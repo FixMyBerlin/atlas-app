@@ -1,0 +1,34 @@
+name: Check PR
+
+on: [pull_request]
+
+jobs:
+  run-ci:
+    name: Run Type Check & Linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Read node version from .nvmrc
+        id: nvmrc
+        uses: browniebroke/read-nvmrc-action@v1
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '${{ steps.nvmrc.outputs.node_version }}'
+
+      - name: Install dependencies (with cache)
+        uses: bahmutov/npm-install@HEAD
+
+      - name: Check types
+        run: npm run type-check
+
+      - name: Check linting
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
