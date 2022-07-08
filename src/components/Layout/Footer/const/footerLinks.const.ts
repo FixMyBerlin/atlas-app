@@ -2,10 +2,7 @@ export type FooterMenuItem = {
   name: string
   to: string
 }
-const pages: FooterMenuItem[] = [
-  { name: 'Start', to: '/' },
-  { name: 'Über', to: '/ueber-uns' },
-]
+const pages: FooterMenuItem[] = [{ name: 'Start', to: '/' }]
 
 const legal: FooterMenuItem[] = [
   { name: 'Impressum', to: '/impressum/' },
