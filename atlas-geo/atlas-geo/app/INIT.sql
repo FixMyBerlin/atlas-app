@@ -1,0 +1,2 @@
+CREATE DATABASE osmdb;
+CREATE EXTENSION postgis;

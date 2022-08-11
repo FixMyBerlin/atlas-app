@@ -1,0 +1,4 @@
+*.osm
+*.pbf
+*.geojson
+*.log

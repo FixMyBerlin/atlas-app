@@ -1,0 +1,41 @@
+# Filter .osm file down to only what we need.
+# Keep those filters broad (keys only); use the LUA file per topic to further filter the data
+# Docs: https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
+
+# Topic: Boundaries
+r/boundary
+
+# Topic: POI Shops
+nwr/amenity
+nwr/shop
+
+# Topic: Citycenter
+nwr/place
+
+# Topic: Start-Ziel
+wr/landuse
+wr/building
+
+# Topic: Barriers
+w/railway
+w/waterway
+w/natural
+w/highway
+w/aeroway
+
+# Topic: Public transport
+w/public_transport
+
+# Topic: Parking
+n/barrier
+n/emergency
+n/highway
+n/public_transport
+n/ramp
+n/traffic_calming
+w/area:highway
+w/barrier
+w/building
+w/highway
+w/leisure
+w/public_transport
