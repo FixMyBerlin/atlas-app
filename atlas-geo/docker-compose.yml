@@ -1,0 +1,58 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    entrypoint: /app/run.sh
+    environment:
+      PGHOST: db
+      PGDATABASE: postgres
+      PGUSER: postgres
+      PGPASSWORD: mysecretpassword
+    volumes:
+      - osmfiles:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: tarmac
+  tiles:
+    # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    image: pramsey/pg_tileserv
+    container_name: tileserver
+    environment:
+      DATABASE_URL: postgres://postgres:mysecretpassword@db/postgres
+    ports:
+      - 7800:7800
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tiles.rule=Host(`tiles.radverkehrsatlas.de)"
+      - "traefik.http.routers.tiles.entrypoints=web"
+      - "traefik.http.routers.tiles.tls.certresolver=myresolver"
+  db:
+    build:
+      context: .
+      dockerfile: ./db.Dockerfile
+    restart: always
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    ports:
+      - "6000:5432"
+    volumes:
+      - geodata:/var/lib/postgresql/data
+    container_name: osmdatabase
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+volumes:
+  geodata:
+  osmfiles:

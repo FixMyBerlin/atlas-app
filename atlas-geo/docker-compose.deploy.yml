@@ -1,0 +1,62 @@
+version: "3"
+services:
+  app:
+    image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
+    entrypoint: /app/run.sh
+    container_name: tarmac_geo
+    environment:
+      PGHOST:
+      PGDATABASE:
+      PGUSER:
+      PGPASSWORD:
+    volumes:
+      - osmfiles:/data
+  tiles:
+    # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    image: pramsey/pg_tileserv
+    container_name: tileserver_compose
+    environment:
+      DATABASE_URL:
+      NODE_ENV: production
+    ports:
+      - 7800:7800
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tilestls.rule=Host(`tiles.radverkehrsatlas.de`)"
+      - "traefik.http.routers.tilestls.entrypoints=websecure"
+      - "traefik.http.services.tilestls.loadbalancer.server.port=7800"
+      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tilestls.tls=true"
+      # HTTP & HTTPS Do not work simulatenously
+      # - "traefik.http.routers.tiles.rule=Host(`tiles.radverkehrsatlas.de`)"
+      # - "traefik.http.routers.tiles.entrypoints=web"
+      # - "traefik.http.services.tiles.loadbalancer.server.port=7800"
+      # - "traefik.http.routers.service=tiles"
+
+  traefik:
+    image: traefik:v2.8
+    container_name: traefik
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"
+      # Enabling docker provider
+      - "--providers.docker=true"
+      # Do not expose containers unless explicitly told so
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=dev-team@fixmycity.de"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "./letsencrypt:/letsencrypt"
+volumes:
+  osmfiles:

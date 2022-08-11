@@ -1,0 +1,1 @@
+Recommended extension `sumneko.lua`
