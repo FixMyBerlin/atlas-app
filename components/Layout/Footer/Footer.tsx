@@ -1,7 +1,7 @@
 import React from 'react'
 import { Logo } from '../Logo'
-import { footerLinks } from './const'
-import { FooterLinkList } from './FooterLinks/FooterLinkList'
+import { FooterLinkList } from './FooterLinkList'
+import { footerLinks } from './footerLinks.const'
 
 export const Footer: React.FC = () => {
   const { pages, legal } = footerLinks

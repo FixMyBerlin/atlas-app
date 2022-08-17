@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React from 'react'
 import { Link } from '@/components/Link'
-import { FooterMenuItem } from '../const/footerLinks.const'
+import { FooterMenuItem } from './footerLinks.const'
 
 type Props = {
   linkList: FooterMenuItem[]
