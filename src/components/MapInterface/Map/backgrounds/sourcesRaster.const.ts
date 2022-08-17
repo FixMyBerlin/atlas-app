@@ -9,7 +9,7 @@ export const backgroundLayer = {
     minzoom: 10,
     maxzoom: 21,
     attribution:
-      '<a target="blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=k_StraDa@senstadt&type=WMS">Geoportal Berlin / Straßenbefahrung 2014</a>',
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=k_StraDa@senstadt&type=WMS">Geoportal Berlin / Straßenbefahrung 2014</a>',
   },
   alkis_tiles: {
     displayName: 'Alkis',
@@ -21,7 +21,7 @@ export const backgroundLayer = {
     minzoom: 10,
     maxzoom: 21,
     attribution:
-      '<a target="blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=k_StraDa@senstadt&type=WMS">Geoportal Berlin / Straßenbefahrung 2014</a>',
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service_intern.jsp?id=k_StraDa@senstadt&type=WMS">Geoportal Berlin / Straßenbefahrung 2014</a>',
   },
   mapnik_tiles: {
     displayName: 'OpenStreetMap Carto',
@@ -60,6 +60,16 @@ export const backgroundLayer = {
   //   attribution:
   //     "<a href='https://wiki.openstreetmap.org/wiki/DigitalGlobe'>Terms & Feedback</a>",
   // },
+  areal2022_tiles: {
+    displayName: 'Luftbilder 2022',
+    // type: 'raster',
+    tiles: ['https://tiles.codefor.de/berlin-2022-dop20rgbi/{z}/{x}/{y}.png'],
+    tileSize: 256,
+    minzoom: 10,
+    maxzoom: 21,
+    attribution:
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2022_true_rgbi@senstadt&type=FEED">Geoportal Berlin / Digitale farbige TrueOrthophotos 2022 (DOP20RGBI)</a>',
+  },
   areal2021_tiles: {
     displayName: 'Luftbilder 2021',
     // type: 'raster',
@@ -68,7 +78,7 @@ export const backgroundLayer = {
     minzoom: 10,
     maxzoom: 21,
     attribution:
-      '<a target="blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2021_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2021 (DOP20RGBI)</a>',
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2021_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2021 (DOP20RGBI)</a>',
   },
   areal2020_tiles: {
     displayName: 'Luftbilder 2020',
@@ -78,7 +88,7 @@ export const backgroundLayer = {
     minzoom: 10,
     maxzoom: 21,
     attribution:
-      '<a target="blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2020_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2020 (DOP20RGB)</a>',
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2020_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2020 (DOP20RGB)</a>',
   },
   areal2019_tiles: {
     displayName: 'Luftbilder 2019',
@@ -88,7 +98,7 @@ export const backgroundLayer = {
     minzoom: 10,
     maxzoom: 21,
     attribution:
-      '<a target="blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2019_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2019 (DOP20RGB)</a>',
+      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2019_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2019 (DOP20RGB)</a>',
   },
   parkraumkarte_neukoelln_tiles: {
     displayName: 'Parkraumkarte Neukoelln',
