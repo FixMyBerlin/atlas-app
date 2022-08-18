@@ -14,9 +14,9 @@ module.exports = {
         },
       },
     },
-    fontFamily: {
-      // sans: ['', 'Segoe UI', 'Tahoma', 'sans-serif'],
-    },
+    // fontFamily: {
+    //   sans: ['', 'Segoe UI', 'Tahoma', 'sans-serif'],
+    // },
   },
   plugins: [
     require('@tailwindcss/typography'),
