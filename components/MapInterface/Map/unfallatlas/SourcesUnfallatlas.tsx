@@ -2,6 +2,7 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { useStore } from 'zustand'
 import { useStoreMap } from '../../store'
+import { useQuery } from '../../store/geschichte'
 import { getSourceVisibility } from '../utils'
 
 export const SourcesUnfallatlas: React.FC = () => {
@@ -9,7 +10,10 @@ export const SourcesUnfallatlas: React.FC = () => {
   const token =
     'pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q' // todo
 
-  const { selectedSources, selectedFilters } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
+  const { selectedFilters } = useStore(useStoreMap)
   const visibility = getSourceVisibility(selectedSources, 'unfallatlas')
 
   // Data https://studio.mapbox.com/tilesets/hejco.86v96gzk/#17.29/52.564196/13.327916

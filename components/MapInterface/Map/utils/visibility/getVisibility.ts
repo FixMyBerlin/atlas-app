@@ -1,4 +1,4 @@
-import { StoreSelectedSources } from '@/components/MapInterface/store'
+import { SelectedSources } from '@/components/MapInterface/store/handleAddRemove'
 import { sourcesList } from '../../sources.const'
 import { ScopeForId } from '../scopedId/types'
 
@@ -9,6 +9,6 @@ export const getVisibility = (active: string, scope: ScopeForId['scope']) =>
   active === scope ? 'visible' : 'none'
 
 export const getSourceVisibility = (
-  sources: StoreSelectedSources['selectedSources'],
+  sources: SelectedSources,
   sourceToCheck: keyof typeof sourcesList
 ) => (sources?.includes(sourceToCheck) ? 'visible' : 'none')

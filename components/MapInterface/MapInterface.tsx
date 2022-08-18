@@ -10,7 +10,6 @@ import { SelectFilter } from './SelectVis/SelectFilter'
 
 export const MapInterface: React.FC = () => {
   return (
-    // <GeschichteWithHistory history={createBrowserHistory()}>
     <MapProvider>
       <div className="flex flex-row gap-4">
         <Map />
@@ -24,6 +23,5 @@ export const MapInterface: React.FC = () => {
         <Inspector />
       </div>
     </MapProvider>
-    // </GeschichteWithHistory>
   )
 }

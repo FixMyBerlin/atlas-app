@@ -8,11 +8,14 @@ import {
 } from '../Map/backgrounds/sourcesRaster.const'
 import { SelectEntryRadibutton } from '../components/SelectEntry/SelectEntryRadiobutton'
 import { cleanupTargetId } from '../Map/utils'
+import { useQuery } from '../store/geschichte'
 
 export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
-  const { selectedBackground, selectBackground: setActiveBackground } =
-    useStore(useStoreMap)
+  const {
+    values: { currentBackground },
+    pushState,
+  } = useQuery()
   const radioButtonScope = 'background'
 
   if (!mainMap) return null
@@ -22,7 +25,7 @@ export const SelectBackground: React.FC = () => {
       event,
       radioButtonScope
     ) as SourcesRasterKey
-    setActiveBackground(sourceId)
+    pushState((state) => (state.currentBackground = sourceId))
   }
 
   const sourceIds = Object.keys(sourcesRaster) as SourcesRasterKey[]
@@ -49,21 +52,24 @@ export const SelectBackground: React.FC = () => {
         <div className="space-y-2.5">
           <SelectEntryRadibutton
             scope={radioButtonScope}
+            key={`${currentBackground}-default`}
             id="default"
             label="Standard"
-            active={selectedBackground === null}
+            active={!!currentBackground && currentBackground === 'default'}
           />
           {sourceIds.map((key) => {
             // @ts-ignore
             const { displayName } = sourcesRaster[key]
 
+            // TODO – This feels hacky. Research solution.
+            const keyThatRerendersOnceGeschichteIsReady = `${currentBackground}-${key}`
             return (
               <SelectEntryRadibutton
                 scope={radioButtonScope}
-                key={key}
+                key={keyThatRerendersOnceGeschichteIsReady}
                 id={key}
                 label={displayName}
-                active={key === selectedBackground}
+                active={!!currentBackground && key === currentBackground}
               />
             )
           })}

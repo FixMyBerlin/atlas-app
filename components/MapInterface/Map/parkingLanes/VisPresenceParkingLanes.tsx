@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layer } from 'react-map-gl'
 import { useStore } from 'zustand'
+import { useQuery } from '../../store/geschichte'
 import { useStoreMap } from '../../store/useStoreMap'
 import { scopedId } from '../utils/scopedId/scopedId'
 import { layerVisibility } from '../utils/visibility'
@@ -8,7 +9,10 @@ import { LayerHighlightParkingLanes } from './LayerHighlightParkingLanes'
 import { LayerLabelParkingLanes } from './LayerLabelParkingLanes'
 
 export const VisPresenceParkingLanes = () => {
-  const { selectedSources, selectedVis } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
+  const { selectedVis } = useStore(useStoreMap)
 
   const scope = 'presence'
   const visibility = layerVisibility(

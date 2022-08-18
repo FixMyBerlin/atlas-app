@@ -4,9 +4,13 @@ import { SelectEntryRadibutton } from '../components'
 import { visualisationsList, VisualisationsListKeys } from '../Map/parkingLanes'
 import { cleanupTargetId } from '../Map/utils'
 import { useStoreMap } from '../store'
+import { useQuery } from '../store/geschichte'
 
 export const SelectVis: React.FC = () => {
-  const { selectedSources, selectedVis, selectVis } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
+  const { selectedVis, selectVis } = useStore(useStoreMap)
   const radioButtonScope = 'layer'
 
   const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {

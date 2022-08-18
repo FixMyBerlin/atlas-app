@@ -4,21 +4,29 @@ import React, { useState } from 'react'
 import {
   Map as MapGl,
   MapboxEvent,
-  MapboxGeoJSONFeature,
   MapLayerMouseEvent,
   NavigationControl,
+  ViewStateChangeEvent,
 } from 'react-map-gl'
 import { useStore } from 'zustand'
-import { SourcesLayerRasterBackgrounds } from './backgrounds'
+import {
+  geschichteDefaultValues,
+  GeschichteStore,
+  useQuery,
+} from '../store/geschichte'
 import { useStoreMap } from '../store/useStoreMap'
-import { SourcesParkingLanes } from './parkingLanes'
+import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourcesBoundaries } from './boundaries'
+import { SourcesParkingLanes } from './parkingLanes'
 import { SourcesUnfallatlas } from './unfallatlas'
+import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
 export const Map: React.FC = () => {
   const interactiveLayerIds = ['vts_pl', 'vts_pl_no', 'vts_pl_all_other']
+
+  const { values, pushState } = useQuery()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
   const {
@@ -49,25 +57,43 @@ export const Map: React.FC = () => {
       }
     })
   }
-  // Just for debugging
   const handleLoad = (event: MapboxEvent) => {
+    // Just for debugging
     const allLayer = event.target.getStyle().layers
     // @ts-ignore
     const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
     // @ts-ignore
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     console.log('onLoad', { event, ourLayer, basemapLayer })
+
+    // Initial values from geschichte
+    // TODO – This is not ideal. We start at the default location an fly to the URL location.
+    //  Can/should we wait for the state to be present before initializing the map?
+    const map = event.target
+    map.flyTo({
+      center: [values.map.lng, values.map.lat],
+      zoom: values.map.zoom,
+    })
+  }
+
+  const handleMoveEnd = (event: ViewStateChangeEvent) => {
+    pushState((state: GeschichteStore) => {
+      const zoom = event.viewState.zoom
+      state.map.zoom = roundNumber(zoom, 1)
+      state.map.lat = roundByZoom(event.viewState.latitude, zoom)
+      state.map.lng = roundByZoom(event.viewState.longitude, zoom)
+    })
   }
 
   return (
     <MapGl
       id="mainMap"
       initialViewState={{
-        longitude: 13.4381,
-        latitude: 52.47928,
-        zoom: 16,
+        longitude: geschichteDefaultValues.map.lng,
+        latitude: geschichteDefaultValues.map.lat,
+        zoom: geschichteDefaultValues.map.zoom,
       }}
-      hash
+      // hash
       style={{ width: '100%', height: 800 }}
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/basic/style.json?key=ECOoUBmpqklzSCASXxcu"
@@ -77,6 +103,8 @@ export const Map: React.FC = () => {
       cursor={cursorStyle}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMoveEnd={handleMoveEnd}
+      // onZoomEnd={handleZoomEnd} // zooming is always also moving
       onClick={handleClick}
       onLoad={handleLoad}
     >
@@ -87,6 +115,10 @@ export const Map: React.FC = () => {
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
+      {/* Gebugging Geschichte */}
+      <div className="z-50 absolute top-5 left-5 text-[10px] font-mono bg-pink-300 rounded px-3">
+        {JSON.stringify(values)}
+      </div>
     </MapGl>
   )
 }

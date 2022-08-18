@@ -1,6 +1,7 @@
 import React from 'react'
 import { Layer } from 'react-map-gl'
 import { useStore } from 'zustand'
+import { useQuery } from '../../store/geschichte'
 import { useStoreMap } from '../../store/useStoreMap'
 import { layerVisibility } from '../utils/visibility'
 import { LayerHighlightParkingLanes } from './LayerHighlightParkingLanes'
@@ -9,7 +10,10 @@ import { LayerLabelParkingLanes } from './LayerLabelParkingLanes'
 export const layerIdToPlaceBackgroundsBefore = 'vts_pl'
 
 export const VisDefaultParkingLanes = () => {
-  const { selectedSources, selectedVis } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
+  const { selectedVis } = useStore(useStoreMap)
 
   const scope = 'default'
   const visibility = layerVisibility(

@@ -1,11 +1,12 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { useStore } from 'zustand'
-import { useStoreMap } from '../../store'
+import { useQuery } from '../../store/geschichte'
 import { getSourceVisibility } from '../utils'
 
 export const SourcesBoundaries: React.FC = () => {
-  const { selectedSources } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
   const visibility = getSourceVisibility(selectedSources, 'boundaries')
 
   return (

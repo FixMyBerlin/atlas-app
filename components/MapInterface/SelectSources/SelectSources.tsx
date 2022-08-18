@@ -1,20 +1,32 @@
 import React from 'react'
-import { useStore } from 'zustand'
 import { SelectEntryCheckbox } from '../components'
 import { sourcesList, SourcesListKeys } from '../Map'
 import { cleanupTargetId } from '../Map/utils'
-import { StoreSelectedSources, useStoreMap } from '../store'
+import { GeschichteStore, useQuery } from '../store/geschichte'
+import { addSource, removeSource } from '../store/handleAddRemove'
 
 export const SelectSources: React.FC = () => {
-  const { selectedSources, addSource, removeSource } = useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+    pushState,
+  } = useQuery()
   const radioButtonScope = 'source'
 
   const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
     const sourceId = cleanupTargetId(event, radioButtonScope) as SourcesListKeys
     if (selectedSources?.includes(sourceId)) {
-      removeSource(sourceId)
+      pushState(
+        (state: GeschichteStore) =>
+          (state.selectedSources = removeSource(
+            state.selectedSources,
+            sourceId
+          ))
+      )
     } else {
-      addSource(sourceId)
+      pushState(
+        (state: GeschichteStore) =>
+          (state.selectedSources = addSource(state.selectedSources, sourceId))
+      )
     }
   }
 
@@ -28,10 +40,15 @@ export const SelectSources: React.FC = () => {
         <div className="space-y-2.5">
           {sourceIds.map((key) => {
             const { displayName } = sourcesList[key]
+
+            // TODO – This feels hacky. Research solution.
+            const keyThatRerendersOnceGeschichteIsReady = `${selectedSources?.join(
+              '-'
+            )}-${key}`
             return (
               <SelectEntryCheckbox
                 scope={radioButtonScope}
-                key={key}
+                key={keyThatRerendersOnceGeschichteIsReady}
                 id={key}
                 label={displayName}
                 active={!!selectedSources?.includes(key)}

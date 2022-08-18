@@ -114,7 +114,7 @@ export const sourcesRaster = {
   },
   // Docs https://docs.mapbox.com/api/maps/static-tiles/
   // Edit Style https://studio.mapbox.com/styles/hejco/ckz8bsqbq000t15nz6ok45bid/edit/#15.61/52.495655/13.417375
-  // TODO: Lizenz / Attribution
+  // TODO Lizenz / Attribution
   // About Quota: Make sure we only pull data where avaliable and only for zoom level that are usefull.
   //  Quota at: https://account.mapbox.com/
   //  Docs: https://docs.mapbox.com/api/maps/static-tiles/#manage-static-tiles-api-costs

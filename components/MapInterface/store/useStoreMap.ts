@@ -5,31 +5,18 @@ import { SourcesRasterKey } from '../Map/backgrounds'
 import { VisualisationsListKeys } from '../Map/parkingLanes'
 import { FilterUnfallatlassYearKeys } from '../Map/unfallatlas/filterUnfallatlas'
 
-export type StoreMap = StoreSelectedBackground &
-  StoreSelectedVis &
-  StoreSelectedSources &
+export type StoreMap = StoreSelectedVis &
   StoreSelectedFilters &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
 
-export type StoreSelectedBackground = {
-  selectedBackground: null | SourcesRasterKey
-  selectBackground: (selectedBackground: null | SourcesRasterKey) => void
-}
-
-// TODO: Muss abstrahiert werden; funktioniert jetzt nur für ParkingLanes
+// TODO – Muss abstrahiert werden; funktioniert jetzt nur für ParkingLanes
 export type StoreSelectedVis = {
   selectedVis: null | VisualisationsListKeys
   selectVis: (activeVis: null | VisualisationsListKeys) => void
 }
 
-export type StoreSelectedSources = {
-  selectedSources: null | SourcesListKeys[]
-  addSource: (source: SourcesListKeys) => void
-  removeSource: (source: SourcesListKeys) => void
-}
-
-// TODO: Muss abstrahiert werden; funktioniert jetzt nur für den einen Jahres-Filter
+// TODO – Muss abstrahiert werden; funktioniert jetzt nur für den einen Jahres-Filter
 export type StoreSelectedFilters = {
   selectedFilters: null | FilterUnfallatlassYearKeys[]
   addFilter: (filter: FilterUnfallatlassYearKeys) => void
@@ -51,28 +38,8 @@ type StoreFeaturesCalculator = {
 }
 
 export const useStoreMap = create<StoreMap>((set, get) => ({
-  selectedBackground: null,
-  selectBackground: (selectedBackground) => set({ selectedBackground }),
-
   selectedVis: 'default',
   selectVis: (selectedVis) => set({ selectedVis }),
-
-  selectedSources: ['parkingLanes', 'boundaries'],
-  addSource: (sourceToAdd) => {
-    const { selectedSources } = get()
-    set({
-      selectedSources: selectedSources
-        ? [...selectedSources, sourceToAdd]
-        : [sourceToAdd],
-    })
-  },
-  removeSource: (sourceToRemove) => {
-    const { selectedSources } = get()
-    set({
-      selectedSources:
-        selectedSources?.filter((e) => e !== sourceToRemove) || null,
-    })
-  },
 
   selectedFilters: ['2017', '2018', '2019'],
   addFilter: (filterToAdd) => {

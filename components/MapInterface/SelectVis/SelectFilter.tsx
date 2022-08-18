@@ -7,10 +7,13 @@ import {
 } from '../Map/unfallatlas/filterUnfallatlas'
 import { cleanupTargetId } from '../Map/utils'
 import { StoreSelectedFilters, useStoreMap } from '../store'
+import { useQuery } from '../store/geschichte'
 
 export const SelectFilter: React.FC = () => {
-  const { selectedSources, selectedFilters, addFilter, removeFilter } =
-    useStore(useStoreMap)
+  const {
+    values: { selectedSources },
+  } = useQuery()
+  const { selectedFilters, addFilter, removeFilter } = useStore(useStoreMap)
   const radioButtonScope = 'filter'
 
   const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
