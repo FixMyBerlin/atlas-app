@@ -108,7 +108,7 @@ export const sourcesRaster = {
     tiles: ['https://tiles.osm-berlin.org/parkraumkarte/{z}/{x}/{y}.jpg'],
     tileSize: 256,
     minzoom: 10,
-    maxzoom: 21,
+    maxzoom: 14,
     attribution:
       '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a>, Bordsteinkanten: OpenStreetMap und Geoportal Berlin / ALKIS.',
   },

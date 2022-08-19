@@ -1,0 +1,1348 @@
+{
+  "version": 8,
+  "name": "ZES+-Themenkarten-phase2 (zes-bb-tt) - only poi+highway styles CLEANED",
+  "metadata": {
+    "mapbox:groups": {
+      "bead268b7f0bdfc65c82ce139c462781": {
+        "name": "fmc-strassentypen",
+        "collapsed": true
+      },
+      "e4184f339655228ca89d272e79bedcb6": {
+        "name": "fmc-barriers",
+        "collapsed": true
+      },
+      "f78270f2a9103881d56e5c6faaa1fca4": {
+        "name": "fmc-poi",
+        "collapsed": true
+      },
+      "ff522415f2581ea10b704c9d4b218fe2": {
+        "name": "fmc-surface-bad",
+        "collapsed": true
+      },
+      "11410b41f70a8e2c11e1c55bb4766763": {
+        "name": "fmc-maxspeed",
+        "collapsed": true
+      },
+      "e4e6e7d8166fdcbd093438747dbb764f": {
+        "name": "fmc-settlements",
+        "collapsed": true
+      },
+      "4d03f86d06789bbcf25cef1e3815b9b9": {
+        "name": "fmc-landuse",
+        "collapsed": true
+      },
+      "cf09579f47bff6b53dd50d1a3a14442c": {
+        "name": "fmc-oberflaechenqualitaet",
+        "collapsed": true
+      },
+      "ec40fd5685d2b63c4db2fbee3bbe5bb5": {
+        "name": "fmc-radinfra",
+        "collapsed": true
+      },
+      "c7f028f67bc0b21de2b287bdbf5b9f9f": {
+        "name": "fmc-betrachtungsgebiet",
+        "collapsed": true
+      },
+      "ac51e34ebbdc0a2110b32276c8b40a17": {
+        "name": "fmc-bibi-problemstellen",
+        "collapsed": true
+      },
+      "e15e09080f9448e9149493006b05a25a": {
+        "name": "fmc-zes-netzkonzepte",
+        "collapsed": true
+      }
+    }
+  },
+  "center": [9.1304, 48.9506],
+  "zoom": 13.63,
+  "bearing": 0,
+  "pitch": 0,
+  "sources": {
+    "composite": {
+      "url": "mapbox://hejco.d2iouwe1,hejco.9ca2gk6c,hejco.d7mywzd3,hejco.3hccfujx,hejco.8cpvm1l1,hejco.8gob9b0c,hejco.8y5mjt9u",
+      "type": "vector"
+    }
+  },
+  "sprite": "mapbox://sprites/hejco/cl706a84j003v14o23n2r81w7/ck2u8j60r58fu0sgyxrigm3cu",
+  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "fmc-landuse",
+      "type": "fill",
+      "source": "composite",
+      "source-layer": "poiLanduse",
+      "minzoom": 9,
+      "paint": {
+        "fill-color": [
+          "match",
+          ["get", "landuse"],
+          ["residential"],
+          "hsl(17, 93%, 81%)",
+          [
+            "commercial",
+            "industrial",
+            "retail",
+            "brownfield",
+            "civic",
+            "garages",
+            "allotments",
+            "farmyard",
+            "construction",
+            "cemetery",
+            "religious"
+          ],
+          "hsl(215, 87%, 78%)",
+          "hsla(17, 93%, 81%, 0)"
+        ],
+        "fill-opacity": 0.3
+      },
+      "metadata": {
+        "mapbox:group": "4d03f86d06789bbcf25cef1e3815b9b9",
+        "groupName": "fmc-landuse"
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_gehwegRadfFrei",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:gehwegRadfarerFrei"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_gehUndRadwegGemeinsam",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_gehUndRadwegGetrennt",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:gehUndRadwegGetrennt"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_radwegBaulichAbgesetzt",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_radwegFreiGefuehrt",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:radwegFreiGefuehrt"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_radwegVerbindungsstueck",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:BicycleWayData:radwegVerbindungsstueck"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surf_mainWay_verkehrsberuhigterBereichMitFahrradFrei",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        [
+          "get",
+          "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"
+        ],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsl(119, 76%, 26%)",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["bad", "very_bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surfacedata_cycleway",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "all",
+        [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+          ["good", "intermediate", "excellent", "bad"],
+          true,
+          false
+        ],
+        [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeCycleway:Right"],
+          ["good", "intermediate", "bad", "excellent"],
+          true,
+          false
+        ]
+      ],
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            ["excellent", "good"],
+            true,
+            false
+          ],
+          "hsl(119, 76%, 26%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            ["intermediate"],
+            true,
+            false
+          ],
+          "hsl(47, 94%, 46%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Right"],
+            ["bad"],
+            true,
+            false
+          ],
+          "#fa610f",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            ["excellent", "good"],
+            true,
+            false
+          ],
+          "hsl(119, 76%, 26%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            ["intermediate"],
+            true,
+            false
+          ],
+          "#e4b407",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            ["bad"],
+            true,
+            false
+          ],
+          "#fa610f",
+          "hsla(252, 94%, 10%, 0.16)"
+        ],
+        "line-offset": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          [
+            "case",
+            ["has", "FMC:Category:SurfaceData:ScopeCycleway:Right"],
+            2,
+            ["has", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            -2,
+            0
+          ],
+          22,
+          [
+            "case",
+            ["has", "FMC:Category:SurfaceData:ScopeCycleway:Right"],
+            7,
+            ["has", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
+            -7,
+            0
+          ]
+        ],
+        "line-dasharray": [1, 1],
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "id": "fmc-surfacedata_sidewalk",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "all",
+        [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Right"],
+          ["good", "intermediate"],
+          true,
+          false
+        ],
+        [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Left"],
+          ["good", "intermediate"],
+          true,
+          false
+        ]
+      ],
+      "paint": {
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Right"],
+            ["good"],
+            true,
+            false
+          ],
+          "hsl(119, 76%, 26%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Right"],
+            ["intermediate"],
+            true,
+            false
+          ],
+          "hsl(47, 94%, 46%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Left"],
+            ["excellent", "good"],
+            true,
+            false
+          ],
+          "hsl(119, 76%, 26%)",
+          [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Left"],
+            ["intermediate"],
+            true,
+            false
+          ],
+          "hsl(47, 94%, 46%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-dasharray": [2, 1],
+        "line-offset": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          [
+            "case",
+            ["has", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Right"],
+            2,
+            ["has", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Left"],
+            -2,
+            0
+          ],
+          22,
+          [
+            "case",
+            ["has", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Right"],
+            7,
+            ["has", "FMC:Category:SurfaceData:ScopeSidewalkBikeYes:Left"],
+            -7,
+            0
+          ]
+        ],
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 13, 3]
+      }
+    },
+    {
+      "minzoom": 12,
+      "metadata": {
+        "mapbox:group": "cf09579f47bff6b53dd50d1a3a14442c",
+        "groupName": "fmc-oberflaechenqualitaet"
+      },
+      "filter": [
+        "match",
+        ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+        ["true"],
+        false,
+        true
+      ],
+      "type": "line",
+      "source": "composite",
+      "id": "fmc-surf_fahrbahn-all",
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "#127510",
+          ["intermediate"],
+          "hsl(47, 94%, 46%)",
+          ["very_bad", "bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2, 14, 4]
+      },
+      "source-layer": "osmHighwaysUnclipped"
+    },
+    {
+      "id": "fmc-fuehung-mit-fluss",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "ec40fd5685d2b63c4db2fbee3bbe5bb5",
+        "groupName": "fmc-radinfra"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "paint": {
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehwegRadfarerFrei"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsl(232, 97%, 36%)",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsl(232, 97%, 36%)",
+          "hsla(232, 97%, 36%, 0)"
+        ],
+        "line-dasharray": [2, 1],
+        "line-offset": 2
+      }
+    },
+    {
+      "id": "fmc-fuehrung-getrennnt",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "ec40fd5685d2b63c4db2fbee3bbe5bb5",
+        "groupName": "fmc-radinfra"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "paint": {
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegFreiGefuehrt"],
+            ["true"],
+            true,
+            false
+          ],
+          "#031ab5",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
+            ["true"],
+            true,
+            false
+          ],
+          "#031ab5",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegVerbindungsstueck"],
+            ["true"],
+            true,
+            false
+          ],
+          "#031ab5",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGetrennt"],
+            ["true"],
+            true,
+            false
+          ],
+          "#031ab5",
+          "hsla(254, 82%, 29%, 0)"
+        ]
+      }
+    },
+    {
+      "id": "fmc-verkehrsberuhigt",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "ec40fd5685d2b63c4db2fbee3bbe5bb5",
+        "groupName": "fmc-radinfra"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "paint": {
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:stufen"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsla(232, 99%, 39%, 0.34)",
+          [
+            "match",
+            [
+              "get",
+              "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"
+            ],
+            ["true"],
+            true,
+            false
+          ],
+          "hsla(232, 99%, 39%, 0.34)",
+          [
+            "match",
+            [
+              "get",
+              "FMC:Category:BicycleWayData:fussgaengerzonenWegFahrradFrei"
+            ],
+            ["true"],
+            true,
+            false
+          ],
+          "hsla(232, 99%, 39%, 0.34)",
+          "hsla(232, 99%, 39%, 0)"
+        ],
+        "line-dasharray": [1, 1],
+        "line-offset": 2
+      }
+    },
+    {
+      "id": "fmc-strassentypen",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "bead268b7f0bdfc65c82ce139c462781",
+        "groupName": "fmc-strassentypen"
+      },
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "paint": {
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          0.5,
+          11.36,
+          1.5,
+          22,
+          5
+        ],
+        "line-color": [
+          "case",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsl(163, 56%, 51%)",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typHauptUndSammelstrasse"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsl(40, 96%, 44%)",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsla(313, 18%, 69%, 0.37)",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typAusserorts"],
+            ["true"],
+            true,
+            false
+          ],
+          "hsl(18, 97%, 47%)",
+          ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
+          "hsla(97, 56%, 51%, 0)",
+          "hsla(97, 56%, 51%, 0)"
+        ],
+        "line-opacity": 0.84
+      }
+    },
+    {
+      "id": "fmc-maxspeed",
+      "type": "line",
+      "source": "composite",
+      "source-layer": "osmHighwaysUnclipped",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:MaxspeedData"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:MaxspeedData:MaxspeedValue"],
+          ["5", "7", "8", "10", "20", "30", "15", "Verkehrsberuhigter Bereich"],
+          "hsl(122, 85%, 48%)",
+          ["60", "70", "80"],
+          "hsl(192, 97%, 51%)",
+          ["100", "120", "130"],
+          "hsl(235, 96%, 41%)",
+          ["50", "40"],
+          "hsl(195, 86%, 37%)",
+          "#000000"
+        ]
+      },
+      "metadata": {
+        "mapbox:group": "11410b41f70a8e2c11e1c55bb4766763",
+        "groupName": "fmc-maxspeed"
+      }
+    },
+    {
+      "minzoom": 11,
+      "metadata": {
+        "mapbox:group": "ff522415f2581ea10b704c9d4b218fe2",
+        "groupName": "fmc-surface-bad"
+      },
+      "filter": [
+        "match",
+        ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+        ["true"],
+        false,
+        true
+      ],
+      "type": "line",
+      "source": "composite",
+      "id": "fmc-surf_fahrbahn-bad",
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+          ["excellent", "good"],
+          "hsla(119, 76%, 26%, 0)",
+          ["intermediate"],
+          "hsla(47, 94%, 46%, 0)",
+          ["very_bad", "bad"],
+          "hsl(5, 96%, 52%)",
+          "hsla(252, 91%, 38%, 0)"
+        ],
+        "line-opacity": 0.7,
+        "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2, 14, 4],
+        "line-dasharray": [0.5, 1]
+      },
+      "source-layer": "osmHighwaysUnclipped"
+    },
+    {
+      "id": "fmc-externe-konzepte",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "e15e09080f9448e9149493006b05a25a",
+        "groupName": "fmc-zes-netzkonzepte"
+      },
+      "source": "composite",
+      "source-layer": "zesbicyclenetworks",
+      "minzoom": 9,
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "layer"],
+          ["osm_routen"],
+          "hsl(88, 89%, 36%)",
+          ["RSV_Y-Trasse", "RSV_Teltowkanalroute"],
+          "#7011a7",
+          ["radnetz_zesplus_vers__4", "Hauptachsen"],
+          "#ffbc0a",
+          ["RSV BER-KW varianten"],
+          "#7700cc",
+          ["radkonzept schoenefeld"],
+          "#018869",
+          ["Radnetz_berlin"],
+          "hsla(229, 100%, 38%, 0)",
+          ["Vorrangnetz_berlin"],
+          "hsl(229, 100%, 38%)",
+          "hsl(48, 89%, 36%)"
+        ],
+        "line-opacity": ["interpolate", ["linear"], ["zoom"], 0, 0, 10, 0.6],
+        "line-dasharray": [2, 0],
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          0,
+          [
+            "match",
+            ["get", "layer"],
+            ["Vorrangnetz_berlin", "RSV_Y-Trasse", "Hauptachsen", "osm_routen"],
+            3,
+            1
+          ],
+          22,
+          1
+        ]
+      }
+    },
+    {
+      "id": "fmc-anschlusspunkte",
+      "type": "circle",
+      "metadata": {
+        "mapbox:group": "e15e09080f9448e9149493006b05a25a",
+        "groupName": "fmc-zes-netzkonzepte"
+      },
+      "source": "composite",
+      "source-layer": "non_scrypt_point-22ec2e",
+      "filter": [
+        "match",
+        ["get", "layer"],
+        [
+          "berlinernetz",
+          "LDS_zielnetz",
+          "RSV BER-KW varianten",
+          "Achsen ZES",
+          "hauptachsen",
+          "Radkonzept Schönefeld",
+          "Vorrangnetz"
+        ],
+        true,
+        false
+      ],
+      "paint": {
+        "circle-radius": 3,
+        "circle-opacity": 0.68,
+        "circle-color": [
+          "match",
+          ["get", "gebiet"],
+          ["zes"],
+          "hsl(26, 0%, 29%)",
+          "hsl(201, 0%, 56%)"
+        ],
+        "circle-stroke-width": 1,
+        "circle-stroke-color": "hsl(326, 82%, 47%)"
+      }
+    },
+    {
+      "id": "fmc-poiShopCategory",
+      "type": "circle",
+      "metadata": {
+        "mapbox:group": "f78270f2a9103881d56e5c6faaa1fca4",
+        "groupName": "fmc-poi"
+      },
+      "source": "composite",
+      "source-layer": "poiShopping",
+      "minzoom": 13.51,
+      "paint": {
+        "circle-color": [
+          "match",
+          ["get", "FMC:ShopCategory"],
+          ["Freizeit"],
+          "#960854",
+          ["Bildung"],
+          "#626060",
+          ["Besorgungen"],
+          "#e709fb",
+          ["Einkauf"],
+          "#0e3ecd",
+          "hsla(116, 48%, 39%, 0.5)"
+        ],
+        "circle-blur": 1,
+        "circle-radius": 6
+      }
+    },
+    {
+      "minzoom": 7,
+      "metadata": {
+        "mapbox:group": "f78270f2a9103881d56e5c6faaa1fca4",
+        "groupName": "fmc-poi"
+      },
+      "maxzoom": 13.5,
+      "type": "heatmap",
+      "source": "composite",
+      "id": "fmc-poiShopping-heatmap",
+      "paint": {
+        "heatmap-radius": 7,
+        "heatmap-color": [
+          "interpolate",
+          ["linear"],
+          ["heatmap-density"],
+          0,
+          "rgba(0, 0, 255, 0)",
+          0.1,
+          "hsla(13, 89%, 31%, 0.1)",
+          0.3,
+          "hsla(13, 89%, 31%, 0.4)",
+          0.5,
+          "hsla(13, 89%, 31%, 0.6)",
+          0.7,
+          "hsla(13, 89%, 31%, 0.8)",
+          1,
+          "#952809"
+        ]
+      },
+      "source-layer": "poiShopping"
+    },
+    {
+      "id": "fmc-poiEducation",
+      "type": "circle",
+      "metadata": {
+        "mapbox:group": "f78270f2a9103881d56e5c6faaa1fca4",
+        "groupName": "fmc-poi"
+      },
+      "source": "composite",
+      "source-layer": "poiEducation",
+      "paint": {
+        "circle-color": "hsl(209, 76%, 38%)",
+        "circle-stroke-color": "hsl(0, 8%, 97%)",
+        "circle-stroke-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          1,
+          12,
+          2
+        ],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 1.5, 12, 3],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1],
+        "circle-stroke-opacity": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          10,
+          0,
+          11,
+          1
+        ]
+      }
+    },
+    {
+      "id": "fmc-poiEducation-label",
+      "type": "symbol",
+      "metadata": {
+        "mapbox:group": "f78270f2a9103881d56e5c6faaa1fca4",
+        "groupName": "fmc-poi"
+      },
+      "source": "composite",
+      "source-layer": "poiEducation",
+      "minzoom": 14,
+      "layout": {
+        "text-field": ["to-string", ["get", "name"]],
+        "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
+        "text-size": 13
+      },
+      "paint": {
+        "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "minzoom": 9,
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "filter": ["match", ["geometry-type"], ["LineString"], true, false],
+      "type": "line",
+      "source": "composite",
+      "id": "fmc-poibarriers_motorway",
+      "paint": {
+        "line-color": [
+          "match",
+          ["get", "highway"],
+          [
+            "motorway",
+            "motorway_link",
+            "primary",
+            "primary_link",
+            "trunk",
+            "trunk_link"
+          ],
+          "hsl(0, 0%, 3%)",
+          "hsla(0, 90%, 5%, 0)"
+        ],
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 18, 4],
+        "line-opacity": 0.64
+      },
+      "source-layer": "poiBarriers"
+    },
+    {
+      "id": "fmc-poibarriers_train",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "source": "composite",
+      "source-layer": "poiBarriers",
+      "filter": [
+        "all",
+        ["match", ["geometry-type"], ["LineString"], true, false],
+        ["match", ["get", "railway"], ["rail"], true, false]
+      ],
+      "paint": {
+        "line-color": "hsl(300, 88%, 10%)",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 18, 4]
+      }
+    },
+    {
+      "id": "fmc-poibarriers_train2",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "source": "composite",
+      "source-layer": "poiBarriers",
+      "filter": [
+        "all",
+        ["match", ["geometry-type"], ["LineString"], true, false],
+        ["match", ["get", "railway"], ["rail"], true, false]
+      ],
+      "paint": {
+        "line-color": "hsl(300, 4%, 97%)",
+        "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 18, 3.8],
+        "line-dasharray": [0.6, 1]
+      }
+    },
+    {
+      "id": "fmc-publicTransport",
+      "type": "symbol",
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "source": "composite",
+      "source-layer": "poiPublicTransport",
+      "minzoom": 9,
+      "layout": {
+        "icon-image": "de-s-bahn",
+        "icon-size": 0.6,
+        "icon-allow-overlap": true,
+        "icon-ignore-placement": true
+      },
+      "paint": {}
+    },
+    {
+      "id": "fmc-poibarriers_water_aerodrome copy",
+      "type": "fill",
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "source": "composite",
+      "source-layer": "poiBarriers",
+      "filter": ["match", ["geometry-type"], ["Polygon"], true, false],
+      "paint": {
+        "fill-opacity": 0.51
+      }
+    },
+    {
+      "id": "fmc-poibarriers_water_aerodrome",
+      "type": "fill",
+      "metadata": {
+        "mapbox:group": "e4184f339655228ca89d272e79bedcb6",
+        "groupName": "fmc-barriers"
+      },
+      "source": "composite",
+      "source-layer": "poiBarriers",
+      "filter": ["match", ["geometry-type"], ["Polygon"], true, false],
+      "paint": {
+        "fill-color": [
+          "case",
+          [
+            "match",
+            ["get", "waterway"],
+            ["canal", "drain", "river"],
+            true,
+            false
+          ],
+          "hsl(0, 2%, 18%)",
+          ["match", ["get", "aeroway"], ["aerodrome"], true, false],
+          "hsl(230, 22%, 27%)",
+          "hsl(0, 2%, 18%)"
+        ],
+        "fill-opacity": 0.6,
+        "fill-pattern": [
+          "case",
+          ["match", ["get", "aeroway"], ["aerodrome"], true, false],
+          "pedestrian-polygon",
+          [
+            "match",
+            ["get", "waterway"],
+            ["canal", "drain", "river"],
+            true,
+            false
+          ],
+          "waterfall",
+          "pedestrian-polygon"
+        ]
+      }
+    },
+    {
+      "id": "fmc-poiPlaces-circle",
+      "type": "circle",
+      "metadata": {
+        "mapbox:group": "e4e6e7d8166fdcbd093438747dbb764f",
+        "groupName": "fmc-settlements"
+      },
+      "source": "composite",
+      "source-layer": "poiPlaces",
+      "filter": [
+        "match",
+        ["get", "FMC:Category:poiPlaces"],
+        ["true"],
+        true,
+        false
+      ],
+      "paint": {
+        "circle-stroke-color": "#d8cd03",
+        "circle-opacity": 0.7,
+        "circle-stroke-width": 2,
+        "circle-radius": [
+          "interpolate",
+          ["linear"],
+          ["get", "population"],
+          100,
+          5,
+          91116,
+          40
+        ]
+      }
+    },
+    {
+      "id": "fmc-poiPlaces-label",
+      "type": "symbol",
+      "metadata": {
+        "mapbox:group": "e4e6e7d8166fdcbd093438747dbb764f",
+        "groupName": "fmc-settlements"
+      },
+      "source": "composite",
+      "source-layer": "poiPlaces",
+      "layout": {
+        "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 22, 13],
+        "icon-image": "dot-10",
+        "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
+        "icon-allow-overlap": true,
+        "text-padding": 0,
+        "text-offset": [0, 1],
+        "icon-size": [
+          "match",
+          ["get", "population"],
+          ["6452"],
+          3,
+          ["8945"],
+          4,
+          ["10633", "11355"],
+          5,
+          ["17017"],
+          8,
+          ["38111"],
+          19,
+          1
+        ],
+        "text-anchor": "top",
+        "text-field": [
+          "to-string",
+          ["concat", ["get", "name"], " \n ", ["get", "population"]]
+        ],
+        "icon-padding": 0
+      },
+      "paint": {
+        "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+        "text-halo-width": 1
+      }
+    },
+    {
+      "metadata": {
+        "mapbox:group": "ac51e34ebbdc0a2110b32276c8b40a17",
+        "groupName": "fmc-bibi-problemstellen"
+      },
+      "type": "circle",
+      "source": "composite",
+      "id": "fmc-problemstellen-art-8ben9u",
+      "paint": {
+        "circle-radius": 2,
+        "circle-blur": 0.5,
+        "circle-color": "hsl(31, 97%, 51%)"
+      },
+      "source-layer": "problemstellen_art-8ben9u"
+    },
+    {
+      "metadata": {
+        "mapbox:group": "ac51e34ebbdc0a2110b32276c8b40a17",
+        "groupName": "fmc-bibi-problemstellen"
+      },
+      "type": "heatmap",
+      "source": "composite",
+      "id": "fmc-problemstellen-art-8ben9u copy 1",
+      "paint": {
+        "heatmap-radius": 4,
+        "heatmap-color": [
+          "interpolate",
+          ["linear"],
+          ["heatmap-density"],
+          0,
+          "rgba(0, 0, 255, 0)",
+          0.1,
+          "hsl(58, 77%, 63%)",
+          0.3,
+          "hsl(37, 94%, 60%)",
+          0.5,
+          "hsl(23, 84%, 43%)",
+          0.7,
+          "hsl(0, 89%, 34%)",
+          1,
+          "hsl(0, 87%, 25%)"
+        ],
+        "heatmap-opacity": 0.7
+      },
+      "source-layer": "problemstellen_art-8ben9u"
+    },
+    {
+      "metadata": {
+        "mapbox:group": "ac51e34ebbdc0a2110b32276c8b40a17",
+        "groupName": "fmc-bibi-problemstellen"
+      },
+      "type": "circle",
+      "source": "composite",
+      "id": "fmc-problemstellen-art-8ben9u copy",
+      "paint": {
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 0, 3, 22, 6],
+        "circle-blur": ["interpolate", ["linear"], ["zoom"], 0, 0.5, 22, 0.2],
+        "circle-color": [
+          "match",
+          ["get", "pst_art_id"],
+          [8, 9, 11, 13, 4, 12],
+          "hsl(315, 90%, 49%)",
+          [7],
+          "hsl(39, 98%, 51%)",
+          "hsl(225, 4%, 44%)"
+        ],
+        "circle-stroke-color": "hsl(0, 5%, 100%)",
+        "circle-opacity": 0.5
+      },
+      "source-layer": "problemstellen_art-8ben9u"
+    },
+    {
+      "id": "fmc-dimmlayer-osm-d3i67u",
+      "type": "fill",
+      "metadata": {
+        "mapbox:group": "c7f028f67bc0b21de2b287bdbf5b9f9f",
+        "groupName": "fmc-betrachtungsgebiet"
+      },
+      "source": "composite",
+      "source-layer": "dimmlayer_osm-d3i67u",
+      "paint": {
+        "fill-opacity": 0.4,
+        "fill-outline-color": "hsla(0, 0%, 0%, 0)"
+      }
+    },
+    {
+      "id": "fmc-10km-zesplusmitte-line-8eu77g",
+      "type": "line",
+      "metadata": {
+        "mapbox:group": "c7f028f67bc0b21de2b287bdbf5b9f9f",
+        "groupName": "fmc-betrachtungsgebiet"
+      },
+      "source": "composite",
+      "source-layer": "10km_zesplusmitte_line-8eu77g",
+      "paint": {
+        "line-color": "hsl(325, 95%, 44%)",
+        "line-width": 3,
+        "line-opacity": 0.71,
+        "line-dasharray": [3, 1, 1, 1]
+      }
+    }
+  ],
+  "created": "2022-08-19T07:51:17.176Z",
+  "modified": "2022-08-19T08:11:35.293Z",
+  "id": "cl706a84j003v14o23n2r81w7",
+  "owner": "hejco",
+  "visibility": "private",
+  "protected": false,
+  "draft": false
+}

@@ -18,6 +18,7 @@ import { useStoreMap } from '../store/useStoreMap'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourcesBoundaries } from './boundaries'
 import { SourcesParkingLanes } from './parkingLanes'
+import { SourcesTarmacGeoHighways, SourcesTarmacGeoPois } from './tarmac-geo'
 import { SourcesUnfallatlas } from './unfallatlas'
 import { roundByZoom, roundNumber } from './utils'
 
@@ -59,12 +60,14 @@ export const Map: React.FC = () => {
   }
   const handleLoad = (event: MapboxEvent) => {
     // Just for debugging
-    const allLayer = event.target.getStyle().layers
+    const style = event.target.getStyle()
+    const allLayer = style.layers
     // @ts-ignore
     const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
     // @ts-ignore
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
-    console.log('onLoad', { event, ourLayer, basemapLayer })
+    const sources = style.sources
+    console.log('onLoad', { event, ourLayer, basemapLayer, sources })
 
     // Initial values from geschichte
     // TODO – This is not ideal. We start at the default location an fly to the URL location.
@@ -112,6 +115,8 @@ export const Map: React.FC = () => {
       <SourcesBoundaries />
       <SourcesUnfallatlas />
       <SourcesLayerRasterBackgrounds />
+      <SourcesTarmacGeoHighways />
+      <SourcesTarmacGeoPois />
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}

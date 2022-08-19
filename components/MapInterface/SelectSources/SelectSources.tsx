@@ -39,7 +39,7 @@ export const SelectSources: React.FC = () => {
         <legend className="sr-only">Datensätze</legend>
         <div className="space-y-2.5">
           {sourceIds.map((key) => {
-            const { displayName } = sourcesList[key]
+            const { displayName, desc } = sourcesList[key]
 
             // TODO – This feels hacky. Research solution.
             const keyThatRerendersOnceGeschichteIsReady = `${selectedSources?.join(
@@ -51,6 +51,7 @@ export const SelectSources: React.FC = () => {
                 key={keyThatRerendersOnceGeschichteIsReady}
                 id={key}
                 label={displayName}
+                desc={desc}
                 active={!!selectedSources?.includes(key)}
               />
             )

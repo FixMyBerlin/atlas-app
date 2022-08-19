@@ -6,6 +6,7 @@ export const SelectEntryRadibutton: React.FC<EntryProps> = ({
   scope,
   id,
   label,
+  desc: _desc,
   active,
   disabled,
 }) => {
@@ -18,7 +19,7 @@ export const SelectEntryRadibutton: React.FC<EntryProps> = ({
         name={scope}
         type="radio"
         className={classNames(
-          'h-4 w-4 rounded-full border-gray-300',
+          'h-4 w-4 rounded-full border-gray-300 cursor-pointer',
           { 'text-indigo-600 focus:ring-indigo-500': !disabled },
           { 'text-gray-600': disabled }
         )}
@@ -27,7 +28,7 @@ export const SelectEntryRadibutton: React.FC<EntryProps> = ({
       />
       <label
         htmlFor={key}
-        className="ml-3 block text-sm font-medium leading-4 text-gray-700"
+        className="ml-3 block text-sm font-medium leading-4 text-gray-700 cursor-pointer"
       >
         {label}
       </label>
