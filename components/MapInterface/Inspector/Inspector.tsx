@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import React from 'react'
 import { useStore } from 'zustand'
 import { useStoreMap } from '../store/useStoreMap'
@@ -37,25 +38,45 @@ export const Inspector: React.FC = () => {
         if (!properties) return null
 
         const sortedPropertyKeys = Object.keys(properties).sort()
+        const todoKeys = sortedPropertyKeys.filter((k) =>
+          k.toLocaleLowerCase().split(':').includes('todo')
+        )
+
         return (
           <table
             key={`${layerId}-${properties.id}-${properties.way_id}`}
             className="prose-sm mb-5 w-full"
           >
+            <caption className="" style={{ captionSide: 'top' }}>
+              <span className="font-light text-gray-400 float-left py-1 px-0.5">
+                {layerId}
+              </span>
+              {!!todoKeys.length && (
+                <span className="rounded px-0.5 mx-0.5 bg-orange-200 float-right">
+                  {' '}
+                  {todoKeys.length} TODO
+                </span>
+              )}
+            </caption>
             <thead>
               <tr className="bg-gray-100">
                 <th className="py-0.5 pl-0.5 text-left">key</th>
-                <th className="flex justify-between py-0.5 pl-1 text-left">
-                  <span>value</span>
-                  <span className="font-light text-gray-400">{layerId}</span>
-                </th>
+                <th className="py-0.5 pl-1 text-left">value</th>
               </tr>
             </thead>
             <tbody>
               {sortedPropertyKeys.map((key) => {
                 const value = properties[key]
                 return (
-                  <tr key={key} className="border-b border-gray-200">
+                  <tr
+                    key={key}
+                    className={classNames(
+                      'border-b border-gray-200 leading-snug',
+                      {
+                        'bg-orange-100': todoKeys.includes(key),
+                      }
+                    )}
+                  >
                     <td className="w-1/2 break-all p-0">
                       <code>{key}</code>
                     </td>
