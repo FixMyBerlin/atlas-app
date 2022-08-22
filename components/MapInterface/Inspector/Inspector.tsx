@@ -25,6 +25,21 @@ export const Inspector: React.FC = () => {
     )
   }
 
+  const addLink = (maybeLink: string, label: React.ReactNode | string) => {
+    if (typeof maybeLink !== 'string') return label
+    return maybeLink.startsWith('http') ? (
+      <a
+        href={maybeLink}
+        target="_blank"
+        className="underline hover:text-blue-500"
+        rel="noreferrer"
+      >
+        {label}
+      </a>
+    ) : (
+      label
+    )
+  }
   return (
     <section>
       <h2 className="text-base font-medium text-gray-900">
