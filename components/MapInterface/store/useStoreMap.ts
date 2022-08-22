@@ -68,6 +68,7 @@ export const useStoreMap = create<StoreMap>((set, get) => ({
     )
     const { calculatorFeatures } = get()
     // Make array unique `Array.from(new Set[/* non-unique array */]))` https://stackoverflow.com/a/9229821/729221
+    // TODO use uniqueArray
     set({
       calculatorFeatures: Array.from(
         new Set([...featuresWithCapacity, ...calculatorFeatures])
