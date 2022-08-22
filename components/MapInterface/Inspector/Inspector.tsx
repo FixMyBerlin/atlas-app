@@ -11,9 +11,10 @@ export const Inspector: React.FC = () => {
   if (!uniqInspectorFeatures) return null
 
   const osmLink = (id: string) => {
+    const pathWithId = id.includes('/') ? id : `way/${id}`
     return (
       <a
-        href={`https://www.openstreetmap.org/way/${id}`}
+        href={`https://www.openstreetmap.org/${pathWithId}`}
         target="_blank"
         className="underline hover:text-blue-500"
         rel="noreferrer"
@@ -59,8 +60,9 @@ export const Inspector: React.FC = () => {
                       <code>{key}</code>
                     </td>
                     <td className="w-1/2 break-all p-0 pl-1">
-                      <code>{value}</code>{' '}
-                      {key === 'way_id' && osmLink(value.split('.')[0])}
+                      {addLink(value, <code>{value}</code>)}{' '}
+                      {['way_id', '@id'].includes(key) &&
+                        osmLink(value.split('.')[0])}
                     </td>
                   </tr>
                 )
