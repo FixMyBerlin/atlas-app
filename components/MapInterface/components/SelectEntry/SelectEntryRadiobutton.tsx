@@ -10,7 +10,7 @@ export const SelectEntryRadibutton: React.FC<EntryProps> = ({
   active,
   disabled,
 }) => {
-  const key = `${scope}-${id}`
+  const key = `${scope}--${id}`
 
   return (
     <div key={key} className="flex items-center">

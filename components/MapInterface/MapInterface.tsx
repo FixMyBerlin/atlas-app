@@ -4,20 +4,22 @@ import { Calculator } from './Calculator'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
 import { SelectBackground } from './SelectBackground'
-import { SelectSources } from './SelectSources'
-import { SelectVis } from './SelectVis'
-import { SelectFilter } from './SelectVis/SelectFilter'
+import { SelectTopics } from './SelectTopics'
+import { SelectStyles } from './SelectStyles'
+import { SelectFilters } from './SelectFilters'
+import { SelectTheme } from './SelectTheme'
 
 export const MapInterface: React.FC = () => {
   return (
     <MapProvider>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row gap-4 relative">
+        <SelectTheme />
         <Map />
         <SelectBackground />
-        <SelectSources />
+        <SelectTopics />
         <div className="space-y-10">
-          <SelectVis />
-          <SelectFilter />
+          <SelectStyles />
+          <SelectFilters />
         </div>
         <Calculator />
         <Inspector />

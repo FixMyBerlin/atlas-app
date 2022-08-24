@@ -1,26 +1,24 @@
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
-import { SourcesListKeys } from '../Map'
-import { SourcesRasterKey } from '../Map/backgrounds'
-import { VisualisationsListKeys } from '../Map/parkingLanes'
-import { FilterUnfallatlassYearKeys } from '../Map/unfallatlas/filterUnfallatlas'
+import { MapDataConfigTopic } from '../Map/mapData'
 
-export type StoreMap = StoreSelectedVis &
-  StoreSelectedFilters &
+// INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
+
+export type StoreMap = StoreSelectedFilters &
+  StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
 
-// TODO – Muss abstrahiert werden; funktioniert jetzt nur für ParkingLanes
-export type StoreSelectedVis = {
-  selectedVis: null | VisualisationsListKeys
-  selectVis: (activeVis: null | VisualisationsListKeys) => void
-}
-
 // TODO – Muss abstrahiert werden; funktioniert jetzt nur für den einen Jahres-Filter
 export type StoreSelectedFilters = {
-  selectedFilters: null | FilterUnfallatlassYearKeys[]
-  addFilter: (filter: FilterUnfallatlassYearKeys) => void
-  removeFilter: (filter: FilterUnfallatlassYearKeys) => void
+  selectedFilters: null | string[] // TODO FilterUnfallatlassYearKeys[]
+  addFilter: (filter: string /* TODO FilterUnfallatlassYearKeys*/) => void
+  removeFilter: (filter: string /* TODO FilterUnfallatlassYearKeys*/) => void
+}
+type StoreInteractiveLayer = {
+  interactiveLayerIds: string[] | []
+  addInteractiveLayerIds: (layerIdsToAdd: string[]) => void
+  removeInteractiveLayerIds: (layerIdsToRemove: string[]) => void
 }
 
 type StoreFeaturesInspector = {
@@ -38,9 +36,6 @@ type StoreFeaturesCalculator = {
 }
 
 export const useStoreMap = create<StoreMap>((set, get) => ({
-  selectedVis: 'default',
-  selectVis: (selectedVis) => set({ selectedVis }),
-
   selectedFilters: ['2017', '2018', '2019'],
   addFilter: (filterToAdd) => {
     const { selectedFilters } = get()
@@ -55,6 +50,25 @@ export const useStoreMap = create<StoreMap>((set, get) => ({
     set({
       selectedFilters:
         selectedFilters?.filter((e) => e !== filterToRemove) || null,
+    })
+  },
+
+  interactiveLayerIds: [],
+  addInteractiveLayerIds: (layerIdsToAdd) => {
+    const { interactiveLayerIds } = get()
+    // TODO use uniqueArray
+    set({
+      interactiveLayerIds: Array.from(
+        new Set([...layerIdsToAdd, ...interactiveLayerIds])
+      ),
+    })
+  },
+  removeInteractiveLayerIds: (layerIdsToRemove) => {
+    const { interactiveLayerIds } = get()
+    set({
+      interactiveLayerIds: interactiveLayerIds.filter(
+        (id) => !layerIdsToRemove.includes(id)
+      ),
     })
   },
 

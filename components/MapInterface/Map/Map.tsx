@@ -9,33 +9,33 @@ import {
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { useStore } from 'zustand'
+import { StoreDebugBox, useStoreMap } from '../store'
 import {
   geschichteDefaultValues,
   GeschichteStore,
   useQuery,
 } from '../store/geschichte'
-import { useStoreMap } from '../store/useStoreMap'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
-import { SourcesBoundaries } from './boundaries'
-import { SourcesParkingLanes } from './parkingLanes'
-import { SourcesTarmacGeoHighways, SourcesTarmacGeoPois } from './tarmac-geo'
-import { SourcesUnfallatlas } from './unfallatlas'
+import { SourceAndLayers } from './mapData/SourceAndLayers'
+
 import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
 export const Map: React.FC = () => {
-  const [interactiveLayerIds, setInteractiveLayerIds] = useState<string[]>([])
+  const [cursorStyle, setCursorStyle] = useState('grab')
 
   const { values, pushState } = useQuery()
 
-  const [cursorStyle, setCursorStyle] = useState('grab')
+  const zustandValues = useStore(useStoreMap)
   const {
     setInspector,
     addToCalculator,
     removeFromCalculator,
     calculatorFeatures,
-  } = useStore(useStoreMap)
+    interactiveLayerIds,
+    addInteractiveLayerIds,
+  } = zustandValues
 
   const handleMouseEnter = (event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -46,7 +46,6 @@ export const Map: React.FC = () => {
     setCursorStyle('grab')
   }
   const handleClick = (event: MapLayerMouseEvent) => {
-    const features = event.features
     if (!event.features) return
 
     const alreadySelectedIds = calculatorFeatures.map((f) => f?.properties?.id)
@@ -68,14 +67,8 @@ export const Map: React.FC = () => {
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     const sources = style.sources
 
-    setInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
-    console.log('onLoad', {
-      event,
-      ourLayer,
-      basemapLayer,
-      sources,
-      interactiveLayerIds,
-    })
+    addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
+    console.log('onLoad', { event, ourLayer, basemapLayer, sources })
 
     // Initial values from geschichte
     // TODO – This is not ideal. We start at the default location an fly to the URL location.
@@ -120,19 +113,13 @@ export const Map: React.FC = () => {
       onClick={handleClick}
       onLoad={handleLoad}
     >
-      <SourcesParkingLanes />
-      <SourcesBoundaries />
-      <SourcesUnfallatlas />
+      <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
-      <SourcesTarmacGeoHighways />
-      <SourcesTarmacGeoPois />
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
-      {/* Gebugging Geschichte */}
-      <div className="z-50 absolute top-5 left-5 text-[10px] font-mono bg-pink-300 rounded px-3">
-        {JSON.stringify(values)}
-      </div>
+
+      <StoreDebugBox geschichteValues={values} zustandValues={zustandValues} />
     </MapGl>
   )
 }

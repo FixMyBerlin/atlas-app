@@ -1,5 +1,19 @@
 import { factoryParameters, pm, serializers } from 'geschichte'
-import { SelectedSources } from './handleAddRemove'
+import {
+  MapDataConfigTopicIds,
+  MapDataConfigTopicStyleFilterIds,
+  MapDataConfigTopicStyleIds,
+} from '../Map/mapData'
+import { MapDataConfigTopic } from '../Map/mapData/types'
+
+// These Types holds a combination of all Topic>Styles, even those that are not actually there.
+// In other words: The Style part doe not know about the hierarchy of the Topic part.
+export type TopicStyleKey =
+  `${MapDataConfigTopicIds}-${MapDataConfigTopicStyleIds}`
+export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<
+  MapDataConfigTopicStyleFilterIds,
+  ''
+>}`
 
 export type GeschichteStore = {
   map: {
@@ -7,8 +21,11 @@ export type GeschichteStore = {
     lng: number
     zoom: number
   }
-  currentBackground: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
-  selectedSources: SelectedSources
+  selectedBackgroundId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
+  selectedThemeId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
+  selectedTopicIds: MapDataConfigTopicIds[]
+  selectedStyleKeys: TopicStyleKey[]
+  selectedStylesFilterKeys: TopicStyleFilterKey[]
 }
 
 // third param: (value?: V, initialValue?: V) => boolean  /** define an optional skip function which will determine if the parameter will be included in the url or not */
@@ -18,8 +35,11 @@ const geschichteConfig = {
     lng: pm('lng', serializers.float, () => false),
     zoom: pm('z', serializers.float, () => false),
   },
-  currentBackground: pm('bg', serializers.string, () => false),
-  selectedSources: pm('layers', serializers.arrayString, () => false),
+  selectedBackgroundId: pm('bg', serializers.string, () => false),
+  selectedThemeId: pm('theme', serializers.string, () => false),
+  selectedTopicIds: pm('topics', serializers.arrayString, () => false),
+  selectedStyleKeys: pm('styles', serializers.arrayString),
+  selectedStylesFilterKeys: pm('filters', serializers.arrayString),
 }
 
 // TODO – wenn Default-Value, dann verschwinden die Values aus der URL
@@ -32,8 +52,11 @@ export const geschichteDefaultValues: GeschichteStore = {
     lng: 13.4381,
     zoom: 16,
   },
-  currentBackground: 'default',
-  selectedSources: ['parkingLanes', 'boundaries'],
+  selectedBackgroundId: 'default',
+  selectedThemeId: 'parking',
+  selectedTopicIds: ['parking', 'boundaries'],
+  selectedStyleKeys: [],
+  selectedStylesFilterKeys: [],
 }
 
 export const { useQuery } = factoryParameters(

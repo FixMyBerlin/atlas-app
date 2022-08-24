@@ -7,13 +7,13 @@ import {
   SourcesRasterKey,
 } from '../Map/backgrounds/sourcesRaster.const'
 import { SelectEntryRadibutton } from '../components/SelectEntry/SelectEntryRadiobutton'
-import { cleanupTargetId } from '../Map/utils'
+import { cleanupTargetIdFromEvent } from '../Map/utils'
 import { useQuery } from '../store/geschichte'
 
 export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
   const {
-    values: { currentBackground },
+    values: { selectedBackgroundId },
     pushState,
   } = useQuery()
   const radioButtonScope = 'background'
@@ -21,28 +21,14 @@ export const SelectBackground: React.FC = () => {
   if (!mainMap) return null
 
   const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    const sourceId = cleanupTargetId(
+    const sourceId = cleanupTargetIdFromEvent(
       event,
       radioButtonScope
     ) as SourcesRasterKey
-    pushState((state) => (state.currentBackground = sourceId))
+    pushState((state) => (state.selectedBackgroundId = sourceId))
   }
 
   const sourceIds = Object.keys(sourcesRaster) as SourcesRasterKey[]
-  // NOTE: Mega weird. Crasht die Karte aus unerfindlichen Gründen. Erstmal weg gelassen, da theoretisch der Check nicht nötig sein müsste, weil eigentlich immer alles schon ein aktiver Layer sein müsste zu dieser Zeit.
-  //   .filter(
-  //   (sourceId) => {
-  //     const layerId = layerIdFromSourceId(sourceId)
-  //     console.log({
-  //       sourceId,
-  //       layerId,
-  //       mainMap,
-  //       true: mainMap.getLayer(layerId),
-  //       all: mainMap.getStyle().layers,
-  //     })
-  //     return mainMap.getLayer(layerId)
-  //   }
-  // )
 
   return (
     <form onChange={onChange}>
@@ -52,24 +38,27 @@ export const SelectBackground: React.FC = () => {
         <div className="space-y-2.5">
           <SelectEntryRadibutton
             scope={radioButtonScope}
-            key={`${currentBackground}-default`}
+            key={`${selectedBackgroundId}-default`}
             id="default"
             label="Standard"
-            active={!!currentBackground && currentBackground === 'default'}
+            active={
+              !!selectedBackgroundId && selectedBackgroundId === 'default'
+            }
           />
           {sourceIds.map((key) => {
-            // @ts-ignore
-            const { displayName } = sourcesRaster[key]
+            const { name } = sourcesRaster[key]
 
             // TODO – This feels hacky. Research solution.
-            const keyThatRerendersOnceGeschichteIsReady = `${currentBackground}-${key}`
+            const keyThatRerendersOnceGeschichteIsReady = `${selectedBackgroundId}-${key}`
+            const active =
+              !!selectedBackgroundId && key === selectedBackgroundId
             return (
               <SelectEntryRadibutton
                 scope={radioButtonScope}
                 key={keyThatRerendersOnceGeschichteIsReady}
                 id={key}
-                label={displayName}
-                active={!!currentBackground && key === currentBackground}
+                label={name}
+                active={active}
               />
             )
           })}
