@@ -25,7 +25,7 @@ export const LayerFromStyle: React.FC<Props> = ({
   return (
     <>
       {relevantLayers.map((layer) => {
-        const { id, type, layout, filter, paint } = layer
+        const { id, type, layout, filter, paint, minzoom } = layer
         return (
           <Layer
             key={scopedId(group, id)}
@@ -33,6 +33,7 @@ export const LayerFromStyle: React.FC<Props> = ({
             type={type as any}
             source={source}
             source-layer={layer['source-layer']}
+            minzoom={minzoom}
             layout={{
               visibility,
               ...layout,
