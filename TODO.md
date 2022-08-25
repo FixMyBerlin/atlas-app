@@ -1,4 +1,14 @@
-# Next
+# Hierarchy TODO
+
+- map
+  - background: maptiler, raster
+  - sources: parking, tarmac-pois, tarmac-highways, unfallatlas, …
+    - layergroups: tarmac-poi--barriers, tarmac-poi--shops <-- TODO NAMING
+      - visualisation: default, missing, debug, …
+        - layer: line, label
+  - data
+
+# Next.js
 
 - Matomo
   Siehe https://www.npmjs.com/package/@socialgouv/matomo-next

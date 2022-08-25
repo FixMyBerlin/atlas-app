@@ -3,6 +3,7 @@ export type EntryProps = {
   scope: string
   id: string
   label: string
+  desc?: string
   active: boolean
   disabled?: boolean
 }
