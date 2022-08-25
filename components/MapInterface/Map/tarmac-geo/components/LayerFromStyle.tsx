@@ -37,7 +37,7 @@ export const LayerFromStyle: React.FC<Props> = ({
               visibility,
               ...layout,
             }}
-            filter={filter || ['in', 'name', '']}
+            filter={filter || ['all']}
             paint={paint || {}}
           />
         )
