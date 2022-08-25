@@ -25,7 +25,7 @@ import { roundByZoom, roundNumber } from './utils'
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
 export const Map: React.FC = () => {
-  const interactiveLayerIds = ['vts_pl', 'vts_pl_no', 'vts_pl_all_other']
+  const [interactiveLayerIds, setInteractiveLayerIds] = useState<string[]>([])
 
   const { values, pushState } = useQuery()
 
@@ -67,7 +67,15 @@ export const Map: React.FC = () => {
     // @ts-ignore
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     const sources = style.sources
-    console.log('onLoad', { event, ourLayer, basemapLayer, sources })
+
+    setInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
+    console.log('onLoad', {
+      event,
+      ourLayer,
+      basemapLayer,
+      sources,
+      interactiveLayerIds,
+    })
 
     // Initial values from geschichte
     // TODO – This is not ideal. We start at the default location an fly to the URL location.
@@ -91,6 +99,7 @@ export const Map: React.FC = () => {
   return (
     <MapGl
       id="mainMap"
+      key={`mainMap-${interactiveLayerIds.join('')}`}
       initialViewState={{
         longitude: geschichteDefaultValues.map.lng,
         latitude: geschichteDefaultValues.map.lat,
