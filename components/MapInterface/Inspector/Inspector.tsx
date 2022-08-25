@@ -8,7 +8,19 @@ export const Inspector: React.FC = () => {
   // For some reason from time to time we get duplicated entires wich cause a `key` warning
   if (!inspectorFeatures) return null
 
-  const uniqInspectorFeatures = Array.from(new Set([...inspectorFeatures]))
+  const generateKey = (layerId: any, propertyId: any, wayId: any) =>
+    `${layerId}-${propertyId}-${wayId}`
+  const tempInspectorFeatureKeysForFilter = inspectorFeatures.map((f) =>
+    generateKey(f.layer.id, f?.properties?.id, f?.properties?.way_id)
+  )
+  const uniqInspectorFeatures = inspectorFeatures.filter((f) => {
+    const currentKey = generateKey(
+      f.layer.id,
+      f?.properties?.id,
+      f?.properties?.way_id
+    )
+    return tempInspectorFeatureKeysForFilter.includes(currentKey)
+  })
   if (!uniqInspectorFeatures) return null
 
   const osmLink = (id: string) => {
@@ -59,7 +71,7 @@ export const Inspector: React.FC = () => {
 
         return (
           <table
-            key={`${layerId}-${properties.id}-${properties.way_id}`}
+            key={generateKey(layerId, properties.id, properties.way_id)}
             className="prose-sm mb-5 w-full"
           >
             <caption className="" style={{ captionSide: 'top' }}>
