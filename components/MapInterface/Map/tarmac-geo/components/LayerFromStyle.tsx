@@ -33,7 +33,8 @@ export const LayerFromStyle: React.FC<Props> = ({
             type={type as any}
             source={source}
             source-layer={layer['source-layer']}
-            minzoom={minzoom}
+            {...(!!minzoom && { minzoom })}
+            // minzoom={minzoom || undefined} // TODO error
             layout={{
               visibility,
               ...layout,
