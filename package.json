@@ -17,6 +17,8 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "^2.0.8",
     "classnames": "^2.3.1",
     "geschichte": "^10.0.2",
     "maplibre-gl": "^2.3.0",

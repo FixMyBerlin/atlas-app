@@ -1,5 +1,6 @@
 import React from 'react'
 import { Footer } from './Footer'
+import { Header } from './Header'
 
 type Props = {
   children?: React.ReactNode
@@ -9,8 +10,9 @@ type Props = {
 export const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div className="relative flex h-full flex-col text-xl">
+      <Header />
       <main>{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
