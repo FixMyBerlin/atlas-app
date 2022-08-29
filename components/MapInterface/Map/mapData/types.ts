@@ -11,6 +11,7 @@ export type MapDataConfigSource = {
   id: MapDataConfigSourcesIds
   /** @desc URL of the vector tiles */
   tiles: string
+  attributionHtml: string // TODO anzeigen in der Karte
 }
 
 /** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
