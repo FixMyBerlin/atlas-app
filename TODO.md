@@ -1,31 +1,12 @@
 # Code
 
-- 'mapbox.TYPE' ersetzten durch 'maplibre.TYPE'? Und die Types aus der package-json (oder wo kommen sie her) löschen
+1. Re add tarmac data
+1. Fix linter, ts-check
+1. Fix filter (default on)
+1. Rework logic: Ich habe die mapDatConfig.const, aber diese verwende ich eigentlich nie (direkt). Stattdessen sollte ich eine dynamisch generierte und mit useMemo persistierte version, die optmiert ist um leichter gefilter zu werden. Darin hat dann jeder layer die IDs des parentLayers, also 'topicId', 'styleId' und immer auch einen 'key' der der volle Key ist.
 
-# Hierarchy TODO
-
-- map
-
-  - background: maptiler, raster
-  - provider: lars(parkraum), tarmac/our stuff
-    desc: the doamin of the data (alt name: 'domain')
-
-    - source: parking, tarmac-pois, tarmac-highways, unfallatlas, …
-      desc: the vector tile URL of the raw data; name is fixed by library
-
-      - topic: tarmac-poi--barriers, tarmac-poi--shops
-        desc: thematic "filter" of the (raw vector tile) data
-
-        - style: default, missing, debug, …
-          desc: different views of the same data; can contain static filter ("only lines with todos")
-
-          - layer: line, label, area, heatmap
-            desc: name fixed by library
-
-          - filter: by year
-            desc: interactive filter that can be activated to change the data of a style
-
-  - data
+1. interactive layer ids dynamisch setzen
+   das müsste den double filter fehlerbeheben, der kommt, wenn man in http://127.0.0.1:3000/?bg=default&topics=parking&styles=%23_parking-presence&filters=accidents-default-years-2019_accidents-default-years-2018 etwas anklickt, weil der presence layer über (unter?) dem default liegt und beide gequeried werden
 
 # Next.js
 
