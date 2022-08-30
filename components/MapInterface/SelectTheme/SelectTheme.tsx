@@ -58,7 +58,7 @@ export const SelectTheme = () => {
                   tabIdx === 0 ? 'rounded-l-lg' : '',
                   tabIdx === themeIds.length - 1 ? 'rounded-r-lg' : '',
                   'group relative min-w-0 flex-0 overflow-hidden bg-white py-2 px-3 text-sm font-medium text-center whitespace-nowrap',
-                  active ? 'bg-yellow-400' : 'hover:bg-gray-50 focus:z-10'
+                  active ? 'bg-yellow-400' : 'hover:bg-yellow-50 focus:z-10'
                 )}
                 disabled={active}
                 aria-current={active ? 'page' : undefined}

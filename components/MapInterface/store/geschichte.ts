@@ -1,5 +1,6 @@
 import { factoryParameters, pm, serializers } from 'geschichte'
 import {
+  MapDataConfigSourcesRasterIds,
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleFilterIds,
   MapDataConfigTopicStyleIds,
@@ -21,7 +22,7 @@ export type GeschichteStore = {
     lng: number
     zoom: number
   }
-  selectedBackgroundId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
+  selectedBackgroundId: MapDataConfigSourcesRasterIds
   selectedThemeId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
   selectedTopicIds: MapDataConfigTopicIds[]
   selectedStyleKeys: TopicStyleKey[]

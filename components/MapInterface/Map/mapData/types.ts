@@ -1,17 +1,29 @@
+import mapboxgl from 'mapbox-gl'
 import {
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleFilterIds,
   MapDataConfigTopicStyleIds,
 } from './mapDataConfig.const'
-import { MapDataConfigSourcesIds } from './sourcesMapDataConfig'
+import {
+  MapDataConfigSourcesIds,
+  MapDataConfigSourcesRasterIds,
+} from './sourcesMapDataConfig'
 import { MapDataConfigThemeIds } from './themesMapDataConfig'
 
 /** @desc: The raw vector tile data; no UI representation; name fixed by library */
-export type MapDataConfigSource = {
-  id: MapDataConfigSourcesIds
+export type MapDataConfigSource<TIds> = {
+  id: TIds
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
+} & MapDataConfigRasterSources
+
+type MapDataConfigRasterSources = {
+  name?: string
+  type?: mapboxgl.Source['type']
+  minzoom?: mapboxgl.RasterSource['minzoom']
+  maxzoom?: mapboxgl.RasterSource['maxzoom']
+  tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
 /** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
@@ -60,7 +72,8 @@ export type MapDataConfigStyleInteractiveFilter = {
 }
 
 export type MapDataConfig = {
-  sources: MapDataConfigSource[]
+  sources: MapDataConfigSource<MapDataConfigSourcesIds>[]
+  backgrounds: MapDataConfigSource<MapDataConfigSourcesRasterIds>[]
   themes: MapDataConfigTheme[]
   topics: MapDataConfigTopic[]
 }
