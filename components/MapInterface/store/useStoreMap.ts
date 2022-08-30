@@ -4,17 +4,10 @@ import { MapDataConfigTopic } from '../Map/mapData'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-export type StoreMap = StoreSelectedFilters &
-  StoreInteractiveLayer &
+export type StoreMap = StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
 
-// TODO – Muss abstrahiert werden; funktioniert jetzt nur für den einen Jahres-Filter
-export type StoreSelectedFilters = {
-  selectedFilters: null | string[] // TODO FilterUnfallatlassYearKeys[]
-  addFilter: (filter: string /* TODO FilterUnfallatlassYearKeys*/) => void
-  removeFilter: (filter: string /* TODO FilterUnfallatlassYearKeys*/) => void
-}
 type StoreInteractiveLayer = {
   interactiveLayerIds: string[] | []
   addInteractiveLayerIds: (layerIdsToAdd: string[]) => void
@@ -36,23 +29,6 @@ type StoreFeaturesCalculator = {
 }
 
 export const useStoreMap = create<StoreMap>((set, get) => ({
-  selectedFilters: ['2017', '2018', '2019'],
-  addFilter: (filterToAdd) => {
-    const { selectedFilters } = get()
-    set({
-      selectedFilters: selectedFilters
-        ? [...selectedFilters, filterToAdd]
-        : [filterToAdd],
-    })
-  },
-  removeFilter: (filterToRemove) => {
-    const { selectedFilters } = get()
-    set({
-      selectedFilters:
-        selectedFilters?.filter((e) => e !== filterToRemove) || null,
-    })
-  },
-
   interactiveLayerIds: [],
   addInteractiveLayerIds: (layerIdsToAdd) => {
     const { interactiveLayerIds } = get()
