@@ -98,7 +98,7 @@ export const Map: React.FC = () => {
         latitude: geschichteDefaultValues.map.lat,
         zoom: geschichteDefaultValues.map.zoom,
       }}
-      // hash
+      // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/basic/style.json?key=ECOoUBmpqklzSCASXxcu"
