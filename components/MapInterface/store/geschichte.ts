@@ -10,10 +10,10 @@ import { MapDataConfigTopic } from '../Map/mapData/types'
 // In other words: The Style part doe not know about the hierarchy of the Topic part.
 export type TopicStyleKey =
   `${MapDataConfigTopicIds}-${MapDataConfigTopicStyleIds}`
-export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<
+export type TopicStyleFilterOptionKey = `${TopicStyleKey}-${Exclude<
   MapDataConfigTopicStyleFilterIds,
   ''
->}`
+>}-${string}`
 
 export type GeschichteStore = {
   map: {
@@ -25,7 +25,7 @@ export type GeschichteStore = {
   selectedThemeId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
   selectedTopicIds: MapDataConfigTopicIds[]
   selectedStyleKeys: TopicStyleKey[]
-  selectedStylesFilterKeys: TopicStyleFilterKey[]
+  selectedStylesFilterOptionKeys: TopicStyleFilterOptionKey[]
 }
 
 // third param: (value?: V, initialValue?: V) => boolean  /** define an optional skip function which will determine if the parameter will be included in the url or not */
@@ -39,7 +39,7 @@ const geschichteConfig = {
   selectedThemeId: pm('theme', serializers.string, () => false),
   selectedTopicIds: pm('topics', serializers.arrayString, () => false),
   selectedStyleKeys: pm('styles', serializers.arrayString),
-  selectedStylesFilterKeys: pm('filters', serializers.arrayString),
+  selectedStylesFilterOptionKeys: pm('filters', serializers.arrayString),
 }
 
 // TODO – wenn Default-Value, dann verschwinden die Values aus der URL
@@ -56,7 +56,7 @@ export const geschichteDefaultValues: GeschichteStore = {
   selectedThemeId: 'parking',
   selectedTopicIds: ['parking', 'boundaries'],
   selectedStyleKeys: [],
-  selectedStylesFilterKeys: [],
+  selectedStylesFilterOptionKeys: [],
 }
 
 export const { useQuery } = factoryParameters(

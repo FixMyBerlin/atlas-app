@@ -10,23 +10,26 @@ import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
   const {
-    values: { selectedTopicIds, selectedStyleKeys },
+    values: {
+      selectedTopicIds,
+      selectedStyleKeys,
+      selectedStylesFilterOptionKeys,
+    },
   } = useQuery()
-  const { selectedFilters } = useStore(useStoreMap)
 
   const topicIds = mapDataConfig.topics.map((t) => t.id)
 
   return (
     <>
       {topicIds.map((topicId) => {
-        const topicData = mapDataConfig.topics.find((t) => t.id === topicId)
-        const sourceData = mapDataConfig.sources.find(
-          (s) => topicData && s.id === topicData.sourceId
+        const topic = mapDataConfig.topics.find((t) => t.id === topicId)
+        const source = mapDataConfig.sources.find(
+          (s) => topic && s.id === topic.sourceId
         )
 
-        if (!topicData || !sourceData) return null
+        if (!topic || !source) return null
 
-        const sourceId = `${sourceData.id}_tiles`
+        const sourceId = `${source.id}_tiles`
 
         // TODO Inspector + Calculator / InteractiveLayerIDs
         // Ich habe sie auf Ebene Layer gespeichert.
@@ -41,11 +44,11 @@ export const SourceAndLayers: React.FC = () => {
             key={sourceId}
             id={sourceId}
             type="vector"
-            tiles={[sourceData.tiles]}
+            tiles={[source.tiles]}
             minzoom={8}
             maxzoom={22}
           >
-            {topicData.styles.map((style) => {
+            {topic.styles.map((style) => {
               // A style is visible when
               // … the topic is active AND
               // … the style is active OR
@@ -62,7 +65,7 @@ export const SourceAndLayers: React.FC = () => {
               const visibility = layerVisibility(visible)
 
               return style.layers.map((layer) => {
-                const layerId = `${sourceData.id}--${topicData.id}--${style.id}--${layer.id}`
+                const layerId = `${source.id}--${topic.id}--${style.id}--${layer.id}`
                 const layout =
                   layer.layout === undefined
                     ? visibility
@@ -71,7 +74,7 @@ export const SourceAndLayers: React.FC = () => {
                 const filter = specifyFilters(
                   style?.interactiveFilters,
                   layer.filter,
-                  selectedFilters
+                  selectedStylesFilterOptionKeys
                 )
 
                 return (

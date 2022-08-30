@@ -3,19 +3,20 @@ import {
   MapDataConfigTopicStyleFilterIds,
   MapDataConfigTopicStyleIds,
 } from '../Map/mapData'
-import { TopicStyleFilterKey, TopicStyleKey } from '../store'
+import { TopicStyleFilterOptionKey, TopicStyleKey } from '../store'
 
 export const createTopicStyleKey = (
   topicId: MapDataConfigTopicIds,
   styleId: MapDataConfigTopicStyleIds
 ): TopicStyleKey => `${topicId}-${styleId}`
 
-export const createTopicStyleFilterKey = (
+export const createTopicStyleFilterOptionKey = (
   topicId: MapDataConfigTopicIds,
   styleId: MapDataConfigTopicStyleIds,
-  filterId: MapDataConfigTopicStyleFilterIds
-): TopicStyleFilterKey | undefined =>
-  filterId === '' ? undefined : `${topicId}-${styleId}-${filterId}`
+  filterId: MapDataConfigTopicStyleFilterIds,
+  optionId: string
+): TopicStyleFilterOptionKey | undefined =>
+  filterId === '' ? undefined : `${topicId}-${styleId}-${filterId}-${optionId}`
 
 export const splitTopicStyleKey = (
   key: TopicStyleKey
@@ -27,17 +28,19 @@ export const splitTopicStyleKey = (
   ]
 }
 
-export const splitTopicStyleFilterKey = (
-  key: TopicStyleFilterKey
+export const splitTopicStyleFilterOptionKey = (
+  key: TopicStyleFilterOptionKey
 ): [
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
-  MapDataConfigTopicStyleFilterIds
+  MapDataConfigTopicStyleFilterIds,
+  string
 ] => {
-  const [topicId, styleId, filterId] = key.split('-')
+  const [topicId, styleId, filterId, optionId] = key.split('-')
   return [
     topicId as MapDataConfigTopicIds,
     styleId as MapDataConfigTopicStyleIds,
     filterId as MapDataConfigTopicStyleFilterIds,
+    optionId as string,
   ]
 }

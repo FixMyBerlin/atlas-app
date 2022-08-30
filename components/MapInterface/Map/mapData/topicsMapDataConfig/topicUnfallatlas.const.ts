@@ -162,9 +162,9 @@ export const topicUnfallatlas: Topic = {
           name: 'Jahre',
           filterConfig: { lookupKey: 'UJAHR' },
           options: [
-            { id: '2017', name: '2017', defaultVisible: true },
-            { id: '2018', name: '2018', defaultVisible: true },
-            { id: '2019', name: '2019', defaultVisible: true },
+            { id: '2017', name: '2017' },
+            { id: '2018', name: '2018' },
+            { id: '2019', name: '2019' },
           ],
         },
       ],

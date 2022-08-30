@@ -32,18 +32,24 @@ export const SelectStyles: React.FC = () => {
     )
     if (previousSelectedStyle) {
       pushState((state) => {
+        // (A) Update style-State
         state.selectedStyleKeys = replaceGeschichte<TopicStyleKey>(
           state.selectedStyleKeys,
           styleId,
           previousSelectedStyle
         )
+        // (B) Update filter-State
+        // TODO
       })
     } else {
       pushState((state) => {
+        // (A) Update style-State
         state.selectedStyleKeys = addGeschichte<TopicStyleKey>(
           state.selectedStyleKeys,
           styleId
         )
+        // (B) Update filter-State
+        // TODO
       })
     }
   }
@@ -58,6 +64,8 @@ export const SelectStyles: React.FC = () => {
     )
   })
 
+  if (!activeTopicsWithMultipeStyles.length) return null
+
   return (
     <section>
       <h2 className="text-base font-medium text-gray-900 mb-4">Kartenstile</h2>
@@ -68,9 +76,9 @@ export const SelectStyles: React.FC = () => {
             className="mb-5"
             onChange={onChange}
           >
-            <h2 className="text-base font-medium text-gray-900 mb-3">
+            <h3 className="text-base font-medium text-gray-900 mb-3">
               Stile für {topic.name}
-            </h2>
+            </h3>
             <fieldset>
               <legend className="sr-only">Stile für {topic.name}</legend>
               <div className="space-y-2.5">

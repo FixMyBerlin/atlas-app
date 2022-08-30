@@ -56,11 +56,11 @@ export type MapDataConfigStyleInteractiveFilter = {
   name: string
   desc?: string
   filterConfig: { lookupKey: string }
-  options: { id: string; name: string; defaultVisible: boolean }[]
+  options: { id: string; name: string }[]
 }
 
 export type MapDataConfig = {
   sources: MapDataConfigSource[]
-  themes: MapDataConfigThemes[]
+  themes: MapDataConfigTheme[]
   topics: MapDataConfigTopic[]
 }
