@@ -99,7 +99,7 @@ export const Map: React.FC = () => {
         zoom: geschichteDefaultValues.map.zoom,
       }}
       // hash
-      style={{ width: '100%', height: 800 }}
+      style={{ width: '100%', height: '100%' }}
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/basic/style.json?key=ECOoUBmpqklzSCASXxcu"
       interactiveLayerIds={interactiveLayerIds}
