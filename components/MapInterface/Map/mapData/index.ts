@@ -1,6 +1,5 @@
 export * from './SourceAndLayers'
 export * from './mapDataConfig.const'
 export * from './sourcesMapDataConfig'
-export * from './tarmac-geo'
 export * from './topicsMapDataConfig'
 export * from './types'

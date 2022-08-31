@@ -62,6 +62,7 @@ export const SelectTheme = () => {
                 )}
                 disabled={active}
                 aria-current={active ? 'page' : undefined}
+                title={theme.desc}
               >
                 <span>{theme.name}</span>
                 <span

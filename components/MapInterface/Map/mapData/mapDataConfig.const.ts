@@ -1,3 +1,4 @@
+import { sourcesBackgroundsRaster } from './sourcesMapDataConfig'
 import { sources } from './sourcesMapDataConfig/sources.const'
 import { themes } from './themesMapDataConfig'
 import {
@@ -9,6 +10,14 @@ import {
   TopicParkingId,
   TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
+  topicTarmacBikelanes,
+  TopicTarmacBikelanesId,
+  TopicTarmacBikelanesStyleFilterIds,
+  TopicTarmacBikelanesStyleIds,
+  topicTarmacHighwayClassification,
+  TopicTarmacHighwayClassificationId,
+  TopicTarmacHighwayClassificationStyleFilterIds,
+  TopicTarmacHighwayClassificationStyleIds,
   topicTarmacSurface,
   TopicTarmacSurfaceId,
   TopicTarmacSurfaceStyleFilterIds,
@@ -25,22 +34,35 @@ export type MapDataConfigTopicIds =
   | TopicParkingId
   | TopicUnfallatlasId
   | TopicTarmacSurfaceId
+  | TopicTarmacBikelanesId
+  | TopicTarmacHighwayClassificationId
 
 export type MapDataConfigTopicStyleIds =
   | TopicBoundariesStyleIds
   | TopicParkingStyleIds
   | TopicUnfallatlasStyleIds
   | TopicTarmacSurfaceStyleIds
+  | TopicTarmacBikelanesStyleIds
+  | TopicTarmacHighwayClassificationStyleIds
 
 export type MapDataConfigTopicStyleFilterIds =
   | TopicBoundariesStyleFilterIds
   | TopicParkingStyleFilterIds
   | TopicUnfallatlasStyleFilterIds
   | TopicTarmacSurfaceStyleFilterIds
+  | TopicTarmacBikelanesStyleFilterIds
+  | TopicTarmacHighwayClassificationStyleFilterIds
 
 export const mapDataConfig: MapDataConfig = {
   sources,
+  backgrounds: sourcesBackgroundsRaster,
   themes,
-  // topics: [topicBoundaries, topicParking, topicUnfallatlas, topicTarmacSurface],
-  topics: [topicBoundaries, topicParking, topicUnfallatlas],
+  topics: [
+    topicBoundaries,
+    topicParking,
+    topicUnfallatlas,
+    topicTarmacSurface,
+    topicTarmacBikelanes,
+    topicTarmacHighwayClassification,
+  ],
 }

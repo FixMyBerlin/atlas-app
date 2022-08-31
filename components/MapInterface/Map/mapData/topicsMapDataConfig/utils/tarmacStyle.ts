@@ -1,3 +1,4 @@
+import { MapDataConfigVisLayer } from '../../types'
 import style from './tarmac-style.const.json'
 
 // Manually created base on the json
@@ -19,4 +20,5 @@ type _OtherSourceStyles =
 
 export type TarmacStyle = typeof style
 
+// TODO types on tarmacStyle; maybe the easiest for good types is to cleanup the source const to only contina the layers
 export const tarmacStyle = style

@@ -18,6 +18,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "exportall.config.folderListener": [
-    "/components/MapInterface/Map/mapData/SourceAndLayers/utils"
+    "/components/MapInterface/Map/mapData/SourceAndLayers/utils",
+    "/components/MapInterface/Map/mapData/topicsMapDataConfig"
   ]
 }
