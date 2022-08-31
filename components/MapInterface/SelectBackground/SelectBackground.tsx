@@ -6,17 +6,20 @@ import {
   MapDataConfigSourcesRasterIds,
   sourcesBackgroundsRaster,
 } from '../Map/mapData'
+import { useStoreMap } from '../store'
 import { useQuery } from '../store/geschichte'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
-  const { mainMap } = useMap()
   const {
     values: { selectedBackgroundId },
     pushState,
   } = useQuery()
 
+  const { mainMap } = useMap()
+  const { calculatorFeatures } = useStoreMap()
   if (!mainMap) return null
+  if (calculatorFeatures.length) return null
 
   const onChange = (value: MapDataConfigSourcesRasterIds) => {
     pushState((state) => (state.selectedBackgroundId = value))
