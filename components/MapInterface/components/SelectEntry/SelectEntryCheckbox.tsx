@@ -10,7 +10,7 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
   active,
   disabled,
 }) => {
-  const key = `${scope}-${id}`
+  const key = `${scope}--${id}`
 
   return (
     <div className="relative flex items-start group">

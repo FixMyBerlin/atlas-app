@@ -3,14 +3,20 @@
 @tailwind utilities;
 
 @layer base {
-  html,
-  body,
-  #__next {
-    @apply h-full;
+  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L11 */
+  html {
+    @apply fixed overflow-hidden h-full;
   }
 
+  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L32 */
   body {
+    @apply fixed overflow-hidden w-full min-h-full flex;
     @apply text-slate-800;
+  }
+
+  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/css/main.css#L14-L19 */
+  #__next {
+    @apply w-full flex-none flex flex-col;
   }
 }
 

@@ -53,7 +53,7 @@ export const Inspector: React.FC = () => {
     )
   }
   return (
-    <section>
+    <section className="absolute z-10 top-5 right-5 bottom-5 bg-yellow-100 rounded p-5 overflow-scroll">
       <h2 className="text-base font-medium text-gray-900">
         Eigenschaften <span>({uniqInspectorFeatures.length})</span>
       </h2>

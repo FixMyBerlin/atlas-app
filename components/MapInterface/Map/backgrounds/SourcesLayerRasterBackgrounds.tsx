@@ -1,45 +1,44 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { useStoreMap } from '../../store'
 import { useQuery } from '../../store/geschichte'
-import { layerIdToPlaceBackgroundsBefore } from '../parkingLanes'
-import { sourcesRaster } from './sourcesRaster.const'
-import { layerIdFromSourceId } from './utils'
+import { sourcesBackgroundsRaster } from '../mapData/sourcesMapDataConfig'
+import { layerVisibility } from '../utils'
+import { beforeId } from './beforeId.const'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
   const {
-    values: { currentBackground },
+    values: { selectedBackgroundId },
   } = useQuery()
 
   return (
     <>
-      {Object.entries(sourcesRaster).map(
-        ([layerName, { tiles, minzoom, maxzoom, attribution }]) => {
+      {sourcesBackgroundsRaster.map(
+        ({ id, tiles, minzoom, maxzoom, attributionHtml }) => {
           // TODO – commented out the two layers that needed those props; had issues with the default props … or something
           // const optSchemeProp = scheme ? { scheme } : {}
           // const optTileSizeProp = tileSize ? { tileSize } : {}
+          const backgroundId = `${id}_tiles`
+
+          const visible = selectedBackgroundId === id
           return (
             <Source
-              id={layerName}
-              key={layerName}
+              id={backgroundId}
+              key={backgroundId}
               type="raster"
-              tiles={tiles}
+              tiles={[tiles]}
               minzoom={minzoom}
               maxzoom={maxzoom}
-              attribution={attribution}
+              attribution={attributionHtml}
               // Only for some
               // {...optSchemeProp}
               // {...optTileSizeProp}
             >
               <Layer
-                id={layerIdFromSourceId(layerName)}
+                id={id}
                 type="raster"
-                source={layerName}
-                layout={{
-                  visibility:
-                    currentBackground === layerName ? 'visible' : 'none',
-                }}
-                beforeId={layerIdToPlaceBackgroundsBefore}
+                source={backgroundId}
+                layout={layerVisibility(visible)}
+                beforeId={beforeId}
               />
             </Source>
           )
