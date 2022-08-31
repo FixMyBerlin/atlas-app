@@ -25,12 +25,12 @@ export const SelectBackground: React.FC = () => {
   return (
     <Listbox
       as="section"
-      className="fixed z-20 bottom-3 left-3 w-60"
+      className="fixed bottom-3 left-5 z-20 w-60"
       value={selectedBackgroundId}
       onChange={onChange}
     >
       <div>
-        <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
           Hintergrundkarten
           <ChevronUpDownIcon
             className="-mr-1 ml-2 h-5 w-5"

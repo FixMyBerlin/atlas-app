@@ -16,8 +16,8 @@ export const MapInterface: React.FC = () => {
         <SelectTheme />
         <Map />
         <SelectBackground />
+        <SelectTopics />
         <div className="absolute bg-white/80 rounded p-3 bottom-3 right-3 max-h-screen flex overflow-y-auto">
-          <SelectTopics />
           <div className="space-y-10">
             <SelectStyles />
             <SelectFilters />

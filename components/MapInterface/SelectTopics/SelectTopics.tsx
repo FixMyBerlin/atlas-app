@@ -64,8 +64,10 @@ export const SelectTopics: React.FC = () => {
   const topicIds = mapDataConfig.topics.map((t) => t.id)
 
   return (
-    <form onChange={onChange}>
-      <h2 className="text-base font-medium text-gray-900">Thema</h2>
+    <form
+      onChange={onChange}
+      className="fixed top-32 left-5 w-56 rounded bg-white/80 px-3 pt-1 pb-3 shadow-md"
+    >
       <fieldset className="mt-4">
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">

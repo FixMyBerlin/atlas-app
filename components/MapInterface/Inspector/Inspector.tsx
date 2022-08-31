@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import React from 'react'
 import { useStore } from 'zustand'
 import { useStoreMap } from '../store/useStoreMap'
+import { CloseButton } from './utils'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useStore(useStoreMap)
@@ -53,10 +54,12 @@ export const Inspector: React.FC = () => {
     )
   }
   return (
-    <section className="absolute z-10 top-5 right-5 bottom-5 bg-yellow-100 rounded p-5 overflow-scroll">
+    <section className="fixed top-32 right-2.5 bottom-5 z-10 min-w-[25rem] max-w-[25rem] overflow-scroll rounded bg-yellow-100 p-5 shadow-md">
       <h2 className="text-base font-medium text-gray-900">
         Eigenschaften <span>({uniqInspectorFeatures.length})</span>
       </h2>
+      <CloseButton onClick={() => setInspector(null)} />
+
       {uniqInspectorFeatures.map((inspectObject) => {
         const {
           layer: { id: layerId },
@@ -75,11 +78,11 @@ export const Inspector: React.FC = () => {
             className="prose-sm mb-5 w-full"
           >
             <caption className="" style={{ captionSide: 'top' }}>
-              <span className="font-light text-gray-400 float-left py-1 px-0.5">
+              <span className="float-left py-1 px-0.5 font-light text-gray-400">
                 {layerId}
               </span>
               {!!todoKeys.length && (
-                <span className="rounded px-0.5 mx-0.5 bg-orange-200 float-right">
+                <span className="float-right mx-0.5 rounded bg-orange-200 px-0.5">
                   {' '}
                   {todoKeys.length} TODO
                 </span>
@@ -119,9 +122,6 @@ export const Inspector: React.FC = () => {
           </table>
         )
       })}
-      <button type="button" onClick={() => setInspector(null)}>
-        &times;
-      </button>
     </section>
   )
 }
