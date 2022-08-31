@@ -1,8 +1,8 @@
 import { createTopicStyleKey } from '@/components/MapInterface/utils'
 import { useStoreMap } from '@/components/MapInterface/store'
 import { useQuery } from '@/components/MapInterface/store/geschichte'
-import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import React, { useState } from 'react'
+import { Layer, Source, useMap } from 'react-map-gl'
 import { useStore } from 'zustand'
 import { layerVisibility } from '../../utils'
 import { mapDataConfig } from '../mapDataConfig.const'
@@ -17,19 +17,19 @@ export const SourceAndLayers: React.FC = () => {
     },
   } = useQuery()
 
-  const topicIds = mapDataConfig.topics.map((t) => t.id)
-
   return (
     <>
-      {topicIds.map((topicId) => {
-        const topic = mapDataConfig.topics.find((t) => t.id === topicId)
+      {mapDataConfig.topics.map((topic) => {
         const source = mapDataConfig.sources.find(
           (s) => topic && s.id === topic.sourceId
         )
 
         if (!topic || !source) return null
 
-        const sourceId = `${source.id}_tiles`
+        // One source can be used by multipe topics, so we need to make the key source-top-specific.
+        // TODO we should try to find a better way for this…
+        //  (and first find out if it's a problem at all)
+        const sourceId = `${source.id}_${topic.id}_tiles`
 
         // TODO Inspector + Calculator / InteractiveLayerIDs
         // Ich habe sie auf Ebene Layer gespeichert.
@@ -55,11 +55,11 @@ export const SourceAndLayers: React.FC = () => {
               // … the style is default (since we do not add topics with just one style to the url/store)
               const visible =
                 !!selectedTopicIds &&
-                selectedTopicIds.includes(topicId) &&
+                selectedTopicIds.includes(topic.id) &&
                 style.id === 'default'
                   ? true
                   : selectedStyleKeys.includes(
-                      createTopicStyleKey(topicId, style.id)
+                      createTopicStyleKey(topic.id, style.id)
                     )
 
               const visibility = layerVisibility(visible)
