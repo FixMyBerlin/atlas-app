@@ -65,8 +65,8 @@ export const Link: React.FC<Props> = ({
   }
 
   return (
-    <NextLink href={to} className={classes} {...props}>
-      <a>{children}</a>
+    <NextLink href={to} {...props}>
+      <a className={classes}>{children}</a>
     </NextLink>
   )
 }
