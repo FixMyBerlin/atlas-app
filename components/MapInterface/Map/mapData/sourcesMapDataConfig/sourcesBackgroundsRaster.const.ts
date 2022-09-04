@@ -11,6 +11,7 @@ export type MapDataConfigSourcesRasterIds =
   | 'areal2020'
   | 'areal2019'
   | 'parkraumkarte_neukoelln'
+  | 'cyclosm'
 
 export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesRasterIds>[] =
   [
@@ -130,6 +131,19 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       maxzoom: 14,
       attributionHtml:
         '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a>, Bordsteinkanten: OpenStreetMap und Geoportal Berlin / ALKIS.',
+    },
+    {
+      id: 'cyclosm',
+      name: 'CyclOSM',
+      type: 'raster',
+      tiles: 'https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+      // 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+      // tileSize: 256, // TODO figure out if we need this
+      minzoom: 10,
+      maxzoom: 14,
+      attributionHtml:
+        '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      legendUrl: 'https://www.cyclosm.org/#map={z}/{x}/{y}/cyclosm',
     },
     // Docs https://docs.mapbox.com/api/maps/static-tiles/
     // Edit Style https://studio.mapbox.com/styles/hejco/ckz8bsqbq000t15nz6ok45bid/edit/#15.61/52.495655/13.417375

@@ -16,6 +16,8 @@ export type MapDataConfigSource<TIds> = {
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
+  /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
+  legendUrl?: string
 } & MapDataConfigRasterSources
 
 type MapDataConfigRasterSources = {

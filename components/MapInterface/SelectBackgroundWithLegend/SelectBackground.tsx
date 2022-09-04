@@ -28,12 +28,12 @@ export const SelectBackground: React.FC = () => {
   return (
     <Listbox
       as="section"
-      className="fixed bottom-3 left-5 z-20 w-60"
+      className=""
       value={selectedBackgroundId}
       onChange={onChange}
     >
       <div>
-        <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
           Hintergrundkarten
           <ChevronUpDownIcon
             className="-mr-1 ml-2 h-5 w-5"
@@ -41,7 +41,6 @@ export const SelectBackground: React.FC = () => {
           />
         </Listbox.Button>
       </div>
-
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -51,18 +50,15 @@ export const SelectBackground: React.FC = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-screen w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-screen w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ListOption
             key={`${selectedBackgroundId}-default`}
             value={'default'}
             name={'Standard'}
           />
-
           {sourcesBackgroundsRaster.map((background) => {
             const { name, id } = background
-
             if (!name || !id) return null
-
             // TODO – This feels hacky. Research solution.
             const keyThatRerendersOnceGeschichteIsReady = `${selectedBackgroundId}-${id}`
             return (
