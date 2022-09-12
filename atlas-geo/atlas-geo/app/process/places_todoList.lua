@@ -9,7 +9,7 @@ require("AddMetadata")
 require("AddUrl")
 
 local table = osm2pgsql.define_table({
-  name = 'places',
+  name = 'places_todoList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -17,10 +17,10 @@ local table = osm2pgsql.define_table({
   }
 })
 
-local function ExitProcessing(object)
-  if not object.tags.place then
-    return true
-  end
+local function ContinueProcess(object)
+  local maybe_continue = false
+  local continue = false
+  object.tags.todos = ""
 
   -- Docs: https://wiki.openstreetmap.org/wiki/Key:place
   local allowed_values = Set({
@@ -31,23 +31,36 @@ local function ExitProcessing(object)
     "village",
     "hamlet"
   })
-  if not allowed_values[object.tags.place] then
-    return true
+  if allowed_values[object.tags.place] then
+    maybe_continue = true
   end
 
-  return false
+  -- Add task to add *population* data.
+  if maybe_continue and (not object.tags.population) then
+    continue = true
+    object.tags.todos = object.tags.todos .. ";TODO add `population`-Tag."
+  end
+
+  -- Add task to add *population:date* data.
+  -- TODO: Ideally, we would look at the data, but we need to parse that first…
+  if maybe_continue and (not object.tags["population:date"]) then
+    continue = true
+    object.tags.todos = object.tags.todos .. ";TODO add `population:date`-Tag."
+  end
+
+  return continue
 end
 
 local function ProcessTags(object)
-  local allowed_tags = Set({ "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
+  local allowed_tags = Set({ "todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
   FilterTags(object.tags, allowed_tags)
-  ToNumber(object.tags, Set({ "population" }))
+  -- ToNumber(object.tags, Set({ "population" }))
   AddMetadata(object)
 end
 
 function osm2pgsql.process_node(object)
-  if ExitProcessing(object) then return end
+  if not ContinueProcess(object) then return end
 
   ProcessTags(object)
   AddUrl("node", object)
@@ -59,7 +72,7 @@ function osm2pgsql.process_node(object)
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) then return end
+  if not ContinueProcess(object) then return end
   if not object.is_closed then return end
 
   ProcessTags(object)
@@ -72,7 +85,7 @@ function osm2pgsql.process_way(object)
 end
 
 function osm2pgsql.process_relation(object)
-  if ExitProcessing(object) then return end
+  if not ContinueProcess(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
   ProcessTags(object)

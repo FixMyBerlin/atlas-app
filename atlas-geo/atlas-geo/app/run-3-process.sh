@@ -24,6 +24,10 @@ echo "🥐 LUA+SQL for Topic: places"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}places.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}places.sql"
 
+echo "🥐 LUA+SQL for Topic: places_todoList"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}places_todoList.lua ${OSM_FILTERED_FILE}
+# psql -q -f "${PROCESS_DIR}places.sql"
+
 echo "🥐 LUA+SQL for Topic: fromTo_education"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_education.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}fromTo_education.sql" # might be needed to handle relation cases
