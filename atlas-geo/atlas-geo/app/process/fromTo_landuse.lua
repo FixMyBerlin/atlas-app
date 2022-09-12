@@ -15,7 +15,6 @@ local table = osm2pgsql.define_table({
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
-    { column = 'update_at', sql_type = 'timestamp' },
   }
 })
 
