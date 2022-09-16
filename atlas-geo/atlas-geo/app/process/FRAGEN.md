@@ -1,3 +1,27 @@
+# Länge Weg
+
+- Länge in das jsonb einfügen
+- Einträge nach Länge filtern; also verschieben in die andere Tabelle mit \_skipNote
+
+## Frage zu Einheit der LUA area/length function
+
+https://github.com/openstreetmap/osm2pgsql/discussions/1756
+
+# Verbindung Weg
+
+Wege finden, die nicht an beiden Enden an einen anderen Weg in der DB grenzen.
+
+# Einschränkungen von Fläche auf Weg
+
+Friedhof => Kein öffentlichen Fußwegenetz
+https://www.openstreetmap.org/way/24276614
+
+# Verschieben Weg
+
+Geometrien anhand der Straßenbreite oder Fallback verschieben
+
+---
+
 # area+relation
 
 - Muss ich das getrennt prozessieren?
