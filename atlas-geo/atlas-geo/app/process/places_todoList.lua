@@ -18,10 +18,6 @@ local table = osm2pgsql.define_table({
 })
 
 local function ContinueProcess(object)
-  local maybe_continue = false
-  local continue = false
-  object.tags.todos = ""
-
   -- Docs: https://wiki.openstreetmap.org/wiki/Key:place
   local allowed_values = Set({
     "city",
@@ -31,28 +27,31 @@ local function ContinueProcess(object)
     "village",
     "hamlet"
   })
-  if allowed_values[object.tags.place] then
-    maybe_continue = true
+  if object.tags.place and allowed_values[object.tags.place] then
+    local continue = false
+    object.tags._todos = ""
+
+    -- Add task to add *population* data.
+    if not object.tags.population then
+      continue = true
+      object.tags._todos = object.tags._todos .. ";TODO add `population`-Tag."
+    end
+
+    -- Add task to add *population:date* data.
+    -- TODO: Ideally, we would look at the data, but we need to parse that first…
+    if not object.tags["population:date"] then
+      continue = true
+      object.tags._todos = object.tags._todos .. ";TODO add `population:date`-Tag."
+    end
+
+    return continue
   end
 
-  -- Add task to add *population* data.
-  if maybe_continue and (not object.tags.population) then
-    continue = true
-    object.tags.todos = object.tags.todos .. ";TODO add `population`-Tag."
-  end
-
-  -- Add task to add *population:date* data.
-  -- TODO: Ideally, we would look at the data, but we need to parse that first…
-  if maybe_continue and (not object.tags["population:date"]) then
-    continue = true
-    object.tags.todos = object.tags.todos .. ";TODO add `population:date`-Tag."
-  end
-
-  return continue
+  return false
 end
 
 local function ProcessTags(object)
-  local allowed_tags = Set({ "todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
+  local allowed_tags = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
   FilterTags(object.tags, allowed_tags)
   -- ToNumber(object.tags, Set({ "population" }))
