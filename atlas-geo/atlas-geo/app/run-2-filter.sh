@@ -12,8 +12,10 @@ OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 # FILTER
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 
+echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 osmium: filter osm data – START"
 if [ -f "${OSM_GERMANY}" ]; then
+  echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
   echo "🥐 osmium: filter regions, create separate files"
   # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
   osmium extract --overwrite --polygon=${FILTER_DIR}bibi.geojson --output=${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_GERMANY}
@@ -21,11 +23,13 @@ if [ -f "${OSM_GERMANY}" ]; then
   osmium extract --overwrite --polygon=${FILTER_DIR}eichwalde.geojson --output=${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_GERMANY}
   # echo "☝️💥 SKIPPED FOR DEV"
 
+  echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
   echo "🥐 osmium: merge regions, create one file"
   # Docs https://docs.osmcode.org/osmium/latest/osmium-merge.html
   osmium merge --overwrite --output=${OSM_REGIONS} ${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf
   # echo "☝️💥 SKIPPED FOR DEV"
 
+  echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
   echo "🥐 osmium: filter tags"
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
   osmium tags-filter --overwrite --output=${OSM_FILTERED_FILE} --expressions ${OSM_FILTER_EXPRESSIONS} ${OSM_REGIONS}
@@ -33,4 +37,5 @@ if [ -f "${OSM_GERMANY}" ]; then
 else
   echo "🧨 file ${OSM_GERMANY} or ${OSM_FILTER_EXPRESSIONS} not found"
 fi
+echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 osmium: filter osm data – END"
