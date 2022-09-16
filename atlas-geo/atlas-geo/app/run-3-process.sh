@@ -45,6 +45,10 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 echo "🥐 LUA+SQL for Topic: fromTo_shopping_todoList"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_shopping_todoList.lua ${OSM_FILTERED_FILE}
 
+echo "🥐 LUA+SQL for Topic: roadtypesOsm"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadtypesOsm.lua ${OSM_FILTERED_FILE}
+psql -q -f "${PROCESS_DIR}roadtypesOsm.sql"
+
 # echo "🥐 LUA+SQL for Topic: parking"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}parking.sql"
