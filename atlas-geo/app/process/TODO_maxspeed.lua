@@ -26,10 +26,12 @@
 -- After our proof of concept was done, Tobias Zwick released a new library, that does parts of what we did, but with a lot more detail.
 --    See https://github.com/westnordost/osm-legal-default-speeds
 --    Demo https://westnordost.github.io/osm-legal-default-speeds/#tags=highway%3Dprimary&cc=DE
--- We could use this library to fill in the blacks.
+-- We could use this library to fill in the blanks.
 -- However, it is unclear how we would run the library code as part of our technical setup.
+--    Update: Something I asked at https://github.com/openstreetmap/osm2pgsql/discussions/1765
 -- And the library does not solve the "source" information (yet), so that would be something we need to build ourself.
 -- Also, the `*zone*` source schema is not supported (see https://github.com/westnordost/osm-legal-default-speeds/issues/4)
+--    Update: Tobias Zwick pointed out, that this is _not_an_issue.
 -- Also, the main benefit of the library are very detailed maxsped values for bus and such… which we don't need.
 
 -- TodoList
