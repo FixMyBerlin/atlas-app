@@ -1,0 +1,21 @@
+name: Generate tiles
+
+on:
+  schedule:
+  - cron: "5 2 * * 1"
+
+jobs:
+  trigger_generation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Pull & Run image on VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          echo "Restart tarmac container"
+          cd /srv/tarmac/
+          docker compose -f docker-compose.deploy.yml  restart -t 30 app
