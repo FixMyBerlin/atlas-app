@@ -6,6 +6,17 @@ This project will download, filter and process OpenStreetMap (OSM) data in a Pos
 
 The data we process is selected and optimize to make planning of bicycle infrastructure easier.
 
+## Production
+
+### Server
+
+https://tiles.radverkehrsatlas.de/
+
+### Data update
+
+* Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
+* Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
+
 ## 1️⃣ Setup
 
 First create a `.env` file. You can use the `.env.example` file as a template.
