@@ -3,7 +3,7 @@ name: Generate tiles
 on:
   workflow_dispatch:
   schedule:
-  - cron: "5 2 * * 1"
+  - cron: "0 5 * * 1"
 
 jobs:
   trigger_generation:
