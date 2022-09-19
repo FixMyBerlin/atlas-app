@@ -4,7 +4,7 @@ require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
 require("AddAddress")
-require("MergeTable")
+require("MergeArray")
 require("AddMetadata")
 require("AddUrl")
 
