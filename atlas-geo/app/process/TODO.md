@@ -1,3 +1,11 @@
+# Tests
+
+- Bash-Script, dass im Ordner helper alle .test files findet und aufruft.
+  - Oder alle files in einen **test** folder verschieben und durch aufrufen.
+- Github Action erstellen, die lua installiert und das bash Script ausführt.
+  - https://github.com/nektos/act evtl. um Github actions lokal zu testen.
+  - https://github.com/marketplace/actions/install-lua-luajit sieht sehr gut aus dafür
+
 # Places: Duplikate auflösen
 
 Es gibt Daten, bei denen auf der Place-Node keine Details stehen, aber die Details and der Relation stehen.
