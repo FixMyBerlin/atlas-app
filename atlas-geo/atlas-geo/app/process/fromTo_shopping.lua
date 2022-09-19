@@ -5,7 +5,7 @@ require("FilterTags")
 -- require("ToNumber")
 -- require("PrintTable")
 require("AddAddress")
-require("MergeTable")
+require("MergeArray")
 require("AddMetadata")
 require("AddUrl")
 -- Shared:
@@ -57,7 +57,7 @@ local function ProcessTags(object)
   end
 
   local allowed_addr_tags = AddAddress(object.tags)
-  local allowed_tags = Set(MergeTable({ "name", "category", "type" }, allowed_addr_tags))
+  local allowed_tags = Set(MergeArray({ "name", "category", "type" }, allowed_addr_tags))
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
 end

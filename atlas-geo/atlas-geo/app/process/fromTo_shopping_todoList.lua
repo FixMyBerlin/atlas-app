@@ -5,7 +5,7 @@ require("FilterTags")
 -- require("ToNumber")
 -- require("PrintTable")
 require("AddAddress")
-require("MergeTable")
+require("MergeArray")
 require("AddMetadata")
 require("AddUrl")
 -- Shared:
@@ -140,7 +140,7 @@ end
 -- Tag processing extracted to be used inside projcess_*
 local function ProcessTags(object)
   local allowed_addr_tags = AddAddress(object.tags)
-  local allowed_tags = Set(MergeTable({ "name", "category", "type", "amenity" }, allowed_addr_tags))
+  local allowed_tags = Set(MergeArray({ "name", "category", "type", "amenity" }, allowed_addr_tags))
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
   object.tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. object.tags.amenity
