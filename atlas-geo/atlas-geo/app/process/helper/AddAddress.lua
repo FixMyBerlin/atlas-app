@@ -1,6 +1,6 @@
 -- Docs https://wiki.openstreetmap.org/wiki/Key:addr:*
 
--- @return `allowed_tags` array to be used with `FilterTags(tagsObject, Set(MergeArray(thisReturnTable, otherTable)))`
+-- * @return `allowed_tags` array to be used with `FilterTags(tagsObject, Set(MergeArray(thisReturnTable, otherTable)))`
 function AddAddress(tagsObject)
   local street = tagsObject.street or tagsObject["addr:street"]
   tagsObject.street = nil

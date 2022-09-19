@@ -1,4 +1,4 @@
--- @desc Use like `ToNumber(object.tags, Set({ 'width' }))`
+-- * @desc `ToNumber(object.tags, Set({ 'width' }))`
 function ToNumber(tagsObject, toNumberTags)
   for key, value in pairs(tagsObject) do
     if toNumberTags[key] then

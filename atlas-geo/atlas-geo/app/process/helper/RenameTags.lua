@@ -1,6 +1,4 @@
--- Usage:
---   RenameTags(object.tags, { ["update"] = "updated_at" })
-
+-- * @desc `RenameTags(object.tags, { ["update"] = "updated_at" })`
 function RenameTags(tagsObject, renameTags)
   for oldName, value in pairs(tagsObject) do
     if renameTags[oldName] then
