@@ -33,7 +33,7 @@ function osm2pgsql.process_way(object)
 
   local allowed_values = HighwayClasses
   -- values that we would allow, but skip here:
-  -- "steps", , "construction", "planned", "proposed", "platform" (Haltestellen),
+  -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
@@ -74,6 +74,10 @@ function osm2pgsql.process_way(object)
   if object.tags.bicycle_road == 'yes' then
     -- traffic_sign=DE:244.1
     object.tags.category = "bicycle_road"
+  end
+  if object.tags.highway == 'steps' then
+    -- Simplify steps as part of the walkable network
+    object.tags.category = "footway"
   end
 
   local allowed_tags = Set({ "_skip", "_skipNotes", "category", "name", "highway", "footway", "access", "service",
