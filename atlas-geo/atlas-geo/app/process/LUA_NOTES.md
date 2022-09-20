@@ -1,3 +1,7 @@
+# Extension Store
+
+https://luarocks.org/
+
 # `starts_with`
 
 https://github.com/openstreetmap/osm2pgsql/blob/master/flex-config/places.lua#L10-L12

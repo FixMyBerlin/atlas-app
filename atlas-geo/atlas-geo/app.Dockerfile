@@ -3,11 +3,17 @@ FROM ubuntu:kinetic
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
+# - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
+RUN apt update && apt install -y osm2pgsql osmium-tool luarocks postgresql-client-14 tzdata wget && apt upgrade -y
 # LUA Libaries:
+# - "dkjson" used by parking.lua to write JSON for debugging
+RUN luarocks install dkjson
+# TODO: We need to find a way to use those packages locally; otherwise using them does not make much sense
 # - "inspect" https://github.com/kikito/inspect.lua
 #   (recommended in https://github.com/openstreetmap/osm2pgsql/blob/master/flex-config/README.md#dependencies)
-# - "dkjson" – used by parking.lua to write JSON for debugging
-RUN apt update && apt install -y osm2pgsql osmium-tool lua-dkjson lua-inspect postgresql-client-14 tzdata wget && apt upgrade -y
+# RUN luarocks install inspect
+# - "date" https://luarocks.org/modules/tieske/date, https://github.com/Tieske/date
+# RUN luarocks install date
 WORKDIR /app
 # 'data' folder is root
 RUN mkdir /data
