@@ -28,6 +28,7 @@ docker compose up
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
 
 _Notes:_
+
 - We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
 
 ## ðŸ’ª Work
@@ -37,9 +38,10 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 1. Edit the files locally
 
 2. Rebuild and restart everything
-    ```sh
-    docker compose build && docker compose up
-    ```
+
+   ```sh
+   docker compose build && docker compose up
+   ```
 
 3. Inspect the new results
 
@@ -51,6 +53,7 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 **Notes**
 
 Hack into the bash
+
 ```sh
 docker compose exec app bash
 ```
@@ -58,27 +61,29 @@ docker compose exec app bash
 You can also run the script locally:
 
 1. This requires a new user in postgres which is the same as your current user:
-    ```sh
-    sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
-    ```
+   ```sh
+   sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
+   ```
 2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
 
 **Build & Run only one container**
 Build docker
+
 ```sh
 docker build -f app.Dockerfile -t tarmac:latest .
 ```
 
 Run it
+
 ```sh
 docker run --name mypipeline -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d tarmac
 ```
 
 Hack into the bash
+
 ```sh
 docker exec -it mypipeline bash
 ```
-
 
 ## OSM Data extraction
 
@@ -86,6 +91,7 @@ The OSM data will be automatically downloaded from download.geofabrik.de.
 It is also possible to extract even smaller areas with osmium. For this you need the relation id from OSM for a multipolygon.
 
 Then you can run, for example:
+
 ```sh
 osmium extract -p bb-boundary.osm stuttgart-regbez-latest.osm.pbf -o bietigheim-bissingen.pbf
 ```
