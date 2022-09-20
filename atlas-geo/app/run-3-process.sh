@@ -55,6 +55,11 @@ echo "🥐 LUA+SQL for Topic: roadtypesOsm"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadtypesOsm.lua ${OSM_FILTERED_FILE}
 psql -q -f "${PROCESS_DIR}roadtypesOsm.sql"
 
+echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
+echo "🥐 LUA+SQL for Topic: lit"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit.lua ${OSM_FILTERED_FILE}
+# psql -q -f "${PROCESS_DIR}lit.sql"
+
 # echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 # echo "🥐 LUA+SQL for Topic: parking"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}

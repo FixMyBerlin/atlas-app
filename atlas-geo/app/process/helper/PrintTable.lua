@@ -6,6 +6,6 @@ function PrintTableWithHeadline(table, headline)
   print("-- PrintTable -- " .. headline .. " --")
 
   for k, v in pairs(table) do
-    print(k .. ": " .. v)
+    print(k .. ": " .. tostring(v))
   end
 end
