@@ -18,4 +18,5 @@ HighwayClasses = Set({
   "footway",
   "cycleway",
   "bridleway", -- Reitweg
+  "steps",
 })
