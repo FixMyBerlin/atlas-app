@@ -202,7 +202,7 @@ function osm2pgsql.process_way(object)
     "segregated",
     "sidewalk:both:bicycle",
     "sidewalk:left:bicycle",
-    "sidewalk:right:bicycle"
+    "sidewalk:right:bicycle",
     "traffic_sign",
   })
   FilterTags(object.tags, allowed_tags)
