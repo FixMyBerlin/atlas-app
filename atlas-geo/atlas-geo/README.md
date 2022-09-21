@@ -17,6 +17,12 @@ https://tiles.radverkehrsatlas.de/
 * Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
 * Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
 
+### Deployment
+
+1. https://github.com/FixMyBerlin/tarmac-geo/actions run
+2. Then our Server IONOS builds the data. This take about 30 Min ATM.
+3. Then https://tiles.radverkehrsatlas.de/ shows new data
+
 ## 1️⃣ Setup
 
 First create a `.env` file. You can use the `.env.example` file as a template.
