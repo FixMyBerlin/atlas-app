@@ -12,8 +12,8 @@ OSM_DOWNLOAD_FILE=germany-latest.osm.pbf
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 Download ${OSM_DOWNLOAD_URL} – START"
 # Docs https://www.man7.org/linux/man-pages/man1/wget.1.html
-#  --quiet
-wget --timestamping --show-progress ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
+# --show-progress  <--- helpfull when running locally
+wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
 cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 # echo "☝️💥 SKIPPED FOR DEV"
 
