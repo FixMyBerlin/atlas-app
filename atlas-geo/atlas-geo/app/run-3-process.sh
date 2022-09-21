@@ -64,8 +64,27 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 # echo "🥐 LUA+SQL for Topic: parking"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}parking.sql"
-# psql -q -c "COMMENT ON TABLE highways IS '${OSM_TIMESTAMP}';"
-# psql -q -c "COMMENT ON TABLE parking_segments IS '${OSM_TIMESTAMP}';"
-# psql -q -c "COMMENT ON TABLE parking_spaces IS '${OSM_TIMESTAMP}';"
 
-echo "✅ completed. Preview the data at http://localhost:7800/"
+# ====
+# This should be the last step…
+echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
+echo "🥐 LUA+SQL for Topic: Metadata"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}metadata.lua ${OSM_FILTERED_FILE}
+# Provide meta data for the frontend application.
+# We missuse a feature of pg_tileserve for this. Inspired by Lars parking_segements code <3.
+# 1. We create the metadata table in LUA with some dummy data
+#    (the office of changing cities; since FMC does not have an OSM node)
+#    But we don't use this geo data in any ways.
+# 2. We use the "comment" feature of gp_tileserve, see https://github.com/CrunchyData/pg_tileserv#layers-list
+#    This levarages a PostgreSQL feature where columns, index and table can have a text "comment".
+#    The "comment" field on the table is retured by the pg_tileserve schema JSON as "description"
+#    See https://tiles.radverkehrsatlas.de/public.metadata.json
+# 3. Our data is a manually stringified JSON which shows…
+#    - downloaded_at – DateTime of the OSM file that we downloaded
+#    - processed_at – DateTime of this processing step
+#    Which means, we do not actually know the age of the data,
+#    which would be the DateTime when Geofabrik pulled the data from the OSM server.
+PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
+psql -q -c "COMMENT ON TABLE metadata IS '{\"downloaded_at\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
+
+echo "✅ completed. Preview the data at http://localhost:7800 with live data at https://tiles.radverkehrsatlas.de"
