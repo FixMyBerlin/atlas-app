@@ -9,6 +9,7 @@ require("AddMetadata")
 require("AddUrl")
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
+require("AddSkipInfoByWidth")
 
 local table = osm2pgsql.define_table({
   name = 'roadtypesOsm',
@@ -41,6 +42,7 @@ function osm2pgsql.process_way(object)
   object.tags._skip = false
 
   AddSkipInfoToHighways(object)
+  AddSkipInfoByWidth(object)
 
   -- Skip sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10

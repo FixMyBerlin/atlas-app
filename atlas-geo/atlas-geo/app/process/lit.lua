@@ -9,6 +9,7 @@ require("AddMetadata")
 require("AddUrl")
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
+require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
 
 local table = osm2pgsql.define_table({
@@ -61,6 +62,7 @@ function osm2pgsql.process_way(object)
   object.tags._skip = false
 
   AddSkipInfoToHighways(object)
+  AddSkipInfoByWidth(object)
 
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 

@@ -38,13 +38,6 @@ function AddSkipInfoToHighways(object)
     object.tags._skip = true
   end
 
-  ToNumber(object.tags, Set({ 'width' }))
-  if object.tags.width and object.tags.width < 2.1 then
-    object.tags._skipNotes = object.tags._skipNotes ..
-        ";Skipped since `width<2.1m` indicates a special interest path"
-    object.tags._skip = true
-  end
-
   -- Skip all unwanted `highway=service + service=<value>` values
   -- The key can have random values, we mainly want to skip "driveway", "parking_aisle".
   local allowed_service_values = Set({ "alley", "drive-through", "emergency_access" })
