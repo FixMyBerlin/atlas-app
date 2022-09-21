@@ -80,11 +80,11 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 #    The "comment" field on the table is retured by the pg_tileserve schema JSON as "description"
 #    See https://tiles.radverkehrsatlas.de/public.metadata.json
 # 3. Our data is a manually stringified JSON which shows…
-#    - downloaded_at – DateTime of the OSM file that we downloaded
+#    - osm_data_from – DateTime when Geofabrik (our source of data) processed the OSM data
 #    - processed_at – DateTime of this processing step
 #    Which means, we do not actually know the age of the data,
 #    which would be the DateTime when Geofabrik pulled the data from the OSM server.
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
-psql -q -c "COMMENT ON TABLE metadata IS '{\"downloaded_at\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
+psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
 
 echo "✅ completed. Preview the data at http://localhost:7800 with live data at https://tiles.radverkehrsatlas.de"
