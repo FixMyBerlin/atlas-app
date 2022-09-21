@@ -38,8 +38,8 @@ function osm2pgsql.process_way(object)
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
-  object.tags._skipNotes = "init"
-  object.tags._skip = false
+  object.tags._skipNotes = "Skipped by default `true`"
+  object.tags._skip = true
 
   AddSkipInfoToHighways(object)
 
@@ -56,6 +56,7 @@ function osm2pgsql.process_way(object)
   if object.tags.highway == "pedestrian" then
     if object.tags.bicycle == "yes" then
       object.tags.category = "pedestrianArea_bicycleYes"
+      object.tags._skip = false
     else
       object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=pedestrian + bicycle!=yes`"
       object.tags._skip = true
@@ -75,6 +76,7 @@ function osm2pgsql.process_way(object)
   if object.tags.bicycle_road == "yes"
       or StartsWith(object.tags.traffic_sign, "DE:244") then
     object.tags.category = "bicycleRoad"
+    object.tags._skip = false
   end
 
   -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
@@ -82,6 +84,7 @@ function osm2pgsql.process_way(object)
   if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "no")
       or StartsWith(object.tags.traffic_sign, "DE:240") then
     object.tags.category = "footAndCycleway_shared"
+    object.tags._skip = false
   end
 
   -- Handle "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
@@ -90,6 +93,7 @@ function osm2pgsql.process_way(object)
   if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "yes")
       or StartsWith(object.tags.traffic_sign, "DE:241") then
     object.tags.category = "footAndCycleway_segregated"
+    object.tags._skip = false
   end
 
   -- Handle "Gehweg, Fahrrad frei"
@@ -106,6 +110,7 @@ function osm2pgsql.process_way(object)
     if object.tags.bicycle == "yes"
         or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
       object.tags.category = "footway_bicycleYes"
+      object.tags._skip = false
     end
   end
   -- TODO CENTERLINE: This handles sidewalks tagged on the centerline. But we would cant those to be separate geometries ideally.
@@ -118,6 +123,7 @@ function osm2pgsql.process_way(object)
       or object.tags["sidewalk:both:bicycle"] == "yes" then
     object.tags.category = "footway_bicycleYes"
     object.tags._centerline = "tagged on centerline"
+    object.tags._skip = false
   end
 
   -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
@@ -126,18 +132,21 @@ function osm2pgsql.process_way(object)
   -- Eg https://www.openstreetmap.org/way/278057274
   if object.tags.highway == "cycleway" and object.tags.is_sidepath == "yes" then
     object.tags.category = "cyclewaySeparated"
+    object.tags._skip = false
   end
   -- Case: The crossing version of a separate cycleway next to a road
   -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
   -- Eg https://www.openstreetmap.org/way/963592923
   if object.tags.highway == "cycleway" and object.tags.cycleway == "crossing" then
     object.tags.category = "cyclewaySeparated"
+    object.tags._skip = false
   end
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   -- Eg https://www.openstreetmap.org/way/964476026
-  if object.tags.traffic_signal == "DE:237" and object.tags.is_sidepath == "yes" then
+  if object.tags.traffic_sign == "DE:237" and object.tags.is_sidepath == "yes" then
     object.tags.category = "cyclewaySeparated"
+    object.tags._skip = false
   end
   -- Case: Separate cycleway idetified via "track"-tagging.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
@@ -146,6 +155,7 @@ function osm2pgsql.process_way(object)
   if object.tags.cycleway == "track"
       or object.tags.cycleway == "opposite_track" then
     object.tags.category = "cyclewaySeparated"
+    object.tags._skip = false
   end
   -- … mapped on the centerline
   -- TODO CENTERLINE: See above…
@@ -154,6 +164,7 @@ function osm2pgsql.process_way(object)
       or object.tags["cycleway:both"] == "track" then
     object.tags.category = "cyclewaySeparated"
     object.tags._centerline = "tagged on centerline"
+    object.tags._skip = false
   end
 
   -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
@@ -163,6 +174,7 @@ function osm2pgsql.process_way(object)
       and object.tags.traffic_sign == "DE:237"
       and (object.tags.is_sidepath == nil or object.tags.is_sidepath == "no") then
     object.tags.category = "cyclewayAlone"
+    object.tags._skip = false
   end
 
   -- TODO SKIPLIST: For ZES, we skip "Verbindungsstücke", especially for the "cyclewayAlone" case
@@ -203,6 +215,9 @@ function osm2pgsql.process_way(object)
       geom = object:as_linestring()
     })
   else
+    -- We don't need this data here…
+    object.tags._skip = nil
+    object.tags._skipNotes = nil
     table:insert({
       tags = object.tags,
       geom = object:as_linestring()
