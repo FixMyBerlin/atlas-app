@@ -169,9 +169,30 @@ function osm2pgsql.process_way(object)
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
 
-  local allowed_tags = Set({ "_skip", "_skipNotes", "_centerline", "category", "name", "highway", "footway", "access",
-    "service",
-    "is_sidepath" })
+  local allowed_tags = Set({
+    "_centerline",
+    "_skip",
+    "_skipNotes",
+    "access",
+    "bicycle_road",
+    "bicycle",
+    "category",
+    "cycleway:both",
+    "cycleway:left",
+    "cycleway:right",
+    "cycleway",
+    "foot",
+    "footway",
+    "highway",
+    "is_sidepath",
+    "mtb:scale",
+    "name",
+    "segregated",
+    "sidewalk:both:bicycle",
+    "sidewalk:left:bicycle",
+    "sidewalk:right:bicycle"
+    "traffic_sign",
+  })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
   AddUrl("way", object)
