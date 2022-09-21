@@ -15,6 +15,7 @@
 -- However, with the power of PostgreSQL, a better approach is likely to first split the data and then process it.
 -- A "centerline" with "sidewalk=both" (or "sidewalk:both=yes") would become 3 lines, with the two sidewalk lines being moved to the left/right of the centerline. Same for "cycleway*". Possible keys like "cycleway:left:surface=*" need to be moved as well.
 -- Its recommended to first pre-process the data in LUA to normalize the tagging of "sidewalk=both" and "sidewalk:both=yes" to a "sidewalk:left+sidewalk:right" patter, so in SQL we only need to deal with explicit left/right.
+-- UPDATE 2022-09-21: See "bicycleRoadInfrastructure.lua" for my latest idea how to setup a process for this.
 
 -- Processing
 -- ====
