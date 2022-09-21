@@ -44,5 +44,5 @@ Wie mache ich das?
 # Notes
 
 -- projections:
--- Latlong (WGS84); 4326 => weltweit; einheit degree
+-- Latlong (WGS84); 4326 => weltweit; einheit degree; GeoJSON
 -- mercator 3857 (default) => welteit; metrische einheiten "3 m puffer"
