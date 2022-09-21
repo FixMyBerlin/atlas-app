@@ -62,6 +62,14 @@ function osm2pgsql.process_way(object)
     end
   end
 
+  -- Handle `highway=living_street`
+  -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
+  if object.tags.highway == "living_street" and not object.tags.bicycle == "no" then
+    object.tags.category = "livingStreet"
+    object.tags._skip = false
+  end
+
   -- Handle `bicycle_road=yes` and traffic_sign
   -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
   if object.tags.bicycle_road == "yes"
