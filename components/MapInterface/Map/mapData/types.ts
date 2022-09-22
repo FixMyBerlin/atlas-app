@@ -62,7 +62,10 @@ export type MapDataConfigVisLayer = (
   | mapboxgl.HeatmapLayer
   | mapboxgl.LineLayer
   | mapboxgl.SymbolLayer
-) & { enableInspector?: boolean; enableCalculator?: boolean }
+) & {
+  enableInspector?: boolean
+  enableCalculator?: boolean
+}
 
 /** @desc: Optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataConfigStyleInteractiveFilter = {

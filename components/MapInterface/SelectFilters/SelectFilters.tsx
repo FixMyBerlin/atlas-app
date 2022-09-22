@@ -53,7 +53,7 @@ export const SelectFilters: React.FC = () => {
 
   return (
     <section>
-      <h2 className="text-base font-medium text-gray-900 mb-4">Filter</h2>
+      <h2 className="mb-4 text-base font-medium text-gray-900">Filter</h2>
       {activeStylesWithFilter.map((style) => {
         const topic = mapDataConfig.topics.find((t) => t.id === style.topicId)
         if (!style || !topic || !style.interactiveFilters?.length) return null
@@ -61,7 +61,7 @@ export const SelectFilters: React.FC = () => {
         return style.interactiveFilters.map((filter) => {
           return (
             <form key={style.id} className="mb-5" onChange={onChange}>
-              <h3 className="text-base font-medium text-gray-900 mb-3">
+              <h3 className="mb-3 text-base font-medium text-gray-900">
                 Filtere {filter.name} von {topic.name}
               </h3>
               <fieldset>

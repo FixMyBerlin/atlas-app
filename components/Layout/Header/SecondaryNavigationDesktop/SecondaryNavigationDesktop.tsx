@@ -32,7 +32,7 @@ export const SecondaryNavigationDesktop: React.FC = () => {
                 <Menu as={Fragment}>
                   <Menu.Items
                     static
-                    className="absolute right-0 mt-6 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none divide-y divide-gray-100"
+                    className="absolute right-0 mt-6 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >
                     <div className="px-1 py-1">
                       <Menu.Item>

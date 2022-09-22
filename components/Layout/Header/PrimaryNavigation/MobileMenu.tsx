@@ -6,7 +6,7 @@ import { primaryNavigation, secondaryNavigationGrouped } from '../menu.const'
 // Includes PrimaryNavigation AND SecondaryNavigation Menu Items.
 export const MobileMenu: React.FC = () => {
   return (
-    <Disclosure.Panel className="sm:hidden divide-y-2 divide-gray-900">
+    <Disclosure.Panel className="divide-y-2 divide-gray-900 sm:hidden">
       <div className="space-y-1 pt-2 pb-3">
         {primaryNavigation.map((item) => (
           <Disclosure.Button
@@ -17,7 +17,7 @@ export const MobileMenu: React.FC = () => {
               item.current
                 ? 'bg-gray-900 text-white'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-              'block px-3 py-2 rounded-md text-base font-medium'
+              'block rounded-md px-3 py-2 text-base font-medium'
             )}
             aria-current={item.current ? 'page' : undefined}
           >
@@ -39,7 +39,7 @@ export const MobileMenu: React.FC = () => {
                     item.current
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block px-3 py-2 rounded-md text-base font-medium'
+                    'block rounded-md px-3 py-2 text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >

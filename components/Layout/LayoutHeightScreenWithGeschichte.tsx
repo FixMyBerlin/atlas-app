@@ -12,7 +12,7 @@ export const LayoutHeightScreenWithGeschichte: React.FC<Props> = ({
 }) => {
   return (
     <GeschichteForNextjs>
-      <div className=" flex flex-col h-screen">
+      <div className=" flex h-screen flex-col">
         <Header />
         <main className="flex-grow">{children}</main>
       </div>
