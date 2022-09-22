@@ -85,7 +85,7 @@ export const SelectTopics: React.FC = () => {
                   active={!!selectedTopicIds?.includes(topicId)}
                   onChange={onChange}
                 />
-                <SelectStyles topicId={topicId} />
+                <SelectStyles selectSylesTopicId={topicId} />
                 {/* <SelectFilters topicId={topicId} /> */}
               </div>
             )
