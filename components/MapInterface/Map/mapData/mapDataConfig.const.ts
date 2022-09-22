@@ -15,9 +15,13 @@ import {
   TopicTarmacBikelanesStyleFilterIds,
   TopicTarmacBikelanesStyleIds,
   topicTarmacHighwayClassification,
+  topicMapillaryCoverage,
   TopicTarmacHighwayClassificationId,
+  TopicMapillaryCoverageId,
   TopicTarmacHighwayClassificationStyleFilterIds,
+  TopicMapillaryCoverageStyleFilterIds,
   TopicTarmacHighwayClassificationStyleIds,
+  TopicMapillaryCoverageStyleIds,
   topicTarmacSurface,
   TopicTarmacSurfaceId,
   TopicTarmacSurfaceStyleFilterIds,
@@ -36,6 +40,7 @@ export type MapDataConfigTopicIds =
   | TopicTarmacSurfaceId
   | TopicTarmacBikelanesId
   | TopicTarmacHighwayClassificationId
+  | TopicMapillaryCoverageId
 
 export type MapDataConfigTopicStyleIds =
   | TopicBoundariesStyleIds
@@ -44,6 +49,7 @@ export type MapDataConfigTopicStyleIds =
   | TopicTarmacSurfaceStyleIds
   | TopicTarmacBikelanesStyleIds
   | TopicTarmacHighwayClassificationStyleIds
+  | TopicMapillaryCoverageStyleIds
 
 export type MapDataConfigTopicStyleFilterIds =
   | TopicBoundariesStyleFilterIds
@@ -52,6 +58,7 @@ export type MapDataConfigTopicStyleFilterIds =
   | TopicTarmacSurfaceStyleFilterIds
   | TopicTarmacBikelanesStyleFilterIds
   | TopicTarmacHighwayClassificationStyleFilterIds
+  | TopicMapillaryCoverageStyleFilterIds
 
 export const mapDataConfig: MapDataConfig = {
   sources,
@@ -64,5 +71,6 @@ export const mapDataConfig: MapDataConfig = {
     topicTarmacSurface,
     topicTarmacBikelanes,
     topicTarmacHighwayClassification,
+    topicMapillaryCoverage,
   ],
 }
