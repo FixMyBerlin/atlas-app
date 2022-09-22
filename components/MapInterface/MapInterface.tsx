@@ -3,26 +3,18 @@ import { MapProvider } from 'react-map-gl'
 import { Calculator } from './Calculator'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
-import { SelectBackground } from './SelectBackground'
-import { SelectTopics } from './SelectTopics'
-import { SelectStyles } from './SelectStyles'
-import { SelectFilters } from './SelectFilters'
+import { SelectBackgroundWithLegend } from './SelectBackgroundWithLegend'
 import { SelectTheme } from './SelectTheme'
+import { SelectTopics } from './SelectTopics'
 
 export const MapInterface: React.FC = () => {
   return (
     <MapProvider>
-      <div className="flex flex-row gap-4 relative h-full w-full">
+      <div className="relative flex h-full w-full flex-row gap-4">
         <SelectTheme />
         <Map />
-        <SelectBackground />
+        <SelectBackgroundWithLegend />
         <SelectTopics />
-        <div className="absolute bg-white/80 rounded p-3 bottom-3 right-3 max-h-screen flex overflow-y-auto">
-          <div className="space-y-10">
-            <SelectStyles />
-            <SelectFilters />
-          </div>
-        </div>
         <Calculator />
         <Inspector />
       </div>

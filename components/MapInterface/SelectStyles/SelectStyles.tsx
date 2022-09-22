@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react'
-import { SelectEntryRadibutton } from '../components'
+import { SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
 import { cleanupTargetIdFromEvent } from '../Map/utils'
 import { addGeschichte, removeGeschichte, replaceGeschichte } from '../store'
 import { TopicStyleKey, useQuery } from '../store/geschichte'
 import { createTopicStyleKey, splitTopicStyleKey } from '../utils'
 
-export const SelectStyles: React.FC = () => {
+type Props = { topicId: MapDataConfigTopicIds }
+
+export const SelectStyles: React.FC<Props> = ({ topicId }) => {
   const {
     values: { selectedTopicIds, selectedStyleKeys },
     pushState,
@@ -21,11 +23,8 @@ export const SelectStyles: React.FC = () => {
   // - we need to update the filters whenever we change styles.
 
   const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    const styleId = cleanupTargetIdFromEvent(
-      event,
-      radioButtonScope
-    ) as TopicStyleKey
-    const topicId = styleId.split('-')[0] as MapDataConfigTopicIds
+    const styleKey = event.target.value as TopicStyleKey
+    const [topicId] = splitTopicStyleKey(styleKey)
 
     const previousSelectedStyle = selectedStyleKeys.find((s) =>
       s.startsWith(topicId)
@@ -35,7 +34,7 @@ export const SelectStyles: React.FC = () => {
         // (A) Update style-State
         state.selectedStyleKeys = replaceGeschichte<TopicStyleKey>(
           state.selectedStyleKeys,
-          styleId,
+          styleKey,
           previousSelectedStyle
         )
         // (B) Update filter-State
@@ -46,7 +45,7 @@ export const SelectStyles: React.FC = () => {
         // (A) Update style-State
         state.selectedStyleKeys = addGeschichte<TopicStyleKey>(
           state.selectedStyleKeys,
-          styleId
+          styleKey
         )
         // (B) Update filter-State
         // TODO
@@ -55,30 +54,19 @@ export const SelectStyles: React.FC = () => {
   }
 
   const activeTopicsWithMultipeStyles = mapDataConfig.topics.filter((t) => {
-    return (
-      selectedTopicIds.includes(t.id) &&
-      // only when more than one style
-      mapDataConfig.topics.filter(
-        (t2) => t.id === t2.id && t2.styles.length > 1
-      ).length
-    )
+    return t.id === topicId && t.styles.length > 1
   })
 
   if (!activeTopicsWithMultipeStyles.length) return null
 
   return (
-    <section>
-      <h2 className="text-base font-medium text-gray-900 mb-4">Kartenstile</h2>
+    <section className="mt-1 rounded border px-2 py-2.5">
       {activeTopicsWithMultipeStyles.map((topic) => {
         return (
           <form
             key={`${topic.id}-${selectedStyleKeys.join()}`}
-            className="mb-5"
-            onChange={onChange}
+            data-topicId={topicId}
           >
-            <h3 className="text-base font-medium text-gray-900 mb-3">
-              Stile für {topic.name}
-            </h3>
             <fieldset>
               <legend className="sr-only">Stile für {topic.name}</legend>
               <div className="space-y-2.5">
@@ -86,12 +74,13 @@ export const SelectStyles: React.FC = () => {
                   const key = createTopicStyleKey(topic.id, style.id)
                   const active = selectedStyleKeys.includes(key)
                   return (
-                    <SelectEntryRadibutton
+                    <SelectEntryRadiobutton
                       scope={radioButtonScope}
                       key={key}
                       id={key}
                       label={style.name}
                       active={active}
+                      onChange={onChange}
                     />
                   )
                 })}

@@ -8,6 +8,8 @@ import {
   removeGeschichte,
 } from '../store/changeGeschichte/changeGeschichte'
 import { GeschichteStore, TopicStyleKey, useQuery } from '../store/geschichte'
+import { SelectStyles } from '../SelectStyles'
+import { SelectFilters } from '../SelectFilters'
 
 export const SelectTopics: React.FC = () => {
   const {
@@ -15,13 +17,9 @@ export const SelectTopics: React.FC = () => {
     pushState,
   } = useQuery()
   // const [addInteractievLayerIds, removeInteractiveLayerIds] = useStore(useStoreMap)
-  const radioButtonScope = 'topic'
 
-  const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    const topicId = cleanupTargetIdFromEvent(
-      event,
-      radioButtonScope
-    ) as MapDataConfigTopicIds
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const topicId = event.target.value as MapDataConfigTopicIds
     if (selectedTopicIds?.includes(topicId)) {
       pushState((state: GeschichteStore) => {
         // (A) Update topic-State
@@ -64,34 +62,36 @@ export const SelectTopics: React.FC = () => {
   const topicIds = mapDataConfig.topics.map((t) => t.id)
 
   return (
-    <form
-      onChange={onChange}
-      className="fixed top-32 left-5 w-56 rounded bg-white/80 px-3 pt-1 pb-3 shadow-md"
-    >
+    <section className="fixed top-32 left-5 max-h-[calc(100vh-12rem)] w-56 overflow-y-auto rounded bg-white/90 px-3 pt-1 pb-3 shadow-md">
       <fieldset className="mt-4">
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">
-          {topicIds.map((key) => {
-            const topic = mapDataConfig.topics.find((t) => t.id === key)
+          {topicIds.map((topicId) => {
+            const topic = mapDataConfig.topics.find((t) => t.id === topicId)
             if (!topic) return null
 
             // TODO – This feels hacky. Research solution.
             const keyThatRerendersOnceGeschichteIsReady = `${selectedTopicIds?.join(
               '-'
-            )}-${key}`
+            )}-${topicId}`
             return (
-              <SelectEntryCheckbox
-                scope={radioButtonScope}
-                key={keyThatRerendersOnceGeschichteIsReady}
-                id={key}
-                label={topic.name}
-                desc={topic.desc}
-                active={!!selectedTopicIds?.includes(key)}
-              />
+              <div key={keyThatRerendersOnceGeschichteIsReady}>
+                <SelectEntryCheckbox
+                  scope={'topic'}
+                  key={keyThatRerendersOnceGeschichteIsReady}
+                  id={topicId}
+                  label={topic.name}
+                  desc={topic.desc}
+                  active={!!selectedTopicIds?.includes(topicId)}
+                  onChange={onChange}
+                />
+                <SelectStyles topicId={topicId} />
+                {/* <SelectFilters topicId={topicId} /> */}
+              </div>
             )
           })}
         </div>
       </fieldset>
-    </form>
+    </section>
   )
 }

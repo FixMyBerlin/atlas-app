@@ -6,4 +6,5 @@ export type EntryProps = {
   desc?: string
   active: boolean
   disabled?: boolean
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }

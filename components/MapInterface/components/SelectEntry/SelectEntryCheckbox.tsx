@@ -9,11 +9,12 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
   desc,
   active,
   disabled,
+  onChange,
 }) => {
   const key = `${scope}--${id}`
 
   return (
-    <div className="relative flex items-start group">
+    <div className="group relative flex items-start">
       <div className="flex h-5 items-center">
         <input
           id={key}
@@ -21,12 +22,14 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           name={scope}
           type="checkbox"
           className={classNames(
-            'h-4 w-4 rounded border-gray-300 cursor-pointer',
+            'h-4 w-4 cursor-pointer rounded border-gray-300',
             { 'text-indigo-600 focus:ring-indigo-500': !disabled },
             { 'text-gray-600': disabled }
           )}
           defaultChecked={active}
           disabled={disabled}
+          value={id}
+          onChange={onChange}
         />
       </div>
       <div className="ml-3 text-sm">
@@ -35,7 +38,7 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           {!!desc && (
             <p
               id={`${key}-description`}
-              className="text-gray-300 group-hover:text-gray-600 text-xs"
+              className="text-xs text-gray-300 group-hover:text-gray-600"
             >
               {desc}
             </p>
