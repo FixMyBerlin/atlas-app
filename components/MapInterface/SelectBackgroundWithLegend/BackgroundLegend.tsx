@@ -3,6 +3,7 @@ import { MapIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { mapDataConfig } from '../Map/mapData'
 import { useQuery } from '../store'
+import { replaceZxy } from '../utils/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {
   const {
@@ -17,10 +18,12 @@ export const BackgroundLegend: React.FC = () => {
   )
   if (!selectedBackground?.legendUrl) return null
 
-  const enhancedLink = selectedBackground.legendUrl
-    .replace('{z}', zoom.toString())
-    .replace('{x}', lat.toString())
-    .replace('{y}', lng.toString())
+  const enhancedLink = replaceZxy({
+    url: selectedBackground.legendUrl,
+    zoom,
+    lat,
+    lng,
+  })
 
   return (
     <Link

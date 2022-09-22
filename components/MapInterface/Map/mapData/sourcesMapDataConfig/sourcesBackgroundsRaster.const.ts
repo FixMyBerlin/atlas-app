@@ -16,7 +16,9 @@ export type MapDataConfigSourcesRasterIds =
   | 'thunderforest-opencyclemap'
   | 'thunderforest-transport'
   | 'thunderforest-landscape'
-  | 'thunderforest-outdoor'
+  | 'thunderforest-outdoors'
+  | 'waymarkedtrails-cycling'
+  | 'waymarkedtrails-hiking'
 
 export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesRasterIds>[] =
   [
@@ -214,7 +216,33 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
-        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    },
+    {
+      // Usage allowed as long as "moderate" traffic.
+      // https://cycling.waymarkedtrails.org/
+      id: 'waymarkedtrails-cycling',
+      name: 'Radrouten',
+      type: 'raster',
+      tiles: 'https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Routenoverlay CC-BY-SA <a href="https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      legendUrl: 'https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}',
+    },
+    {
+      // Usage allowed as long as "moderate" traffic.
+      // https://hiking.waymarkedtrails.org/
+      id: 'waymarkedtrails-hiking',
+      name: 'Wanderrouten',
+      type: 'raster',
+      tiles: 'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
     },
     // Docs https://docs.mapbox.com/api/maps/static-tiles/
     // Edit Style https://studio.mapbox.com/styles/hejco/ckz8bsqbq000t15nz6ok45bid/edit/#15.61/52.495655/13.417375

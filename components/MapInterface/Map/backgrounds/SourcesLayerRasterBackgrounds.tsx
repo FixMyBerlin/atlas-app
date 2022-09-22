@@ -1,13 +1,17 @@
 import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import { Layer, Source, useMap } from 'react-map-gl'
 import { useQuery } from '../../store/geschichte'
+import { replaceZxy } from '../../utils/replaceZxy'
 import { sourcesBackgroundsRaster } from '../mapData/sourcesMapDataConfig'
 import { layerVisibility } from '../utils'
 import { beforeId } from './beforeId.const'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
   const {
-    values: { selectedBackgroundId },
+    values: {
+      selectedBackgroundId,
+      map: { zoom, lat, lng },
+    },
   } = useQuery()
 
   return (
@@ -20,6 +24,13 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
           const backgroundId = `${id}_tiles`
 
           const visible = selectedBackgroundId === id
+
+          const enhancedAttributionHtml = replaceZxy({
+            url: attributionHtml,
+            zoom,
+            lat,
+            lng,
+          })
           return (
             <Source
               id={backgroundId}
@@ -28,7 +39,7 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
               tiles={[tiles]}
               minzoom={minzoom}
               maxzoom={maxzoom}
-              attribution={attributionHtml}
+              attribution={enhancedAttributionHtml}
               // Only for some
               // {...optSchemeProp}
               // {...optTileSizeProp}
