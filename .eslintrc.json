@@ -1,3 +1,7 @@
 {
+  // We had some of those in our previous Gatsby setup but Next works differently.
+  // I liked the a11y rule about button types.
+  // We would have to follow https://nextjs.org/docs/basic-features/eslint to extend this config by quite a bit…
+  // ["react", "react-hooks", "jsx-a11y", "prettier", "jest"],
   "extends": ["next/core-web-vitals", "prettier"]
 }
