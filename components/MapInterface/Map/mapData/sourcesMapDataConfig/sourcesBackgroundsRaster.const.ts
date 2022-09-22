@@ -12,6 +12,11 @@ export type MapDataConfigSourcesRasterIds =
   | 'areal2019'
   | 'parkraumkarte_neukoelln'
   | 'cyclosm'
+  | 'memomaps-transport'
+  | 'thunderforest-opencyclemap'
+  | 'thunderforest-transport'
+  | 'thunderforest-landscape'
+  | 'thunderforest-outdoor'
 
 export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesRasterIds>[] =
   [
@@ -144,6 +149,72 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       attributionHtml:
         '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://www.cyclosm.org/#map={z}/{x}/{y}/cyclosm',
+    },
+    {
+      // https://www.thunderforest.com/maps/opencyclemap/
+      id: 'thunderforest-opencyclemap',
+      name: 'OpenCycleMap',
+      type: 'raster',
+      tiles:
+        'https://tile.thunderforest.com/cycle/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
+      tileSize: 512,
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+      legendUrl: 'https://www.opencyclemap.org/docs/',
+    },
+    // TODO: CORS Problem
+    // {
+    //   // TODO: Vereinbarung mit https://memomaps.de/ treffen
+    //   id: 'memomaps-transport',
+    //   name: 'ÖPNV Karte 1',
+    //   type: 'raster',
+    //   tiles: 'https://tileserver.memomaps.de/tilegen/14/8796/5286.png',
+    //   tileSize: 512,
+    //   minzoom: 10,
+    //   maxzoom: 18,
+    //   attributionHtml:
+    //     'Maps © <a href="https://memomaps.de/">MeMoMaps</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+    // },
+    {
+      // https://www.thunderforest.com/maps/transport/
+      id: 'thunderforest-transport',
+      name: 'ÖPNV Karte 2',
+      type: 'raster',
+      tiles:
+        'https://tile.thunderforest.com/transport/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
+      tileSize: 512,
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+    },
+    {
+      // https://www.thunderforest.com/maps/landscape/
+      id: 'thunderforest-landscape',
+      name: 'Höhenlinien',
+      type: 'raster',
+      tiles:
+        'https://tile.thunderforest.com/landscape/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
+      tileSize: 512,
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+    },
+    {
+      // https://www.thunderforest.com/maps/outdoor/
+      id: 'thunderforest-outdoor',
+      name: 'Wandern',
+      type: 'raster',
+      tiles:
+        'https://tile.thunderforest.com/outdoor/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
+      tileSize: 512,
+      minzoom: 10,
+      maxzoom: 18,
+      attributionHtml:
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
     },
     // Docs https://docs.mapbox.com/api/maps/static-tiles/
     // Edit Style https://studio.mapbox.com/styles/hejco/ckz8bsqbq000t15nz6ok45bid/edit/#15.61/52.495655/13.417375
