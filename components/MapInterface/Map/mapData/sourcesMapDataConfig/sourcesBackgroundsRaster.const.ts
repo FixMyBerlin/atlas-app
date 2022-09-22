@@ -53,7 +53,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       minzoom: 10,
       maxzoom: 21,
       attributionHtml:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>',
     },
     {
       id: 'esri',
@@ -161,7 +161,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
-        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://www.opencyclemap.org/docs/',
     },
     // TODO: CORS Problem
@@ -175,7 +175,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
     //   minzoom: 10,
     //   maxzoom: 18,
     //   attributionHtml:
-    //     'Maps © <a href="https://memomaps.de/">MeMoMaps</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+    //     'Maps © <a href="https://memomaps.de/">MeMoMaps</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     // },
     {
       // https://www.thunderforest.com/maps/transport/
@@ -188,7 +188,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
-        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
     {
       // https://www.thunderforest.com/maps/landscape/
@@ -201,7 +201,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
-        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+        'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
     {
       // https://www.thunderforest.com/maps/outdoor/
