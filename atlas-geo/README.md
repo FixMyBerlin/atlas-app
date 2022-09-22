@@ -1,4 +1,5 @@
 # tarmac-geo – custom vector tiles for bike infrastructure planning based on OpenStreetMap
+# (!) This project is in alpha stage (!)
 
 ## About
 
