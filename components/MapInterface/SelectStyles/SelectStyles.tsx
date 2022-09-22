@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
-import { cleanupTargetIdFromEvent } from '../Map/utils'
-import { addGeschichte, removeGeschichte, replaceGeschichte } from '../store'
+import { addGeschichte, replaceGeschichte } from '../store'
 import { TopicStyleKey, useQuery } from '../store/geschichte'
 import { createTopicStyleKey, splitTopicStyleKey } from '../utils'
 
-type Props = { selectSylesTopicId: MapDataConfigTopicIds }
+type Props = { scopeTopicId: MapDataConfigTopicIds }
 
-export const SelectStyles: React.FC<Props> = ({ selectSylesTopicId }) => {
+export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const {
     values: { selectedStyleKeys },
     pushState,
@@ -54,7 +53,7 @@ export const SelectStyles: React.FC<Props> = ({ selectSylesTopicId }) => {
   }
 
   const activeTopicsWithMultipeStyles = mapDataConfig.topics.filter((t) => {
-    return t.id === selectSylesTopicId && t.styles.length > 1
+    return t.id === scopeTopicId && t.styles.length > 1
   })
 
   if (!activeTopicsWithMultipeStyles.length) return null
@@ -67,7 +66,7 @@ export const SelectStyles: React.FC<Props> = ({ selectSylesTopicId }) => {
 
         return (
           <fieldset key={keyThatRerenders}>
-            <legend className="sr-only">Stile für {topic.name}</legend>
+            <legend className="sr-only">Stile</legend>
             <details className="space-y-2.5">
               <summary className="text-sm">Stile</summary>
               {topic.styles.map((style) => {

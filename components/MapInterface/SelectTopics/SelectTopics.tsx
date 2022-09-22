@@ -1,15 +1,14 @@
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
-import { cleanupTargetIdFromEvent } from '../Map/utils'
-import { createTopicStyleKey } from '../utils'
+import { SelectFilters } from '../SelectFilters'
+import { SelectStyles } from '../SelectStyles'
 import {
   addGeschichte,
   removeGeschichte,
 } from '../store/changeGeschichte/changeGeschichte'
 import { GeschichteStore, TopicStyleKey, useQuery } from '../store/geschichte'
-import { SelectStyles } from '../SelectStyles'
-import { SelectFilters } from '../SelectFilters'
+import { createTopicStyleKey } from '../utils'
 
 export const SelectTopics: React.FC = () => {
   const {
@@ -85,8 +84,8 @@ export const SelectTopics: React.FC = () => {
                   active={!!selectedTopicIds?.includes(topicId)}
                   onChange={onChange}
                 />
-                <SelectStyles selectSylesTopicId={topicId} />
-                {/* <SelectFilters topicId={topicId} /> */}
+                <SelectStyles scopeTopicId={topicId} />
+                <SelectFilters scopeTopicId={topicId} />
               </div>
             )
           })}

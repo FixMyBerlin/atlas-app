@@ -14,6 +14,7 @@ export const flattenedTopicStylesAndId = () => {
     topicId: MapDataConfigTopicIds
   }
   let styles: FlatTopicStyle[] = []
+
   mapDataConfig.topics.forEach((topic) => {
     topic.styles.forEach((style) => {
       styles = [
@@ -27,5 +28,6 @@ export const flattenedTopicStylesAndId = () => {
       ]
     })
   })
+
   return styles
 }

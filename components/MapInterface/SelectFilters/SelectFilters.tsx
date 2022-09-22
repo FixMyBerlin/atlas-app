@@ -1,36 +1,33 @@
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
-import { mapDataConfig } from '../Map/mapData'
+import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
 import { cleanupTargetIdFromEvent } from '../Map/utils'
-import { addGeschichte, removeGeschichte, replaceGeschichte } from '../store'
+import { addGeschichte, removeGeschichte } from '../store'
 import { TopicStyleFilterOptionKey, useQuery } from '../store/geschichte'
-import {
-  createTopicStyleFilterOptionKey,
-  splitTopicStyleFilterOptionKey,
-} from '../utils'
-import { flattenedTopicStylesAndId } from './utils'
+import { createTopicStyleFilterOptionKey, splitTopicStyleKey } from '../utils'
 
-export const SelectFilters: React.FC = () => {
+type Props = { scopeTopicId: MapDataConfigTopicIds }
+
+export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const {
     values: { selectedStyleKeys, selectedStylesFilterOptionKeys },
     pushState,
   } = useQuery()
   const checkboxScope = 'filter'
 
-  const activeStyles = flattenedTopicStylesAndId().filter((s) => {
-    return selectedStyleKeys.includes(s.id)
-  })
-  const activeStylesWithFilter = activeStyles.filter(
-    (s) => s.interactiveFilters?.length
+  const selectedStyleKey = selectedStyleKeys.find((s) =>
+    s.startsWith(scopeTopicId)
   )
+  if (!selectedStyleKey) return null
+  const [_, selectedStyleId] = splitTopicStyleKey(selectedStyleKey)
+  const selectedStyle = mapDataConfig.topics
+    .find((t) => t.id == scopeTopicId)
+    ?.styles.find((s) => s.id == selectedStyleId)
 
-  if (!activeStylesWithFilter.length) return null
+  if (!selectedStyle?.interactiveFilters?.length) return null
 
-  const onChange = (event: React.ChangeEvent<HTMLFormElement>) => {
-    const filterKey = cleanupTargetIdFromEvent(
-      event,
-      checkboxScope
-    ) as TopicStyleFilterOptionKey
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const filterKey = event.target.value as TopicStyleFilterOptionKey
 
     if (selectedStylesFilterOptionKeys?.includes(filterKey)) {
       pushState((state) => {
@@ -52,53 +49,44 @@ export const SelectFilters: React.FC = () => {
   }
 
   return (
-    <section>
-      <h2 className="mb-4 text-base font-medium text-gray-900">Filter</h2>
-      {activeStylesWithFilter.map((style) => {
-        const topic = mapDataConfig.topics.find((t) => t.id === style.topicId)
-        if (!style || !topic || !style.interactiveFilters?.length) return null
+    <section className="mt-1 rounded border px-2 py-2.5">
+      {selectedStyle.interactiveFilters.map((filter) => {
+        return (
+          <fieldset key={selectedStyleKey}>
+            <legend className="sr-only">Filter</legend>
+            <details className="space-y-2.5">
+              <summary className="text-sm">Filter</summary>
+              <div className="space-y-2.5">
+                {filter.options.map((option) => {
+                  const key = createTopicStyleFilterOptionKey(
+                    scopeTopicId,
+                    selectedStyleId,
+                    filter.id,
+                    option.id
+                  )
+                  if (!key) return null
+                  const active = selectedStylesFilterOptionKeys.includes(key)
+                  // The filter list must have one entry, otherwise the map style fails
+                  // so we disable the last active one.
+                  const disabled =
+                    !!active && selectedStylesFilterOptionKeys.length === 1
 
-        return style.interactiveFilters.map((filter) => {
-          return (
-            <form key={style.id} className="mb-5" onChange={onChange}>
-              <h3 className="mb-3 text-base font-medium text-gray-900">
-                Filtere {filter.name} von {topic.name}
-              </h3>
-              <fieldset>
-                <legend className="sr-only">
-                  Filtere {filter.name} von {topic.name}
-                </legend>
-                <div className="space-y-2.5">
-                  {filter.options.map((option) => {
-                    const key = createTopicStyleFilterOptionKey(
-                      style.topicId,
-                      style.originalId,
-                      filter.id,
-                      option.id
-                    )
-                    if (!key) return null
-                    const active = selectedStylesFilterOptionKeys.includes(key)
-                    // The filter list must have one entry, otherwise the map style fails
-                    // so we disable the last active one.
-                    const disabled =
-                      !!active && selectedStylesFilterOptionKeys.length === 1
-
-                    return (
-                      <SelectEntryCheckbox
-                        scope={checkboxScope}
-                        key={key}
-                        id={key}
-                        label={option.name}
-                        active={active}
-                        disabled={disabled}
-                      />
-                    )
-                  })}
-                </div>
-              </fieldset>
-            </form>
-          )
-        })
+                  return (
+                    <SelectEntryCheckbox
+                      scope={checkboxScope}
+                      key={key}
+                      id={key}
+                      label={option.name}
+                      active={active}
+                      disabled={disabled}
+                      onChange={onChange}
+                    />
+                  )
+                })}
+              </div>
+            </details>
+          </fieldset>
+        )
       })}
     </section>
   )
