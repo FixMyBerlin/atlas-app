@@ -184,7 +184,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       type: 'raster',
       tiles:
         'https://tile.thunderforest.com/transport/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
-      tileSize: 512,
+      // tileSize: 512,
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
@@ -197,20 +197,20 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       type: 'raster',
       tiles:
         'https://tile.thunderforest.com/landscape/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
-      tileSize: 512,
+      // tileSize: 512,
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
         'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
     {
-      // https://www.thunderforest.com/maps/outdoor/
-      id: 'thunderforest-outdoor',
+      // https://www.thunderforest.com/maps/outdoors/
+      id: 'thunderforest-outdoors',
       name: 'Wandern',
       type: 'raster',
       tiles:
-        'https://tile.thunderforest.com/outdoor/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
-      tileSize: 512,
+        'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
+      // tileSize: 512,
       minzoom: 10,
       maxzoom: 18,
       attributionHtml:
