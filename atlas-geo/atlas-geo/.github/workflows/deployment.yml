@@ -78,4 +78,5 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env
           echo GITHUB_SHA='${{ github.sha }}' >> .env
-          docker compose -f docker-compose.deploy.yml up  -d
+          mv docker-compose.deploy.yml docker-compose.yml
+          docker compose up  -d
