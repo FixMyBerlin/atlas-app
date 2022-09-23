@@ -33,11 +33,21 @@ services:
     environment:
       PGRST_DB_URI: postgres://postgres:mysecretpassword@db/postgres
       PGRST_DB_ANON_ROLE: api_read
+      PGRST_OPENAPI_MODE: "follow-privileges"
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
     ports:
       - 3000:3000
     depends_on:
       db:
         condition: service_healthy
+  swagger:
+    image: swaggerapi/swagger-ui
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      API_URL: http://localhost:3000/
   db:
     build:
       context: .
