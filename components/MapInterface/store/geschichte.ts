@@ -5,12 +5,18 @@ import {
   MapDataConfigTopicStyleFilterIds,
   MapDataConfigTopicStyleIds,
 } from '../Map/mapData'
-import { MapDataConfigTopic } from '../Map/mapData/types'
+import { MapDataConfigThemeIds } from '../Map/mapData/themesMapDataConfig'
 
 // These Types holds a combination of all Topic>Styles, even those that are not actually there.
 // In other words: The Style part doe not know about the hierarchy of the Topic part.
 export type TopicStyleKey =
   `${MapDataConfigTopicIds}-${MapDataConfigTopicStyleIds}`
+
+export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<
+  MapDataConfigTopicStyleFilterIds,
+  ''
+>}`
+
 export type TopicStyleFilterOptionKey = `${TopicStyleKey}-${Exclude<
   MapDataConfigTopicStyleFilterIds,
   ''
@@ -23,7 +29,7 @@ export type GeschichteStore = {
     zoom: number
   }
   selectedBackgroundId: MapDataConfigSourcesRasterIds
-  selectedThemeId: string // TODO – SourcesRasterKey hier verwenden, aber vorher das _tiles aus dem object raus refactorn
+  selectedThemeId: MapDataConfigThemeIds
   selectedTopicIds: MapDataConfigTopicIds[]
   selectedStyleKeys: TopicStyleKey[]
   selectedStylesFilterOptionKeys: TopicStyleFilterOptionKey[]

@@ -73,7 +73,14 @@ export type MapDataConfigStyleInteractiveFilter = {
   name: string
   desc?: string
   filterConfig: { lookupKey: string }
-  options: { id: string; name: string }[]
+  options: MapDataConfigStyleInteractiveFilterOption[]
+}
+
+/** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
+export type MapDataConfigStyleInteractiveFilterOption = {
+  id: string
+  name: string
+  defaultActive?: boolean
 }
 
 export type MapDataConfig = {
