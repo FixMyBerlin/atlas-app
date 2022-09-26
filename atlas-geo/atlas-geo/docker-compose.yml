@@ -52,7 +52,6 @@ services:
     build:
       context: .
       dockerfile: ./db.Dockerfile
-    restart: always
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
