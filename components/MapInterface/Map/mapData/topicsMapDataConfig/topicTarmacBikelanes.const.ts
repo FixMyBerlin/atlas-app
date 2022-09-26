@@ -14,13 +14,12 @@ export const topicTarmacBikelanes: MapDataConfigTopic = {
   name: 'Fahrradinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmacHighways',
-  visible: true,
+  defaultVisible: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      visible: true,
       layers,
       interactiveFilters: null,
     },
@@ -28,7 +27,6 @@ export const topicTarmacBikelanes: MapDataConfigTopic = {
       id: 'detailed',
       name: 'Detailliert',
       desc: 'Kleinteilige Kategorisierung',
-      visible: false,
       layers,
       interactiveFilters: null,
     },

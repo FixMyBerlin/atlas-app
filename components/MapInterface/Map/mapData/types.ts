@@ -41,7 +41,7 @@ export type MapDataConfigTopic = {
   name: string
   desc: string
   sourceId: MapDataConfigSourcesIds
-  visible: boolean
+  defaultVisible: boolean
   styles: MapDataConfigStyles[]
 }
 
@@ -50,7 +50,6 @@ export type MapDataConfigStyles = {
   id: MapDataConfigTopicStyleIds
   name: string
   desc: null | string
-  visible: boolean
   layers: MapDataConfigVisLayer[]
   interactiveFilters: null | MapDataConfigStyleInteractiveFilter[]
 }

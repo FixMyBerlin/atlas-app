@@ -11,13 +11,12 @@ export const topicMapillaryCoverage: Topic = {
   name: 'Mapillary Fotos',
   desc: 'todo: aktuell erst ab zoom 14-',
   sourceId: 'mapillaryCoverage',
-  visible: true,
+  defaultVisible: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      visible: true,
       layers: [
         {
           id: 'point',

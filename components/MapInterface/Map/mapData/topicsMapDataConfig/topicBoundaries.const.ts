@@ -11,13 +11,12 @@ export const topicBoundaries: Topic = {
   name: 'Grenzen',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumBoundaries',
-  visible: true,
+  defaultVisible: true,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      visible: true,
       layers: [
         {
           id: 'default',

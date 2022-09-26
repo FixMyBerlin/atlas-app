@@ -14,13 +14,12 @@ export const topicTarmacHighwayClassification: MapDataConfigTopic = {
   name: 'Straßentypen',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmacHighways',
-  visible: true,
+  defaultVisible: false,
   styles: [
     {
       id: 'zes',
       name: 'Erweitert',
       desc: 'Straßenklassifizierung basierend auf verschiedenen OSM Indikatoren.',
-      visible: true,
       layers,
       interactiveFilters: null,
     },
@@ -28,7 +27,6 @@ export const topicTarmacHighwayClassification: MapDataConfigTopic = {
       id: 'osm',
       name: 'OpenStreetMap',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
-      visible: false,
       layers,
       interactiveFilters: null,
     },

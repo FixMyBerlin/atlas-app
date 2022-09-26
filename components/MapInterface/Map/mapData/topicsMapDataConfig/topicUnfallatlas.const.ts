@@ -16,13 +16,12 @@ export const topicUnfallatlas: Topic = {
   name: 'Unfälle',
   desc: 'Unfallatlass',
   sourceId: 'unfallatlas',
-  visible: false,
+  defaultVisible: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      visible: true,
       layers: [
         {
           id: 'circle',
@@ -163,8 +162,8 @@ export const topicUnfallatlas: Topic = {
           filterConfig: { lookupKey: 'UJAHR' },
           options: [
             { id: '2017', name: '2017' },
-            { id: '2018', name: '2018' },
-            { id: '2019', name: '2019' },
+            { id: '2018', name: '2018', defaultActive: true },
+            { id: '2019', name: '2019', defaultActive: true },
           ],
         },
       ],
