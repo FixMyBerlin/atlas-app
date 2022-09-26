@@ -1,20 +1,19 @@
 import { MapDataConfigTopic } from '../../Map/mapData'
-import { currentAndFlatMapDataForConfig } from './currentAndFlatMapData'
+import { selectedAndFlatMapDataForConfig } from './selectedAndFlatMapData'
 
-describe('_currentMapData()', () => {
+describe('selectedAndFlatMapDataForConfig()', () => {
   const fakeMapDataConfigTopics: MapDataConfigTopic[] = [
     {
       id: 'boundaries',
       name: '',
       desc: '',
       sourceId: 'unfallatlas',
-      visible: false,
+      defaultVisible: false,
       styles: [
         {
           id: 'default',
           name: 'Standard',
           desc: null,
-          visible: true,
           layers: [
             {
               id: 'circle',
@@ -35,13 +34,12 @@ describe('_currentMapData()', () => {
       name: '',
       desc: '',
       sourceId: 'unfallatlas',
-      visible: false,
+      defaultVisible: false,
       styles: [
         {
           id: 'default',
           name: 'Standard',
           desc: null,
-          visible: true,
           layers: [
             {
               id: 'circle',
@@ -61,8 +59,8 @@ describe('_currentMapData()', () => {
               inputType: 'checkbox',
               options: [
                 { id: 'foo1', name: 'FOO1' },
-                { id: 'foo2', name: 'FOO2', default: true },
-                { id: 'foo3', name: 'FOO3', default: true },
+                { id: 'foo2', name: 'FOO2', defaultActive: true },
+                { id: 'foo3', name: 'FOO3', defaultActive: true },
               ],
             },
           ],
@@ -79,25 +77,25 @@ describe('_currentMapData()', () => {
   }
 
   it('Topics: Shows only current in flatMapData format', () => {
-    const currentAndFlatMap = currentAndFlatMapDataForConfig(fakeInput as any)
-    const result = currentAndFlatMap.topics
+    const selectedAndFlatMap = selectedAndFlatMapDataForConfig(fakeInput as any)
+    const result = selectedAndFlatMap.topics
     expect(result.length).toStrictEqual(1)
     expect(result[0].id).toStrictEqual('accidents')
   })
 
   it('Styles: Shows only current in flatMapData format', () => {
-    const currentAndFlatMap = currentAndFlatMapDataForConfig(fakeInput as any)
-    const result = currentAndFlatMap.styles
+    const selectedAndFlatMap = selectedAndFlatMapDataForConfig(fakeInput as any)
+    const result = selectedAndFlatMap.styles
     expect(result.length).toStrictEqual(1)
     expect(result[0].id).toStrictEqual('default')
   })
 
   it('Styles: Returns none if selected key not found (error case)', () => {
-    const currentAndFlatMap = currentAndFlatMapDataForConfig({
+    const selectedAndFlatMap = selectedAndFlatMapDataForConfig({
       ...fakeInput,
       ...{ selectedStyleKeys: ['foo'] },
     } as any)
-    const result = currentAndFlatMap.styles
+    const result = selectedAndFlatMap.styles
     expect(result.length).toStrictEqual(0)
   })
 })

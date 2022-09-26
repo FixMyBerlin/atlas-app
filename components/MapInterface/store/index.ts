@@ -1,4 +1,6 @@
 export * from './StoreDebugBox'
-export * from './geschichte'
 export * from './changeGeschichte'
+export * from './flatMapData'
+export * from './geschichte'
+export * from './selectedAndFlatMapData'
 export * from './useStoreMap'
