@@ -15,6 +15,7 @@ services:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
     container_name: tileserver_compose
+    restart: always
     environment:
       DATABASE_URL:
       NODE_ENV: production
@@ -36,6 +37,7 @@ services:
   traefik:
     image: traefik:v2.8
     container_name: traefik
+    restart: always
     command:
       - "--log.level=DEBUG"
       - "--api.insecure=true"
