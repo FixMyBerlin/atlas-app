@@ -23,6 +23,7 @@
     "geschichte": "^10.0.2",
     "maplibre-gl": "^2.3.0",
     "next": "12.2.5",
+    "query-string": "^7.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-map-gl": "^7.0.18",

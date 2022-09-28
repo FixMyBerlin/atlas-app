@@ -1,15 +1,20 @@
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
+import { changeFilter } from '../SelectFilters/utils'
 import { addGeschichte, replaceGeschichte } from '../store'
 import { TopicStyleKey, useQuery } from '../store/geschichte'
-import { createTopicStyleKey, splitTopicStyleKey } from '../utils'
+import {
+  createTopicStyleFilterOptionKey,
+  createTopicStyleKey,
+  splitTopicStyleKey,
+} from '../utils'
 
 type Props = { scopeTopicId: MapDataConfigTopicIds }
 
 export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const {
-    values: { selectedStyleKeys },
+    values: { selectedStyleKeys, selectedStylesFilterOptionKeys },
     pushState,
   } = useQuery()
   const radioButtonScope = 'styles'
@@ -23,7 +28,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const styleKey = event.target.value as TopicStyleKey
-    const [topicId] = splitTopicStyleKey(styleKey)
+    const [topicId, styleId] = splitTopicStyleKey(styleKey)
 
     const previousSelectedStyle = selectedStyleKeys.find((s) =>
       s.startsWith(topicId)
@@ -50,6 +55,36 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
         // TODO
       })
     }
+
+    // Filter:
+    const currentStyle = mapDataConfig.topics
+      .find((t) => t.id === topicId)
+      ?.styles.find((s) => s.id === styleId)
+
+    console.log('c', { currentStyle })
+    currentStyle?.interactiveFilters?.forEach((filter) => {
+      console.log('a', { currentStyle, filter })
+      filter.options
+        .filter((o) => o.default)
+        .forEach((option) => {
+          const filterOptionKey = createTopicStyleFilterOptionKey(
+            topicId,
+            styleId,
+            filter.id,
+            option.id
+          )
+          console.log('b', { option, filterOptionKey })
+
+          if (!filterOptionKey) return
+          pushState((state) => {
+            state.selectedStylesFilterOptionKeys = changeFilter({
+              selectedStylesFilterOptionKeys,
+              changeKey: filterOptionKey,
+              state,
+            })
+          })
+        })
+    })
   }
 
   const activeTopicsWithMultipeStyles = mapDataConfig.topics.filter((t) => {
@@ -58,6 +93,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
 
   if (!activeTopicsWithMultipeStyles.length) return null
 
+  if (!selectedStyleKeys || !selectedStylesFilterOptionKeys) return null
   return (
     <section className="mt-1 rounded border px-2 py-2.5">
       {activeTopicsWithMultipeStyles.map((topic) => {

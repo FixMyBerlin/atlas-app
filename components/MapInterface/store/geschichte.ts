@@ -6,6 +6,8 @@ import {
   MapDataConfigTopicStyleIds,
 } from '../Map/mapData'
 import { MapDataConfigThemeIds } from '../Map/mapData/themesMapDataConfig'
+import { MapDataConfigTopicsWithState } from './mapDataConfigTopicsWithState'
+import { objectSerializer } from './objectSerializer'
 
 // These Types holds a combination of all Topic>Styles, even those that are not actually there.
 // In other words: The Style part doe not know about the hierarchy of the Topic part.
@@ -28,11 +30,12 @@ export type GeschichteStore = {
     lng: number
     zoom: number
   }
+  config: MapDataConfigTopicsWithState | null // TODO handle the NULL case at startup
   selectedBackgroundId: MapDataConfigSourcesRasterIds
-  selectedThemeId: MapDataConfigThemeIds
-  selectedTopicIds: MapDataConfigTopicIds[]
-  selectedStyleKeys: TopicStyleKey[]
-  selectedStylesFilterOptionKeys: TopicStyleFilterOptionKey[]
+  selectedThemeId: MapDataConfigThemeIds | null
+  selectedTopicIds: MapDataConfigTopicIds[] | null
+  selectedStyleKeys: TopicStyleKey[] | null
+  selectedStylesFilterOptionKeys: TopicStyleFilterOptionKey[] | null
 }
 
 // third param: (value?: V, initialValue?: V) => boolean  /** define an optional skip function which will determine if the parameter will be included in the url or not */
@@ -42,6 +45,7 @@ const geschichteConfig = {
     lng: pm('lng', serializers.float, () => false),
     zoom: pm('z', serializers.float, () => false),
   },
+  config: pm('config', objectSerializer, () => false),
   selectedBackgroundId: pm('bg', serializers.string, () => false),
   selectedThemeId: pm('theme', serializers.string, () => false),
   selectedTopicIds: pm('topics', serializers.arrayString, () => false),
@@ -59,11 +63,12 @@ export const geschichteDefaultValues: GeschichteStore = {
     lng: 13.4381,
     zoom: 16,
   },
+  config: null,
   selectedBackgroundId: 'default',
-  selectedThemeId: 'parking',
-  selectedTopicIds: ['parking', 'boundaries'],
-  selectedStyleKeys: [],
-  selectedStylesFilterOptionKeys: [],
+  selectedThemeId: null,
+  selectedTopicIds: null,
+  selectedStyleKeys: null,
+  selectedStylesFilterOptionKeys: null,
 }
 
 export const { useQuery } = factoryParameters(

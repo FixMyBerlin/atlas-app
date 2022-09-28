@@ -81,7 +81,7 @@ export const Map: React.FC = () => {
   }
 
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
-    pushState((state: GeschichteStore) => {
+    pushState((state) => {
       const zoom = event.viewState.zoom
       state.map.zoom = roundNumber(zoom, 1)
       state.map.lat = roundByZoom(event.viewState.latitude, zoom)

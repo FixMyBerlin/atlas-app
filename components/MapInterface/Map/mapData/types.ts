@@ -71,6 +71,7 @@ export type MapDataConfigStyleInteractiveFilter = {
   id: MapDataConfigTopicStyleFilterIds
   name: string
   desc?: string
+  inputType: 'checkbox' | 'radiobutton'
   filterConfig: { lookupKey: string }
   options: MapDataConfigStyleInteractiveFilterOption[]
 }

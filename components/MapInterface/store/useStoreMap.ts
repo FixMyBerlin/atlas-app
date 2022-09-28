@@ -4,9 +4,15 @@ import { MapDataConfigTopic } from '../Map/mapData'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-export type StoreMap = StoreInteractiveLayer &
+export type StoreMap = StateInitialization &
+  StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
+
+type StateInitialization = {
+  initialized: boolean
+  setInitialized: (initizalized: true) => void
+}
 
 type StoreInteractiveLayer = {
   interactiveLayerIds: string[] | []
@@ -29,6 +35,9 @@ type StoreFeaturesCalculator = {
 }
 
 export const useStoreMap = create<StoreMap>((set, get) => ({
+  initialized: false,
+  setInitialized: (initialized) => set({ initialized }),
+
   interactiveLayerIds: [],
   addInteractiveLayerIds: (layerIdsToAdd) => {
     const { interactiveLayerIds } = get()

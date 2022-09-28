@@ -160,6 +160,7 @@ export const topicUnfallatlas: Topic = {
           id: 'years',
           name: 'Jahre',
           filterConfig: { lookupKey: 'UJAHR' },
+          inputType: 'checkbox',
           options: [
             { id: '2017', name: '2017' },
             { id: '2018', name: '2018', defaultActive: true },

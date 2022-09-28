@@ -1,10 +1,9 @@
 import React from 'react'
-import { SelectEntryCheckbox } from '../components'
+import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
-import { cleanupTargetIdFromEvent } from '../Map/utils'
-import { addGeschichte, removeGeschichte } from '../store'
 import { TopicStyleFilterOptionKey, useQuery } from '../store/geschichte'
 import { createTopicStyleFilterOptionKey, splitTopicStyleKey } from '../utils'
+import { changeFilter } from './utils'
 
 type Props = { scopeTopicId: MapDataConfigTopicIds }
 
@@ -15,7 +14,9 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   } = useQuery()
   const checkboxScope = 'filter'
 
-  const selectedStyleKey = selectedStyleKeys.find((s) =>
+  // TODO Extracting the different IDs, Keys and objects form state and mapDataConfig
+  // feels too hacky.
+  const selectedStyleKey = selectedStyleKeys?.find((s) =>
     s.startsWith(scopeTopicId)
   )
   if (!selectedStyleKey) return null
@@ -29,25 +30,16 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const filterKey = event.target.value as TopicStyleFilterOptionKey
 
-    if (selectedStylesFilterOptionKeys?.includes(filterKey)) {
-      pushState((state) => {
-        state.selectedStylesFilterOptionKeys =
-          removeGeschichte<TopicStyleFilterOptionKey>(
-            state.selectedStylesFilterOptionKeys,
-            filterKey
-          )
+    pushState((state) => {
+      state.selectedStylesFilterOptionKeys = changeFilter({
+        selectedStylesFilterOptionKeys,
+        changeKey: filterKey,
+        state,
       })
-    } else {
-      pushState((state) => {
-        state.selectedStylesFilterOptionKeys =
-          addGeschichte<TopicStyleFilterOptionKey>(
-            state.selectedStylesFilterOptionKeys,
-            filterKey
-          )
-      })
-    }
+    })
   }
 
+  if (!selectedStyleKeys || !selectedStylesFilterOptionKeys) return null
   return (
     <section className="mt-1 rounded border px-2 py-2.5">
       {selectedStyle.interactiveFilters.map((filter) => {
@@ -65,20 +57,35 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
                     option.id
                   )
                   if (!key) return null
+
                   const active = selectedStylesFilterOptionKeys.includes(key)
-                  // The filter list must have one entry, otherwise the map style fails
-                  // so we disable the last active one.
-                  const disabled =
-                    !!active && selectedStylesFilterOptionKeys.length === 1
+
+                  if (filter.inputType === 'checkbox') {
+                    // The filter list must have one entry, otherwise the map style fails
+                    // so we disable the last active one.
+                    const disabled =
+                      !!active && selectedStylesFilterOptionKeys.length === 1
+
+                    return (
+                      <SelectEntryCheckbox
+                        scope={checkboxScope}
+                        key={key}
+                        id={key}
+                        label={option.name}
+                        active={active}
+                        disabled={disabled}
+                        onChange={onChange}
+                      />
+                    )
+                  }
 
                   return (
-                    <SelectEntryCheckbox
+                    <SelectEntryRadiobutton
                       scope={checkboxScope}
                       key={key}
                       id={key}
                       label={option.name}
                       active={active}
-                      disabled={disabled}
                       onChange={onChange}
                     />
                   )

@@ -58,7 +58,7 @@ export const SourceAndLayers: React.FC = () => {
                 selectedTopicIds.includes(topic.id) &&
                 style.id === 'default'
                   ? true
-                  : selectedStyleKeys.includes(
+                  : selectedStyleKeys?.includes(
                       createTopicStyleKey(topic.id, style.id)
                     )
 

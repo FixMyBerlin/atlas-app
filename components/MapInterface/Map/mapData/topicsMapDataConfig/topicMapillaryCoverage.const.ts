@@ -2,7 +2,7 @@ import { MapDataConfigTopic } from '../types'
 
 export type TopicMapillaryCoverageId = 'mapillaryCoverage'
 export type TopicMapillaryCoverageStyleIds = 'default'
-export type TopicMapillaryCoverageStyleFilterIds = ''
+export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
 type Topic = MapDataConfigTopic
 
@@ -45,7 +45,19 @@ export const topicMapillaryCoverage: Topic = {
           enableCalculator: false,
         },
       ],
-      interactiveFilters: null,
+      interactiveFilters: [
+        {
+          id: 'panorama',
+          name: 'Panorama',
+          filterConfig: { lookupKey: 'is_pano' },
+          inputType: 'radiobutton',
+          options: [
+            { id: 'true', name: 'Ja' },
+            { id: 'false', name: 'Nein' },
+            { id: 'nil', name: 'Egal', defaultActive: true },
+          ],
+        },
+      ],
     },
   ],
 }
