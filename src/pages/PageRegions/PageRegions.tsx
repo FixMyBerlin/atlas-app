@@ -4,14 +4,14 @@ import { LocationGenerics } from '../../routes'
 export const PageRegions: React.FC = () => {
   const {
     data: { regions },
-    search: { notFound },
+    search: { regionPathNotFound },
   } = useMatch<LocationGenerics>()
 
   return (
     <>
-      {!!notFound && (
+      {!!regionPathNotFound && (
         <p>
-          <code>{notFound}</code> konnte nicht gefunden werden.
+          <code>{regionPathNotFound}</code> konnte nicht gefunden werden.
         </p>
       )}
       <h1>Bitte wähle eine Region:</h1>

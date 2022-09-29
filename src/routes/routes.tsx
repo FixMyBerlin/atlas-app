@@ -1,4 +1,7 @@
 import { MakeGenerics, ReactLocation, Route } from '@tanstack/react-location'
+import { MapDataConfigTheme } from '../components/MapInterface/Map/mapData'
+import { MapDataConfigThemeIds } from '../components/MapInterface/Map/mapData/themesMapDataConfig'
+import { MapDataConfigTopicsWithState } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
 import {
   Page404,
   PageContact,
@@ -25,13 +28,12 @@ export type LocationGenerics = MakeGenerics<{
     regionPath: string
   }
   Search: {
-    notFound: string
-    showNotes: boolean
-    notes: string
-    usersView: {
-      sortBy?: 'name' | 'id' | 'email'
-      filterBy?: string
-    }
+    regionPathNotFound: string
+    theme: MapDataConfigThemeIds
+    lat: number
+    lng: number
+    zoom: number
+    config: MapDataConfigTopicsWithState
   }
 }>
 
