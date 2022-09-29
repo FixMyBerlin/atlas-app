@@ -1,21 +1,28 @@
 import { MakeGenerics, ReactLocation, Route } from '@tanstack/react-location'
-import { PageContact, PageHome, PageMap, PagePrivacyStatement } from '../pages'
+import {
+  PageContact,
+  PageHome,
+  PageMapIndex,
+  PageMapRegion,
+  PagePrivacyStatement,
+  Region,
+} from '../pages'
 import Page404 from '../pages/Page404'
+import { fetchRegions } from './fetchRegions'
 
 // LoaderData: LoaderData<unknown>;
 // Params: Params<string>;
 // Search: Search<unknown>;
 // RouteMeta: RouteMeta<unknown>;
-type LocationGenerics = MakeGenerics<{
+export type LocationGenerics = MakeGenerics<{
   LoaderData: {
-    expensiveTimestamp: number
-    reallyExpensiveTimestamp: number
+    regions: Region[]
   }
   Params: {
-    invoiceId: string
-    userId: string
+    regionPath: string
   }
   Search: {
+    notFound: string
     showNotes: boolean
     notes: string
     usersView: {
@@ -29,7 +36,23 @@ export const location = new ReactLocation<LocationGenerics>()
 
 export const routes: Route<LocationGenerics>[] = [
   { path: '/', element: <PageHome /> },
-  { path: '/map', element: <PageMap /> },
+  {
+    // LATER: Add route loaders once we have a DB https://react-location.tanstack.com/guides/route-loaders
+    path: '/karte',
+    children: [
+      {
+        path: '/',
+        element: <PageMapIndex />,
+        loader: async () => {
+          return { regions: await fetchRegions() }
+        },
+      },
+      {
+        path: ':regionPath',
+        element: <PageMapRegion />,
+      },
+    ],
+  },
   {
     path: '/kontakt',
     element: <PageContact />,
