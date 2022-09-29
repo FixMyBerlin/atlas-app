@@ -4,7 +4,7 @@ import {
   PageHome,
   PageMapIndex,
   PageMapRegion,
-  PagePrivacyStatement,
+  PagePrivacy,
   Region,
 } from '../pages'
 import Page404 from '../pages/Page404'
@@ -59,7 +59,7 @@ export const routes: Route<LocationGenerics>[] = [
   },
   {
     path: '/datenschutz',
-    element: <PagePrivacyStatement />,
+    element: <PagePrivacy />,
   },
   {
     path: '*',
