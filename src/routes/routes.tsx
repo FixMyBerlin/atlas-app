@@ -1,14 +1,14 @@
 import { MakeGenerics, ReactLocation, Route } from '@tanstack/react-location'
 import {
+  Page404,
   PageContact,
   PageHome,
-  PageRegions,
-  PageRegionMap,
   PagePrivacy,
-  Region,
   PageRegionAction,
+  PageRegionMap,
+  PageRegions,
+  Region,
 } from '../pages'
-import Page404 from '../pages/Page404'
 import { fetchRegionByPath } from './fetchRegionByPath'
 import { fetchRegions } from './fetchRegions'
 
