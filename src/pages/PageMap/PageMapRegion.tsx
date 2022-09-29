@@ -1,12 +1,10 @@
 import { Navigate, useMatch } from '@tanstack/react-location'
-import { regionFromPath } from './regions'
 
 export const PageMapRegion: React.FC = () => {
   const {
+    data: { region },
     params: { regionPath },
   } = useMatch()
-
-  const region = regionFromPath(regionPath)
 
   if (region === undefined) {
     return <Navigate to="/karte" search={{ notFound: regionPath }} />

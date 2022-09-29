@@ -8,6 +8,7 @@ import {
   Region,
 } from '../pages'
 import Page404 from '../pages/Page404'
+import { fetchRegionByPath } from './fetchRegionByPath'
 import { fetchRegions } from './fetchRegions'
 
 // LoaderData: LoaderData<unknown>;
@@ -17,6 +18,7 @@ import { fetchRegions } from './fetchRegions'
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
     regions: Region[]
+    region: Region
   }
   Params: {
     regionPath: string
@@ -50,6 +52,11 @@ export const routes: Route<LocationGenerics>[] = [
       {
         path: ':regionPath',
         element: <PageMapRegion />,
+        loader: async ({ params: { regionPath } }) => {
+          return {
+            region: await fetchRegionByPath(regionPath),
+          }
+        },
       },
     ],
   },
