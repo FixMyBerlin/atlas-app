@@ -7,12 +7,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run check && vite build",
     "preview": "vite preview",
     "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
-    "check": "npm run type-check && npm run lint && npm run format"
+    "test": "print 'todo: setup test framework'",
+    "check": "npm run type-check && npm run lint && npm run format && npm run test"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.2",
