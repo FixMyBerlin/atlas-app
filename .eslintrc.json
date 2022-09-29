@@ -15,7 +15,9 @@
     "plugin:prettier/recommended"
   ],
   // Docs: off=0, warn=1, error=2, see https://eslint.org/docs/user-guide/configuring/rules
-  "rules": {},
+  "rules": {
+    "react/prop-types": "off"
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
