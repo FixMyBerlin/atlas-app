@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "type-check": "tsc",
+    "lint": "next lint",
+    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "check": "npm run type-check && npm run lint && npm run format && npm run test"
   },
   "dependencies": {
     "@tanstack/react-location": "^3.7.4",
