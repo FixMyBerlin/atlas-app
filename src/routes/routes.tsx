@@ -57,6 +57,8 @@ export const routes: Route<LocationGenerics>[] = [
             region: await fetchRegionByPath(regionPath),
           }
         },
+        // TODO figure out how to use the error-Handling to catch non-existing regionPath's
+        // errorElement: <PageMapIndex regionPathNotFound />,
       },
     ],
   },
