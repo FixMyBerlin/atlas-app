@@ -1,6 +1,5 @@
 import { Outlet, Router,ReactLocation,MakeGenerics,Route } from "@tanstack/react-location";
 import { ReactLocationDevtools } from '@tanstack/react-location-devtools';
-import './App.css';
 
 export type LocationGenerics = MakeGenerics<{
   LoaderData: {
