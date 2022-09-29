@@ -20,6 +20,7 @@
   "exportall.config.folderListener": [
     "/components/MapInterface/Map/mapData/SourceAndLayers/utils",
     "/components/MapInterface/Map/mapData/topicsMapDataConfig",
-    "/components/utils"
+    "/components/utils",
+    "/src/pages"
   ]
 }
