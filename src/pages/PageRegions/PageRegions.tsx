@@ -1,7 +1,7 @@
 import { Link, useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 
-export const PageMapIndex: React.FC = () => {
+export const PageRegions: React.FC = () => {
   const {
     data: { regions },
     search: { notFound },
@@ -19,7 +19,7 @@ export const PageMapIndex: React.FC = () => {
         {regions?.map((region) => {
           return (
             <li key={region.path}>
-              <Link to={`/karte/${region.path}`}>{region.name}</Link>
+              <Link to={`/regionen/${region.path}`}>{region.name}</Link>
             </li>
           )
         })}

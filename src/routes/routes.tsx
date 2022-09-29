@@ -2,10 +2,11 @@ import { MakeGenerics, ReactLocation, Route } from '@tanstack/react-location'
 import {
   PageContact,
   PageHome,
-  PageMapIndex,
-  PageMapRegion,
+  PageRegions,
+  PageRegionMap,
   PagePrivacy,
   Region,
+  PageRegionAction,
 } from '../pages'
 import Page404 from '../pages/Page404'
 import { fetchRegionByPath } from './fetchRegionByPath'
@@ -37,28 +38,44 @@ export type LocationGenerics = MakeGenerics<{
 export const location = new ReactLocation<LocationGenerics>()
 
 export const routes: Route<LocationGenerics>[] = [
-  { path: '/', element: <PageHome /> },
   {
-    // LATER: Add route loaders once we have a DB https://react-location.tanstack.com/guides/route-loaders
-    path: '/karte',
+    path: '/',
+    element: <PageHome />,
+  },
+  {
+    path: '/regionen',
     children: [
       {
         path: '/',
-        element: <PageMapIndex />,
+        element: <PageRegions />,
         loader: async () => {
           return { regions: await fetchRegions() }
         },
       },
       {
         path: ':regionPath',
-        element: <PageMapRegion />,
-        loader: async ({ params: { regionPath } }) => {
-          return {
-            region: await fetchRegionByPath(regionPath),
-          }
-        },
-        // TODO figure out how to use the error-Handling to catch non-existing regionPath's
-        // errorElement: <PageMapIndex regionPathNotFound />,
+        children: [
+          {
+            path: '/',
+            element: <PageRegionMap />,
+            loader: async ({ params: { regionPath } }) => {
+              return {
+                region: await fetchRegionByPath(regionPath),
+              }
+            },
+            // TODO figure out how to use the error-Handling to catch non-existing regionPath's
+            // errorElement: <PageMapIndex regionPathNotFound />,
+          },
+          {
+            path: '/mitmachen',
+            element: <PageRegionAction />,
+            loader: async ({ params: { regionPath } }) => {
+              return {
+                region: await fetchRegionByPath(regionPath),
+              }
+            },
+          },
+        ],
       },
     ],
   },
