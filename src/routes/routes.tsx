@@ -11,7 +11,7 @@ import {
   PageRegionMap,
   PageRegions,
   Region,
-} from '../pages'
+} from '@pages/index'
 import { fetchRegionByPath } from './fetchRegionByPath'
 import { fetchRegions } from './fetchRegions'
 
