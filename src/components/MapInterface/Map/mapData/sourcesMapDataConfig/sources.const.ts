@@ -24,35 +24,47 @@ export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
   },
   {
     id: 'unfallatlas',
-    tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`,
+    tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${
+      import.meta.env.MAPBOX_ACCESS_TOKEN
+    }`,
     attributionHtml: 'todo', // TODO
   },
   {
     id: 'tarmacHighways',
-    tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`,
+    tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${
+      import.meta.env.MAPBOX_ACCESS_TOKEN
+    }`,
     attributionHtml: 'todo', // TODO
   },
   {
     id: 'tarmacPois',
-    tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`,
+    tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${
+      import.meta.env.MAPBOX_ACCESS_TOKEN
+    }`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
     id: 'mapillaryCoverage',
-    tiles: `https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPILLARY_ACCESS_TOKEN}`,
+    tiles: `https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=${
+      import.meta.env.MAPILLARY_ACCESS_TOKEN
+    }`,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#point-tiles
     id: 'mapillaryMapfeatures',
-    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPILLARY_ACCESS_TOKEN}`,
+    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${
+      import.meta.env.MAPILLARY_ACCESS_TOKEN
+    }`,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#traffic-sign-tiles
     id: 'mapillaryTrafficSigns',
-    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${process.env.NEXT_PUBLIC_MAPILLARY_ACCESS_TOKEN}`,
+    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${
+      import.meta.env.MAPILLARY_ACCESS_TOKEN
+    }`,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
 ]
