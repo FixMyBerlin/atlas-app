@@ -3,7 +3,7 @@ import {
   FlatMapDataFilterOption,
   flatMapFilterOptionData,
 } from '../flatMapData'
-import { TopicStyleFilterOptionKey } from '../geschichte'
+import { TopicStyleFilterOptionKey } from '../geschichte.TODO_ts'
 import { addStateToObject, ObjectWithState } from './addStateToObject'
 
 export const flatFilterOptionsMapDataWithStateForConfig = (

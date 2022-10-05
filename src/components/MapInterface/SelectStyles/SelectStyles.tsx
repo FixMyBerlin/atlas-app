@@ -3,7 +3,7 @@ import { SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
 import { changeFilter } from '../SelectFilters/utils'
 import { addGeschichte, replaceGeschichte } from '../store'
-import { TopicStyleKey, useQuery } from '../store/geschichte'
+import { TopicStyleKey, useQuery } from '../store/geschichte.TODO_ts'
 import {
   createTopicStyleFilterOptionKey,
   createTopicStyleKey,

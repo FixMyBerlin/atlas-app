@@ -1,6 +1,6 @@
 import { mapDataConfig, MapDataConfigTopic } from '../../Map/mapData'
 import { flatMapFilterOptionData } from '../flatMapData'
-import { TopicStyleFilterOptionKey } from '../geschichte'
+import { TopicStyleFilterOptionKey } from '../geschichte.TODO_ts'
 
 export const selectedAndFlatMapFilterOptionDataForConfig = (
   thatMapDataConfigTopics: MapDataConfigTopic[],

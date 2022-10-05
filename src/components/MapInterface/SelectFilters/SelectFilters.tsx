@@ -1,7 +1,10 @@
 import React from 'react'
 import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
 import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
-import { TopicStyleFilterOptionKey, useQuery } from '../store/geschichte'
+import {
+  TopicStyleFilterOptionKey,
+  useQuery,
+} from '../store/geschichte.TODO_ts'
 import { createTopicStyleFilterOptionKey, splitTopicStyleKey } from '../utils'
 import { changeFilter } from './utils'
 

@@ -1,6 +1,6 @@
 import { mapDataConfig, MapDataConfigTopic } from '../../Map/mapData'
 import { FlatMapDataStyle, flatMapStyleData } from '../flatMapData'
-import { TopicStyleKey } from '../geschichte'
+import { TopicStyleKey } from '../geschichte.TODO_ts'
 import { addStateToObject, ObjectWithState } from './addStateToObject'
 
 export const flatStylesMapDataWithStateForConfig = (

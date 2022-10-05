@@ -1,6 +1,9 @@
 import { mapDataConfig, MapDataConfigTopic } from '../../Map/mapData'
 import { FlatMapDataFilter, flatMapFilterData } from '../flatMapData'
-import { TopicStyleFilterKey, TopicStyleFilterOptionKey } from '../geschichte'
+import {
+  TopicStyleFilterKey,
+  TopicStyleFilterOptionKey,
+} from '../geschichte.TODO_ts'
 import { addStateToObject, ObjectWithState } from './addStateToObject'
 
 export const flatFiltersMapDataWithStateForConfig = (

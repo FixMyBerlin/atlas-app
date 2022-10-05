@@ -1,6 +1,6 @@
 import { MapDataConfigTopic, MapDataConfigTopicIds } from '../../Map/mapData'
 import { FlatMapData } from '../flatMapData'
-import { TopicStyleFilterOptionKey, TopicStyleKey } from '../geschichte'
+import { TopicStyleFilterOptionKey, TopicStyleKey } from '../geschichte.TODO_ts'
 import { selectedAndFlatMapFilterDataForConfig } from './selectedAndFlatMapFilterData'
 import { selectedAndFlatMapFilterOptionDataForConfig } from './selectedAndFlatMapFilterOptionData'
 import { selectedAndFlatMapStyleDataForConfig } from './selectedAndFlatMapStyleData'
