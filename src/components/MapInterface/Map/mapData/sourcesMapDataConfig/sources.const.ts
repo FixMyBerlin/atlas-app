@@ -49,6 +49,8 @@ export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
     tiles: `https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=${
       import.meta.env.MAPILLARY_ACCESS_TOKEN
     }`,
+    minzoom: 0,
+    maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
   {
@@ -57,6 +59,8 @@ export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
     tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${
       import.meta.env.MAPILLARY_ACCESS_TOKEN
     }`,
+    minzoom: 14,
+    maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
   {
@@ -65,6 +69,8 @@ export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
     tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${
       import.meta.env.MAPILLARY_ACCESS_TOKEN
     }`,
+    minzoom: 14,
+    maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
 ]

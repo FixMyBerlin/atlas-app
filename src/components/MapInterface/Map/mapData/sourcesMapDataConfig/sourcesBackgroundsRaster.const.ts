@@ -146,8 +146,8 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       tiles: 'https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
       // 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
       // tileSize: 256, // TODO figure out if we need this
-      minzoom: 10,
-      maxzoom: 14,
+      minzoom: 0,
+      maxzoom: 20,
       attributionHtml:
         '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://www.cyclosm.org/#map={z}/{x}/{y}/cyclosm',
@@ -161,7 +161,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
         'https://tile.thunderforest.com/cycle/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
       tileSize: 512,
       minzoom: 10,
-      maxzoom: 18,
+      maxzoom: 22,
       attributionHtml:
         'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://www.opencyclemap.org/docs/',
@@ -188,7 +188,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
         'https://tile.thunderforest.com/transport/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
       // tileSize: 512,
       minzoom: 10,
-      maxzoom: 18,
+      maxzoom: 22,
       attributionHtml:
         'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
@@ -201,7 +201,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
         'https://tile.thunderforest.com/landscape/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
       // tileSize: 512,
       minzoom: 10,
-      maxzoom: 18,
+      maxzoom: 22,
       attributionHtml:
         'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
@@ -214,7 +214,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
         'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
       // tileSize: 512,
       minzoom: 10,
-      maxzoom: 18,
+      maxzoom: 22,
       attributionHtml:
         'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     },
@@ -225,8 +225,8 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       name: 'Radrouten',
       type: 'raster',
       tiles: 'https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
-      minzoom: 10,
-      maxzoom: 18,
+      minzoom: 0,
+      maxzoom: 15,
       attributionHtml:
         'Routenoverlay CC-BY-SA <a href="https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}',
@@ -238,8 +238,8 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       name: 'Wanderrouten',
       type: 'raster',
       tiles: 'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
-      minzoom: 10,
-      maxzoom: 18,
+      minzoom: 0,
+      maxzoom: 15,
       attributionHtml:
         'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
