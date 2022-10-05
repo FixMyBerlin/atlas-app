@@ -1,5 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
+import { LocationGenerics } from '@routes/routes'
+import { useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
 import {
@@ -7,23 +9,28 @@ import {
   sourcesBackgroundsRaster,
 } from '../Map/mapData'
 import { useStoreMap } from '../store'
-import { useQuery } from '../store/geschichte'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
-  const {
-    values: { selectedBackgroundId },
-    pushState,
-  } = useQuery()
-
   const { mainMap } = useMap()
   const { calculatorFeatures } = useStoreMap()
+  const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
+
+  const navigate = useNavigate<LocationGenerics>()
+  const onChange = (value: MapDataConfigSourcesRasterIds) => {
+    navigate({
+      search: (old) => {
+        return {
+          ...old,
+          bg: value as MapDataConfigSourcesRasterIds,
+        }
+      },
+    })
+  }
+
   if (!mainMap) return null
   if (calculatorFeatures.length) return null
-
-  const onChange = (value: MapDataConfigSourcesRasterIds) => {
-    pushState((state) => (state.selectedBackgroundId = value))
-  }
+  if (!selectedBackgroundId) return null
 
   return (
     <Listbox

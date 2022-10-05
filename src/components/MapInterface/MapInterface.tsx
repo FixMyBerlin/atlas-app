@@ -13,8 +13,8 @@ export const MapInterface: React.FC = () => {
       <div className="relative flex h-full w-full flex-row gap-4">
         <SelectTheme />
         <Map />
-        {/* <SelectBackgroundWithLegend />
-        <SelectTopics />
+        <SelectBackgroundWithLegend />
+        {/* <SelectTopics />
         <Calculator />
         <Inspector /> */}
       </div>

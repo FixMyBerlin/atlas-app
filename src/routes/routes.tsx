@@ -1,3 +1,4 @@
+import { MapDataConfigSourcesRasterIds } from '@components/MapInterface/Map/mapData'
 import {
   Page404,
   PageAbout,
@@ -41,6 +42,7 @@ export type LocationGenerics = MakeGenerics<{
     lat: number
     lng: number
     zoom: number
+    bg: MapDataConfigSourcesRasterIds
     config: MapDataConfigTopicsWithState
   }
 }>

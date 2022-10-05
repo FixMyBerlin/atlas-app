@@ -1,17 +1,18 @@
-import { Link } from '@/components/Link'
+import { Link } from '@components/Link'
 import { MapIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { LocationGenerics } from '@routes/routes'
+import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { mapDataConfig } from '../Map/mapData'
-import { useQuery } from '../store'
 import { replaceZxy } from '../utils/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {
   const {
-    values: {
-      selectedBackgroundId,
-      map: { zoom, lat, lng },
-    },
-  } = useQuery()
+    bg: selectedBackgroundId,
+    lat,
+    lng,
+    zoom,
+  } = useSearch<LocationGenerics>()
 
   const selectedBackground = mapDataConfig.backgrounds.find(
     (b) => b.id === selectedBackgroundId

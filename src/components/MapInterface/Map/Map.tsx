@@ -13,6 +13,7 @@ import {
 import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
 import { StoreDebugBox, useStoreMap } from '../store'
+import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
@@ -23,6 +24,7 @@ export const Map: React.FC = () => {
     lat,
     lng,
     zoom,
+    bg: _selectedBackgroundId,
     config: _TODO_config,
   } = useSearch<LocationGenerics>()
   const {
@@ -91,11 +93,9 @@ export const Map: React.FC = () => {
     const mapCenter = mainMap?.getCenter()
     const mapZoom = mainMap?.getZoom()
     if (!mapCenter || !mapZoom) {
-      console.log('escape 1')
       return
     }
     if (lat === mapCenter?.lat && lng === mapCenter?.lng && zoom === mapZoom) {
-      console.log('escape 2')
       return
     }
     mainMap?.flyTo({
@@ -107,9 +107,10 @@ export const Map: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
     navigate({
-      search: (_old) => {
+      search: (old) => {
         const zoom = event.viewState.zoom
         return {
+          ...old,
           lat: roundByZoom(event.viewState.latitude, zoom),
           lng: roundByZoom(event.viewState.longitude, zoom),
           zoom: roundNumber(zoom, 1),
@@ -143,7 +144,7 @@ export const Map: React.FC = () => {
       onLoad={handleLoad}
     >
       {/* <SourceAndLayers /> */}
-      {/* <SourcesLayerRasterBackgrounds /> // TODO REACKTIVE */}
+      <SourcesLayerRasterBackgrounds />
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}

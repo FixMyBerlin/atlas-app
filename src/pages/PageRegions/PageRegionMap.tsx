@@ -36,6 +36,7 @@ export const PageRegionMap: React.FC = () => {
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
           theme: old?.theme ?? 'surface', // TODO decide on a default theme on the region
+          bg: 'default',
           config: mapDataConfigTopicsWithState({ themeId: 'surface' }), // TODO implement the theme feature, pick a default
         }
       },
