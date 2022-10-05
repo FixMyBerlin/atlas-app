@@ -18,11 +18,14 @@
   "dependencies": {
     "@headlessui/react": "^1.7.2",
     "@tanstack/react-location": "^3.7.4",
+    "immer": "^9.0.15",
     "maplibre-gl": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-map-gl": "^7.0.19"
+    "react-map-gl": "^7.0.19",
+    "zipson": "^0.2.12",
+    "zustand": "^4.1.1"
   },
   "overrides": {
     "@tanstack/react-location-devtools": {

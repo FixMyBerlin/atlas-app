@@ -5,7 +5,7 @@ import { location, routes } from './routes'
 const App = () => {
   return (
     <Router location={location} routes={routes}>
-      <main>
+      <main className="relative flex-auto">
         <Outlet />
       </main>
       <ReactLocationDevtools initialIsOpen={false} />

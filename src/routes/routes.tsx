@@ -1,7 +1,3 @@
-import { MakeGenerics, ReactLocation, Route } from '@tanstack/react-location'
-import { MapDataConfigTheme } from '../components/MapInterface/Map/mapData'
-import { MapDataConfigThemeIds } from '../components/MapInterface/Map/mapData/themesMapDataConfig'
-import { MapDataConfigTopicsWithState } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
 import {
   Page404,
   PageContact,
@@ -12,6 +8,17 @@ import {
   PageRegions,
   Region,
 } from '@pages/index'
+import {
+  MakeGenerics,
+  parseSearchWith,
+  ReactLocation,
+  Route,
+  stringifySearchWith,
+} from '@tanstack/react-location'
+import { MapDataConfigThemeIds } from '../components/MapInterface/Map/mapData/themesMapDataConfig'
+import { MapDataConfigTopicsWithState } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
+
+import { decodeAndParse, encodeAndStringify } from './encodeDecode'
 import { fetchRegionByPath } from './fetchRegionByPath'
 import { fetchRegions } from './fetchRegions'
 
@@ -37,7 +44,10 @@ export type LocationGenerics = MakeGenerics<{
   }
 }>
 
-export const location = new ReactLocation<LocationGenerics>()
+export const location = new ReactLocation<LocationGenerics>({
+  parseSearch: parseSearchWith((value) => decodeAndParse(value)),
+  stringifySearch: stringifySearchWith((value) => encodeAndStringify(value)),
+})
 
 export const routes: Route<LocationGenerics>[] = [
   {

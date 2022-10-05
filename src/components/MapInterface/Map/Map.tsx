@@ -1,31 +1,35 @@
+import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Map as MapGl,
   MapboxEvent,
   MapLayerMouseEvent,
   NavigationControl,
+  useMap,
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { useStore } from 'zustand'
+import { LocationGenerics } from '../../../routes'
 import { StoreDebugBox, useStoreMap } from '../store'
-import {
-  geschichteDefaultValues,
-  GeschichteStore,
-  useQuery,
-} from '../store/geschichte'
-import { SourcesLayerRasterBackgrounds } from './backgrounds'
-import { SourceAndLayers } from './mapData/SourceAndLayers'
-
 import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
 export const Map: React.FC = () => {
-  const [cursorStyle, setCursorStyle] = useState('grab')
+  const {
+    theme: _theme,
+    lat,
+    lng,
+    zoom,
+    config: _TODO_config,
+  } = useSearch<LocationGenerics>()
+  const {
+    data: { region },
+  } = useMatch<LocationGenerics>()
 
-  const { values, pushState } = useQuery()
+  const [cursorStyle, setCursorStyle] = useState('grab')
 
   const zustandValues = useStore(useStoreMap)
   const {
@@ -57,38 +61,63 @@ export const Map: React.FC = () => {
       }
     })
   }
+
+  // TODO: We might not need this. We use it for debuggin only, ATM
   const handleLoad = (event: MapboxEvent) => {
     // Just for debugging
     const style = event.target.getStyle()
     const allLayer = style.layers
-    // @ts-ignore
+    // @ts-ignore: not relevant
     const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-    // @ts-ignore
+    // @ts-ignore: not relevant
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     const sources = style.sources
 
     addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
-    console.log('onLoad', { event, ourLayer, basemapLayer, sources })
-
-    // Initial values from geschichte
-    // TODO – This is not ideal. We start at the default location an fly to the URL location.
-    //  Can/should we wait for the state to be present before initializing the map?
-    const map = event.target
-    map.flyTo({
-      center: [values.map.lng, values.map.lat],
-      zoom: values.map.zoom,
+    const mapCenter = mainMap?.getCenter()
+    const mapZoom = mainMap?.getZoom()
+    console.log('onLoad', {
+      event,
+      ourLayer,
+      basemapLayer,
+      sources,
+      ...{ ...mapCenter, mapZoom },
     })
   }
 
+  // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
+  const { mainMap } = useMap()
+  useEffect(() => {
+    const mapCenter = mainMap?.getCenter()
+    const mapZoom = mainMap?.getZoom()
+    if (!mapCenter || !mapZoom) {
+      console.log('escape 1')
+      return
+    }
+    if (lat === mapCenter?.lat && lng === mapCenter?.lng && zoom === mapZoom) {
+      console.log('escape 2')
+      return
+    }
+    mainMap?.flyTo({
+      center: [lng || 0, lat || 0],
+      zoom: zoom,
+    })
+  }, [lat, lng, zoom])
+
+  const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
-    pushState((state) => {
-      const zoom = event.viewState.zoom
-      state.map.zoom = roundNumber(zoom, 1)
-      state.map.lat = roundByZoom(event.viewState.latitude, zoom)
-      state.map.lng = roundByZoom(event.viewState.longitude, zoom)
+    navigate({
+      search: (_old) => {
+        const zoom = event.viewState.zoom
+        return {
+          lat: roundByZoom(event.viewState.latitude, zoom),
+          lng: roundByZoom(event.viewState.longitude, zoom),
+          zoom: roundNumber(zoom, 1),
+        }
+      },
+      replace: true,
     })
   }
-
   return (
     <MapGl
       id="mainMap"
@@ -113,13 +142,13 @@ export const Map: React.FC = () => {
       onClick={handleClick}
       onLoad={handleLoad}
     >
-      <SourceAndLayers />
-      <SourcesLayerRasterBackgrounds />
+      {/* <SourceAndLayers /> */}
+      {/* <SourcesLayerRasterBackgrounds /> // TODO REACKTIVE */}
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
 
-      <StoreDebugBox geschichteValues={values} zustandValues={zustandValues} />
+      <StoreDebugBox zustandValues={zustandValues} />
     </MapGl>
   )
 }

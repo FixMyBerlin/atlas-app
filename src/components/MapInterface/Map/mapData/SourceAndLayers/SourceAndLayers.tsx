@@ -1,21 +1,23 @@
-import { createTopicStyleKey } from '@/components/MapInterface/utils'
-import { useStoreMap } from '@/components/MapInterface/store'
-import { useQuery } from '@/components/MapInterface/store/geschichte'
-import React, { useState } from 'react'
-import { Layer, Source, useMap } from 'react-map-gl'
-import { useStore } from 'zustand'
+import React from 'react'
+import { Layer, Source } from 'react-map-gl'
+import { createTopicStyleKey } from '../../../utils'
 import { layerVisibility } from '../../utils'
 import { mapDataConfig } from '../mapDataConfig.const'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
-  const {
-    values: {
-      selectedTopicIds,
-      selectedStyleKeys,
-      selectedStylesFilterOptionKeys,
-    },
-  } = useQuery()
+  return null
+
+  const selectedTopicIds = null // TODO rework to use useSearch
+  const selectedStyleKeys = null // TODO rework to use useSearch
+  const selectedStylesFilterOptionKeys = null // TODO rework to use useSearch
+  // const {
+  //   values: {
+  //     selectedTopicIds,
+  //     selectedStyleKeys,
+  //     selectedStylesFilterOptionKeys,
+  //   },
+  // } = useQuery()
 
   return (
     <>
@@ -53,14 +55,14 @@ export const SourceAndLayers: React.FC = () => {
               // … the topic is active AND
               // … the style is active OR
               // … the style is default (since we do not add topics with just one style to the url/store)
-              const visible =
-                !!selectedTopicIds &&
-                selectedTopicIds.includes(topic.id) &&
-                style.id === 'default'
-                  ? true
-                  : selectedStyleKeys?.includes(
-                      createTopicStyleKey(topic.id, style.id)
-                    )
+              const visible = false // TODO react location
+              // !!selectedTopicIds &&
+              // selectedTopicIds.includes(topic.id) &&
+              // style.id === 'default'
+              //   ? true
+              //   : selectedStyleKeys?.includes(
+              //       createTopicStyleKey(topic.id, style.id)
+              //     )
 
               const visibility = layerVisibility(visible)
 
