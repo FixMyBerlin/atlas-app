@@ -21,12 +21,13 @@ if [ -f "${OSM_GERMANY}" ]; then
   osmium extract --overwrite --polygon=${FILTER_DIR}bibi.geojson --output=${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_GERMANY}
   osmium extract --overwrite --polygon=${FILTER_DIR}trto.geojson --output=${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_GERMANY}
   osmium extract --overwrite --polygon=${FILTER_DIR}eichwalde.geojson --output=${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_GERMANY}
+  osmium extract --overwrite --polygon=${FILTER_DIR}berlin-ring.geojson --output=${OSM_DATADIR}openstreetmap-berlin.osm.pbf ${OSM_GERMANY}
   # echo "☝️💥 SKIPPED FOR DEV"
 
   echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
   echo "🥐 osmium: merge regions, create one file"
   # Docs https://docs.osmcode.org/osmium/latest/osmium-merge.html
-  osmium merge --overwrite --output=${OSM_REGIONS} ${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf
+  osmium merge --overwrite --output=${OSM_REGIONS} ${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_DATADIR}openstreetmap-berlin.osm.pbf
   # echo "☝️💥 SKIPPED FOR DEV"
 
   echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
