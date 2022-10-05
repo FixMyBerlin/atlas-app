@@ -94,9 +94,9 @@ export const Map: React.FC = () => {
       id="mainMap"
       key={`mainMap-${interactiveLayerIds.join('')}`}
       initialViewState={{
-        longitude: geschichteDefaultValues.map.lng,
-        latitude: geschichteDefaultValues.map.lat,
-        zoom: geschichteDefaultValues.map.zoom,
+        longitude: region?.map?.lng || 10,
+        latitude: region?.map?.lat || 10,
+        zoom: region?.map?.zoom || 10,
       }}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
