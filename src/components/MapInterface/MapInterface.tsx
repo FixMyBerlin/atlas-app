@@ -11,7 +11,7 @@ export const MapInterface: React.FC = () => {
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
-        {/* <SelectTheme /> */}
+        <SelectTheme />
         <Map />
         {/* <SelectBackgroundWithLegend />
         <SelectTopics />

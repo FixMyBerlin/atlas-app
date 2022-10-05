@@ -1,3 +1,5 @@
+import { Layout } from '@components/Layout'
+
 export const PageContact: React.FC = () => {
-  return <>Hallo Kontakt</>
+  return <Layout>Hallo Kontakt</Layout>
 }

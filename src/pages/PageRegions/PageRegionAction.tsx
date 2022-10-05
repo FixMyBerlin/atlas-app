@@ -1,3 +1,4 @@
+import { Layout } from '@components/Layout'
 import { Navigate, useMatch } from '@tanstack/react-location'
 
 export const PageRegionAction: React.FC = () => {
@@ -13,8 +14,10 @@ export const PageRegionAction: React.FC = () => {
   }
 
   return (
-    <h1>
-      ACTION {regionPath}: {JSON.stringify(region)}
-    </h1>
+    <Layout>
+      <h1>
+        ACTION {regionPath}: {JSON.stringify(region)}
+      </h1>
+    </Layout>
   )
 }

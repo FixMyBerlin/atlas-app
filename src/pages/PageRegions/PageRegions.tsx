@@ -1,3 +1,4 @@
+import { Layout } from '@components/Layout'
 import { Link, useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 
@@ -8,7 +9,7 @@ export const PageRegions: React.FC = () => {
   } = useMatch<LocationGenerics>()
 
   return (
-    <>
+    <Layout>
       {!!regionPathNotFound && (
         <p>
           <code>{regionPathNotFound}</code> konnte nicht gefunden werden.
@@ -24,6 +25,6 @@ export const PageRegions: React.FC = () => {
           )
         })}
       </ul>
-    </>
+    </Layout>
   )
 }

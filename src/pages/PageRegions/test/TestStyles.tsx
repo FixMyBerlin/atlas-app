@@ -17,6 +17,7 @@ export const TestStyles: React.FC<{
   const toggleActive = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')
     const eventStyleId = event.target.getAttribute('data-styleid')
+
     navigate({
       search: (old) => {
         const oldConfig = old?.config

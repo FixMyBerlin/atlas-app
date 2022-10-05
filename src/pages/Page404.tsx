@@ -1,3 +1,5 @@
+import { Layout } from '@components/Layout'
+
 export const Page404: React.FC = () => {
-  return <>Hallo 404</>
+  return <Layout>Hallo 404</Layout>
 }

@@ -1,22 +1,30 @@
+import { LocationGenerics } from '@routes/routes'
+import { useNavigate, useSearch } from '@tanstack/react-location'
 import classNames from 'classnames'
-import React from 'react'
-import { themes } from '../Map/mapData/themesMapDataConfig'
-import { useQuery } from '../store'
+import {
+  MapDataConfigThemeIds,
+  themes,
+} from '../Map/mapData/themesMapDataConfig'
 
 // Source https://tailwindui.com/components/application-ui/navigation/tabs#component-83b472fc38b57e49a566805a5e5bb2f7
 export const SelectTheme = () => {
-  const {
-    values: { selectedThemeId },
-    pushState,
-  } = useQuery()
-  const themeIds = themes.map((t) => t.id)
+  const { theme: selectedThemeId } = useSearch<LocationGenerics>()
 
+  const navigate = useNavigate<LocationGenerics>()
   const selectTheme = (themeId: string) => {
-    pushState((state) => (state.selectedThemeId = themeId))
+    navigate({
+      search: (old) => {
+        return {
+          ...old,
+          theme: themeId as MapDataConfigThemeIds,
+        }
+      },
+    })
   }
 
   return (
     <section className="absolute top-3 left-5 z-10">
+      {/* Mobile */}
       <div className="sm:hidden">
         <label htmlFor="themeSelect" className="sr-only">
           Ein Thema auswählen
@@ -37,26 +45,26 @@ export const SelectTheme = () => {
         </select>
       </div>
 
+      {/* Desktop */}
       <div className="hidden sm:block">
         <nav
           className="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow-lg"
           aria-label="Thema auswhälen"
         >
-          {themeIds.map((themeId, tabIdx) => {
-            const theme = themes.find((t) => t.id == themeId)
+          {themes.map((theme, index) => {
             if (!theme) return null
-            const active = selectedThemeId === themeId
+            const active = selectedThemeId === theme.id
 
             return (
               <button
                 key={theme.name}
-                onClick={() => selectTheme(themeId)}
+                onClick={() => selectTheme(theme.id)}
                 className={classNames(
                   active
                     ? 'text-gray-900'
                     : 'text-gray-500 hover:text-gray-700',
-                  tabIdx === 0 ? 'rounded-l-lg' : '',
-                  tabIdx === themeIds.length - 1 ? 'rounded-r-lg' : '',
+                  index === 0 ? 'rounded-l-lg' : '',
+                  index === themes.length - 1 ? 'rounded-r-lg' : '',
                   'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
                   active
                     ? 'bg-yellow-400'

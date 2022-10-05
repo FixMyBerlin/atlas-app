@@ -5,8 +5,8 @@ export type FooterMenuItem = {
 const pages: FooterMenuItem[] = [{ name: 'Start', to: '/' }]
 
 const legal: FooterMenuItem[] = [
-  { name: 'Kontakt & Impressum', to: '/kontakt/' },
-  { name: 'Datenschutz', to: '/datenschutz/' },
+  { name: 'Kontakt & Impressum', to: '/kontakt' },
+  { name: 'Datenschutz', to: '/datenschutz' },
 ]
 
 export const footerLinks: { [key: string]: FooterMenuItem[] } = {

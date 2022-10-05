@@ -1,3 +1,2 @@
-export * from './Header'
-export * from './PrimaryNavigation'
-export * from './menu.const'
+export * from './HeaderRegionen/HeaderRegionen'
+export * from './HeaderApp/HeaderApp'

@@ -1,5 +1,6 @@
 import {
   Page404,
+  PageAbout,
   PageContact,
   PageHome,
   PagePrivacy,
@@ -90,6 +91,10 @@ export const routes: Route<LocationGenerics>[] = [
         ],
       },
     ],
+  },
+  {
+    path: '/ueber',
+    element: <PageAbout />,
   },
   {
     path: '/kontakt',

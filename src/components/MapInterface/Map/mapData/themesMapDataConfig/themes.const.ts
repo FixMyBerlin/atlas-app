@@ -13,6 +13,8 @@ export const themes: MapDataConfigTheme[] = [
     id: 'fromTo',
     name: 'Quellen & Ziele',
     desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
+    // TODO see mapDataConfigTopicsWithState
+    // topics: [{ id: 'foo', defaultActive: true }],
   },
   {
     id: 'bikelanes',

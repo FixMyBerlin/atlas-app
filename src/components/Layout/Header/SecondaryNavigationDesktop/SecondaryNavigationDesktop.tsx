@@ -1,9 +1,14 @@
+import { Link } from '@components/Link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
+import { useMatchRoute } from '@tanstack/react-location'
 import classNames from 'classnames'
 import React, { Fragment } from 'react'
+import { secondaryNavigationGrouped } from '../secondaryNavigation.const'
 
 export const SecondaryNavigationDesktop: React.FC = () => {
+  const matchRoute = useMatchRoute()
+
   return (
     <Disclosure as="div" className="hidden sm:block">
       {({ open }) => (
@@ -34,75 +39,33 @@ export const SecondaryNavigationDesktop: React.FC = () => {
                     static
                     className="absolute right-0 mt-6 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >
-                    <div className="px-1 py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            )}
-                          >
-                            Einstellungen
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            )}
-                          >
-                            Abmelden
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
-                    <div className="px-1 py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            )}
-                          >
-                            Feedback
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            )}
-                          >
-                            Datenschutz
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href="#"
-                            className={classNames(
-                              active ? 'bg-gray-100' : '',
-                              'block px-4 py-2 text-sm text-gray-700'
-                            )}
-                          >
-                            Kontakt &amp; Impressum
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </div>
+                    {secondaryNavigationGrouped.map((group, i) => {
+                      return (
+                        <div className="px-1 py-1" key={i}>
+                          {group.map((item, gi) => {
+                            // TOOD Links do not work ATM
+                            return (
+                              <Menu.Item key={gi}>
+                                {({ active }) => (
+                                  <Link
+                                    to={item.href}
+                                    className={classNames(
+                                      active ? 'bg-gray-100' : '',
+                                      matchRoute({ to: item.href })
+                                        ? 'bg-gray-200'
+                                        : '',
+                                      'block px-4 py-2 text-sm text-gray-700'
+                                    )}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                )}
+                              </Menu.Item>
+                            )
+                          })}
+                        </div>
+                      )
+                    })}
                   </Menu.Items>
                 </Menu>
               </Disclosure.Panel>

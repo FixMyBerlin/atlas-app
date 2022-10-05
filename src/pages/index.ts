@@ -1,4 +1,5 @@
 export * from './Page404'
+export * from './PageAbout'
 export * from './PageContact'
 export * from './PageHome'
 export * from './PagePrivacy'

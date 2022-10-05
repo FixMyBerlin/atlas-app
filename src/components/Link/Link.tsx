@@ -1,6 +1,6 @@
 import classNames from 'classnames'
-import NextLink from 'next/link'
 import React from 'react'
+import { Link as ReactLocationLink } from '@tanstack/react-location'
 
 type Props = {
   /** @desc Internal Link, external Link, e-mail-address (will add the `mailto:` automatically) */
@@ -65,8 +65,8 @@ export const Link: React.FC<Props> = ({
   }
 
   return (
-    <NextLink href={to} {...props}>
-      <a className={classes}>{children}</a>
-    </NextLink>
+    <ReactLocationLink href={to} {...props} className={classes}>
+      {children}
+    </ReactLocationLink>
   )
 }

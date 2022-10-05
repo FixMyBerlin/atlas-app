@@ -1,11 +1,21 @@
 import { Disclosure } from '@headlessui/react'
-import { Bars3Icon, MapIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useMatchRoute } from '@tanstack/react-location'
 import classNames from 'classnames'
 import React, { Fragment } from 'react'
-import { primaryNavigation } from '../menu.const'
 import { MobileMenu } from './MobileMenu'
+import { PrimaryNavigationProps } from './types'
 
-export const PrimaryNavigation: React.FC = () => {
+type Props = PrimaryNavigationProps & {
+  logo: React.ReactElement
+}
+
+export const PrimaryNavigation: React.FC<Props> = ({
+  primaryNavigation,
+  logo: Logo,
+}) => {
+  const matchRoute = useMatchRoute()
+
   return (
     <Disclosure as={Fragment}>
       {({ open }) => (
@@ -24,10 +34,7 @@ export const PrimaryNavigation: React.FC = () => {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               {/* Logo */}
-              <div className="flex flex-shrink-0 items-center">
-                <MapIcon className="block h-8 w-auto text-yellow-400 lg:hidden" />
-                <MapIcon className="hidden h-8 w-auto text-yellow-400 lg:block" />
-              </div>
+              <div className="flex flex-shrink-0 items-center">{Logo}</div>
               {/* Desktop: Menu (Line) */}
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
@@ -36,12 +43,14 @@ export const PrimaryNavigation: React.FC = () => {
                       key={item.name}
                       href={item.href}
                       className={classNames(
-                        item.current
+                        matchRoute({ to: item.href })
                           ? 'cursor-default bg-gray-900 text-white'
                           : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                         'rounded-md px-3 py-2 text-sm font-medium'
                       )}
-                      aria-current={item.current ? 'page' : undefined}
+                      aria-current={
+                        matchRoute({ to: item.href }) ? 'page' : undefined
+                      }
                     >
                       {item.name}
                     </a>
@@ -51,7 +60,7 @@ export const PrimaryNavigation: React.FC = () => {
             </div>
           </div>
 
-          <MobileMenu />
+          <MobileMenu primaryNavigation={primaryNavigation} />
         </>
       )}
     </Disclosure>

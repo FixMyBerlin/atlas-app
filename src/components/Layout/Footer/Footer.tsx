@@ -5,9 +5,10 @@ import { footerLinks } from './footerLinks.const'
 
 export const Footer: React.FC = () => {
   const { pages, legal } = footerLinks
+
   return (
     <footer
-      className="bg-dark-gray z-0 pt-6 pb-12"
+      className="z-0 bg-gray-800 pt-6 pb-12"
       aria-labelledby="footer-heading"
     >
       <div className="flex flex-row">
