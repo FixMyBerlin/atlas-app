@@ -7,10 +7,11 @@ import { MapDataConfigTopic } from '../types'
 
 export type TopicUnfallatlasId = 'accidents'
 export type TopicUnfallatlasStyleIds = 'default'
-export type TopicUnfallatlasStyleFilterIds = 'years'
+export type TopicUnfallatlasStyleFilterIds = 'years' | 'location'
 
 type Topic = MapDataConfigTopic
 
+// Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
 export const topicUnfallatlas: Topic = {
   id: 'accidents',
   name: 'Unfälle',
@@ -156,6 +157,16 @@ export const topicUnfallatlas: Topic = {
         },
       ],
       interactiveFilters: [
+        {
+          id: 'location',
+          name: 'Unfallort',
+          filterConfig: { lookupKey: 'Unfallort' },
+          inputType: 'checkbox',
+          options: [
+            { id: 'Knotenpunkt', name: 'Knoten', defaultActive: true },
+            { id: 'Freie Strecke', name: 'Freie Strecke', defaultActive: true },
+          ],
+        },
         {
           id: 'years',
           name: 'Jahre',
