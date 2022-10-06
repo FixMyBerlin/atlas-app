@@ -1,5 +1,5 @@
 import { TopicStyleFilterOptionKey } from '../../../components/MapInterface/store'
-import { uniqueArray } from '../../../../../utils/uniqueArray'
+import { uniqueArray } from '../../../../utils/uniqueArray'
 import { MapDataConfigStyleInteractiveFilter } from '../../types'
 
 // TODO add specs

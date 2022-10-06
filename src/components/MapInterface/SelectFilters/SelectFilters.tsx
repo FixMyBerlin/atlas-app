@@ -1,6 +1,6 @@
 import React from 'react'
 import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
-import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
+import { mapDataConfig, MapDataConfigTopicIds } from '../mapData'
 import {
   TopicStyleFilterOptionKey,
   useQuery,

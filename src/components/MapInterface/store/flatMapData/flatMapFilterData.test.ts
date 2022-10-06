@@ -1,4 +1,4 @@
-import { mapDataConfig } from '../../Map/mapData'
+import { mapDataConfig } from '../../mapData'
 import { flatMapFilterData } from './flatMapFilterData'
 
 describe('flatMapFilterData()', () => {

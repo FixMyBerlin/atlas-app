@@ -1,4 +1,4 @@
-import { MapDataConfigTopic } from '../../Map/mapData'
+import { MapDataConfigTopic } from '../../mapData'
 import { deleteKeyFromObject } from '../../utils'
 
 export type FlatMapDataTopic = Omit<MapDataConfigTopic, 'styles'>

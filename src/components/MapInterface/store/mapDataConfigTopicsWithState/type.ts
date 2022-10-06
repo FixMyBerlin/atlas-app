@@ -2,7 +2,7 @@ import {
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
   MapDataConfigTopicStyleFilterIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 
 export type MapDataConfigTopicsWithState = {
   id: MapDataConfigTopicIds

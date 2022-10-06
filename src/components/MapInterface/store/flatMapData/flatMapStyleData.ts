@@ -4,7 +4,7 @@ import {
   MapDataConfigTopic,
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 import { createTopicStyleKey, deleteKeyFromObject } from '../../utils'
 
 export type FlatMapDataStyle = Omit<

@@ -1,4 +1,4 @@
-import { MapDataConfigTopic, MapDataConfigTopicIds } from '../../Map/mapData'
+import { MapDataConfigTopic, MapDataConfigTopicIds } from '../../mapData'
 import { FlatMapData } from '../flatMapData'
 import { TopicStyleFilterOptionKey, TopicStyleKey } from '../geschichte.TODO_ts'
 import { selectedAndFlatMapFilterDataForConfig } from './selectedAndFlatMapFilterData'

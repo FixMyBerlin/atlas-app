@@ -2,7 +2,7 @@ import {
   mapDataConfig,
   MapDataConfigTopic,
   MapDataConfigTopicIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 import { flatMapTopicData } from '../flatMapData'
 
 export const selectedAndFlatMapTopicDataForConfig = (

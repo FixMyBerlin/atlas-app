@@ -2,7 +2,7 @@ import {
   mapDataConfig,
   MapDataConfigTopic,
   MapDataConfigTopicIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 import { FlatMapDataTopic, flatMapTopicData } from '../flatMapData'
 import { addStateToObject, ObjectWithState } from './addStateToObject'
 

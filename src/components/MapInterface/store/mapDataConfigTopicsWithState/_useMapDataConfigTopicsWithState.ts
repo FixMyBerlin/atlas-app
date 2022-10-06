@@ -1,4 +1,4 @@
-import { MapDataConfigThemeIds } from '@components/MapInterface/Map/mapData/themesMapDataConfig'
+import { MapDataConfigThemeIds } from '@components/MapInterface/mapData/themesMapDataConfig'
 import { useMemo } from 'react'
 import { mapDataConfigTopicsWithState } from './mapDataConfigTopicsWithState'
 

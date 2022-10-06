@@ -3,7 +3,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { replaceZxy } from '../../utils/replaceZxy'
-import { sourcesBackgroundsRaster } from '../mapData/sourcesMapDataConfig'
+import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapDataConfig'
 import { layerVisibility } from '../utils'
 import { beforeId } from './beforeId.const'
 

@@ -1,4 +1,4 @@
-import { mapDataConfig } from '@components/MapInterface/Map/mapData'
+import { mapDataConfig } from '@components/MapInterface/mapData'
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import React from 'react'

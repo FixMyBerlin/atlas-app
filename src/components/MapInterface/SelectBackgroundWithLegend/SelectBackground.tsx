@@ -7,7 +7,7 @@ import { useMap } from 'react-map-gl'
 import {
   MapDataConfigSourcesRasterIds,
   sourcesBackgroundsRaster,
-} from '../Map/mapData'
+} from '../mapData'
 import { useStoreMap } from '../store'
 import { ListOption } from './ListOption'
 

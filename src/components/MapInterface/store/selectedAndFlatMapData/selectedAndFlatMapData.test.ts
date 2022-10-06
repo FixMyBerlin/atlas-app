@@ -1,4 +1,4 @@
-import { MapDataConfigTopic } from '../../Map/mapData'
+import { MapDataConfigTopic } from '../../mapData'
 import { selectedAndFlatMapDataForConfig } from './selectedAndFlatMapData'
 
 describe('selectedAndFlatMapDataForConfig()', () => {

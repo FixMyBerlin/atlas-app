@@ -1,6 +1,6 @@
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
-import { mapDataConfig, MapDataConfigTopicIds } from '../Map/mapData'
+import { mapDataConfig, MapDataConfigTopicIds } from '../mapData'
 import { changeFilter } from '../SelectFilters/utils'
 import { addGeschichte, replaceGeschichte } from '../store'
 import { TopicStyleKey, useQuery } from '../store/geschichte.TODO_ts'

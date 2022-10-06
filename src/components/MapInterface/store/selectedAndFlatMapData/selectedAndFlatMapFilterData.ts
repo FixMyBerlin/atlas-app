@@ -1,4 +1,4 @@
-import { mapDataConfig, MapDataConfigTopic } from '../../Map/mapData'
+import { mapDataConfig, MapDataConfigTopic } from '../../mapData'
 import { flatMapFilterData } from '../flatMapData'
 import {
   TopicStyleFilterKey,

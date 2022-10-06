@@ -1,4 +1,4 @@
-import { MapDataConfigSourcesRasterIds } from '@components/MapInterface/Map/mapData'
+import { MapDataConfigSourcesRasterIds } from '@components/MapInterface/mapData'
 import {
   Page404,
   PageAbout,
@@ -17,7 +17,7 @@ import {
   Route,
   stringifySearchWith,
 } from '@tanstack/react-location'
-import { MapDataConfigThemeIds } from '../components/MapInterface/Map/mapData/themesMapDataConfig'
+import { MapDataConfigThemeIds } from '../components/MapInterface/mapData/themesMapDataConfig'
 import { MapDataConfigTopicsWithState } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
 
 import { decodeAndParse, encodeAndStringify } from './encodeDecode'

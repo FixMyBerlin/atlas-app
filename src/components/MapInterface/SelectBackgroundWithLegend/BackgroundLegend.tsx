@@ -3,7 +3,7 @@ import { MapIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
-import { mapDataConfig } from '../Map/mapData'
+import { mapDataConfig } from '../mapData'
 import { replaceZxy } from '../utils/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {

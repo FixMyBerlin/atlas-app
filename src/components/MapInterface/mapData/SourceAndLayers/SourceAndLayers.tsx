@@ -1,27 +1,19 @@
+import { LocationGenerics } from '@routes/routes'
+import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { createTopicStyleKey } from '../../../utils'
-import { layerVisibility } from '../../utils'
+import { layerVisibility } from '../../Map/utils'
 import { mapDataConfig } from '../mapDataConfig.const'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
-  return null
+  const { config: configTopics } = useSearch<LocationGenerics>()
 
-  const selectedTopicIds = null // TODO rework to use useSearch
-  const selectedStyleKeys = null // TODO rework to use useSearch
-  const selectedStylesFilterOptionKeys = null // TODO rework to use useSearch
-  // const {
-  //   values: {
-  //     selectedTopicIds,
-  //     selectedStyleKeys,
-  //     selectedStylesFilterOptionKeys,
-  //   },
-  // } = useQuery()
+  if (!configTopics) return null
 
   return (
     <>
-      {mapDataConfig.topics.map((topic) => {
+      {configTopics.map((topic) => {
         const source = mapDataConfig.sources.find(
           (s) => topic && s.id === topic.sourceId
         )

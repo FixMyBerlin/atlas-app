@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import React from 'react'
-import { MapDataConfigSourcesRasterIds } from '../Map/mapData/sourcesMapDataConfig'
+import { MapDataConfigSourcesRasterIds } from '../mapData/sourcesMapDataConfig'
 
 type Props = { value: MapDataConfigSourcesRasterIds; name: string }
 

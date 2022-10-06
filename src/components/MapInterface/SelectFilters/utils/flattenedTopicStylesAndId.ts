@@ -4,7 +4,7 @@ import {
   MapDataConfigStyles,
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 import { TopicStyleKey } from '../../store'
 
 export const flattenedTopicStylesAndId = () => {

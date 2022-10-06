@@ -1,4 +1,4 @@
-import { mapDataConfig } from '../../Map/mapData'
+import { mapDataConfig } from '../../mapData'
 import { flatMapTopicData } from './flatMapTopicData'
 
 describe('flatMapTopicData()', () => {

@@ -7,7 +7,7 @@ import {
   MapDataConfigStyleInteractiveFilterOption,
   MapDataConfigTopic,
   MapDataConfigTopicIds,
-} from '../../Map/mapData'
+} from '../../mapData'
 import {
   createTopicStyleFilterKey,
   createTopicStyleFilterOptionKey,
