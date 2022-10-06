@@ -1,1 +1,1 @@
-export * from './getMapDataTopic'
+export * from './getMapDataUtils'
