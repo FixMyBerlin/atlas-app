@@ -1,3 +1,3 @@
 export * from './roundNumber'
-export * from './scopedId'
+export * from '../SourceAndLayers/utils/scopedId'
 export * from './visibility'

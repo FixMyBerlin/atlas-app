@@ -13,7 +13,7 @@ import {
 import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
 import { StoreDebugBox, useStoreMap } from '../store'
-import { SourcesLayerRasterBackgrounds } from '../mapData/backgrounds'
+import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
