@@ -227,6 +227,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       tiles: 'https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
       minzoom: 0,
       maxzoom: 15,
+      // TODO the zxy has to go or be fixed, see comment at `const enhancedAttributionHtml`
       attributionHtml:
         'Routenoverlay CC-BY-SA <a href="https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://cycling.waymarkedtrails.org/#?map={z}/{x}/{y}',
@@ -240,6 +241,7 @@ export const sourcesBackgroundsRaster: MapDataConfigSource<MapDataConfigSourcesR
       tiles: 'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
       minzoom: 0,
       maxzoom: 15,
+      // TODO the zxy has to go or be fixed, see comment at `const enhancedAttributionHtml`
       attributionHtml:
         'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
