@@ -31,7 +31,7 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
       />
       <label
         htmlFor={key}
-        className="ml-3 block cursor-pointer text-sm font-medium leading-4 text-gray-700"
+        className="ml-2.5 block cursor-pointer text-sm font-medium leading-4 text-gray-700"
       >
         {label}
       </label>

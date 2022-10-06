@@ -36,7 +36,7 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           data-styleid={dataStyleId}
         />
       </div>
-      <div className="ml-3 text-sm">
+      <div className="ml-2.5 text-sm">
         <label htmlFor={key} className="cursor-pointer">
           <p className="font-medium text-gray-700">{label}</p>
           {!!desc && (
