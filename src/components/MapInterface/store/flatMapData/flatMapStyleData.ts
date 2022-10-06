@@ -1,16 +1,13 @@
 import { TopicStyleKey } from '..'
 import {
-  MapDataConfigStyles,
+  MapDataConfigStyle,
   MapDataConfigTopic,
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
 } from '../../mapData'
 import { createTopicStyleKey, deleteKeyFromObject } from '../../utils'
 
-export type FlatMapDataStyle = Omit<
-  MapDataConfigStyles,
-  'interactiveLayers'
-> & {
+export type FlatMapDataStyle = Omit<MapDataConfigStyle, 'interactiveLayers'> & {
   key: TopicStyleKey
   id: MapDataConfigTopicStyleIds
   topicId: MapDataConfigTopicIds

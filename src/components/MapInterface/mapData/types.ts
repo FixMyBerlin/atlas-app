@@ -42,11 +42,11 @@ export type MapDataConfigTopic = {
   desc: string
   sourceId: MapDataConfigSourcesIds
   defaultVisible: boolean
-  styles: MapDataConfigStyles[]
+  styles: MapDataConfigStyle[]
 }
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type MapDataConfigStyles = {
+export type MapDataConfigStyle = {
   id: MapDataConfigTopicStyleIds
   name: string
   desc: null | string

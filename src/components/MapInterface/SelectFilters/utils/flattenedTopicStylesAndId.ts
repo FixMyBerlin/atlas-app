@@ -1,14 +1,14 @@
 import { createTopicStyleKey } from '@/components/MapInterface/utils'
 import {
   mapDataConfig,
-  MapDataConfigStyles,
+  MapDataConfigStyle,
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
 } from '../../mapData'
 import { TopicStyleKey } from '../../store'
 
 export const flattenedTopicStylesAndId = () => {
-  type FlatTopicStyle = Omit<MapDataConfigStyles, 'id'> & {
+  type FlatTopicStyle = Omit<MapDataConfigStyle, 'id'> & {
     id: TopicStyleKey
     originalId: MapDataConfigTopicStyleIds
     topicId: MapDataConfigTopicIds
