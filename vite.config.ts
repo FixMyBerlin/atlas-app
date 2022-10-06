@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import svgr from 'vite-plugin-svgr'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
@@ -13,5 +14,6 @@ export default defineConfig({
       '@assets': path.resolve(__dirname, './src/assets/'),
     },
   },
-  plugins: [react()],
+  // https://github.com/pd4d10/vite-plugin-svgr
+  plugins: [react(), svgr()],
 })
