@@ -4,7 +4,7 @@ import {
   MapDataConfigTopicStyleFilterIds,
 } from '../../mapData'
 
-export type MapDataConfigTopicsWithState = {
+export type MapDataConfigTopicWithState = {
   id: MapDataConfigTopicIds
   active: boolean
   styles: {
@@ -20,4 +20,6 @@ export type MapDataConfigTopicsWithState = {
           }[]
         }[]
   }[]
-}[]
+}
+
+export type MapDataConfigTopicsWithState = MapDataConfigTopicWithState[]

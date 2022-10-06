@@ -30,8 +30,8 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           )}
           defaultChecked={active}
           disabled={disabled}
-          value={id}
           onChange={onChange}
+          value={id}
           data-topicid={dataTopicId}
           data-styleid={dataStyleId}
         />

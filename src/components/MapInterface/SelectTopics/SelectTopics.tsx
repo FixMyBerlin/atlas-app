@@ -4,6 +4,7 @@ import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
 import { getMapDataTopic } from '../mapData'
+import { SelectStyles } from '../SelectStyles'
 
 export const SelectTopics: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
@@ -51,8 +52,8 @@ export const SelectTopics: React.FC = () => {
                   active={topic.active}
                   onChange={toggleActive}
                 />
-                {/* <SelectStyles scopeTopicId={topicState.id} />
-                <SelectFilters scopeTopicId={topicState.id} /> */}
+                <SelectStyles scopeTopicId={topic.id} />
+                {/* <SelectFilters scopeTopicId={topicState.id} /> */}
               </div>
             )
           })}

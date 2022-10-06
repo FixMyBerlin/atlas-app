@@ -1,128 +1,83 @@
+import { LocationGenerics } from '@routes/routes'
+import { useNavigate, useSearch } from '@tanstack/react-location'
+import produce from 'immer'
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
-import { mapDataConfig, MapDataConfigTopicIds } from '../mapData'
-import { changeFilter } from '../SelectFilters/utils'
-import { addGeschichte, replaceGeschichte } from '../store'
-import { TopicStyleKey, useQuery } from '../store/geschichte.TODO_ts'
 import {
-  createTopicStyleFilterOptionKey,
-  createTopicStyleKey,
-  splitTopicStyleKey,
-} from '../utils'
+  getMapDataTopic,
+  getMapDataTopicStyle,
+  MapDataConfigTopicIds,
+} from '../mapData'
+import { MapDataConfigTopicWithState } from '../store'
+import { createTopicStyleKey } from '../utils'
 
 type Props = { scopeTopicId: MapDataConfigTopicIds }
 
 export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
-  const {
-    values: { selectedStyleKeys, selectedStylesFilterOptionKeys },
-    pushState,
-  } = useQuery()
-  const radioButtonScope = 'styles'
+  const navigate = useNavigate<LocationGenerics>()
+  const { config: configTopics } = useSearch<LocationGenerics>()
+  const topicConfig = configTopics?.find(
+    (t) => t.id === scopeTopicId
+  ) as MapDataConfigTopicWithState
 
-  // NOTE: We _cannot_ use `useEffect` to update the selectedStyleKeys
-  // based on changes in selectedTopicIds. There is some weird rewrite
-  // behavior that will reset our useQuery store.
-  // Instead, …
-  // - we need to update the styles whenever we change topcis.
-  // - we need to update the filters whenever we change styles.
+  const toggleActive = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const eventTopicId = event.target.getAttribute('data-topicid')
+    const eventStyleId = event.target.getAttribute('data-styleid')
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const styleKey = event.target.value as TopicStyleKey
-    const [topicId, styleId] = splitTopicStyleKey(styleKey)
-
-    const previousSelectedStyle = selectedStyleKeys.find((s) =>
-      s.startsWith(topicId)
-    )
-    if (previousSelectedStyle) {
-      pushState((state) => {
-        // (A) Update style-State
-        state.selectedStyleKeys = replaceGeschichte<TopicStyleKey>(
-          state.selectedStyleKeys,
-          styleKey,
-          previousSelectedStyle
-        )
-        // (B) Update filter-State
-        // TODO
-      })
-    } else {
-      pushState((state) => {
-        // (A) Update style-State
-        state.selectedStyleKeys = addGeschichte<TopicStyleKey>(
-          state.selectedStyleKeys,
-          styleKey
-        )
-        // (B) Update filter-State
-        // TODO
-      })
-    }
-
-    // Filter:
-    const currentStyle = mapDataConfig.topics
-      .find((t) => t.id === topicId)
-      ?.styles.find((s) => s.id === styleId)
-
-    console.log('c', { currentStyle })
-    currentStyle?.interactiveFilters?.forEach((filter) => {
-      console.log('a', { currentStyle, filter })
-      filter.options
-        .filter((o) => o.default)
-        .forEach((option) => {
-          const filterOptionKey = createTopicStyleFilterOptionKey(
-            topicId,
-            styleId,
-            filter.id,
-            option.id
-          )
-          console.log('b', { option, filterOptionKey })
-
-          if (!filterOptionKey) return
-          pushState((state) => {
-            state.selectedStylesFilterOptionKeys = changeFilter({
-              selectedStylesFilterOptionKeys,
-              changeKey: filterOptionKey,
-              state,
-            })
-          })
-        })
+    navigate({
+      search: (old) => {
+        const oldConfig = old?.config
+        if (!oldConfig) return { ...old }
+        return {
+          ...old,
+          config: produce(oldConfig, (draft) => {
+            const topic = draft.find((t) => t.id === eventTopicId)
+            if (topic) {
+              const style = topic.styles.find((s) => s.id === eventStyleId)
+              topic.styles.forEach((s) => (s.active = false))
+              style && (style.active = !style.active)
+            }
+          }),
+        }
+      },
     })
   }
 
-  const activeTopicsWithMultipeStyles = mapDataConfig.topics.filter((t) => {
-    return t.id === scopeTopicId && t.styles.length > 1
-  })
+  if (!topicConfig) return null
+  // Hide UI for inactive topics
+  if (!topicConfig.active) return null
+  // Hide UI for topics with only one style
+  if (topicConfig.styles.length === 1) return null
 
-  if (!activeTopicsWithMultipeStyles.length) return null
-
-  if (!selectedStyleKeys || !selectedStylesFilterOptionKeys) return null
   return (
     <section className="mt-1 rounded border px-2 py-2.5">
-      {activeTopicsWithMultipeStyles.map((topic) => {
-        // TODO – This feels hacky. Research solution.
-        const keyThatRerenders = `${topic.id}-${selectedStyleKeys.join()}`
+      <fieldset>
+        <legend className="sr-only">Stile</legend>
+        <details className="space-y-2.5">
+          <summary className="text-sm">Stile</summary>
+          {topicConfig.styles.map((styleConfig) => {
+            const styleData = getMapDataTopicStyle(
+              topicConfig.id,
+              styleConfig.id
+            )
+            const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
+            if (!styleData) return null
 
-        return (
-          <fieldset key={keyThatRerenders}>
-            <legend className="sr-only">Stile</legend>
-            <details className="space-y-2.5">
-              <summary className="text-sm">Stile</summary>
-              {topic.styles.map((style) => {
-                const key = createTopicStyleKey(topic.id, style.id)
-                const active = selectedStyleKeys.includes(key)
-                return (
-                  <SelectEntryRadiobutton
-                    scope={radioButtonScope}
-                    key={key}
-                    id={key}
-                    label={style.name}
-                    active={active}
-                    onChange={onChange}
-                  />
-                )
-              })}
-            </details>
-          </fieldset>
-        )
-      })}
+            return (
+              <SelectEntryRadiobutton
+                scope="style"
+                key={key}
+                id={key}
+                dataTopicId={topicConfig.id}
+                dataStyleId={styleConfig.id}
+                label={styleData.name}
+                active={styleConfig.active}
+                onChange={toggleActive}
+              />
+            )
+          })}
+        </details>
+      </fieldset>
     </section>
   )
 }

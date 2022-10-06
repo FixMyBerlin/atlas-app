@@ -16,18 +16,18 @@ export const SourceAndLayers: React.FC = () => {
 
   return (
     <>
-      {configTopics.map((topic) => {
-        const topicData = getMapDataTopic(topic.id)
-        const source = mapDataConfig.sources.find(
+      {configTopics.map((topicConfig) => {
+        const topicData = getMapDataTopic(topicConfig.id)
+        const sourceData = mapDataConfig.sources.find(
           (s) => s.id === topicData?.sourceId
         )
 
-        if (!topic || !source || !topicData) return null
+        if (!topicConfig || !sourceData || !topicData) return null
 
         // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…
         //  (and first find out if it's a problem at all)
-        const sourceId = `${source.id}_${topic.id}_tiles`
+        const sourceId = `${sourceData.id}_${topicConfig.id}_tiles`
 
         // TODO Inspector + Calculator / InteractiveLayerIDs
         // Ich habe sie auf Ebene Layer gespeichert.
@@ -42,19 +42,21 @@ export const SourceAndLayers: React.FC = () => {
             key={sourceId}
             id={sourceId}
             type="vector"
-            tiles={[source.tiles]}
+            tiles={[sourceData.tiles]}
             minzoom={8}
             maxzoom={22}
           >
-            {topic.styles.map((style) => {
-              const styleData = getMapDataTopicStyle(topicData, style.id)
+            {topicConfig.styles.map((styleConfig) => {
+              const styleData = getMapDataTopicStyle(topicData, styleConfig.id)
               // A style is visible when
               // … the topic is active AND
               // … the style is active (which includes 'default')
-              const visibility = layerVisibility(topic.active && style.active)
+              const visibility = layerVisibility(
+                topicConfig.active && styleConfig.active
+              )
 
               return styleData?.layers.map((layer) => {
-                const layerId = `${source.id}--${topic.id}--${style.id}--${layer.id}`
+                const layerId = `${sourceData.id}--${topicConfig.id}--${styleConfig.id}--${layer.id}`
                 const layout =
                   layer.layout === undefined
                     ? visibility

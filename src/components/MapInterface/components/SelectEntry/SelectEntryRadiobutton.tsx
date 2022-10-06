@@ -5,6 +5,8 @@ import { EntryProps } from './types'
 export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
   scope,
   id,
+  dataTopicId,
+  dataStyleId,
   label,
   desc: _desc,
   active,
@@ -28,6 +30,8 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
         disabled={disabled}
         onChange={onChange}
         value={id}
+        data-topicid={dataTopicId}
+        data-styleid={dataStyleId}
       />
       <label
         htmlFor={key}
