@@ -60,8 +60,9 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
               topicConfig.id,
               styleConfig.id
             )
-            const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
             if (!styleData) return null
+
+            const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
 
             return (
               <SelectEntryRadiobutton

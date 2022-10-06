@@ -1,6 +1,7 @@
 import {
   mapDataConfig,
   MapDataConfigTopicIds,
+  MapDataConfigTopicStyleFilterIds,
   MapDataConfigTopicStyleIds,
 } from '../mapDataConfig.const'
 import { MapDataConfigSourcesIds } from '../sourcesMapDataConfig'
@@ -20,6 +21,16 @@ export const getMapDataTopicStyle = (
   } else {
     return topicInput?.styles.find((s) => s.id === styleId)
   }
+}
+
+export const getMapDataTopicFilter = (
+  topicId: MapDataConfigTopicIds,
+  styleId: MapDataConfigTopicStyleIds,
+  filterId: MapDataConfigTopicStyleFilterIds
+) => {
+  const topic = mapDataConfig.topics.find((t) => t.id === topicId)
+  const style = topic?.styles.find((s) => s.id === styleId)
+  return style?.interactiveFilters?.find((f) => f.id === filterId)
 }
 
 export const getMapDataSource = (sourceId: MapDataConfigSourcesIds) => {

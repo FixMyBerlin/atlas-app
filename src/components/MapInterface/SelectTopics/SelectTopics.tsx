@@ -4,6 +4,7 @@ import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
 import { getMapDataTopic } from '../mapData'
+import { SelectFilters } from '../SelectFilters'
 import { SelectStyles } from '../SelectStyles'
 
 export const SelectTopics: React.FC = () => {
@@ -34,26 +35,26 @@ export const SelectTopics: React.FC = () => {
       <fieldset className="mt-4">
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">
-          {configTopics.map((topic) => {
-            const topicData = getMapDataTopic(topic.id)
+          {configTopics.map((topicConfig) => {
+            const topicData = getMapDataTopic(topicConfig.id)
             if (!topicData) return null
 
-            const rerenderKey = [topic.id, topic.active].join('-') // TODO – This feels hacky. Research solution.
+            const rerenderKey = [topicConfig.id, topicConfig.active].join('-') // TODO – This feels hacky. Research solution.
 
             return (
               <div key={rerenderKey}>
                 <SelectEntryCheckbox
                   scope="topic"
                   key={rerenderKey}
-                  id={topic.id}
-                  dataTopicId={topic.id}
+                  id={topicConfig.id}
+                  dataTopicId={topicConfig.id}
                   label={topicData.name}
                   desc={topicData.desc}
-                  active={topic.active}
+                  active={topicConfig.active}
                   onChange={toggleActive}
                 />
-                <SelectStyles scopeTopicId={topic.id} />
-                {/* <SelectFilters scopeTopicId={topicState.id} /> */}
+                <SelectStyles scopeTopicId={topicConfig.id} />
+                <SelectFilters scopeTopicId={topicConfig.id} />
               </div>
             )
           })}

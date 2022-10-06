@@ -7,6 +7,8 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
   id,
   dataTopicId,
   dataStyleId,
+  dataFilterId,
+  dataFilterOptionId,
   label,
   desc: _desc,
   active,
@@ -32,6 +34,8 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
         value={id}
         data-topicid={dataTopicId}
         data-styleid={dataStyleId}
+        data-filterid={dataFilterId}
+        data-filteroptionid={dataFilterOptionId}
       />
       <label
         htmlFor={key}

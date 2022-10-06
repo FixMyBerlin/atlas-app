@@ -1,103 +1,157 @@
+import { LocationGenerics } from '@routes/routes'
+import { useNavigate, useSearch } from '@tanstack/react-location'
+import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
-import { mapDataConfig, MapDataConfigTopicIds } from '../mapData'
 import {
-  TopicStyleFilterOptionKey,
-  useQuery,
-} from '../store/geschichte.TODO_ts'
-import { createTopicStyleFilterOptionKey, splitTopicStyleKey } from '../utils'
-import { changeFilter } from './utils'
+  getMapDataTopicFilter,
+  getMapDataTopicStyle,
+  MapDataConfigTopicIds,
+} from '../mapData'
+import { MapDataConfigTopicWithState } from '../store'
+import {
+  createTopicStyleFilterKey,
+  createTopicStyleFilterOptionKey,
+} from '../utils'
 
 type Props = { scopeTopicId: MapDataConfigTopicIds }
 
 export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
-  const {
-    values: { selectedStyleKeys, selectedStylesFilterOptionKeys },
-    pushState,
-  } = useQuery()
-  const checkboxScope = 'filter'
-
-  // TODO Extracting the different IDs, Keys and objects form state and mapDataConfig
-  // feels too hacky.
-  const selectedStyleKey = selectedStyleKeys?.find((s) =>
-    s.startsWith(scopeTopicId)
-  )
-  if (!selectedStyleKey) return null
-  const [_, selectedStyleId] = splitTopicStyleKey(selectedStyleKey)
-  const selectedStyle = mapDataConfig.topics
-    .find((t) => t.id == scopeTopicId)
-    ?.styles.find((s) => s.id == selectedStyleId)
-
-  if (!selectedStyle?.interactiveFilters?.length) return null
+  const navigate = useNavigate<LocationGenerics>()
+  const { config: configTopics } = useSearch<LocationGenerics>()
+  const topicConfig = configTopics?.find(
+    (t) => t.id === scopeTopicId
+  ) as MapDataConfigTopicWithState
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filterKey = event.target.value as TopicStyleFilterOptionKey
+    const eventTopicId = event.target.getAttribute('data-topicid')
+    const eventStyleId = event.target.getAttribute('data-styleid')
+    const eventFilterId = event.target.getAttribute('data-filterid')
+    const eventFilterOptionId = event.target.getAttribute('data-filteroptionid')
 
-    pushState((state) => {
-      state.selectedStylesFilterOptionKeys = changeFilter({
-        selectedStylesFilterOptionKeys,
-        changeKey: filterKey,
-        state,
-      })
+    navigate({
+      search: (old) => {
+        const oldConfig = old?.config
+        if (!oldConfig) return { ...old }
+        return {
+          ...old,
+          config: produce(oldConfig, (draft) => {
+            const topic = draft.find((t) => t.id === eventTopicId)
+            const style = topic?.styles.find((s) => s.id === eventStyleId)
+            const filter = style?.filters?.find((f) => f.id === eventFilterId)
+            const option = filter?.options.find(
+              (o) => o.id === eventFilterOptionId
+            )
+            if (topic && style && filter && option) {
+              const filterData = getMapDataTopicFilter(
+                topic.id,
+                style.id,
+                filter.id
+              )
+              if (filterData?.inputType === 'radiobutton') {
+                filter.options.forEach((fo) => (fo.active = false))
+              }
+              option.active = !option.active
+            }
+          }),
+        }
+      },
     })
   }
 
-  if (!selectedStyleKeys || !selectedStylesFilterOptionKeys) return null
+  if (!topicConfig) return null
+  // Hide UI for inactive topics
+  if (!topicConfig.active) return null
+  // Hide UI for topics with only one style
+  // if (topicConfig.styles.length === 1) return null
+
+  const activeTopicStyleConfig = topicConfig.styles.find((s) => s.active)
+  // Hide UI when no filter present for active style
+  if (!activeTopicStyleConfig) return null
+  if (!activeTopicStyleConfig.filters) return null
+  if (activeTopicStyleConfig.filters.length === 0) return null
+
+  const styleData = getMapDataTopicStyle(
+    topicConfig.id,
+    activeTopicStyleConfig.id
+  )
+
   return (
     <section className="mt-1 rounded border px-2 py-2.5">
-      {selectedStyle.interactiveFilters.map((filter) => {
-        return (
-          <fieldset key={selectedStyleKey}>
-            <legend className="sr-only">Filter</legend>
-            <details className="space-y-2.5">
-              <summary className="text-sm">Filter</summary>
+      <fieldset>
+        <legend className="sr-only">Filter</legend>
+        {styleData?.interactiveFilters?.map((filterData) => {
+          const filterConfig = activeTopicStyleConfig?.filters?.find(
+            (f) => f.id === filterData.id
+          )
+
+          if (!filterConfig) return null
+
+          return (
+            <details className="space-y-2.5" key={filterData.id}>
+              <summary className="text-sm">Filter {filterData.name}</summary>
               <div className="space-y-2.5">
-                {filter.options.map((option) => {
-                  const key = createTopicStyleFilterOptionKey(
-                    scopeTopicId,
-                    selectedStyleId,
-                    filter.id,
-                    option.id
+                {filterData.options.map((optionData) => {
+                  const optionConfig = filterConfig?.options.find(
+                    (o) => o.id === optionData.id
                   )
-                  if (!key) return null
+                  if (!optionConfig) return null
 
-                  const active = selectedStylesFilterOptionKeys.includes(key)
+                  const scope = createTopicStyleFilterKey(
+                    topicConfig.id,
+                    activeTopicStyleConfig.id,
+                    filterConfig.id
+                  )
+                  const key = createTopicStyleFilterOptionKey(
+                    topicConfig.id,
+                    activeTopicStyleConfig.id,
+                    filterConfig.id,
+                    optionConfig.id
+                  )
 
-                  if (filter.inputType === 'checkbox') {
+                  if (filterData.inputType === 'checkbox') {
                     // The filter list must have one entry, otherwise the map style fails
-                    // so we disable the last active one.
+                    // so we disable the last active one. Therefore, we disable the last active input.
                     const disabled =
-                      !!active && selectedStylesFilterOptionKeys.length === 1
+                      filterConfig?.options?.filter((o) => o.active)?.length ===
+                        1 && optionConfig.active
 
                     return (
                       <SelectEntryCheckbox
-                        scope={checkboxScope}
+                        scope={scope}
                         key={key}
                         id={key}
-                        label={option.name}
-                        active={active}
+                        dataTopicId={topicConfig.id}
+                        dataStyleId={activeTopicStyleConfig.id}
+                        dataFilterId={filterConfig.id}
+                        dataFilterOptionId={optionConfig.id}
+                        label={optionData.name}
+                        active={optionConfig.active}
                         disabled={disabled}
                         onChange={onChange}
                       />
                     )
                   }
-
                   return (
                     <SelectEntryRadiobutton
-                      scope={checkboxScope}
+                      scope={scope}
                       key={key}
                       id={key}
-                      label={option.name}
-                      active={active}
+                      dataTopicId={topicConfig.id}
+                      dataStyleId={activeTopicStyleConfig.id}
+                      dataFilterId={filterConfig.id}
+                      dataFilterOptionId={optionConfig.id}
+                      label={optionData.name}
+                      active={optionConfig.active}
                       onChange={onChange}
                     />
                   )
                 })}
               </div>
             </details>
-          </fieldset>
-        )
-      })}
+          )
+        })}
+      </fieldset>
     </section>
   )
 }

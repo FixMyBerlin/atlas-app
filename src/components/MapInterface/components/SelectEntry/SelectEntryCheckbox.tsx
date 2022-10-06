@@ -7,6 +7,8 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
   id,
   dataTopicId,
   dataStyleId,
+  dataFilterId,
+  dataFilterOptionId,
   label,
   desc,
   active,
@@ -34,6 +36,8 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           value={id}
           data-topicid={dataTopicId}
           data-styleid={dataStyleId}
+          data-filterid={dataFilterId}
+          data-filteroptionid={dataFilterOptionId}
         />
       </div>
       <div className="ml-2.5 text-sm">

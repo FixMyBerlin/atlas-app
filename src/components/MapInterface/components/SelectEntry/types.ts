@@ -4,6 +4,8 @@ export type EntryProps = {
   id: string
   dataTopicId?: string
   dataStyleId?: string
+  dataFilterId?: string
+  dataFilterOptionId?: string
   label: string
   desc?: string
   active: boolean
