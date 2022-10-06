@@ -35,7 +35,9 @@ export const regions: Region[] = [
     fullName: 'ZES+',
     path: 'zes',
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
-    logo: null,
+    logo: (
+      <img src="/pageRegions/zesplus-logo.png" className="h-6 w-auto" alt="" />
+    ),
   },
 ]
 
