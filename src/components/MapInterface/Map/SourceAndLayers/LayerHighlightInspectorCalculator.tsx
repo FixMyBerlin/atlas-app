@@ -2,7 +2,7 @@ import React from 'react'
 import { Layer } from 'react-map-gl'
 import { useStore } from 'zustand'
 import { useStoreMap } from '@/components/MapInterface/store/useStoreMap'
-import { layerVisibility, scopedId, ScopeForId } from '../../Map/utils'
+import { layerVisibility, scopedId, ScopeForId } from '../utils'
 
 type Props = ScopeForId & { visible: boolean }
 

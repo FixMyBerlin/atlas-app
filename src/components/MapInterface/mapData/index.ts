@@ -1,4 +1,4 @@
-export * from './SourceAndLayers'
+export * from '../Map/SourceAndLayers'
 export * from './mapDataConfig.const'
 export * from './sourcesMapDataConfig'
 export * from './themesMapDataConfig'

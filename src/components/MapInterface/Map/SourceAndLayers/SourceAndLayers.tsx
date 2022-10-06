@@ -2,8 +2,8 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { layerVisibility } from '../../Map/utils'
-import { mapDataConfig } from '../mapDataConfig.const'
+import { layerVisibility } from '../utils'
+import { mapDataConfig } from '../../mapData/mapDataConfig.const'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {

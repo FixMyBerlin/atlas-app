@@ -3,8 +3,8 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { replaceZxy } from '../../utils/replaceZxy'
-import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapDataConfig'
-import { layerVisibility } from '../utils'
+import { sourcesBackgroundsRaster } from '../sourcesMapDataConfig'
+import { layerVisibility } from '../../Map/utils'
 import { beforeId } from './beforeId.const'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
