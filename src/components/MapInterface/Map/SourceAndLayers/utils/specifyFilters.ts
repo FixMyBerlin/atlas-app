@@ -1,6 +1,5 @@
-import { TopicStyleFilterOptionKey } from '../../../components/MapInterface/store'
-import { uniqueArray } from '../../../../utils/uniqueArray'
-import { MapDataConfigStyleInteractiveFilter } from '../../../mapData/types'
+import { MapDataConfigStyleInteractiveFilter } from '@components/MapInterface/mapData'
+import { uniqueArray } from '@components/utils'
 
 // TODO add specs
 export const specifyFilters = (

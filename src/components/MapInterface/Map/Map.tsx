@@ -14,6 +14,7 @@ import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
 import { StoreDebugBox, useStoreMap } from '../store'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
+import { SourceAndLayers } from './SourceAndLayers'
 import { roundByZoom, roundNumber } from './utils'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
@@ -143,7 +144,7 @@ export const Map: React.FC = () => {
       onClick={handleClick}
       onLoad={handleLoad}
     >
-      {/* <SourceAndLayers /> */}
+      <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}

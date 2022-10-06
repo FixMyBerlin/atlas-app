@@ -1,10 +1,13 @@
+import {
+  getMapDataTopic,
+  getMapDataTopicStyle,
+  mapDataConfig,
+} from '@components/MapInterface/mapData'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
-import { mapDataConfig } from '../../mapData/mapDataConfig.const'
-import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
   const { config: configTopics } = useSearch<LocationGenerics>()
@@ -14,13 +17,14 @@ export const SourceAndLayers: React.FC = () => {
   return (
     <>
       {configTopics.map((topic) => {
+        const topicData = getMapDataTopic(topic.id)
         const source = mapDataConfig.sources.find(
-          (s) => topic && s.id === topic.sourceId
+          (s) => s.id === topicData?.sourceId
         )
 
-        if (!topic || !source) return null
+        if (!topic || !source || !topicData) return null
 
-        // One source can be used by multipe topics, so we need to make the key source-top-specific.
+        // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…
         //  (and first find out if it's a problem at all)
         const sourceId = `${source.id}_${topic.id}_tiles`
@@ -43,33 +47,31 @@ export const SourceAndLayers: React.FC = () => {
             maxzoom={22}
           >
             {topic.styles.map((style) => {
+              const styleData = getMapDataTopicStyle(topicData, style.id)
               // A style is visible when
               // … the topic is active AND
-              // … the style is active OR
-              // … the style is default (since we do not add topics with just one style to the url/store)
-              const visible = false // TODO react location
-              // !!selectedTopicIds &&
-              // selectedTopicIds.includes(topic.id) &&
-              // style.id === 'default'
-              //   ? true
-              //   : selectedStyleKeys?.includes(
-              //       createTopicStyleKey(topic.id, style.id)
-              //     )
+              // … the style is active (which includes 'default')
+              const visibility = layerVisibility(topic.active && style.active)
 
-              const visibility = layerVisibility(visible)
-
-              return style.layers.map((layer) => {
+              return styleData?.layers.map((layer) => {
                 const layerId = `${source.id}--${topic.id}--${style.id}--${layer.id}`
                 const layout =
                   layer.layout === undefined
                     ? visibility
                     : { ...visibility, ...layer.layout }
 
-                const filter = specifyFilters(
-                  style?.interactiveFilters,
-                  layer.filter,
-                  selectedStylesFilterOptionKeys
-                )
+                // TODO: We need to refactor the helper method.
+                // Right now, it expect the filter key which it then splits again. Our config does not have this key.
+                // In addition, I am not sure if the case of multipe filters is supported, yet;
+                // It might be, but it looks like we just put all filter key into all filters…
+                // Which only worked, because we only have one filter ATM
+                const filter = layer.filter || ['all']
+                // const selectedStylesFilterOptionKeys = style.filters.map() TODO
+                // const filter = specifyFilters(
+                //   styleData?.interactiveFilters,
+                //   layer.filter,
+                //   selectedStylesFilterOptionKeys
+                // )
 
                 return (
                   <Layer
@@ -79,6 +81,7 @@ export const SourceAndLayers: React.FC = () => {
                     source={sourceId}
                     source-layer={layer['source-layer']}
                     {...(!!layer.minzoom && { minzoom: layer.minzoom })}
+                    {...(!!layer.maxzoom && { maxzoom: layer.maxzoom })}
                     layout={layout}
                     filter={filter}
                     paint={layer.paint as any} // TODO Typescript
