@@ -3,7 +3,7 @@ import { MapDataConfigSource } from '../types'
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type MapDataConfigSourcesIds =
   | 'parkraumParking'
-  | 'parkraumBoundaries'
+  | 'boundaries'
   | 'unfallatlas'
   | 'tarmacHighways'
   | 'tarmacPois'
@@ -18,9 +18,11 @@ export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
     attributionHtml: 'todo', // TODO
   },
   {
-    id: 'parkraumBoundaries',
-    tiles: 'https://vts.mapwebbing.eu/public.boundaries/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    id: 'boundaries',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.boundaries/{z}/{x}/{y}.pbf',
+    attributionHtml:
+      'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OSM</a>',
   },
   {
     id: 'unfallatlas',
