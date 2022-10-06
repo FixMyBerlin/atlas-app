@@ -3,7 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
-import { mapDataConfig } from '../mapData'
+import { getMapDataTopic, mapDataConfig } from '../mapData'
 
 export const SelectTopics: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
@@ -34,9 +34,7 @@ export const SelectTopics: React.FC = () => {
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">
           {configTopics.map((topic) => {
-            const topicData = mapDataConfig.topics.find(
-              (t) => t.id === topic.id
-            )
+            const topicData = getMapDataTopic(topic.id)
             if (!topicData) return null
 
             const rerenderKey = [topic.id, topic.active].join('-') // TODO – This feels hacky. Research solution.
