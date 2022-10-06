@@ -14,8 +14,8 @@ export const MapInterface: React.FC = () => {
         <SelectTheme />
         <Map />
         <SelectBackgroundWithLegend />
-        {/* <SelectTopics />
-        <Calculator />
+        <SelectTopics />
+        {/* <Calculator />
         <Inspector /> */}
       </div>
     </MapProvider>

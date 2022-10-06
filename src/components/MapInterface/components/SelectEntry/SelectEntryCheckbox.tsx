@@ -5,6 +5,8 @@ import { EntryProps } from './types'
 export const SelectEntryCheckbox: React.FC<EntryProps> = ({
   scope,
   id,
+  dataTopicId,
+  dataStyleId,
   label,
   desc,
   active,
@@ -30,6 +32,8 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           disabled={disabled}
           value={id}
           onChange={onChange}
+          data-topicid={dataTopicId}
+          data-styleid={dataStyleId}
         />
       </div>
       <div className="ml-3 text-sm">
