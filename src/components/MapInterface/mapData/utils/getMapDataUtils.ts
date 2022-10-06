@@ -3,6 +3,7 @@ import {
   MapDataConfigTopicIds,
   MapDataConfigTopicStyleIds,
 } from '../mapDataConfig.const'
+import { MapDataConfigSourcesIds } from '../sourcesMapDataConfig'
 import { MapDataConfigTopic } from '../types'
 
 export const getMapDataTopic = (topicId: MapDataConfigTopicIds) => {
@@ -19,4 +20,8 @@ export const getMapDataTopicStyle = (
   } else {
     return topicInput?.styles.find((s) => s.id === styleId)
   }
+}
+
+export const getMapDataSource = (sourceId: MapDataConfigSourcesIds) => {
+  return mapDataConfig.sources.find((s) => s.id === sourceId)
 }

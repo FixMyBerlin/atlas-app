@@ -3,7 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
-import { getMapDataTopic, mapDataConfig } from '../mapData'
+import { getMapDataTopic } from '../mapData'
 
 export const SelectTopics: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
