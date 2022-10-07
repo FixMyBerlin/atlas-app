@@ -16,10 +16,12 @@ export type TopicConfig = {
 
 export type TopicStyleFilterConfig = {
   id: MapDataConfigTopicStyleFilterIds
-  options: {
-    id: string
-    active: boolean
-  }[]
+  options: TopicStyleFilterOptionConfig[]
+}
+
+export type TopicStyleFilterOptionConfig = {
+  id: string
+  active: boolean
 }
 
 export type TopicsConfig = TopicConfig[]

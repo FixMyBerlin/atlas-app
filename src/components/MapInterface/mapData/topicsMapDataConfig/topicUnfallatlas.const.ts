@@ -7,7 +7,7 @@ import { MapDataConfigTopic } from '../types'
 
 export type TopicUnfallatlasId = 'accidents'
 export type TopicUnfallatlasStyleIds = 'default'
-export type TopicUnfallatlasStyleFilterIds = 'years' | 'location'
+export type TopicUnfallatlasStyleFilterIds = 'years' | 'category' | 'type'
 
 type Topic = MapDataConfigTopic
 
@@ -156,15 +156,49 @@ export const topicUnfallatlas: Topic = {
           enableCalculator: false,
         },
       ],
+      // Style https://studio.mapbox.com/styles/hejco/ckdzvkywj0u3g1amidtrbnw5v/edit/#18.84/52.4900339/13.3864461
+      // Data https://studio.mapbox.com/tilesets/hejco.5oexnrgf/#16.88/52.497576/13.431483
       interactiveFilters: [
         {
-          id: 'location',
-          name: 'Unfallort',
-          filterConfig: { lookupKey: 'Unfallort' },
+          id: 'category',
+          name: 'Unfallkategorie',
+          filterConfig: { lookupKey: 'Unfallkate' },
           inputType: 'checkbox',
           options: [
-            { id: 'Knotenpunkt', name: 'Knoten', defaultActive: true },
-            { id: 'Freie Strecke', name: 'Freie Strecke', defaultActive: true },
+            { id: '1', name: 'Unfälle mit Getöteten', defaultActive: true },
+            {
+              id: '2',
+              name: 'Unfälle mit Schwerverletzten',
+              defaultActive: true,
+            },
+            {
+              id: '3',
+              name: 'Unfälle mit Leichtverletzten',
+              defaultActive: true,
+            },
+          ],
+        },
+        {
+          id: 'type',
+          name: 'Unfalltyp',
+          filterConfig: { lookupKey: 'Unfalltyp' },
+          inputType: 'checkbox',
+          options: [
+            { id: '1', name: 'Fahrunfall', defaultActive: true },
+            { id: '2', name: 'Abbiege-Unfall', defaultActive: true },
+            {
+              id: '3',
+              name: 'Einbiegen / Kreuzen-Unfall',
+              defaultActive: true,
+            },
+            { id: '4', name: 'Überschreitenunfall', defaultActive: true },
+            {
+              id: '5',
+              name: 'Unfall durch ruhenden Verkehr',
+              defaultActive: true,
+            },
+            { id: '6', name: 'Unfall im Längsverkehr', defaultActive: true },
+            { id: '7', name: 'Sonstiger Unfall', defaultActive: true },
           ],
         },
         {

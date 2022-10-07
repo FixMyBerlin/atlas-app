@@ -8,6 +8,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
+import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
   const { config: configTopics } = useSearch<LocationGenerics>()
@@ -62,18 +63,11 @@ export const SourceAndLayers: React.FC = () => {
                     ? visibility
                     : { ...visibility, ...layer.layout }
 
-                // TODO: We need to refactor the helper method.
-                // Right now, it expect the filter key which it then splits again. Our config does not have this key.
-                // In addition, I am not sure if the case of multipe filters is supported, yet;
-                // It might be, but it looks like we just put all filter key into all filters…
-                // Which only worked, because we only have one filter ATM
-                const filter = layer.filter || ['all']
-                // const selectedStylesFilterOptionKeys = style.filters.map() TODO
-                // const filter = specifyFilters(
-                //   styleData?.interactiveFilters,
-                //   layer.filter,
-                //   selectedStylesFilterOptionKeys
-                // )
+                const filter = specifyFilters(
+                  layer.filter,
+                  styleData.interactiveFilters,
+                  styleConfig.filters
+                )
 
                 return (
                   <Layer
