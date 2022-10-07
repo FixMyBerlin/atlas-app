@@ -3,7 +3,7 @@ import { tarmacStyle } from './utils'
 
 export type TopicTarmacBikelanesId = 'bikelanes'
 export type TopicTarmacBikelanesStyleIds = 'default' | 'detailed'
-export type TopicTarmacBikelanesStyleFilterIds = ''
+export type TopicTarmacBikelanesStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-radinfra`

@@ -10,7 +10,7 @@ export type TopicParkingStyleIds =
   | 'default'
   | 'presence'
   | 'debugLengthPerCapacity'
-export type TopicParkingStyleFilterIds = ''
+export type TopicParkingStyleFilterIds = '_nofilter'
 
 type Topic = MapDataConfigTopic
 

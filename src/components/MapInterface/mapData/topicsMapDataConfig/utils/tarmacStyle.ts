@@ -1,4 +1,3 @@
-import { MapDataConfigVisLayer } from '../../types'
 import style from './tarmac-style.const.json'
 
 // Manually created base on the json
@@ -12,11 +11,6 @@ export type TarmacStyleGroups =
   | 'settlements'
   | 'strassentypen'
   | 'surface-bad'
-
-type _OtherSourceStyles =
-  | 'betrachtungsgebiet'
-  | 'bibi-problemstellen'
-  | 'zes-netzkonzepte'
 
 export type TarmacStyle = typeof style
 

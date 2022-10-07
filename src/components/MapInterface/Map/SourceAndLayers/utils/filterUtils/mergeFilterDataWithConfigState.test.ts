@@ -6,7 +6,7 @@ import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState
 // Source: src/components/MapInterface/mapData/topicsMapDataConfig/topicUnfallatlas.const.ts
 export const testFilterData: MapDataConfigStyleInteractiveFilter[] = [
   {
-    id: 'location',
+    id: 'category',
     name: 'Unfallort',
     inputType: 'checkbox',
     filterConfig: { lookupKey: 'Unfallort' },
@@ -30,7 +30,7 @@ export const testFilterData: MapDataConfigStyleInteractiveFilter[] = [
 
 export const testFilterConfig: TopicStyleFilterConfig[] = [
   {
-    id: 'location',
+    id: 'category',
     options: [
       { id: 'Knotenpunkt', active: true },
       { id: 'Freie Strecke', active: false },

@@ -3,7 +3,7 @@ import { tarmacStyle } from './utils'
 
 export type TopicTarmacHighwayClassificationId = 'highwayClassification'
 export type TopicTarmacHighwayClassificationStyleIds = 'zes' | 'osm'
-export type TopicTarmacHighwayClassificationStyleFilterIds = ''
+export type TopicTarmacHighwayClassificationStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-strassentypen`

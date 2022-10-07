@@ -1,10 +1,9 @@
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
-import { MapDataConfigTopic } from '../mapData'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-export type StoreMap = StateInitialization &
+type StoreMap = StateInitialization &
   StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator

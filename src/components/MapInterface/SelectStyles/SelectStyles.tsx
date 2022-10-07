@@ -3,11 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
-import {
-  getMapDataTopic,
-  getMapDataTopicStyle,
-  MapDataConfigTopicIds,
-} from '../mapData'
+import { getMapDataTopicStyle, MapDataConfigTopicIds } from '../mapData'
 import { TopicConfig } from '../store'
 import { createTopicStyleKey } from '../utils'
 

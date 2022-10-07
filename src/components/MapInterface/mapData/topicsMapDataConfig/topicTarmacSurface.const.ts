@@ -3,7 +3,7 @@ import { tarmacStyle } from './utils'
 
 export type TopicTarmacSurfaceId = 'surface'
 export type TopicTarmacSurfaceStyleIds = 'default' | 'bad' | 'debug-smoothness'
-export type TopicTarmacSurfaceStyleFilterIds = ''
+export type TopicTarmacSurfaceStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-oberflaechenqualitaet`

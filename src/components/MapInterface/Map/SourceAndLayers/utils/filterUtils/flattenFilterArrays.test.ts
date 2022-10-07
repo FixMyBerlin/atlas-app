@@ -1,6 +1,5 @@
 import { describe, expect, test } from 'vitest'
 import { flattenFilterArrays } from './flattenFilterArrays'
-import { wrapFilterWithAll } from './wrapFilterWithAll'
 
 describe('flattenFilterArrays()', () => {
   test('input 1 empty, input 2 array', () => {

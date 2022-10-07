@@ -70,9 +70,9 @@ export const Map: React.FC = () => {
     // Just for debugging
     const style = event.target.getStyle()
     const allLayer = style.layers
-    // @ts-ignore: not relevant
+    // @ts-ignore: not relevant here
     const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-    // @ts-ignore: not relevant
+    // @ts-ignore: not relevant here
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     const sources = style.sources
 

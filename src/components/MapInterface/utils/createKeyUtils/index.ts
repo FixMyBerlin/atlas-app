@@ -1,2 +1,2 @@
 export * from './createKeyUtils'
-export * from './replaceZxy'
+export * from './types'

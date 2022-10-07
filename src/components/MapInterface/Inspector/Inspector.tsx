@@ -9,11 +9,16 @@ export const Inspector: React.FC = () => {
   // For some reason from time to time we get duplicated entires wich cause a `key` warning
   if (!inspectorFeatures) return null
 
-  const generateKey = (layerId: any, propertyId: any, wayId: any) =>
-    `${layerId}-${propertyId}-${wayId}`
+  const generateKey = (
+    layerId: string,
+    propertyId: string | undefined,
+    wayId: string | undefined
+  ) => `${layerId}-${propertyId}-${wayId}`
+
   const tempInspectorFeatureKeysForFilter = inspectorFeatures.map((f) =>
     generateKey(f.layer.id, f?.properties?.id, f?.properties?.way_id)
   )
+
   const uniqInspectorFeatures = inspectorFeatures.filter((f) => {
     const currentKey = generateKey(
       f.layer.id,

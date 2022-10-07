@@ -4,7 +4,10 @@ import { TopicsConfig } from './type'
 
 export type Props = { themeId: MapDataConfigThemeIds }
 
-export const mapDataConfigTopicsWithState = ({ themeId }: Props) => {
+// TOOD Check if we should useMemo this; and find out how
+export const mapDataConfigTopicsWithState = ({
+  themeId: _todo_themeid,
+}: Props) => {
   return mapDataConfig.topics.map((topic) => {
     // TODO use themeId to filter topics down to what the theme needs
     // TODO handle the default active values based on the theme

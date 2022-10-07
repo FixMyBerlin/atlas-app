@@ -4,7 +4,7 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { mapDataConfig } from '../mapData'
-import { replaceZxy } from '../utils/replaceZxy'
+import { replaceZxy } from '../utils'
 
 export const BackgroundLegend: React.FC = () => {
   const {

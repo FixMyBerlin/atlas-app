@@ -1,5 +1,15 @@
 # TODOs
 
+## Check radiobutton filter in Mapillary
+
+## Re-add Calculator
+
+- And change to on-dblclick
+
+## Re-add Inspector
+
+- And change to onclick
+
 ## Die 'config' aktualisiert sich nicht
 
 Wenn ich die Config ändere, wird die App im UI trotzdem auf Basis der URL geladen.

@@ -1,7 +1,5 @@
 import React from 'react'
 import { MapProvider } from 'react-map-gl'
-import { Calculator } from './Calculator'
-import { Inspector } from './Inspector'
 import { Map } from './Map'
 import { SelectBackgroundWithLegend } from './SelectBackgroundWithLegend'
 import { SelectTheme } from './SelectTheme'

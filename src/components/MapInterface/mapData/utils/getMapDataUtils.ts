@@ -33,6 +33,8 @@ export const getMapDataTopicFilter = (
   return style?.interactiveFilters?.find((f) => f.id === filterId)
 }
 
-export const getMapDataSource = (sourceId: MapDataConfigSourcesIds) => {
-  return mapDataConfig.sources.find((s) => s.id === sourceId)
+export const getMapDataSource = (
+  sourceId: MapDataConfigSourcesIds | undefined
+) => {
+  return mapDataConfig?.sources?.find((s) => s.id === sourceId)
 }

@@ -2,16 +2,15 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { replaceZxy } from '../../utils/replaceZxy'
 import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapDataConfig'
 import { layerVisibility } from '../utils'
 import { beforeId } from './beforeId.const'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
   const {
-    lat,
-    lng,
-    zoom,
+    // lat,
+    // lng,
+    // zoom,
     bg: selectedBackgroundId,
   } = useSearch<LocationGenerics>()
 

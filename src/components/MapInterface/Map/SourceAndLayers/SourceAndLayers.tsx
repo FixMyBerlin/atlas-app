@@ -1,7 +1,7 @@
 import {
+  getMapDataSource,
   getMapDataTopic,
   getMapDataTopicStyle,
-  mapDataConfig,
 } from '@components/MapInterface/mapData'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
@@ -19,9 +19,7 @@ export const SourceAndLayers: React.FC = () => {
     <>
       {configTopics.map((topicConfig) => {
         const topicData = getMapDataTopic(topicConfig.id)
-        const sourceData = mapDataConfig.sources.find(
-          (s) => s.id === topicData?.sourceId
-        )
+        const sourceData = getMapDataSource(topicData?.sourceId)
 
         if (!topicConfig || !sourceData || !topicData) return null
 

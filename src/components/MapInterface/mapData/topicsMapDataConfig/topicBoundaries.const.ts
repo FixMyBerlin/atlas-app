@@ -2,7 +2,7 @@ import { MapDataConfigTopic } from '../types'
 
 export type TopicBoundariesId = 'boundaries'
 export type TopicBoundariesStyleIds = 'default'
-export type TopicBoundariesStyleFilterIds = ''
+export type TopicBoundariesStyleFilterIds = '_nofilter'
 
 type Topic = MapDataConfigTopic
 
