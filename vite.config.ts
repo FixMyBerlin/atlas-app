@@ -16,4 +16,7 @@ export default defineConfig({
   },
   // https://github.com/pd4d10/vite-plugin-svgr
   plugins: [react(), svgr()],
+  build: {
+    sourcemap: true,
+  },
 })
