@@ -18,7 +18,7 @@ import {
   stringifySearchWith,
 } from '@tanstack/react-location'
 import { MapDataConfigThemeIds } from '../components/MapInterface/mapData/themesMapDataConfig'
-import { MapDataConfigTopicsWithState } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
+import { TopicsConfig } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
 
 import { decodeAndParse, encodeAndStringify } from './encodeDecode'
 import { fetchRegionByPath } from './fetchRegionByPath'
@@ -43,7 +43,7 @@ export type LocationGenerics = MakeGenerics<{
     lng: number
     zoom: number
     bg: MapDataConfigSourcesRasterIds
-    config: MapDataConfigTopicsWithState
+    config: TopicsConfig
   }
 }>
 

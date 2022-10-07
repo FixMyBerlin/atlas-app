@@ -8,7 +8,7 @@ import {
   getMapDataTopicStyle,
   MapDataConfigTopicIds,
 } from '../mapData'
-import { MapDataConfigTopicWithState } from '../store'
+import { TopicConfig } from '../store'
 import {
   createTopicStyleFilterKey,
   createTopicStyleFilterOptionKey,
@@ -21,7 +21,7 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const { config: configTopics } = useSearch<LocationGenerics>()
   const topicConfig = configTopics?.find(
     (t) => t.id === scopeTopicId
-  ) as MapDataConfigTopicWithState
+  ) as TopicConfig
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')

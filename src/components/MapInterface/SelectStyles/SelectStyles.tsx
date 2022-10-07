@@ -8,7 +8,7 @@ import {
   getMapDataTopicStyle,
   MapDataConfigTopicIds,
 } from '../mapData'
-import { MapDataConfigTopicWithState } from '../store'
+import { TopicConfig } from '../store'
 import { createTopicStyleKey } from '../utils'
 
 type Props = { scopeTopicId: MapDataConfigTopicIds }
@@ -18,7 +18,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const { config: configTopics } = useSearch<LocationGenerics>()
   const topicConfig = configTopics?.find(
     (t) => t.id === scopeTopicId
-  ) as MapDataConfigTopicWithState
+  ) as TopicConfig
 
   const toggleActive = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')

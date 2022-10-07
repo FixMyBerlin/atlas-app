@@ -1,6 +1,6 @@
 import { MapDataConfigThemeIds } from '@components/MapInterface/mapData/themesMapDataConfig'
 import { mapDataConfig } from '../../mapData'
-import { MapDataConfigTopicsWithState } from './type'
+import { TopicsConfig } from './type'
 
 export type Props = { themeId: MapDataConfigThemeIds }
 
@@ -29,5 +29,5 @@ export const mapDataConfigTopicsWithState = ({ themeId }: Props) => {
         }
       }),
     }
-  }) as MapDataConfigTopicsWithState
+  }) as TopicsConfig
 }
