@@ -12,10 +12,10 @@
     "type-check": "tsc",
     "lint": "eslint --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\"",
     "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
-    "test": "vitest",
+    "test": "vitest watch",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "check": "npm run type-check && npm run lint && npm run format && npm run test"
+    "check": "npm run type-check && npm run lint && npm run format && vitest run"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.2",
