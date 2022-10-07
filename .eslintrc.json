@@ -18,17 +18,25 @@
   "rules": {
     "react/prop-types": "off",
     // https://eslint.org/docs/latest/rules/no-unused-vars#options
-    "no-unused-vars": [
+    // https://stackoverflow.com/a/61555310/729221
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": [
       "error",
-      // { "varsIgnorePattern": "_[iI]" },
-      { "argsIgnorePattern": "^_" },
-      { "destructuredArrayIgnorePattern": "^_" }
+      {
+        "varsIgnorePattern": "^_",
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_"
+      }
     ],
     // https://typescript-eslint.io/rules/ban-ts-comment/#allow-with-description
     "@typescript-eslint/ban-ts-comment": [
       "error",
-      { "ts-expect-error": "allow-with-description" }
-    ]
+      {
+        "ts-ignore": "allow-with-description",
+        "ts-expect-error": "allow-with-description"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
