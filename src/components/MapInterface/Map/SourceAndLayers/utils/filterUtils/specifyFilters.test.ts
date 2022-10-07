@@ -61,7 +61,6 @@ describe('specifyFilters()', () => {
         testFilterData,
         testFilterConfig
       )
-      console.log(filter)
       expect(filter[0]).toEqual('all')
       expect(filter[1]).toEqual(testLayerFilterSimple)
       expect(filter[2]).toEqual(testLayerFilterSimple2)

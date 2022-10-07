@@ -61,7 +61,6 @@ describe('flattenFilterArrays()', () => {
     const input1 = ['all', ['foo', true], ['bar', false]]
     const input2 = ['all', ['lorem', false], ['ipsum', true]]
     const result = flattenFilterArrays(input1, input2)
-    console.log(result)
     expect(result).toMatchObject([
       ['foo', true],
       ['bar', false],
