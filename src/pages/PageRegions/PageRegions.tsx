@@ -1,5 +1,7 @@
 import { Layout } from '@components/Layout'
-import { Link, useMatch } from '@tanstack/react-location'
+import { PageregionsRegionIntro } from '@components/PageRegions'
+import { PageRegionsRegionList } from '@components/PageRegions/PageRegionsRegionList'
+import { useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 
 export const PageRegions: React.FC = () => {
@@ -8,23 +10,20 @@ export const PageRegions: React.FC = () => {
     search: { regionPathNotFound },
   } = useMatch<LocationGenerics>()
 
-  return (
-    <Layout>
-      {!!regionPathNotFound && (
+  if (regionPathNotFound) {
+    return (
+      <Layout>
         <p>
           <code>{regionPathNotFound}</code> konnte nicht gefunden werden.
         </p>
-      )}
-      <h1>Bitte wähle eine Region:</h1>
-      <ul>
-        {regions?.map((region) => {
-          return (
-            <li key={region.path}>
-              <Link to={`/regionen/${region.path}`}>{region.name}</Link>
-            </li>
-          )
-        })}
-      </ul>
+      </Layout>
+    )
+  }
+
+  return (
+    <Layout>
+      {/* <PageregionsRegionIntro regions={regions} /> */}
+      <PageRegionsRegionList regions={regions} />
     </Layout>
   )
 }
