@@ -39,6 +39,13 @@ export const regions: Region[] = [
       <img src="/pageRegions/zesplus-logo.png" className="h-6 w-auto" alt="" />
     ),
   },
+  {
+    name: 'Langerwehe',
+    fullName: 'Langerwehe',
+    path: 'langerwehe',
+    map: { lat: 50.82, lng: 6.37, zoom: 15 },
+    logo: null,
+  },
 ]
 
 export const regionFromPath = (regionPath: string) => {
