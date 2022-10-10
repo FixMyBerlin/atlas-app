@@ -1,5 +1,5 @@
-import { Layout } from '@components/Layout'
+import { LayoutPage } from '@components/Layout'
 
 export const Page404: React.FC = () => {
-  return <Layout>Hallo 404</Layout>
+  return <LayoutPage>Hallo 404</LayoutPage>
 }

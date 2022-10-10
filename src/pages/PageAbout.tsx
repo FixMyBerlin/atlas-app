@@ -1,5 +1,5 @@
-import { Layout } from '@components/Layout'
+import { LayoutPage } from '@components/Layout'
 
 export const PageAbout: React.FC = () => {
-  return <Layout>Hallo About</Layout>
+  return <LayoutPage>Hallo About</LayoutPage>
 }

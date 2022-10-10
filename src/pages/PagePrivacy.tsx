@@ -1,5 +1,5 @@
-import { Layout } from '@components/Layout'
+import { LayoutPage } from '@components/Layout'
 
 export const PagePrivacy: React.FC = () => {
-  return <Layout>Hallo Datenschutz</Layout>
+  return <LayoutPage>Hallo Datenschutz</LayoutPage>
 }
