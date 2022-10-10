@@ -20,7 +20,11 @@ export const PageRegionMap: React.FC = () => {
   // Guard aganst false regionPath params which result in empty region-data
   if (!region) {
     return (
-      <Navigate to="/regionen" search={{ regionPathNotFound: regionPath }} />
+      <Navigate
+        to="/regionen"
+        search={{ regionPathNotFound: regionPath }}
+        replace
+      />
     )
   }
 

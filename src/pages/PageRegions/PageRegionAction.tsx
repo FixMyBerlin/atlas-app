@@ -9,7 +9,11 @@ export const PageRegionAction: React.FC = () => {
 
   if (region === undefined) {
     return (
-      <Navigate to="/regionen" search={{ regionPathNotFound: regionPath }} />
+      <Navigate
+        to="/regionen"
+        search={{ regionPathNotFound: regionPath }}
+        replace
+      />
     )
   }
 
