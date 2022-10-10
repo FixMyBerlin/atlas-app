@@ -25,14 +25,14 @@ export const DebugBoxZustandStore: React.FC = () => {
     <>
       <div className="absolute top-3 right-12 z-50 max-h-screen max-w-[60%] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
         <button
-          className="absolute top-1 right-1 flex h-5 w-5 items-center justify-center rounded-full border bg-purple-500/90 hover:bg-purple-800 hover:text-purple-200"
+          className="absolute top-0 right-0 z-10 flex h-5 w-5 items-center justify-center rounded-full border bg-purple-500/90 hover:bg-purple-800 hover:text-purple-200"
           onClick={() => setShowDebugInfo(false)}
         >
           &times;
         </button>
         {!!regionPath && (
           <Link to={`/regionen/${regionPath}`} className="rounded border p-1">
-            Reset {regionPath} default
+            Reset URL <code>config</code>
           </Link>
         )}
         <details>
