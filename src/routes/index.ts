@@ -1,3 +1,4 @@
+export * from './DebugBoxReactLocation'
 export * from './encodeDecode'
 export * from './fetchRegionByPath'
 export * from './fetchRegions'

@@ -1,13 +1,13 @@
 import classNames from 'classnames'
 import React, { useState } from 'react'
 import { useStore } from 'zustand'
-import { useStoreMap } from '../store/useStoreMap'
+import { useMapInterfaceStore } from '../store/useMapInterfaceStore'
 
 type Props = { whatToSum: 'capacity' | 'length' }
 
 export const Calculator: React.FC = () => {
   const { calculatorFeatures, removeFromCalculator, clearCalculator } =
-    useStore(useStoreMap)
+    useStore(useMapInterfaceStore)
 
   const [whatToSum, setWhatToSum] = useState<Props['whatToSum']>('capacity')
 

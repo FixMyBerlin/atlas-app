@@ -12,7 +12,7 @@ import {
 } from 'react-map-gl'
 import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
-import { StoreDebugBox, useStoreMap } from '../store'
+import { useMapInterfaceStore } from '../store'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundByZoom, roundNumber } from './utils'
@@ -34,7 +34,6 @@ export const Map: React.FC = () => {
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
-  const zustandValues = useStore(useStoreMap)
   const {
     setInspector,
     addToCalculator,
@@ -42,7 +41,7 @@ export const Map: React.FC = () => {
     calculatorFeatures,
     interactiveLayerIds,
     addInteractiveLayerIds,
-  } = zustandValues
+  } = useStore(useMapInterfaceStore)
 
   const handleMouseEnter = (event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -149,8 +148,6 @@ export const Map: React.FC = () => {
       <NavigationControl showCompass={false} />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
-
-      <StoreDebugBox zustandValues={zustandValues} />
     </MapGl>
   )
 }

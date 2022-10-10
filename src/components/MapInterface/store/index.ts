@@ -1,3 +1,3 @@
-export * from './StoreDebugBox'
+export * from './DebugBoxZustandStore'
 export * from './mapDataConfigTopicsWithState'
-export * from './useStoreMap'
+export * from './useMapInterfaceStore'

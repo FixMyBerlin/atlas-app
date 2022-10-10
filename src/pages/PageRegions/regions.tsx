@@ -31,6 +31,13 @@ export const regions: Region[] = [
     logo: null,
   },
   {
+    name: 'Berlin',
+    fullName: 'Berlin Ring',
+    path: 'berlin',
+    map: { lat: 52.51, lng: 13.41, zoom: 14 },
+    logo: null,
+  },
+  {
     name: 'ZES+',
     fullName: 'ZES+',
     path: 'zes',

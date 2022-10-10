@@ -1,11 +1,11 @@
 import classNames from 'classnames'
 import React from 'react'
 import { useStore } from 'zustand'
-import { useStoreMap } from '../store/useStoreMap'
+import { useMapInterfaceStore } from '../store/useMapInterfaceStore'
 import { CloseButton } from './utils'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, setInspector } = useStore(useStoreMap)
+  const { inspectorFeatures, setInspector } = useStore(useMapInterfaceStore)
   // For some reason from time to time we get duplicated entires wich cause a `key` warning
   if (!inspectorFeatures) return null
 

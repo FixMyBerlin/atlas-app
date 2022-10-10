@@ -1,5 +1,4 @@
 import { Outlet, Router } from '@tanstack/react-location'
-import { ReactLocationDevtools } from '@tanstack/react-location-devtools'
 import { location, routes } from './routes'
 
 const App = () => {
@@ -8,7 +7,6 @@ const App = () => {
       <main className="relative flex-auto">
         <Outlet />
       </main>
-      <ReactLocationDevtools initialIsOpen={false} />
     </Router>
   )
 }

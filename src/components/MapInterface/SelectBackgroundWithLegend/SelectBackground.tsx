@@ -8,12 +8,12 @@ import {
   MapDataConfigSourcesRasterIds,
   sourcesBackgroundsRaster,
 } from '../mapData'
-import { useStoreMap } from '../store'
+import { useMapInterfaceStore } from '../store'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
-  const { calculatorFeatures } = useStoreMap()
+  const { calculatorFeatures } = useMapInterfaceStore()
   const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
 
   const navigate = useNavigate<LocationGenerics>()

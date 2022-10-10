@@ -1,16 +1,17 @@
+import { isDev } from '@components/utils/isDev'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type StoreMap = StateInitialization &
+type MapInterfaceStore = StoreDebugInfo &
   StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
 
-type StateInitialization = {
-  initialized: boolean
-  setInitialized: (initizalized: true) => void
+type StoreDebugInfo = {
+  showDebugInfo: boolean
+  setShowDebugInfo: (showDebugInfo: boolean) => void
 }
 
 type StoreInteractiveLayer = {
@@ -33,9 +34,9 @@ type StoreFeaturesCalculator = {
   clearCalculator: () => void
 }
 
-export const useStoreMap = create<StoreMap>((set, get) => ({
-  initialized: false,
-  setInitialized: (initialized) => set({ initialized }),
+export const useMapInterfaceStore = create<MapInterfaceStore>((set, get) => ({
+  showDebugInfo: isDev,
+  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo: showDebugInfo }),
 
   interactiveLayerIds: [],
   addInteractiveLayerIds: (layerIdsToAdd) => {

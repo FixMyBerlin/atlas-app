@@ -1,4 +1,4 @@
-import { useStoreMap } from '@components/MapInterface/store'
+import { useMapInterfaceStore } from '@components/MapInterface/store'
 import React from 'react'
 import { Layer } from 'react-map-gl'
 import { useStore } from 'zustand'
@@ -11,7 +11,8 @@ export const LayerHighlightParkingLanes: React.FC<Props> = ({
   scope,
   visible,
 }) => {
-  const { inspectorFeatures, calculatorFeatures } = useStore(useStoreMap)
+  const { inspectorFeatures, calculatorFeatures } =
+    useStore(useMapInterfaceStore)
 
   const inspectorIds = inspectorFeatures?.map((o) => o?.properties?.id) || []
   const calculatorIds = calculatorFeatures?.map((o) => o?.properties?.id) || []
