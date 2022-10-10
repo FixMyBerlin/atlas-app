@@ -1,3 +1,3 @@
 export * from './MobileMenu'
-export * from './PrimaryNavigation'
+export * from './NavigationScaffold'
 export * from './types'

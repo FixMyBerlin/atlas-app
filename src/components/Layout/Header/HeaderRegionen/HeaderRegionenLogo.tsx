@@ -27,8 +27,8 @@ export const HeaderRegionenLogo: React.FC = () => {
           region.logo ? 'text-gray-400' : 'text-yellow-400'
         )}
       >
-        {' '}
-        {region.fullName}
+        Radverkehrsatlas{' '}
+        <span className="hidden md:inline">{region.fullName}</span>
       </span>
     </>
   )
