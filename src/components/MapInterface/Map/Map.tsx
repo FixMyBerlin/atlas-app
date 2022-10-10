@@ -43,15 +43,16 @@ export const Map: React.FC = () => {
     addInteractiveLayerIds,
   } = useStore(useMapInterfaceStore)
 
-  const handleMouseEnter = (event: MapLayerMouseEvent) => {
+  const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
-    // handleInspect(event)
-    event.features && setInspector(event.features)
   }
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
     setCursorStyle('grab')
   }
   const handleClick = (event: MapLayerMouseEvent) => {
+    event.features && setInspector(event.features)
+  }
+  const handleDoubleClick = (event: MapLayerMouseEvent) => {
     if (!event.features) return
 
     const alreadySelectedIds = calculatorFeatures.map((f) => f?.properties?.id)
@@ -141,6 +142,7 @@ export const Map: React.FC = () => {
       onMoveEnd={handleMoveEnd}
       // onZoomEnd={handleZoomEnd} // zooming is always also moving
       onClick={handleClick}
+      onDblClick={handleDoubleClick}
       onLoad={handleLoad}
     >
       <SourceAndLayers />

@@ -1,11 +1,10 @@
 import classNames from 'classnames'
 import React from 'react'
-import { useStore } from 'zustand'
 import { useMapInterfaceStore } from '../store/useMapInterfaceStore'
 import { CloseButton } from './utils'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, setInspector } = useStore(useMapInterfaceStore)
+  const { inspectorFeatures, setInspector } = useMapInterfaceStore()
   // For some reason from time to time we get duplicated entires wich cause a `key` warning
   if (!inspectorFeatures) return null
 
@@ -27,7 +26,8 @@ export const Inspector: React.FC = () => {
     )
     return tempInspectorFeatureKeysForFilter.includes(currentKey)
   })
-  if (!uniqInspectorFeatures) return null
+
+  if (!uniqInspectorFeatures?.length) return null
 
   const osmLink = (id: string) => {
     const pathWithId = id.includes('/') ? id : `way/${id}`
@@ -59,7 +59,7 @@ export const Inspector: React.FC = () => {
     )
   }
   return (
-    <section className="fixed top-32 right-2.5 bottom-5 z-10 min-w-[25rem] max-w-[25rem] overflow-scroll rounded bg-yellow-100 p-5 shadow-md">
+    <section className="absolute top-3 right-12 bottom-7 z-10 min-w-[25rem] max-w-[25rem] overflow-y-auto rounded bg-yellow-100 p-5 shadow-md">
       <h2 className="text-base font-medium text-gray-900">
         Eigenschaften <span>({uniqInspectorFeatures.length})</span>
       </h2>
