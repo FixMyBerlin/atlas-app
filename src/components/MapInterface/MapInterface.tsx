@@ -1,11 +1,11 @@
 import React from 'react'
 import { MapProvider } from 'react-map-gl'
+import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
 import { SelectBackgroundWithLegend } from './SelectBackgroundWithLegend'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
-import { DebugBoxReactLocation, DebugBoxZustandStore } from './store'
 
 export const MapInterface: React.FC = () => {
   return (
@@ -17,8 +17,8 @@ export const MapInterface: React.FC = () => {
         <SelectTopics />
         {/* <Calculator /> */}
         <Inspector />
-        <DebugBoxZustandStore />
-        <DebugBoxReactLocation />
+        <DebugStateInteraction />
+        <DebugStateReactLocation />
       </div>
     </MapProvider>
   )
