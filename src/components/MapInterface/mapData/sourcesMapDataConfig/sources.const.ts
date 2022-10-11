@@ -1,7 +1,7 @@
-import { MapDataConfigSource } from '../types'
+import { MapDataSource } from '../types'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
-export type MapDataConfigSourcesIds =
+export type SourcesIds =
   | 'parkraumParking'
   | 'boundaries'
   | 'unfallatlas'
@@ -19,7 +19,7 @@ const apiKeyMapbox =
 // "Tarmac OSM Viewer", they call it "Client Token"
 const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
-export const sources: MapDataConfigSource<MapDataConfigSourcesIds>[] = [
+export const sources: MapDataSource<SourcesIds>[] = [
   {
     id: 'parkraumParking',
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',

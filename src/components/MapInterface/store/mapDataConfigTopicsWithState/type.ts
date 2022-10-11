@@ -1,21 +1,17 @@
-import {
-  MapDataConfigTopicIds,
-  MapDataConfigTopicStyleIds,
-  MapDataConfigTopicStyleFilterIds,
-} from '../../mapData'
+import { TopicIds, TopicStyleIds, TopicStyleFilterIds } from '../../mapData'
 
 export type TopicConfig = {
-  id: MapDataConfigTopicIds
+  id: TopicIds
   active: boolean
   styles: {
-    id: MapDataConfigTopicStyleIds
+    id: TopicStyleIds
     active: boolean
     filters: null | TopicStyleFilterConfig[]
   }[]
 }
 
 export type TopicStyleFilterConfig = {
-  id: MapDataConfigTopicStyleFilterIds
+  id: TopicStyleFilterIds
   options: TopicStyleFilterOptionConfig[]
 }
 

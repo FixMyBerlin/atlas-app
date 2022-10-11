@@ -1,4 +1,4 @@
-import { MapDataConfigTopic } from '../types'
+import { MapDataTopic } from '../types'
 import {
   layersDebugLengthPerCapacity,
   layersDefault,
@@ -12,7 +12,7 @@ export type TopicParkingStyleIds =
   | 'debugLengthPerCapacity'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
-type Topic = MapDataConfigTopic
+type Topic = MapDataTopic
 
 export const topicParking: Topic = {
   id: 'parking',

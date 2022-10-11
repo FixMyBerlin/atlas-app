@@ -1,4 +1,4 @@
-import { MapDataConfigTopic, MapDataConfigVisLayer } from '../types'
+import { MapDataTopic, MapDataVisLayer } from '../types'
 import { tarmacStyle } from './utils'
 
 export type TopicTarmacBikelanesId = 'bikelanes'
@@ -7,9 +7,9 @@ export type TopicTarmacBikelanesStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-radinfra`
-) as MapDataConfigVisLayer[] // TODO types on tarmacStyle
+) as MapDataVisLayer[] // TODO types on tarmacStyle
 
-export const topicTarmacBikelanes: MapDataConfigTopic = {
+export const topicTarmacBikelanes: MapDataTopic = {
   id: 'bikelanes',
   name: 'Fahrradinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',

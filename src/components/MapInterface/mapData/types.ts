@@ -1,17 +1,14 @@
 import mapboxgl from 'mapbox-gl'
 import {
-  MapDataConfigTopicIds,
-  MapDataConfigTopicStyleFilterIds,
-  MapDataConfigTopicStyleIds,
+  TopicIds,
+  TopicStyleFilterIds,
+  TopicStyleIds,
 } from './mapDataConfig.const'
-import {
-  MapDataConfigSourcesIds,
-  MapDataConfigSourcesRasterIds,
-} from './sourcesMapDataConfig'
+import { SourcesIds, SourcesRasterIds } from './sourcesMapDataConfig'
 import { MapDataConfigThemeIds } from './themesMapDataConfig'
 
 /** @desc: The raw vector tile data; no UI representation; name fixed by library */
-export type MapDataConfigSource<TIds> = {
+export type MapDataSource<TIds> = {
   id: TIds
   /** @desc URL of the vector tiles */
   tiles: string
@@ -29,33 +26,33 @@ type MapDataConfigRasterSources = {
 }
 
 /** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
-export type MapDataConfigTheme = {
+export type MapDataTheme = {
   id: MapDataConfigThemeIds
   name: string
   desc?: string
 }
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
-export type MapDataConfigTopic = {
-  id: MapDataConfigTopicIds
+export type MapDataTopic = {
+  id: TopicIds
   name: string
   desc: string
-  sourceId: MapDataConfigSourcesIds
   defaultVisible: boolean
-  styles: MapDataConfigStyle[]
+  sourceId: SourcesIds
+  styles: MapDataStyle[]
 }
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type MapDataConfigStyle = {
-  id: MapDataConfigTopicStyleIds
+export type MapDataStyle = {
+  id: TopicStyleIds
   name: string
   desc: null | string
-  layers: MapDataConfigVisLayer[]
-  interactiveFilters: null | MapDataConfigStyleInteractiveFilter[]
+  layers: MapDataVisLayer[]
+  interactiveFilters: null | MapDataStyleInteractiveFilter[]
 }
 
 /** @desc: The technical glue between sources and styles. name fixed by library */
-export type MapDataConfigVisLayer = (
+export type MapDataVisLayer = (
   | mapboxgl.CircleLayer
   | mapboxgl.FillLayer
   | mapboxgl.HeatmapLayer
@@ -67,25 +64,25 @@ export type MapDataConfigVisLayer = (
 }
 
 /** @desc: Optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataConfigStyleInteractiveFilter = {
-  id: MapDataConfigTopicStyleFilterIds
+export type MapDataStyleInteractiveFilter = {
+  id: TopicStyleFilterIds
   name: string
   desc?: string
   inputType: 'checkbox' | 'radiobutton'
   filterConfig: { lookupKey: string }
-  options: MapDataConfigStyleInteractiveFilterOption[]
+  options: MapDataStyleInteractiveFilterOption[]
 }
 
 /** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataConfigStyleInteractiveFilterOption = {
+export type MapDataStyleInteractiveFilterOption = {
   id: string
   name: string
   defaultActive?: boolean
 }
 
-export type MapDataConfig = {
-  sources: MapDataConfigSource<MapDataConfigSourcesIds>[]
-  backgrounds: MapDataConfigSource<MapDataConfigSourcesRasterIds>[]
-  themes: MapDataConfigTheme[]
-  topics: MapDataConfigTopic[]
+export type MapData = {
+  sources: MapDataSource<SourcesIds>[]
+  backgrounds: MapDataSource<SourcesRasterIds>[]
+  themes: MapDataTheme[]
+  topics: MapDataTopic[]
 }

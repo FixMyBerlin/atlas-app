@@ -1,4 +1,4 @@
-import { MapDataConfigTopic } from '../types'
+import { MapDataTopic } from '../types'
 
 // Data https://studio.mapbox.com/tilesets/hejco.86v96gzk/#17.29/52.564196/13.327916
 // Style https://studio.mapbox.com/styles/hejco/cl6upu3zo000015o3im4kug1n/edit/#17.29/52.564196/13.327916
@@ -9,7 +9,7 @@ export type TopicUnfallatlasId = 'accidents'
 export type TopicUnfallatlasStyleIds = 'default'
 export type TopicUnfallatlasStyleFilterIds = 'years' | 'category' | 'type'
 
-type Topic = MapDataConfigTopic
+type Topic = MapDataTopic
 
 // Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
 export const topicUnfallatlas: Topic = {

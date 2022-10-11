@@ -1,4 +1,4 @@
-import { MapDataConfigTopic, MapDataConfigVisLayer } from '../types'
+import { MapDataTopic, MapDataVisLayer } from '../types'
 import { tarmacStyle } from './utils'
 
 export type TopicTarmacHighwayClassificationId = 'highwayClassification'
@@ -7,9 +7,9 @@ export type TopicTarmacHighwayClassificationStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-strassentypen`
-) as MapDataConfigVisLayer[] // TODO types on tarmacStyle
+) as MapDataVisLayer[] // TODO types on tarmacStyle
 
-export const topicTarmacHighwayClassification: MapDataConfigTopic = {
+export const topicTarmacHighwayClassification: MapDataTopic = {
   id: 'highwayClassification',
   name: 'Straßentypen',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',

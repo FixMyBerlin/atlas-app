@@ -1,4 +1,4 @@
-import { MapDataConfigStyleInteractiveFilter } from '@components/MapInterface/mapData'
+import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
 import { TopicStyleFilterConfig } from '@components/MapInterface/store'
 import { filterArrayFromMergedDataAndConfig } from './filterArrayFromMergedDataAndConfig'
 import { flattenFilterArrays } from './flattenFilterArrays'
@@ -7,7 +7,7 @@ import { wrapFilterWithAll } from './wrapFilterWithAll'
 
 export const specifyFilters = (
   layerFilter: undefined | any[],
-  filtersData: undefined | null | MapDataConfigStyleInteractiveFilter[],
+  filtersData: undefined | null | MapDataStyleInteractiveFilter[],
   filtersConfig: undefined | null | TopicStyleFilterConfig[]
 ) => {
   if (!filtersData || !filtersConfig) {

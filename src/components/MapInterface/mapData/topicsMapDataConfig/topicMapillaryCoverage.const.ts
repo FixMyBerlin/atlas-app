@@ -1,10 +1,10 @@
-import { MapDataConfigTopic } from '../types'
+import { MapDataTopic } from '../types'
 
 export type TopicMapillaryCoverageId = 'mapillaryCoverage'
 export type TopicMapillaryCoverageStyleIds = 'default'
 export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
-type Topic = MapDataConfigTopic
+type Topic = MapDataTopic
 
 export const topicMapillaryCoverage: Topic = {
   id: 'mapillaryCoverage',

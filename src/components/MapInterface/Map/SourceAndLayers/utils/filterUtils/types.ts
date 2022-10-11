@@ -1,16 +1,16 @@
 import {
-  MapDataConfigStyleInteractiveFilter,
-  MapDataConfigStyleInteractiveFilterOption,
+  MapDataStyleInteractiveFilter,
+  MapDataStyleInteractiveFilterOption,
 } from '@components/MapInterface/mapData'
 import { TopicStyleFilterOptionConfig } from '@components/MapInterface/store'
 
 export type FilterDataWithConfigState = Omit<
-  MapDataConfigStyleInteractiveFilter,
+  MapDataStyleInteractiveFilter,
   'options'
 > & { options: FilterOptionDataWithConfigState[] }
 
 type FilterOptionDataWithConfigState = Omit<
-  MapDataConfigStyleInteractiveFilterOption,
+  MapDataStyleInteractiveFilterOption,
   'defaultActive'
 > &
   Pick<TopicStyleFilterOptionConfig, 'active'>

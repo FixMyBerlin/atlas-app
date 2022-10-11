@@ -1,10 +1,10 @@
-import { MapDataConfigStyleInteractiveFilter } from '@components/MapInterface/mapData'
+import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
 import { TopicStyleFilterConfig } from '@components/MapInterface/store'
 import { describe, expect, test } from 'vitest'
 import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'
 
 // Source: src/components/MapInterface/mapData/topicsMapDataConfig/topicUnfallatlas.const.ts
-export const testFilterData: MapDataConfigStyleInteractiveFilter[] = [
+export const testFilterData: MapDataStyleInteractiveFilter[] = [
   {
     id: 'category',
     name: 'Unfallort',

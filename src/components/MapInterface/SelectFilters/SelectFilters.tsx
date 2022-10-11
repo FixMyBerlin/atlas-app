@@ -6,7 +6,7 @@ import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
 import {
   getMapDataTopicFilter,
   getMapDataTopicStyle,
-  MapDataConfigTopicIds,
+  TopicIds,
 } from '../mapData'
 import { TopicConfig } from '../store'
 import {
@@ -14,7 +14,7 @@ import {
   createTopicStyleFilterOptionKey,
 } from '../utils'
 
-type Props = { scopeTopicId: MapDataConfigTopicIds }
+type Props = { scopeTopicId: TopicIds }
 
 export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()

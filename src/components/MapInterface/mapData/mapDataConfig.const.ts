@@ -31,9 +31,9 @@ import {
   TopicUnfallatlasStyleFilterIds,
   TopicUnfallatlasStyleIds,
 } from './topicsMapDataConfig'
-import { MapDataConfig } from './types'
+import { MapData as MapData } from './types'
 
-export type MapDataConfigTopicIds =
+export type TopicIds =
   | TopicBoundariesId
   | TopicParkingId
   | TopicUnfallatlasId
@@ -42,7 +42,7 @@ export type MapDataConfigTopicIds =
   | TopicTarmacHighwayClassificationId
   | TopicMapillaryCoverageId
 
-export type MapDataConfigTopicStyleIds =
+export type TopicStyleIds =
   | TopicBoundariesStyleIds
   | TopicParkingStyleIds
   | TopicUnfallatlasStyleIds
@@ -51,7 +51,7 @@ export type MapDataConfigTopicStyleIds =
   | TopicTarmacHighwayClassificationStyleIds
   | TopicMapillaryCoverageStyleIds
 
-export type MapDataConfigTopicStyleFilterIds =
+export type TopicStyleFilterIds =
   | TopicBoundariesStyleFilterIds
   | TopicParkingStyleFilterIds
   | TopicUnfallatlasStyleFilterIds
@@ -60,7 +60,7 @@ export type MapDataConfigTopicStyleFilterIds =
   | TopicTarmacHighwayClassificationStyleFilterIds
   | TopicMapillaryCoverageStyleFilterIds
 
-export const mapDataConfig: MapDataConfig = {
+export const mapData: MapData = {
   sources,
   backgrounds: sourcesBackgroundsRaster,
   themes,

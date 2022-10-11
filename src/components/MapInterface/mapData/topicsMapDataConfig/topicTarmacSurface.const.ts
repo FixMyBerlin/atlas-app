@@ -1,4 +1,4 @@
-import { MapDataConfigTopic, MapDataConfigVisLayer } from '../types'
+import { MapDataTopic, MapDataVisLayer } from '../types'
 import { tarmacStyle } from './utils'
 
 export type TopicTarmacSurfaceId = 'surface'
@@ -7,13 +7,13 @@ export type TopicTarmacSurfaceStyleFilterIds = '_nofilter'
 
 const layers = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-oberflaechenqualitaet`
-) as MapDataConfigVisLayer[] // TODO types on tarmacStyle
+) as MapDataVisLayer[] // TODO types on tarmacStyle
 
 const layersSurfaceBad = tarmacStyle.layers.filter(
   (s) => s.metadata.groupName === `fmc-surface-bad`
-) as MapDataConfigVisLayer[] // TODO types on tarmacStyle
+) as MapDataVisLayer[] // TODO types on tarmacStyle
 
-export const topicTarmacSurface: MapDataConfigTopic = {
+export const topicTarmacSurface: MapDataTopic = {
   id: 'surface',
   name: 'Oberflächenqualität',
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',

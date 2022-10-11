@@ -1,4 +1,4 @@
-import { MapDataConfigTheme } from '../types'
+import { MapDataTheme } from '../types'
 
 // TODO type MapDataConfigThemeIds = typeof sources[number]['id']
 export type MapDataConfigThemeIds =
@@ -8,7 +8,7 @@ export type MapDataConfigThemeIds =
   | 'surface'
   | 'parking'
 
-export const themes: MapDataConfigTheme[] = [
+export const themes: MapDataTheme[] = [
   {
     id: 'fromTo',
     name: 'Quellen & Ziele',

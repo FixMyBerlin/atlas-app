@@ -3,11 +3,11 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
-import { getMapDataTopicStyle, MapDataConfigTopicIds } from '../mapData'
+import { getMapDataTopicStyle, TopicIds } from '../mapData'
 import { TopicConfig } from '../store'
 import { createTopicStyleKey } from '../utils'
 
-type Props = { scopeTopicId: MapDataConfigTopicIds }
+type Props = { scopeTopicId: TopicIds }
 
 export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()

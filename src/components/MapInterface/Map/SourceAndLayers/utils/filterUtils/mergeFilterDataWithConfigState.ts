@@ -1,11 +1,11 @@
-import { MapDataConfigStyleInteractiveFilter } from '@components/MapInterface/mapData'
+import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
 import { TopicStyleFilterConfig } from '@components/MapInterface/store'
 import produce from 'immer'
 import { FilterDataWithConfigState } from './types'
 
 /** @desc We take our filterData (from MapData…), add the `active` from filterConfig and cleanup the `defaultActive` */
 export const mergeFilterDataWithConfigState = (
-  filtersData: MapDataConfigStyleInteractiveFilter[],
+  filtersData: MapDataStyleInteractiveFilter[],
   filtersConfig: TopicStyleFilterConfig[]
 ) => {
   const mergedFilterDataAndConfig = produce(filtersData, (draft) => {

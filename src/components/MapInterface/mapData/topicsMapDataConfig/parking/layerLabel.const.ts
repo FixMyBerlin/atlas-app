@@ -1,7 +1,7 @@
-import { MapDataConfigVisLayer } from '../../types'
+import { MapDataVisLayer } from '../../types'
 
 // Reminder: Needs to be at the end of the layer list. Last entries are on top.
-export const layerLabel = (keyForTextField: string): MapDataConfigVisLayer => {
+export const layerLabel = (keyForTextField: string): MapDataVisLayer => {
   return {
     id: 'line-label-capacity',
     type: 'symbol',

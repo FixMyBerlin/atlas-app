@@ -4,10 +4,7 @@ import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
-import {
-  MapDataConfigSourcesRasterIds,
-  sourcesBackgroundsRaster,
-} from '../mapData'
+import { SourcesRasterIds, sourcesBackgroundsRaster } from '../mapData'
 import { useMapInterfaceStore } from '../store'
 import { ListOption } from './ListOption'
 
@@ -17,12 +14,12 @@ export const SelectBackground: React.FC = () => {
   const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
 
   const navigate = useNavigate<LocationGenerics>()
-  const onChange = (value: MapDataConfigSourcesRasterIds) => {
+  const onChange = (value: SourcesRasterIds) => {
     navigate({
       search: (old) => {
         return {
           ...old,
-          bg: value as MapDataConfigSourcesRasterIds,
+          bg: value as SourcesRasterIds,
         }
       },
     })

@@ -1,8 +1,4 @@
-import {
-  MapDataConfigTopicIds,
-  MapDataConfigTopicStyleFilterIds,
-  MapDataConfigTopicStyleIds,
-} from '../../mapData'
+import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../../mapData'
 import {
   TopicStyleFilterKey,
   TopicStyleFilterOptionKey,
@@ -10,19 +6,19 @@ import {
 } from './types'
 
 export const createTopicStyleKey = (
-  topicId: MapDataConfigTopicIds,
-  styleId: MapDataConfigTopicStyleIds
+  topicId: TopicIds,
+  styleId: TopicStyleIds
 ): TopicStyleKey => `${topicId}-${styleId}`
 
 export const createTopicStyleFilterKey = (
-  topicId: MapDataConfigTopicIds,
-  styleId: MapDataConfigTopicStyleIds,
-  filterId: MapDataConfigTopicStyleFilterIds
+  topicId: TopicIds,
+  styleId: TopicStyleIds,
+  filterId: TopicStyleFilterIds
 ): TopicStyleFilterKey => `${topicId}-${styleId}-${filterId}`
 
 export const createTopicStyleFilterOptionKey = (
-  topicId: MapDataConfigTopicIds,
-  styleId: MapDataConfigTopicStyleIds,
-  filterId: MapDataConfigTopicStyleFilterIds,
+  topicId: TopicIds,
+  styleId: TopicStyleIds,
+  filterId: TopicStyleFilterIds,
   optionId: string
 ): TopicStyleFilterOptionKey => `${topicId}-${styleId}-${filterId}-${optionId}`

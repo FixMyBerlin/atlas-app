@@ -1,22 +1,22 @@
 import {
-  mapDataConfig,
-  MapDataConfigTopicIds,
-  MapDataConfigTopicStyleFilterIds,
-  MapDataConfigTopicStyleIds,
+  mapData,
+  TopicIds,
+  TopicStyleFilterIds,
+  TopicStyleIds,
 } from '../mapDataConfig.const'
-import { MapDataConfigSourcesIds } from '../sourcesMapDataConfig'
-import { MapDataConfigTopic } from '../types'
+import { SourcesIds } from '../sourcesMapDataConfig'
+import { MapDataTopic } from '../types'
 
-export const getMapDataTopic = (topicId: MapDataConfigTopicIds) => {
-  return mapDataConfig.topics.find((t) => t.id === topicId)
+export const getMapDataTopic = (topicId: TopicIds) => {
+  return mapData.topics.find((t) => t.id === topicId)
 }
 
 export const getMapDataTopicStyle = (
-  topicInput: MapDataConfigTopicIds | MapDataConfigTopic,
-  styleId: MapDataConfigTopicStyleIds
+  topicInput: TopicIds | MapDataTopic,
+  styleId: TopicStyleIds
 ) => {
   if (typeof topicInput === 'string') {
-    const topic = mapDataConfig.topics.find((t) => t.id === topicInput)
+    const topic = mapData.topics.find((t) => t.id === topicInput)
     return topic?.styles.find((s) => s.id === styleId)
   } else {
     return topicInput?.styles.find((s) => s.id === styleId)
@@ -24,17 +24,15 @@ export const getMapDataTopicStyle = (
 }
 
 export const getMapDataTopicFilter = (
-  topicId: MapDataConfigTopicIds,
-  styleId: MapDataConfigTopicStyleIds,
-  filterId: MapDataConfigTopicStyleFilterIds
+  topicId: TopicIds,
+  styleId: TopicStyleIds,
+  filterId: TopicStyleFilterIds
 ) => {
-  const topic = mapDataConfig.topics.find((t) => t.id === topicId)
+  const topic = mapData.topics.find((t) => t.id === topicId)
   const style = topic?.styles.find((s) => s.id === styleId)
   return style?.interactiveFilters?.find((f) => f.id === filterId)
 }
 
-export const getMapDataSource = (
-  sourceId: MapDataConfigSourcesIds | undefined
-) => {
-  return mapDataConfig?.sources?.find((s) => s.id === sourceId)
+export const getMapDataSource = (sourceId: SourcesIds | undefined) => {
+  return mapData?.sources?.find((s) => s.id === sourceId)
 }

@@ -1,7 +1,7 @@
-import { MapDataConfigVisLayer } from '../../types'
+import { MapDataVisLayer } from '../../types'
 import { layerLabel } from './layerLabel.const'
 
-export const layersDefault: MapDataConfigVisLayer[] = [
+export const layersDefault: MapDataVisLayer[] = [
   {
     id: 'line-present',
     type: 'line',

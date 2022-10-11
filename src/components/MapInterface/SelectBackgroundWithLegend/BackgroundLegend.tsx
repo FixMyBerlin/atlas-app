@@ -3,7 +3,7 @@ import { MapIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
-import { mapDataConfig } from '../mapData'
+import { mapData } from '../mapData'
 import { replaceZxy } from '../utils'
 
 export const BackgroundLegend: React.FC = () => {
@@ -14,7 +14,7 @@ export const BackgroundLegend: React.FC = () => {
     zoom,
   } = useSearch<LocationGenerics>()
 
-  const selectedBackground = mapDataConfig.backgrounds.find(
+  const selectedBackground = mapData.backgrounds.find(
     (b) => b.id === selectedBackgroundId
   )
   if (!selectedBackground?.legendUrl) return null

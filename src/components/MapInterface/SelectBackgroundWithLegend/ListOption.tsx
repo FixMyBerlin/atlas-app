@@ -2,9 +2,9 @@ import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import classNames from 'classnames'
 import React from 'react'
-import { MapDataConfigSourcesRasterIds } from '../mapData/sourcesMapDataConfig'
+import { SourcesRasterIds } from '../mapData/sourcesMapDataConfig'
 
-type Props = { value: MapDataConfigSourcesRasterIds; name: string }
+type Props = { value: SourcesRasterIds; name: string }
 
 // https://headlessui.com/react/listbox#styling-the-active-and-selected-option
 export const ListOption: React.FC<Props> = ({ value, name }) => {
