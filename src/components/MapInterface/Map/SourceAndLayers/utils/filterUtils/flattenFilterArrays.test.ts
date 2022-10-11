@@ -53,7 +53,6 @@ describe('flattenFilterArrays()', () => {
       ['ipsum', true],
     ]
     const result = flattenFilterArrays(input1, input2)
-    console.log(result)
     expect(result).toMatchObject([...input1, ...input2])
   })
 
