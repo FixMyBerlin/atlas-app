@@ -20,6 +20,9 @@ import {
   TopicEducationStyleFilterIds_Tarmac,
   TopicEducationStyleIds_Osmscripts,
   TopicEducationStyleIds_Tarmac,
+  TopicLanduseId,
+  TopicLanduseStyleFilterIds,
+  TopicLanduseStyleIds,
   TopicLitId,
   TopicLitStyleFilterIds,
   TopicLitStyleIds,
@@ -63,6 +66,7 @@ import {
   topic_boudaries,
   topic_education_osmscripts,
   topic_education_tarmac,
+  topic_landuse,
   topic_lit,
   topic_mapillaryCoverage,
   topic_places,
@@ -83,6 +87,7 @@ export type TopicIds =
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
+  | TopicLanduseId
   | TopicLitId
   | TopicMapillaryCoverageId
   | TopicPlacesId
@@ -103,6 +108,7 @@ export type TopicStyleIds =
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
+  | TopicLanduseStyleIds
   | TopicLitStyleIds
   | TopicMapillaryCoverageStyleIds
   | TopicPlacesStyleIds
@@ -123,6 +129,7 @@ export type TopicStyleFilterIds =
   | TopicBoundariesStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
   | TopicEducationStyleFilterIds_Tarmac
+  | TopicLanduseStyleFilterIds
   | TopicLitStyleFilterIds
   | TopicMapillaryCoverageStyleFilterIds
   | TopicPlacesStyleFilterIds
@@ -147,6 +154,7 @@ export const mapData: MapData = {
     topic_boudaries,
     topic_education_tarmac,
     topic_education_osmscripts,
+    topic_landuse,
     topic_lit,
     topic_mapillaryCoverage,
     topic_places,

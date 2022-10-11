@@ -12,6 +12,7 @@ export type SourcesIds =
   | 'tarmac_bikelanes'
   | 'tarmac_boundaries'
   | 'tarmac_education'
+  | 'tarmac_landuse'
   | 'tarmac_lit'
   | 'tarmac_places'
   | 'tarmac_publicTransport'
@@ -104,6 +105,13 @@ export const sources: MapDataSource<SourcesIds>[] = [
     // https://tiles.radverkehrsatlas.de/public.places.json
     id: 'tarmac_places',
     tiles: 'https://tiles.radverkehrsatlas.de/public.places/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.fromTo_landuse.json
+    id: 'tarmac_landuse',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.fromTo_landuse/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
   },
   {
