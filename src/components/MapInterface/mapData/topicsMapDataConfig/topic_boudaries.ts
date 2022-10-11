@@ -1,16 +1,17 @@
 import { MapDataTopic } from '../types'
 
-export type TopicBoundariesId = 'boundaries'
+const topiId = 'boundaries'
+export type TopicBoundariesId = typeof topiId
 export type TopicBoundariesStyleIds = 'default'
 export type TopicBoundariesStyleFilterIds = '_nofilter'
 
 type Topic = MapDataTopic
 
-export const topicBoundaries: Topic = {
-  id: 'boundaries',
+export const topic_boudaries: Topic = {
+  id: topiId,
   name: 'Grenzen',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
-  sourceId: 'boundaries',
+  sourceId: 'tarmac_boundaries',
   defaultVisible: true,
   styles: [
     {

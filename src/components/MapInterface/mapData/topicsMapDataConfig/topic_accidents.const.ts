@@ -5,18 +5,19 @@ import { MapDataTopic } from '../types'
 
 // TODO: Did use the default public token from https://account.mapbox.com/
 
-export type TopicUnfallatlasId = 'accidents'
-export type TopicUnfallatlasStyleIds = 'default'
-export type TopicUnfallatlasStyleFilterIds = 'years' | 'category' | 'type'
+const topicId = 'accidents'
+export type TopicAccidentsId = typeof topicId
+export type TopicAccidentsStyleIds = 'default'
+export type TopicAccidentsStyleFilterIds = 'years' | 'category' | 'type'
 
 type Topic = MapDataTopic
 
 // Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
-export const topicUnfallatlas: Topic = {
-  id: 'accidents',
+export const topic_accidents: Topic = {
+  id: topicId,
   name: 'Unfälle',
   desc: 'Unfallatlass',
-  sourceId: 'unfallatlas',
+  sourceId: 'accidents_unfallatlas',
   defaultVisible: false,
   styles: [
     {

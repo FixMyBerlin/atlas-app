@@ -2,14 +2,21 @@ import { MapDataSource } from '../types'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesIds =
+  | 'accidents_unfallatlas'
+  | 'mapillary_coverage'
+  | 'mapillary_mapfeatures'
+  | 'mapillary_trafficSigns'
+  | 'osmscripts_highways'
+  | 'osmscripts_pois'
   | 'parkraumParking'
-  | 'boundaries'
-  | 'unfallatlas'
-  | 'tarmacHighways'
-  | 'tarmacPois'
-  | 'mapillaryCoverage'
-  | 'mapillaryMapfeatures'
-  | 'mapillaryTrafficSigns'
+  | 'tarmac_bikelanes'
+  | 'tarmac_boundaries'
+  | 'tarmac_education'
+  | 'tarmac_lit'
+  | 'tarmac_places'
+  | 'tarmac_publicTransport'
+  | 'tarmac_roadClassification'
+  | 'tarmac_shops'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -26,49 +33,103 @@ export const sources: MapDataSource<SourcesIds>[] = [
     attributionHtml: 'todo', // TODO
   },
   {
-    id: 'boundaries',
+    id: 'tarmac_boundaries',
     tiles:
       'https://tiles.radverkehrsatlas.de/public.boundaries/{z}/{x}/{y}.pbf',
     attributionHtml:
       'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OSM</a>',
   },
   {
-    id: 'unfallatlas',
+    id: 'accidents_unfallatlas',
+    // TODO Migrieren auf Maptiler
     tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
   },
   {
-    id: 'tarmacHighways',
+    // Temporary, nur für den Datenabgleich
+    // https://studio.mapbox.com/tilesets/hejco.d7mywzd3/
+    id: 'osmscripts_highways',
     tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
   },
   {
-    id: 'tarmacPois',
+    // Temporary, nur für den Datenabgleich
+    // https://studio.mapbox.com/tilesets/hejco.3hccfujx/
+    id: 'osmscripts_pois',
     tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
   },
   {
+    // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
+    id: 'tarmac_roadClassification',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.roadtypesOsm/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
+    id: 'tarmac_bikelanes',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.bicycleRoadInfrastructure/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.fromTo_publicTransport.json
+    id: 'tarmac_publicTransport',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.fromTo_publicTransport/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.fromTo_education.json
+    id: 'tarmac_education',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.fromTo_education/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.fromTo_shopping.json
+    id: 'tarmac_shops',
+    tiles:
+      'https://tiles.radverkehrsatlas.de/public.fromTo_shopping/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.lit.json
+    id: 'tarmac_lit',
+    tiles: 'https://tiles.radverkehrsatlas.de/public.lit/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.places.json
+    id: 'tarmac_places',
+    tiles: 'https://tiles.radverkehrsatlas.de/public.places/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+  },
+  {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
-    id: 'mapillaryCoverage',
+    id: 'mapillary_coverage',
     tiles: `https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
     minzoom: 0,
     maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   },
-  {
-    // https://www.mapillary.com/developer/api-documentation/#point-tiles
-    id: 'mapillaryMapfeatures',
-    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
-    minzoom: 14,
-    maxzoom: 14,
-    attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
-  },
-  {
-    // https://www.mapillary.com/developer/api-documentation/#traffic-sign-tiles
-    id: 'mapillaryTrafficSigns',
-    tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
-    minzoom: 14,
-    maxzoom: 14,
-    attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
-  },
+  // UNUSED ATM:
+  // {
+  //   // https://www.mapillary.com/developer/api-documentation/#point-tiles
+  //   id: 'mapillary_mapfeatures',
+  //   tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
+  //   minzoom: 14,
+  //   maxzoom: 14,
+  //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
+  // },
+  // UNUSED ATM:
+  // {
+  //   // https://www.mapillary.com/developer/api-documentation/#traffic-sign-tiles
+  //   id: 'mapillary_trafficSigns',
+  //   tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
+  //   minzoom: 14,
+  //   maxzoom: 14,
+  //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
+  // },
 ]

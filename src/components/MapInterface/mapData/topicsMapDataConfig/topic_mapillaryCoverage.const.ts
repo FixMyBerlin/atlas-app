@@ -1,16 +1,17 @@
 import { MapDataTopic } from '../types'
 
-export type TopicMapillaryCoverageId = 'mapillaryCoverage'
+const topicId = 'mapillaryCoverage'
+export type TopicMapillaryCoverageId = typeof topicId
 export type TopicMapillaryCoverageStyleIds = 'default'
 export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
 type Topic = MapDataTopic
 
-export const topicMapillaryCoverage: Topic = {
-  id: 'mapillaryCoverage',
+export const topic_mapillaryCoverage: Topic = {
+  id: topicId,
   name: 'Mapillary Fotos',
-  desc: 'todo: aktuell erst ab zoom 14-',
-  sourceId: 'mapillaryCoverage',
+  desc: '',
+  sourceId: 'mapillary_coverage',
   defaultVisible: false,
   styles: [
     {
