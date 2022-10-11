@@ -1,7 +1,7 @@
 import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
 import { TopicStyleFilterConfig } from '@components/MapInterface/mapStateConfig'
 import { describe, expect, test } from 'vitest'
-import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'
+import { mergeFilterDataWithConfig } from './mergeFilterDataWithConfig'
 
 // Source: src/components/MapInterface/mapData/topicsMapDataConfig/topicUnfallatlas.const.ts
 export const testFilterData: MapDataStyleInteractiveFilter[] = [
@@ -48,10 +48,7 @@ export const testFilterConfig: TopicStyleFilterConfig[] = [
 
 describe('mergeFilterDataAndConfig()', () => {
   test('removes the `defaultActive` from filterData and adds the `active` state from filterConfig', () => {
-    const filter = mergeFilterDataWithConfigState(
-      testFilterData,
-      testFilterConfig
-    )
+    const filter = mergeFilterDataWithConfig(testFilterData, testFilterConfig)
     expect(filter[0].options[0].active).toBe(true)
     expect(filter[0].options[1].active).toBe(false)
     // @ts-ignore We know, its just a test…

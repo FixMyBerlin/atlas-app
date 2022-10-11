@@ -1,14 +1,14 @@
 import { describe, expect, test } from 'vitest'
 import { filterArrayFromMergedDataAndConfig } from './filterArrayFromMergedDataAndConfig'
-import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'
+import { mergeFilterDataWithConfig } from './mergeFilterDataWithConfig'
 import {
   testFilterConfig,
   testFilterData,
-} from './mergeFilterDataWithConfigState.test'
+} from './mergeFilterDataWithConfig.test'
 
 describe('filterArrayFromMergedDataAndConfig()', () => {
   test('No layerFilter either', () => {
-    const filterDataAndConfig = mergeFilterDataWithConfigState(
+    const filterDataAndConfig = mergeFilterDataWithConfig(
       testFilterData,
       testFilterConfig
     )

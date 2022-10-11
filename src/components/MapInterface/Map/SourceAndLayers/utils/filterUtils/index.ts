@@ -1,4 +1,4 @@
 export * from './filterArrayFromMergedDataAndConfig'
-export * from './mergeFilterDataWithConfigState'
+export * from './mergeFilterDataWithConfig'
 export * from './specifyFilters'
 export * from './types'

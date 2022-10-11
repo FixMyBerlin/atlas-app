@@ -3,8 +3,8 @@ import {
   TopicIds,
   TopicStyleFilterIds,
   TopicStyleIds,
-} from '../mapDataConfig.const'
-import { SourcesIds } from '../sourcesMapDataConfig'
+} from '../mapData.const'
+import { SourcesIds } from '../sourcesMapData'
 import { MapDataTopic } from '../types'
 
 export const getMapDataTopic = (topicId: TopicIds) => {

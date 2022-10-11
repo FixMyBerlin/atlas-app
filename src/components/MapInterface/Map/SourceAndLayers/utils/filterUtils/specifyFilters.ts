@@ -2,7 +2,7 @@ import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
 import { TopicStyleFilterConfig } from '@components/MapInterface/mapStateConfig'
 import { filterArrayFromMergedDataAndConfig } from './filterArrayFromMergedDataAndConfig'
 import { flattenFilterArrays } from './flattenFilterArrays'
-import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'
+import { mergeFilterDataWithConfig } from './mergeFilterDataWithConfig'
 import { wrapFilterWithAll } from './wrapFilterWithAll'
 
 export const specifyFilters = (
@@ -14,7 +14,7 @@ export const specifyFilters = (
     return wrapFilterWithAll(layerFilter)
   }
 
-  const filterDataAndConfig = mergeFilterDataWithConfigState(
+  const filterDataAndConfig = mergeFilterDataWithConfig(
     filtersData,
     filtersConfig
   )

@@ -4,7 +4,7 @@ import produce from 'immer'
 import { FilterDataWithConfigState } from './types'
 
 /** @desc We take our filterData (from MapData…), add the `active` from filterConfig and cleanup the `defaultActive` */
-export const mergeFilterDataWithConfigState = (
+export const mergeFilterDataWithConfig = (
   filtersData: MapDataStyleInteractiveFilter[],
   filtersConfig: TopicStyleFilterConfig[]
 ) => {

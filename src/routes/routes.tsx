@@ -16,7 +16,7 @@ import {
   Route,
   stringifySearchWith,
 } from '@tanstack/react-location'
-import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapDataConfig'
+import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
 import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
 
 import { decodeAndParse, encodeAndStringify } from './encodeDecode'

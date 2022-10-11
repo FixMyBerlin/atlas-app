@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest'
 import {
   testFilterConfig,
   testFilterData,
-} from './mergeFilterDataWithConfigState.test'
+} from './mergeFilterDataWithConfig.test'
 import { specifyFilters } from './specifyFilters'
 
 // Source src/components/MapInterface/mapData/topicsMapDataConfig/utils/tarmac-style.const.json

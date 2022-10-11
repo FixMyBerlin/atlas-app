@@ -1,11 +1,7 @@
 import mapboxgl from 'mapbox-gl'
-import {
-  TopicIds,
-  TopicStyleFilterIds,
-  TopicStyleIds,
-} from './mapDataConfig.const'
-import { SourcesIds, SourcesRasterIds } from './sourcesMapDataConfig'
-import { MapDataThemeIds } from './themesMapDataConfig'
+import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
+import { SourcesIds, SourcesRasterIds } from './sourcesMapData'
+import { MapDataThemeIds } from './themesMapData'
 
 /** @desc: The raw vector tile data; no UI representation; name fixed by library */
 export type MapDataSource<TIds> = {

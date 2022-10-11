@@ -2,7 +2,7 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
-import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapDataConfig'
+import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapData'
 import { layerVisibility } from '../utils'
 import { beforeId } from './beforeId.const'
 

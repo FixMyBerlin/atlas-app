@@ -1,6 +1,6 @@
-import { sourcesBackgroundsRaster } from './sourcesMapDataConfig'
-import { sources } from './sourcesMapDataConfig/sources.const'
-import { themes } from './themesMapDataConfig'
+import { sourcesBackgroundsRaster } from './sourcesMapData'
+import { sources } from './sourcesMapData/sources.const'
+import { themes } from './themesMapData'
 import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
@@ -77,7 +77,7 @@ import {
   topic_shops_osmscripts,
   topic_shops_tarmac,
   topic_surface_osmscripts,
-} from './topicsMapDataConfig'
+} from './topicsMapData'
 import { MapData } from './types'
 
 export type TopicIds =
