@@ -27,6 +27,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  api:
+    build:
+      context: .
+      dockerfile: ./api.Dockerfile
+    container_name: api
+    ports:
+      - 80:80
+    depends_on:
+      db:
+        condition: service_healthy
   db:
     build:
       context: .
