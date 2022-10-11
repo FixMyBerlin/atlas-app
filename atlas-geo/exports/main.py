@@ -11,12 +11,12 @@ app = FastAPI(
     version="0.0.1",
 )
 
-databaseServer = "localhost"
+databaseServer = "db"
 databaseName = "postgres"
 databaseUser = "postgres"
 databasePW = "mysecretpassword"
 
-connString = "host=%s dbname=%s user=%s password=%s port=6000" %(databaseServer,databaseName,databaseUser,databasePW)
+connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer,databaseName,databaseUser,databasePW)
 
 conn = psycopg2.connect(connString)
 
