@@ -19,7 +19,6 @@ export const topicParking: Topic = {
   name: 'Parkraum',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumParking',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

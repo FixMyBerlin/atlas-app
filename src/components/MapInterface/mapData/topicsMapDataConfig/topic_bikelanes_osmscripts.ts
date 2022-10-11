@@ -9,9 +9,8 @@ export type TopicBikelanesStyleFilterIds_Osmscripts = '_nofilter'
 export const topic_bikelanes_osmscripts: MapDataTopic = {
   id: topic,
   name: 'Fahrradinfrastruktur (osmscripts)',
-  desc: '',
+  desc: null,
   sourceId: 'osmscripts_highways',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

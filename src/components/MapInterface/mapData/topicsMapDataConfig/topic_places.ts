@@ -8,9 +8,8 @@ export type TopicPlacesStyleFilterIds = '_nofilter'
 export const topic_places: MapDataTopic = {
   id: topic,
   name: 'Orte',
-  desc: '',
+  desc: null,
   sourceId: 'tarmac_places',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

@@ -9,9 +9,8 @@ export type TopicShopsStyleFilterIds_Osmscripts = '_nofilter'
 export const topic_shops_osmscripts: MapDataTopic = {
   id: topicId,
   name: 'Einkauf etc (osmscripts)',
-  desc: '',
+  desc: null,
   sourceId: 'osmscripts_pois',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

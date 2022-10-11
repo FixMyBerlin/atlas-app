@@ -1,5 +1,5 @@
 import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
-import { TopicStyleFilterConfig } from '@components/MapInterface/store'
+import { TopicStyleFilterConfig } from '@components/MapInterface/mapStateConfig'
 import { filterArrayFromMergedDataAndConfig } from './filterArrayFromMergedDataAndConfig'
 import { flattenFilterArrays } from './flattenFilterArrays'
 import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'

@@ -8,9 +8,8 @@ export type TopicEducationStyleFilterIds_Tarmac = '_nofilter'
 export const topic_education_tarmac: MapDataTopic = {
   id: topicId,
   name: 'Bildungseinrichtungen',
-  desc: '',
+  desc: null,
   sourceId: 'tarmac_education',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

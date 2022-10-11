@@ -5,12 +5,12 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
 import { SourcesRasterIds, sourcesBackgroundsRaster } from '../mapData'
-import { useMapInterfaceStore } from '../store'
+import { useMapStateInteraction } from '../mapStateInteraction'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
-  const { calculatorFeatures } = useMapInterfaceStore()
+  const { calculatorFeatures } = useMapStateInteraction()
   const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
 
   const navigate = useNavigate<LocationGenerics>()

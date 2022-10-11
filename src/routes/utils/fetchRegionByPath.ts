@@ -1,5 +1,5 @@
-import { regionFromPath } from '../pages'
-import { LocationGenerics } from './routes'
+import { LocationGenerics } from '../routes'
+import { regionFromPath } from './regionFromPath'
 
 // This is a fake for now. We will pull the regions from our DB later.
 

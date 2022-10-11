@@ -12,7 +12,7 @@ import {
 } from 'react-map-gl'
 import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
-import { useMapInterfaceStore } from '../store'
+import { useMapStateInteraction } from '../mapStateInteraction'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundByZoom, roundNumber } from './utils'
@@ -41,7 +41,7 @@ export const Map: React.FC = () => {
     calculatorFeatures,
     interactiveLayerIds,
     addInteractiveLayerIds,
-  } = useStore(useMapInterfaceStore)
+  } = useStore(useMapStateInteraction)
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -76,14 +76,22 @@ export const Map: React.FC = () => {
     const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
     const sources = style.sources
 
-    addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
+    // addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
+    const layerToBeInteractive = ourLayer
+      .map((l) => (l.id.startsWith('parkraumParking') ? l.id : ''))
+      .filter(Boolean)
+    addInteractiveLayerIds(layerToBeInteractive)
+
     const mapCenter = mainMap?.getCenter()
     const mapZoom = mainMap?.getZoom()
-    console.log('onLoad', {
+    console.info('onLoad', {
       event,
       ourLayer,
       basemapLayer,
       sources,
+      layerToBeInteractive,
+      // @ts-ignore that is fine here
+      findBeforeId: allLayer.filter((l) => l.source === 'openmaptiles'),
       ...{ ...mapCenter, mapZoom },
     })
   }
@@ -120,6 +128,7 @@ export const Map: React.FC = () => {
       replace: true,
     })
   }
+
   return (
     <MapGl
       id="mainMap"
@@ -132,7 +141,7 @@ export const Map: React.FC = () => {
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
       mapLib={maplibregl}
-      mapStyle="https://api.maptiler.com/maps/basic/style.json?key=ECOoUBmpqklzSCASXxcu"
+      mapStyle="https://api.maptiler.com/maps/5cff051f-e5ca-43cf-b030-1f0286c59bb3/style.json?key=ECOoUBmpqklzSCASXxcu"
       interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}
@@ -144,6 +153,7 @@ export const Map: React.FC = () => {
       onClick={handleClick}
       onDblClick={handleDoubleClick}
       onLoad={handleLoad}
+      doubleClickZoom={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />

@@ -1,5 +1,5 @@
+import { MapDataThemeIds, themes } from '@components/MapInterface/mapData'
 import React from 'react'
-import { ReactComponent as LogoBiBi } from './assets/bibi-logo.svg'
 
 type RegionMap = {
   lat: number
@@ -10,10 +10,13 @@ type RegionMap = {
 export type Region = {
   name: string
   fullName: string
-  path: string
+  path: RegionPath
   map: RegionMap
   logo: React.ReactNode | null
+  themes: MapDataThemeIds[]
 }
+
+export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
 
 export const regions: Region[] = [
   {
@@ -21,7 +24,15 @@ export const regions: Region[] = [
     fullName: 'Bietigheim-Bissingen',
     path: 'bibi',
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
-    logo: <LogoBiBi className="h-6 w-6" />,
+    logo: (
+      <img src="/pageRegions/zesplus-logo.png" className="h-6 w-6" alt="" />
+    ),
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'lit',
+    ],
   },
   {
     name: 'TrTo',
@@ -29,6 +40,11 @@ export const regions: Region[] = [
     path: 'trto',
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     logo: null,
+    themes: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      'lit',
+    ],
   },
   {
     name: 'Berlin',
@@ -36,6 +52,7 @@ export const regions: Region[] = [
     path: 'berlin',
     map: { lat: 52.51, lng: 13.41, zoom: 14 },
     logo: null,
+    themes: themes.map((t) => t.id),
   },
   {
     name: 'ZES+',
@@ -45,6 +62,13 @@ export const regions: Region[] = [
     logo: (
       <img src="/pageRegions/zesplus-logo.png" className="h-6 w-auto" alt="" />
     ),
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'surface',
+    ],
   },
   {
     name: 'Langerwehe',
@@ -52,9 +76,6 @@ export const regions: Region[] = [
     path: 'langerwehe',
     map: { lat: 50.82, lng: 6.37, zoom: 15 },
     logo: null,
+    themes: themes.map((t) => t.id),
   },
 ]
-
-export const regionFromPath = (regionPath: string) => {
-  return regions.find((r) => r.path === regionPath)
-}

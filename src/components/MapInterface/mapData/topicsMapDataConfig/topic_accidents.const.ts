@@ -18,7 +18,6 @@ export const topic_accidents: Topic = {
   name: 'Unfälle',
   desc: 'Unfallatlass',
   sourceId: 'accidents_unfallatlas',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

@@ -1,5 +1,5 @@
 import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
-import { TopicStyleFilterConfig } from '@components/MapInterface/store'
+import { TopicStyleFilterConfig } from '@components/MapInterface/mapStateConfig'
 import produce from 'immer'
 import { FilterDataWithConfigState } from './types'
 

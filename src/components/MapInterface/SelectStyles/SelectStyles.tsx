@@ -4,17 +4,17 @@ import produce from 'immer'
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
 import { getMapDataTopicStyle, TopicIds } from '../mapData'
-import { TopicConfig } from '../store'
 import { createTopicStyleKey } from '../utils'
 
 type Props = { scopeTopicId: TopicIds }
 
 export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configTopics } = useSearch<LocationGenerics>()
-  const topicConfig = configTopics?.find(
-    (t) => t.id === scopeTopicId
-  ) as TopicConfig
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const topicConfig = configThemesTopics
+    ?.find((th) => th.id === themeId)
+    ?.topics.find((t) => t.id === scopeTopicId)
 
   const toggleActive = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')
@@ -27,7 +27,9 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
         return {
           ...old,
           config: produce(oldConfig, (draft) => {
-            const topic = draft.find((t) => t.id === eventTopicId)
+            const topic = draft
+              ?.find((th) => th.id === themeId)
+              ?.topics.find((t) => t.id === eventTopicId)
             if (topic) {
               const style = topic.styles.find((s) => s.id === eventStyleId)
               topic.styles.forEach((s) => (s.active = false))

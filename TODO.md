@@ -1,5 +1,30 @@
 # TODOs
 
+## After the cofig is updated with themes, rename the last "\*DataConfig" files and folders by removing the Config-part
+
+I did not want to do this as part of 517eb9f because it would merge unrelated changes.
+
+## A new `config` issue
+
+We have themes which have topics.
+
+- We want the user to be able to change between themes and see the same setup she had before (the last click), not the default setup
+
+However
+
+- The URL state is focussed on sharing a spcific view. So ideally we would only share the state of the selected theme, not of all themes.
+
+Which is not possible ATM, since all theme/topic state is part of the URL.
+
+## Ask for clean way to solve 2a95e8c
+
+How to lookup the path based on a :param path.
+
+## Link
+
+Write a ticket to get a pattern like TailwindUI has whree on can say
+`<Link className={(active) => classeNames('foo', active ? 'foo', 'baz')}>`
+
 ## Check radiobutton filter in Mapillary
 
 ## Use a map for mapDataConfig

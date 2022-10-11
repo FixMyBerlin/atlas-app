@@ -8,7 +8,6 @@ import {
   PageRegionAction,
   PageRegionMap,
   PageRegions,
-  Region,
 } from '@pages/index'
 import {
   MakeGenerics,
@@ -17,12 +16,13 @@ import {
   Route,
   stringifySearchWith,
 } from '@tanstack/react-location'
-import { MapDataConfigThemeIds } from '../components/MapInterface/mapData/themesMapDataConfig'
-import { TopicsConfig } from '../components/MapInterface/store/mapDataConfigTopicsWithState'
+import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapDataConfig'
+import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
 
 import { decodeAndParse, encodeAndStringify } from './encodeDecode'
-import { fetchRegionByPath } from './fetchRegionByPath'
+import { fetchRegionByPath } from './utils/fetchRegionByPath'
 import { fetchRegions } from './fetchRegions'
+import { Region } from '@fakeServer/index'
 
 // LoaderData: LoaderData<unknown>;
 // Params: Params<string>;
@@ -38,12 +38,12 @@ export type LocationGenerics = MakeGenerics<{
   }
   Search: {
     regionPathNotFound: string
-    theme: MapDataConfigThemeIds
+    theme: MapDataThemeIds
     lat: number
     lng: number
     zoom: number
     bg: SourcesRasterIds
-    config: TopicsConfig
+    config: ThemeConfig[]
   }
 }>
 

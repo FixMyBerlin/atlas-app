@@ -9,7 +9,11 @@ import { SelectStyles } from '../SelectStyles'
 
 export const SelectTopics: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configTopics } = useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const topicsConfig = configThemesTopics?.find(
+    (th) => th.id === themeId
+  )?.topics
 
   const toggleActive = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')
@@ -20,7 +24,9 @@ export const SelectTopics: React.FC = () => {
         return {
           ...old,
           config: produce(oldConfig, (draft) => {
-            const topic = draft.find((t) => t.id === eventTopicId)
+            const topic = draft
+              ?.find((th) => th.id === themeId)
+              ?.topics.find((t) => t.id === eventTopicId)
             topic && (topic.active = !topic.active)
           }),
         }
@@ -28,14 +34,14 @@ export const SelectTopics: React.FC = () => {
     })
   }
 
-  if (!configTopics) return null
+  if (!topicsConfig) return null
 
   return (
     <section className="fixed top-32 left-5 max-h-[calc(100vh-12rem)] w-60 overflow-y-auto rounded bg-white/90 px-3 pt-1 pb-3 shadow-md">
       <fieldset className="mt-4">
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">
-          {configTopics.map((topicConfig) => {
+          {topicsConfig.map((topicConfig) => {
             const topicData = getMapDataTopic(topicConfig.id)
             if (!topicData) return null
 

@@ -8,9 +8,8 @@ export type TopicShopsStyleFilterIds_Tarmac = '_nofilter'
 export const topic_shops_tarmac: MapDataTopic = {
   id: topicId,
   name: 'Einkauf etc',
-  desc: '',
+  desc: null,
   sourceId: 'tarmac_shops',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

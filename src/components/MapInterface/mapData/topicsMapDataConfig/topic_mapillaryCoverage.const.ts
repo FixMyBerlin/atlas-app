@@ -10,9 +10,8 @@ type Topic = MapDataTopic
 export const topic_mapillaryCoverage: Topic = {
   id: topicId,
   name: 'Mapillary Fotos',
-  desc: '',
+  desc: null,
   sourceId: 'mapillary_coverage',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

@@ -4,7 +4,7 @@ import create from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type MapInterfaceStore = StoreDebugInfo &
+type Store = StoreDebugInfo &
   StoreInteractiveLayer &
   StoreFeaturesInspector &
   StoreFeaturesCalculator
@@ -34,7 +34,7 @@ type StoreFeaturesCalculator = {
   clearCalculator: () => void
 }
 
-export const useMapInterfaceStore = create<MapInterfaceStore>((set, get) => ({
+export const useMapStateInteraction = create<Store>((set, get) => ({
   showDebugInfo: isDev,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo: showDebugInfo }),
 

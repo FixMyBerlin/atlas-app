@@ -9,14 +9,13 @@ export type TopicPublicTransportStyleFilterIds_Osmscripts = '_nofilter'
 export const topic_publicTransport_osmscripts: MapDataTopic = {
   id: tpoicId,
   name: 'ÖPNV / Barriers (osmscripts)',
-  desc: '',
+  desc: null,
   sourceId: 'osmscripts_pois',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
-      desc: '',
+      desc: null,
       layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-barriers'),
       interactiveFilters: null,
     },

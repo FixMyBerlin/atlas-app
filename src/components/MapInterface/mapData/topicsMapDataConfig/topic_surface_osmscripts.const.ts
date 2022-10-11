@@ -14,7 +14,6 @@ export const topic_surface_osmscripts: MapDataTopic = {
   name: 'Oberflächenqualität (osmscripts)',
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: 'osmscripts_highways',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

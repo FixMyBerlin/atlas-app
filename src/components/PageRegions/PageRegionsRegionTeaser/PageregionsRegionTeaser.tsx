@@ -1,4 +1,4 @@
-import { Region } from '@pages/PageRegions'
+import { Region } from '@fakeServer/index'
 import { Link } from '@tanstack/react-location'
 
 type Props = { region: Region }

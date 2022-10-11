@@ -3,17 +3,22 @@ import {
   getMapDataTopic,
   getMapDataTopicStyle,
 } from '@components/MapInterface/mapData'
+import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
+import { LayerHighlightParkingLanes } from './LayerHighlightInspectorCalculator'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
-  const { config: configTopics } = useSearch<LocationGenerics>()
+  const { config: configThemesTopics } = useSearch<LocationGenerics>()
+  if (!configThemesTopics) return null
 
-  if (!configTopics) return null
+  // Sources and layers are based on topics. Themes don't change them; they just duplicate them.
+  // Therefore, we look at a flattened topics list for this component.
+  const configTopics = flatConfigTopics(configThemesTopics)
 
   return (
     <>
@@ -27,14 +32,6 @@ export const SourceAndLayers: React.FC = () => {
         // TODO we should try to find a better way for this…
         //  (and first find out if it's a problem at all)
         const sourceId = `${sourceData.id}_${topicConfig.id}_tiles`
-
-        // TODO Inspector + Calculator / InteractiveLayerIDs
-        // Ich habe sie auf Ebene Layer gespeichert.
-        // Aktiv werden müssen sie aber auf Ebene Map.
-        // Ich muss also von hier, abhängig von der visibility, die interactive Layers setzen
-        // UND dann, wenn sie benötigt werden, dynamisch auch die Layer aktivieren
-        // Diese müssen dann abhängig sein vom type (line/point).
-        // Einfacher ist erstmal, sie pro VIS zu duplizieren, daher kommen sie auf diese Ebene
 
         return (
           <Source
@@ -68,18 +65,24 @@ export const SourceAndLayers: React.FC = () => {
                 )
 
                 return (
-                  <Layer
-                    key={layerId}
-                    id={layerId}
-                    type={layer.type}
-                    source={sourceId}
-                    source-layer={layer['source-layer']}
-                    {...(!!layer.minzoom && { minzoom: layer.minzoom })}
-                    {...(!!layer.maxzoom && { maxzoom: layer.maxzoom })}
-                    layout={layout}
-                    filter={filter}
-                    paint={layer.paint as any} // TODO Typescript
-                  />
+                  <>
+                    <LayerHighlightParkingLanes
+                      sourceId={sourceId}
+                      sourceLayer={layer['source-layer']}
+                    />
+                    <Layer
+                      key={layerId}
+                      id={layerId}
+                      type={layer.type}
+                      source={sourceId}
+                      source-layer={layer['source-layer']}
+                      {...(!!layer.minzoom && { minzoom: layer.minzoom })}
+                      {...(!!layer.maxzoom && { maxzoom: layer.maxzoom })}
+                      layout={layout}
+                      filter={filter}
+                      paint={layer.paint as any} // TODO Typescript
+                    />
+                  </>
                 )
               })
             })}

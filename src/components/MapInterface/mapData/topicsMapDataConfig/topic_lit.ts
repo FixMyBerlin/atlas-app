@@ -8,9 +8,8 @@ export type TopicLitStyleFilterIds = '_nofilter'
 export const topic_lit: MapDataTopic = {
   id: topic,
   name: 'Beleuchtung',
-  desc: '',
+  desc: null,
   sourceId: 'tarmac_lit',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

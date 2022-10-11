@@ -8,9 +8,8 @@ export type TopicPublicTransportStyleFilterIds_Tarmac = '_nofilter'
 export const topic_publicTransport_tarmac: MapDataTopic = {
   id: tpoicId,
   name: 'ÖPNV',
-  desc: '',
+  desc: null,
   sourceId: 'tarmac_publicTransport',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

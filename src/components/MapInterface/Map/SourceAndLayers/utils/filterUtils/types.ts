@@ -2,7 +2,7 @@ import {
   MapDataStyleInteractiveFilter,
   MapDataStyleInteractiveFilterOption,
 } from '@components/MapInterface/mapData'
-import { TopicStyleFilterOptionConfig } from '@components/MapInterface/store'
+import { TopicStyleFilterOptionConfig } from '@components/MapInterface/mapStateConfig'
 
 export type FilterDataWithConfigState = Omit<
   MapDataStyleInteractiveFilter,

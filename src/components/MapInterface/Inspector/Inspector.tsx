@@ -1,10 +1,10 @@
 import classNames from 'classnames'
 import React from 'react'
-import { useMapInterfaceStore } from '../store/useMapInterfaceStore'
+import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { CloseButton } from './utils'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, setInspector } = useMapInterfaceStore()
+  const { inspectorFeatures, setInspector } = useMapStateInteraction()
   // For some reason from time to time we get duplicated entires wich cause a `key` warning
   if (!inspectorFeatures) return null
 

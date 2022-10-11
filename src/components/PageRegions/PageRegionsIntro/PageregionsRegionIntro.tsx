@@ -1,4 +1,4 @@
-import { Region } from '@pages/PageRegions'
+import { Region } from '@fakeServer/index'
 
 type Props = { regions: Region[] | undefined }
 

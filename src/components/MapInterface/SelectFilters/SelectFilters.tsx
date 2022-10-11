@@ -8,7 +8,6 @@ import {
   getMapDataTopicStyle,
   TopicIds,
 } from '../mapData'
-import { TopicConfig } from '../store'
 import {
   createTopicStyleFilterKey,
   createTopicStyleFilterOptionKey,
@@ -18,10 +17,11 @@ type Props = { scopeTopicId: TopicIds }
 
 export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configTopics } = useSearch<LocationGenerics>()
-  const topicConfig = configTopics?.find(
-    (t) => t.id === scopeTopicId
-  ) as TopicConfig
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const topicConfig = configThemesTopics
+    ?.find((th) => th.id === themeId)
+    ?.topics.find((t) => t.id === scopeTopicId)
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const eventTopicId = event.target.getAttribute('data-topicid')
@@ -36,7 +36,9 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
         return {
           ...old,
           config: produce(oldConfig, (draft) => {
-            const topic = draft.find((t) => t.id === eventTopicId)
+            const topic = draft
+              ?.find((th) => th.id === themeId)
+              ?.topics.find((t) => t.id === eventTopicId)
             const style = topic?.styles.find((s) => s.id === eventStyleId)
             const filter = style?.filters?.find((f) => f.id === eventFilterId)
             const option = filter?.options.find(

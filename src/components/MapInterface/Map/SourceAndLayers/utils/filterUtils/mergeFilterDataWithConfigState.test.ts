@@ -1,5 +1,5 @@
 import { MapDataStyleInteractiveFilter } from '@components/MapInterface/mapData'
-import { TopicStyleFilterConfig } from '@components/MapInterface/store'
+import { TopicStyleFilterConfig } from '@components/MapInterface/mapStateConfig'
 import { describe, expect, test } from 'vitest'
 import { mergeFilterDataWithConfigState } from './mergeFilterDataWithConfigState'
 

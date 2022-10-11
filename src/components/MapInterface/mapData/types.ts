@@ -5,7 +5,7 @@ import {
   TopicStyleIds,
 } from './mapDataConfig.const'
 import { SourcesIds, SourcesRasterIds } from './sourcesMapDataConfig'
-import { MapDataConfigThemeIds } from './themesMapDataConfig'
+import { MapDataThemeIds } from './themesMapDataConfig'
 
 /** @desc: The raw vector tile data; no UI representation; name fixed by library */
 export type MapDataSource<TIds> = {
@@ -15,9 +15,9 @@ export type MapDataSource<TIds> = {
   attributionHtml: string // TODO anzeigen in der Karte
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
-} & MapDataConfigRasterSources
+} & MapDataRasterSources
 
-type MapDataConfigRasterSources = {
+type MapDataRasterSources = {
   name?: string
   type?: mapboxgl.Source['type']
   minzoom?: mapboxgl.RasterSource['minzoom']
@@ -27,17 +27,23 @@ type MapDataConfigRasterSources = {
 
 /** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
 export type MapDataTheme = {
-  id: MapDataConfigThemeIds
+  id: MapDataThemeIds
   name: string
   desc?: string
+  topics: MapDataThemeTopic[]
+}
+
+type MapDataThemeTopic = {
+  id: TopicIds
+  defaultActive: boolean
+  // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
 export type MapDataTopic = {
   id: TopicIds
   name: string
-  desc: string
-  defaultVisible: boolean
+  desc: string | null
   sourceId: SourcesIds
   styles: MapDataStyle[]
 }

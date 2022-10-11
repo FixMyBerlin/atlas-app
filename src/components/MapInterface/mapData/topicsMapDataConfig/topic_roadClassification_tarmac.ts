@@ -11,7 +11,6 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
   name: 'Straßentypen',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_roadClassification',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

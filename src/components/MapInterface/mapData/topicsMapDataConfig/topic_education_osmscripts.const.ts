@@ -9,9 +9,8 @@ export type TopicEducationStyleFilterIds_Osmscripts = '_nofilter'
 export const topic_education_osmscripts: MapDataTopic = {
   id: topicId,
   name: 'Bildungseinrichtungen (osmscripts)',
-  desc: '',
+  desc: null,
   sourceId: 'osmscripts_pois',
-  defaultVisible: false,
   styles: [
     {
       id: 'default',

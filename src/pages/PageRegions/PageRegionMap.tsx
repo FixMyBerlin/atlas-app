@@ -1,6 +1,6 @@
 import { LayoutMap } from '@components/Layout'
 import { MapInterface } from '@components/MapInterface'
-import { mapDataConfigTopicsWithState } from '@components/MapInterface/store'
+import { createMapRegionConfig } from '@components/MapInterface/mapStateConfig'
 import { LocationGenerics } from '@routes/routes'
 import {
   Navigate,
@@ -39,9 +39,9 @@ export const PageRegionMap: React.FC = () => {
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
-          theme: old?.theme ?? 'surface', // TODO decide on a default theme on the region
+          theme: old?.theme ?? 'fromTo',
           bg: 'default',
-          config: mapDataConfigTopicsWithState({ themeId: 'surface' }), // TODO implement the theme feature, pick a default
+          config: createMapRegionConfig({ regionThemeIds: region.themes }),
         }
       },
       replace: true,
