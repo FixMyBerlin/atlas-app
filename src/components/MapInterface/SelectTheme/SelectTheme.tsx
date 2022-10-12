@@ -2,7 +2,7 @@ import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import classNames from 'classnames'
 import { getThemeData } from '../mapData'
-import { MapDataThemeIds, themes } from '../mapData/themesMapData'
+import { MapDataThemeIds } from '../mapData/themesMapData'
 
 // Source https://tailwindui.com/components/application-ui/navigation/tabs#component-83b472fc38b57e49a566805a5e5bb2f7
 export const SelectTheme = () => {
