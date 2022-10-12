@@ -13,8 +13,8 @@ export const HeaderRegionenLogo: React.FC = () => {
 
   return (
     <>
-      {region.logo ? (
-        region.logo
+      {region.logoPath ? (
+        <img src={region.logoPath} className="h-6 w-auto" alt="" />
       ) : (
         <>
           <BuildingLibraryIcon className="block h-8 w-auto text-yellow-400 lg:hidden" />
@@ -24,7 +24,7 @@ export const HeaderRegionenLogo: React.FC = () => {
       <span
         className={classNames(
           'ml-2',
-          region.logo ? 'text-gray-400' : 'text-yellow-400'
+          region.logoPath ? 'text-gray-400' : 'text-yellow-400'
         )}
       >
         Radverkehrsatlas{' '}

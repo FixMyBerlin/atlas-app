@@ -1,5 +1,4 @@
 import { MapDataThemeIds, themes } from '@components/MapInterface/mapData'
-import React from 'react'
 
 type RegionMap = {
   lat: number
@@ -12,7 +11,7 @@ export type Region = {
   fullName: string
   path: RegionPath
   map: RegionMap
-  logo: React.ReactNode | null
+  logoPath: string | null
   themes: MapDataThemeIds[]
 }
 
@@ -24,9 +23,7 @@ export const regions: Region[] = [
     fullName: 'Bietigheim-Bissingen',
     path: 'bibi',
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
-    logo: (
-      <img src="/pageRegions/zesplus-logo.png" className="h-6 w-6" alt="" />
-    ),
+    logoPath: '/pageRegions/bibi-logo.svg',
     themes: [
       // The order here specifies the order in the UI
       'fromTo',
@@ -39,7 +36,7 @@ export const regions: Region[] = [
     fullName: 'Treptower Tollensewinkel',
     path: 'trto',
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
-    logo: null,
+    logoPath: '/pageRegions/trto-logo.png',
     themes: [
       // The order here specifies the order in the UI
       'bikelanes',
@@ -51,7 +48,7 @@ export const regions: Region[] = [
     fullName: 'Berlin Ring',
     path: 'berlin',
     map: { lat: 52.51, lng: 13.41, zoom: 14 },
-    logo: null,
+    logoPath: null,
     themes: themes.map((t) => t.id),
   },
   {
@@ -59,9 +56,7 @@ export const regions: Region[] = [
     fullName: 'ZES+',
     path: 'zes',
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
-    logo: (
-      <img src="/pageRegions/zesplus-logo.png" className="h-6 w-auto" alt="" />
-    ),
+    logoPath: '/pageRegions/zesplus-logo.png',
     themes: [
       // The order here specifies the order in the UI
       'fromTo',
@@ -75,7 +70,7 @@ export const regions: Region[] = [
     fullName: 'Langerwehe',
     path: 'langerwehe',
     map: { lat: 50.82, lng: 6.37, zoom: 15 },
-    logo: null,
+    logoPath: null,
     themes: themes.map((t) => t.id),
   },
 ]
