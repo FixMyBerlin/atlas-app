@@ -1,5 +1,5 @@
 import { Region } from '@fakeServer/index'
-import { getMapDataTopic, themes } from '../mapData'
+import { getTopicData, themes } from '../mapData'
 import { ThemeConfig as ThemeConfig } from './type'
 
 export type Props = {
@@ -20,7 +20,7 @@ export const createMapRegionConfig = ({ regionThemeIds }: Props) => {
     return {
       id: theme?.id,
       topics: theme?.topics?.map((themeTopic) => {
-        const topicData = getMapDataTopic(themeTopic.id)
+        const topicData = getTopicData(themeTopic.id)
         return {
           id: themeTopic.id,
           active: themeTopic.defaultActive,

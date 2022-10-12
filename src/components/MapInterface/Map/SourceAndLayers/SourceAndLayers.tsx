@@ -1,7 +1,7 @@
 import {
-  getMapDataSource,
-  getMapDataTopic,
-  getMapDataTopicStyle,
+  getSourceData,
+  getStyleData,
+  getThemeTopicData,
 } from '@components/MapInterface/mapData'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { LocationGenerics } from '@routes/routes'
@@ -13,8 +13,10 @@ import { LayerHighlightParkingLanes } from './LayerHighlightInspectorCalculator'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
-  const { config: configThemesTopics } = useSearch<LocationGenerics>()
-  if (!configThemesTopics) return null
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
+  if (!configThemesTopics || !currentTheme) return null
 
   // Sources and layers are based on topics. Themes don't change them; they just duplicate them.
   // Therefore, we look at a flattened topics list for this component.
@@ -23,10 +25,18 @@ export const SourceAndLayers: React.FC = () => {
   return (
     <>
       {configTopics.map((topicConfig) => {
-        const topicData = getMapDataTopic(topicConfig.id)
-        const sourceData = getMapDataSource(topicData?.sourceId)
+        // We neet look at the currentThemeConfig and currentTopicConfig here…
+        // - otherwise the visbility is not based on the theme-topics.
+        // - and otherwise the visibility is based on the first topic of our flat list, not the current.
+        const currTopicConfig = currentTheme.topics.find(
+          (t) => t.id === topicConfig.id
+        )
+        const curTopicData = getThemeTopicData(currentTheme, topicConfig.id)
+        const sourceData = getSourceData(curTopicData?.sourceId)
 
-        if (!topicConfig || !sourceData || !topicData) return null
+        if (!topicConfig || !sourceData || !curTopicData || !currTopicConfig) {
+          return null
+        }
 
         // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…
@@ -43,12 +53,13 @@ export const SourceAndLayers: React.FC = () => {
             maxzoom={22}
           >
             {topicConfig.styles.map((styleConfig) => {
-              const styleData = getMapDataTopicStyle(topicData, styleConfig.id)
+              const styleData = getStyleData(curTopicData, styleConfig.id)
               // A style is visible when
+              // … the theme is active (handled above) AND
               // … the topic is active AND
-              // … the style is active (which includes 'default')
+              // … the style is active (which includes 'default' via the config initialization)
               const visibility = layerVisibility(
-                topicConfig.active && styleConfig.active
+                currTopicConfig.active && styleConfig.active
               )
 
               return styleData?.layers.map((layer) => {

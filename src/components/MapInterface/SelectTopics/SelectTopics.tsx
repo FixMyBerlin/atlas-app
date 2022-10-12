@@ -3,7 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox } from '../components'
-import { getMapDataTopic } from '../mapData'
+import { getTopicData } from '../mapData'
 import { SelectFilters } from '../SelectFilters'
 import { SelectStyles } from '../SelectStyles'
 
@@ -42,7 +42,7 @@ export const SelectTopics: React.FC = () => {
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">
           {topicsConfig.map((topicConfig) => {
-            const topicData = getMapDataTopic(topicConfig.id)
+            const topicData = getTopicData(topicConfig.id)
             if (!topicData) return null
 
             const rerenderKey = [topicConfig.id, topicConfig.active].join('-') // TODO – This feels hacky. Research solution.

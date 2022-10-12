@@ -3,11 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
-import {
-  getMapDataTopicFilter,
-  getMapDataTopicStyle,
-  TopicIds,
-} from '../mapData'
+import { getFilterData, getStyleData, TopicIds } from '../mapData'
 import {
   createTopicStyleFilterKey,
   createTopicStyleFilterOptionKey,
@@ -45,11 +41,7 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
               (o) => o.id === eventFilterOptionId
             )
             if (topic && style && filter && option) {
-              const filterData = getMapDataTopicFilter(
-                topic.id,
-                style.id,
-                filter.id
-              )
+              const filterData = getFilterData(topic.id, style.id, filter.id)
               if (filterData?.inputType === 'radiobutton') {
                 filter.options.forEach((fo) => (fo.active = false))
               }
@@ -73,10 +65,7 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   if (!activeTopicStyleConfig.filters) return null
   if (activeTopicStyleConfig.filters.length === 0) return null
 
-  const styleData = getMapDataTopicStyle(
-    topicConfig.id,
-    activeTopicStyleConfig.id
-  )
+  const styleData = getStyleData(topicConfig.id, activeTopicStyleConfig.id)
 
   return (
     <section className="mt-1 rounded border px-2 py-2.5">

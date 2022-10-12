@@ -3,7 +3,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { SelectEntryRadiobutton } from '../components'
-import { getMapDataTopicStyle, TopicIds } from '../mapData'
+import { getStyleData, TopicIds } from '../mapData'
 import { createTopicStyleKey } from '../utils'
 
 type Props = { scopeTopicId: TopicIds }
@@ -54,10 +54,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
         <details className="space-y-2.5">
           <summary className="text-sm">Stile</summary>
           {topicConfig.styles.map((styleConfig) => {
-            const styleData = getMapDataTopicStyle(
-              topicConfig.id,
-              styleConfig.id
-            )
+            const styleData = getStyleData(topicConfig.id, styleConfig.id)
             if (!styleData) return null
 
             const key = createTopicStyleKey(topicConfig.id, styleConfig.id)

@@ -1,3 +1,4 @@
+import { ThemeConfig } from '@components/MapInterface/mapStateConfig'
 import {
   mapData,
   TopicIds,
@@ -7,32 +8,42 @@ import {
 import { SourcesIds } from '../sourcesMapData'
 import { MapDataTopic } from '../types'
 
-export const getMapDataTopic = (topicId: TopicIds) => {
-  return mapData.topics.find((t) => t.id === topicId)
+export const getTopicData = (topicId: TopicIds | undefined) => {
+  return mapData?.topics.find((t) => t.id === topicId)
 }
 
-export const getMapDataTopicStyle = (
-  topicInput: TopicIds | MapDataTopic,
-  styleId: TopicStyleIds
+export const getThemeTopicData = (
+  currentTheme: ThemeConfig | undefined,
+  topicId: TopicIds | undefined
+) => {
+  if (!currentTheme?.topics.some((t) => t.id === topicId)) {
+    return undefined
+  }
+  return mapData?.topics.find((t) => t.id === topicId)
+}
+
+export const getStyleData = (
+  topicInput: TopicIds | MapDataTopic | undefined,
+  styleId: TopicStyleIds | undefined
 ) => {
   if (typeof topicInput === 'string') {
-    const topic = mapData.topics.find((t) => t.id === topicInput)
+    const topic = getTopicData(topicInput)
     return topic?.styles.find((s) => s.id === styleId)
   } else {
     return topicInput?.styles.find((s) => s.id === styleId)
   }
 }
 
-export const getMapDataTopicFilter = (
-  topicId: TopicIds,
-  styleId: TopicStyleIds,
-  filterId: TopicStyleFilterIds
+export const getFilterData = (
+  topicId: TopicIds | undefined,
+  styleId: TopicStyleIds | undefined,
+  filterId: TopicStyleFilterIds | undefined
 ) => {
-  const topic = mapData.topics.find((t) => t.id === topicId)
-  const style = topic?.styles.find((s) => s.id === styleId)
+  const topic = getTopicData(topicId)
+  const style = getStyleData(topic, styleId)
   return style?.interactiveFilters?.find((f) => f.id === filterId)
 }
 
-export const getMapDataSource = (sourceId: SourcesIds | undefined) => {
+export const getSourceData = (sourceId: SourcesIds | undefined) => {
   return mapData?.sources?.find((s) => s.id === sourceId)
 }
