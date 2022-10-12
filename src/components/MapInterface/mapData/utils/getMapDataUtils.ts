@@ -6,7 +6,12 @@ import {
   TopicStyleIds,
 } from '../mapData.const'
 import { SourcesIds } from '../sourcesMapData'
+import { MapDataThemeIds } from '../themesMapData'
 import { MapDataTopic } from '../types'
+
+export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
+  return mapData?.themes.find((the) => the.id === themeId)
+}
 
 export const getTopicData = (topicId: TopicIds | undefined) => {
   return mapData?.topics.find((t) => t.id === topicId)
