@@ -6,6 +6,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "npm run check && vite build",
     "preview": "vite preview",
