@@ -59,10 +59,10 @@ export const regions: Region[] = [
     logoPath: '/pageRegions/zesplus-logo.png',
     themes: [
       // The order here specifies the order in the UI
-      'fromTo',
-      'bikelanes',
-      'roadClassification',
-      'surface',
+      'fromToZes',
+      'bikelanesZes',
+      'roadClassificationZes',
+      'surfaceZes',
     ],
   },
   {
