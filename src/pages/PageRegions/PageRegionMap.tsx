@@ -35,13 +35,16 @@ export const PageRegionMap: React.FC = () => {
 
     navigate({
       search: (old) => {
+        const initialConfig = createMapRegionConfig({
+          regionThemeIds: region.themes,
+        })
         return {
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
-          theme: old?.theme ?? 'fromTo',
+          theme: old?.theme ?? initialConfig[0].id,
           bg: 'default',
-          config: createMapRegionConfig({ regionThemeIds: region.themes }),
+          config: initialConfig,
         }
       },
       replace: true,
