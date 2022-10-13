@@ -49,7 +49,7 @@ export const regions: Region[] = [
     path: 'berlin',
     map: { lat: 52.51, lng: 13.41, zoom: 14 },
     logoPath: null,
-    themes: themes.map((t) => t.id),
+    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
   },
   {
     name: 'ZES+',
@@ -71,6 +71,6 @@ export const regions: Region[] = [
     path: 'langerwehe',
     map: { lat: 50.82, lng: 6.37, zoom: 15 },
     logoPath: null,
-    themes: themes.map((t) => t.id),
+    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
   },
 ]
