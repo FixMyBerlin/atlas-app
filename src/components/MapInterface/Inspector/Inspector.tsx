@@ -1,7 +1,7 @@
+import { CloseButton } from '@components/CloseButton'
 import classNames from 'classnames'
 import React from 'react'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
-import { CloseButton } from './utils'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useMapStateInteraction()

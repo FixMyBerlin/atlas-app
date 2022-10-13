@@ -11,6 +11,7 @@ export type Region = {
   fullName: string
   path: RegionPath
   map: RegionMap
+  bbox: [[number, number], [number, number]]
   logoPath: string | null
   themes: MapDataThemeIds[]
 }
@@ -23,6 +24,11 @@ export const regions: Region[] = [
     fullName: 'Bietigheim-Bissingen',
     path: 'bibi',
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
+    bbox: [
+      // todo, needs the right bbox
+      [13.2937, 52.5295],
+      [13.2937, 52.5295],
+    ],
     logoPath: '/pageRegions/bibi-logo.svg',
     themes: [
       // The order here specifies the order in the UI
@@ -36,6 +42,11 @@ export const regions: Region[] = [
     fullName: 'Treptower Tollensewinkel',
     path: 'trto',
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
+    bbox: [
+      // todo, needs the right bbox
+      [13.2937, 52.5295],
+      [13.2937, 52.5295],
+    ],
     logoPath: '/pageRegions/trto-logo.png',
     themes: [
       // The order here specifies the order in the UI
@@ -48,6 +59,11 @@ export const regions: Region[] = [
     fullName: 'Berlin Ring',
     path: 'berlin',
     map: { lat: 52.51, lng: 13.41, zoom: 14 },
+    bbox: [
+      // todo, needs the right bbox
+      [13.2937, 52.5295],
+      [13.2937, 52.5295],
+    ],
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
   },
@@ -56,6 +72,11 @@ export const regions: Region[] = [
     fullName: 'ZES+',
     path: 'zes',
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
+    bbox: [
+      // todo, needs the right bbox
+      [13.2937, 52.5295],
+      [13.2937, 52.5295],
+    ],
     logoPath: '/pageRegions/zesplus-logo.png',
     themes: [
       // The order here specifies the order in the UI
@@ -70,6 +91,11 @@ export const regions: Region[] = [
     fullName: 'Langerwehe',
     path: 'langerwehe',
     map: { lat: 50.82, lng: 6.37, zoom: 15 },
+    bbox: [
+      // todo, needs the right bbox
+      [13.2937, 52.5295],
+      [13.2937, 52.5295],
+    ],
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
   },

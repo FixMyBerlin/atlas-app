@@ -2,6 +2,7 @@ import React from 'react'
 import { MapProvider } from 'react-map-gl'
 import { Calculator } from './Calculator'
 import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
+import { Download } from './Download'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
 import { SelectBackgroundWithLegend } from './SelectBackgroundWithLegend'
@@ -18,6 +19,7 @@ export const MapInterface: React.FC = () => {
         <SelectTopics />
         <Calculator />
         <Inspector />
+        <Download />
         <DebugStateInteraction />
         <DebugStateReactLocation />
       </div>
