@@ -8,11 +8,12 @@ type Props = {
 }
 
 export const LayoutPage: React.FC<Props> = ({ header, children }) => {
-  const headerComponent = header || <HeaderApp />
+  const HeaderComponent = header || <HeaderApp />
+
   return (
     <div className="relative flex h-full flex-col">
-      {headerComponent}
-      <main className="prose">{children}</main>
+      {HeaderComponent}
+      <main className="prose mx-auto my-10 max-w-prose">{children}</main>
       <Footer />
     </div>
   )
