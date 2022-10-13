@@ -77,9 +77,7 @@ export const Map: React.FC = () => {
     const sources = style.sources
 
     // addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
-    const layerToBeInteractive = ourLayer
-      .map((l) => (l.id.startsWith('parkraumParking') ? l.id : ''))
-      .filter(Boolean)
+    const layerToBeInteractive = ourLayer.map((l) => l.id).filter(Boolean)
     addInteractiveLayerIds(layerToBeInteractive)
 
     const mapCenter = mainMap?.getCenter()
@@ -91,7 +89,7 @@ export const Map: React.FC = () => {
       sources,
       layerToBeInteractive,
       // @ts-ignore that is fine here
-      findBeforeId: allLayer.filter((l) => l.source === 'openmaptiles'),
+      findBeforeIds: allLayer.filter((l) => l.source === 'openmaptiles'),
       ...{ ...mapCenter, mapZoom },
     })
   }
