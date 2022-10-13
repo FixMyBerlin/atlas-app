@@ -42,7 +42,7 @@ export const PageRegionMap: React.FC = () => {
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
-          theme: old?.theme ?? initialConfig[0].id,
+          theme: old?.theme ?? initialConfig?.[0]?.id ?? 'fromTo',
           bg: 'default',
           config: initialConfig,
         }
