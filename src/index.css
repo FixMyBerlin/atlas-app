@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L11 */
+  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L11 and LaouytMap.tsx */
   html {
-    @apply fixed h-full overflow-hidden;
+    @apply h-full;
   }
 
-  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L32 */
+  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L32 and LaouytMap.tsx */
   body {
-    @apply fixed flex min-h-full w-full overflow-hidden;
+    @apply flex min-h-full w-full;
     @apply text-slate-800;
   }
 
