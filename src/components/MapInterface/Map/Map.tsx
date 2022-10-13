@@ -153,7 +153,7 @@ export const Map: React.FC = () => {
       onClick={handleClick}
       onDblClick={handleDoubleClick}
       onLoad={handleLoad}
-      doubleClickZoom={false}
+      // doubleClickZoom={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
