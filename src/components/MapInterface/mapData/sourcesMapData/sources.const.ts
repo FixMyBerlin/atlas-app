@@ -38,7 +38,8 @@ export const sources: MapDataSource<SourcesIds>[] = [
     tiles:
       'https://tiles.radverkehrsatlas.de/public.boundaries/{z}/{x}/{y}.pbf',
     attributionHtml:
-      'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+      'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    licence: 'ODbL',
   },
   {
     id: 'accidents_unfallatlas',
@@ -93,7 +94,9 @@ export const sources: MapDataSource<SourcesIds>[] = [
     id: 'tarmac_shops',
     tiles:
       'https://tiles.radverkehrsatlas.de/public.fromTo_shopping/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    licence: 'ODbL',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json

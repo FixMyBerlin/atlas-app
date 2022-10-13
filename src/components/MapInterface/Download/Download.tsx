@@ -43,24 +43,35 @@ export const Download: React.FC = () => {
 
             return (
               <li key={topicData.id} className="py-5">
-                <h3 className="mb-1 text-sm font-semibold text-purple-800">
+                <h3 className="mb-1 text-sm font-bold text-purple-800">
                   {topicData.name}:
                 </h3>
 
-                <p className="mb-2 text-sm text-gray-500 line-clamp-2">
+                <p className="mb-2 text-sm text-gray-500">
                   {topicData.desc}
                   {!!sourceData.attributionHtml &&
                     sourceData.attributionHtml !== 'todo' && (
                       <>
                         {!!topicData.desc && <br />}
                         <strong className="font-semibold">Attribution: </strong>
+                        »
                         <span
                           dangerouslySetInnerHTML={{
                             __html: sourceData.attributionHtml,
                           }}
                         />
+                        «
                       </>
                     )}
+                  {!!sourceData.licence && (
+                    <>
+                      {(!!sourceData.attributionHtml || !!topicData.desc) && (
+                        <br />
+                      )}
+                      <strong className="font-semibold">Lizenz: </strong>
+                      {sourceData.licence}
+                    </>
+                  )}
                 </p>
 
                 <div className="flex gap-2">

@@ -9,6 +9,7 @@ export type MapDataSource<TIds> = {
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
+  licence?: 'ODbL'
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
 } & MapDataRasterSources
