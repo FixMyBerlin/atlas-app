@@ -1,5 +1,6 @@
 import { Link } from '@components/Link'
 import { IconModal } from '@components/Modal'
+import { getCurrentUrl } from '@components/utils'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { regionFromPath } from '@routes/utils'
@@ -17,7 +18,7 @@ export const Download: React.FC = () => {
     params: { regionPath },
   } = useMatch()
   const region = regionFromPath(regionPath)
-  const bbox = region ? region.bbox : []
+  const bbox = region ? region.bbox : { min: [], max: [] }
 
   return (
     <div className="absolute bottom-14 left-5">
@@ -28,7 +29,7 @@ export const Download: React.FC = () => {
         triggerIcon={<ArrowDownTrayIcon className="h-5 w-5" />}
       >
         <p className="pt-5 pb-2.5 text-sm">
-          Alle Daten können als <strong>GeoJSON</strong> zum Download sowie als{' '}
+          Alle Daten stehen als <strong>GeoJSON</strong> zum Download sowie als{' '}
           <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
         </p>
 
@@ -78,10 +79,13 @@ export const Download: React.FC = () => {
                   {/* TODO: Add propper download URL */}
                   {/* TODO: Reminder, the bbox params are fake ATM */}
                   <Link
-                    to={`/#todo-download-url?regionBbox=${bbox
-                      .flat()
-                      .join(',')}`}
+                    to={`${getCurrentUrl()}/export/${topicData.id}?minlon=${
+                      bbox.min[0]
+                    }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${
+                      bbox.max[1]
+                    }`}
                     classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
+                    download
                   >
                     <strong className="mb-0.5 block text-xs font-medium text-gray-900">
                       Download:
