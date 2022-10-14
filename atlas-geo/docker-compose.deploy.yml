@@ -33,7 +33,23 @@ services:
       # - "traefik.http.routers.tiles.entrypoints=web"
       # - "traefik.http.services.tiles.loadbalancer.server.port=7800"
       # - "traefik.http.routers.service=tiles"
-
+  api:
+    build:
+      context: .
+      dockerfile: ./api.Dockerfile
+    container_name: api
+    ports:
+      - 8080:80
+    depends_on:
+      db:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tilestls.rule=Host(`api.radverkehrsatlas.de`)"
+      - "traefik.http.routers.tilestls.entrypoints=websecure"
+      - "traefik.http.services.tilestls.loadbalancer.server.port=8080"
+      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tilestls.tls=true"
   traefik:
     image: traefik:v2.8
     container_name: traefik
