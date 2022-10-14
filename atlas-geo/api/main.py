@@ -4,6 +4,7 @@ from typing import Union
 from psycopg2 import sql
 import psycopg2
 import json
+import os
 
 app = FastAPI(
     title="RadverkehrsatlasTools",
@@ -11,12 +12,12 @@ app = FastAPI(
     version="0.0.1",
 )
 
-databaseServer = "db"
-databaseName = "postgres"
-databaseUser = "postgres"
-databasePW = "mysecretpassword"
+databaseServer = os.environ.get('PGHOST', "db")
+databaseName = os.environ.get('PGDATABASE', "postgres")
+databaseUser = os.environ.get('PGUSER', "postgres")
+databasePW = os.environ.get('PGPASSWORD', "mysecretpassword")
 
-connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer,databaseName,databaseUser,databasePW)
+connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer, databaseName, databaseUser, databasePW)
 
 conn = psycopg2.connect(connString)
 

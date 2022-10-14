@@ -38,6 +38,11 @@ services:
       context: .
       dockerfile: ./api.Dockerfile
     container_name: api
+    environment:
+      PGHOST:
+      PGDATABASE:
+      PGUSER:
+      PGPASSWORD:
     ports:
       - 8080:80
     depends_on:
