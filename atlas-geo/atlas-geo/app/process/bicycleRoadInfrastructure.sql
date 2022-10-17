@@ -1,0 +1,1 @@
+insert into "bicycleRoadInfrastructure" select osm_type, osm_id, tags, ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.1), "offset"*2, 'quad_segs=4 join=round'), 3857)  as geom FROM "bicycleRoadInfrastructure_toTranslate";
