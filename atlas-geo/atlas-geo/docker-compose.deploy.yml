@@ -35,12 +35,12 @@ services:
       # - "traefik.http.routers.service=tiles"
 
   traefik:
-    image: traefik:v2.8
+    image: traefik:v2.9
     container_name: traefik
     restart: always
     command:
       - "--log.level=WARN"
-      - "--api.insecure=true"
+      - "--api.insecure=false"
       # Enabling docker provider
       - "--providers.docker=true"
       # Do not expose containers unless explicitly told so
