@@ -60,7 +60,7 @@ services:
     container_name: traefik
     restart: always
     command:
-      - "--log.level=DEBUG"
+    - "--log.level=WARN"
       - "--api.insecure=true"
       # Enabling docker provider
       - "--providers.docker=true"
