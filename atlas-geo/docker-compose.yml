@@ -16,6 +16,8 @@ services:
       db:
         condition: service_healthy
     container_name: tarmac
+    profiles:
+      - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv

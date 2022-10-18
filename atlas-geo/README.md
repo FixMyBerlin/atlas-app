@@ -30,6 +30,11 @@ First create a `.env` file. You can use the `.env.example` file as a template.
 
 ```sh
 docker compose up
+# or
+docker compose up -d
+
+# With osm processing -> starts also tarmac
+docker compose --profile osm_processing up -d
 ```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
