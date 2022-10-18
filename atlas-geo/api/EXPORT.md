@@ -2,26 +2,27 @@
 
 ## Function for creating GeoJSON FeatureCollections:
 ```postgresql
-CREATE OR REPLACE FUNCTION public.export_geojson_bbox(minlon double precision, minlat double precision, maxlon double precision, maxlat double precision)
+CREATE OR REPLACE FUNCTION public.export_geojson_shops(minlon double precision, minlat double precision, maxlon double precision, maxlat double precision)
  RETURNS json
  LANGUAGE sql
 AS $function$
-  SELECT json_build_object(
-      'type',     'FeatureCollection',
-      'features', json_agg(features.feature)
-  )
-  FROM (
-    SELECT jsonb_build_object(
-      'type',       'Feature',
-      'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::jsonb,
-      'properties', to_jsonb(inputs) - 'gid' - 'geom'
-    ) AS feature
-    FROM (
-      SELECT  FROM highways t
-      WHERE t.geog && ST_MakeEnvelope(minlon , minlat , maxlon , maxlat  )
-    ) inputs
-  ) features;
-$function$;
+	SELECT json_build_object(
+	    'type',     'FeatureCollection',
+	    'features', json_agg(features.feature)
+	)
+	FROM (
+	  SELECT jsonb_build_object(
+	    'type',       'Feature',
+	    'geometry',   ST_AsGeoJSON(ST_Transform(geom,4326))::jsonb,
+	    'properties', to_jsonb(inputs) - 'geom'
+	  ) AS feature
+	  FROM (
+	    SELECT * from "fromTo_shopping" t
+	    WHERE ST_Transform(geom, 4326) && ST_MakeEnvelope(minlon , minlat , maxlon , maxlat )
+	  ) inputs
+	) features;
+$function$
+;
 ```
 
 ## Easy GeoJSON FeatureCollection from PostGIS Docs

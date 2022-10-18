@@ -2,6 +2,7 @@ from fastapi import FastAPI, Header, Response, Request, HTTPException
 from fastapi.responses import FileResponse
 from typing import Union
 from psycopg2 import sql
+from constants import available_datasets
 import psycopg2
 import json
 import os
@@ -22,19 +23,24 @@ connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer, databaseN
 conn = psycopg2.connect(connString)
 
 available_export_functions = {
-  "bike_infrastructure": "export_geojson_bikeinfra",
+  "bikelanes_tarmac": "export_geojson_bikeinfra",
   "lit": "export_geojson_lit",
-  "highways": "export_geojson_bbox"
+  "shops_tarmac": "export_geojson_shops",
+  "education_tarmac": "export_geojson_education",
+  "publicTransport_tarmac": "export_geojson_publictransport",
+  "places": "export_geojson_places",
+  "roadClassification_tarmac": "export_geojson_roadtypes",
+  "landuse": "export_geojson_landuse",
 }
 
 available_verification_tables = {
-  "bike_infrastructure": "bike_infrastrucutre_verification",
+  "bicycleRoadInfrastructure": "bike_infrastructure_verification",
   "lit": "lit_verification",
   "highways": "highways_verification"
 }
 
 available_data_tables = {
-  "bike_infrastructure": "bicycleRoadInfrastrucutre",
+  "bicycleRoadInfrastructure": "bicycleRoadInfrastrucutre",
   "lit": "lit",
   "highways": "highways"
 }
@@ -43,7 +49,7 @@ verified_status = ['correct', 'false', 'undefined']
 
 @app.get("/export/{type_name}")
 def export_region(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
-    if type_name not in available_export_functions.keys():
+    if type_name not in available_datasets:
       raise HTTPException(status_code=404, detail="export type unknown")
 
     cur = conn.cursor()
@@ -59,7 +65,7 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
 
 @app.get("/verify/{type_name}/{osm_id}")
 def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_by: int, verified: str):
-    if type_name not in available_verification_tables.keys():
+    if type_name not in available_datasets:
       raise HTTPException(status_code=404, detail="export type unknown")
 
     # Check if verified string is valid
