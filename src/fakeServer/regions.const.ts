@@ -14,9 +14,15 @@ export type Region = {
   bbox: { min: [number, number]; max: [number, number] }
   logoPath: string | null
   themes: MapDataThemeIds[]
+  osmUsers: number[]
 }
 
 export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
+
+const defaultOsmUsers = [
+  11881, // tordans
+  17391407, // elsueno
+]
 
 export const regions: Region[] = [
   {
@@ -35,6 +41,7 @@ export const regions: Region[] = [
       'bikelanes',
       'lit',
     ],
+    osmUsers: [...defaultOsmUsers],
   },
   {
     name: 'TrTo',
@@ -51,6 +58,7 @@ export const regions: Region[] = [
       'bikelanes',
       'lit',
     ],
+    osmUsers: [...defaultOsmUsers],
   },
   {
     name: 'Berlin',
@@ -63,6 +71,7 @@ export const regions: Region[] = [
     },
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    osmUsers: [...defaultOsmUsers],
   },
   {
     name: 'ZES+',
@@ -82,6 +91,7 @@ export const regions: Region[] = [
       'roadClassificationZes',
       'surfaceZes',
     ],
+    osmUsers: [...defaultOsmUsers],
   },
   {
     name: 'Langerwehe',
@@ -95,5 +105,6 @@ export const regions: Region[] = [
     },
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    osmUsers: [...defaultOsmUsers],
   },
 ]

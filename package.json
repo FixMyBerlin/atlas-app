@@ -23,6 +23,7 @@
     "@tanstack/react-location": "^3.7.4",
     "immer": "^9.0.15",
     "maplibre-gl": "^2.4.0",
+    "osm-auth": "^2.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

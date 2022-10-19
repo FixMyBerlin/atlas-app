@@ -8,6 +8,7 @@ import { Map } from './Map'
 import { SelectBackgroundWithLegend } from './SelectBackgroundWithLegend'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
+import { UserInfo } from './UserInfo'
 
 export const MapInterface: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ export const MapInterface: React.FC = () => {
         <Download />
         <DebugStateInteraction />
         <DebugStateReactLocation />
+        <UserInfo />
       </div>
     </MapProvider>
   )
