@@ -26,8 +26,6 @@ select h.osm_type , h.osm_id , lv.verified_at , lv.verified_by , lv.verified, h.
 join  lit_verification lv
 on lv.osm_id = h.osm_id
 and lv.osm_type = h.osm_type  ;
-
-GRANT SELECT ON TABLE public.highways_verified TO api_read;
 ```
 
 ## Refresh materialized view

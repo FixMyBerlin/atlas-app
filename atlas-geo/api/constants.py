@@ -1,3 +1,5 @@
+valid_verified_status = ['correct', 'false', 'undefined']
+
 available_datasets = [
   "shops_tarmac",
   "education_tarmac",
@@ -35,4 +37,10 @@ verification_tables = {
   "bicycleRoadInfrastructure": "bike_infrastructure_verification",
   "lit": "lit_verification",
   "roadtypesOsm": "roadtypesOsm_verification",
+}
+
+verification_views = {
+  "bike_infrastructure_verification": "bike_infrastructure_verified",
+  "lit_verification": "lit_verified",
+  "roadtypesOsm_verification": "roadtypesOsm_verified",
 }
