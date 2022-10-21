@@ -86,6 +86,7 @@ export const Download: React.FC = () => {
                     }`}
                     classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
                     download
+                    blank
                   >
                     <strong className="mb-0.5 block text-xs font-medium text-gray-900">
                       Download:
