@@ -2,7 +2,7 @@ from fastapi import FastAPI, Header, Response, Request, HTTPException
 from fastapi.responses import FileResponse
 from typing import Union
 from psycopg2 import sql
-from constants import available_datasets, available_data_tables, available_export_functions, verification_tables
+from constants import available_datasets, available_export_functions, verification_tables, valid_verified_status
 import psycopg2
 import json
 import os
@@ -22,8 +22,6 @@ connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer, databaseN
 
 conn = psycopg2.connect(connString)
 
-verified_status = ['correct', 'false', 'undefined']
-
 @app.get("/export/{type_name}")
 def export_region(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
     if type_name not in available_datasets:
@@ -41,13 +39,12 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
 
 
 @app.get("/verify/{type_name}/{osm_id}")
-def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_by: int, verified: str):
+def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str,verified_by: int= None):
     if type_name not in available_datasets:
       raise HTTPException(status_code=404, detail="export type unknown")
 
-    # Check if verified string is valid
-    if verified not in verified_status:
-      raise HTTPException(status_code=400, detail="verified property is not valid")
+    if verified_status not in valid_verified_status:
+      raise HTTPException(status_code=400, detail="verified_status property is not valid")
 
     cur = conn.cursor()
 
@@ -56,10 +53,10 @@ def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id:
     cur.execute(statement, (osm_id,))
 
     results = cur.fetchone()
-    if results != None and len(cur.fetchone()) < 1:
+    if results == None:
       raise HTTPException(status_code=404, detail="osm_id not found")
 
     statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified) VALUES (%s, %s, %s, %s, %s)").format(table_name=sql.Identifier(verification_tables[type_name]))
-    cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified ))
+    cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status ))
     conn.commit()
     return 'OK'
