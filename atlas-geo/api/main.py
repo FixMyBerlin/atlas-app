@@ -3,6 +3,7 @@ from fastapi.responses import FileResponse
 from typing import Union
 from psycopg2 import sql
 from constants import available_datasets, available_export_functions, verification_tables, valid_verified_status
+from db import conn_string
 import psycopg2
 import json
 import os
@@ -13,14 +14,7 @@ app = FastAPI(
     version="0.0.1",
 )
 
-databaseServer = os.environ.get('PGHOST', "db")
-databaseName = os.environ.get('PGDATABASE', "postgres")
-databaseUser = os.environ.get('PGUSER', "postgres")
-databasePW = os.environ.get('PGPASSWORD', "mysecretpassword")
-
-connString = "host=%s dbname=%s user=%s password=%s" %(databaseServer, databaseName, databaseUser, databasePW)
-
-conn = psycopg2.connect(connString)
+conn = psycopg2.connect(conn_string)
 
 @app.get("/export/{type_name}")
 def export_region(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):

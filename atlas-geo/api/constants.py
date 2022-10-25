@@ -1,4 +1,4 @@
-valid_verified_status = ['correct', 'false', 'undefined']
+valid_verified_status = ['approved', 'rejected', 'undefined']
 
 available_datasets = [
   "shops_tarmac",
