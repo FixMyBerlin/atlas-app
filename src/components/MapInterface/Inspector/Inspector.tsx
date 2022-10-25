@@ -59,7 +59,7 @@ export const Inspector: React.FC = () => {
     )
   }
   return (
-    <section className="absolute top-3 right-12 bottom-7 z-10 min-w-[25rem] max-w-[25rem] overflow-y-auto rounded bg-yellow-100 p-5 shadow-md">
+    <div className="absolute top-0 right-0 bottom-0 z-10 min-w-[35rem] max-w-[35rem] overflow-y-auto bg-white p-5 shadow-md">
       <h2 className="text-base font-medium text-gray-900">
         Eigenschaften <span>({uniqInspectorFeatures.length})</span>
       </h2>
@@ -127,6 +127,13 @@ export const Inspector: React.FC = () => {
           </table>
         )
       })}
-    </section>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .maplibregl-ctrl-top-right { right: 490px }
+          `,
+        }}
+      />
+    </div>
   )
 }
