@@ -10,7 +10,7 @@ services:
       PGUSER:
       PGPASSWORD:
     volumes:
-      - osmfiles:/data
+      - osmfiles_staging:/data
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
