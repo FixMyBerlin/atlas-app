@@ -1,0 +1,45 @@
+version: "3"
+services:
+  app:
+    image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
+    entrypoint: /app/run.sh
+    container_name: tarmac_staging
+    environment:
+      PGHOST:
+      PGDATABASE:
+      PGUSER:
+      PGPASSWORD:
+    volumes:
+      - osmfiles:/data
+  tiles:
+    # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    image: pramsey/pg_tileserv
+    container_name: tileserver_staging
+    restart: always
+    environment:
+      DATABASE_URL:
+      NODE_ENV: production
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tilestls.rule=Host(`staging-tiles.radverkehrsatlas.de`)"
+      - "traefik.http.routers.tilestls.entrypoints=websecure"
+      - "traefik.http.services.tilestls.loadbalancer.server.port=7800"
+      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tilestls.tls=true"
+  api:
+    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
+    container_name: api_staging
+    environment:
+      PGHOST:
+      PGDATABASE:
+      PGUSER:
+      PGPASSWORD:
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tilestls.rule=Host(`staging-api.radverkehrsatlas.de`)"
+      - "traefik.http.routers.tilestls.entrypoints=websecure"
+      - "traefik.http.services.tilestls.loadbalancer.server.port=8080"
+      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tilestls.tls=true"
+volumes:
+  osmfiles:
