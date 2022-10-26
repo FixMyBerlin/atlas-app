@@ -19,13 +19,14 @@ services:
     environment:
       DATABASE_URL:
       NODE_ENV: production
+    ports:
+      - "9010:7800"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tilestls.rule=Host(`staging-tiles.radverkehrsatlas.de`)"
-      - "traefik.http.routers.tilestls.entrypoints=websecure"
-      - "traefik.http.services.tilestls.loadbalancer.server.port=7800"
-      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tilestls.tls=true"
+      - "traefik.http.routers.stagingtiles.rule=Host(`staging-tiles.radverkehrsatlas.de`)"
+      - "traefik.http.routers.stagingtiles.entrypoints=websecure"
+      - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.stagingtiles.tls=true"
   api:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api_staging
@@ -34,12 +35,13 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+    ports:
+      - "9020:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tilestls.rule=Host(`staging-api.radverkehrsatlas.de`)"
-      - "traefik.http.routers.tilestls.entrypoints=websecure"
-      - "traefik.http.services.tilestls.loadbalancer.server.port=8080"
-      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tilestls.tls=true"
+      - "traefik.http.routers.stagingapi.rule=Host(`staging-api.radverkehrsatlas.de`)"
+      - "traefik.http.routers.stagingapi.entrypoints=websecure"
+      - "traefik.http.routers.stagingapi.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.stagingapi.tls=true"
 volumes:
-  osmfiles:
+  osmfiles_staging:
