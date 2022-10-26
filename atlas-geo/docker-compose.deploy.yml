@@ -34,9 +34,7 @@ services:
       # - "traefik.http.services.tiles.loadbalancer.server.port=7800"
       # - "traefik.http.routers.service=tiles"
   api:
-    build:
-      context: .
-      dockerfile: ./api.Dockerfile
+    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
     environment:
       PGHOST:
