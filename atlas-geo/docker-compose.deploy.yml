@@ -45,9 +45,6 @@ services:
       PGPASSWORD:
     ports:
       - 8080:80
-    depends_on:
-      db:
-        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tilestls.rule=Host(`api.radverkehrsatlas.de`)"
