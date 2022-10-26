@@ -3,7 +3,7 @@ services:
   app:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
-    container_name: tarmac_geo
+    container_name: tarmac
     environment:
       PGHOST:
       PGDATABASE:
@@ -14,23 +14,23 @@ services:
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver_compose
+    container_name: tileserver
     restart: always
     environment:
       DATABASE_URL:
       NODE_ENV: production
+    ports:
+      - "8010:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tilestls.rule=Host(`tiles.radverkehrsatlas.de`)"
-      - "traefik.http.routers.tilestls.entrypoints=websecure"
-      - "traefik.http.services.tilestls.loadbalancer.server.port=7800"
-      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tilestls.tls=true"
+      - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
+      - "traefik.http.routers.prodtiles.entrypoints=websecure"
+      - "traefik.http.routers.prodtiles.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prodtiles.tls=true"
       # HTTP & HTTPS Do not work simulatenously
-      # - "traefik.http.routers.tiles.rule=Host(`tiles.radverkehrsatlas.de`)"
-      # - "traefik.http.routers.tiles.entrypoints=web"
-      # - "traefik.http.services.tiles.loadbalancer.server.port=7800"
-      # - "traefik.http.routers.service=tiles"
+      # - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
+      # - "traefik.http.routers.prodtiles.entrypoints=web"
+      # - "traefik.http.routers.service=prodtiles"
   api:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
@@ -39,12 +39,13 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+    ports:
+      - "8020:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tilestls.rule=Host(`api.radverkehrsatlas.de`)"
-      - "traefik.http.routers.tilestls.entrypoints=websecure"
-      - "traefik.http.services.tilestls.loadbalancer.server.port=8080"
-      - "traefik.http.routers.tilestls.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tilestls.tls=true"
+      - "traefik.http.routers.prodapi.rule=Host(`api.radverkehrsatlas.de`)"
+      - "traefik.http.routers.prodapi.entrypoints=websecure"
+      - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prodapi.tls=true"
 volumes:
   osmfiles:
