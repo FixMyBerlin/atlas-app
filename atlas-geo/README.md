@@ -30,23 +30,14 @@ First create a `.env` file. You can use the `.env.example` file as a template.
 
 ```sh
 docker compose up
+# or
+docker compose up -d
+
+# With osm processing -> starts also tarmac
+docker compose --profile osm_processing up -d
 ```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
-
-### Using PostgREST
-
-If you want to use the PostgREST service for interacting with the database, you need to configure a role which is allowed to handle requests.
-
-We currently only use anonymous requests. To create the role and assign the correct privileges follow:
-
-1. `CREATE ROLE api_read nologin;`
-2. `GRANT USAGE ON SCHEMA PUBLIC to api_read;`
-3. `GRANT SELECT ON public.<YOURTABLE> to api_read;`
-
-
-If you planning using another role than `api_read`, you need to adjust the environment variable `PGRST_DB_ANON_ROLE` in the docker compose file.
-
 
 > **Note**
 > We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64

@@ -16,6 +16,8 @@ services:
       db:
         condition: service_healthy
     container_name: tarmac
+    profiles:
+      - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
@@ -27,27 +29,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  postgrest:
-    image: postgrest/postgrest
+  api:
+    build:
+      context: .
+      dockerfile: ./api.Dockerfile
     container_name: api
     environment:
-      PGRST_DB_URI: postgres://postgres:mysecretpassword@db/postgres
-      PGRST_DB_ANON_ROLE: api_read
-      PGRST_OPENAPI_MODE: "follow-privileges"
-      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3000
+      PGHOST: db
+      PGDATABASE: postgres
+      PGUSER: postgres
+      PGPASSWORD: mysecretpassword
     ports:
-      - 3000:3000
+      - 80:80
     depends_on:
       db:
         condition: service_healthy
-  swagger:
-    image: swaggerapi/swagger-ui
-    ports:
-      - "8080:8080"
-    expose:
-      - "8080"
-    environment:
-      API_URL: http://localhost:3000/
   db:
     build:
       context: .
