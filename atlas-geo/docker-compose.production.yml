@@ -4,6 +4,7 @@ services:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: tarmac
+    restart: always
     environment:
       PGHOST:
       PGDATABASE:
@@ -20,7 +21,7 @@ services:
       DATABASE_URL:
       NODE_ENV: production
     ports:
-      - "8010:80"
+      - "8010:7800"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
@@ -34,6 +35,7 @@ services:
   api:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
+    restart: always
     environment:
       PGHOST:
       PGDATABASE:
