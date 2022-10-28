@@ -52,6 +52,8 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 2. Rebuild and restart everything
 
    ```sh
+   SKIP_DOWNLOAD=true \
+   SKIP_FILTER=true \
    docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
 
