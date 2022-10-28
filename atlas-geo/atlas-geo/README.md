@@ -34,7 +34,7 @@ docker compose up
 # or
 docker compose up -d
 
-# With osm processing -> starts also tarmac
+# With osm processing, which runs the "app" docker image with `ruh.sh`
 docker compose --profile osm_processing up -d
 ```
 
@@ -52,7 +52,7 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 2. Rebuild and restart everything
 
    ```sh
-   docker compose build && docker compose up
+   docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
 
 3. Inspect the new results
