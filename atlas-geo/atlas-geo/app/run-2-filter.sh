@@ -12,14 +12,12 @@ OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 # FILTER
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 osmium: filter osm data – START"
+echo "\e[1m\e[7m Filter – START \e[27m\e[21m"
 
 if [ -f "${OSM_GERMANY}" ]; then
 
   if [ "$SKIP_FILTER" = "true" ]; then
-    echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-    echo "🥐 osmium: filter regions, create separate files"
+    echo "\e[1m\e[7m Filter regions (create separate files) \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
     osmium extract --overwrite --polygon=${FILTER_DIR}bibi.geojson --output=${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_GERMANY}
     osmium extract --overwrite --polygon=${FILTER_DIR}trto.geojson --output=${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_GERMANY}
@@ -27,22 +25,19 @@ if [ -f "${OSM_GERMANY}" ]; then
     osmium extract --overwrite --polygon=${FILTER_DIR}berlin-ring.geojson --output=${OSM_DATADIR}openstreetmap-berlin.osm.pbf ${OSM_GERMANY}
     osmium extract --overwrite --polygon=${FILTER_DIR}langerwehe.geojson --output=${OSM_DATADIR}openstreetmap-langerwehe.osm.pbf ${OSM_GERMANY}
 
-    echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-    echo "🥐 osmium: merge regions, create one file"
+    echo "\e[1m\e[7m Filter: Merge regions (create one file) \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-merge.html
     osmium merge --overwrite --output=${OSM_REGIONS} ${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_DATADIR}openstreetmap-berlin.osm.pbf ${OSM_DATADIR}openstreetmap-langerwehe.osm.pbf
 
-    echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-    echo "🥐 osmium: filter tags"
+    echo "\e[1m\e[7m Filter tags (create filtered file) \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
     osmium tags-filter --overwrite --output=${OSM_FILTERED_FILE} --expressions ${OSM_FILTER_EXPRESSIONS} ${OSM_REGIONS}
   else
-    echo "🥐 💥SKIPPED with 'SKIP_FILTER=true'"
+    echo "💥 SKIPPED with 'SKIP_FILTER=true'"
   fi
 
 else
-  echo "🥐 osmium: 🧨 file ${OSM_GERMANY} or ${OSM_FILTER_EXPRESSIONS} not found"
+  echo "Filter: 🧨 file ${OSM_GERMANY} not found"
 fi
 
-echo "🥐 osmium: filter osm data – END"
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
+echo "\e[1m\e[7m Filter – END \e[27m\e[21m"
