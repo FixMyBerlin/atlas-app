@@ -97,19 +97,6 @@ Hack into the bash
 docker exec -it mypipeline bash
 ```
 
-## OSM Data extraction
-
-The OSM data will be automatically downloaded from download.geofabrik.de.
-It is also possible to extract even smaller areas with osmium. For this you need the relation id from OSM for a multipolygon.
-
-Then you can run, for example:
-
-```sh
-osmium extract -p bb-boundary.osm stuttgart-regbez-latest.osm.pbf -o bietigheim-bissingen.pbf
-```
-
-See also [Osmium Tool Manual](https://osmcode.org/osmium-tool/manual.html#creating-geographic-extracts).
-
 ## 💛 Thanks to
 
 This repo is highly inspired by and is containing code from [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing/tree/wip)
