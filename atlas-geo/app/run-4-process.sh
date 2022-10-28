@@ -13,63 +13,52 @@ OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: boundaries"
+echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m"
+
+echo "\e[1m\e[7m PROCESS – Topic: boundaries \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}boundaries.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: places"
+echo "\e[1m\e[7m PROCESS – Topic: places \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}places.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: places_todoList"
+echo "\e[1m\e[7m PROCESS – Topic: places_todoList \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}places_todoList.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: fromTo_education"
+echo "\e[1m\e[7m PROCESS – Topic: fromTo_education \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_education.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: fromTo_landuse"
+echo "\e[1m\e[7m PROCESS – Topic: fromTo_landuse \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_landuse.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: fromTo_publicTransport"
+echo "\e[1m\e[7m PROCESS – Topic: fromTo_publicTransport \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_publicTransport.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: fromTo_shopping"
+echo "\e[1m\e[7m PROCESS – Topic: fromTo_shopping \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_shopping.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: fromTo_shopping_todoList"
+echo "\e[1m\e[7m PROCESS – Topic: fromTo_shopping_todoList \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_shopping_todoList.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: roadtypesOsm"
+echo "\e[1m\e[7m PROCESS – Topic: roadtypesOsm \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadtypesOsm.lua ${OSM_FILTERED_FILE}
 psql -q -f "${PROCESS_DIR}roadtypesOsm.sql"
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: lit"
+echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit.lua ${OSM_FILTERED_FILE}
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: bicycleRoadInfrastructure.lua"
+echo "\e[1m\e[7m PROCESS – Topic: bicycleRoadInfrastructure \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bicycleRoadInfrastructure.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}bicycleRoadInfrastructure.sql"
 
-# echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-# echo "🥐 LUA+SQL for Topic: parking"
+# echo "\e[1m\e[7m PROCESS – Topic: parking \e[27m\e[21m"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}parking.sql"
 
 # ================================================
 # This should be the last step…
 OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 LUA+SQL for Topic: Metadata"
-echo "🥐 SQL: add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} to some metadata table"
+echo "\e[1m\e[7m PROCESS – Topic: Metadata \e[27m\e[21m"
+echo "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} to some metadata table"
 
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}metadata.lua ${OSM_FILTERED_FILE}
 # Provide meta data for the frontend application.
@@ -90,8 +79,9 @@ PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo "✅ Completed:"
-echo "✅ Development http://localhost:7800"
-echo "✅ Staging https://staging-tiles.radverkehrsatlas.de/"
-echo "✅ Production https://tiles.radverkehrsatlas.de"
+echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m"
+echo "Completed:"
+echo "Development http://localhost:7800"
+echo "Staging https://staging-tiles.radverkehrsatlas.de/"
+echo "Production https://tiles.radverkehrsatlas.de"
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "

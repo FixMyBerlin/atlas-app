@@ -1,10 +1,8 @@
 #!/bin/sh
 set -e
 
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 cleanup – START"
+echo "\e[1m\e[7m Cleanup – START \e[27m\e[21m"
 
 psql -q -f "./cleanup/cleanup.sql"
 
-echo "🥐 cleanup – END"
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
+echo "\e[1m\e[7m Cleanup – END \e[27m\e[21m"
