@@ -8,9 +8,6 @@ OSM_DATADIR="/data/" # root for docker
 OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 
 OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
-OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
-echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
-echo "🥐 SQL: add timestamp of osm file ${OSM_TIMESTAMP} to some database table"
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
 # One line/file per topic.
@@ -19,8 +16,6 @@ echo "🥐 SQL: add timestamp of osm file ${OSM_TIMESTAMP} to some database tabl
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 LUA+SQL for Topic: boundaries"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}boundaries.lua ${OSM_FILTERED_FILE}
-# psql -q -f "${PROCESS_DIR}boundaries.sql"
-# psql -q -c "COMMENT ON TABLE boundaries_stats IS '${OSM_TIMESTAMP}';"
 
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 LUA+SQL for Topic: places"
@@ -58,22 +53,24 @@ psql -q -f "${PROCESS_DIR}roadtypesOsm.sql"
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 LUA+SQL for Topic: lit"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit.lua ${OSM_FILTERED_FILE}
-# psql -q -f "${PROCESS_DIR}lit.sql"
 
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 LUA+SQL for Topic: bicycleRoadInfrastructure.lua"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bicycleRoadInfrastructure.lua ${OSM_FILTERED_FILE}
-# psql -q -f "${PROCESS_DIR}bicycleRoadInfrastructure.lua.sql"
+# psql -q -f "${PROCESS_DIR}bicycleRoadInfrastructure.sql"
 
 # echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 # echo "🥐 LUA+SQL for Topic: parking"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}parking.sql"
 
-# ====
+# ================================================
 # This should be the last step…
+OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
 echo "🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 🥐 "
 echo "🥐 LUA+SQL for Topic: Metadata"
+echo "🥐 SQL: add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} to some metadata table"
+
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}metadata.lua ${OSM_FILTERED_FILE}
 # Provide meta data for the frontend application.
 # We missuse a feature of pg_tileserve for this. Inspired by Lars parking_segements code <3.
@@ -92,4 +89,9 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
 
-echo "✅ completed. Preview the data at http://localhost:7800 with live data at https://tiles.radverkehrsatlas.de"
+echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
+echo "✅ Completed:"
+echo "✅ Development http://localhost:7800"
+echo "✅ Staging https://staging-tiles.radverkehrsatlas.de/"
+echo "✅ Production https://tiles.radverkehrsatlas.de"
+echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
