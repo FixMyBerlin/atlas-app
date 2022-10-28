@@ -1,4 +1,5 @@
 # tarmac-geo – custom vector tiles for bike infrastructure planning based on OpenStreetMap
+
 # (!) This project is in alpha stage (!)
 
 ## About
@@ -15,8 +16,8 @@ https://tiles.radverkehrsatlas.de/
 
 ### Data update
 
-* Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
-* Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
+- Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
+- Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
