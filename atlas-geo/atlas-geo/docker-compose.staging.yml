@@ -1,9 +1,10 @@
 version: "3"
 services:
-  app:
+  app_staging:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: tarmac_staging
+    restart: always
     environment:
       PGHOST:
       PGDATABASE:
@@ -11,7 +12,7 @@ services:
       PGPASSWORD:
     volumes:
       - osmfiles_staging:/data
-  tiles:
+  tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
     container_name: tileserver_staging
@@ -27,9 +28,10 @@ services:
       - "traefik.http.routers.stagingtiles.entrypoints=websecure"
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
-  api:
+  api_staging:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api_staging
+    restart: always
     environment:
       PGHOST:
       PGDATABASE:
