@@ -1,4 +1,5 @@
 # tarmac-geo – custom vector tiles for bike infrastructure planning based on OpenStreetMap
+
 # (!) This project is in alpha stage (!)
 
 ## About
@@ -15,8 +16,8 @@ https://tiles.radverkehrsatlas.de/
 
 ### Data update
 
-* Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
-* Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
+- Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
+- Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
@@ -33,7 +34,7 @@ docker compose up
 # or
 docker compose up -d
 
-# With osm processing -> starts also tarmac
+# With osm processing, which runs the "app" docker image with `ruh.sh`
 docker compose --profile osm_processing up -d
 ```
 
@@ -51,7 +52,9 @@ You can only rebuild and regenerate the whole system, for now. The workflow is�
 2. Rebuild and restart everything
 
    ```sh
-   docker compose build && docker compose up
+   SKIP_DOWNLOAD=true \
+   SKIP_FILTER=true \
+   docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
 
 3. Inspect the new results
@@ -95,19 +98,6 @@ Hack into the bash
 ```sh
 docker exec -it mypipeline bash
 ```
-
-## OSM Data extraction
-
-The OSM data will be automatically downloaded from download.geofabrik.de.
-It is also possible to extract even smaller areas with osmium. For this you need the relation id from OSM for a multipolygon.
-
-Then you can run, for example:
-
-```sh
-osmium extract -p bb-boundary.osm stuttgart-regbez-latest.osm.pbf -o bietigheim-bissingen.pbf
-```
-
-See also [Osmium Tool Manual](https://osmcode.org/osmium-tool/manual.html#creating-geographic-extracts).
 
 ## 💛 Thanks to
 
