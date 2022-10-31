@@ -205,16 +205,7 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- TODO CENTERLINE: This handles sidewalks tagged on the centerline. But we would like those to be separate geometries ideally.
-  -- Maybe we can …
-  -- 1. add internal tags like "_centerline=right" here
-  -- 2. use those to create duplicated geometries with multiple insert calls below
-  -- 3. selecte those duplicated geoms and move them left/right of the centerline (based on the _centerline=left + _centerlineOffset = <RoadWith|DefaultByRoadClass>) in PostGIS?
-
-  -- Possible solution:
-  -- 1. store all centerline tagged bike paths in separate table `toTranslateTable` with extra column `offset`
-  -- 2. `offset` is calculated based on <RoadWith|DefaultByRoadClass> and the sign indicates left = + /right = - (see postgis offsetcurve)
-  -- 3. translate geometries by `offset` in PostGIS and join the result into the main table
+  -- These are stored in a separated table because wen need to translate the geometry by half the road width
   local offsetDirections = {["cycleway:left"] = 1, ["cycleway:right"] = -1 }
   local trackVariants = Set({"track", "lane", "separate"})
   --  we miss trackVariant  = `shared_lane`
