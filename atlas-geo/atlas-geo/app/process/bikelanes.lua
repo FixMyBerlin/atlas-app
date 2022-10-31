@@ -39,9 +39,38 @@ local toTranslateTable = osm2pgsql.define_table({
   }
 })
 
--- TODO: return `width` if tagged otherwise estimate the width based on the road type
+-- TODO: estimate the width based on the road type when `width=nil`
+--
 local function roadWidth(tags)
-  return 2.5
+  if tags["width"] ~= nil then
+    return tonumber(tags["width"])
+  end
+  if tags["est_width"] ~= nil then
+    return tonumber(tags["est_width"])
+  end
+  if tags["lanes"] ~= nil then
+    return tonumber(tags["lanes"]) * 2.5
+  end
+  if tags["highway"] == "primary" then
+    return 10
+  end
+  if tags["highway"] == "secondary" then
+    return 8
+  end
+  if tags["highway"] == "tertiary" then
+    return 6
+  end
+  if tags["highway"] == "residential" then
+    return 4
+  end
+  if tags["highway"] == "cycleway" then
+    print(tags["cycleway"])
+  end
+  print(tags["highway"])
+  print(tags["lanes"])
+  print(tags["tracks"])
+  return 6
+
 end
 
 local function insert(object)
@@ -184,36 +213,30 @@ function osm2pgsql.process_way(object)
 
   -- Possible solution:
   -- 1. store all centerline tagged bike paths in separate table `toTranslateTable` with extra column `offset`
-  -- 2. `offset` is calculated based on <RoadWith|DefaultByRoadClass> and the sign indicates left/right
+  -- 2. `offset` is calculated based on <RoadWith|DefaultByRoadClass> and the sign indicates left = + /right = - (see postgis offsetcurve)
   -- 3. translate geometries by `offset` in PostGIS and join the result into the main table
-  local offsets = {["cycleway:left"] = 1, ["cycleway:right"] = -1 }
-  for tag, offset in pairs(offsets) do
-    if object.tags[tag] == "track" or object.tags["cycleway:both"] == "track" then
+  local offsetDirections = {["cycleway:left"] = 1, ["cycleway:right"] = -1 }
+  local trackVariants = Set({"track", "lane", "separate"})
+  --  we miss trackVariant  = `shared_lane`
+  for tag, sign in pairs(offsetDirections) do
+    if trackVariants[object.tags[tag]] or trackVariants[object.tags["cycleway:both"]] then
+      -- print(object.tags.name)
       object.tags.category = "cyclewaySeparated"
       object.tags._centerline = "tagged on centerline"
       object.tags._skip = false
       toTranslateTable:insert({
         tags = object.tags,
         geom = object:as_linestring(),
-        offset = offset * roadWidth(object.tags)
+        offset = sign * roadWidth(object.tags) / 2
       })
     end
-  end
-  for tag, offset in pairs(offsets) do
-    if object.tags[tag] == "lane" or object.tags["cycleway:both"] == "lane" then
-      object.tags.category = "cyclewaySeparated_line"
-      object.tags._centerline = "tagged on centerline"
-      object.tags._skip = false
-      toTranslateTable:insert({
-        tags = object.tags,
-        geom = object:as_linestring(),
-        offset = offset * roadWidth(object.tags)
-      })
+    if object.tags._centerline ~= nil then
+      return
     end
   end
 
-  local offsets = {["sidewalk:left:bicycle"] = 1, ["sidewalk:right:bicycle"] = -1 }
-  for tag, offset in pairs(offsets) do
+  local offsetDirections = {["sidewalk:left:bicycle"] = 1, ["sidewalk:right:bicycle"] = -1 }
+  for tag, sign in pairs(offsetDirections) do
     if object.tags[tag] == "yes" or object.tags["sidewalk:both:bicycle"] == "yes" then
       object.tags.category = "footway_bicycleYes"
       object.tags._centerline = "tagged on centerline"
@@ -221,8 +244,11 @@ function osm2pgsql.process_way(object)
       toTranslateTable:insert({
         tags = object.tags,
         geom = object:as_linestring(),
-        offset = offset * roadWidth(object.tags)
+        offset = sign * roadWidth(object.tags) / 2
       })
+    end
+    if object.tags._centerline ~= nil then
+      return
     end
   end
 
@@ -253,6 +279,8 @@ function osm2pgsql.process_way(object)
     "sidewalk:left:bicycle",
     "sidewalk:right:bicycle",
     "traffic_sign",
+    "width",
+    "est_width"
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
