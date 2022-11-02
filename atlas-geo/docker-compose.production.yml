@@ -4,7 +4,6 @@ services:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: tarmac
-    restart: always
     environment:
       PGHOST:
       PGDATABASE:
