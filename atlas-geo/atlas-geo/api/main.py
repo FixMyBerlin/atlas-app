@@ -5,6 +5,7 @@ from psycopg2 import sql
 from constants import available_datasets, available_export_functions, verification_tables, valid_verified_status
 from db import conn_string
 import psycopg2
+import psycopg2.extras
 import json
 import os
 
@@ -33,6 +34,39 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
 
 
 @app.get("/verify/{type_name}/{osm_id}")
+def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
+    if type_name not in available_datasets:
+      raise HTTPException(status_code=404, detail="export type unknown")
+
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+    # Check if osm_id is available
+    statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC LIMIT 1").format(table_name=sql.Identifier(verification_tables[type_name]))
+    cur.execute(statement, (osm_id,))
+
+    results = cur.fetchone()
+    if results == None:
+      raise HTTPException(status_code=404, detail="osm_id not found")
+    return results
+
+@app.get("/verify/{type_name}/{osm_id}/history")
+def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
+    if type_name not in available_datasets:
+      raise HTTPException(status_code=404, detail="export type unknown")
+
+    cur = conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor)
+
+    # Check if osm_id is available
+    statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC").format(table_name=sql.Identifier(verification_tables[type_name]))
+    cur.execute(statement, (osm_id,))
+
+    results = cur.fetchall()
+    if results == None:
+      raise HTTPException(status_code=404, detail="osm_id not found")
+    return results
+
+
+@app.post("/verify/{type_name}/{osm_id}")
 def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str,verified_by: int= None):
     if type_name not in available_datasets:
       raise HTTPException(status_code=404, detail="export type unknown")
