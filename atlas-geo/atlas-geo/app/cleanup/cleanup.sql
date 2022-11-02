@@ -24,4 +24,4 @@ DROP TABLE IF EXISTS ramps;
 -- DROP TABLE IF EXISTS roadtypesOsm_skipList;
 DROP TABLE IF EXISTS service;
 DROP TABLE IF EXISTS service_tmp;
-DROP TABLE IF EXISTS traffic_calming_point;
+DROP TABLE IF EXISTS traffic_calming_points;
