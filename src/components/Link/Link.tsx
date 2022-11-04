@@ -17,7 +17,7 @@ type Props = {
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>
 
 const linkStyles =
-  'text-emerald-500 hover:text-emerald-600 hover:underline active:underline'
+  'text-emerald-500 hover:text-brand-yellow hover:underline active:underline'
 export const buttonStyles =
   'inline-flex items-center px-4 py-2 border border-transparent font-semibold rounded-md shadow-sm text-gray-800 bg-brand-yellow hover:bg-yellow-400 group-hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-yellow'
 
@@ -65,7 +65,7 @@ export const Link: React.FC<Props> = ({
   }
 
   return (
-    <ReactLocationLink href={to} {...props} className={classes}>
+    <ReactLocationLink to={to} {...props} className={classes}>
       {children}
     </ReactLocationLink>
   )
