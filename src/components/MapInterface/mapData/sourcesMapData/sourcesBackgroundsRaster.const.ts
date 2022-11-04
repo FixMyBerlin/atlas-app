@@ -245,22 +245,4 @@ export const sourcesBackgroundsRaster: MapDataSource<SourcesRasterIds>[] = [
       'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
   },
-  // Docs https://docs.mapbox.com/api/maps/static-tiles/
-  // Edit Style https://studio.mapbox.com/styles/hejco/ckz8bsqbq000t15nz6ok45bid/edit/#15.61/52.495655/13.417375
-  // TODO Lizenz / Attribution
-  // About Quota: Make sure we only pull data where avaliable and only for zoom level that are usefull.
-  //  Quota at: https://account.mapbox.com/
-  //  Docs: https://docs.mapbox.com/api/maps/static-tiles/#manage-static-tiles-api-costs
-  // xhainGutachten_tiles: {
-  //   name: 'Parkraumgutachten Xhain',
-  // type: 'raster',
-  //   tiles: 'https://api.mapbox.com/styles/v1/hejco/ckz8bsqbq000t15nz6ok45bid/tiles/512/{z}/{x}/{y}?access_token=pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q',
-  //   ,
-  //   tileSize: 512,
-  //   minzoom: 18, // Quota
-  //   maxzoom: 21,
-  //   //     bounds: L.latLngBounds(L.latLng(52.5310256, 13.4914434), L.latLng(52.4827923, 13.3682291)), // Quota (outside no data is loaded for this layer)
-  //   attribution:
-  //     'Daten der Parkraumgutachten der Bezirksverwaltung. OpenData. Lizenz TODO.',
-  // },
 ]
