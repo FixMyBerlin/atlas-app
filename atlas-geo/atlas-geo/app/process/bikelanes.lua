@@ -48,29 +48,20 @@ local function roadWidth(tags)
   if tags["est_width"] ~= nil then
     return tonumber(tags["est_width"])
   end
-  if tags["lanes"] ~= nil then
-    return tonumber(tags["lanes"]) * 2.5
+  -- if tags["lanes"] ~= nil then
+  --   return tonumber(tags["lanes"]) * 2.5
+  -- end
+  local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
+  if streetWidths[tags["highway"]] ~= nil then
+    return streetWidths[tags["highway"]]
   end
-  if tags["highway"] == "primary" then
-    return 10
-  end
-  if tags["highway"] == "secondary" then
-    return 8
-  end
-  if tags["highway"] == "tertiary" then
-    return 6
-  end
-  if tags["highway"] == "residential" then
-    return 4
-  end
-  if tags["highway"] == "cycleway" then
-    print(tags["cycleway"])
-  end
-  print(tags["highway"])
-  print(tags["lanes"])
-  print(tags["tracks"])
+    -- if tags["highway"] == "cycleway" then
+  --   print(tags["cycleway"])
+  -- end
+  -- print(tags["highway"])
+  -- print(tags["lanes"])
+  -- print(tags["tracks"])
   return 6
-
 end
 
 local function insert(object)
