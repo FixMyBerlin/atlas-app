@@ -76,8 +76,6 @@ export const Download: React.FC = () => {
                 </p>
 
                 <div className="flex gap-2">
-                  {/* TODO: Add propper download URL */}
-                  {/* TODO: Reminder, the bbox params are fake ATM */}
                   <Link
                     to={`${getCurrentUrl()}/export/${topicData.id}?minlon=${
                       bbox.min[0]
