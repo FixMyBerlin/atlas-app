@@ -10,8 +10,6 @@ import { flatConfigTopics } from '../mapStateConfig/utils/flatConfigTopics'
 
 export const Download: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
-  if (!configThemesTopics) return null
-  const flatTopics = flatConfigTopics(configThemesTopics)
 
   // Get the bbox from our region data
   const {
@@ -20,6 +18,9 @@ export const Download: React.FC = () => {
   const region = regionFromPath(regionPath)
   const bbox = region?.bbox ? region.bbox : { min: [0, 0], max: [0, 0] }
   const allowDownload = region?.bbox ? true : false
+
+  if (!configThemesTopics) return null
+  const flatTopics = flatConfigTopics(configThemesTopics)
 
   return (
     <div className="absolute bottom-14 left-5">
