@@ -1,3 +1,5 @@
+// TODO Cleanup once "mapboxStyles" is in place
+
 import style from './tarmac-style.const.json'
 
 // Manually created base on the json

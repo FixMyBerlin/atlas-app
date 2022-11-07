@@ -16,7 +16,8 @@
     "test": "vitest watch",
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
-    "check": "npm run type-check && npm run lint && npm run format && vitest run"
+    "check": "npm run type-check && npm run lint && npm run format && vitest run",
+    "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.2",
@@ -51,6 +52,7 @@
     "@vitejs/plugin-react": "^2.1.0",
     "@vitest/ui": "^0.23.4",
     "autoprefixer": "^10.4.12",
+    "chalk": "^5.1.2",
     "classnames": "^2.3.2",
     "eslint": "^8.24.0",
     "eslint-config-prettier": "^8.5.0",

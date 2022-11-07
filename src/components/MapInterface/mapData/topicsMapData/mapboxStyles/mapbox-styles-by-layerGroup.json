@@ -1,0 +1,866 @@
+[
+  {
+    "group": "atlas_lit",
+    "layers": [
+      {
+        "id": "2_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "2_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "2_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_places",
+    "layers": [
+      {
+        "id": "fmc-poiPlaces-circle",
+        "type": "circle",
+        "filter": [
+          "match",
+          [
+            "get",
+            "FMC:Category:poiPlaces"
+          ],
+          [
+            "true"
+          ],
+          true,
+          false
+        ],
+        "paint": {
+          "circle-stroke-color": "#d8cd03",
+          "circle-opacity": 0.7,
+          "circle-stroke-width": 2,
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "population"
+            ],
+            100,
+            5,
+            91116,
+            40
+          ]
+        },
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "fmc-poiPlaces-label",
+        "type": "symbol",
+        "layout": {
+          "text-size": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            10,
+            22,
+            13
+          ],
+          "text-font": [
+            "Open Sans SemiBold",
+            "Arial Unicode MS Regular"
+          ],
+          "icon-allow-overlap": true,
+          "text-padding": 0,
+          "text-offset": [
+            0,
+            1
+          ],
+          "icon-size": [
+            "match",
+            [
+              "get",
+              "population"
+            ],
+            [
+              "6452"
+            ],
+            3,
+            [
+              "8945"
+            ],
+            4,
+            [
+              "10633",
+              "11355"
+            ],
+            5,
+            [
+              "17017"
+            ],
+            8,
+            [
+              "38111"
+            ],
+            19,
+            1
+          ],
+          "text-anchor": "top",
+          "text-field": [
+            "to-string",
+            [
+              "concat",
+              [
+                "get",
+                "name"
+              ],
+              " \n ",
+              [
+                "get",
+                "population"
+              ]
+            ]
+          ],
+          "icon-padding": 0,
+          "text-max-width": 20
+        },
+        "paint": {
+          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+          "text-halo-width": 1
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_complete",
+    "layers": [
+      {
+        "id": "1_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "1_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "1_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "1_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_fresh",
+    "layers": [
+      {
+        "id": "3_lit-Daten aelter 2020",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -4,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-width": 3,
+          "line-pattern": "milan-metro"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataCurrent"
+          ],
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "3_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "3_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "3_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "3_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "3_lit-Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3,
+          "visibility": "none"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "service"
+          ],
+          [
+            "alley"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_complete_fresh_verified",
+    "layers": [
+      {
+        "id": "5_lit-Daten aelter 2020",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -4,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-width": 3,
+          "line-pattern": "milan-metro"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataCurrent"
+          ],
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "5_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "5_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "5_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "5_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "5_lit-Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3,
+          "visibility": "none"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "service"
+          ],
+          [
+            "alley"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_verified",
+    "layers": [
+      {
+        "id": "4_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "4_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "4_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {
+          "visibility": "none"
+        }
+      },
+      {
+        "id": "4_lit-Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3,
+          "visibility": "none"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "service"
+          ],
+          [
+            "alley"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  }
+]
