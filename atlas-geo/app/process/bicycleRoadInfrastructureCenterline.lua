@@ -12,7 +12,7 @@ require("AddSkipInfoToHighways")
 require("StartsWith")
 
 
-local toTranslateTable = osm2pgsql.define_table({
+local table = osm2pgsql.define_table({
   name = 'bicycleRoadInfrastructureCenterline',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -47,12 +47,6 @@ local function roadWidth(tags)
   return 6
 end
 
-local function insert(object)
-  table:insert({
-    tags = object.tags,
-    geom = object:as_linestring()
-  })
-end
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
@@ -77,7 +71,7 @@ function osm2pgsql.process_way(object)
       object.tags.category = "cyclewaySeparated"
       object.tags._centerline = "tagged on centerline"
       object.tags._skip = false
-      toTranslateTable:insert({
+      table:insert({
         tags = object.tags,
         geom = object:as_linestring(),
         offset = sign * roadWidth(object.tags) / 2
@@ -94,7 +88,7 @@ function osm2pgsql.process_way(object)
       object.tags.category = "footway_bicycleYes"
       object.tags._centerline = "tagged on centerline"
       object.tags._skip = false
-      toTranslateTable:insert({
+      table:insert({
         tags = object.tags,
         geom = object:as_linestring(),
         offset = sign * roadWidth(object.tags) / 2
