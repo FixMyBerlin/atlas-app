@@ -11,7 +11,7 @@ export type Region = {
   fullName: string
   path: RegionPath
   map: RegionMap
-  bbox: { min: [number, number]; max: [number, number] }
+  bbox: { min: [number, number]; max: [number, number] } | null
   logoPath: string | null
   themes: MapDataThemeIds[]
   osmUsers: number[]
@@ -79,11 +79,8 @@ export const regions: Region[] = [
     fullName: 'ZES+',
     path: 'zes',
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
-    bbox: {
-      // todo, needs the right bbox
-      min: [13.2937, 52.5295],
-      max: [13.2937, 52.5295],
-    },
+    // todo, needs the right bbox
+    bbox: null,
     logoPath: '/pageRegions/zesplus-logo.png',
     themes: [
       // The order here specifies the order in the UI
@@ -99,11 +96,8 @@ export const regions: Region[] = [
     fullName: 'Langerwehe',
     path: 'langerwehe',
     map: { lat: 50.82, lng: 6.37, zoom: 15 },
-    bbox: {
-      // todo, needs the right bbox
-      min: [13.2937, 52.5295],
-      max: [13.2937, 52.5295],
-    },
+    // todo, needs the right bbox
+    bbox: null,
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...osmUserAdmins],

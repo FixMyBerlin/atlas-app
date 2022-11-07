@@ -18,7 +18,8 @@ export const Download: React.FC = () => {
     params: { regionPath },
   } = useMatch()
   const region = regionFromPath(regionPath)
-  const bbox = region ? region.bbox : { min: [], max: [] }
+  const bbox = region?.bbox ? region.bbox : { min: [0, 0], max: [0, 0] }
+  const allowDownload = region?.bbox ? true : false
 
   return (
     <div className="absolute bottom-14 left-5">
@@ -32,6 +33,13 @@ export const Download: React.FC = () => {
           Alle Daten stehen als <strong>GeoJSON</strong> zum Download sowie als{' '}
           <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
         </p>
+
+        {!allowDownload && (
+          <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">
+            Hinweis: GeoJSON Export ist für die Region {region?.fullName} nicht
+            eingerichtet.
+          </p>
+        )}
 
         {/* TODO: Die Description von https://tiles.radverkehrsatlas.de/public.metadata.json auslesen. */}
         <p className="pb-5 text-sm">Letzte Aktualisierung: ___</p>
@@ -76,23 +84,25 @@ export const Download: React.FC = () => {
                 </p>
 
                 <div className="flex gap-2">
-                  <Link
-                    to={`${getCurrentUrl()}/export/${topicData.id}?minlon=${
-                      bbox.min[0]
-                    }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${
-                      bbox.max[1]
-                    }`}
-                    classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
-                    download
-                    blank
-                  >
-                    <strong className="mb-0.5 block text-xs font-medium text-gray-900">
-                      Download:
-                    </strong>
-                    <span className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm">
-                      GeoJSON
-                    </span>
-                  </Link>
+                  {allowDownload && (
+                    <Link
+                      to={`${getCurrentUrl()}/export/${topicData.id}?minlon=${
+                        bbox.min[0]
+                      }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${
+                        bbox.max[1]
+                      }`}
+                      classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
+                      download
+                      blank
+                    >
+                      <strong className="mb-0.5 block text-xs font-medium text-gray-900">
+                        Download:
+                      </strong>
+                      <span className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm">
+                        GeoJSON
+                      </span>
+                    </Link>
+                  )}
 
                   <div className="grow rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
                     <label
