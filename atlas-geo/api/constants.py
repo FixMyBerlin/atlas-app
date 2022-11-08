@@ -26,7 +26,7 @@ function_table_mapping = {
   "bicycleRoadInfrastructure": "export_geojson_bikeinfra",
   "lit": "export_geojson_lit",
   "fromTo_shopping": "export_geojson_shops",
-  "fromTo_education": "export_geojson_education",
+  "education": "export_geojson_education",
   "fromTo_publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
   "roadtypesOsm": "export_geojson_roadtypes",
