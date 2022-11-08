@@ -23,6 +23,7 @@ const osmUserAdmins = [
   11881, // http://whosthat.osmz.ru/?q=tordans
   17391407, // http://whosthat.osmz.ru/?q=elsueno
   155680, // http://whosthat.osmz.ru/?q=Henri97
+  7302664, // http://whosthat.osmz.ru/?q=hejco
 ]
 
 export const regions: Region[] = [
