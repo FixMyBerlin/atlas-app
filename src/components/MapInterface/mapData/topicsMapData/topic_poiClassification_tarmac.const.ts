@@ -1,15 +1,15 @@
 import { MapDataTopic } from '../types'
 
 const topicId = 'shops_tarmac'
-export type TopicShopsId_Tarmac = typeof topicId
-export type TopicShopsStyleIds_Tarmac = 'default'
-export type TopicShopsStyleFilterIds_Tarmac = '_nofilter'
+export type TopicPoiClassificationId_Tarmac = typeof topicId
+export type TopicPoiClassificationStyleIds_Tarmac = 'default'
+export type TopicPoiClassificationStyleFilterIds_Tarmac = '_nofilter'
 
-export const topic_shops_tarmac: MapDataTopic = {
+export const topic_poiClassification_tarmac: MapDataTopic = {
   id: topicId,
   name: 'Einkauf etc',
   desc: null,
-  sourceId: 'tarmac_shops',
+  sourceId: 'tarmac_poiClassification',
   styles: [
     {
       id: 'default',
@@ -19,8 +19,8 @@ export const topic_shops_tarmac: MapDataTopic = {
         {
           id: 'default',
           type: 'circle',
-          source: 'tarmac_shops',
-          'source-layer': 'public.fromTo_shopping',
+          source: 'tarmac_poiClassification',
+          'source-layer': 'public.poiClassification',
           paint: {
             'circle-color': 'HotPink',
             'circle-radius': 10,

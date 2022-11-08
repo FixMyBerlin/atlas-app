@@ -15,14 +15,15 @@ export type SourcesIds =
   | 'tarmac_landuse'
   | 'tarmac_lit'
   | 'tarmac_places'
+  | 'tarmac_poiClassification'
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
-  | 'tarmac_shops'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
 const apiKeyMapbox =
   'pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q'
+
 // https://www.mapillary.com/dashboard/developers
 // "Tarmac OSM Viewer", they call it "Client Token"
 const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
@@ -90,10 +91,10 @@ export const sources: MapDataSource<SourcesIds>[] = [
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.fromTo_shopping.json
-    id: 'tarmac_shops',
+    // https://tiles.radverkehrsatlas.de/public.poiClassification.json
+    id: 'tarmac_poiClassification',
     tiles:
-      'https://tiles.radverkehrsatlas.de/public.fromTo_shopping/{z}/{x}/{y}.pbf',
+      'https://tiles.radverkehrsatlas.de/public.poiClassification/{z}/{x}/{y}.pbf',
     attributionHtml:
       'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',

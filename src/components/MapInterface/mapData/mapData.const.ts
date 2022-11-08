@@ -49,11 +49,11 @@ import {
   TopicRoadClassificationStyleIds_Osmscripts,
   TopicRoadClassificationStyleIds_Tarmac,
   TopicShopsId_Osmscripts,
-  TopicShopsId_Tarmac,
+  TopicPoiClassificationId_Tarmac,
   TopicShopsStyleFilterIds_Osmscripts,
-  TopicShopsStyleFilterIds_Tarmac,
+  TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicShopsStyleIds_Osmscripts,
-  TopicShopsStyleIds_Tarmac,
+  TopicPoiClassificationStyleIds_Tarmac,
   TopicSurfaceId_Osmscripts,
   TopicSurfaceId_Tarmac,
   TopicSurfaceStyleFilterIds_Osmscripts,
@@ -75,7 +75,7 @@ import {
   topic_roadClassification_osmscripts,
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
-  topic_shops_tarmac,
+  topic_poiClassification_tarmac,
   topic_surface_osmscripts,
 } from './topicsMapData'
 import { MapData } from './types'
@@ -96,7 +96,7 @@ export type TopicIds =
   | TopicRoadClassificationId_Osmscripts
   | TopicRoadClassificationId_Tarmac
   | TopicShopsId_Osmscripts
-  | TopicShopsId_Tarmac
+  | TopicPoiClassificationId_Tarmac
   | TopicSurfaceId_Osmscripts
   | TopicSurfaceId_Tarmac
   | TopicParkingId
@@ -117,7 +117,7 @@ export type TopicStyleIds =
   | TopicRoadClassificationStyleIds_Osmscripts
   | TopicRoadClassificationStyleIds_Tarmac
   | TopicShopsStyleIds_Osmscripts
-  | TopicShopsStyleIds_Tarmac
+  | TopicPoiClassificationStyleIds_Tarmac
   | TopicSurfaceStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Tarmac
   | TopicParkingStyleIds
@@ -138,7 +138,7 @@ export type TopicStyleFilterIds =
   | TopicRoadClassificationStyleFilterIds_Osmscripts
   | TopicRoadClassificationStyleFilterIds_Tarmac
   | TopicShopsStyleFilterIds_Osmscripts
-  | TopicShopsStyleFilterIds_Tarmac
+  | TopicPoiClassificationStyleFilterIds_Tarmac
   | TopicSurfaceStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Tarmac
   | TopicParkingStyleFilterIds
@@ -163,7 +163,7 @@ export const mapData: MapData = {
     topic_roadClassification_osmscripts,
     topic_roadClassification_tarmac,
     topic_shops_osmscripts,
-    topic_shops_tarmac,
+    topic_poiClassification_tarmac,
     topic_surface_osmscripts,
     // topic_surface_tarmac,
     topicParking,
