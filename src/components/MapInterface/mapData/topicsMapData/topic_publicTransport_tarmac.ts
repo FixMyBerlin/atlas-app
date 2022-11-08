@@ -20,7 +20,7 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
           id: 'default',
           type: 'circle',
           source: 'tarmac_publicTransport',
-          'source-layer': 'public.fromTo_publicTransport',
+          'source-layer': 'public.publicTransport',
           paint: {
             'circle-color': 'HotPink',
             'circle-radius': 10,

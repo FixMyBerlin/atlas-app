@@ -20,7 +20,7 @@ export const topic_education_tarmac: MapDataTopic = {
           id: 'default',
           type: 'circle',
           source: 'tarmac_education',
-          'source-layer': 'public.fromTo_education',
+          'source-layer': 'public.education',
           paint: {
             'circle-color': 'HotPink',
             'circle-radius': 10,

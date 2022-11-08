@@ -65,27 +65,27 @@ export const sources: MapDataSource<SourcesIds>[] = [
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
+    // https://tiles.radverkehrsatlas.de/public.roadClassification.json
     id: 'tarmac_roadClassification',
-    tiles: `${tilesUrl}/public.roadtypesOsm/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
+    // https://tiles.radverkehrsatlas.de/public.bikelanes.json
     id: 'tarmac_bikelanes',
-    tiles: `${tilesUrl}/public.bicycleRoadInfrastructure/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.bikelanes/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.fromTo_publicTransport.json
+    // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
-    tiles: `${tilesUrl}/public.fromTo_publicTransport/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.fromTo_education.json
+    // https://tiles.radverkehrsatlas.de/public.education.json
     id: 'tarmac_education',
-    tiles: `${tilesUrl}/public.fromTo_education/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
@@ -109,9 +109,9 @@ export const sources: MapDataSource<SourcesIds>[] = [
     attributionHtml: 'todo', // TODO
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.fromTo_landuse.json
+    // https://tiles.radverkehrsatlas.de/public.landuse.json
     id: 'tarmac_landuse',
-    tiles: `${tilesUrl}/public.fromTo_landuse/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.landuse/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {

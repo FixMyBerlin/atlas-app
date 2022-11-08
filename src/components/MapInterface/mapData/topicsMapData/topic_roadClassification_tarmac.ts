@@ -21,7 +21,7 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
           id: 'default',
           type: 'line',
           source: 'tarmac_roadClassification',
-          'source-layer': 'public.roadtypesOsm',
+          'source-layer': 'public.roadClassification',
           paint: {
             'line-color': 'HotPink',
             'line-width': 10,

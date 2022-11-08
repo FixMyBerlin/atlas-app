@@ -20,7 +20,7 @@ export const topic_landuse: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_landuse',
         source: 'tarmac_landuse',
-        sourceLayer: 'public.fromTo_landuse',
+        sourceLayer: 'public.landuse',
       }),
       interactiveFilters: null,
     },
