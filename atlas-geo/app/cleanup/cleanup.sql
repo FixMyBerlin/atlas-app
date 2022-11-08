@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS bicycleRoadInfrastructure_skipList;
 -- DROP TABLE IF EXISTS footways_tmp;
 DROP TABLE IF EXISTS fromTo_education;
 DROP TABLE IF EXISTS fromTo_landuse;
--- DROP TABLE IF EXISTS fromTo_publicTransport;
+DROP TABLE IF EXISTS fromTo_publicTransport;
 DROP TABLE IF EXISTS fromTo_shopping;
 DROP TABLE IF EXISTS fromTo_shopping_todoList;
 -- DROP TABLE IF EXISTS highways;
