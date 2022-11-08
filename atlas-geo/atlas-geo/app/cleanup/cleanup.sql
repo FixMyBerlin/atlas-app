@@ -8,7 +8,7 @@
 -- DROP TABLE IF EXISTS crossings;
 -- DROP TABLE IF EXISTS footways;
 -- DROP TABLE IF EXISTS footways_tmp;
--- DROP TABLE IF EXISTS fromTo_education;
+DROP TABLE IF EXISTS fromTo_education;
 DROP TABLE IF EXISTS fromTo_landuse;
 -- DROP TABLE IF EXISTS fromTo_publicTransport;
 -- DROP TABLE IF EXISTS fromTo_shopping;
