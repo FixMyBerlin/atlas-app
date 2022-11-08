@@ -1119,7 +1119,7 @@
     ]
   },
   {
-    "group": "atlas_bikelanes__complete_fresh_verified",
+    "group": "atlas_bikelanes_complete_fresh_verified",
     "layers": [
       {
         "id": "Daten aelter 2020-fake copy",

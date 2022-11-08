@@ -3,8 +3,8 @@
 
 export type MapboxStylesByLayerGroupIds =
   | 'atlas_bikelanes'
-  | 'atlas_bikelanes__complete_fresh_verified'
   | 'atlas_bikelanes_complete'
+  | 'atlas_bikelanes_complete_fresh_verified'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
   | 'atlas_education'
@@ -19,8 +19,8 @@ export type MapboxStylesByLayerGroupIds =
 
 export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes'
-  | 'atlas_bikelanes__complete_fresh_verified'
   | 'atlas_bikelanes_complete'
+  | 'atlas_bikelanes_complete_fresh_verified'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
 
