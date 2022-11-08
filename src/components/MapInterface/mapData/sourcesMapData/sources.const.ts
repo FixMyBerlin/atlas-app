@@ -1,4 +1,5 @@
 import { MapDataSource } from '../types'
+import { getCurrentTilesUrl } from '@components/utils/getTilesUrl'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesIds =
@@ -28,6 +29,8 @@ const apiKeyMapbox =
 // "Tarmac OSM Viewer", they call it "Client Token"
 const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
+const tilesUrl = getCurrentTilesUrl()
+
 export const sources: MapDataSource<SourcesIds>[] = [
   {
     id: 'parkraumParking',
@@ -36,8 +39,7 @@ export const sources: MapDataSource<SourcesIds>[] = [
   },
   {
     id: 'tarmac_boundaries',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.boundaries/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.boundaries/{z}/{x}/{y}.pbf`,
     attributionHtml:
       'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
@@ -65,36 +67,31 @@ export const sources: MapDataSource<SourcesIds>[] = [
   {
     // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
     id: 'tarmac_roadClassification',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.roadtypesOsm/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.roadtypesOsm/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.roadtypesOsm.json
     id: 'tarmac_bikelanes',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.bicycleRoadInfrastructure/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.bicycleRoadInfrastructure/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.fromTo_publicTransport.json
     id: 'tarmac_publicTransport',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.fromTo_publicTransport/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.fromTo_publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.fromTo_education.json
     id: 'tarmac_education',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.fromTo_education/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.fromTo_education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
     id: 'tarmac_poiClassification',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.poiClassification/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
       'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
@@ -102,20 +99,19 @@ export const sources: MapDataSource<SourcesIds>[] = [
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
     id: 'tarmac_lit',
-    tiles: 'https://tiles.radverkehrsatlas.de/public.lit/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
     id: 'tarmac_places',
-    tiles: 'https://tiles.radverkehrsatlas.de/public.places/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
     // https://tiles.radverkehrsatlas.de/public.fromTo_landuse.json
     id: 'tarmac_landuse',
-    tiles:
-      'https://tiles.radverkehrsatlas.de/public.fromTo_landuse/{z}/{x}/{y}.pbf',
+    tiles: `${tilesUrl}/public.fromTo_landuse/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
   },
   {
