@@ -7,7 +7,6 @@
   "type": "module",
   "scripts": {
     "start": "vite --host 127.0.0.1",
-    "start:staging": "export VITE_STAGING && vite",
     "dev": "npm run start",
     "build": "npm run check && vite build",
     "preview": "vite preview",
