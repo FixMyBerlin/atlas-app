@@ -23,7 +23,7 @@ available_export_functions = {
 }
 
 function_table_mapping = {
-  "bicycleRoadInfrastructure": "export_geojson_bikeinfra",
+  "bikelanes": "export_geojson_bikeinfra",
   "lit": "export_geojson_lit",
   "fromTo_shopping": "export_geojson_shops",
   "education": "export_geojson_education",
@@ -34,7 +34,7 @@ function_table_mapping = {
 }
 
 verification_tables = {
-  "bicycleRoadInfrastructure": "bike_infrastructure_verification",
+  "bikelanes": "bike_infrastructure_verification",
   "lit": "lit_verification",
   "roadtypesOsm": "roadtypesOsm_verification",
 }

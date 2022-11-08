@@ -12,7 +12,7 @@ require("AddSkipInfoToHighways")
 require("StartsWith")
 
 local table = osm2pgsql.define_table({
-  name = 'bicycleRoadInfrastructure',
+  name = 'bikelanes',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -21,7 +21,7 @@ local table = osm2pgsql.define_table({
 })
 
 local skipTable = osm2pgsql.define_table({
-  name = 'bicycleRoadInfrastructure_skipList',
+  name = 'bikelanes_skipList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
