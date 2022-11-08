@@ -1,8 +1,10 @@
 import { MapDataTopic } from '../types'
+import { MapboxStyleLayerGroupLanduseIds } from './mapboxStyles'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'landuse'
 export type TopicLanduseId = typeof topic
-export type TopicLanduseStyleIds = 'default'
+export type TopicLanduseStyleIds = 'default' | MapboxStyleLayerGroupLanduseIds
 export type TopicLanduseStyleFilterIds = '_nofilter'
 
 export const topic_landuse: MapDataTopic = {
@@ -15,31 +17,12 @@ export const topic_landuse: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: [
-        {
-          id: 'default',
-          type: 'fill',
-          source: 'tarmac_landuse',
-          'source-layer': 'public.fromTo_landuse',
-          paint: {
-            'fill-color': 'HotPink',
-            'fill-outline-color': 'DeepPink',
-            'fill-opacity': 0.1,
-          },
-          enableInspector: true,
-          enableCalculator: false,
-        },
-      ],
+      layers: mapboxStyleLayers({
+        group: 'atlas_landuse',
+        source: 'tarmac_landuse',
+        sourceLayer: 'public.fromTo_landuse',
+      }),
       interactiveFilters: null,
     },
   ],
-  // styles: [
-  //   {
-  //     id: 'default',
-  //     name: 'Standard',
-  //     desc: null,
-  //     layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-settlements'),
-  //     interactiveFilters: null,
-  //   },
-  // ],
 }

@@ -1,8 +1,8 @@
 {
   "about": "Metadata on the last processing of the styles api response",
-  "processed_at": "8.11.2022, 06:35:18",
+  "processed_at": "8.11.2022, 06:51:51",
   "style_last_published": {
-    "published_at": "8.11.2022, 05:46:27",
+    "published_at": "8.11.2022, 06:30:36",
     "version": 8
   },
   "style_id": "cl706a84j003v14o23n2r81w7",
@@ -12,7 +12,7 @@
     "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
     "changedNames": [
       [
-        "atlas_places-circle",
+        "atlas_placesCircle",
         "atlas_placescircle"
       ]
     ]

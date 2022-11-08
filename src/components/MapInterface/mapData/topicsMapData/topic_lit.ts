@@ -4,7 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
 export type TopicLitId = typeof topic
-export type TopicLitStyleIds = MapboxStyleLayerGroupLitIds
+export type TopicLitStyleIds = 'default' | MapboxStyleLayerGroupLitIds
 export type TopicLitStyleFilterIds = '_nofilter'
 
 export const topic_lit: MapDataTopic = {
