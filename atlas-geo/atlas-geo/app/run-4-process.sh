@@ -27,8 +27,8 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 echo "\e[1m\e[7m PROCESS – Topic: fromTo_education \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_education.lua ${OSM_FILTERED_FILE}
 
-echo "\e[1m\e[7m PROCESS – Topic: fromTo_landuse \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_landuse.lua ${OSM_FILTERED_FILE}
+echo "\e[1m\e[7m PROCESS – Topic: landuse \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}landuse.lua ${OSM_FILTERED_FILE}
 
 echo "\e[1m\e[7m PROCESS – Topic: fromTo_publicTransport \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_publicTransport.lua ${OSM_FILTERED_FILE}

@@ -30,7 +30,7 @@ function_table_mapping = {
   "fromTo_publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
   "roadtypesOsm": "export_geojson_roadtypes",
-  "fromTo_landuse": "export_geojson_landuse",
+  "landuse": "export_geojson_landuse",
 }
 
 verification_tables = {
