@@ -25,7 +25,7 @@ available_export_functions = {
 function_table_mapping = {
   "bikelanes": "export_geojson_bikeinfra",
   "lit": "export_geojson_lit",
-  "fromTo_shopping": "export_geojson_shops",
+  "poiClassification": "export_geojson_shops",
   "education": "export_geojson_education",
   "fromTo_publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
