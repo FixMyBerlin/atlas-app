@@ -29,18 +29,18 @@ function_table_mapping = {
   "education": "export_geojson_education",
   "fromTo_publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
-  "roadtypesOsm": "export_geojson_roadtypes",
+  "roadClassification": "export_geojson_roadtypes",
   "landuse": "export_geojson_landuse",
 }
 
 verification_tables = {
   "bikelanes": "bike_infrastructure_verification",
   "lit": "lit_verification",
-  "roadtypesOsm": "roadtypesOsm_verification",
+  "roadClassification": "roadClassification_verification",
 }
 
 verification_views = {
   "bike_infrastructure_verification": "bike_infrastructure_verified",
   "lit_verification": "lit_verified",
-  "roadtypesOsm_verification": "roadtypesOsm_verified",
+  "roadClassification_verification": "roadClassification_verified",
 }

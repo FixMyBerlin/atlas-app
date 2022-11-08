@@ -12,7 +12,7 @@ require("AddSkipInfoToHighways")
 require("AddSkipInfoByWidth")
 
 local table = osm2pgsql.define_table({
-  name = 'roadtypesOsm',
+  name = 'roadClassification',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -21,7 +21,7 @@ local table = osm2pgsql.define_table({
 })
 
 local skipTable = osm2pgsql.define_table({
-  name = 'roadtypesOsm_skipList',
+  name = 'roadClassification_skipList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
