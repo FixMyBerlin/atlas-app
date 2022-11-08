@@ -1,0 +1,1820 @@
+[
+  {
+    "group": "atlas_bikelanes_verified",
+    "layers": [
+      {
+        "id": "Fuehrung mit Fussverkehr copy 1",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsl(232, 97%, 36%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Getrennte Fuehrung copy 1",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "cyclewaySeparated",
+            "cyclewayAlone",
+            "footAndCycleway_segregated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-verkehrsberuhigt copy 2",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            1,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "pedestrianArea_bicycleYes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Geprueft copy",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit",
+    "layers": [
+      {
+        "id": "2_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "2_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "2_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_education",
+    "layers": [
+      {
+        "id": "fmc-poiEducation",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsl(209, 76%, 38%)",
+          "circle-stroke-color": "hsl(0, 8%, 97%)",
+          "circle-stroke-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            1,
+            12,
+            2
+          ],
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            1.5,
+            12,
+            3
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0,
+            11,
+            1
+          ],
+          "circle-stroke-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0,
+            11,
+            1
+          ]
+        },
+        "layout": {}
+      },
+      {
+        "id": "fmc-poiEducation-label",
+        "type": "symbol",
+        "minzoom": 14,
+        "layout": {
+          "text-field": [
+            "to-string",
+            [
+              "get",
+              "name"
+            ]
+          ],
+          "text-font": [
+            "Open Sans SemiBold",
+            "Arial Unicode MS Regular"
+          ],
+          "text-size": 13
+        },
+        "paint": {
+          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+          "text-halo-width": 1
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_places",
+    "layers": [
+      {
+        "id": "fmc-poiPlaces-label",
+        "type": "symbol",
+        "layout": {
+          "text-size": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            10,
+            22,
+            13
+          ],
+          "text-font": [
+            "Open Sans SemiBold",
+            "Arial Unicode MS Regular"
+          ],
+          "icon-allow-overlap": true,
+          "text-padding": 0,
+          "text-offset": [
+            0,
+            1
+          ],
+          "icon-size": [
+            "match",
+            [
+              "get",
+              "population"
+            ],
+            [
+              "6452"
+            ],
+            3,
+            [
+              "8945"
+            ],
+            4,
+            [
+              "10633",
+              "11355"
+            ],
+            5,
+            [
+              "17017"
+            ],
+            8,
+            [
+              "38111"
+            ],
+            19,
+            1
+          ],
+          "text-anchor": "top",
+          "text-field": [
+            "to-string",
+            [
+              "concat",
+              [
+                "get",
+                "name"
+              ],
+              " \n ",
+              [
+                "get",
+                "population"
+              ]
+            ]
+          ],
+          "icon-padding": 0,
+          "text-max-width": 20
+        },
+        "paint": {
+          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+          "text-halo-width": 1
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_landuse",
+    "layers": [
+      {
+        "id": "fmc-landuse",
+        "type": "fill",
+        "minzoom": 9,
+        "paint": {
+          "fill-color": [
+            "case",
+            [
+              "match",
+              [
+                "get",
+                "landuse"
+              ],
+              [
+                "residential"
+              ],
+              true,
+              false
+            ],
+            "hsl(17, 94%, 81%)",
+            [
+              "match",
+              [
+                "get",
+                "landuse"
+              ],
+              [
+                "residential"
+              ],
+              false,
+              true
+            ],
+            "hsl(215, 88%, 78%)",
+            "hsla(17, 0%, 100%, 0)"
+          ],
+          "fill-opacity": 0.3
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_complete",
+    "layers": [
+      {
+        "id": "1_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "1_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "1_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "1_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_bikelanes_complete",
+    "layers": [
+      {
+        "id": "Daten vorhanden-fake copy 1",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(107, 72%, 76%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "bicycle"
+          ],
+          [
+            "yes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Keine Daten-fake copy 1",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "bicycle"
+          ],
+          [
+            "designated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Fuehrung mit Fussverkehr copy 4",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsl(232, 97%, 36%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Getrennte Fuehrung copy 4",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "cyclewaySeparated",
+            "cyclewayAlone",
+            "footAndCycleway_segregated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-verkehrsberuhigt copy 5",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            1,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "pedestrianArea_bicycleYes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_placescircle",
+    "layers": [
+      {
+        "id": "fmc-poiPlaces-circle",
+        "type": "circle",
+        "paint": {
+          "circle-stroke-color": "#d8cd03",
+          "circle-opacity": 0.7,
+          "circle-stroke-width": 2,
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "population"
+            ],
+            100,
+            5,
+            91116,
+            40
+          ]
+        },
+        "layout": {}
+      },
+      {
+        "id": "fmc-poiPlaces-label-for-circle",
+        "type": "symbol",
+        "layout": {
+          "text-size": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            10,
+            22,
+            13
+          ],
+          "text-font": [
+            "Open Sans SemiBold",
+            "Arial Unicode MS Regular"
+          ],
+          "icon-allow-overlap": true,
+          "text-padding": 0,
+          "text-offset": [
+            0,
+            1
+          ],
+          "icon-size": [
+            "match",
+            [
+              "get",
+              "population"
+            ],
+            [
+              "6452"
+            ],
+            3,
+            [
+              "8945"
+            ],
+            4,
+            [
+              "10633",
+              "11355"
+            ],
+            5,
+            [
+              "17017"
+            ],
+            8,
+            [
+              "38111"
+            ],
+            19,
+            1
+          ],
+          "text-anchor": "top",
+          "text-field": [
+            "to-string",
+            [
+              "concat",
+              [
+                "get",
+                "name"
+              ],
+              " \n ",
+              [
+                "get",
+                "population"
+              ]
+            ]
+          ],
+          "icon-padding": 0,
+          "text-max-width": 20
+        },
+        "paint": {
+          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+          "text-halo-width": 1
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_fresh",
+    "layers": [
+      {
+        "id": "3_lit-Daten aelter 2020",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -4,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-width": 3,
+          "line-pattern": "milan-metro"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataCurrent"
+          ],
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "3_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "3_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "3_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "3_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_bikelanes",
+    "layers": [
+      {
+        "id": "Fuehrung mit Fussverkehr copy 3",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsl(232, 97%, 36%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Getrennte Fuehrung copy 3",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "cyclewaySeparated",
+            "cyclewayAlone",
+            "footAndCycleway_segregated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-verkehrsberuhigt copy 4",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            1,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "pedestrianArea_bicycleYes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_bikelanes__complete_fresh_verified",
+    "layers": [
+      {
+        "id": "Daten aelter 2020-fake copy",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -3,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-pattern": "milan-metro",
+          "line-width": 3
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "update_at"
+          ],
+          [
+            "2021-05-23T15:09:37Z",
+            "2021-02-16T08:56:21Z",
+            "2021-05-23T15:09:36Z",
+            "2020-03-02T15:14:43Z",
+            "2022-09-25T20:56:11Z",
+            "2022-01-28T19:21:32Z",
+            "2022-04-14T09:07:00Z",
+            "2021-05-23T15:09:35Z",
+            "2021-03-14T16:16:56Z",
+            "2021-05-01T12:32:50Z",
+            "2020-11-05T17:23:00Z",
+            "2019-11-13T10:11:24Z",
+            "2019-05-18T21:10:24Z",
+            "2020-04-29T11:18:55Z",
+            "2019-11-19T17:42:00Z",
+            "2021-03-02T10:06:20Z",
+            "2019-03-01T17:46:40Z",
+            "2017-06-04T09:16:58Z",
+            "2021-05-09T08:53:40Z",
+            "2022-04-29T09:36:28Z",
+            "2021-05-01T12:32:37Z",
+            "2021-03-03T15:53:28Z",
+            "2021-05-16T15:41:58Z",
+            "2021-04-02T16:01:38Z",
+            "2021-05-01T12:32:38Z",
+            "2022-09-24T13:14:28Z",
+            "2021-06-29T07:45:48Z",
+            "2021-06-02T15:17:28Z",
+            "2021-05-25T15:24:04Z",
+            "2019-06-30T19:34:11Z",
+            "2020-11-17T17:23:04Z",
+            "2020-11-22T15:55:00Z",
+            "2020-12-15T17:14:59Z",
+            "2021-05-23T15:09:28Z"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Daten vorhanden-fake copy",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(107, 72%, 76%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "bicycle"
+          ],
+          [
+            "yes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Keine Daten-fake copy",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "bicycle"
+          ],
+          [
+            "designated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Fuehrung mit Fussverkehr copy",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsl(232, 97%, 36%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Getrennte Fuehrung copy",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "cyclewaySeparated",
+            "cyclewayAlone",
+            "footAndCycleway_segregated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-verkehrsberuhigt copy 1",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            1,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "pedestrianArea_bicycleYes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_complete_fresh_verified",
+    "layers": [
+      {
+        "id": "5_lit-Daten aelter 2020",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -4,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-width": 3,
+          "line-pattern": "milan-metro"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataCurrent"
+          ],
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "5_lit-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(330, 89%, 56%)"
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataPresent"
+          ],
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "5_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "5_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "5_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "5_lit-Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "service"
+          ],
+          [
+            "alley"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_bikelanes_fresh",
+    "layers": [
+      {
+        "id": "Daten aelter 2020-fake copy 1",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.65,
+          "line-offset": -3,
+          "line-color": "hsl(0, 0%, 0%)",
+          "line-pattern": "milan-metro",
+          "line-width": 3
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "update_at"
+          ],
+          [
+            "2021-05-23T15:09:37Z",
+            "2021-02-16T08:56:21Z",
+            "2021-05-23T15:09:36Z",
+            "2020-03-02T15:14:43Z",
+            "2022-09-25T20:56:11Z",
+            "2022-01-28T19:21:32Z",
+            "2022-04-14T09:07:00Z",
+            "2021-05-23T15:09:35Z",
+            "2021-03-14T16:16:56Z",
+            "2021-05-01T12:32:50Z",
+            "2020-11-05T17:23:00Z",
+            "2019-11-13T10:11:24Z",
+            "2019-05-18T21:10:24Z",
+            "2020-04-29T11:18:55Z",
+            "2019-11-19T17:42:00Z",
+            "2021-03-02T10:06:20Z",
+            "2019-03-01T17:46:40Z",
+            "2017-06-04T09:16:58Z",
+            "2021-05-09T08:53:40Z",
+            "2022-04-29T09:36:28Z",
+            "2021-05-01T12:32:37Z",
+            "2021-03-03T15:53:28Z",
+            "2021-05-16T15:41:58Z",
+            "2021-04-02T16:01:38Z",
+            "2021-05-01T12:32:38Z",
+            "2022-09-24T13:14:28Z",
+            "2021-06-29T07:45:48Z",
+            "2021-06-02T15:17:28Z",
+            "2021-05-25T15:24:04Z",
+            "2019-06-30T19:34:11Z",
+            "2020-11-17T17:23:04Z",
+            "2020-11-22T15:55:00Z",
+            "2020-12-15T17:14:59Z",
+            "2021-05-23T15:09:28Z"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Fuehrung mit Fussverkehr copy 2",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsl(232, 97%, 36%)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "Getrennte Fuehrung copy 2",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "cyclewaySeparated",
+            "cyclewayAlone",
+            "footAndCycleway_segregated"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-verkehrsberuhigt copy 3",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            1,
+            1
+          ],
+          "line-offset": 2,
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "pedestrianArea_bicycleYes"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_lit_verified",
+    "layers": [
+      {
+        "id": "4_lit-Special",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 96%, 69%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "4_lit-Unbeleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 86%, 15%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "unlit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "4_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 91%, 46%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1,
+          "line-opacity": 0.6
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "lit"
+          ],
+          true,
+          false
+        ],
+        "layout": {}
+      },
+      {
+        "id": "4_lit-Geprueft-fake",
+        "type": "symbol",
+        "paint": {},
+        "layout": {
+          "icon-image": "button-menu-default copy",
+          "icon-size": 0.3
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "dataCurrent"
+          ],
+          true
+        ]
+      }
+    ]
+  }
+]

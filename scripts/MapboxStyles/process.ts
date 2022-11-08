@@ -13,8 +13,9 @@ const apiUrl = `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7
 // Only groups with `atlas_` prefix are used
 const mapboxGroupPrefix = 'atlas_'
 
-// Output folder 'src/components/MapInterface/mapData/topicsMapData/mapboxStyles'
-const outputFolder =
+// Folder
+const scriptJsonFolder = 'scripts/MapboxStyles/json'
+const componentFolder =
   'src/components/MapInterface/mapData/topicsMapData/mapboxStyles'
 
 // Helper:
@@ -38,7 +39,7 @@ const rawData = await fetchStyles.json()
 
 // Script: For debugging, write the rawData
 fs.writeFileSync(
-  'scripts/MapboxStyles/tmp/atlas-raw-style.json',
+  `${scriptJsonFolder}/atlas-raw-api-response.json`,
   JSON.stringify(rawData, undefined, 2)
 )
 log('Received raw data', rawData)
@@ -85,7 +86,7 @@ groupsAndLayers.forEach((g) =>
 const changedNames: [string, string][] = []
 groupsAndLayers.forEach((g) => {
   const name = g.group
-  const cleanName = name.toLowerCase().replace(/[^a-z_-]/g, '_')
+  const cleanName = name.toLowerCase().replace(/[^a-z_]/g, '')
   if (name !== cleanName) {
     g.group = cleanName
     changedNames.push([name, cleanName])
@@ -96,7 +97,7 @@ if (changedNames.length) {
 }
 
 // Write file
-const stylesFile = `${outputFolder}/mapbox-styles-by-layerGroup.json`
+const stylesFile = `${componentFolder}/mapbox-layer-styles-by-group.json`
 fs.writeFileSync(stylesFile, JSON.stringify(groupsAndLayers, undefined, 2))
 log(`Write stylesFile`, stylesFile)
 
@@ -141,6 +142,27 @@ ${typeGroups
   .join('\n')}
 `
 
-const typesFile = `${outputFolder}/types.ts`
-fs.writeFileSync(typesFile, typesFileContent)
+fs.writeFileSync(`${componentFolder}/types.ts`, typesFileContent)
 log(`Write typesFile`, typesFileContent)
+
+// Script: Write meta data file
+const metaFileContent = {
+  about: 'Metadata on the last processing of the styles api response',
+  processed_at: new Date().toLocaleString('de-DE'),
+  style_last_published: {
+    published_at: new Date(rawData.modified).toLocaleString('de-DE'),
+    version: rawData.version,
+  },
+  style_id: rawData.id,
+  style_owner: rawData.owner,
+  style_name: rawData.name,
+  debug_changed_names: {
+    about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
+    changedNames,
+  },
+}
+fs.writeFileSync(
+  `${scriptJsonFolder}/metadata_last_process.json`,
+  JSON.stringify(metaFileContent, undefined, 2)
+)
+log(`Store metadata on processing`, metaFileContent)
