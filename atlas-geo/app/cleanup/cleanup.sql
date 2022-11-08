@@ -2,8 +2,8 @@
 
 -- DROP TABLE IF EXISTS _roadtypesOsm_buffer;
 -- DROP TABLE IF EXISTS amenity_parking_points;
--- DROP TABLE IF EXISTS bicycleRoadInfrastructure;
--- DROP TABLE IF EXISTS bicycleRoadInfrastructure_skipList;
+DROP TABLE IF EXISTS bicycleRoadInfrastructure;
+DROP TABLE IF EXISTS bicycleRoadInfrastructure_skipList;
 -- DROP TABLE IF EXISTS boundaries;
 -- DROP TABLE IF EXISTS crossings;
 -- DROP TABLE IF EXISTS footways;

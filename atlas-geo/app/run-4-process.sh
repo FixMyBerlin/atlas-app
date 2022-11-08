@@ -46,9 +46,9 @@ psql -q -f "${PROCESS_DIR}roadtypesOsm.sql"
 echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit.lua ${OSM_FILTERED_FILE}
 
-echo "\e[1m\e[7m PROCESS – Topic: bicycleRoadInfrastructure \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bicycleRoadInfrastructure.lua ${OSM_FILTERED_FILE}
-# psql -q -f "${PROCESS_DIR}bicycleRoadInfrastructure.sql"
+echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes.lua ${OSM_FILTERED_FILE}
+# psql -q -f "${PROCESS_DIR}bikelanes.sql"
 
 # echo "\e[1m\e[7m PROCESS – Topic: parking \e[27m\e[21m"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
