@@ -33,11 +33,11 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 echo "\e[1m\e[7m PROCESS – Topic: fromTo_publicTransport \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_publicTransport.lua ${OSM_FILTERED_FILE}
 
-echo "\e[1m\e[7m PROCESS – Topic: fromTo_shopping \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_shopping.lua ${OSM_FILTERED_FILE}
+echo "\e[1m\e[7m PROCESS – Topic: poiClassification \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}poiClassification.lua ${OSM_FILTERED_FILE}
 
-echo "\e[1m\e[7m PROCESS – Topic: fromTo_shopping_todoList \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}fromTo_shopping_todoList.lua ${OSM_FILTERED_FILE}
+echo "\e[1m\e[7m PROCESS – Topic: poiClassification_todoList \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}poiClassification_todoList.lua ${OSM_FILTERED_FILE}
 
 echo "\e[1m\e[7m PROCESS – Topic: roadClassification \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadClassification.lua ${OSM_FILTERED_FILE}
