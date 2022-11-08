@@ -77,7 +77,10 @@ export const Map: React.FC = () => {
     const sources = style.sources
 
     // addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
-    const layerToBeInteractive = ourLayer.map((l) => l.id).filter(Boolean)
+    const layerToBeInteractive = ourLayer
+      .map((l) => l.id)
+      .filter((l) => l.startsWith('tarmac'))
+      .filter(Boolean)
     addInteractiveLayerIds(layerToBeInteractive)
 
     const mapCenter = mainMap?.getCenter()
