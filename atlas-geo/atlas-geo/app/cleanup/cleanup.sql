@@ -1,6 +1,6 @@
 -- Learn more about this file in README.md
 
--- DROP TABLE IF EXISTS _roadtypesOsm_buffer;
+DROP TABLE IF EXISTS _roadtypesOsm_buffer;
 -- DROP TABLE IF EXISTS amenity_parking_points;
 DROP TABLE IF EXISTS bicycleRoadInfrastructure;
 DROP TABLE IF EXISTS bicycleRoadInfrastructure_skipList;
@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS fromTo_landuse;
 -- DROP TABLE IF EXISTS pt_platform;
 -- DROP TABLE IF EXISTS pt_stops;
 -- DROP TABLE IF EXISTS ramps;
--- DROP TABLE IF EXISTS roadtypesOsm;
--- DROP TABLE IF EXISTS roadtypesOsm_skipList;
+DROP TABLE IF EXISTS roadtypesOsm;
+DROP TABLE IF EXISTS roadtypesOsm_skipList;
 -- DROP TABLE IF EXISTS service;
 -- DROP TABLE IF EXISTS service_tmp;
 -- DROP TABLE IF EXISTS traffic_calming_points;
