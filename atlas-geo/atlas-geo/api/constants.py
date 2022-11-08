@@ -27,7 +27,7 @@ function_table_mapping = {
   "lit": "export_geojson_lit",
   "poiClassification": "export_geojson_shops",
   "education": "export_geojson_education",
-  "fromTo_publicTransport": "export_geojson_publictransport",
+  "publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
   "roadClassification": "export_geojson_roadtypes",
   "landuse": "export_geojson_landuse",

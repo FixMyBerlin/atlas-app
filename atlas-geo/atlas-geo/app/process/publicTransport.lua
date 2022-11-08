@@ -9,7 +9,7 @@ require("AddMetadata")
 require("AddUrl")
 
 local table = osm2pgsql.define_table({
-  name = 'fromTo_publicTransport',
+  name = 'publicTransport',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
