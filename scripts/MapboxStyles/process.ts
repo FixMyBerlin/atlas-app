@@ -73,10 +73,11 @@ const groupsAndLayers = groups.map((group) => {
 
 // Cleanup keys from layers that we don't need or that we need to add ourselved later:
 groupsAndLayers.forEach((g) =>
-  g.layers.forEach((l) => {
-    delete l.metadata
-    delete l.source
-    delete l['source-layer']
+  g.layers.forEach((layer) => {
+    delete layer.metadata
+    delete layer.source
+    delete layer['source-layer']
+    delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
   })
 )
 
