@@ -17,12 +17,12 @@ export const LayerHighlightParkingLanes: React.FC<Props> = ({
   const inspectorIds = inspectorFeatures?.map((o) => o?.properties?.id) || []
   const calculatorIds = calculatorFeatures?.map((o) => o?.properties?.id) || []
 
-  console.log(sourceId, {
-    inspectorIds,
-    ivis: layerVisibility(!!inspectorIds?.length),
-    calculatorIds,
-    cvis: layerVisibility(!!calculatorIds?.length),
-  })
+  // console.log(sourceId, {
+  //   inspectorIds,
+  //   ivis: layerVisibility(!!inspectorIds?.length),
+  //   calculatorIds,
+  //   cvis: layerVisibility(!!calculatorIds?.length),
+  // })
 
   return (
     <>
