@@ -22,7 +22,7 @@ export const topic_bikelanes_tarmac: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes',
         source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bicycleRoadInfrastructure',
+        sourceLayer: 'public.bikelanes',
       }),
       interactiveFilters: null,
     },
@@ -33,7 +33,7 @@ export const topic_bikelanes_tarmac: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_complete',
         source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bicycleRoadInfrastructure',
+        sourceLayer: 'public.bikelanes',
       }),
       interactiveFilters: null,
     },
@@ -44,7 +44,7 @@ export const topic_bikelanes_tarmac: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_fresh',
         source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bicycleRoadInfrastructure',
+        sourceLayer: 'public.bikelanes',
       }),
       interactiveFilters: null,
     },
@@ -55,7 +55,7 @@ export const topic_bikelanes_tarmac: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_verified',
         source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bicycleRoadInfrastructure',
+        sourceLayer: 'public.bikelanes',
       }),
       interactiveFilters: null,
     },
@@ -66,7 +66,7 @@ export const topic_bikelanes_tarmac: MapDataTopic = {
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_complete_fresh_verified',
         source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bicycleRoadInfrastructure',
+        sourceLayer: 'public.bikelanes',
       }),
       interactiveFilters: null,
     },
