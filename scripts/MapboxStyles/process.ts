@@ -83,17 +83,20 @@ groupsAndLayers.forEach((g) =>
 )
 
 // Cleanup layer names
-const changedNames: [string, string][] = []
+const changedNamesForDebugging: { sourceName: string; cleanedName: string }[] =
+  []
 groupsAndLayers.forEach((g) => {
-  const name = g.group
-  const cleanName = name.toLowerCase().replace(/[^a-z_]/g, '')
-  if (name !== cleanName) {
-    g.group = cleanName
-    changedNames.push([name, cleanName])
+  const sourceName = g.group
+  const cleanedName = sourceName.toLowerCase().replace(/[^a-z_]/g, '')
+  if (sourceName !== cleanedName) {
+    g.group = cleanedName
+    changedNamesForDebugging.push({ sourceName, cleanedName })
   }
 })
-if (changedNames.length) {
-  log(`${changedNames.length} group names where renamed:`, { changedNames })
+if (changedNamesForDebugging.length) {
+  log(`${changedNamesForDebugging.length} group names where renamed:`, {
+    changedNamesForDebugging,
+  })
 }
 
 // Write file
@@ -158,7 +161,7 @@ const metaFileContent = {
   style_name: rawData.name,
   debug_changed_names: {
     about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
-    changedNames,
+    changedNamesForDebugging,
   },
 }
 fs.writeFileSync(
