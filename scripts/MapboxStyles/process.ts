@@ -6,7 +6,7 @@ import chalk from 'chalk'
 
 // Configruation:
 // Data from https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
-const apiUrl = `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?access_token=${
+const apiUrl = `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${
   import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
 }`
 
