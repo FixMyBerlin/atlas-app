@@ -10,7 +10,6 @@ import {
   useMap,
   ViewStateChangeEvent,
 } from 'react-map-gl'
-import { useStore } from 'zustand'
 import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
@@ -20,8 +19,6 @@ import {
   getStyleData,
   getThemeTopicData,
 } from '@components/MapInterface/mapData'
-
-// const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
 export const Map: React.FC = () => {
   const {
@@ -43,7 +40,7 @@ export const Map: React.FC = () => {
     addToCalculator,
     removeFromCalculator,
     calculatorFeatures,
-  } = useStore(useMapStateInteraction)
+  } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
