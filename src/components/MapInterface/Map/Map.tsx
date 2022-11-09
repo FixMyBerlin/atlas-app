@@ -39,8 +39,6 @@ export const Map: React.FC = () => {
     addToCalculator,
     removeFromCalculator,
     calculatorFeatures,
-    interactiveLayerIds,
-    addInteractiveLayerIds,
   } = useStore(useMapStateInteraction)
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
