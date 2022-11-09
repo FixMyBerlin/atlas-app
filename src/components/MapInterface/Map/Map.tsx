@@ -16,6 +16,10 @@ import { useMapStateInteraction } from '../mapStateInteraction'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundByZoom, roundNumber } from './utils'
+import {
+  getStyleData,
+  getThemeTopicData,
+} from '@components/MapInterface/mapData'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
@@ -39,8 +43,6 @@ export const Map: React.FC = () => {
     addToCalculator,
     removeFromCalculator,
     calculatorFeatures,
-    interactiveLayerIds,
-    addInteractiveLayerIds,
   } = useStore(useMapStateInteraction)
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
@@ -65,37 +67,9 @@ export const Map: React.FC = () => {
     })
   }
 
-  // TODO: We might not need this. We use it for debuggin only, ATM
-  const handleLoad = (event: MapboxEvent) => {
-    // Just for debugging
-    const style = event.target.getStyle()
-    const allLayer = style.layers
-    // @ts-ignore: not relevant here
-    const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-    // @ts-ignore: not relevant here
-    const ourLayer = allLayer.filter((l) => l.source !== 'openmaptiles')
-    const sources = style.sources
-
-    // addInteractiveLayerIds(ourLayer.map((l) => l.id)) // TODO this is just a temporary hack until we have a system to enable/disable layer on change.
-    const layerToBeInteractive = ourLayer
-      .map((l) => l.id)
-      .filter((l) => l.startsWith('tarmac'))
-      .filter(Boolean)
-    addInteractiveLayerIds(layerToBeInteractive)
-
-    const mapCenter = mainMap?.getCenter()
-    const mapZoom = mainMap?.getZoom()
-    console.info('onLoad', {
-      event,
-      ourLayer,
-      basemapLayer,
-      sources,
-      layerToBeInteractive,
-      // @ts-ignore that is fine here
-      findBeforeIds: allLayer.filter((l) => l.source === 'openmaptiles'),
-      ...{ ...mapCenter, mapZoom },
-    })
-  }
+  // keeping this for debugging purposes for now
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars,@typescript-eslint/no-empty-function
+  const handleLoad = (event: MapboxEvent) => {}
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
@@ -130,10 +104,29 @@ export const Map: React.FC = () => {
     })
   }
 
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
+  if (!configThemesTopics || !currentTheme) return null
+
+  const interactiveLayerIds: string[] = []
+  currentTheme.topics.forEach((topic) => {
+    const topicData = getThemeTopicData(currentTheme, topic.id)
+    if (!topicData) return
+    const sourceId = topicData?.sourceId
+    topic.styles.map((style) => {
+      const styleData = getStyleData(topicData, style.id)
+      // @ts-ignore styleData should not be undefined here
+      styleData.layers.forEach((layer) => {
+        const layerId = `${sourceId}--${topic.id}--${style.id}--${layer.id}`
+        interactiveLayerIds.push(layerId)
+      })
+    })
+  })
+
   return (
     <MapGl
       id="mainMap"
-      key={`mainMap-${interactiveLayerIds.join('')}`}
       initialViewState={{
         longitude: region?.map?.lng || 10,
         latitude: region?.map?.lat || 10,

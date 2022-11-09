@@ -4,20 +4,11 @@ import create from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreDebugInfo &
-  StoreInteractiveLayer &
-  StoreFeaturesInspector &
-  StoreFeaturesCalculator
+type Store = StoreDebugInfo & StoreFeaturesInspector & StoreFeaturesCalculator
 
 type StoreDebugInfo = {
   showDebugInfo: boolean
   setShowDebugInfo: (showDebugInfo: boolean) => void
-}
-
-type StoreInteractiveLayer = {
-  interactiveLayerIds: string[] | []
-  addInteractiveLayerIds: (layerIdsToAdd: string[]) => void
-  removeInteractiveLayerIds: (layerIdsToRemove: string[]) => void
 }
 
 type StoreFeaturesInspector = {
@@ -37,25 +28,6 @@ type StoreFeaturesCalculator = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   showDebugInfo: isDev,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo: showDebugInfo }),
-
-  interactiveLayerIds: [],
-  addInteractiveLayerIds: (layerIdsToAdd) => {
-    const { interactiveLayerIds } = get()
-    // TODO use uniqueArray
-    set({
-      interactiveLayerIds: Array.from(
-        new Set([...layerIdsToAdd, ...interactiveLayerIds])
-      ),
-    })
-  },
-  removeInteractiveLayerIds: (layerIdsToRemove) => {
-    const { interactiveLayerIds } = get()
-    set({
-      interactiveLayerIds: interactiveLayerIds.filter(
-        (id) => !layerIdsToRemove.includes(id)
-      ),
-    })
-  },
 
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
