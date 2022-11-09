@@ -13,12 +13,12 @@ require("ShoppingAllowedListWithCategories")
 
 -- The goal of this TodoList is to make sure we do not miss out on any amenitys.
 -- The amenity key is used for all kind of stuff.
--- For our `fromTo_shopping` list, we only include those values
+-- For our `poiClassification` list, we only include those values
 -- that are part of `ShoppingAllowedListWithCategories``
 -- The goal of this TodoList is, see all values that we did not include
 -- … and did not explicitly decide to skip.
 local table = osm2pgsql.define_table({
-  name = 'fromTo_shopping_todoList',
+  name = 'poiClassification_todoList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
