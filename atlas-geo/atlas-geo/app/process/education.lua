@@ -6,43 +6,31 @@ require("FilterTags")
 require("AddAddress")
 require("MergeArray")
 require("AddMetadata")
-require("HasAreaTags")
 require("AddUrl")
 
 local table = osm2pgsql.define_table({
-  name = 'fromTo_landuse',
+  name = 'education',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'multipolygon' },
+    { column = 'geom', type = 'point' },
   }
 })
 
 local function ExitProcessing(object)
-  if not (object.tags.landuse or object.tags.amenity) then
+  if not object.tags.amenity then
     return true
   end
 
-  local allowed_values_landuse = Set({
-    "allotments",
-    "brownfield",
-    "cemetery",
-    "civic_admin",
-    "civic",
-    "commercial",
-    "construction",
-    "farmyard",
-    "garages",
-    "industrial",
-    "religious",
-    "residential",
-    "retail"
-  })
-  local allowed_values_amenity = Set({
+  local allowed_values = Set({
+    "childcare",
+    "college",
+    "kindergarten",
+    "research_institute",
     "school",
     "university"
   })
-  if not (allowed_values_landuse[object.tags.landuse] or allowed_values_amenity[object.tags.amenity]) then
+  if not allowed_values[object.tags.amenity] then
     return true
   end
 
@@ -50,11 +38,22 @@ local function ExitProcessing(object)
 end
 
 local function ProcessTags(object)
-  -- For simplicy, we move the amenity values to the landuse key
-  object.tags.landuse = object.tags.landuse or object.tags.amenity
-  local allowed_tags = Set({ "name", "landuse", "access", "operator" })
+  local allowed_addr_tags = AddAddress(object.tags)
+  local allowed_tags = Set(MergeArray({ "name", "amenity" }, allowed_addr_tags))
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
+end
+
+function osm2pgsql.process_node(object)
+  if ExitProcessing(object) then return end
+
+  ProcessTags(object)
+  AddUrl("node", object)
+
+  table:insert({
+    tags = object.tags,
+    geom = object:as_point()
+  })
 end
 
 function osm2pgsql.process_way(object)
@@ -66,7 +65,7 @@ function osm2pgsql.process_way(object)
 
   table:insert({
     tags = object.tags,
-    geom = object:as_polygon()
+    geom = object:as_polygon():centroid()
   })
 end
 
@@ -79,6 +78,6 @@ function osm2pgsql.process_relation(object)
 
   table:insert({
     tags = object.tags,
-    geom = object:as_multipolygon()
+    geom = object:as_multipolygon():centroid()
   })
 end

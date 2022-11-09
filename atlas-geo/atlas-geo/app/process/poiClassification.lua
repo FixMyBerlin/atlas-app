@@ -13,7 +13,7 @@ require("ShoppingAllowedListWithCategories")
 
 -- We look at shop=* and amenity=<allowed_values>. We also `category`ze each into one of 4 categories for filtering.
 local table = osm2pgsql.define_table({
-  name = 'fromTo_shopping',
+  name = 'poiClassification',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -21,7 +21,7 @@ local table = osm2pgsql.define_table({
   }
 })
 
--- Guards extracted to be used inside projcess_*
+-- Guards extracted to be used inside osm2pgsql.process_*
 -- @return `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
   if not (object.tags.amenity or object.tags.shop) then

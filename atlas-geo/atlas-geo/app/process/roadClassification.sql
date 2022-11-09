@@ -4,22 +4,22 @@
 -- ---------------------------
 
 -- Whenever we move content to our skipList, that table has to have the same structure (columns).
-ALTER TABLE "roadtypesOsm" ADD COLUMN IF NOT EXISTS length numeric;
-ALTER TABLE "roadtypesOsm_skipList" ADD COLUMN IF NOT EXISTS length numeric;
+ALTER TABLE "roadClassification" ADD COLUMN IF NOT EXISTS length numeric;
+ALTER TABLE "roadClassification_skipList" ADD COLUMN IF NOT EXISTS length numeric;
 
-UPDATE "roadtypesOsm" SET length = ROUND(ST_Length(geom)::numeric, 1);
+UPDATE "roadClassification" SET length = ROUND(ST_Length(geom)::numeric, 1);
 
 -- TODO: _skipNotes erzeugen
 -- TODO: This seems to bee too hard; maybe we should make the _skipNotes a regular column?
--- UPDATE "roadtypesOsm" SET tags = jsonb_set(tags, '{_skipNotes}', ';Skipped (SQL) `length<10`');
+-- UPDATE "roadClassification" SET tags = jsonb_set(tags, '{_skipNotes}', ';Skipped (SQL) `length<10`');
 
 -- Lets only delete small segments of certain highway types which typically have small non-needed extensions.
-INSERT INTO "roadtypesOsm_skipList" (
-  SELECT * FROM "roadtypesOsm"
+INSERT INTO "roadClassification_skipList" (
+  SELECT * FROM "roadClassification"
   WHERE "length" < 20
   AND tags ->> 'highway' IN ('path', 'track', 'footway', 'service')
 );
-DELETE FROM "roadtypesOsm"
+DELETE FROM "roadClassification"
   WHERE "length" < 20
   AND tags ->> 'highway' IN ('path', 'track', 'footway', 'service');
 
@@ -32,14 +32,14 @@ DELETE FROM "roadtypesOsm"
 -- Wenn Startpunkt ja, dann Ende nein
 -- Wenn Ende ja, dann Start nein
 
-DROP TABLE IF EXISTS "_roadtypesOsm_buffer";
+DROP TABLE IF EXISTS "_roadClassification_buffer";
 
-CREATE TABLE "_roadtypesOsm_buffer" AS (
+CREATE TABLE "_roadClassification_buffer" AS (
 	SELECT
 		r1.*
 	FROM
-		"roadtypesOsm" AS r1,
-		"roadtypesOsm" AS r2
+		"roadClassification" AS r1,
+		"roadClassification" AS r2
 	WHERE
   (
     -- only those, where the start point buffer intersetcs with other ways (except for itself)

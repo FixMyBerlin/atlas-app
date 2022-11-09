@@ -23,24 +23,24 @@ available_export_functions = {
 }
 
 function_table_mapping = {
-  "bicycleRoadInfrastructure": "export_geojson_bikeinfra",
+  "bikelanes": "export_geojson_bikeinfra",
   "lit": "export_geojson_lit",
-  "fromTo_shopping": "export_geojson_shops",
-  "fromTo_education": "export_geojson_education",
-  "fromTo_publicTransport": "export_geojson_publictransport",
+  "poiClassification": "export_geojson_shops",
+  "education": "export_geojson_education",
+  "publicTransport": "export_geojson_publictransport",
   "places": "export_geojson_places",
-  "roadtypesOsm": "export_geojson_roadtypes",
-  "fromTo_landuse": "export_geojson_landuse",
+  "roadClassification": "export_geojson_roadtypes",
+  "landuse": "export_geojson_landuse",
 }
 
 verification_tables = {
-  "bicycleRoadInfrastructure": "bike_infrastructure_verification",
+  "bikelanes": "bike_infrastructure_verification",
   "lit": "lit_verification",
-  "roadtypesOsm": "roadtypesOsm_verification",
+  "roadClassification": "roadClassification_verification",
 }
 
 verification_views = {
   "bike_infrastructure_verification": "bike_infrastructure_verified",
   "lit_verification": "lit_verified",
-  "roadtypesOsm_verification": "roadtypesOsm_verified",
+  "roadClassification_verification": "roadClassification_verified",
 }

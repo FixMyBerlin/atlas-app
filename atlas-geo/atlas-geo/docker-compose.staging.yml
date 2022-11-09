@@ -4,6 +4,8 @@ services:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: tarmac_staging
+    env_file:
+      - ./.env.staging
     environment:
       PGHOST:
       PGDATABASE:
@@ -16,6 +18,8 @@ services:
     image: pramsey/pg_tileserv
     container_name: tileserver_staging
     restart: always
+    env_file:
+      - ./.env.staging
     environment:
       DATABASE_URL:
       NODE_ENV: production
@@ -31,6 +35,8 @@ services:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api_staging
     restart: always
+    env_file:
+      - ./.env.staging
     environment:
       PGHOST:
       PGDATABASE:
