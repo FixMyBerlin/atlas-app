@@ -9,8 +9,9 @@ require("AddMetadata")
 require("AddUrl")
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
+require("AddSkipInfoByWidth")
+require("CheckDataWithinYears")
 require("StartsWith")
-
 
 local table = osm2pgsql.define_table({
   name = 'bikelanesCenterline',
@@ -18,7 +19,7 @@ local table = osm2pgsql.define_table({
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
-    { column = 'offset', type='real'}
+    { column = 'offset', type = 'real' }
   }
 })
 
@@ -34,11 +35,11 @@ local function roadWidth(tags)
   -- if tags["lanes"] ~= nil then
   --   return tonumber(tags["lanes"]) * 2.5
   -- end
-  local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
+  local streetWidths = { primary = 10, secondary = 8, tertiary = 6, residential = 6 }
   if streetWidths[tags["highway"]] ~= nil then
     return streetWidths[tags["highway"]]
   end
-    -- if tags["highway"] == "cycleway" then
+  -- if tags["highway"] == "cycleway" then
   --   print(tags["cycleway"])
   -- end
   -- print(tags["highway"])
@@ -62,8 +63,8 @@ function osm2pgsql.process_way(object)
   AddSkipInfoToHighways(object)
 
   -- These are stored in a separated table because wen need to translate the geometry by half the road width
-  local offsetDirections = {["cycleway:left"] = 1, ["cycleway:right"] = -1 }
-  local trackVariants = Set({"track", "lane", "separate"})
+  local offsetDirections = { ["cycleway:left"] = 1, ["cycleway:right"] = -1 }
+  local trackVariants = Set({ "track", "lane", "separate" })
   --  we miss trackVariant  = `shared_lane`
   for tag, sign in pairs(offsetDirections) do
     if trackVariants[object.tags[tag]] or trackVariants[object.tags["cycleway:both"]] then
@@ -82,7 +83,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  local offsetDirections = {["sidewalk:left:bicycle"] = 1, ["sidewalk:right:bicycle"] = -1 }
+  local offsetDirections = { ["sidewalk:left:bicycle"] = 1, ["sidewalk:right:bicycle"] = -1 }
   for tag, sign in pairs(offsetDirections) do
     if object.tags[tag] == "yes" or object.tags["sidewalk:both:bicycle"] == "yes" then
       object.tags.category = "footway_bicycleYes"
@@ -103,6 +104,25 @@ function osm2pgsql.process_way(object)
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
 
+  -- TODO: This part does not work, yet. I think it needs to move up in the "for tag, sign"-loop
+  -- Presence of data
+  if (object.tags.category) then
+    object.tags.is_present = true
+  else
+    object.tags.is_present = false
+  end
+
+  -- TODO: This part does not work, yet. I think it needs to move up in the "for tag, sign"-loop
+  -- Fleshness of data, see documentation
+  local withinYears = CheckDataWithinYears("cycleway", object.tags, 2)
+  if (withinYears.result) then
+    object.tags.is_fresh = true
+    object.tags.fresh_age_days = withinYears.diffDays
+  else
+    object.tags.is_fresh = false
+    object.tags.fresh_age_days = withinYears.diffDays
+  end
+
   local allowed_tags = Set({
     "_centerline",
     "_skip",
@@ -111,13 +131,18 @@ function osm2pgsql.process_way(object)
     "bicycle_road",
     "bicycle",
     "category",
+    "check_date:cycleway",
     "cycleway:both",
     "cycleway:left",
     "cycleway:right",
     "cycleway",
+    "est_width",
     "foot",
     "footway",
+    "fresh_age_days",
     "highway",
+    "is_fresh",
+    "is_present",
     "is_sidepath",
     "mtb:scale",
     "name",
@@ -127,7 +152,6 @@ function osm2pgsql.process_way(object)
     "sidewalk:right:bicycle",
     "traffic_sign",
     "width",
-    "est_width"
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
