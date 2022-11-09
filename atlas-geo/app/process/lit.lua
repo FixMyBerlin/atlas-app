@@ -77,26 +77,26 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Completeness
+  -- Presence of data
   if (object.tags.lit) then
-    object.tags.dataPresent = true
+    object.tags.is_present = true
   else
-    object.tags.dataPresent = false
+    object.tags.is_present = false
   end
 
-  -- Currentness
+  -- Fleshness of data
   -- Overpass testing https://overpass-turbo.eu/s/1lZW
   local withinYears = CheckDataWithinYears("lit", object.tags, 2)
   if (withinYears.result) then
-    object.tags.dataCurrent = true
-    object.tags.dataCurrentDiffdays = withinYears.diffDays
+    object.tags.is_fresh = true
+    object.tags.fresh_age_days = withinYears.diffDays
   else
-    object.tags.dataCurrent = false
-    object.tags.dataCurrentDiffdays = withinYears.diffDays
+    object.tags.is_fresh = false
+    object.tags.fresh_age_days = withinYears.diffDays
   end
 
   local allowed_tags = Set({ "_skip", "_skipNotes", "category", "lit", "check_date:lit", "name", "highway", "footway",
-    "access", "service", "is_sidepath", "dataPresent", "dataCurrent", "dataCurrentDiffdays" })
+    "access", "service", "is_sidepath", "is_present", "is_fresh", "fresh_age_days" })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
   AddUrl("way", object)
