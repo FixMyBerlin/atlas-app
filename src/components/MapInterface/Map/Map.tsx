@@ -77,6 +77,8 @@ export const Map: React.FC = () => {
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
+  mainMap?.getMap().touchZoomRotate.disableRotation()
+
   useEffect(() => {
     if (!mainMap) return
 
@@ -160,7 +162,6 @@ export const Map: React.FC = () => {
       onLoad={handleLoad}
       // doubleClickZoom={false}
       dragRotate={false}
-      touchZoomRotate={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
