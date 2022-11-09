@@ -16,6 +16,10 @@ import { useMapStateInteraction } from '../mapStateInteraction'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundByZoom, roundNumber } from './utils'
+import {
+  getStyleData,
+  getThemeTopicData,
+} from '@components/MapInterface/mapData'
 
 // const GATSBY_MAPTILER_KEY = process.env.GATSBY_MAPTILER_KEY
 
@@ -79,7 +83,7 @@ export const Map: React.FC = () => {
       .map((l) => l.id)
       .filter((l) => l.startsWith('tarmac'))
       .filter(Boolean)
-    addInteractiveLayerIds(layerToBeInteractive)
+    // addInteractiveLayerIds(layerToBeInteractive)
 
     const mapCenter = mainMap?.getCenter()
     const mapZoom = mainMap?.getZoom()
@@ -128,10 +132,29 @@ export const Map: React.FC = () => {
     })
   }
 
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
+  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
+  if (!configThemesTopics || !currentTheme) return null
+
+  const interactiveLayerIds: string[] = []
+  currentTheme.topics.forEach((topic) => {
+    const topicData = getThemeTopicData(currentTheme, topic.id)
+    if (!topicData) return
+    const sourceId = topicData?.sourceId
+    topic.styles.map((style) => {
+      const styleData = getStyleData(topicData, style.id)
+      // @ts-ignore styleData should not be undefined here
+      styleData.layers.forEach((layer) => {
+        const layerId = `${sourceId}--${topic.id}--${style.id}--${layer.id}`
+        interactiveLayerIds.push(layerId)
+      })
+    })
+  })
+
   return (
     <MapGl
       id="mainMap"
-      key={`mainMap-${interactiveLayerIds.join('')}`}
       initialViewState={{
         longitude: region?.map?.lng || 10,
         latitude: region?.map?.lat || 10,
