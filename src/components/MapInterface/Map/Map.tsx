@@ -19,6 +19,7 @@ import {
   getStyleData,
   getThemeTopicData,
 } from '@components/MapInterface/mapData'
+import { createSourceTopicStyleLayerKey } from '../utils'
 
 export const Map: React.FC = () => {
   const {
@@ -110,13 +111,17 @@ export const Map: React.FC = () => {
   currentTheme.topics.forEach((topic) => {
     const topicData = getThemeTopicData(currentTheme, topic.id)
     if (!topicData) return
-    const sourceId = topicData?.sourceId
     topic.styles.map((style) => {
       const styleData = getStyleData(topicData, style.id)
       // @ts-ignore styleData should not be undefined here
       styleData.layers.forEach((layer) => {
-        const layerId = `${sourceId}--${topic.id}--${style.id}--${layer.id}`
-        interactiveLayerIds.push(layerId)
+        const layerKey = createSourceTopicStyleLayerKey(
+          topicData.sourceId,
+          topic.id,
+          style.id,
+          layer.id
+        )
+        interactiveLayerIds.push(layerKey)
       })
     })
   })

@@ -22,3 +22,12 @@ export const createTopicStyleFilterOptionKey = (
   filterId: TopicStyleFilterIds,
   optionId: string
 ): TopicStyleFilterOptionKey => `${topicId}-${styleId}-${filterId}-${optionId}`
+
+export const createSourceTopicStyleLayerKey = (
+  sourceId: string,
+  topicId: string,
+  styleId: string,
+  layerId: string
+) => {
+  return `${sourceId}--${topicId}--${styleId}--${layerId}`
+}

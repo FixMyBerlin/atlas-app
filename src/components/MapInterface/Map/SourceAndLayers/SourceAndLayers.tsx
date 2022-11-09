@@ -4,6 +4,7 @@ import {
   getThemeTopicData,
 } from '@components/MapInterface/mapData'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
+import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
@@ -66,7 +67,12 @@ export const SourceAndLayers: React.FC = () => {
               )
 
               return styleData?.layers.map((layer) => {
-                const layerId = `${sourceData.id}--${topicConfig.id}--${styleConfig.id}--${layer.id}`
+                const layerKey = createSourceTopicStyleLayerKey(
+                  sourceData.id,
+                  topicConfig.id,
+                  styleConfig.id,
+                  layer.id
+                )
                 const layout =
                   layer.layout === undefined
                     ? visibility
@@ -85,8 +91,8 @@ export const SourceAndLayers: React.FC = () => {
                       sourceLayer={layer['source-layer']}
                     />
                     <Layer
-                      key={layerId}
-                      id={layerId}
+                      key={layerKey}
+                      id={layerKey}
                       type={layer.type}
                       source={sourceId}
                       source-layer={layer['source-layer']}
