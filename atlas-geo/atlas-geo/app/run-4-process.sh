@@ -44,7 +44,7 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 psql -q -f "${PROCESS_DIR}roadClassification.sql"
 
 echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit.lua ${OSM_FILTERED_FILE}
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit/lit.lua ${OSM_FILTERED_FILE}
 
 echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes.lua ${OSM_FILTERED_FILE}
