@@ -21,3 +21,13 @@ export const getCurrentTilesUrl = () => {
     return tilesBaseUrl.production
   }
 }
+
+console.log('netlify debugging getTilesUrl', {
+  isProductionBuild,
+  isNetlifyPreviewBuild,
+  metaEnvContext: import.meta.env.CONTEXT,
+  metaEnvNode: import.meta.env.NODE_ENV,
+  ViteTilesEnv: tilesBaseUrl[import.meta.env.VITE_TILES_ENV],
+  envDev: import.meta.env.DEV,
+  result: getCurrentTilesUrl,
+})
