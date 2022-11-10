@@ -8,6 +8,8 @@ import {
   extractTopicIdFromSourceKey,
 } from './utils'
 import { Verification } from './Verification'
+import { IntlProvider, FormattedMessage } from 'react-intl'
+import { ConditionalFormattedMessage, translations } from './translations'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useMapStateInteraction()
@@ -102,101 +104,115 @@ export const Inspector: React.FC = () => {
             )}
             className="mt-5 w-full rounded-2xl bg-white"
           >
-            <Disclosure
-              title={`Layer ${sourceKey}; Segement ${properties.osm_id}`}
+            <IntlProvider
+              messages={translations}
+              locale="de"
+              defaultLocale="de"
             >
-              <table className="w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="py-1.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
-                    >
-                      {/*  Key  */}
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-1.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Wert
-                    </th>
-                    <th
-                      scope="col"
-                      className="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
-                    >
-                      <span className="sr-only">Aktionen</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {Object.entries(documentedProperties).map(([key, value]) => {
-                    return (
-                      <tr key={key}>
-                        <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
-                          {key}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500">
-                          <code>
-                            {typeof value == 'boolean'
-                              ? JSON.stringify(value)
-                              : value}
-                          </code>
-                        </td>
-                        <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
-                          {/*  <a href="#" className="text-indigo-600 hover:text-indigo-900">
+              <Disclosure
+                title={<FormattedMessage id={`title--${sourceKey}`} />}
+                objectId={properties.osm_id}
+              >
+                <table className="w-full">
+                  <thead className="sr-only bg-gray-50">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="py-1.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Schlüssel
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-1.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Wert
+                      </th>
+                      <th
+                        scope="col"
+                        className="relative py-1.5 pl-3 pr-4 sm:pr-6 lg:pr-8"
+                      >
+                        Aktionen
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 bg-white">
+                    {Object.entries(documentedProperties).map(
+                      ([key, value]) => {
+                        return (
+                          <tr key={key}>
+                            <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
+                              <FormattedMessage id={`${sourceId}--${key}`} />
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500">
+                              <code>
+                                <ConditionalFormattedMessage
+                                  sourceId={sourceId}
+                                  tagKey={key}
+                                  tagValue={value}
+                                />
+                              </code>
+                            </td>
+                            <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                              {/*  <a href="#" className="text-indigo-600 hover:text-indigo-900">
             Edit<span className="sr-only">, {person.name}</span>
           </a>  */}
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
-
-              <div className="grid grid-cols-2">
-                {!!Object.keys(otherOsmProperties).length && (
-                  <div className="border-t bg-white px-4 py-2.5 text-xs">
-                    <details>
-                      <summary>Weitere OSM Werte</summary>
-                      {Object.entries(otherOsmProperties).map(
-                        ([key, value]) => {
-                          return (
-                            <p key={key}>
-                              <code>
-                                {key}: {value}
-                              </code>
-                            </p>
-                          )
-                        }
-                      )}
-                    </details>
-                  </div>
-                )}
-                {!!Object.keys(systemProperties).length && (
-                  <div className="border-t bg-white px-4 py-2.5 text-xs">
-                    <details>
-                      <summary className="open:text-semibold">
-                        System-Werte
-                      </summary>
-                      {Object.entries(systemProperties).map(([key, value]) => {
-                        return (
-                          <p key={key}>
-                            <code>
-                              {key}: {value}
-                            </code>
-                          </p>
+                            </td>
+                          </tr>
                         )
-                      })}
-                    </details>
-                  </div>
-                )}
-              </div>
+                      }
+                    )}
+                  </tbody>
+                </table>
 
-              <Verification
-                visible={allowVerify}
-                sourceKey={sourceKey.toString()}
-              />
-            </Disclosure>
+                <div className="grid grid-cols-2">
+                  <div className="border-t bg-white px-4 py-2.5 text-xs">
+                    {!!Object.keys(otherOsmProperties).length && (
+                      <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
+                        <summary>Weitere OSM Werte</summary>
+                        {Object.entries(otherOsmProperties).map(
+                          ([key, value]) => {
+                            return (
+                              <p key={key}>
+                                <code>
+                                  {key}: {value}
+                                </code>
+                              </p>
+                            )
+                          }
+                        )}
+                      </details>
+                    )}
+                  </div>
+                  <div className="border-t bg-white px-4 py-2.5 text-xs">
+                    {!!Object.keys(systemProperties).length && (
+                      <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
+                        <summary>System-Werte</summary>
+                        {Object.entries(systemProperties).map(
+                          ([key, value]) => {
+                            return (
+                              <p
+                                key={key}
+                                className="mb-0.5 border-b border-gray-200 pb-0.5"
+                              >
+                                <code>
+                                  {key}: {value}
+                                </code>
+                              </p>
+                            )
+                          }
+                        )}
+                      </details>
+                    )}
+                  </div>
+                </div>
+
+                <Verification
+                  visible={allowVerify}
+                  sourceKey={sourceKey.toString()}
+                />
+              </Disclosure>
+            </IntlProvider>
           </div>
         )
       })}

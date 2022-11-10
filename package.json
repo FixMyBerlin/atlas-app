@@ -28,6 +28,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-intl": "^6.2.1",
     "react-map-gl": "^7.0.19",
     "zipson": "^0.2.12",
     "zustand": "^4.1.1"

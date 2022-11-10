@@ -8,12 +8,14 @@ import classNames from 'classnames'
 
 type Props = {
   title: string | React.ReactNode
+  objectId?: string
   children: React.ReactNode
   defaultOpen?: boolean
 }
 
 export const Disclosure: React.FC<Props> = ({
   title,
+  objectId,
   children,
   defaultOpen = true,
 }) => {
@@ -30,11 +32,25 @@ export const Disclosure: React.FC<Props> = ({
               { 'rounded-lg border': !open }
             )}
           >
-            <h3>{title}</h3>
+            <h3 className="w-full">
+              <div className="flex w-full justify-between pr-3">
+                <span>{title}</span>
+                {!!objectId && (
+                  <span
+                    className={classNames(
+                      'rounded  px-1 py-0 font-mono',
+                      open ? 'bg-white' : 'bg-gray-100'
+                    )}
+                  >
+                    #{objectId}
+                  </span>
+                )}
+              </div>
+            </h3>
             <ChevronUpIcon
-              className={`${
-                open ? 'rotate-180 transform' : ''
-              } h-5 w-5 text-gray-500`}
+              className={classNames('h-5 w-5 text-gray-500', {
+                'rotate-180 transform': open,
+              })}
             />
           </HeadlessUiDisclosure.Button>
           <Transition
