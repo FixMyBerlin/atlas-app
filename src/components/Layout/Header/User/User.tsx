@@ -2,10 +2,11 @@ import React, { useEffect } from 'react'
 // @ts-ignore but it works
 import { osmAuth } from 'osm-auth'
 import useUserStore from '@components/MapInterface/UserInfo/useUserStore'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
+import { UserIcon } from '@heroicons/react/24/outline'
 import LoggedIn from './LoggedIn'
 import { useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/routes'
+import { hasPermission } from '@components/MapInterface/UserInfo'
 
 const redirectPath = window.location.origin
 const redirectUri = `${redirectPath}/auth.html`
@@ -34,9 +35,10 @@ export const User: React.FC = () => {
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
   const removeCurrentUser = useUserStore((state) => state.removeCurrentUser)
 
-  const { region } = useMatch<LocationGenerics>().data
-  const hasPermissions =
-    !!user && !!region ? region.osmUsers.includes(user.id) : false
+  const {
+    data: { region },
+  } = useMatch<LocationGenerics>()
+  const hasPermissions = hasPermission(user, region)
 
   useEffect(() => {
     update()
@@ -75,14 +77,15 @@ export const User: React.FC = () => {
     setCurrentUser({ id, displayName, avatar })
   }
 
-  const btnClassName =
-    'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
-
   return (
-    <div className="hidden sm:ml-6 sm:block">
+    <div className="sm:ml-6">
       {!user ? (
-        <button className={btnClassName} onClick={login}>
-          <UserCircleIcon className="h-8 w-8" />
+        <button
+          className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white sm:border sm:border-gray-700"
+          onClick={login}
+        >
+          <span className="sr-only">Anmelden</span>
+          <UserIcon className="h-6 w-6" aria-hidden="true" />
         </button>
       ) : (
         <LoggedIn

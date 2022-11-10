@@ -1,7 +1,7 @@
 import { NavigationScaffold } from '../components'
 import { PrimaryNavigation } from '../components/PrimaryNavigation'
 import { SecondaryNavigationDesktop } from '../SecondaryNavigationDesktop'
-import { User } from '../User/User'
+import { User } from '../User'
 import { HeaderRegionenLogo } from './HeaderRegionenLogo'
 import { primaryNavigation } from './primaryNavigation.const'
 
@@ -16,7 +16,9 @@ export const HeaderRegionen = () => {
           />
           <div className="flex items-center">
             <PrimaryNavigation primaryNavigation={primaryNavigation} />
-            <User />
+            <span className="hidden sm:block">
+              <User />
+            </span>
             <SecondaryNavigationDesktop />
           </div>
         </div>

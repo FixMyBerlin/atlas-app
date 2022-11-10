@@ -1,12 +1,12 @@
 import create from 'zustand'
 
-interface User {
+export type User = {
   id: number
   displayName: string
   avatar: null | string
 }
 
-interface Store {
+type Store = {
   currentUser: null | User
   setCurrentUser: (data: object) => void
   removeCurrentUser: () => void

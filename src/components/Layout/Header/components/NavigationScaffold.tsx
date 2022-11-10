@@ -1,6 +1,7 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import React, { Fragment } from 'react'
+import { User } from '../User'
 import { MobileMenu } from './MobileMenu'
 import { PrimaryNavigationProps } from './types'
 
@@ -18,7 +19,8 @@ export const NavigationScaffold: React.FC<Props> = ({
         <>
           <div className="relative flex min-h-[4rem] items-center justify-between sm:h-16">
             {/* Mobile: Menü Button */}
-            <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
+            <div className="absolute inset-y-0 right-0 flex items-center space-x-2 sm:hidden">
+              <User />
               <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                 <span className="sr-only">Hauptmenü öffnen</span>
                 {open ? (
