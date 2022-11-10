@@ -101,7 +101,6 @@ export const topic_accidents: Topic = {
               1,
             ],
           },
-          enableInspector: true,
           enableCalculator: false,
         },
         {
@@ -153,7 +152,6 @@ export const topic_accidents: Topic = {
             ],
             'text-halo-width': 1,
           },
-          enableInspector: false,
           enableCalculator: false,
         },
       ],

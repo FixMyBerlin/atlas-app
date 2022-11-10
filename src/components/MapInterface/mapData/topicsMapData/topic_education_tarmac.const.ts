@@ -26,7 +26,6 @@ export const topic_education_tarmac: MapDataTopic = {
             'circle-color': 'HotPink',
             'circle-radius': 10,
           },
-          enableInspector: true,
           enableCalculator: false,
         },
       ],

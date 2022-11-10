@@ -29,7 +29,6 @@ export const topic_boudaries: Topic = {
             'line-width': 2,
             'line-color': 'rgba(215, 34, 34, 1)',
           },
-          enableInspector: true,
           enableCalculator: false,
         },
       ],

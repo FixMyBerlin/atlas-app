@@ -65,7 +65,6 @@ export type MapDataVisLayer = (
   | mapboxgl.LineLayer
   | mapboxgl.SymbolLayer
 ) & {
-  enableInspector?: boolean
   enableCalculator?: boolean
 }
 

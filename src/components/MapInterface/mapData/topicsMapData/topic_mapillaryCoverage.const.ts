@@ -29,7 +29,6 @@ export const topic_mapillaryCoverage: Topic = {
             'circle-blur': 0.5,
             'circle-color': 'green',
           },
-          enableInspector: false,
           enableCalculator: false,
         },
         {
@@ -42,7 +41,6 @@ export const topic_mapillaryCoverage: Topic = {
             'line-opacity': 0.7,
             'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 14, 1],
           },
-          enableInspector: false,
           enableCalculator: false,
         },
       ],
