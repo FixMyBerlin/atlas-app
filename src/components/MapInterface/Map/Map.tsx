@@ -1,4 +1,4 @@
-import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
+import { useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import React, { useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
-import { roundByZoom, roundNumber } from './utils'
+import { roundPositionForURL } from './utils'
 import {
   getStyleData,
   getThemeTopicData,
@@ -30,9 +30,6 @@ export const Map: React.FC = () => {
     bg: _selectedBackgroundId,
     config: _TODO_config,
   } = useSearch<LocationGenerics>()
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
@@ -79,15 +76,20 @@ export const Map: React.FC = () => {
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
   useEffect(() => {
-    const mapCenter = mainMap?.getCenter()
-    const mapZoom = mainMap?.getZoom()
-    if (!mapCenter || !mapZoom) {
-      return
-    }
-    if (lat === mapCenter?.lat && lng === mapCenter?.lng && zoom === mapZoom) {
-      return
-    }
-    mainMap?.flyTo({
+    if (!mainMap) return
+
+    const mapCenter = mainMap.getCenter()
+    const mapZoom = mainMap.getZoom()
+
+    const [lat_, lng_, zoom_] = roundPositionForURL(
+      mapCenter.lat,
+      mapCenter.lng,
+      mapZoom
+    )
+
+    if (lat == lat_ && lng == lng_ && zoom == zoom_) return
+
+    mainMap.flyTo({
       center: [lng || 0, lat || 0],
       zoom: zoom,
     })
@@ -95,16 +97,10 @@ export const Map: React.FC = () => {
 
   const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
+    const { latitude, longitude, zoom } = event.viewState
+    const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
     navigate({
-      search: (old) => {
-        const zoom = event.viewState.zoom
-        return {
-          ...old,
-          lat: roundByZoom(event.viewState.latitude, zoom),
-          lng: roundByZoom(event.viewState.longitude, zoom),
-          zoom: roundNumber(zoom, 1),
-        }
-      },
+      search: (old) => ({ ...old, lat: lat_, lng: lng_, zoom: zoom_ }),
       replace: true,
     })
   }
@@ -133,13 +129,17 @@ export const Map: React.FC = () => {
     })
   })
 
+  if (lat === undefined || lng === undefined || zoom === undefined) {
+    return null
+  }
+
   return (
     <MapGl
       id="mainMap"
       initialViewState={{
-        longitude: region?.map?.lng || 10,
-        latitude: region?.map?.lat || 10,
-        zoom: region?.map?.zoom || 10,
+        longitude: lng,
+        latitude: lat,
+        zoom: zoom,
       }}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
