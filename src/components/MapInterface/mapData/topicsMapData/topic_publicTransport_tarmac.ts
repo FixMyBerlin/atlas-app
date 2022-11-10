@@ -10,6 +10,7 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
   name: 'ÖPNV',
   desc: null,
   sourceId: 'tarmac_publicTransport',
+  allowVerify: false,
   styles: [
     {
       id: 'default',

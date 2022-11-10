@@ -12,6 +12,7 @@ export const topic_lit: MapDataTopic = {
   name: 'Beleuchtung',
   desc: null,
   sourceId: 'tarmac_lit',
+  allowVerify: true,
   styles: [
     {
       id: 'default',

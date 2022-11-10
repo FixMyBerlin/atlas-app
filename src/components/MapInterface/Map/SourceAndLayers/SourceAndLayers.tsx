@@ -45,7 +45,7 @@ export const SourceAndLayers: React.FC = () => {
         // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…
         //  (and first find out if it's a problem at all)
-        const sourceId = `${sourceData.id}_${topicConfig.id}_tiles`
+        const sourceId = `source:${sourceData.id}--topic:${topicConfig.id}--tiles`
 
         return (
           <Source

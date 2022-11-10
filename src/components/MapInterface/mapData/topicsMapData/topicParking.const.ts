@@ -19,6 +19,7 @@ export const topicParking: Topic = {
   name: 'Parkraum',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumParking',
+  allowVerify: false,
   styles: [
     {
       id: 'default',

@@ -12,6 +12,7 @@ export const topic_surface_tarmac: MapDataTopic = {
   name: 'Oberflächenqualität',
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: 'osmscripts_highways', // TODO we dont have this data, yet
+  allowVerify: false,
   styles: [
     {
       id: 'default',

@@ -11,6 +11,7 @@ export const topic_education_osmscripts: MapDataTopic = {
   name: 'Bildungseinrichtungen (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_pois',
+  allowVerify: false,
   styles: [
     {
       id: 'default',

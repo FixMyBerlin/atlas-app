@@ -42,6 +42,7 @@ export type MapDataTopic = {
   name: string
   desc: string | null
   sourceId: SourcesIds
+  allowVerify: boolean
   styles: MapDataStyle[]
 }
 

@@ -11,6 +11,7 @@ export const topic_shops_osmscripts: MapDataTopic = {
   name: 'Einkauf etc (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_pois',
+  allowVerify: false,
   styles: [
     {
       id: 'default',

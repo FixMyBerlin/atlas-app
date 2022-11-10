@@ -12,6 +12,7 @@ export const topic_boudaries: Topic = {
   name: 'Grenzen',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'tarmac_boundaries',
+  allowVerify: false,
   styles: [
     {
       id: 'default',
