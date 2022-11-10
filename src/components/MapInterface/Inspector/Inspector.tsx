@@ -1,8 +1,8 @@
-import { CloseButton } from '@components/CloseButton'
 import React from 'react'
 import { getTopicData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'
+import { InspectorHeader } from './InspectorHeader'
 import { extractTopicIdFromSourceKey } from './utils'
 import { Verification } from './Verification'
 
@@ -34,12 +34,9 @@ export const Inspector: React.FC = () => {
 
   return (
     <div className="absolute top-0 right-0 bottom-0 z-10 min-w-[35rem] max-w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
-      <h2 className="text-base font-medium text-gray-900">
-        Eigenschaften <span>({uniqInspectorFeatures.length})</span>
-      </h2>
-      <CloseButton
-        onClick={() => setInspector(null)}
-        positionClasses="top-3 right-3"
+      <InspectorHeader
+        count={uniqInspectorFeatures.length}
+        handleClose={() => setInspector(null)}
       />
 
       {uniqInspectorFeatures.map((inspectObject) => {
