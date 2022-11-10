@@ -148,6 +148,8 @@ export const Map: React.FC = () => {
       onDblClick={handleDoubleClick}
       onLoad={handleLoad}
       // doubleClickZoom={false}
+      dragRotate={false}
+      touchZoomRotate={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
