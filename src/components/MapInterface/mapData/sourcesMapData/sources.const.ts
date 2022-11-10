@@ -75,6 +75,7 @@ export const sources: MapDataSource<SourcesIds>[] = [
     id: 'tarmac_bikelanes',
     tiles: `${tilesUrl}/public.bikelanes/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    documentedKeys: ['category'],
   },
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
@@ -101,18 +102,21 @@ export const sources: MapDataSource<SourcesIds>[] = [
     id: 'tarmac_lit',
     tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    documentedKeys: ['category', 'lit'],
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
     id: 'tarmac_places',
     tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    documentedKeys: ['name', 'place', 'population', 'population:date'],
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
     id: 'tarmac_landuse',
     tiles: `${tilesUrl}/public.landuse/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    documentedKeys: ['landuse'],
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles

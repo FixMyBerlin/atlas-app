@@ -12,6 +12,8 @@ export type MapDataSource<TIds> = {
   licence?: 'ODbL'
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
+  /** @desc A list of keys that we officially document; other keys are for debugging; others are system keys */
+  documentedKeys?: string[]
 } & MapDataRasterSources
 
 type MapDataRasterSources = {

@@ -1,9 +1,12 @@
 import React from 'react'
-import { getTopicData } from '../mapData'
+import { getSourceData, getTopicData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
-import { extractTopicIdFromSourceKey } from './utils'
+import {
+  extractSourceIdIdFromSourceKey,
+  extractTopicIdFromSourceKey,
+} from './utils'
 import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
@@ -52,20 +55,43 @@ export const Inspector: React.FC = () => {
         const topicData = getTopicData(topicId)
         const allowVerify = topicData?.allowVerify || false
 
-        const debuggingKeys = [
+        // The documentedKeys info is placed on the source object
+        const sourceId = extractSourceIdIdFromSourceKey(sourceKey.toString())
+        const sourceData = getSourceData(sourceId)
+
+        const systemKeys = [
+          '_skip',
+          '_skipNotes',
           'osm_id',
           'osm_type',
           'osm_url',
-          '_skip',
-          '_skipNotes',
+          'update_at',
           'version',
         ]
-        const sortedCleanedPropertyKeys = Object.keys(properties)
-          .sort()
-          .filter((key) => !debuggingKeys.includes(key))
-        const sortedDebuggingKeys = Object.keys(properties)
-          .sort()
-          .filter((key) => debuggingKeys.includes(key))
+        const documentedProperties = Object.fromEntries(
+          Object.entries(properties)
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .filter(([key, _v]) => sourceData?.documentedKeys?.includes(key))
+        )
+        const otherOsmProperties = Object.fromEntries(
+          Object.entries(properties)
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .filter(
+              ([key, _v]) =>
+                !sourceData?.documentedKeys?.includes(key) &&
+                !systemKeys.includes(key)
+            )
+        )
+        const systemProperties = Object.fromEntries(
+          Object.entries(properties)
+            .sort((a, b) => a[0].localeCompare(b[0]))
+            .filter(
+              ([key, _v]) =>
+                systemKeys.includes(key) &&
+                !sourceData?.documentedKeys?.includes(key)
+            )
+        )
+        console.log({ documentedProperties, systemProperties })
 
         return (
           <div
@@ -103,8 +129,7 @@ export const Inspector: React.FC = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {sortedCleanedPropertyKeys.map((key) => {
-                    const value = properties[key]
+                  {Object.entries(documentedProperties).map(([key, value]) => {
                     return (
                       <tr key={key}>
                         <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
@@ -128,23 +153,44 @@ export const Inspector: React.FC = () => {
                 </tbody>
               </table>
 
-              {!!sortedDebuggingKeys.length && (
-                <div className="border-t bg-white px-4 py-2.5 text-xs">
-                  <details>
-                    <summary>System-Werte</summary>
-                    {sortedDebuggingKeys.map((key) => {
-                      const value = properties[key]
-                      return (
-                        <p key={key}>
-                          <code>
-                            {key}: {value}
-                          </code>
-                        </p>
-                      )
-                    })}
-                  </details>
-                </div>
-              )}
+              <div className="grid grid-cols-2">
+                {!!Object.keys(otherOsmProperties).length && (
+                  <div className="border-t bg-white px-4 py-2.5 text-xs">
+                    <details>
+                      <summary>Weitere OSM Werte</summary>
+                      {Object.entries(otherOsmProperties).map(
+                        ([key, value]) => {
+                          return (
+                            <p key={key}>
+                              <code>
+                                {key}: {value}
+                              </code>
+                            </p>
+                          )
+                        }
+                      )}
+                    </details>
+                  </div>
+                )}
+                {!!Object.keys(systemProperties).length && (
+                  <div className="border-t bg-white px-4 py-2.5 text-xs">
+                    <details>
+                      <summary className="open:text-semibold">
+                        System-Werte
+                      </summary>
+                      {Object.entries(systemProperties).map(([key, value]) => {
+                        return (
+                          <p key={key}>
+                            <code>
+                              {key}: {value}
+                            </code>
+                          </p>
+                        )
+                      })}
+                    </details>
+                  </div>
+                )}
+              </div>
 
               <Verification
                 visible={allowVerify}
