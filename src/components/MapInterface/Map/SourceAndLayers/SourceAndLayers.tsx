@@ -10,7 +10,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
-import { LayerHighlightParkingLanes } from './LayerHighlightInspectorCalculator'
+import { LayerHighlight } from './LayerHighlight'
 import { specifyFilters } from './utils'
 
 // We add source+layer map-components for all topics of the given confic.
@@ -67,7 +67,7 @@ export const SourceAndLayers: React.FC = () => {
               )
 
               return styleData?.layers.map((layer) => {
-                const layerKey = createSourceTopicStyleLayerKey(
+                const layerId = createSourceTopicStyleLayerKey(
                   sourceData.id,
                   topicConfig.id,
                   styleConfig.id,
@@ -84,24 +84,22 @@ export const SourceAndLayers: React.FC = () => {
                   styleConfig.filters
                 )
 
+                const layerProps = {
+                  id: layerId,
+                  type: layer.type,
+                  source: sourceId,
+                  'source-layer': layer['source-layer'],
+                  layout: layout,
+                  filter: filter,
+                  paint: layer.paint as any,
+                  ...(!!layer.minzoom && { minzoom: layer.minzoom }),
+                  ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
+                }
+
                 return (
                   <>
-                    <LayerHighlightParkingLanes
-                      sourceId={sourceId}
-                      sourceLayer={layer['source-layer']}
-                    />
-                    <Layer
-                      key={layerKey}
-                      id={layerKey}
-                      type={layer.type}
-                      source={sourceId}
-                      source-layer={layer['source-layer']}
-                      {...(!!layer.minzoom && { minzoom: layer.minzoom })}
-                      {...(!!layer.maxzoom && { maxzoom: layer.maxzoom })}
-                      layout={layout}
-                      filter={filter}
-                      paint={layer.paint as any} // TODO Typescript
-                    />
+                    <Layer {...layerProps} />
+                    <LayerHighlight {...layerProps} />
                   </>
                 )
               })
