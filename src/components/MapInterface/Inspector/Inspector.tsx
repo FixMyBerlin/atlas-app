@@ -38,7 +38,7 @@ export const Inspector: React.FC = () => {
   if (!uniqInspectorFeatures?.length) return null
 
   return (
-    <div className="absolute top-0 right-0 bottom-0 z-10 min-w-[35rem] max-w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
+    <div className="absolute top-0 right-0 bottom-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
       <InspectorHeader
         count={uniqInspectorFeatures.length}
         handleClose={() => setInspector(null)}
@@ -219,7 +219,7 @@ export const Inspector: React.FC = () => {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-            .maplibregl-ctrl-top-right { right: 490px }
+            .maplibregl-ctrl-top-right { right: 35rem }
           `,
         }}
       />
