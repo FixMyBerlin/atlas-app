@@ -9,7 +9,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
-import { LayerHighlightParkingLanes } from './LayerHighlightInspectorCalculator'
+import { LayerHighlight } from './LayerHighlight'
 import { specifyFilters } from './utils'
 
 export const SourceAndLayers: React.FC = () => {
@@ -75,24 +75,22 @@ export const SourceAndLayers: React.FC = () => {
                   styleConfig.filters
                 )
 
+                const layerProps = {
+                  id: layerId,
+                  type: layer.type,
+                  source: sourceId,
+                  'source-layer': layer['source-layer'],
+                  layout: layout,
+                  filter: filter,
+                  paint: layer.paint as any,
+                  ...(!!layer.minzoom && { minzoom: layer.minzoom }),
+                  ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
+                }
+
                 return (
                   <>
-                    <LayerHighlightParkingLanes
-                      sourceId={sourceId}
-                      sourceLayer={layer['source-layer']}
-                    />
-                    <Layer
-                      key={layerId}
-                      id={layerId}
-                      type={layer.type}
-                      source={sourceId}
-                      source-layer={layer['source-layer']}
-                      {...(!!layer.minzoom && { minzoom: layer.minzoom })}
-                      {...(!!layer.maxzoom && { maxzoom: layer.maxzoom })}
-                      layout={layout}
-                      filter={filter}
-                      paint={layer.paint as any} // TODO Typescript
-                    />
+                    <Layer {...layerProps} />
+                    <LayerHighlight {...layerProps} />
                   </>
                 )
               })
