@@ -216,6 +216,13 @@ export const Inspector: React.FC = () => {
           </div>
         )
       })}
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            .maplibregl-ctrl-top-right { right: 490px }
+          `,
+        }}
+      />
     </div>
   )
 }
