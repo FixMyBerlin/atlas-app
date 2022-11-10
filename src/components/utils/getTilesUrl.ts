@@ -9,6 +9,7 @@ const isNetlifyPreviewBuild =
   isProductionBuild && import.meta.env.CONTEXT !== 'production'
 
 export const getCurrentTilesUrl = () => {
+  // VITE_TILES_ENV is undefined in Netlify (unless we explicity add it)
   if (import.meta.env.VITE_TILES_ENV) {
     return tilesBaseUrl[import.meta.env.VITE_TILES_ENV]
   }
@@ -21,14 +22,3 @@ export const getCurrentTilesUrl = () => {
     return tilesBaseUrl.production
   }
 }
-
-console.log('netlify debugging getTilesUrl', {
-  isProductionBuild,
-  isNetlifyPreviewBuild,
-  metaEnvContext: import.meta.env.CONTEXT,
-  metaEnvNode: process.env.NODE_ENV,
-  ViteTilesEnv: import.meta.env.VITE_TILES_ENV,
-  ViteTilesEnvRes: tilesBaseUrl[import.meta.env.VITE_TILES_ENV],
-  envDev: import.meta.env.DEV,
-  result: getCurrentTilesUrl,
-})
