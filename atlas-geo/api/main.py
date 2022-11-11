@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Header, Response, Request, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from typing import Union
 from psycopg2 import sql
@@ -13,6 +14,22 @@ app = FastAPI(
     title="RadverkehrsatlasTools",
     description="Use and interact with OSM data from FixMyCity",
     version="0.0.1",
+)
+
+origins = [
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://develop--radverkehrsatlas.netlify.app",
+  "https://radverkehrsatlas.de",
+  "https://www.radverkehrsatlas.de",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 conn = psycopg2.connect(conn_string)
