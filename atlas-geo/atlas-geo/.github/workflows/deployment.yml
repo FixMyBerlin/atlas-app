@@ -71,7 +71,7 @@ jobs:
         target: "/srv/tarmac/"
         overwrite: true
 
-    - name: Pull & Run image on VPS
+    - name: Stop container on VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -82,7 +82,16 @@ jobs:
           cd /srv/tarmac/
           docker image prune -a
           docker compose -f docker-compose.production.yml down
+          sleep 15
           rm .env
+
+    - name: Start container on VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
           touch .env
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env
@@ -90,4 +99,5 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env
           echo GITHUB_SHA='${{ github.sha }}' >> .env
+          docker compose -f -f docker-compose.production.yml pull
           docker compose -f -f docker-compose.production.yml up -d

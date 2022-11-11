@@ -74,7 +74,7 @@ jobs:
         target: "/srv/tarmac/"
         overwrite: true
 
-    - name: Pull & Run image on VPS
+    - name: Stop containers on VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -86,7 +86,16 @@ jobs:
           docker image prune -a
           docker compose -f docker-compose.staging.yml down
           docker compose -f docker-compose.traefik.yml down
+          sleep 15
           rm .env.staging
+
+    - name: Start container on VPS
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
           touch .env.staging
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.staging
@@ -94,5 +103,7 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.staging
           echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
+          docker compose -f docker-compose.staging.yml pull
+          docker compose -f docker-compose.traefik.yml pull
           docker compose -f docker-compose.staging.yml up -d
           docker compose -f docker-compose.traefik.yml up -d
