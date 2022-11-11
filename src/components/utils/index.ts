@@ -1,4 +1,5 @@
-export * from './isDev'
-export * from './uniqueArray'
 export * from './getApiUrl'
 export * from './getTilesUrl'
+export * from './isDev'
+export * from './isEnv'
+export * from './uniqueArray'

@@ -1,14 +1,12 @@
+import { isNetlifyPreviewBuild } from './isEnv'
+
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
   staging: 'https://staging-tiles.radverkehrsatlas.de',
   production: 'https://tiles.radverkehrsatlas.de',
 }
 
-const isProductionBuild = process.env.NODE_ENV === 'production'
-const isNetlifyPreviewBuild =
-  isProductionBuild && import.meta.env.CONTEXT !== 'production'
-
-export const getCurrentTilesUrl = () => {
+export const getTilesUrl = () => {
   // VITE_TILES_ENV is undefined in Netlify (unless we explicity add it)
   if (import.meta.env.VITE_TILES_ENV) {
     return tilesBaseUrl[import.meta.env.VITE_TILES_ENV]

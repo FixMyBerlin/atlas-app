@@ -1,19 +1,22 @@
 /* eslint-env node */
 
+import { isNetlifyPreviewBuild } from './isEnv'
+
 export const apiBaseUrl = {
-  local: 'http://localhost:80',
+  development: 'http://localhost:80',
   staging: 'https://staging-api.radverkehrsatlas.de',
   production: 'https://api.radverkehrsatlas.de',
 }
 
-const isProductionBuild = import.meta.env.NODE_ENV === 'production'
-const isNetlifyPreviewBuild =
-  isProductionBuild && import.meta.env.CONTEXT !== 'production'
+export const getApiUrl = () => {
+  // VITE_API_ENV is undefined in Netlify (unless we explicity add it)
+  if (import.meta.env.VITE_API_ENV) {
+    return apiBaseUrl[import.meta.env.VITE_API_ENV]
+  }
 
-export const getCurrentApiUrl = () => {
   if (import.meta.env.DEV) {
-    return apiBaseUrl.local
-  } else if (isNetlifyPreviewBuild || import.meta.env.VITE_STAGING) {
+    return apiBaseUrl.development
+  } else if (isNetlifyPreviewBuild) {
     return apiBaseUrl.staging
   } else {
     return apiBaseUrl.production

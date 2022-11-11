@@ -1,4 +1,4 @@
-import { getCurrentTilesUrl } from '@components/utils/getTilesUrl'
+import { getTilesUrl } from '@components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
@@ -31,7 +31,7 @@ const apiKeyMapbox =
 // "Tarmac OSM Viewer", they call it "Client Token"
 const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
-const tilesUrl = getCurrentTilesUrl()
+const tilesUrl = getTilesUrl()
 
 export const sources: MapDataSource<
   SourcesIds,
