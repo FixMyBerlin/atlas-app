@@ -3,7 +3,7 @@ services:
   app_staging:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
-    container_name: tarmac_staging
+    container_name: app_staging
     env_file:
       - ./.env.staging
     environment:
@@ -16,7 +16,7 @@ services:
   tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver_staging
+    container_name: tiles_staging
     restart: always
     env_file:
       - ./.env.staging
