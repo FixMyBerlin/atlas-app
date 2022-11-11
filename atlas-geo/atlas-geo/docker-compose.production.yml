@@ -3,7 +3,7 @@ services:
   app:
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
-    container_name: tarmac
+    container_name: app
     environment:
       PGHOST:
       PGDATABASE:
@@ -14,7 +14,7 @@ services:
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver
+    container_name: tiles
     restart: always
     environment:
       DATABASE_URL:
