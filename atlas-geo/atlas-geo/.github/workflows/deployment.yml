@@ -80,7 +80,7 @@ jobs:
         script: |
           echo "Pulling and running docker compose"
           cd /srv/tarmac/
-          docker image prune -a
+          docker image prune -fa
           docker compose -f docker-compose.production.yml down
           sleep 15
           rm .env
