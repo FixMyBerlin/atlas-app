@@ -10,6 +10,8 @@ services:
       PGDATABASE: postgres
       PGUSER: postgres
       PGPASSWORD: mysecretpassword
+      SKIP_DOWNLOAD: 'skip'
+      SKIP_FILTER: 'skip'
     volumes:
       - osmfiles:/data
     depends_on:

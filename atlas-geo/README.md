@@ -52,10 +52,10 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 2. Rebuild and restart everything
 
    ```sh
-   SKIP_DOWNLOAD=true \
-   SKIP_FILTER=true \
    docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
+
+   The default `/docker-compose.yml` does set `SKIP_DOWNLOAD` and `SKIP_FILTER`. For your first run, you need to remove those.
 
 3. Inspect the new results
 

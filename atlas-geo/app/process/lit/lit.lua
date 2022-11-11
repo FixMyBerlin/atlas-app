@@ -21,16 +21,6 @@ local table = osm2pgsql.define_table({
   }
 })
 
--- Goal
--- =====
--- 1. Show all ways lit/non-lit (lit=yes|no|(?))
--- 2. Show all ways lit/non-lit AND check_date:lit > (vor 2 Jahren)
-
--- Wiki
--- ====
--- https://wiki.openstreetmap.org/wiki/Key:lit
---  Note: the QA tools on https://wiki.openstreetmap.org/wiki/DE:Key:lit do not work for our use case or not at all.
-
 -- Notes
 -- =====
 -- Which highways do we look at?
@@ -77,26 +67,39 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Completeness
+  -- Presence of data
   if (object.tags.lit) then
-    object.tags.dataPresent = true
+    object.tags.is_present = true
   else
-    object.tags.dataPresent = false
+    object.tags.is_present = false
   end
 
-  -- Currentness
-  -- Overpass testing https://overpass-turbo.eu/s/1lZW
+  -- Fleshness of data
   local withinYears = CheckDataWithinYears("lit", object.tags, 2)
   if (withinYears.result) then
-    object.tags.dataCurrent = true
-    object.tags.dataCurrentDiffdays = withinYears.diffDays
+    object.tags.is_fresh = true
+    object.tags.fresh_age_days = withinYears.diffDays
   else
-    object.tags.dataCurrent = false
-    object.tags.dataCurrentDiffdays = withinYears.diffDays
+    object.tags.is_fresh = false
+    object.tags.fresh_age_days = withinYears.diffDays
   end
 
-  local allowed_tags = Set({ "_skip", "_skipNotes", "category", "lit", "check_date:lit", "name", "highway", "footway",
-    "access", "service", "is_sidepath", "dataPresent", "dataCurrent", "dataCurrentDiffdays" })
+  local allowed_tags = Set({
+    "_skip",
+    "_skipNotes",
+    "access",
+    "category",
+    "check_date:lit",
+    "footway",
+    "fresh_age_days",
+    "highway",
+    "is_fresh",
+    "is_present",
+    "is_sidepath",
+    "lit",
+    "name",
+    "service",
+  })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
   AddUrl("way", object)
