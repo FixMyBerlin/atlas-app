@@ -13,6 +13,8 @@ export type MapDataThemeIds =
   | 'bikelanesZes'
   | 'roadClassificationZes'
   | 'surfaceZes'
+  // Speical only:
+  | 'mapillary'
 
 export const themes: MapDataTheme[] = [
   {
@@ -145,5 +147,11 @@ export const themes: MapDataTheme[] = [
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
     ],
+  },
+  {
+    id: 'mapillary',
+    name: 'Mapillay',
+    desc: '',
+    topics: [{ id: 'mapillaryCoverage', defaultActive: true }],
   },
 ]

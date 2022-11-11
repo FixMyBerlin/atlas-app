@@ -89,6 +89,7 @@ export const regions: Region[] = [
       'bikelanesZes',
       'roadClassificationZes',
       'surfaceZes',
+      'mapillary',
     ],
     osmUsers: [...osmUserAdmins],
   },
