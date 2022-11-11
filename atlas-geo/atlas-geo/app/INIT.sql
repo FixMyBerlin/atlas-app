@@ -1,2 +1,2 @@
-CREATE DATABASE osmdb;
+--- Run this after db creation
 CREATE EXTENSION postgis;
