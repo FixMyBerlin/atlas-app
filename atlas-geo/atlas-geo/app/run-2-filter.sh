@@ -16,7 +16,9 @@ echo "\e[1m\e[7m Filter – START \e[27m\e[21m"
 
 if [ -f "${OSM_GERMANY}" ]; then
 
-  if [ "$SKIP_FILTER" = "true" ]; then
+  if [ "$SKIP_FILTER" = "skip" ]; then
+    echo "💥 SKIPPED with 'SKIP_FILTER=skip' in '/docker-compose.yml'"
+  else
     echo "\e[1m\e[7m Filter regions (create separate files) \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
     osmium extract --overwrite --polygon=${FILTER_DIR}bibi.geojson --output=${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_GERMANY}
@@ -32,8 +34,6 @@ if [ -f "${OSM_GERMANY}" ]; then
     echo "\e[1m\e[7m Filter tags (create filtered file) \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
     osmium tags-filter --overwrite --output=${OSM_FILTERED_FILE} --expressions ${OSM_FILTER_EXPRESSIONS} ${OSM_REGIONS}
-  else
-    echo "💥 SKIPPED with 'SKIP_FILTER=true'"
   fi
 
 else

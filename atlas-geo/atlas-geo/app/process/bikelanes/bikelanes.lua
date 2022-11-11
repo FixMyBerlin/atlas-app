@@ -9,6 +9,8 @@ require("AddMetadata")
 require("AddUrl")
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
+require("AddSkipInfoByWidth")
+require("CheckDataWithinYears")
 require("StartsWith")
 
 local table = osm2pgsql.define_table({
@@ -51,7 +53,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- Handle `highway=pedestrian + bicycle=yes/!=yes`
-  -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
+  -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does count as "no"
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
   if object.tags.highway == "pedestrian" then
     if object.tags.bicycle == "yes" then
@@ -181,6 +183,23 @@ function osm2pgsql.process_way(object)
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
 
+  -- Presence of data
+  if (object.tags.category) then
+    object.tags.is_present = true
+  else
+    object.tags.is_present = false
+  end
+
+  -- Fleshness of data, see documentation
+  local withinYears = CheckDataWithinYears("cycleway", object.tags, 2)
+  if (withinYears.result) then
+    object.tags.is_fresh = true
+    object.tags.fresh_age_days = withinYears.diffDays
+  else
+    object.tags.is_fresh = false
+    object.tags.fresh_age_days = withinYears.diffDays
+  end
+
   local allowed_tags = Set({
     "_centerline",
     "_skip",
@@ -189,13 +208,18 @@ function osm2pgsql.process_way(object)
     "bicycle_road",
     "bicycle",
     "category",
+    "check_date:cycleway",
     "cycleway:both",
     "cycleway:left",
     "cycleway:right",
     "cycleway",
+    "est_width",
     "foot",
     "footway",
+    "fresh_age_days",
     "highway",
+    "is_fresh",
+    "is_present",
     "is_sidepath",
     "mtb:scale",
     "name",
@@ -204,6 +228,7 @@ function osm2pgsql.process_way(object)
     "sidewalk:left:bicycle",
     "sidewalk:right:bicycle",
     "traffic_sign",
+    "width",
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
@@ -215,7 +240,7 @@ function osm2pgsql.process_way(object)
       geom = object:as_linestring()
     })
   else
-    -- We don't need this data here…
+    -- `nil` will remove this non-needed data from the table
     object.tags._skip = nil
     object.tags._skipNotes = nil
     table:insert({
