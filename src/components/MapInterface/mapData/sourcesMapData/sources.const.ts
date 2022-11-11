@@ -1,5 +1,5 @@
-import { MapDataSource } from '../types'
 import { getCurrentTilesUrl } from '@components/utils/getTilesUrl'
+import { MapDataSource } from '../types'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesIds =
@@ -20,6 +20,8 @@ export type SourcesIds =
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
 
+export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
+
 // https://account.mapbox.com/access-tokens
 // "Default public token"
 const apiKeyMapbox =
@@ -31,7 +33,10 @@ const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
 const tilesUrl = getCurrentTilesUrl()
 
-export const sources: MapDataSource<SourcesIds>[] = [
+export const sources: MapDataSource<
+  SourcesIds,
+  SourceVerificationApiIdentifier
+>[] = [
   {
     id: 'parkraumParking',
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
@@ -73,6 +78,7 @@ export const sources: MapDataSource<SourcesIds>[] = [
   {
     // https://tiles.radverkehrsatlas.de/public.bikelanes.json
     id: 'tarmac_bikelanes',
+    apiVerificationIdentifier: 'bikelanes',
     tiles: `${tilesUrl}/public.bikelanes/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],
@@ -100,6 +106,7 @@ export const sources: MapDataSource<SourcesIds>[] = [
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
     id: 'tarmac_lit',
+    apiVerificationIdentifier: 'lit',
     tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'lit'],

@@ -1,17 +1,31 @@
 import mapboxgl from 'mapbox-gl'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
-import { SourcesIds, SourcesRasterIds } from './sourcesMapData'
+import {
+  SourcesIds,
+  SourcesRasterIds,
+  SourceVerificationApiIdentifier,
+} from './sourcesMapData'
 import { MapDataThemeIds } from './themesMapData'
 
-/** @desc: The raw vector tile data; no UI representation; name fixed by library */
-export type MapDataSource<TIds> = {
+/** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
+export type MapDataBackgroundSource<TIds> = {
   id: TIds
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
-  licence?: 'ODbL'
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
+} & MapDataRasterSources
+
+/** @desc: Our own vector tile layers configured in 'sources.const.ts' */
+export type MapDataSource<TIds, TApiKeyIds> = {
+  id: TIds
+  /** @desc The part of the API URL that identifes the data set */
+  apiVerificationIdentifier?: TApiKeyIds
+  /** @desc URL of the vector tiles */
+  tiles: string
+  attributionHtml: string // TODO anzeigen in der Karte
+  licence?: 'ODbL'
   /** @desc A list of keys that we officially document; other keys are for debugging; others are system keys */
   documentedKeys?: string[]
 } & MapDataRasterSources
@@ -86,8 +100,8 @@ export type MapDataStyleInteractiveFilterOption = {
 }
 
 export type MapData = {
-  sources: MapDataSource<SourcesIds>[]
-  backgrounds: MapDataSource<SourcesRasterIds>[]
+  sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier>[]
+  backgrounds: MapDataBackgroundSource<SourcesRasterIds>[]
   themes: MapDataTheme[]
   topics: MapDataTopic[]
 }
