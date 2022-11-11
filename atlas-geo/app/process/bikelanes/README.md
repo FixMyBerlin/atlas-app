@@ -23,8 +23,6 @@ The `_skipNotes` give a hint to why a road segment was skipped.
   - `livingStreet` – Verkehrsberuhigter Bereich AKA "Spielstraße" based on highway tag
   - `pedestrianArea_bicycleYes` – "Fußgängerzonen, Fahrrad frei" ("dismount" does count as "no")
 
-- `lit` (string) – Raw osm values
-
 ## Style helper tags
 
 - `verified` (string) – The state of verification
