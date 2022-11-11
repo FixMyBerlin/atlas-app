@@ -1,12 +1,14 @@
 import { Link } from '@components/Link'
 import { IconModal } from '@components/Modal'
-import { getApiUrl } from '@components/utils'
+import { getApiUrl, getTilesUrl } from '@components/utils'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { regionFromPath } from '@routes/utils'
 import { useMatch, useSearch } from '@tanstack/react-location'
 import { getSourceData, getTopicData } from '../mapData'
 import { flatConfigTopics } from '../mapStateConfig/utils/flatConfigTopics'
+import { useQuery } from '@tanstack/react-query'
+import { SmallSpinner } from '@components/Spinner/Spinner'
 
 export const Download: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
@@ -18,6 +20,18 @@ export const Download: React.FC = () => {
   const region = regionFromPath(regionPath)
   const bbox = region?.bbox ? region.bbox : { min: [0, 0], max: [0, 0] }
   const allowDownload = region?.bbox ? true : false
+
+  const osmDataDate = useQuery({
+    queryKey: ['metadata'],
+    queryFn: () => {
+      return fetch(`${getTilesUrl()}/public.metadata.json`)
+        .then((response) => response.json())
+        .then((response) => {
+          console.log('test', response)
+          return response
+        })
+    },
+  })
 
   if (!configThemesTopics) return null
   const flatTopics = flatConfigTopics(configThemesTopics)
@@ -42,8 +56,23 @@ export const Download: React.FC = () => {
           </p>
         )}
 
-        {/* TODO: Die Description von https://tiles.radverkehrsatlas.de/public.metadata.json auslesen. */}
-        <p className="pb-5 text-sm">Letzte Aktualisierung: ___</p>
+        <div>
+          <p className="pb-5 text-sm">
+            Letzte Aktualisierung:{' '}
+            <span>
+              {new Date(
+                Date.parse(
+                  JSON.parse(osmDataDate.data?.description || null)
+                    ?.osm_data_from
+                )
+              ).toLocaleDateString('de-DE')}
+            </span>
+          </p>
+          {osmDataDate.isLoading && <SmallSpinner />}
+          {osmDataDate.error && (
+            <p className="text-red-600">Fehler beim laden</p>
+          )}
+        </div>
 
         <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
           {flatTopics.map((topicConfig) => {

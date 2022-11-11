@@ -22,6 +22,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.2",
     "@tanstack/react-location": "^3.7.4",
+    "@tanstack/react-query": "^4.14.5",
     "immer": "^9.0.15",
     "maplibre-gl": "^2.4.0",
     "osm-auth": "^2.0.1",
