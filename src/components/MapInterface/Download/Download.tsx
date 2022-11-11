@@ -68,10 +68,10 @@ export const Download: React.FC = () => {
               ).toLocaleDateString('de-DE')}
             </span>
           </p>
-          {osmDataDate.isLoading && <SmallSpinner />}
-          {osmDataDate.error && (
+          {osmDataDate.isLoading ? <SmallSpinner /> : null}
+          {osmDataDate.error ? (
             <p className="text-red-600">Fehler beim laden</p>
-          )}
+          ) : null}
         </div>
 
         <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
