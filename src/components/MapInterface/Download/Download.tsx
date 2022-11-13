@@ -1,14 +1,14 @@
 import { Link } from '@components/Link'
 import { IconModal } from '@components/Modal'
+import { SmallSpinner } from '@components/Spinner/Spinner'
 import { getApiUrl, getTilesUrl } from '@components/utils'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { regionFromPath } from '@routes/utils'
 import { useMatch, useSearch } from '@tanstack/react-location'
+import { useQuery } from '@tanstack/react-query'
 import { getSourceData, getTopicData } from '../mapData'
 import { flatConfigTopics } from '../mapStateConfig/utils/flatConfigTopics'
-import { useQuery } from '@tanstack/react-query'
-import { SmallSpinner } from '@components/Spinner/Spinner'
 
 export const Download: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
@@ -23,13 +23,12 @@ export const Download: React.FC = () => {
 
   const osmDataDate = useQuery({
     queryKey: ['metadata'],
-    queryFn: () => {
-      return fetch(`${getTilesUrl()}/public.metadata.json`)
-        .then((response) => response.json())
-        .then((response) => {
-          console.log('test', response)
-          return response
-        })
+    queryFn: async () => {
+      const response = await fetch(`${getTilesUrl()}/public.metadata.json`)
+      if (!response.ok) {
+        throw new Error('Network response was not ok')
+      }
+      return response.json()
     },
   })
 
