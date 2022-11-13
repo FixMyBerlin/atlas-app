@@ -93,7 +93,6 @@ export const Inspector: React.FC = () => {
                 !sourceData?.documentedKeys?.includes(key)
             )
         )
-        console.log({ documentedProperties, systemProperties })
 
         return (
           <div
