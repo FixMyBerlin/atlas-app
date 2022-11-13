@@ -1,7 +1,7 @@
 import { Link } from '@components/Link'
 import { getSourceData } from '@components/MapInterface/mapData'
 import React from 'react'
-import { extractSourceIdIdFromSourceKey } from '../utils'
+import { extractSourceIdIdFromSourceKey } from '../../Map/SourceAndLayers/utils/extractFromSourceKey'
 
 type Props = {
   visible: boolean

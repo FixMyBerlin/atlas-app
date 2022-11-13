@@ -3,13 +3,13 @@ import { getSourceData, getTopicData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
+import { FormattedMessage, IntlProvider } from 'react-intl'
 import {
   extractSourceIdIdFromSourceKey,
   extractTopicIdFromSourceKey,
-} from './utils'
-import { Verification } from './Verification'
-import { IntlProvider, FormattedMessage } from 'react-intl'
+} from '../Map/SourceAndLayers/utils/extractFromSourceKey'
 import { ConditionalFormattedMessage, translations } from './translations'
+import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useMapStateInteraction()
