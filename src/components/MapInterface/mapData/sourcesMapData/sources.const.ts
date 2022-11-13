@@ -41,6 +41,7 @@ export const sources: MapDataSource<
     id: 'parkraumParking',
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'id',
   },
   {
     id: 'tarmac_boundaries',
@@ -48,12 +49,14 @@ export const sources: MapDataSource<
     attributionHtml:
       'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
+    highlightingKey: 'osm_id',
   },
   {
     id: 'accidents_unfallatlas',
     // TODO Migrieren auf Maptiler
     tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'unfall_id',
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -61,6 +64,7 @@ export const sources: MapDataSource<
     id: 'osmscripts_highways',
     tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: '@id',
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -68,12 +72,14 @@ export const sources: MapDataSource<
     id: 'osmscripts_pois',
     tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.roadClassification.json
     id: 'tarmac_roadClassification',
     tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.bikelanes.json
@@ -82,18 +88,21 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.bikelanes/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.education.json
     id: 'tarmac_education',
     tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
@@ -102,6 +111,7 @@ export const sources: MapDataSource<
     attributionHtml:
       'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
@@ -110,6 +120,7 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'lit'],
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
@@ -117,6 +128,7 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['name', 'place', 'population', 'population:date'],
+    highlightingKey: 'osm_id',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
@@ -124,6 +136,7 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.landuse/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['landuse'],
+    highlightingKey: 'osm_id',
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
@@ -132,6 +145,7 @@ export const sources: MapDataSource<
     minzoom: 0,
     maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
+    highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
   },
   // UNUSED ATM:
   // {
@@ -141,6 +155,7 @@ export const sources: MapDataSource<
   //   minzoom: 14,
   //   maxzoom: 14,
   //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
+  //   highlightingKey: 'id',
   // },
   // UNUSED ATM:
   // {
@@ -150,5 +165,6 @@ export const sources: MapDataSource<
   //   minzoom: 14,
   //   maxzoom: 14,
   //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
+  //   highlightingKey: 'id',
   // },
 ]

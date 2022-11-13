@@ -1,6 +1,8 @@
+import { getSourceData } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import React from 'react'
 import { Layer } from 'react-map-gl'
+import { extractSourceIdIdFromSourceKey } from './utils/extractFromSourceKey'
 
 type Props = {
   id: string
@@ -14,14 +16,17 @@ type Props = {
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const { inspectorFeatures } = useMapStateInteraction()
+  const sourceData = getSourceData(
+    extractSourceIdIdFromSourceKey(parentLayerProps.source)
+  )
+  const highlightingKey = sourceData?.highlightingKey
 
-  if (!inspectorFeatures) return null
+  if (!inspectorFeatures || !highlightingKey) return null
 
   const osmIds = inspectorFeatures
-    .filter((f) => f?.properties)
     .filter((f) => f.layer.id === parentLayerProps.id)
-    // @ts-ignore f.properties can't be null here
-    .map((f) => f.properties.osm_id)
+    .map((f) => f?.properties?.[highlightingKey])
+    .filter((id): id is string => !!id)
 
   if (!osmIds.length) return null
 
@@ -53,7 +58,7 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     }
   }
 
-  props.filter = ['in', 'osm_id', ...osmIds]
+  props.filter = ['in', highlightingKey, ...osmIds]
 
   return (
     <>
