@@ -15,6 +15,7 @@ export type MapDataThemeIds =
   | 'surfaceZes'
   // Speical only:
   | 'mapillary'
+  | 'accidents'
 
 export const themes: MapDataTheme[] = [
   {
@@ -153,5 +154,11 @@ export const themes: MapDataTheme[] = [
     name: 'Mapillay',
     desc: '',
     topics: [{ id: 'mapillaryCoverage', defaultActive: true }],
+  },
+  {
+    id: 'accidents',
+    name: 'Unfallatlas',
+    desc: '',
+    topics: [{ id: 'accidents', defaultActive: true }],
   },
 ]
