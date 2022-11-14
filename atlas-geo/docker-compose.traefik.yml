@@ -27,5 +27,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
-volumes:
-  osmfiles:
+    networks:
+      - mesh
+networks:
+  mesh:
+    name: radverkehrsatlas_mesh
+    driver: bridge
