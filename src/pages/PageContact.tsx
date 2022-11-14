@@ -19,7 +19,12 @@ export const PageContact: React.FC = () => {
         <br />
         12049 Berlin
         <br />
-        <Link to="hello@fixmycity.de">hello@fixmycity.de</Link>
+        <Link
+          to="feedback@fixmycity.de"
+          mailSubject="Feedback Radverkehrsatlas"
+        >
+          feedback@fixmycity.de
+        </Link>
         <br />
         Telefon: <Link to="tel:+49-30-54908665">+49-30-54908665</Link>
         <br />
@@ -39,7 +44,7 @@ export const PageContact: React.FC = () => {
         Wir freuen uns über Kommentare Anregungen und Unterstützung an{' '}
         <Link
           to="feedback@fixmycity.de"
-          mailSubject="Feedback Radschnellverbindungen"
+          mailSubject="Feedback Radverkehrsatlas"
         >
           feedback@fixmycity.de
         </Link>
@@ -84,22 +89,35 @@ export const PageContact: React.FC = () => {
       </p>
       <h2>Förderung</h2>
       <p>
-        Diese Website wird im Rahmen des NRVP-Projektes
-        &ldquo;Baukasten-RSV&rdquo; vom Bundesministerium für Digitales und
-        Verkehr (BMDV) gefördert.
-        <br />
+        Diese Website wird im Rahmen des mFund-Projektes “Kommunale
+        Radverkehrsplanung und Instandhaltung aus OpenStreetMap-Daten
+        ermöglichen – OSM-RVP” vom Bundesministerium für Digitales und Verkehr
+        (BMDV) gefördert. <br />
         Förderkennzeichen 19F1096A,{' '}
         <Link
           external
           blank
-          to="https://www.bmvi.de/SharedDocs/DE/Artikel/DG/mfund-projekte/osm-rvp.html"
+          to="https://www.bmdv.bund.de/SharedDocs/DE/Artikel/DG/mfund-projekte/osm-rvp.html"
         >
           <strong>Projektsteckbrief</strong>
         </Link>
       </p>
-      <Link to="https://bmdv.bund.de/" external blank>
-        <ImageLogoBmdvFoerderung title="Förderung durch BMDV" />
-      </Link>
+      <div className="grid grid-cols-2 gap-2">
+        <Link to="https://bmdv.bund.de/" external blank>
+          <ImageLogoBmdvFoerderung title="Förderung durch BMDV" />
+        </Link>
+        <Link
+          to="https://www.bmvi.de/DE/Themen/Digitales/mFund/Ueberblick/ueberblick.html"
+          external
+          blank
+        >
+          <img
+            src="src/pages/assets/PageContact/logo-mfund.png"
+            alt="Förderung durch den mFund"
+            className="w-40"
+          />
+        </Link>
+      </div>
     </LayoutPage>
   )
 }
