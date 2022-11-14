@@ -97,6 +97,7 @@ jobs:
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
           echo "Start container on VPS"
+          cd /srv/tarmac/
           touch .env.staging
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.staging
