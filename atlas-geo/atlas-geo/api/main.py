@@ -63,7 +63,13 @@ def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
 
     results = cur.fetchone()
     if results == None:
-      raise HTTPException(status_code=404, detail="osm_id not found")
+      statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name))
+      cur.execute(statement, (osm_id,))
+      results = cur.fetchone()
+      return {
+        "osm_id": osm_id,
+        "verified": "none"
+      }
     return results
 
 @app.get("/verify/{type_name}/{osm_id}/history")
