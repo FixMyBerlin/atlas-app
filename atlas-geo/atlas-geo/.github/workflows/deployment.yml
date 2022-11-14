@@ -80,10 +80,9 @@ jobs:
         script: |
           echo "Stop containers on VPS"
           cd /srv/tarmac/
+          rm .env
           docker image prune -fa
           docker compose -f docker-compose.production.yml down
-          sleep 15
-          rm .env
           echo "Start container on VPS"
           touch .env
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env

@@ -83,11 +83,11 @@ jobs:
         script: |
           echo "Stop containers on VPS"
           cd /srv/tarmac/
+          rm .env.staging
           docker image prune -fa
           docker compose -f docker-compose.staging.yml down
           docker compose -f docker-compose.traefik.yml down
-          sleep 15
-          rm .env.staging
+          ./wait-for-staging-containers-stop.sh
           echo "Start container on VPS"
           touch .env.staging
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.staging
