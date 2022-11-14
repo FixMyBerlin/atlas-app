@@ -99,7 +99,7 @@ jobs:
           echo "Start container on VPS"
           cd /srv/tarmac/
           touch .env.staging
-          echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
+          echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.staging
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.staging
           echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.staging
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
