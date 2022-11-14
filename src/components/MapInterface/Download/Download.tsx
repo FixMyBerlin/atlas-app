@@ -55,23 +55,24 @@ export const Download: React.FC = () => {
           </p>
         )}
 
-        <div>
-          <p className="pb-5 text-sm">
-            Letzte Aktualisierung:{' '}
+        <p className="flex items-center gap-2 pb-5 text-sm">
+          Letzte Aktualisierung:{' '}
+          {!!osmDataDate.data?.description && (
             <span>
               {new Date(
                 Date.parse(
-                  JSON.parse(osmDataDate.data?.description || null)
-                    ?.osm_data_from
+                  JSON.parse(osmDataDate.data?.description)?.osm_data_from
                 )
               ).toLocaleDateString('de-DE')}
             </span>
-          </p>
-          {osmDataDate.isLoading ? <SmallSpinner /> : null}
-          {osmDataDate.error ? (
-            <p className="text-red-600">Fehler beim laden</p>
-          ) : null}
-        </div>
+          )}
+          {!!osmDataDate.isLoading && <SmallSpinner />}
+          {!!osmDataDate.error && (
+            <span className="text-orange-500">
+              Fehler beim Laden des Datums
+            </span>
+          )}
+        </p>
 
         <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
           {flatTopics.map((topicConfig) => {
