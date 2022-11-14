@@ -31,4 +31,5 @@ services:
       - mesh
 networks:
   mesh:
+    name: radverkehrsatlas_mesh
     driver: bridge
