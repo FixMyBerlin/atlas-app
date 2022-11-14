@@ -8,8 +8,8 @@ import {
   extractSourceIdIdFromSourceKey,
   extractTopicIdFromSourceKey,
 } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
+import { Verification, VerificationStatus } from './Verification'
 import { ConditionalFormattedMessage, translations } from './translations'
-import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useMapStateInteraction()
@@ -209,9 +209,10 @@ export const Inspector: React.FC = () => {
                   </div>
                 </div>
 
-                <Verification
+                <VerificationStatus
                   visible={allowVerify}
                   sourceKey={sourceKey.toString()}
+                  objectId={systemProperties['osm_id']}
                 />
               </Disclosure>
             </IntlProvider>
