@@ -1,8 +1,7 @@
-import { Link } from '@components/Link'
 import { getSourceData } from '@components/MapInterface/mapData'
 import { SmallSpinner } from '@components/Spinner/Spinner'
 import { getApiUrl } from '@components/utils'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import React from 'react'
 import { extractSourceIdIdFromSourceKey } from '../../Map/SourceAndLayers/utils/extractFromSourceKey'
 
@@ -32,7 +31,7 @@ export const Verification: React.FC<Props> = ({
   verificationData.append('verified_at', new Date().toISOString())
 
   const mutation = useMutation({
-    mutationFn: (event) => {
+    mutationFn: () => {
       // event.preventDefault()
       return fetch(
         `${getApiUrl()}/verify/lit/${objectId}?` + verificationData,

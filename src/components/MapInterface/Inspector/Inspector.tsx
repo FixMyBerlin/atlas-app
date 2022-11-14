@@ -8,7 +8,7 @@ import {
   extractSourceIdIdFromSourceKey,
   extractTopicIdFromSourceKey,
 } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
-import { Verification, VerificationStatus } from './Verification'
+import { VerificationStatus } from './Verification'
 import { ConditionalFormattedMessage, translations } from './translations'
 
 export const Inspector: React.FC = () => {
