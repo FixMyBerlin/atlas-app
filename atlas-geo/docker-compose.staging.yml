@@ -13,6 +13,8 @@ services:
       PGPASSWORD:
     volumes:
       - osmfiles_staging:/data
+    networks:
+      - app_staging_bridge
   tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     env_file:
@@ -59,3 +61,4 @@ volumes:
 networks:
   radverkehrsatlas_mesh:
     external: true
+  app_staging_bridge:
