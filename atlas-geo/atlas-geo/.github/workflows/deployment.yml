@@ -83,7 +83,7 @@ jobs:
           docker image prune -fa
           docker compose -f docker-compose.production.yml down
           sleep 15
-          rm .env
+          [ -e ".env" ] && rm .env
 
     - name: Start container on VPS
       uses: appleboy/ssh-action@master

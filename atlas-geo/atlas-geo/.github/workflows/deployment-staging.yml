@@ -87,7 +87,7 @@ jobs:
           docker compose -f docker-compose.staging.yml down
           docker compose -f docker-compose.traefik.yml down
           sleep 15
-          rm .env.staging
+          [ -e ".env.staging" ] && rm .env.staging
 
     - name: Start container on VPS
       uses: appleboy/ssh-action@master
