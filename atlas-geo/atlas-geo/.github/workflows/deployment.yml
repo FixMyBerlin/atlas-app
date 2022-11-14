@@ -91,5 +91,5 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env
           echo GITHUB_SHA='${{ github.sha }}' >> .env
-          docker compose -f -f docker-compose.production.yml pull
-          docker compose -f -f docker-compose.production.yml up -d
+          docker compose -f docker-compose.production.yml pull
+          docker compose -f docker-compose.production.yml up -d

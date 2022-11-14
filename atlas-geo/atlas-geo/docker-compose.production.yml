@@ -11,6 +11,8 @@ services:
       PGPASSWORD:
     volumes:
       - osmfiles:/data
+    networks:
+      - app_bridge
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
@@ -31,6 +33,8 @@ services:
       # - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
       # - "traefik.http.routers.prodtiles.entrypoints=web"
       # - "traefik.http.routers.service=prodtiles"
+    networks:
+      - radverkehrsatlas_mesh
   api:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
@@ -48,5 +52,11 @@ services:
       - "traefik.http.routers.prodapi.entrypoints=websecure"
       - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prodapi.tls=true"
+    networks:
+      - radverkehrsatlas_mesh
 volumes:
   osmfiles:
+networks:
+  radverkehrsatlas_mesh:
+    external: true
+  app_bridge:
