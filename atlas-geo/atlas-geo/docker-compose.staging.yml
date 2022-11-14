@@ -1,11 +1,11 @@
 version: "3"
 services:
   app_staging:
+    env_file:
+      - ./.env.staging
     image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: app_staging
-    env_file:
-      - ./.env.staging
     environment:
       PGHOST:
       PGDATABASE:
@@ -15,11 +15,11 @@ services:
       - osmfiles_staging:/data
   tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    env_file:
+      - ./.env.staging
     image: pramsey/pg_tileserv
     container_name: tiles_staging
     restart: always
-    env_file:
-      - ./.env.staging
     environment:
       DATABASE_URL:
       NODE_ENV: production
@@ -32,11 +32,11 @@ services:
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
   api_staging:
-    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
-    container_name: api_staging
-    restart: always
     env_file:
       - ./.env.staging
+    container_name: api_staging
+    restart: always
+    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     environment:
       PGHOST:
       PGDATABASE:

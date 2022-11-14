@@ -71,27 +71,19 @@ jobs:
         target: "/srv/tarmac/"
         overwrite: true
 
-    - name: Stop container on VPS
+    - name: Stop & start container on VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
         script: |
-          echo "Pulling and running docker compose"
+          echo "Stop containers on VPS"
           cd /srv/tarmac/
+          rm .env
           docker image prune -fa
           docker compose -f docker-compose.production.yml down
-          sleep 15
-          rm .env
-
-    - name: Start container on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
+          echo "Start container on VPS"
           touch .env
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env
