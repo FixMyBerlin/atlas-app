@@ -167,12 +167,15 @@ export const Inspector: React.FC = () => {
                 <div className="grid grid-cols-2">
                   <div className="border-t bg-white px-4 py-2.5 text-xs">
                     {!!Object.keys(otherOsmProperties).length && (
-                      <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
+                      <details className="break-all [&_summary]:open:mb-1 [&_summary]:open:font-semibold">
                         <summary>Weitere OSM Werte</summary>
                         {Object.entries(otherOsmProperties).map(
                           ([key, value]) => {
                             return (
-                              <p key={key}>
+                              <p
+                                key={key}
+                                className="mb-0.5 border-b border-gray-200 pb-0.5"
+                              >
                                 <code>
                                   {key}: {value}
                                 </code>
@@ -185,7 +188,7 @@ export const Inspector: React.FC = () => {
                   </div>
                   <div className="border-t bg-white px-4 py-2.5 text-xs">
                     {!!Object.keys(systemProperties).length && (
-                      <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
+                      <details className="break-all [&_summary]:open:mb-1 [&_summary]:open:font-semibold">
                         <summary>System-Werte</summary>
                         {Object.entries(systemProperties).map(
                           ([key, value]) => {
