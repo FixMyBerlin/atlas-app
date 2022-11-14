@@ -25,6 +25,10 @@ https://tiles.radverkehrsatlas.de/
 2. Then our Server IONOS builds the data. This take about 30 Min ATM.
 3. Then https://tiles.radverkehrsatlas.de/ shows new data
 
+#### Skip CI Actions
+
+ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the commit message. This is a [default behaviour](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs) of Github Actions.
+
 ## 1️⃣ Setup
 
 First create a `.env` file. You can use the `.env.example` file as a template.
