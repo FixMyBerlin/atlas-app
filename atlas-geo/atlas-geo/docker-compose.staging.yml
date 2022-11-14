@@ -31,6 +31,8 @@ services:
       - "traefik.http.routers.stagingtiles.entrypoints=websecure"
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
+    networks:
+      - mesh
   api_staging:
     env_file:
       - ./.env.staging
@@ -50,5 +52,7 @@ services:
       - "traefik.http.routers.stagingapi.entrypoints=websecure"
       - "traefik.http.routers.stagingapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingapi.tls=true"
+    networks:
+      - mesh
 volumes:
   osmfiles_staging:

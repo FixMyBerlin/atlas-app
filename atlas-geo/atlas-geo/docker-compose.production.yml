@@ -31,6 +31,8 @@ services:
       # - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
       # - "traefik.http.routers.prodtiles.entrypoints=web"
       # - "traefik.http.routers.service=prodtiles"
+    networks:
+      - mesh
   api:
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
@@ -48,5 +50,7 @@ services:
       - "traefik.http.routers.prodapi.entrypoints=websecure"
       - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prodapi.tls=true"
+    networks:
+      - mesh
 volumes:
   osmfiles:
