@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
     networks:
-      - mesh
+      - radverkehrsatlas_mesh
   api_staging:
     env_file:
       - ./.env.staging
@@ -53,6 +53,9 @@ services:
       - "traefik.http.routers.stagingapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingapi.tls=true"
     networks:
-      - mesh
+      - radverkehrsatlas_mesh
 volumes:
   osmfiles_staging:
+networks:
+  radverkehrsatlas_mesh:
+    external: true
