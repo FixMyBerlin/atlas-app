@@ -1,7 +1,14 @@
+// prettier-ignore
 export const translations = {
-  'tarmac_landuse--landuse--commercial': 'Wirtschaftliche Nutzung',
+  'tarmac_bikelanes--category--footAndCycleway_segregated': 'Getrennter Geh- und Radweg / Rad- und Gehweg',
+  'tarmac_bikelanes--category--footAndCycleway_shared': 'Gemeinsamer Geh- und Radweg',
+  'tarmac_bikelanes--category--footway_bicycleYes': 'Gehweg mit Radwegfreigabe',
+  'tarmac_bikelanes--category': 'Radinfrastruktur',
+  'tarmac_landuse--landuse--allotments': 'Kleingartenanlage',
+  'tarmac_landuse--landuse--commercial': 'Gewerbliche Nutzung',
   'tarmac_landuse--landuse--farmyard': 'Landwirdschaftliche Nutzung',
   'tarmac_landuse--landuse--residential': 'Wohngebiet',
+  'tarmac_landuse--landuse--retail': 'Gewerbliche Nutzung (Einzelhandel/Geschäfte)',
   'tarmac_landuse--landuse': 'Landnutzung',
   'tarmac_lit--category--lit': 'Beleuchtet',
   'tarmac_lit--category--special': 'Spezielle Angaben',
@@ -14,6 +21,7 @@ export const translations = {
   'tarmac_places--place--village': 'Dorf',
   'tarmac_places--place': 'Ortskategorie',
   'tarmac_places--population': 'Einwohner:innen-Anzahl',
+  'title--source:tarmac_bikelanes--topic:bikelanes_tarmac--tiles': 'Daten zu Radinfrastruktur',
   'title--source:tarmac_landuse--topic:landuse--tiles': 'Daten zur Landnutzung',
   'title--source:tarmac_lit--topic:lit--tiles': 'Daten zur Beleuchtung',
   'title--source:tarmac_places--topic:places--tiles': 'Daten zu Orten',
