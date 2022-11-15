@@ -7,12 +7,12 @@ available_datasets = [
   "places",
   "roadClassification_tarmac",
   "landuse",
-  "bikelanes_tarmac",
+  "bikelanes",
   "lit"
 ]
 
 available_export_functions = {
-  "bikelanes_tarmac": "export_geojson_bikelanes",
+  "bikelanes": "export_geojson_bikelanes",
   "lit": "export_geojson_lit",
   "shops_tarmac": "export_geojson_shops",
   "education_tarmac": "export_geojson_education",
@@ -34,7 +34,7 @@ function_table_mapping = {
 }
 
 verification_tables = {
-  "bikelanes_tarmac": "bikelanes_verification",
+  "bikelanes": "bikelanes_verification",
   "lit": "lit_verification",
   "roadClassification": "roadClassification_verification",
 }
