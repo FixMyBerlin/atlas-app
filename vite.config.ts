@@ -20,4 +20,10 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  server: {
+    host: '127.0.0.1', // `localhost` fails with OSM OAuth, so we force the IP
+    port: 5173, // Whitelisted in tarmac-geo, so we need this one
+    strictPort: true, // Exit if 5173 is unavaliable
+    // open: '/docs/index.html',
+  },
 })
