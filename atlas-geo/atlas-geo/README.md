@@ -42,6 +42,9 @@ docker compose up -d
 docker compose --profile osm_processing up -d
 ```
 
+> **Warning"" Consider creating the Postgis extension before first run of *app*
+> ```CREATE EXTENSION postgis;```
+
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
 
 > **Note**
