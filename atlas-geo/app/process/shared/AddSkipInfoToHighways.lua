@@ -48,4 +48,9 @@ function AddSkipInfoToHighways(object)
     object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `skip_service_values`"
     object.tags._skip = true
   end
+
+  if object.tags.man_made == 'pier' then
+    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `man_made=pier`"
+    object.tags._skip = true
+  end
 end
