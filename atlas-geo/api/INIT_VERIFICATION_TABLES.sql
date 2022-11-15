@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS public.{table_name} (
 );
 
 -- JOIN original data table with verification table
-CREATE MATERIALIZED VIEW {view_name} AS
+CREATE VIEW {view_name} AS
 SELECT o.osm_type, o.osm_id, v.verified_at, v.verified_by , v.verified, o.tags, o.geom FROM "{original_table}" o
 LEFT JOIN  {table_name} v
 ON v.osm_id = o.osm_id
