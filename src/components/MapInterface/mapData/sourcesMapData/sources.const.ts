@@ -82,14 +82,9 @@ export const sources: MapDataSource<
     highlightingKey: 'osm_id',
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.bikelanes.json
-    // TODO: Once https://github.com/FixMyBerlin/tarmac-geo/pull/9 is merged…
-    //    1. rename the `tiles`-URL below
-    //    1. rename the `sourceLayer` in `src/components/MapInterface/mapData/topicsMapData/topic_bikelanes_tarmac.ts`
-    // https://tiles.radverkehrsatlas.de/public.bike_infrastructure_verified.json
     id: 'tarmac_bikelanes',
     apiVerificationIdentifier: 'bikelanes_tarmac',
-    tiles: `${tilesUrl}/public.bike_infrastructure_verified/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.bikelanes_verification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],
     highlightingKey: 'osm_id',
