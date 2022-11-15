@@ -20,7 +20,10 @@ export type SourcesIds =
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
 
-export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes_tarmac'
+export type SourceVerificationApiIdentifier =
+  | 'lit'
+  | 'bikelanes'
+  | 'roadclassification'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -83,7 +86,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'tarmac_bikelanes',
-    apiVerificationIdentifier: 'bikelanes_tarmac',
+    apiVerificationIdentifier: 'bikelanes',
     tiles: `${tilesUrl}/public.bikelanes_verification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],
