@@ -12,7 +12,7 @@ available_datasets = [
 ]
 
 available_export_functions = {
-  "bikelanes_tarmac": "export_geojson_bikeinfra",
+  "bikelanes_tarmac": "export_geojson_bikelanes",
   "lit": "export_geojson_lit",
   "shops_tarmac": "export_geojson_shops",
   "education_tarmac": "export_geojson_education",
@@ -23,7 +23,7 @@ available_export_functions = {
 }
 
 function_table_mapping = {
-  "bikelanes": "export_geojson_bikeinfra",
+  "bikelanes": "export_geojson_bikelanes",
   "lit": "export_geojson_lit",
   "poiClassification": "export_geojson_shops",
   "education": "export_geojson_education",
@@ -34,13 +34,13 @@ function_table_mapping = {
 }
 
 verification_tables = {
-  "bikelanes": "bike_infrastructure_verification",
+  "bikelanes": "bikelanes_verification",
   "lit": "lit_verification",
   "roadClassification": "roadClassification_verification",
 }
 
 verification_views = {
-  "bike_infrastructure_verification": "bike_infrastructure_verified",
+  "bikelanes_verification": "bikelanes_verified",
   "lit_verification": "lit_verified",
   "roadClassification_verification": "roadClassification_verified",
 }
