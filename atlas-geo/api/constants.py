@@ -34,7 +34,7 @@ function_table_mapping = {
 }
 
 verification_tables = {
-  "bikelanes": "bikelanes_verification",
+  "bikelanes_tarmac": "bikelanes_verification",
   "lit": "lit_verification",
   "roadClassification": "roadClassification_verification",
 }
