@@ -20,7 +20,7 @@ export type SourcesIds =
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
 
-export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
+export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes_tarmac'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -88,7 +88,7 @@ export const sources: MapDataSource<
     //    1. rename the `sourceLayer` in `src/components/MapInterface/mapData/topicsMapData/topic_bikelanes_tarmac.ts`
     // https://tiles.radverkehrsatlas.de/public.bike_infrastructure_verified.json
     id: 'tarmac_bikelanes',
-    apiVerificationIdentifier: 'bikelanes',
+    apiVerificationIdentifier: 'bikelanes_tarmac',
     tiles: `${tilesUrl}/public.bike_infrastructure_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],

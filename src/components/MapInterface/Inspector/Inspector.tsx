@@ -1,15 +1,15 @@
 import React from 'react'
-import { getSourceData, getTopicData } from '../mapData'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
-import { Disclosure } from './Disclosure'
-import { InspectorHeader } from './InspectorHeader'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import {
   extractSourceIdIdFromSourceKey,
   extractTopicIdFromSourceKey,
 } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
-import { VerificationStatus } from './Verification'
+import { getSourceData, getTopicData } from '../mapData'
+import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { Disclosure } from './Disclosure'
+import { InspectorHeader } from './InspectorHeader'
 import { ConditionalFormattedMessage, translations } from './translations'
+import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, setInspector } = useMapStateInteraction()
@@ -215,7 +215,7 @@ export const Inspector: React.FC = () => {
                   </div>
                 </div>
 
-                <VerificationStatus
+                <Verification
                   visible={allowVerify}
                   sourceKey={sourceKey.toString()}
                   objectId={systemProperties['osm_id']}
