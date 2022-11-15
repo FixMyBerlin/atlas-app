@@ -114,19 +114,17 @@ export const Inspector: React.FC = () => {
                       ([key, value]) => {
                         return (
                           <tr key={key}>
-                            <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
+                            <td className="w-2/5 py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
                               <FormattedMessage id={`${sourceId}--${key}`} />
                             </td>
-                            <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500">
-                              <code>
-                                <ConditionalFormattedMessage
-                                  sourceId={sourceId}
-                                  tagKey={key}
-                                  tagValue={value}
-                                />
-                              </code>
+                            <td className="px-3 py-2 text-sm text-gray-500">
+                              <ConditionalFormattedMessage
+                                sourceId={sourceId}
+                                tagKey={key}
+                                tagValue={value}
+                              />
                             </td>
-                            <td className="relative whitespace-nowrap py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
+                            <td className="relative py-2 pl-3 pr-4 text-right text-sm font-medium sm:pr-6 lg:pr-8">
                               {/*  <a href="#" className="text-indigo-600 hover:text-indigo-900">
             Edit<span className="sr-only">, {person.name}</span>
           </a>  */}
