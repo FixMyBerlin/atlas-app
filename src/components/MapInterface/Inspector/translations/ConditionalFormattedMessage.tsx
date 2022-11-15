@@ -13,7 +13,6 @@ export const ConditionalFormattedMessage: React.FC<Props> = ({
   tagKey,
   tagValue,
 }) => {
-  console.log({ sourceId, key: tagKey, value: tagValue })
   if (tagKey === 'name') {
     return <>{tagValue}</>
   }
