@@ -87,7 +87,7 @@ export const sources: MapDataSource<
   {
     id: 'tarmac_bikelanes',
     apiVerificationIdentifier: 'bikelanes',
-    tiles: `${tilesUrl}/public.bikelanes_verification/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category'],
     highlightingKey: 'osm_id',
