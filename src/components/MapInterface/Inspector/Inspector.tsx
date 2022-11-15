@@ -177,7 +177,10 @@ export const Inspector: React.FC = () => {
                                 className="mb-0.5 border-b border-gray-200 pb-0.5"
                               >
                                 <code>
-                                  {key}: {value}
+                                  {key}:{' '}
+                                  {typeof value === 'boolean'
+                                    ? JSON.stringify(value)
+                                    : value}
                                 </code>
                               </p>
                             )
@@ -198,7 +201,10 @@ export const Inspector: React.FC = () => {
                                 className="mb-0.5 border-b border-gray-200 pb-0.5"
                               >
                                 <code>
-                                  {key}: {value}
+                                  {key}:{' '}
+                                  {typeof value === 'boolean'
+                                    ? JSON.stringify(value)
+                                    : value}
                                 </code>
                               </p>
                             )
