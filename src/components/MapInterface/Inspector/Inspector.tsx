@@ -15,7 +15,8 @@ import { ConditionalFormattedMessage, translations } from './translations'
 import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, resetInspector } = useMapStateInteraction()
+  const { inspectorFeatures, resetInspector, localUpdates } =
+    useMapStateInteraction()
   if (!inspectorFeatures.length) return null
 
   // const {setInspectorOpenDisclosures, getInspectorOpenDisclosure} = useMapStateInteraction()
@@ -61,6 +62,15 @@ export const Inspector: React.FC = () => {
             .sort((a, b) => a[0].localeCompare(b[0]))
             .filter(([key, _v]) => sourceData?.documentedKeys?.includes(key))
         )
+
+        const objectId = properties.osm_id
+        const localVerificationStatus = [...localUpdates]
+          .reverse()
+          // @ts-ignore ok here
+          .find((update) => update.osm_id === objectId)?.verified
+
+        const verificationStatus =
+          localVerificationStatus || properties.verified
 
         return (
           <div
@@ -139,8 +149,8 @@ export const Inspector: React.FC = () => {
                 <Verification
                   visible={allowVerify}
                   sourceKey={sourceKey.toString()}
-                  objectId={properties.osm_id}
-                  verificationStatus={properties.verified}
+                  objectId={objectId}
+                  verificationStatus={verificationStatus}
                 />
               </Disclosure>
             </IntlProvider>

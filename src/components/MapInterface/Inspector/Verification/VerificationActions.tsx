@@ -1,10 +1,12 @@
 import React from 'react'
 import axios from 'axios'
+import classNames from 'classnames'
+
+import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { buttonStyles } from '@components/Link'
 import { SmallSpinner } from '@components/Spinner/Spinner'
 import { getApiUrl } from '@components/utils'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import classNames from 'classnames'
 
 type Props = {
   apiIdentifier: string
@@ -15,6 +17,9 @@ export const VerificationActions: React.FC<Props> = ({
   apiIdentifier,
   objectId,
 }) => {
+  const queryClient = useQueryClient()
+  const { addLocalUpdate, removeLocalUpdate } = useMapStateInteraction()
+
   const apiData = {
     type_name: apiIdentifier,
     osm_id: objectId,
@@ -23,7 +28,6 @@ export const VerificationActions: React.FC<Props> = ({
     verified_status: '*** needs to be set ***',
   }
 
-  const queryClient = useQueryClient()
   const queryKey = ['verificationHistory', apiData.osm_id]
 
   const api = axios.create({
@@ -71,30 +75,34 @@ export const VerificationActions: React.FC<Props> = ({
 
       // Optimistically update to the new value
       queryClient.setQueryData(
-        ['verificationHistory', osm_id],
+        queryKey,
         (data: undefined | { data: object }) => {
-          console.log('data', data)
-          const history = data ? data.data : []
+          console.log('data', data) //TODO: cleanup
+          const history = data?.data ? data.data : []
           // return [...old.data, queryParams]
           return {
             data: [newHistoryItem, ...history],
           }
         }
       )
+
+      addLocalUpdate(newHistoryItem)
+
       // Return a context object with the snapshotted value
-      return { previousHistory }
+      return { previousHistory, newHistoryItem }
     },
     // If the mutation fails, use the context returned from onMutate to roll back
     // use the context returned from onMutate to roll back
     onError: (err, variables, context) => {
-      console.log('onError', err)
-      if (context?.previousHistory) {
+      console.log('onError', err) //TODO: cleanup
+      if (context) {
         queryClient.setQueryData(queryKey, context.previousHistory)
+        removeLocalUpdate(context.newHistoryItem)
       }
     },
     // Always refetch after error or success:
     onSettled: () => {
-      console.log('onSettled')
+      console.log('onSettled') //TODO: cleanup
       queryClient.invalidateQueries(queryKey)
     },
   })
