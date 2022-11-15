@@ -124,7 +124,7 @@ export const sources: MapDataSource<
     apiVerificationIdentifier: 'lit',
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'lit'],
+    documentedKeys: ['category', 'lit', 'highway'],
     highlightingKey: 'osm_id',
   },
   {
