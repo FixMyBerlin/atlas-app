@@ -88,6 +88,7 @@ function osm2pgsql.process_way(object)
     "_skip",
     "_skipNotes",
     "access",
+    "area",
     "category",
     "check_date:lit",
     "footway",
