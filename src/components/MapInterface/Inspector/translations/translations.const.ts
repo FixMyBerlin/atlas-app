@@ -1,8 +1,13 @@
-// prettier-ignore
+/* prettier-ignore */
 export const translations = {
+  'tarmac_bikelanes--category--bicycleRoad': 'Fahrradstraße',
+  'tarmac_bikelanes--category--cyclewayAlone': 'Radweg, frei geführt',
+  'tarmac_bikelanes--category--cyclewaySeparated': 'Radweg, baulich abgesetzt',
   'tarmac_bikelanes--category--footAndCycleway_segregated': 'Getrennter Geh- und Radweg / Rad- und Gehweg',
   'tarmac_bikelanes--category--footAndCycleway_shared': 'Gemeinsamer Geh- und Radweg',
   'tarmac_bikelanes--category--footway_bicycleYes': 'Gehweg mit Radwegfreigabe',
+  'tarmac_bikelanes--category--livingStreet': 'Verkehrsberuhigter Bereich (Spielstraße)',
+  'tarmac_bikelanes--category--pedestrianArea_bicycleYes': 'Fußgängerzone, Fahrrad frei',
   'tarmac_bikelanes--category': 'Radinfrastruktur',
   'tarmac_landuse--landuse--allotments': 'Kleingartenanlage',
   'tarmac_landuse--landuse--commercial': 'Gewerbliche Nutzung',
@@ -18,6 +23,11 @@ export const translations = {
   'tarmac_lit--lit--yes': 'Beleuchtet',
   'tarmac_lit--lit': 'Detaillierte Angaben',
   'tarmac_places--name': 'Name',
+  'tarmac_places--place--borough': 'Stadtteil/Stadtbezirke',
+  'tarmac_places--place--city': 'Stadte',
+  'tarmac_places--place--hamlet': 'Siedlung',
+  'tarmac_places--place--suburb': 'Stadtteil',
+  'tarmac_places--place--town': 'Stadt oder große Gemeinde',
   'tarmac_places--place--village': 'Dorf',
   'tarmac_places--place': 'Ortskategorie',
   'tarmac_places--population': 'Einwohner:innen-Anzahl',
