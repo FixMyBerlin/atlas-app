@@ -16,6 +16,7 @@ type StoreFeaturesInspector = {
   setInspector: (
     inspectObject: StoreFeaturesInspector['inspectorFeatures']
   ) => void
+  resetInspector: () => void
 }
 
 type StoreFeaturesCalculator = {
@@ -31,6 +32,7 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
 
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
+  resetInspector: () => set({ inspectorFeatures: null }),
 
   calculatorFeatures: [],
   addToCalculator: (featuresToAdd) => {
