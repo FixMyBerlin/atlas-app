@@ -8,6 +8,7 @@ import { getSourceData, getTopicData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
+import { Links } from './Links'
 import { OtherProperties } from './OtherProperties'
 import { ConditionalFormattedMessage, translations } from './translations'
 import { Verification } from './Verification'
@@ -136,6 +137,7 @@ export const Inspector: React.FC = () => {
                   </tbody>
                 </table>
 
+                <Links properties={properties} />
                 <OtherProperties
                   properties={properties}
                   documentedKeys={sourceData?.documentedKeys}
