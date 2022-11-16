@@ -3,6 +3,7 @@ import { getSourceData } from '@components/MapInterface/mapData'
 import React from 'react'
 import { VerificationStatus } from './VerificationStatus'
 import { VerificationActions } from './VerificationActions'
+import { VerificationHistory } from '@components/MapInterface/Inspector/Verification/VerificationHistory'
 
 export type VerificationProps = {
   sourceKey: string
@@ -29,6 +30,9 @@ export const Verification: React.FC<Props> = ({
     <div className="border-t bg-gray-50">
       <VerificationStatus verificationStatus={verificationStatus} />
       <VerificationActions apiIdentifier={apiIdentifier} objectId={objectId} />
+      {verificationStatus !== undefined && (
+        <VerificationHistory osmId={objectId} />
+      )}
     </div>
   )
 }
