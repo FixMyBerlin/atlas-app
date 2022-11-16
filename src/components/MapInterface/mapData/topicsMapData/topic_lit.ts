@@ -3,6 +3,8 @@ import { MapboxStyleLayerGroupLitIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
+const source = 'tarmac_lit'
+const sourceLayer = 'public.lit_verified'
 export type TopicLitId = typeof topic
 export type TopicLitStyleIds = 'default' | MapboxStyleLayerGroupLitIds
 export type TopicLitStyleFilterIds = '_nofilter'
@@ -20,8 +22,8 @@ export const topic_lit: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit',
-        source: 'tarmac_lit',
-        sourceLayer: 'public.lit_verified',
+        source,
+        sourceLayer,
       }),
       interactiveFilters: null,
     },
@@ -31,8 +33,8 @@ export const topic_lit: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_complete',
-        source: 'tarmac_lit',
-        sourceLayer: 'public.lit_verified',
+        source,
+        sourceLayer,
       }),
       interactiveFilters: null,
     },
@@ -42,8 +44,8 @@ export const topic_lit: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_fresh',
-        source: 'tarmac_lit',
-        sourceLayer: 'public.lit_verified',
+        source,
+        sourceLayer,
       }),
       interactiveFilters: null,
     },
@@ -53,8 +55,8 @@ export const topic_lit: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_verified',
-        source: 'tarmac_lit',
-        sourceLayer: 'public.lit_verified',
+        source,
+        sourceLayer,
       }),
       interactiveFilters: null,
     },
@@ -64,8 +66,8 @@ export const topic_lit: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_complete_fresh_verified',
-        source: 'tarmac_lit',
-        sourceLayer: 'public.lit_verified',
+        source,
+        sourceLayer,
       }),
       interactiveFilters: null,
     },
