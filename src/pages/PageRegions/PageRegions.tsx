@@ -1,5 +1,8 @@
 import { Layout } from '@components/Layout'
+import { isAdmin } from '@components/MapInterface/UserInfo'
+import { useUserStore } from '@components/MapInterface/UserInfo/useUserStore'
 import { PageRegionsRegionList } from '@components/PageRegions/PageRegionsRegionList'
+import { isDev, isStaging } from '@components/utils'
 import { useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 
@@ -8,6 +11,8 @@ export const PageRegions: React.FC = () => {
     data: { regions },
     search: { regionPathNotFound },
   } = useMatch<LocationGenerics>()
+
+  const { currentUser } = useUserStore()
 
   if (regionPathNotFound) {
     return (
@@ -19,10 +24,27 @@ export const PageRegions: React.FC = () => {
     )
   }
 
+  const publishedRegions = regions?.filter((r) => r.published)
+  const unPublishedRegions = regions?.filter((r) => !r.published)
+  const showUnpublishedRegions =
+    unPublishedRegions?.length &&
+    ((currentUser && isAdmin(currentUser)) || isDev || isStaging)
+
   return (
     <Layout>
       {/* <PageregionsRegionIntro regions={regions} /> */}
-      <PageRegionsRegionList regions={regions} />
+      <PageRegionsRegionList regions={publishedRegions} />
+      {showUnpublishedRegions && (
+        <div className="mt-4 bg-pink-200 py-10">
+          <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <h2 className="text-bold text-xl">Unpublished Regions </h2>
+            <span className="text-xs">
+              (Unsichtbar auf Production; Außer für Admins, die sehen es immer)
+            </span>
+          </div>
+          <PageRegionsRegionList regions={unPublishedRegions} />
+        </div>
+      )}
     </Layout>
   )
 }

@@ -15,6 +15,8 @@ export type Region = {
   logoPath: string | null
   themes: MapDataThemeIds[]
   osmUsers: number[]
+  /** @desc published=true regions are visible on production, all others are not */
+  published: boolean
 }
 
 export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
@@ -44,6 +46,7 @@ export const regions: Region[] = [
       'lit',
     ],
     osmUsers: [...osmUserAdmins],
+    published: true,
   },
   {
     name: 'TrTo',
@@ -61,6 +64,7 @@ export const regions: Region[] = [
       'lit',
     ],
     osmUsers: [...osmUserAdmins],
+    published: true,
   },
   {
     name: 'Berlin',
@@ -74,6 +78,7 @@ export const regions: Region[] = [
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...osmUserAdmins],
+    published: false,
   },
   {
     name: 'ZES+',
@@ -92,6 +97,7 @@ export const regions: Region[] = [
       'mapillary',
     ],
     osmUsers: [...osmUserAdmins],
+    published: false,
   },
   {
     name: 'Langerwehe',
@@ -103,5 +109,6 @@ export const regions: Region[] = [
     logoPath: null,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...osmUserAdmins],
+    published: false,
   },
 ]

@@ -7,7 +7,7 @@ export const PageRegionsRegionList: React.FC<Props> = ({ regions }) => {
   if (!regions) return <h1>Loading…</h1>
 
   return (
-    <div className="bg-white">
+    <div className="bg-transparent">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
         <h2 className="sr-only">Products</h2>
 
