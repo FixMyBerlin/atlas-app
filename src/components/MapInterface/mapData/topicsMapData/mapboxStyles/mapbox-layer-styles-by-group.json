@@ -881,51 +881,10 @@
     "group": "atlas_lit_fresh",
     "layers": [
       {
-        "id": "3_lit-Daten aelter 2020",
-        "type": "symbol",
-        "paint": {
-          "text-color": "hsl(0, 0%, 46%)"
-        },
-        "filter": [
-          "==",
-          [
-            "get",
-            "is_fresh"
-          ],
-          false
-        ],
-        "layout": {
-          "text-field": [
-            "to-string",
-            "< 2020"
-          ],
-          "symbol-placement": "line-center",
-          "text-size": 10
-        }
-      },
-      {
-        "id": "3_lit-Keine Daten",
+        "id": "3_lit-fresh-true-line",
         "type": "line",
         "paint": {
-          "line-width": 5,
-          "line-blur": 4,
-          "line-color": "hsl(330, 89%, 56%)"
-        },
-        "filter": [
-          "==",
-          [
-            "get",
-            "is_present"
-          ],
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "3_lit-Special",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 96%, 69%)",
+          "line-color": "hsl(133, 100%, 41%)",
           "line-width": [
             "interpolate",
             [
@@ -935,26 +894,106 @@
               "zoom"
             ],
             13,
-            2.5,
+            5,
             16,
-            6
+            12
           ],
           "line-blur": 1,
           "line-opacity": 0.7
         },
         "filter": [
-          "match",
+          "all",
           [
-            "get",
-            "category"
+            "==",
+            [
+              "get",
+              "is_fresh"
+            ],
+            true
           ],
           [
-            "special"
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ]
+      },
+      {
+        "id": "3_lit-fresh-false-line",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(360, 100%, 41%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            5,
+            16,
+            12
           ],
-          true,
-          false
+          "line-opacity": 0.74
+        },
+        "filter": [
+          "all",
+          [
+            "==",
+            [
+              "get",
+              "is_fresh"
+            ],
+            false
+          ],
+          [
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ]
+      },
+      {
+        "id": "3_lit-fresh-false-sprite-ersatz",
+        "type": "symbol",
+        "paint": {
+          "text-color": "hsl(0, 0%, 46%)"
+        },
+        "filter": [
+          "all",
+          [
+            "==",
+            [
+              "get",
+              "is_fresh"
+            ],
+            false
+          ],
+          [
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
         ],
-        "layout": {}
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
+          ],
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
       },
       {
         "id": "3_lit-Unbeleuchtet",
@@ -974,8 +1013,7 @@
             16,
             6
           ],
-          "line-blur": 1,
-          "line-opacity": 0.7
+          "line-blur": 1
         },
         "filter": [
           "match",
@@ -988,14 +1026,13 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
-        "id": "3_lit-Beleuchtet",
+        "id": "3_lit-Special",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 91%, 46%)",
+          "line-color": "hsl(35, 100%, 61%)",
           "line-width": [
             "interpolate",
             [
@@ -1009,8 +1046,40 @@
             16,
             6
           ],
-          "line-blur": 1,
-          "line-opacity": 0.6
+          "line-blur": 1
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "special"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "3_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 94%, 57%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ],
+          "line-blur": 1
         },
         "filter": [
           "match",
@@ -1023,8 +1092,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       }
     ]
   },
@@ -1579,7 +1647,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "5_lit-verified-rejected",
@@ -1624,7 +1693,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   },
@@ -1796,7 +1866,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Unbeleuchtet",
@@ -1830,7 +1901,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Beleuchtet",
@@ -1864,7 +1936,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-verified-approved",
@@ -1909,7 +1982,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-verified-missing",
@@ -1955,7 +2029,8 @@
           ],
           false,
           true
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-verified-rejected",
@@ -2000,7 +2075,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   }
