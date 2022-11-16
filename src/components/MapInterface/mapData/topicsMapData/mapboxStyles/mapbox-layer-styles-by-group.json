@@ -919,7 +919,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh-false-line",
@@ -959,7 +960,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh-false-sprite-ersatz",
@@ -1012,8 +1014,7 @@
             2.5,
             16,
             6
-          ],
-          "line-blur": 1
+          ]
         },
         "filter": [
           "match",
@@ -1026,7 +1027,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-Special",
@@ -1045,8 +1047,7 @@
             2.5,
             16,
             6
-          ],
-          "line-blur": 1
+          ]
         },
         "filter": [
           "match",
@@ -1059,7 +1060,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-Beleuchtet",
@@ -1078,8 +1080,7 @@
             2.5,
             16,
             6
-          ],
-          "line-blur": 1
+          ]
         },
         "filter": [
           "match",
@@ -1092,7 +1093,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   },
@@ -1835,10 +1837,10 @@
     "group": "atlas_lit_verified",
     "layers": [
       {
-        "id": "4_lit-Special",
+        "id": "3_lit-no-verification-done",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 96%, 69%)",
+          "line-color": "hsl(276, 100%, 41%)",
           "line-width": [
             "interpolate",
             [
@@ -1848,26 +1850,126 @@
               "zoom"
             ],
             13,
-            2.5,
+            5,
             16,
-            6
+            12
           ],
           "line-blur": 1,
           "line-opacity": 0.7
         },
         "filter": [
-          "match",
+          "all",
           [
-            "get",
-            "category"
+            "match",
+            [
+              "get",
+              "verified"
+            ],
+            [
+              "rejected",
+              "approved"
+            ],
+            false,
+            true
           ],
           [
-            "special"
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ]
+      },
+      {
+        "id": "3_lit-verified",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(133, 100%, 41%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            5,
+            16,
+            12
           ],
-          true,
-          false
-        ],
-        "layout": {}
+          "line-blur": 1,
+          "line-opacity": 0.7
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            [
+              "get",
+              "verified"
+            ],
+            [
+              "approved"
+            ],
+            true,
+            false
+          ],
+          [
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ]
+      },
+      {
+        "id": "3_lit-unverified",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(360, 100%, 41%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            5,
+            16,
+            12
+          ],
+          "line-opacity": 0.74
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            [
+              "get",
+              "verified"
+            ],
+            [
+              "rejected"
+            ],
+            true,
+            false
+          ],
+          [
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ]
       },
       {
         "id": "4_lit-Unbeleuchtet",
@@ -1886,9 +1988,7 @@
             2.5,
             16,
             6
-          ],
-          "line-blur": 1,
-          "line-opacity": 0.7
+          ]
         },
         "filter": [
           "match",
@@ -1901,14 +2001,13 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
-        "id": "4_lit-Beleuchtet",
+        "id": "4_lit-Special",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 91%, 46%)",
+          "line-color": "hsl(36, 96%, 69%)",
           "line-width": [
             "interpolate",
             [
@@ -1921,9 +2020,39 @@
             2.5,
             16,
             6
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
           ],
-          "line-blur": 1,
-          "line-opacity": 0.6
+          [
+            "special"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "4_lit-Beleuchtet",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(47, 95%, 50%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            2.5,
+            16,
+            6
+          ]
         },
         "filter": [
           "match",
@@ -1936,147 +2065,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "4_lit-verified-approved",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsl(112, 76%, 47%)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "approved"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "4_lit-verified-missing",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsla(252, 76%, 47%, 0.51)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            1,
-            20,
-            3
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "approved",
-            "rejected"
-          ],
-          false,
-          true
-        ],
-        "layout": {}
-      },
-      {
-        "id": "4_lit-verified-rejected",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsla(343, 76%, 47%, 0.74)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "rejected"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
+        ]
       }
     ]
   }
