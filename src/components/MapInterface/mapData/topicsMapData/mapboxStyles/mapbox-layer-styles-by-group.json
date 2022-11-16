@@ -116,13 +116,38 @@
         "layout": {}
       },
       {
-        "id": "Geprueft copy",
-        "type": "symbol",
-        "paint": {},
-        "layout": {
-          "icon-image": "button-menu-default copy",
-          "icon-size": 0.3
-        }
+        "id": "Datengeprueft",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsl(112, 76%, 47%)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "layout": {}
       }
     ]
   },
@@ -468,7 +493,7 @@
           "==",
           [
             "get",
-            "dataPresent"
+            "is_present"
           ],
           false
         ],
@@ -857,23 +882,26 @@
     "layers": [
       {
         "id": "3_lit-Daten aelter 2020",
-        "type": "line",
+        "type": "symbol",
         "paint": {
-          "line-opacity": 0.65,
-          "line-offset": -4,
-          "line-color": "hsl(0, 0%, 0%)",
-          "line-width": 3,
-          "line-pattern": "milan-metro"
+          "text-color": "hsl(0, 0%, 46%)"
         },
         "filter": [
           "==",
           [
             "get",
-            "dataCurrent"
+            "is_fresh"
           ],
           false
         ],
-        "layout": {}
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
+          ],
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
       },
       {
         "id": "3_lit-Keine Daten",
@@ -887,7 +915,7 @@
           "==",
           [
             "get",
-            "dataPresent"
+            "is_present"
           ],
           false
         ],
@@ -1122,61 +1150,19 @@
     "group": "atlas_bikelanes_complete_fresh_verified",
     "layers": [
       {
-        "id": "Daten aelter 2020-fake copy",
-        "type": "line",
+        "id": "Daten aelter 2020-fake copy 1",
+        "type": "symbol",
         "paint": {
-          "line-opacity": 0.65,
-          "line-offset": -3,
-          "line-color": "hsl(0, 0%, 0%)",
-          "line-pattern": "milan-metro",
-          "line-width": 3
+          "text-color": "hsl(0, 1%, 31%)"
         },
-        "filter": [
-          "match",
-          [
-            "get",
-            "update_at"
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
           ],
-          [
-            "2021-05-23T15:09:37Z",
-            "2021-02-16T08:56:21Z",
-            "2021-05-23T15:09:36Z",
-            "2020-03-02T15:14:43Z",
-            "2022-09-25T20:56:11Z",
-            "2022-01-28T19:21:32Z",
-            "2022-04-14T09:07:00Z",
-            "2021-05-23T15:09:35Z",
-            "2021-03-14T16:16:56Z",
-            "2021-05-01T12:32:50Z",
-            "2020-11-05T17:23:00Z",
-            "2019-11-13T10:11:24Z",
-            "2019-05-18T21:10:24Z",
-            "2020-04-29T11:18:55Z",
-            "2019-11-19T17:42:00Z",
-            "2021-03-02T10:06:20Z",
-            "2019-03-01T17:46:40Z",
-            "2017-06-04T09:16:58Z",
-            "2021-05-09T08:53:40Z",
-            "2022-04-29T09:36:28Z",
-            "2021-05-01T12:32:37Z",
-            "2021-03-03T15:53:28Z",
-            "2021-05-16T15:41:58Z",
-            "2021-04-02T16:01:38Z",
-            "2021-05-01T12:32:38Z",
-            "2022-09-24T13:14:28Z",
-            "2021-06-29T07:45:48Z",
-            "2021-06-02T15:17:28Z",
-            "2021-05-25T15:24:04Z",
-            "2019-06-30T19:34:11Z",
-            "2020-11-17T17:23:04Z",
-            "2020-11-22T15:55:00Z",
-            "2020-12-15T17:14:59Z",
-            "2021-05-23T15:09:28Z"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
       },
       {
         "id": "Daten vorhanden-fake copy",
@@ -1343,6 +1329,40 @@
           "icon-image": "button-menu-default copy",
           "icon-size": 0.3
         }
+      },
+      {
+        "id": "Datengeprueft copy",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsl(112, 76%, 47%)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "layout": {}
       }
     ]
   },
@@ -1351,23 +1371,26 @@
     "layers": [
       {
         "id": "5_lit-Daten aelter 2020",
-        "type": "line",
+        "type": "symbol",
         "paint": {
-          "line-opacity": 0.65,
-          "line-offset": -4,
-          "line-color": "hsl(0, 0%, 0%)",
-          "line-width": 3,
-          "line-pattern": "milan-metro"
+          "text-color": "hsl(0, 0%, 46%)"
         },
         "filter": [
           "==",
           [
             "get",
-            "dataCurrent"
+            "is_fresh"
           ],
           false
         ],
-        "layout": {}
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
+          ],
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
       },
       {
         "id": "5_lit-Keine Daten",
@@ -1381,7 +1404,7 @@
           "==",
           [
             "get",
-            "dataPresent"
+            "is_present"
           ],
           false
         ],
@@ -1493,7 +1516,7 @@
         "layout": {}
       },
       {
-        "id": "5_lit-Geprueft-fake",
+        "id": "5_lit-verified-approfed--spriteversion",
         "type": "symbol",
         "paint": {},
         "layout": {
@@ -1504,10 +1527,100 @@
           "match",
           [
             "get",
-            "service"
+            "verified"
           ],
           [
-            "alley"
+            "approved"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "5_lit-verified-approved",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsl(112, 76%, 47%)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "verified"
+          ],
+          [
+            "approved"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "5_lit-verified-rejected",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsla(343, 76%, 47%, 0.74)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "verified"
+          ],
+          [
+            "rejected"
           ],
           true,
           false
@@ -1519,61 +1632,19 @@
     "group": "atlas_bikelanes_fresh",
     "layers": [
       {
-        "id": "Daten aelter 2020-fake copy 1",
-        "type": "line",
+        "id": "Daten aelter 2020-fake",
+        "type": "symbol",
         "paint": {
-          "line-opacity": 0.65,
-          "line-offset": -3,
-          "line-color": "hsl(0, 0%, 0%)",
-          "line-pattern": "milan-metro",
-          "line-width": 3
+          "text-color": "hsl(0, 1%, 31%)"
         },
-        "filter": [
-          "match",
-          [
-            "get",
-            "update_at"
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
           ],
-          [
-            "2021-05-23T15:09:37Z",
-            "2021-02-16T08:56:21Z",
-            "2021-05-23T15:09:36Z",
-            "2020-03-02T15:14:43Z",
-            "2022-09-25T20:56:11Z",
-            "2022-01-28T19:21:32Z",
-            "2022-04-14T09:07:00Z",
-            "2021-05-23T15:09:35Z",
-            "2021-03-14T16:16:56Z",
-            "2021-05-01T12:32:50Z",
-            "2020-11-05T17:23:00Z",
-            "2019-11-13T10:11:24Z",
-            "2019-05-18T21:10:24Z",
-            "2020-04-29T11:18:55Z",
-            "2019-11-19T17:42:00Z",
-            "2021-03-02T10:06:20Z",
-            "2019-03-01T17:46:40Z",
-            "2017-06-04T09:16:58Z",
-            "2021-05-09T08:53:40Z",
-            "2022-04-29T09:36:28Z",
-            "2021-05-01T12:32:37Z",
-            "2021-03-03T15:53:28Z",
-            "2021-05-16T15:41:58Z",
-            "2021-04-02T16:01:38Z",
-            "2021-05-01T12:32:38Z",
-            "2022-09-24T13:14:28Z",
-            "2021-06-29T07:45:48Z",
-            "2021-06-02T15:17:28Z",
-            "2021-05-25T15:24:04Z",
-            "2019-06-30T19:34:11Z",
-            "2020-11-17T17:23:04Z",
-            "2020-11-22T15:55:00Z",
-            "2020-12-15T17:14:59Z",
-            "2021-05-23T15:09:28Z"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 2",
@@ -1725,8 +1796,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "4_lit-Unbeleuchtet",
@@ -1760,8 +1830,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "4_lit-Beleuchtet",
@@ -1795,24 +1864,142 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
-        "id": "4_lit-Geprueft-fake",
-        "type": "symbol",
-        "paint": {},
-        "layout": {
-          "icon-image": "button-menu-default copy",
-          "icon-size": 0.3
+        "id": "4_lit-verified-approved",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsl(112, 76%, 47%)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
         },
         "filter": [
-          "==",
+          "match",
           [
             "get",
-            "dataCurrent"
+            "verified"
           ],
+          [
+            "approved"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "4_lit-verified-missing",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsla(252, 76%, 47%, 0.51)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            1,
+            20,
+            3
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "verified"
+          ],
+          [
+            "approved",
+            "rejected"
+          ],
+          false,
           true
+        ]
+      },
+      {
+        "id": "4_lit-verified-rejected",
+        "type": "circle",
+        "paint": {
+          "circle-color": "hsla(343, 76%, 47%, 0.74)",
+          "circle-radius": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            2,
+            22,
+            10
+          ],
+          "circle-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            14,
+            1,
+            22,
+            0.6
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "verified"
+          ],
+          [
+            "rejected"
+          ],
+          true,
+          false
         ]
       }
     ]
