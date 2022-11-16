@@ -20,34 +20,17 @@ export const Inspector: React.FC = () => {
 
   // const {setInspectorOpenDisclosures, getInspectorOpenDisclosure} = useMapStateInteraction()
 
-  const createLayerPropertyKey = (
-    layerId: string,
-    propertyId: string | undefined,
-    wayId: string | undefined
-  ) => `${layerId}-${propertyId}-${wayId}`
-
-  // For some reason from time to time we get duplicated entires wich cause a `key` warning
-  const tempInspectorFeatureKeysForFilter = inspectorFeatures.map((f) =>
-    createLayerPropertyKey(f.layer.id, f?.properties?.id, f?.properties?.way_id)
-  )
-  const uniqInspectorFeatures = inspectorFeatures.filter((f) => {
-    const currentKey = createLayerPropertyKey(
-      f.layer.id,
-      f?.properties?.id,
-      f?.properties?.way_id
-    )
-    return tempInspectorFeatureKeysForFilter.includes(currentKey)
-  })
-  if (!uniqInspectorFeatures?.length) return null
+  // Uniqueness check: For some reason from time to time we get duplicated entires wich cause a `key` warning
+  const renderedLayerPropertyKeys: string[] = []
 
   return (
     <div className="absolute top-0 right-0 bottom-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
       <InspectorHeader
-        count={uniqInspectorFeatures.length}
+        count={inspectorFeatures.length}
         handleClose={() => setInspector(null)}
       />
 
-      {uniqInspectorFeatures.map((inspectObject) => {
+      {inspectorFeatures.map((inspectObject) => {
         const {
           layer: { id: layerKey, source: sourceKey },
           properties,
@@ -55,14 +38,23 @@ export const Inspector: React.FC = () => {
 
         if (!properties || !layerKey || !sourceKey) return null
 
+        // The documentedKeys info is placed on the source object
+        const sourceId = extractSourceIdIdFromSourceKey(sourceKey.toString())
+        const sourceData = getSourceData(sourceId)
+
+        // Uniqueness check:
+        const layerPropertyKey = `${sourceKey}-${
+          properties[sourceData?.highlightingKey || 'osm_id']
+        }`
+        if (renderedLayerPropertyKeys.includes(layerPropertyKey)) {
+          return null
+        }
+        renderedLayerPropertyKeys.push(layerPropertyKey)
+
         // The allowVerify info is placed on the topic object, which we only have indirect access to…
         const topicId = extractTopicIdFromSourceKey(sourceKey.toString())
         const topicData = getTopicData(topicId)
         const allowVerify = topicData?.allowVerify || false
-
-        // The documentedKeys info is placed on the source object
-        const sourceId = extractSourceIdIdFromSourceKey(sourceKey.toString())
-        const sourceData = getSourceData(sourceId)
 
         const documentedProperties = Object.fromEntries(
           Object.entries(properties)
@@ -72,11 +64,7 @@ export const Inspector: React.FC = () => {
 
         return (
           <div
-            key={createLayerPropertyKey(
-              layerKey,
-              properties.id,
-              properties.way_id
-            )}
+            key={layerPropertyKey}
             className="mt-5 w-full rounded-2xl bg-white"
           >
             <IntlProvider
