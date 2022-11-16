@@ -12,12 +12,10 @@ type Store = {
   removeCurrentUser: () => void
 }
 
-const useUserStore = create<Store>((set) => ({
+export const useUserStore = create<Store>((set) => ({
   currentUser: null,
   setCurrentUser: (data) =>
     set((state: any) => ({ ...state, currentUser: data })),
   removeCurrentUser: () =>
     set((state: any) => ({ ...state, currentUser: null })),
 }))
-
-export default useUserStore

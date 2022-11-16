@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 // @ts-ignore but it works
 import { osmAuth } from 'osm-auth'
-import useUserStore from '@components/MapInterface/UserInfo/useUserStore'
+import { useUserStore } from '@components/MapInterface/UserInfo/useUserStore'
 import { UserIcon } from '@heroicons/react/24/outline'
 import { LoggedIn } from './LoggedIn'
 import { useMatch } from '@tanstack/react-location'
