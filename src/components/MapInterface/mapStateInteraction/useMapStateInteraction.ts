@@ -1,4 +1,4 @@
-import { isDev } from '@components/utils/isDev'
+import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
 

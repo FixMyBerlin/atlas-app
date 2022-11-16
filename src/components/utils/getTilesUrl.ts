@@ -1,4 +1,4 @@
-import { isNetlifyPreviewBuild } from './isEnv'
+import { isStaging } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
@@ -14,7 +14,7 @@ export const getTilesUrl = () => {
 
   if (import.meta.env.DEV) {
     return tilesBaseUrl.development
-  } else if (isNetlifyPreviewBuild) {
+  } else if (isStaging) {
     return tilesBaseUrl.staging
   } else {
     return tilesBaseUrl.production

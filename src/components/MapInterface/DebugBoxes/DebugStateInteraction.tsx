@@ -1,4 +1,10 @@
-import { getApiUrl, getTilesUrl } from '@components/utils'
+import {
+  getApiUrl,
+  getTilesUrl,
+  isDev,
+  isProd,
+  isStaging,
+} from '@components/utils'
 import React from 'react'
 import { useMapStateInteraction } from '../mapStateInteraction'
 
@@ -35,6 +41,13 @@ export const DebugStateInteraction: React.FC = () => {
           <summary className="cursor-pointer">Urls</summary>
           <div className="font-mono">getApiUrl: {getApiUrl()}</div>
           <div className="font-mono">getTilesUrl: {getTilesUrl()}</div>
+          <div className="font-mono">isDev: {JSON.stringify(isDev)}</div>
+          <div className="font-mono">
+            isStaging: {JSON.stringify(isStaging)}
+          </div>
+          <div className="font-mono">
+            isProduction: {JSON.stringify(isProd)}
+          </div>
         </details>
       </div>
     </>

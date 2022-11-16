@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import { isNetlifyPreviewBuild } from './isEnv'
+import { isStaging } from './isEnv'
 
 export const apiBaseUrl = {
   development: 'http://localhost:80',
@@ -16,7 +16,7 @@ export const getApiUrl = () => {
 
   if (import.meta.env.DEV) {
     return apiBaseUrl.development
-  } else if (isNetlifyPreviewBuild) {
+  } else if (isStaging) {
     return apiBaseUrl.staging
   } else {
     return apiBaseUrl.production
