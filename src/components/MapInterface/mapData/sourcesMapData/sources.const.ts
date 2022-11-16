@@ -126,6 +126,7 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'lit', 'highway'],
     highlightingKey: 'osm_id',
+    freshnessDateKey: 'check_date:lit',
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json

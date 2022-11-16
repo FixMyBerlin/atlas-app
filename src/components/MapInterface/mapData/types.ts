@@ -30,6 +30,8 @@ export type MapDataSource<TIds, TApiKeyIds> = {
   documentedKeys?: string[]
   /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
   highlightingKey: string
+  /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
+  freshnessDateKey?: string
 } & MapDataRasterSources
 
 type MapDataRasterSources = {
