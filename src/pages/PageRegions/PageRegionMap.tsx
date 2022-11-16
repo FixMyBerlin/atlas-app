@@ -51,23 +51,6 @@ export const PageRegionMap: React.FC = () => {
     })
   }, [theme, lat, lng, zoom, config])
 
-  // NOTE: Might be used later to move the map…
-  // const moveMap = ({
-  //   lat,
-  //   lng,
-  //   zoom,
-  // }: {
-  //   lat: number
-  //   lng: number
-  //   zoom: number
-  // }) => {
-  //   navigate({
-  //     search: (old) => {
-  //       return { ...old, lat, lng, zoom }
-  //     },
-  //   })
-  // }
-
   return (
     <LayoutMap>
       <MapInterface />
