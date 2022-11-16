@@ -104,6 +104,7 @@ export const sources: MapDataSource<
     id: 'tarmac_education',
     tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
+    documentedKeys: ['amenity', 'name'],
     highlightingKey: 'osm_id',
   },
   {
@@ -113,6 +114,7 @@ export const sources: MapDataSource<
     attributionHtml:
       'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
+    documentedKeys: ['category', 'type', 'name'],
     highlightingKey: 'osm_id',
   },
   {

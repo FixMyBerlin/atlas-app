@@ -13,7 +13,9 @@ export const ConditionalFormattedMessage: React.FC<Props> = ({
   tagKey,
   tagValue,
 }) => {
-  if (tagKey === 'name') {
+  const categoryTranslatedAlready =
+    sourceId == 'tarmac_poiClassification' && tagKey == 'category'
+  if (tagKey === 'name' || categoryTranslatedAlready) {
     return <>{tagValue}</>
   }
 
