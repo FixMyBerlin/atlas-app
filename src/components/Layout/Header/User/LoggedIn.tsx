@@ -12,7 +12,11 @@ type Props = {
   onLogout: () => void
 }
 
-const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
+export const LoggedIn: React.FC<Props> = ({
+  user,
+  hasPermissions,
+  onLogout,
+}) => {
   const { showDebugInfo } = useMapStateInteraction()
   const imgSrc = user.avatar ? user.avatar : null
 
@@ -80,5 +84,3 @@ const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
     </Disclosure>
   )
 }
-
-export default LoggedIn
