@@ -25,11 +25,9 @@ export const themes: MapDataTheme[] = [
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
       { id: 'shops_tarmac', defaultActive: true },
-      { id: 'education_tarmac', defaultActive: true },
-      { id: 'publicTransport_tarmac', defaultActive: true },
+      { id: 'publicTransport_tarmac', defaultActive: false },
       // TODO { id: 'places_population', defaultActive: true },
       { id: 'places', defaultActive: true },
-      { id: 'roadClassification_tarmac', defaultActive: false },
       { id: 'landuse', defaultActive: true },
     ],
   },
@@ -60,7 +58,7 @@ export const themes: MapDataTheme[] = [
       { id: 'bikelanes', defaultActive: true },
       { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      { id: 'landuse', defaultActive: false },
     ],
   },
   {
@@ -85,7 +83,7 @@ export const themes: MapDataTheme[] = [
       { id: 'bikelanes', defaultActive: false },
       { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      { id: 'landuse', defaultActive: false },
     ],
   },
   {
