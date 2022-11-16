@@ -2,14 +2,14 @@ import { MapDataTopic } from '../types'
 import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topic = 'bikelanes_tarmac'
+const topic = 'bikelanes'
 export type TopicBikelanesId_Tarmac = typeof topic
 export type TopicBikelanesStyleIds_Tarmac =
   | 'default'
   | MapboxStyleLayerGroupBikelanesIds
 export type TopicBikelanesStyleFilterIds_Tarmac = '_nofilter'
 
-export const topic_bikelanes_tarmac: MapDataTopic = {
+export const topic_bikelanes: MapDataTopic = {
   id: topic,
   name: 'Fahrradinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',

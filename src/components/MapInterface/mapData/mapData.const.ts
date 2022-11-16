@@ -62,7 +62,7 @@ import {
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
   topic_bikelanes_osmscripts,
-  topic_bikelanes_tarmac,
+  topic_bikelanes,
   topic_boudaries,
   topic_education_osmscripts,
   topic_education_tarmac,
@@ -150,7 +150,7 @@ export const mapData: MapData = {
   topics: [
     topic_accidents,
     topic_bikelanes_osmscripts,
-    topic_bikelanes_tarmac,
+    topic_bikelanes,
     topic_boudaries,
     topic_education_tarmac,
     topic_education_osmscripts,
