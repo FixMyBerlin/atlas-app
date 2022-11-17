@@ -41,5 +41,5 @@ def create_verification_tables():
     print('=' * 80)
     print("Finished creating tables for verification")
 
-create_or_replace_export_functions()
 create_verification_tables()
+create_or_replace_export_functions()
