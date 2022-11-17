@@ -219,6 +219,7 @@ export const Inspector: React.FC = () => {
                   visible={allowVerify}
                   sourceKey={sourceKey.toString()}
                   objectId={systemProperties['osm_id']}
+                  verificationStatus={properties.verified}
                 />
               </Disclosure>
             </IntlProvider>

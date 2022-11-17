@@ -7,6 +7,7 @@ import { VerificationActions } from './VerificationActions'
 export type VerificationProps = {
   sourceKey: string
   objectId: number
+  verificationStatus: string
 }
 
 type Props = VerificationProps & { visible: boolean }
@@ -15,6 +16,7 @@ export const Verification: React.FC<Props> = ({
   visible,
   sourceKey,
   objectId,
+  verificationStatus,
 }) => {
   const sourceData = getSourceData(
     extractSourceIdIdFromSourceKey(sourceKey.toString())
@@ -25,7 +27,7 @@ export const Verification: React.FC<Props> = ({
 
   return (
     <div className="border-t bg-gray-50">
-      <VerificationStatus apiIdentifier={apiIdentifier} objectId={objectId} />
+      <VerificationStatus verificationStatus={verificationStatus} />
       <VerificationActions apiIdentifier={apiIdentifier} objectId={objectId} />
     </div>
   )
