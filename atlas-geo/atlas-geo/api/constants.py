@@ -12,16 +12,16 @@ available_datasets = [
 ]
 
 export_geojson_function_from_type = {
-  "bikelanes": "export_geojson_bikelanes",
-  "bikelanes_verified": "atlas_geojson_bikelanes_verified",
-  "lit": "export_geojson_lit",
-  "lit_verified": "atlas_geojson_lit_verified",
-  "poiClassification": "export_geojson_shops",
-  "education": "export_geojson_education",
-  "publicTransport": "export_geojson_publictransport",
-  "places": "export_geojson_places",
-  "roadClassification": "export_geojson_roadtypes",
-  "landuse": "export_geojson_landuse",
+  "bikelanes": "atlas_export_geojson_bikelanes",
+  "bikelanes_verified": "atlas_export_geojson_bikelanes_verified",
+  "lit": "atlas_export_geojson_lit",
+  "lit_verified": "atlas_export_geojson_lit_verified",
+  "poiClassification": "atlas_export_geojson_shops",
+  "education": "atlas_export_geojson_education",
+  "publicTransport": "atlas_export_geojson_publictransport",
+  "places": "atlas_export_geojson_places",
+  "roadClassification": "atlas_export_geojson_roadtypes",
+  "landuse": "atlas_export_geojson_landuse",
 }
 
 verification_tables = {
