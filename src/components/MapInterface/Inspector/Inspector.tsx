@@ -140,6 +140,7 @@ export const Inspector: React.FC = () => {
                   visible={allowVerify}
                   sourceKey={sourceKey.toString()}
                   objectId={properties.osm_id}
+                  verificationStatus={properties.verified}
                 />
               </Disclosure>
             </IntlProvider>
