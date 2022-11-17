@@ -1,5 +1,5 @@
 from psycopg2 import sql
-from constants import available_datasets, function_table_mapping, verification_tables, verification_views
+from constants import available_datasets, export_geojson_function_from_type, verification_tables, verification_views
 from db import conn_string
 import psycopg2
 import json
@@ -12,7 +12,7 @@ def create_or_replace_export_functions():
     print("Starting INIT of database for exports")
     with open("INIT_FUNCTIONS.sql", "r") as f:
       sql = f.read()
-    for table_name, func_name in function_table_mapping.items():
+    for table_name, func_name in export_geojson_function_from_type.items():
       print('Create function', func_name,' for table ', table_name)
       processed_sql = sql.replace('{func_name}', func_name).replace('{table_name}', table_name)
       cursor.execute(processed_sql)

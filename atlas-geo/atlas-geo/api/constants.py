@@ -11,20 +11,11 @@ available_datasets = [
   "lit"
 ]
 
-available_export_functions = {
+export_geojson_function_from_type = {
   "bikelanes": "export_geojson_bikelanes",
+  "bikelanes_verified": "atlas_geojson_bikelanes_verified",
   "lit": "export_geojson_lit",
-  "shops_tarmac": "export_geojson_shops",
-  "education_tarmac": "export_geojson_education",
-  "publicTransport_tarmac": "export_geojson_publictransport",
-  "places": "export_geojson_places",
-  "roadClassification_tarmac": "export_geojson_roadtypes",
-  "landuse": "export_geojson_landuse",
-}
-
-function_table_mapping = {
-  "bikelanes": "export_geojson_bikelanes",
-  "lit": "export_geojson_lit",
+  "lit_verified": "atlas_geojson_lit_verified",
   "poiClassification": "export_geojson_shops",
   "education": "export_geojson_education",
   "publicTransport": "export_geojson_publictransport",
