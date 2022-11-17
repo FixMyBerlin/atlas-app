@@ -1,5 +1,8 @@
 -- * @desc Add `_skip = true` and `_skipNotes` for highways with private access, indoor, informal, "mtb"-style (inkl. width) and only allowed service values
 function AddSkipInfoToHighways(object)
+  if object.tags._skipNotes == nil then
+    object.tags._skipNotes = ""
+  end
   -- Skip all non standard access values
   local allowed_access_values = Set({ "private", "no", "destination", "delivery", "permit" })
   if object.tags.access and allowed_access_values[object.tags.access] then
