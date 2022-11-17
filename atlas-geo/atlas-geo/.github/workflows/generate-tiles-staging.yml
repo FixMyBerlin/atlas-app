@@ -1,16 +1,14 @@
-name: Regenerate production tiles
+name: Regenerate staging tiles
 
 on:
   workflow_dispatch:
-  schedule:
-  - cron: "0 5 * * 1"
 
 jobs:
   trigger_generation:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Restart tarmac production
+    - name: Restart tarmac staging
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SSH_HOST }}
@@ -19,4 +17,4 @@ jobs:
         script: |
           echo "Restart tarmac container"
           cd /srv/tarmac/
-          docker compose -f docker-compose.production.yml restart -t 30 app
+          docker compose -f docker-compose.staging.yml restart -t 30 app
