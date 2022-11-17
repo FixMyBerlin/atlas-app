@@ -12,7 +12,7 @@ type StoreDebugInfo = {
 }
 
 type StoreFeaturesInspector = {
-  inspectorFeatures: null | MapboxGeoJSONFeature[]
+  inspectorFeatures: MapboxGeoJSONFeature[]
   setInspector: (
     inspectObject: StoreFeaturesInspector['inspectorFeatures']
   ) => void
@@ -32,7 +32,7 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
 
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
-  resetInspector: () => set({ inspectorFeatures: null }),
+  resetInspector: () => set({ inspectorFeatures: [] }),
 
   calculatorFeatures: [],
   addToCalculator: (featuresToAdd) => {

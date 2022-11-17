@@ -15,8 +15,8 @@ import { ConditionalFormattedMessage, translations } from './translations'
 import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, setInspector } = useMapStateInteraction()
-  if (!inspectorFeatures) return null
+  const { inspectorFeatures, resetInspector } = useMapStateInteraction()
+  if (!inspectorFeatures.length) return null
 
   // const {setInspectorOpenDisclosures, getInspectorOpenDisclosure} = useMapStateInteraction()
 
@@ -27,7 +27,7 @@ export const Inspector: React.FC = () => {
     <div className="absolute top-0 right-0 bottom-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
       <InspectorHeader
         count={inspectorFeatures.length}
-        handleClose={() => setInspector(null)}
+        handleClose={() => resetInspector()}
       />
 
       {inspectorFeatures.map((inspectObject) => {
