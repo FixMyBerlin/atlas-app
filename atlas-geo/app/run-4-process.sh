@@ -15,6 +15,15 @@ OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 
 echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m"
 
+# lit and bikelanes should be at the top, so it's available ASAP
+echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit/lit.lua ${OSM_FILTERED_FILE}
+
+echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes/bikelanes.lua ${OSM_FILTERED_FILE}
+# TODO: Enable when bug is fixed
+# psql -q -f "${PROCESS_DIR}bikelanes/bikelanesCenterline.sql"
+
 echo "\e[1m\e[7m PROCESS – Topic: boundaries \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}boundaries.lua ${OSM_FILTERED_FILE}
 
@@ -42,13 +51,6 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 echo "\e[1m\e[7m PROCESS – Topic: roadClassification \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadClassification.lua ${OSM_FILTERED_FILE}
 psql -q -f "${PROCESS_DIR}roadClassification.sql"
-
-echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit/lit.lua ${OSM_FILTERED_FILE}
-
-echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes/bikelanes.lua ${OSM_FILTERED_FILE}
-psql -q -f "${PROCESS_DIR}bikelanes/bikelanesCenterline.sql"
 
 
 # echo "\e[1m\e[7m PROCESS – Topic: parking \e[27m\e[21m"
