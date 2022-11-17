@@ -15,6 +15,9 @@ export const topic_lit: MapDataTopic = {
   desc: null,
   sourceId: 'tarmac_lit',
   allowVerify: true,
+  exportOptions: {
+    requestType: 'lit_verified',
+  },
   styles: [
     {
       id: 'default',

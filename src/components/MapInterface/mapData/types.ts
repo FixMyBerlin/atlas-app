@@ -63,6 +63,7 @@ export type MapDataTopic = {
   desc: string | null
   sourceId: SourcesIds
   allowVerify: boolean
+  exportOptions?: ExportOptions
   styles: MapDataStyle[]
 }
 
@@ -108,4 +109,8 @@ export type MapData = {
   backgrounds: MapDataBackgroundSource<SourcesRasterIds>[]
   themes: MapDataTheme[]
   topics: MapDataTopic[]
+}
+
+export type ExportOptions = {
+  requestType: string
 }
