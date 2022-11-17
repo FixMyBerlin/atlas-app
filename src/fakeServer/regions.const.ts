@@ -13,6 +13,7 @@ export type Region = {
   map: RegionMap
   bbox: { min: [number, number]; max: [number, number] } | null
   logoPath: string | null
+  logoWhiteBackgroundRequired: boolean
   themes: MapDataThemeIds[]
   osmUsers: number[]
   /** @desc published=true regions are visible on production, all others are not */
@@ -39,6 +40,7 @@ export const regions: Region[] = [
       max: [9.1753, 48.9838],
     },
     logoPath: '/pageRegions/bibi-logo.svg',
+    logoWhiteBackgroundRequired: false,
     themes: [
       // The order here specifies the order in the UI
       'fromTo',
@@ -58,6 +60,7 @@ export const regions: Region[] = [
       max: [13.4782, 53.8528],
     },
     logoPath: '/pageRegions/trto-logo.png',
+    logoWhiteBackgroundRequired: true,
     themes: [
       // The order here specifies the order in the UI
       'bikelanes',
@@ -76,6 +79,7 @@ export const regions: Region[] = [
       max: [13.4929, 52.5528],
     },
     logoPath: null,
+    logoWhiteBackgroundRequired: false,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...osmUserAdmins],
     published: false,
@@ -88,6 +92,7 @@ export const regions: Region[] = [
     // todo, needs the right bbox
     bbox: null,
     logoPath: '/pageRegions/zesplus-logo.png',
+    logoWhiteBackgroundRequired: false,
     themes: [
       // The order here specifies the order in the UI
       'fromToZes',
@@ -107,6 +112,7 @@ export const regions: Region[] = [
     // todo, needs the right bbox
     bbox: null,
     logoPath: null,
+    logoWhiteBackgroundRequired: false,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...osmUserAdmins],
     published: false,

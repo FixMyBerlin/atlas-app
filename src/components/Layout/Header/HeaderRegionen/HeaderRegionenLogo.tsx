@@ -14,7 +14,14 @@ export const HeaderRegionenLogo: React.FC = () => {
   return (
     <>
       {region.logoPath ? (
-        <img src={region.logoPath} className="h-6 w-auto" alt="" />
+        <div
+          className={classNames({
+            'rounded-sm bg-white/90 px-1 py-1':
+              region.logoWhiteBackgroundRequired,
+          })}
+        >
+          <img src={region.logoPath} className="h-6 w-auto" alt="" />
+        </div>
       ) : (
         <>
           <BuildingLibraryIcon className="block h-8 w-auto text-yellow-400 lg:hidden" />
