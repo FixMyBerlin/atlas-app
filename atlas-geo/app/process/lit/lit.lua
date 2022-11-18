@@ -74,8 +74,8 @@ function osm2pgsql.process_way(object)
     object.tags.is_present = false
   end
 
-  -- Fleshness of data
-  local withinYears = CheckDataWithinYears("lit", object.tags, 2)
+  -- Freshness of data
+  local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
   if (withinYears.result) then
     object.tags.is_fresh = true
     object.tags.fresh_age_days = withinYears.diffDays

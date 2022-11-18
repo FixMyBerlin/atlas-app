@@ -249,7 +249,7 @@ local function normalizeTags(object)
   end
 
   -- Freshness of data, see documentation
-  local withinYears = CheckDataWithinYears("cycleway", object.tags, 2)
+  local withinYears = CheckDataWithinYears(object.tags["check_date:cycleway"], 2)
   if (withinYears.result) then
     object.tags.is_fresh = true
     object.tags.fresh_age_days = withinYears.diffDays
