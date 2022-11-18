@@ -47,9 +47,9 @@ export const translations = {
   'tarmac_poiClassification--type--amenity-school': 'Schule',
   'tarmac_poiClassification--type': 'Detail-Kategorie',
   'title--source:tarmac_bikelanes--topic:bikelanes--tiles': 'Daten zu Radinfrastruktur',
-  'title--source:tarmac_education--topic:education_tarmac--tiles': 'Daten zu Bildungseinrichtungen',
+  'title--source:tarmac_education--topic:education--tiles': 'Daten zu Bildungseinrichtungen',
   'title--source:tarmac_landuse--topic:landuse--tiles': 'Daten zur Landnutzung',
   'title--source:tarmac_lit--topic:lit--tiles': 'Daten zur Beleuchtung',
   'title--source:tarmac_places--topic:places--tiles': 'Daten zu Orten',
-  'title--source:tarmac_poiClassification--topic:shops_tarmac--tiles': 'Daten zu Start-Ziel-Punkten',
+  'title--source:tarmac_poiClassification--topic:shops--tiles': 'Daten zu Start-Ziel-Punkten',
 }

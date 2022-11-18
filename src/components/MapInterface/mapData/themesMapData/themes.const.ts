@@ -24,7 +24,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
-      { id: 'shops_tarmac', defaultActive: true },
+      { id: 'shops', defaultActive: true },
       { id: 'publicTransport_tarmac', defaultActive: false },
       // TODO { id: 'places_population', defaultActive: true },
       { id: 'places', defaultActive: true },
@@ -37,9 +37,9 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
-      { id: 'shops_tarmac', defaultActive: true },
+      { id: 'shops', defaultActive: true },
       { id: 'shops_osmscripts', defaultActive: false },
-      { id: 'education_tarmac', defaultActive: true },
+      { id: 'education', defaultActive: true },
       { id: 'education_osmscripts', defaultActive: false },
       { id: 'publicTransport_tarmac', defaultActive: true },
       { id: 'publicTransport_osmscripts', defaultActive: false },

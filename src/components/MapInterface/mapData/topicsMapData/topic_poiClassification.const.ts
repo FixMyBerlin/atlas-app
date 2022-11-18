@@ -1,7 +1,7 @@
 import { MapDataTopic } from '../types'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topic = 'shops_tarmac'
+const topic = 'shops'
 const source = 'tarmac_poiClassification'
 const sourceLayer = 'public.poiClassification'
 export type TopicPoiClassificationId_Tarmac = typeof topic
