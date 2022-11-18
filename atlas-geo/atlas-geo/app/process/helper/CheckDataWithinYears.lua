@@ -4,21 +4,20 @@
 -- - We can only compare full years (for now)
 -- - Default is 2 years; the exact behavior on the edges is not explitly coded/decided
 
--- * @desc CheckDataWithinYears('lit', object.tags, [_opt_ 2 (default)])
+-- * @desc CheckDataWithinYears(dateValue, [_opt_ 2 (default)])
 -- * @returns `{ result = boolean, diffDays = int | nil }`
-function CheckDataWithinYears(keyPart, tagsObject, years)
-  local checkDateKey = "check_date:" .. keyPart
+function CheckDataWithinYears(dateValue, years)
   local yearsToSubtract = years or 2
   local compareDays = yearsToSubtract * 365
 
-  if not tagsObject[checkDateKey] then
+  if not dateValue then
     return { result = false }
   end
 
   -- `2022-01<rest>`
   -- For simplicty, we skip the days.
   local checkDatePattern = "(%d+)-(%d+).*"
-  local checkDateYear, checkDateMonth, _rest = tagsObject[checkDateKey]:match(checkDatePattern)
+  local checkDateYear, checkDateMonth, _rest = dateValue:match(checkDatePattern)
   if not checkDateYear and not checkDateMonth then return { result = false } end
 
   local checkDateUnixtime = os.time({ year = checkDateYear, month = checkDateMonth, day = 1, hour = 12, min = 0, sec = 0 })
