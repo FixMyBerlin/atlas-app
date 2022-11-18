@@ -152,6 +152,76 @@
     ]
   },
   {
+    "group": "atlas_poiclassification",
+    "layers": [
+      {
+        "id": "fmc-poiShopCategory",
+        "type": "circle",
+        "minzoom": 13.51,
+        "paint": {
+          "circle-color": [
+            "match",
+            [
+              "get",
+              "FMC:ShopCategory"
+            ],
+            [
+              "Freizeit"
+            ],
+            "#960854",
+            [
+              "Bildung"
+            ],
+            "#626060",
+            [
+              "Besorgungen"
+            ],
+            "#e709fb",
+            [
+              "Einkauf"
+            ],
+            "#0e3ecd",
+            "hsla(116, 48%, 39%, 0.5)"
+          ],
+          "circle-blur": 1,
+          "circle-radius": 6
+        },
+        "layout": {}
+      },
+      {
+        "minzoom": 7,
+        "layout": {},
+        "maxzoom": 13.5,
+        "type": "heatmap",
+        "id": "fmc-poiShopping-heatmap",
+        "paint": {
+          "heatmap-radius": 7,
+          "heatmap-color": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "heatmap-density"
+            ],
+            0,
+            "rgba(0, 0, 255, 0)",
+            0.1,
+            "hsla(13, 89%, 31%, 0.1)",
+            0.3,
+            "hsla(13, 89%, 31%, 0.4)",
+            0.5,
+            "hsla(13, 89%, 31%, 0.6)",
+            0.7,
+            "hsla(13, 89%, 31%, 0.8)",
+            1,
+            "#952809"
+          ]
+        }
+      }
+    ]
+  },
+  {
     "group": "atlas_lit",
     "layers": [
       {
@@ -610,24 +680,67 @@
     "group": "atlas_bikelanes_complete",
     "layers": [
       {
-        "id": "Daten vorhanden-fake copy 1",
+        "id": "Fuehrung mit Fussverkehr copy 4",
         "type": "line",
         "paint": {
-          "line-width": 5,
-          "line-blur": 4,
-          "line-color": "hsl(107, 72%, 76%)"
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            10,
+            0.5,
+            13,
+            2
+          ],
+          "line-dasharray": [
+            2,
+            1
+          ],
+          "line-color": "hsl(232, 97%, 36%)"
         },
         "filter": [
           "match",
           [
             "get",
-            "bicycle"
+            "category"
           ],
           [
-            "yes"
+            "footway_bicycleYes",
+            "footAndCycleway_shared"
           ],
           true,
           false
+        ]
+      },
+      {
+        "id": "MouseOverArea",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            0,
+            20,
+            14.1,
+            10,
+            22,
+            12
+          ],
+          "line-opacity": 0,
+          "line-color": "hsl(290, 100%, 54%)"
+        },
+        "filter": [
+          "has",
+          "category"
         ],
         "layout": {}
       },
@@ -650,47 +763,28 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
-        "id": "Fuehrung mit Fussverkehr copy 4",
+        "id": "Daten vorhanden-fake copy 1",
         "type": "line",
         "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0.5,
-            13,
-            2
-          ],
-          "line-dasharray": [
-            2,
-            1
-          ],
-          "line-offset": 2,
-          "line-color": "hsl(232, 97%, 36%)"
+          "line-width": 5,
+          "line-blur": 4,
+          "line-color": "hsl(107, 72%, 76%)"
         },
         "filter": [
           "match",
           [
             "get",
-            "category"
+            "bicycle"
           ],
           [
-            "footway_bicycleYes",
-            "footAndCycleway_shared"
+            "yes"
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 4",
@@ -709,8 +803,7 @@
             13,
             2
           ],
-          "line-color": "#031ab5",
-          "line-offset": 2
+          "line-color": "#031ab5"
         },
         "filter": [
           "match",
@@ -725,8 +818,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 5",
@@ -749,7 +841,6 @@
             1,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsla(232, 99%, 39%, 0.34)"
         },
         "filter": [
@@ -763,8 +854,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       }
     ]
   },
@@ -1880,7 +1970,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-verified",
@@ -1925,7 +2016,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-unverified",
@@ -1969,7 +2061,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Unbeleuchtet",
@@ -2001,7 +2094,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Special",
@@ -2033,7 +2127,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Beleuchtet",
@@ -2065,7 +2160,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   }

@@ -1,8 +1,8 @@
 {
   "about": "Metadata on the last processing of the styles api response",
-  "processed_at": "16.11.2022, 17:35:55",
+  "processed_at": "18.11.2022, 15:10:19",
   "style_last_published": {
-    "published_at": "16.11.2022, 17:35:45",
+    "published_at": "18.11.2022, 15:10:06",
     "version": 8
   },
   "style_id": "cl706a84j003v14o23n2r81w7",
@@ -10,6 +10,11 @@
   "style_name": "radverkehrsatlas-styles",
   "debug_changed_names": {
     "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
-    "changedNamesForDebugging": []
+    "changedNamesForDebugging": [
+      {
+        "sourceName": "atlas_poiClassification",
+        "cleanedName": "atlas_poiclassification"
+      }
+    ]
   }
 }
