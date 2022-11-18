@@ -38,7 +38,7 @@ local translateTable = osm2pgsql.define_table({
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
-    { column = 'offset', type='real'}
+    { column = 'offset', type = 'real' }
   }
 })
 
@@ -63,7 +63,7 @@ end
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
 -- tag: "pedestrianArea_bicycleYes"
 local function pedestiranArea(tags)
-  local results = tags.highway == "pedestrian" and tags.bicycle=="yes"
+  local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
   if result then
     tags.category = "pedestrianArea_bicycleYes"
   end
@@ -226,7 +226,8 @@ local allowed_tags = Set({
   "smoothness",
 })
 
-local predicates = {pedestiranArea, livingStreet, bicycleRoad, footAndCycleway , footAndCyclewaySegregated, footwayBicycleAllowed, cyclewaySeperated, cycleWayAlone}
+local predicates = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
+  footwayBicycleAllowed, cyclewaySeperated, cycleWayAlone }
 
 local function applyPredicates(tags)
   for _, predicate in pairs(predicates) do
@@ -241,8 +242,8 @@ local function normalizeTags(object)
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
   AddUrl("way", object)
-   -- Presence of data
-   if (object.tags.category) then
+  -- Presence of data
+  if (object.tags.category) then
     object.tags.is_present = true
   else
     object.tags.is_present = false
@@ -259,15 +260,13 @@ local function normalizeTags(object)
   end
 end
 
-
 local function intoSkipList(object)
   normalizeTags(object)
-    skipTable:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
+  skipTable:insert({
+    tags = object.tags,
+    geom = object:as_linestring()
+  })
 end
-
 
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
@@ -321,13 +320,29 @@ function osm2pgsql.process_way(object)
 
   -- apply predicates nested
   -- transformations:
-  local footwayTransformer = {highway="footway", dest="bicycle", tags={["sidewalk:left:bicycle"] = {1}, ["sidewalk:right:bicycle"] = {-1}, ["sidewalk:both:bicycle"] = {-1, 1} }}
-  local cyclewayTransformer ={highway="cycleway", dest="cycleway", tags={["cycleway:left"] = {1}, ["cycleway:right"] = {-1} , ["cycleway:both"] = {-1, 1}}}
-  local transformations = {footwayTransformer, cyclewayTransformer}
+  local footwayTransformer = {
+    highway = "footway",
+    dest = "bicycle",
+    tags = {
+      ["sidewalk:left:bicycle"] = { 1 },
+      ["sidewalk:right:bicycle"] = { -1 },
+      ["sidewalk:both:bicycle"] = { -1, 1 },
+    },
+  }
+  local cyclewayTransformer = {
+    highway = "cycleway",
+    dest = "cycleway",
+    tags = {
+      ["cycleway:left"] = { 1 },
+      ["cycleway:right"] = { -1 },
+      ["cycleway:both"] = { -1, 1 },
+    },
+  }
+  local transformations = { footwayTransformer, cyclewayTransformer }
 
   for _, transformer in pairs(transformations) do
     -- set the highway category
-    local cycleway = {highway = transformer.highway}
+    local cycleway = { highway = transformer.highway }
     -- NOTE: the category/transformer should also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
     local offset = roadWidth(object.tags) / 2
     for tag, signs in pairs(transformer.tags) do
@@ -335,7 +350,7 @@ function osm2pgsql.process_way(object)
         -- sets the bicycle tag to the value of nested tags
         cycleway[transformer.dest] = object.tags[tag]
         if applyPredicates(cycleway) then
-        object.tags._centerline = "tagged on centerline"
+          object.tags._centerline = "tagged on centerline"
           for _, sign in pairs(signs) do
             object.tags._skipNotes = nil
             object.tags.category = cycleway.category
