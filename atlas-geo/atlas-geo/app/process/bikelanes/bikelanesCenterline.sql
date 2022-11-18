@@ -20,6 +20,6 @@ UPDATE "bikelanesCenterline"
 -- Query below shows the geometries that would result in MultiLineString
 -- SELECT * from "bikelanesCenterline" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
 
-INSERT INTO "bikelanes"
-  SELECT osm_type, osm_id, tags, geom
-  FROM "bikelanesCenterline";
+-- INSERT INTO "bikelanes"
+--   SELECT osm_type, osm_id, tags, geom
+--   FROM "bikelanesCenterline";
