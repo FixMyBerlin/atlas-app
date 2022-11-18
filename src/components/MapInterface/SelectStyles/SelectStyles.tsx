@@ -20,9 +20,9 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
     ?.topics.find((t) => t.id === scopeTopicId)
 
   const [trigger, container] = usePopper({
-    placement: 'bottom-end',
+    placement: 'bottom-start',
     strategy: 'fixed',
-    modifiers: [{ name: 'offset', options: { offset: [0, 10] } }],
+    modifiers: [{ name: 'offset', options: { offset: [0, 8] } }],
   })
 
   type ToggleActiveProps = { topicId: string; styleId: string }
@@ -63,63 +63,51 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
         <div>
           <Menu.Button
             ref={trigger}
-            className="inline-flex w-full justify-between rounded-md border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+            // `w-*` has to be set fo the `truncate` to work
+            className="inline-flex w-[13.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-100"
           >
-            Stil: {activeStyleData?.name}
+            <span className="truncate">Stil: {activeStyleData?.name}</span>
             <ChevronDownIcon
-              className="-mr-1 ml-2 h-5 w-5"
+              className="-mr-1 ml-0.5 h-5 w-5"
               aria-hidden="true"
             />
           </Menu.Button>
         </div>
 
         <Portal>
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
+          <Menu.Items
+            ref={container}
+            className="absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
-            <Menu.Items
-              ref={container}
-              className="absolute left-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-            >
-              <div className="py-1">
-                {topicConfig.styles.map((styleConfig) => {
-                  const styleData = getStyleData(topicConfig.id, styleConfig.id)
-                  if (!styleData) return null
-                  const key = createTopicStyleKey(
-                    topicConfig.id,
-                    styleConfig.id
-                  )
-                  return (
-                    <Menu.Item key={key}>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          toggleActive({
-                            topicId: topicConfig.id,
-                            styleId: styleConfig.id,
-                          })
-                        }
-                        className={classNames(
-                          styleConfig.active
-                            ? 'bg-gray-100 text-gray-900'
-                            : 'text-gray-700',
-                          'block w-full px-4 py-2 text-left text-sm'
-                        )}
-                      >
-                        Stil: {styleData.name}
-                      </button>
-                    </Menu.Item>
-                  )
-                })}
-              </div>
-            </Menu.Items>
-          </Transition>
+            <div className="py-1">
+              {topicConfig.styles.map((styleConfig) => {
+                const styleData = getStyleData(topicConfig.id, styleConfig.id)
+                if (!styleData) return null
+                const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
+                return (
+                  <Menu.Item key={key}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        toggleActive({
+                          topicId: topicConfig.id,
+                          styleId: styleConfig.id,
+                        })
+                      }
+                      className={classNames(
+                        styleConfig.active
+                          ? 'bg-gray-100 text-gray-900'
+                          : 'text-gray-700',
+                        'block w-full px-4 py-2 text-left text-sm'
+                      )}
+                    >
+                      Stil: {styleData.name}
+                    </button>
+                  </Menu.Item>
+                )
+              })}
+            </div>
+          </Menu.Items>
         </Portal>
       </Menu>
     </section>
