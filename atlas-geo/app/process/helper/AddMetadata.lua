@@ -1,6 +1,6 @@
 function AddMetadata(object)
-  -- We use the tags-"process" to make the timestamp accessible.
-  -- The osm2pgsql examples use a different process. But…
+  -- We use the tags-"object" to make the timestamp accessible.
+  -- The osm2pgsql examples use store the timestamp as a separate column. But…
   --    - …I could not get this working
   --    - …and I don't see the benefit. Maybe it is needed to efficintly filter the table for incremental updates?
   -- Docs: https://github.com/openstreetmap/osm2pgsql/blob/master/flex-config/attributes.lua#L18-L21
