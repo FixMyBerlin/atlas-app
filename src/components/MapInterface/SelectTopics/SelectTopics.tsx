@@ -37,7 +37,7 @@ export const SelectTopics: React.FC = () => {
   if (!topicsConfig) return null
 
   return (
-    <section className="fixed top-32 left-5 max-h-[calc(100vh-12rem)] w-60 overflow-y-auto rounded bg-white/90 px-3 pt-1 pb-3 shadow-md">
+    <section className="fixed top-32 left-5 max-h-[calc(100vh-12rem)] w-60 overflow-y-auto overflow-x-visible rounded bg-white/90 px-3 pt-1 pb-3 shadow-md">
       <fieldset className="mt-4">
         <legend className="sr-only">Thema</legend>
         <div className="space-y-2.5">

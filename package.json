@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.2",
+    "@popperjs/core": "^2.11.6",
     "@tanstack/react-location": "^3.7.4",
     "@tanstack/react-query": "^4.14.5",
     "axios": "^1.1.3",
@@ -32,6 +33,7 @@
     "react-helmet": "^6.1.0",
     "react-intl": "^6.2.1",
     "react-map-gl": "^7.0.19",
+    "react-popper": "^2.3.0",
     "zipson": "^0.2.12",
     "zustand": "^4.1.1"
   },
