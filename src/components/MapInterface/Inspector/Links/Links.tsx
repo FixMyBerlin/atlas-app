@@ -1,12 +1,16 @@
 import { Link } from '@components/Link'
 import React from 'react'
-import { historyUrl, osmUrl } from './osmUrls'
+import { historyUrl, mapillaryUrl, osmUrl } from './osmUrls'
 
-type Props = { properties: { [key: string]: any } }
+type Props = {
+  properties: maplibregl.GeoJSONFeature['properties']
+  geometry: maplibregl.GeoJSONFeature['geometry']
+}
 
-export const Links: React.FC<Props> = ({ properties }) => {
+export const Links: React.FC<Props> = ({ properties, geometry }) => {
   const osmUrl_ = osmUrl(properties.osm_type, properties.osm_id)
   const historyUrl_ = historyUrl(properties.osm_type, properties.osm_id)
+  const mapillaryUrl_ = mapillaryUrl(geometry)
 
   if (!osmUrl_ || !historyUrl_) return null
   return (
@@ -24,6 +28,14 @@ export const Links: React.FC<Props> = ({ properties }) => {
               Änderungshistorie anzeigen
             </Link>
           </p>
+
+          {mapillaryUrl_ && (
+            <p>
+              <Link external blank to={mapillaryUrl_}>
+                Mapillary
+              </Link>
+            </p>
+          )}
         </div>
       </details>
     </div>

@@ -130,7 +130,10 @@ export const Inspector: React.FC = () => {
                   properties={properties}
                   freshnessDateKey={sourceData?.freshnessDateKey}
                 />
-                <Links properties={properties} />
+                <Links
+                  properties={properties}
+                  geometry={inspectObject.geometry}
+                />
                 <OtherProperties
                   properties={properties}
                   documentedKeys={sourceData?.documentedKeys}
