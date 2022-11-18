@@ -1,5 +1,5 @@
 /* prettier-ignore */
-export const translations = {
+export const translations: { [key: string]: string } = {
   'tarmac_bikelanes--category--bicycleRoad': 'Fahrradstraße',
   'tarmac_bikelanes--category--cyclewayAlone': 'Radweg, frei geführt',
   'tarmac_bikelanes--category--cyclewaySeparated': 'Radweg, baulich abgesetzt',
@@ -12,12 +12,13 @@ export const translations = {
   'tarmac_education--amenity--kindergarten': 'Kindergarten',
   'tarmac_education--amenity--school': 'Schule',
   'tarmac_education--amenity': 'Art der Bildngseinrichtung',
-  'tarmac_education--name': 'Name',
   'tarmac_landuse--landuse--allotments': 'Kleingartenanlage',
   'tarmac_landuse--landuse--commercial': 'Gewerbliche Nutzung',
   'tarmac_landuse--landuse--farmyard': 'Landwirdschaftliche Nutzung',
   'tarmac_landuse--landuse--residential': 'Wohngebiet',
   'tarmac_landuse--landuse--retail': 'Gewerbliche Nutzung (Einzelhandel/Geschäfte)',
+  'tarmac_landuse--landuse--university': 'Universitätsgelände',
+  'tarmac_landuse--landuse--school': 'Schulgelände',
   'tarmac_landuse--landuse': 'Landnutzung',
   'tarmac_lit--category--lit': 'Beleuchtet',
   'tarmac_lit--category--special': 'Spezielle Angaben',
@@ -30,7 +31,7 @@ export const translations = {
   'tarmac_lit--lit--no': 'Nicht beleuchtet',
   'tarmac_lit--lit--yes': 'Beleuchtet',
   'tarmac_lit--lit': 'Detaillierte Angaben',
-  'tarmac_places--name': 'Name',
+  'name': 'Name',
   'tarmac_places--place--borough': 'Stadtteil/Stadtbezirke',
   'tarmac_places--place--city': 'Stadte',
   'tarmac_places--place--hamlet': 'Siedlung',
@@ -38,6 +39,7 @@ export const translations = {
   'tarmac_places--place--town': 'Stadt oder große Gemeinde',
   'tarmac_places--place--village': 'Dorf',
   'tarmac_places--place': 'Ortskategorie',
+  'tarmac_places--population:date': 'Datum der Quelle der Einwohner:innen-Anzahl',
   'tarmac_places--population': 'Einwohner:innen-Anzahl',
   'tarmac_poiClassification--category': 'Kategorisierung des POI',
   'tarmac_poiClassification--name': 'Name POI',

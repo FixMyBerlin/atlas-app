@@ -26,7 +26,7 @@ export type MapDataSource<TIds, TApiKeyIds> = {
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
   licence?: 'ODbL'
-  /** @desc A list of keys that we officially document; other keys are for debugging; others are system keys */
+  /** @desc A sorted list of keys that we officially document; other keys are for debugging only */
   documentedKeys?: string[]
   /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
   highlightingKey: string

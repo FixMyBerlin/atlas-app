@@ -11,7 +11,11 @@ import { InspectorHeader } from './InspectorHeader'
 import { Links } from './Links'
 import { OtherProperties } from './OtherProperties'
 import { StatusTable } from './StatusTable'
-import { ConditionalFormattedMessage, translations } from './translations'
+import {
+  ConditionalFormattedKey,
+  ConditionalFormattedValue,
+  translations,
+} from './translations'
 import { Verification } from './Verification'
 
 export const Inspector: React.FC = () => {
@@ -94,24 +98,33 @@ export const Inspector: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {Object.entries(documentedProperties).map(
-                      ([key, value]) => {
-                        return (
-                          <tr key={key}>
-                            <td className="w-2/5 py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
-                              <FormattedMessage id={`${sourceId}--${key}`} />
-                            </td>
-                            <td className="px-3 py-2 text-sm text-gray-500">
-                              <ConditionalFormattedMessage
+                    {sourceData?.documentedKeys?.map((key) => {
+                      const value = documentedProperties[key]
+                      return (
+                        <tr key={key} className="group">
+                          <td className="w-2/5 py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
+                            <ConditionalFormattedKey
+                              sourceId={sourceId}
+                              tagKey={key}
+                              tagValue={value}
+                            />
+                          </td>
+                          <td className="px-3 py-2 text-sm text-gray-500">
+                            {value ? (
+                              <ConditionalFormattedValue
                                 sourceId={sourceId}
                                 tagKey={key}
                                 tagValue={value}
                               />
-                            </td>
-                          </tr>
-                        )
-                      }
-                    )}
+                            ) : (
+                              <span className="text-gray-200 group-hover:text-gray-400">
+                                Noch keine Daten
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    })}
                   </tbody>
                 </table>
 

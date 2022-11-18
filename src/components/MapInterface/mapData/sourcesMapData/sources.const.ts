@@ -89,7 +89,7 @@ export const sources: MapDataSource<
     apiVerificationIdentifier: 'bikelanes',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category'],
+    documentedKeys: ['category', 'highway', 'name'],
     highlightingKey: 'osm_id',
   },
   {
@@ -124,7 +124,7 @@ export const sources: MapDataSource<
     apiVerificationIdentifier: 'lit',
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'lit', 'highway'],
+    documentedKeys: ['category', 'lit', 'highway', 'name'],
     highlightingKey: 'osm_id',
     freshnessDateKey: 'check_date:lit',
   },

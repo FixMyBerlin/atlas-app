@@ -9,7 +9,7 @@ type Props = {
   tagValue: string
 }
 
-export const ConditionalFormattedMessage: React.FC<Props> = ({
+export const ConditionalFormattedValue: React.FC<Props> = ({
   sourceId,
   tagKey,
   tagValue,
@@ -32,5 +32,5 @@ export const ConditionalFormattedMessage: React.FC<Props> = ({
 
   // It will take a while to translate everything. This fallback does look better on production.
   const key = `${sourceId}--${tagKey}--${tagValue}`
-  return <FormattedMessage id={key} defaultMessage={isDev ? tagValue : key} />
+  return <FormattedMessage id={key} defaultMessage={isDev ? key : tagValue} />
 }
