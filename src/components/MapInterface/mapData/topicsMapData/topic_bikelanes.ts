@@ -21,7 +21,7 @@ export const topic_bikelanes: MapDataTopic = {
   styles: [
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Inhalte',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes',
@@ -32,7 +32,7 @@ export const topic_bikelanes: MapDataTopic = {
     },
     {
       id: 'atlas_bikelanes_complete',
-      name: 'Vollständigkeit',
+      name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_complete',
@@ -42,19 +42,8 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
     },
     {
-      id: 'atlas_bikelanes_fresh',
-      name: 'Aktualität',
-      desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_fresh',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
-      }),
-      interactiveFilters: null,
-    },
-    {
       id: 'atlas_bikelanes_verified',
-      name: 'Prüf-Status',
+      name: 'Inhalte & Prüf-Status',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_verified',
@@ -64,15 +53,26 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
     },
     {
-      id: 'atlas_bikelanes_complete_fresh_verified',
-      name: 'Vollansicht',
+      id: 'atlas_bikelanes_fresh',
+      name: 'Inhalte & Aktualität',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_complete_fresh_verified',
+        group: 'atlas_bikelanes_fresh',
         source: 'tarmac_bikelanes',
         sourceLayer: 'public.bikelanes_verified',
       }),
       interactiveFilters: null,
     },
+    // {
+    //   id: 'atlas_bikelanes_complete_fresh_verified',
+    //   name: 'Vollansicht',
+    //   desc: null,
+    //   layers: mapboxStyleLayers({
+    //     group: 'atlas_bikelanes_complete_fresh_verified',
+    //     source: 'tarmac_bikelanes',
+    //     sourceLayer: 'public.bikelanes_verified',
+    //   }),
+    //   interactiveFilters: null,
+    // },
   ],
 }
