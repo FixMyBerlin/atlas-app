@@ -84,6 +84,18 @@ function osm2pgsql.process_way(object)
     object.tags.fresh_age_days = withinYears.diffDays
   end
 
+  -- Experimental: Freshness of data based on update_at of object
+  local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
+  if (withinYears.result) then
+    object.tags._update_is_fresh = true
+    object.tags._update_fresh_age_days = withinYears.diffDays
+  else
+    object.tags._update_is_fresh = false
+    object.tags._update_fresh_age_days = withinYears.diffDays
+  end
+  object.tags._is_fresh_combined = object.tags.is_fresh or object.tags._update_is_fresh
+  object.tags._update_fresh_age_days_combined = object.tags.fresh_age_days or object.tags._update_fresh_age_days
+
   local allowed_tags = Set({
     "_skip",
     "_skipNotes",
