@@ -323,6 +323,7 @@ function osm2pgsql.process_way(object)
   for _, transformer in pairs(transformations) do
     -- set the highway category
     local cycleway = {highway = transformer.highway}
+    -- NOTE: the category/transformer should also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
     local offset = roadWidth(object.tags) / 2
     for tag, signs in pairs(transformer.tags) do
       if object.tags[tag] ~= nil and object.tags[tag] ~= "no" then

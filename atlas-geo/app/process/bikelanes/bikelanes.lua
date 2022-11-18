@@ -1,3 +1,7 @@
+--
+-- THIS FILE IS DEPRECATED PLEAE DON'T ADD NEW FEATURES
+-- IT WILL SOON BE REPLACED BY `bikelanesNew.lua`
+--
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
