@@ -232,7 +232,11 @@ function osm2pgsql.process_way(object)
     "sidewalk:left:bicycle",
     "sidewalk:right:bicycle",
     "traffic_sign",
-    "width",
+    "width", -- experimental
+    "sidewalk:width", -- experimental
+    "cycleway:width", -- experimental
+    "surface",
+    "smoothness",
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)

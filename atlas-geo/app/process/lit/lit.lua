@@ -98,8 +98,13 @@ function osm2pgsql.process_way(object)
     "is_present",
     "is_sidepath",
     "lit",
+    "surface",
+    "smoothness",
     "name",
     "service",
+    "width", -- experimental
+    "sidewalk:width", -- experimental
+    "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
