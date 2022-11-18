@@ -165,6 +165,7 @@ local function cyclewaySeperated(tags)
   return result
 end
 
+-- deprecated only for backwards compatibility
 local function oldCenterline(tags)
   if tags["sidewalk:left:bicycle"] == "yes" or tags["sidewalk:right:bicycle"] == "yes" or tags["sidewalk:both:bicycle"] then
     tags._centerline = "tagged on centerline"
@@ -293,6 +294,7 @@ function osm2pgsql.process_way(object)
       tags = object.tags,
       geom = object:as_linestring()
     })
+    -- in future versions we should do this as a concationation of the tables(sql)
     translateTable:insert({
       tags = object.tags,
       geom = object:as_linestring(),
@@ -301,6 +303,7 @@ function osm2pgsql.process_way(object)
     return
   end
 
+  -- this is only to stay consistent with the previous version
   if oldCenterline(object.tags) then
     object.tags._skipNotes = nil
     normalizeTags(object)
