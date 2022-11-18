@@ -13,9 +13,9 @@
 --   FROM "bikelanes_toTranslate"
 --   WHERE ST_IsSimple(geom);
 
--- UPDATE "bikelanesCenterline"
---   SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Transform(geom, 25833), "offset", 'quad_segs=4 join=round'), 3857))
---   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom);
+UPDATE "bikelanesCenterlineNew"
+  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Transform(geom, 25833), "offset", 'quad_segs=4 join=round'), 3857))
+  WHERE ST_IsSimple(geom) and not ST_IsClosed(geom);
 
 -- Query below shows the geometries that would result in MultiLineString
 -- SELECT * from "bikelanesCenterline" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
