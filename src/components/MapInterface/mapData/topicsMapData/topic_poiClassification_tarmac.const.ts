@@ -1,15 +1,18 @@
 import { MapDataTopic } from '../types'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topicId = 'shops_tarmac'
-export type TopicPoiClassificationId_Tarmac = typeof topicId
+const topic = 'shops_tarmac'
+const source = 'tarmac_poiClassification'
+const sourceLayer = 'public.poiClassification'
+export type TopicPoiClassificationId_Tarmac = typeof topic
 export type TopicPoiClassificationStyleIds_Tarmac = 'default'
 export type TopicPoiClassificationStyleFilterIds_Tarmac = '_nofilter'
 
 export const topic_poiClassification_tarmac: MapDataTopic = {
-  id: topicId,
+  id: topic,
   name: 'Einkauf etc',
   desc: null,
-  sourceId: 'tarmac_poiClassification',
+  sourceId: source,
   allowVerify: false,
   exportOptions: {
     requestType: 'shops',
@@ -19,19 +22,11 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: [
-        {
-          id: 'default',
-          type: 'circle',
-          source: 'tarmac_poiClassification',
-          'source-layer': 'public.poiClassification',
-          paint: {
-            'circle-color': 'HotPink',
-            'circle-radius': 10,
-          },
-          enableCalculator: false,
-        },
-      ],
+      layers: mapboxStyleLayers({
+        group: 'atlas_poiclassification',
+        source,
+        sourceLayer,
+      }),
       interactiveFilters: null,
     },
   ],

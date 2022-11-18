@@ -112,7 +112,7 @@ export const sources: MapDataSource<
     id: 'tarmac_poiClassification',
     tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
-      'Geschäfte (u.ä.): © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      'POIs: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>; Eigene Klassifizierung',
     licence: 'ODbL',
     documentedKeys: ['category', 'type', 'name'],
     highlightingKey: 'osm_id',

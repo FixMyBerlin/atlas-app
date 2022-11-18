@@ -1,12 +1,15 @@
 import { MapDataTopic } from '../types'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topicId = 'education_tarmac'
-export type TopicEducationId_Tarmac = typeof topicId
+const topic = 'education_tarmac'
+const source = 'tarmac_education'
+const sourceLayer = 'public.education'
+export type TopicEducationId_Tarmac = typeof topic
 export type TopicEducationStyleIds_Tarmac = 'default'
 export type TopicEducationStyleFilterIds_Tarmac = '_nofilter'
 
 export const topic_education_tarmac: MapDataTopic = {
-  id: topicId,
+  id: topic,
   name: 'Bildungseinrichtungen',
   desc: null,
   sourceId: 'tarmac_education',
@@ -19,19 +22,11 @@ export const topic_education_tarmac: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: [
-        {
-          id: 'default',
-          type: 'circle',
-          source: 'tarmac_education',
-          'source-layer': 'public.education',
-          paint: {
-            'circle-color': 'HotPink',
-            'circle-radius': 10,
-          },
-          enableCalculator: false,
-        },
-      ],
+      layers: mapboxStyleLayers({
+        group: 'atlas_education',
+        source,
+        sourceLayer,
+      }),
       interactiveFilters: null,
     },
   ],

@@ -13,7 +13,7 @@ export const topic_lit: MapDataTopic = {
   id: topic,
   name: 'Beleuchtung',
   desc: null,
-  sourceId: 'tarmac_lit',
+  sourceId: source,
   allowVerify: true,
   exportOptions: {
     requestType: 'lit_verified',
@@ -21,7 +21,7 @@ export const topic_lit: MapDataTopic = {
   styles: [
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Inhalte',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit',
@@ -32,7 +32,7 @@ export const topic_lit: MapDataTopic = {
     },
     {
       id: 'atlas_lit_complete',
-      name: 'Vollständigkeit',
+      name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_complete',
@@ -42,19 +42,8 @@ export const topic_lit: MapDataTopic = {
       interactiveFilters: null,
     },
     {
-      id: 'atlas_lit_fresh',
-      name: 'Aktualität',
-      desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_lit_fresh',
-        source,
-        sourceLayer,
-      }),
-      interactiveFilters: null,
-    },
-    {
       id: 'atlas_lit_verified',
-      name: 'Prüf-Status',
+      name: 'Inhalte & Prüf-Status',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_lit_verified',
@@ -64,15 +53,26 @@ export const topic_lit: MapDataTopic = {
       interactiveFilters: null,
     },
     {
-      id: 'atlas_lit_complete_fresh_verified',
-      name: 'Vollansicht',
+      id: 'atlas_lit_fresh',
+      name: 'Inhalte & Aktualität',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_lit_complete_fresh_verified',
+        group: 'atlas_lit_fresh',
         source,
         sourceLayer,
       }),
       interactiveFilters: null,
     },
+    // {
+    //   id: 'atlas_lit_complete_fresh_verified',
+    //   name: 'Vollansicht',
+    //   desc: null,
+    //   layers: mapboxStyleLayers({
+    //     group: 'atlas_lit_complete_fresh_verified',
+    //     source,
+    //     sourceLayer,
+    //   }),
+    //   interactiveFilters: null,
+    // },
   ],
 }

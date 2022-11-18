@@ -16,6 +16,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_lit_verified'
   | 'atlas_places'
   | 'atlas_placescircle'
+  | 'atlas_poiclassification'
 
 export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes'
@@ -38,3 +39,5 @@ export type MapboxStyleLayerGroupPlacesIds =
   | 'atlas_placescircle'
 
 export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
+export type MapboxStyleLayerGroupPoiclassificationIds =
+  'atlas_poiclassification'
