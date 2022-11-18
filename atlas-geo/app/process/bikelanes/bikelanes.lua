@@ -165,6 +165,20 @@ local function cyclewaySeperated(tags)
   return result
 end
 
+local function oldCenterline(tags)
+  if tags["sidewalk:left:bicycle"] == "yes" or tags["sidewalk:right:bicycle"] == "yes" or tags["sidewalk:both:bicycle"] then
+    tags._centerline = "tagged on centerline"
+    tags.category = "footway_bicycleYes"
+    return true
+  end
+  if tags["cycleway:right"] == "track" or tags["cycleway:left"] == "track" or tags["cycleway:both"] == "track" then
+    tags.category = "cyclewaySeparated"
+    tags._centerline = "tagged on centerline"
+    return true
+  end
+  return false
+end
+
 -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
 -- Eg. https://www.openstreetmap.org/way/27701956
 -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
@@ -279,9 +293,22 @@ function osm2pgsql.process_way(object)
       tags = object.tags,
       geom = object:as_linestring()
     })
+    translateTable:insert({
+      tags = object.tags,
+      geom = object:as_linestring(),
+      offset = 0
+    })
     return
   end
 
+  if oldCenterline(object.tags) then
+    object.tags._skipNotes = nil
+    normalizeTags(object)
+    table:insert({
+      tags = object.tags,
+      geom = object:as_linestring()
+    })
+  end
 
   -- apply predicates nested
   -- transformations:
