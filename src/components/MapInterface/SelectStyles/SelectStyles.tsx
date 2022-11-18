@@ -1,11 +1,11 @@
 import { Portal, usePopper } from '@components/utils'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import classNames from 'classnames'
 import produce from 'immer'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { getStyleData, TopicIds } from '../mapData'
 import { createTopicStyleKey } from '../utils'
 
