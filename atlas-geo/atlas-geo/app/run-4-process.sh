@@ -21,8 +21,10 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 
 echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes/bikelanes.lua ${OSM_FILTERED_FILE}
+echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes/bikelanesNew.lua ${OSM_FILTERED_FILE}
 # TODO: Enable when bug is fixed
-# psql -q -f "${PROCESS_DIR}bikelanes/bikelanesCenterline.sql"
+psql -q -f "${PROCESS_DIR}bikelanes/bikelanesCenterline.sql"
 
 echo "\e[1m\e[7m PROCESS – Topic: boundaries \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}boundaries.lua ${OSM_FILTERED_FILE}
