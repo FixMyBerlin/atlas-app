@@ -1,9 +1,8 @@
 import React from 'react'
-import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 
-import { getApiUrl } from '@components/utils'
 import VerificationHistoryWidget from './VerificationHistoryWidget'
+import { getHistory } from '../../../../api'
 
 interface Props {
   osmId: number
@@ -12,7 +11,7 @@ interface Props {
 export const VerificationHistory: React.FC<Props> = ({ osmId }) => {
   const query = useQuery({
     queryKey: ['verificationHistory', osmId],
-    queryFn: () => axios.get(`${getApiUrl()}/verify/lit/${osmId}/history`),
+    queryFn: () => getHistory('lit', osmId),
   })
 
   if (query.status !== 'success') return null
