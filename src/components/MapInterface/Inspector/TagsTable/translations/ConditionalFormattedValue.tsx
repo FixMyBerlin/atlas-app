@@ -14,6 +14,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   tagKey,
   tagValue,
 }) => {
+  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `tarmac-geo`.
   const categoryTranslatedAlready =
     sourceId == 'tarmac_poiClassification' && tagKey == 'category'
   if (tagKey === 'name' || categoryTranslatedAlready) {
@@ -30,7 +31,13 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     return <FormattedDate value={tagValue} />
   }
 
+  // Some TagKeys are not specific per category; we only translate those once
+  const nonCategorizedTagKeys = ['highway', 'surface', 'smoothness']
+  const key = nonCategorizedTagKeys.includes(tagKey)
+    ? `value--${tagKey}--${tagValue}`
+    : `value--${sourceId}--${tagKey}--${tagValue}`
+
   // It will take a while to translate everything. This fallback does look better on production.
-  const key = `${sourceId}--${tagKey}--${tagValue}`
-  return <FormattedMessage id={key} defaultMessage={isDev ? key : tagValue} />
+  const defaultMessage = isDev ? key : tagValue
+  return <FormattedMessage id={key} defaultMessage={defaultMessage} />
 }

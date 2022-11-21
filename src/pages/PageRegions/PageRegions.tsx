@@ -1,8 +1,8 @@
 import { Layout } from '@components/Layout'
-import { isAdmin } from '@components/MapInterface/UserInfo'
 import { useUserStore } from '@components/MapInterface/UserInfo/useUserStore'
 import { PageRegionsRegionList } from '@components/PageRegions/PageRegionsRegionList'
 import { isDev, isStaging } from '@components/utils'
+import { isAdmin } from '@fakeServer/utils'
 import { useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 

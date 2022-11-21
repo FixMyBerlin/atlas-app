@@ -124,7 +124,8 @@ export const sources: MapDataSource<
     apiVerificationIdentifier: 'lit',
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'lit', 'highway', 'name'],
+    // Keys with underscore are treated special in <TagsTable />
+    documentedKeys: ['category', 'lit', 'highway', 'name', '_surfacequality'],
     highlightingKey: 'osm_id',
     freshnessDateKey: 'check_date:lit',
   },

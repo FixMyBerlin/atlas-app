@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { UserIcon } from '@heroicons/react/24/solid'
-import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import { isAdmin, User } from '@components/MapInterface/UserInfo'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import { User } from '@components/MapInterface/UserInfo'
+import { isAdmin } from '@fakeServer/utils'
+import { Disclosure, Menu, Transition } from '@headlessui/react'
+import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import classNames from 'classnames'
+import React, { Fragment } from 'react'
 
 type Props = {
   user: User

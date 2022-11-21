@@ -1,4 +1,5 @@
 import { MapDataThemeIds, themes } from '@components/MapInterface/mapData'
+import { adminIds } from './utils'
 
 type RegionMap = {
   lat: number
@@ -22,13 +23,7 @@ export type Region = {
 
 export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
 
-export const osmUserAdmins = [
-  11881, // http://whosthat.osmz.ru/?q=tordans
-  17391407, // http://whosthat.osmz.ru/?q=elsueno
-  155680, // http://whosthat.osmz.ru/?q=Henri97
-  7302664, // http://whosthat.osmz.ru/?q=hejco
-]
-
+// This is our regions "Database" until we have a real one
 export const regions: Region[] = [
   {
     name: 'BiBi',
@@ -47,7 +42,7 @@ export const regions: Region[] = [
       'bikelanes',
       'lit',
     ],
-    osmUsers: [...osmUserAdmins],
+    osmUsers: [...adminIds],
     published: true,
   },
   {
@@ -66,7 +61,7 @@ export const regions: Region[] = [
       'bikelanes',
       'lit',
     ],
-    osmUsers: [...osmUserAdmins],
+    osmUsers: [...adminIds],
     published: true,
   },
   {
@@ -81,7 +76,7 @@ export const regions: Region[] = [
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
-    osmUsers: [...osmUserAdmins],
+    osmUsers: [...adminIds],
     published: false,
   },
   {
@@ -101,7 +96,7 @@ export const regions: Region[] = [
       'surfaceZes',
       'mapillary',
     ],
-    osmUsers: [...osmUserAdmins],
+    osmUsers: [...adminIds],
     published: false,
   },
   {
@@ -114,7 +109,7 @@ export const regions: Region[] = [
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
-    osmUsers: [...osmUserAdmins],
+    osmUsers: [...adminIds],
     published: false,
   },
 ]

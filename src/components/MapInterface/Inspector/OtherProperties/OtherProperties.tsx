@@ -40,7 +40,7 @@ export const OtherProperties: React.FC<Props> = ({
   )
   return (
     <details className="border-t bg-white px-4 py-2.5 text-xs [&_summary]:open:mb-1 [&_summary]:open:font-semibold">
-      <summary>Weitere Werte</summary>
+      <summary className="cursor-pointer text-right">Weitere Werte</summary>
       <div className="grid grid-cols-2 gap-4 break-all">
         <div>
           <h5 className="mb-2 font-semibold">Weitere OSM Werte:</h5>

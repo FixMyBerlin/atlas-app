@@ -1,3 +1,5 @@
+import { LocationGenerics } from '@routes/routes'
+import { useMatch } from '@tanstack/react-location'
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import {
@@ -6,23 +8,25 @@ import {
 } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
 import { getSourceData, getTopicData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { hasPermission, useUserStore } from '../UserInfo'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
 import { Links } from './Links'
 import { OtherProperties } from './OtherProperties'
 import { StatusTable } from './StatusTable'
-import {
-  ConditionalFormattedKey,
-  ConditionalFormattedValue,
-  translations,
-} from './translations'
-import { Verification } from './Verification'
+import { TagsTable } from './TagsTable'
+import { translations } from './TagsTable/translations'
+import { VerificationActions } from './VerificationAction'
+import { VerificationHistory } from './VerificationHistory'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, resetInspector } = useMapStateInteraction()
-  if (!inspectorFeatures.length) return null
+  const { currentUser } = useUserStore()
+  const {
+    data: { region },
+  } = useMatch<LocationGenerics>()
 
-  // const {setInspectorOpenDisclosures, getInspectorOpenDisclosure} = useMapStateInteraction()
+  if (!inspectorFeatures.length) return null
 
   // Uniqueness check: For some reason from time to time we get duplicated entires wich cause a `key` warning
   const renderedLayerPropertyKeys: string[] = []
@@ -58,13 +62,9 @@ export const Inspector: React.FC = () => {
         // The allowVerify info is placed on the topic object, which we only have indirect access to…
         const topicId = extractTopicIdFromSourceKey(sourceKey.toString())
         const topicData = getTopicData(topicId)
-        const allowVerify = topicData?.allowVerify || false
-
-        const documentedProperties = Object.fromEntries(
-          Object.entries(properties)
-            .sort((a, b) => a[0].localeCompare(b[0]))
-            .filter(([key, _v]) => sourceData?.documentedKeys?.includes(key))
-        )
+        const allowVerify =
+          (topicData?.allowVerify || false) &&
+          hasPermission(currentUser, region)
 
         return (
           <div
@@ -80,73 +80,39 @@ export const Inspector: React.FC = () => {
                 title={<FormattedMessage id={`title--${sourceKey}`} />}
                 objectId={properties.osm_id}
               >
-                <table className="w-full">
-                  <thead className="sr-only bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="py-1.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Schlüssel
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-1.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Wert
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    {sourceData?.documentedKeys?.map((key) => {
-                      const value = documentedProperties[key]
-                      return (
-                        <tr key={key} className="group">
-                          <td className="w-2/5 py-2 pl-4 pr-3 text-sm font-medium text-gray-900">
-                            <ConditionalFormattedKey
-                              sourceId={sourceId}
-                              tagKey={key}
-                              tagValue={value}
-                            />
-                          </td>
-                          <td className="px-3 py-2 text-sm text-gray-500">
-                            {value ? (
-                              <ConditionalFormattedValue
-                                sourceId={sourceId}
-                                tagKey={key}
-                                tagValue={value}
-                              />
-                            ) : (
-                              <span className="text-gray-200 group-hover:text-gray-400">
-                                Noch keine Daten
-                              </span>
-                            )}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-
-                <StatusTable
+                <div className="py-1">{/* Spacer */}</div>
+                <TagsTable
                   properties={properties}
-                  freshnessDateKey={sourceData?.freshnessDateKey}
+                  documentedKeys={sourceData?.documentedKeys}
+                  sourceId={sourceId}
+                />
+
+                <OtherProperties
+                  properties={properties}
+                  documentedKeys={sourceData?.documentedKeys}
                 />
                 <Links
                   properties={properties}
                   geometry={inspectObject.geometry}
                 />
-                <OtherProperties
-                  properties={properties}
-                  documentedKeys={sourceData?.documentedKeys}
-                />
-
-                <Verification
-                  visible={allowVerify}
-                  sourceKey={sourceKey.toString()}
-                  objectId={properties.osm_id}
-                  verificationStatus={properties.verified}
-                />
+                <div className="border-t bg-gray-50 px-4 py-2.5">
+                  <StatusTable
+                    properties={properties}
+                    freshnessDateKey={sourceData?.freshnessDateKey}
+                    allowVerify={allowVerify}
+                    verificationStatus={properties.verified}
+                  />
+                  <VerificationActions
+                    sourceKey={sourceKey.toString()}
+                    visible={allowVerify}
+                    osmId={properties.osm_id}
+                    verificationStatus={properties.verified}
+                  />
+                  <VerificationHistory
+                    visible={allowVerify && properties.verified !== undefined}
+                    osmId={properties.osm_id}
+                  />
+                </div>
               </Disclosure>
             </IntlProvider>
           </div>

@@ -7,25 +7,23 @@ import { translations } from './translations.const'
 type Props = {
   sourceId: SourcesIds
   tagKey: string
-  tagValue: string
 }
 
 export const ConditionalFormattedKey: React.FC<Props> = ({
   sourceId,
   tagKey,
-  tagValue,
 }) => {
-  const key = `${sourceId}--${tagKey}`
+  const key = `key--${sourceId}--${tagKey}`
 
   // It will take a while to translate everything. This fallback does look better on production.
-  let defaultMessage = isDev ? tagValue : key
+  let defaultMessage = isDev ? key : tagKey
 
   // For some key, we don't want to add translations for each source.
   // For those, we use a simple fallback.
   // (Unfortunatelly react-intl. does not support nested FormattedMessage components to handle the fallbacks.)
-  const simpleTranslFallbackKeys = ['name']
+  const simpleTranslFallbackKeys = ['name', 'highway']
   if (simpleTranslFallbackKeys.includes(tagKey)) {
-    defaultMessage = translations[tagKey]
+    defaultMessage = translations[`key--${tagKey}`]
   }
 
   return <FormattedMessage id={key} defaultMessage={defaultMessage} />
