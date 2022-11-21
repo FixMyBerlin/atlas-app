@@ -58,6 +58,7 @@ export const VerificationActions: React.FC<Props> = ({
           const history = data?.data ? data.data : []
           // return [...old.data, queryParams]
           return {
+            // @ts-ignore will work
             data: [newHistoryItem, ...history],
           }
         }
