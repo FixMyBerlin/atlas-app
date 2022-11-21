@@ -33,7 +33,6 @@ export const VerificationActions: React.FC<Props> = ({
     mutationFn: updateVerificationStatus,
     // When mutate is called:
     onMutate: async (queryParams) => {
-      console.log('========== onMutate ==========', queryParams) // TODO: cleanup
       const { osm_id, osm_type, verified_at, verified_status } = queryParams
       const newHistoryItem = {
         osm_id,
@@ -54,9 +53,7 @@ export const VerificationActions: React.FC<Props> = ({
       queryClient.setQueryData(
         queryKey,
         (data: undefined | { data: object }) => {
-          console.log('data', data) //TODO: cleanup
           const history = data?.data ? data.data : []
-          // return [...old.data, queryParams]
           return {
             // @ts-ignore will work
             data: [newHistoryItem, ...history],
@@ -72,7 +69,6 @@ export const VerificationActions: React.FC<Props> = ({
     // If the mutation fails, use the context returned from onMutate to roll back
     // use the context returned from onMutate to roll back
     onError: (err, variables, context) => {
-      console.log('onError', err) //TODO: cleanup
       if (context) {
         queryClient.setQueryData(queryKey, context.previousHistory)
         removeLocalUpdate(context.newHistoryItem)
@@ -80,7 +76,6 @@ export const VerificationActions: React.FC<Props> = ({
     },
     // Always refetch after error or success:
     onSettled: () => {
-      console.log('onSettled') //TODO: cleanup
       queryClient.invalidateQueries(queryKey)
     },
   })
