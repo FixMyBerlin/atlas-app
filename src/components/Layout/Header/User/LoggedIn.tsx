@@ -2,9 +2,9 @@ import React, { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { UserIcon } from '@heroicons/react/24/solid'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import cn from 'classnames'
 import { isAdmin, User } from '@components/MapInterface/UserInfo'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import classNames from 'classnames'
 
 type Props = {
   user: User
@@ -68,7 +68,7 @@ export const LoggedIn: React.FC<Props> = ({
                 {({ active }) => (
                   <button
                     onClick={onLogout}
-                    className={cn(
+                    className={classNames(
                       active ? 'bg-gray-100' : '',
                       'w-full px-4 py-2 text-left text-sm text-gray-700'
                     )}
