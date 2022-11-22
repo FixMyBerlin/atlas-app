@@ -100,7 +100,8 @@ export const VerificationActions: React.FC<Props> = ({
     },
   })
 
-  const verifiedOnce = ['approved', 'rejected'].includes(verificationStatus)
+  const verifiedOnce =
+    verificationStatus && ['approved', 'rejected'].includes(verificationStatus)
 
   const ApproveButton = ({ children }: { children: React.ReactNode }) => {
     if (verifiedOnce && verificationStatus === 'approved') return null
