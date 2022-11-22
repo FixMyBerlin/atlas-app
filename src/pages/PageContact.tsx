@@ -1,6 +1,7 @@
 import { LayoutPage } from '@components/Layout'
 import { Link } from '@components/Link'
 import { MetaTags } from '@components/MetaTags'
+import MfundLogo from '@pages/assets/PageContact/logo-mfund.png'
 import { ReactComponent as ImageLogoBmdvFoerderung } from './assets/PageContact/logo-bmdv-foerderung.svg'
 
 export const PageContact: React.FC = () => {
@@ -112,7 +113,7 @@ export const PageContact: React.FC = () => {
           blank
         >
           <img
-            src="src/pages/assets/PageContact/logo-mfund.png"
+            src={MfundLogo}
             alt="Förderung durch den mFund"
             className="w-40"
           />
