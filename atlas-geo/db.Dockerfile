@@ -10,3 +10,13 @@
 # This code uses the last option in that list…
 
 FROM ghcr.io/baosystems/postgis:14-3.2
+# logs can be found in /var/lib/postgresql/data/pg_log/
+CMD [ \
+  "postgres", \
+  "-clog_destination=csvlog", \
+  "-clogging_collector=on", \
+  "-clog_rotation_size=100MB", \
+  "-clog_directory=pg_log", \
+  "-clog_filename=postgresql-%Y-%m-%d_%H%M%S.log", \
+  "-clog_statement=mod" \
+]
