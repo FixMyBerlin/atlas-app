@@ -139,11 +139,28 @@ ${typeGroups
         .map((g) => `  | '${g}'\n`)
         .join('')}`
     } else {
-      return `${exportString} = ${groupValues.map((g) => `'${g}'`).join('')}`
+      return `${exportString} = ${groupValues.map((g) => `'${g}'`).join('')}\n`
     }
   })
   .join('\n')}
-`
+
+// Type for the layers of each group:
+
+${sortedGroupsAndLayers
+  .map((entry) => {
+    type Entry = { group: string; layers: { id: string }[] }
+    const { group, layers } = entry as unknown as Entry
+    const typeKeyPart = group.replace(mapboxGroupPrefix, '')
+    const exportString = `export type MapboxStyleLayers_${typeKeyPart}`
+    if (layers.length > 1) {
+      return `${exportString} =\n${layers
+        .map((l) => `  | '${l.id}'\n`)
+        .join('')}`
+    } else {
+      return `${exportString} = ${layers.map((l) => `'${l.id}'`).join('')}\n`
+    }
+  })
+  .join('\n')}`
 
 fs.writeFileSync(`${componentFolder}/types.ts`, typesFileContent)
 log(`Write typesFile`, typesFileContent)

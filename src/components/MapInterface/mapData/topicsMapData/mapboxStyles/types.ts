@@ -26,7 +26,9 @@ export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes_verified'
 
 export type MapboxStyleLayerGroupEducationIds = 'atlas_education'
+
 export type MapboxStyleLayerGroupLanduseIds = 'atlas_landuse'
+
 export type MapboxStyleLayerGroupLitIds =
   | 'atlas_lit'
   | 'atlas_lit_complete'
@@ -39,5 +41,103 @@ export type MapboxStyleLayerGroupPlacesIds =
   | 'atlas_placescircle'
 
 export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
+
 export type MapboxStyleLayerGroupPoiclassificationIds =
   'atlas_poiclassification'
+
+export type MapboxStyleLayersForGroup_bikelanes =
+  | 'Fuehrung mit Fussverkehr copy 3'
+  | 'Getrennte Fuehrung copy 3'
+  | 'fmc-verkehrsberuhigt copy 4'
+  | 'MouseOverArea-bikelanes'
+
+export type MapboxStyleLayersForGroup_bikelanes_complete =
+  | 'Fuehrung mit Fussverkehr copy 4'
+  | 'Keine Daten-fake copy 1'
+  | 'Daten vorhanden-fake copy 1'
+  | 'Getrennte Fuehrung copy 4'
+  | 'fmc-verkehrsberuhigt copy 5'
+  | 'MouseOverArea-bikelanes_complete copy'
+
+export type MapboxStyleLayersForGroup_bikelanes_complete_fresh_verified =
+  | 'Daten aelter 2020-fake copy 1'
+  | 'Daten vorhanden-fake copy'
+  | 'Keine Daten-fake copy'
+  | 'Fuehrung mit Fussverkehr copy'
+  | 'Getrennte Fuehrung copy'
+  | 'fmc-verkehrsberuhigt copy 1'
+  | 'Geprueft-fake'
+  | 'Datengeprueft copy'
+  | 'MouseOverArea-bikelanes-complete-fresh'
+
+export type MapboxStyleLayersForGroup_bikelanes_fresh =
+  | 'Daten aelter 2020-fake copy'
+  | 'Fuehrung mit Fussverkehr copy 2'
+  | 'Getrennte Fuehrung copy 2'
+  | 'fmc-verkehrsberuhigt copy 3'
+  | 'MouseOverArea-bikelanes-fresh'
+
+export type MapboxStyleLayersForGroup_bikelanes_verified =
+  | 'Fuehrung mit Fussverkehr copy 1'
+  | 'Getrennte Fuehrung copy 1'
+  | 'fmc-verkehrsberuhigt copy 2'
+  | 'Datengeprueft'
+  | 'MouseOverArea-bikelanes-verified'
+
+export type MapboxStyleLayersForGroup_education =
+  | 'fmc-poiEducation'
+  | 'fmc-poiEducation-label'
+
+export type MapboxStyleLayersForGroup_landuse = 'fmc-landuse'
+
+export type MapboxStyleLayersForGroup_lit =
+  | '2_lit-Special'
+  | '2_lit-Unbeleuchtet'
+  | '2_lit-Beleuchtet'
+  | '2_MouseOverArea-lit'
+
+export type MapboxStyleLayersForGroup_lit_complete =
+  | '1_lit-Keine Daten'
+  | '1_lit-Special'
+  | '1_lit-Unbeleuchtet'
+  | '1_lit-Beleuchtet'
+  | '1_MouseOverArea-lit'
+
+export type MapboxStyleLayersForGroup_lit_complete_fresh_verified =
+  | '5_lit-Daten aelter 2020'
+  | '5_lit-Keine Daten'
+  | '5_lit-Special'
+  | '5_lit-Unbeleuchtet'
+  | '5_lit-Beleuchtet'
+  | '5_lit-verified-approfed--spriteversion'
+  | '5_lit-verified-approved'
+  | '5_lit-verified-rejected'
+  | '5_MouseOverArea-lit'
+
+export type MapboxStyleLayersForGroup_lit_fresh =
+  | '3_lit-fresh-false-sprite-ersatz'
+  | '3_lit-fresh-true-line copy'
+  | '3_lit-fresh-true-line'
+  | '3_lit-Unbeleuchtet'
+  | '3_lit-Special'
+  | '3_lit-Beleuchtet'
+  | '3_MouseOverArea-lit'
+
+export type MapboxStyleLayersForGroup_lit_verified =
+  | '3_lit-no-verification-done'
+  | '3_lit-verified'
+  | '3_lit-unverified'
+  | '4_lit-Unbeleuchtet'
+  | '4_lit-Special'
+  | '4_lit-Beleuchtet'
+  | '4_MouseOverArea-lit'
+
+export type MapboxStyleLayersForGroup_places = 'fmc-poiPlaces-label'
+
+export type MapboxStyleLayersForGroup_placescircle =
+  | 'fmc-poiPlaces-circle'
+  | 'fmc-poiPlaces-label-for-circle'
+
+export type MapboxStyleLayersForGroup_poiclassification =
+  | 'fmc-poiShopCategory'
+  | 'fmc-poiShopping-heatmap'
