@@ -96,6 +96,10 @@ function osm2pgsql.process_way(object)
   object.tags._is_fresh_combined = object.tags.is_fresh or object.tags._update_is_fresh
   object.tags._update_fresh_age_days_combined = object.tags.fresh_age_days or object.tags._update_fresh_age_days
 
+  -- Normalize name info for sidepath'
+  -- TODO: Extact into helper
+  object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
+
   local allowed_tags = Set({
     "_skip",
     "_skipNotes",
