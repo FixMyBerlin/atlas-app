@@ -113,6 +113,7 @@ export const Inspector: React.FC = () => {
                   <VerificationActions
                     sourceKey={sourceKey.toString()}
                     visible={allowVerify}
+                    disabled={!properties?.is_present}
                     osmId={properties.osm_id}
                     verificationStatus={verificationStatus}
                   />

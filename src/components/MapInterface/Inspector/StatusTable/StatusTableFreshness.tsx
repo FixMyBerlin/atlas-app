@@ -14,7 +14,7 @@ export const StatusTableFreshness: React.FC<Props> = ({
   properties,
   freshnessDateKey,
 }) => {
-  const { is_fresh } = properties
+  const { is_fresh, is_present } = properties
   const localCheckDate = freshnessDateKey && properties[freshnessDateKey]
 
   const Table = (
@@ -53,11 +53,17 @@ export const StatusTableFreshness: React.FC<Props> = ({
       {is_fresh === undefined ||
         (is_fresh === false && !localCheckDate && (
           <div className="flex gap-1" title="">
-            <QuestionMarkCircleIcon
-              className="h-5 w-5 flex-none text-gray-600"
-              aria-hidden="true"
-            />
-            <span>Keine Angabe</span>
+            {is_present ? (
+              <>
+                <QuestionMarkCircleIcon
+                  className="h-5 w-5 flex-none text-gray-600"
+                  aria-hidden="true"
+                />
+                <span>Keine Angabe</span>
+              </>
+            ) : (
+              <span className="text-gray-400">(Primärdaten fehlen)</span>
+            )}
           </div>
         ))}
     </>

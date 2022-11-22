@@ -3,17 +3,21 @@ import {
   QuestionMarkCircleIcon,
   ShieldCheckIcon,
 } from '@heroicons/react/24/outline'
+import { GeoJSONFeature } from 'maplibre-gl'
 
 type Props = {
   allowVerify: boolean
   verificationStatus: string | undefined
+  properties: GeoJSONFeature['properties']
 }
 
 export const StatusTableVerification: React.FC<Props> = ({
   allowVerify,
   verificationStatus,
+  properties,
 }) => {
   if (!allowVerify) return null
+  const { is_present } = properties
 
   return (
     <section>
@@ -38,11 +42,17 @@ export const StatusTableVerification: React.FC<Props> = ({
       )}
       {verificationStatus === undefined && (
         <div className="flex gap-1" title="">
-          <QuestionMarkCircleIcon
-            className="h-5 w-5 flex-none text-gray-600"
-            aria-hidden="true"
-          />
-          <span>Überprüfung steht aus</span>
+          {is_present ? (
+            <>
+              <QuestionMarkCircleIcon
+                className="h-5 w-5 flex-none text-gray-600"
+                aria-hidden="true"
+              />
+              <span>Überprüfung steht aus</span>
+            </>
+          ) : (
+            <span className="text-gray-400">(Primärdaten fehlen)</span>
+          )}
         </div>
       )}
     </section>

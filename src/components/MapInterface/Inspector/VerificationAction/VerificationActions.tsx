@@ -1,7 +1,7 @@
 import {
-  VerificationApiPost,
   updateVerificationStatus,
   VerificationApiGet,
+  VerificationApiPost,
 } from '@api/index'
 import { buttonStyles } from '@components/Link'
 import { extractSourceIdIdFromSourceKey } from '@components/MapInterface/Map/SourceAndLayers/utils/extractFromSourceKey'
@@ -16,6 +16,7 @@ import React from 'react'
 type Props = {
   sourceKey: string
   visible: boolean
+  disabled: boolean
   osmId: number
   verificationStatus: string | undefined
 }
@@ -23,6 +24,7 @@ type Props = {
 export const VerificationActions: React.FC<Props> = ({
   sourceKey,
   visible,
+  disabled,
   osmId,
   verificationStatus,
 }) => {
@@ -98,19 +100,22 @@ export const VerificationActions: React.FC<Props> = ({
     },
   })
 
-  const firstVerification = verificationStatus === undefined
+  const verifiedOnce = ['approved', 'rejected'].includes(verificationStatus)
 
   const ApproveButton = ({ children }: { children: React.ReactNode }) => {
-    if (firstVerification || verificationStatus === 'approved') return null
+    if (verifiedOnce && verificationStatus === 'approved') return null
     return (
       <button
         onClick={() => {
           mutation.mutate({ ...apiData, verified_status: 'approved' })
         }}
-        disabled={mutation.isLoading}
+        disabled={mutation.isLoading || disabled}
         className={classNames(
           buttonStyles,
-          'border-gray-400 bg-white py-1 px-3 shadow-md'
+          'bg-white py-1 px-3',
+          disabled
+            ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
+            : 'border-gray-400 shadow-md'
         )}
       >
         {children}
@@ -119,16 +124,19 @@ export const VerificationActions: React.FC<Props> = ({
   }
 
   const RejectButton = ({ children }: { children: React.ReactNode }) => {
-    if (firstVerification || verificationStatus === 'rejected') return null
+    if (verifiedOnce && verificationStatus === 'rejected') return null
     return (
       <button
         onClick={() => {
           mutation.mutate({ ...apiData, verified_status: 'rejected' })
         }}
-        disabled={mutation.isLoading}
+        disabled={mutation.isLoading || disabled}
         className={classNames(
           buttonStyles,
-          'border-gray-400 bg-white py-1 px-3 shadow-md'
+          'bg-white py-1 px-3',
+          disabled
+            ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
+            : 'border-gray-400 shadow-md'
         )}
       >
         {children}
@@ -141,16 +149,22 @@ export const VerificationActions: React.FC<Props> = ({
   return (
     <div
       className={classNames('mb-4', {
-        'flex items-center justify-between': !firstVerification,
+        'flex items-center justify-between': verifiedOnce,
       })}
     >
       <h4 className="mb-2 font-semibold text-gray-600">
-        Prüf-Status {firstVerification ? 'eintragen' : 'ändern'}
+        Prüf-Status {verifiedOnce ? 'ändern' : 'eintragen'}
       </h4>
+      {disabled && (
+        <div className="mb-2">
+          Ein Status kann nur eingetragen werden, wenn die Primärdaten
+          vorliegen.
+        </div>
+      )}
       <div className="space-x-2">
         {mutation.isLoading && <SmallSpinner />}
         <ApproveButton>
-          {firstVerification ? 'Richtig' : 'Daten richtig'}
+          {verifiedOnce ? 'Daten richtig' : 'Richtig'}
         </ApproveButton>
         <RejectButton>Überarbeitung nötig</RejectButton>
       </div>

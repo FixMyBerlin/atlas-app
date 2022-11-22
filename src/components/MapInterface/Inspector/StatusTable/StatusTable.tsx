@@ -26,6 +26,7 @@ export const StatusTable: React.FC<Props> = ({
         <StatusTableVerification
           allowVerify={allowVerify}
           verificationStatus={verificationStatus}
+          properties={properties}
         />
         <StatusTableFreshness
           properties={properties}

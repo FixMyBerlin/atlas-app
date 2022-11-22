@@ -9,10 +9,11 @@ type Props = { properties: GeoJSONFeature['properties'] }
 
 export const StatusTablePresence: React.FC<Props> = ({ properties }) => {
   const { is_present } = properties
-  if (!is_present) return null
 
-  const Table = (
-    <>
+  return (
+    <section>
+      <h5 className="mb-2 font-semibold text-gray-600">Vollständigkeit</h5>
+
       {is_present === true && (
         <span
           className="flex gap-1"
@@ -25,6 +26,7 @@ export const StatusTablePresence: React.FC<Props> = ({ properties }) => {
           <span>Ja, Daten sind vorhanden</span>
         </span>
       )}
+
       {is_present === false && (
         <span
           className="flex gap-1"
@@ -37,6 +39,7 @@ export const StatusTablePresence: React.FC<Props> = ({ properties }) => {
           <span>Nein, Daten fehlen</span>
         </span>
       )}
+
       {is_present === undefined && (
         <div
           className="flex gap-1"
@@ -48,17 +51,6 @@ export const StatusTablePresence: React.FC<Props> = ({ properties }) => {
           />
           <span className="text-gray-400">(Keine Aussage möglich)</span>
         </div>
-      )}
-    </>
-  )
-
-  return (
-    <section>
-      <h5 className="mb-2 font-semibold text-gray-600">Vollständigkeit</h5>
-      {is_present ? (
-        Table
-      ) : (
-        <span className="text-gray-400">(Keine Aussage möglich)</span>
       )}
     </section>
   )
