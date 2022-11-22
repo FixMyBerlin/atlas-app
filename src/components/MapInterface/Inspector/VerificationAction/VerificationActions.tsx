@@ -1,10 +1,15 @@
+import {
+  VerificationApiPost,
+  updateVerificationStatus,
+  VerificationApiGet,
+} from '@api/index'
 import { buttonStyles } from '@components/Link'
 import { extractSourceIdIdFromSourceKey } from '@components/MapInterface/Map/SourceAndLayers/utils/extractFromSourceKey'
 import { getSourceData } from '@components/MapInterface/mapData'
+import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { useUserStore } from '@components/MapInterface/UserInfo'
 import { SmallSpinner } from '@components/Spinner/Spinner'
-import { getApiUrl } from '@components/utils'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import classNames from 'classnames'
 import React from 'react'
 
@@ -21,26 +26,75 @@ export const VerificationActions: React.FC<Props> = ({
   osmId,
   verificationStatus,
 }) => {
-  const { currentUser } = useUserStore()
+  const queryClient = useQueryClient()
+  const { addLocalUpdate, removeLocalUpdate } = useMapStateInteraction()
 
   const sourceData = getSourceData(
     extractSourceIdIdFromSourceKey(sourceKey.toString())
   )
   const apiIdentifier = sourceData?.apiVerificationIdentifier
 
-  const verificationParams = new URLSearchParams()
-  verificationParams.append('osm_type', 'W')
-  verificationParams.append('verified_by', currentUser?.id?.toString() || '')
-  verificationParams.append('verified_at', new Date().toISOString())
+  const { currentUser } = useUserStore()
+
+  const apiData: VerificationApiPost = {
+    type_name: apiIdentifier as string,
+    osm_id: osmId,
+    osm_type: 'W',
+    verified_at: new Date().toISOString(),
+    verified_by: currentUser?.id,
+    verified_status: '*** needs to be set ***',
+  }
+
+  const queryKey = ['verificationHistory', apiData.osm_id]
 
   const mutation = useMutation({
-    mutationFn: () => {
-      return fetch(
-        `${getApiUrl()}/verify/${apiIdentifier}/${osmId}?` + verificationParams,
-        {
-          method: 'POST',
+    mutationFn: updateVerificationStatus,
+    // When mutate is called:
+    onMutate: async (queryParams) => {
+      const { osm_id, osm_type, verified_at, verified_status } = queryParams
+      const newHistoryItem: VerificationApiGet = {
+        osm_id,
+        osm_type,
+        verified_at,
+        verified_by: currentUser?.id,
+        verified: verified_status,
+      }
+
+      // Cancel any outgoing refetches
+      // (so they don't overwrite our optimistic update)
+      await queryClient.cancelQueries({ queryKey })
+
+      // Snapshot the previous value
+      const previousHistory = queryClient.getQueryData(queryKey)
+
+      // Optimistically update to the new value
+      queryClient.setQueryData(
+        queryKey,
+        (data: undefined | { data: object }) => {
+          const history = data?.data ? data.data : []
+          return {
+            // @ts-ignore will work
+            data: [newHistoryItem, ...history],
+          }
         }
       )
+
+      addLocalUpdate(newHistoryItem)
+
+      // Return a context object with the snapshotted value
+      return { previousHistory, newHistoryItem }
+    },
+    // If the mutation fails, use the context returned from onMutate to roll back
+    // use the context returned from onMutate to roll back
+    onError: (err, variables, context) => {
+      if (context) {
+        queryClient.setQueryData(queryKey, context.previousHistory)
+        removeLocalUpdate(context.newHistoryItem)
+      }
+    },
+    // Always refetch after error or success:
+    onSettled: () => {
+      queryClient.invalidateQueries(queryKey)
     },
   })
 
@@ -51,8 +105,7 @@ export const VerificationActions: React.FC<Props> = ({
     return (
       <button
         onClick={() => {
-          verificationParams.append('verified_status', 'approved')
-          mutation.mutate()
+          mutation.mutate({ ...apiData, verified_status: 'approved' })
         }}
         disabled={mutation.isLoading}
         className={classNames(
@@ -70,8 +123,7 @@ export const VerificationActions: React.FC<Props> = ({
     return (
       <button
         onClick={() => {
-          verificationParams.append('verified_status', 'rejected')
-          mutation.mutate()
+          mutation.mutate({ ...apiData, verified_status: 'rejected' })
         }}
         disabled={mutation.isLoading}
         className={classNames(
@@ -85,7 +137,6 @@ export const VerificationActions: React.FC<Props> = ({
   }
 
   if (!visible) return null
-  if (!currentUser?.id) return null
 
   return (
     <div
