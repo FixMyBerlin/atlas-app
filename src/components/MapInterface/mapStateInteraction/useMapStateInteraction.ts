@@ -1,10 +1,14 @@
+import { VerificationApiGet } from '@api/index'
 import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreDebugInfo & StoreFeaturesInspector & StoreFeaturesCalculator
+type Store = StoreDebugInfo &
+  StoreFeaturesInspector &
+  StoreFeaturesCalculator &
+  StoreLocalUpdates
 
 type StoreDebugInfo = {
   showDebugInfo: boolean
@@ -24,6 +28,12 @@ type StoreFeaturesCalculator = {
   addToCalculator: (featuresToAdd: MapboxGeoJSONFeature[]) => void
   removeFromCalculator: (featureToRemove: MapboxGeoJSONFeature) => void
   clearCalculator: () => void
+}
+
+type StoreLocalUpdates = {
+  localUpdates: VerificationApiGet[]
+  addLocalUpdate: (update: VerificationApiGet) => void
+  removeLocalUpdate: (update: VerificationApiGet) => void
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
@@ -58,5 +68,19 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   },
   clearCalculator: () => {
     set({ calculatorFeatures: [] })
+  },
+
+  localUpdates: [],
+  addLocalUpdate: (update) => {
+    const { localUpdates } = get()
+    set({
+      localUpdates: [...localUpdates, update],
+    })
+  },
+  removeLocalUpdate: (updateToRemove) => {
+    const { localUpdates } = get()
+    set({
+      localUpdates: localUpdates.filter((update) => update === updateToRemove),
+    })
   },
 }))

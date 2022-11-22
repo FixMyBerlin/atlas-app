@@ -21,7 +21,8 @@
       "@pages/*": ["src/pages/*"],
       "@routes/*": ["src/routes/*"],
       "@assets/*": ["src/assets/*"],
-      "@fakeServer/*": ["src/fakeServer/*"]
+      "@fakeServer/*": ["src/fakeServer/*"],
+      "@api/*": ["src/api/*"]
     }
   },
   "include": ["src"],

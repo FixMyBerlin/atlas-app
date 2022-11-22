@@ -13,6 +13,7 @@ export default defineConfig({
       '@routes': path.resolve(__dirname, './src/routes/'),
       '@assets': path.resolve(__dirname, './src/assets/'),
       '@fakeServer': path.resolve(__dirname, './src/fakeServer/'),
+      '@api': path.resolve(__dirname, './src/api/'),
     },
   },
   // https://github.com/pd4d10/vite-plugin-svgr

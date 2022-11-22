@@ -20,7 +20,8 @@ import { VerificationActions } from './VerificationAction'
 import { VerificationHistory } from './VerificationHistory'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, resetInspector } = useMapStateInteraction()
+  const { inspectorFeatures, resetInspector, localUpdates } =
+    useMapStateInteraction()
   const { currentUser } = useUserStore()
   const {
     data: { region },
@@ -66,6 +67,13 @@ export const Inspector: React.FC = () => {
           (topicData?.allowVerify || false) &&
           hasPermission(currentUser, region)
 
+        const localVerificationStatus = [...localUpdates]
+          .reverse()
+          .find((update) => update.osm_id === properties.osm_id)?.verified
+
+        const verificationStatus =
+          localVerificationStatus || properties.verified
+
         return (
           <div
             key={layerPropertyKey}
@@ -100,16 +108,16 @@ export const Inspector: React.FC = () => {
                     properties={properties}
                     freshnessDateKey={sourceData?.freshnessDateKey}
                     allowVerify={allowVerify}
-                    verificationStatus={properties.verified}
+                    verificationStatus={verificationStatus}
                   />
                   <VerificationActions
                     sourceKey={sourceKey.toString()}
                     visible={allowVerify}
                     osmId={properties.osm_id}
-                    verificationStatus={properties.verified}
+                    verificationStatus={verificationStatus}
                   />
                   <VerificationHistory
-                    visible={allowVerify && properties.verified !== undefined}
+                    visible={allowVerify && verificationStatus !== undefined}
                     osmId={properties.osm_id}
                   />
                 </div>
