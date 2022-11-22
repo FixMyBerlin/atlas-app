@@ -1,4 +1,3 @@
-import { sourcesBackgroundsRaster } from './sourcesMapData'
 import { sources } from './sourcesMapData/sources.const'
 import { themes } from './themesMapData'
 import {
@@ -36,6 +35,9 @@ import {
   TopicPlacesId,
   TopicPlacesStyleFilterIds,
   TopicPlacesStyleIds,
+  TopicPoiClassificationId_Tarmac,
+  TopicPoiClassificationStyleFilterIds_Tarmac,
+  TopicPoiClassificationStyleIds_Tarmac,
   TopicPublicTransportId_Osmscripts,
   TopicPublicTransportId_Tarmac,
   TopicPublicTransportStyleFilterIds_Osmscripts,
@@ -49,11 +51,8 @@ import {
   TopicRoadClassificationStyleIds_Osmscripts,
   TopicRoadClassificationStyleIds_Tarmac,
   TopicShopsId_Osmscripts,
-  TopicPoiClassificationId_Tarmac,
   TopicShopsStyleFilterIds_Osmscripts,
-  TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicShopsStyleIds_Osmscripts,
-  TopicPoiClassificationStyleIds_Tarmac,
   TopicSurfaceId_Osmscripts,
   TopicSurfaceId_Tarmac,
   TopicSurfaceStyleFilterIds_Osmscripts,
@@ -61,21 +60,21 @@ import {
   TopicSurfaceStyleIds_Osmscripts,
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
-  topic_bikelanes_osmscripts,
   topic_bikelanes,
+  topic_bikelanes_osmscripts,
   topic_boudaries,
-  topic_education_osmscripts,
   topic_education,
+  topic_education_osmscripts,
   topic_landuse,
   topic_lit,
   topic_mapillaryCoverage,
   topic_places,
+  topic_poiClassification_tarmac,
   topic_publicTransport_osmscripts,
   topic_publicTransport_tarmac,
   topic_roadClassification_osmscripts,
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
-  topic_poiClassification_tarmac,
   topic_surface_osmscripts,
 } from './topicsMapData'
 import { MapData } from './types'
@@ -145,7 +144,6 @@ export type TopicStyleFilterIds =
 
 export const mapData: MapData = {
   sources,
-  backgrounds: sourcesBackgroundsRaster,
   themes,
   topics: [
     topic_accidents,

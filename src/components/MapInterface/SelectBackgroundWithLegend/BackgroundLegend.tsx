@@ -1,9 +1,9 @@
 import { Link } from '@components/Link'
-import { MapIcon, ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline'
+import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
-import { mapData } from '../mapData'
+import { sourcesBackgroundsRaster } from '../mapData'
 import { replaceZxy } from '../utils'
 
 export const BackgroundLegend: React.FC = () => {
@@ -14,7 +14,7 @@ export const BackgroundLegend: React.FC = () => {
     zoom,
   } = useSearch<LocationGenerics>()
 
-  const selectedBackground = mapData.backgrounds.find(
+  const selectedBackground = sourcesBackgroundsRaster.find(
     (b) => b.id === selectedBackgroundId
   )
   if (!selectedBackground?.legendUrl) return null

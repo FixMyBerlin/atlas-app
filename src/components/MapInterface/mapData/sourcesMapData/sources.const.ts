@@ -29,10 +29,10 @@ export type SourceExportApiIdentifier =
   | 'bikelanes_verified'
   | 'education'
   | 'lit_verified'
+  | 'places'
   | 'publicTransport'
   | 'roadClassification'
   | 'shops'
-  | 'places'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"

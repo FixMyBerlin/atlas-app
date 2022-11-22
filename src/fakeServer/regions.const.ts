@@ -1,4 +1,8 @@
-import { MapDataThemeIds, themes } from '@components/MapInterface/mapData'
+import {
+  MapDataThemeIds,
+  SourcesRasterIds,
+  themes,
+} from '@components/MapInterface/mapData'
 import { adminIds } from './utils'
 
 type RegionMap = {
@@ -19,7 +23,21 @@ export type Region = {
   osmUsers: number[]
   /** @desc published=true regions are visible on production, all others are not */
   published: boolean
+  backgroundSources: SourcesRasterIds[]
 }
+
+const defaultBackgroundSources: SourcesRasterIds[] = [
+  'mapnik',
+  'esri',
+  'cyclosm',
+  'thunderforest-opencyclemap',
+  'memomaps-transport',
+  'thunderforest-transport',
+  'thunderforest-landscape',
+  'thunderforest-outdoors',
+  'waymarkedtrails-cycling',
+  'waymarkedtrails-hiking',
+]
 
 export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
 
@@ -44,6 +62,7 @@ export const regions: Region[] = [
     ],
     osmUsers: [...adminIds],
     published: true,
+    backgroundSources: defaultBackgroundSources,
   },
   {
     name: 'TrTo',
@@ -63,6 +82,7 @@ export const regions: Region[] = [
     ],
     osmUsers: [...adminIds],
     published: true,
+    backgroundSources: defaultBackgroundSources,
   },
   {
     name: 'Berlin',
@@ -78,6 +98,16 @@ export const regions: Region[] = [
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...adminIds],
     published: false,
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'strassenbefahrung',
+      'alkis',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+      'parkraumkarte_neukoelln',
+    ],
   },
   {
     name: 'ZES+',
@@ -98,6 +128,7 @@ export const regions: Region[] = [
     ],
     osmUsers: [...adminIds],
     published: false,
+    backgroundSources: defaultBackgroundSources,
   },
   {
     name: 'Langerwehe',
@@ -111,5 +142,6 @@ export const regions: Region[] = [
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
     osmUsers: [...adminIds],
     published: false,
+    backgroundSources: defaultBackgroundSources,
   },
 ]

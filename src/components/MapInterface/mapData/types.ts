@@ -3,7 +3,6 @@ import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
 import {
   SourceExportApiIdentifier,
   SourcesIds,
-  SourcesRasterIds,
   SourceVerificationApiIdentifier,
 } from './sourcesMapData'
 import { MapDataThemeIds } from './themesMapData'
@@ -11,12 +10,17 @@ import { MapDataThemeIds } from './themesMapData'
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
 export type MapDataBackgroundSource<TIds> = {
   id: TIds
+  name: string
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
-} & MapDataRasterSources
+  type?: mapboxgl.Source['type']
+  minzoom?: mapboxgl.RasterSource['minzoom']
+  maxzoom?: mapboxgl.RasterSource['maxzoom']
+  tileSize?: mapboxgl.RasterSource['tileSize']
+}
 
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
@@ -35,14 +39,8 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   highlightingKey: string
   /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
   freshnessDateKey?: string
-} & MapDataRasterSources
-
-type MapDataRasterSources = {
-  name?: string
-  type?: mapboxgl.Source['type']
   minzoom?: mapboxgl.RasterSource['minzoom']
   maxzoom?: mapboxgl.RasterSource['maxzoom']
-  tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
 /** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
@@ -112,7 +110,6 @@ export type MapData = {
     SourceVerificationApiIdentifier,
     SourceExportApiIdentifier
   >[]
-  backgrounds: MapDataBackgroundSource<SourcesRasterIds>[]
   themes: MapDataTheme[]
   topics: MapDataTopic[]
 }

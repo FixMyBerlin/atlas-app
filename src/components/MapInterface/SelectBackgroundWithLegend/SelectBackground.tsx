@@ -1,7 +1,8 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
-import { useNavigate, useSearch } from '@tanstack/react-location'
+import { regionFromPath } from '@routes/utils'
+import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
 import { SourcesRasterIds, sourcesBackgroundsRaster } from '../mapData'
@@ -12,6 +13,16 @@ export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
   const { calculatorFeatures } = useMapStateInteraction()
   const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
+  const {
+    params: { regionPath },
+  } = useMatch()
+  const region = regionFromPath(regionPath)
+
+  if (!region?.backgroundSources) return null
+
+  const backgrounds = sourcesBackgroundsRaster.filter((s) =>
+    region.backgroundSources.includes(s.id)
+  )
 
   const navigate = useNavigate<LocationGenerics>()
   const onChange = (value: SourcesRasterIds) => {
@@ -60,9 +71,7 @@ export const SelectBackground: React.FC = () => {
             value={'default'}
             name={'Standard'}
           />
-          {sourcesBackgroundsRaster.map((background) => {
-            const { name, id } = background
-            if (!name || !id) return null
+          {backgrounds.map(({ name, id }) => {
             // TODO – This feels hacky. Research solution.
             const keyThatRerendersOnceGeschichteIsReady = `${selectedBackgroundId}-${id}`
             return (
