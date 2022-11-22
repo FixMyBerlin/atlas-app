@@ -61,6 +61,7 @@ export const VerificationActions: React.FC<Props> = ({
         }
       )
 
+      // @ts-ignore TODO: make this work
       addLocalUpdate(newHistoryItem)
 
       // Return a context object with the snapshotted value
@@ -71,6 +72,7 @@ export const VerificationActions: React.FC<Props> = ({
     onError: (err, variables, context) => {
       if (context) {
         queryClient.setQueryData(queryKey, context.previousHistory)
+        // @ts-ignore TODO: make this work
         removeLocalUpdate(context.newHistoryItem)
       }
     },
