@@ -237,6 +237,7 @@ function osm2pgsql.process_way(object)
     "cycleway:width", -- experimental
     "surface",
     "smoothness",
+    "traffic_sign",
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)

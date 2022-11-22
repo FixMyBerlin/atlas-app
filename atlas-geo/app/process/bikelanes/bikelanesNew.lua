@@ -224,6 +224,7 @@ local allowed_tags = Set({
   "cycleway:width", -- experimental
   "surface",
   "smoothness",
+  "traffic_sign",
 })
 
 local predicates = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
