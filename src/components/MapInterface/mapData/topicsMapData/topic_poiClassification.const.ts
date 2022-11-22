@@ -14,9 +14,6 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
   desc: null,
   sourceId: source,
   allowVerify: false,
-  exportOptions: {
-    requestType: 'shops',
-  },
   styles: [
     {
       id: 'default',

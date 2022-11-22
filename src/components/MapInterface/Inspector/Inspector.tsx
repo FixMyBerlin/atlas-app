@@ -103,6 +103,7 @@ export const Inspector: React.FC = () => {
                   properties={properties}
                   geometry={inspectObject.geometry}
                 />
+
                 <div className="border-t bg-gray-50 px-4 py-2.5">
                   <StatusTable
                     properties={properties}

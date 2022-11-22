@@ -25,6 +25,15 @@ export type SourceVerificationApiIdentifier =
   | 'bikelanes'
   | 'roadclassification'
 
+export type SourceExportApiIdentifier =
+  | 'bikelanes_verified'
+  | 'education'
+  | 'lit_verified'
+  | 'publicTransport'
+  | 'roadClassification'
+  | 'shops'
+  | 'places'
+
 // https://account.mapbox.com/access-tokens
 // "Default public token"
 const apiKeyMapbox =
@@ -38,7 +47,8 @@ const tilesUrl = getTilesUrl()
 
 export const sources: MapDataSource<
   SourcesIds,
-  SourceVerificationApiIdentifier
+  SourceVerificationApiIdentifier,
+  SourceExportApiIdentifier
 >[] = [
   {
     id: 'parkraumParking',
@@ -80,6 +90,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.roadClassification.json
     id: 'tarmac_roadClassification',
+    apiExportIdentifier: 'roadClassification',
     tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'osm_id',
@@ -87,6 +98,7 @@ export const sources: MapDataSource<
   {
     id: 'tarmac_bikelanes',
     apiVerificationIdentifier: 'bikelanes',
+    apiExportIdentifier: 'bikelanes_verified',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'highway', 'name'],
@@ -95,6 +107,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
+    apiExportIdentifier: 'publicTransport',
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'osm_id',
@@ -102,6 +115,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.education.json
     id: 'tarmac_education',
+    apiExportIdentifier: 'education',
     tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['amenity', 'name'],
@@ -110,6 +124,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
     id: 'tarmac_poiClassification',
+    apiExportIdentifier: 'shops',
     tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
       'POIs: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>; Eigene Klassifizierung',
@@ -122,6 +137,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/public.lit_verified.json
     id: 'tarmac_lit',
     apiVerificationIdentifier: 'lit',
+    apiExportIdentifier: 'lit_verified',
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     // Keys with underscore are treated special in <TagsTable />
@@ -132,6 +148,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
     id: 'tarmac_places',
+    apiExportIdentifier: 'places',
     tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['name', 'place', 'population', 'population:date'],

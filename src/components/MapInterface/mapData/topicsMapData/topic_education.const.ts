@@ -14,9 +14,6 @@ export const topic_education: MapDataTopic = {
   desc: null,
   sourceId: 'tarmac_education',
   allowVerify: false,
-  exportOptions: {
-    requestType: 'education',
-  },
   styles: [
     {
       id: 'default',

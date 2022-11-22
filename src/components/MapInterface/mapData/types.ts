@@ -1,6 +1,7 @@
 import mapboxgl from 'mapbox-gl'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
 import {
+  SourceExportApiIdentifier,
   SourcesIds,
   SourcesRasterIds,
   SourceVerificationApiIdentifier,
@@ -18,10 +19,12 @@ export type MapDataBackgroundSource<TIds> = {
 } & MapDataRasterSources
 
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
-export type MapDataSource<TIds, TApiKeyIds> = {
+export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
-  /** @desc The part of the API URL that identifes the data set */
-  apiVerificationIdentifier?: TApiKeyIds
+  /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
+  apiVerificationIdentifier?: TVerIds
+  /** @desc Identifier for the export API URL; export is only allowed when present */
+  apiExportIdentifier?: TExpIds
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
@@ -63,7 +66,6 @@ export type MapDataTopic = {
   desc: string | null
   sourceId: SourcesIds
   allowVerify: boolean
-  exportOptions?: ExportOptions
   styles: MapDataStyle[]
 }
 
@@ -105,12 +107,12 @@ export type MapDataStyleInteractiveFilterOption = {
 }
 
 export type MapData = {
-  sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier>[]
+  sources: MapDataSource<
+    SourcesIds,
+    SourceVerificationApiIdentifier,
+    SourceExportApiIdentifier
+  >[]
   backgrounds: MapDataBackgroundSource<SourcesRasterIds>[]
   themes: MapDataTheme[]
   topics: MapDataTopic[]
-}
-
-export type ExportOptions = {
-  requestType: string
 }

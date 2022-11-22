@@ -11,9 +11,6 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
   desc: null,
   sourceId: 'tarmac_publicTransport',
   allowVerify: false,
-  exportOptions: {
-    requestType: 'publicTransport',
-  },
   styles: [
     {
       id: 'default',

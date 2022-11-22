@@ -15,9 +15,6 @@ export const topic_lit: MapDataTopic = {
   desc: null,
   sourceId: source,
   allowVerify: true,
-  exportOptions: {
-    requestType: 'lit_verified',
-  },
   styles: [
     {
       id: 'default',

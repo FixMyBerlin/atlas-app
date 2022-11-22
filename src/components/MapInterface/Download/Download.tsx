@@ -78,7 +78,11 @@ export const Download: React.FC = () => {
           {flatTopics.map((topicConfig) => {
             const topicData = getTopicData(topicConfig.id)
             const sourceData = getSourceData(topicData?.sourceId)
-            if (!topicData || !sourceData) return null
+
+            // Download is only allowed when `apiExportIdentifier` is specified explicitly
+            if (!topicData || !sourceData || !sourceData?.apiExportIdentifier) {
+              return null
+            }
 
             return (
               <li key={topicData.id} className="py-5">
@@ -117,7 +121,7 @@ export const Download: React.FC = () => {
                   {allowDownload && (
                     <Link
                       to={`${getApiUrl()}/export/${
-                        topicData?.exportOptions?.requestType || topicData.id
+                        sourceData?.apiExportIdentifier
                       }?minlon=${bbox.min[0]}&minlat=${bbox.min[1]}&maxlon=${
                         bbox.max[0]
                       }&maxlat=${bbox.max[1]}`}
