@@ -23,6 +23,25 @@ export const topic_landuse: MapDataTopic = {
         source: 'tarmac_landuse',
         sourceLayer: 'public.landuse',
       }),
+      legends: [
+        {
+          id: 'residential',
+          name: 'Wohngegend',
+          style: { type: 'fill', color: 'hsl(17, 94%, 81%)' },
+          layers: null,
+        },
+        {
+          id: 'non-residential',
+          name: 'Gewerbe',
+          style: { type: 'fill', color: 'hsl(215, 88%, 78%)' },
+          layers: null,
+        },
+        {
+          id: 'ignore',
+          name: null,
+          layers: ['fmc-landuse'],
+        },
+      ],
       interactiveFilters: null,
     },
   ],

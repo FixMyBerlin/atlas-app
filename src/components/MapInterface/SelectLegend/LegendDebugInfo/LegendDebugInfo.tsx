@@ -33,7 +33,9 @@ export const LegendDebugInfo: React.FC<Props> = ({ legendName, layers }) => {
                 return (
                   <pre key={key} className="my-0.5 text-xs">
                     paint['{key}']{' '}
-                    <span style={{ color: content }}>{content}</span>
+                    <span style={{ color: content }}>
+                      {JSON.stringify(content, undefined, 2)}
+                    </span>
                   </pre>
                 )
               })}

@@ -1,8 +1,11 @@
+import { isDev } from '@components/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
+import classNames from 'classnames'
 import React from 'react'
 import {
   getStyleData,
+  MapDataStyleLegend,
   MapDataVisLayer,
   TopicIds,
   TopicStyleIds,
@@ -10,7 +13,12 @@ import {
 } from '../mapData'
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
 import { LegendDebugInfo } from './LegendDebugInfo'
-import { LegendIconCircle, LegendIconLine } from './LegendIcons'
+import {
+  LegendIconArea,
+  LegendIconCircle,
+  LegendIconLine,
+  LegendIconTypes,
+} from './LegendIcons'
 
 type Props = { scopeTopicId: TopicIds }
 
@@ -33,7 +41,12 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const legends = styleData?.legends?.filter(
     (l) => l.id !== 'ignore' && l.name !== null
   )
-  if (!styleData || !legends) return null
+  if (!styleData || !legends) {
+    // For development, we want some help whenever no legend is specified, yet
+    return isDev && styleData ? (
+      <LegendDebugInfo legendName={'(All layers)'} layers={styleData.layers} />
+    ) : null
+  }
 
   const handleClick = (
     topicId: TopicIds,
@@ -43,18 +56,40 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
     console.log({ topicId, styleId, legendId })
   }
 
-  const pickIcon = (layer: MapDataVisLayer[]) => {
+  const pickIconFromLayer = (layer: MapDataVisLayer[]) => {
     const styleLayer = layer[0]
-    switch (styleLayer.type) {
+    if (styleLayer === undefined) return null
+
+    let color = 'red'
+    if (
+      styleLayer.type === 'line' &&
+      typeof styleLayer?.paint?.['line-color'] === 'string'
+    ) {
+      color = styleLayer?.paint?.['line-color']
+    }
+    return iconByStyle(styleLayer.type, color)
+  }
+
+  const pickIconFromLegend = (legend: MapDataStyleLegend) => {
+    if (!legend?.style?.type && !legend?.style?.color) {
+      console.warn('pickIconFromLegend: missing data', {
+        type: legend?.style?.type,
+        style: legend?.style?.color,
+      })
+      return null
+    }
+    return iconByStyle(legend.style.type, legend.style.color)
+  }
+
+  const iconByStyle = (type: LegendIconTypes, color: string) => {
+    console.log({ type })
+    switch (type) {
       case 'line':
-        return (
-          <LegendIconLine
-            color={styleLayer?.paint?.['line-color'] as string}
-            width={4}
-          />
-        )
+        return <LegendIconLine color={color} width={4} />
       case 'circle':
-        return <LegendIconCircle />
+        return <LegendIconCircle color={color} />
+      case 'fill':
+        return <LegendIconArea color={color} />
       default:
         return <>TODO</>
     }
@@ -79,17 +114,24 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
 
             const active = true // TODO
             const disabled = false // TODO
+            const interactive = legendData.layers !== null
             const layers = styleData.layers.filter((layer) =>
-              legendData.layers.includes(layer.id)
+              legendData?.layers?.includes(layer.id)
             )
 
             return (
               <label
                 htmlFor={key}
-                className="group relative flex cursor-pointer items-center"
+                className={classNames('group relative flex items-center', {
+                  'cursor-pointer': interactive,
+                })}
                 key={key}
               >
-                <div className="h-5 w-5">{pickIcon(layers)}</div>
+                <div className="h-5 w-5">
+                  {layers.length
+                    ? pickIconFromLayer(layers)
+                    : pickIconFromLegend(legendData)}
+                </div>
                 <div className="flex h-5 items-center ">
                   <input
                     id={key}
@@ -99,6 +141,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     defaultChecked={active}
                     disabled={disabled}
                     onChange={() =>
+                      interactive &&
                       handleClick(topicConfig.id, styleConfig.id, legendDataId)
                     }
                     value={key}
@@ -107,8 +150,10 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 <div className="ml-2.5 flex items-center text-sm font-medium text-gray-700">
                   {legendData.name}
                   <LegendDebugInfo
-                    legendName={legendData.name || ''}
-                    layers={layers}
+                    legendName={
+                      layers.length ? legendData.name || '' : '(All layers)'
+                    }
+                    layers={layers.length ? layers : styleData.layers}
                   />
                 </div>
               </label>

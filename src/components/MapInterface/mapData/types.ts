@@ -1,4 +1,5 @@
 import mapboxgl from 'mapbox-gl'
+import { LegendIconTypes } from '../SelectLegend/LegendIcons'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
 import {
   SourceExportApiIdentifier,
@@ -104,8 +105,16 @@ export type MapDataStyleInteractiveFilter = {
 export type MapDataStyleLegend = {
   id: string
   name: string | null
-  layers: string[]
-}
+} & (
+  | { style?: undefined; layers: string[] }
+  | {
+      style: {
+        type: LegendIconTypes
+        color: string
+      }
+      layers: null
+    }
+)
 
 /** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataStyleInteractiveFilterOption = {
