@@ -5,7 +5,7 @@ import {
   ConditionalFormattedValue,
 } from './translations'
 
-type Props =
+export type TagsTableRowProps =
   | {
       sourceId: SourcesIds
       tagKey: string
@@ -24,7 +24,7 @@ type Props =
 //   tagValue: string
 // }
 
-export const TagsTableRow: React.FC<Props> = ({
+export const TagsTableRow: React.FC<TagsTableRowProps> = ({
   sourceId,
   tagKey,
   tagValue,

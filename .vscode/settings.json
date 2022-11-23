@@ -22,6 +22,7 @@
     "/components/MapInterface/Map/mapData/topicsMapDataConfig",
     "/components/utils",
     "/src/pages",
-    "/src/components/MapInterface/mapData/topicsMapDataConfig"
+    "/src/components/MapInterface/mapData/topicsMapDataConfig",
+    "/src/components/MapInterface/Inspector/TagsTable/compositTableRows"
   ]
 }

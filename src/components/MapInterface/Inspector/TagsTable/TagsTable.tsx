@@ -1,8 +1,8 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
+import { TagsTableRowCompositSurfaceSmoothness } from './compositTableRows'
 import { TagsTableRow } from './TagsTableRow'
-import { ConditionalFormattedValue } from './translations'
 
 type Props = {
   properties: GeoJSONFeature['properties']
@@ -41,57 +41,27 @@ export const TagsTable: React.FC<Props> = ({
       </thead>
       <tbody className="divide-y divide-gray-200 bg-white">
         {documentedKeys?.map((key) => {
-          const value = documentedProperties[key]
-
-          // We have those special keys that we want to handle differently
-          // We prefix them with an underscore (for now…)
-          const isSpecial = key.startsWith('_')
-          if (isSpecial) {
-            switch (key) {
-              case '_surfacequality': {
-                return (
-                  <TagsTableRow
-                    key={key}
-                    sourceId={sourceId}
-                    tagKey={key}
-                    value={
-                      <>
-                        <ConditionalFormattedValue
-                          sourceId={sourceId}
-                          tagKey={'smoothness'}
-                          tagValue={properties['smoothness']}
-                        />{' '}
-                        —{' '}
-                        <ConditionalFormattedValue
-                          sourceId={sourceId}
-                          tagKey={'surface'}
-                          tagValue={properties['surface']}
-                        />
-                      </>
-                    }
-                  />
-                )
-              }
-              default: {
-                return (
-                  <TagsTableRow
-                    key={key}
-                    sourceId={sourceId}
-                    tagKey={key}
-                    tagValue={value}
-                  />
-                )
-              }
+          switch (key) {
+            case 'composit_surface_smoothness': {
+              return (
+                <TagsTableRowCompositSurfaceSmoothness
+                  sourceId={sourceId}
+                  tagKey={key}
+                  properties={properties}
+                />
+              )
+            }
+            default: {
+              return (
+                <TagsTableRow
+                  key={key}
+                  sourceId={sourceId}
+                  tagKey={key}
+                  tagValue={documentedProperties[key]}
+                />
+              )
             }
           }
-          return (
-            <TagsTableRow
-              key={key}
-              sourceId={sourceId}
-              tagKey={key}
-              tagValue={value}
-            />
-          )
         })}
       </tbody>
     </table>

@@ -141,7 +141,13 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     // Keys with underscore are treated special in <TagsTable />
-    documentedKeys: ['category', 'lit', 'highway', 'name', '_surfacequality'],
+    documentedKeys: [
+      'category',
+      'lit',
+      'highway',
+      'name',
+      'composit_surface_smoothness',
+    ],
     highlightingKey: 'osm_id',
     freshnessDateKey: 'check_date:lit',
   },
