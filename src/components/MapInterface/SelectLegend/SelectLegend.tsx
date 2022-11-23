@@ -118,6 +118,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             const layers = styleData.layers.filter((layer) =>
               legendData?.layers?.includes(layer.id)
             )
+            const legendIconFromLayer = layers.length
 
             return (
               <label
@@ -128,7 +129,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 key={key}
               >
                 <div className="h-5 w-5">
-                  {layers.length
+                  {legendIconFromLayer
                     ? pickIconFromLayer(layers)
                     : pickIconFromLegend(legendData)}
                 </div>
@@ -149,12 +150,17 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 </div>
                 <div className="ml-2.5 flex items-center text-sm font-medium text-gray-700">
                   {legendData.name}
-                  <LegendDebugInfo
-                    legendName={
-                      layers.length ? legendData.name || '' : '(All layers)'
-                    }
-                    layers={layers.length ? layers : styleData.layers}
-                  />
+                  {legendIconFromLayer ? (
+                    <LegendDebugInfo
+                      legendName={legendData.name || ''}
+                      layers={layers}
+                    />
+                  ) : (
+                    <LegendDebugInfo
+                      legendName={'(All layers)'}
+                      layers={styleData.layers}
+                    />
+                  )}
                 </div>
               </label>
             )
