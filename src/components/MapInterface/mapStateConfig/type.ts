@@ -3,6 +3,7 @@ import {
   TopicStyleIds,
   TopicStyleFilterIds,
   MapDataThemeIds,
+  TopicStyleLegendIds,
 } from '../mapData'
 
 export type ThemeConfig = {
@@ -17,11 +18,17 @@ export type TopicConfig = {
     id: TopicStyleIds
     active: boolean
     filters: null | TopicStyleFilterConfig[]
+    legends: null | TopicStyleLegendConfig[]
   }[]
 }
 
 export type TopicStyleFilterConfig = {
   id: TopicStyleFilterIds
+  options: TopicStyleFilterOptionConfig[]
+}
+
+export type TopicStyleLegendConfig = {
+  id: TopicStyleLegendIds
   options: TopicStyleFilterOptionConfig[]
 }
 

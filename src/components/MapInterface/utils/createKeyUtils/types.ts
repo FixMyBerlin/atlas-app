@@ -2,6 +2,7 @@ import {
   TopicIds,
   TopicStyleFilterIds,
   TopicStyleIds,
+  TopicStyleLegendIds,
 } from '@components/MapInterface/mapData'
 
 // These Types holds a combination of all Topic>Styles, even those that are not actually there.
@@ -12,6 +13,8 @@ export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<
   TopicStyleFilterIds,
   ''
 >}`
+
+export type TopicStyleLegendKey = `${TopicStyleKey}-${TopicStyleLegendIds}`
 
 export type TopicStyleFilterOptionKey = `${TopicStyleKey}-${Exclude<
   TopicStyleFilterIds,

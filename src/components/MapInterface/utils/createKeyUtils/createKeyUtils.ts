@@ -1,8 +1,14 @@
-import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../../mapData'
+import {
+  TopicIds,
+  TopicStyleFilterIds,
+  TopicStyleIds,
+  TopicStyleLegendIds,
+} from '../../mapData'
 import {
   TopicStyleFilterKey,
   TopicStyleFilterOptionKey,
   TopicStyleKey,
+  TopicStyleLegendKey,
 } from './types'
 
 export const createTopicStyleKey = (
@@ -15,6 +21,12 @@ export const createTopicStyleFilterKey = (
   styleId: TopicStyleIds,
   filterId: TopicStyleFilterIds
 ): TopicStyleFilterKey => `${topicId}-${styleId}-${filterId}`
+
+export const createTopicStyleLegendKey = (
+  topicId: TopicIds,
+  styleId: TopicStyleIds,
+  legendId: TopicStyleLegendIds
+): TopicStyleLegendKey => `${topicId}-${styleId}-${legendId}`
 
 export const createTopicStyleFilterOptionKey = (
   topicId: TopicIds,

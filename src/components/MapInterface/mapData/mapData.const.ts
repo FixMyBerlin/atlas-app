@@ -76,6 +76,7 @@ import {
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
+  TopicLitStyleLegendIds,
 } from './topicsMapData'
 import { MapData } from './types'
 
@@ -141,6 +142,27 @@ export type TopicStyleFilterIds =
   | TopicSurfaceStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Tarmac
   | TopicParkingStyleFilterIds
+
+export type TopicStyleLegendIds =
+  // | TopicAccidentsStyleLegendIds
+  // | TopicBikelanesStyleLegendIds_Osmscripts
+  // | TopicBikelanesStyleLegendIds_Tarmac
+  // | TopicBoundariesStyleLegendIds
+  // | TopicEducationStyleLegendIds_Osmscripts
+  // | TopicEducationStyleLegendIds_Tarmac
+  // | TopicLanduseStyleLegendIds
+  TopicLitStyleLegendIds
+// | TopicMapillaryCoverageStyleLegendIds
+// | TopicPlacesStyleLegendIds
+// | TopicPublicTransportStyleLegendIds_Osmscripts
+// | TopicPublicTransportStyleLegendIds_Tarmac
+// | TopicRoadClassificationStyleLegendIds_Osmscripts
+// | TopicRoadClassificationStyleLegendIds_Tarmac
+// | TopicShopsStyleLegendIds_Osmscripts
+// | TopicPoiClassificationStyleLegendIds_Tarmac
+// | TopicSurfaceStyleLegendIds_Osmscripts
+// | TopicSurfaceStyleLegendIds_Tarmac
+// | TopicParkingStyleLegendIds
 
 export const mapData: MapData = {
   sources,

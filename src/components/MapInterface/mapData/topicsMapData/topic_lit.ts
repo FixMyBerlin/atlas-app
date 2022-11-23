@@ -1,5 +1,8 @@
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupLitIds } from './mapboxStyles'
+import {
+  MapboxStyleLayerGroupLitIds,
+  MapboxStyleLayersForGroup_lit,
+} from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
@@ -8,6 +11,7 @@ const sourceLayer = 'public.lit_verified'
 export type TopicLitId = typeof topic
 export type TopicLitStyleIds = 'default' | MapboxStyleLayerGroupLitIds
 export type TopicLitStyleFilterIds = '_nofilter'
+export type TopicLitStyleLegendIds = 'lit' | 'unlit' | 'ignore'
 
 export const topic_lit: MapDataTopic = {
   id: topic,
@@ -26,6 +30,26 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
+      legends: [
+        {
+          id: 'lit',
+          name: 'Beleuchtet',
+          layers: [
+            '2_lit-Beleuchtet',
+            '2_lit-Special',
+          ] as MapboxStyleLayersForGroup_lit[],
+        },
+        {
+          id: 'unlit',
+          name: 'Unbeleuchtet',
+          layers: ['2_lit-Unbeleuchtet'] as MapboxStyleLayersForGroup_lit[],
+        },
+        {
+          id: 'ignore',
+          name: null,
+          layers: ['2_MouseOverArea-lit'] as MapboxStyleLayersForGroup_lit[],
+        },
+      ],
     },
     {
       id: 'atlas_lit_complete',

@@ -4,6 +4,7 @@ import produce from 'immer'
 import React from 'react'
 import { getTopicData, themes, TopicIds } from '../mapData'
 import { SelectFilters } from '../SelectFilters'
+import { SelectLegend } from '../SelectLegend'
 import { SelectStyles } from '../SelectStyles'
 import { Toggle } from './Toggle'
 
@@ -56,6 +57,7 @@ export const SelectTopics: React.FC = () => {
                   {topicData.name}
                 </Toggle>
                 <SelectStyles scopeTopicId={topicConfig.id} />
+                <SelectLegend scopeTopicId={topicConfig.id} />
                 <SelectFilters scopeTopicId={topicConfig.id} />
               </div>
             )

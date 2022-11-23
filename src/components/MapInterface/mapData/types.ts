@@ -76,6 +76,7 @@ export type MapDataStyle = {
   desc: null | string
   layers: MapDataVisLayer[]
   interactiveFilters: null | MapDataStyleInteractiveFilter[]
+  legends?: null | MapDataStyleLegend[]
 }
 
 /** @desc: The technical glue between sources and styles. name fixed by library */
@@ -97,6 +98,13 @@ export type MapDataStyleInteractiveFilter = {
   inputType: 'checkbox' | 'radiobutton'
   filterConfig: { lookupKey: string }
   options: MapDataStyleInteractiveFilterOption[]
+}
+
+/** @desc: Optional legend that allows filtering the given layer */
+export type MapDataStyleLegend = {
+  id: string
+  name: string | null
+  layers: string[]
 }
 
 /** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
