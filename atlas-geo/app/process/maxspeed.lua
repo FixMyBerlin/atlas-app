@@ -94,9 +94,15 @@ function osm2pgsql.process_way(object)
        object.tags.highway == "bridleway" or
        object.tags.access == "private" then
         object.tags._skip = true
-        object.tags._skipNotes =  "Skipped by unsuful waytypes"
+        object.tags._skipNotes =  "Skipped by unuseful waytypes"
   end
   AddSkipInfoToHighways(object)
+
+  if object.tags.highway == "residential" or 
+    object.tags.highway == "secondary" or
+    object.tags.highway == "bicycle_road" then
+    object.tags._skip = false
+  end
 
   if object.tags.highway == "steps" then
     object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
@@ -152,12 +158,15 @@ if object.tags.maxspeed then
     object.tags._todo  = false
   else
      object.tags._todo  = false
+     object.tags._skip  = false
   end
 else
  if object.tags._skip == true then
-      object.tags._skip = false
+      object.tags._todo = false
+      object.tags._skip = true
  else
     object.tags._todo = true
+    object.tags._skip = false
   end
 end
 
