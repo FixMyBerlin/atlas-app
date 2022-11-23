@@ -53,164 +53,203 @@ require("HighwayClasses")
 require("AddSkipInfoToHighways")
 require("StartsWith")
 
-local table = osm2pgsql.define_table({
-  name = 'maxspeed',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
+-- Define tables with all bicycle related roads what contain speed values
+local table =
+    osm2pgsql.define_table(
+    {
+        name = "maxspeed",
+        ids = {type = "any", id_column = "osm_id", type_column = "osm_type"},
+        columns = {
+            {column = "tags", type = "jsonb"},
+            {column = "geom", type = "linestring"}
+        }
+    }
+)
 
-local skipTable = osm2pgsql.define_table({
-  name = 'maxspeed_skipList',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
+-- Define tables with all non bicycle related roads
+local skipTable =
+    osm2pgsql.define_table(
+    {
+        name = "maxspeed_skipList",
+        ids = {type = "any", id_column = "osm_id", type_column = "osm_type"},
+        columns = {
+            {column = "tags", type = "jsonb"},
+            {column = "geom", type = "linestring"}
+        }
+    }
+)
 
-local todoTable = osm2pgsql.define_table({
-  name = 'maxspeed_todoList',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
+-- Define tables with all bicycle related roads that currently dont have speed values
+local todoTable =
+    osm2pgsql.define_table(
+    {
+        name = "maxspeed_todoList",
+        ids = {type = "any", id_column = "osm_id", type_column = "osm_type"},
+        columns = {
+            {column = "tags", type = "jsonb"},
+            {column = "geom", type = "linestring"}
+        }
+    }
+)
 
 function osm2pgsql.process_way(object)
-  local allowed_values = HighwayClasses
-  if not allowed_values[object.tags.highway] then return end
-  object.tags._skipNotes = "Skipped by default `true`"
-  object.tags._skip = true
-  object.tags._todo = false
-
-
-  if object.tags.highway == "motorway" or
-       object.tags.highway == "motorway_link" or
-       object.tags.highway == "trunk" or
-       object.tags.highway == "bridleway" or
-       object.tags.access == "private" then
-        object.tags._skip = true
-        object.tags._skipNotes =  "Skipped by unuseful waytypes"
-  end
-  AddSkipInfoToHighways(object)
-
-  if object.tags.highway == "residential" or 
-    object.tags.highway == "secondary" or
-    object.tags.highway == "bicycle_road" then
-    object.tags._skip = false
-  end
-
-  if object.tags.highway == "steps" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
+    local allowed_values = HighwayClasses
+    if not allowed_values[object.tags.highway] then
+        return
+    end
+    object.tags._skipNotes = "Skipped by default `true`"
     object.tags._skip = true
-  end
+    object.tags._todo = false
 
-  if object.tags.highway == "pedestrian" then
-    if object.tags.bicycle == "yes" then
-       object.tags._skip = false
+    -- Skip all waytpes, that are unuseful, because they are not bicycle related
+    if
+        object.tags.highway == "motorway" or object.tags.highway == "motorway_link" or object.tags.highway == "trunk" or
+            object.tags.highway == "bridleway" or
+            object.tags.access == "private"
+     then
+        object.tags._skip = true
+        object.tags._skipNotes = "Skipped by unuseful waytypes"
+    end
+    AddSkipInfoToHighways(object)
+
+    -- All standard ways, which should be observed in any case
+    if
+        object.tags.highway == "residential" or object.tags.highway == "secondary" or
+            object.tags.highway == "unclassified" or
+            object.tags.highway == "bicycle_road"
+     then
+        object.tags._skip = false
+    end
+
+    -- All special day combinations which are wheel-related. This section is based on the code from bicycleroadinfrasturcture.lua
+    if object.tags.highway == "steps" then
+        object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
+        object.tags._skip = true
+    end
+
+    if object.tags.highway == "pedestrian" then
+        if object.tags.bicycle == "yes" then
+            object.tags._skip = false
+        else
+            object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=pedestrian + bicycle!=yes`"
+            object.tags._skip = true
+        end
+    end
+
+    if object.tags.highway == "living_street" and not object.tags.bicycle == "no" then
+        object.tags.category = "livingStreet"
+        object.tags._skip = false
+    end
+
+    if object.tags.bicycle_road == "yes" or StartsWith(object.tags.traffic_sign, "DE:244") then
+        object.tags._skip = false
+    end
+
+    if
+        (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "no") or
+            StartsWith(object.tags.traffic_sign, "DE:240")
+     then
+        object.tags.category = "footAndCycleway_shared"
+        object.tags._skip = false
+    end
+
+    if
+        (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "yes") or
+            StartsWith(object.tags.traffic_sign, "DE:241")
+     then
+        object.tags.category = "footAndCycleway_segregated"
+        object.tags._skip = false
+    end
+
+    if object.tags.highway == "footway" or object.tags.highway == "path" then
+        if object.tags["mtb:scale"] then
+            object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=footway|path` but `mtb:scale`"
+            object.tags._skip = true
+        end
+
+        if object.tags.bicycle == "yes" or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
+            object.tags.category = "footway_bicycleYes"
+            object.tags._skip = false
+        end
+    end
+
+    -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
+    if object.tags.maxspeed then
+        if object.tags._skip == true then
+            -- maxspeed available but path type not correct -> _skip table
+            object.tags._todo = false
+        else
+            -- maxspeed available and path type is correct -> result table
+            object.tags._todo = false
+            object.tags._skip = false
+        end
     else
-      object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=pedestrian + bicycle!=yes`"
-      object.tags._skip = true
-    end
-  end
-
-  if object.tags.highway == "living_street" and not object.tags.bicycle == "no" then
-    object.tags.category = "livingStreet"
-    object.tags._skip = false
-  end
-
-  if object.tags.bicycle_road == "yes"
-      or StartsWith(object.tags.traffic_sign, "DE:244") then
-    object.tags._skip = false
-  end
-
-  if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "no")
-      or StartsWith(object.tags.traffic_sign, "DE:240") then
-    object.tags.category = "footAndCycleway_shared"
-    object.tags._skip = false
-  end
-
-  if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "yes")
-      or StartsWith(object.tags.traffic_sign, "DE:241") then
-    object.tags.category = "footAndCycleway_segregated"
-    object.tags._skip = false
-  end
-
-  if object.tags.highway == "footway" or object.tags.highway == "path" then
-    if object.tags["mtb:scale"] then
-      object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=footway|path` but `mtb:scale`"
-      object.tags._skip = true
+        if object.tags._skip == true then
+            -- maxspeed not available and path type is not correct -> _skip table
+            object.tags._todo = false
+            object.tags._skip = true
+        else
+            -- maxspeed not available and path type is correct -> _todo table
+            object.tags._todo = true
+            object.tags._skip = false
+        end
     end
 
-    if object.tags.bicycle == "yes"
-        or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
-      object.tags.category = "footway_bicycleYes"
-      object.tags._skip = false
+    -- all tags that are shown on the application
+    local allowed_tags =
+        Set(
+        {
+            "_centerline",
+            "_skip",
+            "_skipNotes",
+            "_todo",
+            "bicycle_road",
+            "bicycle",
+            "category",
+            "cycleway",
+            "unclassified",
+            "secondary",
+            "residential",
+            "highway",
+            "maxspeed",
+            "source:maxspeed",
+            "maxspeed:type",
+            "zone:maxspeed",
+            "zone_traffic",
+            "traffic_sign"
+        }
+    )
+
+    FilterTags(object.tags, allowed_tags)
+    AddMetadata(object)
+    AddUrl("way", object)
+
+    -- insert the ways in theri respective table based on the tags _skip or _todo
+    if object.tags._skip == true then
+        skipTable:insert(
+            {
+                tags = object.tags,
+                geom = object:as_linestring()
+            }
+        )
     end
-  end
-
-if object.tags.maxspeed then
-  if object.tags._skip == true then
-    object.tags._todo  = false
-  else
-     object.tags._todo  = false
-     object.tags._skip  = false
-  end
-else
- if object.tags._skip == true then
-      object.tags._todo = false
-      object.tags._skip = true
- else
-    object.tags._todo = true
-    object.tags._skip = false
-  end
-end
-
-  local allowed_tags = Set({
-    "_centerline",
-    "_skip",
-    "_skipNotes",
-    "_todo",
-    "bicycle_road",
-    "bicycle",
-    "category",
-    "cycleway",
-    "unclassified",
-    "secondary",
-    "residential",
-    "highway",
-    "maxspeed",
-    "source:maxspeed",
-    "traffic_sign",
-  })
-
-  FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
-
-  if object.tags._skip == true then
-    skipTable:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
-  end
-  if object.tags._todo == true and object.tags._skip == false then
-   todoTable:insert({
-      tags = object.tags,
-     geom = object:as_linestring()
-   })
-  end
-  if object.tags._skip == false and object.tags._todo == false then
-   --object.tags._skip = nil
-   --object.tags._skipNotes = nil
-   --object.tags._todo = nil
-   table:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
-  end
+    if object.tags._todo == true and object.tags._skip == false then
+        todoTable:insert(
+            {
+                tags = object.tags,
+                geom = object:as_linestring()
+            }
+        )
+    end
+    if object.tags._skip == false and object.tags._todo == false then
+        object.tags._skip = nil
+        object.tags._skipNotes = nil
+        object.tags._todo = nil
+        table:insert(
+            {
+                tags = object.tags,
+                geom = object:as_linestring()
+            }
+        )
+    end
 end
