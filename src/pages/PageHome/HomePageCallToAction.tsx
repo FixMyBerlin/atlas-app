@@ -19,7 +19,7 @@ export const HomePageCallToAction = () => {
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
             Sie haben auch Interesse?
           </h2>
-          <p className="mt-4 text-lg tracking-tight text-white">
+          <p className="my-4 text-lg tracking-tight text-white">
             Sie möchten informiert bleiben und den Radverkehrsatlas als
             Pilotkommune nutzen? Tragen Sie sich für die Warteliste ein.
           </p>
