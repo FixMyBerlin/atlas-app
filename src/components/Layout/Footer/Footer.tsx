@@ -1,25 +1,16 @@
-import React from 'react'
-import { Logo } from '../Logo'
+import { MapIcon } from '@heroicons/react/24/outline'
 import { FooterLinkList } from './FooterLinkList'
 import { footerLinks } from './footerLinks.const'
 
 export const Footer: React.FC = () => {
-  const { pages, legal } = footerLinks
-
   return (
-    <footer
-      className="z-0 bg-gray-800 pt-6 pb-12"
-      aria-labelledby="footer-heading"
-    >
-      <div className="flex flex-row">
-        <div className="px-[3vw]">
-          <Logo />
+    <footer className="z-0 bg-gray-800 py-12">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 sm:flex-row sm:px-6 lg:mx-20 lg:px-8">
+        <div className="flex items-center">
+          <MapIcon className="h-8 w-auto text-yellow-400" />
+          <span className="ml-2 text-gray-400">Radverkehrsatlas</span>
         </div>
-        <FooterLinkList linkList={pages} className="flex-grow px-[3vw]" />
-        <FooterLinkList
-          linkList={legal}
-          className="ml-auto flex-none pr-[15vw]"
-        />
+        <FooterLinkList linkList={footerLinks} className="" />
       </div>
     </footer>
   )
