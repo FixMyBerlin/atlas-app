@@ -18,7 +18,7 @@
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && vitest run",
-    "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts",
+    "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts && npm run lint -- --fix",
     "prepare": "husky install"
   },
   "dependencies": {
