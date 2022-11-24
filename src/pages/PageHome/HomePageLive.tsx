@@ -46,13 +46,13 @@ export const HomePageLive = () => {
           einsehen – mehr ist in Arbeit.
         </p>
 
-        <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
+        <div className="mt-6 space-y-10 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
           {callouts.map((callout) => (
             <Link
               to={callout.href}
               external={callout.href.startsWith('http')}
               key={callout.name}
-              classNameOverwrite="group relative"
+              classNameOverwrite="block group relative"
             >
               <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:h-64">
                 <img
@@ -65,7 +65,7 @@ export const HomePageLive = () => {
                 <span className="absolute inset-0" />
                 {callout.description}
               </p>
-              <h3 className="text-base font-semibold text-gray-900">
+              <h3 className="text-base font-semibold text-gray-900 group-hover:underline">
                 {callout.name}
               </h3>
             </Link>

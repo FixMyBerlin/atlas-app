@@ -1,6 +1,6 @@
 export const HomePageCompanies: React.FC = () => {
   return (
-    <section className="mx-auto max-w-7xl px-4 pb-16 text-center sm:px-6 lg:px-8">
+    <section className="group mx-auto max-w-7xl px-4 pb-16 text-center sm:px-6 lg:px-8">
       <div className="mt-36 lg:mt-24">
         <p className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
           Pilot-Kommunen, die den Radverkehrsatlas bereits nutzen
@@ -26,7 +26,7 @@ export const HomePageCompanies: React.FC = () => {
                     <img
                       src={region.logo}
                       alt={region.name}
-                      className="h-10 w-auto grayscale transition hover:grayscale-0"
+                      className="h-10 w-auto grayscale transition group-hover:grayscale-0"
                     />
                   </li>
                 ))}

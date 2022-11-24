@@ -7,25 +7,47 @@ import screenshotPayroll from './images/screenshots/payroll.png'
 import screenshotReporting from './images/screenshots/reporting.png'
 import screenshotVatReturns from './images/screenshots/vat-returns.png'
 
-const features = [
+type Feature = {
+  title: string | React.ReactNode
+  description: string
+  image: React.ReactNode
+}
+const features: Feature[] = [
   {
-    title: 'Themenkarte Radinfrastruktur',
+    title: (
+      <>
+        <span className="hidden xl:inline">Themenkarte</span> Radinfrastruktur
+      </>
+    ),
     description: 'Breite, Führungsform und Oberflächen.',
     image: screenshotPayroll,
   },
   {
-    title: 'Themenkarte Quellen und Ziele',
+    title: (
+      <>
+        <span className="hidden xl:inline">Themenkarte</span> Quellen und Ziele
+      </>
+    ),
     description:
       'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
     image: screenshotExpenses,
   },
   {
-    title: 'Themenkarte Beleuchtung',
+    title: (
+      <>
+        <span className="hidden xl:inline">Themenkarte</span> Beleuchtung
+      </>
+    ),
     description: 'Beleuchtete Radwege und Straßen.',
     image: screenshotVatReturns,
   },
   {
-    title: 'Weitere Themenkarten',
+    title: (
+      <>
+        <span className="hidden xl:inline">Weitere Themenkarten</span>
+        <span className="inline xl:hidden">Mehr</span>
+      </>
+    ),
     description:
       'Karten zu Straßentypen, Höchstgeschwindigkeiten, Parkraum werden nach und nach hinzugefügt.',
     image: screenshotReporting,
@@ -86,7 +108,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                 <Tab.List className="relative z-10 flex gap-x-4 whitespace-nowrap px-4 sm:mx-auto sm:px-0 lg:mx-0 lg:block lg:gap-x-0 lg:gap-y-1 lg:whitespace-normal">
                   {features.map((feature, featureIndex) => (
                     <div
-                      key={feature.title}
+                      key={featureIndex}
                       className={classNames(
                         'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === featureIndex
@@ -122,16 +144,18 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                 </Tab.List>
               </div>
               <Tab.Panels className="lg:col-span-7">
-                {features.map((feature) => (
-                  <Tab.Panel key={feature.title} unmount={false}>
+                {features.map((feature, featureIndex) => (
+                  <Tab.Panel key={featureIndex} unmount={false}>
                     <div className="relative sm:px-6 lg:hidden">
                       <div className="absolute -inset-x-4 top-[-6.5rem] bottom-[-4.25rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl" />
                       <p className="relative mx-auto max-w-2xl text-base text-white sm:text-center">
                         {feature.description}
                       </p>
                     </div>
-                    <div className="mt-10 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                      <img className="w-full" src={feature.image} alt="" />
+                    <div className="mt-6 w-[45rem] overflow-hidden rounded-xl bg-slate-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
+                      {typeof feature.image === 'string' && (
+                        <img className="w-full" src={feature.image} alt="" />
+                      )}
                     </div>
                   </Tab.Panel>
                 ))}

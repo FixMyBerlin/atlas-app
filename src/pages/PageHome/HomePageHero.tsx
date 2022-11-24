@@ -2,8 +2,8 @@ import { WaitlistButton } from './components'
 
 export const HomePageHero: React.FC = () => {
   return (
-    <section className="lg:px-8pt-20 mx-auto max-w-7xl px-4 text-center sm:px-6 lg:pt-32">
-      <h1 className="font-display mx-auto max-w-4xl text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+    <section className="lg:px-8pt-20 mx-auto max-w-7xl px-4 pt-6 text-center sm:px-6 lg:pt-32">
+      <h1 className="font-display mx-auto max-w-4xl text-2xl font-bold tracking-tight text-slate-900 sm:text-5xl sm:font-medium md:text-7xl">
         Offene Daten für die{' '}
         <span className="relative whitespace-nowrap text-yellow-600">
           <svg
@@ -30,7 +30,7 @@ export const HomePageHero: React.FC = () => {
         (Voraussichtlich Sommer 2023) nutzen zu können und Benachrichtigungen zu
         Updates zu bekommen.
       </p>
-      <div className="mx-auto mt-6 max-w-2xl text-lg tracking-tight text-slate-700">
+      <div className="text-md mx-auto mt-6 max-w-2xl tracking-tight text-slate-700 sm:text-lg">
         <WaitlistButton />
       </div>
     </section>

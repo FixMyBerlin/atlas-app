@@ -76,7 +76,7 @@ function Feature({
       </div>
       <h3
         className={classNames(
-          'mt-6 text-sm font-medium',
+          'mt-3 text-sm font-medium',
           isActive ? 'text-blue-600' : 'text-slate-600'
         )}
       >
@@ -85,7 +85,7 @@ function Feature({
       <p className="font-display mt-2 text-xl text-slate-900">
         {feature.summary}
       </p>
-      <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
+      <p className="mt-3 text-sm text-slate-600">{feature.description}</p>
     </div>
   )
 }
@@ -137,7 +137,7 @@ const FeaturesDesktop = () => {
               />
             ))}
           </Tab.List>
-          <Tab.Panels className="relative mt-20 overflow-hidden rounded-4xl bg-slate-200 px-14 py-16 xl:px-16">
+          <Tab.Panels className="relative mt-12 overflow-hidden rounded-4xl bg-slate-200 px-14 py-16 xl:px-16">
             <div className="-mx-5 flex">
               {features.map((feature, featureIndex) => (
                 <Tab.Panel
