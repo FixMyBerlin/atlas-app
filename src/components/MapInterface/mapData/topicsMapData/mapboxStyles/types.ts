@@ -4,14 +4,12 @@
 export type MapboxStylesByLayerGroupIds =
   | 'atlas_bikelanes'
   | 'atlas_bikelanes_complete'
-  | 'atlas_bikelanes_complete_fresh_verified'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
   | 'atlas_education'
   | 'atlas_landuse'
   | 'atlas_lit'
   | 'atlas_lit_complete'
-  | 'atlas_lit_complete_fresh_verified'
   | 'atlas_lit_fresh'
   | 'atlas_lit_verified'
   | 'atlas_places'
@@ -21,7 +19,6 @@ export type MapboxStylesByLayerGroupIds =
 export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes'
   | 'atlas_bikelanes_complete'
-  | 'atlas_bikelanes_complete_fresh_verified'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
 
@@ -32,7 +29,6 @@ export type MapboxStyleLayerGroupLanduseIds = 'atlas_landuse'
 export type MapboxStyleLayerGroupLitIds =
   | 'atlas_lit'
   | 'atlas_lit_complete'
-  | 'atlas_lit_complete_fresh_verified'
   | 'atlas_lit_fresh'
   | 'atlas_lit_verified'
 
@@ -60,15 +56,6 @@ export type MapboxStyleLayers_bikelanes_complete =
   | 'Getrennte Fuehrung copy 4'
   | 'fmc-verkehrsberuhigt copy 5'
   | 'hitarea_complete'
-
-export type MapboxStyleLayers_bikelanes_complete_fresh_verified =
-  | 'Daten aelter 2020-fake copy 1'
-  | 'Daten vorhanden-fake copy'
-  | 'Keine Daten-fake copy'
-  | 'Fuehrung mit Fussverkehr copy'
-  | 'Getrennte Fuehrung copy'
-  | 'fmc-verkehrsberuhigt copy 1'
-  | 'hitarea-complete-fresh'
 
 export type MapboxStyleLayers_bikelanes_fresh =
   | 'Daten aelter 2020-fake copy'
@@ -102,17 +89,6 @@ export type MapboxStyleLayers_lit_complete =
   | '1_lit-Unbeleuchtet'
   | '1_lit-Beleuchtet'
   | '1_hitarea-lit'
-
-export type MapboxStyleLayers_lit_complete_fresh_verified =
-  | '5_lit-Daten aelter 2020'
-  | '5_lit-Keine Daten'
-  | '5_lit-Special'
-  | '5_lit-Unbeleuchtet'
-  | '5_lit-Beleuchtet'
-  | '5_lit-verified-approved--spriteversion'
-  | '5_lit-verified-approved'
-  | '5_lit-verified-rejected'
-  | '5_hitarea-lit'
 
 export type MapboxStyleLayers_lit_fresh =
   | '3_lit-fresh-true-line copy'

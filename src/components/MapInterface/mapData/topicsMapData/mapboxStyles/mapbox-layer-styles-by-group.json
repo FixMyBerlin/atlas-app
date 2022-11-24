@@ -44,7 +44,8 @@
         "filter": [
           "has",
           "category"
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "bikelanes-no-verfication-done copy",
@@ -98,7 +99,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 1",
@@ -136,7 +138,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Getrennte Fuehrung copy 1",
@@ -171,7 +174,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "hitarea-bikelanes-verified",
@@ -680,7 +684,8 @@
             "hsla(17, 0%, 100%, 0)"
           ],
           "fill-opacity": 0.2
-        }
+        },
+        "layout": {}
       }
     ]
   },
@@ -1192,6 +1197,7 @@
           "icon-padding": 0,
           "text-max-width": 20
         },
+        "maxzoom": 14,
         "type": "symbol",
         "id": "fmc-poiPlaces-label-for-circle",
         "paint": {
@@ -1644,534 +1650,6 @@
           "has",
           "category"
         ],
-        "layout": {
-          "line-cap": "round"
-        }
-      }
-    ]
-  },
-  {
-    "group": "atlas_bikelanes_complete_fresh_verified",
-    "layers": [
-      {
-        "id": "Daten aelter 2020-fake copy 1",
-        "type": "symbol",
-        "paint": {
-          "text-color": "hsl(330, 98%, 43%)"
-        },
-        "layout": {
-          "text-field": [
-            "to-string",
-            "< 2020"
-          ],
-          "symbol-placement": "line-center",
-          "text-size": 10,
-          "text-font": [
-            "Open Sans Bold",
-            "Arial Unicode MS Regular"
-          ],
-          "text-anchor": "top"
-        }
-      },
-      {
-        "id": "Daten vorhanden-fake copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            12,
-            1,
-            14,
-            2,
-            18,
-            4
-          ],
-          "line-color": "hsl(107, 45%, 50%)"
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "bicycle"
-          ],
-          [
-            "yes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Keine Daten-fake copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            12,
-            1,
-            14,
-            2,
-            18,
-            4
-          ],
-          "line-color": "hsl(330, 46%, 46%)"
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "bicycle"
-          ],
-          [
-            "designated"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Fuehrung mit Fussverkehr copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0.5,
-            13,
-            2
-          ],
-          "line-dasharray": [
-            2,
-            1
-          ],
-          "line-offset": 2,
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "footway_bicycleYes",
-            "footAndCycleway_shared"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Getrennte Fuehrung copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0.5,
-            13,
-            2
-          ],
-          "line-color": "#031ab5",
-          "line-offset": 2
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "cyclewaySeparated",
-            "cyclewayAlone",
-            "footAndCycleway_segregated"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "fmc-verkehrsberuhigt copy 1",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0.5,
-            13,
-            2
-          ],
-          "line-dasharray": [
-            1,
-            1
-          ],
-          "line-offset": 2,
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "pedestrianArea_bicycleYes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "hitarea-complete-fresh",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            9,
-            1,
-            14.1,
-            10,
-            22,
-            12
-          ],
-          "line-opacity": 0,
-          "line-color": "hsl(290, 100%, 54%)"
-        },
-        "filter": [
-          "has",
-          "category"
-        ],
-        "layout": {
-          "line-cap": "round"
-        }
-      }
-    ]
-  },
-  {
-    "group": "atlas_lit_complete_fresh_verified",
-    "layers": [
-      {
-        "id": "5_lit-Daten aelter 2020",
-        "type": "symbol",
-        "paint": {
-          "text-color": "hsl(0, 0%, 46%)"
-        },
-        "filter": [
-          "==",
-          [
-            "get",
-            "is_fresh"
-          ],
-          false
-        ],
-        "layout": {
-          "text-field": [
-            "to-string",
-            "< 2020"
-          ],
-          "symbol-placement": "line-center",
-          "text-size": 10
-        }
-      },
-      {
-        "id": "5_lit-Keine Daten",
-        "type": "line",
-        "paint": {
-          "line-width": 5,
-          "line-blur": 4,
-          "line-color": "hsl(330, 89%, 56%)"
-        },
-        "filter": [
-          "==",
-          [
-            "get",
-            "is_present"
-          ],
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_lit-Special",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 96%, 69%)",
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            13,
-            2.5,
-            16,
-            6
-          ],
-          "line-blur": 1,
-          "line-opacity": 0.7
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "special"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_lit-Unbeleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 86%, 15%)",
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            13,
-            2.5,
-            16,
-            6
-          ],
-          "line-blur": 1,
-          "line-opacity": 0.7
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "unlit"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_lit-Beleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 91%, 46%)",
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            13,
-            2.5,
-            16,
-            6
-          ],
-          "line-blur": 1,
-          "line-opacity": 0.6
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "lit"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_lit-verified-approved--spriteversion",
-        "type": "symbol",
-        "paint": {},
-        "layout": {
-          "icon-image": "button-menu-default copy",
-          "icon-size": 0.3
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "approved"
-          ],
-          true,
-          false
-        ]
-      },
-      {
-        "id": "5_lit-verified-approved",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsl(112, 76%, 47%)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "approved"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_lit-verified-rejected",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsla(343, 76%, 47%, 0.74)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "rejected"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "5_hitarea-lit",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(290, 100%, 54%)",
-          "line-opacity": 0,
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            9,
-            1,
-            15,
-            10,
-            22,
-            12
-          ]
-        },
         "layout": {
           "line-cap": "round"
         }

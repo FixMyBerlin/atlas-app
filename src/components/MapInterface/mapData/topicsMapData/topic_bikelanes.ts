@@ -60,16 +60,5 @@ export const topic_bikelanes: MapDataTopic = {
       }),
       interactiveFilters: null,
     },
-    // {
-    //   id: 'atlas_bikelanes_complete_fresh_verified',
-    //   name: 'Vollansicht',
-    //   desc: null,
-    //   layers: mapboxStyleLayers({
-    //     group: 'atlas_bikelanes_complete_fresh_verified',
-    //     source: 'tarmac_bikelanes',
-    //     sourceLayer: 'public.bikelanes_verified',
-    //   }),
-    //   interactiveFilters: null,
-    // },
   ],
 }

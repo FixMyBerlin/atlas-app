@@ -118,16 +118,5 @@ export const topic_lit: MapDataTopic = {
       }),
       interactiveFilters: null,
     },
-    // {
-    //   id: 'atlas_lit_complete_fresh_verified',
-    //   name: 'Vollansicht',
-    //   desc: null,
-    //   layers: mapboxStyleLayers({
-    //     group: 'atlas_lit_complete_fresh_verified',
-    //     source,
-    //     sourceLayer,
-    //   }),
-    //   interactiveFilters: null,
-    // },
   ],
 }
