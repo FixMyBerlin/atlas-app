@@ -14,14 +14,12 @@ export const VerificationHistory: React.FC<Props> = ({
   visible,
   osmId,
 }) => {
-  if (!visible || !apiIdentifier) return null
-
   const query = useQuery({
     queryKey: ['verificationHistory', apiIdentifier, osmId],
     queryFn: () => getHistory(apiIdentifier, osmId),
   })
 
-  if (query?.status !== 'success' || !apiIdentifier) return null
+  if (!visible || query?.status !== 'success') return null
 
   return (
     <div>

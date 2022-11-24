@@ -138,7 +138,7 @@ export const VerificationActions: React.FC<Props> = ({
     )
   }
 
-  if (!visible || !apiIdentifier) return null
+  if (!visible) return null
 
   return (
     <div
