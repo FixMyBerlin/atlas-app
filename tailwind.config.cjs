@@ -11,6 +11,9 @@ module.exports = {
           css: { a: false },
         },
       },
+      borderRadius: {
+        '4xl': '2rem',
+      },
     },
     // fontFamily: {
     //   sans: ['', 'Segoe UI', 'Tahoma', 'sans-serif'],
