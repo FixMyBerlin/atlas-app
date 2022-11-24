@@ -1,21 +1,27 @@
 import { getHistory } from '@api/index'
+import { SourceVerificationApiIdentifier } from '@components/MapInterface/mapData'
 import { useQuery } from '@tanstack/react-query'
 import { VerificationHistoryWidget } from './VerificationHistoryWidget'
 
 type Props = {
+  apiIdentifier: SourceVerificationApiIdentifier
   visible: boolean
   osmId: number
 }
 
-export const VerificationHistory: React.FC<Props> = ({ osmId, visible }) => {
-  if (!visible) return null
+export const VerificationHistory: React.FC<Props> = ({
+  apiIdentifier,
+  visible,
+  osmId,
+}) => {
+  if (!visible || !apiIdentifier) return null
 
   const query = useQuery({
-    queryKey: ['verificationHistory', osmId],
-    queryFn: () => getHistory('lit', osmId),
+    queryKey: ['verificationHistory', apiIdentifier, osmId],
+    queryFn: () => getHistory(apiIdentifier, osmId),
   })
 
-  if (query.status !== 'success') return null
+  if (query?.status !== 'success' || !apiIdentifier) return null
 
   return (
     <div>

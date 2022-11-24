@@ -4,8 +4,7 @@ import {
   VerificationApiPost,
 } from '@api/index'
 import { buttonStyles } from '@components/Link'
-import { extractSourceIdIdFromSourceKey } from '@components/MapInterface/Map/SourceAndLayers/utils/extractFromSourceKey'
-import { getSourceData } from '@components/MapInterface/mapData'
+import { SourceVerificationApiIdentifier } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { useUserStore } from '@components/MapInterface/UserInfo'
 import { SmallSpinner } from '@components/Spinner/Spinner'
@@ -14,7 +13,7 @@ import classNames from 'classnames'
 import React from 'react'
 
 type Props = {
-  sourceKey: string
+  apiIdentifier: SourceVerificationApiIdentifier
   visible: boolean
   disabled: boolean
   osmId: number
@@ -22,7 +21,7 @@ type Props = {
 }
 
 export const VerificationActions: React.FC<Props> = ({
-  sourceKey,
+  apiIdentifier,
   visible,
   disabled,
   osmId,
@@ -31,29 +30,23 @@ export const VerificationActions: React.FC<Props> = ({
   const queryClient = useQueryClient()
   const { addLocalUpdate, removeLocalUpdate } = useMapStateInteraction()
 
-  const sourceData = getSourceData(
-    extractSourceIdIdFromSourceKey(sourceKey.toString())
-  )
-  const apiIdentifier = sourceData?.apiVerificationIdentifier
-
   const { currentUser } = useUserStore()
 
   const apiData: VerificationApiPost = {
-    type_name: apiIdentifier as string,
+    apiIdentifier,
     osm_id: osmId,
     osm_type: 'W',
     verified_at: new Date().toISOString(),
     verified_by: currentUser?.id,
-    verified_status: '*** needs to be set ***',
+    verified_status: null, // Set inside the Button mutation below
   }
 
-  const queryKey = ['verificationHistory', apiData.osm_id]
+  const queryKey = ['verificationHistory', apiIdentifier, apiData.osm_id]
 
   const mutation = useMutation({
     mutationFn: updateVerificationStatus,
     // When mutate is called:
-    onMutate: async (queryParams) => {
-      const { osm_id, osm_type, verified_at, verified_status } = queryParams
+    onMutate: async ({ osm_id, osm_type, verified_at, verified_status }) => {
       const newHistoryItem: VerificationApiGet = {
         osm_id,
         osm_type,
@@ -145,7 +138,7 @@ export const VerificationActions: React.FC<Props> = ({
     )
   }
 
-  if (!visible) return null
+  if (!visible || !apiIdentifier) return null
 
   return (
     <div

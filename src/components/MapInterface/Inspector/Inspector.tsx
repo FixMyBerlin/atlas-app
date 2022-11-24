@@ -111,17 +111,24 @@ export const Inspector: React.FC = () => {
                     allowVerify={allowVerify}
                     verificationStatus={verificationStatus}
                   />
-                  <VerificationActions
-                    sourceKey={sourceKey.toString()}
-                    visible={allowVerify}
-                    disabled={!properties?.is_present}
-                    osmId={properties.osm_id}
-                    verificationStatus={verificationStatus}
-                  />
-                  <VerificationHistory
-                    visible={allowVerify && verificationStatus !== undefined}
-                    osmId={properties.osm_id}
-                  />
+                  {sourceData?.apiVerificationIdentifier && (
+                    <>
+                      <VerificationActions
+                        apiIdentifier={sourceData.apiVerificationIdentifier}
+                        visible={allowVerify}
+                        disabled={!properties?.is_present}
+                        osmId={properties.osm_id}
+                        verificationStatus={verificationStatus}
+                      />
+                      <VerificationHistory
+                        apiIdentifier={sourceData.apiVerificationIdentifier}
+                        visible={
+                          allowVerify && verificationStatus !== undefined
+                        }
+                        osmId={properties.osm_id}
+                      />
+                    </>
+                  )}
                 </div>
               </Disclosure>
             </IntlProvider>
