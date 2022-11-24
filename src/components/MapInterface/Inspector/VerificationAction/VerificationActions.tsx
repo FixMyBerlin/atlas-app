@@ -167,7 +167,7 @@ export const VerificationActions: React.FC<Props> = ({
         <ApproveButton>
           {verifiedOnce ? 'Daten richtig' : 'Richtig'}
         </ApproveButton>
-        <RejectButton>Überarbeitung nötig</RejectButton>
+        <RejectButton>Daten überarbeiten</RejectButton>
       </div>
     </div>
   )
