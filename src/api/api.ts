@@ -42,5 +42,5 @@ export const updateVerificationStatus = ({
 
   return api
     .post(`/verify/${type_name}/${osm_id}?` + encoded)
-    .then((res) => res.data)
+    .then((res) => res.data as VerificationApiGet)
 }

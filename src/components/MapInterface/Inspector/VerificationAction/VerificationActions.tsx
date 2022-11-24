@@ -67,15 +67,15 @@ export const VerificationActions: React.FC<Props> = ({
       await queryClient.cancelQueries({ queryKey })
 
       // Snapshot the previous value
-      const previousHistory = queryClient.getQueryData(queryKey)
+      const previousHistory: VerificationApiGet[] | undefined =
+        queryClient.getQueryData(queryKey)
 
       // Optimistically update to the new value
       queryClient.setQueryData(
         queryKey,
-        (data: undefined | { data: object }) => {
+        (data: undefined | { data: VerificationApiGet[] }) => {
           const history = data?.data ? data.data : []
           return {
-            // @ts-ignore will work
             data: [newHistoryItem, ...history],
           }
         }
@@ -88,7 +88,7 @@ export const VerificationActions: React.FC<Props> = ({
     },
     // If the mutation fails, use the context returned from onMutate to roll back
     // use the context returned from onMutate to roll back
-    onError: (err, variables, context) => {
+    onError: (_err, _variables, context) => {
       if (context) {
         queryClient.setQueryData(queryKey, context.previousHistory)
         removeLocalUpdate(context.newHistoryItem)
