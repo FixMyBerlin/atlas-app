@@ -23,7 +23,6 @@ import React from 'react'
 export const PagePrivacy: React.FC = () => {
   const tocItems: TocHashLink = [
     ['#responsible', 'Verantwortlichkeit'],
-    ['#thirdparty', 'Drittdienste'],
     ['#hosting', 'Bereitstellung'],
     // ['#analytics', 'Webanalyse'],
     ['#youtube', 'YouTube'],
@@ -38,7 +37,7 @@ export const PagePrivacy: React.FC = () => {
       <MetaTags noindex title="Datenschutzerklärung" />
       <h1>Datenschutzerklärung</h1>
       <TableOfContents items={tocItems} />
-      <h2 id="responsible">Einleitung</h2>
+      <h2>Einleitung</h2>
       <p>
         Mit den nachfolgenden Informationen wollen wir Ihnen einen Überblick
         über die Verarbeitung Ihrer personenbezogenen Daten auf unserer Website
@@ -49,7 +48,7 @@ export const PagePrivacy: React.FC = () => {
         genannt) sowie allen geltenden landesspezifischen
         Datenschutzbestimmungen.
       </p>
-      <h2 id="thirdparty">Verantwortlichkeit</h2>
+      <h2 id="responsible">Verantwortlichkeit</h2>
       <h3>Verantwortlich im Sinne der DSGVO</h3>
       <p>
         <strong>FixMyCity GmbH</strong>
