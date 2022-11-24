@@ -1,4 +1,3 @@
-import { isDev } from '@components/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import classNames from 'classnames'
@@ -12,7 +11,10 @@ import {
   TopicStyleLegendIds,
 } from '../mapData'
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
-import { LegendDebugInfoLayerStyle } from './LegendDebugInfo'
+import {
+  LegendDebugInfoLayerStyle,
+  LegendDebugInfoTopicLayerConfig,
+} from './LegendDebugInfo'
 import {
   LegendIconArea,
   LegendIconCircle,
@@ -36,46 +38,20 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const styleConfig = topicConfig.styles.find((s) => s.active)
   if (!styleConfig) return null
 
-  // Guard: Hide UI when no legends present for active style
   const styleData = getStyleData(topicConfig.id, styleConfig.id)
   const legends = styleData?.legends?.filter(
     (l) => l.id !== 'ignore' && l.name !== null
   )
+  // Guard: Hide UI when no legends present for active style
+  // (but vor isDev, give us a helper box to fix the config)
   if (!styleData || !legends?.length) {
-    // For development, we want some help whenever no legend is specified, yet
-    if (isDev && styleData) {
-      const allLegendLayers: string[] = []
-      legends?.forEach((legend) => [
-        ...allLegendLayers,
-        ...(legend?.layers || []),
-      ])
-      // TODO DebuggingInfo — See comment below.
-      // const layersThatAreMissingInLegend = styleData.layers
-      //   .map((layer) => layer.id)
-      //   .filter((layerId) => !allLegendLayers.includes(layerId))
-
-      return (
-        <div className="bg-pink-300">
-          <LegendDebugInfoLayerStyle
-            title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
-            layers={styleData.layers}
-          />
-          {/* TODO DebuggingInfo — Disabled for now.
-          The idea was, to have all layers explicitly specified in the topic config.
-          And this debug info should list those, that are not yet explicitly specified, so we can add them.
-          However, it looks like it lists the wrong layers or maybe not all … — needs another close look. */}
-          {/* {!!layersThatAreMissingInLegend.length && (
-            <details className="prose">
-              <summary>Review layers</summary>
-              Those layers need to be added to one of the legend-layers array.
-              Or to the dumping ground legend entry <code>ignore</code>.
-              <pre>{layersThatAreMissingInLegend.join('\n')}</pre>
-            </details>
-          )} */}
-        </div>
-      )
-    }
-    return null
+    return (
+      <LegendDebugInfoTopicLayerConfig
+        legends={styleData?.legends}
+        topicId={topicConfig.id}
+        styleDataLayers={styleData?.layers}
+      />
+    )
   }
 
   const handleClick = (
