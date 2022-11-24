@@ -16,10 +16,28 @@ export const topic_places: MapDataTopic = {
   styles: [
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Ortsnamen',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_places',
+        source: 'tarmac_places',
+        sourceLayer: 'public.places',
+      }),
+      interactiveFilters: null,
+      legends: [
+        {
+          id: 'ignore',
+          name: null,
+          layers: ['fmc-poiPlaces-label'],
+        },
+      ],
+    },
+    {
+      id: 'atlas_placescircle',
+      name: 'Ortsname & Einwohner',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'atlas_placescircle',
         source: 'tarmac_places',
         sourceLayer: 'public.places',
       }),
