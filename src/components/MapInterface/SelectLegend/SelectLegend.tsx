@@ -12,7 +12,7 @@ import {
   TopicStyleLegendIds,
 } from '../mapData'
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
-import { LegendDebugInfo } from './LegendDebugInfo'
+import { LegendDebugInfoLayerStyle } from './LegendDebugInfo'
 import {
   LegendIconArea,
   LegendIconCircle,
@@ -41,11 +41,41 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const legends = styleData?.legends?.filter(
     (l) => l.id !== 'ignore' && l.name !== null
   )
-  if (!styleData || !legends) {
+  if (!styleData || !legends?.length) {
     // For development, we want some help whenever no legend is specified, yet
-    return isDev && styleData ? (
-      <LegendDebugInfo legendName={'(All layers)'} layers={styleData.layers} />
-    ) : null
+    if (isDev && styleData) {
+      const allLegendLayers: string[] = []
+      legends?.forEach((legend) => [
+        ...allLegendLayers,
+        ...(legend?.layers || []),
+      ])
+      // TODO DebuggingInfo — See comment below.
+      // const layersThatAreMissingInLegend = styleData.layers
+      //   .map((layer) => layer.id)
+      //   .filter((layerId) => !allLegendLayers.includes(layerId))
+
+      return (
+        <div className="bg-pink-300">
+          <LegendDebugInfoLayerStyle
+            title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
+            layers={styleData.layers}
+          />
+          {/* TODO DebuggingInfo — Disabled for now.
+          The idea was, to have all layers explicitly specified in the topic config.
+          And this debug info should list those, that are not yet explicitly specified, so we can add them.
+          However, it looks like it lists the wrong layers or maybe not all … — needs another close look. */}
+          {/* {!!layersThatAreMissingInLegend.length && (
+            <details className="prose">
+              <summary>Review layers</summary>
+              Those layers need to be added to one of the legend-layers array.
+              Or to the dumping ground legend entry <code>ignore</code>.
+              <pre>{layersThatAreMissingInLegend.join('\n')}</pre>
+            </details>
+          )} */}
+        </div>
+      )
+    }
+    return null
   }
 
   const handleClick = (
@@ -53,7 +83,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
     styleId: TopicStyleIds,
     legendId: TopicStyleLegendIds
   ) => {
-    console.log({ topicId, styleId, legendId })
+    console.log('not implemented,yet', { topicId, styleId, legendId })
   }
 
   const pickIconFromLayer = (layer: MapDataVisLayer[]) => {
@@ -82,7 +112,6 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   }
 
   const iconByStyle = (type: LegendIconTypes, color: string) => {
-    console.log({ type })
     switch (type) {
       case 'line':
         return <LegendIconLine color={color} width={4} />
@@ -114,7 +143,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
 
             const active = true // TODO
             const disabled = false // TODO
-            const interactive = legendData.layers !== null
+            const interactive = false // TODO legendData.layers !== null
             const layers = styleData.layers.filter((layer) =>
               legendData?.layers?.includes(layer.id)
             )
@@ -151,13 +180,13 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 <div className="ml-2.5 flex items-center text-sm font-medium text-gray-700">
                   {legendData.name}
                   {legendIconFromLayer ? (
-                    <LegendDebugInfo
-                      legendName={legendData.name || ''}
+                    <LegendDebugInfoLayerStyle
+                      title={`Debug info for legend entry "${legendData.name}" (${legendData.id}): All specified layers and their styles (topic "${topicConfig.id}")`}
                       layers={layers}
                     />
                   ) : (
-                    <LegendDebugInfo
-                      legendName={'(All layers)'}
+                    <LegendDebugInfoLayerStyle
+                      title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
                       layers={styleData.layers}
                     />
                   )}

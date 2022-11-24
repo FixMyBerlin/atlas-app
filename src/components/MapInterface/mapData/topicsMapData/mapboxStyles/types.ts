@@ -45,99 +45,99 @@ export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
 export type MapboxStyleLayerGroupPoiclassificationIds =
   'atlas_poiclassification'
 
-export type MapboxStyleLayersForGroup_bikelanes =
+// Type for the layers of each group:
+
+export type MapboxStyleLayers_bikelanes =
   | 'Fuehrung mit Fussverkehr copy 3'
   | 'Getrennte Fuehrung copy 3'
   | 'fmc-verkehrsberuhigt copy 4'
-  | 'MouseOverArea-bikelanes'
+  | 'hitarea-bikelanes'
 
-export type MapboxStyleLayersForGroup_bikelanes_complete =
+export type MapboxStyleLayers_bikelanes_complete =
   | 'Fuehrung mit Fussverkehr copy 4'
   | 'Keine Daten-fake copy 1'
   | 'Daten vorhanden-fake copy 1'
   | 'Getrennte Fuehrung copy 4'
   | 'fmc-verkehrsberuhigt copy 5'
-  | 'MouseOverArea-bikelanes_complete copy'
+  | 'hitarea_complete'
 
-export type MapboxStyleLayersForGroup_bikelanes_complete_fresh_verified =
+export type MapboxStyleLayers_bikelanes_complete_fresh_verified =
   | 'Daten aelter 2020-fake copy 1'
   | 'Daten vorhanden-fake copy'
   | 'Keine Daten-fake copy'
   | 'Fuehrung mit Fussverkehr copy'
   | 'Getrennte Fuehrung copy'
   | 'fmc-verkehrsberuhigt copy 1'
-  | 'Geprueft-fake'
-  | 'Datengeprueft copy'
-  | 'MouseOverArea-bikelanes-complete-fresh'
+  | 'hitarea-complete-fresh'
 
-export type MapboxStyleLayersForGroup_bikelanes_fresh =
+export type MapboxStyleLayers_bikelanes_fresh =
   | 'Daten aelter 2020-fake copy'
   | 'Fuehrung mit Fussverkehr copy 2'
   | 'Getrennte Fuehrung copy 2'
   | 'fmc-verkehrsberuhigt copy 3'
-  | 'MouseOverArea-bikelanes-fresh'
+  | 'hitarea-bikelanes-fresh'
 
-export type MapboxStyleLayersForGroup_bikelanes_verified =
+export type MapboxStyleLayers_bikelanes_verified =
+  | 'bikelanes-no-verfication-done'
+  | 'bikelanes-no-verfication-done copy'
   | 'Fuehrung mit Fussverkehr copy 1'
   | 'Getrennte Fuehrung copy 1'
-  | 'fmc-verkehrsberuhigt copy 2'
-  | 'Datengeprueft'
-  | 'MouseOverArea-bikelanes-verified'
+  | 'hitarea-bikelanes-verified'
 
-export type MapboxStyleLayersForGroup_education =
+export type MapboxStyleLayers_education =
   | 'fmc-poiEducation'
   | 'fmc-poiEducation-label'
 
-export type MapboxStyleLayersForGroup_landuse = 'fmc-landuse'
+export type MapboxStyleLayers_landuse = 'fmc-landuse'
 
-export type MapboxStyleLayersForGroup_lit =
+export type MapboxStyleLayers_lit =
   | '2_lit-Special'
   | '2_lit-Unbeleuchtet'
   | '2_lit-Beleuchtet'
-  | '2_MouseOverArea-lit'
+  | '2_hitarea-lit'
 
-export type MapboxStyleLayersForGroup_lit_complete =
+export type MapboxStyleLayers_lit_complete =
   | '1_lit-Keine Daten'
   | '1_lit-Special'
   | '1_lit-Unbeleuchtet'
   | '1_lit-Beleuchtet'
-  | '1_MouseOverArea-lit'
+  | '1_hitarea-lit'
 
-export type MapboxStyleLayersForGroup_lit_complete_fresh_verified =
+export type MapboxStyleLayers_lit_complete_fresh_verified =
   | '5_lit-Daten aelter 2020'
   | '5_lit-Keine Daten'
   | '5_lit-Special'
   | '5_lit-Unbeleuchtet'
   | '5_lit-Beleuchtet'
-  | '5_lit-verified-approfed--spriteversion'
+  | '5_lit-verified-approved--spriteversion'
   | '5_lit-verified-approved'
   | '5_lit-verified-rejected'
-  | '5_MouseOverArea-lit'
+  | '5_hitarea-lit'
 
-export type MapboxStyleLayersForGroup_lit_fresh =
-  | '3_lit-fresh-false-sprite-ersatz'
+export type MapboxStyleLayers_lit_fresh =
   | '3_lit-fresh-true-line copy'
   | '3_lit-fresh-true-line'
   | '3_lit-Unbeleuchtet'
   | '3_lit-Special'
   | '3_lit-Beleuchtet'
-  | '3_MouseOverArea-lit'
+  | '3_lit-fresh-false-sprite-ersatz'
+  | '3_hitarea-lit'
 
-export type MapboxStyleLayersForGroup_lit_verified =
-  | '3_lit-no-verification-done'
-  | '3_lit-verified'
-  | '3_lit-unverified'
+export type MapboxStyleLayers_lit_verified =
+  | '4_lit-no-verification-done'
+  | '4_lit-verified'
+  | '4_lit-unverified'
   | '4_lit-Unbeleuchtet'
   | '4_lit-Special'
   | '4_lit-Beleuchtet'
-  | '4_MouseOverArea-lit'
+  | '4_hitarea-lit'
 
-export type MapboxStyleLayersForGroup_places = 'fmc-poiPlaces-label'
+export type MapboxStyleLayers_places = 'fmc-poiPlaces-label'
 
-export type MapboxStyleLayersForGroup_placescircle =
+export type MapboxStyleLayers_placescircle =
   | 'fmc-poiPlaces-circle'
   | 'fmc-poiPlaces-label-for-circle'
 
-export type MapboxStyleLayersForGroup_poiclassification =
+export type MapboxStyleLayers_poiclassification =
   | 'fmc-poiShopCategory'
   | 'fmc-poiShopping-heatmap'

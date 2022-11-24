@@ -1,1 +1,1 @@
-export * from './LegendDebugInfo'
+export * from './LegendDebugInfoLayerStyle'

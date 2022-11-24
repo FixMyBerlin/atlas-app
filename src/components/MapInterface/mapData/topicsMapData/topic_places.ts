@@ -24,6 +24,13 @@ export const topic_places: MapDataTopic = {
         sourceLayer: 'public.places',
       }),
       interactiveFilters: null,
+      legends: [
+        {
+          id: 'ignore',
+          name: null,
+          layers: ['fmc-poiPlaces-label'],
+        },
+      ],
     },
   ],
 }

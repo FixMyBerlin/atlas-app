@@ -1,7 +1,7 @@
 import { MapDataTopic } from '../types'
 import {
   MapboxStyleLayerGroupLitIds,
-  MapboxStyleLayersForGroup_lit,
+  MapboxStyleLayers_lit,
 } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -37,17 +37,17 @@ export const topic_lit: MapDataTopic = {
           layers: [
             '2_lit-Beleuchtet',
             '2_lit-Special',
-          ] as MapboxStyleLayersForGroup_lit[],
+          ] as MapboxStyleLayers_lit[],
         },
         {
           id: 'unlit',
           name: 'Unbeleuchtet',
-          layers: ['2_lit-Unbeleuchtet'] as MapboxStyleLayersForGroup_lit[],
+          layers: ['2_lit-Unbeleuchtet'] as MapboxStyleLayers_lit[],
         },
         {
           id: 'ignore',
           name: null,
-          layers: ['2_MouseOverArea-lit'] as MapboxStyleLayersForGroup_lit[],
+          layers: ['2_hitarea-lit'] as MapboxStyleLayers_lit[],
         },
       ],
     },
@@ -61,6 +61,40 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
+      legends: [
+        {
+          id: 'lit',
+          name: 'Beleuchtet',
+          layers: null,
+          style: {
+            type: 'line',
+            color: 'hsl(47, 94%, 57%)',
+          },
+        },
+        {
+          id: 'unlit',
+          name: 'Unbeleuchtet',
+          layers: null,
+          style: {
+            type: 'line',
+            color: 'hsl(47, 86%, 15%)',
+          },
+        },
+        {
+          id: 'missing',
+          name: 'Daten fehlen',
+          layers: null,
+          style: {
+            type: 'line',
+            color: 'hsl(330, 46%, 46%)',
+          },
+        },
+        {
+          id: 'ignore',
+          name: null,
+          layers: ['ignore_for_now'],
+        },
+      ],
     },
     {
       id: 'atlas_lit_verified',

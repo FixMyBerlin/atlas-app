@@ -3,6 +3,104 @@
     "group": "atlas_bikelanes_verified",
     "layers": [
       {
+        "id": "bikelanes-no-verfication-done",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12,
+            3,
+            12.2,
+            4,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-offset": 2,
+          "line-color": "#fa7fe2",
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12.1,
+            0,
+            12.2,
+            1,
+            18,
+            1
+          ]
+        },
+        "filter": [
+          "has",
+          "category"
+        ]
+      },
+      {
+        "id": "bikelanes-no-verfication-done copy",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12,
+            3,
+            12.2,
+            4,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-offset": 2,
+          "line-color": "#fa7fe2",
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12.1,
+            0,
+            12.2,
+            1,
+            18,
+            1
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "category"
+          ],
+          [
+            "",
+            "cyclewaySeparated",
+            "footAndCycleway_shared"
+          ],
+          true,
+          false
+        ]
+      },
+      {
         "id": "Fuehrung mit Fussverkehr copy 1",
         "type": "line",
         "paint": {
@@ -38,8 +136,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 1",
@@ -74,83 +171,10 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
-        "id": "fmc-verkehrsberuhigt copy 2",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0.5,
-            13,
-            2
-          ],
-          "line-dasharray": [
-            1,
-            1
-          ],
-          "line-offset": 2,
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "category"
-          ],
-          [
-            "pedestrianArea_bicycleYes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Datengeprueft",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsl(112, 76%, 47%)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "layout": {}
-      },
-      {
-        "id": "MouseOverArea-bikelanes-verified",
+        "id": "hitarea-bikelanes-verified",
         "type": "line",
         "paint": {
           "line-width": [
@@ -258,7 +282,7 @@
         "id": "2_lit-Special",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 96%, 69%)",
+          "line-color": "hsl(35, 100%, 61%)",
           "line-width": [
             "interpolate",
             [
@@ -267,13 +291,27 @@
             [
               "zoom"
             ],
-            13,
+            12,
             2.5,
-            16,
-            6
+            14,
+            4,
+            18,
+            10
           ],
           "line-blur": 1,
-          "line-opacity": 0.7
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            1,
+            18,
+            0.7
+          ]
         },
         "filter": [
           "match",
@@ -287,7 +325,9 @@
           true,
           false
         ],
-        "layout": {}
+        "layout": {
+          "line-cap": "round"
+        }
       },
       {
         "id": "2_lit-Unbeleuchtet",
@@ -328,7 +368,7 @@
         "id": "2_lit-Beleuchtet",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 91%, 46%)",
+          "line-color": "hsl(47, 94%, 57%)",
           "line-width": [
             "interpolate",
             [
@@ -337,13 +377,27 @@
             [
               "zoom"
             ],
-            13,
+            12,
             2.5,
-            16,
-            6
+            14,
+            4,
+            18,
+            10
           ],
           "line-blur": 1,
-          "line-opacity": 0.6
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            13,
+            1,
+            18,
+            0.7
+          ]
         },
         "filter": [
           "match",
@@ -357,10 +411,12 @@
           true,
           false
         ],
-        "layout": {}
+        "layout": {
+          "line-cap": "round"
+        }
       },
       {
-        "id": "2_MouseOverArea-lit",
+        "id": "2_hitarea-lit",
         "type": "line",
         "paint": {
           "line-color": "hsl(290, 100%, 54%)",
@@ -537,17 +593,39 @@
           ],
           "text-anchor": "top",
           "text-field": [
-            "to-string",
+            "step",
             [
-              "concat",
+              "zoom"
+            ],
+            [
+              "to-string",
               [
-                "get",
-                "name"
-              ],
-              " \n ",
+                "concat",
+                [
+                  "get",
+                  "name"
+                ],
+                " \n ",
+                [
+                  "get",
+                  "population"
+                ]
+              ]
+            ],
+            22,
+            [
+              "to-string",
               [
-                "get",
-                "population"
+                "concat",
+                [
+                  "get",
+                  "name"
+                ],
+                " \n ",
+                [
+                  "get",
+                  "population"
+                ]
               ]
             ]
           ],
@@ -599,9 +677,8 @@
             "hsl(215, 88%, 78%)",
             "hsla(17, 0%, 100%, 0)"
           ],
-          "fill-opacity": 0.3
-        },
-        "layout": {}
+          "fill-opacity": 0.2
+        }
       }
     ]
   },
@@ -794,7 +871,7 @@
         }
       },
       {
-        "id": "1_MouseOverArea-lit",
+        "id": "1_hitarea-lit",
         "type": "line",
         "paint": {
           "line-color": "hsl(290, 100%, 54%)",
@@ -923,7 +1000,7 @@
             13,
             2
           ],
-          "line-color": "#031ab5"
+          "line-color": "hsl(232, 97%, 36%)"
         },
         "filter": [
           "match",
@@ -979,7 +1056,7 @@
         "layout": {}
       },
       {
-        "id": "MouseOverArea-bikelanes_complete copy",
+        "id": "hitarea_complete",
         "type": "line",
         "paint": {
           "line-width": [
@@ -1123,40 +1200,6 @@
     "group": "atlas_lit_fresh",
     "layers": [
       {
-        "id": "3_lit-fresh-false-sprite-ersatz",
-        "type": "symbol",
-        "paint": {
-          "text-color": "hsl(0, 0%, 46%)"
-        },
-        "filter": [
-          "all",
-          [
-            "==",
-            [
-              "get",
-              "is_fresh"
-            ],
-            false
-          ],
-          [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
-        ],
-        "layout": {
-          "text-field": [
-            "to-string",
-            "< 2020"
-          ],
-          "symbol-placement": "line-center",
-          "text-size": 10
-        }
-      },
-      {
         "id": "3_lit-fresh-true-line copy",
         "type": "line",
         "paint": {
@@ -1253,9 +1296,9 @@
               "zoom"
             ],
             12,
-            2.5,
-            14,
-            4,
+            3,
+            13,
+            5,
             18,
             10
           ],
@@ -1304,9 +1347,9 @@
               "zoom"
             ],
             12,
-            2.5,
-            14,
-            4,
+            3,
+            13,
+            5,
             18,
             10
           ],
@@ -1355,9 +1398,9 @@
               "zoom"
             ],
             12,
-            2.5,
-            14,
-            4,
+            3,
+            13,
+            5,
             18,
             10
           ],
@@ -1393,7 +1436,41 @@
         }
       },
       {
-        "id": "3_MouseOverArea-lit",
+        "id": "3_lit-fresh-false-sprite-ersatz",
+        "type": "symbol",
+        "paint": {
+          "text-color": "hsl(0, 0%, 46%)"
+        },
+        "filter": [
+          "all",
+          [
+            "==",
+            [
+              "get",
+              "is_fresh"
+            ],
+            false
+          ],
+          [
+            "==",
+            [
+              "get",
+              "is_present"
+            ],
+            true
+          ]
+        ],
+        "layout": {
+          "text-field": [
+            "to-string",
+            "< 2020"
+          ],
+          "symbol-placement": "line-center",
+          "text-size": 10
+        }
+      },
+      {
+        "id": "3_hitarea-lit",
         "type": "line",
         "paint": {
           "line-color": "hsl(290, 100%, 54%)",
@@ -1537,7 +1614,7 @@
         "layout": {}
       },
       {
-        "id": "MouseOverArea-bikelanes",
+        "id": "hitarea-bikelanes",
         "type": "line",
         "paint": {
           "line-width": [
@@ -1775,50 +1852,7 @@
         "layout": {}
       },
       {
-        "id": "Geprueft-fake",
-        "type": "symbol",
-        "paint": {},
-        "layout": {
-          "icon-image": "button-menu-default copy",
-          "icon-size": 0.3
-        }
-      },
-      {
-        "id": "Datengeprueft copy",
-        "type": "circle",
-        "paint": {
-          "circle-color": "hsl(112, 76%, 47%)",
-          "circle-radius": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            2,
-            22,
-            10
-          ],
-          "circle-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            14,
-            1,
-            22,
-            0.6
-          ]
-        },
-        "layout": {}
-      },
-      {
-        "id": "MouseOverArea-bikelanes-complete-fresh",
+        "id": "hitarea-complete-fresh",
         "type": "line",
         "paint": {
           "line-width": [
@@ -1999,7 +2033,7 @@
         "layout": {}
       },
       {
-        "id": "5_lit-verified-approfed--spriteversion",
+        "id": "5_lit-verified-approved--spriteversion",
         "type": "symbol",
         "paint": {},
         "layout": {
@@ -2112,7 +2146,7 @@
         "layout": {}
       },
       {
-        "id": "5_MouseOverArea-lit",
+        "id": "5_hitarea-lit",
         "type": "line",
         "paint": {
           "line-color": "hsl(290, 100%, 54%)",
@@ -2278,7 +2312,7 @@
         "layout": {}
       },
       {
-        "id": "MouseOverArea-bikelanes-fresh",
+        "id": "hitarea-bikelanes-fresh",
         "type": "line",
         "paint": {
           "line-width": [
@@ -2313,10 +2347,10 @@
     "group": "atlas_lit_verified",
     "layers": [
       {
-        "id": "3_lit-no-verification-done",
+        "id": "4_lit-no-verification-done",
         "type": "line",
         "paint": {
-          "line-color": "#ab3f75",
+          "line-color": "#fa7fe2",
           "line-width": [
             "interpolate",
             [
@@ -2326,14 +2360,30 @@
               "zoom"
             ],
             12,
+            3,
+            12.2,
             4,
-            14,
-            6,
+            13,
+            8,
             18,
-            16
+            20
           ],
           "line-blur": 1,
-          "line-opacity": 0.7
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            12.1,
+            0,
+            12.2,
+            1,
+            18,
+            1
+          ]
         },
         "filter": [
           "all",
@@ -2358,10 +2408,11 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
-        "id": "3_lit-verified",
+        "id": "4_lit-verified",
         "type": "line",
         "paint": {
           "line-color": "#5fb946",
@@ -2405,10 +2456,11 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
-        "id": "3_lit-unverified",
+        "id": "4_lit-unverified",
         "type": "line",
         "paint": {
           "line-color": "hsl(360, 100%, 41%)",
@@ -2451,7 +2503,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Unbeleuchtet",
@@ -2607,7 +2660,7 @@
         }
       },
       {
-        "id": "4_MouseOverArea-lit",
+        "id": "4_hitarea-lit",
         "type": "line",
         "paint": {
           "line-color": "hsl(290, 100%, 54%)",

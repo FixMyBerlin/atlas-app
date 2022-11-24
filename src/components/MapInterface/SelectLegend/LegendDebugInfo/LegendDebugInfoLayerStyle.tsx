@@ -6,9 +6,12 @@ import { isDev } from '@components/utils'
 import { CommandLineIcon } from '@heroicons/react/20/solid'
 import React from 'react'
 
-type Props = { legendName: string; layers: MapDataVisLayer[] }
+type Props = { title: string; layers: MapDataVisLayer[] }
 
-export const LegendDebugInfo: React.FC<Props> = ({ legendName, layers }) => {
+export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
+  title,
+  layers,
+}) => {
   const { showDebugInfo } = useMapStateInteraction()
 
   if (!isDev && !showDebugInfo) return null
@@ -16,7 +19,7 @@ export const LegendDebugInfo: React.FC<Props> = ({ legendName, layers }) => {
   return (
     <div className="ml-2 inline-block bg-pink-300">
       <IconModal
-        title={`Debug info for Legends for ${legendName}`}
+        title={title}
         titleIcon="info"
         triggerStyle="circle"
         triggerIcon={<CommandLineIcon className="h-4 w-4" />}
