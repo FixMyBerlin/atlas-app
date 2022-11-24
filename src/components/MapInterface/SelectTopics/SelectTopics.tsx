@@ -43,7 +43,7 @@ export const SelectTopics: React.FC = () => {
         <legend className="sr-only">
           Datensätze für die ausgewählte Themenkarte {themeData?.name}
         </legend>
-        <div className="space-y-2.5">
+        <div className="space-y-4">
           {topicsConfig.map((topicConfig) => {
             const topicData = getTopicData(topicConfig.id)
             if (!topicData) return null

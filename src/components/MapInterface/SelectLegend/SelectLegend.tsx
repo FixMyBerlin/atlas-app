@@ -101,10 +101,10 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   }
 
   return (
-    <section className="mt-1 rounded border px-2 py-2.5">
+    <section className="mt-1 px-2 pt-0.5">
       <fieldset>
         <legend className="sr-only">Legende</legend>
-        <div className="space-y-2.5">
+        <div className="space-y-1">
           {legends.map((legendData) => {
             // TODO: TS: This should be specified at the source…
             const legendDataId = legendData.id as TopicStyleLegendIds
@@ -133,7 +133,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 })}
                 key={key}
               >
-                <div className="h-5 w-5">
+                <div className="ml-3 h-5 w-5">
                   {legendIconFromLayer
                     ? pickIconFromLayer(layers)
                     : pickIconFromLegend(legendData)}

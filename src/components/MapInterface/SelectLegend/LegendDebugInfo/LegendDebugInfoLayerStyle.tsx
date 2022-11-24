@@ -14,7 +14,7 @@ export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
 }) => {
   const { showDebugInfo } = useMapStateInteraction()
 
-  if (!isDev && !showDebugInfo) return null
+  if (!isDev || !showDebugInfo) return null
 
   return (
     <div className="ml-2 inline-block bg-pink-300">
