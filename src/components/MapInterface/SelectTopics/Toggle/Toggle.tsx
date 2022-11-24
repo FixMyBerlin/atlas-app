@@ -11,12 +11,12 @@ export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
   return (
     <Switch.Group
       as="div"
-      className="flex min-h-[1.3rem] cursor-pointer items-center"
+      className="group flex min-h-[1.3rem] cursor-pointer items-center"
     >
       <Switch
         checked={active}
         onChange={handleChange}
-        className="group relative inline-flex h-5 w-10 flex-shrink-0 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+        className="relative inline-flex h-5 w-10 flex-shrink-0 items-center justify-center rounded-full focus:outline-none"
       >
         <span
           aria-hidden="true"
@@ -39,7 +39,10 @@ export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
       </Switch>
       <Switch.Label
         as="div"
-        className="ml-2 text-sm font-medium leading-[17px] text-gray-900"
+        className={classNames(
+          'ml-2 w-full text-sm font-semibold leading-[17px]',
+          active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900'
+        )}
       >
         {children}
       </Switch.Label>

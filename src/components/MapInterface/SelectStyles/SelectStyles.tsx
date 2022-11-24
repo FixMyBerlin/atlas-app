@@ -66,7 +66,10 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
             // `w-*` has to be set fo the `truncate` to work
             className="inline-flex w-[13.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-gray-100"
           >
-            <span className="truncate">Stil: {activeStyleData?.name}</span>
+            <div className="flex gap-1">
+              <span className="w-[2rem] text-right">Stil:</span>
+              <span className="truncate">{activeStyleData?.name}</span>
+            </div>
             <ChevronDownIcon
               className="-mr-1 ml-0.5 h-5 w-5"
               aria-hidden="true"
