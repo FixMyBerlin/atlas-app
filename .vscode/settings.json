@@ -17,12 +17,5 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "exportall.config.folderListener": [
-    "/components/MapInterface/Map/mapData/SourceAndLayers/utils",
-    "/components/MapInterface/Map/mapData/topicsMapDataConfig",
-    "/components/utils",
-    "/src/pages",
-    "/src/components/MapInterface/mapData/topicsMapDataConfig",
-    "/src/components/MapInterface/Inspector/TagsTable/compositTableRows"
-  ]
+  "exportall.config.folderListener": []
 }
