@@ -1,7 +1,6 @@
 import { SourcesRasterIds } from '@components/MapInterface/mapData'
 import {
   Page404,
-  PageAbout,
   PageContact,
   PageHome,
   PagePrivacy,
@@ -19,10 +18,10 @@ import {
 import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
 import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
 
-import { decodeAndParse, encodeAndStringify } from './encodeDecode'
-import { fetchRegionByPath } from './utils/fetchRegionByPath'
-import { fetchRegions } from './fetchRegions'
 import { Region } from '@fakeServer/index'
+import { decodeAndParse, encodeAndStringify } from './encodeDecode'
+import { fetchRegions } from './fetchRegions'
+import { fetchRegionByPath } from './utils/fetchRegionByPath'
 
 // LoaderData: LoaderData<unknown>;
 // Params: Params<string>;
@@ -94,10 +93,11 @@ export const routes: Route<LocationGenerics>[] = [
       },
     ],
   },
-  {
-    path: '/ueber',
-    element: <PageAbout />,
-  },
+  // TODO Deactivated for now
+  // {
+  //   path: '/ueber',
+  //   element: <PageAbout />,
+  // },
   {
     path: '/kontakt',
     element: <PageContact />,
