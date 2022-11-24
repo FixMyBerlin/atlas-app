@@ -4,7 +4,7 @@ import { MetaTags } from '@components/MetaTags'
 import MfundLogo from '@pages/assets/PageContact/logo-mfund.png'
 import { ReactComponent as ImageLogoBmdvFoerderung } from './assets/PageContact/logo-bmdv-foerderung.svg'
 
-export const PageContact: React.FC = () => {
+export const ContactPage: React.FC = () => {
   return (
     <LayoutPage>
       <MetaTags

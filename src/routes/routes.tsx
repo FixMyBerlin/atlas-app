@@ -1,13 +1,5 @@
 import { SourcesRasterIds } from '@components/MapInterface/mapData'
-import {
-  Page404,
-  PageContact,
-  PageHome,
-  PagePrivacy,
-  PageRegionAction,
-  PageRegionMap,
-  PageRegions,
-} from '@pages/index'
+import { ContactPage, NotFoundPage, HomePage, PrivacyPage } from '@pages/index'
 import {
   MakeGenerics,
   parseSearchWith,
@@ -22,6 +14,7 @@ import { Region } from '@fakeServer/index'
 import { decodeAndParse, encodeAndStringify } from './encodeDecode'
 import { fetchRegions } from './fetchRegions'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'
+import { PageRegionMap, PageRegions } from '@pages/PageRegions'
 
 // LoaderData: LoaderData<unknown>;
 // Params: Params<string>;
@@ -54,7 +47,7 @@ export const location = new ReactLocation<LocationGenerics>({
 export const routes: Route<LocationGenerics>[] = [
   {
     path: '/',
-    element: <PageHome />,
+    element: <HomePage />,
   },
   {
     path: '/regionen',
@@ -78,17 +71,17 @@ export const routes: Route<LocationGenerics>[] = [
               }
             },
             // TODO figure out how to use the error-Handling to catch non-existing regionPath's
-            // errorElement: <PageMapIndex regionPathNotFound />,
+            // errorElement: <MapIndexPage regionPathNotFound />,
           },
-          {
-            path: '/mitmachen',
-            element: <PageRegionAction />,
-            loader: async ({ params: { regionPath } }) => {
-              return {
-                region: await fetchRegionByPath(regionPath),
-              }
-            },
-          },
+          // {
+          //   path: '/mitmachen',
+          //   element: <PageRegionAction />,
+          //   loader: async ({ params: { regionPath } }) => {
+          //     return {
+          //       region: await fetchRegionByPath(regionPath),
+          //     }
+          //   },
+          // },
         ],
       },
     ],
@@ -96,18 +89,18 @@ export const routes: Route<LocationGenerics>[] = [
   // TODO Deactivated for now
   // {
   //   path: '/ueber',
-  //   element: <PageAbout />,
+  //   element: <AboutPage />,
   // },
   {
     path: '/kontakt',
-    element: <PageContact />,
+    element: <ContactPage />,
   },
   {
     path: '/datenschutz',
-    element: <PagePrivacy />,
+    element: <PrivacyPage />,
   },
   {
     path: '*',
-    element: <Page404 />,
+    element: <NotFoundPage />,
   },
 ]

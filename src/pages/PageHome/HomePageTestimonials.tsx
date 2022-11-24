@@ -51,7 +51,7 @@ const QuoteIcon = (props: any) => {
   )
 }
 
-export const PageHomeTestimonials = () => {
+export const HomePageTestimonials = () => {
   return (
     <section id="testimonials" className="bg-slate-50 py-20 sm:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

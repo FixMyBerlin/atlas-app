@@ -170,7 +170,7 @@ const FeaturesDesktop = () => {
   )
 }
 
-export const PageHomeSecondaryFeatures = () => {
+export const HomePageSecondaryFeatures = () => {
   return (
     <section
       id="secondary-features"

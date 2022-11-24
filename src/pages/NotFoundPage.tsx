@@ -2,7 +2,7 @@ import { LayoutPage } from '@components/Layout'
 import { Link } from '@components/Link'
 import { MetaTags } from '@components/MetaTags'
 
-export const Page404: React.FC = () => {
+export const NotFoundPage: React.FC = () => {
   return (
     <LayoutPage>
       <MetaTags title="Seite nicht gefunden (Fehler 404)" noindex />

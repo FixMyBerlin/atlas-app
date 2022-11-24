@@ -20,7 +20,7 @@ import React from 'react'
   Original Dokument https://docs.google.com/document/d/1Tymx04eNjC0atCuQje5Df_bxxn8HJAyr/edit
 */
 
-export const PagePrivacy: React.FC = () => {
+export const PrivacyPage: React.FC = () => {
   const tocItems: TocHashLink = [
     ['#responsible', 'Verantwortlichkeit'],
     ['#hosting', 'Bereitstellung'],

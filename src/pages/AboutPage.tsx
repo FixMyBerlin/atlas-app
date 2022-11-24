@@ -1,7 +1,7 @@
 import { LayoutPage } from '@components/Layout'
 import { MetaTags } from '@components/MetaTags'
 
-export const PageAbout: React.FC = () => {
+export const AboutPage: React.FC = () => {
   return (
     <LayoutPage>
       <MetaTags title="Über den Radverkehrsatlas" />
