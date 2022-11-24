@@ -35,7 +35,7 @@ export const PagePrivacy: React.FC = () => {
 
   return (
     <LayoutPage>
-      <MetaTags noindex title="Radwege-Check | Datenschutz" />
+      <MetaTags noindex title="Datenschutzerklärung" />
       <h1>Datenschutzerklärung</h1>
       <TableOfContents items={tocItems} />
       <h2 id="responsible">Einleitung</h2>

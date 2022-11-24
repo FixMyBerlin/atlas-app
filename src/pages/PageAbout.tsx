@@ -1,5 +1,11 @@
 import { LayoutPage } from '@components/Layout'
+import { MetaTags } from '@components/MetaTags'
 
 export const PageAbout: React.FC = () => {
-  return <LayoutPage>Hallo About</LayoutPage>
+  return (
+    <LayoutPage>
+      <MetaTags title="Über den Radverkehrsatlas" />
+      Hallo About
+    </LayoutPage>
+  )
 }
