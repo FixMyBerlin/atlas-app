@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
-RUN apt update && apt install -y osm2pgsql osmium-tool luarocks postgresql-client-14 tzdata wget && apt upgrade -y
+RUN apt update && apt install -y osm2pgsql osmium-tool luarocks postgresql-client-14 tzdata wget libpq-dev python3 python3-pip && apt upgrade -y
 # LUA Libaries:
 # - "dkjson" used by parking.lua to write JSON for debugging
 RUN luarocks install dkjson
@@ -14,9 +14,11 @@ RUN luarocks install dkjson
 # RUN luarocks install inspect
 # - "date" https://luarocks.org/modules/tieske/date, https://github.com/Tieske/date
 # RUN luarocks install date
+RUN python3 -m pip install --no-cache-dir --upgrade psycopg2
 WORKDIR /app
 # 'data' folder is root
 RUN mkdir /data
 COPY app /app/
+COPY api /app/api
 RUN chmod +x /app/run.sh
 CMD /app/run.sh

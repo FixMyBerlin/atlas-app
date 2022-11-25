@@ -18,7 +18,7 @@ require("CheckDataWithinYears")
 require("StartsWith")
 
 local table = osm2pgsql.define_table({
-  name = 'bikelanes',
+  name = 'bikelanes_new',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
