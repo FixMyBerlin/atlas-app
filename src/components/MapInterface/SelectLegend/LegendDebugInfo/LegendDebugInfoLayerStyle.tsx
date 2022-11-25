@@ -17,7 +17,7 @@ export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
   if (!isDev || !showDebugInfo) return null
 
   return (
-    <div className="ml-2 inline-block bg-pink-300">
+    <div className="absolute bottom-0 right-0 ml-2 inline-block bg-pink-300">
       <IconModal
         title={title}
         titleIcon="info"

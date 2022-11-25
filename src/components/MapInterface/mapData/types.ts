@@ -104,17 +104,19 @@ export type MapDataStyleInteractiveFilter = {
 /** @desc: Optional legend that allows filtering the given layer */
 export type MapDataStyleLegend = {
   id: string
-  name: string | null
-} & (
-  | { style?: undefined; layers: string[] }
-  | {
-      style: {
-        type: LegendIconTypes
+  name: string
+  style:
+    | {
+        type: Exclude<LegendIconTypes, 'line'>
         color: string
+        dasharray?: never
       }
-      layers: null
-    }
-)
+    | {
+        type: Extract<LegendIconTypes, 'line'>
+        color: string
+        dasharray?: number[]
+      }
+}
 
 /** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataStyleInteractiveFilterOption = {

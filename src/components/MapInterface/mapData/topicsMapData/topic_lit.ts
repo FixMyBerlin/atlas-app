@@ -1,8 +1,5 @@
 import { MapDataTopic } from '../types'
-import {
-  MapboxStyleLayerGroupLitIds,
-  MapboxStyleLayers_lit,
-} from './mapboxStyles'
+import { MapboxStyleLayerGroupLitIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
@@ -12,6 +9,25 @@ export type TopicLitId = typeof topic
 export type TopicLitStyleIds = 'default' | MapboxStyleLayerGroupLitIds
 export type TopicLitStyleFilterIds = '_nofilter'
 export type TopicLitStyleLegendIds = 'lit' | 'unlit' | 'ignore'
+
+const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
+  {
+    id: 'lit',
+    name: 'Beleuchtet',
+    style: {
+      type: 'line',
+      color: 'hsl(47, 94%, 57%)',
+    },
+  },
+  {
+    id: 'unlit',
+    name: 'Unbeleuchtet',
+    style: {
+      type: 'line',
+      color: 'hsl(47, 86%, 19%)',
+    },
+  },
+]
 
 export const topic_lit: MapDataTopic = {
   id: topic,
@@ -30,26 +46,7 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
-      legends: [
-        {
-          id: 'lit',
-          name: 'Beleuchtet',
-          layers: [
-            '2_lit-Beleuchtet',
-            '2_lit-Special',
-          ] as MapboxStyleLayers_lit[],
-        },
-        {
-          id: 'unlit',
-          name: 'Unbeleuchtet',
-          layers: ['2_lit-Unbeleuchtet'] as MapboxStyleLayers_lit[],
-        },
-        {
-          id: 'ignore',
-          name: null,
-          layers: ['2_hitarea-lit'] as MapboxStyleLayers_lit[],
-        },
-      ],
+      legends: [...defaultLegend],
     },
     {
       id: 'atlas_lit_complete',
@@ -62,37 +59,14 @@ export const topic_lit: MapDataTopic = {
       }),
       interactiveFilters: null,
       legends: [
-        {
-          id: 'lit',
-          name: 'Beleuchtet',
-          layers: null,
-          style: {
-            type: 'line',
-            color: 'hsl(47, 94%, 57%)',
-          },
-        },
-        {
-          id: 'unlit',
-          name: 'Unbeleuchtet',
-          layers: null,
-          style: {
-            type: 'line',
-            color: 'hsl(47, 86%, 15%)',
-          },
-        },
+        ...defaultLegend,
         {
           id: 'missing',
           name: 'Daten fehlen',
-          layers: null,
           style: {
             type: 'line',
-            color: 'hsl(330, 46%, 46%)',
+            color: 'hsl(312, 92%, 74%)',
           },
-        },
-        {
-          id: 'ignore',
-          name: null,
-          layers: ['ignore_for_now'],
         },
       ],
     },
@@ -106,6 +80,36 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
+      legends: [
+        ...defaultLegend,
+        // {
+        //   id: 'spacer',
+        // },
+        {
+          id: 'verification-missing',
+          name: 'Daten richtig',
+          style: {
+            type: 'line',
+            color: 'hsl(107, 88%, 57%)',
+          },
+        },
+        {
+          id: 'verification-rejected',
+          name: 'Daten überarbeiten',
+          style: {
+            type: 'line',
+            color: 'hsl(0, 100%, 41%)',
+          },
+        },
+        {
+          id: 'verification-accepted',
+          name: 'Überprüfung steht aus',
+          style: {
+            type: 'line',
+            color: '#fa7fe2',
+          },
+        },
+      ],
     },
     {
       id: 'atlas_lit_fresh',
@@ -117,6 +121,25 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
+      legends: [
+        ...defaultLegend,
+        {
+          id: 'fresh-true',
+          name: 'Aktuelles Prüfdatum',
+          style: {
+            type: 'line',
+            color: 'hsl(107, 88%, 57%)',
+          },
+        },
+        {
+          id: 'fresh-false',
+          name: 'Kein/veraltetes Prüfdatum',
+          style: {
+            type: 'line',
+            color: 'hsl(0, 100%, 41%)',
+          },
+        },
+      ],
     },
   ],
 }

@@ -5,7 +5,6 @@ import React from 'react'
 import {
   getStyleData,
   MapDataStyleLegend,
-  MapDataVisLayer,
   TopicIds,
   TopicStyleIds,
   TopicStyleLegendIds,
@@ -46,11 +45,13 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   // (but vor isDev, give us a helper box to fix the config)
   if (!styleData || !legends?.length) {
     return (
-      <LegendDebugInfoTopicLayerConfig
-        legends={styleData?.legends}
-        topicId={topicConfig.id}
-        styleDataLayers={styleData?.layers}
-      />
+      <section className="relative">
+        <LegendDebugInfoTopicLayerConfig
+          legends={styleData?.legends}
+          topicId={topicConfig.id}
+          styleDataLayers={styleData?.layers}
+        />
+      </section>
     )
   }
 
@@ -62,21 +63,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
     console.log('not implemented,yet', { topicId, styleId, legendId })
   }
 
-  const pickIconFromLayer = (layer: MapDataVisLayer[]) => {
-    const styleLayer = layer[0]
-    if (styleLayer === undefined) return null
-
-    let color = 'red'
-    if (
-      styleLayer.type === 'line' &&
-      typeof styleLayer?.paint?.['line-color'] === 'string'
-    ) {
-      color = styleLayer?.paint?.['line-color']
-    }
-    return iconByStyle(styleLayer.type, color)
-  }
-
-  const pickIconFromLegend = (legend: MapDataStyleLegend) => {
+  const iconFromLegend = (legend: MapDataStyleLegend) => {
     if (!legend?.style?.type && !legend?.style?.color) {
       console.warn('pickIconFromLegend: missing data', {
         type: legend?.style?.type,
@@ -84,13 +71,28 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
       })
       return null
     }
-    return iconByStyle(legend.style.type, legend.style.color)
+    const { type, color, dasharray } = legend.style
+    return iconByStyle({ type, color, dasharray })
   }
 
-  const iconByStyle = (type: LegendIconTypes, color: string) => {
+  const iconByStyle = ({
+    type,
+    color,
+    dasharray,
+  }: {
+    type: LegendIconTypes
+    color: string
+    dasharray?: number[]
+  }) => {
     switch (type) {
       case 'line':
-        return <LegendIconLine color={color} width={4} />
+        return (
+          <LegendIconLine
+            color={color}
+            width={4}
+            strokeDasharray={dasharray?.join(',')}
+          />
+        )
       case 'circle':
         return <LegendIconCircle color={color} />
       case 'fill':
@@ -101,7 +103,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   }
 
   return (
-    <section className="mt-1 px-2 pt-0.5">
+    <section className="relative mt-1 px-2 pt-0.5">
       <fieldset>
         <legend className="sr-only">Legende</legend>
         <div className="space-y-1">
@@ -120,10 +122,6 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             const active = true // TODO
             const disabled = false // TODO
             const interactive = false // TODO legendData.layers !== null
-            const layers = styleData.layers.filter((layer) =>
-              legendData?.layers?.includes(layer.id)
-            )
-            const legendIconFromLayer = layers.length
 
             return (
               <label
@@ -133,11 +131,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 })}
                 key={key}
               >
-                <div className="ml-3 h-5 w-5">
-                  {legendIconFromLayer
-                    ? pickIconFromLayer(layers)
-                    : pickIconFromLegend(legendData)}
-                </div>
+                <div className="ml-3 h-5 w-5">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center ">
                   <input
                     id={key}
@@ -155,21 +149,14 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 </div>
                 <div className="ml-2.5 flex items-center text-sm font-medium text-gray-700">
                   {legendData.name}
-                  {legendIconFromLayer ? (
-                    <LegendDebugInfoLayerStyle
-                      title={`Debug info for legend entry "${legendData.name}" (${legendData.id}): All specified layers and their styles (topic "${topicConfig.id}")`}
-                      layers={layers}
-                    />
-                  ) : (
-                    <LegendDebugInfoLayerStyle
-                      title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
-                      layers={styleData.layers}
-                    />
-                  )}
                 </div>
               </label>
             )
           })}
+          <LegendDebugInfoLayerStyle
+            title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
+            layers={styleData.layers}
+          />
         </div>
       </fieldset>
     </section>
