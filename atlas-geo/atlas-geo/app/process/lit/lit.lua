@@ -13,7 +13,7 @@ require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
 
 local table = osm2pgsql.define_table({
-  name = 'lit',
+  name = 'lit_new',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
