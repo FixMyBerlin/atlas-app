@@ -28,18 +28,11 @@ export const topic_landuse: MapDataTopic = {
           id: 'residential',
           name: 'Wohngegend',
           style: { type: 'fill', color: 'hsl(17, 94%, 81%)' },
-          layers: null,
         },
         {
           id: 'non-residential',
           name: 'Gewerbe',
           style: { type: 'fill', color: 'hsl(215, 88%, 78%)' },
-          layers: null,
-        },
-        {
-          id: 'ignore',
-          name: null,
-          layers: ['fmc-landuse'],
         },
       ],
       interactiveFilters: null,

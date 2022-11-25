@@ -24,13 +24,7 @@ export const topic_places: MapDataTopic = {
         sourceLayer: 'public.places',
       }),
       interactiveFilters: null,
-      legends: [
-        {
-          id: 'ignore',
-          name: null,
-          layers: ['fmc-poiPlaces-label'],
-        },
-      ],
+      legends: null,
     },
     {
       id: 'atlas_placescircle',
@@ -42,13 +36,7 @@ export const topic_places: MapDataTopic = {
         sourceLayer: 'public.places',
       }),
       interactiveFilters: null,
-      legends: [
-        {
-          id: 'ignore',
-          name: null,
-          layers: ['fmc-poiPlaces-label'],
-        },
-      ],
+      legends: null,
     },
   ],
 }
