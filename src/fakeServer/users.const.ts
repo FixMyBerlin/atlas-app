@@ -5,7 +5,14 @@ type User = {
 }
 
 // This is our users "Database" until we have a real one
+// Note: If the 'whosthat' does not work, one can find the user on the OSM user page => Link "Report this User" => "reportable_id"
 export const users: User[] = [
+  {
+    // http://whosthat.osmz.ru/?q=boooshii
+    id: 9142806,
+    displayName: 'boooshii',
+    isAdmin: true,
+  },
   {
     // http://whosthat.osmz.ru/?q=tordans
     id: 11881,
