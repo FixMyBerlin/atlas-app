@@ -1,0 +1,32 @@
+import { Serializer } from 'geschichte'
+import { parse, stringify } from 'query-string'
+import { MapDataConfigTopicsWithState } from '../mapDataConfigTopicsWithState'
+
+export const objectSerializer: Serializer<MapDataConfigTopicsWithState> = {
+  // string to object
+  deserialize: (value: string | null): MapDataConfigTopicsWithState | null => {
+    if (!value) return null
+
+    // Undo the custom replacement from serialize
+    const preparedString = value.replace(/:/g, '=').replace(/\|/g, '&')
+
+    // Now lets create our result object
+    return parse(preparedString, {
+      arrayFormat: 'separator',
+      arrayFormatSeparator: ',',
+    }) as unknown as MapDataConfigTopicsWithState
+  },
+  // object to string
+  serialize: (object?: MapDataConfigTopicsWithState): string | null => {
+    return object === undefined
+      ? null
+      : stringify(object, {
+          arrayFormat: 'separator',
+          arrayFormatSeparator: ',',
+          skipNull: true,
+          skipEmptyString: true,
+        })
+          .replace(/=/g, ':')
+          .replace(/&/g, '|')
+  },
+}

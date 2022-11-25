@@ -1,4 +1,3 @@
-
 // https://www.roboleary.net/vscode/2020/09/17/vscode-workspace-settings.html
 // All settings https://code.visualstudio.com/docs/getstarted/settings#_default-settings
 {
@@ -17,5 +16,6 @@
   },
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "exportall.config.folderListener": []
 }
