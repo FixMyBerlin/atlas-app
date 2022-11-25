@@ -96,7 +96,7 @@ export const regions: Region[] = [
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
-    osmUsers: [...adminIds],
+    osmUsers: [...adminIds, 12741863],
     published: false,
     backgroundSources: [
       ...defaultBackgroundSources,

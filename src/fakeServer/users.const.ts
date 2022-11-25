@@ -30,4 +30,11 @@ export const users: User[] = [
     displayName: 'hejco',
     isAdmin: true,
   },
+  {
+    // http://whosthat.osmz.ru/?q=BAFK_St
+    // Bezirksamt Xhain
+    id: 12741863,
+    displayName: 'BAFK_St',
+    isAdmin: false,
+  },
 ]
