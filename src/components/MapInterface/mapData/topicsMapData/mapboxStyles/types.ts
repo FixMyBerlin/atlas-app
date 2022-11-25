@@ -50,25 +50,28 @@ export type MapboxStyleLayers_bikelanes =
   | 'hitarea-bikelanes'
 
 export type MapboxStyleLayers_bikelanes_complete =
+  | 'bikelanes-Keine Daten'
+  | 'bikelanes-Daten vorhanden'
   | 'Fuehrung mit Fussverkehr copy 4'
-  | 'Keine Daten-fake copy 1'
-  | 'Daten vorhanden-fake copy 1'
   | 'Getrennte Fuehrung copy 4'
   | 'fmc-verkehrsberuhigt copy 5'
   | 'hitarea_complete'
 
 export type MapboxStyleLayers_bikelanes_fresh =
   | 'Daten aelter 2020-fake copy'
+  | 'Daten aktuell'
   | 'Fuehrung mit Fussverkehr copy 2'
   | 'Getrennte Fuehrung copy 2'
   | 'fmc-verkehrsberuhigt copy 3'
   | 'hitarea-bikelanes-fresh'
 
 export type MapboxStyleLayers_bikelanes_verified =
-  | 'bikelanes-no-verfication-done'
   | 'bikelanes-no-verfication-done copy'
+  | 'bikelanes-verified'
+  | 'bikelanes-unverified'
   | 'Fuehrung mit Fussverkehr copy 1'
   | 'Getrennte Fuehrung copy 1'
+  | 'fmc-verkehrsberuhigt copy 6'
   | 'hitarea-bikelanes-verified'
 
 export type MapboxStyleLayers_education =
@@ -96,7 +99,6 @@ export type MapboxStyleLayers_lit_fresh =
   | '3_lit-Unbeleuchtet'
   | '3_lit-Special'
   | '3_lit-Beleuchtet'
-  | '3_lit-fresh-false-sprite-ersatz'
   | '3_hitarea-lit'
 
 export type MapboxStyleLayers_lit_verified =
