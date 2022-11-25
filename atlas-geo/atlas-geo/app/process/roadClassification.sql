@@ -4,22 +4,22 @@
 -- ---------------------------
 
 -- Whenever we move content to our skipList, that table has to have the same structure (columns).
-ALTER TABLE "roadClassification" ADD COLUMN IF NOT EXISTS length numeric;
+ALTER TABLE "roadClassification_new" ADD COLUMN IF NOT EXISTS length numeric;
 ALTER TABLE "roadClassification_skipList" ADD COLUMN IF NOT EXISTS length numeric;
 
-UPDATE "roadClassification" SET length = ROUND(ST_Length(geom)::numeric, 1);
+UPDATE "roadClassification_new" SET length = ROUND(ST_Length(geom)::numeric, 1);
 
 -- TODO: _skipNotes erzeugen
 -- TODO: This seems to bee too hard; maybe we should make the _skipNotes a regular column?
--- UPDATE "roadClassification" SET tags = jsonb_set(tags, '{_skipNotes}', ';Skipped (SQL) `length<10`');
+-- UPDATE "roadClassification_new" SET tags = jsonb_set(tags, '{_skipNotes}', ';Skipped (SQL) `length<10`');
 
 -- Lets only delete small segments of certain highway types which typically have small non-needed extensions.
 INSERT INTO "roadClassification_skipList" (
-  SELECT * FROM "roadClassification"
+  SELECT * FROM "roadClassification_new"
   WHERE "length" < 20
   AND tags ->> 'highway' IN ('path', 'track', 'footway', 'service')
 );
-DELETE FROM "roadClassification"
+DELETE FROM "roadClassification_new"
   WHERE "length" < 20
   AND tags ->> 'highway' IN ('path', 'track', 'footway', 'service');
 
@@ -38,8 +38,8 @@ CREATE TABLE "_roadClassification_buffer" AS (
 	SELECT
 		r1.*
 	FROM
-		"roadClassification" AS r1,
-		"roadClassification" AS r2
+		"roadClassification_new" AS r1,
+		"roadClassification_new" AS r2
 	WHERE
   (
     -- only those, where the start point buffer intersetcs with other ways (except for itself)

@@ -46,6 +46,7 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+      ERROR_LOG: /var/log/gunicorn-error.log
     ports:
       - "9020:80"
     labels:

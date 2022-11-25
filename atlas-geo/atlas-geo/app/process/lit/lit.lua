@@ -13,7 +13,7 @@ require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
 
 local table = osm2pgsql.define_table({
-  name = 'lit',
+  name = 'lit_new',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -74,8 +74,8 @@ function osm2pgsql.process_way(object)
     object.tags.is_present = false
   end
 
-  -- Fleshness of data
-  local withinYears = CheckDataWithinYears("lit", object.tags, 2)
+  -- Freshness of data
+  local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
   if (withinYears.result) then
     object.tags.is_fresh = true
     object.tags.fresh_age_days = withinYears.diffDays
@@ -84,10 +84,27 @@ function osm2pgsql.process_way(object)
     object.tags.fresh_age_days = withinYears.diffDays
   end
 
+  -- Experimental: Freshness of data based on update_at of object
+  local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
+  if (withinYears.result) then
+    object.tags._update_is_fresh = true
+    object.tags._update_fresh_age_days = withinYears.diffDays
+  else
+    object.tags._update_is_fresh = false
+    object.tags._update_fresh_age_days = withinYears.diffDays
+  end
+  object.tags._is_fresh_combined = object.tags.is_fresh or object.tags._update_is_fresh
+  object.tags._update_fresh_age_days_combined = object.tags.fresh_age_days or object.tags._update_fresh_age_days
+
+  -- Normalize name info for sidepath'
+  -- TODO: Extact into helper
+  object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
+
   local allowed_tags = Set({
     "_skip",
     "_skipNotes",
     "access",
+    "area",
     "category",
     "check_date:lit",
     "footway",
@@ -97,8 +114,13 @@ function osm2pgsql.process_way(object)
     "is_present",
     "is_sidepath",
     "lit",
+    "surface",
+    "smoothness",
     "name",
     "service",
+    "width", -- experimental
+    "sidewalk:width", -- experimental
+    "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)

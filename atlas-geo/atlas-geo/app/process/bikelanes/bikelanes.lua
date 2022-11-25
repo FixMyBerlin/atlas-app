@@ -1,3 +1,7 @@
+--
+-- THIS FILE IS DEPRECATED PLEAE DON'T ADD NEW FEATURES
+-- IT WILL SOON BE REPLACED BY `bikelanesNew.lua`
+--
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
@@ -14,7 +18,7 @@ require("CheckDataWithinYears")
 require("StartsWith")
 
 local table = osm2pgsql.define_table({
-  name = 'bikelanes',
+  name = 'bikelanes_new',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -191,7 +195,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- Fleshness of data, see documentation
-  local withinYears = CheckDataWithinYears("cycleway", object.tags, 2)
+  local withinYears = CheckDataWithinYears(object.tags["check_date:cycleway"], 2)
   if (withinYears.result) then
     object.tags.is_fresh = true
     object.tags.fresh_age_days = withinYears.diffDays
@@ -228,7 +232,12 @@ function osm2pgsql.process_way(object)
     "sidewalk:left:bicycle",
     "sidewalk:right:bicycle",
     "traffic_sign",
-    "width",
+    "width", -- experimental
+    "sidewalk:width", -- experimental
+    "cycleway:width", -- experimental
+    "surface",
+    "smoothness",
+    "traffic_sign",
   })
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
