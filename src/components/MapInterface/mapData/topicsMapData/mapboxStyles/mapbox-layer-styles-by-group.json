@@ -3,51 +3,6 @@
     "group": "atlas_bikelanes_verified",
     "layers": [
       {
-        "id": "bikelanes-no-verfication-done copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            9,
-            5,
-            13,
-            8,
-            18,
-            20
-          ],
-          "line-offset": 2,
-          "line-color": "#fa7fe2",
-          "line-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            11.6,
-            0,
-            11.8,
-            1,
-            12.2,
-            1,
-            18,
-            1
-          ]
-        },
-        "filter": [
-          "has",
-          "category"
-        ],
-        "layout": {}
-      },
-      {
         "id": "bikelanes-verified",
         "type": "line",
         "paint": {
@@ -90,18 +45,66 @@
           "match",
           [
             "get",
-            "category"
+            "verified"
           ],
           [
-            "cyclewaySeparated",
-            "cyclewayAlone",
-            "pedestrianArea_bicycleYes",
-            "footAndCycleway_shared"
+            "approved"
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
+      },
+      {
+        "id": "bikelanes-no-verfication-done copy",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            9,
+            5,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-offset": 2,
+          "line-color": "#fa7fe2",
+          "line-opacity": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            11.6,
+            0,
+            11.8,
+            1,
+            12.2,
+            1,
+            18,
+            1
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "verified"
+          ],
+          [
+            ""
+          ],
+          true,
+          false
+        ]
       },
       {
         "id": "bikelanes-unverified",
@@ -146,15 +149,15 @@
           "match",
           [
             "get",
-            "category"
+            "verified"
           ],
           [
-            "footAndCycleway_shared"
+            "",
+            "approved"
           ],
-          true,
-          false
-        ],
-        "layout": {}
+          false,
+          true
+        ]
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 1",
@@ -192,8 +195,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 1",
@@ -228,8 +230,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 6",
@@ -266,8 +267,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "hitarea-bikelanes-verified",
@@ -2031,7 +2031,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-verified",
@@ -2078,7 +2079,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-unverified",
@@ -2125,7 +2127,8 @@
             ],
             true
           ]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "4_lit-Unbeleuchtet",
