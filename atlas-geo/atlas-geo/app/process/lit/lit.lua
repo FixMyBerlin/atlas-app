@@ -93,8 +93,8 @@ function osm2pgsql.process_way(object)
     object.tags._update_is_fresh = false
     object.tags._update_fresh_age_days = withinYears.diffDays
   end
-  object.tags._is_fresh_combined = object.tags.is_fresh or object.tags._update_is_fresh
-  object.tags._update_fresh_age_days_combined = object.tags.fresh_age_days or object.tags._update_fresh_age_days
+  object.tags._combined_is_fresh = object.tags.is_fresh or object.tags._update_is_fresh
+  object.tags._combined_fresh_age_days = object.tags.fresh_age_days or object.tags._update_fresh_age_days
 
   -- Normalize name info for sidepath'
   -- TODO: Extact into helper
@@ -103,6 +103,10 @@ function osm2pgsql.process_way(object)
   local allowed_tags = Set({
     "_skip",
     "_skipNotes",
+    "_combined_fresh_age_days",
+    "_combined_is_fresh",
+    "_update_fresh_age_days",
+    "_update_is_fresh",
     "access",
     "area",
     "category",
