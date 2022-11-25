@@ -25,10 +25,7 @@ export const OtherProperties: React.FC<Props> = ({
   const otherOsmProperties = Object.fromEntries(
     Object.entries(properties)
       .sort((a, b) => a[0].localeCompare(b[0]))
-      .filter(
-        ([key, _v]) =>
-          !documentedKeys?.includes(key) && !systemKeys.includes(key)
-      )
+      .filter(([key, _v]) => !systemKeys.includes(key))
   )
   const systemProperties = Object.fromEntries(
     Object.entries(properties)
