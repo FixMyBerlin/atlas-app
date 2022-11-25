@@ -16,6 +16,7 @@
 -- A "centerline" with "sidewalk=both" (or "sidewalk:both=yes") would become 3 lines, with the two sidewalk lines being moved to the left/right of the centerline. Same for "cycleway*". Possible keys like "cycleway:left:surface=*" need to be moved as well.
 -- Its recommended to first pre-process the data in LUA to normalize the tagging of "sidewalk=both" and "sidewalk:both=yes" to a "sidewalk:left+sidewalk:right" patter, so in SQL we only need to deal with explicit left/right.
 -- UPDATE 2022-09-21: See "bikelanes.lua" for my latest idea how to setup a process for this.
+-- UPDATE 2022-11-24: We are working on a solution in biklanesNew.lua. Once this is finished, we can rework this file to follow the new conventions established there. Until then, lets only look at the simple tags surface+smoothness on the centerline (tags for the "car road").
 
 -- Processing
 -- ====

@@ -1,29 +1,38 @@
-# tarmac-geo – custom vector tiles for bike infrastructure planning based on OpenStreetMap
-
-# (!) This project is in alpha stage (!)
+<div align="center">
+  <!-- <img src="src/images/" height="80" /> -->
+  <h1 align="center"><a href="https://radverkehtsatlas.de">Radverkehrsatlas.de</a> — processing repository</h1>
+  <h3><strong>(!)</strong> This project ist still in development</h3>
+</div>
 
 ## About
 
-This project will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with pg_tileserve.
+Please check out [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app) first.
+
+This project handles the processing of geo data for `tarmac-app`. It will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with pg_tileserve.
 
 The data we process is selected and optimize to make planning of bicycle infrastructure easier.
+
+## Issues
+
+Please use [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app/issues) to create issues for this repository.
 
 ## Production
 
 ### Server
 
-https://tiles.radverkehrsatlas.de/
+- https://tiles.radverkehrsatlas.de/
+- https://staging-tiles.radverkehrsatlas.de/
 
 ### Data update
 
 - Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
-- Data can manually updates [via Github Actions ("Run workflow > from Branch: main")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
+- Data can manually updates [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
-1. https://github.com/FixMyBerlin/tarmac-geo/actions run
+1. First https://github.com/FixMyBerlin/tarmac-geo/actions runs.
 2. Then our Server IONOS builds the data. This take about 30 Min ATM.
-3. Then https://tiles.radverkehrsatlas.de/ shows new data
+3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ has new data.
 
 #### Skip CI Actions
 
@@ -41,6 +50,9 @@ docker compose up -d
 # With osm processing, which runs the "app" docker image with `ruh.sh`
 docker compose --profile osm_processing up -d
 ```
+
+> **Warning"" Consider creating the Postgis extension before first run of *app*
+> ```CREATE EXTENSION postgis;```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
 

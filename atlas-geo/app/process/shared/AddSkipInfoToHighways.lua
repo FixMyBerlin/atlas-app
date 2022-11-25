@@ -1,5 +1,10 @@
 -- * @desc Add `_skip = true` and `_skipNotes` for highways with private access, indoor, informal, "mtb"-style (inkl. width) and only allowed service values
+-- TODO: we should transform this function into a filter/predicate and use it absolut
+-- (in a sense that when one of the conditions apply we'll always add it into the skiplist)
 function AddSkipInfoToHighways(object)
+  if object.tags._skipNotes == nil then
+    object.tags._skipNotes = ""
+  end
   -- Skip all non standard access values
   local allowed_access_values = Set({ "private", "no", "destination", "delivery", "permit" })
   if object.tags.access and allowed_access_values[object.tags.access] then
@@ -43,6 +48,11 @@ function AddSkipInfoToHighways(object)
   local allowed_service_values = Set({ "alley", "drive-through", "emergency_access" })
   if object.tags.service and not allowed_service_values[object.tags.service] then
     object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `skip_service_values`"
+    object.tags._skip = true
+  end
+
+  if object.tags.man_made == 'pier' then
+    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `man_made=pier`"
     object.tags._skip = true
   end
 end
