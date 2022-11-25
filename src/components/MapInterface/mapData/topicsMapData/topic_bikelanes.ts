@@ -134,7 +134,7 @@ export const topic_bikelanes: MapDataTopic = {
         ...defaultLegend,
         {
           id: 'fresh-true',
-          name: 'Aktuelles Prüfdatum',
+          name: 'TODO! Aktuelles Prüfdatum',
           style: {
             type: 'line',
             color: 'hsl(107, 88%, 57%)',
@@ -142,7 +142,7 @@ export const topic_bikelanes: MapDataTopic = {
         },
         {
           id: 'fresh-false',
-          name: 'Kein/veraltetes Prüfdatum',
+          name: 'TODO! Kein/veraltetes Prüfdatum',
           style: {
             type: 'line',
             color: 'hsl(0, 100%, 41%)',
