@@ -125,7 +125,7 @@ local function footwayBicycleAllowed(tags)
   local result = tags.highway == "footway" or tags.highway == "path"
   -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
   -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
-  result = result and (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10"))
+  result = result and (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
   -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
