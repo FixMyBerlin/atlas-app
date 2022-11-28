@@ -35,9 +35,10 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   attributionHtml: string // TODO anzeigen in der Karte
   licence?: 'ODbL'
   /** @desc A sorted list of keys that we officially document.
-   * Keys of type composit_* require their own TableRowCell-Component.
+   * Keys of type `composit_*` require their own TableRowCell-Component.
+   * Keys of type `*__if_present` are only presented if a value is present.
    * (Keys that are not mentioned here are for debugging only.) */
-  documentedKeys?: (string | `composit_${string}`)[]
+  documentedKeys?: (string | `composit_${string}` | `${string}__if_present`)[]
   /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
   highlightingKey: string
   /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */

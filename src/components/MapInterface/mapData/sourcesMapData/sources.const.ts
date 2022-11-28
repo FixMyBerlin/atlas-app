@@ -143,7 +143,7 @@ export const sources: MapDataSource<
     // Keys with underscore are treated special in <TagsTable />
     documentedKeys: [
       'category',
-      'lit',
+      'lit__if_present',
       'highway',
       'name',
       'composit_surface_smoothness',
