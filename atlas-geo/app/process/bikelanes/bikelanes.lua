@@ -114,7 +114,8 @@ function osm2pgsql.process_way(object)
     -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
     -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
     if object.tags.bicycle == "yes"
-        or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
+        or StartsWith(object.tags.traffic_sign, "DE:239,1022-10")
+        or object.tags.traffic_sign == 'DE:1022-10' then
       object.tags.category = "footway_bicycleYes"
       object.tags._skip = false
     end
