@@ -133,19 +133,37 @@ export const topic_bikelanes: MapDataTopic = {
       legends: [
         ...defaultLegend,
         {
-          id: 'fresh-true',
-          name: 'TODO! Aktuelles Prüfdatum',
+          id: 'fresh_check_date',
+          name: 'TODO: Aktuell (explizit)',
           style: {
             type: 'line',
             color: 'hsl(107, 88%, 57%)',
           },
         },
         {
-          id: 'fresh-false',
-          name: 'TODO! Kein/veraltetes Prüfdatum',
+          id: 'fresh_update_at',
+          name: 'TODO: Aktuell (implizit)',
+          style: {
+            type: 'line',
+            color: 'hsl(107, 88%, 57%)',
+            dasharray: [7, 3],
+          },
+        },
+        {
+          id: 'outdated_check_date',
+          name: 'TODO: Veraltet (explizit)',
           style: {
             type: 'line',
             color: 'hsl(0, 100%, 41%)',
+          },
+        },
+        {
+          id: 'outdated_update_at',
+          name: 'TODO: Veraltet (implizit)',
+          style: {
+            type: 'line',
+            color: 'hsl(0, 100%, 41%)',
+            dasharray: [7, 3],
           },
         },
       ],

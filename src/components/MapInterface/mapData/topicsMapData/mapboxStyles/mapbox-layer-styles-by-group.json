@@ -52,7 +52,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "bikelanes-no-verfication-done copy",
@@ -104,7 +105,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "bikelanes-unverified",
@@ -157,7 +159,8 @@
           ],
           false,
           true
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 1",
@@ -195,7 +198,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Getrennte Fuehrung copy 1",
@@ -230,7 +234,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "fmc-verkehrsberuhigt copy 6",
@@ -267,7 +272,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "hitarea-bikelanes-verified",
@@ -549,7 +555,15 @@
         },
         "layout": {
           "line-cap": "round"
-        }
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "is_present"
+          ],
+          true
+        ]
       }
     ]
   },
@@ -1333,7 +1347,84 @@
     "group": "atlas_lit_fresh",
     "layers": [
       {
-        "id": "3_lit-fresh-true-line copy",
+        "id": "3_lit-outdated_update_at",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(0, 100%, 41%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            7,
+            2,
+            12,
+            4.5,
+            16,
+            16
+          ],
+          "line-dasharray": [
+            0.5,
+            0.1
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "fresh"
+          ],
+          [
+            "outdated_update_at"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "3_lit-fresh_update_at",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(107, 88%, 57%)",
+          "line-width": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "zoom"
+            ],
+            7,
+            2,
+            12,
+            4.5,
+            16,
+            16
+          ],
+          "line-blur": 1,
+          "line-dasharray": [
+            0.5,
+            0.1
+          ]
+        },
+        "filter": [
+          "match",
+          [
+            "get",
+            "fresh"
+          ],
+          [
+            "fresh_update_at"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "3_lit-outdated_check_date",
         "type": "line",
         "paint": {
           "line-color": "hsl(0, 100%, 41%)",
@@ -1354,28 +1445,20 @@
           ]
         },
         "filter": [
-          "all",
+          "match",
           [
-            "==",
-            [
-              "get",
-              "is_fresh"
-            ],
-            false
+            "get",
+            "fresh"
           ],
           [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
-        ],
-        "layout": {}
+            "outdated_check_date"
+          ],
+          true,
+          false
+        ]
       },
       {
-        "id": "3_lit-fresh-true-line",
+        "id": "3_lit-fresh_check_date",
         "type": "line",
         "paint": {
           "line-color": "hsl(107, 88%, 57%)",
@@ -1397,25 +1480,17 @@
           "line-blur": 1
         },
         "filter": [
-          "all",
+          "match",
           [
-            "==",
-            [
-              "get",
-              "is_fresh"
-            ],
-            true
+            "get",
+            "fresh"
           ],
           [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
-        ],
-        "layout": {}
+            "fresh_check_date"
+          ],
+          true,
+          false
+        ]
       },
       {
         "id": "3_lit-Unbeleuchtet",
@@ -1594,7 +1669,15 @@
         },
         "layout": {
           "line-cap": "round"
-        }
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "is_present"
+          ],
+          true
+        ]
       }
     ]
   },
@@ -2313,7 +2396,15 @@
         },
         "layout": {
           "line-cap": "round"
-        }
+        },
+        "filter": [
+          "==",
+          [
+            "get",
+            "is_present"
+          ],
+          true
+        ]
       }
     ]
   }

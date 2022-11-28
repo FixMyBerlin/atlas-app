@@ -10,17 +10,19 @@ export const OtherProperties: React.FC<Props> = ({
   documentedKeys,
 }) => {
   const systemKeys = [
+    '_freshNotes',
     '_skip',
     '_skipNotes',
+    'fresh_age_days',
+    'fresh',
+    'is_present',
     'osm_id',
     'osm_type',
     'osm_url',
     'update_at',
-    'version',
-    'is_fresh',
-    'is_present',
-    'verified',
     'verified_at',
+    'verified',
+    'version',
   ]
   const otherOsmProperties = Object.fromEntries(
     Object.entries(properties)

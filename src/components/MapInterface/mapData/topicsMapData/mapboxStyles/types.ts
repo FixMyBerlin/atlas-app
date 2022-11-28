@@ -96,8 +96,10 @@ export type MapboxStyleLayers_lit_complete =
 export type MapboxStyleLayers_lit_fresh =
   | '3_hitarea-lit'
   | '3_lit-Beleuchtet'
-  | '3_lit-fresh-true-line'
-  | '3_lit-fresh-true-line copy'
+  | '3_lit-fresh_check_date'
+  | '3_lit-fresh_update_at'
+  | '3_lit-outdated_check_date'
+  | '3_lit-outdated_update_at'
   | '3_lit-Special'
   | '3_lit-Unbeleuchtet'
 

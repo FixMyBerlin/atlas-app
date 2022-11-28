@@ -67,7 +67,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                 ref={trigger}
                 // `w-*` has to be set fo the `truncate` to work
                 className={classNames(
-                  'inline-flex w-[13.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50',
+                  'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50',
                   'focus:shadow-md focus:outline-none',
                   { 'shadow-md': open }
                 )}
