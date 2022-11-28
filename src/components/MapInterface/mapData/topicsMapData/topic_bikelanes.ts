@@ -3,11 +3,11 @@ import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bikelanes'
-export type TopicBikelanesId_Tarmac = typeof topic
-export type TopicBikelanesStyleIds_Tarmac =
+export type TopicBikelanesId = typeof topic
+export type TopicBikelanesStyleIds =
   | 'default'
   | MapboxStyleLayerGroupBikelanesIds
-export type TopicBikelanesStyleFilterIds_Tarmac = '_nofilter'
+export type TopicBikelanesStyleFilterIds = '_nofilter'
 
 const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   {

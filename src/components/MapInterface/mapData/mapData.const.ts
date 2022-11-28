@@ -4,12 +4,12 @@ import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
+  TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
-  TopicBikelanesId_Tarmac,
+  TopicBikelanesStyleFilterIds,
   TopicBikelanesStyleFilterIds_Osmscripts,
-  TopicBikelanesStyleFilterIds_Tarmac,
+  TopicBikelanesStyleIds,
   TopicBikelanesStyleIds_Osmscripts,
-  TopicBikelanesStyleIds_Tarmac,
   TopicBoundariesId,
   TopicBoundariesStyleFilterIds,
   TopicBoundariesStyleIds,
@@ -25,6 +25,7 @@ import {
   TopicLitId,
   TopicLitStyleFilterIds,
   TopicLitStyleIds,
+  TopicLitStyleLegendIds,
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
@@ -76,14 +77,13 @@ import {
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
-  TopicLitStyleLegendIds,
 } from './topicsMapData'
 import { MapData } from './types'
 
 export type TopicIds =
   | TopicAccidentsId
   | TopicBikelanesId_Osmscripts
-  | TopicBikelanesId_Tarmac
+  | TopicBikelanesId
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
@@ -104,7 +104,7 @@ export type TopicIds =
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBikelanesStyleIds_Osmscripts
-  | TopicBikelanesStyleIds_Tarmac
+  | TopicBikelanesStyleIds
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
@@ -125,7 +125,7 @@ export type TopicStyleIds =
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
   | TopicBikelanesStyleFilterIds_Osmscripts
-  | TopicBikelanesStyleFilterIds_Tarmac
+  | TopicBikelanesStyleFilterIds
   | TopicBoundariesStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
   | TopicEducationStyleFilterIds_Tarmac
