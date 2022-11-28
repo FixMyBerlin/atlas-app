@@ -114,8 +114,10 @@ export const regions: Region[] = [
     fullName: 'ZES+',
     path: 'zes',
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
-    // todo, needs the right bbox
-    bbox: null,
+    bbox: {
+      min: [13.3579, 52.2095],
+      max: [13.825, 52.4784],
+    },
     logoPath: '/pageRegions/zesplus-logo.png',
     logoWhiteBackgroundRequired: false,
     themes: [
@@ -124,6 +126,7 @@ export const regions: Region[] = [
       'bikelanesZes',
       'roadClassificationZes',
       'surfaceZes',
+      'lit',
       'mapillary',
     ],
     osmUsers: [...adminIds],
