@@ -2,16 +2,17 @@ import { Tab } from '@headlessui/react'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import backgroundImage from './images/background-features.jpg'
-import screenshotExpenses from './images/screenshots/expenses.png'
-import screenshotPayroll from './images/screenshots/payroll.png'
-import screenshotReporting from './images/screenshots/reporting.png'
-import screenshotVatReturns from './images/screenshots/vat-returns.png'
+import screenshotPoiCategorized from './images/screenshots/expenses.png'
+import screenshotBikelanes from './images/screenshots/bikelanes.jpg'
+import screenshotOther from './images/screenshots/reporting.png'
+import screenshotLit from './images/screenshots/vat-returns.png'
 
 type Feature = {
   title: string | React.ReactNode
   description: string
   image: React.ReactNode
 }
+
 const features: Feature[] = [
   {
     title: (
@@ -20,7 +21,7 @@ const features: Feature[] = [
       </>
     ),
     description: 'Breite, Führungsform und Oberflächen.',
-    image: screenshotPayroll,
+    image: screenshotBikelanes,
   },
   {
     title: (
@@ -30,7 +31,7 @@ const features: Feature[] = [
     ),
     description:
       'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
-    image: screenshotExpenses,
+    image: screenshotPoiCategorized,
   },
   {
     title: (
@@ -39,7 +40,7 @@ const features: Feature[] = [
       </>
     ),
     description: 'Beleuchtete Radwege und Straßen.',
-    image: screenshotVatReturns,
+    image: screenshotLit,
   },
   {
     title: (
@@ -50,7 +51,7 @@ const features: Feature[] = [
     ),
     description:
       'Karten zu Straßentypen, Höchstgeschwindigkeiten, Parkraum werden nach und nach hinzugefügt.',
-    image: screenshotReporting,
+    image: screenshotOther,
   },
 ]
 
