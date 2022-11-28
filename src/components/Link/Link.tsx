@@ -40,10 +40,12 @@ export const Link: React.FC<Props> = ({
 
   let mailto: string | undefined = undefined
   if (to.includes('@')) {
-    const url = new URL(`mailto:${to}`)
-    if (mailSubject) url.searchParams.set('subject', mailSubject)
-    if (mailBody) url.searchParams.set('body', mailBody)
-    mailto = url.toString()
+    const mail = `mailto:${to}`
+    const params = [
+      mailSubject && `subject=${encodeURIComponent(mailSubject)}`,
+      mailBody && `body=${encodeURIComponent(mailBody)}`,
+    ].filter(Boolean)
+    mailto = `${mail}${params && `?${params.join('&')}`}`
   }
 
   type NewWindowProps = {
