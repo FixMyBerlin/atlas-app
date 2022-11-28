@@ -17,7 +17,7 @@ export const HomePageCallToAction = () => {
       <div className="relative">
         <div className="mx-auto max-w-lg text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
-            Sie haben auch Interesse?
+            Haben Sie auch Interesse?
           </h2>
           <p className="my-4 text-lg tracking-tight text-white">
             Sie möchten informiert bleiben und den Radverkehrsatlas als

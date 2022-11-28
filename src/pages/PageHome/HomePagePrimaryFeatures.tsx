@@ -2,10 +2,10 @@ import { Tab } from '@headlessui/react'
 import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import backgroundImage from './images/background-features.jpg'
-import screenshotPoiCategorized from './images/screenshots/expenses.png'
-import screenshotBikelanes from './images/screenshots/bikelanes.jpg'
-import screenshotOther from './images/screenshots/reporting.png'
-import screenshotLit from './images/screenshots/vat-returns.png'
+import screenshotBikelanes from './images/HomePagePrimaryFeatures/bikelanes.jpg'
+import screenshotOther from './images/HomePagePrimaryFeatures/other.jpg'
+import screenshotPoiClassification from './images/HomePagePrimaryFeatures/poiclassification.jpg'
+import screenshotSurface from './images/HomePagePrimaryFeatures/surface.jpg'
 
 type Feature = {
   title: string | React.ReactNode
@@ -31,16 +31,18 @@ const features: Feature[] = [
     ),
     description:
       'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
-    image: screenshotPoiCategorized,
+    image: screenshotPoiClassification,
   },
   {
     title: (
       <>
-        <span className="hidden xl:inline">Themenkarte</span> Beleuchtung
+        <span className="hidden xl:inline">Themenkarte</span>{' '}
+        Oberflächenqualität
       </>
     ),
-    description: 'Beleuchtete Radwege und Straßen.',
-    image: screenshotLit,
+    description:
+      'Oberflächenqualität und Oberflächenart von Radwegen und Fahrbahnen.',
+    image: screenshotSurface,
   },
   {
     title: (

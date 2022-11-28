@@ -1,6 +1,6 @@
-import avatarImage1 from './images/avatars/avatar-1.png'
-import avatarImage3 from './images/avatars/avatar-3.png'
-import avatarChristoph from './images/avatars/christoph.jpg'
+import avatarImage1 from './images/HomePageTestimonials/avatar-1.png'
+import avatarImage3 from './images/HomePageTestimonials/avatar-3.png'
+import avatarChristoph from './images/HomePageTestimonials/christoph.jpg'
 
 type Testimonial = {
   content: string
