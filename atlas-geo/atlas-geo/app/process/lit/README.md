@@ -14,7 +14,8 @@
 
 - `verified` (string) – The state of verification
 - `is_present` (boolean) – Is the main data (lit) present? "Any lit values" is `true`, "no lit value" is `false`.
-- `is_fresh` (boolean) – Was the main data (lit) checked at least 2 years ago? (based on `check_date:lit`)
+- `fresh` (string) – Was the main data (lit) checked at least 2 years ago? (based on `check_date:lit` or the object's timestamp)
+   - `_freshNotes` — Additional debugging info to help understand the data (we will likely remove this later)
 - `fresh_age_days` (number) – Age of data as number of days based on `check_date:lit`
 
 ## Raw OSM tags
