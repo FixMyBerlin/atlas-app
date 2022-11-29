@@ -190,6 +190,44 @@ function osm2pgsql.process_way(object)
     end
   end
 
+  -- wenn maxspeed
+  --  - maxspeed = <zahl>
+  --  - _maxspeed_source = "maxspeed-tag"
+  -- wenn kein maxspeed
+  -- aber eines der source-tags, dann…
+  --  - maxspeed = <zahl> inferred from source tag
+  --  - _maxspec_source = "source tag"
+  --  (szenarien de:urbuan, de:rural, bike_roads,  verschiedene zonen)
+  --  siehe auch https://github.com/FixMyBerlin/osm-scripts/blob/main/utils/Highways-MaxspeedData/utils/addMaxspeedProperty.ts
+  --  verkehrsberuhigere bereich als string (nicht als Zahl)
+  -- debugging-todos:
+  --  - wenn maxpseed-zahl nicht passt zu source-tags (alle varianten), dann fehler _todo="source <TAG=VALUE>"
+
+  -- forwad-backwrad behandeln
+  -- - maxspeed_forward=<zahl> (default null)
+  -- - maxspeed_forward_source=<wert>
+  -- - maxspeed_backward=<zahl> (default null)
+  -- - maxspeed_backward_source=<wert>
+
+  -- "maxspeed:conditional" — reichen wir durch; mehrwert ist noch fraglich; viele sonderfälle
+
+  -- SQL:
+  -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
+  --  wir nehmen die landuse=residential+industrial+commerical+retail
+  --  buffer von ~10m um die fläche
+  --  dann alle linien die (TODO) vollständig / am meisten / … in der fläche fläche sind
+  --  (tendentizell dafür nicht schneiden, weil wir am liebsten die OSM ways so haben wie in OSM)
+  --  und dann können wir in sql "maxspeed" "maxspeed_source='infereed from landuse'"
+  --  UND dann auch einen "_todo="add 'maxspeed:source=DE:urban' to way"
+
+  -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
+
+  -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
+  --    wenn primärdaten vorhanden, dann is_present=true
+
+  -- "Freshness of data" in Datei lit.lua
+  -- Gern abstrahieren in helper.
+
   -- all tags that are shown on the application
   local allowed_tags =
   Set(
