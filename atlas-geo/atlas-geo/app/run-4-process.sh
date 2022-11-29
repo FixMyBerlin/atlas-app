@@ -54,6 +54,10 @@ echo "\e[1m\e[7m PROCESS – Topic: roadClassification \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}roadClassification.lua ${OSM_FILTERED_FILE}
 psql -q -f "${PROCESS_DIR}roadClassification.sql"
 
+echo "\e[1m\e[7m PROCESS – Topic: maxspeed \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}maxspeed/maxspeed.lua ${OSM_FILTERED_FILE}
+# psql -q -f "${PROCESS_DIR}maxspeed/maxspeed.sql"
+
 
 # echo "\e[1m\e[7m PROCESS – Topic: parking \e[27m\e[21m"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
