@@ -3,7 +3,7 @@
     "group": "atlas_bikelanes_verified",
     "layers": [
       {
-        "id": "bikelanes-verified",
+        "id": "bikelanes-verification-status",
         "type": "line",
         "paint": {
           "line-width": [
@@ -22,60 +22,28 @@
             20
           ],
           "line-offset": 2,
-          "line-color": "hsl(107, 88%, 57%)",
-          "line-opacity": [
-            "interpolate",
+          "line-color": [
+            "case",
             [
-              "linear"
+              "==",
+              [
+                "get",
+                "verified"
+              ],
+              "approved"
             ],
+            "hsl(107, 88%, 57%)",
             [
-              "zoom"
+              "==",
+              [
+                "get",
+                "verified"
+              ],
+              "rejected"
             ],
-            10,
-            0,
-            10.2,
-            1,
-            12.2,
-            1,
-            18,
-            1
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
+            "hsl(0, 100%, 41%)",
+            "#fa7fe2"
           ],
-          [
-            "approved"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "bikelanes-no-verfication-done copy",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            9,
-            5,
-            13,
-            8,
-            18,
-            20
-          ],
-          "line-offset": 2,
-          "line-color": "#fa7fe2",
           "line-opacity": [
             "interpolate",
             [
@@ -94,72 +62,6 @@
             1
           ]
         },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            ""
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "bikelanes-unverified",
-        "type": "line",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            9,
-            5,
-            13,
-            8,
-            18,
-            20
-          ],
-          "line-offset": 2,
-          "line-color": "hsl(0, 100%, 41%)",
-          "line-opacity": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            10,
-            0,
-            10.2,
-            1,
-            12.2,
-            1,
-            18,
-            1
-          ]
-        },
-        "filter": [
-          "match",
-          [
-            "get",
-            "verified"
-          ],
-          [
-            "",
-            "approved"
-          ],
-          false,
-          true
-        ],
         "layout": {}
       },
       {
@@ -2056,10 +1958,31 @@
     "group": "atlas_lit_verified",
     "layers": [
       {
-        "id": "4_lit-no-verification-done",
+        "id": "4_lit-verification-status",
         "type": "line",
         "paint": {
-          "line-color": "#fa7fe2",
+          "line-color": [
+            "case",
+            [
+              "==",
+              [
+                "get",
+                "verified"
+              ],
+              "approved"
+            ],
+            "hsl(107, 88%, 57%)",
+            [
+              "==",
+              [
+                "get",
+                "verified"
+              ],
+              "rejected"
+            ],
+            "hsl(0, 100%, 41%)",
+            "#fa7fe2"
+          ],
           "line-width": [
             "interpolate",
             [
@@ -2092,124 +2015,12 @@
           ]
         },
         "filter": [
-          "all",
+          "==",
           [
-            "match",
-            [
-              "get",
-              "verified"
-            ],
-            [
-              "rejected",
-              "approved"
-            ],
-            false,
-            true
+            "get",
+            "is_present"
           ],
-          [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "4_lit-verified",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(107, 88%, 57%)",
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            7,
-            1,
-            12,
-            7,
-            14,
-            10,
-            18,
-            20
-          ]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            [
-              "get",
-              "verified"
-            ],
-            [
-              "approved"
-            ],
-            true,
-            false
-          ],
-          [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "4_lit-unverified",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(0, 100%, 41%)",
-          "line-width": [
-            "interpolate",
-            [
-              "linear"
-            ],
-            [
-              "zoom"
-            ],
-            7,
-            1,
-            12,
-            7,
-            14,
-            10,
-            18,
-            20
-          ]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            [
-              "get",
-              "verified"
-            ],
-            [
-              "rejected"
-            ],
-            true,
-            false
-          ],
-          [
-            "==",
-            [
-              "get",
-              "is_present"
-            ],
-            true
-          ]
+          true
         ],
         "layout": {}
       },

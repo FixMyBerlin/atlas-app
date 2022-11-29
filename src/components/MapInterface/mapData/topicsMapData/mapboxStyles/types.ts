@@ -66,9 +66,7 @@ export type MapboxStyleLayers_bikelanes_fresh =
   | 'hitarea-bikelanes-fresh'
 
 export type MapboxStyleLayers_bikelanes_verified =
-  | 'bikelanes-no-verfication-done copy'
-  | 'bikelanes-unverified'
-  | 'bikelanes-verified'
+  | 'bikelanes-verification-status'
   | 'fmc-verkehrsberuhigt copy 6'
   | 'Fuehrung mit Fussverkehr copy 1'
   | 'Getrennte Fuehrung copy 1'
@@ -106,11 +104,9 @@ export type MapboxStyleLayers_lit_fresh =
 export type MapboxStyleLayers_lit_verified =
   | '4_hitarea-lit'
   | '4_lit-Beleuchtet'
-  | '4_lit-no-verification-done'
   | '4_lit-Special'
   | '4_lit-Unbeleuchtet'
-  | '4_lit-unverified'
-  | '4_lit-verified'
+  | '4_lit-verification-status'
 
 export type MapboxStyleLayers_places = 'fmc-poiPlaces-label'
 
