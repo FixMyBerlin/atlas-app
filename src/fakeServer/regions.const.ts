@@ -39,7 +39,14 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'waymarkedtrails-hiking',
 ]
 
-export type RegionPath = 'bibi' | 'trto' | 'berlin' | 'zes' | 'langerwehe'
+export type RegionPath =
+  | 'bibi'
+  | 'trto'
+  | 'berlin'
+  | 'zes'
+  | 'langerwehe'
+  | 'bibi_centerline'
+  | 'trto_centerline'
 
 // This is our regions "Database" until we have a real one
 export const regions: Region[] = [
@@ -65,6 +72,22 @@ export const regions: Region[] = [
     backgroundSources: defaultBackgroundSources,
   },
   {
+    name: 'BiBiCenterline',
+    fullName: 'Bietigheim-Bissingen CENTERLINE',
+    path: 'bibi_centerline',
+    map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
+    bbox: {
+      min: [9.0671, 48.9229],
+      max: [9.1753, 48.9838],
+    },
+    logoPath: '/pageRegions/bibi-logo.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['bikelanescenterline'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: defaultBackgroundSources,
+  },
+  {
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
     path: 'trto',
@@ -82,6 +105,22 @@ export const regions: Region[] = [
     ],
     osmUsers: [...adminIds],
     published: true,
+    backgroundSources: defaultBackgroundSources,
+  },
+  {
+    name: 'TrToCenterline',
+    fullName: 'Treptower Tollensewinkel CENTERLINE',
+    path: 'trto_centerline',
+    map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
+    bbox: {
+      min: [12.9949, 53.5934],
+      max: [13.4782, 53.8528],
+    },
+    logoPath: '/pageRegions/trto-logo.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['bikelanescenterline'],
+    osmUsers: [...adminIds],
+    published: false,
     backgroundSources: defaultBackgroundSources,
   },
   {
@@ -123,7 +162,10 @@ export const regions: Region[] = [
     themes: [
       // The order here specifies the order in the UI
       'fromToZes',
+      'fromTo',
       'bikelanesZes',
+      'bikelanes',
+      'bikelanescenterline',
       'roadClassificationZes',
       'surfaceZes',
       'lit',

@@ -4,6 +4,8 @@ import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
+  TopicBikelanescenterlineId,
+  TopicBikelanescenterlineStyleIds,
   TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
   TopicBikelanesStyleFilterIds,
@@ -62,6 +64,7 @@ import {
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
   topic_bikelanes,
+  topic_bikelanescenterline,
   topic_bikelanes_osmscripts,
   topic_boudaries,
   topic_education,
@@ -84,6 +87,7 @@ export type TopicIds =
   | TopicAccidentsId
   | TopicBikelanesId_Osmscripts
   | TopicBikelanesId
+  | TopicBikelanescenterlineId
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
@@ -105,6 +109,7 @@ export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBikelanesStyleIds_Osmscripts
   | TopicBikelanesStyleIds
+  | TopicBikelanescenterlineStyleIds
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
@@ -171,6 +176,7 @@ export const mapData: MapData = {
     topic_accidents,
     topic_bikelanes_osmscripts,
     topic_bikelanes,
+    topic_bikelanescenterline,
     topic_boudaries,
     topic_education,
     topic_education_osmscripts,
