@@ -12,6 +12,7 @@ import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { specifyFilters } from './utils'
+import { LayerVerificationStatus } from './LayerVerificationStatus'
 
 // We add source+layer map-components for all topics of the given confic.
 // We then toggle the visibility of the layer base on state.
@@ -96,9 +97,16 @@ export const SourceAndLayers: React.FC = () => {
                   ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
                 }
 
+                const isVerificationStatusLayer =
+                  layer.id.search('verification-status') != -1
+
                 return (
                   <>
-                    <Layer {...layerProps} />
+                    {isVerificationStatusLayer ? (
+                      <LayerVerificationStatus {...layerProps} />
+                    ) : (
+                      <Layer {...layerProps} />
+                    )}
                     <LayerHighlight {...layerProps} />
                   </>
                 )
