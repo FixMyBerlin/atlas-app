@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { useMatchRoute } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import { secondaryNavigationGrouped } from '../secondaryNavigation.const'
 import { PrimaryNavigationProps } from './types'
@@ -19,7 +19,7 @@ export const MobileMenu: React.FC<PrimaryNavigationProps> = ({
             key={item.name}
             as="a"
             href={item.href}
-            className={classNames(
+            className={clsx(
               matchRoute({ to: item.href })
                 ? 'bg-gray-900 text-white'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -41,7 +41,7 @@ export const MobileMenu: React.FC<PrimaryNavigationProps> = ({
                   key={item.name}
                   as="a"
                   href={item.href}
-                  className={classNames(
+                  className={clsx(
                     matchRoute({ to: item.href })
                       ? 'bg-gray-900 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',

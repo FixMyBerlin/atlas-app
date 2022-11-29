@@ -1,6 +1,6 @@
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import {
   getStyleData,
@@ -126,7 +126,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             return (
               <label
                 htmlFor={key}
-                className={classNames('group relative flex items-center', {
+                className={clsx('group relative flex items-center', {
                   'cursor-pointer': interactive,
                 })}
                 key={key}

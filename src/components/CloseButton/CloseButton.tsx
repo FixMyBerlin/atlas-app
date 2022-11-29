@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 
 type Props = {
@@ -15,7 +15,7 @@ export const CloseButton: React.FC<Props> = ({
     <button
       type="button"
       onClick={onClick}
-      className={classNames(
+      className={clsx(
         positionClasses,
         'absolute  inline-flex items-center justify-center rounded-md border border-gray-300 p-1.5 text-gray-900 transition-colors hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
       )}

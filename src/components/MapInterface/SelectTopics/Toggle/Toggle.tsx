@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 
 type Props = {
   active: boolean
@@ -24,14 +24,14 @@ export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
         />
         <span
           aria-hidden="true"
-          className={classNames(
+          className={clsx(
             active ? 'bg-yellow-500' : 'bg-gray-200',
             'pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out'
           )}
         />
         <span
           aria-hidden="true"
-          className={classNames(
+          className={clsx(
             active ? 'translate-x-5' : 'translate-x-0',
             'pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out'
           )}
@@ -39,7 +39,7 @@ export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
       </Switch>
       <Switch.Label
         as="div"
-        className={classNames(
+        className={clsx(
           'ml-2 w-full text-sm font-semibold leading-[17px]',
           active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900'
         )}

@@ -4,7 +4,7 @@ import {
   EyeIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/outline'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import screenshotImprove from './images/HomePageSecondaryFeatures/placeholder.png'
 import screenshotCheck from './images/HomePageSecondaryFeatures/placeholder.png'
 import screenshotView from './images/HomePageSecondaryFeatures/placeholder.png'
@@ -59,14 +59,11 @@ function Feature({
 }) {
   return (
     <div
-      className={classNames(
-        className,
-        !isActive && 'opacity-75 hover:opacity-100'
-      )}
+      className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })}
       {...props}
     >
       <div
-        className={classNames(
+        className={clsx(
           'w-9 rounded-lg',
           isActive ? 'bg-blue-600' : 'bg-slate-500'
         )}
@@ -76,7 +73,7 @@ function Feature({
         </svg>
       </div>
       <h3
-        className={classNames(
+        className={clsx(
           'mt-3 text-sm font-medium',
           isActive ? 'text-blue-600' : 'text-slate-600'
         )}
@@ -144,9 +141,9 @@ const FeaturesDesktop = () => {
                 <Tab.Panel
                   static
                   key={featureIndex}
-                  className={classNames(
+                  className={clsx(
                     'px-5 transition duration-500 ease-in-out [&:not(:focus-visible)]:focus:outline-none',
-                    featureIndex !== selectedIndex && 'opacity-60'
+                    { 'opacity-60': featureIndex !== selectedIndex }
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}

@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import { SourcesRasterIds } from '../mapData/sourcesMapData'
 
@@ -12,7 +12,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
     <Listbox.Option
       value={value}
       className={({ active, selected }) =>
-        classNames(
+        clsx(
           'relative select-none py-2 pl-10 pr-4 text-gray-900',
           {
             'cursor-pointer bg-yellow-50 text-yellow-900': active && !selected,
@@ -24,7 +24,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
       {({ active, selected }) => (
         <>
           <span
-            className={classNames(
+            className={clsx(
               'block truncate',
               active || selected ? 'font-medium' : 'font-normal'
             )}

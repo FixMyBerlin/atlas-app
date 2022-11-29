@@ -2,7 +2,7 @@ import { Link } from '@components/Link'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { XMarkIcon, Bars3Icon } from '@heroicons/react/24/outline'
 import { useMatchRoute } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React, { Fragment } from 'react'
 import { secondaryNavigationGrouped } from '../secondaryNavigation.const'
 
@@ -49,7 +49,7 @@ export const SecondaryNavigationDesktop: React.FC = () => {
                                 {({ active }) => (
                                   <Link
                                     to={item.href}
-                                    className={classNames(
+                                    className={clsx(
                                       active ? 'bg-gray-100' : '',
                                       matchRoute({ to: item.href })
                                         ? 'bg-gray-200'

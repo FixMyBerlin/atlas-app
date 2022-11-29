@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React, { useState } from 'react'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 
@@ -20,7 +20,7 @@ export const Calculator: React.FC = () => {
         <button
           type="button"
           onClick={() => setWhatToSum('capacity')}
-          className={classNames('tracking-tight', {
+          className={clsx('tracking-tight', {
             'font-bold': whatToSum === 'capacity',
           })}
         >
@@ -29,7 +29,7 @@ export const Calculator: React.FC = () => {
         <button
           type="button"
           onClick={() => setWhatToSum('length')}
-          className={classNames('tracking-tight', {
+          className={clsx('tracking-tight', {
             'font-bold': whatToSum === 'length',
           })}
         >

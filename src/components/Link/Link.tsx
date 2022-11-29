@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import { Link as ReactLocationLink } from '@tanstack/react-location'
 
@@ -33,7 +33,7 @@ export const Link: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const classes = classNames(
+  const classes = clsx(
     className,
     classNameOverwrite || (button ? buttonStyles : linkStyles)
   )

@@ -1,6 +1,6 @@
 import { LocationGenerics } from '@routes/index'
 import { useMatchRoute, Link, useMatch } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import { PrimaryNavigationProps } from './types'
 
@@ -25,7 +25,7 @@ export const PrimaryNavigation: React.FC<Props> = ({ primaryNavigation }) => {
             <Link
               key={item.name}
               to={routeWithRegion}
-              className={classNames(
+              className={clsx(
                 matchRoute({ to: item.href })
                   ? 'cursor-default bg-gray-900 text-white'
                   : 'text-gray-300 hover:bg-gray-700 hover:text-white',

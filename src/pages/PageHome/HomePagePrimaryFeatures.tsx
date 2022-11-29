@@ -1,5 +1,5 @@
 import { Tab } from '@headlessui/react'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import { useEffect, useState } from 'react'
 import backgroundImage from './images/background-features.jpg'
 import screenshotBikelanes from './images/HomePagePrimaryFeatures/bikelanes.jpg'
@@ -112,7 +112,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                   {features.map((feature, featureIndex) => (
                     <div
                       key={featureIndex}
-                      className={classNames(
+                      className={clsx(
                         'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
@@ -121,7 +121,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                     >
                       <h3>
                         <Tab
-                          className={classNames(
+                          className={clsx(
                             'font-display text-lg [&:not(:focus-visible)]:focus:outline-none',
                             selectedIndex === featureIndex
                               ? 'text-blue-600 lg:text-white'
@@ -133,7 +133,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                         </Tab>
                       </h3>
                       <p
-                        className={classNames(
+                        className={clsx(
                           'mt-2 hidden text-sm lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'

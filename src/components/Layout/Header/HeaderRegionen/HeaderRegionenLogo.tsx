@@ -1,7 +1,7 @@
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useMatch } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 
 export const HeaderRegionenLogo: React.FC = () => {
@@ -15,7 +15,7 @@ export const HeaderRegionenLogo: React.FC = () => {
     <>
       {region.logoPath ? (
         <div
-          className={classNames({
+          className={clsx({
             'rounded-sm bg-white/90 px-1 py-1':
               region.logoWhiteBackgroundRequired,
           })}
@@ -29,7 +29,7 @@ export const HeaderRegionenLogo: React.FC = () => {
         </>
       )}
       <span
-        className={classNames(
+        className={clsx(
           'ml-2',
           region.logoPath ? 'text-gray-400' : 'text-yellow-400'
         )}

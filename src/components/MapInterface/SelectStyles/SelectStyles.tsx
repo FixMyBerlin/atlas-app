@@ -3,7 +3,7 @@ import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import produce from 'immer'
 import React from 'react'
 import { getStyleData, TopicIds } from '../mapData'
@@ -66,7 +66,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
               <Menu.Button
                 ref={trigger}
                 // `w-*` has to be set fo the `truncate` to work
-                className={classNames(
+                className={clsx(
                   'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50',
                   'focus:shadow-md focus:outline-none',
                   { 'shadow-md': open }
@@ -110,7 +110,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                                 styleId: styleConfig.id,
                               })
                             }
-                            className={classNames(
+                            className={clsx(
                               styleConfig.active
                                 ? 'bg-yellow-400 text-gray-900'
                                 : 'text-gray-700',
