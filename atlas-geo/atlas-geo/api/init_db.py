@@ -31,12 +31,12 @@ def create_verification_tables():
     print("Starting creating tables for verification")
     with open(sql_views_path, "r") as f:
       sql = f.read()
-    for original_table, table_name in verification_tables.items():
-      print('Create verification table and view ', table_name)
+    for geometry_table, verification_table in verification_tables.items():
+      print('Create verification table and view ', verification_table)
       processed_sql = sql.format(
-        table_name=table_name,
-        original_table=original_table,
-        view_name=verification_views[table_name],
+        verification_table=verification_table,
+        geometry_table=geometry_table,
+        view_name=verification_views[verification_table],
       )
       cursor.execute(processed_sql)
 
