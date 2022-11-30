@@ -1,7 +1,6 @@
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import React from 'react'
-import { Layer } from 'react-map-gl'
-import { LayerProps } from 'react-map-gl/src/components/layer'
+import { Layer, LayerProps } from 'react-map-gl'
 
 let errorLogged = false
 
