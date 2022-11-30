@@ -21,6 +21,14 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
     },
   },
   {
+    id: 'lit',
+    name: 'Beleuchtet (Sonderfälle)',
+    style: {
+      type: 'line',
+      color: 'hsl(35, 100%, 61%)',
+    },
+  },
+  {
     id: 'unlit',
     name: 'Unbeleuchtet',
     style: {
