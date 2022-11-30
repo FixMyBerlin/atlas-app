@@ -4,10 +4,9 @@ import {
   HomePageCallToAction,
   HomePageCompanies,
   HomePageHero,
-  HomePagePrimaryFeatures,
-  HomePageTestimonials,
   HomePageLive,
-  HomePageSecondaryFeatures,
+  HomePagePrimaryFeatures,
+  HomePageSecondaryFeaturesJustText,
 } from './PageHome'
 
 export const HomePage: React.FC = () => {
@@ -17,9 +16,10 @@ export const HomePage: React.FC = () => {
       <HomePageHero />
       <HomePageCompanies />
       <HomePagePrimaryFeatures />
-      <HomePageSecondaryFeatures />
+      {/* <HomePageSecondaryFeatures /> */}
+      <HomePageSecondaryFeaturesJustText />
       <HomePageCallToAction />
-      <HomePageTestimonials />
+      {/* <HomePageTestimonials /> */}
       <HomePageLive />
     </Layout>
   )

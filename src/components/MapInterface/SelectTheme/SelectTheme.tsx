@@ -1,6 +1,6 @@
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import { getThemeData } from '../mapData'
 import { MapDataThemeIds } from '../mapData/themesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction'
@@ -68,7 +68,7 @@ export const SelectTheme = () => {
               <button
                 key={themeData.name}
                 onClick={() => selectTheme(themeConfig.id)}
-                className={classNames(
+                className={clsx(
                   active
                     ? 'text-gray-900'
                     : 'text-gray-500 hover:text-gray-700',
@@ -86,7 +86,7 @@ export const SelectTheme = () => {
                 <span>{themeData.name}</span>
                 <span
                   aria-hidden="true"
-                  className={classNames(
+                  className={clsx(
                     active ? 'bg-yellow-500' : 'bg-transparent',
                     'absolute inset-x-0 bottom-0 h-0.5'
                   )}

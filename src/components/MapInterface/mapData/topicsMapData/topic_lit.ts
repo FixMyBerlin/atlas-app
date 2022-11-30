@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultLegendFresh } from './defaultLegend'
 import { MapboxStyleLayerGroupLitIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -121,25 +122,7 @@ export const topic_lit: MapDataTopic = {
         sourceLayer,
       }),
       interactiveFilters: null,
-      legends: [
-        ...defaultLegend,
-        {
-          id: 'fresh-true',
-          name: 'Aktuelles Prüfdatum',
-          style: {
-            type: 'line',
-            color: 'hsl(107, 88%, 57%)',
-          },
-        },
-        {
-          id: 'fresh-false',
-          name: 'Kein/veraltetes Prüfdatum',
-          style: {
-            type: 'line',
-            color: 'hsl(0, 100%, 41%)',
-          },
-        },
-      ],
+      legends: [...defaultLegend, ...defaultLegendFresh],
     },
   ],
 }

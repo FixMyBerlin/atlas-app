@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 import { Link as ReactLocationLink } from '@tanstack/react-location'
 
@@ -33,17 +33,19 @@ export const Link: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const classes = classNames(
+  const classes = clsx(
     className,
     classNameOverwrite || (button ? buttonStyles : linkStyles)
   )
 
   let mailto: string | undefined = undefined
   if (to.includes('@')) {
-    const url = new URL(`mailto:${to}`)
-    if (mailSubject) url.searchParams.set('subject', mailSubject)
-    if (mailBody) url.searchParams.set('body', mailBody)
-    mailto = url.toString()
+    const mail = `mailto:${to}`
+    const params = [
+      mailSubject && `subject=${encodeURIComponent(mailSubject)}`,
+      mailBody && `body=${encodeURIComponent(mailBody)}`,
+    ].filter(Boolean)
+    mailto = `${mail}${params && `?${params.join('&')}`}`
   }
 
   type NewWindowProps = {

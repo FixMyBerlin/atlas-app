@@ -1,7 +1,7 @@
 import { Link } from '@components/Link'
-import screenshotBiBi from './images/avatars/avatar-1.png'
-import screenshotTrTo from './images/avatars/avatar-3.png'
-import screenshotNudafa from './images/avatars/christoph.jpg'
+import screenshotBiBi from './images/HomePageLive/bibi.jpg'
+import screenshotTrTo from './images/HomePageLive/trto.jpg'
+import screenshotNudafa from './images/HomePageLive/zes.jpg'
 
 type Callout = {
   name: string
@@ -10,6 +10,7 @@ type Callout = {
   imageAlt: string
   href: string
 }
+
 const callouts: Callout[] = [
   {
     name: 'Bietigheim-Bissingen',

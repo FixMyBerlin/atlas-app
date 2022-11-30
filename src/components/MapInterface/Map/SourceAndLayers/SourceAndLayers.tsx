@@ -11,6 +11,7 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
+import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { specifyFilters } from './utils'
 
 // We add source+layer map-components for all topics of the given confic.
@@ -96,9 +97,17 @@ export const SourceAndLayers: React.FC = () => {
                   ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
                 }
 
+                // The verification style layer in Mapbox Studio has to include this string
+                const isVerificationStatusLayer =
+                  layer.id.search('verification-status') != -1
+
                 return (
                   <>
-                    <Layer {...layerProps} />
+                    {isVerificationStatusLayer ? (
+                      <LayerVerificationStatus {...layerProps} />
+                    ) : (
+                      <Layer {...layerProps} />
+                    )}
                     <LayerHighlight {...layerProps} />
                   </>
                 )

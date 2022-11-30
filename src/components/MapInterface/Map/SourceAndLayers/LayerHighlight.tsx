@@ -1,7 +1,7 @@
 import { getSourceData } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import React from 'react'
-import { Layer } from 'react-map-gl'
+import { Layer, LayerProps } from 'react-map-gl'
 import { extractSourceIdIdFromSourceKey } from './utils/extractFromSourceKey'
 
 type Props = {
@@ -33,8 +33,8 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const props = {
     ...parentLayerProps,
     id: parentLayerProps.id + '--highlight',
-    paint: JSON.parse(JSON.stringify(parentLayerProps.paint)),
-  }
+    paint: structuredClone(parentLayerProps.paint),
+  } as LayerProps
 
   if (props.type === 'line') {
     if (!props.paint) props.paint = {}
@@ -42,7 +42,7 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     delete props.paint['line-blur']
     delete props.paint['line-opacity']
   } else if (props.type === 'fill') {
-    props.paint['fill-color'] = 'red'
+    props?.paint && (props.paint['fill-color'] = 'red')
   } else if (props.type === 'circle') {
     props.paint = {
       ...props.paint,
@@ -58,12 +58,9 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     }
   }
 
-  props.filter = ['in', highlightingKey, ...osmIds]
+  if ('filter' in props) {
+    props.filter = ['in', highlightingKey, ...osmIds]
+  }
 
-  return (
-    <>
-      {/* @ts-ignore TODO: find out what's wrong here */}
-      <Layer {...props} />
-    </>
-  )
+  return <Layer {...props} />
 }

@@ -44,34 +44,32 @@ export type MapboxStyleLayerGroupPoiclassificationIds =
 // Type for the layers of each group:
 
 export type MapboxStyleLayers_bikelanes =
+  | 'fmc-verkehrsberuhigt copy 4'
   | 'Fuehrung mit Fussverkehr copy 3'
   | 'Getrennte Fuehrung copy 3'
-  | 'fmc-verkehrsberuhigt copy 4'
   | 'hitarea-bikelanes'
 
 export type MapboxStyleLayers_bikelanes_complete =
-  | 'bikelanes-Keine Daten'
   | 'bikelanes-Daten vorhanden'
+  | 'bikelanes-Keine Daten'
+  | 'fmc-verkehrsberuhigt copy 5'
   | 'Fuehrung mit Fussverkehr copy 4'
   | 'Getrennte Fuehrung copy 4'
-  | 'fmc-verkehrsberuhigt copy 5'
   | 'hitarea_complete'
 
 export type MapboxStyleLayers_bikelanes_fresh =
   | 'Daten aelter 2020-fake copy'
   | 'Daten aktuell'
+  | 'fmc-verkehrsberuhigt copy 3'
   | 'Fuehrung mit Fussverkehr copy 2'
   | 'Getrennte Fuehrung copy 2'
-  | 'fmc-verkehrsberuhigt copy 3'
   | 'hitarea-bikelanes-fresh'
 
 export type MapboxStyleLayers_bikelanes_verified =
-  | 'bikelanes-no-verfication-done copy'
-  | 'bikelanes-verified'
-  | 'bikelanes-unverified'
+  | 'bikelanes-verification-status'
+  | 'fmc-verkehrsberuhigt copy 6'
   | 'Fuehrung mit Fussverkehr copy 1'
   | 'Getrennte Fuehrung copy 1'
-  | 'fmc-verkehrsberuhigt copy 6'
   | 'hitarea-bikelanes-verified'
 
 export type MapboxStyleLayers_education =
@@ -81,34 +79,34 @@ export type MapboxStyleLayers_education =
 export type MapboxStyleLayers_landuse = 'fmc-landuse'
 
 export type MapboxStyleLayers_lit =
+  | '2_hitarea-lit'
+  | '2_lit-Beleuchtet'
   | '2_lit-Special'
   | '2_lit-Unbeleuchtet'
-  | '2_lit-Beleuchtet'
-  | '2_hitarea-lit'
 
 export type MapboxStyleLayers_lit_complete =
+  | '1_hitarea-lit'
+  | '1_lit-Beleuchtet'
   | '1_lit-Keine Daten'
   | '1_lit-Special'
   | '1_lit-Unbeleuchtet'
-  | '1_lit-Beleuchtet'
-  | '1_hitarea-lit'
 
 export type MapboxStyleLayers_lit_fresh =
-  | '3_lit-fresh-true-line copy'
-  | '3_lit-fresh-true-line'
-  | '3_lit-Unbeleuchtet'
-  | '3_lit-Special'
-  | '3_lit-Beleuchtet'
   | '3_hitarea-lit'
+  | '3_lit-Beleuchtet'
+  | '3_lit-fresh_check_date'
+  | '3_lit-fresh_update_at'
+  | '3_lit-outdated_check_date'
+  | '3_lit-outdated_update_at'
+  | '3_lit-Special'
+  | '3_lit-Unbeleuchtet'
 
 export type MapboxStyleLayers_lit_verified =
-  | '4_lit-no-verification-done'
-  | '4_lit-verified'
-  | '4_lit-unverified'
-  | '4_lit-Unbeleuchtet'
-  | '4_lit-Special'
-  | '4_lit-Beleuchtet'
   | '4_hitarea-lit'
+  | '4_lit-Beleuchtet'
+  | '4_lit-Special'
+  | '4_lit-Unbeleuchtet'
+  | '4_lit-verification-status'
 
 export type MapboxStyleLayers_places = 'fmc-poiPlaces-label'
 

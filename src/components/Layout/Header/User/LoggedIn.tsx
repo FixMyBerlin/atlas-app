@@ -3,7 +3,7 @@ import { User } from '@components/MapInterface/UserInfo'
 import { isAdmin } from '@fakeServer/utils'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React, { Fragment } from 'react'
 
 type Props = {
@@ -68,7 +68,7 @@ export const LoggedIn: React.FC<Props> = ({
                 {({ active }) => (
                   <button
                     onClick={onLogout}
-                    className={classNames(
+                    className={clsx(
                       active ? 'bg-gray-100' : '',
                       'w-full px-4 py-2 text-left text-sm text-gray-700'
                     )}

@@ -41,6 +41,17 @@ export const TagsTable: React.FC<Props> = ({
       </thead>
       <tbody className="divide-y divide-gray-200 bg-white">
         {documentedKeys?.map((key) => {
+          // `documentedKeys` are specified on the source.const object.
+          let cleanedKey = key
+          // Handle documentedKeys that should _only show if a value is present_
+          if (key.includes('__if_present')) {
+            cleanedKey = key.replace('__if_present', '')
+            if (!documentedProperties[cleanedKey]) {
+              return null
+            }
+          }
+
+          // Handle _composit_ table rows and default case
           switch (key) {
             case 'composit_surface_smoothness': {
               return (

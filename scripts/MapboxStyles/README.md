@@ -5,6 +5,10 @@ https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.
 
 The reason for that is, that styling the data there has the best editor experience. At the same time, we do not want to use Mapbox direclty for privacy reasons but also due to our own vector tiles setup.
 
+## Initial Setup
+
+Create a `.env.local` file with a `VITE_MAPBOX_STYLE_ACCESS_TOKEN` key. See `.env.defaults` for more.
+
 ## General process
 
 1. Style in Mapbox Studio.

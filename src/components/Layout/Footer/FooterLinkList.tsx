@@ -1,5 +1,5 @@
 import { Link } from '@components/Link'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 
 import { FooterMenuItem } from './footerLinks.const'
@@ -12,7 +12,7 @@ type Props = {
 export const FooterLinkList: React.FC<Props> = ({ linkList, className }) => {
   return (
     <ul
-      className={classNames(
+      className={clsx(
         'flex flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left',
         className
       )}

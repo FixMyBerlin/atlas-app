@@ -1,17 +1,18 @@
 import { Tab } from '@headlessui/react'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import { useEffect, useState } from 'react'
 import backgroundImage from './images/background-features.jpg'
-import screenshotExpenses from './images/screenshots/expenses.png'
-import screenshotPayroll from './images/screenshots/payroll.png'
-import screenshotReporting from './images/screenshots/reporting.png'
-import screenshotVatReturns from './images/screenshots/vat-returns.png'
+import screenshotBikelanes from './images/HomePagePrimaryFeatures/bikelanes.jpg'
+import screenshotOther from './images/HomePagePrimaryFeatures/other.jpg'
+import screenshotPoiClassification from './images/HomePagePrimaryFeatures/poiclassification.jpg'
+import screenshotSurface from './images/HomePagePrimaryFeatures/surface.jpg'
 
 type Feature = {
   title: string | React.ReactNode
   description: string
   image: React.ReactNode
 }
+
 const features: Feature[] = [
   {
     title: (
@@ -20,7 +21,7 @@ const features: Feature[] = [
       </>
     ),
     description: 'Breite, Führungsform und Oberflächen.',
-    image: screenshotPayroll,
+    image: screenshotBikelanes,
   },
   {
     title: (
@@ -30,16 +31,18 @@ const features: Feature[] = [
     ),
     description:
       'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
-    image: screenshotExpenses,
+    image: screenshotPoiClassification,
   },
   {
     title: (
       <>
-        <span className="hidden xl:inline">Themenkarte</span> Beleuchtung
+        <span className="hidden xl:inline">Themenkarte</span>{' '}
+        Oberflächenqualität
       </>
     ),
-    description: 'Beleuchtete Radwege und Straßen.',
-    image: screenshotVatReturns,
+    description:
+      'Oberflächenqualität und Oberflächenart von Radwegen und Fahrbahnen.',
+    image: screenshotSurface,
   },
   {
     title: (
@@ -50,7 +53,7 @@ const features: Feature[] = [
     ),
     description:
       'Karten zu Straßentypen, Höchstgeschwindigkeiten, Parkraum werden nach und nach hinzugefügt.',
-    image: screenshotReporting,
+    image: screenshotOther,
   },
 ]
 
@@ -109,7 +112,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                   {features.map((feature, featureIndex) => (
                     <div
                       key={featureIndex}
-                      className={classNames(
+                      className={clsx(
                         'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
@@ -118,7 +121,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                     >
                       <h3>
                         <Tab
-                          className={classNames(
+                          className={clsx(
                             'font-display text-lg [&:not(:focus-visible)]:focus:outline-none',
                             selectedIndex === featureIndex
                               ? 'text-blue-600 lg:text-white'
@@ -130,7 +133,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                         </Tab>
                       </h3>
                       <p
-                        className={classNames(
+                        className={clsx(
                           'mt-2 hidden text-sm lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'

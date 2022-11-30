@@ -32,6 +32,7 @@ export const Map: React.FC = () => {
   } = useSearch<LocationGenerics>()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
+  const [loaded, setLoaded] = useState(false)
 
   const {
     setInspector,
@@ -71,10 +72,13 @@ export const Map: React.FC = () => {
     // // @ts-ignore: 'AnyLayer' not relevant here
     // const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
     // console.log({ findBeforeIds: basemapLayer })
+    setLoaded(true)
   }
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
+  mainMap?.getMap().touchZoomRotate.disableRotation()
+
   useEffect(() => {
     if (!mainMap) return
 
@@ -145,7 +149,7 @@ export const Map: React.FC = () => {
       style={{ width: '100%', height: '100%' }}
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/5cff051f-e5ca-43cf-b030-1f0286c59bb3/style.json?key=ECOoUBmpqklzSCASXxcu"
-      interactiveLayerIds={interactiveLayerIds}
+      interactiveLayerIds={loaded ? interactiveLayerIds : []}
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}
@@ -158,7 +162,6 @@ export const Map: React.FC = () => {
       onLoad={handleLoad}
       // doubleClickZoom={false}
       dragRotate={false}
-      touchZoomRotate={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />

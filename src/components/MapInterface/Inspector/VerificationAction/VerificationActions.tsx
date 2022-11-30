@@ -9,7 +9,7 @@ import { useMapStateInteraction } from '@components/MapInterface/mapStateInterac
 import { useUserStore } from '@components/MapInterface/UserInfo'
 import { SmallSpinner } from '@components/Spinner/Spinner'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 import React from 'react'
 
 type Props = {
@@ -104,7 +104,7 @@ export const VerificationActions: React.FC<Props> = ({
           mutation.mutate({ ...apiData, verified_status: 'approved' })
         }}
         disabled={mutation.isLoading || disabled}
-        className={classNames(
+        className={clsx(
           buttonStyles,
           'bg-white py-1 px-3',
           disabled
@@ -125,7 +125,7 @@ export const VerificationActions: React.FC<Props> = ({
           mutation.mutate({ ...apiData, verified_status: 'rejected' })
         }}
         disabled={mutation.isLoading || disabled}
-        className={classNames(
+        className={clsx(
           buttonStyles,
           'bg-white py-1 px-3',
           disabled
@@ -142,7 +142,7 @@ export const VerificationActions: React.FC<Props> = ({
 
   return (
     <div
-      className={classNames('mb-4', {
+      className={clsx('mb-4', {
         'flex items-center justify-between': verifiedOnce,
       })}
     >

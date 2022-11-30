@@ -4,10 +4,10 @@ import {
   EyeIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/outline'
-import classNames from 'classnames'
-import screenshotContacts from './images/screenshots/contacts.png'
-import screenshotInventory from './images/screenshots/inventory.png'
-import screenshotProfitLoss from './images/screenshots/profit-loss.png'
+import { clsx } from 'clsx'
+import screenshotImprove from './images/HomePageSecondaryFeatures/placeholder.png'
+import screenshotCheck from './images/HomePageSecondaryFeatures/placeholder.png'
+import screenshotView from './images/HomePageSecondaryFeatures/placeholder.png'
 
 type Feature = {
   name: string | React.ReactNode
@@ -16,23 +16,24 @@ type Feature = {
   image: string
   icon: React.ReactNode
 }
+
 const features: Feature[] = [
   {
     name: 'Daten Betrachten',
     summary:
       'Der Radverkehrsatlas visualisiert Daten interaktiv zur direkten Unterstützung der Planung.',
     description:
-      'Nutzen Sie die vorhandenen Daten im Radverkehrsatlas zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme. Sehr viele Daten liegen in OSM bereits in hoher Qualität vor.',
-    image: screenshotProfitLoss,
+      'Nutzen Sie die vorhandenen Daten im Radverkehrsatlas zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme. Viele Daten liegen in OSM bereits in hoher Qualität vor.',
+    image: screenshotView,
     icon: <EyeIcon className="text-white" />,
   },
   {
     name: 'Daten prüfen',
     summary:
-      'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess stichprobenartig oder vollständig.',
+      'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
     description:
-      'Diese Funktion ist nur per Login verfügbar, sie entscheiden als Expert:innen welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die OpenStreetMap Community übergeben.',
-    image: screenshotInventory,
+      'Diese Funktion ist nur per Login verfügbar. Sie entscheiden als Kommune, welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die OpenStreetMap-Community übergeben.',
+    image: screenshotCheck,
     icon: <CheckBadgeIcon className="text-white" />,
   },
   {
@@ -40,8 +41,8 @@ const features: Feature[] = [
     summary:
       'Mit leicht zu bedienenden Editierwerkzeugen können Bürger:innen unvollständige Daten einfach ergänzen.',
     description:
-      'Rufen Sie die Bürger:innen zum Mitmachen auf, so können diese Lokales Wissen einbringen und konstruktiv eingebunden werden. Die Datenlage verbessert sich nach und nach und wird aktuell gehalten.',
-    image: screenshotContacts,
+      'Rufen Sie die Bürger:innen zum Mitmachen auf, so können sie lokales Wissen einbringen und konstruktiv beitragen. Die Datenlage verbessert sich nach und nach und wird aktuell gehalten.',
+    image: screenshotImprove,
     icon: <PencilSquareIcon className="text-white" />,
   },
 ]
@@ -58,14 +59,11 @@ function Feature({
 }) {
   return (
     <div
-      className={classNames(
-        className,
-        !isActive && 'opacity-75 hover:opacity-100'
-      )}
+      className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })}
       {...props}
     >
       <div
-        className={classNames(
+        className={clsx(
           'w-9 rounded-lg',
           isActive ? 'bg-blue-600' : 'bg-slate-500'
         )}
@@ -75,7 +73,7 @@ function Feature({
         </svg>
       </div>
       <h3
-        className={classNames(
+        className={clsx(
           'mt-3 text-sm font-medium',
           isActive ? 'text-blue-600' : 'text-slate-600'
         )}
@@ -143,9 +141,9 @@ const FeaturesDesktop = () => {
                 <Tab.Panel
                   static
                   key={featureIndex}
-                  className={classNames(
+                  className={clsx(
                     'px-5 transition duration-500 ease-in-out [&:not(:focus-visible)]:focus:outline-none',
-                    featureIndex !== selectedIndex && 'opacity-60'
+                    { 'opacity-60': featureIndex !== selectedIndex }
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
@@ -184,7 +182,7 @@ export const HomePageSecondaryFeatures = () => {
           <p className="mt-4 text-lg tracking-tight text-slate-700">
             Die Qualität der Daten lebt von der Beteiligung der Bürger:innen
             sowie von Ihrer Expertise als Verwaltung. Wir bringen beides
-            zusammen und binden damit Bürger:innen konstruktiv ein.
+            zusammen.
           </p>
         </div>
         <FeaturesMobile />

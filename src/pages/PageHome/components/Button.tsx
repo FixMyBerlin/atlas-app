@@ -1,5 +1,5 @@
 import { Link } from '@components/Link'
-import classNames from 'classnames'
+import { clsx } from 'clsx'
 
 const baseStyles = {
   solid:
@@ -40,7 +40,7 @@ export const Button: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  className = classNames(
+  className = clsx(
     baseStyles[variant],
     variantStyles[variant][color],
     className

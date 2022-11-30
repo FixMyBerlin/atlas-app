@@ -11,8 +11,9 @@ export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
   const mapboxLayers = mapboxStylesByLayerGroup.find(
     (g: any) => g.group === group
   )?.layers
+  const mapboxLayersClone = structuredClone(mapboxLayers)
 
-  if (!mapboxLayers) {
+  if (!mapboxLayersClone) {
     console.error(
       'Error in `mapboxStyleLayers()`: Cannot find groupName in `mapboxStylesByLayerGroup`',
       {
@@ -26,10 +27,10 @@ export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
   }
 
   // Add required source id data that is not part of what we receive from the mapbox styles API
-  mapboxLayers.forEach((layer: any) => {
+  mapboxLayersClone.forEach((layer: any) => {
     layer['source'] = source
     layer['source-layer'] = sourceLayer
   })
 
-  return mapboxLayers
+  return mapboxLayersClone
 }

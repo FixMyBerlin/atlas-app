@@ -18,8 +18,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<Props> = ({
       sourceId={sourceId}
       tagKey={tagKey}
       value={
-        properties['smoothness'] &&
-        properties['surface'] && (
+        (properties['smoothness'] || properties['surface']) && (
           <>
             {properties['smoothness'] && (
               <>

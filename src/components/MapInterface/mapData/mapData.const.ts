@@ -4,12 +4,14 @@ import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
+  TopicBikelanescenterlineId,
+  TopicBikelanescenterlineStyleIds,
+  TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
-  TopicBikelanesId_Tarmac,
+  TopicBikelanesStyleFilterIds,
   TopicBikelanesStyleFilterIds_Osmscripts,
-  TopicBikelanesStyleFilterIds_Tarmac,
+  TopicBikelanesStyleIds,
   TopicBikelanesStyleIds_Osmscripts,
-  TopicBikelanesStyleIds_Tarmac,
   TopicBoundariesId,
   TopicBoundariesStyleFilterIds,
   TopicBoundariesStyleIds,
@@ -25,6 +27,7 @@ import {
   TopicLitId,
   TopicLitStyleFilterIds,
   TopicLitStyleIds,
+  TopicLitStyleLegendIds,
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
@@ -61,6 +64,7 @@ import {
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
   topic_bikelanes,
+  topic_bikelanescenterline,
   topic_bikelanes_osmscripts,
   topic_boudaries,
   topic_education,
@@ -76,14 +80,14 @@ import {
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
-  TopicLitStyleLegendIds,
 } from './topicsMapData'
 import { MapData } from './types'
 
 export type TopicIds =
   | TopicAccidentsId
   | TopicBikelanesId_Osmscripts
-  | TopicBikelanesId_Tarmac
+  | TopicBikelanesId
+  | TopicBikelanescenterlineId
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
@@ -104,7 +108,8 @@ export type TopicIds =
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBikelanesStyleIds_Osmscripts
-  | TopicBikelanesStyleIds_Tarmac
+  | TopicBikelanesStyleIds
+  | TopicBikelanescenterlineStyleIds
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
@@ -125,7 +130,7 @@ export type TopicStyleIds =
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
   | TopicBikelanesStyleFilterIds_Osmscripts
-  | TopicBikelanesStyleFilterIds_Tarmac
+  | TopicBikelanesStyleFilterIds
   | TopicBoundariesStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
   | TopicEducationStyleFilterIds_Tarmac
@@ -171,6 +176,7 @@ export const mapData: MapData = {
     topic_accidents,
     topic_bikelanes_osmscripts,
     topic_bikelanes,
+    topic_bikelanescenterline,
     topic_boudaries,
     topic_education,
     topic_education_osmscripts,

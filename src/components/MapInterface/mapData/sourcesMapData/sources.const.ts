@@ -11,6 +11,7 @@ export type SourcesIds =
   | 'osmscripts_pois'
   | 'parkraumParking'
   | 'tarmac_bikelanes'
+  | 'tarmac_bikelanescenterline'
   | 'tarmac_boundaries'
   | 'tarmac_education'
   | 'tarmac_landuse'
@@ -105,6 +106,13 @@ export const sources: MapDataSource<
     highlightingKey: 'osm_id',
   },
   {
+    id: 'tarmac_bikelanescenterline',
+    tiles: `${tilesUrl}/public.bikelanesCenterlineNew/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    documentedKeys: ['category', 'highway', 'name'],
+    highlightingKey: 'osm_id',
+  },
+  {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
     apiExportIdentifier: 'publicTransport',
@@ -143,7 +151,7 @@ export const sources: MapDataSource<
     // Keys with underscore are treated special in <TagsTable />
     documentedKeys: [
       'category',
-      'lit',
+      'lit__if_present',
       'highway',
       'name',
       'composit_surface_smoothness',

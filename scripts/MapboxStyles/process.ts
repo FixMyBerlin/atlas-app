@@ -150,14 +150,17 @@ ${sortedGroupsAndLayers
   .map((entry) => {
     type Entry = { group: string; layers: { id: string }[] }
     const { group, layers } = entry as unknown as Entry
+    const sortedLayers = layers.sort((a, b) => a.id.localeCompare(b.id))
     const typeKeyPart = group.replace(mapboxGroupPrefix, '')
     const exportString = `export type MapboxStyleLayers_${typeKeyPart}`
-    if (layers.length > 1) {
-      return `${exportString} =\n${layers
+    if (sortedLayers.length > 1) {
+      return `${exportString} =\n${sortedLayers
         .map((l) => `  | '${l.id}'\n`)
         .join('')}`
     } else {
-      return `${exportString} = ${layers.map((l) => `'${l.id}'`).join('')}\n`
+      return `${exportString} = ${sortedLayers
+        .map((l) => `'${l.id}'`)
+        .join('')}\n`
     }
   })
   .join('\n')}`
