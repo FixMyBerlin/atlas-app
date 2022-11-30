@@ -1,7 +1,7 @@
+import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import React from 'react'
 import { Layer } from 'react-map-gl'
 import { LayerProps } from 'react-map-gl/src/components/layer'
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 
 let errorLogged = false
 
@@ -52,10 +52,5 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (
     colorNull
   )
 
-  return (
-    <>
-      {/* @ts-ignore TODO: find out what's wrong here */}
-      <Layer {...props} />
-    </>
-  )
+  return <Layer {...props} />
 }
