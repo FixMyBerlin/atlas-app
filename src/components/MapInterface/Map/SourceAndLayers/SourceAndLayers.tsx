@@ -97,6 +97,7 @@ export const SourceAndLayers: React.FC = () => {
                   ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
                 }
 
+                // The verification style layer in Mapbox Studio has to include this string
                 const isVerificationStatusLayer =
                   layer.id.search('verification-status') != -1
 
