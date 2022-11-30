@@ -59,12 +59,12 @@ export const HomePageSecondaryFeaturesJustText = () => {
           {features.map((feature) => {
             return (
               <div key={feature.name}>
-                <div className="w-9 rounded-lg bg-yellow-600">
+                <div className="w-9 rounded-lg bg-blue-400">
                   <svg aria-hidden="true" className="h-9 w-9 p-2" fill="none">
                     {feature.icon}
                   </svg>
                 </div>
-                <h3 className="mt-3 text-sm font-medium text-yellow-600">
+                <h3 className="mt-3 text-sm font-medium text-blue-600">
                   {feature.name}
                 </h3>
                 <p className="font-display mt-2 text-xl text-slate-900">
