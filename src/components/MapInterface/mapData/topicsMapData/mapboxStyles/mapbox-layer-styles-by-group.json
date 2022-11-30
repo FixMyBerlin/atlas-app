@@ -132,7 +132,8 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad"
           ],
           true,
           false
@@ -1056,7 +1057,8 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad"
           ],
           true,
           false
@@ -1284,7 +1286,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_update_at",
@@ -1323,7 +1326,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_check_date",
@@ -1357,7 +1361,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_check_date",
@@ -1392,7 +1397,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-Unbeleuchtet",
@@ -1622,8 +1628,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 3",
@@ -1654,12 +1659,12 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad"
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 4",
@@ -1696,8 +1701,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "hitarea-bikelanes",
@@ -1877,7 +1881,8 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad"
           ],
           true,
           false
