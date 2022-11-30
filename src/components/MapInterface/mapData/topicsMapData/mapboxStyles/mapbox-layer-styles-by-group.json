@@ -130,7 +130,8 @@
             "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
-            "bicycleRoad"
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -1054,7 +1055,8 @@
             "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
-            "bicycleRoad"
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -1655,7 +1657,8 @@
             "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
-            "bicycleRoad"
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -1871,7 +1874,8 @@
             "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
-            "bicycleRoad"
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
