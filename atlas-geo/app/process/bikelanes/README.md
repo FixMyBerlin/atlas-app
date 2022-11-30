@@ -17,6 +17,7 @@ The `_skipNotes` give a hint to why a road segment was skipped.
   - `bicycleRoad` – Fahrradstraße based on tag OR traffic_sign
   - `cyclewayAlone` – "Frei geführte Radwege"; dedicated cycleways that are not next to a road; eg. https://www.openstreetmap.org/way/27701956
   - `cyclewaySeparated` – "Baulich abgesetzte Radwege" ("Protected Bike Lane"); Relies on `is_sidepath` tagging; eg. https://www.openstreetmap.org/way/278057274
+  - `cyclewayOnHighway` – "Radfahrstreifen" / "Schutz- oder Angebotsstreifen"
   - `footAndCycleway_segregated` – "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
   - `footAndCycleway_shared` – "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
   - `footway_bicycleYes` – "Gehweg, Fahrrad frei"
