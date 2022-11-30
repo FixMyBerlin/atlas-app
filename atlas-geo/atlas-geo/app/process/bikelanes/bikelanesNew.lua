@@ -61,7 +61,6 @@ end
 -- Handle `highway=pedestrian + bicycle=yes/!=yes`
 -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
--- tag: "pedestrianArea_bicycleYes"
 local function pedestiranArea(tags)
   local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
   if result then
@@ -73,7 +72,6 @@ end
 -- Handle `highway=living_street`
 -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
--- tag: "livingStreet"
 local function livingStreet(tags)
   local result = tags.highway == "living_street" and not tags.bicycle == "no"
   if result then
@@ -95,7 +93,6 @@ end
 
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
--- tag: "footAndCycleway_shared"
 local function footAndCycleway(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   result = result or StartsWith(tags.traffic_sign, "DE:240")
@@ -108,7 +105,6 @@ end
 -- Handle "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
--- tag: "footAndCycleway_segregated"
 local function footAndCyclewaySegregated(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   result = result or StartsWith(tags.traffic_sign, "DE:241")
@@ -120,12 +116,12 @@ end
 
 -- Handle "Gehweg, Fahrrad frei"
 -- traffic_sign=DE:239,1022-10, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:239
--- tag: "footway_bicycleYes"
 local function footwayBicycleAllowed(tags)
   local result = tags.highway == "footway" or tags.highway == "path"
   -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
   -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
-  result = result and (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
+  result = result and
+      (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
   -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
@@ -137,30 +133,40 @@ end
 
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
--- tag: "cyclewaySeparated"
-local function cyclewaySeperated(tags)
+local function cyclewaySeparated(tags)
   -- Case: Separate cycleway next to a road
-  -- Eg https://www.openstreetmap.org/way/278057274
+  --    Eg https://www.openstreetmap.org/way/278057274
   local result = (tags.highway == "cycleway" and tags.is_sidepath == "yes")
   -- Case: The crossing version of a separate cycleway next to a road
   -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
-  -- Eg https://www.openstreetmap.org/way/963592923
+  --    Eg https://www.openstreetmap.org/way/963592923
   result = result or (tags.highway == "cycleway" and tags.cycleway == "crossing")
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
-  -- Eg https://www.openstreetmap.org/way/964476026
+  --    Eg https://www.openstreetmap.org/way/964476026
   result = result or (tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes")
-
-  -- TODO: cases bellow should be handled in center line logic
-  -- Case: Separate cycleway idetified via "track"-tagging.
+  -- Case: Separate cycleway identified via "track"-tagging.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  -- … separately mapped
   result = result or (tags.cycleway == "track" or tags.cycleway == "opposite_track")
-  -- TODO: comment
-  -- result = result or (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+
   if result then
     tags.category = "cyclewaySeparated"
+  end
+  return result
+end
+
+-- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
+-- This part relies heavly on the `is_sidepath` tagging.
+local function cyclewayOnHighway(tags)
+  local result = result or (tags.cycleway == "track" or tags.cycleway == "opposite_track")
+  -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
+  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
+  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
+  result = result or (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+
+  if result then
+    tags.category = "cyclewayOnHighway"
   end
   return result
 end
@@ -174,6 +180,11 @@ local function oldCenterline(tags)
   end
   if tags["cycleway:right"] == "track" or tags["cycleway:left"] == "track" or tags["cycleway:both"] == "track" then
     tags.category = "cyclewaySeparated"
+    tags._centerline = "tagged on centerline"
+    return true
+  end
+  if tags["cycleway:right"] == "lane" or tags["cycleway:left"] == "lane" or tags["cycleway:both"] == "lane" then
+    tags.category = "cyclewayOnHighway"
     tags._centerline = "tagged on centerline"
     return true
   end
@@ -228,7 +239,7 @@ local allowed_tags = Set({
 })
 
 local predicates = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-  footwayBicycleAllowed, cyclewaySeperated, cycleWayAlone }
+  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
 
 local function applyPredicates(tags)
   for _, predicate in pairs(predicates) do
