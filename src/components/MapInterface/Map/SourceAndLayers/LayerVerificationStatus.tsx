@@ -13,7 +13,7 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (
   const props = {
     ...parentLayerProps,
     // @ts-ignore TODO: check ts
-    paint: JSON.parse(JSON.stringify(parentLayerProps.paint)),
+    paint: structuredClone(parentLayerProps.paint),
   }
 
   let colorApproved: string, colorRejected: string, colorNull: string

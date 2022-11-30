@@ -33,8 +33,8 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const props = {
     ...parentLayerProps,
     id: parentLayerProps.id + '--highlight',
-    paint: JSON.parse(JSON.stringify(parentLayerProps.paint)),
   }
+    paint: structuredClone(parentLayerProps.paint),
 
   if (props.type === 'line') {
     if (!props.paint) props.paint = {}
