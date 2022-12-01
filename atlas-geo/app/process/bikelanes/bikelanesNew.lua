@@ -159,7 +159,7 @@ end
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewayOnHighway(tags)
-  local result = result or (tags.cycleway == "track" or tags.cycleway == "opposite_track")
+  local result = (tags.cycleway == "track" or tags.cycleway == "opposite_track")
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
