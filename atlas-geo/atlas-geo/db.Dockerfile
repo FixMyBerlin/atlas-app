@@ -18,5 +18,6 @@ CMD [ \
   "-clog_rotation_size=100MB", \
   "-clog_directory=pg_log", \
   "-clog_filename=postgresql-%Y-%m-%d_%H%M%S.log", \
-  "-clog_statement=mod" \
+  "-clog_statement=mod", \
+  "-cwork_mem=16MB" \
 ]
