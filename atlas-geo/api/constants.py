@@ -27,11 +27,11 @@ export_geojson_function_from_type = {
 verification_tables = {
   "bikelanes": "bikelanes_verification",
   "lit": "lit_verification",
-  "roadClassification": "roadClassification_verification",
+  # "roadClassification": "roadClassification_verification",
 }
 
 verification_views = {
   "bikelanes_verification": "bikelanes_verified",
   "lit_verification": "lit_verified",
-  "roadClassification_verification": "roadClassification_verified",
+  # "roadClassification_verification": "roadClassification_verified",
 }
