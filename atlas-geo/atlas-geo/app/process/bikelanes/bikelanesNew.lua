@@ -339,6 +339,7 @@ function osm2pgsql.process_way(object)
       ["sidewalk:left:bicycle"] = { 1 },
       ["sidewalk:right:bicycle"] = { -1 },
       ["sidewalk:both:bicycle"] = { -1, 1 },
+      ["sidewalk:both"] = { -1, 1 },
     },
   }
   local cyclewayTransformer = {
@@ -348,6 +349,7 @@ function osm2pgsql.process_way(object)
       ["cycleway:left"] = { 1 },
       ["cycleway:right"] = { -1 },
       ["cycleway:both"] = { -1, 1 },
+      ["cycleway"] = { -1, 1 },
     },
   }
   local transformations = { footwayTransformer, cyclewayTransformer }
