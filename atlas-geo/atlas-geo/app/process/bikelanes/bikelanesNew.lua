@@ -368,8 +368,10 @@ function osm2pgsql.process_way(object)
           for _, sign in pairs(signs) do
             object.tags._skipNotes = nil
             object.tags.category = cycleway.category
+            local id = object.id .. ({[-1]="_left", [1]="_right"})[sign]
             normalizeTags(object)
             translateTable:insert({
+              osm_id = id,
               tags = object.tags,
               geom = object:as_linestring(),
               offset = sign * offset
