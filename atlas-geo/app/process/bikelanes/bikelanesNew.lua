@@ -24,15 +24,6 @@ local table = osm2pgsql.define_table({
   }
 })
 
-local skipTable = osm2pgsql.define_table({
-  name = 'bikelanes_skipListNew',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
-
 local translateTable = osm2pgsql.define_table({
   name = 'bikelanesCenterlineNew',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -40,6 +31,16 @@ local translateTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'offset', type = 'real' }
+  }
+})
+
+
+local skipTable = osm2pgsql.define_table({
+  name = 'bikelanes_skipListNew',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
   }
 })
 
@@ -114,10 +115,8 @@ local function roadWidth(tags)
   return 8
 end
 
-
-
 local function normalizeTags(object)
-  FilterTags(object.tags, allowed_tags)
+  FilterTags(object, allowed_tags)
   AddMetadata(object)
   AddUrl("way", object)
   -- Presence of data
@@ -129,13 +128,9 @@ local function normalizeTags(object)
 
   -- Freshness of data, see documentation
   local withinYears = CheckDataWithinYears(object.tags["check_date:cycleway"], 2)
-  if (withinYears.result) then
-    object.tags.is_fresh = true
-    object.tags.fresh_age_days = withinYears.diffDays
-  else
-    object.tags.is_fresh = false
-    object.tags.fresh_age_days = withinYears.diffDays
-  end
+  object.tags.is_fresh = withinYears.result
+  object.tags.fresh_age_days = withinYears.diffDays
+  return object.tags
 end
 
 local function intoSkipList(object)
@@ -144,6 +139,18 @@ local function intoSkipList(object)
     tags = object.tags,
     geom = object:as_linestring()
   })
+end
+
+local function projectNestedTags(tags, prefix)
+  local projectedTags = {}
+  for key,val  in pairs(tags) do
+    if key ~= prefix and StartsWith(key, prefix) then
+      -- offset of 2 due to 1-indexing and for removing the ':'
+      local key_suffix = string.sub(key, string.len(prefix) + 2)
+      projectedTags[key_suffix] = val
+    end
+  end
+  return projectedTags
 end
 
 function osm2pgsql.process_way(object)
@@ -177,12 +184,6 @@ function osm2pgsql.process_way(object)
       tags = object.tags,
       geom = object:as_linestring()
     })
-    -- in future versions we should do this as a concationation of the tables(sql)
-    translateTable:insert({
-      tags = object.tags,
-      geom = object:as_linestring(),
-      offset = 0
-    })
     return
   end
 
@@ -211,16 +212,18 @@ function osm2pgsql.process_way(object)
         if BikelaneCategory(cycleway) then
           object.tags._centerline = "tagged on centerline"
           for _, sign in pairs(signs) do
+            -- projectNestedTags(object.tags, tag)
             object.tags._skipNotes = nil
             object.tags.category = cycleway.category
-            local id = object.id .. ({[-1]="_left", [1]="_right"})[sign]
             normalizeTags(object)
+            -- local id = object.id
+            -- object.id = object.id .. ({[-1]="_left", [1]="_right"})[sign]
             translateTable:insert({
-              osm_id = id,
               tags = object.tags,
               geom = object:as_linestring(),
               offset = sign * offset
             })
+            -- object.id = id
           end
         end
       end
@@ -234,3 +237,4 @@ function osm2pgsql.process_way(object)
     intoSkipList(object)
   end
 end
+
