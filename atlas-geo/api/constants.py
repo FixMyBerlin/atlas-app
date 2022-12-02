@@ -30,7 +30,7 @@ verification_tables = {
   # "roadClassification": "roadClassification_verification",
 }
 
-verification_views = {
+joined_tables = {
   "bikelanes_verification": "bikelanes_verified",
   "lit_verification": "lit_verified",
   # "roadClassification_verification": "roadClassification_verified",
