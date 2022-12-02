@@ -41,7 +41,6 @@ services:
       PGDATABASE: postgres
       PGUSER: postgres
       PGPASSWORD: mysecretpassword
-      ERROR_LOG: /var/log/gunicorn-error.log
     ports:
       - 80:80
     depends_on:
