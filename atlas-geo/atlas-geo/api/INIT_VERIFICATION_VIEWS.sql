@@ -2,7 +2,7 @@ DROP INDEX IF EXISTS {geometry_table}_osm_id_idx;
 CREATE INDEX {geometry_table}_osm_id_idx ON {geometry_table} USING btree (osm_id);
 
 
-CREATE TABLE IF NOT EXISTS public.{verification_table} (
+CREATE TABLE IF NOT EXISTS {verification_table} (
 	osm_type varchar NOT NULL,
   -- osm_type bpchar(1) NOT NULL,
 	osm_id bigint NOT NULL,
@@ -11,42 +11,31 @@ CREATE TABLE IF NOT EXISTS public.{verification_table} (
 	verified_by bigint,
 	verified varchar NULL
 );
--- ALTER TABLE public.lit_verification ALTER COLUMN osm_type TYPE bpchar(1) USING osm_type::bpchar;
+-- TODO: ALTER TABLE {verification_table} ALTER COLUMN osm_type TYPE bpchar(1) USING osm_type::bpchar;
 
-
-DROP TABLE IF EXISTS {verification_table}_uniq CASCADE;
-
-
-CREATE TABLE {verification_table}_uniq AS (
-  SELECT DISTINCT ON (v.osm_id) *
-  FROM {verification_table} v
-  ORDER BY v.osm_id, verified_at DESC
+DROP TABLE IF EXISTS {joined_table};
+CREATE TABLE {joined_table} AS (
+  SELECT g.osm_type, g.osm_id, g.tags, g.geom, v.verified_at, v.verified_by, v.verified
+  FROM {geometry_table} g
+  LEFT JOIN (
+    SELECT DISTINCT ON (v.osm_id) * FROM {verification_table} v ORDER BY v.osm_id, verified_at DESC
+  ) v
+  ON g.osm_id = v.osm_id
 );
+CREATE INDEX {joined_table}_geom_idx ON {joined_table} USING gist (geom) WITH (fillfactor='100');
+CREATE INDEX {joined_table}_osm_id_idx ON {joined_table} USING btree (osm_id);
 
-ALTER TABLE {verification_table}_uniq ADD CONSTRAINT {verification_table}_uniq_osm_id_osm_type_uniq UNIQUE (osm_id, osm_type);
-CREATE INDEX {verification_table}_uniq_osm_type_osm_id_idx ON {verification_table}_uniq USING btree (osm_id);
-
-
-CREATE OR REPLACE FUNCTION upsert_{verification_table}_uniq() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+CREATE OR REPLACE FUNCTION update_{joined_table}() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 BEGIN
-  INSERT INTO {verification_table}_uniq (osm_type, osm_id, verified_at, verified_by, verified)
-    VALUES(NEW.osm_type, NEW.osm_id, NEW.verified_at, NEW.verified_by, NEW.verified)
-  ON CONFLICT (osm_type, osm_id) do
-    UPDATE SET verified_at = NEW.verified_at, verified_by = NEW.verified_by, verified = NEW.verified;
+  UPDATE {joined_table}
+  SET verified_at = NEW.verified_at,
+      verified_by = NEW.verified_by,
+      verified = NEW.verified
+  WHERE osm_id = NEW.osm_id;
   RETURN NEW;
 END;
 $$;
 
-
-CREATE OR REPLACE TRIGGER upsert_{verification_table}_uniq AFTER
-INSERT ON {verification_table}
-FOR EACH ROW EXECUTE PROCEDURE upsert_{verification_table}_uniq();
-
-
-DROP VIEW IF EXISTS {view_name};
-CREATE VIEW {view_name} AS
-SELECT v.osm_type, v.osm_id, v.verified_at, v.verified_by , v.verified, o.tags, o.geom
-FROM {geometry_table} o
-LEFT JOIN {verification_table}_uniq v
-ON v.osm_id = o.osm_id;
---AND v.osm_type = o.osm_type;
+CREATE OR REPLACE TRIGGER update_{joined_table}
+AFTER INSERT ON lit_verification
+FOR EACH ROW EXECUTE PROCEDURE update_{joined_table}();
