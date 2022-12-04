@@ -135,11 +135,11 @@ end
 -- projects all tags prefix:subtag=val -> subtag=val
 local function projectTags(tags, prefix)
   local projectedTags = {}
-  for key,val  in pairs(tags) do
-    if key ~= prefix and StartsWith(key, prefix) then
+  for prefixedKey,val  in pairs(tags) do
+    if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
-      local key_suffix = string.sub(key, string.len(prefix) + 2)
-      projectedTags[key_suffix] = val
+      local key = string.sub(prefixedKey, string.len(prefix) + 2)
+      projectedTags[key] = val
     end
   end
   return projectedTags
