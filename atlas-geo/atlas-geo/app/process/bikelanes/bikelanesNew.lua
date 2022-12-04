@@ -148,7 +148,8 @@ function osm2pgsql.process_way(object)
   AddMetadata(object);
   AddUrl("way", object)
 
-  AddSkipInfoToHighways(object)  if object.tags._skip == true then
+  AddSkipInfoToHighways(object)
+  if object.tags._skip == true then
     intoSkipList(object)
     return
   end
@@ -164,7 +165,6 @@ function osm2pgsql.process_way(object)
   end
 
   -- apply predicates nested
-
   local footwayProjection = {
     highway = "footway",
     prefix = 'sidewalk'
@@ -196,11 +196,13 @@ function osm2pgsql.process_way(object)
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            translateTable:insert({
-              tags = normalizeTags(cycleway),
-              geom = object:as_linestring(),
-              offset = sign * offset
-            })
+            if not (dir == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case
+              translateTable:insert({
+                tags = normalizeTags(cycleway),
+                geom = object:as_linestring(),
+                offset = sign * offset
+              })
+            end
           end
         end
       end
