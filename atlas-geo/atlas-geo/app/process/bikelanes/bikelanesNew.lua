@@ -175,7 +175,7 @@ function osm2pgsql.process_way(object)
   }
   local projections = { footwayProjection, cyclewayProjection }
 
-  local projDirections = {
+  local projSides = {
     [":right"] = { -1 },
     [":left"] = { 1 },
     [":both"] = { -1, 1 },
@@ -187,8 +187,8 @@ function osm2pgsql.process_way(object)
     -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
     -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = roadWidth(object.tags) / 2
-    for dir, signs in pairs(projDirections) do
-      local prefixedDir = projection.prefix .. dir
+    for side, signs in pairs(projSides) do
+      local prefixedDir = projection.prefix .. side
       if object.tags[prefixedDir] ~= "no" and object.tags[prefixedDir] ~="separate" then
         local cycleway = projectTags(object.tags, prefixedDir)
         cycleway["highway"] = projection.highway
@@ -198,7 +198,7 @@ function osm2pgsql.process_way(object)
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            if not (dir == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case
+            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case
               translateTable:insert({
                 tags = normalizeTags(cycleway),
                 geom = object:as_linestring(),
