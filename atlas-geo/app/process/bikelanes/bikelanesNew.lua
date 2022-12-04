@@ -183,7 +183,9 @@ function osm2pgsql.process_way(object)
   }
 
   for _, projection in pairs(projections) do
-    -- NOTE: the category/projection could also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
+    -- NOTE: the category/projection could also influence the offset
+    -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
+    -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = roadWidth(object.tags) / 2
     for dir, signs in pairs(projDirections) do
       local prefixedDir = projection.prefix .. dir
