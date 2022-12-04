@@ -76,6 +76,10 @@ local allowed_tags = Set({
   "surface",
   "smoothness",
   "traffic_sign",
+  "osm_url",
+  "updated_by",
+  "update_at",
+  "version"
 })
 
 
@@ -115,33 +119,30 @@ local function roadWidth(tags)
   return 8
 end
 
-local function normalizeTags(object)
-  FilterTags(object, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
-  -- Presence of data
-  if (object.tags.category) then
-    object.tags.is_present = true
-  else
-    object.tags.is_present = false
-  end
+local function timeValidation(tags)
+    -- Presence of data
+    tags.is_present = tags.category ~= nil
+    -- Freshness of data, see documentation
+    local withinYears = CheckDataWithinYears(tags["check_date:cycleway"], 2)
+    tags.is_fresh = withinYears.result
+    tags.fresh_age_days = withinYears.diffDays
+end
 
-  -- Freshness of data, see documentation
-  local withinYears = CheckDataWithinYears(object.tags["check_date:cycleway"], 2)
-  object.tags.is_fresh = withinYears.result
-  object.tags.fresh_age_days = withinYears.diffDays
-  return object.tags
+local function normalizeTags(tags)
+  FilterTags(tags, allowed_tags)
+  timeValidation(tags)
+  return tags
 end
 
 local function intoSkipList(object)
-  normalizeTags(object)
+  -- normalizeTags(object.tags)
   skipTable:insert({
     tags = object.tags,
     geom = object:as_linestring()
   })
 end
 
-local function projectNestedTags(tags, prefix)
+local function projectTags(tags, prefix)
   local projectedTags = {}
   for key,val  in pairs(tags) do
     if key ~= prefix and StartsWith(key, prefix) then
@@ -157,73 +158,55 @@ function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
   local allowed_values = HighwayClasses
+
+  -- Skip `highway=steps`
+  -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
+  allowed_values["steps"] = nil
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
+  AddMetadata(object);
+  AddUrl("way", object)
 
-  AddSkipInfoToHighways(object)
-  -- Skip `highway=steps`
-  -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
-  if object.tags.highway == "steps" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
-    object.tags._skip = true
-  end
-  if object.tags._skip == true then
+  AddSkipInfoToHighways(object)  if object.tags._skip == true then
     intoSkipList(object)
     return
   end
 
-
   -- apply predicates
   if BikelaneCategory(object.tags) then
     object.tags._skipNotes = nil
-    normalizeTags(object)
     table:insert({
-      tags = object.tags,
+      tags =  normalizeTags(object.tags),
       geom = object:as_linestring()
     })
     return
   end
 
-  -- -- this is only to stay consistent with the previous version
-  -- if OldCenterline(object.tags) then
-  --   object.tags._skipNotes = nil
-  --   normalizeTags(object)
-  --   table:insert({
-  --     tags = object.tags,
-  --     geom = object:as_linestring()
-  --   })
-  -- end
-
   -- apply predicates nested
   local projections = { footwayProjection, cyclewayProjection }
 
-  for _, transformer in pairs(projections) do
-    -- set the highway category
-    local cycleway = { highway = transformer.highway }
-    -- NOTE: the category/transformer should also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
+  for _, projection in pairs(projections) do
+    -- NOTE: the category/projection could also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
     local offset = roadWidth(object.tags) / 2
-    for tag, signs in pairs(transformer.tags) do
+    for tag, signs in pairs(projection.tags) do
       if object.tags[tag] ~= nil and object.tags[tag] ~= "no" then
         -- sets the bicycle tag to the value of nested tags
-        cycleway[transformer.dest] = object.tags[tag]
+            -- set the highway category
+        local cycleway = projectTags(object.tags, tag)
+        cycleway["highway"] = projection.highway
+        cycleway[projection.dest] = object.tags[tag]
         if BikelaneCategory(cycleway) then
-          object.tags._centerline = "tagged on centerline"
+          cycleway._centerline = "tagged on centerline old highway:" .. object.tags.highway .. "dest:" .. projection.dest
           for _, sign in pairs(signs) do
-            -- projectNestedTags(object.tags, tag)
-            object.tags._skipNotes = nil
-            object.tags.category = cycleway.category
-            normalizeTags(object)
-            -- local id = object.id
-            -- object.id = object.id .. ({[-1]="_left", [1]="_right"})[sign]
+            -- TODO: insert tags from object.tags -> cycleway (prefer cycleway in case if ambiguity)
             translateTable:insert({
-              tags = object.tags,
+              tags = normalizeTags(cycleway),
               geom = object:as_linestring(),
               offset = sign * offset
             })
-            -- object.id = id
           end
         end
       end
