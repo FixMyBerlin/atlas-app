@@ -191,7 +191,7 @@ function osm2pgsql.process_way(object)
     local offset = roadWidth(object.tags) / 2
     for dir, signs in pairs(projDirections) do
       local tag = projection.tag .. dir
-      if object.tags[tag] ~= nil and object.tags[tag] ~= "no" then
+      if object.tags[tag] ~= "no" then
         local cycleway = projectTags(object.tags, tag)
         cycleway["highway"] = projection.highway
         cycleway[projection.tag] = object.tags[tag]
