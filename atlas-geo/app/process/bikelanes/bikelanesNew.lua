@@ -191,15 +191,14 @@ function osm2pgsql.process_way(object)
     local offset = roadWidth(object.tags) / 2
     for dir, signs in pairs(projDirections) do
       local tag = projection.tag .. dir
-      if object.tags[tag] ~= "no" then
+      if object.tags[tag] ~= "no" and object.tags[tag] ~="separate" then
         local cycleway = projectTags(object.tags, tag)
         cycleway["highway"] = projection.highway
         cycleway[projection.tag] = object.tags[tag]
         if BikelaneCategory(cycleway) then
           cycleway._centerline = "generated from centerline with tag=" .. tag
-          for key, val in pairs(object.tags) do
-            if cycleway[key] == nil then cycleway[key]=val end
-          end
+          for key, val in pairs(Metadata(object)) do cycleway[key]=val end
+          cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
             translateTable:insert({
               tags = normalizeTags(cycleway),
