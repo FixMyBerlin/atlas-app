@@ -82,19 +82,6 @@ local allowed_tags = Set({
   "version"
 })
 
-
-local footwayProjection = {
-  highway = "footway",
-  tag = 'sidewalk'
-}
-
-local cyclewayProjection = {
-  highway = "cycleway",
-  tag = "cycleway"
-}
-
-
-
 local function roadWidth(tags)
   -- if tags["width"] ~= nil then
   --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())
@@ -177,6 +164,15 @@ function osm2pgsql.process_way(object)
   end
 
   -- apply predicates nested
+
+  local footwayProjection = {
+    highway = "footway",
+    prefix = 'sidewalk'
+  }
+  local cyclewayProjection = {
+    highway = "cycleway",
+    prefix = "cycleway"
+  }
   local projections = { footwayProjection, cyclewayProjection }
 
   local projDirections = {
@@ -190,13 +186,13 @@ function osm2pgsql.process_way(object)
     -- NOTE: the category/projection could also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
     local offset = roadWidth(object.tags) / 2
     for dir, signs in pairs(projDirections) do
-      local tag = projection.tag .. dir
-      if object.tags[tag] ~= "no" and object.tags[tag] ~="separate" then
-        local cycleway = projectTags(object.tags, tag)
+      local prefixedDir = projection.prefix .. dir
+      if object.tags[prefixedDir] ~= "no" and object.tags[prefixedDir] ~="separate" then
+        local cycleway = projectTags(object.tags, prefixedDir)
         cycleway["highway"] = projection.highway
-        cycleway[projection.tag] = object.tags[tag]
+        cycleway[projection.prefix] = object.tags[prefixedDir]
         if BikelaneCategory(cycleway) then
-          cycleway._centerline = "generated from centerline with tag=" .. tag
+          cycleway._centerline = "projected tag=" .. prefixedDir
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
