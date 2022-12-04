@@ -85,25 +85,15 @@ local allowed_tags = Set({
 
 local footwayProjection = {
   highway = "footway",
-  dest = "bicycle",
-  tags = {
-    ["sidewalk:left:bicycle"] = { 1 },
-    ["sidewalk:right:bicycle"] = { -1 },
-    ["sidewalk:both:bicycle"] = { -1, 1 },
-    ["sidewalk:bicycle"] = { -1, 1 },
-  },
+  tag = 'sidewalk'
 }
 
 local cyclewayProjection = {
   highway = "cycleway",
-  dest = "cycleway",
-  tags = {
-    ["cycleway:left"] = { 1 },
-    ["cycleway:right"] = { -1 },
-    ["cycleway:both"] = { -1, 1 },
-    ["cycleway"] = { -1, 1 },
-  },
+  tag = "cycleway"
 }
+
+
 
 local function roadWidth(tags)
   -- if tags["width"] ~= nil then
@@ -142,6 +132,7 @@ local function intoSkipList(object)
   })
 end
 
+-- projects all tags prefix:subtag=val -> subtag=val
 local function projectTags(tags, prefix)
   local projectedTags = {}
   for key,val  in pairs(tags) do
@@ -188,18 +179,24 @@ function osm2pgsql.process_way(object)
   -- apply predicates nested
   local projections = { footwayProjection, cyclewayProjection }
 
+  local projDirections = {
+    [":right"] = { -1 },
+    [":left"] = { 1 },
+    [":both"] = { -1, 1 },
+    [""] = { -1, 1 } -- TODO: if oneway=yes only apply to the right=-1
+  }
+
   for _, projection in pairs(projections) do
     -- NOTE: the category/projection could also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
     local offset = roadWidth(object.tags) / 2
-    for tag, signs in pairs(projection.tags) do
+    for dir, signs in pairs(projDirections) do
+      local tag = projection.tag .. dir
       if object.tags[tag] ~= nil and object.tags[tag] ~= "no" then
-        -- sets the bicycle tag to the value of nested tags
-            -- set the highway category
         local cycleway = projectTags(object.tags, tag)
         cycleway["highway"] = projection.highway
-        cycleway[projection.dest] = object.tags[tag]
+        cycleway[projection.tag] = object.tags[tag]
         if BikelaneCategory(cycleway) then
-          cycleway._centerline = "tagged on centerline old highway:" .. object.tags.highway .. "dest:" .. projection.dest
+          cycleway._centerline = "generated from centerline with tag=" .. tag
           for _, sign in pairs(signs) do
             -- TODO: insert tags from object.tags -> cycleway (prefer cycleway in case if ambiguity)
             translateTable:insert({
