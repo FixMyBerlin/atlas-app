@@ -197,8 +197,10 @@ function osm2pgsql.process_way(object)
         cycleway[projection.tag] = object.tags[tag]
         if BikelaneCategory(cycleway) then
           cycleway._centerline = "generated from centerline with tag=" .. tag
+          for key, val in pairs(object.tags) do
+            if cycleway[key] == nil then cycleway[key]=val end
+          end
           for _, sign in pairs(signs) do
-            -- TODO: insert tags from object.tags -> cycleway (prefer cycleway in case if ambiguity)
             translateTable:insert({
               tags = normalizeTags(cycleway),
               geom = object:as_linestring(),
