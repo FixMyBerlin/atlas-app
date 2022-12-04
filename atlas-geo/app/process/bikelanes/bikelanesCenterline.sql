@@ -8,6 +8,10 @@ UPDATE "bikelanesCenterlineNew"
   SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Transform(geom, 25833), "offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 
+UPDATE "bikelanesCenterlineNew"
+  SET osm_id=osm_id*SIGN("offset");
+
+
 INSERT INTO "bikelanesNew"
   SELECT osm_type, osm_id, tags, geom
   FROM "bikelanesCenterlineNew";
