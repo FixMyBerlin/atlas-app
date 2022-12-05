@@ -1,7 +1,7 @@
 import { Link } from '@components/Link'
 import screenshotBiBi from './images/HomePageLive/bibi.jpg'
 import screenshotTrTo from './images/HomePageLive/trto.jpg'
-import screenshotNudafa from './images/HomePageLive/zes.jpg'
+// import screenshotNudafa from './images/HomePageLive/zes.jpg'
 
 type Callout = {
   name: string
@@ -19,13 +19,13 @@ const callouts: Callout[] = [
     imageAlt: '',
     href: '/regionen/bibi',
   },
-  {
-    name: 'NUDAFA',
-    description: 'Radnetzplanung auf OpenData-Grundlage',
-    image: screenshotNudafa,
-    imageAlt: '',
-    href: 'https://www.nudafa.de/radnetzplanung',
-  },
+  // {
+  //   name: 'NUDAFA',
+  //   description: 'Radnetzplanung auf OpenData-Grundlage',
+  //   image: screenshotNudafa,
+  //   imageAlt: '',
+  //   href: 'https://www.nudafa.de/radnetzplanung',
+  // },
   {
     name: 'Treptower Tollensewinkel',
     description: 'Radinfrastruktur als OpenData',
@@ -47,13 +47,13 @@ export const HomePageLive = () => {
           einsehen – mehr ist in Arbeit.
         </p>
 
-        <div className="mt-6 space-y-10 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
+        <div className="mt-6 justify-center space-y-10 lg:flex lg:gap-x-6 lg:space-y-0">
           {callouts.map((callout) => (
             <Link
               to={callout.href}
               external={callout.href.startsWith('http')}
               key={callout.name}
-              classNameOverwrite="block group relative"
+              classNameOverwrite="block group relative lg:max-w-[26rem]"
             >
               <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:h-64">
                 <img
