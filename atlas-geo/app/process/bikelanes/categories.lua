@@ -78,24 +78,23 @@ end
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewaySeparated(tags)
-  -- Case: Separate cycleway next to a road
-  --    Eg https://www.openstreetmap.org/way/278057274
-  local result = (tags.highway == "cycleway" and tags.is_sidepath == "yes")
-  -- Case: The crossing version of a separate cycleway next to a road
-  -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
-  --    Eg https://www.openstreetmap.org/way/963592923
-  result = result or (tags.highway == "cycleway" and tags.cycleway == "crossing")
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   --    Eg https://www.openstreetmap.org/way/964476026
-  -- Note: We do not check cycleway=lane (eg https://www.openstreetmap.org/way/761086733)
-  --    since we consider this a separate cycleway.
-  result = result or (tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes")
-  -- Case: Separate cycleway identified via "track"-tagging. Only handle for center line!
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  result = result or (tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track"))
-
+  local result = tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes"
+  if tags.highway == "cycleway" then
+    -- Case: Separate cycleway next to a road
+    --    Eg https://www.openstreetmap.org/way/278057274
+    result = result or tags.is_sidepath == "yes"
+    -- Case: The crossing version of a separate cycleway next to a road
+    -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
+    --    Eg https://www.openstreetmap.org/way/963592923
+    result = result or tags.cycleway == "crossing"
+    -- Case: Separate cycleway identified via "track"-tagging. Only handle through center line!
+    --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
+    --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
+    result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
+  end
   if result then
     tags.category = "cyclewaySeparated"
   end
