@@ -91,10 +91,10 @@ local function cyclewaySeparated(tags)
   -- Note: We do not check cycleway=lane (eg https://www.openstreetmap.org/way/761086733)
   --    since we consider this a separate cycleway.
   result = result or (tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes")
-  -- Case: Separate cycleway identified via "track"-tagging.
+  -- Case: Separate cycleway identified via "track"-tagging. Only handle for center line!
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  result = result or (tags.cycleway == "track" or tags.cycleway == "opposite_track")
+  result = result or (tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track"))
 
   if result then
     tags.category = "cyclewaySeparated"
@@ -107,7 +107,7 @@ local function cyclewayOnHighway(tags)
   --    TBD: We might need to split of the cycleway=lane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  local result = tags.cycleway == "lane" or tags.cycleway == "opposite_lane"
+  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
 
   if result then
     tags.category = "cyclewayOnHighway"
