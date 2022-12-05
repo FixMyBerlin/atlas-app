@@ -36,6 +36,6 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE TRIGGER update_{joined_table}
-AFTER INSERT ON lit_verification
+CREATE TRIGGER update_{joined_table}
+AFTER INSERT ON {verification_table}
 FOR EACH ROW EXECUTE PROCEDURE update_{joined_table}();
