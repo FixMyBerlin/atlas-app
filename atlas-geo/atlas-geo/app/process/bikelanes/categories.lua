@@ -108,8 +108,8 @@ local function cyclewayOnHighway(tags)
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
   if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
     tags.category = "cyclewayOnHighway"
+    return true
   end
-  return result
 end
 
 -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
