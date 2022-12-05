@@ -200,7 +200,7 @@ function osm2pgsql.process_way(object)
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case for oneways
+            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no')  then -- skips implicit case for oneways
               translateTable:insert({
                 tags = normalizeTags(cycleway),
                 geom = object:as_linestring(),
