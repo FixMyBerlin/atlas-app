@@ -165,12 +165,27 @@ function osm2pgsql.process_way(object)
   local footwayProjection = {
     highway = "footway",
     prefix = "sidewalk",
-    tagsCC = {"name"}
   }
+  local function laneSurface(cycleway, parent)
+    -- TODO: check with category instead
+    if cycleway.bicycle=='lane' then
+      cycleway["surface"] = parent["surface"]
+      cycleway["smoothness"] = parent["smoothness"]
+    end
+  end
+  local function offsetLanes(cycleway)
+  end
+
+  local function cyclewayPP(cycleway, parent)
+    laneSurface(cycleway, parent)
+    offsetLanes(cycleway)
+    return true
+  end
+
   local cyclewayProjection = {
     highway = "cycleway",
     prefix = "cycleway",
-    tagsCC = {"name", "surface", "smoothness"} -- for cycleways on streets surface and smoothness should match
+    postProcessing = cyclewayPP,-- for cycleways on streets surface and smoothness should match
   }
   local projections = { footwayProjection, cyclewayProjection }
 
@@ -187,25 +202,26 @@ function osm2pgsql.process_way(object)
     -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = roadWidth(object.tags) / 2
     for side, signs in pairs(projSides) do
-      local prefixedDir = projection.prefix .. side
-      if object.tags[prefixedDir] ~= "no" and object.tags[prefixedDir] ~="separate" then
-        local cycleway = projectTags(object.tags, prefixedDir)
+      local prefixedSide = projection.prefix .. side
+      if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~="separate" then
+        local cycleway = projectTags(object.tags, prefixedSide)
         cycleway["highway"] = projection.highway
-        cycleway[projection.prefix] = object.tags[prefixedDir] -- we also project reflexiv onto the prefix
-        for _, tag in pairs(projection.tagsCC) do
-          if cycleway[tag] == nil then cycleway[tag] = object.tags[tag] end
-        end
+        cycleway[projection.prefix] = object.tags[prefixedSide] -- project the `side` to the `prefix`
+        cycleway["name"] = cycleway["name"]
         if BikelaneCategory(cycleway) then
-          cycleway._centerline = "projected tag=" .. prefixedDir
+          cycleway._centerline = "projected tag=" .. prefixedSide
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no')  then -- skips implicit case for oneways
-              translateTable:insert({
-                tags = normalizeTags(cycleway),
-                geom = object:as_linestring(),
-                offset = sign * offset
-              })
+            local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
+            if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
+              if projection.postProcessing == nil or projection.postProcessing(cycleway, object.tags) then
+                  translateTable:insert({
+                    tags = normalizeTags(cycleway),
+                    geom = object:as_linestring(),
+                    offset = sign * offset
+                  })
+              end
             end
           end
         end
