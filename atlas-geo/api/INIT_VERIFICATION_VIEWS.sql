@@ -36,6 +36,7 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS update_{joined_table} ON {verification_table};
 CREATE TRIGGER update_{joined_table}
 AFTER INSERT ON {verification_table}
 FOR EACH ROW EXECUTE PROCEDURE update_{joined_table}();
