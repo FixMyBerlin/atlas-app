@@ -191,7 +191,7 @@ function osm2pgsql.process_way(object)
       if object.tags[prefixedDir] ~= "no" and object.tags[prefixedDir] ~="separate" then
         local cycleway = projectTags(object.tags, prefixedDir)
         cycleway["highway"] = projection.highway
-        cycleway[projection.prefix] = object.tags[prefixedDir] -- we also project reflexiv onto the prefixa
+        cycleway[projection.prefix] = object.tags[prefixedDir] -- we also project reflexiv onto the prefix
         for _, tag in pairs(projection.tagsCC) do
           if cycleway[tag] == nil then cycleway[tag] = object.tags[tag] end
         end
