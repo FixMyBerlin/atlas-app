@@ -107,9 +107,7 @@ local function cyclewayOnHighway(tags)
   --    TBD: We might need to split of the cycleway=lane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
-
-  if result then
+  if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
     tags.category = "cyclewayOnHighway"
   end
   return result
