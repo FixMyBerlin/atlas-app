@@ -1,4 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
 require("ToNumber")
@@ -12,6 +13,7 @@ require("AddSkipInfoToHighways")
 require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
 require("StartsWith")
+require("categories")
 
 local table = osm2pgsql.define_table({
   name = 'bikelanesNew',
@@ -21,16 +23,6 @@ local table = osm2pgsql.define_table({
     { column = 'geom', type = 'linestring' },
   }
 })
-
-local skipTable = osm2pgsql.define_table({
-  name = 'bikelanes_skipListNew',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
-
 
 local translateTable = osm2pgsql.define_table({
   name = 'bikelanesCenterlineNew',
@@ -42,167 +34,15 @@ local translateTable = osm2pgsql.define_table({
   }
 })
 
-local function roadWidth(tags)
-  -- if tags["width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())
-  -- end
-  -- if tags["est_width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["est_width"], "[^%s;]+")())
-  -- end
-  -- local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
-  -- if streetWidths[tags["highway"]] ~= nil then
-  --   return streetWidths[tags["highway"]]
-  -- end
-  return 8
-end
 
--- PREDICATES FOR EACH CATEGORY:
-
--- Handle `highway=pedestrian + bicycle=yes/!=yes`
--- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
--- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
-local function pedestiranArea(tags)
-  local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
-  if result then
-    tags.category = "pedestrianArea_bicycleYes"
-  end
-  return results
-end
-
--- Handle `highway=living_street`
--- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
--- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
-local function livingStreet(tags)
-  local result = tags.highway == "living_street" and not tags.bicycle == "no"
-  if result then
-    tags.category = "livingStreet"
-  end
-  return result
-end
-
--- Handle `bicycle_road=yes` and traffic_sign
--- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
--- tag: "bicycleRoad"
-local function bicycleRoad(tags)
-  local result = tags.bicycle_road == "yes" or StartsWith(tags.traffic_sign, "DE:244")
-  if result then
-    tags.category = "bicycleRoad"
-  end
-  return result
-end
-
--- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
--- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
-local function footAndCycleway(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
-  result = result or StartsWith(tags.traffic_sign, "DE:240")
-  if result then
-    tags.category = "footAndCycleway_shared"
-  end
-  return result
-end
-
--- Handle "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
--- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-30
--- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
-local function footAndCyclewaySegregated(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
-  result = result or StartsWith(tags.traffic_sign, "DE:241")
-  if result then
-    tags.category = "footAndCycleway_segregated"
-  end
-  return result
-end
-
--- Handle "Gehweg, Fahrrad frei"
--- traffic_sign=DE:239,1022-10, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:239
-local function footwayBicycleAllowed(tags)
-  local result = tags.highway == "footway" or tags.highway == "path"
-  -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
-  -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
-  result = result and
-      (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
-  -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
-  -- We filter those based on mtb:scale=*.
-  result = result and not tags["mtb:scale"]
-  if result then
-    tags.category = "footway_bicycleYes"
-  end
-  return result
-end
-
--- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
--- This part relies heavly on the `is_sidepath` tagging.
-local function cyclewaySeparated(tags)
-  -- Case: Separate cycleway next to a road
-  --    Eg https://www.openstreetmap.org/way/278057274
-  local result = (tags.highway == "cycleway" and tags.is_sidepath == "yes")
-  -- Case: The crossing version of a separate cycleway next to a road
-  -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
-  --    Eg https://www.openstreetmap.org/way/963592923
-  result = result or (tags.highway == "cycleway" and tags.cycleway == "crossing")
-  -- Case: Separate cycleway identified via traffic_sign
-  -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
-  --    Eg https://www.openstreetmap.org/way/964476026
-  -- Note: We do not check cycleway=lane (eg https://www.openstreetmap.org/way/761086733)
-  --    since we consider this a separate cycleway.
-  result = result or (tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes")
-  -- Case: Separate cycleway identified via "track"-tagging.
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  result = result or (tags.cycleway == "track" or tags.cycleway == "opposite_track")
-
-  if result then
-    tags.category = "cyclewaySeparated"
-  end
-  return result
-end
-
-local function cyclewayOnHighway(tags)
-  -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
-  --    TBD: We might need to split of the cycleway=lane
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  local result = tags.cycleway == "lane" or tags.cycleway == "opposite_lane"
-
-  if result then
-    tags.category = "cyclewayOnHighway"
-  end
-  return result
-end
-
--- deprecated only for backwards compatibility
-local function oldCenterline(tags)
-  if tags["sidewalk:left:bicycle"] == "yes" or tags["sidewalk:right:bicycle"] == "yes" or tags["sidewalk:both:bicycle"] then
-    tags._centerline = "tagged on centerline"
-    tags.category = "footway_bicycleYes"
-    return true
-  end
-  if tags["cycleway:right"] == "track" or tags["cycleway:left"] == "track" or tags["cycleway:both"] == "track" then
-    tags.category = "cyclewaySeparated"
-    tags._centerline = "tagged on centerline"
-    return true
-  end
-  if tags["cycleway:right"] == "lane" or tags["cycleway:left"] == "lane" or tags["cycleway:both"] == "lane" then
-    tags.category = "cyclewayOnHighway"
-    tags._centerline = "tagged on centerline"
-    return true
-  end
-  return false
-end
-
--- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
--- Eg. https://www.openstreetmap.org/way/27701956
--- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
--- tag: "cyclewayAlone"
-local function cycleWayAlone(tags)
-  local result = tags.highway == "cycleway" and tags.traffic_sign == "DE:237"
-  result = result and (tags.is_sidepath == nil or tags.is_sidepath == "no")
-  if result then
-    tags.category = "cyclewayAlone"
-  end
-  return result
-end
+local skipTable = osm2pgsql.define_table({
+  name = 'bikelanes_skipListNew',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+  }
+})
 
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
@@ -236,144 +76,136 @@ local allowed_tags = Set({
   "surface",
   "smoothness",
   "traffic_sign",
+  "osm_url",
+  "updated_by",
+  "update_at",
+  "version"
 })
 
-local predicates = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
-
-local function applyPredicates(tags)
-  for _, predicate in pairs(predicates) do
-    if predicate(tags) then
-      return true
-    end
-  end
-  return false
+local function roadWidth(tags)
+  -- if tags["width"] ~= nil then
+  --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())
+  -- end
+  -- if tags["est_width"] ~= nil then
+  --   return tonumber(string.gmatch(tags["est_width"], "[^%s;]+")())
+  -- end
+  -- local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
+  -- if streetWidths[tags["highway"]] ~= nil then
+  --   return streetWidths[tags["highway"]]
+  -- end
+  return 8
 end
 
-local function normalizeTags(object)
-  FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
-  -- Presence of data
-  if (object.tags.category) then
-    object.tags.is_present = true
-  else
-    object.tags.is_present = false
-  end
+local function timeValidation(tags)
+    -- Presence of data
+    tags.is_present = tags.category ~= nil
+    -- Freshness of data, see documentation
+    local withinYears = CheckDataWithinYears(tags["check_date:cycleway"], 2)
+    tags.is_fresh = withinYears.result
+    tags.fresh_age_days = withinYears.diffDays
+end
 
-  -- Freshness of data, see documentation
-  local withinYears = CheckDataWithinYears(object.tags["check_date:cycleway"], 2)
-  if (withinYears.result) then
-    object.tags.is_fresh = true
-    object.tags.fresh_age_days = withinYears.diffDays
-  else
-    object.tags.is_fresh = false
-    object.tags.fresh_age_days = withinYears.diffDays
-  end
+local function normalizeTags(tags)
+  FilterTags(tags, allowed_tags)
+  timeValidation(tags)
+  return tags
 end
 
 local function intoSkipList(object)
-  normalizeTags(object)
+  -- normalizeTags(object.tags)
   skipTable:insert({
     tags = object.tags,
     geom = object:as_linestring()
   })
 end
 
+-- projects all tags prefix:subtag=val -> subtag=val
+local function projectTags(tags, prefix)
+  local projectedTags = {}
+  for prefixedKey,val  in pairs(tags) do
+    if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
+      -- offset of 2 due to 1-indexing and for removing the ':'
+      local key = string.sub(prefixedKey, string.len(prefix) + 2)
+      projectedTags[key] = val
+    end
+  end
+  return projectedTags
+end
+
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
   local allowed_values = HighwayClasses
+
+  -- Skip `highway=steps`
+  -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
+  allowed_values["steps"] = nil
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
+  AddMetadata(object);
+  AddUrl("way", object)
 
   AddSkipInfoToHighways(object)
-  -- Skip `highway=steps`
-  -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
-  if object.tags.highway == "steps" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
-    object.tags._skip = true
-  end
   if object.tags._skip == true then
     intoSkipList(object)
     return
   end
 
-
   -- apply predicates
-  if applyPredicates(object.tags) then
+  if BikelaneCategory(object.tags) then
     object.tags._skipNotes = nil
-    normalizeTags(object)
     table:insert({
-      tags = object.tags,
+      tags =  normalizeTags(object.tags),
       geom = object:as_linestring()
-    })
-    -- in future versions we should do this as a concationation of the tables(sql)
-    translateTable:insert({
-      tags = object.tags,
-      geom = object:as_linestring(),
-      offset = 0
     })
     return
   end
 
-  -- this is only to stay consistent with the previous version
-  if oldCenterline(object.tags) then
-    object.tags._skipNotes = nil
-    normalizeTags(object)
-    table:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
-  end
-
   -- apply predicates nested
-  -- transformations:
-  local footwayTransformer = {
+  local footwayProjection = {
     highway = "footway",
-    dest = "bicycle",
-    tags = {
-      ["sidewalk:left:bicycle"] = { 1 },
-      ["sidewalk:right:bicycle"] = { -1 },
-      ["sidewalk:both:bicycle"] = { -1, 1 },
-      ["sidewalk:bicycle"] = { -1, 1 },
-    },
+    prefix = 'sidewalk'
   }
-  local cyclewayTransformer = {
+  local cyclewayProjection = {
     highway = "cycleway",
-    dest = "cycleway",
-    tags = {
-      ["cycleway:left"] = { 1 },
-      ["cycleway:right"] = { -1 },
-      ["cycleway:both"] = { -1, 1 },
-      ["cycleway"] = { -1, 1 },
-    },
+    prefix = "cycleway"
   }
-  local transformations = { footwayTransformer, cyclewayTransformer }
+  local projections = { footwayProjection, cyclewayProjection }
 
-  for _, transformer in pairs(transformations) do
-    -- set the highway category
-    local cycleway = { highway = transformer.highway }
-    -- NOTE: the category/transformer should also influence the offset e.g. a street with bike lane should have less offset than a sidewalk with bicycle=yes approx. the width of the bike lane itself
+  local projSides = {
+    [":right"] = { -1 },
+    [":left"] = { 1 },
+    [":both"] = { -1, 1 },
+    [""] = { -1, 1 }
+  }
+
+  for _, projection in pairs(projections) do
+    -- NOTE: the category/projection should also influence the offset
+    -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
+    -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = roadWidth(object.tags) / 2
-    for tag, signs in pairs(transformer.tags) do
-      if object.tags[tag] ~= nil and object.tags[tag] ~= "no" then
-        -- sets the bicycle tag to the value of nested tags
-        cycleway[transformer.dest] = object.tags[tag]
-        if applyPredicates(cycleway) then
-          object.tags._centerline = "tagged on centerline"
+    for side, signs in pairs(projSides) do
+      local prefixedDir = projection.prefix .. side
+      if object.tags[prefixedDir] ~= "no" and object.tags[prefixedDir] ~="separate" then
+        local cycleway = projectTags(object.tags, prefixedDir)
+        cycleway["highway"] = projection.highway
+        cycleway[projection.prefix] = object.tags[prefixedDir]
+        -- TODO: maybe copy some unnested tags as fallback. e.g. the surface of an on street bike lane is usally identically to the suface of the street
+        if BikelaneCategory(cycleway) then
+          cycleway._centerline = "projected tag=" .. prefixedDir
+          for key, val in pairs(Metadata(object)) do cycleway[key]=val end
+          cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            object.tags._skipNotes = nil
-            object.tags.category = cycleway.category
-            normalizeTags(object)
-            translateTable:insert({
-              tags = object.tags,
-              geom = object:as_linestring(),
-              offset = sign * offset
-            })
+            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case for oneways
+              translateTable:insert({
+                tags = normalizeTags(cycleway),
+                geom = object:as_linestring(),
+                offset = sign * offset
+              })
+            end
           end
         end
       end
@@ -387,3 +219,4 @@ function osm2pgsql.process_way(object)
     intoSkipList(object)
   end
 end
+
