@@ -157,13 +157,20 @@ function osm2pgsql.process_way(object)
   end
 
   -- apply predicates nested
+  -- for that we define "projections" as:
+  -- `highway` is the new highway type for the generated object
+  -- `prefix` will be concatinated wiht one of the sides `':left' | ':right' | ':both' | '' `
+  -- all tags wich have the concatination as a preix get projected -> w\o prefix
+  -- tagsCC is a list of tags which get copied from the parent object if they don't exist yet on the generated one
   local footwayProjection = {
     highway = "footway",
-    prefix = 'sidewalk'
+    prefix = "sidewalk",
+    tagsCC = {"name"}
   }
   local cyclewayProjection = {
     highway = "cycleway",
-    prefix = "cycleway"
+    prefix = "cycleway",
+    tagsCC = {"name", "surface", "smoothness"} -- for cycleways on streets surface and smoothness should match
   }
   local projections = { footwayProjection, cyclewayProjection }
 
@@ -185,7 +192,9 @@ function osm2pgsql.process_way(object)
         local cycleway = projectTags(object.tags, prefixedDir)
         cycleway["highway"] = projection.highway
         cycleway[projection.prefix] = object.tags[prefixedDir]
-        -- TODO: maybe copy some unnested tags as fallback. e.g. the surface of an on street bike lane is usally identically to the suface of the street
+        for _, tag in pairs(projection.tagsCC) do
+          if cycleway[tag] == nil then cycleway[tag] = object.tags[tag] end
+        end
         if BikelaneCategory(cycleway) then
           cycleway._centerline = "projected tag=" .. prefixedDir
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
