@@ -55,9 +55,6 @@ local allowed_tags = Set({
   "bicycle_road",
   "bicycle",
   "category",
-  "cycleway:both",
-  "cycleway:left",
-  "cycleway:right",
   "cycleway",
   "foot",
   "footway",
@@ -66,13 +63,8 @@ local allowed_tags = Set({
   "mtb:scale",
   "name",
   "segregated",
-  "sidewalk:both:bicycle",
-  "sidewalk:left:bicycle",
-  "sidewalk:right:bicycle",
   "traffic_sign",
   "width", -- experimental
-  "sidewalk:width", -- experimental
-  "cycleway:width", -- experimental
   "surface",
   "smoothness",
   "traffic_sign",
