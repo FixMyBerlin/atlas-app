@@ -17,7 +17,7 @@ const features: Feature[] = [
     summary:
       'Der Radverkehrsatlas visualisiert Daten interaktiv zur direkten Unterstützung der Planung.',
     description:
-      'Nutzen Sie die vorhandenen Daten im Radverkehrsatlas zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme. Viele Daten liegen in OSM bereits in hoher Qualität vor.',
+      'Nutzen Sie die vorhandenen Daten im Radverkehrsatlas zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme.',
     icon: <EyeIcon className="text-white" />,
   },
   {
