@@ -1,5 +1,6 @@
 
 -- PREDICATES FOR EACH CATEGORY:
+-- maybe switch to returning the category instead of mutating the input
 
 -- Handle `highway=pedestrian + bicycle=yes/!=yes`
 -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
