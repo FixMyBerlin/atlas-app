@@ -25,7 +25,7 @@ const features: Feature[] = [
     summary:
       'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
     description:
-      'Diese Funktion ist nur per Login verfügbar. Sie entscheiden als Kommune, welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die OpenStreetMap-Community übergeben.',
+      'Diese Funktion ist nur per Login verfügbar. Sie entscheiden als Kommune, welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die Bürger:innen übergeben.',
     icon: <CheckBadgeIcon className="text-white" />,
   },
   {
