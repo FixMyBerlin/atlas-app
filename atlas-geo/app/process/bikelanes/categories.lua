@@ -8,9 +8,8 @@
 local function pedestiranArea(tags)
   local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
   if result then
-    tags.category = "pedestrianArea_bicycleYes"
+    return "pedestrianArea_bicycleYes"
   end
-  return results
 end
 
 -- Handle `highway=living_street`
@@ -19,9 +18,8 @@ end
 local function livingStreet(tags)
   local result = tags.highway == "living_street" and not tags.bicycle == "no"
   if result then
-    tags.category = "livingStreet"
+    return "livingStreet"
   end
-  return result
 end
 
 -- Handle `bicycle_road=yes` and traffic_sign
@@ -30,9 +28,8 @@ end
 local function bicycleRoad(tags)
   local result = tags.bicycle_road == "yes" or StartsWith(tags.traffic_sign, "DE:244")
   if result then
-    tags.category = "bicycleRoad"
+    return"bicycleRoad"
   end
-  return result
 end
 
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
@@ -41,9 +38,8 @@ local function footAndCycleway(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   result = result or StartsWith(tags.traffic_sign, "DE:240")
   if result then
-    tags.category = "footAndCycleway_shared"
+    return "footAndCycleway_shared"
   end
-  return result
 end
 
 -- Handle "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
@@ -53,9 +49,8 @@ local function footAndCyclewaySegregated(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   result = result or StartsWith(tags.traffic_sign, "DE:241")
   if result then
-    tags.category = "footAndCycleway_segregated"
+    return "footAndCycleway_segregated"
   end
-  return result
 end
 
 -- Handle "Gehweg, Fahrrad frei"
@@ -70,9 +65,8 @@ local function footwayBicycleAllowed(tags)
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
   if result then
-    tags.category = "footway_bicycleYes"
+    return "footway_bicycleYes"
   end
-  return result
 end
 
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
@@ -96,9 +90,14 @@ local function cyclewaySeparated(tags)
     result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
   end
   if result then
-    tags.category = "cyclewaySeparated"
+    return "cyclewaySeparated"
   end
-  return result
+end
+
+local function cyclewayUnspecified(tags)
+  if tags.highway=="cycleway" and tags.bicycle=="yes" then
+    return "cyclewayNEW"
+  end
 end
 
 local function cyclewayOnHighway(tags)
@@ -107,8 +106,7 @@ local function cyclewayOnHighway(tags)
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
   if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
-    tags.category = "cyclewayOnHighway"
-    return true
+    return "cyclewayOnHighway"
   end
 end
 
@@ -120,16 +118,16 @@ local function cycleWayAlone(tags)
   local result = tags.highway == "cycleway" and tags.traffic_sign == "DE:237"
   result = result and (tags.is_sidepath == nil or tags.is_sidepath == "no")
   if result then
-    tags.category = "cyclewayAlone"
+    return "cyclewayAlone"
   end
-  return result
 end
 
 function BikelaneCategory(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
+  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone, cyclewayUnspecified}
   for _, predicate in pairs(categories) do
-    if predicate(tags) then
+    tags.category = predicate(tags)
+    if tags.category ~= nil then
       return true
     end
   end
