@@ -179,11 +179,11 @@ function osm2pgsql.process_way(object)
     [":right"] = { -1 },
     [":left"] = { 1 },
     [":both"] = { -1, 1 },
-    [""] = { -1, 1 } -- TODO: if oneway=yes only apply to the right=-1
+    [""] = { -1, 1 }
   }
 
   for _, projection in pairs(projections) do
-    -- NOTE: the category/projection could also influence the offset
+    -- NOTE: the category/projection should also influence the offset
     -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
     -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = roadWidth(object.tags) / 2
@@ -193,12 +193,13 @@ function osm2pgsql.process_way(object)
         local cycleway = projectTags(object.tags, prefixedDir)
         cycleway["highway"] = projection.highway
         cycleway[projection.prefix] = object.tags[prefixedDir]
+        -- TODO: maybe copy some unnested tags as fallback. e.g. the surface of an on street bike lane is usally identically to the suface of the street
         if BikelaneCategory(cycleway) then
           cycleway._centerline = "projected tag=" .. prefixedDir
           for key, val in pairs(Metadata(object)) do cycleway[key]=val end
           cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
-            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case
+            if not (side == "" and sign > 0 and object.tags['oneway'] == 'yes') then -- skips implicit case for oneways
               translateTable:insert({
                 tags = normalizeTags(cycleway),
                 geom = object:as_linestring(),
