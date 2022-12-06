@@ -114,7 +114,8 @@ function osm2pgsql.process_way(object)
     -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
     -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
     if object.tags.bicycle == "yes"
-        or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
+        or StartsWith(object.tags.traffic_sign, "DE:239,1022-10")
+        or object.tags.traffic_sign == 'DE:1022-10' then
       object.tags.category = "footway_bicycleYes"
       object.tags._skip = false
     end
@@ -154,21 +155,27 @@ function osm2pgsql.process_way(object)
     object.tags.category = "cyclewaySeparated"
     object.tags._skip = false
   end
-  -- Case: Separate cycleway idetified via "track"-tagging.
+  -- Case: Separate cycleway identified via "track"-tagging.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  -- … separately mapped
   if object.tags.cycleway == "track"
-      or object.tags.cycleway == "opposite_track" then
-    object.tags.category = "cyclewaySeparated"
-    object.tags._skip = false
-  end
-  -- … mapped on the centerline
-  -- TODO CENTERLINE: See above…
-  if object.tags["cycleway:right"] == "track"
+      or object.tags.cycleway == "opposite_track"
+      or object.tags["cycleway:right"] == "track"
       or object.tags["cycleway:left"] == "track"
       or object.tags["cycleway:both"] == "track" then
     object.tags.category = "cyclewaySeparated"
+    object.tags._centerline = "tagged on centerline"
+    object.tags._skip = false
+  end
+  -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
+  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
+  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
+  if object.tags.cycleway == "lane"
+      or object.tags.cycleway == "opposite_lane"
+      or object.tags["cycleway:right"] == "lane"
+      or object.tags["cycleway:left"] == "lane"
+      or object.tags["cycleway:both"] == "lane" then
+    object.tags.category = "cyclewayOnHighway"
     object.tags._centerline = "tagged on centerline"
     object.tags._skip = false
   end

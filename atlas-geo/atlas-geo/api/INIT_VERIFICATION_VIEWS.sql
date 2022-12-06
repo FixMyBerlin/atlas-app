@@ -1,16 +1,42 @@
-CREATE TABLE IF NOT EXISTS public.{table_name} (
+DROP INDEX IF EXISTS {geometry_table}_osm_id_idx;
+CREATE INDEX {geometry_table}_osm_id_idx ON {geometry_table} USING btree (osm_id);
+
+
+CREATE TABLE IF NOT EXISTS {verification_table} (
 	osm_type varchar NOT NULL,
+  -- osm_type bpchar(1) NOT NULL,
 	osm_id bigint NOT NULL,
+	-- osm_id int8 NOT NULL,
 	verified_at timestamp NOT NULL,
 	verified_by bigint,
 	verified varchar NULL
 );
+-- TODO: ALTER TABLE {verification_table} ALTER COLUMN osm_type TYPE bpchar(1) USING osm_type::bpchar;
 
--- JOIN original data table with verification table
-CREATE OR REPLACE VIEW {view_name} AS
-SELECT DISTINCT ON (o.osm_id) o.osm_type, o.osm_id, v.verified_at, v.verified_by , v.verified, o.tags, o.geom
-FROM "{original_table}" o
-LEFT JOIN  {table_name} v
-ON v.osm_id = o.osm_id
-AND v.osm_type = o.osm_type
-ORDER BY o.osm_id, v.verified_at DESC;
+DROP TABLE IF EXISTS {joined_table};
+CREATE TABLE {joined_table} AS (
+  SELECT g.osm_type, g.osm_id, g.tags, g.geom, v.verified_at, v.verified_by, v.verified
+  FROM {geometry_table} g
+  LEFT JOIN (
+    SELECT DISTINCT ON (v.osm_id) * FROM {verification_table} v ORDER BY v.osm_id, verified_at DESC
+  ) v
+  ON g.osm_id = v.osm_id
+);
+CREATE INDEX {joined_table}_geom_idx ON {joined_table} USING gist (geom) WITH (fillfactor='100');
+CREATE INDEX {joined_table}_osm_id_idx ON {joined_table} USING btree (osm_id);
+
+CREATE OR REPLACE FUNCTION update_{joined_table}() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+BEGIN
+  UPDATE {joined_table}
+  SET verified_at = NEW.verified_at,
+      verified_by = NEW.verified_by,
+      verified = NEW.verified
+  WHERE osm_id = NEW.osm_id;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS update_{joined_table} ON {verification_table};
+CREATE TRIGGER update_{joined_table}
+AFTER INSERT ON {verification_table}
+FOR EACH ROW EXECUTE PROCEDURE update_{joined_table}();

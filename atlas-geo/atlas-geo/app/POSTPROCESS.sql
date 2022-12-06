@@ -1,7 +1,7 @@
 BEGIN;
-DROP TABLE lit CASCADE;
-DROP TABLE bikelanes CASCADE;
-DROP TABLE "roadClassification" CASCADE;
+DROP TABLE IF EXISTS lit CASCADE;
+DROP TABLE IF EXISTS bikelanes CASCADE;
+DROP TABLE IF EXISTS "roadClassification" CASCADE;
 
 ALTER TABLE lit_new RENAME TO lit;
 ALTER TABLE bikelanes_new RENAME TO bikelanes;
