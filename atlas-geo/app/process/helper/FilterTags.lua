@@ -7,3 +7,14 @@ function FilterTags(tagsObject, allowedTags)
     end
   end
 end
+
+function FilterTags2(tags, allowedTags)
+  local tagsFiltered = {}
+  for key, _ in pairs(allowedTags) do
+    if tags[key] ~= nil then
+      tagsFiltered[key] = tags[key]
+    end
+  end
+  return tagsFiltered
+end
+

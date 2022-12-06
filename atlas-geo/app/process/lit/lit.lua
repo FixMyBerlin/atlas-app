@@ -75,26 +75,36 @@ function osm2pgsql.process_way(object)
   end
 
   -- Freshness of data
-  local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
-  if (withinYears.result) then
-    object.tags.is_fresh = true
-    object.tags.fresh_age_days = withinYears.diffDays
+  if(object.tags.is_present == true) then
+    -- (0) Only handle cases where our main data is present
+    if(object.tags['check_date:lit']) then
+      -- (1) If check_date is present, use it
+      local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
+      if (withinYears.result) then
+        object.tags.fresh = 'fresh_check_date'
+        object.tags.fresh_age_days = withinYears.diffDays
+        object.tags._freshNotes = 'check_date used; fresh=true; confidence=high'
+      else
+        object.tags.fresh = 'outdated_check_date'
+        object.tags.fresh_age_days = withinYears.diffDays
+        object.tags._freshNotes = 'check_date used; fresh=false; confidence=high'
+      end
+    else
+      -- (2) Fall back to object's last update date
+      local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
+      if(withinYears.result) then
+        object.tags.fresh = 'fresh_update_at'
+        object.tags.fresh_age_days = withinYears.diffDays
+        object.tags._freshNotes = 'update_at used; fresh=true; confidence=low'
+      else
+        object.tags.fresh = 'outdated_update_at'
+        object.tags.fresh_age_days = withinYears.diffDays
+        object.tags._freshNotes = 'update_at used; fresh=false; confidence=low'
+      end
+    end
   else
-    object.tags.is_fresh = false
-    object.tags.fresh_age_days = withinYears.diffDays
+    object.tags._freshNotes = 'is_present=false, so fresh data skipped'
   end
-
-  -- Experimental: Freshness of data based on update_at of object
-  local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
-  if (withinYears.result) then
-    object.tags._update_is_fresh = true
-    object.tags._update_fresh_age_days = withinYears.diffDays
-  else
-    object.tags._update_is_fresh = false
-    object.tags._update_fresh_age_days = withinYears.diffDays
-  end
-  object.tags._is_fresh_combined = object.tags.is_fresh or object.tags._update_is_fresh
-  object.tags._update_fresh_age_days_combined = object.tags.fresh_age_days or object.tags._update_fresh_age_days
 
   -- Normalize name info for sidepath'
   -- TODO: Extact into helper
@@ -103,14 +113,19 @@ function osm2pgsql.process_way(object)
   local allowed_tags = Set({
     "_skip",
     "_skipNotes",
+    "_combined_fresh_age_days",
+    "_combined_is_fresh",
+    "_update_fresh_age_days",
+    "_update_is_fresh",
     "access",
     "area",
     "category",
     "check_date:lit",
     "footway",
+    "fresh",
     "fresh_age_days",
+    "_freshNotes",
     "highway",
-    "is_fresh",
     "is_present",
     "is_sidepath",
     "lit",
