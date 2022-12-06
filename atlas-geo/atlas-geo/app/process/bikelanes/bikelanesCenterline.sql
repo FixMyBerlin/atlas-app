@@ -5,7 +5,7 @@
 -- additionally we check wether the geometry is `simple` because otherwise we might get a MLString
 -- TODO: check parameters `quad_segs` and  `join`
 UPDATE "bikelanesCenterlineNew"
-  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.0001), "offset", 'quad_segs=4 join=round'), 3857))
+  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.05), "offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 
 UPDATE "bikelanesCenterlineNew"
@@ -18,4 +18,3 @@ INSERT INTO "bikelanesNew"
 
 -- Query below shows the geometries that would result in MultiLineString
 -- SELECT * from "bikelanesCenterline" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
-
