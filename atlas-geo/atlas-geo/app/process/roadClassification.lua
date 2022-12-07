@@ -5,8 +5,8 @@ require("ToNumber")
 -- require("PrintTable")
 require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
+
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
 require("AddSkipInfoByWidth")
@@ -16,6 +16,7 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -25,6 +26,7 @@ local skipTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -85,17 +87,17 @@ function osm2pgsql.process_way(object)
   local allowed_tags = Set({ "_skip", "_skipNotes", "category", "name", "highway", "footway", "access", "service",
     "is_sidepath" })
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
 
   if object.tags._skip then
     skipTable:insert({
       tags = object.tags,
+      meta = Metadata(object),
       geom = object:as_linestring()
     })
   else
     table:insert({
       tags = object.tags,
+      meta = Metadata(object),
       geom = object:as_linestring()
     })
   end

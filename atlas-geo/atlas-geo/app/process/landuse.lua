@@ -5,15 +5,15 @@ require("FilterTags")
 -- require("PrintTable")
 require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
+require("Metadata")
 require("HasAreaTags")
-require("AddUrl")
 
 local table = osm2pgsql.define_table({
   name = 'landuse',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'multipolygon' },
   }
 })
@@ -54,7 +54,6 @@ local function ProcessTags(object)
   object.tags.landuse = object.tags.landuse or object.tags.amenity
   local allowed_tags = Set({ "name", "landuse", "access", "operator" })
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
 end
 
 function osm2pgsql.process_way(object)
@@ -62,10 +61,10 @@ function osm2pgsql.process_way(object)
   if not object.is_closed then return end
 
   ProcessTags(object)
-  AddUrl("way", object)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_polygon()
   })
 end
@@ -75,10 +74,10 @@ function osm2pgsql.process_relation(object)
   if not object.tags.type == 'multipolygon' then return end
 
   ProcessTags(object)
-  AddUrl("relation", object)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_multipolygon()
   })
 end
