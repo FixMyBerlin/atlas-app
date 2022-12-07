@@ -122,14 +122,15 @@ local function cycleWayAlone(tags)
   end
 end
 
-function BikelaneCategory(tags)
+function CategorizeBikelane(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
   footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone, cyclewayUnspecified}
+  local category = nil
   for _, predicate in pairs(categories) do
-    tags.category = predicate(tags)
-    if tags.category ~= nil then
-      return true
+    category = predicate(tags)
+    if category ~= nil then
+      return category
     end
   end
-  return false
+  return category
 end
