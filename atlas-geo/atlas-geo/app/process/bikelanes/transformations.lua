@@ -16,20 +16,10 @@ local footwayTransformation = {
   prefix = "sidewalk",
 }
 
--- cycleway transformer: transforms all bicycle:<side> = val
-local function cyclewayPP(category, cycleway, parent)
-  if false and category == '' then -- For bike lanes on the street we want to infer surface quality and to reduce the offset
-    cycleway["surface"] = parent["surface"]
-    cycleway["smoothness"] = parent["smoothness"]
-    return 1.5 -- TODO: base on  width
-  end
-  return 0
-end
-
+-- cycleway transformer:
 local cyclewayTransformation = {
   highway = "cycleway",
   prefix = "cycleway",
-  postProcessing = cyclewayPP,-- for cycleways on streets surface and smoothness should match
 }
 
 Transformations = { footwayTransformation, cyclewayTransformation }
