@@ -8,12 +8,13 @@ UPDATE "bikelanesCenterlineNew"
   SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.05), "offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 
-UPDATE "bikelanesCenterlineNew"
-  SET osm_id=osm_id*SIGN("offset");
+-- need to get the query below into lua, otherwise updating tables won't work
+-- UPDATE "bikelanesCenterlineNew"
+--   SET osm_id=osm_id*SIGN("offset");
 
 
 INSERT INTO "bikelanesNew"
-  SELECT osm_type, osm_id, tags, geom
+  SELECT osm_type, osm_id, tags, meta, geom
   FROM "bikelanesCenterlineNew";
 
 -- Query below shows the geometries that would result in MultiLineString
