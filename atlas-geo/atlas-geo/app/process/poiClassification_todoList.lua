@@ -139,17 +139,17 @@ local function ExitProcessing(object)
 end
 
 -- Tag processing extracted to be used inside projcess_*
-local function ProcessTags(object)
-  local allowed_addr_tags = AddAddress(object.tags)
+local function processTags(tags)
+  local allowed_addr_tags = AddAddress(tags)
   local allowed_tags = Set(MergeArray({ "name", "category", "type", "amenity" }, allowed_addr_tags))
-  FilterTags(object.tags, allowed_tags)
-  object.tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. object.tags.amenity
+  FilterTags(tags, allowed_tags)
+  tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -162,7 +162,7 @@ function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -175,7 +175,7 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
   table:insert({
     tags = object.tags,
     meta = Metadata(object),

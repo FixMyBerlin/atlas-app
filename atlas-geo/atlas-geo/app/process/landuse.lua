@@ -49,18 +49,18 @@ local function ExitProcessing(object)
   return false
 end
 
-local function ProcessTags(object)
+local function processTags(tags)
   -- For simplicy, we move the amenity values to the landuse key
-  object.tags.landuse = object.tags.landuse or object.tags.amenity
+  tags.landuse = tags.landuse or tags.amenity
   local allowed_tags = Set({ "name", "landuse", "access", "operator" })
-  FilterTags(object.tags, allowed_tags)
+  FilterTags(tags, allowed_tags)
 end
 
 function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -73,7 +73,7 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
