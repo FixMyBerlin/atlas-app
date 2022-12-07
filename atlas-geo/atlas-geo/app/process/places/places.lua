@@ -41,8 +41,8 @@ end
 local function processTags(tags)
   local allowed_tags = Set({ "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
-  FilterTags(object.tags, allowed_tags)
-  ToNumber(object.tags, Set({ "population" }))
+  FilterTags(tags, allowed_tags)
+  ToNumber(tags, Set({ "population" }))
 end
 
 function osm2pgsql.process_node(object)
