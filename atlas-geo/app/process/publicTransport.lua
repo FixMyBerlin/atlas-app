@@ -5,14 +5,15 @@ require("FilterTags")
 -- require("PrintTable")
 require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
+
 
 local table = osm2pgsql.define_table({
   name = 'publicTransport',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'point' },
   }
 })
@@ -47,17 +48,16 @@ end
 local function ProcessTags(object)
   local allowed_tags = Set({ "name", "public_transport", "operator", "railway", "bus", "ferry" })
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
   ProcessTags(object)
-  AddUrl("node", object)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_point()
   })
 end
@@ -67,10 +67,10 @@ function osm2pgsql.process_way(object)
   if not object.is_closed then return end
 
   ProcessTags(object)
-  AddUrl("way", object)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
 end
@@ -80,10 +80,10 @@ function osm2pgsql.process_relation(object)
   if not object.tags.type == 'multipolygon' then return end
 
   ProcessTags(object)
-  AddUrl("relation", object)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })
 end

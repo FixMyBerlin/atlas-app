@@ -1,5 +1,5 @@
 package.path = package.path .. ";app/process/helper/?.lua"
-require("AddUrl")
+
 
 print('=== Test AddUrl ===')
 
