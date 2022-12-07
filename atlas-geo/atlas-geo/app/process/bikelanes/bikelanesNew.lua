@@ -1,5 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
-package.path = package.path .. ";/app/process/bikelanes/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
 require("ToNumber")
@@ -9,6 +8,7 @@ require("MergeArray")
 require("AddMetadata")
 require("AddUrl")
 require("HighwayClasses")
+require("RoadWidth")
 require("AddSkipInfoToHighways")
 require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
@@ -20,6 +20,7 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column  = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -29,6 +30,7 @@ local translateTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'linestring' },
     { column = 'offset', type = 'real' }
   }
@@ -40,6 +42,7 @@ local skipTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb'},
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -68,27 +71,12 @@ local allowed_tags = Set({
   "surface",
   "smoothness",
   "traffic_sign",
-  "osm_url",
-  "updated_by",
-  "update_at",
-  "version"
 })
 
-local function roadWidth(tags)
-  -- if tags["width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())
-  -- end
-  -- if tags["est_width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["est_width"], "[^%s;]+")())
-  -- end
-  -- local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
-  -- if streetWidths[tags["highway"]] ~= nil then
-  --   return streetWidths[tags["highway"]]
-  -- end
-  return 8
-end
 
 local function timeValidation(tags)
+    -- IMO this whole logic should be implemented on the database
+    -- e.g. only safe the last date of modification and then define computated properties
     -- Presence of data
     tags.is_present = tags.category ~= nil
     -- Freshness of data, see documentation
@@ -97,16 +85,17 @@ local function timeValidation(tags)
     tags.fresh_age_days = withinYears.diffDays
 end
 
-local function normalizeTags(tags)
-  FilterTags(tags, allowed_tags)
-  timeValidation(tags)
-  return tags
-end
+-- local function normalizeTags(tags)
+--   FilterTags(tags, allowed_tags)
+--   timeValidation(tags)
+--   return tags
+-- end
 
 local function intoSkipList(object)
   -- normalizeTags(object.tags)
   skipTable:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_linestring()
   })
 end
@@ -137,10 +126,8 @@ function osm2pgsql.process_way(object)
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
-  AddMetadata(object);
-  AddUrl("way", object)
-
   AddSkipInfoToHighways(object)
+
   if object.tags._skip == true then
     intoSkipList(object)
     return
@@ -149,8 +136,10 @@ function osm2pgsql.process_way(object)
   -- apply predicates
   if BikelaneCategory(object.tags) then
     object.tags._skipNotes = nil
+    FilterTags(object.tags, allowed_tags)
     table:insert({
-      tags =  normalizeTags(object.tags),
+      tags = object.tags,
+      meta = Metadata(object),
       geom = object:as_linestring()
     })
     return
@@ -200,24 +189,24 @@ function osm2pgsql.process_way(object)
     -- NOTE: the category/projection should also influence the offset
     -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
     -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
-    local offset = roadWidth(object.tags) / 2
+    local offset = RoadWidth(object.tags) / 2
     for side, signs in pairs(projSides) do
       local prefixedSide = projection.prefix .. side
       if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~="separate" then
         local cycleway = projectTags(object.tags, prefixedSide)
         cycleway["highway"] = projection.highway
-        cycleway[projection.prefix] = object.tags[prefixedSide] -- project the `side` to the `prefix`
         cycleway["name"] = cycleway["name"]
+        cycleway[projection.prefix] = object.tags[prefixedSide] -- project the `side` to the `prefix`
         if BikelaneCategory(cycleway) then
           cycleway._centerline = "projected tag=" .. prefixedSide
-          for key, val in pairs(Metadata(object)) do cycleway[key]=val end
-          cycleway["osm_url"] = OsmUrl('way', object)
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
-              if projection.postProcessing == nil or projection.postProcessing(cycleway, object.tags) then
+              if projection.postProcessing ~= nil or projection.postProcessing(cycleway, object.tags) then
+                  FilterTags(cycleway, allowed_tags)
                   translateTable:insert({
-                    tags = normalizeTags(cycleway),
+                    tags = cycleway,
+                    meta = Metadata(object),
                     geom = object:as_linestring(),
                     offset = sign * offset
                   })
