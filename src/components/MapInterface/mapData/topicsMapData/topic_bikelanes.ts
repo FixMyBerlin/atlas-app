@@ -40,7 +40,7 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
 
 export const topic_bikelanes: MapDataTopic = {
   id: topic,
-  name: 'Fahrradinfrastruktur',
+  name: 'Radinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_bikelanes',
   allowVerify: true,
