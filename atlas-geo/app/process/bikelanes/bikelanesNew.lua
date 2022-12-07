@@ -160,16 +160,12 @@ function osm2pgsql.process_way(object)
         local cycleway = transformTags(object.tags, prefixedSide)
         cycleway.highway = transformation.highway
         cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
-        local offset = RoadWidth(object.tags) / 2
         category = CategorizeBikelane(cycleway)
         if category ~= nil then
           cycleway._centerline = "projected tag=" .. prefixedSide
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
-              if transformation.postProcessing ~= nil then
-                offset = offset + transformation.postProcessing(category, cycleway, object.tags)
-              end
                 FilterTags(cycleway, allowed_tags)
                 translateTable:insert({
                   tags = cycleway,
