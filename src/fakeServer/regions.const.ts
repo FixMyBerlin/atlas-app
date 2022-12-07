@@ -47,6 +47,7 @@ export type RegionPath =
   | 'langerwehe'
   | 'bibi_centerline'
   | 'trto_centerline'
+  | 'deutschland'
 
 // This is our regions "Database" until we have a real one
 export const regions: Region[] = [
@@ -188,5 +189,21 @@ export const regions: Region[] = [
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: defaultBackgroundSources,
+  },
+  {
+    name: 'Download',
+    fullName: 'Deutschlandweiter Download',
+    path: 'deutschland',
+    map: { lat: 51.07, lng: 13.35, zoom: 5 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
   },
 ]

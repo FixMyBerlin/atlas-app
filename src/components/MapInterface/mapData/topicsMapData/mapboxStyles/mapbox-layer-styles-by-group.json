@@ -21,7 +21,6 @@
             18,
             20
           ],
-          "line-offset": 2,
           "line-color": [
             "case",
             [
@@ -85,7 +84,6 @@
             2,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsl(232, 97%, 36%)"
         },
         "filter": [
@@ -120,8 +118,7 @@
             13,
             3
           ],
-          "line-color": "#031ab5",
-          "line-offset": 2
+          "line-color": "#031ab5"
         },
         "filter": [
           "match",
@@ -132,7 +129,9 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -160,7 +159,6 @@
             1,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsla(232, 99%, 39%, 0.34)"
         },
         "filter": [
@@ -1056,7 +1054,9 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -1284,7 +1284,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_update_at",
@@ -1323,7 +1324,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_check_date",
@@ -1357,7 +1359,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_check_date",
@@ -1392,7 +1395,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-Unbeleuchtet",
@@ -1607,7 +1611,6 @@
             2,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsl(232, 97%, 36%)"
         },
         "filter": [
@@ -1642,8 +1645,7 @@
             13,
             2
           ],
-          "line-color": "#031ab5",
-          "line-offset": 2
+          "line-color": "#031ab5"
         },
         "filter": [
           "match",
@@ -1654,7 +1656,9 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
@@ -1682,7 +1686,6 @@
             1,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsla(232, 99%, 39%, 0.34)"
         },
         "filter": [
@@ -1753,8 +1756,7 @@
             4,
             16,
             12
-          ],
-          "line-offset": -1
+          ]
         },
         "filter": [
           "match",
@@ -1767,8 +1769,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Daten aktuell",
@@ -1789,8 +1790,7 @@
             4,
             16,
             12
-          ],
-          "line-offset": -1
+          ]
         },
         "filter": [
           "match",
@@ -1806,8 +1806,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 2",
@@ -1830,7 +1829,6 @@
             2,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsl(232, 97%, 36%)"
         },
         "filter": [
@@ -1845,8 +1843,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 2",
@@ -1865,8 +1862,7 @@
             13,
             3
           ],
-          "line-color": "#031ab5",
-          "line-offset": 2
+          "line-color": "#031ab5"
         },
         "filter": [
           "match",
@@ -1877,12 +1873,13 @@
           [
             "cyclewaySeparated",
             "cyclewayAlone",
-            "footAndCycleway_segregated"
+            "footAndCycleway_segregated",
+            "bicycleRoad",
+            "cyclewayOnHighway"
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 3",
@@ -1905,7 +1902,6 @@
             1,
             1
           ],
-          "line-offset": 2,
           "line-color": "hsla(232, 99%, 39%, 0.34)"
         },
         "filter": [
@@ -1919,8 +1915,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "hitarea-bikelanes-fresh",

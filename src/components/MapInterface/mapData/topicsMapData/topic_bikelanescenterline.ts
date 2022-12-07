@@ -41,7 +41,7 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
 
 export const topic_bikelanescenterline: MapDataTopic = {
   id: topic,
-  name: 'Fahrradinfrastruktur Centerline',
+  name: 'Radinfrastruktur Centerline',
   desc: '',
   sourceId: 'tarmac_bikelanescenterline',
   allowVerify: false,

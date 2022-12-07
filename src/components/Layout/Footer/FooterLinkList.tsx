@@ -21,7 +21,7 @@ export const FooterLinkList: React.FC<Props> = ({ linkList, className }) => {
         <li key={item.name} className="sm:mr-8">
           <Link
             to={item.to}
-            className="block text-base leading-5 text-stone-50 decoration-stone-400 decoration-1 underline-offset-2 hover:text-white hover:decoration-white"
+            className="block text-base leading-5 text-stone-50 decoration-stone-400 decoration-1 underline-offset-2 hover:!text-white hover:decoration-white"
           >
             {item.name}
           </Link>
