@@ -1,7 +1,7 @@
 import { Link } from '@components/Link'
 import screenshotBiBi from './images/HomePageLive/bibi.jpg'
 import screenshotTrTo from './images/HomePageLive/trto.jpg'
-// import screenshotNudafa from './images/HomePageLive/zes.jpg'
+import screenshotNudafa from './images/HomePageLive/zes.jpg'
 
 type Callout = {
   name: string
@@ -19,13 +19,14 @@ const callouts: Callout[] = [
     imageAlt: '',
     href: '/regionen/bibi',
   },
-  // {
-  //   name: 'NUDAFA',
-  //   description: 'Radnetzplanung auf OpenData-Grundlage',
-  //   image: screenshotNudafa,
-  //   imageAlt: '',
-  //   href: 'https://www.nudafa.de/radnetzplanung',
-  // },
+  {
+    name: 'NUDAFA',
+    description:
+      'Der Radverkehrsatlas eingebettet in ein laufendes Projekten der Radnetz- und Maßnahmenplanung.',
+    image: screenshotNudafa,
+    imageAlt: '',
+    href: 'https://www.nudafa.de/radnetzplanung',
+  },
   {
     name: 'Treptower Tollensewinkel',
     description: 'Radinfrastruktur als OpenData',
@@ -62,13 +63,13 @@ export const HomePageLive = () => {
                   className="h-full w-full object-cover object-center"
                 />
               </div>
-              <p className="mt-6 text-sm text-gray-500">
+              <h3 className="mt-6 text-base font-semibold text-gray-900 group-hover:underline">
+                {callout.name}
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
                 <span className="absolute inset-0" />
                 {callout.description}
               </p>
-              <h3 className="text-base font-semibold text-gray-900 group-hover:underline">
-                {callout.name}
-              </h3>
             </Link>
           ))}
         </div>
