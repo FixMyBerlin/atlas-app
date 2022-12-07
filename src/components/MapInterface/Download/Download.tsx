@@ -38,7 +38,7 @@ export const Download: React.FC = () => {
   return (
     <div className="absolute bottom-14 left-5">
       <IconModal
-        title="Daten des Radverkehrsatlas' downloaden"
+        title="Daten download"
         titleIcon="download"
         triggerStyle="button"
         triggerIcon={<ArrowDownTrayIcon className="h-5 w-5" />}
