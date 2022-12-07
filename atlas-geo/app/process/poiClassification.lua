@@ -45,27 +45,27 @@ local function ExitProcessing(object)
 end
 
 -- Tag processing extracted to be used inside projcess_*
-local function ProcessTags(object)
+local function processTags(tags)
   -- Set our custom `category` value with one of our 4 values.
   -- We also introduce `type` as a unified way to speicify the shop-or-amenity type.
-  if object.tags.shop then
-    object.tags.category = 'shopping'
-    object.tags.type = "shop-" .. object.tags.shop
+  if tags.shop then
+    tags.category = 'shopping'
+    tags.type = "shop-" .. tags.shop
   end
-  if object.tags.amenity then
-    object.tags.category = ShoppingAllowedListWithCategories[object.tags.amenity]
-    object.tags.type = "amenity-" .. object.tags.amenity
+  if tags.amenity then
+    tags.category = ShoppingAllowedListWithCategories[tags.amenity]
+    tags.type = "amenity-" .. tags.amenity
   end
 
-  local allowed_addr_tags = AddAddress(object.tags)
+  local allowed_addr_tags = AddAddress(tags)
   local allowed_tags = Set(MergeArray({ "name", "category", "type" }, allowed_addr_tags))
-  FilterTags(object.tags, allowed_tags)
+  FilterTags(tags, allowed_tags)
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -78,7 +78,7 @@ function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -91,7 +91,7 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,

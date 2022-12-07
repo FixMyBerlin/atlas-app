@@ -51,17 +51,17 @@ local function ContinueProcess(object)
   return false
 end
 
-local function ProcessTags(object)
+local function processTags(tags)
   local allowed_tags = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
-  FilterTags(object.tags, allowed_tags)
+  FilterTags(tags, allowed_tags)
   -- ToNumber(object.tags, Set({ "population" }))
 end
 
 function osm2pgsql.process_node(object)
   if not ContinueProcess(object) then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -74,7 +74,7 @@ function osm2pgsql.process_way(object)
   if not ContinueProcess(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -87,7 +87,7 @@ function osm2pgsql.process_relation(object)
   if not ContinueProcess(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,

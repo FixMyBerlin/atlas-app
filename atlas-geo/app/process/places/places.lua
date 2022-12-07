@@ -38,7 +38,7 @@ local function ExitProcessing(object)
   return false
 end
 
-local function ProcessTags(object)
+local function processTags(tags)
   local allowed_tags = Set({ "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
   FilterTags(object.tags, allowed_tags)
@@ -48,7 +48,7 @@ end
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -61,7 +61,7 @@ function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
@@ -74,7 +74,7 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
+  processTags(object.tags)
   table:insert({
     tags = object.tags,
     meta = Metadata(object),
