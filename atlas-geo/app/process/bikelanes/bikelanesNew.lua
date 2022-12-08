@@ -48,8 +48,6 @@ local skipTable = osm2pgsql.define_table({
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
   "_centerline",
-  "_skip",
-  "_skipNotes",
   "_direction",
   "access",
   "bicycle_road",
@@ -107,16 +105,8 @@ local function transformTags(tags, prefix)
 end
 
 function osm2pgsql.process_way(object)
-  if not object.tags.highway then return end
-  -- Skip `highway=steps`
-  -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
-  HighwayClasses["steps"] = nil
-  -- values that we would allow, but skip here:
-  -- "construction", "planned", "proposed", "platform" (Haltestellen),
-  -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
-  if not HighwayClasses[object.tags.highway] then return end
-
-  AddSkipInfoToHighways(object)
+  -- filter highway classes
+  if not object.tags.highway or not HighwayClasses[object.tags.highway] then return end
 
   local filterResult = FilterHighways(object.tags)
   if filterResult.skip then
@@ -127,7 +117,6 @@ function osm2pgsql.process_way(object)
   -- apply predicates
   local category = CategorizeBikelane(object.tags)
   if category ~= nil then
-    object.tags._skipNotes = nil
     FilterTags(object.tags, allowed_tags)
     table:insert({
       tags = object.tags,
@@ -146,9 +135,6 @@ function osm2pgsql.process_way(object)
     [""] = { -1, 1 }
   }
   for _, transformation in pairs(Transformations) do
-    -- NOTE: the category/transformation should also influence the offset
-    -- e.g. a street with bike lane should have offset=streetWidth/2 - bikelaneWidth/2
-    -- where a sidewalk with bicycle=yes should have offset=streetWidth/2 + bikelaneWidth/2
     local offset = RoadWidth(object.tags) / 2
     for side, signs in pairs(sides) do
       local prefixedSide = transformation.prefix .. side
