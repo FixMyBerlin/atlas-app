@@ -1,16 +1,10 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
-require("ToNumber")
--- require("PrintTable")
-require("AddAddress")
-require("MergeArray")
 require("Metadata")
-
 require("HighwayClasses")
 require("RoadWidth")
 require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
 require("CheckDataWithinYears")
 require("StartsWith")
 require("categories")
