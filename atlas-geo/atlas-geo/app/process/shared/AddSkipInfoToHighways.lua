@@ -1,14 +1,55 @@
+function FilterHighways(tags)
+  -- Skip all non standard access values
+  local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
+  if tags.access and forbidden_accesses[tags.access] then
+    return {skip = true, reason = "Skipped by `forbidden_accesses`"}
+  end
+  if tags.operator == 'private' then
+    return {skip = true, reason = "Skipped by `operator=private`"}
+  end
+  if tags.foot == 'private' then
+    return {skip = true, reason = "Skipped by `foot=private`"}
+  end
+
+  if tags.indoor == 'yes' then
+    return {skip = true, reason = "Skipped by `indoor=yes`"}
+  end
+
+  if tags.informal == 'yes' then
+    return {skip = true, reason = "Skipped by `informal=yes`"}
+  end
+
+  if tags['mtb:scale'] then
+    return {skip = true, reason = "Skipped since `mtb:scale` indicates a special interest path"}
+  end
+
+  if tags.tracktype == "grade5" then
+    return {skip = true, reason = "Skipped since `tracktype=grade5` indicates a special interest path"}
+  end
+
+  -- Skip all unwanted `highway=service + service=<value>` values
+  -- The key can have random values, we mainly want to skip "driveway", "parking_aisle".
+  local forbidden_services = Set({ "alley", "drive-through", "emergency_access" })
+  if tags.service and not forbidden_services[tags.service] then
+    return {skip = true, reason = "Skipped by `forbidden_services`"}
+  end
+  if tags.man_made == 'pier' then
+    return {skip = true, reason = "Skipped by `man_made=pier`"}
+  end
+
+  return {skip = false, reason=""}
+end
+
 -- * @desc Add `_skip = true` and `_skipNotes` for highways with private access, indoor, informal, "mtb"-style (inkl. width) and only allowed service values
--- TODO: we should transform this function into a filter/predicate and use it absolut
--- (in a sense that when one of the conditions apply we'll always add it into the skiplist)
+--  DEPRECATED
 function AddSkipInfoToHighways(object)
   if object.tags._skipNotes == nil then
     object.tags._skipNotes = ""
   end
   -- Skip all non standard access values
-  local allowed_access_values = Set({ "private", "no", "destination", "delivery", "permit" })
-  if object.tags.access and allowed_access_values[object.tags.access] then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `allowed_access_values`"
+  local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
+  if object.tags.access and forbidden_accesses[object.tags.access] then
+    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `forbidden_accesses`"
     object.tags._skip = true
   end
 
@@ -45,8 +86,8 @@ function AddSkipInfoToHighways(object)
 
   -- Skip all unwanted `highway=service + service=<value>` values
   -- The key can have random values, we mainly want to skip "driveway", "parking_aisle".
-  local allowed_service_values = Set({ "alley", "drive-through", "emergency_access" })
-  if object.tags.service and not allowed_service_values[object.tags.service] then
+  local forbidden_services = Set({ "alley", "drive-through", "emergency_access" })
+  if object.tags.service and not forbidden_services[object.tags.service] then
     object.tags._skipNotes = object.tags._skipNotes .. ";Skipped by `skip_service_values`"
     object.tags._skip = true
   end
