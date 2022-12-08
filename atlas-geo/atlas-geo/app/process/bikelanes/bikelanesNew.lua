@@ -71,7 +71,7 @@ local allowed_tags = Set({
 
 
 local function timeValidation(tags)
-    -- IMO this whole logic should be implemented on the database
+    -- IMO this whole logic could be implemented on the database
     -- e.g. only safe the last date of modification and then define computated properties
     -- Presence of data
     tags.is_present = tags.category ~= nil
@@ -82,7 +82,6 @@ local function timeValidation(tags)
 end
 
 local function intoSkipList(object, reason)
-  -- normalizeTags(object.tags)
   skipTable:insert({
     tags = object.tags,
     meta = Metadata(object),
@@ -169,4 +168,3 @@ function osm2pgsql.process_way(object)
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
   intoSkipList(object, "no category applied")
 end
-
