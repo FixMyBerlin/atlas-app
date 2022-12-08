@@ -46,6 +46,7 @@ local skipTable = osm2pgsql.define_table({
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb'},
+    { column = 'reason', type = 'text' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -88,11 +89,12 @@ local function timeValidation(tags)
     tags.fresh_age_days = withinYears.diffDays
 end
 
-local function intoSkipList(object)
+local function intoSkipList(object, reason)
   -- normalizeTags(object.tags)
   skipTable:insert({
     tags = object.tags,
     meta = Metadata(object),
+    reason = reason,
     geom = object:as_linestring()
   })
 end
@@ -122,8 +124,9 @@ function osm2pgsql.process_way(object)
 
   AddSkipInfoToHighways(object)
 
-  if object.tags._skip == true then
-    intoSkipList(object)
+  local filterResult = FilterHighways(object.tags)
+  if filterResult.skip then
+    intoSkipList(object, filterResult.reason)
     return
   end
 
@@ -184,6 +187,6 @@ function osm2pgsql.process_way(object)
   -- TODO SKIPLIST: For ZES, we skip "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-  intoSkipList(object)
+  intoSkipList(object, "no category applied")
 end
 
