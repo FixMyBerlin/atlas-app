@@ -56,8 +56,9 @@ function osm2pgsql.process_node(object)
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) then return end
-  if not object.is_closed then return end
+  if ExitProcessing(object) or not object.is_closed then
+    return
+  end
 
   processTags(object.tags)
 
@@ -69,8 +70,9 @@ function osm2pgsql.process_way(object)
 end
 
 function osm2pgsql.process_relation(object)
-  if ExitProcessing(object) then return end
-  if not object.tags.type == 'multipolygon' then return end
+  if ExitProcessing(object) or not object.tags.type == 'multipolygon' then
+    return
+  end
 
   processTags(object.tags)
 
