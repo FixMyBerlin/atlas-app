@@ -159,8 +159,9 @@ function osm2pgsql.process_node(object)
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) then return end
-  if not object.is_closed then return end
+  if ExitProcessing(object) or not object.is_closed then
+    return
+  end
 
   processTags(object.tags)
 
