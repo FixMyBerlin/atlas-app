@@ -94,6 +94,7 @@ local function cyclewaySeparated(tags)
   end
 end
 
+-- TODO: this is bad tagging need to go into the to check list
 local function cyclewayUnspecified(tags)
   if tags.highway=="cycleway" and tags.bicycle=="yes" then
     return "cyclewayNEW"
