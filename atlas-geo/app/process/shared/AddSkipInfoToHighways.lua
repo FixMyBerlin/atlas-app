@@ -2,43 +2,44 @@ function FilterHighways(tags)
   -- Skip all non standard access values
   local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
   if tags.access and forbidden_accesses[tags.access] then
-    return {skip = true, reason = "Skipped by `forbidden_accesses`"}
+    return true, "Skipped by `forbidden_accesses`"
   end
   if tags.operator == 'private' then
-    return {skip = true, reason = "Skipped by `operator=private`"}
+    return true, "Skipped by `operator=private`"
   end
   if tags.foot == 'private' then
-    return {skip = true, reason = "Skipped by `foot=private`"}
+    return true, "Skipped by `foot=private`"
   end
 
   if tags.indoor == 'yes' then
-    return {skip = true, reason = "Skipped by `indoor=yes`"}
+    return true, "Skipped by `indoor=yes`"
   end
 
   if tags.informal == 'yes' then
-    return {skip = true, reason = "Skipped by `informal=yes`"}
+    return true, "Skipped by `informal=yes`"
   end
 
   if tags['mtb:scale'] then
-    return {skip = true, reason = "Skipped since `mtb:scale` indicates a special interest path"}
+    return true, "Skipped since `mtb:scale` indicates a special interest path"
   end
 
   if tags.tracktype == "grade5" then
-    return {skip = true, reason = "Skipped since `tracktype=grade5` indicates a special interest path"}
+    return true, "Skipped since `tracktype=grade5` indicates a special interest path"
   end
 
   -- Skip all unwanted `highway=service + service=<value>` values
   -- The key can have random values, we mainly want to skip "driveway", "parking_aisle".
   local forbidden_services = Set({ "alley", "drive-through", "emergency_access" })
   if tags.service and not forbidden_services[tags.service] then
-    return {skip = true, reason = "Skipped by `forbidden_services`"}
+    return true, "Skipped by `forbidden_services`"
   end
   if tags.man_made == 'pier' then
-    return {skip = true, reason = "Skipped by `man_made=pier`"}
+    return true, "Skipped by `man_made=pier`"
   end
 
-  return {skip = false, reason=""}
+  return false, ""
 end
+
 
 -- * @desc Add `_skip = true` and `_skipNotes` for highways with private access, indoor, informal, "mtb"-style (inkl. width) and only allowed service values
 --  DEPRECATED

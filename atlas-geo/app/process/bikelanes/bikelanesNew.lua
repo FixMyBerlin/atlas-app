@@ -93,7 +93,7 @@ end
 -- projects all tags prefix:subtag=val -> subtag=val
 local function transformTags(tags, prefix)
   local transformedTags = {name = tags.name}
-  for prefixedKey,val  in pairs(tags) do
+  for prefixedKey, val  in pairs(tags) do
     if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
       local key = string.sub(prefixedKey, string.len(prefix) + 2)
@@ -107,9 +107,9 @@ function osm2pgsql.process_way(object)
   -- filter highway classes
   if not object.tags.highway or not HighwayClasses[object.tags.highway] then return end
 
-  local filterResult = FilterHighways(object.tags)
-  if filterResult.skip then
-    intoSkipList(object, filterResult.reason)
+  local skip, reason = FilterHighways(object.tags)
+  if skip then
+    intoSkipList(object, reason)
     return
   end
 
