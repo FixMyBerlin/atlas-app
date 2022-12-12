@@ -125,7 +125,7 @@ end
 
 function CategorizeBikelane(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone, cyclewayUnspecified}
+  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone}
   local category = nil
   for _, predicate in pairs(categories) do
     category = predicate(tags)
