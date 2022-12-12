@@ -43,7 +43,7 @@ function osm2pgsql.process_way(object)
   local skip, reason = FilterHighways(object.tags)
   object.tags._skip = skip
   object.tags._skipNotes = reason
-  skip, reason = FilterByWidth(object, 2.1)
+  skip, reason = FilterByWidth(object.tags, 2.1)
   object.tags._skip = object.tags._skip or skip
   object.tags._skipNotes = object.tags._skipNotes .. reason
 
