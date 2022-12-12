@@ -4,7 +4,7 @@ require("ExtractKeys")
 require("FilterTags")
 -- require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
+require("InferAddress")
 require("MergeArray")
 require("Metadata")
 
@@ -140,9 +140,9 @@ end
 
 -- Tag processing extracted to be used inside projcess_*
 local function processTags(tags)
-  local allowed_addr_tags = AddAddress(tags)
-  local allowed_tags = Set(MergeArray({ "name", "category", "type", "amenity" }, allowed_addr_tags))
-  FilterTags(tags, allowed_tags)
+  InferAddress(tags, tags)
+  local allowed_tags = MergeArray({ "name", "category", "type", "amenity" }, AddressKeys)
+  FilterTags(tags, Set(allowed_tags))
   tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
 end
 
