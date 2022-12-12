@@ -1,6 +1,5 @@
 -- Docs https://wiki.openstreetmap.org/wiki/Key:addr:*
--- NAEM SUGESTION: InferAdress
--- * @return `allowed_tags` array to be used with `FilterTags(tags, Set(MergeArray(thisReturnTable, otherTable)))`
+-- * @return `dest` object
 function InferAddress(tags, dest)
   dest = dest or {}
   dest.addr_street = tags.street or tags["addr:street"]
