@@ -3,13 +3,11 @@ require("Set")
 require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
 require("Metadata")
-
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
+require("FilterHighways")
+require("FilterByWidth")
 
 local table = osm2pgsql.define_table({
   name = 'roadClassification_new',
@@ -40,11 +38,14 @@ function osm2pgsql.process_way(object)
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
-  object.tags._skipNotes = "init"
-  object.tags._skip = false
 
-  AddSkipInfoToHighways(object)
-  AddSkipInfoByWidth(object)
+  --TODO: exit here
+  local skip, reason = FilterHighways(object.tags)
+  object.tags._skip = skip
+  object.tags._skipNotes = reason
+  skip, reason = FilterByWidth(object, 2.1)
+  object.tags._skip = object.tags._skip or skip
+  object.tags._skipNotes = object.tags._skipNotes .. reason
 
   -- Skip sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10

@@ -6,13 +6,10 @@ require("Set")
 require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
 require("Metadata")
-
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
+require("FilterHighways")
 require("CheckDataWithinYears")
 require("StartsWith")
 
@@ -45,11 +42,9 @@ function osm2pgsql.process_way(object)
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_values[object.tags.highway] then return end
 
-  object.tags._skipNotes = "Skipped by default `true`"
-  object.tags._skip = true
-
-  AddSkipInfoToHighways(object)
-
+  local skip, reason = FilterHighways(object.tags)
+  object.tags._skip = skip
+  object.tags._skipNotes = reason
   -- Skip `highway=steps`
   -- We don't look at ramps on steps ATM. That is not good bicycleInfrastructure anyways
   if object.tags.highway == "steps" then

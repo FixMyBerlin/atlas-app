@@ -3,13 +3,11 @@ require("Set")
 require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
 require("Metadata")
-
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
+require("FilterHighways")
+require("FilterByWidth")
 require("CheckDataWithinYears")
 
 local table = osm2pgsql.define_table({
@@ -48,12 +46,9 @@ function osm2pgsql.process_way(object)
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
   if not allowed_values[object.tags.highway] then return end
-
-  object.tags._skipNotes = "init"
-  object.tags._skip = false
-
-  AddSkipInfoToHighways(object)
-  AddSkipInfoByWidth(object)
+  if FilterHighways(object.tags) or FilterByWidth(object.tags, 2.1) then
+    return
+  end
 
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 
@@ -112,8 +107,6 @@ function osm2pgsql.process_way(object)
   object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
 
   local allowed_tags = Set({
-    "_skip",
-    "_skipNotes",
     "_combined_fresh_age_days",
     "_combined_is_fresh",
     "_update_fresh_age_days",
