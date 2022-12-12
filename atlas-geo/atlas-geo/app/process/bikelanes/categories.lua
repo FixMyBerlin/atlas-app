@@ -28,7 +28,7 @@ end
 local function bicycleRoad(tags)
   local result = tags.bicycle_road == "yes" or StartsWith(tags.traffic_sign, "DE:244")
   if result then
-    return"bicycleRoad"
+    return "bicycleRoad"
   end
 end
 
@@ -103,7 +103,6 @@ end
 
 local function cyclewayOnHighway(tags)
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
-  --    TBD: We might need to split of the cycleway=lane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
   if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
@@ -126,12 +125,11 @@ end
 function CategorizeBikelane(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
   footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone}
-  local category = nil
   for _, predicate in pairs(categories) do
-    category = predicate(tags)
+     local category = predicate(tags)
     if category ~= nil then
       return category
     end
   end
-  return category
+  return nil
 end

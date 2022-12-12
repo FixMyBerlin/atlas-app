@@ -90,7 +90,7 @@ local function intoSkipList(object, reason)
   })
 end
 
--- projects all tags prefix:subtag=val -> subtag=val
+-- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
 local function transformTags(tags, prefix)
   local transformedTags = {name = tags.name}
   for prefixedKey, val  in pairs(tags) do
@@ -113,7 +113,7 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- apply predicates
+  -- categorize bike lanes (flat)
   local category = CategorizeBikelane(object.tags)
   if category ~= nil then
     FilterTags(object.tags, allowed_tags)
@@ -126,7 +126,7 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- apply predicates nested
+  -- categorize bike lanes (nested)
   local sides = {
     [":right"] = { -1 },
     [":left"] = { 1 },
