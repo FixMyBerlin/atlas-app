@@ -11,7 +11,8 @@ UPDATE "bikelanesCenterline"
 --IDEA: maybe we can transform closed geometries with some sort of buffer function:
 -- at least for the cases where we buffer "outside"(side=right) this should always yield a LineString
 
--- need to get the query below into lua, otherwise updating tables won't work
+-- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
+-- In turn this brakes updating tables via osm2pgsql
 UPDATE "bikelanesCenterline"
   SET osm_id=osm_id*SIGN("offset");
 
