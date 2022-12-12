@@ -4,7 +4,7 @@ require("ExtractKeys")
 require("FilterTags")
 -- require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
+require("InferAddress")
 require("MergeArray")
 require("Metadata")
 
@@ -57,9 +57,9 @@ local function processTags(tags)
     tags.type = "amenity-" .. tags.amenity
   end
 
-  local allowed_addr_tags = AddAddress(tags)
-  local allowed_tags = Set(MergeArray({ "name", "category", "type" }, allowed_addr_tags))
-  FilterTags(tags, allowed_tags)
+  InferAddress(tags, tags)
+  local allowed_tags = MergeArray({ "name", "category", "type" }, AddressKeys)
+  FilterTags(tags, Set(allowed_tags))
 end
 
 function osm2pgsql.process_node(object)
