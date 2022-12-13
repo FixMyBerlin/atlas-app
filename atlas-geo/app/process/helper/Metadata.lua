@@ -1,4 +1,3 @@
-
 function OsmUrl(object)
   return "https://osm.org/" .. object.type .. "/" .. object.id
 end
@@ -13,10 +12,9 @@ end
 function Metadata(object)
   local meta = {
     ["update_at"] = os.date('!%Y-%m-%dT%H:%M:%SZ', object.timestamp),
-    ["updated_by"] = object.user,  -- 'user' not present in regular osm file
+    ["updated_by"] = object.user, -- 'user' not present in regular osm file
     ["version"] = object.version,
     ["osm_url"] = OsmUrl(object)
   }
   return meta
 end
-

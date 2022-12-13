@@ -1,5 +1,3 @@
-
-
 -- This file defines the `Transformations` which are used to process center line tagged bike lanes
 -- `highway` is the new highway type for the generated object
 -- `prefix` will be concatinated wiht one of the sides `':left' | ':right' | ':both' | '' `
