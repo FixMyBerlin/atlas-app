@@ -9,6 +9,7 @@ require("HighwayClasses")
 require("FilterHighways")
 require("FilterByWidth")
 require("CheckDataWithinYears")
+require("IsFresh")
 
 local table = osm2pgsql.define_table({
   name = 'lit_new',
@@ -73,33 +74,7 @@ function osm2pgsql.process_way(object)
   -- Freshness of data
   if(object.tags.is_present == true) then
     -- (0) Only handle cases where our main data is present
-    if(object.tags['check_date:lit']) then
-      -- (1) If check_date is present, use it
-      local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
-      if (withinYears.result) then
-        object.tags.fresh = 'fresh_check_date'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'check_date used; fresh=true; confidence=high'
-      else
-        object.tags.fresh = 'outdated_check_date'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'check_date used; fresh=false; confidence=high'
-      end
-    else
-      -- (2) Fall back to object's last update date
-      local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
-      if(withinYears.result) then
-        object.tags.fresh = 'fresh_update_at'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'update_at used; fresh=true; confidence=low'
-      else
-        object.tags.fresh = 'outdated_update_at'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'update_at used; fresh=false; confidence=low'
-      end
-    end
-  else
-    object.tags._freshNotes = 'is_present=false, so fresh data skipped'
+    IsFresh(object, 'check_date:lit', object.tags)
   end
 
   -- Normalize name info for sidepath'
