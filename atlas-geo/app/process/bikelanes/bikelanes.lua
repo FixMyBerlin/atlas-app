@@ -49,7 +49,6 @@ local skipTable = osm2pgsql.define_table({
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
   "_centerline",
-  "_direction",
   "access",
   "bicycle_road",
   "bicycle",
@@ -62,11 +61,11 @@ local allowed_tags = Set({
   "mtb:scale",
   "name",
   "segregated",
+  "smoothness",
+  "surface",
+  "traffic_sign",
   "traffic_sign",
   "width", -- experimental
-  "surface",
-  "smoothness",
-  "traffic_sign",
 })
 
 local function intoSkipList(object, reason)
