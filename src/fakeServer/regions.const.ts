@@ -74,7 +74,7 @@ export const regions: Region[] = [
   },
   {
     name: 'BiBiCenterline',
-    fullName: 'Bietigheim-Bissingen CENTERLINE',
+    fullName: 'Bietigheim-Bissingen V1+V2',
     path: 'bibi_centerline',
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
     bbox: {
@@ -83,7 +83,7 @@ export const regions: Region[] = [
     },
     logoPath: '/pageRegions/bibi-logo.svg',
     logoWhiteBackgroundRequired: false,
-    themes: ['bikelanescenterline'],
+    themes: ['bikelanes_v1_2'],
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: defaultBackgroundSources,
@@ -110,7 +110,7 @@ export const regions: Region[] = [
   },
   {
     name: 'TrToCenterline',
-    fullName: 'Treptower Tollensewinkel CENTERLINE',
+    fullName: 'Treptower Tollensewinkel V1+V2',
     path: 'trto_centerline',
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     bbox: {
@@ -119,7 +119,7 @@ export const regions: Region[] = [
     },
     logoPath: '/pageRegions/trto-logo.png',
     logoWhiteBackgroundRequired: true,
-    themes: ['bikelanescenterline'],
+    themes: ['bikelanes_v1_2'],
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: defaultBackgroundSources,
@@ -166,7 +166,7 @@ export const regions: Region[] = [
       'fromTo',
       'bikelanesZes',
       'bikelanes',
-      'bikelanescenterline',
+      'bikelanes_v1_2',
       'roadClassificationZes',
       'surfaceZes',
       'lit',

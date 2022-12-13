@@ -1,14 +1,14 @@
 import { MapDataTopic } from '../types'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topic = 'bikelanescenterline'
-export type TopicBikelanescenterlineId = typeof topic
-export type TopicBikelanescenterlineStyleIds =
+const topic = 'bikelanes_v1'
+export type TopicBikelanesV1Id = typeof topic
+export type TopicBikelanesV1StyleIds =
   | 'default'
   | 'original'
   | 'atlas_bikelanes_complete'
   | 'atlas_bikelanes_fresh'
-export type TopicBikelanescenterlineStyleFilterIds = '_nofilter'
+export type TopicBikelaneV1StyleFilterIds = '_nofilter'
 
 const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   {
@@ -39,11 +39,11 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   },
 ]
 
-export const topic_bikelanescenterline: MapDataTopic = {
+export const topic_bikelanes_v1: MapDataTopic = {
   id: topic,
-  name: 'Radinfrastruktur Centerline',
+  name: 'Radinfrastruktur v1',
   desc: '',
-  sourceId: 'tarmac_bikelanescenterline',
+  sourceId: 'tarmac_bikelanes_v1',
   allowVerify: false,
   styles: [
     {
@@ -54,8 +54,8 @@ export const topic_bikelanescenterline: MapDataTopic = {
         {
           id: 'Fuehrung mit Fussverkehr copy 3',
           type: 'line',
-          source: 'tarmac_bikelanescenterline',
-          'source-layer': 'public.bikelanesCenterlineNew',
+          source: 'tarmac_bikelane_v1',
+          'source-layer': 'public.bikelanes_v1',
           paint: {
             'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.5, 13, 2],
             'line-dasharray': [2, 1],
@@ -74,8 +74,8 @@ export const topic_bikelanescenterline: MapDataTopic = {
         {
           id: 'Getrennte Fuehrung copy 3',
           type: 'line',
-          source: 'tarmac_bikelanescenterline',
-          'source-layer': 'public.bikelanesCenterlineNew',
+          source: 'tarmac_bikelanes_v1',
+          'source-layer': 'public.bikelanes_v1',
           paint: {
             'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.5, 13, 2],
             'line-color': 'purple',
@@ -143,8 +143,8 @@ export const topic_bikelanescenterline: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_complete',
-        source: 'tarmac_bikelanescenterline',
-        sourceLayer: 'public.bikelanesCenterlineNew',
+        source: 'tarmac_bikelanes_v1',
+        sourceLayer: 'public.bikelanes_v1',
       }),
       interactiveFilters: null,
       legends: [
@@ -165,8 +165,8 @@ export const topic_bikelanescenterline: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes_fresh',
-        source: 'tarmac_bikelanescenterline',
-        sourceLayer: 'public.bikelanesCenterlineNew',
+        source: 'tarmac_bikelanes_v1',
+        sourceLayer: 'public.bikelanes_v1',
       }),
       interactiveFilters: null,
       legends: [
