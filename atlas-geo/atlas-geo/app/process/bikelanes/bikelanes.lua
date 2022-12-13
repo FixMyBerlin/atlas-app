@@ -70,15 +70,21 @@ local allowed_tags = Set({
 
 
 
-local function timeValidation(tags)
-    -- IMO this whole logic could be implemented on the database
-    -- e.g. only safe the last date of modification and then define computated properties
-    -- Presence of data
-    tags.is_present = tags.category ~= nil
-    -- Freshness of data, see documentation
-    local withinYears = CheckDataWithinYears(tags["check_date:cycleway"], 2)
-    tags.is_fresh = withinYears.result
-    tags.fresh_age_days = withinYears.diffDays
+local function isFresh(object, date_tag, dest)
+  dest = dest or {}
+  -- IMO this whole logic could be implemented on the database
+  -- e.g. only safe the last date of modification and then define computated properties
+  local date = os.date('!%Y-%m-%d', object.timestamp)
+  dest.freshNotes = "used object timestamp"
+  if object.tags[date_tag] then
+    print("used " .. date_tag)
+    date = object.tags[date_tag]
+    dest.freshNotes = "used check_date"
+  end
+  -- Freshness of data, see documentation
+  local withinYears = CheckDataWithinYears(date, 2)
+  dest.fresh = withinYears.result
+  dest.fresh_age_days = withinYears.diffDays
 end
 
 local function intoSkipList(object, reason)
@@ -117,6 +123,7 @@ function osm2pgsql.process_way(object)
   local category = CategorizeBikelane(object.tags)
   if category ~= nil then
     FilterTags(object.tags, allowed_tags)
+    isFresh(object, "check_date:cycleway", object.tags)
     table:insert({
       tags = object.tags,
       category = category,
@@ -142,13 +149,17 @@ function osm2pgsql.process_way(object)
         local cycleway = transformTags(object.tags, prefixedSide)
         cycleway.highway = transformation.highway
         cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
+
         category = CategorizeBikelane(cycleway)
+
         if category ~= nil then
           cycleway._centerline = "projected tag=" .. prefixedSide
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
                 FilterTags(cycleway, allowed_tags)
+                isFresh(object, "check_date:" .. transformation.prefix, cycleway)
+                -- isFresh(object, "check_date:cycleway", cycleway)
                 translateTable:insert({
                   tags = cycleway,
                   category = category,
