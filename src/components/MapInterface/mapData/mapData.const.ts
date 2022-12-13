@@ -4,7 +4,6 @@ import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
-  TopicBikelanesV1Id,
   TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
   TopicBikelanesStyleFilterIds,
@@ -63,7 +62,6 @@ import {
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
   topic_bikelanes,
-  topic_bikelanes_v1,
   topic_bikelanes_osmscripts,
   topic_boundaries,
   topic_education,
@@ -79,7 +77,6 @@ import {
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
-  TopicBikelanesV1StyleIds,
 } from './topicsMapData'
 import { MapData } from './types'
 
@@ -87,7 +84,6 @@ export type TopicIds =
   | TopicAccidentsId
   | TopicBikelanesId_Osmscripts
   | TopicBikelanesId
-  | TopicBikelanesV1Id
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
@@ -109,7 +105,6 @@ export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBikelanesStyleIds_Osmscripts
   | TopicBikelanesStyleIds
-  | TopicBikelanesV1StyleIds
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
@@ -176,7 +171,6 @@ export const mapData: MapData = {
     topic_accidents,
     topic_bikelanes_osmscripts,
     topic_bikelanes,
-    topic_bikelanes_v1,
     topic_boundaries,
     topic_education,
     topic_education_osmscripts,
