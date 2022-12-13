@@ -4,7 +4,6 @@ import { MapDataTheme } from '../types'
 export type MapDataThemeIds =
   | 'fromTo'
   | 'bikelanes'
-  | 'bikelanes_v1_2'
   | 'roadClassification'
   | 'surface'
   | 'parking'
@@ -58,15 +57,6 @@ export const themes: MapDataTheme[] = [
       { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
-    ],
-  },
-  {
-    id: 'bikelanes_v1_2',
-    name: 'Infrastruktur (V1+V2)',
-    desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
-    topics: [
-      { id: 'bikelanes', defaultActive: true },
-      { id: 'bikelanes_v1', defaultActive: false },
     ],
   },
   {

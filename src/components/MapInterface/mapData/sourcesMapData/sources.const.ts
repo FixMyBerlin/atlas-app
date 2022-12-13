@@ -11,7 +11,6 @@ export type SourcesIds =
   | 'osmscripts_pois'
   | 'parkraumParking'
   | 'tarmac_bikelanes'
-  | 'tarmac_bikelanes_v1'
   | 'tarmac_boundaries'
   | 'tarmac_education'
   | 'tarmac_landuse'
@@ -101,13 +100,6 @@ export const sources: MapDataSource<
     apiVerificationIdentifier: 'bikelanes',
     apiExportIdentifier: 'bikelanes_verified',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
-    attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'highway', 'name'],
-    highlightingKey: 'osm_id',
-  },
-  {
-    id: 'tarmac_bikelanes_v1',
-    tiles: `${tilesUrl}/public.bikelanes_v1/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'highway', 'name'],
     highlightingKey: 'osm_id',
