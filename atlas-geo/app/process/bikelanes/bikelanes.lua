@@ -7,6 +7,7 @@ require("RoadWidth")
 require("FilterHighways")
 require("CheckDataWithinYears")
 require("StartsWith")
+require("IsFresh")
 require("categories")
 require("transformations")
 
@@ -70,23 +71,6 @@ local allowed_tags = Set({
 
 
 
-local function isFresh(object, date_tag, dest)
-  dest = dest or {}
-  -- IMO this whole logic could be implemented on the database
-  -- e.g. only safe the last date of modification and then define computated properties
-  local date = os.date('!%Y-%m-%d', object.timestamp)
-  dest.freshNotes = "used object timestamp"
-  if object.tags[date_tag] then
-    print("used " .. date_tag)
-    date = object.tags[date_tag]
-    dest.freshNotes = "used check_date"
-  end
-  -- Freshness of data, see documentation
-  local withinYears = CheckDataWithinYears(date, 2)
-  dest.fresh = withinYears.result
-  dest.fresh_age_days = withinYears.diffDays
-end
-
 local function intoSkipList(object, reason)
   skipTable:insert({
     tags = object.tags,
@@ -123,7 +107,7 @@ function osm2pgsql.process_way(object)
   local category = CategorizeBikelane(object.tags)
   if category ~= nil then
     FilterTags(object.tags, allowed_tags)
-    isFresh(object, "check_date:cycleway", object.tags)
+    IsFresh(object, "check_date:cycleway", object.tags)
     table:insert({
       tags = object.tags,
       category = category,
@@ -158,7 +142,7 @@ function osm2pgsql.process_way(object)
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
                 FilterTags(cycleway, allowed_tags)
-                isFresh(object, "check_date:" .. transformation.prefix, cycleway)
+                IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
                 -- isFresh(object, "check_date:cycleway", cycleway)
                 translateTable:insert({
                   tags = cycleway,
