@@ -4,7 +4,7 @@ import { MapDataTheme } from '../types'
 export type MapDataThemeIds =
   | 'fromTo'
   | 'bikelanes'
-  | 'bikelanescenterline'
+  | 'bikelanes_v1_2'
   | 'roadClassification'
   | 'surface'
   | 'parking'
@@ -61,12 +61,12 @@ export const themes: MapDataTheme[] = [
     ],
   },
   {
-    id: 'bikelanescenterline',
-    name: 'Infrastruktur CENTERLINE',
+    id: 'bikelanes_v1_2',
+    name: 'Infrastruktur (V1+V2)',
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
-      { id: 'bikelanescenterline', defaultActive: true },
-      { id: 'bikelanes', defaultActive: false },
+      { id: 'bikelanes', defaultActive: true },
+      { id: 'bikelanes_v1', defaultActive: false },
     ],
   },
   {
