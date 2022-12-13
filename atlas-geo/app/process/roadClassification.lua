@@ -10,11 +10,11 @@ require("FilterHighways")
 require("FilterByWidth")
 
 local table = osm2pgsql.define_table({
-  name = 'roadClassification_new',
+  name = 'roadClassification',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb'},
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -24,7 +24,7 @@ local skipTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb'},
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
