@@ -1,5 +1,8 @@
--- Docs https://wiki.openstreetmap.org/wiki/Key:addr:*
--- * @return `dest` object
+-- * @desc Handle different address tagging schema.
+--    Docs <https://wiki.openstreetmap.org/wiki/Key:addr:*>
+-- * @returns
+--   `dest` if provided with `AddressKeys` are added to it.
+--   Otherwise a new object of format `AddressKeys` ist returned.
 function InferAddress(tags, dest)
   dest = dest or {}
   dest.addr_street = tags.street or tags["addr:street"]

@@ -1,12 +1,16 @@
+-- * @desc If and why a highway object should be filterd based on its tags.
+-- * @returns { boolean (shouldFilter), string (reason) }
 function FilterHighways(tags)
   -- Skip all non standard access values
   local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
   if tags.access and forbidden_accesses[tags.access] then
     return true, "Skipped by `forbidden_accesses`"
   end
+
   if tags.operator == 'private' then
     return true, "Skipped by `operator=private`"
   end
+
   if tags.foot == 'private' then
     return true, "Skipped by `foot=private`"
   end
