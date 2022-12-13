@@ -14,7 +14,7 @@ export type MapDataThemeIds =
   | 'bikelanesZes'
   | 'roadClassificationZes'
   | 'surfaceZes'
-  // Speical only:
+  // Special only:
   | 'mapillary'
   | 'accidents'
 
