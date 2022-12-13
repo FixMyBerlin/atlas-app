@@ -16,7 +16,7 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb'},
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -72,7 +72,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- Freshness of data
-  if(object.tags.is_present == true) then
+  if (object.tags.is_present == true) then
     IsFresh(object, 'check_date:lit', object.tags)
   end
 

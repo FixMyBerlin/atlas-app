@@ -1,4 +1,3 @@
-
 -- PREDICATES FOR EACH CATEGORY:
 -- maybe switch to returning the category instead of mutating the input
 
@@ -96,7 +95,7 @@ end
 
 -- TODO: this is bad tagging need to go into the to check list
 local function cyclewayUnspecified(tags)
-  if tags.highway=="cycleway" and tags.bicycle=="yes" then
+  if tags.highway == "cycleway" and tags.bicycle == "yes" then
     return "cyclewayNEW"
   end
 end
@@ -124,9 +123,9 @@ end
 
 function CategorizeBikelane(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-  footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone}
+    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
   for _, predicate in pairs(categories) do
-     local category = predicate(tags)
+    local category = predicate(tags)
     if category ~= nil then
       return category
     end
