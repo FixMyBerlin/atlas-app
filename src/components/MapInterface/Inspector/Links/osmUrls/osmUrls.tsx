@@ -2,12 +2,14 @@ const osmType = { W: 'way', N: 'node', R: 'relation' }
 
 export const osmUrl = (type: 'W' | 'N' | 'R', id: number) => {
   if (!osmType[type]) return undefined
-  return `https://www.openstreetmap.org/${osmType[type]}/${id}`
+  const cleanId = Math.abs(id) // tarmag-geo sometimes prefixes "-{id}"
+  return `https://www.openstreetmap.org/${osmType[type]}/${cleanId}`
 }
 
 export const historyUrl = (type: 'W' | 'N' | 'R', id: number) => {
   if (!osmType[type]) return undefined
-  return `https://osmlab.github.io/osm-deep-history/#/${osmType[type]}/${id}`
+  const cleanId = Math.abs(id) // tarmag-geo sometimes prefixes "-{id}"
+  return `https://osmlab.github.io/osm-deep-history/#/${osmType[type]}/${cleanId}`
 }
 
 export const mapillaryUrl = (
