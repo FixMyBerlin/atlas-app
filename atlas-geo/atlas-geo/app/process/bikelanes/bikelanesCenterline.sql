@@ -17,7 +17,7 @@ UPDATE "bikelanesCenterline"
   SET osm_id=osm_id*SIGN("offset");
 
 
-INSERT INTO "bikelanes_new"
+INSERT INTO "_bikelanes_temp"
   SELECT osm_type, osm_id, tags, category, meta, geom
   FROM "bikelanesCenterline";
 

@@ -12,12 +12,12 @@ require("categories")
 require("transformations")
 
 local table = osm2pgsql.define_table({
-  name = 'bikelanes_new',
+  name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'category', type = 'text'},
-    { column = 'meta', type = 'jsonb'},
+    { column = 'category', type = 'text' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -27,8 +27,8 @@ local translateTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'category', type = 'text'},
-    { column = 'meta', type = 'jsonb'},
+    { column = 'category', type = 'text' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'offset', type = 'real' }
   }
@@ -40,7 +40,7 @@ local skipTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb'},
+    { column = 'meta', type = 'jsonb' },
     { column = 'reason', type = 'text' },
     { column = 'geom', type = 'linestring' },
   }
@@ -69,8 +69,6 @@ local allowed_tags = Set({
   "traffic_sign",
 })
 
-
-
 local function intoSkipList(object, reason)
   skipTable:insert({
     tags = object.tags,
@@ -82,8 +80,8 @@ end
 
 -- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
 local function transformTags(tags, prefix)
-  local transformedTags = {name = tags.name}
-  for prefixedKey, val  in pairs(tags) do
+  local transformedTags = { name = tags.name }
+  for prefixedKey, val in pairs(tags) do
     if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
       local key = string.sub(prefixedKey, string.len(prefix) + 2)
@@ -140,17 +138,16 @@ function osm2pgsql.process_way(object)
           cycleway._centerline = "projected tag=" .. prefixedSide
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
-            if not (side == "" and sign > 0 and isOneway)  then -- skips implicit case for oneways
-                FilterTags(cycleway, allowed_tags)
-                IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
-                -- isFresh(object, "check_date:cycleway", cycleway)
-                translateTable:insert({
-                  tags = cycleway,
-                  category = category,
-                  meta = Metadata(object),
-                  geom = object:as_linestring(),
-                  offset = sign * offset
-                })
+            if not (side == "" and sign > 0 and isOneway) then -- skips implicit case for oneways
+              FilterTags(cycleway, allowed_tags)
+              IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
+              translateTable:insert({
+                tags = cycleway,
+                category = category,
+                meta = Metadata(object),
+                geom = object:as_linestring(),
+                offset = sign * offset
+              })
             end
           end
         end

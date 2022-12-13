@@ -12,7 +12,7 @@ require("CheckDataWithinYears")
 require("IsFresh")
 
 local table = osm2pgsql.define_table({
-  name = 'lit_new',
+  name = '_lit_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
