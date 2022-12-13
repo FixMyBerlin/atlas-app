@@ -81,10 +81,6 @@ function osm2pgsql.process_way(object)
   object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
 
   local allowed_tags = Set({
-    "_combined_fresh_age_days",
-    "_combined_is_fresh",
-    "_update_fresh_age_days",
-    "_update_is_fresh",
     "access",
     "area",
     "category",
