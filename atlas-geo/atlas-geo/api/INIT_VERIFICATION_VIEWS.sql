@@ -25,7 +25,7 @@ CREATE TABLE {joined_table} AS (
 CREATE INDEX {joined_table}_geom_idx ON {joined_table} USING gist (geom) WITH (fillfactor='100');
 CREATE INDEX {joined_table}_osm_id_idx ON {joined_table} USING btree (osm_id);
 
-CREATE OR REPLACE FUNCTION update_{joined_table}() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+CREATE OR REPLACE FUNCTION atlas_update_{joined_table}() RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 BEGIN
   UPDATE {joined_table}
   SET verified_at = NEW.verified_at,
@@ -36,7 +36,7 @@ BEGIN
 END;
 $$;
 
-DROP TRIGGER IF EXISTS update_{joined_table} ON {verification_table};
-CREATE TRIGGER update_{joined_table}
+DROP TRIGGER IF EXISTS atlas_update_{joined_table} ON {verification_table};
+CREATE TRIGGER atlas_update_{joined_table}
 AFTER INSERT ON {verification_table}
-FOR EACH ROW EXECUTE PROCEDURE update_{joined_table}();
+FOR EACH ROW EXECUTE PROCEDURE atlas_update_{joined_table}();
