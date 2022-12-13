@@ -73,7 +73,6 @@ function osm2pgsql.process_way(object)
 
   -- Freshness of data
   if(object.tags.is_present == true) then
-    -- (0) Only handle cases where our main data is present
     IsFresh(object, 'check_date:lit', object.tags)
   end
 
