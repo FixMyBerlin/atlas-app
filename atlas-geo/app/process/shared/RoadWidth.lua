@@ -1,3 +1,5 @@
+-- * @desc TODO
+-- * @returns 8
 function RoadWidth(tags)
   -- if tags["width"] ~= nil then
   --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())

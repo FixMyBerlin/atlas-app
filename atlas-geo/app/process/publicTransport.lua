@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
 -- require("ToNumber")
@@ -13,7 +13,7 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb'},
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
   }
 })
