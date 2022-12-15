@@ -6,11 +6,10 @@
 
 ## About
 
-Please check out [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app) first.
+This project handles the processing of geo data for [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app).
+The data is selected and optimize to make planning of bicycle infrastructure easier.
 
-This project handles the processing of geo data for `tarmac-app`. It will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with pg_tileserve.
-
-The data we process is selected and optimize to make planning of bicycle infrastructure easier.
+`tarmac-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with `pg_tileserve`. In addition, we support verifying OSM objects in a separate database.
 
 ## Issues
 
@@ -51,10 +50,11 @@ docker compose up -d
 docker compose --profile osm_processing up -d
 ```
 
-> **Warning"" Consider creating the Postgis extension before first run of *app*
-> ```CREATE EXTENSION postgis;```
-
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
+
+> **Warning**
+> You need to create the Postgis extension before first run of `app\`:
+> `CREATE EXTENSION postgis;`
 
 > **Note**
 > We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
@@ -75,10 +75,8 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 
 3. Inspect the new results
 
-**TODOs**
-
-- [ ] Allow editing code direclty inside the docker container, so no rebuild is needed; change the re-generation-part
-- [ ] Split of the downloading of new data
+> **Note**
+> Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
 **Notes**
 
