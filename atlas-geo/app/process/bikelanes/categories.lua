@@ -73,8 +73,10 @@ end
 local function cyclewaySeparated(tags)
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
+  -- (Note: cycleway==track is not very common)
   --    Eg https://www.openstreetmap.org/way/964476026
-  local result = tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes"
+  local result = tags.traffic_sign == "DE:237" and tags.cycleway == "track" and tags.is_sidepath == "yes"
+
   if tags.highway == "cycleway" then
     -- Case: Separate cycleway next to a road
     --    Eg https://www.openstreetmap.org/way/278057274
