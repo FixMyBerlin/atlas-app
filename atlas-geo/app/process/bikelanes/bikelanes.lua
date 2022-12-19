@@ -60,6 +60,7 @@ local allowed_tags = Set({
   "is_sidepath",
   "mtb:scale",
   "name",
+  "oneway", -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   "segregated",
   "smoothness",
   "surface",
