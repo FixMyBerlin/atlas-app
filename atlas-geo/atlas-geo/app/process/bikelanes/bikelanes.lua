@@ -65,7 +65,6 @@ local allowed_tags = Set({
   "smoothness",
   "surface",
   "traffic_sign",
-  "traffic_sign",
   "width", -- experimental
 })
 
