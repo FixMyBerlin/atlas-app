@@ -89,16 +89,12 @@ local function cyclewaySeparated(tags)
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
     result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
+    -- Case: Separate cycleway
+    --    https://www.openstreetmap.org/way/989837901/
+    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil)
   end
   if result then
     return "cyclewaySeparated"
-  end
-end
-
--- TODO: this is bad tagging need to go into the to check list
-local function cyclewayUnspecified(tags)
-  if tags.highway == "cycleway" and tags.bicycle == "yes" then
-    return "cyclewayNEW"
   end
 end
 
