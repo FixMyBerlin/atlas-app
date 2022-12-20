@@ -78,7 +78,7 @@ end
 
 -- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
 local function transformTags(tags, prefix)
-  local transformedTags = { name = tags.name }
+  local transformedTags = { name = tags.name, _projected_tag = prefix }
   for prefixedKey, val in pairs(tags) do
     if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
@@ -120,8 +120,9 @@ function osm2pgsql.process_way(object)
     [":both"] = { -1, 1 },
     [""] = { -1, 1 }
   }
+
+  local width = RoadWidth(object.tags)
   for _, transformation in pairs(Transformations) do
-    local offset = RoadWidth(object.tags) / 2
     for side, signs in pairs(sides) do
       local prefixedSide = transformation.prefix .. side
       if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~= "separate" then
@@ -133,7 +134,6 @@ function osm2pgsql.process_way(object)
         category = CategorizeBikelane(cycleway)
 
         if category ~= nil then
-          cycleway._centerline = "projected tag=" .. prefixedSide
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway) then -- skips implicit case for oneways
@@ -144,7 +144,7 @@ function osm2pgsql.process_way(object)
                 tags = cycleway,
                 meta = Metadata(object),
                 geom = object:as_linestring(),
-                offset = sign * offset
+                offset = sign * width / 2
               })
             end
           end
