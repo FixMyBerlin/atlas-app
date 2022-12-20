@@ -15,8 +15,8 @@ local table = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
     { column = 'category', type = 'text' },
+    { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
@@ -26,8 +26,8 @@ local translateTable = osm2pgsql.define_table({
   name = 'bikelanesCenterline',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
     { column = 'category', type = 'text' },
+    { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'offset', type = 'real' }
@@ -106,8 +106,8 @@ function osm2pgsql.process_way(object)
     FilterTags(object.tags, allowed_tags)
     IsFresh(object, "check_date:cycleway", object.tags)
     table:insert({
-      tags = object.tags,
       category = category,
+      tags = object.tags,
       meta = Metadata(object),
       geom = object:as_linestring()
     })
@@ -141,8 +141,8 @@ function osm2pgsql.process_way(object)
               FilterTags(cycleway, allowed_tags)
               IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
               translateTable:insert({
-                tags = cycleway,
                 category = category,
+                tags = cycleway,
                 meta = Metadata(object),
                 geom = object:as_linestring(),
                 offset = sign * offset
