@@ -22,8 +22,8 @@ local table = osm2pgsql.define_table({
   }
 })
 
-local translateTable = osm2pgsql.define_table({
-  name = 'bikelanesCenterline',
+local transformTable = osm2pgsql.define_table({
+  name = '_bikelanes_transformed',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'category', type = 'text' },
@@ -33,7 +33,6 @@ local translateTable = osm2pgsql.define_table({
     { column = 'offset', type = 'real' }
   }
 })
-
 
 local skipTable = osm2pgsql.define_table({
   name = 'bikelanes_skipList',
@@ -140,7 +139,7 @@ function osm2pgsql.process_way(object)
             if not (side == "" and sign > 0 and isOneway) then -- skips implicit case for oneways
               FilterTags(cycleway, allowed_tags)
               IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
-              translateTable:insert({
+              transformTable:insert({
                 category = category,
                 tags = cycleway,
                 meta = Metadata(object),

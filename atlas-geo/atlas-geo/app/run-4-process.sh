@@ -19,9 +19,11 @@ echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m"
 echo "\e[1m\e[7m PROCESS – Topic: lit \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}lit/lit.lua ${OSM_FILTERED_FILE}
 
-echo "\e[1m\e[7m PROCESS – Topic: bikelanes \e[27m\e[21m"
+echo "\e[1m\e[7m PROCESS – Topic: bikelanes LUA \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}bikelanes/bikelanes.lua ${OSM_FILTERED_FILE}
-psql -q -f "${PROCESS_DIR}bikelanes/bikelanesCenterline.sql"
+
+echo "\e[1m\e[7m PROCESS – Topic: bikelanes SQL \e[27m\e[21m"
+psql -q -f "${PROCESS_DIR}bikelanes/bikelanes.sql"
 
 echo "\e[1m\e[7m PROCESS – Topic: boundaries \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}boundaries.lua ${OSM_FILTERED_FILE}
