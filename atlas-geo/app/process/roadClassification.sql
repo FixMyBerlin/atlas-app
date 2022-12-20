@@ -3,18 +3,18 @@
 -- Filter by Length
 -- ---------------------------
 
--- Whenever we move content to our skipList, that table has to have the same structure (columns).
+-- Reminder: Whenever we move content to our `_excluded` Table, that table has to have the same structure (columns).
 ALTER TABLE "roadClassification" ADD COLUMN IF NOT EXISTS length numeric;
-ALTER TABLE "roadClassification_skipList" ADD COLUMN IF NOT EXISTS length numeric;
+ALTER TABLE "roadClassification_excluded" ADD COLUMN IF NOT EXISTS length numeric;
 
 UPDATE "roadClassification" SET length = ROUND(ST_Length(geom)::numeric, 1);
 
--- TODO: _skipNotes erzeugen
--- TODO: This seems to bee too hard; maybe we should make the _skipNotes a regular column?
--- UPDATE "roadClassification" SET tags = jsonb_set(tags, '{_skipNotes}', ';Skipped (SQL) `length<10`');
+-- TODO: _excludeNotes erzeugen
+-- TODO: This seems to bee too hard; maybe we should make the _excludeNotes a regular column?
+-- UPDATE "roadClassification" SET tags = jsonb_set(tags, '{_excludeNotes}', ';Exclude (SQL) `length<10`');
 
 -- Lets only delete small segments of certain highway types which typically have small non-needed extensions.
-INSERT INTO "roadClassification_skipList" (
+INSERT INTO "roadClassification_excluded" (
   SELECT * FROM "roadClassification"
   WHERE "length" < 20
   AND tags ->> 'highway' IN ('path', 'track', 'footway', 'service')
