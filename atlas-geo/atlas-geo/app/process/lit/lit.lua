@@ -15,6 +15,7 @@ local table = osm2pgsql.define_table({
   name = '_lit_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'category', type = 'text' },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
@@ -54,13 +55,14 @@ function osm2pgsql.process_way(object)
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
+  local category = nil
   if (object.tags.lit) then
-    object.tags.category = "special"
+    category = "special"
     if (object.tags.lit == "yes") then
-      object.tags.category = "lit"
+      category = "lit"
     end
     if (object.tags.lit == "no") then
-      object.tags.category = "unlit"
+      category = "unlit"
     end
   end
 
@@ -102,6 +104,7 @@ function osm2pgsql.process_way(object)
   if object.tags._skip then
   else
     table:insert({
+      category = category,
       tags = object.tags,
       meta = Metadata(object),
       geom = object:as_linestring()
