@@ -4,7 +4,7 @@
 -- because negative offsets reverse the order and we want the right side to be aligned we reverse the order again
 -- additionally we check wether the geometry is `simple` because otherwise we might get a MLString
 -- TODO: check parameters `quad_segs` and  `join`
-UPDATE "bikelanesCenterline"
+UPDATE "_bikelanes_transformed"
   SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.05), "offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 
@@ -13,12 +13,12 @@ UPDATE "bikelanesCenterline"
 
 -- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
 -- In turn this brakes updating tables via osm2pgsql
-UPDATE "bikelanesCenterline"
+UPDATE "_bikelanes_transformed"
   SET osm_id=osm_id*SIGN("offset");
 
 INSERT INTO "_bikelanes_temp"
   SELECT osm_type, osm_id, category, tags, meta, geom
-  FROM "bikelanesCenterline";
+  FROM "_bikelanes_transformed";
 
 -- Query below shows the geometries that would result in MultiLineString
--- SELECT * from "bikelanesCenterline" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
+-- SELECT * from "_bikelanes_transformed" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
