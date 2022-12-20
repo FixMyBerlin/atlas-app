@@ -4,7 +4,7 @@ require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
 require("RoadWidth")
-require("FilterHighways")
+require("ExcludeHighways")
 require("CheckDataWithinYears")
 require("StartsWith")
 require("IsFresh")
@@ -34,8 +34,8 @@ local transformTable = osm2pgsql.define_table({
   }
 })
 
-local skipTable = osm2pgsql.define_table({
-  name = 'bikelanes_skipList',
+local excludeTable = osm2pgsql.define_table({
+  name = 'bikelanes_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -67,8 +67,8 @@ local allowed_tags = Set({
   "width", -- experimental
 })
 
-local function intoSkipList(object, reason)
-  skipTable:insert({
+local function intoExcludeTable(object, reason)
+  excludeTable:insert({
     tags = object.tags,
     meta = Metadata(object),
     reason = reason,
@@ -93,9 +93,9 @@ function osm2pgsql.process_way(object)
   -- filter highway classes
   if not object.tags.highway or not HighwayClasses[object.tags.highway] then return end
 
-  local skip, reason = FilterHighways(object.tags)
-  if skip then
-    intoSkipList(object, reason)
+  local exclude, reason = ExcludeHighways(object.tags)
+  if exclude then
+    intoExcludeTable(object, reason)
     return
   end
 
@@ -153,8 +153,8 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- TODO SKIPLIST: For ZES, we skip "Verbindungsstücke", especially for the "cyclewayAlone" case
+  -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-  intoSkipList(object, "no category applied")
+  intoExcludeTable(object, "no category applied")
 end

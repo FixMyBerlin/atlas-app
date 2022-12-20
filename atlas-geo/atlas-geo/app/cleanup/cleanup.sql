@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS "bikelanes_new";
 DROP TABLE IF EXISTS "lit_TEMP";
 DROP TABLE IF EXISTS "bikelanes_old";
 DROP TABLE IF EXISTS "bikelanes_skipList_old";
+DROP TABLE IF EXISTS "bikelanes_skipList";
 DROP TABLE IF EXISTS "bikelanes_TEMP";
 DROP TABLE IF EXISTS "bikelanesNew";
 DROP TABLE IF EXISTS "bikelanesCenterline";

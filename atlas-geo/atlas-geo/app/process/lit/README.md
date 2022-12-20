@@ -31,5 +31,5 @@
 
 ## Processing helper
 
-- `_skip`
-- `_skipNotes`
+- `_exclude`
+- `_excludeNotes`

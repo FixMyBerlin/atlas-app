@@ -6,8 +6,8 @@ require("ToNumber")
 require("MergeArray")
 require("Metadata")
 require("HighwayClasses")
-require("FilterHighways")
-require("FilterByWidth")
+require("ExcludeHighways")
+require("ExcludeByWidth")
 require("CheckDataWithinYears")
 require("IsFresh")
 
@@ -48,7 +48,7 @@ function osm2pgsql.process_way(object)
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
   if not allowed_values[object.tags.highway] then return end
-  if FilterHighways(object.tags) or FilterByWidth(object.tags, 2.1) then
+  if ExcludeHighways(object.tags) or ExcludeByWidth(object.tags, 2.1) then
     return
   end
 
@@ -101,7 +101,7 @@ function osm2pgsql.process_way(object)
     "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
-  if object.tags._skip then
+  if object.tags._exclude then
   else
     table:insert({
       category = category,

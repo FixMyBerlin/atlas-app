@@ -11,7 +11,7 @@
 
 **Official helper tables**
 
-- `<NAME>_skipList` holds objects that where filtered during processing. This table is useful (only) for debugging.
+- `<NAME>_excluded` holds objects that where filtered during processing. This table is useful (only) for debugging.
 
 **Processing helper tables**
 
