@@ -18,7 +18,7 @@ UPDATE "bikelanesCenterline"
 
 
 INSERT INTO "_bikelanes_temp"
-  SELECT osm_type, osm_id, tags, meta, geom
+  SELECT osm_type, osm_id, tags, category, meta, geom
   FROM "bikelanesCenterline";
 
 -- Query below shows the geometries that would result in MultiLineString

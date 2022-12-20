@@ -16,6 +16,7 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'category', type = 'text' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
@@ -26,6 +27,7 @@ local translateTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'category', type = 'text' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'offset', type = 'real' }
@@ -99,12 +101,13 @@ function osm2pgsql.process_way(object)
   end
 
   -- categorize bike lanes (flat)
-  object.tags.category = CategorizeBikelane(object.tags)
-  if object.tags.category ~= nil then
+  local category = CategorizeBikelane(object.tags)
+  if category ~= nil then
     FilterTags(object.tags, allowed_tags)
     IsFresh(object, "check_date:cycleway", object.tags)
     table:insert({
       tags = object.tags,
+      category = category,
       meta = Metadata(object),
       geom = object:as_linestring()
     })
@@ -124,21 +127,22 @@ function osm2pgsql.process_way(object)
       local prefixedSide = transformation.prefix .. side
       if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~= "separate" then
         -- this is the transformation:
-        local cyclewayTags = transformTags(object.tags, prefixedSide)
-        cyclewayTags.highway = transformation.highway
-        cyclewayTags[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
+        local cycleway = transformTags(object.tags, prefixedSide)
+        cycleway.highway = transformation.highway
+        cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
 
-        cyclewayTags.category = CategorizeBikelane(cyclewayTags)
+        category = CategorizeBikelane(cycleway)
 
-        if cyclewayTags.category ~= nil then
-          cyclewayTags._centerline = "projected tag=" .. prefixedSide
+        if category ~= nil then
+          cycleway._centerline = "projected tag=" .. prefixedSide
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway) then -- skips implicit case for oneways
-              FilterTags(cyclewayTags, allowed_tags)
-              IsFresh(object, "check_date:" .. transformation.prefix, cyclewayTags)
+              FilterTags(cycleway, allowed_tags)
+              IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
               translateTable:insert({
-                tags = cyclewayTags,
+                tags = cycleway,
+                category = category,
                 meta = Metadata(object),
                 geom = object:as_linestring(),
                 offset = sign * offset
