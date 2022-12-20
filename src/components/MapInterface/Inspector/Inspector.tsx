@@ -116,7 +116,7 @@ export const Inspector: React.FC = () => {
                       <VerificationActions
                         apiIdentifier={sourceData.apiVerificationIdentifier}
                         visible={allowVerify}
-                        disabled={!properties?.is_present}
+                        disabled={!properties?.category}
                         osmId={properties.osm_id}
                         verificationStatus={verificationStatus}
                       />
