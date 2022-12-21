@@ -1,12 +1,17 @@
-# About and how to use
+# About
+
+- `helper` are utility functions that extend LUA.
+- Shared functions that work on/with our data belong into `shared`.
+
+# How to use
 
 - One helper per file. (Or at least one topic per file.)
 
-- To use helper, put … at the top of your file:
+- To use helper, put the code below at the top of your file:
 
 ```lua
 package.path = package.path .. ";/app/process/helper/?.lua"
-require("HelperFileName")
+require("FileName")
 ```
 
 `require` works very differently to what I was expecting. More at https://www.lua.org/pil/8.1.html.
