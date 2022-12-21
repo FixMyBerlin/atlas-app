@@ -1,18 +1,19 @@
-package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
+
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
+
 
 local table = osm2pgsql.define_table({
   name = 'metadata',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
   }
 })
@@ -28,11 +29,10 @@ function osm2pgsql.process_node(object)
   if object.tags.name == "Changing Cities" then
     local allowed_tags = Set({ "name", "office", "operator" })
     FilterTags(object.tags, allowed_tags)
-    AddMetadata(object)
-    AddUrl("node", object)
 
     table:insert({
       tags = object.tags,
+      meta = Metadata(object),
       geom = object:as_point()
     })
   end
