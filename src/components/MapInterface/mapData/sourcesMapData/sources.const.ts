@@ -101,7 +101,7 @@ export const sources: MapDataSource<
     apiExportIdentifier: 'bikelanes_verified',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'highway', 'name'],
+    documentedKeys: ['category', 'oneway__if_present', 'highway', 'name'],
     highlightingKey: 'osm_id',
   },
   {
