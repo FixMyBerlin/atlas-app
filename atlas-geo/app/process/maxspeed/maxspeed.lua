@@ -52,6 +52,7 @@ require("AddUrl")
 require("HighwayClasses")
 require("AddSkipInfoToHighways")
 require("StartsWith")
+require("CheckDataWithinYears")
 
 -- Define tables with all bicycle related roads what contain speed values
 local table =
@@ -97,7 +98,7 @@ function osm2pgsql.process_way(object)
   if not allowed_values[object.tags.highway] then
     return
   end
-  object.tags._skipNotes = "Skipped by default `true`"
+  object.tags._skipNotes = "init"
   object.tags._skip = true
   object.tags._todo = false
 
@@ -135,6 +136,7 @@ function osm2pgsql.process_way(object)
 
   if object.tags.highway == "living_street" and not object.tags.bicycle == "no" then
     object.tags.category = "livingStreet"
+    object.tags.maxspeed = "Verkehrsberuhigter Bereich"
     object.tags._skip = false
   end
 
@@ -168,8 +170,10 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
-  if object.tags.maxspeed then
+
+   -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
+   if object.tags.maxspeed then
+    object.tags.is_present = true
     if object.tags._skip == true then
       -- maxspeed available but path type not correct -> _skip table
       object.tags._todo = false
@@ -179,6 +183,7 @@ function osm2pgsql.process_way(object)
       object.tags._skip = false
     end
   else
+    object.tags.is_present = false
     if object.tags._skip == true then
       -- maxspeed not available and path type is not correct -> _skip table
       object.tags._todo = false
@@ -190,6 +195,16 @@ function osm2pgsql.process_way(object)
     end
   end
 
+
+  if object.tags.maxspeed then
+  --  - maxspeed = <zahl>
+    object.tags._maxspeed_source = "maxspeed-tag"
+  else
+    object.tags._maxspeed_source  = "source tag"
+
+  end
+  --  - maxspeed = <zahl> inferred from source tag
+
   -- wenn maxspeed
   --  - maxspeed = <zahl>
   --  - _maxspeed_source = "maxspeed-tag"
@@ -198,6 +213,71 @@ function osm2pgsql.process_way(object)
   --  - maxspeed = <zahl> inferred from source tag
   --  - _maxspec_source = "source tag"
   --  (szenarien de:urbuan, de:rural, bike_roads,  verschiedene zonen)
+
+  if (object.tags["maxspeed:type"] == "DE:bicycle_road" or  object.tags["source:maxspeed"] == "DE:bicycle_road") and not(object.tags.maxspeed) then
+    object.tags["maxspeed"] = "30"
+  end
+
+-- Pick the highest value if multiple present.
+--if (object.tags["maxspeed:forward"]) and ((object.tags["maxspeed:forward"]) or (object.tags["maxspeed:backward"])) then
+--   local maxspeed_local = math.max(tonumber(object.tags["maxspeed:forward"]),tonumber(object.tags["maxspeed:backward"]))
+--   object.tags.maxspeed = maxspeed_local
+--   object.tags._todo = false
+--  object.tags._skip = false
+--  object.tags.maxspeed_split =maxspeed_local
+--  end
+
+
+  if object.tags["maxspeed:forward"] then
+    object.tags.maxspeed = object.tags["maxspeed:forward"]
+    object.tags._todo = false
+    object.tags._skip = false 
+  end
+  if object.tags["maxspeed:backward"] then
+    object.tags.maxspeed = object.tags["maxspeed:backward"]
+    object.tags._todo = false
+     object.tags._skip = false
+  end
+  
+    -- Translate maxspeed:type (and tagging variants) to maxspeed
+    if (object.tags["maxspeed:type"] == "DE:urban" or  object.tags["source:maxspeed"] == "DE:urban") then
+      object.tags.maxspeed = "50"
+      object.tags._todo = false
+      object.tags._skip = false
+    end
+ 
+    -- https://wiki.openstreetmap.org/wiki/DE:Key:maxspeed#Beispiele
+    if (object.tags["maxspeed:type"] == "DE:rural" or object.tags["source:maxspeed"] == "DE:rural") then
+      object.tags.maxspeed = "100"
+      object.tags._todo = false
+      object.tags._skip = false
+    end
+  
+    if (object.tags["maxspeed:type"] == "DE:zone30" or object.tags["source:maxspeed"] == "DE:zone:30" or
+      object.tags["source:maxspeed"] == "DE:zone30" or object.tags["zone:maxspeed"] == "DE:30" or
+      object.tags["zone:maxspeed"] == "30") then
+        object.tags.maxspeed = "30"
+        object.tags._todo = false
+        object.tags._skip = false
+      end
+  
+    if (object.tags["maxspeed:type"] == "DE:zone20" or object.tags["source:maxspeed"] == "DE:zone:20" or
+      object.tags["source:maxspeed"] == "DE:zone20" or object.tags["zone:maxspeed"] == "DE:20" or
+      object.tags["zone:maxspeed"] == "20")
+    then
+      object.tags.maxspeed = "20"
+      object.tags._todo = false
+      object.tags._skip = false
+    end
+  
+    -- Add note about conditional maxspeed
+    if (object.tags["maxspeed:conditional"]) then
+      object.tags.maxspeed = "Angabe mit Einschränkungen"
+      object.tags._todo = false
+      object.tags._skip = false
+    end
+  
+
   --  siehe auch https://github.com/FixMyBerlin/osm-scripts/blob/main/utils/Highways-MaxspeedData/utils/addMaxspeedProperty.ts
   --  verkehrsberuhigere bereich als string (nicht als Zahl)
   -- debugging-todos:
@@ -225,17 +305,28 @@ function osm2pgsql.process_way(object)
   -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
   --    wenn primärdaten vorhanden, dann is_present=true
 
-  -- "Freshness of data" in Datei lit.lua
-  -- Gern abstrahieren in helper.
+ 
+ 
+  -- Freshness of data
+  CheckDate(object, object.tags.maxspeed)
 
   -- all tags that are shown on the application
   local allowed_tags =
   Set(
     {
-      "_centerline",
       "_skip",
       "_skipNotes",
+      "is_present",
+      "_combined_fresh_age_days",
+      "_combined_is_fresh",
+      "_update_fresh_age_days",
+      "_update_is_fresh",
+      "_centerline",
+      "_maxspeed_source",
       "_todo",
+      "fresh",
+      "fresh_age_days",
+      "_freshNotes",
       "bicycle_road",
       "bicycle",
       "category",
@@ -245,12 +336,15 @@ function osm2pgsql.process_way(object)
       "residential",
       "highway",
       "maxspeed",
+      "maxspeed:forward",
+      "maxspeed:backword",
       "maxspeed:conditional", -- show if present; details TBD
       "source:maxspeed", -- only for debugging in webapp
       "maxspeed:type", -- only for debugging in webapp
       "zone:maxspeed", -- only for debugging in webapp
       "zone_traffic",
-      "traffic_sign" -- only for debugging in webapp
+      "traffic_sign",
+      "maxspeed_split" -- only for debugging in webapp
     }
   )
 
@@ -278,9 +372,6 @@ function osm2pgsql.process_way(object)
   end
 
   if object.tags._skip == false and object.tags._todo == false then
-    object.tags._skip = nil
-    object.tags._skipNotes = nil
-    object.tags._todo = nil
     table:insert(
       {
         tags = object.tags,
