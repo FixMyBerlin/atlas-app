@@ -2,8 +2,8 @@
 --    If present, use `date_tag` (high confidence).
 --    Fall back to `object.timestamp` (low confidence).
 -- * @returns
---   `dest` if provided with freshness-tags added to it.
---   Otherwise a new object with freshness-tags is returned.
+--   `dest` with freshness-tags added to it.
+--   If no parameter was provided a new object gets created.
 function IsFresh(object, date_tag, dest)
   dest = dest or {}
 
