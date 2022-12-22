@@ -174,7 +174,7 @@ function osm2pgsql.process_way(object)
               object.tags["data:"..sign2side[sign]] = "not expected"
             end
           elseif transformation.prefix == 'bicycle' then
-            -- we have data
+            -- we (should) have data
             object.tags["data:"..sign2side[sign]] = "present"
           end
         end
