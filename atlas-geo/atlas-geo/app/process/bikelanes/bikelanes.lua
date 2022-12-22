@@ -136,7 +136,7 @@ function osm2pgsql.process_way(object)
         if category ~= nil then
           for _, sign in pairs(signs) do
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
-            if not (side == "" and sign > 0 and isOneway) then -- skips implicit case for oneways TODO: dont skip on sidewalk transformation
+            if not (side == "" and sign > 0 and isOneway and transformation.prefix == 'bicycle') then
               FilterTags(cycleway, allowed_tags)
               IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
               transformTable:insert({
