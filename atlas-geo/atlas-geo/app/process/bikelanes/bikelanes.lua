@@ -78,7 +78,7 @@ end
 
 -- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
 local function transformTags(tags, prefix)
-  local transformedTags = { name = tags.name, _projected_tag = prefix }
+  local transformedTags = { _projected_tag = prefix }
   for prefixedKey, val in pairs(tags) do
     if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
@@ -87,6 +87,27 @@ local function transformTags(tags, prefix)
     end
   end
   return transformedTags
+end
+
+function applyTransformation(object, transformation)
+  local result = {}
+  local sides = {
+    [":right"] = { -1 },
+    [":left"] = { 1 },
+    [":both"] = { -1, 1 },
+    [""] = { -1, 1 }
+  }
+  for side, signs in pairs(sides) do
+    local prefixedSide = transformation.prefix .. side
+    local cycleway = transformTags(object.tags, prefixedSide)
+    cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
+    cycleway.highway = transformation.highway
+    cycleway.name = object.name
+    IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
+    -- post processing to filter oneway
+    result[cycleway] = signs
+  end
+  return result
 end
 
 function osm2pgsql.process_way(object)
@@ -121,20 +142,20 @@ function osm2pgsql.process_way(object)
     [""] = { -1, 1 }
   }
 
+  local sign2side = { [1] = "left", [-1]="right"}
+
   local width = RoadWidth(object.tags)
   for _, transformation in pairs(Transformations) do
     for side, signs in pairs(sides) do
       local prefixedSide = transformation.prefix .. side
-      if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~= "separate" then
-        -- this is the transformation:
-        local cycleway = transformTags(object.tags, prefixedSide)
-        cycleway.highway = transformation.highway
-        cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
-
-        category = CategorizeBikelane(cycleway)
-
-        if category ~= nil then
-          for _, sign in pairs(signs) do
+      -- this is the transformation:
+      local cycleway = transformTags(object.tags, prefixedSide)
+      cycleway.highway = transformation.highway
+      cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
+      category = CategorizeBikelane(cycleway)
+      if category ~= nil then
+        for _, sign in pairs(signs) do
+          if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~= "separate" then
             local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
             if not (side == "" and sign > 0 and isOneway and transformation.prefix == 'bicycle') then
               FilterTags(cycleway, allowed_tags)
@@ -146,12 +167,22 @@ function osm2pgsql.process_way(object)
                 geom = object:as_linestring(),
                 offset = sign * width / 2
               })
+              -- we have data
+              object.tags["data:"..sign2side[sign]] = "present"
+            else
+              -- we don't expect data
+              object.tags["data:"..sign2side[sign]] = "not expected"
             end
+          elseif transformation.prefix == 'bicycle' then
+            -- we have data
+            object.tags["data:"..sign2side[sign]] = "present"
           end
         end
       end
     end
   end
+
+  -- TODO: Filter ways where we dont expect bicycle infrastructure
 
   -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
