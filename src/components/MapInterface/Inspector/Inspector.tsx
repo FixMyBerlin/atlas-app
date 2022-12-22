@@ -88,6 +88,18 @@ export const Inspector: React.FC = () => {
                 title={<FormattedMessage id={`title--${sourceKey}`} />}
                 objectId={properties.osm_id}
               >
+                {properties._projected_from && (
+                  <details className="prose prose-sm rounded bg-purple-100 p-1 py-1.5 px-4">
+                    <summary>Hinweis: Projizierte Geometrie</summary>
+                    Diese Geometrie wurde im Rahmen der Datenaufbereitung
+                    künstlich erstellt. In OpenStreetMap sind die Daten an der
+                    Straßen-Geometrie erfasst. Durch die Datenaufbereitung
+                    können die Attribute kompfortabler analysiert und geprüft
+                    werden. Sie sorgt aber auch dafür, dass Verbindungspunkte
+                    kleine Kanten und Lücken aufweisen können.
+                  </details>
+                )}
+
                 <div className="py-1">{/* Spacer */}</div>
                 <TagsTable
                   properties={properties}
