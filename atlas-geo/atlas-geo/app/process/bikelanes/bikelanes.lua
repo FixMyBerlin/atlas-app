@@ -45,6 +45,17 @@ local excludeTable = osm2pgsql.define_table({
   }
 })
 
+local presenceTable = osm2pgsql.define_table({
+  name = 'bikelanes_presence',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+    { column = 'left', type = 'text'},
+    { column = 'right', type = 'text'},
+  }
+})
+
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
   "_projected_tag",
@@ -120,14 +131,16 @@ function osm2pgsql.process_way(object)
     return
   end
 
+  local tags = object.tags
+
   -- categorize bike lanes (flat)
-  local category = CategorizeBikelane(object.tags)
+  local category = CategorizeBikelane(tags)
   if category ~= nil then
-    FilterTags(object.tags, allowed_tags)
-    IsFresh(object, "check_date:cycleway", object.tags)
+    FilterTags(tags, allowed_tags)
+    IsFresh(object, "check_date:cycleway", tags)
     table:insert({
       category = category,
-      tags = object.tags,
+      tags = tags,
       meta = Metadata(object),
       geom = object:as_linestring()
     })
@@ -141,25 +154,29 @@ function osm2pgsql.process_way(object)
     [":both"] = { -1, 1 },
     [""] = { -1, 1 }
   }
-
-  local sign2side = { [1] = "left", [-1]="right"}
-
-  local width = RoadWidth(object.tags)
+  local width = RoadWidth(tags)
+  local presence = {[1] = nil, [-1] = nil}
   for _, transformation in pairs(Transformations) do
     for side, signs in pairs(sides) do
-      local prefixedSide = transformation.prefix .. side
+      local prefix = transformation.prefix
+      local prefixedSide = prefix .. side
       -- this is the transformation:
-      local cycleway = transformTags(object.tags, prefixedSide)
+      local cycleway = transformTags(tags, prefixedSide)
       cycleway.highway = transformation.highway
-      cycleway[transformation.prefix] = object.tags[prefixedSide] -- project `prefix:side` to `prefix`
+      cycleway[prefix] = tags[prefixedSide] -- project `prefix:side` to `prefix`
       category = CategorizeBikelane(cycleway)
-      if category ~= nil then
-        for _, sign in pairs(signs) do
-          if object.tags[prefixedSide] ~= "no" and object.tags[prefixedSide] ~= "separate" then
-            local isOneway = object.tags['oneway'] == 'yes' and object.tags['oneway:bicycle'] ~= 'no'
-            if not (side == "" and sign > 0 and isOneway and transformation.prefix == 'bicycle') then
+      for _, sign in pairs(signs) do
+        if cycleway[prefix] == "no" or cycleway[prefix] == "separate" then
+          if prefix == 'cycleway' then
+            -- we might have data but need to find it
+            presence[sign] = presence[sign] or "present"
+          end
+        else
+          local isOneway = tags['oneway'] == 'yes' and tags['oneway:bicycle'] ~= 'no'
+          if not (side == "" and sign > 0 and isOneway and prefix == 'bicycle') then
+            if category ~= nil then
               FilterTags(cycleway, allowed_tags)
-              IsFresh(object, "check_date:" .. transformation.prefix, cycleway)
+              IsFresh(object, "check_date:" .. prefix, cycleway)
               transformTable:insert({
                 category = category,
                 tags = cycleway,
@@ -167,25 +184,38 @@ function osm2pgsql.process_way(object)
                 geom = object:as_linestring(),
                 offset = sign * width / 2
               })
-              -- we have data
-              object.tags["data:"..sign2side[sign]] = "present"
-            else
-              -- we don't expect data
-              object.tags["data:"..sign2side[sign]] = "not expected"
+              -- we have data and know it
+              presence[sign] = presence[sign] or "present"
             end
-          elseif transformation.prefix == 'bicycle' then
-            -- we (should) have data
-            object.tags["data:"..sign2side[sign]] = "present"
+          else
+            -- we don't expect data
+            presence[sign] = presence[sign] or "not expected"
           end
         end
       end
     end
   end
 
-  -- TODO: Filter ways where we dont expect bicycle infrastructure
-
+  -- Filter ways where we dont expect bicycle infrastructure
+  -- TODO: filter on surface and traffic zone
+  -- TODO 2: into excludeTable
+  if Set({"path", "track", "residential", "unclassified", "service", "living_street", "pedestrian"," service", "motorway_link", "motorway", "footway", "steps"})[tags.highway] then
+    intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
+    return
+  elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
+    intoExcludeTable(object, "no (extra) infrastructure expected for motorroad, express way and cycle streets")
+    return
+  -- elseif tags.maxspeed and tags.maxspeed <= 20 then
+  --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
+  --   return
+  end
   -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-  intoExcludeTable(object, "no category applied")
+  presenceTable:insert({
+    tags = tags,
+    geom = object:as_linestring(),
+    left = presence[1] or "no",
+    right = presence[-1] or "no"
+  })
 end
