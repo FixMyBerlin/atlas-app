@@ -111,7 +111,7 @@ end
 -- Eg. https://www.openstreetmap.org/way/27701956
 -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
 -- tag: "cyclewayAlone"
-local function cycleWayAlone(tags)
+local function cyclewayAlone(tags)
   local result = tags.highway == "cycleway" and tags.traffic_sign == "DE:237"
   result = result and (tags.is_sidepath == nil or tags.is_sidepath == "no")
   if result then
@@ -119,9 +119,16 @@ local function cycleWayAlone(tags)
   end
 end
 
+local function cyclewayBuslane(tags)
+  -- TODO: check for other cases
+  if tags.highway == "cycleway" and tags.cycleway == "share_busway" then
+    return "cyclewayAlone"
+  end
+end
+
 function CategorizeBikelane(tags)
   local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
+    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
     if category ~= nil then
