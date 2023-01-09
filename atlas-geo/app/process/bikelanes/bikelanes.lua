@@ -199,7 +199,7 @@ function osm2pgsql.process_way(object)
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone
   -- TODO 2: into excludeTable
-  if Set({"path", "track", "residential", "unclassified", "service", "living_street", "pedestrian"," service", "motorway_link", "motorway", "footway", "steps"})[tags.highway] then
+  if Set({"path", "cycleway", "track", "residential", "unclassified", "service", "living_street", "pedestrian"," service", "motorway_link", "motorway", "footway", "steps"})[tags.highway] then
     intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
     return
   elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
