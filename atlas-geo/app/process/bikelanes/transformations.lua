@@ -8,16 +8,55 @@
 -- `category` the category of the transformed cycleway
 -- return an int which gets added onto the offset value
 
--- footway transformer: transforms all sidewalk:<side>:bicycle = val
-local footwayTransformation = {
-  highway = "footway",
-  prefix = "sidewalk",
-}
+require("PrintTable")
 
--- cycleway transformer:
-local cyclewayTransformation = {
-  highway = "cycleway",
-  prefix = "cycleway",
-}
 
-Transformations = { footwayTransformation, cyclewayTransformation }
+-- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
+local function transformTags(tags, side, transformation)
+  local prefix = transformation.prefix
+  local prefixedSide = prefix .. side
+  if tags[prefixedSide] == nil then
+    return
+  end
+
+  local transformedTags = {
+    highway = transformation.highway,
+    [prefix] = tags[prefixedSide], -- self projection
+    _projected_to = prefix,
+    _projected_from = prefixedSide,
+  }
+  for prefixedKey, val in pairs(tags) do
+    if prefixedKey ~= prefixedSide and StartsWith(prefixedKey, prefixedSide) then
+      -- offset of 2 due to 1-indexing and for removing the ':'
+      local key = string.sub(prefixedKey, string.len(prefixedSide) + 2)
+      transformedTags[key] = val
+    end
+  end
+  return transformedTags
+end
+
+
+function GetTransformedObjects(object, transformations)
+  local sides = {
+    [":right"] = { -1 },
+    [":left"] = { 1 },
+    [":both"] = { -1, 1 },
+    [""] = { -1, 1 },
+  }
+  local transformedObjects = {};
+  for _, transformation in pairs(transformations) do
+    for side, signs in pairs(sides) do
+
+      for _, sign in pairs(signs) do
+      -- PrintTable(signs)
+      -- this is the transformation:
+        local cycleway = transformTags(object.tags, side, transformation)
+        if cycleway ~= nil then
+          cycleway.sign = sign
+          table.insert(transformedObjects, cycleway)
+        end
+      end
+    end
+  end
+  return transformedObjects
+end

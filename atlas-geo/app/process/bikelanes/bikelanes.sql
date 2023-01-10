@@ -5,9 +5,13 @@
 -- additionally we check wether the geometry is `simple` because otherwise we might get a MLString
 -- TODO: check parameters `quad_segs` and  `join`
 UPDATE "_bikelanes_transformed"
-  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.05), "offset", 'quad_segs=4 join=round'), 3857))
+  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 
+
+UPDATE "_synthetic_excluded"
+  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 1), "offset", 'quad_segs=4 join=round'), 3857))
+  WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "offset"!=0;
 --IDEA: maybe we can transform closed geometries with some sort of buffer function:
 -- at least for the cases where we buffer "outside"(side=right) this should always yield a LineString
 

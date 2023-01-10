@@ -1,11 +1,28 @@
 -- PREDICATES FOR EACH CATEGORY:
--- maybe switch to returning the category instead of mutating the input
+
+local function seperateOrNo(value)
+  return value == 'no' or value == 'separate'
+end
+
+local function onlyData(tags)
+  if seperateOrNo(tags.cycleway) then
+    return 'only_data'
+  end
+end
+
+local function implicitOneWay(tags)
+  local result = tags.oneway == 'yes' and tags['oneway:bicycle'] ~= 'no'
+  result = result and tags['_projected_from'] == 'bicycle' and tags.sign == 1 --
+  if result then
+    return 'not_expected'
+  end
+end
 
 -- Handle `highway=pedestrian + bicycle=yes/!=yes`
 -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
 local function pedestiranArea(tags)
-  local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
+  local result = tags.highway == "pedestrian" and tags.bicycle == "yes"
   if result then
     return "pedestrianArea_bicycleYes"
   end
@@ -36,6 +53,7 @@ end
 local function footAndCycleway(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   result = result or StartsWith(tags.traffic_sign, "DE:240")
+  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footAndCycleway_shared"
   end
@@ -47,6 +65,7 @@ end
 local function footAndCyclewaySegregated(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   result = result or StartsWith(tags.traffic_sign, "DE:241")
+  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footAndCycleway_segregated"
   end
@@ -63,6 +82,7 @@ local function footwayBicycleAllowed(tags)
   -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
+  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footway_bicycleYes"
   end
@@ -71,12 +91,13 @@ end
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewaySeparated(tags)
+
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   -- (Note: cycleway==track is not very common)
   --    Eg https://www.openstreetmap.org/way/964476026
-  local result = tags.traffic_sign == "DE:237" and tags.cycleway == "track" and tags.is_sidepath == "yes"
-
+  local result = tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes"
+  result = result and (tags.cycleway == "track" or tags.cycleway == "opposite_track")
   if tags.highway == "cycleway" then
     -- Case: Separate cycleway next to a road
     --    Eg https://www.openstreetmap.org/way/278057274
@@ -127,7 +148,7 @@ local function cyclewayBuslane(tags)
 end
 
 function CategorizeBikelane(tags)
-  local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
+  local categories = { onlyData, implicitOneWay, pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
     footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
