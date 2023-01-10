@@ -189,7 +189,7 @@ function osm2pgsql.process_way(object)
             end
           else
             -- we don't expect data
-            presence[sign] = presence[sign] or "not expected"
+            presence[sign] = presence[sign] or "not_expected"
           end
         end
       end
