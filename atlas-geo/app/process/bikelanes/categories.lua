@@ -10,9 +10,8 @@ end
 
 -- this category is for the implicit absence in oneways
 local function implicitOneWay(tags)
-  local result = tags.parent ~= nil
+  local result = tags.parent ~= nil and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
-  result = result and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
   result = result and tags.sign > 0  -- it's the left object (in driving direction)
   if result then
     return 'not_expected'
