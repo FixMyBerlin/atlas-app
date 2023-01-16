@@ -106,12 +106,15 @@ function osm2pgsql.process_way(object)
   }
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
-
-  local width = RoadWidth(tags)
-  local presence = {[1] = nil, [0] = nil, [-1] = nil}
+  -- generate cycleways from center line tagging
   local cycleways = GetTransformedObjects(tags, transformations);
+  -- add the original object with `sign=0`
   tags.sign = 0
   table.insert(cycleways, tags)
+
+
+  local presence = {[1] = nil, [0] = nil, [-1] = nil}
+  local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local category = CategorizeBikelane(cycleway)
     if category ~= nil then
