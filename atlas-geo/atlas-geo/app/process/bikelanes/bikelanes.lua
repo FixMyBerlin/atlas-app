@@ -12,26 +12,27 @@ require("categories")
 require("transformations")
 require("PrintTable")
 
--- local table = osm2pgsql.define_table({
---   name = '_bikelanes_temp',
---   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
---   columns = {
---     { column = 'category', type = 'text' },
---     { column = 'tags', type = 'jsonb' },
---     { column = 'meta', type = 'jsonb' },
---     { column = 'geom', type = 'linestring' },
---   }
--- })
-
-local transformTable = osm2pgsql.define_table({
-  name = '_bikelanes_transformed',
+local categoryTable = osm2pgsql.define_table({
+  name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'category', type = 'text' },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
-    { column = 'offset', type = 'real' }
+    { column = '_offset', type = 'real' }
+  }
+})
+
+local presenceTable = osm2pgsql.define_table({
+  name = 'bikelanes_presence',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+    { column = 'left', type = 'text'},
+    { column = 'self', type = 'text'},
+    { column = 'right', type = 'text'},
   }
 })
 
@@ -46,17 +47,6 @@ local excludeTable = osm2pgsql.define_table({
   }
 })
 
-local presenceTable = osm2pgsql.define_table({
-  name = 'bikelanes_presence',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-    { column = 'left', type = 'text'},
-    { column = 'right', type = 'text'},
-  }
-})
-
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
   "_projected_from",
@@ -64,7 +54,7 @@ local allowed_tags = Set({
   "access",
   "bicycle_road",
   "bicycle",
-  "category",
+  "conditional",
   "cycleway",
   "foot",
   "footway",
@@ -118,7 +108,7 @@ function osm2pgsql.process_way(object)
 
 
   local width = RoadWidth(tags)
-  local presence = {[1] = nil, [-1] = nil}
+  local presence = {[1] = nil, [0] = nil, [-1] = nil}
   local cycleways = GetTransformedObjects(tags, transformations);
   tags.sign = 0
   table.insert(cycleways, tags)
@@ -132,20 +122,32 @@ function osm2pgsql.process_way(object)
         freshTag = "check_date:" .. cycleway._projected_to
       end
       IsFresh(object, freshTag, cycleway)
-      transformTable:insert({
+      categoryTable:insert({
         category = category,
         tags = cycleway,
         meta = Metadata(object),
         geom = object:as_linestring(),
-        offset = sign * width / 2
+        _offset = sign * width / 2
       })
       presence[sign] = presence[sign] or category
     end
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed
-  if not (presence[-1] or presence[1]) then
-    if Set({"path", "cycleway", "track", "residential", "unclassified", "service", "living_street", "pedestrian"," service", "motorway_link", "motorway", "footway", "steps"})[tags.highway] then
+  if not (presence[-1] or presence[0] or presence[1]) then
+    if Set({"path",
+            "cycleway",
+            "track",
+            "residential",
+            "unclassified",
+            "service",
+            "living_street",
+            "pedestrian",
+            "service",
+            "motorway_link",
+            "motorway",
+            "footway",
+            "steps"})[tags.highway] then
       intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
@@ -165,6 +167,7 @@ function osm2pgsql.process_way(object)
     tags = tags,
     geom = object:as_linestring(),
     left = presence[1] or "no",
+    self = presence[0] or "no",
     right = presence[-1] or "no"
   })
 end
