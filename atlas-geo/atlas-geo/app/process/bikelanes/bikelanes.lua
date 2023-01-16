@@ -12,16 +12,16 @@ require("categories")
 require("transformations")
 require("PrintTable")
 
-local table = osm2pgsql.define_table({
-  name = '_bikelanes_temp',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'category', type = 'text' },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
+-- local table = osm2pgsql.define_table({
+--   name = '_bikelanes_temp',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'category', type = 'text' },
+--     { column = 'tags', type = 'jsonb' },
+--     { column = 'meta', type = 'jsonb' },
+--     { column = 'geom', type = 'linestring' },
+--   }
+-- })
 
 local transformTable = osm2pgsql.define_table({
   name = '_bikelanes_transformed',
@@ -101,47 +101,37 @@ function osm2pgsql.process_way(object)
 
   local tags = object.tags
 
-  -- categorize bike lanes (flat)
-  local category = CategorizeBikelane(tags)
-  if category ~= nil then
-    FilterTags(tags, allowed_tags)
-    IsFresh(object, "check_date:cycleway", tags)
-    table:insert({
-      category = category,
-      tags = tags,
-      meta = Metadata(object),
-      geom = object:as_linestring()
-    })
-    return
-  end
-
-  -- categorize bike lanes (nested)
--- footway transformer: transforms all sidewalk:<side>:bicycle = val
+  -- transformations
   local footwayTransformation = {
     highway = "footway",
     prefix = "sidewalk",
+    filter = function(tags)
+      return not(tags.footway=='no' or tags.footway == 'separate')
+    end
   }
-
   -- cycleway transformer:
   local cyclewayTransformation = {
     highway = "cycleway",
     prefix = "cycleway",
   }
-
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
+
 
   local width = RoadWidth(tags)
   local presence = {[1] = nil, [-1] = nil}
-  local cycleways = GetTransformedObjects(object, transformations);
-  print("\n\n ")
+  local cycleways = GetTransformedObjects(tags, transformations);
+  tags.sign = 0
+  table.insert(cycleways, tags)
   for _, cycleway in pairs(cycleways) do
-    -- print(cycleway.sign)
-    PrintTable(cycleway)
-    category = CategorizeBikelane(cycleway)
+    local category = CategorizeBikelane(cycleway)
     if category ~= nil then
       local sign = cycleway.sign
       FilterTags(cycleway, allowed_tags)
-      -- IsFresh(object, "check_date:" .. cycleway._projected_to, cycleway)
+      local freshTag = "check_date"
+      if cycleway._projected_to then
+        freshTag = "check_date:" .. cycleway._projected_to
+      end
+      IsFresh(object, freshTag, cycleway)
       transformTable:insert({
         category = category,
         tags = cycleway,
@@ -166,6 +156,7 @@ function osm2pgsql.process_way(object)
     --   return
     end
   end
+
   -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
