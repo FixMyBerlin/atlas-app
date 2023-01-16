@@ -8,52 +8,49 @@
 -- `category` the category of the transformed cycleway
 -- return an int which gets added onto the offset value
 
-require("PrintTable")
-
-
--- transform all tags from ["prefix:subtag"]=val -> ["subtag"]=val
-local function transformTags(tags, side, transformation)
-  local prefix = transformation.prefix
-  local prefixedSide = prefix .. side
-  if tags[prefixedSide] == nil then
-    return
-  end
-
-  local transformedTags = {
-    highway = transformation.highway,
-    [prefix] = tags[prefixedSide], -- self projection
-    _projected_to = prefix,
-    _projected_from = prefixedSide,
-  }
+-- unnest all tags from ["prefix:subtag"]=val -> ["subtag"]=val
+local function unnestTags(tags, prefix, dest)
+  dest = dest or {}
+  dest.parent = tags
   for prefixedKey, val in pairs(tags) do
-    if prefixedKey ~= prefixedSide and StartsWith(prefixedKey, prefixedSide) then
+    if prefixedKey ~= prefix and StartsWith(prefixedKey, prefix) then
       -- offset of 2 due to 1-indexing and for removing the ':'
-      local key = string.sub(prefixedKey, string.len(prefixedSide) + 2)
-      transformedTags[key] = val
+      local key = string.sub(prefixedKey, string.len(prefix) + 2)
+      dest[key] = val
     end
   end
-  return transformedTags
+  return dest
 end
 
 
-function GetTransformedObjects(object, transformations)
+function GetTransformedObjects(tags, transformations)
   local sides = {
     [":right"] = { -1 },
     [":left"] = { 1 },
     [":both"] = { -1, 1 },
     [""] = { -1, 1 },
   }
-  local transformedObjects = {};
+  local transformedObjects = {}
   for _, transformation in pairs(transformations) do
     for side, signs in pairs(sides) do
 
       for _, sign in pairs(signs) do
-      -- PrintTable(signs)
-      -- this is the transformation:
-        local cycleway = transformTags(object.tags, side, transformation)
-        if cycleway ~= nil then
-          cycleway.sign = sign
-          table.insert(transformedObjects, cycleway)
+        -- this is the transformation:
+        local prefix = transformation.prefix
+        local prefixedSide = prefix .. side
+        if tags[prefixedSide] ~= nil and tags.highway ~= transformation.highway then -- check if tag exist
+          local transformedObj = unnestTags(tags, prefixedSide)
+          transformedObj.highway = transformation.highway
+          transformedObj.name = tags.name -- copy name
+          transformedObj[prefix] = tags[prefixedSide] -- self projection
+
+          -- transformation meta data (some categories rely on this e.g. implicit oneway)
+          transformedObj._projected_from = prefixedSide
+          transformedObj._projected_to = prefix
+          if not transformation.filter or transformation.filter(transformedObj) then
+            transformedObj.sign = sign
+            table.insert(transformedObjects, transformedObj)
+          end
         end
       end
     end
