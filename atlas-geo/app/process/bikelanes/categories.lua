@@ -1,18 +1,19 @@
 -- PREDICATES FOR EACH CATEGORY:
 
-local function seperateOrNo(value)
-  return value == 'no' or value == 'separate'
-end
-
+-- this category is for the explicit absence of bike infrastrucute
+-- TODO: split into `no` or `separate`
 local function onlyData(tags)
-  if seperateOrNo(tags.cycleway) then
-    return 'only_data'
+  if tags.cycleway == 'no' or tags.cycleway == 'separate' then
+    return "only_data"
   end
 end
 
+-- this category is for the implicit absence in oneways
 local function implicitOneWay(tags)
-  local result = tags.oneway == 'yes' and tags['oneway:bicycle'] ~= 'no'
-  result = result and tags['_projected_from'] == 'bicycle' and tags.sign == 1 --
+  local result = tags.parent ~= nil
+  result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
+  result = result and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
+  result = result and tags.sign > 0  -- it's the left object (in driving direction)
   if result then
     return 'not_expected'
   end
@@ -53,7 +54,6 @@ end
 local function footAndCycleway(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   result = result or StartsWith(tags.traffic_sign, "DE:240")
-  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footAndCycleway_shared"
   end
@@ -65,7 +65,6 @@ end
 local function footAndCyclewaySegregated(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   result = result or StartsWith(tags.traffic_sign, "DE:241")
-  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footAndCycleway_segregated"
   end
@@ -82,7 +81,6 @@ local function footwayBicycleAllowed(tags)
   -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
-  result = result and not seperateOrNo(tags.sidewalk)
   if result then
     return "footway_bicycleYes"
   end
