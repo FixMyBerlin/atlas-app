@@ -102,7 +102,7 @@ local function cyclewaySeparated(tags)
     -- Case: The crossing version of a separate cycleway next to a road
     -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
     --    Eg https://www.openstreetmap.org/way/963592923
-    -- result = result or tags.cycleway == "crossing"
+    result = result or tags.cycleway == "crossing"
     -- Case: Separate cycleway identified via "track"-tagging. Only handle through center line!
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
