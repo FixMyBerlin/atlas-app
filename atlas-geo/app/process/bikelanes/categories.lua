@@ -12,7 +12,7 @@ end
 local function implicitOneWay(tags)
   local result = tags.parent ~= nil and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
-  result = result and tags.sign > 0  -- it's the left object (in driving direction)
+  result = result and tags.sign > 0 -- it's the left object (in driving direction)
   if result then
     return 'not_expected'
   end
@@ -102,7 +102,7 @@ local function cyclewaySeparated(tags)
     -- Case: The crossing version of a separate cycleway next to a road
     -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
     --    Eg https://www.openstreetmap.org/way/963592923
-    result = result or tags.cycleway == "crossing"
+    -- result = result or tags.cycleway == "crossing"
     -- Case: Separate cycleway identified via "track"-tagging. Only handle through center line!
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
@@ -139,13 +139,16 @@ end
 
 local function cyclewayBuslane(tags)
   -- TODO: check for other cases
-  if tags.highway == "cycleway" and tags.cycleway == "share_busway" then
+  local result = tags.highway == "cycleway"
+  result = result and tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway"
+  if result then
     return "cyclewayAlone"
   end
 end
 
 function CategorizeBikelane(tags)
-  local categories = { onlyData, implicitOneWay, pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
+  local categories = { onlyData, implicitOneWay, pedestiranArea, livingStreet, bicycleRoad, footAndCycleway,
+    footAndCyclewaySegregated,
     footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
