@@ -1,13 +1,3 @@
--- This file defines the `Transformations` which are used to process center line tagged bike lanes
--- `highway` is the new highway type for the generated object
--- `prefix` will be concatinated wiht one of the sides `':left' | ':right' | ':both' | '' `
--- all tags wich have the concatination as a preix get projected -> w\o prefix
--- postProcessing() gets called before inserting the transformed object into the table and has the following params:
--- `parent` (tags of original object)
--- `cycleway` (transformed object)
--- `category` the category of the transformed cycleway
--- return an int which gets added onto the offset value
-
 -- unnest all tags from ["prefix:subtag"]=val -> ["subtag"]=val
 local function unnestTags(tags, prefix, dest)
   dest = dest or {}
@@ -22,7 +12,7 @@ local function unnestTags(tags, prefix, dest)
   return dest
 end
 
-
+-- returns a list of all transformed objects created with the given `transformations` from `tags`
 function GetTransformedObjects(tags, transformations)
   local sides = {
     [":right"] = { -1 },

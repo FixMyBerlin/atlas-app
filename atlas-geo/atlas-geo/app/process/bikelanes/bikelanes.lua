@@ -30,9 +30,9 @@ local presenceTable = osm2pgsql.define_table({
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
-    { column = 'left', type = 'text'},
-    { column = 'self', type = 'text'},
-    { column = 'right', type = 'text'},
+    { column = 'left', type = 'text' },
+    { column = 'self', type = 'text' },
+    { column = 'right', type = 'text' },
   }
 })
 
@@ -96,7 +96,7 @@ function osm2pgsql.process_way(object)
     highway = "footway",
     prefix = "sidewalk",
     filter = function(tags)
-      return not(tags.footway=='no' or tags.footway == 'separate')
+      return not (tags.footway == 'no' or tags.footway == 'separate')
     end
   }
   -- cycleway transformer:
@@ -112,8 +112,8 @@ function osm2pgsql.process_way(object)
   tags.sign = 0
   table.insert(cycleways, tags)
 
-
-  local presence = {[1] = nil, [0] = nil, [-1] = nil}
+  -- map presence vis signs
+  local presence = { [1] = nil, [0] = nil, [-1] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local category = CategorizeBikelane(cycleway)
@@ -138,27 +138,27 @@ function osm2pgsql.process_way(object)
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed
   if not (presence[-1] or presence[0] or presence[1]) then
-    if Set({"path",
-            "cycleway",
-            "track",
-            "residential",
-            "unclassified",
-            "service",
-            "living_street",
-            "pedestrian",
-            "service",
-            "motorway_link",
-            "motorway",
-            "footway",
-            "steps"})[tags.highway] then
+    if Set({ "path",
+      "cycleway",
+      "track",
+      "residential",
+      "unclassified",
+      "service",
+      "living_street",
+      "pedestrian",
+      "service",
+      "motorway_link",
+      "motorway",
+      "footway",
+      "steps" })[tags.highway] then
       intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
       intoExcludeTable(object, "no (extra) infrastructure expected for motorroad, express way and cycle streets")
-    return
-    -- elseif tags.maxspeed and tags.maxspeed <= 20 then
-    --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
-    --   return
+      return
+      -- elseif tags.maxspeed and tags.maxspeed <= 20 then
+      --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
+      --   return
     end
   end
 
