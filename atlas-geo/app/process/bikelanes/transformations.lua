@@ -13,12 +13,15 @@ local function unnestTags(tags, prefix, dest)
 end
 
 -- returns a list of all transformed objects created with the given `transformations` from `tags`
+LEFT_SIGN = 1
+CENTER_SIGN = 0
+RIGHT_SIGN = -1
 function GetTransformedObjects(tags, transformations)
   local sides = {
-    [":right"] = { -1 },
-    [":left"] = { 1 },
-    [":both"] = { -1, 1 },
-    [""] = { -1, 1 },
+    [":left"] = { LEFT_SIGN },
+    [":right"] = { RIGHT_SIGN },
+    [":both"] = { LEFT_SIGN, RIGHT_SIGN },
+    [""] = { LEFT_SIGN, RIGHT_SIGN },
   }
   local transformedObjects = {}
   for _, transformation in pairs(transformations) do

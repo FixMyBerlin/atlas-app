@@ -113,7 +113,7 @@ function osm2pgsql.process_way(object)
   table.insert(cycleways, tags)
 
   -- map presence vis signs
-  local presence = { [1] = nil, [0] = nil, [-1] = nil }
+  local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local category = CategorizeBikelane(cycleway)
@@ -137,7 +137,7 @@ function osm2pgsql.process_way(object)
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed
-  if not (presence[-1] or presence[0] or presence[1]) then
+  if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
     if Set({ "path",
       "cycleway",
       "track",
@@ -169,8 +169,8 @@ function osm2pgsql.process_way(object)
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
-    left = presence[1] or "no",
-    self = presence[0] or "no",
-    right = presence[-1] or "no"
+    left = presence[LEFT_SIGN] or "no",
+    self = presence[CENTER_SIGN] or "no",
+    right = presence[RIGHT_SIGN] or "no"
   })
 end
