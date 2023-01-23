@@ -4,6 +4,7 @@ import { StatusTablePresence } from './StatusTablePresence'
 import { StatusTableVerification } from './StatusTableVerification'
 
 type Props = {
+  visible: boolean
   properties: { [key: string]: any }
   freshnessDateKey: string | undefined
   allowVerify: boolean
@@ -11,11 +12,14 @@ type Props = {
 }
 
 export const StatusTable: React.FC<Props> = ({
+  visible,
   properties,
   freshnessDateKey,
   allowVerify,
   verificationStatus,
 }) => {
+  if (!visible) return null
+
   return (
     <div className="mb-4">
       <h4 className="mb-2 font-semibold text-gray-900">

@@ -41,6 +41,8 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   documentedKeys?: (string | `composit_${string}` | `${string}__if_present`)[]
   /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
   highlightingKey: string
+  /** @desc Show the 3 columd quality assurance status table below the translated tags; @default false */
+  inspectorStatus: boolean
   /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
   freshnessDateKey?: string
   minzoom?: mapboxgl.RasterSource['minzoom']

@@ -1,5 +1,6 @@
 import { LocationGenerics } from '@routes/routes'
 import { useMatch } from '@tanstack/react-location'
+import clsx from 'clsx'
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import {
@@ -74,6 +75,8 @@ export const Inspector: React.FC = () => {
         const verificationStatus =
           localVerificationStatus || properties.verified
 
+        if (!sourceData) return null
+
         return (
           <div
             key={layerPropertyKey}
@@ -116,31 +119,39 @@ export const Inspector: React.FC = () => {
                   geometry={inspectObject.geometry}
                 />
 
-                <div className="border-t bg-gray-50 px-4 py-2.5">
+                <div
+                  className={clsx({
+                    'border-t bg-gray-50 px-4 py-2.5':
+                      sourceData.inspectorStatus ||
+                      sourceData?.apiVerificationIdentifier,
+                  })}
+                >
                   <StatusTable
+                    visible={sourceData.inspectorStatus}
                     properties={properties}
                     freshnessDateKey={sourceData?.freshnessDateKey}
                     allowVerify={allowVerify}
                     verificationStatus={verificationStatus}
                   />
-                  {sourceData?.apiVerificationIdentifier && (
-                    <>
-                      <VerificationActions
-                        apiIdentifier={sourceData.apiVerificationIdentifier}
-                        visible={allowVerify}
-                        disabled={!properties?.category}
-                        osmId={properties.osm_id}
-                        verificationStatus={verificationStatus}
-                      />
-                      <VerificationHistory
-                        apiIdentifier={sourceData.apiVerificationIdentifier}
-                        visible={
-                          allowVerify && verificationStatus !== undefined
-                        }
-                        osmId={properties.osm_id}
-                      />
-                    </>
-                  )}
+                  {sourceData.inspectorStatus &&
+                    sourceData?.apiVerificationIdentifier && (
+                      <>
+                        <VerificationActions
+                          apiIdentifier={sourceData.apiVerificationIdentifier}
+                          visible={allowVerify}
+                          disabled={!properties?.category}
+                          osmId={properties.osm_id}
+                          verificationStatus={verificationStatus}
+                        />
+                        <VerificationHistory
+                          apiIdentifier={sourceData.apiVerificationIdentifier}
+                          visible={
+                            allowVerify && verificationStatus !== undefined
+                          }
+                          osmId={properties.osm_id}
+                        />
+                      </>
+                    )}
                 </div>
               </Disclosure>
             </IntlProvider>
