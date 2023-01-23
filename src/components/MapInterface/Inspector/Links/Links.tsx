@@ -8,8 +8,12 @@ type Props = {
 }
 
 export const Links: React.FC<Props> = ({ properties, geometry }) => {
-  const osmUrl_ = osmUrl(properties.osm_type, properties.osm_id)
-  const historyUrl_ = historyUrl(properties.osm_type, properties.osm_id)
+  // Normalize id + type for Parking data
+  const osmId = properties.osm_id || properties.way_id
+  const osmType = 'osm_type' in properties ? properties.osm_type : 'W'
+
+  const osmUrl_ = osmUrl(osmType, osmId)
+  const historyUrl_ = historyUrl(osmType, osmId)
   const mapillaryUrl_ = mapillaryUrl(geometry)
 
   if (!osmUrl_ || !historyUrl_) return null
