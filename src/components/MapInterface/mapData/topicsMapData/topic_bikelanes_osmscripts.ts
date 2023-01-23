@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, tarmacStyle } from './utils'
+import { pickLayersByGroup, atlasStyle } from './utils'
 
 const topic = 'bikelanes_osmscripts'
 export type TopicBikelanesId_Osmscripts = typeof topic
@@ -17,14 +17,14 @@ export const topic_bikelanes_osmscripts: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-radinfra'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-radinfra'),
       interactiveFilters: null,
     },
     {
       id: 'detailed',
       name: 'Detailliert',
       desc: 'Kleinteilige Kategorisierung',
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-radinfra'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-radinfra'),
       interactiveFilters: null,
     },
   ],

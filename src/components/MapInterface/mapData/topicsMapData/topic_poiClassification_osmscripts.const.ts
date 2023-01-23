@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { tarmacStyle, pickLayersByGroup } from './utils'
+import { atlasStyle, pickLayersByGroup } from './utils'
 
 const topicId = 'shops_osmscripts'
 export type TopicShopsId_Osmscripts = typeof topicId
@@ -17,7 +17,7 @@ export const topic_shops_osmscripts: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-poi'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-poi'),
       interactiveFilters: null,
     },
   ],

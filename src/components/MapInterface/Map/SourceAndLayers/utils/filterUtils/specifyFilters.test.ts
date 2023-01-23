@@ -5,7 +5,7 @@ import {
 } from './mergeFilterDataWithConfig.test'
 import { specifyFilters } from './specifyFilters'
 
-// Source src/components/MapInterface/mapData/topicsMapDataConfig/utils/tarmac-style.const.json
+// Source src/components/MapInterface/mapData/topicsMapDataConfig/utils/atlas-style.const.json
 const testLayerFilterSimple = ['match', ['get', 'Foo'], ['true'], true, false]
 const testLayerFilterSimple2 = [
   'match',

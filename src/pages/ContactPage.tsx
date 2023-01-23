@@ -62,12 +62,12 @@ export const ContactPage: React.FC = () => {
       </p>
       <p>
         Sofern du Bugs oder Verbesserungsvorschläge hast, gib uns gerne{' '}
-        <Link external blank to="https://github.com/FixMyBerlin/tarmac-app">
+        <Link external blank to="https://github.com/FixMyBerlin/atlas-app">
           auf GitHub Feedback
         </Link>
         . Du kannst den Source Code auch weiterentwickeln. Lizenz:{' '}
         <Link
-          to="https://github.com/FixMyBerlin/tarmac-app/blob/develop/LICENSE.md"
+          to="https://github.com/FixMyBerlin/atlas-app/blob/develop/LICENSE.md"
           external
           blank
         >

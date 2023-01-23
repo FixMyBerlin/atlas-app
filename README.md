@@ -8,7 +8,7 @@
 
 **Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and visualized in multiple map views. The integrated verification process provided a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
 
-The backend, for processing and storing the geographic data, is located at [tarmac-geo](https://github.com/FixMyBerlin/tarmac-geo).
+The backend, for processing and storing the geographic data, is located at [atlas-geo](https://github.com/FixMyBerlin/atlas-geo).
 
 ## Develop
 
