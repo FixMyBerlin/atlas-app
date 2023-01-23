@@ -44,6 +44,13 @@ function GetTransformedObjects(tags, transformations)
             transformedObj.sign = sign
             table.insert(transformedObjects, transformedObj)
           end
+          if transformedObj.lanes == nil and false then
+            if sign == RIGHT_SIGN then
+              transformedObj.lanes = transformedObj['lanes:forward']
+            elseif sign == LEFT_SIGN then
+              transformedObj.lanes = transformedObj['lanes:backward']
+            end
+          end
         end
       end
     end
