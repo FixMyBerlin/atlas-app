@@ -2,9 +2,9 @@
 
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
-local function onlyData(tags)
+local function dataNo(tags)
   if tags.cycleway == 'no' or tags.cycleway == 'separate' then
-    return "only_data"
+    return "data_no"
   end
 end
 
@@ -146,10 +146,7 @@ local function cyclewayBuslane(tags)
   end
 end
 
-function CategorizeBikelane(tags)
-  local categories = { onlyData, implicitOneWay, pedestiranArea, livingStreet, bicycleRoad, footAndCycleway,
-    footAndCyclewaySegregated,
-    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
+local function defineCategory(tags, categories)
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
     if category ~= nil then
@@ -157,4 +154,17 @@ function CategorizeBikelane(tags)
     end
   end
   return nil
+end
+
+-- Categories for objects where no infrastructure is available but the data is considered complete
+function OnlyPresent(tags)
+  local dataCategories = { dataNo, implicitOneWay}
+  return defineCategory(tags, dataCategories)
+end
+
+function CategorizeBikelane(tags)
+  local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway,
+    footAndCyclewaySegregated,
+    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
+  return defineCategory(tags, categories)
 end

@@ -116,27 +116,33 @@ function osm2pgsql.process_way(object)
   local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
-    local category = CategorizeBikelane(cycleway)
-    if category ~= nil then
-      local sign = cycleway.sign
-      FilterTags(cycleway, allowed_tags)
-      local freshTag = "check_date"
-      if cycleway._projected_to then
-        freshTag = "check_date:" .. cycleway._projected_to
+    local sign = cycleway.sign
+    local onlyPresent = OnlyPresent(cycleway)
+    if onlyPresent ~= nil then
+      presence[sign] = presence[sign] or onlyPresent
+    else
+      local category= CategorizeBikelane(cycleway)
+      if category ~= nil then
+        FilterTags(cycleway, allowed_tags)
+        local freshTag = "check_date"
+        if cycleway._projected_to then
+          freshTag = "check_date:" .. cycleway._projected_to
+        end
+        IsFresh(object, freshTag, cycleway)
+        categoryTable:insert({
+          category = category,
+          tags = cycleway,
+          meta = Metadata(object),
+          geom = object:as_linestring(),
+          _offset = sign * width / 2
+        })
+        presence[sign] = presence[sign] or category
       end
-      IsFresh(object, freshTag, cycleway)
-      categoryTable:insert({
-        category = category,
-        tags = cycleway,
-        meta = Metadata(object),
-        geom = object:as_linestring(),
-        _offset = sign * width / 2
-      })
-      presence[sign] = presence[sign] or category
+
     end
   end
   -- Filter ways where we dont expect bicycle infrastructure
-  -- TODO: filter on surface and traffic zone and maxspeed
+  -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
     if Set({ "path",
       "cycleway",

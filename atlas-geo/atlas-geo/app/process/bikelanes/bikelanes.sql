@@ -1,5 +1,4 @@
 -- remove categories which are only used for checking the presence of data
-DELETE FROM "_bikelanes_temp" WHERE category='only_data' OR category='not_expected';
 
 -- What happens here:
 -- we project to cartesian coordinates
