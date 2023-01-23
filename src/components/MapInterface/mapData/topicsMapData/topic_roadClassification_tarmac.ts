@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, tarmacStyle } from './utils'
+import { pickLayersByGroup, atlasStyle } from './utils'
 
 const tpoicId = 'roadClassification_tarmac'
 export type TopicRoadClassificationId_Tarmac = typeof tpoicId
@@ -36,7 +36,7 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
       id: 'zes',
       name: 'Erweitert',
       desc: 'Straßenklassifizierung basierend auf verschiedenen OSM Indikatoren.',
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-strassentypen'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-strassentypen'),
       interactiveFilters: null,
     },
   ],

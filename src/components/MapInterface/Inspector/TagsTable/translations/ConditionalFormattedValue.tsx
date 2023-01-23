@@ -14,7 +14,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   tagKey,
   tagValue,
 }) => {
-  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `tarmac-geo`.
+  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
   const categoryTranslatedAlready =
     sourceId == 'tarmac_poiClassification' && tagKey == 'category'
   if (tagKey === 'name' || categoryTranslatedAlready) {
