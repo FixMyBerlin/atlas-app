@@ -16,7 +16,7 @@ UPDATE "_bikelanes_temp"
 UPDATE "_bikelanes_temp"
   SET osm_id=osm_id*SIGN("_offset");
 
-ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";
+-- ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";
 
 --IDEA: maybe we can transform closed geometries with some sort of buffer function:
 -- at least for the cases where we buffer "outside"(side=right) this should always yield a LineString
