@@ -45,6 +45,7 @@ export type RegionPath =
   | 'berlin'
   | 'zes'
   | 'langerwehe'
+  | 'parkraum'
   | 'deutschland'
 
 // This is our regions "Database" until we have a real one
@@ -154,6 +155,31 @@ export const regions: Region[] = [
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: defaultBackgroundSources,
+  },
+  {
+    name: 'Parkraum',
+    fullName: 'Deutschlandweiter Parkraum',
+    path: 'parkraum',
+    map: { lat: 52.494, lng: 13.406, zoom: 12 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    themes: ['parking'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'strassenbefahrung',
+      'alkis',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+      'parkraumkarte_neukoelln',
+    ],
   },
   {
     name: 'Download',
