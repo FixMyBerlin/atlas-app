@@ -31,6 +31,9 @@ import {
   TopicMapillaryCoverageStyleIds,
   topicParking,
   TopicParkingId,
+  TopicParkingPointsId,
+  TopicParkingPointsStyleFilterIds,
+  TopicParkingPointsStyleIds,
   TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
@@ -69,6 +72,7 @@ import {
   topic_landuse,
   topic_lit,
   topic_mapillaryCoverage,
+  topic_parkingPoints,
   topic_places,
   topic_poiClassification_tarmac,
   topic_publicTransport_osmscripts,
@@ -100,6 +104,7 @@ export type TopicIds =
   | TopicSurfaceId_Osmscripts
   | TopicSurfaceId_Tarmac
   | TopicParkingId
+  | TopicParkingPointsId
 
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
@@ -121,6 +126,7 @@ export type TopicStyleIds =
   | TopicSurfaceStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Tarmac
   | TopicParkingStyleIds
+  | TopicParkingPointsStyleIds
 
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
@@ -142,6 +148,7 @@ export type TopicStyleFilterIds =
   | TopicSurfaceStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Tarmac
   | TopicParkingStyleFilterIds
+  | TopicParkingPointsStyleFilterIds
 
 export type TopicStyleLegendIds =
   // | TopicAccidentsStyleLegendIds
@@ -163,6 +170,7 @@ export type TopicStyleLegendIds =
 // | TopicSurfaceStyleLegendIds_Osmscripts
 // | TopicSurfaceStyleLegendIds_Tarmac
 // | TopicParkingStyleLegendIds
+// | TopicParkingPointsStyleLegendIds
 
 export const mapData: MapData = {
   sources,
@@ -187,5 +195,6 @@ export const mapData: MapData = {
     topic_surface_osmscripts,
     // topic_surface_tarmac,
     topicParking,
+    topic_parkingPoints,
   ],
 }

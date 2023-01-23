@@ -131,8 +131,8 @@ export const themes: MapDataTheme[] = [
       { id: 'parking', defaultActive: true },
       // { id: 'surface_tarmac', defaultActive: false },
       { id: 'landuse', defaultActive: false },
-      { id: 'mapillaryCoverage', defaultActive: true },
-      { id: 'accidents', defaultActive: true },
+      { id: 'mapillaryCoverage', defaultActive: false },
+      { id: 'accidents', defaultActive: false },
     ],
   },
   {
