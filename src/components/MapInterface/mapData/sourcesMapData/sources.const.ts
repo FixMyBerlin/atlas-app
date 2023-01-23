@@ -55,6 +55,7 @@ export const sources: MapDataSource<
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     highlightingKey: 'id',
+    inspectorStatus: false,
   },
   {
     id: 'tarmac_boundaries',
@@ -63,6 +64,7 @@ export const sources: MapDataSource<
       'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     id: 'accidents_unfallatlas',
@@ -70,6 +72,7 @@ export const sources: MapDataSource<
     tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'unfall_id',
+    inspectorStatus: false,
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -78,6 +81,7 @@ export const sources: MapDataSource<
     tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
     highlightingKey: '@id',
+    inspectorStatus: false,
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -86,6 +90,7 @@ export const sources: MapDataSource<
     tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'id',
+    inspectorStatus: false,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.roadClassification.json
@@ -94,6 +99,7 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     id: 'tarmac_bikelanes',
@@ -103,6 +109,7 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     documentedKeys: ['category', 'oneway__if_present', 'highway', 'name'],
     highlightingKey: 'osm_id',
+    inspectorStatus: true,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
@@ -111,6 +118,7 @@ export const sources: MapDataSource<
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.education.json
@@ -120,6 +128,7 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     documentedKeys: ['amenity', 'name'],
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
@@ -131,6 +140,7 @@ export const sources: MapDataSource<
     licence: 'ODbL',
     documentedKeys: ['category', 'type', 'name'],
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
@@ -149,6 +159,7 @@ export const sources: MapDataSource<
       'composit_surface_smoothness',
     ],
     highlightingKey: 'osm_id',
+    inspectorStatus: true,
     freshnessDateKey: 'check_date:lit',
   },
   {
@@ -159,6 +170,7 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     documentedKeys: ['name', 'place', 'population', 'population:date'],
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
@@ -167,6 +179,7 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     documentedKeys: ['landuse'],
     highlightingKey: 'osm_id',
+    inspectorStatus: false,
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
@@ -176,6 +189,7 @@ export const sources: MapDataSource<
     maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
     highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
+    inspectorStatus: false,
   },
   // UNUSED ATM:
   // {
