@@ -17,11 +17,16 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
   const categoryTranslatedAlready =
     sourceId == 'tarmac_poiClassification' && tagKey == 'category'
-  if (tagKey === 'name' || categoryTranslatedAlready) {
+  if (['name', 'highway_name'].includes(tagKey) || categoryTranslatedAlready) {
     return <>{tagValue}</>
   }
 
-  const numberKeys = ['population']
+  const numberKeys = [
+    'population',
+    'highway_width_proc_effective',
+    'length',
+    'capacity',
+  ]
   if (numberKeys.includes(tagKey)) {
     return <FormattedNumber value={parseInt(tagValue)} />
   }
