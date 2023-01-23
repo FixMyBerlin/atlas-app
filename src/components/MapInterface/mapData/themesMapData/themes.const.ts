@@ -130,8 +130,9 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'parking', defaultActive: true },
       { id: 'surface_tarmac', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      { id: 'landuse', defaultActive: false },
+      { id: 'mapillaryCoverage', defaultActive: true },
+      { id: 'accidents', defaultActive: true },
     ],
   },
   {
@@ -141,8 +142,8 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'lit', defaultActive: true },
       { id: 'surface_tarmac', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      { id: 'places', defaultActive: false },
+      { id: 'landuse', defaultActive: false },
     ],
   },
   {
