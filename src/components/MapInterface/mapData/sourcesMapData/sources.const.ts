@@ -10,6 +10,7 @@ export type SourcesIds =
   | 'osmscripts_highways'
   | 'osmscripts_pois'
   | 'parkraumParking'
+  | 'parkraumParkingPoints'
   | 'tarmac_bikelanes'
   | 'tarmac_boundaries'
   | 'tarmac_education'
@@ -73,6 +74,36 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
+    export: { enabled: false },
+  },
+  {
+    id: 'parkraumParkingPoints',
+    tiles: 'https://vts.mapwebbing.eu/public.parking_spaces/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: false,
+      // highlightingKey: 'id',
+      // documentedKeys: [
+      //   'highway_name',
+      //   'highway',
+      //   'parking',
+      //   'orientation',
+      //   'capacity__if_present',
+      //   'source_capacity__if_present',
+      //   'capacity_osm__if_present',
+      //   'source_capacity_osm__if_present',
+      //   'length',
+      //   'highway_width_proc_effective',
+      //   'surface',
+      // ],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: {
+      enabled: true,
+      key: 'capacity',
+    },
     export: { enabled: false },
   },
   {

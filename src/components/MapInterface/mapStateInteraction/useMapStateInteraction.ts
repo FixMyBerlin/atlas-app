@@ -1,4 +1,5 @@
 import { VerificationApiGet } from '@api/index'
+import { uniqueGeoJSONFeatureArray } from '@components/utils'
 import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
@@ -50,13 +51,11 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
       (f) => f?.properties?.capacity
     )
     const { calculatorFeatures } = get()
-    // Make array unique `Array.from(new Set[/* non-unique array */]))` https://stackoverflow.com/a/9229821/729221
-    // TODO use uniqueArray
-    set({
-      calculatorFeatures: Array.from(
-        new Set([...featuresWithCapacity, ...calculatorFeatures])
-      ),
-    })
+    const uniqueFeatures = uniqueGeoJSONFeatureArray(
+      calculatorFeatures,
+      featuresWithCapacity
+    )
+    set({ calculatorFeatures: uniqueFeatures })
   },
   removeFromCalculator: (featureToRemove) => {
     const { calculatorFeatures } = get()
