@@ -55,6 +55,17 @@ export const sources: MapDataSource<
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     highlightingKey: 'id',
+    documentedKeys: [
+      'highway_name',
+      'highway',
+      'parking',
+      'orientation',
+      'capacity',
+      'source_capacity',
+      'length',
+      'highway_width_proc_effective',
+      'surface',
+    ],
     inspectorStatus: false,
   },
   {
