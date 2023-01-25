@@ -129,12 +129,13 @@ function osm2pgsql.process_way(object)
           freshTag = "check_date:" .. cycleway._projected_to
         end
         IsFresh(object, freshTag, cycleway)
+        cycleway.offset  = sign * width / 2
         categoryTable:insert({
           category = category,
           tags = cycleway,
           meta = Metadata(object),
           geom = object:as_linestring(),
-          _offset = sign * width / 2
+          _offset = cycleway.offset
         })
         presence[sign] = presence[sign] or category
       end
