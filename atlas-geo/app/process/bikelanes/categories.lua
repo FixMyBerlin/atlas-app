@@ -1,11 +1,29 @@
 -- PREDICATES FOR EACH CATEGORY:
--- maybe switch to returning the category instead of mutating the input
+
+-- this category is for the explicit absence of bike infrastrucute
+-- TODO: split into `no` or `separate`
+local function dataNo(tags)
+  if tags.cycleway == 'no' or tags.cycleway == 'separate' then
+    return "data_no"
+  end
+end
+
+-- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
+-- TODO: this assumes right hand traffic (would be nice to have this as an option)
+local function implicitOneWay(tags)
+  local result = tags.parent ~= nil and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
+  result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
+  result = result and tags.sign == LEFT_SIGN
+  if result then
+    return 'not_expected'
+  end
+end
 
 -- Handle `highway=pedestrian + bicycle=yes/!=yes`
 -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
 local function pedestiranArea(tags)
-  local results = tags.highway == "pedestrian" and tags.bicycle == "yes"
+  local result = tags.highway == "pedestrian" and tags.bicycle == "yes"
   if result then
     return "pedestrianArea_bicycleYes"
   end
@@ -71,12 +89,13 @@ end
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewaySeparated(tags)
+
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   -- (Note: cycleway==track is not very common)
   --    Eg https://www.openstreetmap.org/way/964476026
-  local result = tags.traffic_sign == "DE:237" and tags.cycleway == "track" and tags.is_sidepath == "yes"
-
+  local result = tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes"
+  result = result and (tags.cycleway == "track" or tags.cycleway == "opposite_track")
   if tags.highway == "cycleway" then
     -- Case: Separate cycleway next to a road
     --    Eg https://www.openstreetmap.org/way/278057274
@@ -111,7 +130,7 @@ end
 -- Eg. https://www.openstreetmap.org/way/27701956
 -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
 -- tag: "cyclewayAlone"
-local function cycleWayAlone(tags)
+local function cyclewayAlone(tags)
   local result = tags.highway == "cycleway" and tags.traffic_sign == "DE:237"
   result = result and (tags.is_sidepath == nil or tags.is_sidepath == "no")
   if result then
@@ -119,9 +138,16 @@ local function cycleWayAlone(tags)
   end
 end
 
-function CategorizeBikelane(tags)
-  local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway, footAndCyclewaySegregated,
-    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cycleWayAlone }
+local function cyclewayBuslane(tags)
+  -- TODO: check for other cases
+  local result = tags.highway == "cycleway"
+  result = result and tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway"
+  if result then
+    return "cyclewayAlone"
+  end
+end
+
+local function defineCategory(tags, categories)
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
     if category ~= nil then
@@ -129,4 +155,17 @@ function CategorizeBikelane(tags)
     end
   end
   return nil
+end
+
+-- Categories for objects where no infrastructure is available but the data is considered complete
+function OnlyPresent(tags)
+  local dataCategories = { dataNo, implicitOneWay}
+  return defineCategory(tags, dataCategories)
+end
+
+function CategorizeBikelane(tags)
+  local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway,
+    footAndCyclewaySegregated,
+    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
+  return defineCategory(tags, categories)
 end
