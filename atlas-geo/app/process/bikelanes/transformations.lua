@@ -26,7 +26,7 @@ function GetTransformedObjects(tags, transformations)
   local transformedObjects = {}
   for _, transformation in pairs(transformations) do
     for side, signs in pairs(sides) do
-
+      -- TODO: take :both as scelleton and overwrite with specific tags from :left or :right (maybe also from implicit both)
       for _, sign in pairs(signs) do
         -- this is the transformation:
         local prefix = transformation.prefix
@@ -45,10 +45,13 @@ function GetTransformedObjects(tags, transformations)
             table.insert(transformedObjects, transformedObj)
           end
           if transformedObj.lanes == nil and false then
+            -- TODO: this assumes right hand traffic (would be nice to have this as an option)
             if sign == RIGHT_SIGN then
-              transformedObj.lanes = transformedObj['lanes:forward']
+              transformedObj['cycleway:lanes'] = transformedObj['cycleway:lanes:forward']
+              transformedObj['bicycle:lanes'] = transformedObj['bicycle:lanes:forward']
             elseif sign == LEFT_SIGN then
-              transformedObj.lanes = transformedObj['lanes:backward']
+              transformedObj['cycleway:lanes'] = transformedObj['cycleway:lanes:backward']
+              transformedObj['bicycle:lanes'] = transformedObj['bicycle:lanes:backward']
             end
           end
         end
