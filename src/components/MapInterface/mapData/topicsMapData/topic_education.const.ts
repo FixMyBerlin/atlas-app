@@ -13,7 +13,6 @@ export const topic_education: MapDataTopic = {
   name: 'Bildungseinrichtungen',
   desc: null,
   sourceId: 'tarmac_education',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

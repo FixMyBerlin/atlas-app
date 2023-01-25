@@ -11,7 +11,6 @@ export const topic_roadClassification_osmscripts: MapDataTopic = {
   name: 'Straßentypen (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_highways',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

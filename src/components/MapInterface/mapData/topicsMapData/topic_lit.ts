@@ -43,7 +43,6 @@ export const topic_lit: MapDataTopic = {
   name: 'Beleuchtung',
   desc: null,
   sourceId: source,
-  allowVerify: true,
   styles: [
     {
       id: 'default',

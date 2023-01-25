@@ -54,7 +54,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
     ],
@@ -66,7 +66,7 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'bikelanes', defaultActive: true },
       { id: 'bikelanes_osmscripts', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -79,7 +79,7 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'roadClassification_tarmac', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
     ],
@@ -93,7 +93,7 @@ export const themes: MapDataTheme[] = [
       { id: 'roadClassification_osmscripts', defaultActive: false },
       { id: 'bikelanes', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -104,7 +104,7 @@ export const themes: MapDataTheme[] = [
     name: 'Oberflächen',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
-      { id: 'surface_tarmac', defaultActive: true },
+      // { id: 'surface_tarmac', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -115,7 +115,7 @@ export const themes: MapDataTheme[] = [
     name: 'Oberflächen',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
-      { id: 'surface_tarmac', defaultActive: true },
+      // { id: 'surface_tarmac', defaultActive: true },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'bikelanes', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
@@ -129,7 +129,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Auswertung zum Parken im Straßenraum',
     topics: [
       { id: 'parking', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'landuse', defaultActive: false },
       { id: 'mapillaryCoverage', defaultActive: true },
       { id: 'accidents', defaultActive: true },
@@ -141,7 +141,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
     topics: [
       { id: 'lit', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: false },
       { id: 'landuse', defaultActive: false },
     ],

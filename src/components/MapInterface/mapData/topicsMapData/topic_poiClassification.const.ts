@@ -13,7 +13,6 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
   name: 'Einkauf etc',
   desc: null,
   sourceId: source,
-  allowVerify: false,
   styles: [
     {
       id: 'default',

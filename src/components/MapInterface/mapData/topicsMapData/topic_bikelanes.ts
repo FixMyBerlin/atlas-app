@@ -43,7 +43,6 @@ export const topic_bikelanes: MapDataTopic = {
   name: 'Radinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_bikelanes',
-  allowVerify: true,
   styles: [
     {
       id: 'default',
