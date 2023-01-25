@@ -129,7 +129,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Auswertung zum Parken im Straßenraum',
     topics: [
       { id: 'parking', defaultActive: true },
-      // { id: 'surface_tarmac', defaultActive: false },
+      { id: 'parkingPoints', defaultActive: false },
       { id: 'landuse', defaultActive: false },
       { id: 'mapillaryCoverage', defaultActive: false },
       { id: 'accidents', defaultActive: false },
