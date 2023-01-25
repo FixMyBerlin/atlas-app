@@ -14,7 +14,7 @@ UPDATE "_bikelanes_temp"
 -- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
 -- In turn this brakes updating tables via osm2pgsql
 UPDATE "_bikelanes_temp"
-  SET osm_id=osm_id*SIGN("_offset");
+  SET osm_id=osm_id*SIGN("_offset") WHERE "_offset"!=0;
 
 -- ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";
 
