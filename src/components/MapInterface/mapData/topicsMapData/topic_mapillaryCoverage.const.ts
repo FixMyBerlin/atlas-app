@@ -12,7 +12,6 @@ export const topic_mapillaryCoverage: Topic = {
   name: 'Mapillary Fotos',
   desc: null,
   sourceId: 'mapillary_coverage',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

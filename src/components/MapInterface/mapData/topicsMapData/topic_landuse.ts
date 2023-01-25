@@ -12,7 +12,6 @@ export const topic_landuse: MapDataTopic = {
   name: 'Wohn- und Gewerbegebiete',
   desc: null,
   sourceId: 'tarmac_landuse',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

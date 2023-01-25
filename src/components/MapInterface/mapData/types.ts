@@ -26,25 +26,76 @@ export type MapDataBackgroundSource<TIds> = {
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
-  /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
-  apiVerificationIdentifier?: TVerIds
-  /** @desc Identifier for the export API URL; export is only allowed when present */
-  apiExportIdentifier?: TExpIds
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
   licence?: 'ODbL'
-  /** @desc A sorted list of keys that we officially document.
-   * Keys of type `composit_*` require their own TableRowCell-Component.
-   * Keys of type `*__if_present` are only presented if a value is present.
-   * (Keys that are not mentioned here are for debugging only.) */
-  documentedKeys?: (string | `composit_${string}` | `${string}__if_present`)[]
-  /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
-  highlightingKey: string
-  /** @desc Show the 3 columd quality assurance status table below the translated tags; @default false */
-  inspectorStatus: boolean
-  /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
-  freshnessDateKey?: string
+  /** @desc Inspector: Enable and configure Inspector */
+  inspector:
+    | {
+        enabled: true
+        /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
+        highlightingKey: string
+        /** @desc A sorted list of keys that we officially document.
+         * Keys of type `composit_*` require their own TableRowCell-Component.
+         * Keys of type `*__if_present` are only presented if a value is present.
+         * (Keys that are not mentioned here are for debugging only.) */
+        documentedKeys?: (
+          | string
+          | `composit_${string}`
+          | `${string}__if_present`
+        )[]
+      }
+    | {
+        enabled: false
+      }
+  /** @desc Inspector: Enable info data on presence */
+  presence: {
+    enabled: boolean
+  }
+  /** @desc Inspector: Enable and configure in app verification */
+  verification:
+    | {
+        enabled: true
+        /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
+        apiIdentifier: TVerIds
+      }
+    | {
+        enabled: false
+        apiIdentifier?: undefined
+      }
+  /** @desc Inspector: Enable and configure info data on freshness */
+  freshness:
+    | {
+        enabled: true
+        /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
+        dateKey?: string
+      }
+    | {
+        enabled: false
+        dateKey?: undefined
+      }
+  /** @desc Calculator: Enable and configure calculator feature */
+  calculator:
+    | {
+        enabled: true
+        key: string
+      }
+    | {
+        enabled: false
+        key?: undefined
+      }
+  /** @desc Export: Enable and configure data export */
+  export:
+    | {
+        enabled: true
+        /** @desc Identifier for the export API URL; export is only allowed when present */
+        apiIdentifier: TExpIds
+      }
+    | {
+        enabled: false
+        apiIdentifier?: undefined
+      }
   minzoom?: mapboxgl.RasterSource['minzoom']
   maxzoom?: mapboxgl.RasterSource['maxzoom']
 }
@@ -69,7 +120,6 @@ export type MapDataTopic = {
   name: string
   desc: string | null
   sourceId: SourcesIds
-  allowVerify: boolean
   styles: MapDataStyle[]
 }
 

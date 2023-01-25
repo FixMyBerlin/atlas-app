@@ -11,7 +11,6 @@ export const topic_publicTransport_osmscripts: MapDataTopic = {
   name: 'ÖPNV / Barriers (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_pois',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

@@ -19,10 +19,10 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const sourceData = getSourceData(
     extractSourceIdIdFromSourceKey(parentLayerProps.source)
   )
-  const highlightingKey = sourceData?.highlightingKey
 
-  if (!inspectorFeatures || !highlightingKey) return null
+  if (!inspectorFeatures || !sourceData.inspector.enabled) return null
 
+  const highlightingKey = sourceData.inspector.highlightingKey
   const osmIds = inspectorFeatures
     .filter((f) => f.layer.id === parentLayerProps.id)
     .map((f) => f?.properties?.[highlightingKey])

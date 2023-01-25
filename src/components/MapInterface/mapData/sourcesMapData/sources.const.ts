@@ -54,19 +54,26 @@ export const sources: MapDataSource<
     id: 'parkraumParking',
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
-    highlightingKey: 'id',
-    documentedKeys: [
-      'highway_name',
-      'highway',
-      'parking',
-      'orientation',
-      'capacity',
-      'source_capacity',
-      'length',
-      'highway_width_proc_effective',
-      'surface',
-    ],
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        'highway_name',
+        'highway',
+        'parking',
+        'orientation',
+        'capacity',
+        'source_capacity',
+        'length',
+        'highway_width_proc_effective',
+        'surface',
+      ],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     id: 'tarmac_boundaries',
@@ -74,16 +81,30 @@ export const sources: MapDataSource<
     attributionHtml:
       'Grenzen: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     licence: 'ODbL',
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     id: 'accidents_unfallatlas',
     // TODO Migrieren auf Maptiler
     tiles: `https://api.mapbox.com/v4/hejco.5oexnrgf/{z}/{x}/{y}.vector.pbf?sku=101bSz70Afq22&access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
-    highlightingKey: 'unfall_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'unfall_id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -91,8 +112,15 @@ export const sources: MapDataSource<
     id: 'osmscripts_highways',
     tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
-    highlightingKey: '@id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: '@id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // Temporary, nur für den Datenabgleich
@@ -100,97 +128,181 @@ export const sources: MapDataSource<
     id: 'osmscripts_pois',
     tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
     attributionHtml: 'todo', // TODO
-    highlightingKey: 'id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.roadClassification.json
     id: 'tarmac_roadClassification',
-    apiExportIdentifier: 'roadClassification',
     tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'roadClassification',
+    },
   },
   {
     id: 'tarmac_bikelanes',
-    apiVerificationIdentifier: 'bikelanes',
-    apiExportIdentifier: 'bikelanes_verified',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['category', 'oneway__if_present', 'highway', 'name'],
-    highlightingKey: 'osm_id',
-    inspectorStatus: true,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['category', 'oneway__if_present', 'highway', 'name'],
+    },
+    presence: { enabled: true },
+    verification: {
+      enabled: true,
+      apiIdentifier: 'bikelanes',
+    },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'bikelanes_verified',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
-    apiExportIdentifier: 'publicTransport',
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'publicTransport',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.education.json
     id: 'tarmac_education',
-    apiExportIdentifier: 'education',
     tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['amenity', 'name'],
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['amenity', 'name'],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'education',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
     id: 'tarmac_poiClassification',
-    apiExportIdentifier: 'shops',
     tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
       'POIs: © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>; Eigene Klassifizierung',
     licence: 'ODbL',
-    documentedKeys: ['category', 'type', 'name'],
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['category', 'type', 'name'],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'shops',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
     // https://tiles.radverkehrsatlas.de/public.lit_verified.json
     id: 'tarmac_lit',
-    apiVerificationIdentifier: 'lit',
-    apiExportIdentifier: 'lit_verified',
     tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    // Keys with underscore are treated special in <TagsTable />
-    documentedKeys: [
-      'category',
-      'lit__if_present',
-      'highway',
-      'name',
-      'composit_surface_smoothness',
-    ],
-    highlightingKey: 'osm_id',
-    inspectorStatus: true,
-    freshnessDateKey: 'check_date:lit',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+
+      // Keys with underscore are treated special in <TagsTable />
+      documentedKeys: [
+        'category',
+        'lit__if_present',
+        'highway',
+        'name',
+        'composit_surface_smoothness',
+      ],
+    },
+    presence: { enabled: true },
+    verification: {
+      enabled: true,
+      apiIdentifier: 'lit',
+    },
+    freshness: {
+      enabled: true,
+      dateKey: 'check_date:lit',
+    },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'lit_verified',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
     id: 'tarmac_places',
-    apiExportIdentifier: 'places',
     tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['name', 'place', 'population', 'population:date'],
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['name', 'place', 'population', 'population:date'],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'places',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
     id: 'tarmac_landuse',
     tiles: `${tilesUrl}/public.landuse/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    documentedKeys: ['landuse'],
-    highlightingKey: 'osm_id',
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['landuse'],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
@@ -199,8 +311,15 @@ export const sources: MapDataSource<
     minzoom: 0,
     maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
-    highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
-    inspectorStatus: false,
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   // UNUSED ATM:
   // {

@@ -3,11 +3,8 @@ import { useMatch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import {
-  extractSourceIdIdFromSourceKey,
-  extractTopicIdFromSourceKey,
-} from '../Map/SourceAndLayers/utils/extractFromSourceKey'
-import { getSourceData, getTopicData } from '../mapData'
+import { extractSourceIdIdFromSourceKey } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
+import { getSourceData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { hasPermission, useUserStore } from '../UserInfo'
 import { Disclosure } from './Disclosure'
@@ -52,20 +49,19 @@ export const Inspector: React.FC = () => {
         const sourceId = extractSourceIdIdFromSourceKey(sourceKey.toString())
         const sourceData = getSourceData(sourceId)
 
+        if (!sourceData.inspector.enabled) return null
+
         // Uniqueness check:
         const layerPropertyKey = `${sourceKey}-${
-          properties[sourceData?.highlightingKey || 'osm_id']
+          properties[sourceData.inspector.highlightingKey || 'osm_id']
         }`
         if (renderedLayerPropertyKeys.includes(layerPropertyKey)) {
           return null
         }
         renderedLayerPropertyKeys.push(layerPropertyKey)
 
-        // The allowVerify info is placed on the topic object, which we only have indirect access to…
-        const topicId = extractTopicIdFromSourceKey(sourceKey.toString())
-        const topicData = getTopicData(topicId)
         const allowVerify =
-          (topicData?.allowVerify || false) &&
+          (sourceData.verification.enabled || false) &&
           hasPermission(currentUser, region)
 
         const localVerificationStatus = [...localUpdates]
@@ -74,8 +70,6 @@ export const Inspector: React.FC = () => {
 
         const verificationStatus =
           localVerificationStatus || properties.verified
-
-        if (!sourceData) return null
 
         return (
           <div
@@ -106,13 +100,13 @@ export const Inspector: React.FC = () => {
                 <div className="py-1">{/* Spacer */}</div>
                 <TagsTable
                   properties={properties}
-                  documentedKeys={sourceData?.documentedKeys}
+                  documentedKeys={sourceData.inspector.documentedKeys}
                   sourceId={sourceId}
                 />
 
                 <OtherProperties
                   properties={properties}
-                  documentedKeys={sourceData?.documentedKeys}
+                  documentedKeys={sourceData.inspector.documentedKeys}
                 />
                 <Links
                   properties={properties}
@@ -122,36 +116,40 @@ export const Inspector: React.FC = () => {
                 <div
                   className={clsx({
                     'border-t bg-gray-50 px-4 py-2.5':
-                      sourceData.inspectorStatus ||
-                      sourceData?.apiVerificationIdentifier,
+                      sourceData.presence.enabled ||
+                      sourceData.verification.enabled ||
+                      sourceData.freshness.enabled,
                   })}
                 >
                   <StatusTable
-                    visible={sourceData.inspectorStatus}
+                    visible={
+                      sourceData.presence.enabled ||
+                      sourceData.verification.enabled ||
+                      sourceData.freshness.enabled
+                    }
                     properties={properties}
-                    freshnessDateKey={sourceData?.freshnessDateKey}
+                    freshnessDateKey={sourceData.freshness.dateKey}
                     allowVerify={allowVerify}
                     verificationStatus={verificationStatus}
                   />
-                  {sourceData.inspectorStatus &&
-                    sourceData?.apiVerificationIdentifier && (
-                      <>
-                        <VerificationActions
-                          apiIdentifier={sourceData.apiVerificationIdentifier}
-                          visible={allowVerify}
-                          disabled={!properties?.category}
-                          osmId={properties.osm_id}
-                          verificationStatus={verificationStatus}
-                        />
-                        <VerificationHistory
-                          apiIdentifier={sourceData.apiVerificationIdentifier}
-                          visible={
-                            allowVerify && verificationStatus !== undefined
-                          }
-                          osmId={properties.osm_id}
-                        />
-                      </>
-                    )}
+                  {sourceData.verification.enabled && (
+                    <>
+                      <VerificationActions
+                        apiIdentifier={sourceData.verification.apiIdentifier}
+                        visible={allowVerify}
+                        disabled={!properties?.category}
+                        osmId={properties.osm_id}
+                        verificationStatus={verificationStatus}
+                      />
+                      <VerificationHistory
+                        apiIdentifier={sourceData.verification.apiIdentifier}
+                        visible={
+                          allowVerify && verificationStatus !== undefined
+                        }
+                        osmId={properties.osm_id}
+                      />
+                    </>
+                  )}
                 </div>
               </Disclosure>
             </IntlProvider>

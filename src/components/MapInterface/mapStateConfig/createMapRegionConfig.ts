@@ -1,6 +1,6 @@
 import { Region } from '@fakeServer/index'
-import { getTopicData, themes } from '../mapData'
-import { ThemeConfig as ThemeConfig } from './type'
+import { getThemeData, getTopicData } from '../mapData'
+import { ThemeConfig } from './type'
 
 export type Props = {
   regionThemeIds: Region['themes']
@@ -14,17 +14,17 @@ export type Props = {
  */
 export const createMapRegionConfig = ({ regionThemeIds }: Props) => {
   // We want to preserve the sort order of `regionThemeIds`.
-  const themesData = regionThemeIds.map((id) => themes.find((t) => t.id === id))
+  const sortedThemesData = regionThemeIds.map((id) => getThemeData(id))
 
-  return themesData.map((theme) => {
+  return sortedThemesData.map((theme) => {
     return {
-      id: theme?.id,
-      topics: theme?.topics?.map((themeTopic) => {
+      id: theme.id,
+      topics: theme.topics.map((themeTopic) => {
         const topicData = getTopicData(themeTopic.id)
         return {
           id: themeTopic.id,
           active: themeTopic.defaultActive,
-          styles: topicData?.styles.map((style) => {
+          styles: topicData.styles.map((style) => {
             return {
               id: style.id,
               active: style.id === 'default',

@@ -11,7 +11,6 @@ export const topic_bikelanes_osmscripts: MapDataTopic = {
   name: 'Radinfrastruktur (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_highways',
-  allowVerify: false,
   styles: [
     {
       id: 'default',

@@ -12,7 +12,6 @@ export const topic_places: MapDataTopic = {
   name: 'Orte',
   desc: null,
   sourceId: 'tarmac_places',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
