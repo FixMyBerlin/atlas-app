@@ -9,6 +9,7 @@ local function dataNo(tags)
 end
 
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
+-- TODO: this assumes right hand traffic (would be nice to have this as an option)
 local function implicitOneWay(tags)
   local result = tags.parent ~= nil and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
