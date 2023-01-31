@@ -49,8 +49,8 @@ local excludeTable = osm2pgsql.define_table({
 
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
-  "_projected_from",
-  "_projected_to",
+  "side",
+  "prefix",
   "access",
   "bicycle_road",
   "bicycle",
@@ -106,13 +106,9 @@ function osm2pgsql.process_way(object)
   }
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
-  -- generate cycleways from center line tagging
+  -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local cycleways = GetTransformedObjects(tags, transformations);
-  -- add the original object with `sign=0`
-  tags.sign = 0
-  table.insert(cycleways, tags)
-
-  -- map presence vis signs
+  -- map presence via signs, could also initialize with {}
   local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
@@ -125,8 +121,8 @@ function osm2pgsql.process_way(object)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
         local freshTag = "check_date"
-        if cycleway._projected_to then
-          freshTag = "check_date:" .. cycleway._projected_to
+        if cycleway.prefix then
+          freshTag = "check_date:" .. cycleway.prefix
         end
         IsFresh(object, freshTag, cycleway)
         cycleway.offset  = sign * width / 2
