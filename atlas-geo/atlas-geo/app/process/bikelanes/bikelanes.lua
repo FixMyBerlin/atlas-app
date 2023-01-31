@@ -66,6 +66,7 @@ local allowed_tags = Set({
   "segregated",
   "smoothness",
   "surface",
+  "surface:color",
   "traffic_sign",
   "width", -- experimental
 })
