@@ -153,6 +153,7 @@ export const Map: React.FC = () => {
     })
   }
 
+  const drawRef = React.useRef<MapboxDraw>()
   useEffect(() => {
     console.log('selectArea useEffect', { selectArea })
 
@@ -221,6 +222,7 @@ export const Map: React.FC = () => {
   }
 
   console.log('selectArea', selectArea)
+  console.log('y', { drawRef })
 
   return (
     <MapGl
@@ -254,6 +256,7 @@ export const Map: React.FC = () => {
       <SourcesLayerRasterBackgrounds />
       <NavigationControl showCompass={false} />
       <DrawControl
+        drawRef={drawRef}
         position="top-right"
         displayControlsDefault={false}
         controls={{
