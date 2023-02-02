@@ -1,7 +1,7 @@
 import {
   getSourceData,
   getStyleData,
-  getThemeTopicData,
+  getTopicData,
 } from '@components/MapInterface/mapData'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
@@ -36,12 +36,10 @@ export const SourceAndLayers: React.FC = () => {
         const currTopicConfig = currentTheme.topics.find(
           (t) => t.id === topicConfig.id
         )
-        const curTopicData = getThemeTopicData(currentTheme, topicConfig.id)
-        const sourceData = getSourceData(curTopicData?.sourceId)
+        if (!currTopicConfig) return null
 
-        if (!topicConfig || !sourceData || !curTopicData || !currTopicConfig) {
-          return null
-        }
+        const curTopicData = getTopicData(topicConfig.id)
+        const sourceData = getSourceData(curTopicData?.sourceId)
 
         // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…

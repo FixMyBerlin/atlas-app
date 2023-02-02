@@ -1,4 +1,3 @@
-import { ThemeConfig } from '@components/MapInterface/mapStateConfig'
 import invariant from 'tiny-invariant'
 import {
   mapData,
@@ -15,24 +14,9 @@ export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
   invariant(themeData, 'getThemeData: themeData required')
   return themeData
 }
-
 export const getTopicData = (topicId: TopicIds | undefined) => {
   const topicData = mapData?.topics.find((t) => t.id === topicId)
   invariant(topicData, `getTopicData: topicData for ${topicId} missing`)
-  return topicData
-}
-
-export const getThemeTopicData = (
-  currentTheme: ThemeConfig | undefined,
-  topicId: TopicIds | undefined
-) => {
-  const isTopicInCurTheme = currentTheme?.topics.some((t) => t.id === topicId)
-  invariant(
-    isTopicInCurTheme,
-    `topic ${topicId} has to be part of current theme`
-  )
-
-  const topicData = getTopicData(topicId)
   return topicData
 }
 
