@@ -1,3 +1,4 @@
+import { getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -12,14 +13,10 @@ import {
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
+import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
-import {
-  getStyleData,
-  getThemeTopicData,
-} from '@components/MapInterface/mapData'
-import { createSourceTopicStyleLayerKey } from '../utils'
 
 export const Map: React.FC = () => {
   const {
@@ -115,18 +112,21 @@ export const Map: React.FC = () => {
   if (!configThemesTopics || !currentTheme) return null
 
   const interactiveLayerIds: string[] = []
-  currentTheme.topics.forEach((topic) => {
-    const topicData = getThemeTopicData(currentTheme, topic.id)
-    if (!topicData) return
-    topic.styles.map((style) => {
-      const styleData = getStyleData(topicData, style.id)
+  currentTheme.topics.forEach((topicConfig) => {
+    // Guard: Only pick layer that are part of our current theme
+    if (currentTheme?.topics.some((t) => t.id === topicConfig.id)) return null
+
+    const topicData = getTopicData(topicConfig.id)
+
+    topicConfig.styles.map((styleConfig) => {
+      const styleData = getStyleData(topicData, styleConfig.id)
       // @ts-ignore styleData should not be undefined here
-      styleData.layers.forEach((layer) => {
+      styleData.layers.forEach((layerConfig) => {
         const layerKey = createSourceTopicStyleLayerKey(
           topicData.sourceId,
-          topic.id,
-          style.id,
-          layer.id
+          topicConfig.id,
+          styleConfig.id,
+          layerConfig.id
         )
         interactiveLayerIds.push(layerKey)
       })
