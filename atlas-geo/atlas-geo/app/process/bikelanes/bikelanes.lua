@@ -10,6 +10,7 @@ require("StartsWith")
 require("IsFresh")
 require("categories")
 require("transformations")
+require("JoinSets")
 require("PrintTable")
 
 local categoryTable = osm2pgsql.define_table({
@@ -82,7 +83,8 @@ end
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
-  if not object.tags.highway or not HighwayClasses[object.tags.highway] then return end
+  local allowed_highways = JoinSets(StreetClasses, PathClasses)
+  if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
 
   local exclude, reason = ExcludeHighways(object.tags)
   if exclude then

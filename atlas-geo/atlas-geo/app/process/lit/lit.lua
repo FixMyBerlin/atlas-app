@@ -4,6 +4,7 @@ require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
 require("MergeArray")
+require("JoinSets")
 require("Metadata")
 require("HighwayClasses")
 require("ExcludeHighways")
@@ -44,10 +45,10 @@ local table = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
-  local allowed_values = HighwayClasses
+  local allowed_highways = JoinSets(StreetClasses, PathClasses)
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
-  if not allowed_values[object.tags.highway] then return end
+  if not allowed_highways[object.tags.highway] then return end
   if ExcludeHighways(object.tags) or ExcludeByWidth(object.tags, 2.1) then
     return
   end
