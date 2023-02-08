@@ -29,6 +29,9 @@ function GetTransformedObjects(tags, transformations)
   }
   tags.sign = 0
   local results = { tags }
+  if not StreetClasses[tags.highway] then
+    return results
+  end
   for _, transformation in pairs(transformations) do
     for side, sign in pairs(sides) do
       if tags.highway ~= transformation.highway then
