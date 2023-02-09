@@ -110,7 +110,7 @@ local function cyclewaySeparated(tags)
     result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
     -- Case: Separate cycleway
     --    https://www.openstreetmap.org/way/989837901/
-    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil)
+    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil) -- maybe use foot ~= yes instead
   end
   if result then
     return "cyclewaySeparated"
@@ -121,6 +121,7 @@ local function cyclewayOnHighway(tags)
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
+  -- TODO: we should add shared_line https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
   if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
     return "cyclewayOnHighway"
   end
