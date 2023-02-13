@@ -40,6 +40,16 @@
 --    * no maxspeed _and_ no source is given
 --    * multiple source taggings are used that are in conflict
 
+
+-- Review TodoList
+-- =====
+-- - [ ] AFAIK the whole bike categorization in this file can be removed. It is likely left over from the copied file(?)
+-- - [ ] Can we apply the new "real excludeTable" pattern that does not just mark as excluded but actually exits for this file? Is it worth it?
+-- - [ ] Rebase on to of main
+-- - [ ] Use our new freshness and presence logic (naming of fields, helper methods)
+-- - [ ] Stichproben of the resulted response
+-- - [ ] Merge into main so we can run the data on production an use it in a hidden part of the app
+
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
