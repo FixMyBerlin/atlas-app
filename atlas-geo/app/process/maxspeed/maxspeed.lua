@@ -93,18 +93,6 @@ local todoTable =
         }
     )
 
-local transformTable = osm2pgsql.define_table({
-        name = "maxspeed_transformed",
-        ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-        columns = {
-            { column = 'category', type = 'text' },
-            { column = 'tags',     type = 'jsonb' },
-            { column = 'meta',     type = 'jsonb' },
-            { column = 'geom',     type = 'linestring' },
-            { column = 'offset',   type = 'real' }
-        }
-    })
-
 function osm2pgsql.process_way(object)
   local allowed_values = HighwayClasses
   if not allowed_values[object.tags.highway] then
