@@ -67,11 +67,11 @@ local table =
         }
     )
 
--- Define tables with all non bicycle related roads
-local skipTable =
+-- Roads that we exlude from our analysis
+local excludeTable =
     osm2pgsql.define_table(
         {
-            name = "maxspeed_skipList",
+            name = "maxspeed_excluded",
             ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
             columns = {
                 { column = "tags", type = "jsonb" },
@@ -217,7 +217,7 @@ function osm2pgsql.process_way(object)
 
   -- insert the ways in theri respective table based on the tags _skip or _todo
   if object.tags._skip == true then
-    skipTable:insert(
+    excludeTable:insert(
         {
             tags = object.tags,
             geom = object:as_linestring()
