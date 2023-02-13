@@ -56,54 +56,54 @@ require("CheckDataWithinYears")
 
 -- Define tables with all bicycle related roads what contain speed values
 local tableM =
-osm2pgsql.define_table(
-  {
-    name = "maxspeed",
-    ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-    columns = {
-      { column = "tags", type = "jsonb" },
-      { column = "geom", type = "linestring" }
-    }
-  }
-)
+    osm2pgsql.define_table(
+        {
+            name = "maxspeed",
+            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+            columns = {
+                { column = "tags", type = "jsonb" },
+                { column = "geom", type = "linestring" }
+            }
+        }
+    )
 
 -- Define tables with all non bicycle related roads
 local skipTable =
-osm2pgsql.define_table(
-  {
-    name = "maxspeed_skipList",
-    ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-    columns = {
-      { column = "tags", type = "jsonb" },
-      { column = "geom", type = "linestring" }
-    }
-  }
-)
+    osm2pgsql.define_table(
+        {
+            name = "maxspeed_skipList",
+            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+            columns = {
+                { column = "tags", type = "jsonb" },
+                { column = "geom", type = "linestring" }
+            }
+        }
+    )
 
 -- Define tables with all bicycle related roads that currently dont have speed values
 local todoTable =
-osm2pgsql.define_table(
-  {
-    name = "maxspeed_todoList",
-    ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-    columns = {
-      { column = "tags", type = "jsonb" },
-      { column = "geom", type = "linestring" }
-    }
-  }
-)
+    osm2pgsql.define_table(
+        {
+            name = "maxspeed_todoList",
+            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+            columns = {
+                { column = "tags", type = "jsonb" },
+                { column = "geom", type = "linestring" }
+            }
+        }
+    )
 
 local transformTable = osm2pgsql.define_table({
-  name = "maxspeed_transformed",
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'category', type = 'text' },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-    { column = 'offset', type = 'real' }
-  }
-})
+        name = "maxspeed_transformed",
+        ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+        columns = {
+            { column = 'category', type = 'text' },
+            { column = 'tags',     type = 'jsonb' },
+            { column = 'meta',     type = 'jsonb' },
+            { column = 'geom',     type = 'linestring' },
+            { column = 'offset',   type = 'real' }
+        }
+    })
 
 function osm2pgsql.process_way(object)
   local allowed_values = HighwayClasses
@@ -123,13 +123,12 @@ function osm2pgsql.process_way(object)
   end
   AddSkipInfoToHighways(object)
   FindBicycleroads(object)
-  
+
   if object.tags.maxspeed then
-  --  - maxspeed = <zahl>
+    --  - maxspeed = <zahl>
     object.tags._maxspeed_source = "maxspeed-tag"
   else
-    object.tags._maxspeed_source  = "source tag"
-
+    object.tags._maxspeed_source = "source tag"
   end
   --  - maxspeed = <zahl> inferred from source tag
   -- wenn maxspeed
@@ -141,14 +140,14 @@ function osm2pgsql.process_way(object)
   --  - _maxspec_source = "source tag"
   --  (szenarien de:urbuan, de:rural, bike_roads,  verschiedene zonen)
 
-  if (object.tags["maxspeed:type"] == "DE:bicycle_road" or  object.tags["source:maxspeed"] == "DE:bicycle_road") and not(object.tags.maxspeed) then
+  if (object.tags["maxspeed:type"] == "DE:bicycle_road" or object.tags["source:maxspeed"] == "DE:bicycle_road") and not (object.tags.maxspeed) then
     object.tags["maxspeed"] = "30"
   end
 
   Findmaxvalue(object)
 
   DefineZones(object)
-  
+
   --  wenn maxspeed-zahl nicht passt zu source-tags (alle varianten), dann fehler _todo="source <TAG=VALUE>"
   CheckSourceTagsValue(object)
 
@@ -166,51 +165,51 @@ function osm2pgsql.process_way(object)
   -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
   --    wenn primärdaten vorhanden, dann is_present=true
 
-    -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
-    SortIntoTables(object)
+  -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
+  SortIntoTables(object)
   -- Freshness of data
   CheckDate(object, object.tags.maxspeed)
 
   -- all tags that are shown on the application
   local allowed_tags =
-  Set(
-    {
-      "_skip",
-      "_skipNotes",
-      "is_present",
-      "_combined_fresh_age_days",
-      "_combined_is_fresh",
-      "_update_fresh_age_days",
-      "_update_is_fresh",
-      "_centerline",
-      "_maxspeed_source",
-      "_todo",
-      "fresh",
-      "fresh_age_days",
-      "_freshNotes",
-      "bicycle_road",
-      "bicycle",
-      "category",
-      "cycleway",
-      "unclassified",
-      "secondary",
-      "residential",
-      "highway",
-      "maxspeed",
-      "maxspeed:backward",
-      "maxspeed:forward",
-      "maxspeed:conditional", -- show if present; details TBD
-      "source:maxspeed", -- only for debugging in webapp
-      "maxspeed:type", -- only for debugging in webapp
-      "zone:maxspeed", -- only for debugging in webapp
-      "zone_traffic",
-      "traffic_sign",
-      "maxspeed_split",
-      "source_maxspeed_forward",
-      "source_maxspeed_backward",
-      "source_maxspeed" -- only for debugging in webapp
-    }
-  )
+      Set(
+          {
+              "_skip",
+              "_skipNotes",
+              "is_present",
+              "_combined_fresh_age_days",
+              "_combined_is_fresh",
+              "_update_fresh_age_days",
+              "_update_is_fresh",
+              "_centerline",
+              "_maxspeed_source",
+              "_todo",
+              "fresh",
+              "fresh_age_days",
+              "_freshNotes",
+              "bicycle_road",
+              "bicycle",
+              "category",
+              "cycleway",
+              "unclassified",
+              "secondary",
+              "residential",
+              "highway",
+              "maxspeed",
+              "maxspeed:backward",
+              "maxspeed:forward",
+              "maxspeed:conditional", -- show if present; details TBD
+              "source:maxspeed", -- only for debugging in webapp
+              "maxspeed:type", -- only for debugging in webapp
+              "zone:maxspeed", -- only for debugging in webapp
+              "zone_traffic",
+              "traffic_sign",
+              "maxspeed_split",
+              "source_maxspeed_forward",
+              "source_maxspeed_backward",
+              "source_maxspeed" -- only for debugging in webapp
+          }
+      )
 
   FilterTags(object.tags, allowed_tags)
   AddMetadata(object)
@@ -219,32 +218,31 @@ function osm2pgsql.process_way(object)
   -- insert the ways in theri respective table based on the tags _skip or _todo
   if object.tags._skip == true then
     skipTable:insert(
-      {
-        tags = object.tags,
-        geom = object:as_linestring()
-      }
+        {
+            tags = object.tags,
+            geom = object:as_linestring()
+        }
     )
   end
 
   if object.tags._todo == true and object.tags._skip == false then
     todoTable:insert(
-      {
-        tags = object.tags,
-        geom = object:as_linestring()
-      }
+        {
+            tags = object.tags,
+            geom = object:as_linestring()
+        }
     )
   end
 
   if object.tags._skip == false and object.tags._todo == false then
     tableM:insert(
-      {
-        tags = object.tags,
-        geom = object:as_linestring()
-      }
+        {
+            tags = object.tags,
+            geom = object:as_linestring()
+        }
     )
   end
 end
-
 
 function FindBicycleroads(object)
   -- All standard ways, which should be observed in any case
@@ -310,22 +308,22 @@ end
 function Findmaxvalue(object)
   if object.tags["maxspeed:forward"] then
     object.tags.maxspeed = object.tags["maxspeed:forward"]
-    object.tags.source_maxspeed_forward = object.tags["source:maxspeed:forward"] 
+    object.tags.source_maxspeed_forward = object.tags["source:maxspeed:forward"]
     object.tags._todo = false
-    object.tags._skip = false 
+    object.tags._skip = false
   end
   if object.tags["maxspeed:backward"] then
     object.tags.maxspeed = object.tags["maxspeed:backward"]
-    object.tags.source_maxspeed_backward = object.tags["source:maxspeed:backward"] 
+    object.tags.source_maxspeed_backward = object.tags["source:maxspeed:backward"]
     object.tags._todo = false
     object.tags._skip = false
   end
   local tbl = {}
   -- Pick the highest value if multiple present.
   if (object.tags["maxspeed:forward"]) then
-      table.insert(tbl, tonumber(object.tags["maxspeed:forward"]))
+    table.insert(tbl, tonumber(object.tags["maxspeed:forward"]))
   else
-   table.insert(tbl, -999)
+    table.insert(tbl, -999)
   end
   if (object.tags["maxspeed:backward"]) then
     table.insert(tbl, tonumber(object.tags["maxspeed:backward"]))
@@ -335,103 +333,104 @@ function Findmaxvalue(object)
   if (object.tags["maxspeed"]) then
     table.insert(tbl, tonumber(object.tags["maxspeed"]))
   else
-      table.insert(tbl, -999)
-  end
-  
-    local max = math.max(table.unpack(tbl))
-    if (not(tonumber(max) and -999)) then
-      print(max)
-      object.tags.maxspeed = max
-      object.tags._todo = false
-      object.tags._skip = false
-    end
+    table.insert(tbl, -999)
   end
 
+  local max = math.max(table.unpack(tbl))
+  if (not (tonumber(max) and -999)) then
+    print(max)
+    object.tags.maxspeed = max
+    object.tags._todo = false
+    object.tags._skip = false
+  end
+end
 
 function DefineZones(object)
-    -- Translate maxspeed:type (and tagging variants) to maxspeed
-    if (object.tags["maxspeed:type"] == "DE:urban" or  object.tags["source:maxspeed"] == "DE:urban") then
-      object.tags.maxspeed = "50"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-      object.tags._todo = false
-      object.tags._skip = false
-    end
- 
-    -- https://wiki.openstreetmap.org/wiki/DE:Key:maxspeed#Beispiele
-    if (object.tags["maxspeed:type"] == "DE:rural" or object.tags["source:maxspeed"] == "DE:rural") then
-      object.tags.maxspeed = "100"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-      object.tags._todo = false
-      object.tags._skip = false
-    end
-  
-    if (object.tags["maxspeed:type"] == "DE:zone30" or object.tags["source:maxspeed"] == "DE:zone:30" or
+  -- Translate maxspeed:type (and tagging variants) to maxspeed
+  if (object.tags["maxspeed:type"] == "DE:urban" or object.tags["source:maxspeed"] == "DE:urban") then
+    object.tags.maxspeed = "50"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+    object.tags._todo = false
+    object.tags._skip = false
+  end
+
+  -- https://wiki.openstreetmap.org/wiki/DE:Key:maxspeed#Beispiele
+  if (object.tags["maxspeed:type"] == "DE:rural" or object.tags["source:maxspeed"] == "DE:rural") then
+    object.tags.maxspeed = "100"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+    object.tags._todo = false
+    object.tags._skip = false
+  end
+
+  if (object.tags["maxspeed:type"] == "DE:zone30" or object.tags["source:maxspeed"] == "DE:zone:30" or
       object.tags["source:maxspeed"] == "DE:zone30" or object.tags["zone:maxspeed"] == "DE:30" or
       object.tags["zone:maxspeed"] == "30") then
-        object.tags.maxspeed = "30"
-        object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-        object.tags._todo = false
-        object.tags._skip = false
-      end
-  
-    if (object.tags["maxspeed:type"] == "DE:zone20" or object.tags["source:maxspeed"] == "DE:zone:20" or
+    object.tags.maxspeed = "30"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+    object.tags._todo = false
+    object.tags._skip = false
+  end
+
+  if (object.tags["maxspeed:type"] == "DE:zone20" or object.tags["source:maxspeed"] == "DE:zone:20" or
       object.tags["source:maxspeed"] == "DE:zone20" or object.tags["zone:maxspeed"] == "DE:20" or
       object.tags["zone:maxspeed"] == "20")
-    then
-      object.tags.maxspeed = "20"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-      object.tags._todo = false
-      object.tags._skip = false
-    end
-  
-    -- Add note about conditional maxspeed
-    -- "maxspeed:conditional" — reichen wir durch; mehrwert ist noch fraglich; viele sonderfälle
-    if (object.tags["maxspeed:conditional"]) then
-      object.tags.maxspeed = "Angabe mit Einschränkungen"
-      object.tags._todo = false
-      object.tags._skip = false
-    end
+  then
+    object.tags.maxspeed = "20"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+    object.tags._todo = false
+    object.tags._skip = false
   end
 
+  -- Add note about conditional maxspeed
+  -- "maxspeed:conditional" — reichen wir durch; mehrwert ist noch fraglich; viele sonderfälle
+  if (object.tags["maxspeed:conditional"]) then
+    object.tags.maxspeed = "Angabe mit Einschränkungen"
+    object.tags._todo = false
+    object.tags._skip = false
+  end
+end
 
-  function SortIntoTables(object)
-    if object.tags.maxspeed then
-      object.tags.is_present = true
-      if object.tags._skip == true then
-        -- maxspeed available but path type not correct -> _skip table
-        object.tags._todo = false
-      else
-        -- maxspeed available and path type is correct -> result table
-        object.tags._todo = false
-        object.tags._skip = false
-      end
+function SortIntoTables(object)
+  if object.tags.maxspeed then
+    object.tags.is_present = true
+    if object.tags._skip == true then
+      -- maxspeed available but path type not correct -> _skip table
+      object.tags._todo = false
     else
-      object.tags.is_present = false
-      if object.tags._skip == true then
-        -- maxspeed not available and path type is not correct -> _skip table
-        object.tags._todo = false
-        object.tags._skip = true
-      else
-        -- maxspeed not available and path type is correct -> _todo table
-        object.tags._todo = true
-        object.tags._skip = false
-      end
+      -- maxspeed available and path type is correct -> result table
+      object.tags._todo = false
+      object.tags._skip = false
+    end
+  else
+    object.tags.is_present = false
+    if object.tags._skip == true then
+      -- maxspeed not available and path type is not correct -> _skip table
+      object.tags._todo = false
+      object.tags._skip = true
+    else
+      -- maxspeed not available and path type is correct -> _todo table
+      object.tags._todo = true
+      object.tags._skip = false
     end
   end
+end
 
-  function CheckSourceTagsValue(object)
-    if (object.tags["source:maxspeed"] == "DE:zone:30" and object.tags["maxspeed"] == "30") then
-    else object.tags._todoinfo="source <TAG=VALUE>"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-    end
-  
-    if (object.tags["source:maxspeed"] == "DE:zone:20" and object.tags["maxspeed"] == "20") then
-    else object.tags._todoinfo="source <TAG=VALUE>"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-    end
-
-    if (object.tags["source:maxspeed"] == "DE:zone:10" and object.tags["maxspeed"] == "10") then
-    else object.tags._todoinfo="source <TAG=VALUE>"
-      object.tags.source_maxspeed = object.tags["source:maxspeed"] 
-    end
+function CheckSourceTagsValue(object)
+  if (object.tags["source:maxspeed"] == "DE:zone:30" and object.tags["maxspeed"] == "30") then
+  else
+    object.tags._todoinfo = "source <TAG=VALUE>"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
   end
+
+  if (object.tags["source:maxspeed"] == "DE:zone:20" and object.tags["maxspeed"] == "20") then
+  else
+    object.tags._todoinfo = "source <TAG=VALUE>"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+  end
+
+  if (object.tags["source:maxspeed"] == "DE:zone:10" and object.tags["maxspeed"] == "10") then
+  else
+    object.tags._todoinfo = "source <TAG=VALUE>"
+    object.tags.source_maxspeed = object.tags["source:maxspeed"]
+  end
+end
