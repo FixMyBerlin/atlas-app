@@ -54,8 +54,8 @@ require("AddSkipInfoToHighways")
 require("StartsWith")
 require("CheckDataWithinYears")
 
--- Define tables with all bicycle related roads what contain speed values
-local tableM =
+-- The analysed road network, enriched with maxspeed information
+local table =
     osm2pgsql.define_table(
         {
             name = "maxspeed",
@@ -235,7 +235,7 @@ function osm2pgsql.process_way(object)
   end
 
   if object.tags._skip == false and object.tags._todo == false then
-    tableM:insert(
+    table:insert(
         {
             tags = object.tags,
             geom = object:as_linestring()
