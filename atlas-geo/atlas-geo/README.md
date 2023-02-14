@@ -6,15 +6,14 @@
 
 ## About
 
-Please check out [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app) first.
+This project handles the processing of geo data for [`atlas-app`](https://github.com/FixMyBerlin/atlas-app).
+The data is selected and optimize to make planning of bicycle infrastructure easier.
 
-This project handles the processing of geo data for `tarmac-app`. It will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with pg_tileserve.
-
-The data we process is selected and optimize to make planning of bicycle infrastructure easier.
+`atlas-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with `pg_tileserve`. In addition, we support verifying OSM objects in a separate database.
 
 ## Issues
 
-Please use [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app/issues) to create issues for this repository.
+Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to create issues for this repository.
 
 ## Production
 
@@ -25,12 +24,12 @@ Please use [`tarmac-app`](https://github.com/FixMyBerlin/tarmac-app/issues) to c
 
 ### Data update
 
-- Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/tarmac-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
-- Data can manually updates [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/tarmac-geo/actions/workflows/generate-tiles.yml).
+- Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/atlas-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
+- Data can manually updates [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
-1. First https://github.com/FixMyBerlin/tarmac-geo/actions runs.
+1. First https://github.com/FixMyBerlin/atlas-geo/actions runs.
 2. Then our Server IONOS builds the data. This take about 30 Min ATM.
 3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ has new data.
 
@@ -51,10 +50,11 @@ docker compose up -d
 docker compose --profile osm_processing up -d
 ```
 
-> **Warning"" Consider creating the Postgis extension before first run of *app*
-> ```CREATE EXTENSION postgis;```
-
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
+
+> **Warning**
+> You need to create the Postgis extension before first run of `app\`:
+> `CREATE EXTENSION postgis;`
 
 > **Note**
 > We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
@@ -75,10 +75,8 @@ You can only rebuild and regenerate the whole system, for now. The workflow isâ€
 
 3. Inspect the new results
 
-**TODOs**
-
-- [ ] Allow editing code direclty inside the docker container, so no rebuild is needed; change the re-generation-part
-- [ ] Split of the downloading of new data
+> **Note**
+> Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
 **Notes**
 
@@ -100,13 +98,13 @@ You can also run the script locally:
 Build docker
 
 ```sh
-docker build -f app.Dockerfile -t tarmac:latest .
+docker build -f app.Dockerfile -t atlas:latest .
 ```
 
 Run it
 
 ```sh
-docker run --name mypipeline -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d tarmac
+docker run --name mypipeline -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d atlas
 ```
 
 Hack into the bash

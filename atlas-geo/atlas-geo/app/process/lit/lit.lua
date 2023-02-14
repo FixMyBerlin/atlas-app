@@ -3,20 +3,21 @@ require("Set")
 require("FilterTags")
 require("ToNumber")
 -- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
+require("ExcludeHighways")
+require("ExcludeByWidth")
 require("CheckDataWithinYears")
+require("IsFresh")
 
 local table = osm2pgsql.define_table({
-  name = 'lit_new',
+  name = '_lit_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'category', type = 'text' },
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -47,23 +48,21 @@ function osm2pgsql.process_way(object)
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
   if not allowed_values[object.tags.highway] then return end
-
-  object.tags._skipNotes = "init"
-  object.tags._skip = false
-
-  AddSkipInfoToHighways(object)
-  AddSkipInfoByWidth(object)
+  if ExcludeHighways(object.tags) or ExcludeByWidth(object.tags, 2.1) then
+    return
+  end
 
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
+  local category = nil
   if (object.tags.lit) then
-    object.tags.category = "special"
+    category = "special"
     if (object.tags.lit == "yes") then
-      object.tags.category = "lit"
+      category = "lit"
     end
     if (object.tags.lit == "no") then
-      object.tags.category = "unlit"
+      category = "unlit"
     end
   end
 
@@ -75,35 +74,8 @@ function osm2pgsql.process_way(object)
   end
 
   -- Freshness of data
-  if(object.tags.is_present == true) then
-    -- (0) Only handle cases where our main data is present
-    if(object.tags['check_date:lit']) then
-      -- (1) If check_date is present, use it
-      local withinYears = CheckDataWithinYears(object.tags['check_date:lit'], 2)
-      if (withinYears.result) then
-        object.tags.fresh = 'fresh_check_date'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'check_date used; fresh=true; confidence=high'
-      else
-        object.tags.fresh = 'outdated_check_date'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'check_date used; fresh=false; confidence=high'
-      end
-    else
-      -- (2) Fall back to object's last update date
-      local withinYears = CheckDataWithinYears(os.date('!%Y-%m-%d', object.timestamp), 2)
-      if(withinYears.result) then
-        object.tags.fresh = 'fresh_update_at'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'update_at used; fresh=true; confidence=low'
-      else
-        object.tags.fresh = 'outdated_update_at'
-        object.tags.fresh_age_days = withinYears.diffDays
-        object.tags._freshNotes = 'update_at used; fresh=false; confidence=low'
-      end
-    end
-  else
-    object.tags._freshNotes = 'is_present=false, so fresh data skipped'
+  if (object.tags.is_present == true) then
+    IsFresh(object, 'check_date:lit', object.tags)
   end
 
   -- Normalize name info for sidepath'
@@ -111,20 +83,11 @@ function osm2pgsql.process_way(object)
   object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
 
   local allowed_tags = Set({
-    "_skip",
-    "_skipNotes",
-    "_combined_fresh_age_days",
-    "_combined_is_fresh",
-    "_update_fresh_age_days",
-    "_update_is_fresh",
     "access",
     "area",
     "category",
     "check_date:lit",
     "footway",
-    "fresh",
-    "fresh_age_days",
-    "_freshNotes",
     "highway",
     "is_present",
     "is_sidepath",
@@ -138,13 +101,12 @@ function osm2pgsql.process_way(object)
     "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
-
-  if object.tags._skip then
+  if object.tags._exclude then
   else
     table:insert({
+      category = category,
       tags = object.tags,
+      meta = Metadata(object),
       geom = object:as_linestring()
     })
   end
