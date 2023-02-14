@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("HasAreaTags")
 
 local json = require('dkjson')

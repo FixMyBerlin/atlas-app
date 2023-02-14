@@ -1,14 +1,11 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+package.path = package.path ..
+    ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/poiClassification/?.lua"
 require("Set")
 require("ExtractKeys")
 require("FilterTags")
--- require("ToNumber")
--- require("PrintTable")
-require("AddAddress")
+require("InferAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
--- Shared:
+require("Metadata")
 require("ShoppingAllowedListWithCategories")
 
 -- The goal of this TodoList is to make sure we do not miss out on any amenitys.
@@ -22,12 +19,13 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
   }
 })
 
--- Guards extracted to be used inside projcess_*
--- @return `true` whenever we want to exit processing the given data
+-- * @desc Guards extracted to be used inside projcess_*
+-- * @returns `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
   if not object.tags.amenity then
     return true
@@ -138,35 +136,35 @@ local function ExitProcessing(object)
 end
 
 -- Tag processing extracted to be used inside projcess_*
-local function ProcessTags(object)
-  local allowed_addr_tags = AddAddress(object.tags)
-  local allowed_tags = Set(MergeArray({ "name", "category", "type", "amenity" }, allowed_addr_tags))
-  FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  object.tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. object.tags.amenity
+local function processTags(tags)
+  InferAddress(tags, tags)
+  local allowed_tags = MergeArray({ "name", "category", "type", "amenity" }, AddressKeys)
+  FilterTags(tags, Set(allowed_tags))
+  tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  ProcessTags(object)
-  AddUrl("node", object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_point()
   })
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) then return end
-  if not object.is_closed then return end
+  if ExitProcessing(object) or not object.is_closed then
+    return
+  end
 
-  ProcessTags(object)
-  AddUrl("way", object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
 end
@@ -175,11 +173,10 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
-  AddUrl("relation", object)
-
+  processTags(object.tags)
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })
 end

@@ -1,7 +1,7 @@
 # Länge Weg
 
 - Länge in das jsonb einfügen
-- Einträge nach Länge filtern; also verschieben in die andere Tabelle mit \_skipNote
+- Einträge nach Länge filtern; also verschieben in die andere Tabelle mit \_excludeNote
 
 ## Frage zu Einheit der LUA area/length function
 

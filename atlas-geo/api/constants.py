@@ -16,6 +16,7 @@ export_geojson_function_from_type = {
   "bikelanes_verified": "atlas_export_geojson_bikelanes_verified",
   "lit": "atlas_export_geojson_lit",
   "lit_verified": "atlas_export_geojson_lit_verified",
+  "lit_destilled": "atlas_export_geojson_destilled",
   "poiClassification": "atlas_export_geojson_shops",
   "education": "atlas_export_geojson_education",
   "publicTransport": "atlas_export_geojson_publictransport",
@@ -27,11 +28,9 @@ export_geojson_function_from_type = {
 verification_tables = {
   "bikelanes": "bikelanes_verification",
   "lit": "lit_verification",
-  "roadClassification": "roadClassification_verification",
 }
 
-verification_views = {
+joined_tables = {
   "bikelanes_verification": "bikelanes_verified",
   "lit_verification": "lit_verified",
-  "roadClassification_verification": "roadClassification_verified",
 }
