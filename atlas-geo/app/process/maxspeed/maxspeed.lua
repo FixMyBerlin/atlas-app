@@ -72,6 +72,7 @@ local table =
             ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
             columns = {
                 { column = "tags", type = "jsonb" },
+                { column = "meta", type = "jsonb" },
                 { column = "geom", type = "linestring" }
             }
         }
@@ -85,6 +86,7 @@ local excludeTable =
             ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
             columns = {
                 { column = "tags", type = "jsonb" },
+                { column = "meta", type = "jsonb" },
                 { column = "geom", type = "linestring" }
             }
         }
@@ -98,6 +100,7 @@ local todoTable =
             ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
             columns = {
                 { column = "tags", type = "jsonb" },
+                { column = "meta", type = "jsonb" },
                 { column = "geom", type = "linestring" }
             }
         }
@@ -119,7 +122,11 @@ function osm2pgsql.process_way(object)
     object.tags._skip = true
     object.tags._skipNotes = "Skipped by unuseful waytypes"
   end
-  AddSkipInfoToHighways(object)
+  local exclude, reason = ExcludeHighways(object.tags)
+  if exclude then
+    object.tags._skip = "excluded highway"
+    object.tags._skipNotes = reason
+  end
   FindBicycleroads(object)
 
   if object.tags.maxspeed then
@@ -143,7 +150,6 @@ function osm2pgsql.process_way(object)
   end
 
   Findmaxvalue(object)
-
   DefineZones(object)
 
   --  wenn maxspeed-zahl nicht passt zu source-tags (alle varianten), dann fehler _todo="source <TAG=VALUE>"
@@ -210,15 +216,15 @@ function osm2pgsql.process_way(object)
       )
 
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
+  local meta = Metadata(object)
 
   -- insert the ways in theri respective table based on the tags _skip or _todo
   if object.tags._skip == true then
     excludeTable:insert(
         {
             tags = object.tags,
-            geom = object:as_linestring()
+            geom = object:as_linestring(),
+            meta = meta
         }
     )
   end
@@ -227,20 +233,85 @@ function osm2pgsql.process_way(object)
     todoTable:insert(
         {
             tags = object.tags,
-            geom = object:as_linestring()
+            geom = object:as_linestring(),
+            meta = meta
         }
     )
   end
-
   if object.tags._skip == false and object.tags._todo == false then
     table:insert(
         {
             tags = object.tags,
-            geom = object:as_linestring()
+            geom = object:as_linestring(),
+            meta = meta
         }
     )
   end
 end
+
+
+local function maxspeedDriect(tags)
+  local maxspeed = -1.0
+  local source = "nothing found"
+  local speed_tags = {"maxspeed:forward", "maxspeed:backward", "maxspeed"}
+  for _, tag in pairs(speed_tags) do
+    if tags[tag] then
+      local val = tonumber(tags[tag])
+      if val ~= nil and val > maxspeed then
+        maxspeed = val
+      end
+    end
+  end
+  return maxspeed
+end
+
+local function maxspeedFromZone(tags)
+  local maxspeed_type = {
+    ["DE:rural"] = 100,
+    ["DE:urban"] = 50,
+    ["DE:zone30"] = 30,
+    ["DE:bicycle_road"] = 30,
+    ["DE:zone20"] = 20,
+    ["DE:zone10"] = 10,
+  }
+
+  local maxspeed_zone = {
+    ["DE:30"] = 30,
+    ["30"] = 30,
+    ["DE:bicycle_road"] = 30,
+    ["DE:20"] = 20,
+    ["20"] = 20,
+    ["DE:10"] = 10,
+    ["10"] = 10,
+  }
+  -- maybe add also traffic signs to parse
+
+  local maxspeed_source = {
+    ["DE:rural"] = 100,
+    ["DE:urban"] = 50,
+    ["DE:zone:30"] = 30,
+    ["DE:zone30"] = 30,
+    ["DE:bicycle_road"] = 30,
+    ["DE:zone:20"] = 20,
+    ["DE:zone20"] = 20,
+    ["DE:zone:10"] = 10,
+    ["DE:zone10"] = 10,
+  }
+  if maxspeed_type[tags["maxspeed_type"]] then
+    return maxspeed_type[tags["maxspeed_type"]]
+  end
+  if maxspeed_zone[tags["zone:maxspeed"]] then
+    return maxspeed_type[tags["zone:maxspeed"]]
+  end
+  if maxspeed_source[tags["source:maxspeed"]] then
+    return maxspeed_source[tags["source:maxspeed"]]
+  end
+  if tags["maxspeed:conditional"] then
+    return "Angabe mit Einschränkungen"
+  end
+end
+
+
 
 function FindBicycleroads(object)
   -- All standard ways, which should be observed in any case
@@ -304,6 +375,21 @@ function FindBicycleroads(object)
 end
 
 function Findmaxvalue(object)
+
+  local maxspeed = -1.0
+  local source = "nothing found"
+  local speed_tags = {"maxspeed:forward", "maxspeed:backward", "maxspeed"}
+  for _, tag in pairs(speed_tags) do
+    if object.tags[tag] then
+      local val = tonumber(object.tags[tag])
+      if val ~= nil and val > maxspeed then
+        maxspeed = val
+        source = tag
+      end
+    end
+  end
+  -- return maxspeed, source
+
   if object.tags["maxspeed:forward"] then
     object.tags.maxspeed = object.tags["maxspeed:forward"]
     object.tags.source_maxspeed_forward = object.tags["source:maxspeed:forward"]
@@ -336,12 +422,13 @@ function Findmaxvalue(object)
 
   local max = math.max(table.unpack(tbl))
   if (not (tonumber(max) and -999)) then
-    print(max)
     object.tags.maxspeed = max
     object.tags._todo = false
     object.tags._skip = false
   end
 end
+
+
 
 function DefineZones(object)
   -- Translate maxspeed:type (and tagging variants) to maxspeed
