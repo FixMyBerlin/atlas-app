@@ -37,12 +37,7 @@ export const Map: React.FC = () => {
   const [cursorStyle, setCursorStyle] = useState('grab')
   const [loaded, setLoaded] = useState(false)
 
-  const {
-    setInspector,
-    addToCalculator,
-    removeFromCalculator,
-    calculatorFeatures,
-  } = useMapStateInteraction()
+  const { setInspector, addToCalculator } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -52,18 +47,6 @@ export const Map: React.FC = () => {
   }
   const handleClick = (event: MapLayerMouseEvent) => {
     event.features && setInspector(event.features)
-  }
-  const handleDoubleClick = (event: MapLayerMouseEvent) => {
-    if (!event.features) return
-
-    const alreadySelectedIds = calculatorFeatures.map((f) => f?.properties?.id)
-    event.features.forEach((f) => {
-      if (alreadySelectedIds.includes(f?.properties?.id)) {
-        removeFromCalculator(f)
-      } else {
-        addToCalculator([f])
-      }
-    })
   }
 
   const handleLoad = (_event: MapboxEvent) => {
@@ -250,7 +233,6 @@ export const Map: React.FC = () => {
       onMoveEnd={handleMoveEnd}
       // onZoomEnd={handleZoomEnd} // zooming is always also moving
       onClick={handleClick}
-      onDblClick={handleDoubleClick}
       onLoad={handleLoad}
       doubleClickZoom={false}
       dragRotate={false}
