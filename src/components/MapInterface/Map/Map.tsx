@@ -137,10 +137,6 @@ export const Map: React.FC = () => {
     })
   })
 
-  if (lat === undefined || lng === undefined || zoom === undefined) {
-    return null
-  }
-
   const [selectArea, setSelectArea] = useState<DrawFeature[]>([])
 
   const onUpdate = (e: { features: DrawFeature[] }) => {
@@ -222,6 +218,10 @@ export const Map: React.FC = () => {
 
   console.log('selectArea', selectArea)
   console.log('y', { drawRef })
+
+  if (lat === undefined || lng === undefined || zoom === undefined) {
+    return null
+  }
 
   return (
     <MapGl
