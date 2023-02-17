@@ -29,7 +29,7 @@ export type StoreCalculator = {
     features: MapboxGeoJSONFeature[]
   }[]
   setCalculatorAreasWithFeatures: (
-    featuresToAdd: StoreCalculator['calculatorAreasWithFeatures']
+    calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures']
   ) => void
 }
 
@@ -41,16 +41,15 @@ type StoreLocalUpdates = {
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
   showDebugInfo: isDev,
-  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo: showDebugInfo }),
+  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
 
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
   resetInspector: () => set({ inspectorFeatures: [] }),
 
   calculatorAreasWithFeatures: [],
-  setCalculatorAreasWithFeatures: (calculatorSelectAreasFeatures) => {
-    set({ calculatorAreasWithFeatures: calculatorSelectAreasFeatures })
-  },
+  setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
+    set({ calculatorAreasWithFeatures }),
 
   localUpdates: [],
   addLocalUpdate: (update) => {

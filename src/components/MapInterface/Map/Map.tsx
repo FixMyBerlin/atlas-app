@@ -20,7 +20,7 @@ import { LocationGenerics } from '../../../routes'
 import { StoreCalculator, useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
-import { DrawControl, DrawArea } from './DrawControl'
+import { DrawArea, DrawControl } from './DrawControl'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
 
@@ -128,29 +128,48 @@ export const Map: React.FC = () => {
   const [calculatorDrawAreas, setCalculatorDrawAreas] = useState<DrawArea[]>([])
 
   const onUpdate = (e: { features: DrawArea[] }) => {
+    // Input can be added, modified or multi select modification
+    const inputFeatures = e.features
     setCalculatorDrawAreas((currFeatures) => {
-      const reallyNew = e.features.filter(
-        (nf) => !currFeatures.some((cf) => cf.id === nf.id)
+      // Case new feature(s):
+      const currFeatureIds = currFeatures.map((f) => f.id)
+      const newFeatures = inputFeatures.filter(
+        (iF) => !currFeatureIds.includes(iF.id)
       )
-      return [...currFeatures, ...reallyNew]
+      // Case modified features
+      const modifiedFeatures = inputFeatures.filter((iF) =>
+        currFeatureIds.includes(iF.id)
+      )
+      // Rest: Non modified features
+      const modifiedFeatureIds = modifiedFeatures.map((f) => f.id)
+      const untouchedFeatures = currFeatures.filter(
+        (cF) => !modifiedFeatureIds.includes(cF.id)
+      )
+      return [...newFeatures, ...modifiedFeatures, ...untouchedFeatures]
     })
   }
 
-  const drawRef = React.useRef<MapboxDraw>()
-  useEffect(() => {
-    console.log('selectArea useEffect', { calculatorDrawAreas })
+  const onDelete = (e: { features: DrawArea[] }) => {
+    const inputFeatures = e.features
+    setCalculatorDrawAreas((currFeatures) => {
+      const deletedFeaturesIds = inputFeatures.map((f) => f.id)
+      return currFeatures.filter(
+        (feature) => !deletedFeaturesIds.includes(feature.id)
+      )
+    })
+  }
 
+  const drawRef = React.useRef<MapboxDraw>() // TODO
+  useEffect(() => {
     if (!mainMap) return
 
     const calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures'] =
       []
+
     calculatorDrawAreas.forEach((selectArea) => {
       const polygonBbox = bbox(selectArea)
-      console.log(polygonBbox)
-
       const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
       const northEast: mapboxgl.LngLatLike = [polygonBbox[2], polygonBbox[3]]
-
       const northEastPointPixel = mainMap.project(northEast)
       const southWestPointPixel = mainMap.project(southWest)
 
@@ -178,20 +197,9 @@ export const Map: React.FC = () => {
         features: filteredFeatures,
       })
     })
+
     setCalculatorAreasWithFeatures(calculatorAreasWithFeatures)
   }, [calculatorDrawAreas])
-
-  const onDelete = (e: { features: DrawArea[] }) => {
-    setCalculatorDrawAreas((currFeatures) => {
-      const deletedFeaturesIds = e.features.map((f) => f.id)
-      return [...currFeatures].filter(
-        (feature) => !deletedFeaturesIds.includes(feature.id)
-      )
-    })
-  }
-
-  console.log('selectArea', calculatorDrawAreas)
-  console.log('y', { drawRef })
 
   if (lat === undefined || lng === undefined || zoom === undefined) {
     return null
