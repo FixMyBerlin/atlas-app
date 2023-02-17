@@ -5,13 +5,11 @@ import { regionFromPath } from '@routes/utils'
 import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
-import { SourcesRasterIds, sourcesBackgroundsRaster } from '../mapData'
-import { useMapStateInteraction } from '../mapStateInteraction'
+import { sourcesBackgroundsRaster, SourcesRasterIds } from '../mapData'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
   const { mainMap } = useMap()
-  const { calculatorFeatures } = useMapStateInteraction()
   const { bg: selectedBackgroundId } = useSearch<LocationGenerics>()
   const {
     params: { regionPath },
@@ -37,7 +35,6 @@ export const SelectBackground: React.FC = () => {
   }
 
   if (!mainMap) return null
-  if (calculatorFeatures.length) return null
   if (!selectedBackgroundId) return null
 
   return (

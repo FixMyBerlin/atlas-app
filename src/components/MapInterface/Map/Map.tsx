@@ -17,10 +17,10 @@ import {
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
-import { useMapStateInteraction } from '../mapStateInteraction'
+import { StoreCalculator, useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
-import { DrawControl, DrawFeature } from './DrawControl'
+import { DrawControl, DrawArea } from './DrawControl'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
 
@@ -37,7 +37,8 @@ export const Map: React.FC = () => {
   const [cursorStyle, setCursorStyle] = useState('grab')
   const [loaded, setLoaded] = useState(false)
 
-  const { setInspector, addToCalculator } = useMapStateInteraction()
+  const { setInspector, setCalculatorAreasWithFeatures } =
+    useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -124,10 +125,10 @@ export const Map: React.FC = () => {
     })
   })
 
-  const [selectArea, setSelectArea] = useState<DrawFeature[]>([])
+  const [calculatorDrawAreas, setCalculatorDrawAreas] = useState<DrawArea[]>([])
 
-  const onUpdate = (e: { features: DrawFeature[] }) => {
-    setSelectArea((currFeatures) => {
+  const onUpdate = (e: { features: DrawArea[] }) => {
+    setCalculatorDrawAreas((currFeatures) => {
       const reallyNew = e.features.filter(
         (nf) => !currFeatures.some((cf) => cf.id === nf.id)
       )
@@ -137,11 +138,14 @@ export const Map: React.FC = () => {
 
   const drawRef = React.useRef<MapboxDraw>()
   useEffect(() => {
-    console.log('selectArea useEffect', { selectArea })
+    console.log('selectArea useEffect', { calculatorDrawAreas })
 
-    const first = selectArea?.at(0)
-    if (first && mainMap) {
-      const polygonBbox = bbox(first)
+    if (!mainMap) return
+
+    const calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures'] =
+      []
+    calculatorDrawAreas.forEach((selectArea) => {
+      const polygonBbox = bbox(selectArea)
       console.log(polygonBbox)
 
       const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
@@ -161,7 +165,7 @@ export const Map: React.FC = () => {
 
       const filteredFeatures = features
         .map((feature) => {
-          if (booleanIntersects(feature, first)) {
+          if (booleanIntersects(feature, selectArea)) {
             return feature
           }
         })
@@ -169,41 +173,16 @@ export const Map: React.FC = () => {
           (feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature
         )
 
-      // When we sum Point features, we consider each point to be capacity=1
-      // (We overwrite _or_ create capacity=1)
-      filteredFeatures.forEach((f) => {
-        if (f.geometry.type === 'Point' && f?.properties) {
-          f.properties.capacity = 1
-        }
+      calculatorAreasWithFeatures.push({
+        key: selectArea.id,
+        features: filteredFeatures,
       })
+    })
+    setCalculatorAreasWithFeatures(calculatorAreasWithFeatures)
+  }, [calculatorDrawAreas])
 
-      console.info('user selected polygon', first, polygonBbox)
-      console.info('date for polygon', features, features?.at(0))
-      console.info('setFilter counties-highlighted to', filteredFeatures)
-
-      addToCalculator(filteredFeatures)
-    }
-
-    // Dont need this, this will collect too much data
-    // const querySourceFeatures =
-    //   mainMap &&
-    //   mainMap.querySourceFeatures(
-    //     'source:parkraumParkingPoints--topic:parkingPoints--tiles',
-    //     { sourceLayer: 'public.parking_spaces' }
-    //   )
-    // console.log({ querySourceFeatures })
-
-    // Does this work; throw away…
-    // mainMap.querySourceFeatures(
-    //   'source:parkraumParking--topic:parking--tiles',
-    //   { sourceLayer: 'public.parking_segments' }
-    // )
-
-    // addToCalculator
-  }, [selectArea])
-
-  const onDelete = (e: { features: DrawFeature[] }) => {
-    setSelectArea((currFeatures) => {
+  const onDelete = (e: { features: DrawArea[] }) => {
+    setCalculatorDrawAreas((currFeatures) => {
       const deletedFeaturesIds = e.features.map((f) => f.id)
       return [...currFeatures].filter(
         (feature) => !deletedFeaturesIds.includes(feature.id)
@@ -211,7 +190,7 @@ export const Map: React.FC = () => {
     })
   }
 
-  console.log('selectArea', selectArea)
+  console.log('selectArea', calculatorDrawAreas)
   console.log('y', { drawRef })
 
   if (lat === undefined || lng === undefined || zoom === undefined) {

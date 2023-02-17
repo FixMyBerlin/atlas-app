@@ -1,22 +1,18 @@
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
-import type { Polygon } from '@turf/turf'
 import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl'
 
-export type DrawFeature = {
+export type DrawArea = Omit<GeoJSON.Feature<GeoJSON.Polygon, never>, 'id'> & {
   id: string
-  type: 'Feature'
-  geometry: Polygon
-  properties: never
 }
 
 type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
   drawRef: MutableRefObject<MapboxDraw | undefined>
   position?: ControlPosition
 
-  onCreate?: (event: { features: DrawFeature[] }) => void
-  onUpdate?: (event: { features: DrawFeature[]; action: string }) => void
-  onDelete?: (event: { features: DrawFeature[] }) => void
+  onCreate?: (event: { features: DrawArea[] }) => void
+  onUpdate?: (event: { features: DrawArea[]; action: string }) => void
+  onDelete?: (event: { features: DrawArea[] }) => void
 }
 
 // Docs https://github.com/mapbox/mapbox-gl-draw/blob/main/docs/API.md#styling-draw
@@ -33,7 +29,7 @@ const drawControlStyle = [
       'line-join': 'round',
     },
     paint: {
-      'line-color': '#D20C0C',
+      'line-color': '#a21caf',
       'line-dasharray': [0.2, 2],
       'line-width': 2,
     },
@@ -44,8 +40,8 @@ const drawControlStyle = [
     type: 'fill',
     filter: ['all', ['==', '$type', 'Polygon']],
     paint: {
-      'fill-color': '#D20C0C',
-      'fill-outline-color': '#D20C0C',
+      'fill-color': '#d946ef',
+      'fill-outline-color': '#a21caf',
       'fill-opacity': 0.1,
     },
   },
@@ -70,7 +66,7 @@ const drawControlStyle = [
       'line-join': 'round',
     },
     paint: {
-      'line-color': '#D20C0C',
+      'line-color': '#a21caf',
       'line-dasharray': [0.2, 2],
       'line-width': 2,
     },
@@ -82,7 +78,7 @@ const drawControlStyle = [
     filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point']],
     paint: {
       'circle-radius': 5,
-      'circle-color': '#FFF',
+      'circle-color': '#fdf4ff',
     },
   },
   // vertex points
@@ -92,7 +88,7 @@ const drawControlStyle = [
     filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point']],
     paint: {
       'circle-radius': 3,
-      'circle-color': '#D20C0C',
+      'circle-color': '#86198f',
     },
   },
 ]

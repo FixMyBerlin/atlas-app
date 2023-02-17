@@ -1,5 +1,4 @@
 import { VerificationApiGet } from '@api/index'
-import { uniqueGeoJSONFeatureArray } from '@components/utils'
 import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import create from 'zustand'
@@ -8,7 +7,7 @@ import create from 'zustand'
 
 type Store = StoreDebugInfo &
   StoreFeaturesInspector &
-  StoreFeaturesCalculator &
+  StoreCalculator &
   StoreLocalUpdates
 
 type StoreDebugInfo = {
@@ -24,11 +23,14 @@ type StoreFeaturesInspector = {
   resetInspector: () => void
 }
 
-type StoreFeaturesCalculator = {
-  calculatorFeatures: [] | MapboxGeoJSONFeature[]
-  addToCalculator: (featuresToAdd: MapboxGeoJSONFeature[]) => void
-  removeFromCalculator: (featureToRemove: MapboxGeoJSONFeature) => void
-  clearCalculator: () => void
+export type StoreCalculator = {
+  calculatorAreasWithFeatures: {
+    key: string
+    features: MapboxGeoJSONFeature[]
+  }[]
+  setCalculatorAreasWithFeatures: (
+    featuresToAdd: StoreCalculator['calculatorAreasWithFeatures']
+  ) => void
 }
 
 type StoreLocalUpdates = {
@@ -45,28 +47,9 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
   resetInspector: () => set({ inspectorFeatures: [] }),
 
-  calculatorFeatures: [],
-  addToCalculator: (featuresToAdd) => {
-    const featuresWithCapacity = featuresToAdd.filter(
-      (f) => f?.properties?.capacity
-    )
-    const { calculatorFeatures } = get()
-    const uniqueFeatures = uniqueGeoJSONFeatureArray(
-      calculatorFeatures,
-      featuresWithCapacity
-    )
-    set({ calculatorFeatures: uniqueFeatures })
-  },
-  removeFromCalculator: (featureToRemove) => {
-    const { calculatorFeatures } = get()
-    set({
-      calculatorFeatures: calculatorFeatures.filter(
-        (s) => s?.properties?.id !== featureToRemove?.properties?.id
-      ),
-    })
-  },
-  clearCalculator: () => {
-    set({ calculatorFeatures: [] })
+  calculatorAreasWithFeatures: [],
+  setCalculatorAreasWithFeatures: (calculatorSelectAreasFeatures) => {
+    set({ calculatorAreasWithFeatures: calculatorSelectAreasFeatures })
   },
 
   localUpdates: [],
