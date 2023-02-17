@@ -27,6 +27,11 @@ export const PointCalculator = () => {
             {sum}
           </strong>
         ))}
+        {sums.length > 1 && (
+          <strong className="mt-1 block w-full border-t border-white/60 py-0.5">
+            {sums.map(([_k, v]) => v).reduce((prevV, currV) => prevV + currV)}
+          </strong>
+        )}
       </div>
     </section>
   )
