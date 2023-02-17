@@ -1,4 +1,5 @@
 import { getStyleData, getTopicData } from '@components/MapInterface/mapData'
+import { isDev } from '@components/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import bbox from '@turf/bbox'
@@ -65,16 +66,19 @@ export const Map: React.FC = () => {
     })
   }
 
-  // keeping this for debugging purposes for now
   const handleLoad = (_event: MapboxEvent) => {
-    // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
-    //  needs to be updated. The following code shows a list of all "external" layers.
-    const style = _event.target.getStyle()
-    const allLayer = style.layers
-    // @ts-ignore: 'AnyLayer' not relevant here
-    const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-    console.log({ findBeforeIds: basemapLayer, allLayer })
+    // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
     setLoaded(true)
+
+    if (isDev) {
+      // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
+      //  needs to be updated. The following code shows a list of all "external" layers.
+      const style = _event.target.getStyle()
+      const allLayer = style.layers
+      // @ts-ignore: 'AnyLayer' not relevant here
+      const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
+      console.log({ findBeforeIds: basemapLayer, allLayer })
+    }
   }
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
