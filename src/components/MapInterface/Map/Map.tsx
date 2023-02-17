@@ -169,6 +169,14 @@ export const Map: React.FC = () => {
           (feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature
         )
 
+      // When we sum Point features, we consider each point to be capacity=1
+      // (We overwrite _or_ create capacity=1)
+      filteredFeatures.forEach((f) => {
+        if (f.geometry.type === 'Point' && f?.properties) {
+          f.properties.capacity = 1
+        }
+      })
+
       console.info('user selected polygon', first, polygonBbox)
       console.info('date for polygon', features, features?.at(0))
       console.info('setFilter counties-highlighted to', filteredFeatures)
