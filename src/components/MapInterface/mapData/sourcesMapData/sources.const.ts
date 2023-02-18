@@ -102,7 +102,10 @@ export const sources: MapDataSource<
     freshness: { enabled: false },
     calculator: {
       enabled: true,
-      key: 'capacity',
+      keys: ['capacity'],
+      queryLayers: [
+        'parkraumParkingPoints--parkingPoints--default--parkraumParkingPointsLayer',
+      ],
     },
     export: { enabled: false },
   },

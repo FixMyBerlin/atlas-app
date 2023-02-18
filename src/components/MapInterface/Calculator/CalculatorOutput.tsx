@@ -1,7 +1,11 @@
 import clsx from 'clsx'
+import { MapDataSourceCalculator } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 
-export const CalculatorOutput = () => {
+// NOTE: `keys` are unused for now. `capacity` is counted, not summed; lets see what other keys/data we will need …
+type Props = { keys: MapDataSourceCalculator['keys'] }
+
+export const CalculatorOutput: React.FC<Props> = ({ keys: _unused }) => {
   const { calculatorAreasWithFeatures } = useMapStateInteraction()
 
   // <PointCalculator> only sums Point feature. Each point is considere `capacity=1`
