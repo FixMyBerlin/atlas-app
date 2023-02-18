@@ -2,9 +2,6 @@ import { getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { isDev } from '@components/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
-import bbox from '@turf/bbox'
-import booleanIntersects from '@turf/boolean-intersects'
-import mapboxgl from 'mapbox-gl'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import React, { useEffect, useState } from 'react'
@@ -17,10 +14,10 @@ import {
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
-import { StoreCalculator, useMapStateInteraction } from '../mapStateInteraction'
+import { Calculator } from '../Calculator/Calculator'
+import { useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
-import { DrawArea, DrawControl } from './DrawControl'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
 
@@ -37,8 +34,7 @@ export const Map: React.FC = () => {
   const [cursorStyle, setCursorStyle] = useState('grab')
   const [loaded, setLoaded] = useState(false)
 
-  const { setInspector, setCalculatorAreasWithFeatures } =
-    useMapStateInteraction()
+  const { setInspector } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -125,82 +121,6 @@ export const Map: React.FC = () => {
     })
   })
 
-  const [calculatorDrawAreas, setCalculatorDrawAreas] = useState<DrawArea[]>([])
-
-  const onUpdate = (e: { features: DrawArea[] }) => {
-    // Input can be added, modified or multi select modification
-    const inputFeatures = e.features
-    setCalculatorDrawAreas((currFeatures) => {
-      // Case new feature(s):
-      const currFeatureIds = currFeatures.map((f) => f.id)
-      const newFeatures = inputFeatures.filter(
-        (iF) => !currFeatureIds.includes(iF.id)
-      )
-      // Case modified features
-      const modifiedFeatures = inputFeatures.filter((iF) =>
-        currFeatureIds.includes(iF.id)
-      )
-      // Rest: Non modified features
-      const modifiedFeatureIds = modifiedFeatures.map((f) => f.id)
-      const untouchedFeatures = currFeatures.filter(
-        (cF) => !modifiedFeatureIds.includes(cF.id)
-      )
-      return [...newFeatures, ...modifiedFeatures, ...untouchedFeatures]
-    })
-  }
-
-  const onDelete = (e: { features: DrawArea[] }) => {
-    const inputFeatures = e.features
-    setCalculatorDrawAreas((currFeatures) => {
-      const deletedFeaturesIds = inputFeatures.map((f) => f.id)
-      return currFeatures.filter(
-        (feature) => !deletedFeaturesIds.includes(feature.id)
-      )
-    })
-  }
-
-  const drawRef = React.useRef<MapboxDraw>() // TODO
-  useEffect(() => {
-    if (!mainMap) return
-
-    const calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures'] =
-      []
-
-    calculatorDrawAreas.forEach((selectArea) => {
-      const polygonBbox = bbox(selectArea)
-      const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
-      const northEast: mapboxgl.LngLatLike = [polygonBbox[2], polygonBbox[3]]
-      const northEastPointPixel = mainMap.project(northEast)
-      const southWestPointPixel = mainMap.project(southWest)
-
-      const features = mainMap.queryRenderedFeatures(
-        [southWestPointPixel, northEastPointPixel],
-        {
-          layers: [
-            'parkraumParkingPoints--parkingPoints--default--parkraumParkingPointsLayer',
-          ],
-        }
-      )
-
-      const filteredFeatures = features
-        .map((feature) => {
-          if (booleanIntersects(feature, selectArea)) {
-            return feature
-          }
-        })
-        .filter(
-          (feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature
-        )
-
-      calculatorAreasWithFeatures.push({
-        key: selectArea.id,
-        features: filteredFeatures,
-      })
-    })
-
-    setCalculatorAreasWithFeatures(calculatorAreasWithFeatures)
-  }, [calculatorDrawAreas])
-
   if (lat === undefined || lng === undefined || zoom === undefined) {
     return null
   }
@@ -235,18 +155,7 @@ export const Map: React.FC = () => {
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
       <NavigationControl showCompass={false} />
-      <DrawControl
-        drawRef={drawRef}
-        position="top-right"
-        displayControlsDefault={false}
-        controls={{
-          polygon: true,
-          trash: true,
-        }}
-        onCreate={onUpdate}
-        onUpdate={onUpdate}
-        onDelete={onDelete}
-      />
+      <Calculator />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
     </MapGl>

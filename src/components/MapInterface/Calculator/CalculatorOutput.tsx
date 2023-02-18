@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 
-export const PointCalculator = () => {
+export const CalculatorOutput = () => {
   const { calculatorAreasWithFeatures } = useMapStateInteraction()
 
   // <PointCalculator> only sums Point feature. Each point is considere `capacity=1`
