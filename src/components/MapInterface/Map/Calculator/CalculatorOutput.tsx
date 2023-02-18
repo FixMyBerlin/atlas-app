@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import { MapDataSourceCalculator } from '../mapData'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { MapDataSourceCalculator } from '../../mapData'
+import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 
 // NOTE: `keys` are unused for now. `capacity` is counted, not summed; lets see what other keys/data we will need …
 type Props = { keys: MapDataSourceCalculator['keys'] }

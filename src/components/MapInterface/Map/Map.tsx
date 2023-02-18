@@ -14,7 +14,7 @@ import {
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
-import { Calculator } from '../Calculator/Calculator'
+import { Calculator } from './Calculator/Calculator'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'

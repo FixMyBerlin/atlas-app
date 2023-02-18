@@ -2,9 +2,12 @@ import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl'
-import { DrawArea, DrawControl } from '../Map/DrawControl'
-import { MapDataSourceCalculator } from '../mapData'
-import { StoreCalculator, useMapStateInteraction } from '../mapStateInteraction'
+import { MapDataSourceCalculator } from '../../mapData'
+import {
+  StoreCalculator,
+  useMapStateInteraction,
+} from '../../mapStateInteraction'
+import { DrawArea, DrawControl } from './CalculatorControlsDrawControl'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']

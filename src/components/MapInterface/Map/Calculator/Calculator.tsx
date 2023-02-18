@@ -1,8 +1,8 @@
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
-import { getSourceData, getTopicData } from '../mapData'
-import { flatConfigTopics } from '../mapStateConfig/utils/flatConfigTopics'
+import { getSourceData, getTopicData } from '../../mapData'
+import { flatConfigTopics } from '../../mapStateConfig/utils/flatConfigTopics'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
 
