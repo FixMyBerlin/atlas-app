@@ -93,32 +93,34 @@ const drawControlStyle = [
   },
 ]
 
-export const DrawControl = React.forwardRef((props: DrawControlProps, ref) => {
-  const drawRef = useControl<MapboxDraw>(
-    () => {
-      return new MapboxDraw({
-        ...props,
-        styles: drawControlStyle,
-      })
-    },
-    ({ map }: { map: MapRef }) => {
-      console.log('x', { map, drawRef })
-      props.onCreate && map.on('draw.create', props.onCreate)
-      props.onUpdate && map.on('draw.update', props.onUpdate)
-      props.onDelete && map.on('draw.delete', props.onDelete)
-    },
-    ({ map }: { map: MapRef }) => {
-      props.onCreate && map.off('draw.create', props.onCreate)
-      props.onUpdate && map.off('draw.update', props.onUpdate)
-      props.onDelete && map.off('draw.delete', props.onDelete)
-    },
-    {
-      position: props.position,
-    }
-  )
+export const CalculatorControlsDrawControl = React.forwardRef(
+  (props: DrawControlProps, ref) => {
+    const drawRef = useControl<MapboxDraw>(
+      () => {
+        return new MapboxDraw({
+          ...props,
+          styles: drawControlStyle,
+        })
+      },
+      ({ map }: { map: MapRef }) => {
+        console.log('x', { map, drawRef })
+        props.onCreate && map.on('draw.create', props.onCreate)
+        props.onUpdate && map.on('draw.update', props.onUpdate)
+        props.onDelete && map.on('draw.delete', props.onDelete)
+      },
+      ({ map }: { map: MapRef }) => {
+        props.onCreate && map.off('draw.create', props.onCreate)
+        props.onUpdate && map.off('draw.update', props.onUpdate)
+        props.onDelete && map.off('draw.delete', props.onDelete)
+      },
+      {
+        position: props.position,
+      }
+    )
 
-  React.useImperativeHandle(ref, () => drawRef, [drawRef]) // This way I exposed drawRef outside the component
+    React.useImperativeHandle(ref, () => drawRef, [drawRef]) // This way I exposed drawRef outside the component
 
-  return null
-})
-DrawControl.displayName = 'DrawControl'
+    return null
+  }
+)
+CalculatorControlsDrawControl.displayName = 'CalculatorControlsDrawControl'

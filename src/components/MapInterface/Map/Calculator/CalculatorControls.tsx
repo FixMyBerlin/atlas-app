@@ -7,7 +7,10 @@ import {
   StoreCalculator,
   useMapStateInteraction,
 } from '../../mapStateInteraction'
-import { DrawArea, DrawControl } from './CalculatorControlsDrawControl'
+import {
+  DrawArea,
+  CalculatorControlsDrawControl,
+} from './CalculatorControlsDrawControl'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
@@ -92,7 +95,7 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers }) => {
   }
 
   return (
-    <DrawControl
+    <CalculatorControlsDrawControl
       drawRef={drawRef}
       position="top-right"
       displayControlsDefault={false}
