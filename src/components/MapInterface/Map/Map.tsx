@@ -32,9 +32,8 @@ export const Map: React.FC = () => {
   } = useSearch<LocationGenerics>()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
-  const [loaded, setLoaded] = useState(false)
 
-  const { setInspector } = useMapStateInteraction()
+  const { setInspector, mapLoaded, setMapLoaded } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -48,7 +47,7 @@ export const Map: React.FC = () => {
 
   const handleLoad = (_event: MapboxEvent) => {
     // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
-    setLoaded(true)
+    setMapLoaded(true)
 
     if (isDev) {
       // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
@@ -139,7 +138,7 @@ export const Map: React.FC = () => {
       mapStyle="https://api.maptiler.com/maps/5cff051f-e5ca-43cf-b030-1f0286c59bb3/style.json?key=ECOoUBmpqklzSCASXxcu"
       // mapStyle="mapbox://styles/hejco/cl706a84j003v14o23n2r81w7"
       // mapboxAccessToken="pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q"
-      interactiveLayerIds={loaded ? interactiveLayerIds : []}
+      interactiveLayerIds={mapLoaded ? interactiveLayerIds : []}
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}

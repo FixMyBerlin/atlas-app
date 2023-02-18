@@ -5,14 +5,20 @@ import create from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreDebugInfo &
+type Store = StoreMapState &
+  StoreDebugInfo &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates
 
+type StoreMapState = {
+  mapLoaded: boolean
+  setMapLoaded: (mapLoaded: StoreMapState['mapLoaded']) => void
+}
+
 type StoreDebugInfo = {
   showDebugInfo: boolean
-  setShowDebugInfo: (showDebugInfo: boolean) => void
+  setShowDebugInfo: (showDebugInfo: StoreDebugInfo['showDebugInfo']) => void
 }
 
 type StoreFeaturesInspector = {
@@ -40,6 +46,9 @@ type StoreLocalUpdates = {
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
+  mapLoaded: false,
+  setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+
   showDebugInfo: isDev,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
 
