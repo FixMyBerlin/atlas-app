@@ -23,6 +23,70 @@ export type MapDataBackgroundSource<TIds> = {
   tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
+type MapDataSourceInspector =
+  | {
+      enabled: true
+      /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
+      highlightingKey: string
+      /** @desc A sorted list of keys that we officially document.
+       * Keys of type `composit_*` require their own TableRowCell-Component.
+       * Keys of type `*__if_present` are only presented if a value is present.
+       * (Keys that are not mentioned here are for debugging only.) */
+      documentedKeys?: (
+        | string
+        | `composit_${string}`
+        | `${string}__if_present`
+      )[]
+    }
+  | {
+      enabled: false
+    }
+
+type MapDataSourceVerifcation<TVerIds> =
+  | {
+      enabled: true
+      /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
+      apiIdentifier: TVerIds
+    }
+  | {
+      enabled: false
+      apiIdentifier?: undefined
+    }
+
+type MapDataSourceFreshness =
+  | {
+      enabled: true
+      /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
+      dateKey?: string
+    }
+  | {
+      enabled: false
+      dateKey?: undefined
+    }
+
+export type MapDataSourceCalculator =
+  | {
+      enabled: true
+      keys: string[]
+      queryLayers: string[]
+    }
+  | {
+      enabled: false
+      keys?: undefined
+      queryLayers?: undefined
+    }
+
+type MapDataSourceExport<TExpIds> =
+  | {
+      enabled: true
+      /** @desc Identifier for the export API URL; export is only allowed when present */
+      apiIdentifier: TExpIds
+    }
+  | {
+      enabled: false
+      apiIdentifier?: undefined
+    }
+
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
@@ -31,71 +95,19 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   attributionHtml: string // TODO anzeigen in der Karte
   licence?: 'ODbL'
   /** @desc Inspector: Enable and configure Inspector */
-  inspector:
-    | {
-        enabled: true
-        /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
-        highlightingKey: string
-        /** @desc A sorted list of keys that we officially document.
-         * Keys of type `composit_*` require their own TableRowCell-Component.
-         * Keys of type `*__if_present` are only presented if a value is present.
-         * (Keys that are not mentioned here are for debugging only.) */
-        documentedKeys?: (
-          | string
-          | `composit_${string}`
-          | `${string}__if_present`
-        )[]
-      }
-    | {
-        enabled: false
-      }
+  inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
   presence: {
     enabled: boolean
   }
   /** @desc Inspector: Enable and configure in app verification */
-  verification:
-    | {
-        enabled: true
-        /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
-        apiIdentifier: TVerIds
-      }
-    | {
-        enabled: false
-        apiIdentifier?: undefined
-      }
+  verification: MapDataSourceVerifcation<TVerIds>
   /** @desc Inspector: Enable and configure info data on freshness */
-  freshness:
-    | {
-        enabled: true
-        /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
-        dateKey?: string
-      }
-    | {
-        enabled: false
-        dateKey?: undefined
-      }
+  freshness: MapDataSourceFreshness
   /** @desc Calculator: Enable and configure calculator feature */
-  calculator:
-    | {
-        enabled: true
-        key: string
-      }
-    | {
-        enabled: false
-        key?: undefined
-      }
+  calculator: MapDataSourceCalculator
   /** @desc Export: Enable and configure data export */
-  export:
-    | {
-        enabled: true
-        /** @desc Identifier for the export API URL; export is only allowed when present */
-        apiIdentifier: TExpIds
-      }
-    | {
-        enabled: false
-        apiIdentifier?: undefined
-      }
+  export: MapDataSourceExport<TExpIds>
   minzoom?: mapboxgl.RasterSource['minzoom']
   maxzoom?: mapboxgl.RasterSource['maxzoom']
 }
