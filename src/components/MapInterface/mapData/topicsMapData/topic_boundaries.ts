@@ -5,9 +5,7 @@ export type TopicBoundariesId = typeof topiId
 export type TopicBoundariesStyleIds = 'default'
 export type TopicBoundariesStyleFilterIds = '_nofilter'
 
-type Topic = MapDataTopic
-
-export const topic_boundaries: Topic = {
+export const topic_boundaries: MapDataTopic = {
   id: topiId,
   name: 'Grenzen',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',

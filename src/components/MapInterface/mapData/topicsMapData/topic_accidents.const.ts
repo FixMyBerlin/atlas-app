@@ -10,10 +10,8 @@ export type TopicAccidentsId = typeof topicId
 export type TopicAccidentsStyleIds = 'default'
 export type TopicAccidentsStyleFilterIds = 'years' | 'category' | 'type'
 
-type Topic = MapDataTopic
-
 // Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
-export const topic_accidents: Topic = {
+export const topic_accidents: MapDataTopic = {
   id: topicId,
   name: 'Unfälle',
   desc: 'Unfallatlass',

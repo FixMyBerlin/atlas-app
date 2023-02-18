@@ -5,9 +5,7 @@ export type TopicMapillaryCoverageId = typeof topicId
 export type TopicMapillaryCoverageStyleIds = 'default'
 export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
-type Topic = MapDataTopic
-
-export const topic_mapillaryCoverage: Topic = {
+export const topic_mapillaryCoverage: MapDataTopic = {
   id: topicId,
   name: 'Mapillary Fotos',
   desc: null,

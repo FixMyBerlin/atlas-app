@@ -29,7 +29,7 @@ import {
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
-  topicParking,
+  topic_parking,
   TopicParkingId,
   TopicParkingPointsId,
   TopicParkingPointsStyleFilterIds,
@@ -194,7 +194,7 @@ export const mapData: MapData = {
     topic_poiClassification_tarmac,
     topic_surface_osmscripts,
     // topic_surface_tarmac,
-    topicParking,
+    topic_parking,
     topic_parkingPoints,
   ],
 }

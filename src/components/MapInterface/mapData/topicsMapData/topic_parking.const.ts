@@ -12,9 +12,7 @@ export type TopicParkingStyleIds =
   | 'debugLengthPerCapacity'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
-type Topic = MapDataTopic
-
-export const topicParking: Topic = {
+export const topic_parking: MapDataTopic = {
   id: 'parking',
   name: 'Parkraum',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',

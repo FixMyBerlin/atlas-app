@@ -4,9 +4,7 @@ export type TopicParkingPointsId = 'parkingPoints'
 export type TopicParkingPointsStyleIds = 'default'
 export type TopicParkingPointsStyleFilterIds = '_nofilter'
 
-type Topic = MapDataTopic
-
-export const topic_parkingPoints: Topic = {
+export const topic_parkingPoints: MapDataTopic = {
   id: 'parkingPoints',
   name: 'Parkplätze',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
