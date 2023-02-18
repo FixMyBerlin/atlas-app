@@ -1,6 +1,6 @@
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useMap } from 'react-map-gl'
 import { MapDataSourceCalculator } from '../../mapData'
 import {
@@ -21,7 +21,7 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers }) => {
 
   const [calculatorDrawAreas, setCalculatorDrawAreas] = useState<DrawArea[]>([])
   const { setCalculatorAreasWithFeatures } = useMapStateInteraction()
-  const drawRef = React.useRef<MapboxDraw>() // TODO
+  const drawControlRef = useRef<MapboxDraw>()
 
   useEffect(() => {
     if (!mainMap) return
@@ -96,7 +96,7 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers }) => {
 
   return (
     <CalculatorControlsDrawControl
-      drawRef={drawRef}
+      ref={drawControlRef}
       position="top-right"
       displayControlsDefault={false}
       controls={{
