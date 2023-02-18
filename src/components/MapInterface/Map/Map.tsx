@@ -57,11 +57,11 @@ export const Map: React.FC = () => {
     if (isDev) {
       // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
       //  needs to be updated. The following code shows a list of all "external" layers.
-      const style = _event.target.getStyle()
-      const allLayer = style.layers
-      // @ts-ignore: 'AnyLayer' not relevant here
-      const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-      console.log({ findBeforeIds: basemapLayer, allLayer })
+      // const style = _event.target.getStyle()
+      // const allLayer = style.layers
+      // // @ts-ignore: 'AnyLayer' not relevant here
+      // const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
+      // console.log({ findBeforeIds: basemapLayer, allLayer })
     }
   }
 
