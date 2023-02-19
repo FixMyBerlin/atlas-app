@@ -12,5 +12,6 @@ function decodeFromBinary(str: string): string {
 }
 
 export const legacyParse = (value: string) => {
+  // No need to use expandObjectKeys() here since the legacy schema did not use minifiedObjectKeys
   return parse(decodeURIComponent(decodeFromBinary(value)))
 }

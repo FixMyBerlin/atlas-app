@@ -1,16 +1,16 @@
-const transTable = {
+const translateKeys = [
   // Mainly for ?config
-  id: 'i',
-  active: 'a',
-  style: 's',
-  default: 'd',
-  options: 'o',
+  ['id', 'i'],
+  ['active', 'a'],
+  ['styles', 's'],
+  ['default', 'd'],
+  ['options', 'o'],
   // Mainly for ?map (GeoJSON)
-  type: 't',
-  properties: 'p',
-  geometry: 'g',
-  coordinates: 'c',
-} as const
+  ['type', 't'],
+  ['properties', 'p'],
+  ['geometry', 'g'],
+  ['coordinates', 'c'],
+] as const
 
 // type TTransTableKeys = keyof typeof transTable
 // type TTransTableValues = (typeof transTable)[TTransTableKeys]
@@ -34,14 +34,13 @@ const replaceKeyInNestedObject = (
   searchKey: string,
   newKey: string
 ) => {
-  let output: Record<string, any> | undefined = undefined
   if (Array.isArray(input)) {
-    output = input.map((innerInput: TInput) =>
+    return input.map((innerInput: TInput) =>
       replaceKeyInNestedObject(innerInput, searchKey, newKey)
     )
   }
   if (typeof input === 'object' && input !== null) {
-    output = Object.fromEntries(
+    return Object.fromEntries(
       Object.entries(input).map(([innerKey, value]: [string, TInput]) => {
         const newValue: TInput | string =
           typeof value === 'object'
@@ -51,21 +50,12 @@ const replaceKeyInNestedObject = (
       })
     )
   }
-  return output || input
+  return input
 }
 
 export const minimizeObjectKeys = (inputObject: TInput) => {
-  if (
-    !inputObject ||
-    typeof inputObject !== 'object' ||
-    Array.isArray(inputObject)
-  ) {
-    return inputObject
-  }
-
   let minimizedObject = inputObject
-  const fromToTable = Object.entries(transTable)
-  fromToTable.forEach(([fromKey, toKey]) => {
+  translateKeys.forEach(([fromKey, toKey]) => {
     minimizedObject = replaceKeyInNestedObject(minimizedObject, fromKey, toKey)
   })
 
@@ -73,17 +63,8 @@ export const minimizeObjectKeys = (inputObject: TInput) => {
 }
 
 export const expandObjectKeys = (inputObject: TInput) => {
-  if (
-    !inputObject ||
-    typeof inputObject !== 'object' ||
-    Array.isArray(inputObject)
-  ) {
-    return inputObject
-  }
-
   let minimizedObject = inputObject
-  const fromToTable = Object.entries(transTable)
-  fromToTable.forEach(([toKey, fromKey]) => {
+  translateKeys.forEach(([toKey, fromKey]) => {
     minimizedObject = replaceKeyInNestedObject(minimizedObject, fromKey, toKey)
   })
 
