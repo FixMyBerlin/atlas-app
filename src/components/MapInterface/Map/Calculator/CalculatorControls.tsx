@@ -1,6 +1,8 @@
+import { LocationGenerics } from '@routes/routes'
+import { useSearch } from '@tanstack/react-location'
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useMap } from 'react-map-gl'
 import { MapDataSourceCalculator } from '../../mapData'
 import {
@@ -8,28 +10,33 @@ import {
   useMapStateInteraction,
 } from '../../mapStateInteraction'
 import {
-  DrawArea,
   CalculatorControlsDrawControl,
+  DrawArea,
+  DrawControlProps,
 } from './CalculatorControlsDrawControl'
+import { useDelete } from './hooks/useDelete'
+import { useUpdate } from './hooks/useUpdate'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
+  drawControlRef: DrawControlProps['ref']
 }
 
-export const CalculatorControls: React.FC<Props> = ({ queryLayers }) => {
+export const CalculatorControls: React.FC<Props> = ({
+  queryLayers,
+  drawControlRef,
+}) => {
   const { mainMap } = useMap()
 
-  const [calculatorDrawAreas, setCalculatorDrawAreas] = useState<DrawArea[]>([])
-  const { setCalculatorAreasWithFeatures } = useMapStateInteraction()
-  const drawControlRef = useRef<MapboxDraw>()
+  const { draw: drawAreasStore } = useSearch<LocationGenerics>()
+  const { mapLoaded, setCalculatorAreasWithFeatures } = useMapStateInteraction()
 
   useEffect(() => {
-    if (!mainMap) return
+    if (!mainMap || !mapLoaded || !drawAreasStore) return
 
-    const calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures'] =
-      []
+    const result: StoreCalculator['calculatorAreasWithFeatures'] = []
 
-    calculatorDrawAreas.forEach((selectArea) => {
+    drawAreasStore.forEach((selectArea) => {
       const polygonBbox = bbox(selectArea)
       const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
       const northEast: mapboxgl.LngLatLike = [polygonBbox[2], polygonBbox[3]]
@@ -53,46 +60,32 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers }) => {
           (feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature
         )
 
-      calculatorAreasWithFeatures.push({
+      result.push({
         key: selectArea.id,
         features: filteredFeatures,
       })
     })
 
-    setCalculatorAreasWithFeatures(calculatorAreasWithFeatures)
-  }, [calculatorDrawAreas])
+    setCalculatorAreasWithFeatures(result)
+  }, [drawAreasStore, mapLoaded])
 
+  const { updateDrawFeatures } = useUpdate()
   const onUpdate = (e: { features: DrawArea[] }) => {
-    // Input can be added, modified or multi select modification
-    const inputFeatures = e.features
-    setCalculatorDrawAreas((currFeatures) => {
-      // Case new feature(s):
-      const currFeatureIds = currFeatures.map((f) => f.id)
-      const newFeatures = inputFeatures.filter(
-        (iF) => !currFeatureIds.includes(iF.id)
-      )
-      // Case modified features
-      const modifiedFeatures = inputFeatures.filter((iF) =>
-        currFeatureIds.includes(iF.id)
-      )
-      // Rest: Non modified features
-      const modifiedFeatureIds = modifiedFeatures.map((f) => f.id)
-      const untouchedFeatures = currFeatures.filter(
-        (cF) => !modifiedFeatureIds.includes(cF.id)
-      )
-      return [...newFeatures, ...modifiedFeatures, ...untouchedFeatures]
-    })
+    updateDrawFeatures(drawAreasStore, e.features)
   }
 
+  const { deleteDrawFeatures } = useDelete()
   const onDelete = (e: { features: DrawArea[] }) => {
-    const inputFeatures = e.features
-    setCalculatorDrawAreas((currFeatures) => {
-      const deletedFeaturesIds = inputFeatures.map((f) => f.id)
-      return currFeatures.filter(
-        (feature) => !deletedFeaturesIds.includes(feature.id)
-      )
-    })
+    deleteDrawFeatures(drawAreasStore, e.features)
   }
+
+  // OnInit, add drawAreas from store to the UI
+  useEffect(() => {
+    if (!mapLoaded || !drawAreasStore) return
+
+    drawAreasStore.forEach((feature) => drawControlRef.current?.add(feature))
+    updateDrawFeatures(drawAreasStore, drawAreasStore)
+  }, [mapLoaded])
 
   return (
     <CalculatorControlsDrawControl

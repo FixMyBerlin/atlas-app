@@ -1,6 +1,6 @@
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
-import React from 'react'
+import React, { useRef } from 'react'
 import { getSourceData, getTopicData } from '../../mapData'
 import { flatConfigTopics } from '../../mapStateConfig/utils/flatConfigTopics'
 import { CalculatorControls } from './CalculatorControls'
@@ -32,12 +32,20 @@ export const Calculator: React.FC = () => {
     )
   }
 
+  const drawControlRef = useRef<MapboxDraw>()
+
   if (!queryLayers) return null
 
   return (
     <>
-      <CalculatorControls queryLayers={queryLayers} />
-      <CalculatorOutput keys={calculatorSource?.calculator?.keys} />
+      <CalculatorControls
+        queryLayers={queryLayers}
+        drawControlRef={drawControlRef}
+      />
+      <CalculatorOutput
+        keys={calculatorSource?.calculator?.keys}
+        drawControlRef={drawControlRef}
+      />
     </>
   )
 }

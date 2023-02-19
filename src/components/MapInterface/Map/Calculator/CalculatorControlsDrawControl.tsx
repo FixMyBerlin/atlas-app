@@ -3,14 +3,11 @@ import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl'
 import { drawControlStyle } from './drawControlStyle'
 
-export type DrawArea = Omit<
-  GeoJSON.Feature<GeoJSON.Polygon, never | []>,
-  'id'
-> & {
+export type DrawArea = Omit<GeoJSON.Feature<GeoJSON.Polygon, []>, 'id'> & {
   id: string
 }
 
-type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
+export type DrawControlProps = ConstructorParameters<typeof MapboxDraw>[0] & {
   ref: MutableRefObject<MapboxDraw | undefined>
   position?: ControlPosition
 
