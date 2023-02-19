@@ -1,5 +1,8 @@
+import { DrawArea } from '@components/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
 import { SourcesRasterIds } from '@components/MapInterface/mapData'
-import { ContactPage, NotFoundPage, HomePage, PrivacyPage } from '@pages/index'
+import { Region } from '@fakeServer/index'
+import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
+import { PageRegionMap, PageRegions } from '@pages/PageRegions'
 import {
   MakeGenerics,
   parseSearchWith,
@@ -7,14 +10,12 @@ import {
   Route,
   stringifySearchWith,
 } from '@tanstack/react-location'
+import jsurl from 'jsurl2'
 import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
 import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
-
-import { Region } from '@fakeServer/index'
-import { decodeAndParse, encodeAndStringify } from './encodeDecode'
 import { fetchRegions } from './fetchRegions'
+import { updateLegacyEncoding } from './legacyEncodeDecode'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'
-import { PageRegionMap, PageRegions } from '@pages/PageRegions'
 
 // LoaderData: LoaderData<unknown>;
 // Params: Params<string>;
@@ -36,12 +37,17 @@ export type LocationGenerics = MakeGenerics<{
     zoom: number
     bg: SourcesRasterIds
     config: ThemeConfig[]
+    draw: DrawArea[]
   }
 }>
 
-export const location = new ReactLocation<LocationGenerics>({
-  parseSearch: parseSearchWith((value) => decodeAndParse(value)),
-  stringifySearch: stringifySearchWith((value) => encodeAndStringify(value)),
+// Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
+// Using https://github.com/wmertens/jsurl2
+export const location = new ReactLocation({
+  parseSearch: parseSearchWith((value) =>
+    jsurl.parse(updateLegacyEncoding(value))
+  ),
+  stringifySearch: stringifySearchWith((value) => jsurl.stringify(value)),
 })
 
 export const routes: Route<LocationGenerics>[] = [
