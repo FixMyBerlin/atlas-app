@@ -10,11 +10,13 @@ import {
   Route,
   stringifySearchWith,
 } from '@tanstack/react-location'
-import jsurl from 'jsurl2'
 import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
 import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
+import {
+  customParse,
+  customStringify,
+} from './encodeDecode/customParseStringify'
 import { fetchRegions } from './fetchRegions'
-import { updateLegacyEncoding } from './legacyEncodeDecode'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'
 
 // LoaderData: LoaderData<unknown>;
@@ -41,13 +43,10 @@ export type LocationGenerics = MakeGenerics<{
   }
 }>
 
-// Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
-// Using https://github.com/wmertens/jsurl2
-export const location = new ReactLocation({
-  parseSearch: parseSearchWith((value) =>
-    jsurl.parse(updateLegacyEncoding(value))
-  ),
-  stringifySearch: stringifySearchWith((value) => jsurl.stringify(value)),
+export const location = new ReactLocation<LocationGenerics>({
+  // Encode/decode search params of type 'object'
+  parseSearch: parseSearchWith((value) => customParse(value)),
+  stringifySearch: stringifySearchWith((value) => customStringify(value)),
 })
 
 export const routes: Route<LocationGenerics>[] = [
