@@ -3,11 +3,17 @@ import { clsx } from 'clsx'
 
 type Props = {
   active: boolean
+  desc?: string | null
   handleChange: () => void
   children: React.ReactNode
 }
 
-export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
+export const Toggle: React.FC<Props> = ({
+  active,
+  desc,
+  handleChange,
+  children,
+}) => {
   return (
     <Switch.Group
       as="div"
@@ -43,6 +49,7 @@ export const Toggle: React.FC<Props> = ({ active, handleChange, children }) => {
           'ml-2 w-full text-sm font-semibold leading-[17px]',
           active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900'
         )}
+        title={desc ? desc : undefined}
       >
         {children}
       </Switch.Label>

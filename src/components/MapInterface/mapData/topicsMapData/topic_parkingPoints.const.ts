@@ -6,8 +6,8 @@ export type TopicParkingPointsStyleFilterIds = '_nofilter'
 
 export const topic_parkingPoints: MapDataTopic = {
   id: 'parkingPoints',
-  name: 'Parkplätze',
-  desc: '(Nur für Berlin da Datenquelle Parkraum)',
+  name: 'Parkplätze zählen',
+  desc: 'Jeder Punkt ist ein errechneter Stellplatz. Man kann Flächen einzeichnen, für die eine Summe dargestellt wird.',
   sourceId: 'parkraumParkingPoints',
   styles: [
     {

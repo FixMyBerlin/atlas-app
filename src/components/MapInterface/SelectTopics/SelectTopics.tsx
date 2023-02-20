@@ -53,6 +53,7 @@ export const SelectTopics: React.FC = () => {
                 <Toggle
                   active={topicConfig.active}
                   handleChange={() => toggleActive(topicConfig.id)}
+                  desc={topicData.desc}
                 >
                   {topicData.name}
                 </Toggle>
