@@ -1,4 +1,8 @@
-import { getStyleData, getTopicData } from '@components/MapInterface/mapData'
+import {
+  getSourceData,
+  getStyleData,
+  getTopicData,
+} from '@components/MapInterface/mapData'
 import { isDev } from '@components/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
@@ -115,6 +119,10 @@ export const Map: React.FC = () => {
           styleConfig.id,
           layerConfig.id
         )
+        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
+        const sourceData = getSourceData(topicData.sourceId)
+        if (!sourceData.inspector.enabled) return
+
         interactiveLayerIds.push(layerKey)
       })
     })
