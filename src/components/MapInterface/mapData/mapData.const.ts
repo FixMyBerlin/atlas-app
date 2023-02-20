@@ -29,7 +29,9 @@ import {
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
-  topic_parking,
+  TopicParkingAreasId,
+  TopicParkingAreasStyleFilterIds,
+  TopicParkingAreasStyleIds,
   TopicParkingId,
   TopicParkingPointsId,
   TopicParkingPointsStyleFilterIds,
@@ -72,6 +74,8 @@ import {
   topic_landuse,
   topic_lit,
   topic_mapillaryCoverage,
+  topic_parking,
+  topic_parkingAreas,
   topic_parkingPoints,
   topic_places,
   topic_poiClassification_tarmac,
@@ -105,6 +109,7 @@ export type TopicIds =
   | TopicSurfaceId_Tarmac
   | TopicParkingId
   | TopicParkingPointsId
+  | TopicParkingAreasId
 
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
@@ -127,6 +132,7 @@ export type TopicStyleIds =
   | TopicSurfaceStyleIds_Tarmac
   | TopicParkingStyleIds
   | TopicParkingPointsStyleIds
+  | TopicParkingAreasStyleIds
 
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
@@ -149,6 +155,7 @@ export type TopicStyleFilterIds =
   | TopicSurfaceStyleFilterIds_Tarmac
   | TopicParkingStyleFilterIds
   | TopicParkingPointsStyleFilterIds
+  | TopicParkingAreasStyleFilterIds
 
 export type TopicStyleLegendIds =
   // | TopicAccidentsStyleLegendIds
@@ -171,6 +178,7 @@ export type TopicStyleLegendIds =
 // | TopicSurfaceStyleLegendIds_Tarmac
 // | TopicParkingStyleLegendIds
 // | TopicParkingPointsStyleLegendIds
+// | TopicParkingAreasStyleLegendIds
 
 export const mapData: MapData = {
   sources,
@@ -196,5 +204,6 @@ export const mapData: MapData = {
     // topic_surface_tarmac,
     topic_parking,
     topic_parkingPoints,
+    topic_parkingAreas,
   ],
 }

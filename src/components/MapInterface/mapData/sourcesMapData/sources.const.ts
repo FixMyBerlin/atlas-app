@@ -11,6 +11,7 @@ export type SourcesIds =
   | 'osmscripts_pois'
   | 'parkraumParking'
   | 'parkraumParkingPoints'
+  | 'parkraumParkingAreas'
   | 'tarmac_bikelanes'
   | 'tarmac_boundaries'
   | 'tarmac_education'
@@ -94,6 +95,26 @@ export const sources: MapDataSource<
       ],
       highlightingKey: 'id',
     },
+    export: { enabled: false },
+  },
+  {
+    id: 'parkraumParkingAreas',
+    tiles: 'https://vts.mapwebbing.eu/public.parking_poly/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'area_id',
+      documentedKeys: [
+        'parking',
+        'access',
+        'capacity__if_present',
+        'building__if_present',
+      ],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
     export: { enabled: false },
   },
   {

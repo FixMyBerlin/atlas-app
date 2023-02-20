@@ -130,6 +130,7 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'parking', defaultActive: true },
       { id: 'parkingPoints', defaultActive: false },
+      { id: 'parkingAreas', defaultActive: true },
       { id: 'landuse', defaultActive: false },
       { id: 'mapillaryCoverage', defaultActive: false },
       { id: 'accidents', defaultActive: false },
