@@ -106,7 +106,7 @@ export const Map: React.FC = () => {
     if (!currentTheme?.topics.some((t) => t.id === topicConfig.id)) return
     const topicData = getTopicData(topicConfig.id)
 
-    topicConfig.styles.map((styleConfig) => {
+    topicConfig.styles.forEach((styleConfig) => {
       const styleData = getStyleData(topicData, styleConfig.id)
       styleData.layers.forEach((layerConfig) => {
         const layerKey = createSourceTopicStyleLayerKey(
