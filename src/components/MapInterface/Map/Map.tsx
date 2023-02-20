@@ -33,7 +33,7 @@ export const Map: React.FC = () => {
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
-  const { setInspector, mapLoaded, setMapLoaded } = useMapStateInteraction()
+  const { setInspector, setMapLoaded } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -138,7 +138,7 @@ export const Map: React.FC = () => {
       mapStyle="https://api.maptiler.com/maps/5cff051f-e5ca-43cf-b030-1f0286c59bb3/style.json?key=ECOoUBmpqklzSCASXxcu"
       // mapStyle="mapbox://styles/hejco/cl706a84j003v14o23n2r81w7"
       // mapboxAccessToken="pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q"
-      interactiveLayerIds={mapLoaded ? interactiveLayerIds : []}
+      interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}
