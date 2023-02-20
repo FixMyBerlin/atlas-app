@@ -114,13 +114,12 @@ export const Map: React.FC = () => {
   const interactiveLayerIds: string[] = []
   currentTheme.topics.forEach((topicConfig) => {
     // Guard: Only pick layer that are part of our current theme
-    if (currentTheme?.topics.some((t) => t.id === topicConfig.id)) return null
 
+    if (!currentTheme?.topics.some((t) => t.id === topicConfig.id)) return
     const topicData = getTopicData(topicConfig.id)
 
     topicConfig.styles.map((styleConfig) => {
       const styleData = getStyleData(topicData, styleConfig.id)
-      // @ts-ignore styleData should not be undefined here
       styleData.layers.forEach((layerConfig) => {
         const layerKey = createSourceTopicStyleLayerKey(
           topicData.sourceId,
