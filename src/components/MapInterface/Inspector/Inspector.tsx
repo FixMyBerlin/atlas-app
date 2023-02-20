@@ -100,7 +100,7 @@ export const Inspector: React.FC = () => {
                 <div className="py-1">{/* Spacer */}</div>
                 <TagsTable
                   properties={properties}
-                  documentedKeys={sourceData.inspector.documentedKeys}
+                  sourceDocumentedKeys={sourceData.inspector.documentedKeys}
                   sourceId={sourceId}
                 />
 

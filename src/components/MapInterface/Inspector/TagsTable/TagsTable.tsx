@@ -6,19 +6,23 @@ import { TagsTableRow } from './TagsTableRow'
 
 type Props = {
   properties: GeoJSONFeature['properties']
-  documentedKeys: string[] | undefined
+  sourceDocumentedKeys: string[] | undefined
   sourceId: SourcesIds
 }
 
 export const TagsTable: React.FC<Props> = ({
   properties,
-  documentedKeys,
+  sourceDocumentedKeys,
   sourceId,
 }) => {
+  const cleanKey = (key: string) => key.replace('__if_present', '')
+
   const documentedProperties = Object.fromEntries(
     Object.entries(properties)
       .sort((a, b) => a[0].localeCompare(b[0]))
-      .filter(([key, _v]) => documentedKeys?.includes(key))
+      .filter(([key, _v]) =>
+        sourceDocumentedKeys?.map((k) => cleanKey(k))?.includes(key)
+      )
   )
 
   return (
@@ -40,24 +44,21 @@ export const TagsTable: React.FC<Props> = ({
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200 bg-white">
-        {documentedKeys?.map((key) => {
-          // `documentedKeys` are specified on the source.const object.
-          let cleanedKey = key
-          // Handle documentedKeys that should _only show if a value is present_
-          if (key.includes('__if_present')) {
-            cleanedKey = key.replace('__if_present', '')
-            if (!documentedProperties[cleanedKey]) {
-              return null
-            }
+        {sourceDocumentedKeys?.map((key) => {
+          // `sourceDocumentedKeys` are specified on the source.const object.
+          // Handle sourceDocumentedKeys that should _only show if a value is present_
+          const cleanedKey = cleanKey(key)
+          if (!Object.keys(documentedProperties).includes(cleanedKey)) {
+            return null
           }
 
           // Handle _composit_ table rows and default case
-          switch (key) {
+          switch (cleanedKey) {
             case 'composit_surface_smoothness': {
               return (
                 <TagsTableRowCompositSurfaceSmoothness
                   sourceId={sourceId}
-                  tagKey={key}
+                  tagKey={cleanedKey}
                   properties={properties}
                 />
               )
@@ -65,10 +66,10 @@ export const TagsTable: React.FC<Props> = ({
             default: {
               return (
                 <TagsTableRow
-                  key={key}
+                  key={cleanedKey}
                   sourceId={sourceId}
-                  tagKey={key}
-                  tagValue={documentedProperties[key]}
+                  tagKey={cleanedKey}
+                  tagValue={documentedProperties[cleanedKey]}
                 />
               )
             }
