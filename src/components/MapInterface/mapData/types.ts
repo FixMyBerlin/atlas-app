@@ -26,7 +26,7 @@ export type MapDataBackgroundSource<TIds> = {
 type MapDataSourceInspector =
   | {
       enabled: true
-      /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
+      /** @desc The key used by the highlighting LayerHighlight component to change the appearance of the selected element */
       highlightingKey: string
       /** @desc A sorted list of keys that we officially document.
        * Keys of type `composit_*` require their own TableRowCell-Component.
@@ -69,11 +69,14 @@ export type MapDataSourceCalculator =
       enabled: true
       keys: string[]
       queryLayers: string[]
+      /** @desc The key used by the highlighting LayerHighlight component to change the appearance of the selected element */
+      highlightingKey: string
     }
   | {
       enabled: false
       keys?: undefined
       queryLayers?: undefined
+      highlightingKey?: undefined
     }
 
 type MapDataSourceExport<TExpIds> =

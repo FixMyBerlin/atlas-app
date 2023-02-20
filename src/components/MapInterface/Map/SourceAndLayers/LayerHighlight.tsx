@@ -3,6 +3,7 @@ import { useMapStateInteraction } from '@components/MapInterface/mapStateInterac
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl'
 import { extractSourceIdIdFromSourceKey } from './utils/extractFromSourceKey'
+import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 
 type Props = {
   id: string
@@ -15,20 +16,33 @@ type Props = {
 }
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
-  const { inspectorFeatures } = useMapStateInteraction()
+  const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } =
+    useMapStateInteraction()
   const sourceData = getSourceData(
     extractSourceIdIdFromSourceKey(parentLayerProps.source)
   )
 
-  if (!inspectorFeatures || !sourceData.inspector.enabled) return null
+  if (!mapLoaded) return null
 
-  const highlightingKey = sourceData.inspector.highlightingKey
-  const osmIds = inspectorFeatures
-    .filter((f) => f.layer.id === parentLayerProps.id)
-    .map((f) => f?.properties?.[highlightingKey])
-    .filter((id): id is string => !!id)
+  let highlightingKey: string | undefined = undefined
+  let featureIds: string[] | undefined = undefined
 
-  if (!osmIds.length) return null
+  if (sourceData.inspector.enabled) {
+    highlightingKey = sourceData.inspector.highlightingKey
+    featureIds = extractHighlightFeatureIds(
+      inspectorFeatures.filter((f) => f.layer.id === parentLayerProps.id),
+      highlightingKey
+    )
+  }
+  if (sourceData.calculator.enabled) {
+    highlightingKey = sourceData.calculator.highlightingKey
+    featureIds = extractHighlightFeatureIds(
+      calculatorAreasWithFeatures.map((e) => e.features).flat(),
+      highlightingKey
+    )
+  }
+
+  if (!highlightingKey || !featureIds) return null
 
   const props = {
     ...parentLayerProps,
@@ -59,7 +73,7 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   }
 
   if ('filter' in props) {
-    props.filter = ['in', highlightingKey, ...osmIds]
+    props.filter = ['in', highlightingKey, ...featureIds]
   }
 
   return <Layer {...props} />

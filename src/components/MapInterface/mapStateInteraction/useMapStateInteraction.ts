@@ -21,7 +21,7 @@ type StoreDebugInfo = {
   setShowDebugInfo: (showDebugInfo: StoreDebugInfo['showDebugInfo']) => void
 }
 
-type StoreFeaturesInspector = {
+export type StoreFeaturesInspector = {
   inspectorFeatures: MapboxGeoJSONFeature[]
   setInspector: (
     inspectObject: StoreFeaturesInspector['inspectorFeatures']
@@ -52,14 +52,17 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   showDebugInfo: isDev,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
 
+  // Data for <Inspector> AND <LayerHighlight>
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
   resetInspector: () => set({ inspectorFeatures: [] }),
 
+  // Data for <Inspector> AND <LayerHighlight>
   calculatorAreasWithFeatures: [],
   setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
     set({ calculatorAreasWithFeatures }),
 
+  // Data for optimistic updates; show verification immediately <LayerHightlight>
   localUpdates: [],
   addLocalUpdate: (update) => {
     const { localUpdates } = get()

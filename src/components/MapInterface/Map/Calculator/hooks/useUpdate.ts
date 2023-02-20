@@ -10,7 +10,6 @@ export const useUpdate = () => {
     drawAreas: DrawArea[] | undefined,
     inputFeatures: DrawArea[]
   ) => {
-    console.log({ inputFeatures, drawAreas })
     const currFeatures = drawAreas || []
     // Input can be added, modified or multi select modification
     // Case new feature(s):

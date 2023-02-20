@@ -82,20 +82,6 @@ export const sources: MapDataSource<
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: false,
-      // highlightingKey: 'id',
-      // documentedKeys: [
-      //   'highway_name',
-      //   'highway',
-      //   'parking',
-      //   'orientation',
-      //   'capacity__if_present',
-      //   'source_capacity__if_present',
-      //   'capacity_osm__if_present',
-      //   'source_capacity_osm__if_present',
-      //   'length',
-      //   'highway_width_proc_effective',
-      //   'surface',
-      // ],
     },
     presence: { enabled: false },
     verification: { enabled: false },
@@ -106,6 +92,7 @@ export const sources: MapDataSource<
       queryLayers: [
         'parkraumParkingPoints--parkingPoints--default--parkraumParkingPointsLayer',
       ],
+      highlightingKey: 'id',
     },
     export: { enabled: false },
   },
