@@ -16,9 +16,9 @@ const translateKeys = [
 // type TTransTableValues = (typeof transTable)[TTransTableKeys]
 
 // Some input at https://stackoverflow.com/a/63116708/729221
-type TInput =
+type TObjectInput =
   | Record<string, any>
-  | Array<any>
+  | any[]
   | null
   | undefined
   | number
@@ -27,46 +27,66 @@ type TInput =
   | object
 
 // Thanks to https://stackoverflow.com/a/63116708/729221 for inspiration
-// TODO Fix types for helper
-// @ts-ignore don't know how to type this
-const replaceKeyInNestedObject = (
+// TODO TS types could be a lot nicer here…
+const replaceKeyInNestedObject = <TInput>(
   input: TInput,
   searchKey: string,
   newKey: string
 ) => {
   if (Array.isArray(input)) {
-    return input.map((innerInput: TInput) =>
-      replaceKeyInNestedObject(innerInput, searchKey, newKey)
-    )
+    const output = input.map((innerInput: TInput) => {
+      const output = replaceKeyInNestedObject<TObjectInput>(
+        innerInput as TObjectInput,
+        searchKey,
+        newKey
+      ) as Record<string, TInput>
+      return output
+    })
+    return output
   }
+
   if (typeof input === 'object' && input !== null) {
-    return Object.fromEntries(
-      Object.entries(input).map(([innerKey, value]: [string, TInput]) => {
-        const newValue: TInput | string =
+    const output = Object.fromEntries(
+      Object.entries(input).map(([innerKey, value]: [string, TObjectInput]) => {
+        const newValue: TObjectInput | string =
           typeof value === 'object'
-            ? replaceKeyInNestedObject(value, searchKey, newKey)
+            ? replaceKeyInNestedObject<TObjectInput>(value, searchKey, newKey)
             : value
-        return [innerKey === searchKey ? newKey : innerKey, newValue]
+        const output = [
+          innerKey === searchKey ? newKey : innerKey,
+          newValue,
+        ] as [string, TObjectInput]
+        return output
       })
     )
+    return output
   }
+
   return input
 }
 
-export const minimizeObjectKeys = (inputObject: TInput) => {
+export const minimizeObjectKeys = (inputObject: Record<string, any>) => {
   let minimizedObject = inputObject
   translateKeys.forEach(([fromKey, toKey]) => {
-    minimizedObject = replaceKeyInNestedObject(minimizedObject, fromKey, toKey)
+    minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
+      minimizedObject,
+      fromKey,
+      toKey
+    )
   })
 
-  return minimizedObject as Record<string, any>
+  return minimizedObject
 }
 
-export const expandObjectKeys = (inputObject: TInput) => {
+export const expandObjectKeys = (inputObject: Record<string, any>) => {
   let minimizedObject = inputObject
   translateKeys.forEach(([toKey, fromKey]) => {
-    minimizedObject = replaceKeyInNestedObject(minimizedObject, fromKey, toKey)
+    minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
+      minimizedObject,
+      fromKey,
+      toKey
+    )
   })
 
-  return minimizedObject as Record<string, any>
+  return minimizedObject
 }
