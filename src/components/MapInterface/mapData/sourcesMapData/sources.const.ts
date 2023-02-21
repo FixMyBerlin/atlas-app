@@ -13,6 +13,7 @@ export type SourcesIds =
   | 'parkraumParkingPoints'
   | 'parkraumParkingAreas'
   | 'tarmac_bikelanes'
+  | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
   | 'tarmac_education'
   | 'tarmac_landuse'
@@ -220,6 +221,21 @@ export const sources: MapDataSource<
     },
   },
   {
+    id: 'tarmac_bikelanesPresence',
+    tiles: `${tilesUrl}/public.bikelanes_presence/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [],
+    },
+    presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
+  {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
     id: 'tarmac_publicTransport',
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
@@ -286,7 +302,6 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-
       // Keys with underscore are treated special in <TagsTable />
       documentedKeys: [
         'category',

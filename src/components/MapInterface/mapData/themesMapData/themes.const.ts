@@ -54,6 +54,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
+      { id: 'bikelanesPresence', defaultActive: false },
       // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
@@ -65,6 +66,7 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
+      { id: 'bikelanesPresence', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
       // { id: 'surface_tarmac', defaultActive: false },
       { id: 'surface_osmscripts', defaultActive: false },

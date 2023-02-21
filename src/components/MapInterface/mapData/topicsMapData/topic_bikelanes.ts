@@ -9,34 +9,35 @@ export type TopicBikelanesStyleIds =
   | MapboxStyleLayerGroupBikelanesIds
 export type TopicBikelanesStyleFilterIds = '_nofilter'
 
-const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
-  {
-    id: 'separated',
-    name: 'Getrennte Fuehrung',
-    style: {
-      type: 'line',
-      color: '#031ab5',
+export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> =
+  [
+    {
+      id: 'separated',
+      name: 'Getrennte Fuehrung',
+      style: {
+        type: 'line',
+        color: '#031ab5',
+      },
     },
-  },
-  {
-    id: 'shared',
-    name: 'Fuehrung mit Fussverkehr',
-    style: {
-      type: 'line',
-      color: 'hsl(232, 97%, 36%)',
-      dasharray: [7, 3],
+    {
+      id: 'shared',
+      name: 'Fuehrung mit Fussverkehr',
+      style: {
+        type: 'line',
+        color: 'hsl(232, 97%, 36%)',
+        dasharray: [7, 3],
+      },
     },
-  },
-  {
-    id: 'pedestrian',
-    name: 'Verkehrsberuhigt',
-    style: {
-      type: 'line',
-      color: 'hsla(232, 99%, 39%, 0.34)',
-      dasharray: [7, 3],
+    {
+      id: 'pedestrian',
+      name: 'Verkehrsberuhigt',
+      style: {
+        type: 'line',
+        color: 'hsla(232, 99%, 39%, 0.34)',
+        dasharray: [7, 3],
+      },
     },
-  },
-]
+  ]
 
 export const topic_bikelanes: MapDataTopic = {
   id: topic,

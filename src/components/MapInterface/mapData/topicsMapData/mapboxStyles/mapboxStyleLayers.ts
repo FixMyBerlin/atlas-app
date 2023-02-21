@@ -1,3 +1,4 @@
+import mapboxgl from 'mapbox-gl'
 import { mapboxStylesByLayerGroup, MapboxStylesByLayerGroupIds } from '.'
 import { SourcesIds } from '../../sourcesMapData'
 
@@ -7,7 +8,7 @@ type Props = {
   sourceLayer: string
 }
 
-const debugStyleLayer = ({
+export const debugStyleLayer = ({
   source,
   sourceLayer,
 }: Pick<Props, 'source' | 'sourceLayer'>) => {
@@ -19,23 +20,16 @@ const debugStyleLayer = ({
       source: source,
       'source-layer': sourceLayer,
       paint: {
-        'line-width': 20,
+        'line-width': 10,
         'line-color': '#a21caf',
         'line-opacity': 0.6,
       },
       layout: {},
     },
-  ]
+  ] satisfies mapboxgl.LineLayer[]
 }
 
-// This is for debugging. We might want to put this into a state, later.
-const useDebugStyle = false
-
 export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
-  if (useDebugStyle) {
-    return debugStyleLayer({ source, sourceLayer })
-  }
-
   const mapboxLayers = mapboxStylesByLayerGroup.find(
     (g: any) => g.group === group
   )?.layers

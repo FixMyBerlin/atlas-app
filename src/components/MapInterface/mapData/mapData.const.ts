@@ -6,6 +6,9 @@ import {
   TopicAccidentsStyleIds,
   TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
+  TopicBikelanesPresenceId,
+  TopicBikelanesPresenceStyleFilterIds,
+  TopicBikelanesPresenceStyleIds,
   TopicBikelanesStyleFilterIds,
   TopicBikelanesStyleFilterIds_Osmscripts,
   TopicBikelanesStyleIds,
@@ -67,6 +70,7 @@ import {
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
   topic_bikelanes,
+  topic_bikelanesPresence,
   topic_bikelanes_osmscripts,
   topic_boundaries,
   topic_education,
@@ -92,6 +96,7 @@ export type TopicIds =
   | TopicAccidentsId
   | TopicBikelanesId_Osmscripts
   | TopicBikelanesId
+  | TopicBikelanesPresenceId
   | TopicBoundariesId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
@@ -115,6 +120,7 @@ export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBikelanesStyleIds_Osmscripts
   | TopicBikelanesStyleIds
+  | TopicBikelanesPresenceStyleIds
   | TopicBoundariesStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
@@ -138,6 +144,7 @@ export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
   | TopicBikelanesStyleFilterIds_Osmscripts
   | TopicBikelanesStyleFilterIds
+  | TopicBikelanesPresenceStyleFilterIds
   | TopicBoundariesStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
   | TopicEducationStyleFilterIds_Tarmac
@@ -160,7 +167,9 @@ export type TopicStyleFilterIds =
 export type TopicStyleLegendIds =
   // | TopicAccidentsStyleLegendIds
   // | TopicBikelanesStyleLegendIds_Osmscripts
+  // | TopicBikelanesPresenceStyleLegendIds_Osmscripts
   // | TopicBikelanesStyleLegendIds_Tarmac
+  // | TopicBikelanesPresenceStyleLegendIds_Tarmac
   // | TopicBoundariesStyleLegendIds
   // | TopicEducationStyleLegendIds_Osmscripts
   // | TopicEducationStyleLegendIds_Tarmac
@@ -187,6 +196,7 @@ export const mapData: MapData = {
     topic_accidents,
     topic_bikelanes_osmscripts,
     topic_bikelanes,
+    topic_bikelanesPresence,
     topic_boundaries,
     topic_education,
     topic_education_osmscripts,
