@@ -26,7 +26,7 @@ local categoryTable = osm2pgsql.define_table({
 })
 
 local presenceTable = osm2pgsql.define_table({
-  name = 'bikelanes_presence',
+  name = 'bikelanesPresence',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
