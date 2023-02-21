@@ -1,6 +1,7 @@
-function JoinSets(a, b, dest)
+function JoinSets(sets, dest)
   dest = dest or {}
-  for k, _ in pairs(a) do dest[k] = true end
-  for k, _ in pairs(b) do dest[k] = true end
+  for _, set in pairs(sets) do
+    for k, _ in pairs(set) do dest[k] = true end
+  end
   return dest
 end

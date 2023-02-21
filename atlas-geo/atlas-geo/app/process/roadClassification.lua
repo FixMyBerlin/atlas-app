@@ -33,7 +33,7 @@ local excludeTable = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
-  local allowed_highways = JoinSets(StreetClasses, PathClasses)
+  local allowed_highways = JoinSets({StreetClasses, PathClasses})
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
