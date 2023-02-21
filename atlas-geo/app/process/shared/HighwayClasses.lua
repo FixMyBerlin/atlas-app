@@ -1,5 +1,8 @@
 -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
 -- https://wiki.openstreetmap.org/wiki/Attribuierung_von_Stra%C3%9Fen_in_Deutschland
+-- We keep the different highway classes separate so we can use them for filtering
+-- to combine them use the function JoinSets in the ~/process/helper/JoinSets
+
 StreetClasses = Set({
   -- "*_link" bedeutet "Autobahnzubringer", "Anschlussstelle", "Auf- / Abfahrt"
   "motorway", "motorway_link", -- "Autobahn"
