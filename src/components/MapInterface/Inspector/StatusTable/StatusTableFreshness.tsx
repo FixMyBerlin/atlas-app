@@ -7,6 +7,7 @@ import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 
 type Props = {
+  visible: boolean
   properties: GeoJSONFeature['properties']
   freshnessDateKey: string | undefined
 }
@@ -50,9 +51,11 @@ const StatusTableFreshnessCell: React.FC<{
 }
 
 export const StatusTableFreshness: React.FC<Props> = ({
+  visible,
   properties,
   freshnessDateKey,
 }) => {
+  if (!visible) return null
   const { fresh } = properties
   if (!freshnessDateKey) return null
 

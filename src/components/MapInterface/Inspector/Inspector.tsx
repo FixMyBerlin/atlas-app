@@ -122,11 +122,9 @@ export const Inspector: React.FC = () => {
                   })}
                 >
                   <StatusTable
-                    visible={
-                      sourceData.presence.enabled ||
-                      sourceData.verification.enabled ||
-                      sourceData.freshness.enabled
-                    }
+                    presenceVisible={sourceData.presence.enabled}
+                    verificationVisible={sourceData.verification.enabled}
+                    freshnessVisible={sourceData.freshness.enabled}
                     properties={properties}
                     freshnessDateKey={sourceData.freshness.dateKey}
                     allowVerify={allowVerify}

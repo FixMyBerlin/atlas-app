@@ -5,9 +5,16 @@ import {
 } from '@heroicons/react/24/outline'
 import { GeoJSONFeature } from 'maplibre-gl'
 
-type Props = { properties: GeoJSONFeature['properties'] }
+type Props = {
+  visible: boolean
+  properties: GeoJSONFeature['properties']
+}
 
-export const StatusTablePresence: React.FC<Props> = ({ properties }) => {
+export const StatusTablePresence: React.FC<Props> = ({
+  visible,
+  properties,
+}) => {
+  if (!visible) return null
   const { is_present } = properties
 
   return (

@@ -6,16 +6,19 @@ import {
 import { GeoJSONFeature } from 'maplibre-gl'
 
 type Props = {
+  visible: boolean
   allowVerify: boolean
   verificationStatus: string | undefined
   properties: GeoJSONFeature['properties']
 }
 
 export const StatusTableVerification: React.FC<Props> = ({
+  visible,
   allowVerify,
   verificationStatus,
   properties,
 }) => {
+  if (!visible) return null
   if (!allowVerify) return null
   const { is_present } = properties
 

@@ -4,7 +4,9 @@ import { StatusTablePresence } from './StatusTablePresence'
 import { StatusTableVerification } from './StatusTableVerification'
 
 type Props = {
-  visible: boolean
+  presenceVisible: boolean
+  verificationVisible: boolean
+  freshnessVisible: boolean
   properties: { [key: string]: any }
   freshnessDateKey: string | undefined
   allowVerify: boolean
@@ -12,13 +14,15 @@ type Props = {
 }
 
 export const StatusTable: React.FC<Props> = ({
-  visible,
+  presenceVisible,
+  verificationVisible,
+  freshnessVisible,
   properties,
   freshnessDateKey,
   allowVerify,
   verificationStatus,
 }) => {
-  if (!visible) return null
+  if (presenceVisible || verificationVisible || freshnessVisible) return null
 
   return (
     <div className="mb-4">
@@ -26,13 +30,18 @@ export const StatusTable: React.FC<Props> = ({
         Bewertung der Datenqualität
       </h4>
       <div className="grid grid-cols-3 text-gray-500">
-        <StatusTablePresence properties={properties} />
+        <StatusTablePresence
+          visible={presenceVisible}
+          properties={properties}
+        />
         <StatusTableVerification
+          visible={verificationVisible}
           allowVerify={allowVerify}
           verificationStatus={verificationStatus}
           properties={properties}
         />
         <StatusTableFreshness
+          visible={freshnessVisible}
           properties={properties}
           freshnessDateKey={freshnessDateKey}
         />
