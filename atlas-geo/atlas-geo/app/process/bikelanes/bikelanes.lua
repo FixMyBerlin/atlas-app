@@ -61,7 +61,6 @@ local allowed_tags = Set({
   "footway",
   "highway",
   "is_sidepath",
-  "mtb:scale",
   "name",
   "oneway", -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   "segregated",
@@ -83,7 +82,7 @@ end
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
-  local allowed_highways = JoinSets({StreetClasses, PathClasses})
+  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
   if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
 
   local exclude, reason = ExcludeHighways(object.tags)
@@ -144,19 +143,7 @@ function osm2pgsql.process_way(object)
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
-    if Set({ "path",
-      "cycleway",
-      "track",
-      "residential",
-      "unclassified",
-      "service",
-      "living_street",
-      "pedestrian",
-      "service",
-      "motorway_link",
-      "motorway",
-      "footway",
-      "steps" })[tags.highway] then
+    if JoinSets({ HighwayClasses, MinorRoadClasses, PathClasses })[tags.highway] then
       intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
