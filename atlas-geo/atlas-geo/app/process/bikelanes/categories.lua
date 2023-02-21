@@ -121,9 +121,18 @@ local function cyclewayOnHighway(tags)
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  -- TODO: we should add shared_line https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
-  if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
+  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+  if result then
     return "cyclewayOnHighway"
+  end
+end
+
+local function cyclewaySharedLane(tags)
+  -- Case: Cycleway identified via "shared_lane"-tagging, which means it is part of the highway.
+  -- https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
+  local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
+  if result then
+    return "cyclewaySharedLane"
   end
 end
 
