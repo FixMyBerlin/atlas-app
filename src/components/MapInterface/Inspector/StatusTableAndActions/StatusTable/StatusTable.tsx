@@ -22,7 +22,7 @@ export const StatusTable: React.FC<Props> = ({
   allowVerify,
   verificationStatus,
 }) => {
-  if (presenceVisible || verificationVisible || freshnessVisible) return null
+  if (!presenceVisible || !verificationVisible || !freshnessVisible) return null
 
   return (
     <div className="mb-4">

@@ -1,29 +1,18 @@
-import { LocationGenerics } from '@routes/routes'
-import { useMatch } from '@tanstack/react-location'
-import clsx from 'clsx'
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { extractSourceIdIdFromSourceKey } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
 import { getSourceData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
-import { hasPermission, useUserStore } from '../UserInfo'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
 import { Links } from './Links'
 import { OtherProperties } from './OtherProperties'
-import { StatusTable } from './StatusTable'
+import { StatusTableAndVerification } from './StatusTableAndActions/StatusTableAndVerification'
 import { TagsTable } from './TagsTable'
 import { translations } from './TagsTable/translations'
-import { VerificationActions } from './VerificationAction'
-import { VerificationHistory } from './VerificationHistory'
 
 export const Inspector: React.FC = () => {
-  const { inspectorFeatures, resetInspector, localUpdates } =
-    useMapStateInteraction()
-  const { currentUser } = useUserStore()
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const { inspectorFeatures, resetInspector } = useMapStateInteraction()
 
   if (!inspectorFeatures.length) return null
 
@@ -39,11 +28,11 @@ export const Inspector: React.FC = () => {
 
       {inspectorFeatures.map((inspectObject) => {
         const {
-          layer: { id: layerKey, source: sourceKey },
+          layer: { source: sourceKey },
           properties,
         } = inspectObject
 
-        if (!properties || !layerKey || !sourceKey) return null
+        if (!properties || !sourceKey) return null
 
         // The documentedKeys info is placed on the source object
         const sourceId = extractSourceIdIdFromSourceKey(sourceKey.toString())
@@ -59,17 +48,6 @@ export const Inspector: React.FC = () => {
           return null
         }
         renderedLayerPropertyKeys.push(layerPropertyKey)
-
-        const allowVerify =
-          (sourceData.verification.enabled || false) &&
-          hasPermission(currentUser, region)
-
-        const localVerificationStatus = [...localUpdates]
-          .reverse()
-          .find((update) => update.osm_id === properties.osm_id)?.verified
-
-        const verificationStatus =
-          localVerificationStatus || properties.verified
 
         return (
           <div
@@ -113,42 +91,10 @@ export const Inspector: React.FC = () => {
                   geometry={inspectObject.geometry}
                 />
 
-                <div
-                  className={clsx({
-                    'border-t bg-gray-50 px-4 py-2.5':
-                      sourceData.presence.enabled ||
-                      sourceData.verification.enabled ||
-                      sourceData.freshness.enabled,
-                  })}
-                >
-                  <StatusTable
-                    presenceVisible={sourceData.presence.enabled}
-                    verificationVisible={sourceData.verification.enabled}
-                    freshnessVisible={sourceData.freshness.enabled}
-                    properties={properties}
-                    freshnessDateKey={sourceData.freshness.dateKey}
-                    allowVerify={allowVerify}
-                    verificationStatus={verificationStatus}
-                  />
-                  {sourceData.verification.enabled && (
-                    <>
-                      <VerificationActions
-                        apiIdentifier={sourceData.verification.apiIdentifier}
-                        visible={allowVerify}
-                        disabled={!properties?.category}
-                        osmId={properties.osm_id}
-                        verificationStatus={verificationStatus}
-                      />
-                      <VerificationHistory
-                        apiIdentifier={sourceData.verification.apiIdentifier}
-                        visible={
-                          allowVerify && verificationStatus !== undefined
-                        }
-                        osmId={properties.osm_id}
-                      />
-                    </>
-                  )}
-                </div>
+                <StatusTableAndVerification
+                  properties={properties}
+                  sourceId={sourceId}
+                />
               </Disclosure>
             </IntlProvider>
           </div>
