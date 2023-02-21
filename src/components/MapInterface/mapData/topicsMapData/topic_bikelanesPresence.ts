@@ -22,7 +22,7 @@ export const topic_bikelanesPresence: MapDataTopic = {
       desc: null,
       layers: debugStyleLayer({
         source: 'tarmac_bikelanesPresence',
-        sourceLayer: 'public.bikelanes_presence',
+        sourceLayer: 'public.bikelanesPresence',
       }),
       // layers: mapboxStyleLayers({
       //   group: 'atlas_bikelanes_complete',

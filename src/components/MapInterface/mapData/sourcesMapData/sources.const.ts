@@ -222,7 +222,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'tarmac_bikelanesPresence',
-    tiles: `${tilesUrl}/public.bikelanes_presence/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.bikelanesPresence/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
