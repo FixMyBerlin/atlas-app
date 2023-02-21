@@ -1,4 +1,3 @@
-/* prettier-ignore */
 export const translations: { [key: string]: string } = {
   'key--highway': 'Straßentyp',
   'key--name': 'Name',
