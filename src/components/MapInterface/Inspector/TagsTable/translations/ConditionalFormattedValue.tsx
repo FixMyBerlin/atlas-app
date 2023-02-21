@@ -37,7 +37,14 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   }
 
   // Some TagKeys are not specific per category; we only translate those once
-  const nonCategorizedTagKeys = ['highway', 'surface', 'smoothness']
+  const nonCategorizedTagKeys = [
+    'highway',
+    'surface',
+    'smoothness',
+    'left',
+    'right',
+    'oneway',
+  ]
   const key = nonCategorizedTagKeys.includes(tagKey)
     ? `value--${tagKey}--${tagValue}`
     : `value--${sourceId}--${tagKey}--${tagValue}`

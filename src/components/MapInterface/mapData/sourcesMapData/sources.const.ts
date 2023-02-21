@@ -227,7 +227,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: [],
+      documentedKeys: ['left', 'right', 'highway', 'oneway__if_present'],
     },
     presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
