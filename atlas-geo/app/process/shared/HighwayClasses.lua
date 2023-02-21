@@ -3,13 +3,19 @@
 -- We keep the different highway classes separate so we can use them for filtering
 -- to combine them use the function JoinSets in the ~/process/helper/JoinSets
 
-StreetClasses = Set({
-  -- "*_link" bedeutet "Autobahnzubringer", "Anschlussstelle", "Auf- / Abfahrt"
+-- "*_link" bedeutet "Autobahnzubringer", "Anschlussstelle", "Auf- / Abfahrt"
+HighwayClasses = Set({
   "motorway", "motorway_link", -- "Autobahn"
   "trunk", "trunk_link", -- "Autobahnähnliche Straße", "Schnellstraßen" (those have motorroad=yes)
+})
+
+MajorRoadClasses = Set({
   "primary", "primary_link", -- "Bundesstraßen" (B XXX)
   "secondary", "secondary_link", -- "Landesstraße" (L XXX)
   "tertiary", "tertiary_link", -- "Kreisstraße", "Gemeindeverbindungsstraße", "Innerstädtische Vorfahrtstraßen mit Durchfahrtscharakter"
+})
+
+MinorRoadClasses = Set({
   "unclassified", -- "Nebenstraßen", "Gemeindestraße mit Verbindungscharakter"
   "residential", -- "Straße an und in Wohngebieten"
   "road", -- Ohne Klassifizierung

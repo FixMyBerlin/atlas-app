@@ -45,7 +45,7 @@ local table = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
-  local allowed_highways = JoinSets({StreetClasses, PathClasses})
+  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
   if not allowed_highways[object.tags.highway] then return end
