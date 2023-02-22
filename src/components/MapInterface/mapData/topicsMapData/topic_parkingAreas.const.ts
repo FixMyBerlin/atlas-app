@@ -1,11 +1,12 @@
 import { MapDataTopic } from '../types'
 
-export type TopicParkingAreasId = 'parkingAreas'
+const topic = 'parkingAreas'
+export type TopicParkingAreasId = typeof topic
 export type TopicParkingAreasStyleIds = 'default'
 export type TopicParkingAreasStyleFilterIds = '_nofilter'
 
 export const topic_parkingAreas: MapDataTopic = {
-  id: 'parkingAreas',
+  id: topic,
   name: 'Flächenparkplätze',
   desc: 'Private und öffentliche Parkplätze.',
   sourceId: 'parkraumParkingAreas',

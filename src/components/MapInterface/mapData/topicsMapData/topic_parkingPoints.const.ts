@@ -1,11 +1,12 @@
 import { MapDataTopic } from '../types'
 
-export type TopicParkingPointsId = 'parkingPoints'
+const topic = 'parkingPoints'
+export type TopicParkingPointsId = typeof topic
 export type TopicParkingPointsStyleIds = 'default'
 export type TopicParkingPointsStyleFilterIds = '_nofilter'
 
 export const topic_parkingPoints: MapDataTopic = {
-  id: 'parkingPoints',
+  id: topic,
   name: 'Parkplätze zählen',
   desc: 'Jeder Punkt ist ein errechneter Stellplatz. Man kann Flächen einzeichnen, für die eine Summe dargestellt wird.',
   sourceId: 'parkraumParkingPoints',

@@ -10,6 +10,7 @@ export type SourcesIds =
   | 'osmscripts_highways'
   | 'osmscripts_pois'
   | 'parkraumParking'
+  | 'parkraumParkingLegacy'
   | 'parkraumParkingPoints'
   | 'parkraumParkingAreas'
   | 'tarmac_bikelanes'
@@ -55,6 +56,32 @@ export const sources: MapDataSource<
 >[] = [
   {
     id: 'parkraumParking',
+    tiles:
+      'https://vts.mapwebbing.eu:7801/processing.parking_segments/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        'highway_name',
+        'highway',
+        'parking',
+        'orientation',
+        'capacity',
+        'source_capacity',
+        'length',
+        'highway_width_proc_effective',
+        'surface',
+      ],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
+  {
+    id: 'parkraumParkingLegacy',
     tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {

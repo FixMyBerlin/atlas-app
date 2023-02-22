@@ -5,7 +5,8 @@ import {
   layersPresence,
 } from './parking'
 
-export type TopicParkingId = 'parking'
+const topic = 'parking'
+export type TopicParkingId = typeof topic
 export type TopicParkingStyleIds =
   | 'default'
   | 'presence'
@@ -13,7 +14,7 @@ export type TopicParkingStyleIds =
 export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
-  id: 'parking',
+  id: topic,
   name: 'Parkraum',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumParking',
@@ -22,21 +23,24 @@ export const topic_parking: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: layersDefault,
+      layers: layersDefault('parkraumParking', 'processing.parking_segments'),
       interactiveFilters: null,
     },
     {
       id: 'presence',
       name: 'Vollständigkeit',
       desc: null,
-      layers: layersPresence,
+      layers: layersPresence('parkraumParking', 'processing.parking_segments'),
       interactiveFilters: null,
     },
     {
       id: 'debugLengthPerCapacity',
       name: 'Debug Lange<>Kapazität',
       desc: null,
-      layers: layersDebugLengthPerCapacity,
+      layers: layersDebugLengthPerCapacity(
+        'parkraumParking',
+        'processing.parking_segments'
+      ),
       interactiveFilters: null,
     },
   ],
