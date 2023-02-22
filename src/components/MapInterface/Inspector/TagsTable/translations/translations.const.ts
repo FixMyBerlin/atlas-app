@@ -1,3 +1,4 @@
+/* prettier-ignore */
 export const translations: { [key: string]: string } = {
   'key--highway': 'Straßentyp',
   'key--left': 'Vollständigkeit Links (Linienrichtung)',
