@@ -9,9 +9,9 @@ local function dataNo(tags)
 end
 
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
--- TODO: this assumes right hand traffic (would be nice to have this as an option)
+-- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
-  local result = tags.parent ~= nil and tags['_projected_from'] == 'cycleway' -- object is created from implicit case
+  local result = tags.parent ~= nil and tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN
   if result then
@@ -110,7 +110,7 @@ local function cyclewaySeparated(tags)
     result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
     -- Case: Separate cycleway
     --    https://www.openstreetmap.org/way/989837901/
-    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil)
+    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil) -- maybe use foot ~= yes instead
   end
   if result then
     return "cyclewaySeparated"
@@ -121,7 +121,9 @@ local function cyclewayOnHighway(tags)
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  if tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane") then
+
+  -- https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
+  if result then
     return "cyclewayOnHighway"
   end
 end

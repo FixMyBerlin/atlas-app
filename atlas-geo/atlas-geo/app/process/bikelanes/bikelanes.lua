@@ -10,6 +10,7 @@ require("StartsWith")
 require("IsFresh")
 require("categories")
 require("transformations")
+require("JoinSets")
 require("PrintTable")
 
 local categoryTable = osm2pgsql.define_table({
@@ -25,7 +26,7 @@ local categoryTable = osm2pgsql.define_table({
 })
 
 local presenceTable = osm2pgsql.define_table({
-  name = 'bikelanes_presence',
+  name = 'bikelanesPresence',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -49,8 +50,8 @@ local excludeTable = osm2pgsql.define_table({
 
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
-  "_projected_from",
-  "_projected_to",
+  "side",
+  "prefix",
   "access",
   "bicycle_road",
   "bicycle",
@@ -60,12 +61,12 @@ local allowed_tags = Set({
   "footway",
   "highway",
   "is_sidepath",
-  "mtb:scale",
   "name",
   "oneway", -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   "segregated",
   "smoothness",
   "surface",
+  "surface:color",
   "traffic_sign",
   "width", -- experimental
 })
@@ -81,7 +82,8 @@ end
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
-  if not object.tags.highway or not HighwayClasses[object.tags.highway] then return end
+  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
+  if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
 
   local exclude, reason = ExcludeHighways(object.tags)
   if exclude then
@@ -106,13 +108,9 @@ function osm2pgsql.process_way(object)
   }
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
-  -- generate cycleways from center line tagging
+  -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local cycleways = GetTransformedObjects(tags, transformations);
-  -- add the original object with `sign=0`
-  tags.sign = 0
-  table.insert(cycleways, tags)
-
-  -- map presence vis signs
+  -- map presence via signs, could also initialize with {}
   local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
@@ -125,8 +123,8 @@ function osm2pgsql.process_way(object)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
         local freshTag = "check_date"
-        if cycleway._projected_to then
-          freshTag = "check_date:" .. cycleway._projected_to
+        if cycleway.prefix then
+          freshTag = "check_date:" .. cycleway.prefix
         end
         IsFresh(object, freshTag, cycleway)
         cycleway.offset  = sign * width / 2
@@ -145,19 +143,7 @@ function osm2pgsql.process_way(object)
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
-    if Set({ "path",
-      "cycleway",
-      "track",
-      "residential",
-      "unclassified",
-      "service",
-      "living_street",
-      "pedestrian",
-      "service",
-      "motorway_link",
-      "motorway",
-      "footway",
-      "steps" })[tags.highway] then
+    if JoinSets({ HighwayClasses, MinorRoadClasses, PathClasses })[tags.highway] then
       intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
