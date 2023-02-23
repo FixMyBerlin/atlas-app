@@ -20,7 +20,7 @@ export const topic_parkingPoints: MapDataTopic = {
           id: 'parkraumParkingPointsLayer',
           type: 'circle',
           source: 'parkraumParkingPoints',
-          'source-layer': 'public.parking_spaces',
+          'source-layer': 'processing.parking_spaces',
           paint: {
             'circle-color': '#6d28d9',
             'circle-stroke-color': '#fdf4ff',

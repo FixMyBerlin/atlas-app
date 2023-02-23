@@ -19,7 +19,7 @@ export type TopicParkingLegacyStyleFilterIds = '_nofilter'
 //       id: 'default',
 //       name: 'Standard',
 //       desc: null,
-//       layers: layersDefault('parkraumParkingLegacy', 'public.parking_segments'),
+//       layers: layersDefault('parkraumParkingLegacy', 'processing.parking_segments'),
 //       interactiveFilters: null,
 //     },
 //     {
@@ -28,7 +28,7 @@ export type TopicParkingLegacyStyleFilterIds = '_nofilter'
 //       desc: null,
 //       layers: layersPresence(
 //         'parkraumParkingLegacy',
-//         'public.parking_segments'
+//         'processing.parking_segments'
 //       ),
 //       interactiveFilters: null,
 //     },

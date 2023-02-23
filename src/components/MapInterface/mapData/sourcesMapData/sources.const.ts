@@ -82,7 +82,7 @@ export const sources: MapDataSource<
   },
   // {
   //   id: 'parkraumParkingLegacy',
-  //   tiles: 'https://vts.mapwebbing.eu/public.parking_segments/{z}/{x}/{y}.pbf',
+  //   tiles: 'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
   //   attributionHtml: 'todo', // TODO
   //   inspector: {
   //     enabled: true,

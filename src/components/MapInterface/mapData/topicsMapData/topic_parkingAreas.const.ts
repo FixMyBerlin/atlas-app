@@ -20,7 +20,7 @@ export const topic_parkingAreas: MapDataTopic = {
           id: 'parkraumParkingAreasLayer',
           type: 'fill',
           source: 'parkraumParkingAreas',
-          'source-layer': 'public.parking_poly',
+          'source-layer': 'processing.parking_poly',
           filter: [
             'all',
             ['match', ['get', 'parking'], ['street_side', 'lane'], false, true],
