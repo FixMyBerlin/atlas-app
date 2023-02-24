@@ -1,3 +1,4 @@
+import { TailwindResponsiveHelper } from '@components/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import React from 'react'
 import { Footer } from './Footer'
 import { HeaderApp } from './Header'
@@ -12,6 +13,7 @@ export const Layout: React.FC<Props> = ({ children }) => {
       <HeaderApp />
       <main>{children}</main>
       <Footer />
+      <TailwindResponsiveHelper />
     </div>
   )
 }
