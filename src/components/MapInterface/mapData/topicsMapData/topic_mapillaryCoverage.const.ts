@@ -26,7 +26,6 @@ export const topic_mapillaryCoverage: MapDataTopic = {
             'circle-blur': 0.5,
             'circle-color': 'green',
           },
-          enableCalculator: false,
         },
         {
           id: 'line',
@@ -38,7 +37,6 @@ export const topic_mapillaryCoverage: MapDataTopic = {
             'line-opacity': 0.7,
             'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 14, 1],
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,

@@ -98,7 +98,6 @@ export const topic_accidents: MapDataTopic = {
               1,
             ],
           },
-          enableCalculator: false,
         },
         {
           id: 'label',
@@ -149,7 +148,6 @@ export const topic_accidents: MapDataTopic = {
             ],
             'text-halo-width': 1,
           },
-          enableCalculator: false,
         },
       ],
       // Style https://studio.mapbox.com/styles/hejco/ckdzvkywj0u3g1amidtrbnw5v/edit/#18.84/52.4900339/13.3864461

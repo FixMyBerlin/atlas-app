@@ -25,7 +25,6 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
             'circle-color': 'HotPink',
             'circle-radius': 10,
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,

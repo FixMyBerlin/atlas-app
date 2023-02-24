@@ -26,7 +26,6 @@ export const topic_boundaries: MapDataTopic = {
             'line-width': 2,
             'line-color': 'rgba(215, 34, 34, 1)',
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,

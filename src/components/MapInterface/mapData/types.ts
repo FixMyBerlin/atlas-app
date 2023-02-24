@@ -149,15 +149,12 @@ export type MapDataStyle = {
 }
 
 /** @desc: The technical glue between sources and styles. name fixed by library */
-export type MapDataVisLayer = (
+export type MapDataVisLayer =
   | mapboxgl.CircleLayer
   | mapboxgl.FillLayer
   | mapboxgl.HeatmapLayer
   | mapboxgl.LineLayer
   | mapboxgl.SymbolLayer
-) & {
-  enableCalculator?: boolean
-}
 
 /** @desc: Optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataStyleInteractiveFilter = {

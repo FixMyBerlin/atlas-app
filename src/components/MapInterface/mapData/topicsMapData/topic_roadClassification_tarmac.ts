@@ -26,7 +26,6 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
             'line-color': 'HotPink',
             'line-width': 10,
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,
