@@ -9,16 +9,24 @@
   -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
 
 -- DELETE * FROM "maxspeed_transformed";
+-- Thoughts to implement this:
+-- filter landuse on type
+-- make a union of the filter geometries
+-- buffer that union by e.g. 10 m
+-- check intersections or inclusion for ways that lack maxspeed e.g. those in _maxspeed_missing
+-- add these ways with a constant maxspeed and `present=false` into maxspeed table
+SELECT ST_Transform(geom, 25833) from landuse where tags->>'landuse' = 'residential';
+
 INSERT INTO "maxspeed_transformed"
-  SELECT   maxspeed.osm_type, maxspeed.osm_id, maxspeed.category, maxspeed.tags, maxspeed.meta, maxspeed.geom
-  FROM "fromTo_landuse" as landuse, "maxspeed_todoList" as maxspeed
+  SELECT   maxspeed.*
+  FROM "fromTo_landuse" as landuse, "_maxspeed_missing" as maxspeed
   WHERE ST_Intersects(maxspeed.geom::geometry , ST_Expand(landuse.geom, 10)::geometry);
 
 -- UPDATE "maxspeed_transformed" SET "_maxspeed_source" = 'infereed from landuse';
 
-update "maxspeed_transformed"  
+update "maxspeed_transformed"
 set  tags = jsonb_set(tags, '{_maxspeed_source}','"infereed from landuse"');
 
-update "maxspeed_transformed"  
+update "maxspeed_transformed"
 set  tags = jsonb_insert(tags, '{maxspeed}','"add maxspeed:source=DE:urban to way"');
 
