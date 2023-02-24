@@ -3,6 +3,7 @@ import {
   getStyleData,
   getTopicData,
 } from '@components/MapInterface/mapData'
+import { debugStyleLayers } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugStyleLayers'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
@@ -18,8 +19,11 @@ import { specifyFilters } from './utils'
 // We then toggle the visibility of the layer base on state.
 // We also use this visbility to add/remove interactive layers.
 export const SourceAndLayers: React.FC = () => {
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const {
+    config: configThemesTopics,
+    theme: themeId,
+    debugLayerStyles,
+  } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
   if (!configThemesTopics || !currentTheme) return null
 
@@ -83,6 +87,14 @@ export const SourceAndLayers: React.FC = () => {
                   styleConfig.filters
                 )
 
+                // Use ?debugLayerStyles to activate debug styling
+                const layerPaint =
+                  debugLayerStyles &&
+                  debugStyleLayers({
+                    source: sourceId,
+                    sourceLayer: layer['source-layer'],
+                  }).find((l) => l.type === layer.type)?.paint
+
                 const layerProps = {
                   id: layerId,
                   type: layer.type,
@@ -90,7 +102,7 @@ export const SourceAndLayers: React.FC = () => {
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: filter,
-                  paint: layer.paint as any,
+                  paint: layerPaint || (layer.paint as any),
                   ...(!!layer.minzoom && { minzoom: layer.minzoom }),
                   ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
                 }

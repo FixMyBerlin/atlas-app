@@ -1,12 +1,8 @@
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
-import { useMatch, Link } from '@tanstack/react-location'
 import { ReactLocationDevtools } from '@tanstack/react-location-devtools'
 import React from 'react'
 
 export const DebugStateReactLocation: React.FC = () => {
-  const {
-    params: { regionPath },
-  } = useMatch()
   const { showDebugInfo, setShowDebugInfo } = useMapStateInteraction()
 
   if (!showDebugInfo) return null
@@ -20,11 +16,6 @@ export const DebugStateReactLocation: React.FC = () => {
         >
           &times;
         </button>
-        {!!regionPath && (
-          <Link to={`/regionen/${regionPath}`} className="rounded border p-1">
-            Reset URL <code>config</code>
-          </Link>
-        )}
         <ReactLocationDevtools
           initialIsOpen={false}
           position="bottom-right"

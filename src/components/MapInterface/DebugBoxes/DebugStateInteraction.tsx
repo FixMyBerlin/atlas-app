@@ -5,12 +5,23 @@ import {
   isProd,
   isStaging,
 } from '@components/utils'
-import React from 'react'
+import { LocationGenerics } from '@routes/routes'
+import {
+  Link,
+  useMatch,
+  useNavigate,
+  useSearch,
+} from '@tanstack/react-location'
 import { useMapStateInteraction } from '../mapStateInteraction'
 
-export const DebugStateInteraction: React.FC = () => {
+export const DebugStateInteraction = () => {
   const zustandValues = useMapStateInteraction()
   const { showDebugInfo, setShowDebugInfo } = useMapStateInteraction()
+  const {
+    params: { regionPath },
+  } = useMatch()
+  const navigate = useNavigate<LocationGenerics>()
+  const { debugLayerStyles } = useSearch<LocationGenerics>()
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
@@ -34,9 +45,38 @@ export const DebugStateInteraction: React.FC = () => {
           &times;
         </button>
         <details>
+          <summary className="cursor-pointer">Helper</summary>
+          <div className="flex flex-col gap-1">
+            <button
+              onClick={() =>
+                navigate({
+                  search: (old) => ({
+                    ...old,
+                    debugLayerStyles: !old?.debugLayerStyles ?? false,
+                  }),
+                  replace: true,
+                })
+              }
+              className="rounded border p-1"
+            >
+              Toggle Debug Style {debugLayerStyles ? 'ON' : 'OFF'}
+            </button>
+            {!!regionPath && (
+              <Link
+                to={`/regionen/${regionPath}`}
+                className="rounded border p-1"
+              >
+                Reset URL <code>config</code>
+              </Link>
+            )}
+          </div>
+        </details>
+
+        <details>
           <summary className="cursor-pointer">Zustand</summary>
           <div className="font-mono">{keyValue(zustandValues)}</div>
         </details>
+
         <details>
           <summary className="cursor-pointer">Urls</summary>
           <div className="font-mono">getApiUrl: {getApiUrl()}</div>

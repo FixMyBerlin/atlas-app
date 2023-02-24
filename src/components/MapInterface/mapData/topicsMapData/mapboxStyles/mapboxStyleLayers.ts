@@ -1,32 +1,10 @@
-import mapboxgl from 'mapbox-gl'
 import { mapboxStylesByLayerGroup, MapboxStylesByLayerGroupIds } from '.'
 import { SourcesIds } from '../../sourcesMapData'
 
-type Props = {
+export type Props = {
   group: MapboxStylesByLayerGroupIds
   source: SourcesIds
   sourceLayer: string
-}
-
-export const debugStyleLayer = ({
-  source,
-  sourceLayer,
-}: Pick<Props, 'source' | 'sourceLayer'>) => {
-  // TODO: Right now this will only work for type=line; it needs refactoring to work with points and areas.
-  return [
-    {
-      id: 'debugStyleLayer',
-      type: 'line',
-      source: source,
-      'source-layer': sourceLayer,
-      paint: {
-        'line-width': 10,
-        'line-color': '#a21caf',
-        'line-opacity': 0.6,
-      },
-      layout: {},
-    },
-  ] satisfies mapboxgl.LineLayer[]
 }
 
 export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
