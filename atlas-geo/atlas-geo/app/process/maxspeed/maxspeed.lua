@@ -54,15 +54,14 @@ package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?
 require("Set")
 require("FilterTags")
 require("ToNumber")
--- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
 require("StartsWith")
-require("CheckDataWithinYears")
+require("IsFresh")
+require("ExcludeHighways")
+require("JoinSets")
+require("IntoExcludeTable")
 
 -- The analysed road network, enriched with maxspeed information
 local table =
@@ -73,6 +72,7 @@ local table =
             columns = {
                 { column = "tags", type = "jsonb" },
                 { column = "meta", type = "jsonb" },
+                { column = 'maxspeed', type = 'integer'},
                 { column = "geom", type = "linestring" }
             }
         }
@@ -87,6 +87,7 @@ local excludeTable =
             columns = {
                 { column = "tags", type = "jsonb" },
                 { column = "meta", type = "jsonb" },
+                { column = 'reason', type = 'text' },
                 { column = "geom", type = "linestring" }
             }
         }
@@ -106,151 +107,8 @@ local todoTable =
         }
     )
 
-function osm2pgsql.process_way(object)
-  local allowed_values = HighwayClasses
-  if not allowed_values[object.tags.highway] then
-    return
-  end
-  object.tags._skipNotes = "init"
-  object.tags._skip = true
-  object.tags._todo = false
 
-  -- Skip all waytypes, that are unuseful, because they are not bicycle related
-  if object.tags.highway == "motorway" or object.tags.highway == "motorway_link" or object.tags.highway == "trunk" or
-      object.tags.highway == "bridleway"
-  then
-    object.tags._skip = true
-    object.tags._skipNotes = "Skipped by unuseful waytypes"
-  end
-  local exclude, reason = ExcludeHighways(object.tags)
-  if exclude then
-    object.tags._skip = "excluded highway"
-    object.tags._skipNotes = reason
-  end
-  FindBicycleroads(object)
-
-  if object.tags.maxspeed then
-    --  - maxspeed = <zahl>
-    object.tags._maxspeed_source = "maxspeed-tag"
-  else
-    object.tags._maxspeed_source = "source tag"
-  end
-  --  - maxspeed = <zahl> inferred from source tag
-  -- wenn maxspeed
-  --  - maxspeed = <zahl>
-  --  - _maxspeed_source = "maxspeed-tag"
-  -- wenn kein maxspeed
-  -- aber eines der source-tags, dann…
-  --  - maxspeed = <zahl> inferred from source tag
-  --  - _maxspec_source = "source tag"
-  --  (szenarien de:urbuan, de:rural, bike_roads,  verschiedene zonen)
-
-  if (object.tags["maxspeed:type"] == "DE:bicycle_road" or object.tags["source:maxspeed"] == "DE:bicycle_road") and not (object.tags.maxspeed) then
-    object.tags["maxspeed"] = "30"
-  end
-
-  Findmaxvalue(object)
-  DefineZones(object)
-
-  --  wenn maxspeed-zahl nicht passt zu source-tags (alle varianten), dann fehler _todo="source <TAG=VALUE>"
-  CheckSourceTagsValue(object)
-
-  -- SQL:
-  -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
-  --  wir nehmen die landuse=residential+industrial+commerical+retail
-  --  buffer von ~10m um die fläche
-  --  dann alle linien die (TODO) vollständig / am meisten / … in der fläche fläche sind
-  --  (tendentizell dafür nicht schneiden, weil wir am liebsten die OSM ways so haben wie in OSM)
-  --  und dann können wir in sql "maxspeed" "maxspeed_source='infereed from landuse'"
-  --  UND dann auch einen "_todo="add 'maxspeed:source=DE:urban' to way"
-  -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
-
-
-  -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
-  --    wenn primärdaten vorhanden, dann is_present=true
-
-  -- Sort the paths depending on whether they have a maxspeed tag in the ToDo table or in the results table
-  SortIntoTables(object)
-  -- Freshness of data
-  CheckDate(object, object.tags.maxspeed)
-
-  -- all tags that are shown on the application
-  local allowed_tags =
-      Set(
-          {
-              "_skip",
-              "_skipNotes",
-              "is_present",
-              "_combined_fresh_age_days",
-              "_combined_is_fresh",
-              "_update_fresh_age_days",
-              "_update_is_fresh",
-              "_centerline",
-              "_maxspeed_source",
-              "_todo",
-              "fresh",
-              "fresh_age_days",
-              "_freshNotes",
-              "bicycle_road",
-              "bicycle",
-              "category",
-              "cycleway",
-              "unclassified",
-              "secondary",
-              "residential",
-              "highway",
-              "maxspeed",
-              "maxspeed:backward",
-              "maxspeed:forward",
-              "maxspeed:conditional", -- show if present; details TBD
-              "source:maxspeed", -- only for debugging in webapp
-              "maxspeed:type", -- only for debugging in webapp
-              "zone:maxspeed", -- only for debugging in webapp
-              "zone_traffic",
-              "traffic_sign",
-              "maxspeed_split",
-              "source_maxspeed_forward",
-              "source_maxspeed_backward",
-              "source_maxspeed" -- only for debugging in webapp
-          }
-      )
-
-  FilterTags(object.tags, allowed_tags)
-  local meta = Metadata(object)
-
-  -- insert the ways in theri respective table based on the tags _skip or _todo
-  if object.tags._skip == true then
-    excludeTable:insert(
-        {
-            tags = object.tags,
-            geom = object:as_linestring(),
-            meta = meta
-        }
-    )
-  end
-
-  if object.tags._todo == true and object.tags._skip == false then
-    todoTable:insert(
-        {
-            tags = object.tags,
-            geom = object:as_linestring(),
-            meta = meta
-        }
-    )
-  end
-  if object.tags._skip == false and object.tags._todo == false then
-    table:insert(
-        {
-            tags = object.tags,
-            geom = object:as_linestring(),
-            meta = meta
-        }
-    )
-  end
-end
-
-
-local function maxspeedDriect(tags)
+local function maxspeedDirect(tags)
   local maxspeed = -1.0
   local source = "nothing found"
   local speed_tags = {"maxspeed:forward", "maxspeed:backward", "maxspeed"}
@@ -258,11 +116,12 @@ local function maxspeedDriect(tags)
     if tags[tag] then
       local val = tonumber(tags[tag])
       if val ~= nil and val > maxspeed then
+        source = tag
         maxspeed = val
       end
     end
   end
-  return maxspeed
+  return maxspeed, source
 end
 
 local function maxspeedFromZone(tags)
@@ -285,7 +144,6 @@ local function maxspeedFromZone(tags)
     ["10"] = 10,
   }
   -- maybe add also traffic signs to parse
-
   local maxspeed_source = {
     ["DE:rural"] = 100,
     ["DE:urban"] = 50,
@@ -297,225 +155,129 @@ local function maxspeedFromZone(tags)
     ["DE:zone:10"] = 10,
     ["DE:zone10"] = 10,
   }
+
   if maxspeed_type[tags["maxspeed_type"]] then
-    return maxspeed_type[tags["maxspeed_type"]]
+    return maxspeed_type[tags["maxspeed_type"]], "maxspeed_type"
   end
   if maxspeed_zone[tags["zone:maxspeed"]] then
-    return maxspeed_type[tags["zone:maxspeed"]]
+    return maxspeed_type[tags["zone:maxspeed"]], "zone:maxspeed"
   end
   if maxspeed_source[tags["source:maxspeed"]] then
-    return maxspeed_source[tags["source:maxspeed"]]
+    return maxspeed_source[tags["source:maxspeed"]], "source:maxspeed"
   end
-  if tags["maxspeed:conditional"] then
-    return "Angabe mit Einschränkungen"
-  end
+
+  -- tbd think about conditional maxspeed
+  -- if tags["maxspeed:conditional"] then
+  --   return "Angabe mit Einschränkungen", "maxspeed:conditional"
+  -- end
+
+  return -1.0, "nothing found"
 end
 
 
-
-function FindBicycleroads(object)
-  -- All standard ways, which should be observed in any case
-  if object.tags.highway == "residential" or object.tags.highway == "secondary" or
-      object.tags.highway == "unclassified" or
-      object.tags.highway == "bicycle_road"
-  then
-    object.tags._skip = false
+function osm2pgsql.process_way(object)
+  local allowed_values = JoinSets({MajorRoadClasses, MinorRoadClasses})
+  if not allowed_values[object.tags.highway] then
+    return
+  end
+  local meta = Metadata(object)
+  local tags = object.tags
+  local exclude, reason = ExcludeHighways(tags)
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
+  if tags.bicycle == "no" then
+    IntoExcludeTable(table, object, "no bikes allowed")
+    return
   end
 
-  -- All special day combinations which are wheel-related. This section is based on the code from bicycleroadinfrasturcture.lua
-  if object.tags.highway == "steps" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=steps`"
-    object.tags._skip = true
+  -- OLD COMMENT
+  --  - maxspeed = <zahl> inferred from source tag
+  -- wenn maxspeed
+  --  - maxspeed = <zahl>
+  --  - _maxspeed_source = "maxspeed-tag"
+  -- wenn kein maxspeed
+  -- aber eines der source-tags, dann…
+  --  - maxspeed = <zahl> inferred from source tag
+  --  - _maxspec_source = "source tag"
+  --  (szenarien de:urbuan, de:rural, bike_roads,  verschiedene zonen)
+
+  -- try to find maxspeed information in the following order:
+  -- `maxspeed` tag > maxspeed zones > highway type
+  local maxspeed, source =  maxspeedDirect(tags)
+  if maxspeed < 0 then
+    maxspeed, source = maxspeedFromZone(tags)
   end
 
-  if object.tags.highway == "pedestrian" then
-    if object.tags.bicycle == "yes" then
-      object.tags._skip = false
-    else
-      object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=pedestrian + bicycle!=yes`"
-      object.tags._skip = true
-    end
+  -- TODO: fallback option on highway type
+  if maxspeed == nil or maxspeed == -1  then
+    local highway_speeds = {
+      ["living_street"] = 15
+    }
+    maxspeed = highway_speeds[tags.highway]
   end
-  --  verkehrsberuhigere bereich als string (nicht als Zahl)
-  if object.tags.highway == "living_street" and not object.tags.bicycle == "no" then
-    object.tags.category = "livingStreet"
-    object.tags.maxspeed = "Verkehrsberuhigter Bereich"
-    object.tags._skip = false
-  end
-
-  if object.tags.bicycle_road == "yes" or StartsWith(object.tags.traffic_sign, "DE:244") then
-    object.tags._skip = false
-  end
-
-  if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "no") or
-      StartsWith(object.tags.traffic_sign, "DE:240")
-  then
-    object.tags.category = "footAndCycleway_shared"
-    object.tags._skip = false
-  end
-
-  if (object.tags.bicycle == "designated" and object.tags.foot == "designated" and object.tags.segregated == "yes") or
-      StartsWith(object.tags.traffic_sign, "DE:241")
-  then
-    object.tags.category = "footAndCycleway_segregated"
-    object.tags._skip = false
-  end
-
-  if object.tags.highway == "footway" or object.tags.highway == "path" then
-    if object.tags["mtb:scale"] then
-      object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `highway=footway|path` but `mtb:scale`"
-      object.tags._skip = true
-    end
-
-    if object.tags.bicycle == "yes" or StartsWith(object.tags.traffic_sign, "DE:239,1022-10") then
-      object.tags.category = "footway_bicycleYes"
-      object.tags._skip = false
-    end
-  end
-end
-
-function Findmaxvalue(object)
-
-  local maxspeed = -1.0
-  local source = "nothing found"
-  local speed_tags = {"maxspeed:forward", "maxspeed:backward", "maxspeed"}
-  for _, tag in pairs(speed_tags) do
-    if object.tags[tag] then
-      local val = tonumber(object.tags[tag])
-      if val ~= nil and val > maxspeed then
-        maxspeed = val
-        source = tag
-      end
-    end
-  end
-  -- return maxspeed, source
-
-  if object.tags["maxspeed:forward"] then
-    object.tags.maxspeed = object.tags["maxspeed:forward"]
-    object.tags.source_maxspeed_forward = object.tags["source:maxspeed:forward"]
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-  if object.tags["maxspeed:backward"] then
-    object.tags.maxspeed = object.tags["maxspeed:backward"]
-    object.tags.source_maxspeed_backward = object.tags["source:maxspeed:backward"]
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-  local tbl = {}
-  -- Pick the highest value if multiple present.
-  if (object.tags["maxspeed:forward"]) then
-    table.insert(tbl, tonumber(object.tags["maxspeed:forward"]))
-  else
-    table.insert(tbl, -999)
-  end
-  if (object.tags["maxspeed:backward"]) then
-    table.insert(tbl, tonumber(object.tags["maxspeed:backward"]))
-  else
-    table.insert(tbl, -999)
-  end
-  if (object.tags["maxspeed"]) then
-    table.insert(tbl, tonumber(object.tags["maxspeed"]))
-  else
-    table.insert(tbl, -999)
-  end
-
-  local max = math.max(table.unpack(tbl))
-  if (not (tonumber(max) and -999)) then
-    object.tags.maxspeed = max
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-end
+  -- SQL:
+  -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
+  --  wir nehmen die landuse=residential+industrial+commerical+retail
+  --  buffer von ~10m um die fläche
+  --  dann alle linien die (TODO) vollständig / am meisten / … in der fläche fläche sind
+  --  (tendentizell dafür nicht schneiden, weil wir am liebsten die OSM ways so haben wie in OSM)
+  --  und dann können wir in sql "maxspeed" "maxspeed_source='infereed from landuse'"
+  --  UND dann auch einen "_todo="add 'maxspeed:source=DE:urban' to way"
+  -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
 
 
+  -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
+  --    wenn primärdaten vorhanden, dann is_present=true
 
-function DefineZones(object)
-  -- Translate maxspeed:type (and tagging variants) to maxspeed
-  if (object.tags["maxspeed:type"] == "DE:urban" or object.tags["source:maxspeed"] == "DE:urban") then
-    object.tags.maxspeed = "50"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-    object.tags._todo = false
-    object.tags._skip = false
+  -- all tags that are shown on the application
+  local allowed_tags =
+      Set(
+          {
+              "_todo",
+              "bicycle_road",
+              "bicycle",
+              "cycleway",
+              "highway",
+              "maxspeed",
+              "maxspeed:backward",
+              "maxspeed:forward",
+              "maxspeed:conditional", -- show if present; details TBD
+              "source:maxspeed", -- only for debugging in webapp
+              "maxspeed:type", -- only for debugging in webapp
+              "zone:maxspeed", -- only for debugging in webapp
+              "zone_traffic",
+              "traffic_sign",
+              "maxspeed_split",
+              "source_maxspeed_forward",
+              "source_maxspeed_backward",
+              "source_maxspeed" -- only for debugging in webapp
+          }
+      )
+
+  FilterTags(tags, allowed_tags)
+  -- Freshness of data
+  IsFresh(object, "checkdate:maxspeed", tags)
+  tags._maxspeed_source = source
+if maxspeed ~= nil and maxspeed ~= -1 then
+    tags.present = true
+    table:insert(
+        {
+            tags = tags,
+            geom = object:as_linestring(),
+            maxspeed = maxspeed,
+            meta = meta
+        }
+    )
+    return
   end
 
-  -- https://wiki.openstreetmap.org/wiki/DE:Key:maxspeed#Beispiele
-  if (object.tags["maxspeed:type"] == "DE:rural" or object.tags["source:maxspeed"] == "DE:rural") then
-    object.tags.maxspeed = "100"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-
-  if (object.tags["maxspeed:type"] == "DE:zone30" or object.tags["source:maxspeed"] == "DE:zone:30" or
-      object.tags["source:maxspeed"] == "DE:zone30" or object.tags["zone:maxspeed"] == "DE:30" or
-      object.tags["zone:maxspeed"] == "30") then
-    object.tags.maxspeed = "30"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-
-  if (object.tags["maxspeed:type"] == "DE:zone20" or object.tags["source:maxspeed"] == "DE:zone:20" or
-      object.tags["source:maxspeed"] == "DE:zone20" or object.tags["zone:maxspeed"] == "DE:20" or
-      object.tags["zone:maxspeed"] == "20")
-  then
-    object.tags.maxspeed = "20"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-
-  -- Add note about conditional maxspeed
-  -- "maxspeed:conditional" — reichen wir durch; mehrwert ist noch fraglich; viele sonderfälle
-  if (object.tags["maxspeed:conditional"]) then
-    object.tags.maxspeed = "Angabe mit Einschränkungen"
-    object.tags._todo = false
-    object.tags._skip = false
-  end
-end
-
-function SortIntoTables(object)
-  if object.tags.maxspeed then
-    object.tags.is_present = true
-    if object.tags._skip == true then
-      -- maxspeed available but path type not correct -> _skip table
-      object.tags._todo = false
-    else
-      -- maxspeed available and path type is correct -> result table
-      object.tags._todo = false
-      object.tags._skip = false
-    end
-  else
-    object.tags.is_present = false
-    if object.tags._skip == true then
-      -- maxspeed not available and path type is not correct -> _skip table
-      object.tags._todo = false
-      object.tags._skip = true
-    else
-      -- maxspeed not available and path type is correct -> _todo table
-      object.tags._todo = true
-      object.tags._skip = false
-    end
-  end
-end
-
-function CheckSourceTagsValue(object)
-  if (object.tags["source:maxspeed"] == "DE:zone:30" and object.tags["maxspeed"] == "30") then
-  else
-    object.tags._todoinfo = "source <TAG=VALUE>"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-  end
-
-  if (object.tags["source:maxspeed"] == "DE:zone:20" and object.tags["maxspeed"] == "20") then
-  else
-    object.tags._todoinfo = "source <TAG=VALUE>"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-  end
-
-  if (object.tags["source:maxspeed"] == "DE:zone:10" and object.tags["maxspeed"] == "10") then
-  else
-    object.tags._todoinfo = "source <TAG=VALUE>"
-    object.tags.source_maxspeed = object.tags["source:maxspeed"]
-  end
+  todoTable:insert(
+      {
+          tags = object.tags,
+          geom = object:as_linestring(),
+          meta = meta
+      }
+  )
 end
