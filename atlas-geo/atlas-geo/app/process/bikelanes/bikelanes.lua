@@ -12,6 +12,7 @@ require("categories")
 require("transformations")
 require("JoinSets")
 require("PrintTable")
+require("IntoExcludeTable")
 
 local categoryTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
@@ -71,14 +72,6 @@ local allowed_tags = Set({
   "width", -- experimental
 })
 
-local function intoExcludeTable(object, reason)
-  excludeTable:insert({
-    tags = object.tags,
-    meta = Metadata(object),
-    reason = reason,
-    geom = object:as_linestring()
-  })
-end
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
@@ -87,7 +80,7 @@ function osm2pgsql.process_way(object)
 
   local exclude, reason = ExcludeHighways(object.tags)
   if exclude then
-    intoExcludeTable(object, reason)
+    IntoExcludeTable(excludeTable, object, reason)
     return
   end
 
@@ -144,10 +137,10 @@ function osm2pgsql.process_way(object)
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
     if JoinSets({ HighwayClasses, MinorRoadClasses, PathClasses })[tags.highway] then
-      intoExcludeTable(object, "no infrastructure expected for highway type: " .. tags.highway)
+      IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
-      intoExcludeTable(object, "no (extra) infrastructure expected for motorroad, express way and cycle streets")
+      IntoExcludeTable(excludeTable, object, "no (extra) infrastructure expected for motorroad, express way and cycle streets")
       return
       -- elseif tags.maxspeed and tags.maxspeed <= 20 then
       --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
