@@ -73,6 +73,7 @@ local table =
                 { column = "tags", type = "jsonb" },
                 { column = "meta", type = "jsonb" },
                 { column = 'maxspeed', type = 'integer'},
+                { column = 'present', type = 'boolean'},
                 { column = "geom", type = "linestring" }
             }
         }
@@ -94,10 +95,10 @@ local excludeTable =
     )
 
 -- Define tables with all bicycle related roads that currently dont have speed values
-local todoTable =
+local missingTable =
     osm2pgsql.define_table(
         {
-            name = "maxspeed_todoList",
+            name = "_maxspeed_missing",
             ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
             columns = {
                 { column = "tags", type = "jsonb" },
@@ -155,7 +156,6 @@ local function maxspeedFromZone(tags)
     ["DE:zone:10"] = 10,
     ["DE:zone10"] = 10,
   }
-
   if maxspeed_type[tags["maxspeed_type"]] then
     return maxspeed_type[tags["maxspeed_type"]], "maxspeed_type"
   end
@@ -260,20 +260,20 @@ function osm2pgsql.process_way(object)
   -- Freshness of data
   IsFresh(object, "checkdate:maxspeed", tags)
   tags._maxspeed_source = source
-if maxspeed ~= nil and maxspeed ~= -1 then
+  if maxspeed ~= nil and maxspeed ~= -1 then
     tags.present = true
     table:insert(
         {
             tags = tags,
             geom = object:as_linestring(),
             maxspeed = maxspeed,
+            present = true,
             meta = meta
         }
     )
     return
   end
-
-  todoTable:insert(
+  missingTable:insert(
       {
           tags = object.tags,
           geom = object:as_linestring(),
