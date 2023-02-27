@@ -108,10 +108,13 @@ local function cyclewaySeparated(tags)
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
     --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
     result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
+
+    -- TODO: Removed for now, we might need it later? (otherwise delete…)
     -- Case: Separate cycleway
     --    https://www.openstreetmap.org/way/989837901/
-    result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil) -- maybe use foot ~= yes instead
+    -- result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil) -- maybe use foot ~= yes instead
   end
+
   if result then
     return "cyclewaySeparated"
   end
