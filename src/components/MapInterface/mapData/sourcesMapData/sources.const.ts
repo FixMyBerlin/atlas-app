@@ -234,7 +234,15 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['category', 'oneway__if_present', 'highway', 'name'],
+      documentedKeys: [
+        'category',
+        'cycleway__if_present',
+        'oneway__if_present',
+        'traffic_sign__if_present',
+        'width__if_present',
+        'highway',
+        'name',
+      ],
     },
     presence: { enabled: true },
     verification: {
