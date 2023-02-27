@@ -69,6 +69,7 @@ local allowed_tags = Set({
   "surface:color",
   "traffic_sign",
   "width", -- experimental
+  "_parent_highway", -- debug
 })
 
 local function intoExcludeTable(object, reason)
