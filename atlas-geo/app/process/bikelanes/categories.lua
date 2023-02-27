@@ -11,8 +11,10 @@ end
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
-  local result = tags.parent ~= nil and tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
-  result = result and tags.parent.oneway == 'yes' and tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
+  local result = tags.parent ~= nil and tags.prefix == 'cycleway' and
+      tags.side == '' -- object is created from implicit case
+  result = result and tags.parent.oneway == 'yes' and
+      tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN
   if result then
     return 'not_expected'
@@ -89,17 +91,18 @@ end
 -- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewaySeparated(tags)
-
   -- Case: Separate cycleway identified via traffic_sign
   -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   -- (Note: cycleway==track is not very common)
   --    Eg https://www.openstreetmap.org/way/964476026
-  local result = tags.traffic_sign == "DE:237" and tags.is_sidepath == "yes"
-  result = result and (tags.cycleway == "track" or tags.cycleway == "opposite_track")
+  local result = tags.traffic_sign == "DE:237"
+      and tags.is_sidepath == "yes"
+      and (tags.cycleway == "track" or tags.cycleway == "opposite_track")
+
   if tags.highway == "cycleway" then
     -- Case: Separate cycleway next to a road
     --    Eg https://www.openstreetmap.org/way/278057274
-    result = result or tags.is_sidepath == "yes"
+    result = tags.is_sidepath == "yes"
     -- Case: The crossing version of a separate cycleway next to a road
     -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
     --    Eg https://www.openstreetmap.org/way/963592923
@@ -164,7 +167,7 @@ end
 
 -- Categories for objects where no infrastructure is available but the data is considered complete
 function OnlyPresent(tags)
-  local dataCategories = { dataNo, implicitOneWay}
+  local dataCategories = { dataNo, implicitOneWay }
   return defineCategory(tags, dataCategories)
 end
 
