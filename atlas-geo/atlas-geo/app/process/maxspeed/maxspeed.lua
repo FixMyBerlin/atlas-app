@@ -212,10 +212,14 @@ function osm2pgsql.process_way(object)
 
   -- TODO: fallback option on highway type
   if maxspeed == nil or maxspeed == -1  then
+    -- TODO: present no?
     local highway_speeds = {
-      ["living_street"] = 15
+      ["living_street"] = 7
     }
-    maxspeed = highway_speeds[tags.highway]
+    if highway_speeds[tags.highway] then
+      maxspeed = highway_speeds[tags.highway]
+      source = "inferred from highway"
+    end
   end
   -- SQL:
   -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
