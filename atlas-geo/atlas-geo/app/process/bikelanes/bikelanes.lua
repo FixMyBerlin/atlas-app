@@ -162,8 +162,8 @@ function osm2pgsql.process_way(object)
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
-    left = presence[LEFT_SIGN] or "no",
-    self = presence[CENTER_SIGN] or "no",
-    right = presence[RIGHT_SIGN] or "no"
+    left = presence[LEFT_SIGN] or "missing",
+    self = presence[CENTER_SIGN] or "missing",
+    right = presence[RIGHT_SIGN] or "missing"
   })
 end
