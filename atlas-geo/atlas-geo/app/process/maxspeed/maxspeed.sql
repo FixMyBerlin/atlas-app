@@ -10,9 +10,10 @@
 
 -- DELETE * FROM "maxspeed_transformed";
 -- Thoughts to implement this:
--- filter landuse on type
--- make a union of the filter geometries
+-- filter landuse or places on type
+-- project to euclidean
 -- buffer that union by e.g. 10 m
+-- make a union of the filter geometries
 -- check intersections or inclusion for ways that lack maxspeed e.g. those in _maxspeed_missing
 -- add these ways with a constant maxspeed and `present=false` into maxspeed table
 SELECT ST_Transform(geom, 25833) from landuse where tags->>'landuse' = 'residential';
