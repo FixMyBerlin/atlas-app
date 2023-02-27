@@ -127,8 +127,12 @@ local function cyclewayOnHighway(tags)
   -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
   --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-
-  -- https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
+  --    https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
+  local result = false
+  if tags.highway == 'cycleway' then
+    result = (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+    result = result or tags.cycleway == "shared_lane"
+  end
   if result then
     return "cyclewayOnHighway"
   end
