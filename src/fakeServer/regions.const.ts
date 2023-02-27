@@ -84,6 +84,7 @@ export const regions: Region[] = [
     logoWhiteBackgroundRequired: true,
     themes: [
       // The order here specifies the order in the UI
+      'fromTo',
       'bikelanes',
       'lit',
     ],
