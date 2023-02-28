@@ -10,7 +10,7 @@ export type SourcesIds =
   | 'osmscripts_highways'
   | 'osmscripts_pois'
   | 'parkraumParking'
-  // | 'parkraumParkingLegacy'
+  | 'parkraumParkingDebug'
   | 'parkraumParkingPoints'
   | 'parkraumParkingAreas'
   | 'tarmac_bikelanes'
@@ -80,31 +80,19 @@ export const sources: MapDataSource<
     calculator: { enabled: false },
     export: { enabled: false },
   },
-  // {
-  //   id: 'parkraumParkingLegacy',
-  //   tiles: 'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
-  //   attributionHtml: 'todo', // TODO
-  //   inspector: {
-  //     enabled: true,
-  //     highlightingKey: 'id',
-  //     documentedKeys: [
-  //       'highway_name',
-  //       'highway',
-  //       'parking',
-  //       'orientation',
-  //       'capacity',
-  //       'source_capacity',
-  //       'length',
-  //       'highway_width_proc_effective',
-  //       'surface',
-  //     ],
-  //   },
-  //   presence: { enabled: false },
-  //   verification: { enabled: false },
-  //   freshness: { enabled: false },
-  //   calculator: { enabled: false },
-  //   export: { enabled: false },
-  // },
+
+  {
+    id: 'parkraumParkingDebug',
+    tiles:
+      'https://vts.mapwebbing.eu/processing.buffer_amenity_parking_points,processing.buffer_driveways,processing.buffer_highways,processing.buffer_kerb_intersections,processing.buffer_pedestrian_crossings,processing.buffer_pt_bus,processing.buffer_pt_tram,processing.buffer_ramps/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+    inspector: { enabled: false }, // Those layers have no properties anyways
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
   {
     id: 'parkraumParkingPoints',
     tiles:
