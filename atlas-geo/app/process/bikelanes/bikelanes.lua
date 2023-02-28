@@ -131,18 +131,19 @@ function osm2pgsql.process_way(object)
         })
         presence[sign] = presence[sign] or category
       end
-
     end
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
-    local not_expected = MinorRoadClasses
-    not_expected.service = nil
-    if not_expected[tags.highway] then
-      -- enough to set the center value (see last if at end of function)
-      presence[CENTER_SIGN] = NOT_EXPECTED
-    elseif not MajorRoadClasses[tags.highway] then
+  if MinorRoadClasses[tags.highway] and tags.highway ~= 'service' then
+    for k,v in pairs(presence) do
+      if v == nil then
+        presence[k] = NOT_EXPECTED
+      end
+    end
+  elseif not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
+    -- sksk
+    if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway then
@@ -157,7 +158,6 @@ function osm2pgsql.process_way(object)
   -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-
   if presence[CENTER_SIGN] then
     -- TODO: here we could check for collissions between center line and self
     presence[LEFT_SIGN] = presence[LEFT_SIGN] or NOT_EXPECTED
