@@ -9,6 +9,7 @@ require("HighwayClasses")
 require("JoinSets")
 require("ExcludeHighways")
 require("ExcludeByWidth")
+require("IntoExcludeTable")
 
 local table = osm2pgsql.define_table({
   name = 'roadClassification',
@@ -42,24 +43,26 @@ function osm2pgsql.process_way(object)
 
   --TODO: exit here
   local exclude, reason = ExcludeHighways(object.tags)
-  object.tags._exclude = exclude
-  object.tags._excludeNotes = reason
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
   exclude, reason = ExcludeByWidth(object.tags, 2.1)
-  object.tags._exclude = object.tags._exclude or exclude
-  object.tags._excludeNotes = object.tags._excludeNotes .. reason
-
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
   -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.footway == "sidewalk" then
-    object.tags._excludeNotes = object.tags._excludeNotes .. ";Exclude `footway=sidewalk`"
-    object.tags._exclude = true
+    IntoExcludeTable(excludeTable, object, "Exclude `footway=sidewalk`")
+    return
   end
-
   -- Exclude `is_sidepath=yes`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.is_sidepath == "yes" then
-    object.tags._excludeNotes = object.tags._excludeNotes .. ";Exclude `is_sidepath=yes`"
-    object.tags._exclude = true
+    IntoExcludeTable(excludeTable, object, "Exclude `is_sidepath=yes`")
+    return
   end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
@@ -90,17 +93,9 @@ function osm2pgsql.process_way(object)
     "is_sidepath" })
   FilterTags(object.tags, allowed_tags)
 
-  if object.tags._exclude then
-    excludeTable:insert({
-      tags = object.tags,
-      meta = Metadata(object),
-      geom = object:as_linestring()
-    })
-  else
-    table:insert({
-      tags = object.tags,
-      meta = Metadata(object),
-      geom = object:as_linestring()
-    })
-  end
+  table:insert({
+    tags = object.tags,
+    meta = Metadata(object),
+    geom = object:as_linestring()
+  })
 end

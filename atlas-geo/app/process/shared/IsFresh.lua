@@ -1,3 +1,4 @@
+require("CheckDataWithinYears")
 -- * @desc Categoize the fresshnews of data.
 --    If present, use `date_tag` (high confidence).
 --    Fall back to `object.timestamp` (low confidence).
