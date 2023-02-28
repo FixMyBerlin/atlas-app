@@ -153,6 +153,12 @@ function osm2pgsql.process_way(object)
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
 
+  if presence[CENTER_SIGN] then
+    -- TODO: here we could check for collissions between center line and self
+    presence[LEFT_SIGN] = presence[LEFT_SIGN] or 'not_expected'
+    presence[RIGHT_SIGN] = presence[RIGHT_SIGN] or 'not_expected'
+  end
+
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
