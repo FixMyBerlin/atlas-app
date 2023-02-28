@@ -156,7 +156,7 @@ export const Map: React.FC = () => {
       // onZoomEnd={handleZoomEnd} // zooming is always also moving
       onClick={handleClick}
       onLoad={handleLoad}
-      doubleClickZoom={false}
+      doubleClickZoom={true}
       dragRotate={false}
     >
       <SourceAndLayers />
