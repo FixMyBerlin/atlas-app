@@ -1,7 +1,7 @@
 import { VerificationApiGet } from '@api/index'
 import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
-import create from 'zustand'
+import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
