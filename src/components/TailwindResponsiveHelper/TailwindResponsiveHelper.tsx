@@ -1,9 +1,7 @@
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import { isDev } from '@components/utils'
 
 export const TailwindResponsiveHelper = () => {
-  const { showDebugInfo } = useMapStateInteraction()
-
-  if (!showDebugInfo) return null
+  if (!isDev) return null
 
   return (
     <a

@@ -1,4 +1,3 @@
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { User } from '@components/MapInterface/UserInfo'
 import { isAdmin } from '@fakeServer/utils'
 import { Menu, Transition } from '@headlessui/react'
@@ -17,8 +16,7 @@ export const LoggedIn: React.FC<Props> = ({
   hasPermissions,
   onLogout,
 }) => {
-  const { showDebugInfo } = useMapStateInteraction()
-  const showUserId = isAdmin(user) && showDebugInfo
+  const showUserId = isAdmin(user)
   const imgSrc = user.avatar ? user.avatar : null
 
   return (

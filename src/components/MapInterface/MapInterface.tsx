@@ -1,6 +1,7 @@
 import React from 'react'
 import { MapProvider } from 'react-map-gl'
 import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
+import { DebugMap } from './DebugBoxes/DebugMap'
 import { Download } from './Download'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
@@ -18,6 +19,7 @@ export const MapInterface: React.FC = () => {
         <SelectTopics />
         <Inspector />
         <Download />
+        <DebugMap />
         <DebugStateInteraction />
         <DebugStateReactLocation />
       </div>

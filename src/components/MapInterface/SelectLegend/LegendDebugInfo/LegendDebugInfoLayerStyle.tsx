@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { MapDataVisLayer } from '@components/MapInterface/mapData'
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { IconModal } from '@components/Modal'
 import { isDev } from '@components/utils'
 import { CommandLineIcon } from '@heroicons/react/20/solid'
@@ -12,7 +12,7 @@ export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
   title,
   layers,
 }) => {
-  const { showDebugInfo } = useMapStateInteraction()
+  const { showDebugInfo } = useMapDebugState()
 
   if (!isDev || !showDebugInfo) return null
 

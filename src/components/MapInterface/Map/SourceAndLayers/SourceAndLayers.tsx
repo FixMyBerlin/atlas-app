@@ -3,8 +3,9 @@ import {
   getStyleData,
   getTopicData,
 } from '@components/MapInterface/mapData'
-import { debugStyleLayers } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugStyleLayers'
+import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
+import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
@@ -19,11 +20,9 @@ import { specifyFilters } from './utils'
 // We then toggle the visibility of the layer base on state.
 // We also use this visbility to add/remove interactive layers.
 export const SourceAndLayers: React.FC = () => {
-  const {
-    config: configThemesTopics,
-    theme: themeId,
-    debugLayerStyles,
-  } = useSearch<LocationGenerics>()
+  const { useDebugLayerStyles } = useMapDebugState()
+  const { config: configThemesTopics, theme: themeId } =
+    useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
   if (!configThemesTopics || !currentTheme) return null
 
@@ -87,10 +86,10 @@ export const SourceAndLayers: React.FC = () => {
                   styleConfig.filters
                 )
 
-                // Use ?debugLayerStyles to activate debug styling
+                // Use <DebugMap> to setUseDebugLayerStyles
                 const layerPaint =
-                  debugLayerStyles &&
-                  debugStyleLayers({
+                  useDebugLayerStyles &&
+                  debugLayerStyles({
                     source: sourceId,
                     sourceLayer: layer['source-layer'],
                   }).find((l) => l.type === layer.type)?.paint

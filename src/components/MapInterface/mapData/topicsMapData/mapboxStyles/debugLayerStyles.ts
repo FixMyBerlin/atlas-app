@@ -1,6 +1,6 @@
 import { MapDataVisLayer } from '../../types'
 
-export const debugStyleLayers = ({
+export const debugLayerStyles = ({
   source,
   sourceLayer,
 }: {

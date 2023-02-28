@@ -1,6 +1,6 @@
 import { MapDataTopic } from '../types'
 import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
-import { debugStyleLayers } from './mapboxStyles/debugStyleLayers'
+import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { defaultLegend } from './topic_bikelanes'
 
 const topic = 'bikelanesPresence'
@@ -20,7 +20,7 @@ export const topic_bikelanesPresence: MapDataTopic = {
       id: 'default',
       name: 'Inhalte & Vollständigkeit',
       desc: null,
-      layers: debugStyleLayers({
+      layers: debugLayerStyles({
         source: 'tarmac_bikelanesPresence',
         sourceLayer: 'public.bikelanesPresence',
       }),

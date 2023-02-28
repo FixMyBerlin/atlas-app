@@ -1,31 +1,22 @@
 import { VerificationApiGet } from '@api/index'
-import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
 type Store = StoreMapState &
-  StoreDebugInfo &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates
 
 type StoreMapState = {
   mapLoaded: boolean
-  setMapLoaded: (mapLoaded: StoreMapState['mapLoaded']) => void
-}
-
-type StoreDebugInfo = {
-  showDebugInfo: boolean
-  setShowDebugInfo: (showDebugInfo: StoreDebugInfo['showDebugInfo']) => void
+  setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
 }
 
 export type StoreFeaturesInspector = {
   inspectorFeatures: MapboxGeoJSONFeature[]
-  setInspector: (
-    inspectObject: StoreFeaturesInspector['inspectorFeatures']
-  ) => void
+  setInspector: (inspectObject: Store['inspectorFeatures']) => void
   resetInspector: () => void
 }
 
@@ -35,7 +26,7 @@ export type StoreCalculator = {
     features: MapboxGeoJSONFeature[]
   }[]
   setCalculatorAreasWithFeatures: (
-    calculatorAreasWithFeatures: StoreCalculator['calculatorAreasWithFeatures']
+    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures']
   ) => void
 }
 
@@ -48,9 +39,6 @@ type StoreLocalUpdates = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
-
-  showDebugInfo: isDev,
-  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
 
   // Data for <Inspector> AND <LayerHighlight>
   inspectorFeatures: [],

@@ -3,7 +3,7 @@ import {
   MapDataVisLayer,
   TopicIds,
 } from '@components/MapInterface/mapData'
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { isDev } from '@components/utils'
 import React from 'react'
 import { LegendDebugInfoLayerStyle } from './LegendDebugInfoLayerStyle'
@@ -19,7 +19,7 @@ export const LegendDebugInfoTopicLayerConfig: React.FC<Props> = ({
   topicId,
   styleDataLayers,
 }) => {
-  const { showDebugInfo } = useMapStateInteraction()
+  const { showDebugInfo } = useMapDebugState()
 
   if (!isDev || !showDebugInfo || !legends || !styleDataLayers) return null
 

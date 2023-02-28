@@ -40,7 +40,7 @@ export type LocationGenerics = MakeGenerics<{
     bg: SourcesRasterIds
     config: ThemeConfig[]
     draw: DrawArea[]
-    debugLayerStyles: boolean
+    debugMap: boolean
   }
 }>
 
