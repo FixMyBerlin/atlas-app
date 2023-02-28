@@ -1,4 +1,5 @@
 -- PREDICATES FOR EACH CATEGORY:
+NOT_EXPECTED = 'not_expected'
 
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
@@ -15,9 +16,9 @@ local function implicitOneWay(tags)
       tags.side == '' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and
       tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
-  result = result and tags.sign == LEFT_SIGN
+  result = result and tags.sign == LEFT_SIGN -- is the left side object
   if result then
-    return 'not_expected'
+    return NOT_EXPECTED
   end
 end
 
