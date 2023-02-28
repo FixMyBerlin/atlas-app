@@ -141,7 +141,7 @@ function osm2pgsql.process_way(object)
     not_expected.service = nil
     if not_expected[tags.highway] then
       -- enough to set the center value (see last if at end of function)
-      presence[CENTER_SIGN] = 'not_expected'
+      presence[CENTER_SIGN] = NOT_EXPECTED
     elseif not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
@@ -160,8 +160,8 @@ function osm2pgsql.process_way(object)
 
   if presence[CENTER_SIGN] then
     -- TODO: here we could check for collissions between center line and self
-    presence[LEFT_SIGN] = presence[LEFT_SIGN] or 'not_expected'
-    presence[RIGHT_SIGN] = presence[RIGHT_SIGN] or 'not_expected'
+    presence[LEFT_SIGN] = presence[LEFT_SIGN] or NOT_EXPECTED
+    presence[RIGHT_SIGN] = presence[RIGHT_SIGN] or NOT_EXPECTED
   end
 
   presenceTable:insert({
