@@ -57,7 +57,11 @@ function osm2pgsql.process_way(object)
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
   local category = nil
-  if (object.tags.lit) then
+  if object.tags.lit == nil then
+
+    object.tags.is_present = false
+  else
+    object.tags.is_present = true
     category = "special"
     if (object.tags.lit == "yes") then
       category = "lit"
@@ -65,13 +69,6 @@ function osm2pgsql.process_way(object)
     if (object.tags.lit == "no") then
       category = "unlit"
     end
-  end
-
-  -- Presence of data
-  if (object.tags.lit) then
-    object.tags.is_present = true
-  else
-    object.tags.is_present = false
   end
 
   -- Freshness of data
