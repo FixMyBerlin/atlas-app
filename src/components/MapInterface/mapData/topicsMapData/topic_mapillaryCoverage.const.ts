@@ -7,7 +7,7 @@ export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
 export const topic_mapillaryCoverage: MapDataTopic = {
   id: topicId,
-  name: 'Mapillary Fotos',
+  name: 'Mapillary (Zoom 0-14)',
   desc: null,
   sourceId: 'mapillary_coverage',
   styles: [
