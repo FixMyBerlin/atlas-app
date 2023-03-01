@@ -28,6 +28,7 @@ export const themes: MapDataTheme[] = [
       { id: 'shops', defaultActive: true },
       // { id: 'publicTransport_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
+      { id: 'buildings', defaultActive: true },
       { id: 'landuse', defaultActive: true },
     ],
   },

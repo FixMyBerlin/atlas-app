@@ -16,6 +16,7 @@ export type SourcesIds =
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
+  | 'tarmac_buildings'
   | 'tarmac_education'
   | 'tarmac_landuse'
   | 'tarmac_lit'
@@ -410,6 +411,22 @@ export const sources: MapDataSource<
       enabled: true,
       apiIdentifier: 'places',
     },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.buildings.json
+    id: 'tarmac_buildings',
+    tiles: `${tilesUrl}/public.buildings/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['building', 'place', 'population', 'population:date'],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json

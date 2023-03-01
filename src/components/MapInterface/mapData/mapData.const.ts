@@ -48,8 +48,11 @@ import {
   TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
+  TopicBuildingsId,
   TopicPlacesStyleFilterIds,
+  TopicBuildingsStyleFilterIds,
   TopicPlacesStyleIds,
+  TopicBuildingsStyleIds,
   TopicPoiClassificationId_Tarmac,
   TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicPoiClassificationStyleIds_Tarmac,
@@ -97,6 +100,7 @@ import {
   topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
+  topic_buildings,
 } from './topicsMapData'
 import { MapData } from './types'
 
@@ -106,6 +110,7 @@ export type TopicIds =
   | TopicBikelanesId_Osmscripts
   | TopicBikelanesPresenceId
   | TopicBoundariesId
+  | TopicBuildingsId
   | TopicEducationId_Osmscripts
   | TopicEducationId_Tarmac
   | TopicLanduseId
@@ -132,6 +137,7 @@ export type TopicStyleIds =
   | TopicBikelanesStyleIds
   | TopicBikelanesStyleIds_Osmscripts
   | TopicBoundariesStyleIds
+  | TopicBuildingsStyleIds
   | TopicEducationStyleIds_Osmscripts
   | TopicEducationStyleIds_Tarmac
   | TopicLanduseStyleIds
@@ -158,6 +164,7 @@ export type TopicStyleFilterIds =
   | TopicBikelanesStyleFilterIds
   | TopicBikelanesStyleFilterIds_Osmscripts
   | TopicBoundariesStyleFilterIds
+  | TopicBuildingsStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
   | TopicEducationStyleFilterIds_Tarmac
   | TopicLanduseStyleFilterIds
@@ -191,6 +198,7 @@ export type TopicStyleLegendIds =
   TopicLitStyleLegendIds
 // | TopicMapillaryCoverageStyleLegendIds
 // | TopicPlacesStyleLegendIds
+// | TopicBuildingsStyleLegendIds
 // | TopicMaxspeedStyleLegendIds
 // | TopicPublicTransportStyleLegendIds_Osmscripts
 // | TopicPublicTransportStyleLegendIds_Tarmac
@@ -213,6 +221,7 @@ export const mapData: MapData = {
     topic_bikelanes,
     topic_bikelanesPresence,
     topic_boundaries,
+    topic_buildings,
     topic_education_osmscripts,
     topic_education,
     topic_landuse,
