@@ -10,15 +10,16 @@ export type SourcesIds =
   | 'osmscripts_highways'
   | 'osmscripts_pois'
   | 'parkraumParking'
+  | 'parkraumParkingAreas'
   | 'parkraumParkingDebug'
   | 'parkraumParkingPoints'
-  | 'parkraumParkingAreas'
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
   | 'tarmac_education'
   | 'tarmac_landuse'
   | 'tarmac_lit'
+  | 'tarmac_maxspeed'
   | 'tarmac_places'
   | 'tarmac_poiClassification'
   | 'tarmac_publicTransport'
@@ -363,6 +364,36 @@ export const sources: MapDataSource<
     presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'places',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.maxspeed.json
+    id: 'tarmac_maxspeed',
+    tiles: `${tilesUrl}/public.maxspeed/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [
+        'name',
+        'highway',
+        'maxspeed',
+        '_maxspeed_source',
+        'traffic_sign__if_present',
+      ],
+    },
+    presence: {
+      enabled: true,
+    },
+    verification: { enabled: false },
+    freshness: {
+      enabled: true,
+      dateKey: 'fresh',
+    },
     calculator: { enabled: false },
     export: {
       enabled: true,

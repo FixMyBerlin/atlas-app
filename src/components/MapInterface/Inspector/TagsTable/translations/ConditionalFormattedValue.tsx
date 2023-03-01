@@ -26,6 +26,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     'highway_width_proc_effective',
     'length',
     'capacity',
+    'maxspeed',
   ]
   if (numberKeys.includes(tagKey)) {
     return <FormattedNumber value={parseInt(tagValue)} />

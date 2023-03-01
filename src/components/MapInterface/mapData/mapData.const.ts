@@ -32,6 +32,9 @@ import {
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
+  TopicMaxspeedId,
+  TopicMaxspeedStyleFilterIds,
+  TopicMaxspeedStyleIds,
   TopicParkingAreasId,
   TopicParkingAreasStyleFilterIds,
   TopicParkingAreasStyleIds,
@@ -81,6 +84,7 @@ import {
   topic_landuse,
   topic_lit,
   topic_mapillaryCoverage,
+  topic_maxspeed,
   topic_parking,
   topic_parkingAreas,
   topic_parkingDebug,
@@ -107,6 +111,7 @@ export type TopicIds =
   | TopicLanduseId
   | TopicLitId
   | TopicMapillaryCoverageId
+  | TopicMaxspeedId
   | TopicParkingAreasId
   | TopicParkingDebugId
   | TopicParkingId
@@ -132,6 +137,7 @@ export type TopicStyleIds =
   | TopicLanduseStyleIds
   | TopicLitStyleIds
   | TopicMapillaryCoverageStyleIds
+  | TopicMaxspeedStyleIds
   | TopicParkingAreasStyleIds
   | TopicParkingDebugStyleIds
   | TopicParkingPointsStyleIds
@@ -157,6 +163,7 @@ export type TopicStyleFilterIds =
   | TopicLanduseStyleFilterIds
   | TopicLitStyleFilterIds
   | TopicMapillaryCoverageStyleFilterIds
+  | TopicMaxspeedStyleFilterIds
   | TopicParkingAreasStyleFilterIds
   | TopicParkingDebugStyleFilterIds
   | TopicParkingPointsStyleFilterIds
@@ -184,6 +191,7 @@ export type TopicStyleLegendIds =
   TopicLitStyleLegendIds
 // | TopicMapillaryCoverageStyleLegendIds
 // | TopicPlacesStyleLegendIds
+// | TopicMaxspeedStyleLegendIds
 // | TopicPublicTransportStyleLegendIds_Osmscripts
 // | TopicPublicTransportStyleLegendIds_Tarmac
 // | TopicRoadClassificationStyleLegendIds_Osmscripts
@@ -205,18 +213,19 @@ export const mapData: MapData = {
     topic_bikelanes,
     topic_bikelanesPresence,
     topic_boundaries,
-    topic_education,
     topic_education_osmscripts,
+    topic_education,
     topic_landuse,
     topic_lit,
     topic_mapillaryCoverage,
+    topic_maxspeed,
     topic_places,
+    topic_poiClassification_tarmac,
     topic_publicTransport_osmscripts,
     topic_publicTransport_tarmac,
     topic_roadClassification_osmscripts,
     topic_roadClassification_tarmac,
     topic_shops_osmscripts,
-    topic_poiClassification_tarmac,
     topic_surface_osmscripts,
     // topic_surface_tarmac,
     topic_parking,

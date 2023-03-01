@@ -12,6 +12,7 @@ export type MapDataThemeIds =
   | 'fromToZes'
   | 'bikelanesZes'
   | 'roadClassificationZes'
+  | 'maxspeed'
   | 'surfaceZes'
   // Special only:
   | 'mapillary'
@@ -81,6 +82,7 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'roadClassification_tarmac', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
+      { id: 'maxspeed', defaultActive: false },
       // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
