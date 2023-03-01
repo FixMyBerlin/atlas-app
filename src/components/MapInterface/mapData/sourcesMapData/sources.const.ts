@@ -384,6 +384,9 @@ export const sources: MapDataSource<
         'maxspeed',
         '_maxspeed_source',
         'traffic_sign__if_present',
+        'maxspeed:backward__if_present',
+        'maxspeed:forward__if_present',
+        'maxspeed:conditional__if_present',
       ],
     },
     presence: {
