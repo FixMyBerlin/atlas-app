@@ -243,6 +243,7 @@ function osm2pgsql.process_way(object)
           "bicycle_road",
           "bicycle",
           "cycleway",
+          "name",
           "highway",
           "maxspeed",
           "maxspeed:backward",
@@ -254,9 +255,7 @@ function osm2pgsql.process_way(object)
           "zone_traffic",
           "traffic_sign",
           "maxspeed_split",
-          "source_maxspeed_forward",
-          "source_maxspeed_backward",
-          "source_maxspeed" -- only for debugging in webapp
+          "checkdate:maxspeed"
         }
       )
 
