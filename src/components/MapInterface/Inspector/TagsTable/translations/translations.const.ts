@@ -1,5 +1,6 @@
 /* prettier-ignore */
 export const translations: { [key: string]: string } = {
+  'key--_parent_highway': 'Straßentyp der zugehörigen Straße',
   'key--highway': 'Straßentyp',
   'key--left': 'Vollständigkeit Links (Linienrichtung)',
   'key--name': 'Name',
@@ -40,6 +41,7 @@ export const translations: { [key: string]: string } = {
   'title--source:tarmac_lit--topic:lit--tiles': 'Daten zur Beleuchtung',
   'title--source:tarmac_places--topic:places--tiles': 'Daten zu Orten',
   'title--source:tarmac_poiClassification--topic:shops--tiles': 'Daten zu Start-Ziel-Punkten',
+  'value--highway--cycleway': 'Radweg',
   'value--highway--footway': 'Fußweg',
   'value--highway--living_street': 'Verkehrsberuhigter Bereich',
   'value--highway--path': 'Weg',

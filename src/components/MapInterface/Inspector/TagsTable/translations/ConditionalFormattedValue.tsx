@@ -37,20 +37,31 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     return <FormattedDate value={tagValue} />
   }
 
+  let key = `value--${sourceId}--${tagKey}--${tagValue}`
+
+  // Some keys are a duplicate of other Keys.
+  // We want them translated only once, so we overwrite them here…
+  const keyOverwrites: Record<string, string> = { _parent_highway: 'highway' }
+  if (Object.keys(keyOverwrites).includes(tagKey)) {
+    tagKey = keyOverwrites[tagKey]
+  }
+
   // Some TagKeys are not specific per category; we only translate those once
   const nonCategorizedTagKeys = [
     'highway',
+    '_parent_highway',
     'surface',
     'smoothness',
     'left',
     'right',
     'oneway',
   ]
-  const key = nonCategorizedTagKeys.includes(tagKey)
-    ? `value--${tagKey}--${tagValue}`
-    : `value--${sourceId}--${tagKey}--${tagValue}`
+  if (nonCategorizedTagKeys.includes(tagKey)) {
+    key = `value--${tagKey}--${tagValue}`
+  }
 
   // It will take a while to translate everything. This fallback does look better on production.
   const defaultMessage = isDev ? key : tagValue
+
   return <FormattedMessage id={key} defaultMessage={defaultMessage} />
 }

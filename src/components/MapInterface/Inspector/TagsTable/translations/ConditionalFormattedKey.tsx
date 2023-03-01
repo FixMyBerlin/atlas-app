@@ -2,7 +2,6 @@ import { SourcesIds } from '@components/MapInterface/mapData'
 import { isDev } from '@components/utils'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { translations } from './translations.const'
 
 type Props = {
   sourceId: SourcesIds
@@ -13,10 +12,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
   sourceId,
   tagKey,
 }) => {
-  const key = `key--${sourceId}--${tagKey}`
-
-  // It will take a while to translate everything. This fallback does look better on production.
-  let defaultMessage = isDev ? key : tagKey
+  let key = `key--${sourceId}--${tagKey}`
 
   // For some key, we don't want to add translations for each source.
   // For those, we use a simple fallback.
@@ -24,13 +20,17 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
   const simpleTranslFallbackKeys = [
     'name',
     'highway',
+    '_parent_highway',
     'left',
     'right',
     'oneway',
   ]
   if (simpleTranslFallbackKeys.includes(tagKey)) {
-    defaultMessage = translations[`key--${tagKey}`]
+    key = `key--${tagKey}`
   }
+
+  // It will take a while to translate everything. This fallback does look better on production.
+  const defaultMessage = isDev ? key : tagKey
 
   return <FormattedMessage id={key} defaultMessage={defaultMessage} />
 }
