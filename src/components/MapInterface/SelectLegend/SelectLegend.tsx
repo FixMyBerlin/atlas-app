@@ -131,7 +131,9 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 })}
                 key={key}
               >
-                <div className="ml-3 h-5 w-5">{iconFromLegend(legendData)}</div>
+                <div className="ml-3 h-5 w-5 flex-none">
+                  {iconFromLegend(legendData)}
+                </div>
                 <div className="flex h-5 items-center ">
                   <input
                     id={key}
