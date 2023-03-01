@@ -29,7 +29,8 @@ export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
   //    behaves similar enough that we don't need to figure this out.
   //    The issue was, that it always returned `[]`. Even when isSourceLoaded is true
   //    (https://maplibre.org/maplibre-gl-js-docs/api/map/#map#issourceloaded)
-  //    This example works, aparently https://docs.mapbox.com/mapbox-gl-js/example/query-similar-features/
+  //    This example works, apparently https://docs.mapbox.com/mapbox-gl-js/example/query-similar-features/
+  //    Next: Maybe more testing with the source prop? https://github.com/maplibre/maplibre-gl-js/issues/1952
   // mainMap
   //   .getMap()
   //   .querySourceFeatures(layer.source, {
