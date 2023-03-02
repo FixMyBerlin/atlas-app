@@ -24,7 +24,7 @@ export const translations: { [key: string]: string } = {
   'key--tarmac_education--amenity': 'Art der Bildngseinrichtung',
   'key--tarmac_landuse--landuse': 'Landnutzung',
   'key--tarmac_lit--category': 'Beleuchtung',
-  'key--tarmac_lit--composit_surface_smoothness': 'Oberflächenqualität',
+  'key--composit_surface_smoothness': 'Oberflächenqualität',
   'key--tarmac_lit--lit__if_present': 'Beleuchtung Details',
   'key--tarmac_places--place': 'Ortskategorie',
   'key--tarmac_places--population:date': 'Datum der Quelle der Einwohner:innen-Anzahl',

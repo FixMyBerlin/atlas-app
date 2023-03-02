@@ -21,6 +21,8 @@ export const TagsTableRowCompositTrafficSign: React.FC<Props> = ({
   tagKey,
   properties,
 }) => {
+  if (!properties['traffic_sign']) return null
+
   return (
     <TagsTableRow
       key={tagKey}

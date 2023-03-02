@@ -19,6 +19,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
   // (Unfortunatelly react-intl. does not support nested FormattedMessage components to handle the fallbacks.)
   const simpleTranslFallbackKeys = [
     '_parent_highway',
+    'composit_surface_smoothness',
     'highway',
     'left',
     'name',
