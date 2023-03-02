@@ -2,6 +2,7 @@ import { SourcesIds } from '@components/MapInterface/mapData'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 import { TagsTableRowCompositSurfaceSmoothness } from './compositTableRows'
+import { TagsTableRowCompositTrafficSign } from './compositTableRows/TagsTableRowCompositTrafficSign'
 import { TagsTableRow } from './TagsTableRow'
 
 type Props = {
@@ -54,6 +55,15 @@ export const TagsTable: React.FC<Props> = ({
 
           // Handle _composit_ table rows and default case
           switch (cleanedKey) {
+            case 'traffic_sign': {
+              return (
+                <TagsTableRowCompositTrafficSign
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
             case 'composit_surface_smoothness': {
               return (
                 <TagsTableRowCompositSurfaceSmoothness
