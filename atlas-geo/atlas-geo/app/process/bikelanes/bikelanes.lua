@@ -19,10 +19,10 @@ local categoryTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'category', type = 'text' },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-    { column = '_offset', type = 'real' }
+    { column = 'tags',     type = 'jsonb' },
+    { column = 'meta',     type = 'jsonb' },
+    { column = 'geom',     type = 'linestring' },
+    { column = '_offset',  type = 'real' }
   }
 })
 
@@ -30,10 +30,10 @@ local presenceTable = osm2pgsql.define_table({
   name = 'bikelanesPresence',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-    { column = 'left', type = 'text' },
-    { column = 'self', type = 'text' },
+    { column = 'tags',  type = 'jsonb' },
+    { column = 'geom',  type = 'linestring' },
+    { column = 'left',  type = 'text' },
+    { column = 'self',  type = 'text' },
     { column = 'right', type = 'text' },
   }
 })
@@ -42,10 +42,10 @@ local excludeTable = osm2pgsql.define_table({
   name = 'bikelanes_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
+    { column = 'tags',   type = 'jsonb' },
+    { column = 'meta',   type = 'jsonb' },
     { column = 'reason', type = 'text' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'geom',   type = 'linestring' },
   }
 })
 
@@ -69,14 +69,14 @@ local allowed_tags = Set({
   "surface",
   "surface:color",
   "traffic_sign",
-  "width", -- experimental
-  "_parent_highway", -- debug
+  "width",
+  "_parent_highway",
 })
 
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
-  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
+  local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
 
   local exclude, reason = ExcludeHighways(object.tags)
@@ -105,7 +105,7 @@ function osm2pgsql.process_way(object)
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local cycleways = GetTransformedObjects(tags, transformations);
   -- map presence via signs, could also initialize with {}
-  local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
+  local presence = { [LEFT_SIGN] = nil,[CENTER_SIGN] = nil,[RIGHT_SIGN] = nil }
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local sign = cycleway.sign
@@ -113,7 +113,7 @@ function osm2pgsql.process_way(object)
     if onlyPresent ~= nil then
       presence[sign] = presence[sign] or onlyPresent
     else
-      local category= CategorizeBikelane(cycleway)
+      local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
         local freshTag = "check_date"
@@ -121,7 +121,7 @@ function osm2pgsql.process_way(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
         IsFresh(object, freshTag, cycleway)
-        cycleway.offset  = sign * width / 2
+        cycleway.offset = sign * width / 2
         categoryTable:insert({
           category = category,
           tags = cycleway,
@@ -131,7 +131,6 @@ function osm2pgsql.process_way(object)
         })
         presence[sign] = presence[sign] or category
       end
-
     end
   end
   -- Filter ways where we dont expect bicycle infrastructure
@@ -141,7 +140,8 @@ function osm2pgsql.process_way(object)
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
-      IntoExcludeTable(excludeTable, object, "no (extra) infrastructure expected for motorroad, express way and cycle streets")
+      IntoExcludeTable(excludeTable, object,
+        "no (extra) infrastructure expected for motorroad, express way and cycle streets")
       return
       -- elseif tags.maxspeed and tags.maxspeed <= 20 then
       --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
