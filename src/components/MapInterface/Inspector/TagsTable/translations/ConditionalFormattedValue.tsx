@@ -1,5 +1,5 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
-import { isDev } from '@components/utils'
+import { isDev, isStaging } from '@components/utils'
 import React from 'react'
 import { FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl'
 
@@ -62,7 +62,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   }
 
   // It will take a while to translate everything. This fallback does look better on production.
-  const defaultMessage = isDev ? key : tagValue
+  const defaultMessage = isDev || isStaging ? key : tagValue
 
   return <FormattedMessage id={key} defaultMessage={defaultMessage} />
 }
