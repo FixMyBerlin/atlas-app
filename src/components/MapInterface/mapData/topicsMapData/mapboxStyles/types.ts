@@ -48,14 +48,16 @@ export type MapboxStyleLayers_bikelanes =
   | 'Fuehrung mit Fussverkehr copy 3'
   | 'Getrennte Fuehrung copy 3'
   | 'hitarea-bikelanes'
+  | 'needsClarification copy 2'
 
 export type MapboxStyleLayers_bikelanes_complete =
   | 'bikelanes-Daten vorhanden'
   | 'bikelanes-Keine Daten'
   | 'fmc-verkehrsberuhigt copy 5'
-  | 'Fuehrung mit Fussverkehr copy 4'
+  | 'Fuehrung mit Fussverkehr copy 5'
   | 'Getrennte Fuehrung copy 4'
   | 'hitarea_complete'
+  | 'needsClarification'
 
 export type MapboxStyleLayers_bikelanes_fresh =
   | 'Daten aelter 2020-fake copy'
@@ -64,6 +66,7 @@ export type MapboxStyleLayers_bikelanes_fresh =
   | 'Fuehrung mit Fussverkehr copy 2'
   | 'Getrennte Fuehrung copy 2'
   | 'hitarea-bikelanes-fresh'
+  | 'needsClarification copy'
 
 export type MapboxStyleLayers_bikelanes_verified =
   | 'bikelanes-verification-status'
@@ -71,6 +74,7 @@ export type MapboxStyleLayers_bikelanes_verified =
   | 'Fuehrung mit Fussverkehr copy 1'
   | 'Getrennte Fuehrung copy 1'
   | 'hitarea-bikelanes-verified'
+  | 'needsClarification copy 1'
 
 export type MapboxStyleLayers_education =
   | 'fmc-poiEducation'
