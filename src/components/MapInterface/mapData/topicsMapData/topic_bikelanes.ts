@@ -37,6 +37,15 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> =
         dasharray: [7, 3],
       },
     },
+    {
+      id: 'needsClarification',
+      name: '(Führungsform unklar)',
+      style: {
+        type: 'line',
+        color: 'hsl(317, 97%, 36%)',
+        dasharray: [7, 3],
+      },
+    },
   ]
 
 export const topic_bikelanes: MapDataTopic = {

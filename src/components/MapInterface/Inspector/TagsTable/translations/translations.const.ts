@@ -98,6 +98,7 @@ export const translations: { [key: string]: string } = {
   'value--tarmac_bikelanes--category--footAndCycleway_shared': 'Gemeinsamer Geh- und Radweg',
   'value--tarmac_bikelanes--category--footway_bicycleYes': 'Gehweg mit Radwegfreigabe',
   'value--tarmac_bikelanes--category--livingStreet': 'Verkehrsberuhigter Bereich (Spielstraße)',
+  'value--tarmac_bikelanes--category--needsClarification': 'Führungsform unklar. Die Attribute in OpenStreetMap sind nicht ausreichend, um die Führungsform zu kategorisieren. Das deutet darauf hin, dass zusätzlich Attribute in OSM ergänzt werden müssen.',
   'value--tarmac_bikelanes--category--pedestrianArea_bicycleYes': 'Fußgängerzone, Fahrrad frei',
   'value--tarmac_bikelanes--oneway--no': '(!) Sonderfall: Zwei-Richtungs-Radweg (in einer Geometrie dargestellt)',
   'value--tarmac_bikelanes--oneway--yes': 'Ein-Richtungs-Radweg',
