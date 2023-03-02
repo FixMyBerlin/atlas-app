@@ -109,7 +109,7 @@ function osm2pgsql.process_way(object)
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local sign = cycleway.sign
-    local onlyPresent = OnlyPresent(cycleway)
+    local onlyPresent = OnlyPresent(cycleway) -- these are categories defining the presence of data
     if onlyPresent ~= nil then
       presence[sign] = presence[sign] or onlyPresent
     else
@@ -135,19 +135,16 @@ function osm2pgsql.process_way(object)
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or
-    presence[CENTER_SIGN]or (presence[RIGHT_SIGN] and presence[LEFT_SIGN]) then
-    -- this condition applies to complete data (either center has data or both left and right)
-    -- but also to all minor roads where no data is expected
-    for _, side in pairs(SIDES) do
-      if presence[side] == nil then
-        presence[side] = NOT_EXPECTED
-      end
-    end
+  local data_complete = presence[CENTER_SIGN] or (presence[RIGHT_SIGN] and presence[LEFT_SIGN])
+  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or data_complete then
+    -- set the nil values to 'not_expected', for all minor roads and complete data
+    for _, side in pairs(SIDES) do presence[side] = presence[side] or NOT_EXPECTED end
+
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
+
     elseif tags.motorroad or tags.expressway then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
       return
@@ -161,11 +158,13 @@ function osm2pgsql.process_way(object)
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
 
+  -- replace all nil values with 'missing'
+  for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
-    left = presence[LEFT_SIGN] or "missing",
-    self = presence[CENTER_SIGN] or "missing",
-    right = presence[RIGHT_SIGN] or "missing"
+    left = presence[LEFT_SIGN],
+    self = presence[CENTER_SIGN],
+    right = presence[RIGHT_SIGN],
   })
 end
