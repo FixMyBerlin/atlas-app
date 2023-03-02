@@ -22,11 +22,12 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   }
 
   const numberKeys = [
-    'population',
+    'capacity',
     'highway_width_proc_effective',
     'length',
-    'capacity',
     'maxspeed',
+    'population',
+    'width',
   ]
   if (numberKeys.includes(tagKey)) {
     return <FormattedNumber value={parseInt(tagValue)} />

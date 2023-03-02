@@ -18,12 +18,14 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
   // For those, we use a simple fallback.
   // (Unfortunatelly react-intl. does not support nested FormattedMessage components to handle the fallbacks.)
   const simpleTranslFallbackKeys = [
-    'name',
-    'highway',
     '_parent_highway',
+    'highway',
     'left',
-    'right',
+    'name',
     'oneway',
+    'right',
+    'traffic_sign',
+    'width',
   ]
   if (simpleTranslFallbackKeys.includes(tagKey)) {
     key = `key--${tagKey}`
