@@ -19,6 +19,7 @@ export type SourcesRasterIds =
   | 'thunderforest-outdoors'
   | 'waymarkedtrails-cycling'
   | 'waymarkedtrails-hiking'
+  | 'trto-radwege'
 
 export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>[] =
   [
@@ -245,5 +246,18 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
       attributionHtml:
         'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
+    },
+    {
+      // https://dienste.btfietz.de/kommsvz/ttw_radwege/wms?request=getCapabilities
+      // https://maplibre.org/maplibre-gl-js-docs/style-spec/sources/
+      id: 'trto-radwege',
+      name: 'Amtliche Radwege',
+      type: 'raster',
+      tiles:
+        'https://dienste.btfietz.de/kommsvz/ttw_radwege/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX={bbox-epsg-3857}&CRS=EPSG:3857&WIDTH=839&HEIGHT=878&LAYERS=radweg&STYLES=&FORMAT=image/png&DPI=72&MAP_RESOLUTION=72&FORMAT_OPTIONS=dpi:72&TRANSPARENT=TRUE',
+      minzoom: 0,
+      maxzoom: 15,
+      attributionHtml: 'Amt Treptower Tollensewinkel',
+      legendUrl: undefined,
     },
   ]

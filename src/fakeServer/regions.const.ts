@@ -90,7 +90,7 @@ export const regions: Region[] = [
     ],
     osmUsers: [...adminIds],
     published: true,
-    backgroundSources: defaultBackgroundSources,
+    backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },
   {
     name: 'Berlin',
