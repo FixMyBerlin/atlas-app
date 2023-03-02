@@ -22,6 +22,7 @@ end
 LEFT_SIGN = 1
 CENTER_SIGN = 0
 RIGHT_SIGN = -1
+SIDES = {LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN}
 function GetTransformedObjects(tags, transformations)
   local sides = {
     [":left"] = LEFT_SIGN,

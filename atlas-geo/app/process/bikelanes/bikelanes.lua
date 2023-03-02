@@ -105,7 +105,7 @@ function osm2pgsql.process_way(object)
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local cycleways = GetTransformedObjects(tags, transformations);
   -- map presence via signs, could also initialize with {}
-  local presence = { [LEFT_SIGN] = nil, [CENTER_SIGN] = nil, [RIGHT_SIGN] = nil }
+  local presence = {}
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local sign = cycleway.sign
@@ -135,14 +135,16 @@ function osm2pgsql.process_way(object)
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if MinorRoadClasses[tags.highway] and tags.highway ~= 'service' then
-    for k,v in pairs(presence) do
-      if v == nil then
-        presence[k] = NOT_EXPECTED
+  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or
+    presence[CENTER_SIGN]or (presence[RIGHT_SIGN] and presence[LEFT_SIGN]) then
+    -- this condition applies to complete data (either center has data or both left and right)
+    -- but also to all minor roads where no data is expected
+    for _, side in pairs(SIDES) do
+      if presence[side] == nil then
+        presence[side] = NOT_EXPECTED
       end
     end
-  elseif not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
-    -- sksk
+  elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
@@ -158,11 +160,6 @@ function osm2pgsql.process_way(object)
   -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
   -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
   -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-  if presence[CENTER_SIGN] then
-    -- TODO: here we could check for collissions between center line and self
-    presence[LEFT_SIGN] = presence[LEFT_SIGN] or NOT_EXPECTED
-    presence[RIGHT_SIGN] = presence[RIGHT_SIGN] or NOT_EXPECTED
-  end
 
   presenceTable:insert({
     tags = tags,
