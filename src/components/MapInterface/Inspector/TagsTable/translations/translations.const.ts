@@ -56,7 +56,7 @@ export const translations: { [key: string]: string } = {
   'value--highway--unclassified': 'Nebenstraßen (Verbindungscharakter)',
   'value--left--cyclewaySeparated': 'baulich abgesetzte Radwege',
   'value--left--data_no': 'Keine Radinfrastruktur (explizit)',
-  'value--oneway--no': '(Explizit keine Einbahnstraße)',
+  'value--oneway--no': 'Zwei-Richtungsstraße (Zwei-Richtungs-Radweg)',
   'value--oneway--yes': 'Einbahnstraße',
   'value--parkraumParking--orientation--no': '(!) Kein Parken',
   'value--parkraumParking--orientation--parallel': 'Parallel',
