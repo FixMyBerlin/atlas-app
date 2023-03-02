@@ -66,53 +66,53 @@ require("IntoExcludeTable")
 -- The analysed road network, enriched with maxspeed information
 local table =
     osm2pgsql.define_table(
-        {
-            name = "maxspeed",
-            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-            columns = {
-                { column = "tags", type = "jsonb" },
-                { column = "meta", type = "jsonb" },
-                { column = 'maxspeed', type = 'integer'},
-                { column = 'present', type = 'boolean'},
-                { column = "geom", type = "linestring" }
-            }
+      {
+        name = "maxspeed",
+        ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+        columns = {
+          { column = "tags",     type = "jsonb" },
+          { column = "meta",     type = "jsonb" },
+          { column = 'maxspeed', type = 'integer' },
+          { column = 'present',  type = 'boolean' },
+          { column = "geom",     type = "linestring" }
         }
+      }
     )
 
 -- Roads that we exlude from our analysis
 local excludeTable =
     osm2pgsql.define_table(
-        {
-            name = "maxspeed_excluded",
-            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-            columns = {
-                { column = "tags", type = "jsonb" },
-                { column = "meta", type = "jsonb" },
-                { column = 'reason', type = 'text' },
-                { column = "geom", type = "linestring" }
-            }
+      {
+        name = "maxspeed_excluded",
+        ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+        columns = {
+          { column = "tags",   type = "jsonb" },
+          { column = "meta",   type = "jsonb" },
+          { column = 'reason', type = 'text' },
+          { column = "geom",   type = "linestring" }
         }
+      }
     )
 
 -- Define tables with all bicycle related roads that currently dont have speed values
 local missingTable =
     osm2pgsql.define_table(
-        {
-            name = "_maxspeed_missing",
-            ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-            columns = {
-                { column = "tags", type = "jsonb" },
-                { column = "meta", type = "jsonb" },
-                { column = "geom", type = "linestring" }
-            }
+      {
+        name = "_maxspeed_missing",
+        ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
+        columns = {
+          { column = "tags", type = "jsonb" },
+          { column = "meta", type = "jsonb" },
+          { column = "geom", type = "linestring" }
         }
+      }
     )
 
 
 local function maxspeedDirect(tags)
   local maxspeed = -1.0
   local source = "nothing found"
-  local speed_tags = {"maxspeed:forward", "maxspeed:backward", "maxspeed"}
+  local speed_tags = { "maxspeed:forward", "maxspeed:backward", "maxspeed" }
   for _, tag in pairs(speed_tags) do
     if tags[tag] then
       local val = tonumber(tags[tag])
@@ -176,7 +176,7 @@ end
 
 
 function osm2pgsql.process_way(object)
-  local allowed_values = JoinSets({MajorRoadClasses, MinorRoadClasses})
+  local allowed_values = JoinSets({ MajorRoadClasses, MinorRoadClasses })
   if not allowed_values[object.tags.highway] then
     return
   end
@@ -205,13 +205,13 @@ function osm2pgsql.process_way(object)
 
   -- try to find maxspeed information in the following order:
   -- `maxspeed` tag > maxspeed zones > highway type
-  local maxspeed, source =  maxspeedDirect(tags)
+  local maxspeed, source = maxspeedDirect(tags)
   if maxspeed < 0 then
     maxspeed, source = maxspeedFromZone(tags)
   end
 
   -- TODO: fallback option on highway type
-  if maxspeed == nil or maxspeed == -1  then
+  if maxspeed == nil or maxspeed == -1 then
     -- TODO: present no?
     local highway_speeds = {
       ["living_street"] = 7
@@ -238,26 +238,25 @@ function osm2pgsql.process_way(object)
   -- all tags that are shown on the application
   local allowed_tags =
       Set(
-          {
-              "_todo",
-              "bicycle_road",
-              "bicycle",
-              "cycleway",
-              "highway",
-              "maxspeed",
-              "maxspeed:backward",
-              "maxspeed:forward",
-              "maxspeed:conditional", -- show if present; details TBD
-              "source:maxspeed", -- only for debugging in webapp
-              "maxspeed:type", -- only for debugging in webapp
-              "zone:maxspeed", -- only for debugging in webapp
-              "zone_traffic",
-              "traffic_sign",
-              "maxspeed_split",
-              "source_maxspeed_forward",
-              "source_maxspeed_backward",
-              "source_maxspeed" -- only for debugging in webapp
-          }
+        {
+          "_todo",
+          "bicycle_road",
+          "bicycle",
+          "cycleway",
+          "name",
+          "highway",
+          "maxspeed",
+          "maxspeed:backward",
+          "maxspeed:forward",
+          "maxspeed:conditional", -- show if present; details TBD
+          "source:maxspeed", -- only for debugging in webapp
+          "maxspeed:type", -- only for debugging in webapp
+          "zone:maxspeed", -- only for debugging in webapp
+          "zone_traffic",
+          "traffic_sign",
+          "maxspeed_split",
+          "checkdate:maxspeed"
+        }
       )
 
   FilterTags(tags, allowed_tags)
@@ -267,21 +266,21 @@ function osm2pgsql.process_way(object)
   if maxspeed ~= nil and maxspeed ~= -1 then
     tags.present = true
     table:insert(
-        {
-            tags = tags,
-            geom = object:as_linestring(),
-            maxspeed = maxspeed,
-            present = true,
-            meta = meta
-        }
+      {
+        tags = tags,
+        geom = object:as_linestring(),
+        maxspeed = maxspeed,
+        present = true,
+        meta = meta
+      }
     )
     return
   end
   missingTable:insert(
-      {
-          tags = object.tags,
-          geom = object:as_linestring(),
-          meta = meta
-      }
+    {
+      tags = object.tags,
+      geom = object:as_linestring(),
+      meta = meta
+    }
   )
 end
