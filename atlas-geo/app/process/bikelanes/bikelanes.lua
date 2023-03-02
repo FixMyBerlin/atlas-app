@@ -154,12 +154,9 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
-  -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
-  -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
-
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
+
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
