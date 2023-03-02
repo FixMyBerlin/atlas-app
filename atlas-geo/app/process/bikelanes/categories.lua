@@ -159,6 +159,14 @@ local function cyclewayBuslane(tags)
   end
 end
 
+-- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
+-- They are in OSM, but they need to be improved, which we show in the UI.
+local function cyclewayNeedsClarification(tags)
+  if tags.highway == "cycleway" then
+    return "needsClarification"
+  end
+end
+
 local function defineCategory(tags, categories)
   for _, predicate in pairs(categories) do
     local category = predicate(tags)
@@ -176,8 +184,19 @@ function OnlyPresent(tags)
 end
 
 function CategorizeBikelane(tags)
-  local categories = { pedestiranArea, livingStreet, bicycleRoad, footAndCycleway,
+  -- The order specifies the precedence; first one with a result win.
+  local categories = {
+    pedestiranArea,
+    livingStreet,
+    bicycleRoad,
+    footAndCycleway,
     footAndCyclewaySegregated,
-    footwayBicycleAllowed, cyclewaySeparated, cyclewayOnHighway, cyclewayAlone, cyclewayBuslane }
+    footwayBicycleAllowed,
+    cyclewaySeparated,
+    cyclewayOnHighway,
+    cyclewayAlone,
+    cyclewayBuslane,
+    cyclewayNeedsClarification,
+  }
   return defineCategory(tags, categories)
 end
