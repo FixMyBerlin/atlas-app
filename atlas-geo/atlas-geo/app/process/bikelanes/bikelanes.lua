@@ -157,6 +157,16 @@ function osm2pgsql.process_way(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
+  allowed_tags = Set({
+    'name',
+    'highway',
+    'self',
+    'left',
+    'right',
+    'oneway',
+    'dual_carriageway'
+  })
+  FilterTags(tags, allowed_tags)
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
