@@ -86,6 +86,7 @@ function osm2pgsql.process_way(object)
   end
 
   local tags = object.tags
+  local meta = Metadata(object)
 
   -- transformations
   local footwayTransformation = {
@@ -124,7 +125,7 @@ function osm2pgsql.process_way(object)
         categoryTable:insert({
           category = category,
           tags = cycleway,
-          meta = Metadata(object),
+          meta = meta,
           geom = object:as_linestring(),
           _offset = cycleway.offset
         })
@@ -173,5 +174,7 @@ function osm2pgsql.process_way(object)
     left = presence[LEFT_SIGN],
     self = presence[CENTER_SIGN],
     right = presence[RIGHT_SIGN],
+    meta = meta,
   })
+
 end
