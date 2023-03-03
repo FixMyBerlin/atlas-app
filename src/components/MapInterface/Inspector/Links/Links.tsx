@@ -9,8 +9,14 @@ type Props = {
 
 export const Links: React.FC<Props> = ({ properties, geometry }) => {
   // Normalize id + type for Parking data
-  const osmId = properties.osm_id || properties.way_id
-  const osmType = 'osm_type' in properties ? properties.osm_type : 'W'
+  const osmId = properties.osm_id || properties.way_id || properties.area_id
+  const osmType =
+    'osm_type' in properties
+      ? properties.osm_type
+      : // `area_id` is what our boundaries return, they don't have osm_type field (yet)
+      'area_id' in properties
+      ? 'R'
+      : undefined
 
   const osmUrl_ = osmUrl(osmType, osmId)
   const historyUrl_ = historyUrl(osmType, osmId)
