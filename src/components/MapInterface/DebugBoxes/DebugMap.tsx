@@ -102,7 +102,13 @@ export const DebugMap = () => {
                 key={layer.id}
                 className="ml-2 border-l border-pink-200 pl-2"
               >
-                <summary className="cursor-pointer hover:font-semibold">
+                <summary
+                  className={clsx(
+                    // @ts-ignore this weird AnyLayer issue that I don't get worked around…
+                    { 'font-bold': layer?.layout?.visibility === 'visible' },
+                    'cursor-pointer hover:font-semibold'
+                  )}
+                >
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
                   {layer?.layout?.visibility === 'none' && '(off)'}
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
