@@ -86,6 +86,7 @@ function osm2pgsql.process_way(object)
   end
 
   local tags = object.tags
+  local meta = Metadata(object)
 
   -- transformations
   local footwayTransformation = {
@@ -104,12 +105,11 @@ function osm2pgsql.process_way(object)
 
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local cycleways = GetTransformedObjects(tags, transformations);
-  -- map presence via signs, could also initialize with {}
-  local presence = { [LEFT_SIGN] = nil,[CENTER_SIGN] = nil,[RIGHT_SIGN] = nil }
+  local presence = {} -- table holding the presence (per way object)
   local width = RoadWidth(tags)
   for _, cycleway in pairs(cycleways) do
     local sign = cycleway.sign
-    local onlyPresent = OnlyPresent(cycleway)
+    local onlyPresent = OnlyPresent(cycleway) -- these are categories defining the presence of data
     if onlyPresent ~= nil then
       presence[sign] = presence[sign] or onlyPresent
     else
@@ -125,7 +125,7 @@ function osm2pgsql.process_way(object)
         categoryTable:insert({
           category = category,
           tags = cycleway,
-          meta = Metadata(object),
+          meta = meta,
           geom = object:as_linestring(),
           _offset = cycleway.offset
         })
@@ -135,29 +135,46 @@ function osm2pgsql.process_way(object)
   end
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if not (presence[LEFT_SIGN] or presence[CENTER_SIGN] or presence[RIGHT_SIGN]) then
-    if JoinSets({ HighwayClasses, MinorRoadClasses, PathClasses })[tags.highway] then
+  local data_complete = presence[CENTER_SIGN] or (presence[RIGHT_SIGN] and presence[LEFT_SIGN])
+  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or data_complete then
+    -- set the nil values to 'not_expected', for all minor roads and complete data
+    for _, side in pairs(SIDES) do presence[side] = presence[side] or NOT_EXPECTED end
+
+  elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
+    if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
-    elseif tags.motorroad or tags.expressway or tags.cyclestreet or tags.bicycle_road then
-      IntoExcludeTable(excludeTable, object,
-        "no (extra) infrastructure expected for motorroad, express way and cycle streets")
+
+    elseif tags.motorroad or tags.expressway then
+      IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
+
       return
-      -- elseif tags.maxspeed and tags.maxspeed <= 20 then
-      --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
-      --   return
+    -- elseif tags.maxspeed and tags.maxspeed <= 20 then
+    --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
+    --   return
     end
   end
 
-  -- TODO excludeTable: For ZES, we exclude "Verbindungsstücke", especially for the "cyclewayAlone" case
-  -- We would have to do this in a separate processing step or wait for length() data to be available in LUA
-  -- MORE: osm-scripts-Repo => utils/Highways-BicycleWayData/filter/radwegVerbindungsstueck.ts
+  -- replace all nil values with 'missing'
+  for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
+  allowed_tags = Set({
+    'name',
+    'highway',
+    'self',
+    'left',
+    'right',
+    'oneway',
+    'dual_carriageway'
+  })
+  FilterTags(tags, allowed_tags)
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
-    left = presence[LEFT_SIGN] or "missing",
-    self = presence[CENTER_SIGN] or "missing",
-    right = presence[RIGHT_SIGN] or "missing"
+    left = presence[LEFT_SIGN],
+    self = presence[CENTER_SIGN],
+    right = presence[RIGHT_SIGN],
+    meta = meta,
   })
+
 end
