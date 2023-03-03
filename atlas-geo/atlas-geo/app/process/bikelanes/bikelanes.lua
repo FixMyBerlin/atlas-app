@@ -51,26 +51,31 @@ local excludeTable = osm2pgsql.define_table({
 
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
-  "side",
-  "prefix",
-  "access",
-  "bicycle_road",
-  "bicycle",
-  "conditional",
-  "cycleway",
-  "foot",
-  "footway",
-  "highway",
-  "is_sidepath",
-  "name",
-  "oneway", -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
-  "segregated",
-  "smoothness",
-  "surface",
-  "surface:colour",
-  "traffic_sign",
-  "width",
-  "_parent_highway",
+  '_parent_highway',
+  'access',
+  'bicycle_road',
+  'bicycle',
+  'conditional',
+  'cycleway',
+  'dual_carriageway',
+  'foot',
+  'footway',
+  'highway',
+  'is_sidepath',
+  'name',
+  'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
+  'prefix',
+  'left',
+  'right',
+  'self',
+  'segregated',
+  'side',
+  'smoothness',
+  'surface:colour',
+  'surface',
+  'traffic_sign',
+  'width',
+  'category',
 })
 
 
@@ -158,15 +163,6 @@ function osm2pgsql.process_way(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  allowed_tags = Set({
-    'name',
-    'highway',
-    'self',
-    'left',
-    'right',
-    'oneway',
-    'dual_carriageway'
-  })
   FilterTags(tags, allowed_tags)
   presenceTable:insert({
     tags = tags,
