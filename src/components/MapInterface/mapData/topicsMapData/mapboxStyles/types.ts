@@ -6,6 +6,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_bikelanes_complete'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
+  | 'atlas_boundaries'
   | 'atlas_education'
   | 'atlas_landuse'
   | 'atlas_lit'
@@ -21,6 +22,8 @@ export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes_complete'
   | 'atlas_bikelanes_fresh'
   | 'atlas_bikelanes_verified'
+
+export type MapboxStyleLayerGroupBoundariesIds = 'atlas_boundaries'
 
 export type MapboxStyleLayerGroupEducationIds = 'atlas_education'
 
@@ -75,6 +78,8 @@ export type MapboxStyleLayers_bikelanes_verified =
   | 'Getrennte Fuehrung copy 1'
   | 'hitarea-bikelanes-verified'
   | 'needsClarification copy 1'
+
+export type MapboxStyleLayers_boundaries = 'admin-level-7' | 'admin-level-8'
 
 export type MapboxStyleLayers_education =
   | 'fmc-poiEducation'

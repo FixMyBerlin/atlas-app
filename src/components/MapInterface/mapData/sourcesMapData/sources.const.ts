@@ -144,7 +144,8 @@ export const sources: MapDataSource<
     licence: 'ODbL',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'area_id',
+      documentedKeys: ['name', 'admin_level'],
     },
     presence: { enabled: false },
     verification: { enabled: false },

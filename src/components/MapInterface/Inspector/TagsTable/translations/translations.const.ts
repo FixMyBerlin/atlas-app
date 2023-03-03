@@ -1,6 +1,7 @@
 /* prettier-ignore */
 export const translations: { [key: string]: string } = {
   'key--_parent_highway': 'Straßentyp der zugehörigen Straße',
+  'key--composit_surface_smoothness': 'Oberflächenqualität',
   'key--highway': 'Straßentyp',
   'key--left': 'Vollständigkeit Links (Linienrichtung)',
   'key--name': 'Name',
@@ -21,10 +22,10 @@ export const translations: { [key: string]: string } = {
   'key--right': 'Vollständigkeit Rechts (Linienrichtung)',
   'key--tarmac_bikelanes--category': 'Radinfrastruktur',
   'key--tarmac_bikelanes--oneway__if_present': 'Einbahnstraße',
+  'key--tarmac_boundaries--admin_level': 'Grenzen Level',
   'key--tarmac_education--amenity': 'Art der Bildngseinrichtung',
   'key--tarmac_landuse--landuse': 'Landnutzung',
   'key--tarmac_lit--category': 'Beleuchtung',
-  'key--composit_surface_smoothness': 'Oberflächenqualität',
   'key--tarmac_lit--lit__if_present': 'Beleuchtung Details',
   'key--tarmac_places--place': 'Ortskategorie',
   'key--tarmac_places--population:date': 'Datum der Quelle der Einwohner:innen-Anzahl',
@@ -37,6 +38,7 @@ export const translations: { [key: string]: string } = {
   'title--source:parkraumParkingAreas--topic:parkingAreas--tiles': 'Parkplatz-Flächen',
   'title--source:tarmac_bikelanes--topic:bikelanes--tiles': 'Daten zu Radinfrastruktur',
   'title--source:tarmac_bikelanesPresence--topic:bikelanesPresence--tiles': 'Daten zu Vollständigkeit der Radinfrastruktur',
+  'title--source:tarmac_boundaries--topic:boundaries--tiles': 'Grenzen',
   'title--source:tarmac_education--topic:education--tiles': 'Daten zu Bildungseinrichtungen',
   'title--source:tarmac_landuse--topic:landuse--tiles': 'Daten zur Landnutzung',
   'title--source:tarmac_lit--topic:lit--tiles': 'Daten zur Beleuchtung',
@@ -105,6 +107,8 @@ export const translations: { [key: string]: string } = {
   'value--tarmac_bikelanes--traffic_sign--DE:1022-10': 'DE:1022-10, Zusatzzeichen Fahrrad frei',
   'value--tarmac_bikelanes--traffic_sign--DE:240': 'DE:240, Gemeinsamer Geh- und Radweg',
   'value--tarmac_bikelanes--traffic_sign--DE:244.1': 'Fahrradstraße',
+  'value--tarmac_boundaries--admin_level--7': 'Level 7 — Meistens Verwaltungsgemeinschaft, Amt', // https://wiki.openstreetmap.org/wiki/DE:Grenze
+  'value--tarmac_boundaries--admin_level--8': 'Level 8 — Meistens (Kreisangehörige) Gemeinde / Stadt',
   'value--tarmac_education--amenity--kindergarten': 'Kindergarten',
   'value--tarmac_education--amenity--school': 'Schule',
   'value--tarmac_landuse--landuse--allotments': 'Kleingartenanlage',

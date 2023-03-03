@@ -97,7 +97,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 1",
@@ -993,7 +994,8 @@
             "is_present"
           ],
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "bikelanes-Daten vorhanden",
@@ -1020,7 +1022,8 @@
         "filter": [
           "has",
           "category"
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "needsClarification",
@@ -1056,7 +1059,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 5",
@@ -1093,7 +1097,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Getrennte Fuehrung copy 4",
@@ -1129,7 +1134,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "fmc-verkehrsberuhigt copy 5",
@@ -1165,7 +1171,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "hitarea_complete",
@@ -1691,7 +1698,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 3",
@@ -1838,6 +1846,73 @@
     ]
   },
   {
+    "group": "atlas_boundaries",
+    "layers": [
+      {
+        "layout": {},
+        "type": "line",
+        "id": "admin-level-7",
+        "paint": {
+          "line-color": "hsl(271, 81%, 56%)",
+          "line-width": 2,
+          "line-opacity": 0.35,
+          "line-dasharray": [
+            2,
+            1
+          ]
+        },
+        "filter": [
+          "all",
+          [
+            "has",
+            "admin_level"
+          ],
+          [
+            "match",
+            [
+              "get",
+              "admin_level"
+            ],
+            [
+              "7"
+            ],
+            true,
+            false
+          ]
+        ]
+      },
+      {
+        "layout": {},
+        "type": "line",
+        "id": "admin-level-8",
+        "paint": {
+          "line-color": "hsl(271, 89%, 51%)",
+          "line-width": 2,
+          "line-opacity": 0.2
+        },
+        "filter": [
+          "all",
+          [
+            "has",
+            "admin_level"
+          ],
+          [
+            "match",
+            [
+              "get",
+              "admin_level"
+            ],
+            [
+              "8"
+            ],
+            true,
+            false
+          ]
+        ]
+      }
+    ]
+  },
+  {
     "group": "atlas_bikelanes_fresh",
     "layers": [
       {
@@ -1947,7 +2022,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 2",
