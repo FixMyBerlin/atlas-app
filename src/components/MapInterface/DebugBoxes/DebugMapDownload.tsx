@@ -40,7 +40,9 @@ export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
 
   return (
     <details>
-      <summary className="cursor-pointer hover:font-semibold">Download</summary>
+      <summary className="cursor-pointer hover:font-semibold">
+        Download {downloadLayers.length}
+      </summary>
 
       <table>
         <tbody>

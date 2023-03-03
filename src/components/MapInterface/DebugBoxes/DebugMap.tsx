@@ -1,7 +1,8 @@
 import { getTilesUrl } from '@components/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
-import { useEffect } from 'react'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
@@ -16,6 +17,8 @@ export const DebugMap = () => {
   } = useMapDebugState()
   const { mainMap } = useMap()
   const { mapLoaded } = useMapStateInteraction()
+  const [triggerRerender, setTriggerRerender] = useState(0)
+  const [atlasLayers, setAtlasLayers] = useState<mapboxgl.AnyLayer[]>([])
 
   // The default is to showDebugInfo on isDev.
   // However, we can overwrite this with `?debugMap=true` on production
@@ -24,18 +27,25 @@ export const DebugMap = () => {
     if (debugMap === true) setShowDebugInfo(debugMap)
   }, [debugMap])
 
-  if (!showDebugInfo || !mapLoaded || !mainMap) return null
+  const handleRerender = () => setTriggerRerender((prev) => prev + 1)
+  useEffect(() => {
+    if (!showDebugInfo || !mapLoaded || !mainMap) return
 
-  const allLayers = mainMap.getStyle().layers
-  const atlasLayers = allLayers
-    .filter((layer) => {
-      return (
-        'source' in layer &&
-        layer.source !== 'openmaptiles' &&
-        layer.type !== 'raster'
-      )
-    })
-    .flat()
+    const allLayers = mainMap.getStyle().layers
+    setAtlasLayers(
+      allLayers
+        .filter((layer) => {
+          return (
+            'source' in layer &&
+            layer.source !== 'openmaptiles' &&
+            layer.type !== 'raster'
+          )
+        })
+        .flat()
+    )
+  }, [mapLoaded, mainMap, showDebugInfo, triggerRerender])
+
+  if (!showDebugInfo || !mapLoaded || !mainMap) return null
 
   const vectorSources = Object.entries(mainMap.getStyle().sources).filter(
     ([_key, value]) => value.type === 'vector'
@@ -92,9 +102,20 @@ export const DebugMap = () => {
         <DebugMapDownload layers={atlasLayers} />
 
         <details>
-          <summary className="cursor-pointer hover:font-semibold">
+          <summary
+            className="cursor-pointer hover:font-semibold"
+            onClick={handleRerender}
+          >
             Layers {Object.keys(atlasLayers).length}
           </summary>
+
+          <button
+            type="button"
+            onClick={handleRerender}
+            className="p-1 font-bold underline hover:text-pink-700"
+          >
+            Manually update layers (eg. after filter changes)
+          </button>
 
           {Object.entries(atlasLayers).map(([_key, layer]) => {
             return (
