@@ -1,18 +1,16 @@
 import { getTilesUrl } from '@components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
+import { sourcesParking, SourcesParkingIds } from './sourcesParking.const'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesIds =
+  | SourcesParkingIds
   | 'accidents_unfallatlas'
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
   | 'osmscripts_highways'
   | 'osmscripts_pois'
-  | 'parkraumParking'
-  | 'parkraumParkingAreas'
-  | 'parkraumParkingDebug'
-  | 'parkraumParkingPoints'
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
@@ -56,86 +54,7 @@ export const sources: MapDataSource<
   SourceVerificationApiIdentifier,
   SourceExportApiIdentifier
 >[] = [
-  {
-    id: 'parkraumParking',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
-    inspector: {
-      enabled: true,
-      highlightingKey: 'id',
-      documentedKeys: [
-        'highway_name',
-        'highway',
-        'parking',
-        'orientation',
-        'capacity',
-        'source_capacity',
-        'length',
-        'highway_width_proc_effective',
-        'surface',
-      ],
-    },
-    presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-
-  {
-    id: 'parkraumParkingDebug',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.buffer_amenity_parking_points,processing.buffer_driveways,processing.buffer_highways,processing.buffer_kerb_intersections,processing.buffer_pedestrian_crossings,processing.buffer_pt_bus,processing.buffer_pt_tram,processing.buffer_ramps/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
-    inspector: { enabled: false }, // Those layers have no properties anyways
-    presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
-    id: 'parkraumParkingPoints',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.parking_spaces/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
-    inspector: {
-      enabled: false,
-    },
-    presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: {
-      enabled: true,
-      keys: ['capacity'],
-      queryLayers: [
-        'parkraumParkingPoints--parkingPoints--default--parkraumParkingPointsLayer',
-      ],
-      highlightingKey: 'id',
-    },
-    export: { enabled: false },
-  },
-  {
-    id: 'parkraumParkingAreas',
-    tiles: 'https://vts.mapwebbing.eu/processing.parking_poly/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
-    inspector: {
-      enabled: true,
-      highlightingKey: 'area_id',
-      documentedKeys: [
-        'parking',
-        'access',
-        'capacity__if_present',
-        'building__if_present',
-      ],
-    },
-    presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
+  ...sourcesParking,
   {
     id: 'tarmac_boundaries',
     tiles: `${tilesUrl}/public.boundaries/{z}/{x}/{y}.pbf`,
