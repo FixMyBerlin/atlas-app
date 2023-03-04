@@ -66,28 +66,28 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
       legends: [...defaultLegend],
     },
-    {
-      id: 'atlas_bikelanes_complete',
-      name: 'Inhalte & Vollständigkeit',
-      desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_complete',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
-      }),
-      interactiveFilters: null,
-      legends: [
-        ...defaultLegend,
-        {
-          id: 'missing',
-          name: 'Daten fehlen (in Arbeit)',
-          style: {
-            type: 'line',
-            color: 'hsl(312, 92%, 74%)',
-          },
-        },
-      ],
-    },
+    // {
+    //   id: 'atlas_bikelanes_complete',
+    //   name: 'Inhalte & Vollständigkeit',
+    //   desc: null,
+    //   layers: mapboxStyleLayers({
+    //     group: 'atlas_bikelanes_complete',
+    //     source: 'tarmac_bikelanes',
+    //     sourceLayer: 'public.bikelanes_verified',
+    //   }),
+    //   interactiveFilters: null,
+    //   legends: [
+    //     ...defaultLegend,
+    //     {
+    //       id: 'missing',
+    //       name: 'Daten fehlen (in Arbeit)',
+    //       style: {
+    //         type: 'line',
+    //         color: 'hsl(312, 92%, 74%)',
+    //       },
+    //     },
+    //   ],
+    // },
     {
       id: 'atlas_bikelanes_verified',
       name: 'Inhalte & Prüf-Status',
@@ -129,53 +129,53 @@ export const topic_bikelanes: MapDataTopic = {
         },
       ],
     },
-    {
-      id: 'atlas_bikelanes_fresh',
-      name: 'Inhalte & Aktualität',
-      desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_fresh',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
-      }),
-      interactiveFilters: null,
-      legends: [
-        ...defaultLegend,
-        {
-          id: 'fresh_check_date',
-          name: 'TODO: Aktuell (explizit)',
-          style: {
-            type: 'line',
-            color: 'hsl(107, 88%, 57%)',
-          },
-        },
-        {
-          id: 'fresh_update_at',
-          name: 'TODO: Aktuell (implizit)',
-          style: {
-            type: 'line',
-            color: 'hsl(107, 88%, 57%)',
-            dasharray: [7, 3],
-          },
-        },
-        {
-          id: 'outdated_check_date',
-          name: 'TODO: Veraltet (explizit)',
-          style: {
-            type: 'line',
-            color: 'hsl(0, 100%, 41%)',
-          },
-        },
-        {
-          id: 'outdated_update_at',
-          name: 'TODO: Veraltet (implizit)',
-          style: {
-            type: 'line',
-            color: 'hsl(0, 100%, 41%)',
-            dasharray: [7, 3],
-          },
-        },
-      ],
-    },
+    // {
+    //   id: 'atlas_bikelanes_fresh',
+    //   name: 'Inhalte & Aktualität',
+    //   desc: null,
+    //   layers: mapboxStyleLayers({
+    //     group: 'atlas_bikelanes_fresh',
+    //     source: 'tarmac_bikelanes',
+    //     sourceLayer: 'public.bikelanes_verified',
+    //   }),
+    //   interactiveFilters: null,
+    //   legends: [
+    //     ...defaultLegend,
+    //     {
+    //       id: 'fresh_check_date',
+    //       name: 'TODO: Aktuell (explizit)',
+    //       style: {
+    //         type: 'line',
+    //         color: 'hsl(107, 88%, 57%)',
+    //       },
+    //     },
+    //     {
+    //       id: 'fresh_update_at',
+    //       name: 'TODO: Aktuell (implizit)',
+    //       style: {
+    //         type: 'line',
+    //         color: 'hsl(107, 88%, 57%)',
+    //         dasharray: [7, 3],
+    //       },
+    //     },
+    //     {
+    //       id: 'outdated_check_date',
+    //       name: 'TODO: Veraltet (explizit)',
+    //       style: {
+    //         type: 'line',
+    //         color: 'hsl(0, 100%, 41%)',
+    //       },
+    //     },
+    //     {
+    //       id: 'outdated_update_at',
+    //       name: 'TODO: Veraltet (implizit)',
+    //       style: {
+    //         type: 'line',
+    //         color: 'hsl(0, 100%, 41%)',
+    //         dasharray: [7, 3],
+    //       },
+    //     },
+    //   ],
+    // },
   ],
 }
