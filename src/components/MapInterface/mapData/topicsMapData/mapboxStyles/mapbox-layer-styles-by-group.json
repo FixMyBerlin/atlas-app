@@ -565,8 +565,7 @@
             11,
             1
           ]
-        },
-        "layout": {}
+        }
       },
       {
         "id": "fmc-poiEducation-label",
@@ -1681,11 +1680,11 @@
             13,
             2
           ],
+          "line-color": "#b50382",
           "line-dasharray": [
-            2,
-            1
-          ],
-          "line-color": "hsl(317, 97%, 36%)"
+            2.5,
+            0.5
+          ]
         },
         "filter": [
           "match",
@@ -1698,8 +1697,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 3",
@@ -1722,7 +1720,7 @@
             2,
             1
           ],
-          "line-color": "hsl(232, 97%, 36%)"
+          "line-color": "#031ab5"
         },
         "filter": [
           "match",
@@ -1736,8 +1734,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "Getrennte Fuehrung copy 3",
@@ -1765,16 +1762,15 @@
             "category"
           ],
           [
-            "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewayOnHighway"
+            "cyclewayOnHighway",
+            "cyclewaySeparated"
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 4",
@@ -1810,8 +1806,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "hitarea-bikelanes",
