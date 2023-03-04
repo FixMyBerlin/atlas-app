@@ -56,7 +56,7 @@ export const DebugMap = () => {
 
   return (
     <>
-      <div className="group absolute top-3 right-[7.5rem] z-10 max-h-[95%] max-w-[25rem] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
+      <div className="group absolute top-3 right-[8.5rem] z-10 max-h-[95%] max-w-[25rem] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
         <button
           className="absolute top-0 right-0 z-10 flex h-5 w-5 items-center justify-center rounded-full border bg-purple-500/90 opacity-0 hover:bg-purple-800 hover:text-purple-200 group-hover:opacity-100"
           onClick={() => setShowDebugInfo(false)}
