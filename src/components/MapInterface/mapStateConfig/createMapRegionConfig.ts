@@ -2,14 +2,12 @@ import { Region } from '@fakeServer/index'
 import { getThemeData, getTopicData } from '../mapData'
 import { ThemeConfig } from './type'
 
-export type Props = {
+type Props = {
   regionThemeIds: Region['themes']
 }
 
-// TODO: Check if we should useMemo this; and find out how
-// TODO: Check this @desc, its likely wront ATM
 /**
- * @desc Our main state object per theme. ~~It holds the `active`-values. Which are either the `defaultActive`s given by the configs or the current `active` values specified by the UI/User. In our map, we use this object as `*Config` (eg `topicConfig) in parallel to a `*Data` (eg `topicData`) which represents the mapDataConfig object and holds static details like name, description and such.~~
+ * @desc Our main state object per theme. It holds the `active`-values. Which are either the `defaultActive`s given by the configs (from files) or the current `active` values specified by the url config (User). Wording Convention: We use this `*Config` (eg `topicConfig) to reference this config and `*Data` (eg `topicData`) to reference the mapData object and holds static details like name, description and such.~~
  * @attr `region` Which themes we show is specified per region. In turn the theme specifies which topcis to show.
  */
 export const createMapRegionConfig = ({ regionThemeIds }: Props) => {

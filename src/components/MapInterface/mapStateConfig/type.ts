@@ -17,8 +17,8 @@ export type TopicConfig = {
   styles: {
     id: TopicStyleIds
     active: boolean
-    filters: null | TopicStyleFilterConfig[]
-    legends: null | TopicStyleLegendConfig[]
+    filters?: TopicStyleFilterConfig[]
+    legends?: TopicStyleLegendConfig[]
   }[]
 }
 
