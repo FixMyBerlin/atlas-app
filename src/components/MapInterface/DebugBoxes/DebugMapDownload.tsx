@@ -15,6 +15,7 @@ export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
 
   const downloadLayers = layers.filter(
     (layer) =>
+      mainMap.getMap().getLayer(layer.id) &&
       // @ts-ignore this weird AnyLayer issue that I don't get worked around…
       layer?.layout?.visibility === 'visible' &&
       // @ts-ignore this weird AnyLayer issue that I don't get worked around…
