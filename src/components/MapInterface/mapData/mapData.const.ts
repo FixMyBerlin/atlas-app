@@ -43,8 +43,11 @@ import {
   TopicParkingDebugStyleIds,
   TopicParkingId,
   TopicParkingPointsId,
+  TopicParkingStatsId,
   TopicParkingPointsStyleFilterIds,
+  TopicParkingStatsStyleFilterIds,
   TopicParkingPointsStyleIds,
+  TopicParkingStatsStyleIds,
   TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
@@ -92,6 +95,7 @@ import {
   topic_parkingAreas,
   topic_parkingDebug,
   topic_parkingPoints,
+  topic_parkingStats,
   topic_places,
   topic_poiClassification_tarmac,
   topic_publicTransport_osmscripts,
@@ -121,6 +125,7 @@ export type TopicIds =
   | TopicParkingDebugId
   | TopicParkingId
   | TopicParkingPointsId
+  | TopicParkingStatsId
   | TopicPlacesId
   | TopicPoiClassificationId_Tarmac
   | TopicPublicTransportId_Osmscripts
@@ -147,6 +152,7 @@ export type TopicStyleIds =
   | TopicParkingAreasStyleIds
   | TopicParkingDebugStyleIds
   | TopicParkingPointsStyleIds
+  | TopicParkingStatsStyleIds
   | TopicParkingStyleIds
   | TopicPlacesStyleIds
   | TopicPoiClassificationStyleIds_Tarmac
@@ -174,6 +180,7 @@ export type TopicStyleFilterIds =
   | TopicParkingAreasStyleFilterIds
   | TopicParkingDebugStyleFilterIds
   | TopicParkingPointsStyleFilterIds
+  | TopicParkingStatsStyleFilterIds
   | TopicParkingStyleFilterIds
   | TopicPlacesStyleFilterIds
   | TopicPoiClassificationStyleFilterIds_Tarmac
@@ -210,6 +217,7 @@ export type TopicStyleLegendIds =
 // | TopicSurfaceStyleLegendIds_Tarmac
 // | TopicParkingStyleLegendIds
 // | TopicParkingPointsStyleLegendIds
+// | TopicParkingStatsStyleLegendIds
 // | TopicParkingAreasStyleLegendIds
 
 export const mapData: MapData = {
@@ -241,5 +249,6 @@ export const mapData: MapData = {
     topic_parkingAreas,
     topic_parkingDebug,
     topic_parkingPoints,
+    topic_parkingStats,
   ],
 }

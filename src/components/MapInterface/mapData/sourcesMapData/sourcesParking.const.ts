@@ -9,6 +9,7 @@ export type SourcesParkingIds =
   | 'parkraumParkingAreas'
   | 'parkraumParkingDebug'
   | 'parkraumParkingPoints'
+  | 'parkraumParkingStats'
 
 export const sourcesParking: MapDataSource<
   SourcesParkingIds,
@@ -87,6 +88,32 @@ export const sourcesParking: MapDataSource<
         'access',
         'capacity__if_present',
         'building__if_present',
+      ],
+    },
+    presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
+  {
+    id: 'parkraumParkingStats',
+    tiles:
+      'https://vts.mapwebbing.eu/processing.boundaries_stats/{z}/{x}/{y}.pbf',
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        'name',
+        'd_other_km',
+        'done_percent',
+        'admin_level',
+        'aera_sqkm',
+        'lane_km',
+        'street_side_km',
+        'sum_km',
+        'length_wo_dual_carriageway',
       ],
     },
     presence: { enabled: false },

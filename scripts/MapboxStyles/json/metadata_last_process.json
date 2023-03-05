@@ -2,7 +2,7 @@
   "atlas": {
     "key": "atlas",
     "about": "Metadata on the last processing of the atlas styles api response",
-    "processed_at": "6.3.2023, 17:57:27",
+    "processed_at": "6.3.2023, 20:30:30",
     "style_last_published": {
       "published_at": "4.3.2023, 16:40:54",
       "version": 8
@@ -18,9 +18,9 @@
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "6.3.2023, 17:57:27",
+    "processed_at": "6.3.2023, 20:30:30",
     "style_last_published": {
-      "published_at": "6.3.2023, 17:48:38",
+      "published_at": "6.3.2023, 20:29:40",
       "version": 8
     },
     "style_id": "clev6ho1i00hd01o9bfo80n9q",

@@ -21,6 +21,8 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_debug_driveways'
   | 'parking_debug_kerb'
   | 'parking_parkinglines'
+  | 'parking_stats'
+  | 'parking_stats_length'
   | 'parking_xx'
 
 export type MapboxStyleLayerGroupBikelanesIds =
@@ -60,5 +62,9 @@ export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_kerb'
 
 export type MapboxStyleLayerGroupParkinglinesIds = 'parking_parkinglines'
+
+export type MapboxStyleLayerGroupStatsIds =
+  | 'parking_stats'
+  | 'parking_stats_length'
 
 export type MapboxStyleLayerGroupXxIds = 'parking_xx'

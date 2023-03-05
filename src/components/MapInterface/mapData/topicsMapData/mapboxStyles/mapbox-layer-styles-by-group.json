@@ -2699,6 +2699,134 @@
     ]
   },
   {
+    "group": "parking_stats",
+    "layers": [
+      {
+        "layout": {},
+        "filter": [
+          "has",
+          "admin_level"
+        ],
+        "type": "fill",
+        "id": "area-0-to-100",
+        "paint": {
+          "fill-color": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "done_percent"
+            ],
+            0,
+            "rgb(195, 179, 255)",
+            100,
+            "rgb(122, 0, 163)"
+          ],
+          "fill-outline-color": "hsl(0, 100%, 100%)",
+          "fill-opacity": 0.35
+        }
+      },
+      {
+        "layout": {},
+        "type": "line",
+        "id": "line",
+        "paint": {
+          "line-color": "hsl(0, 0%, 100%)",
+          "line-opacity": 0.63
+        }
+      },
+      {
+        "layout": {
+          "text-field": [
+            "to-string",
+            [
+              "get",
+              "done_percent"
+            ]
+          ]
+        },
+        "type": "symbol",
+        "id": "label",
+        "paint": {
+          "text-color": "rgba(69, 0, 112, 0.95)",
+          "text-halo-width": 1,
+          "text-halo-color": "hsl(291, 0%, 100%)",
+          "text-halo-blur": 1
+        }
+      }
+    ]
+  },
+  {
+    "group": "parking_stats_length",
+    "layers": [
+      {
+        "layout": {},
+        "filter": [
+          "has",
+          "lane_km"
+        ],
+        "type": "fill",
+        "id": "area-0-to-100 copy",
+        "paint": {
+          "fill-color": [
+            "interpolate",
+            [
+              "linear"
+            ],
+            [
+              "get",
+              "lane_km"
+            ],
+            0,
+            "rgb(163, 255, 189)",
+            889.8,
+            "rgb(0, 128, 36)"
+          ],
+          "fill-outline-color": "hsl(0, 100%, 100%)",
+          "fill-opacity": 0.35
+        }
+      },
+      {
+        "layout": {},
+        "type": "line",
+        "id": "line copy",
+        "paint": {
+          "line-color": "hsl(0, 0%, 100%)",
+          "line-opacity": 0.63
+        },
+        "filter": [
+          "has",
+          "lane_km"
+        ]
+      },
+      {
+        "layout": {
+          "text-field": [
+            "to-string",
+            [
+              "get",
+              "lane_km"
+            ]
+          ]
+        },
+        "filter": [
+          "has",
+          "lane_km"
+        ],
+        "type": "symbol",
+        "id": "label copy",
+        "paint": {
+          "text-color": "rgba(0, 51, 37, 0.95)",
+          "text-halo-width": 1,
+          "text-halo-color": "hsl(291, 0%, 100%)",
+          "text-halo-blur": 1
+        }
+      }
+    ]
+  },
+  {
     "group": "parking_xx",
     "layers": [
       {
