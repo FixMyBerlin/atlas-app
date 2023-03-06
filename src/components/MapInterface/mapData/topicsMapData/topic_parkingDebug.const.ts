@@ -1,6 +1,7 @@
 import { MapDataTopic } from '../types'
 
 const topic = 'parkingDebug'
+const source = 'parkraumParkingDebug'
 export type TopicParkingDebugId = typeof topic
 export type TopicParkingDebugStyleIds =
   | 'default'
@@ -22,7 +23,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_pt_bus',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_pt_bus',
           paint: {
             'fill-color': 'RGBA(142, 59, 31, 0.7)',
@@ -32,7 +33,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_pt_tram',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_pt_tram',
           paint: {
             'fill-color': 'RGBA(142, 59, 31, 0.7)',
@@ -42,7 +43,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_amenity_parking_points',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_amenity_parking_points',
           paint: {
             'fill-color': '#a21caf',
@@ -52,7 +53,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_driveways',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_driveways',
           paint: {
             'fill-color': 'RGBA(217, 98, 43, 0.7)',
@@ -62,7 +63,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_highways',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_highways',
           paint: {
             'fill-color': 'RGBA(217, 98, 43, 0.7)',
@@ -72,7 +73,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_kerb_intersections',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_kerb_intersections',
           paint: {
             'fill-color': 'RGBA(217, 98, 43, 0.7)',
@@ -82,7 +83,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_pedestrian_crossings',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_pedestrian_crossings',
           paint: {
             'fill-color': 'RGBA(217, 98, 43, 0.7)',
@@ -92,7 +93,7 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_ramps',
           type: 'fill',
-          source: 'parkraumParkingDebug',
+          source,
           'source-layer': 'processing.buffer_ramps',
           paint: {
             'fill-color': 'RGBA(217, 98, 43, 0.7)',
