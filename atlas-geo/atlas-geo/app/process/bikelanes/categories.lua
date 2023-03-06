@@ -142,14 +142,8 @@ end
 local function cyclewayBetweenLanes(tags)
   -- TODO: maybe we want this only on transformed objects e.g. _parent_highway ~= nil
   -- TODO: add description
-  local result = false
-  if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true) then
-    result = true
-  end
-  if tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
-    result = true
-  end
-  if result then
+  if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true)
+    or tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
     return "cyclewayBetweenLanes"
   end
 end
