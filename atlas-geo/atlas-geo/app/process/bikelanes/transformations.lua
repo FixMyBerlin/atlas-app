@@ -28,6 +28,10 @@ function GetTransformedObjects(tags, transformations)
     [":left"] = LEFT_SIGN,
     [":right"] = RIGHT_SIGN
   }
+  local directions = {
+    [LEFT_SIGN] = 'backward',
+    [RIGHT_SIGN] = 'forward',
+  }
   tags.sign = 0
   local results = { tags }
   if PathClasses[tags.highway] then
@@ -54,17 +58,10 @@ function GetTransformedObjects(tags, transformations)
             table.insert(results, newObj)
           end
         end
-        -- DRAFT FOR LANES:
-        -- if newObj.lanes == nil and false then
-        --   -- TODO: this assumes right hand traffic (would be nice to have this as an option)
-        --   if sign == RIGHT_SIGN then
-        --     transformedObj['cycleway:lanes'] = transformedObj['cycleway:lanes:forward']
-        --     transformedObj['bicycle:lanes'] = transformedObj['bicycle:lanes:forward']
-        --   elseif sign == LEFT_SIGN then
-        --     transformedObj['cycleway:lanes'] = transformedObj['cycleway:lanes:backward']
-        --     transformedObj['bicycle:lanes'] = transformedObj['bicycle:lanes:backward']
-        --   end
-        -- end
+        for _, key in pairs({'cycleway:lanes', 'bicycle:lanes'}) do
+          local directedKey = key .. ':' .. directions[sign]
+          newObj[key] = tags[key] or tags[directedKey]
+        end
       end
     end
   end
