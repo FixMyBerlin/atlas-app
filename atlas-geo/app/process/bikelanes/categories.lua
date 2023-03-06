@@ -140,8 +140,9 @@ local function cyclewayOnHighway(tags)
 end
 
 local function cyclewayBetweenLanes(tags)
-  -- TODO: maybe we want this only on transformed objects e.g. _parent_highway ~= nil
-  -- TODO: add description
+  -- Handle  "Radweg in Mittellage", mainly cyclways which are left of the (right) turn lane
+  -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
+  if tags['_parent_highway'] == nil then return end
   if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true)
     or tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
     return "cyclewayBetweenLanes"
