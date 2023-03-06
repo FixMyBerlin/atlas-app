@@ -73,7 +73,10 @@ local allowed_tags = Set({
   'traffic_sign',
   'width',
   'bicycle:lanes',
-  'cycleway:lanes'
+  'cycleway:lanes',
+  'separation',
+  'separation:left',
+  'separation:right'
 })
 
 function osm2pgsql.process_way(object)
