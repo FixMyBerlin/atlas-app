@@ -45,7 +45,7 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
     response.headers["Content-Disposition"] = 'attachment; filename="'+type_name+'.geojson"'
     response.headers["Content-Type"] = 'application/geo+json'
 
-    statement = sql.SQL("SELECT {table_name}.*, license.* FROM {table_name} (%s, %s, %s, %s), license;").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
+    statement = sql.SQL("SELECT * FROM {table_name} (%s, %s, %s, %s);").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
     cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
     return cur.fetchone()[0]
 
