@@ -36,7 +36,7 @@ export type SourceExportApiIdentifier =
   | 'places'
   | 'publicTransport'
   | 'roadClassification'
-  | 'shops'
+  | 'poiClassification'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -246,7 +246,7 @@ export const sources: MapDataSource<
     calculator: { enabled: false },
     export: {
       enabled: true,
-      apiIdentifier: 'shops',
+      apiIdentifier: 'poiClassification',
     },
   },
   {
