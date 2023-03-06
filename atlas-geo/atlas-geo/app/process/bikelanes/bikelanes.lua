@@ -65,9 +65,6 @@ local allowed_tags = Set({
   'name',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   'prefix',
-  'left',
-  'right',
-  'self',
   'segregated',
   'side',
   'smoothness',
@@ -75,7 +72,8 @@ local allowed_tags = Set({
   'surface',
   'traffic_sign',
   'width',
-  'category',
+  'bicycle:lanes',
+  'cycleway:lanes'
 })
 
 function osm2pgsql.process_way(object)
@@ -160,7 +158,16 @@ function osm2pgsql.process_way(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  FilterTags(tags, allowed_tags)
+  local allowed_tags_presence= Set({
+    'left',
+    'right',
+    'self',
+    'name',
+    'highway',
+    'oneway',
+    'dual_carriageway',})
+
+  FilterTags(tags, allowed_tags_presence)
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),
