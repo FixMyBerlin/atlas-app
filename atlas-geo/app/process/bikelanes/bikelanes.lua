@@ -76,7 +76,7 @@ local allowed_tags = Set({
   'cycleway:lanes',
   'separation',
   'separation:left',
-  'separation:right'
+  'separation:right',
 })
 
 function osm2pgsql.process_way(object)
@@ -161,14 +161,15 @@ function osm2pgsql.process_way(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  local allowed_tags_presence= Set({
+  local allowed_tags_presence = Set({
     'left',
     'right',
     'self',
     'name',
     'highway',
     'oneway',
-    'dual_carriageway',})
+    'dual_carriageway',
+  })
 
   FilterTags(tags, allowed_tags_presence)
   presenceTable:insert({
