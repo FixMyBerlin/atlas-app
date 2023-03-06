@@ -42,8 +42,8 @@ export const topic_parkingStats: MapDataTopic = {
           filterConfig: { lookupKey: 'admin_level' },
           inputType: 'radiobutton',
           options: [
-            { id: '4', name: 'Admin Level 4', defaultActive: false },
-            { id: '9', name: 'Admin Level 9', defaultActive: true },
+            { id: '4', name: 'Admin Level 4 / Stadt', defaultActive: false },
+            { id: '9', name: 'Admin Level 9 / Bezirk', defaultActive: true },
             { id: '10', name: 'Admin Level 10', defaultActive: false },
           ],
         },
@@ -65,8 +65,8 @@ export const topic_parkingStats: MapDataTopic = {
           filterConfig: { lookupKey: 'admin_level' },
           inputType: 'radiobutton',
           options: [
-            { id: '4', name: 'Admin Level 4', defaultActive: false },
-            { id: '9', name: 'Admin Level 9', defaultActive: true },
+            { id: '4', name: 'Admin Level 4 / Stadt', defaultActive: false },
+            { id: '9', name: 'Admin Level 9 / Bezirk', defaultActive: true },
             { id: '10', name: 'Admin Level 10', defaultActive: false },
           ],
         },
