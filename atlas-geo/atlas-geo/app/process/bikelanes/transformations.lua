@@ -28,6 +28,7 @@ function GetTransformedObjects(tags, transformations)
     [":left"] = LEFT_SIGN,
     [":right"] = RIGHT_SIGN
   }
+  -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
   local directions = {
     [LEFT_SIGN] = 'backward',
     [RIGHT_SIGN] = 'forward',

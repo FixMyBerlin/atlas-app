@@ -141,6 +141,7 @@ end
 
 local function cyclewayBetweenLanes(tags)
   -- Handle  "Radweg in Mittellage", mainly cyclways which are left of the (right) turn lane
+  -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
   -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
   if tags['_parent_highway'] == nil then return end
   if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true)
