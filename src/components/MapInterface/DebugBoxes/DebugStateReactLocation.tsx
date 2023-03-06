@@ -6,7 +6,6 @@ export const DebugStateReactLocation: React.FC = () => {
   const { showDebugInfo, setShowDebugInfo } = useMapDebugState()
 
   if (!showDebugInfo) return null
-
   return (
     <>
       <div className="group absolute bottom-3 right-12 z-10 max-h-screen max-w-[60%] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
