@@ -124,11 +124,11 @@ local function cyclewaySeparated(tags)
   end
 end
 
+-- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
+--    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
+--    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
+--    https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
 local function cyclewayOnHighway(tags)
-  -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
-  --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-  --    https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
   local result = false
   if tags.highway == 'cycleway' then
     result = (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
@@ -138,6 +138,22 @@ local function cyclewayOnHighway(tags)
     return "cyclewayOnHighway"
   end
 end
+
+local function cyclewayBetweenLanes(tags)
+  -- TODO: maybe we want this only on transformed objects e.g. _parent_highway ~= nil
+  -- TODO: add description
+  local result = false
+  if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true) then
+    result = true
+  end
+  if tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
+    result = true
+  end
+  if result then
+    return "cyclewayBetweenLanes"
+  end
+end
+
 
 -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
 -- Eg. https://www.openstreetmap.org/way/27701956
@@ -187,6 +203,7 @@ end
 function CategorizeBikelane(tags)
   -- The order specifies the precedence; first one with a result win.
   local categories = {
+    cyclewayBetweenLanes,
     pedestiranArea,
     livingStreet,
     bicycleRoad,
