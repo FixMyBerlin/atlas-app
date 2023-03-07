@@ -3,8 +3,6 @@ package.path = package.path ..
 require("Set")
 require("ExtractKeys")
 require("FilterTags")
--- require("ToNumber")
--- require("PrintTable")
 require("InferAddress")
 require("MergeArray")
 require("Metadata")
