@@ -84,14 +84,15 @@ export const Inspector: React.FC = () => {
                   sourceId={sourceId}
                 />
 
-                <OtherProperties
-                  properties={properties}
-                  documentedKeys={sourceData.inspector.documentedKeys}
-                />
                 <Links
                   properties={properties}
                   geometry={inspectObject.geometry}
                   editors={sourceData.inspector.editors}
+                />
+
+                <OtherProperties
+                  properties={properties}
+                  documentedKeys={sourceData.inspector.documentedKeys}
                 />
 
                 <StatusTableAndVerification

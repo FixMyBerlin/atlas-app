@@ -1,4 +1,4 @@
-import { Link } from '@components/Link'
+import { buttonStyles, Link } from '@components/Link'
 import { MapDataSourceInspectorEditor } from '@components/MapInterface/mapData/types'
 import React from 'react'
 import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls'
@@ -32,46 +32,46 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
 
   if (!osmUrl_ || !historyUrl_ || !editors) return null
   return (
-    <div className="bg-white px-4 pb-2.5 text-xs">
-      <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
-        <summary className="cursor-pointer text-right">Tools</summary>
-        <div className="space-y-2">
-          {editors?.map(({ urlTemplate, name }) => {
-            const url = editorUrl({
-              urlTemplate,
-              geometry,
-              osmType: osmType && longOsmType[osmType],
-              osmId,
-            })
-            if (!url) return null
-            return (
-              <p key={name}>
-                <Link external blank to={url}>
-                  {name}
-                </Link>
-              </p>
-            )
-          })}
-          <p>
-            <Link external blank to={osmUrl_}>
-              In OpenStreetMap öffnen
+    <div className="flex gap-4 border-t bg-white px-4 py-2.5 text-xs">
+      {editors?.map(({ urlTemplate, name }) => {
+        const url = editorUrl({
+          urlTemplate,
+          geometry,
+          osmType: osmType && longOsmType[osmType],
+          osmId,
+        })
+        if (!url) return null
+        return (
+          <p key={name}>
+            <Link external blank to={url} classNameOverwrite={buttonStyles}>
+              {name}
             </Link>
           </p>
-          <p>
-            <Link external blank to={historyUrl_}>
-              Änderungshistorie anzeigen
-            </Link>
-          </p>
+        )
+      })}
+      <p>
+        <Link external blank to={osmUrl_} classNameOverwrite={buttonStyles}>
+          OpenStreetMap
+        </Link>
+      </p>
+      <p>
+        <Link external blank to={historyUrl_} classNameOverwrite={buttonStyles}>
+          Änderungshistorie
+        </Link>
+      </p>
 
-          {mapillaryUrl_ && (
-            <p>
-              <Link external blank to={mapillaryUrl_}>
-                Mapillary
-              </Link>
-            </p>
-          )}
-        </div>
-      </details>
+      {mapillaryUrl_ && (
+        <p>
+          <Link
+            external
+            blank
+            to={mapillaryUrl_}
+            classNameOverwrite={buttonStyles}
+          >
+            Mapillary
+          </Link>
+        </p>
+      )}
     </div>
   )
 }
