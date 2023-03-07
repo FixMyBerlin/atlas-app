@@ -3,15 +3,15 @@ local function unnestTags(tags, prefix, side, dest)
   dest = dest or {}
   dest.parent = tags
   local fullPrefix = prefix .. side
-  for prefixedKey, val in pairs(tags) do
-    if StartsWith(prefixedKey, fullPrefix) then
+  for key, val in pairs(tags) do
+    if StartsWith(key, fullPrefix) then
       dest.side = side
-      if prefixedKey == fullPrefix then -- self projection
+      if key == fullPrefix then -- self projection
         dest[prefix] = val
       else
         -- offset of 2 due to 1-indexing and for removing the ':'
-        local key = string.sub(prefixedKey, string.len(fullPrefix) + 2)
-        dest[key] = val
+        local prefixlessKey = string.sub(key, string.len(fullPrefix) + 2)
+        dest[prefixlessKey] = val
       end
     end
   end
