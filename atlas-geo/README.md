@@ -59,9 +59,11 @@ This will create the docker container and run all scripts. One this is finished,
 > **Note**
 > We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
 
-## 💪 Work
+## Development
 
-You can only rebuild and regenerate the whole system, for now. The workflow is…
+### You can only rebuild and regenerate the whole system
+
+The workflow is…
 
 1. Edit the files locally
 
@@ -94,7 +96,8 @@ You can also run the script locally:
    ```
 2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
 
-**Build & Run only one container**
+### Build & Run only one container
+
 Build docker
 
 ```sh
@@ -111,6 +114,20 @@ Hack into the bash
 
 ```sh
 docker exec -it mypipeline bash
+```
+
+## Production
+
+### Inspect Logs locally
+
+For FixMyCity, the command to inspect the current state of the processing on the server is …
+
+```
+ssh ionos docker logs --tail --follow app
+```
+
+```
+ssh ionos docker logs --tail --follow app_staging
 ```
 
 ## 💛 Thanks to
