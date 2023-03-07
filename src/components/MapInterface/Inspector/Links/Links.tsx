@@ -30,7 +30,7 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
   const historyUrl_ = historyUrl(osmType, osmId)
   const mapillaryUrl_ = mapillaryUrl(geometry)
 
-  if (!osmUrl_ || !historyUrl_ || !editors) return null
+  if (!osmUrl_ && !historyUrl_ && !editors) return null
   return (
     <div className="flex gap-4 border-t bg-white px-4 py-2.5 text-xs">
       {editors?.map(({ urlTemplate, name }) => {
@@ -49,16 +49,25 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
           </p>
         )
       })}
-      <p>
-        <Link external blank to={osmUrl_} classNameOverwrite={buttonStyles}>
-          OpenStreetMap
-        </Link>
-      </p>
-      <p>
-        <Link external blank to={historyUrl_} classNameOverwrite={buttonStyles}>
-          Änderungshistorie
-        </Link>
-      </p>
+      {osmUrl_ && (
+        <p>
+          <Link external blank to={osmUrl_} classNameOverwrite={buttonStyles}>
+            OpenStreetMap
+          </Link>
+        </p>
+      )}
+      {historyUrl_ && (
+        <p>
+          <Link
+            external
+            blank
+            to={historyUrl_}
+            classNameOverwrite={buttonStyles}
+          >
+            Änderungshistorie
+          </Link>
+        </p>
+      )}
 
       {mapillaryUrl_ && (
         <p>
