@@ -1,7 +1,5 @@
-require("StartsWith")
-
--- PREDICATES FOR EACH CATEGORY:
 NOT_EXPECTED = 'not_expected'
+-- PREDICATES FOR EACH CATEGORY:
 
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
@@ -48,7 +46,7 @@ end
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
 -- tag: "bicycleRoad"
 local function bicycleRoad(tags)
-  local result = tags.bicycle_road == "yes" or StartsWith(tags.traffic_sign, "DE:244")
+  local result = tags.bicycle_road == "yes" or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244")
   if result then
     return "bicycleRoad"
   end
@@ -58,7 +56,7 @@ end
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
 local function footAndCycleway(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
-  result = result or StartsWith(tags.traffic_sign, "DE:240")
+  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if result then
     return "footAndCycleway_shared"
   end
@@ -69,7 +67,7 @@ end
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
 local function footAndCyclewaySegregated(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
-  result = result or StartsWith(tags.traffic_sign, "DE:241")
+  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if result then
     return "footAndCycleway_segregated"
   end
@@ -82,7 +80,7 @@ local function footwayBicycleAllowed(tags)
   -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
   -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
   result = result and
-      (tags.bicycle == "yes" or StartsWith(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
+      (tags.bicycle == "yes" or osm2pgsql.has_prefix(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
   -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
   -- We filter those based on mtb:scale=*.
   result = result and not tags["mtb:scale"]
