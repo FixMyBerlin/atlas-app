@@ -1,3 +1,5 @@
+require("StartsWith")
+
 -- PREDICATES FOR EACH CATEGORY:
 NOT_EXPECTED = 'not_expected'
 
