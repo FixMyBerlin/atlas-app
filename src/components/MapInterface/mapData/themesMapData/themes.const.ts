@@ -35,7 +35,7 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'fromToZes',
-    name: 'Quellen & Ziele',
+    name: 'Quellen & Ziele ZES',
     desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
@@ -65,7 +65,7 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'bikelanesZes',
-    name: 'Infrastruktur',
+    name: 'Infrastruktur ZES',
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
@@ -92,7 +92,7 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'roadClassificationZes',
-    name: 'Straßentypen',
+    name: 'Straßentypen ZES',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
       { id: 'roadClassification_tarmac', defaultActive: true },
@@ -118,7 +118,7 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'surfaceZes',
-    name: 'Oberflächen',
+    name: 'Oberflächen ZES',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
       // { id: 'surface_tarmac', defaultActive: true },
