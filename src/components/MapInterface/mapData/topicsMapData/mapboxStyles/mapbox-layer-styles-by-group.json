@@ -49,7 +49,8 @@
             "footAndCycleway_segregated",
             "bicycleRoad",
             "cyclewayOnHighway",
-            "cyclewaySeparated"
+            "cyclewaySeparated",
+            "cyclewayBetweenLanes"
           ],
           true,
           false
@@ -186,11 +187,12 @@
           "match",
           ["get", "category"],
           [
-            "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewayOnHighway"
+            "cyclewayOnHighway",
+            "cyclewaySeparated",
+            "cyclewayBetweenLanes"
           ],
           true,
           false
@@ -240,7 +242,7 @@
     ]
   },
   {
-    "group": "atlas_bikelanes_fresh",
+    "group": "atlas_bikelanes_fresh_disabled",
     "layers": [
       {
         "id": "Daten aelter 2020-fake copy",
@@ -344,11 +346,12 @@
           "match",
           ["get", "category"],
           [
-            "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewayOnHighway"
+            "cyclewayOnHighway",
+            "cyclewaySeparated",
+            "cyclewayBetweenLanes"
           ],
           true,
           false
@@ -484,11 +487,12 @@
           "match",
           ["get", "category"],
           [
-            "cyclewaySeparated",
             "cyclewayAlone",
             "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewayOnHighway"
+            "cyclewayOnHighway",
+            "cyclewaySeparated",
+            "cyclewayBetweenLanes"
           ],
           true,
           false

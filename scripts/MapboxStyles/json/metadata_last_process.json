@@ -2,9 +2,9 @@
   "atlas": {
     "key": "atlas",
     "about": "Metadata on the last processing of the atlas styles api response",
-    "processed_at": "6.3.2023, 20:30:30",
+    "processed_at": "7.3.2023, 11:44:08",
     "style_last_published": {
-      "published_at": "4.3.2023, 16:40:54",
+      "published_at": "7.3.2023, 11:05:51",
       "version": 8
     },
     "style_id": "cl706a84j003v14o23n2r81w7",
@@ -12,15 +12,20 @@
     "style_name": "radverkehrsatlas-styles",
     "debug_changed_names": {
       "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
-      "changedNamesForDebugging": []
+      "changedNamesForDebugging": [
+        {
+          "sourceName": "atlas_bikelanes_fresh_DISABLED",
+          "cleanedName": "atlas_bikelanes_fresh_disabled"
+        }
+      ]
     }
   },
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "6.3.2023, 20:30:30",
+    "processed_at": "7.3.2023, 11:44:08",
     "style_last_published": {
-      "published_at": "6.3.2023, 20:29:40",
+      "published_at": "7.3.2023, 11:07:58",
       "version": 8
     },
     "style_id": "clev6ho1i00hd01o9bfo80n9q",
