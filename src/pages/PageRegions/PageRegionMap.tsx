@@ -53,7 +53,11 @@ export const PageRegionMap: React.FC = () => {
   // We re-use this reset to update the config on the first render.
   const [resetConfig, setResetConfig] = useState(true)
   useEffect(() => {
-    if (!resetConfig && theme && lat && lng && zoom && config) return
+    // It might be, that a existing URL has a theme that we don't support anymore.
+    const checkedTheme =
+      theme && region.themes.includes(theme) ? theme : undefined
+
+    if (!resetConfig && checkedTheme && lat && lng && zoom && config) return
 
     navigate({
       search: (old) => {
@@ -61,7 +65,7 @@ export const PageRegionMap: React.FC = () => {
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
-          theme: old?.theme ?? initialConfig?.[0]?.id ?? 'fromTo',
+          theme: checkedTheme ?? initialConfig?.[0]?.id ?? 'fromTo',
           bg: 'default',
           config: initialConfig,
         }
