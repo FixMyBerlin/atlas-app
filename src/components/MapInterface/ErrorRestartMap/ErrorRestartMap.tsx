@@ -1,23 +1,36 @@
-import { Link } from '@components/Link'
-import { useMatch } from '@tanstack/react-location'
+import { LocationGenerics } from '@routes/routes'
+import { useMatch, useSearch } from '@tanstack/react-location'
 import React from 'react'
 
 export const ErrorRestartMap: React.FC = () => {
   const {
     params: { regionPath },
   } = useMatch()
+  const { theme, lat, lng, zoom, bg } = useSearch<LocationGenerics>()
+
+  // We cannot use react-location for the Link, since this will not force a reload of the page.
+  const paramsWithoutConfig = new URLSearchParams()
+  theme && paramsWithoutConfig.append('theme', theme)
+  lat && paramsWithoutConfig.append('lat', lat.toString())
+  lng && paramsWithoutConfig.append('lng', lng.toString())
+  zoom && paramsWithoutConfig.append('zoom', zoom.toString())
+  bg && paramsWithoutConfig.append('bg', bg)
 
   return (
-    <p className="pt-2 text-red-500">
-      Leider ist ein Fehler ist aufgetreten.{' '}
+    <div className="pt-2 text-purple-500">
+      <p>Leider ist ein Fehler ist aufgetreten.</p>
       {!!regionPath && (
         <>
-          <br />
-          <Link to={`/regionen/${regionPath}`}>
-            Bitte laden Sie die Karte neu…
-          </Link>
+          <p>
+            <a
+              href={`/regionen/${regionPath}?${paramsWithoutConfig.toString()}`}
+              className="underline"
+            >
+              Bitte laden Sie die Karte neu…
+            </a>
+          </p>
         </>
       )}
-    </p>
+    </div>
   )
 }

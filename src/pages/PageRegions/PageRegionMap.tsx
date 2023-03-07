@@ -1,10 +1,13 @@
 import { LayoutMap } from '@components/Layout'
 import { MapInterface } from '@components/MapInterface'
+import { ErrorRestartMap } from '@components/MapInterface/ErrorRestartMap/ErrorRestartMap'
 import {
   createMapRegionConfig,
   initializeMapRegionConfig,
 } from '@components/MapInterface/mapStateConfig'
+import { isDev } from '@components/utils'
 import { LocationGenerics } from '@routes/routes'
+import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import {
   Navigate,
   useMatch,
@@ -12,9 +15,6 @@ import {
   useSearch,
 } from '@tanstack/react-location'
 import { useEffect, useMemo, useState } from 'react'
-import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
-import { ErrorRestartMap } from '@components/MapInterface/ErrorRestartMap/ErrorRestartMap'
-import { isDev } from '@components/utils'
 
 export const PageRegionMap: React.FC = () => {
   const { theme, lat, lng, zoom, config } = useSearch<LocationGenerics>()
