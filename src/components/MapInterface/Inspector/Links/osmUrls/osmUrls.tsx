@@ -1,17 +1,20 @@
 import { pointFromGeometry } from './pointFromGeometry'
 
-const osmType = { W: 'way', N: 'node', R: 'relation' }
+export type OsmShortType = 'W' | 'N' | 'R' | undefined
+export const longOsmType = { W: 'way', N: 'node', R: 'relation' }
 
-export const osmUrl = (type: 'W' | 'N' | 'R', id: number) => {
-  if (!osmType[type]) return undefined
+export const osmUrl = (type: OsmShortType, id: number) => {
+  if (!type || (type && !longOsmType[type])) return undefined
+
   const cleanId = Math.abs(id) // tarmag-geo sometimes prefixes "-{id}"
-  return `https://www.openstreetmap.org/${osmType[type]}/${cleanId}`
+  return `https://www.openstreetmap.org/${longOsmType[type]}/${cleanId}`
 }
 
-export const historyUrl = (type: 'W' | 'N' | 'R', id: number) => {
-  if (!osmType[type]) return undefined
+export const historyUrl = (type: OsmShortType, id: number) => {
+  if (!type || (type && !longOsmType[type])) return undefined
+
   const cleanId = Math.abs(id) // tarmag-geo sometimes prefixes "-{id}"
-  return `https://osmlab.github.io/osm-deep-history/#/${osmType[type]}/${cleanId}`
+  return `https://osmlab.github.io/osm-deep-history/#/${longOsmType[type]}/${cleanId}`
 }
 
 export const mapillaryUrl = (

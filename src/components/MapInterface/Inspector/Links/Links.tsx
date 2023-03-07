@@ -1,6 +1,6 @@
 import { Link } from '@components/Link'
 import React from 'react'
-import { historyUrl, mapillaryUrl, osmUrl } from './osmUrls'
+import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls'
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
@@ -13,8 +13,10 @@ export const Links: React.FC<Props> = ({ properties, geometry }) => {
     ?.toString()
     ?.split('.') // Parking data are split into segments with dot-notation. First part is the id.
     ?.at(0)
-  const osmType =
-    'osm_type' in properties
+  const osmType: 'W' | 'N' | 'R' | undefined =
+    'way_id' in properties
+      ? 'W'
+      : 'osm_type' in properties
       ? properties.osm_type
       : // `area_id` is what our boundaries return, they don't have osm_type field (yet)
       'area_id' in properties
