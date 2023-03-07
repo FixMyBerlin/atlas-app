@@ -13,9 +13,9 @@ end
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
   local result = tags.parent ~= nil and tags.prefix == 'cycleway' and
-      tags.side == '' -- object is created from implicit case
+      tags.side == ''                        -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and
-      tags.parent['oneway:bicycle'] ~= 'no' -- is oneway w/o bike exception
+      tags.parent['oneway:bicycle'] ~= 'no'  -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN -- is the left side object
   if result then
     return NOT_EXPECTED
@@ -145,7 +145,7 @@ local function cyclewayBetweenLanes(tags)
   -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
   if tags['_parent_highway'] == nil or tags.prefix == 'sidewalk' then return end
   if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true)
-    or tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
+      or tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
     return "cyclewayBetweenLanes"
   end
 end

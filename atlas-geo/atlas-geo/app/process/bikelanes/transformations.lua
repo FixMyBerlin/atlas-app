@@ -13,7 +13,7 @@ local function unnestTags(tags, prefix, side, dest)
         local prefixlessKey = string.sub(key, prefixLen + 2)
         local infix = string.match(prefixlessKey, '[^:]*')
         -- avoid projecting sided tags in the implicit case
-        if not Set({'left', 'right', 'both'})[infix] then
+        if not Set({ 'left', 'right', 'both' })[infix] then
           -- offset of 2 due to 1-indexing and for removing the ':'
           dest[prefixlessKey] = val
           dest.side = side
@@ -28,7 +28,7 @@ end
 LEFT_SIGN = 1
 CENTER_SIGN = 0
 RIGHT_SIGN = -1
-SIDES = {LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN}
+SIDES = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
 function GetTransformedObjects(tags, transformations)
   local sides = {
     [":left"] = LEFT_SIGN,
@@ -39,7 +39,7 @@ function GetTransformedObjects(tags, transformations)
     [LEFT_SIGN] = 'backward',
     [RIGHT_SIGN] = 'forward',
   }
-  local center = {sign = 0}
+  local center = { sign = 0 }
   for k, v in pairs(tags) do center[k] = v end
   local results = { center }
   if PathClasses[tags.highway] then
@@ -66,7 +66,7 @@ function GetTransformedObjects(tags, transformations)
             table.insert(results, newObj)
           end
         end
-        for _, key in pairs({'cycleway:lanes', 'bicycle:lanes'}) do
+        for _, key in pairs({ 'cycleway:lanes', 'bicycle:lanes' }) do
           local directedKey = key .. ':' .. directions[sign]
           newObj[key] = tags[key] or tags[directedKey]
         end
