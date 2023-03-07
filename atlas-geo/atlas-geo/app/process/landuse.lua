@@ -1,11 +1,8 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
--- require("ToNumber")
--- require("PrintTable")
 require("MergeArray")
 require("Metadata")
-require("HasAreaTags")
 
 local table = osm2pgsql.define_table({
   name = 'landuse',
