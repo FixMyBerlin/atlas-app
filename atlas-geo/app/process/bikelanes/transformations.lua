@@ -3,14 +3,15 @@ local function unnestTags(tags, prefix, side, dest)
   dest = dest or {}
   dest.parent = tags
   local fullPrefix = prefix .. side
+  local prefixLen = string.len(fullPrefix)
   for key, val in pairs(tags) do
-    if StartsWith(key, fullPrefix) then
+    if osm2pgsql.has_prefix(key, fullPrefix) then
       dest.side = side
       if key == fullPrefix then -- self projection
         dest[prefix] = val
       else
         -- offset of 2 due to 1-indexing and for removing the ':'
-        local prefixlessKey = string.sub(key, string.len(fullPrefix) + 2)
+        local prefixlessKey = string.sub(key, prefixLen + 2)
         dest[prefixlessKey] = val
       end
     end
