@@ -166,7 +166,8 @@ function osm2pgsql.process_way(object)
     'name',
     'highway',
     'oneway',
-    'dual_carriageway', })
+    'dual_carriageway',
+  })
 
   FilterTags(tags, allowed_tags_presence)
   presenceTable:insert({
