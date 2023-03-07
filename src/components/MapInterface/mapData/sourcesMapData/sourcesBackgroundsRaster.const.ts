@@ -136,7 +136,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
       tiles: 'https://tiles.osm-berlin.org/parkraumkarte/{z}/{x}/{y}.jpg',
       tileSize: 256,
       minzoom: 10,
-      maxzoom: 14,
+      maxzoom: 20,
       attributionHtml:
         '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap-Mitwirkende</a>, Bordsteinkanten: OpenStreetMap und Geoportal Berlin / ALKIS.',
     },
