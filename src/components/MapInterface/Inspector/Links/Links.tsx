@@ -9,7 +9,10 @@ type Props = {
 
 export const Links: React.FC<Props> = ({ properties, geometry }) => {
   // Normalize id + type for Parking data
-  const osmId = properties.osm_id || properties.way_id || properties.area_id
+  const osmId = (properties.osm_id || properties.way_id || properties.area_id)
+    ?.toString()
+    ?.split('.') // Parking data are split into segments with dot-notation. First part is the id.
+    ?.at(0)
   const osmType =
     'osm_type' in properties
       ? properties.osm_type
