@@ -3,6 +3,7 @@ export const translations: { [key: string]: string } = {
   'key--_parent_highway': 'Straßentyp der zugehörigen Straße',
   'key--composit_surface_smoothness': 'Oberflächenqualität',
   'key--highway': 'Straßentyp',
+  'key--self': 'Vollständigkeit Mittellinie',
   'key--left': 'Vollständigkeit Links (Linienrichtung)',
   'key--name': 'Name',
   'key--oneway': 'Fahrtrichtung',
