@@ -3,15 +3,21 @@ local function unnestTags(tags, prefix, side, dest)
   dest = dest or {}
   dest.parent = tags
   local fullPrefix = prefix .. side
-  for prefixedKey, val in pairs(tags) do
-    if StartsWith(prefixedKey, fullPrefix) then
-      dest.side = side
-      if prefixedKey == fullPrefix then -- self projection
+  local prefixLen = string.len(fullPrefix)
+  for key, val in pairs(tags) do
+    if osm2pgsql.has_prefix(key, fullPrefix) then
+      if key == fullPrefix then -- self projection
         dest[prefix] = val
+        dest.side = side
       else
-        -- offset of 2 due to 1-indexing and for removing the ':'
-        local key = string.sub(prefixedKey, string.len(fullPrefix) + 2)
-        dest[key] = val
+        local prefixlessKey = string.sub(key, prefixLen + 2)
+        local infix = string.match(prefixlessKey, '[^:]*')
+        -- avoid projecting sided tags in the implicit case
+        if not Set({ 'left', 'right', 'both' })[infix] then
+          -- offset of 2 due to 1-indexing and for removing the ':'
+          dest[prefixlessKey] = val
+          dest.side = side
+        end
       end
     end
   end
@@ -22,7 +28,7 @@ end
 LEFT_SIGN = 1
 CENTER_SIGN = 0
 RIGHT_SIGN = -1
-SIDES = {LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN}
+SIDES = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
 function GetTransformedObjects(tags, transformations)
   local sides = {
     [":left"] = LEFT_SIGN,
@@ -33,8 +39,9 @@ function GetTransformedObjects(tags, transformations)
     [LEFT_SIGN] = 'backward',
     [RIGHT_SIGN] = 'forward',
   }
-  tags.sign = 0
-  local results = { tags }
+  local center = { sign = 0 }
+  for k, v in pairs(tags) do center[k] = v end
+  local results = { center }
   if PathClasses[tags.highway] then
     return results
   end
@@ -59,7 +66,7 @@ function GetTransformedObjects(tags, transformations)
             table.insert(results, newObj)
           end
         end
-        for _, key in pairs({'cycleway:lanes', 'bicycle:lanes'}) do
+        for _, key in pairs({ 'cycleway:lanes', 'bicycle:lanes' }) do
           local directedKey = key .. ':' .. directions[sign]
           newObj[key] = tags[key] or tags[directedKey]
         end
