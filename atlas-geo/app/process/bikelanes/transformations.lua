@@ -33,8 +33,9 @@ function GetTransformedObjects(tags, transformations)
     [LEFT_SIGN] = 'backward',
     [RIGHT_SIGN] = 'forward',
   }
-  tags.sign = 0
-  local results = { tags }
+  local center = {sign = 0}
+  for k, v in pairs(tags) do center[k] = v end
+  local results = { center }
   if PathClasses[tags.highway] then
     return results
   end
