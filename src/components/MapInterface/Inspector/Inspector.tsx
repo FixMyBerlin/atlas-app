@@ -91,6 +91,7 @@ export const Inspector: React.FC = () => {
                 <Links
                   properties={properties}
                   geometry={inspectObject.geometry}
+                  editors={sourceData.inspector.editors}
                 />
 
                 <StatusTableAndVerification

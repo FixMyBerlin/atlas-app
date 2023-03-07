@@ -1,13 +1,16 @@
 import { Link } from '@components/Link'
+import { MapDataSourceInspectorEditor } from '@components/MapInterface/mapData/types'
 import React from 'react'
 import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls'
+import { editorUrl } from './osmUrls/editorUrl'
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
   geometry: maplibregl.GeoJSONFeature['geometry']
+  editors?: MapDataSourceInspectorEditor[]
 }
 
-export const Links: React.FC<Props> = ({ properties, geometry }) => {
+export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
   // Normalize id + type for Parking data
   const osmId = (properties.osm_id || properties.way_id || properties.area_id)
     ?.toString()
@@ -27,12 +30,28 @@ export const Links: React.FC<Props> = ({ properties, geometry }) => {
   const historyUrl_ = historyUrl(osmType, osmId)
   const mapillaryUrl_ = mapillaryUrl(geometry)
 
-  if (!osmUrl_ || !historyUrl_) return null
+  if (!osmUrl_ || !historyUrl_ || !editors) return null
   return (
     <div className="bg-white px-4 pb-2.5 text-xs">
       <details className="[&_summary]:open:mb-1 [&_summary]:open:font-semibold">
         <summary className="cursor-pointer text-right">Tools</summary>
         <div className="space-y-2">
+          {editors?.map(({ urlTemplate, name }) => {
+            const url = editorUrl({
+              urlTemplate,
+              geometry,
+              osmType: osmType && longOsmType[osmType],
+              osmId,
+            })
+            if (!url) return null
+            return (
+              <p key={name}>
+                <Link external blank to={url}>
+                  {name}
+                </Link>
+              </p>
+            )
+          })}
           <p>
             <Link external blank to={osmUrl_}>
               In OpenStreetMap öffnen

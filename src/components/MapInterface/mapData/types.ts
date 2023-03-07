@@ -23,6 +23,11 @@ export type MapDataBackgroundSource<TIds> = {
   tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
+export type MapDataSourceInspectorEditor = {
+  name: string
+  urlTemplate: `https://${string}`
+}
+
 type MapDataSourceInspector =
   | {
       enabled: true
@@ -37,6 +42,7 @@ type MapDataSourceInspector =
         | `composit_${string}`
         | `${string}__if_present`
       )[]
+      editors?: MapDataSourceInspectorEditor[]
     }
   | {
       enabled: false

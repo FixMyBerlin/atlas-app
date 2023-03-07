@@ -35,6 +35,13 @@ export const sourcesParking: MapDataSource<
         'highway_width_proc_effective',
         'surface',
       ],
+      editors: [
+        {
+          name: 'Parklinien Editor',
+          urlTemplate:
+            'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
+        },
+      ],
     },
     presence: { enabled: false },
     verification: { enabled: false },
@@ -88,6 +95,13 @@ export const sourcesParking: MapDataSource<
         'access',
         'capacity__if_present',
         'building__if_present',
+      ],
+      editors: [
+        {
+          name: 'Parkplätze Editor',
+          urlTemplate:
+            'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{osm_type}/{osm_id}',
+        },
       ],
     },
     presence: { enabled: false },
