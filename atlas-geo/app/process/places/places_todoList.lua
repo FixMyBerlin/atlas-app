@@ -1,8 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
-require("ToNumber")
--- require("PrintTable")
 require("MergeArray")
 require("Metadata")
 
@@ -54,7 +52,7 @@ local function processTags(tags)
   local allowed_tags = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
   FilterTags(tags, allowed_tags)
-  -- ToNumber(object.tags, Set({ "population" }))
+  -- tags.population = tonumber(tags.population)
 end
 
 function osm2pgsql.process_node(object)
