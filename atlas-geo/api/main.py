@@ -47,7 +47,9 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
 
     statement = sql.SQL("SELECT * FROM {table_name} (%s, %s, %s, %s);").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
     cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
-    return cur.fetchone()[0]
+    result = cur.fetchone()[0]
+    cur.close()
+    return result
 
 
 @app.get("/verify/{type_name}/{osm_id}")
@@ -70,6 +72,8 @@ def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
         "osm_id": osm_id,
         "verified": "none"
       }
+    cur.close()
+
     return results
 
 @app.get("/verify/{type_name}/{osm_id}/history")
@@ -86,6 +90,8 @@ def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
     results = cur.fetchall()
     if results == None:
       raise HTTPException(status_code=404, detail="osm_id not found")
+
+    cur.close()
     return results
 
 
@@ -110,4 +116,11 @@ def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id:
     statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified) VALUES (%s, %s, %s, %s, %s)").format(table_name=sql.Identifier(verification_tables[type_name]))
     cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status ))
     conn.commit()
+
+    cur.close()
     return 'OK'
+
+
+@app.on_event("shutdown")
+def shutdown_event():
+    conn.close()
