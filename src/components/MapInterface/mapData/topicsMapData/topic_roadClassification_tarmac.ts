@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, tarmacStyle } from './utils'
+import { pickLayersByGroup, atlasStyle } from './utils'
 
 const tpoicId = 'roadClassification_tarmac'
 export type TopicRoadClassificationId_Tarmac = typeof tpoicId
@@ -11,7 +11,6 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
   name: 'Straßentypen',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_roadClassification',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
@@ -27,7 +26,6 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
             'line-color': 'HotPink',
             'line-width': 10,
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,
@@ -36,7 +34,7 @@ export const topic_roadClassification_tarmac: MapDataTopic = {
       id: 'zes',
       name: 'Erweitert',
       desc: 'Straßenklassifizierung basierend auf verschiedenen OSM Indikatoren.',
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-strassentypen'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-strassentypen'),
       interactiveFilters: null,
     },
   ],

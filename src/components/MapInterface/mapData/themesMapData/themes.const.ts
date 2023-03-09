@@ -4,7 +4,6 @@ import { MapDataTheme } from '../types'
 export type MapDataThemeIds =
   | 'fromTo'
   | 'bikelanes'
-  | 'bikelanescenterline'
   | 'roadClassification'
   | 'surface'
   | 'parking'
@@ -13,8 +12,9 @@ export type MapDataThemeIds =
   | 'fromToZes'
   | 'bikelanesZes'
   | 'roadClassificationZes'
+  | 'maxspeed'
   | 'surfaceZes'
-  // Speical only:
+  // Special only:
   | 'mapillary'
   | 'accidents'
 
@@ -28,12 +28,14 @@ export const themes: MapDataTheme[] = [
       { id: 'shops', defaultActive: true },
       // { id: 'publicTransport_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
+      { id: 'buildings', defaultActive: false },
       { id: 'landuse', defaultActive: true },
+      { id: 'boundaries', defaultActive: false },
     ],
   },
   {
     id: 'fromToZes',
-    name: 'Quellen & Ziele',
+    name: 'Quellen & Ziele ZES',
     desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
@@ -55,28 +57,21 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
+      { id: 'bikelanesPresence', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
     ],
   },
   {
-    id: 'bikelanescenterline',
-    name: 'Infrastruktur CENTERLINE',
-    desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
-    topics: [
-      { id: 'bikelanescenterline', defaultActive: true },
-      { id: 'bikelanes', defaultActive: false },
-    ],
-  },
-  {
     id: 'bikelanesZes',
-    name: 'Infrastruktur',
+    name: 'Infrastruktur ZES',
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
+      { id: 'bikelanesPresence', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -89,21 +84,22 @@ export const themes: MapDataTheme[] = [
     topics: [
       { id: 'roadClassification_tarmac', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      { id: 'maxspeed', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
     ],
   },
   {
     id: 'roadClassificationZes',
-    name: 'Straßentypen',
+    name: 'Straßentypen ZES',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
       { id: 'roadClassification_tarmac', defaultActive: true },
       { id: 'roadClassification_osmscripts', defaultActive: false },
       { id: 'bikelanes', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
-      { id: 'surface_tarmac', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -114,7 +110,7 @@ export const themes: MapDataTheme[] = [
     name: 'Oberflächen',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
-      { id: 'surface_tarmac', defaultActive: true },
+      // { id: 'surface_tarmac', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
@@ -122,10 +118,10 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'surfaceZes',
-    name: 'Oberflächen',
+    name: 'Oberflächen ZES',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
-      { id: 'surface_tarmac', defaultActive: true },
+      // { id: 'surface_tarmac', defaultActive: true },
       { id: 'surface_osmscripts', defaultActive: false },
       { id: 'bikelanes', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },
@@ -139,9 +135,14 @@ export const themes: MapDataTheme[] = [
     desc: 'Auswertung zum Parken im Straßenraum',
     topics: [
       { id: 'parking', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      // { id: 'parkingLegacy', defaultActive: false },
+      { id: 'parkingPoints', defaultActive: false },
+      { id: 'parkingAreas', defaultActive: true },
+      { id: 'parkingDebug', defaultActive: false },
+      { id: 'parkingStats', defaultActive: false },
+      { id: 'landuse', defaultActive: false },
+      { id: 'mapillaryCoverage', defaultActive: false },
+      // { id: 'accidents', defaultActive: false },
     ],
   },
   {
@@ -150,9 +151,9 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
     topics: [
       { id: 'lit', defaultActive: true },
-      { id: 'surface_tarmac', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
+      // { id: 'surface_tarmac', defaultActive: false },
+      { id: 'places', defaultActive: false },
+      { id: 'landuse', defaultActive: false },
     ],
   },
   {

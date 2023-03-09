@@ -81,7 +81,14 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
           return (
             <details className="space-y-2.5" key={filterData.id}>
               <summary className="text-sm">Filter {filterData.name}</summary>
-              <div className="space-y-2.5">
+              <form
+                className="space-y-2.5"
+                // Radiobuttons need to be triggered on the <form>, Checkboxed on the <input>
+                // @ts-ignore when we console.log what we receive, it is an <input> element. No idea how to tell TS this…
+                onChange={
+                  filterData.inputType === 'radiobutton' ? onChange : undefined
+                }
+              >
                 {filterData.options.map((optionData) => {
                   const optionConfig = filterConfig?.options.find(
                     (o) => o.id === optionData.id
@@ -134,11 +141,10 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
                       dataFilterOptionId={optionConfig.id}
                       label={optionData.name}
                       active={optionConfig.active}
-                      onChange={onChange}
                     />
                   )
                 })}
-              </div>
+              </form>
             </details>
           )
         })}

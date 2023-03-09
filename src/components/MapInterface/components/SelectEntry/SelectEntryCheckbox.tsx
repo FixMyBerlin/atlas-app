@@ -32,6 +32,7 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           )}
           defaultChecked={active}
           disabled={disabled}
+          // Radiobuttons need to be triggered on the <form>, Checkboxed on the <input>
           onChange={onChange}
           value={id}
           data-topicid={dataTopicId}

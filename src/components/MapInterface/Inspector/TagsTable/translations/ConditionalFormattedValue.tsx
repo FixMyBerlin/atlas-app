@@ -1,7 +1,7 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
-import { isDev } from '@components/utils'
+import { isDev, isStaging } from '@components/utils'
 import React from 'react'
-import { FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl'
+import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 
 type Props = {
   sourceId: SourcesIds
@@ -14,30 +14,68 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   tagKey,
   tagValue,
 }) => {
-  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `tarmac-geo`.
+  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
   const categoryTranslatedAlready =
     sourceId == 'tarmac_poiClassification' && tagKey == 'category'
-  if (tagKey === 'name' || categoryTranslatedAlready) {
+  if (['name', 'highway_name'].includes(tagKey) || categoryTranslatedAlready) {
     return <>{tagValue}</>
   }
 
-  const numberKeys = ['population']
-  if (numberKeys.includes(tagKey)) {
-    return <FormattedNumber value={parseInt(tagValue)} />
+  // https://formatjs.io/docs/react-intl/components/#formattednumber
+  const numberConfigs: { key: string; suffix?: string }[] = [
+    { key: 'capacity', suffix: undefined },
+    { key: 'highway_width_proc_effective', suffix: 'm' },
+    { key: 'length', suffix: 'm' },
+    { key: 'maxspeed', suffix: 'km/h' },
+    { key: 'population', suffix: 'Einwohner:innen' },
+    { key: 'width', suffix: 'm' },
+  ]
+  const numberConfig = numberConfigs.find((c) => c.key === tagKey)
+  if (numberConfig) {
+    return (
+      <>
+        <FormattedNumber value={parseFloat(tagValue)} /> {numberConfig.suffix}
+      </>
+    )
   }
 
   const dateKeys = ['population:date']
   if (dateKeys.includes(tagKey)) {
-    return <FormattedDate value={tagValue} />
+    return (
+      <span className="group">
+        <FormattedDate value={tagValue} />{' '}
+        <code className="text-gray-50 group-hover:text-gray-600">
+          {tagValue}
+        </code>
+      </span>
+    )
+  }
+
+  let key = `value--${sourceId}--${tagKey}--${tagValue}`
+
+  // Some keys are a duplicate of other Keys.
+  // We want them translated only once, so we overwrite them here…
+  const keyOverwrites: Record<string, string> = { _parent_highway: 'highway' }
+  if (Object.keys(keyOverwrites).includes(tagKey)) {
+    tagKey = keyOverwrites[tagKey]
   }
 
   // Some TagKeys are not specific per category; we only translate those once
-  const nonCategorizedTagKeys = ['highway', 'surface', 'smoothness']
-  const key = nonCategorizedTagKeys.includes(tagKey)
-    ? `value--${tagKey}--${tagValue}`
-    : `value--${sourceId}--${tagKey}--${tagValue}`
+  const nonCategorizedTagKeys = [
+    'highway',
+    '_parent_highway',
+    'surface',
+    'smoothness',
+    'left',
+    'right',
+    'oneway',
+  ]
+  if (nonCategorizedTagKeys.includes(tagKey)) {
+    key = `value--${tagKey}--${tagValue}`
+  }
 
   // It will take a while to translate everything. This fallback does look better on production.
-  const defaultMessage = isDev ? key : tagValue
+  const defaultMessage = isDev || isStaging ? key : tagValue
+
   return <FormattedMessage id={key} defaultMessage={defaultMessage} />
 }

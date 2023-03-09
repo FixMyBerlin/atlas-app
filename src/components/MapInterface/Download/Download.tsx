@@ -79,8 +79,8 @@ export const Download: React.FC = () => {
             const topicData = getTopicData(topicConfig.id)
             const sourceData = getSourceData(topicData?.sourceId)
 
-            // Download is only allowed when `apiExportIdentifier` is specified explicitly
-            if (!topicData || !sourceData || !sourceData?.apiExportIdentifier) {
+            // Download needs to be enabled per source
+            if (!sourceData.export.enabled) {
               return null
             }
 
@@ -121,7 +121,7 @@ export const Download: React.FC = () => {
                   {allowDownload && (
                     <Link
                       to={`${getApiUrl()}/export/${
-                        sourceData?.apiExportIdentifier
+                        sourceData.export.apiIdentifier
                       }?minlon=${bbox.min[0]}&minlat=${bbox.min[1]}&maxlon=${
                         bbox.max[0]
                       }&maxlat=${bbox.max[1]}`}

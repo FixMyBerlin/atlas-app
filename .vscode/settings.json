@@ -17,5 +17,7 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "exportall.config.folderListener": []
+  "exportall.config.folderListener": [
+    "/src/components/MapInterface/mapData/topicsMapData"
+  ]
 }

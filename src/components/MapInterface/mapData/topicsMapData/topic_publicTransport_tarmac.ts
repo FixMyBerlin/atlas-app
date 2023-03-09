@@ -10,7 +10,6 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
   name: 'ÖPNV',
   desc: null,
   sourceId: 'tarmac_publicTransport',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
@@ -26,7 +25,6 @@ export const topic_publicTransport_tarmac: MapDataTopic = {
             'circle-color': 'HotPink',
             'circle-radius': 10,
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,

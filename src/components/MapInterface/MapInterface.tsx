@@ -1,7 +1,7 @@
 import React from 'react'
 import { MapProvider } from 'react-map-gl'
-import { Calculator } from './Calculator'
 import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
+import { DebugMap } from './DebugBoxes/DebugMap'
 import { Download } from './Download'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
@@ -17,9 +17,9 @@ export const MapInterface: React.FC = () => {
         <Map />
         <SelectBackgroundWithLegend />
         <SelectTopics />
-        <Calculator />
         <Inspector />
         <Download />
+        <DebugMap />
         <DebugStateInteraction />
         <DebugStateReactLocation />
       </div>

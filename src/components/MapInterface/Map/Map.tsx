@@ -1,3 +1,10 @@
+import {
+  getSourceData,
+  getStyleData,
+  getTopicData,
+} from '@components/MapInterface/mapData'
+import { isDev } from '@components/utils'
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -12,14 +19,12 @@ import {
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
+import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
+import { Calculator } from './Calculator/Calculator'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
-import {
-  getStyleData,
-  getThemeTopicData,
-} from '@components/MapInterface/mapData'
-import { createSourceTopicStyleLayerKey } from '../utils'
+import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
   const {
@@ -32,14 +37,8 @@ export const Map: React.FC = () => {
   } = useSearch<LocationGenerics>()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
-  const [loaded, setLoaded] = useState(false)
 
-  const {
-    setInspector,
-    addToCalculator,
-    removeFromCalculator,
-    calculatorFeatures,
-  } = useMapStateInteraction()
+  const { setInspector, setMapLoaded } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -50,34 +49,27 @@ export const Map: React.FC = () => {
   const handleClick = (event: MapLayerMouseEvent) => {
     event.features && setInspector(event.features)
   }
-  const handleDoubleClick = (event: MapLayerMouseEvent) => {
-    if (!event.features) return
 
-    const alreadySelectedIds = calculatorFeatures.map((f) => f?.properties?.id)
-    event.features.forEach((f) => {
-      if (alreadySelectedIds.includes(f?.properties?.id)) {
-        removeFromCalculator(f)
-      } else {
-        addToCalculator([f])
-      }
-    })
-  }
-
-  // keeping this for debugging purposes for now
   const handleLoad = (_event: MapboxEvent) => {
-    // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
-    //  needs to be updated. The following code shows a list of all "external" layers.
-    // const style = event.target.getStyle()
-    // const allLayer = style.layers
-    // // @ts-ignore: 'AnyLayer' not relevant here
-    // const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-    // console.log({ findBeforeIds: basemapLayer })
-    setLoaded(true)
+    // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
+    setMapLoaded(true)
+
+    if (isDev) {
+      // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
+      //  needs to be updated. The following code shows a list of all "external" layers.
+      // const style = _event.target.getStyle()
+      // const allLayer = style.layers
+      // // @ts-ignore: 'AnyLayer' not relevant here
+      // const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
+      // console.log({ findBeforeIds: basemapLayer, allLayer })
+    }
   }
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
+
+  useMissingImage(mainMap)
 
   useEffect(() => {
     if (!mainMap) return
@@ -115,19 +107,25 @@ export const Map: React.FC = () => {
   if (!configThemesTopics || !currentTheme) return null
 
   const interactiveLayerIds: string[] = []
-  currentTheme.topics.forEach((topic) => {
-    const topicData = getThemeTopicData(currentTheme, topic.id)
-    if (!topicData) return
-    topic.styles.map((style) => {
-      const styleData = getStyleData(topicData, style.id)
-      // @ts-ignore styleData should not be undefined here
-      styleData.layers.forEach((layer) => {
+  currentTheme.topics.forEach((topicConfig) => {
+    // Guard: Only pick layer that are part of our current theme
+
+    if (!currentTheme?.topics.some((t) => t.id === topicConfig.id)) return
+    const topicData = getTopicData(topicConfig.id)
+
+    topicConfig.styles.forEach((styleConfig) => {
+      const styleData = getStyleData(topicData, styleConfig.id)
+      styleData.layers.forEach((layerConfig) => {
         const layerKey = createSourceTopicStyleLayerKey(
           topicData.sourceId,
-          topic.id,
-          style.id,
-          layer.id
+          topicConfig.id,
+          styleConfig.id,
+          layerConfig.id
         )
+        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
+        const sourceData = getSourceData(topicData.sourceId)
+        if (!sourceData.inspector.enabled) return
+
         interactiveLayerIds.push(layerKey)
       })
     })
@@ -149,7 +147,9 @@ export const Map: React.FC = () => {
       style={{ width: '100%', height: '100%' }}
       mapLib={maplibregl}
       mapStyle="https://api.maptiler.com/maps/5cff051f-e5ca-43cf-b030-1f0286c59bb3/style.json?key=ECOoUBmpqklzSCASXxcu"
-      interactiveLayerIds={loaded ? interactiveLayerIds : []}
+      // mapStyle="mapbox://styles/hejco/cl706a84j003v14o23n2r81w7"
+      // mapboxAccessToken="pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q"
+      interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}
@@ -158,14 +158,14 @@ export const Map: React.FC = () => {
       onMoveEnd={handleMoveEnd}
       // onZoomEnd={handleZoomEnd} // zooming is always also moving
       onClick={handleClick}
-      onDblClick={handleDoubleClick}
       onLoad={handleLoad}
-      // doubleClickZoom={false}
+      doubleClickZoom={true}
       dragRotate={false}
     >
       <SourceAndLayers />
       <SourcesLayerRasterBackgrounds />
       <NavigationControl showCompass={false} />
+      <Calculator />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
     </MapGl>

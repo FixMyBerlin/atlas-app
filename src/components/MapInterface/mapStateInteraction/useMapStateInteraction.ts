@@ -1,33 +1,33 @@
 import { VerificationApiGet } from '@api/index'
-import { isDev } from '@components/utils/isEnv'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
-import create from 'zustand'
+import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreDebugInfo &
+type Store = StoreMapState &
   StoreFeaturesInspector &
-  StoreFeaturesCalculator &
+  StoreCalculator &
   StoreLocalUpdates
 
-type StoreDebugInfo = {
-  showDebugInfo: boolean
-  setShowDebugInfo: (showDebugInfo: boolean) => void
+type StoreMapState = {
+  mapLoaded: boolean
+  setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
 }
 
-type StoreFeaturesInspector = {
+export type StoreFeaturesInspector = {
   inspectorFeatures: MapboxGeoJSONFeature[]
-  setInspector: (
-    inspectObject: StoreFeaturesInspector['inspectorFeatures']
-  ) => void
+  setInspector: (inspectObject: Store['inspectorFeatures']) => void
   resetInspector: () => void
 }
 
-type StoreFeaturesCalculator = {
-  calculatorFeatures: [] | MapboxGeoJSONFeature[]
-  addToCalculator: (featuresToAdd: MapboxGeoJSONFeature[]) => void
-  removeFromCalculator: (featureToRemove: MapboxGeoJSONFeature) => void
-  clearCalculator: () => void
+export type StoreCalculator = {
+  calculatorAreasWithFeatures: {
+    key: string
+    features: MapboxGeoJSONFeature[]
+  }[]
+  setCalculatorAreasWithFeatures: (
+    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures']
+  ) => void
 }
 
 type StoreLocalUpdates = {
@@ -37,39 +37,20 @@ type StoreLocalUpdates = {
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
-  showDebugInfo: isDev,
-  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo: showDebugInfo }),
+  mapLoaded: false,
+  setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
+  // Data for <Inspector> AND <LayerHighlight>
   inspectorFeatures: [],
   setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
   resetInspector: () => set({ inspectorFeatures: [] }),
 
-  calculatorFeatures: [],
-  addToCalculator: (featuresToAdd) => {
-    const featuresWithCapacity = featuresToAdd.filter(
-      (f) => f?.properties?.capacity
-    )
-    const { calculatorFeatures } = get()
-    // Make array unique `Array.from(new Set[/* non-unique array */]))` https://stackoverflow.com/a/9229821/729221
-    // TODO use uniqueArray
-    set({
-      calculatorFeatures: Array.from(
-        new Set([...featuresWithCapacity, ...calculatorFeatures])
-      ),
-    })
-  },
-  removeFromCalculator: (featureToRemove) => {
-    const { calculatorFeatures } = get()
-    set({
-      calculatorFeatures: calculatorFeatures.filter(
-        (s) => s?.properties?.id !== featureToRemove?.properties?.id
-      ),
-    })
-  },
-  clearCalculator: () => {
-    set({ calculatorFeatures: [] })
-  },
+  // Data for <Inspector> AND <LayerHighlight>
+  calculatorAreasWithFeatures: [],
+  setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
+    set({ calculatorAreasWithFeatures }),
 
+  // Data for optimistic updates; show verification immediately <LayerHightlight>
   localUpdates: [],
   addLocalUpdate: (update) => {
     const { localUpdates } = get()

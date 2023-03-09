@@ -1,7 +1,7 @@
 import { mapboxStylesByLayerGroup, MapboxStylesByLayerGroupIds } from '.'
 import { SourcesIds } from '../../sourcesMapData'
 
-type Props = {
+export type Props = {
   group: MapboxStylesByLayerGroupIds
   source: SourcesIds
   sourceLayer: string

@@ -1,4 +1,4 @@
-import { ThemeConfig } from '@components/MapInterface/mapStateConfig'
+import invariant from 'tiny-invariant'
 import {
   mapData,
   TopicIds,
@@ -6,37 +6,35 @@ import {
   TopicStyleIds,
 } from '../mapData.const'
 import { SourcesIds } from '../sourcesMapData'
-import { MapDataThemeIds } from '../themesMapData'
-import { MapDataTopic } from '../types'
+import { MapDataThemeIds, themes } from '../themesMapData'
+import { MapDataStyle, MapDataTopic } from '../types'
 
 export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
-  return mapData?.themes.find((the) => the.id === themeId)
+  const themeData = themes.find((the) => the.id === themeId)
+  invariant(themeData, 'getThemeData: themeData required')
+  return themeData
 }
-
 export const getTopicData = (topicId: TopicIds | undefined) => {
-  return mapData?.topics.find((t) => t.id === topicId)
-}
-
-export const getThemeTopicData = (
-  currentTheme: ThemeConfig | undefined,
-  topicId: TopicIds | undefined
-) => {
-  if (!currentTheme?.topics.some((t) => t.id === topicId)) {
-    return undefined
-  }
-  return mapData?.topics.find((t) => t.id === topicId)
+  const topicData = mapData?.topics.find((t) => t.id === topicId)
+  invariant(topicData, `getTopicData: topicData for ${topicId} missing`)
+  return topicData
 }
 
 export const getStyleData = (
   topicInput: TopicIds | MapDataTopic | undefined,
   styleId: TopicStyleIds | undefined
 ) => {
+  let styleData = undefined
   if (typeof topicInput === 'string') {
-    const topic = getTopicData(topicInput)
-    return topic?.styles.find((s) => s.id === styleId)
+    const topicData = getTopicData(topicInput)
+    styleData = topicData?.styles.find((s) => s.id === styleId) as MapDataStyle // TODO improve types, likely changing the if-statement to something like "if 'id' in topicInput" to make it easier for TS to infer the types; we should also try to remove the 'undefined' more ore lesse everwhere
   } else {
-    return topicInput?.styles.find((s) => s.id === styleId)
+    styleData = topicInput?.styles.find(
+      (s: MapDataStyle) => s.id === styleId
+    ) as MapDataStyle
   }
+  invariant(styleData, `getStyleData: styleData for ${styleId} missing`)
+  return styleData
 }
 
 export const getFilterData = (
@@ -44,11 +42,15 @@ export const getFilterData = (
   styleId: TopicStyleIds | undefined,
   filterId: TopicStyleFilterIds | undefined
 ) => {
-  const topic = getTopicData(topicId)
-  const style = getStyleData(topic, styleId)
-  return style?.interactiveFilters?.find((f) => f.id === filterId)
+  const topicD = getTopicData(topicId)
+  const styleD = getStyleData(topicD, styleId)
+  const filterData = styleD?.interactiveFilters?.find((f) => f.id === filterId)
+  invariant(filterData, `getFilterData: filterData for ${filterId} missing`)
+  return filterData
 }
 
 export const getSourceData = (sourceId: SourcesIds | undefined) => {
-  return mapData?.sources?.find((s) => s.id === sourceId)
+  const sourceData = mapData?.sources?.find((s) => s.id === sourceId)
+  invariant(sourceData, `filterData: sourceData for ${sourceId} missing`)
+  return sourceData
 }

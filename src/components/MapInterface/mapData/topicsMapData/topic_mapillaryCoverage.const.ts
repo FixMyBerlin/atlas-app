@@ -5,14 +5,11 @@ export type TopicMapillaryCoverageId = typeof topicId
 export type TopicMapillaryCoverageStyleIds = 'default'
 export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
-type Topic = MapDataTopic
-
-export const topic_mapillaryCoverage: Topic = {
+export const topic_mapillaryCoverage: MapDataTopic = {
   id: topicId,
-  name: 'Mapillary Fotos',
+  name: 'Mapillary (Zoom 0-14)',
   desc: null,
   sourceId: 'mapillary_coverage',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
@@ -29,7 +26,6 @@ export const topic_mapillaryCoverage: Topic = {
             'circle-blur': 0.5,
             'circle-color': 'green',
           },
-          enableCalculator: false,
         },
         {
           id: 'line',
@@ -41,7 +37,6 @@ export const topic_mapillaryCoverage: Topic = {
             'line-opacity': 0.7,
             'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 14, 1],
           },
-          enableCalculator: false,
         },
       ],
       interactiveFilters: null,

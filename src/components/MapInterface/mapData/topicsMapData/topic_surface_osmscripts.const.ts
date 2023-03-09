@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, tarmacStyle } from './utils'
+import { pickLayersByGroup, atlasStyle } from './utils'
 
 const topicId = 'surface_osmscripts'
 export type TopicSurfaceId_Osmscripts = typeof topicId
@@ -14,16 +14,12 @@ export const topic_surface_osmscripts: MapDataTopic = {
   name: 'Oberflächenqualität (osmscripts)',
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: 'osmscripts_highways',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: pickLayersByGroup(
-        tarmacStyle.layers,
-        'fmc-oberflaechenqualitaet'
-      ),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-oberflaechenqualitaet'),
       interactiveFilters: null,
     },
     {
@@ -31,17 +27,14 @@ export const topic_surface_osmscripts: MapDataTopic = {
       id: 'bad',
       name: 'Schlechte Oberflächen',
       desc: 'Hervorhebung von schlechten Oberflächen.',
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-surface-bad'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-surface-bad'),
       interactiveFilters: null,
     },
     {
       id: 'debug-smoothness',
       name: 'Debug: Smoothness',
       desc: '`smoothness` Tag fehlt.',
-      layers: pickLayersByGroup(
-        tarmacStyle.layers,
-        'fmc-oberflaechenqualitaet'
-      ),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-oberflaechenqualitaet'),
       interactiveFilters: null,
     },
   ],

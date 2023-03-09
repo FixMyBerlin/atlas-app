@@ -1,5 +1,5 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, tarmacStyle } from './utils'
+import { pickLayersByGroup, atlasStyle } from './utils'
 
 const tpoicId = 'publicTransport_osmscripts'
 export type TopicPublicTransportId_Osmscripts = typeof tpoicId
@@ -11,13 +11,12 @@ export const topic_publicTransport_osmscripts: MapDataTopic = {
   name: 'ÖPNV / Barriers (osmscripts)',
   desc: null,
   sourceId: 'osmscripts_pois',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: pickLayersByGroup(tarmacStyle.layers, 'fmc-barriers'),
+      layers: pickLayersByGroup(atlasStyle.layers, 'fmc-barriers'),
       interactiveFilters: null,
     },
   ],

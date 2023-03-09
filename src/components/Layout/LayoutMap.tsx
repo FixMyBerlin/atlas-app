@@ -1,3 +1,4 @@
+import { TailwindResponsiveHelper } from '@components/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { HeaderRegionen } from './Header'
@@ -19,6 +20,7 @@ export const LayoutMap: React.FC<Props> = ({ children }) => {
         <HeaderRegionen />
         <main className="flex-grow">{children}</main>
       </div>
+      <TailwindResponsiveHelper />
     </>
   )
 }

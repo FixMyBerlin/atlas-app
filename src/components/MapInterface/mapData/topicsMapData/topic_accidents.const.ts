@@ -10,15 +10,12 @@ export type TopicAccidentsId = typeof topicId
 export type TopicAccidentsStyleIds = 'default'
 export type TopicAccidentsStyleFilterIds = 'years' | 'category' | 'type'
 
-type Topic = MapDataTopic
-
 // Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
-export const topic_accidents: Topic = {
+export const topic_accidents: MapDataTopic = {
   id: topicId,
   name: 'Unfälle',
   desc: 'Unfallatlass',
   sourceId: 'accidents_unfallatlas',
-  allowVerify: false,
   styles: [
     {
       id: 'default',
@@ -101,7 +98,6 @@ export const topic_accidents: Topic = {
               1,
             ],
           },
-          enableCalculator: false,
         },
         {
           id: 'label',
@@ -152,7 +148,6 @@ export const topic_accidents: Topic = {
             ],
             'text-halo-width': 1,
           },
-          enableCalculator: false,
         },
       ],
       // Style https://studio.mapbox.com/styles/hejco/ckdzvkywj0u3g1amidtrbnw5v/edit/#18.84/52.4900339/13.3864461

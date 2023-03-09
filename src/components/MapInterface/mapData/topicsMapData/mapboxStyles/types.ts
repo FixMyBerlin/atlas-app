@@ -4,8 +4,9 @@
 export type MapboxStylesByLayerGroupIds =
   | 'atlas_bikelanes'
   | 'atlas_bikelanes_complete'
-  | 'atlas_bikelanes_fresh'
+  | 'atlas_bikelanes_fresh_disabled'
   | 'atlas_bikelanes_verified'
+  | 'atlas_boundaries'
   | 'atlas_education'
   | 'atlas_landuse'
   | 'atlas_lit'
@@ -15,12 +16,23 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_places'
   | 'atlas_placescircle'
   | 'atlas_poiclassification'
+  | 'parking_bufferdriveways'
+  | 'parking_bufferkerbintersections'
+  | 'parking_debug_driveways'
+  | 'parking_debug_kerb'
+  | 'parking_highway_area'
+  | 'parking_parkinglines'
+  | 'parking_stats'
+  | 'parking_stats_length'
+  | 'parking_xx'
 
 export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes'
   | 'atlas_bikelanes_complete'
-  | 'atlas_bikelanes_fresh'
+  | 'atlas_bikelanes_fresh_disabled'
   | 'atlas_bikelanes_verified'
+
+export type MapboxStyleLayerGroupBoundariesIds = 'atlas_boundaries'
 
 export type MapboxStyleLayerGroupEducationIds = 'atlas_education'
 
@@ -41,79 +53,21 @@ export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
 export type MapboxStyleLayerGroupPoiclassificationIds =
   'atlas_poiclassification'
 
-// Type for the layers of each group:
+export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 
-export type MapboxStyleLayers_bikelanes =
-  | 'fmc-verkehrsberuhigt copy 4'
-  | 'Fuehrung mit Fussverkehr copy 3'
-  | 'Getrennte Fuehrung copy 3'
-  | 'hitarea-bikelanes'
+export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
+  'parking_bufferkerbintersections'
 
-export type MapboxStyleLayers_bikelanes_complete =
-  | 'bikelanes-Daten vorhanden'
-  | 'bikelanes-Keine Daten'
-  | 'fmc-verkehrsberuhigt copy 5'
-  | 'Fuehrung mit Fussverkehr copy 4'
-  | 'Getrennte Fuehrung copy 4'
-  | 'hitarea_complete'
+export type MapboxStyleLayerGroupDebugIds =
+  | 'parking_debug_driveways'
+  | 'parking_debug_kerb'
 
-export type MapboxStyleLayers_bikelanes_fresh =
-  | 'Daten aelter 2020-fake copy'
-  | 'Daten aktuell'
-  | 'fmc-verkehrsberuhigt copy 3'
-  | 'Fuehrung mit Fussverkehr copy 2'
-  | 'Getrennte Fuehrung copy 2'
-  | 'hitarea-bikelanes-fresh'
+export type MapboxStyleLayerGroupHighwayIds = 'parking_highway_area'
 
-export type MapboxStyleLayers_bikelanes_verified =
-  | 'bikelanes-verification-status'
-  | 'fmc-verkehrsberuhigt copy 6'
-  | 'Fuehrung mit Fussverkehr copy 1'
-  | 'Getrennte Fuehrung copy 1'
-  | 'hitarea-bikelanes-verified'
+export type MapboxStyleLayerGroupParkinglinesIds = 'parking_parkinglines'
 
-export type MapboxStyleLayers_education =
-  | 'fmc-poiEducation'
-  | 'fmc-poiEducation-label'
+export type MapboxStyleLayerGroupStatsIds =
+  | 'parking_stats'
+  | 'parking_stats_length'
 
-export type MapboxStyleLayers_landuse = 'fmc-landuse'
-
-export type MapboxStyleLayers_lit =
-  | '2_hitarea-lit'
-  | '2_lit-Beleuchtet'
-  | '2_lit-Special'
-  | '2_lit-Unbeleuchtet'
-
-export type MapboxStyleLayers_lit_complete =
-  | '1_hitarea-lit'
-  | '1_lit-Beleuchtet'
-  | '1_lit-Keine Daten'
-  | '1_lit-Special'
-  | '1_lit-Unbeleuchtet'
-
-export type MapboxStyleLayers_lit_fresh =
-  | '3_hitarea-lit'
-  | '3_lit-Beleuchtet'
-  | '3_lit-fresh_check_date'
-  | '3_lit-fresh_update_at'
-  | '3_lit-outdated_check_date'
-  | '3_lit-outdated_update_at'
-  | '3_lit-Special'
-  | '3_lit-Unbeleuchtet'
-
-export type MapboxStyleLayers_lit_verified =
-  | '4_hitarea-lit'
-  | '4_lit-Beleuchtet'
-  | '4_lit-Special'
-  | '4_lit-Unbeleuchtet'
-  | '4_lit-verification-status'
-
-export type MapboxStyleLayers_places = 'fmc-poiPlaces-label'
-
-export type MapboxStyleLayers_placescircle =
-  | 'fmc-poiPlaces-circle'
-  | 'fmc-poiPlaces-label-for-circle'
-
-export type MapboxStyleLayers_poiclassification =
-  | 'fmc-poiShopCategory'
-  | 'fmc-poiShopping-heatmap'
+export type MapboxStyleLayerGroupXxIds = 'parking_xx'

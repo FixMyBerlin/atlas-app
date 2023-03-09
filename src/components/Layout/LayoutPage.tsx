@@ -1,3 +1,4 @@
+import { TailwindResponsiveHelper } from '@components/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import React from 'react'
 import { Footer } from './Footer'
 import { HeaderApp } from './Header'
@@ -15,6 +16,7 @@ export const LayoutPage: React.FC<Props> = ({ header, children }) => {
       {HeaderComponent}
       <main className="prose mx-auto my-10 max-w-prose">{children}</main>
       <Footer />
+      <TailwindResponsiveHelper />
     </div>
   )
 }

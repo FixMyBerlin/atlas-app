@@ -13,7 +13,6 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
   desc: _desc,
   active,
   disabled,
-  onChange,
 }) => {
   const key = `${scope}--${id}`
 
@@ -30,7 +29,6 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
         )}
         defaultChecked={active}
         disabled={disabled}
-        onChange={onChange}
         value={id}
         data-topicid={dataTopicId}
         data-styleid={dataStyleId}

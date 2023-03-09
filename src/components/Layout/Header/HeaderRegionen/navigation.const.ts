@@ -8,5 +8,5 @@ export const primaryNavigation = [
 ]
 
 export const secondaryNavigationGrouped = [
-  [{ name: 'Starseite', href: '/' }, ...defaultSecondaryNavigation],
+  [{ name: 'Startseite', href: '/' }, ...defaultSecondaryNavigation],
 ]

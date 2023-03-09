@@ -6,7 +6,7 @@ import { flatConfigTopics } from './flatConfigTopics'
 describe('flatConfigTopics()', () => {
   test('Flatten removes duplicate topics', () => {
     const initialMapConfig = createMapRegionConfig({
-      regionThemeIds: ['fromTo', 'lit'],
+      regionThemeIds: ['bikelanes', 'lit'],
     })
 
     // console.log('intialConfig', JSON.stringify(initialMapConfig, undefined, 2))

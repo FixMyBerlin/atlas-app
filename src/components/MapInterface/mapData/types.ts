@@ -23,26 +23,100 @@ export type MapDataBackgroundSource<TIds> = {
   tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
+export type MapDataSourceInspectorEditor = {
+  name: string
+  urlTemplate: `https://${string}`
+}
+
+type MapDataSourceInspector =
+  | {
+      enabled: true
+      /** @desc The key used by the highlighting LayerHighlight component to change the appearance of the selected element */
+      highlightingKey: string
+      /** @desc A sorted list of keys that we officially document.
+       * Keys of type `composit_*` require their own TableRowCell-Component.
+       * Keys of type `*__if_present` are only presented if a value is present.
+       * (Keys that are not mentioned here are for debugging only.) */
+      documentedKeys?: (
+        | string
+        | `composit_${string}`
+        | `${string}__if_present`
+      )[]
+      editors?: MapDataSourceInspectorEditor[]
+    }
+  | {
+      enabled: false
+    }
+
+type MapDataSourceVerifcation<TVerIds> =
+  | {
+      enabled: true
+      /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
+      apiIdentifier: TVerIds
+    }
+  | {
+      enabled: false
+      apiIdentifier?: undefined
+    }
+
+type MapDataSourceFreshness =
+  | {
+      enabled: true
+      /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
+      dateKey?: string
+    }
+  | {
+      enabled: false
+      dateKey?: undefined
+    }
+
+export type MapDataSourceCalculator =
+  | {
+      enabled: true
+      keys: string[]
+      queryLayers: string[]
+      /** @desc The key used by the highlighting LayerHighlight component to change the appearance of the selected element */
+      highlightingKey: string
+    }
+  | {
+      enabled: false
+      keys?: undefined
+      queryLayers?: undefined
+      highlightingKey?: undefined
+    }
+
+type MapDataSourceExport<TExpIds> =
+  | {
+      enabled: true
+      /** @desc Identifier for the export API URL; export is only allowed when present */
+      apiIdentifier: TExpIds
+    }
+  | {
+      enabled: false
+      apiIdentifier?: undefined
+    }
+
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
-  /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
-  apiVerificationIdentifier?: TVerIds
-  /** @desc Identifier for the export API URL; export is only allowed when present */
-  apiExportIdentifier?: TExpIds
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
   licence?: 'ODbL'
-  /** @desc A sorted list of keys that we officially document.
-   * Keys of type `composit_*` require their own TableRowCell-Component.
-   * Keys of type `*__if_present` are only presented if a value is present.
-   * (Keys that are not mentioned here are for debugging only.) */
-  documentedKeys?: (string | `composit_${string}` | `${string}__if_present`)[]
-  /** @desc The key used by the highlighting LayerHighliht component to change the appearance of the selected element */
-  highlightingKey: string
-  /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
-  freshnessDateKey?: string
+  /** @desc Inspector: Enable and configure Inspector */
+  inspector: MapDataSourceInspector
+  /** @desc Inspector: Enable info data on presence */
+  presence: {
+    enabled: boolean
+  }
+  /** @desc Inspector: Enable and configure in app verification */
+  verification: MapDataSourceVerifcation<TVerIds>
+  /** @desc Inspector: Enable and configure info data on freshness */
+  freshness: MapDataSourceFreshness
+  /** @desc Calculator: Enable and configure calculator feature */
+  calculator: MapDataSourceCalculator
+  /** @desc Export: Enable and configure data export */
+  export: MapDataSourceExport<TExpIds>
   minzoom?: mapboxgl.RasterSource['minzoom']
   maxzoom?: mapboxgl.RasterSource['maxzoom']
 }
@@ -67,7 +141,6 @@ export type MapDataTopic = {
   name: string
   desc: string | null
   sourceId: SourcesIds
-  allowVerify: boolean
   styles: MapDataStyle[]
 }
 
@@ -88,9 +161,8 @@ export type MapDataVisLayer = (
   | mapboxgl.HeatmapLayer
   | mapboxgl.LineLayer
   | mapboxgl.SymbolLayer
-) & {
-  enableCalculator?: boolean
-}
+) &
+  Required<Pick<mapboxgl.Layer, 'source-layer'>>
 
 /** @desc: Optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataStyleInteractiveFilter = {

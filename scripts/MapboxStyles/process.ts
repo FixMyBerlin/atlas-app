@@ -5,13 +5,30 @@ import fs from 'fs'
 import chalk from 'chalk'
 
 // Configruation:
-// Data from https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
-const apiUrl = `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${
-  import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
-}`
-
-// Only groups with `atlas_` prefix are used
-const mapboxGroupPrefix = 'atlas_'
+const keys = ['atlas', 'parking']
+const apiConfigs = [
+  {
+    key: 'atlas',
+    // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
+    apiUrl:
+      import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${
+        import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
+      }`,
+    // Only groups with `atlas_` prefix are used
+    mapboxGroupPrefix: 'atlas_',
+  },
+  {
+    key: 'parking',
+    // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
+    apiUrl:
+      import.meta.env.VITE_MAPBOX_PARKING_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${
+        import.meta.env.VITE_MAPBOX_PARKING_STYLE_ACCESS_TOKEN
+      }`,
+    mapboxGroupPrefix: 'parking_',
+  },
+].filter((c) => Boolean(c.apiUrl))
 
 // Folder
 const scriptJsonFolder = 'scripts/MapboxStyles/json'
@@ -26,114 +43,157 @@ const log = (title, object: any = '-') => {
   )
 }
 
-// Script:
-// Script: Fetch rawData
-const fetchStyles = await fetch(apiUrl)
+// ============= Collect data per `apiConfig`
 
-if (!fetchStyles.ok) {
-  console.error('Fetch failed', fetchStyles)
-  process.exit()
-}
-
-const rawData = await fetchStyles.json()
-
-// Script: For debugging, write the rawData
-fs.writeFileSync(
-  `${scriptJsonFolder}/atlas-raw-api-response.json`,
-  JSON.stringify(rawData, undefined, 2)
+type GroupsLayer = { group: string; layers: mapboxgl.AnyLayer[] }
+const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(
+  keys.map((k) => [k, []])
 )
-log('Received raw data', rawData)
+const metaFileContent: Record<string, any> = Object.fromEntries(
+  keys.map((k) => [k, undefined])
+)
 
-// Script: Remove all non-FMC-groups
-type MapBoxGroupEntry = { name: string; collapsed: boolean }
-type Group = { key: string; name: string }
+await Promise.all(
+  apiConfigs.map(async ({ key, apiUrl, mapboxGroupPrefix }) => {
+    // Script:
+    // Script: Fetch rawData
+    const fetchStyles = await fetch(apiUrl)
 
-const groups = Object.entries(rawData.metadata['mapbox:groups'])
-  .map((entry) => {
-    const key = entry[0] as string
-    const values = entry[1] as MapBoxGroupEntry
-    if (values.name.startsWith(mapboxGroupPrefix)) {
-      return { key: key, name: values.name }
+    if (!fetchStyles.ok) {
+      console.error('Fetch failed', fetchStyles)
+      process.exit()
     }
-    return null
-  })
-  .filter((e): e is Group => !!e) // Learn more https://www.benmvp.com/blog/filtering-undefined-elements-from-array-typescript/
 
-log(`Received ${groups.length} groups`)
+    const rawData = await fetchStyles.json()
 
-// Script: For each group, collect the layers:
-// Create our own data
-const groupsAndLayers = groups.map((group) => {
-  return {
-    group: group.name,
-    layers: rawData.layers.filter((layer) => {
-      return layer.metadata && layer.metadata['mapbox:group'] == group.key
-    }),
-  }
-})
+    // Script: For debugging, write the rawData
+    fs.writeFileSync(
+      `${scriptJsonFolder}/raw-api-response_${key}.json`,
+      JSON.stringify(rawData, undefined, 2)
+    )
+    // log(`${key}: Received raw data`, rawData)
+    log(`${key}: Received raw data`)
 
-// Cleanup keys from layers that we don't need or that we need to add ourselved later:
-groupsAndLayers.forEach((g) =>
-  g.layers.forEach((layer) => {
-    delete layer.metadata
-    delete layer.source
-    delete layer['source-layer']
-    delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
+    // Script: Remove all non-FMC-groups
+    type MapBoxGroupEntry = { name: string; collapsed: boolean }
+    type Group = { key: string; name: string }
+
+    const groups = Object.entries(rawData.metadata['mapbox:groups'])
+      .map((entry) => {
+        const key = entry[0] as string
+        const values = entry[1] as MapBoxGroupEntry
+        if (values.name.startsWith(mapboxGroupPrefix)) {
+          return { key: key, name: values.name }
+        }
+        return null
+      })
+      .filter((e): e is Group => !!e) // Learn more https://www.benmvp.com/blog/filtering-undefined-elements-from-array-typescript/
+
+    log(`${key}: Received ${groups.length} groups`)
+
+    // Script: For each group, collect the layers:
+    // Create our own data
+    groupsAndLayers[key] = groups.map((group) => {
+      return {
+        group: group.name,
+        layers: rawData.layers.filter((layer) => {
+          return layer.metadata && layer.metadata['mapbox:group'] == group.key
+        }),
+      }
+    })
+
+    // Cleanup keys from layers that we don't need or that we need to add ourselved later:
+    groupsAndLayers[key].forEach((g) =>
+      g.layers.forEach((layer: any) => {
+        delete layer.metadata
+        delete layer.source
+        delete layer['source-layer']
+        delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
+      })
+    )
+
+    // Cleanup layer names & collect debugging info
+    const changedNamesForDebugging: {
+      sourceName: string
+      cleanedName: string
+    }[] = []
+    groupsAndLayers[key].forEach((g) => {
+      const sourceName = g.group
+      const cleanedName = sourceName.toLowerCase().replace(/[^a-z_]/g, '')
+      if (sourceName !== cleanedName) {
+        g.group = cleanedName
+        changedNamesForDebugging.push({ sourceName, cleanedName })
+      }
+    })
+    if (changedNamesForDebugging.length) {
+      log(
+        `${key}: ${changedNamesForDebugging.length} group names where renamed:`,
+        { changedNamesForDebugging }
+      )
+    }
+
+    metaFileContent[key] = {
+      key,
+      about: `Metadata on the last processing of the ${key} styles api response`,
+      processed_at: new Date().toLocaleString('de-DE'),
+      style_last_published: {
+        published_at: new Date(rawData.modified).toLocaleString('de-DE'),
+        version: rawData.version,
+      },
+      style_id: rawData.id,
+      style_owner: rawData.owner,
+      style_name: rawData.name,
+      debug_changed_names: {
+        about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
+        changedNamesForDebugging,
+      },
+    }
   })
 )
 
-// Cleanup layer names
-const changedNamesForDebugging: { sourceName: string; cleanedName: string }[] =
-  []
-groupsAndLayers.forEach((g) => {
-  const sourceName = g.group
-  const cleanedName = sourceName.toLowerCase().replace(/[^a-z_]/g, '')
-  if (sourceName !== cleanedName) {
-    g.group = cleanedName
-    changedNamesForDebugging.push({ sourceName, cleanedName })
-  }
-})
-if (changedNamesForDebugging.length) {
-  log(`${changedNamesForDebugging.length} group names where renamed:`, {
-    changedNamesForDebugging,
-  })
-}
+// ============= Now, we bring all `apiConfigs` back together
+
+const mergedSortedGroupAndLayers = Object.values(groupsAndLayers)
+  .map((layers) => layers)
+  .flat()
+  .sort((a, b) => a.group.localeCompare(b.group))
 
 // Write file
 const stylesFile = `${componentFolder}/mapbox-layer-styles-by-group.json`
-fs.writeFileSync(stylesFile, JSON.stringify(groupsAndLayers, undefined, 2))
+fs.writeFileSync(
+  stylesFile,
+  JSON.stringify(mergedSortedGroupAndLayers, undefined, 2)
+)
 log(`Write stylesFile`, stylesFile)
 
 // Script: Generate types file
-// (Don't change the new lines and spaces in this template; the generated output does fit Prettier conventions.)
-const sortedGroupsAndLayers = groupsAndLayers.sort((a, b) =>
-  a.group.localeCompare(b.group)
-)
 type TypeGroup = [string, string[]]
 const typeGroupKeys = Array.from(
-  new Set(sortedGroupsAndLayers.map((entry) => entry.group.split('_')[1]))
+  new Set(mergedSortedGroupAndLayers.map((entry) => entry.group.split('_')[1]))
 )
 const typeGroups = typeGroupKeys.map((groupKey) => {
-  const groupValues = sortedGroupsAndLayers
-    .filter((entry) =>
-      entry.group.startsWith(`${mapboxGroupPrefix}${groupKey}`)
-    )
+  const groupValues = mergedSortedGroupAndLayers
+    .filter((entry) => {
+      return keys.some((key) => entry.group.startsWith(`${key}_${groupKey}`))
+    })
     .map((entry) => entry.group)
   return [groupKey, groupValues] as TypeGroup
 })
 // This is the file that we write.
 // We create one type with all Ids
 // And one Type per Group with only the Ids of that type.
+// (Don't change the new lines and spaces in this template; the generated output does fit Prettier conventions.)
 const typesFileContent = `// Autogenerated by \`scripts/MapboxStyles/process.ts\`
 // Do not change this file manually
 
 export type MapboxStylesByLayerGroupIds =
-${sortedGroupsAndLayers.map((g) => `  | '${g.group}'\n`).join('')}
+${mergedSortedGroupAndLayers.map((g) => `  | '${g.group}'\n`).join('')}
 ${typeGroups
   .map((entry) => {
     const [groupKey, groupValues] = entry as TypeGroup
     const typeKeyPart = `${groupKey[0].toUpperCase()}${groupKey.substring(1)}`
     const exportString = `export type MapboxStyleLayerGroup${typeKeyPart}Ids`
+
     if (groupValues.length > 1) {
       return `${exportString} =\n${groupValues
         .map((g) => `  | '${g}'\n`)
@@ -142,48 +202,11 @@ ${typeGroups
       return `${exportString} = ${groupValues.map((g) => `'${g}'`).join('')}\n`
     }
   })
-  .join('\n')}
-
-// Type for the layers of each group:
-
-${sortedGroupsAndLayers
-  .map((entry) => {
-    type Entry = { group: string; layers: { id: string }[] }
-    const { group, layers } = entry as unknown as Entry
-    const sortedLayers = layers.sort((a, b) => a.id.localeCompare(b.id))
-    const typeKeyPart = group.replace(mapboxGroupPrefix, '')
-    const exportString = `export type MapboxStyleLayers_${typeKeyPart}`
-    if (sortedLayers.length > 1) {
-      return `${exportString} =\n${sortedLayers
-        .map((l) => `  | '${l.id}'\n`)
-        .join('')}`
-    } else {
-      return `${exportString} = ${sortedLayers
-        .map((l) => `'${l.id}'`)
-        .join('')}\n`
-    }
-  })
   .join('\n')}`
 
 fs.writeFileSync(`${componentFolder}/types.ts`, typesFileContent)
 log(`Write typesFile`, typesFileContent)
 
-// Script: Write meta data file
-const metaFileContent = {
-  about: 'Metadata on the last processing of the styles api response',
-  processed_at: new Date().toLocaleString('de-DE'),
-  style_last_published: {
-    published_at: new Date(rawData.modified).toLocaleString('de-DE'),
-    version: rawData.version,
-  },
-  style_id: rawData.id,
-  style_owner: rawData.owner,
-  style_name: rawData.name,
-  debug_changed_names: {
-    about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
-    changedNamesForDebugging,
-  },
-}
 fs.writeFileSync(
   `${scriptJsonFolder}/metadata_last_process.json`,
   JSON.stringify(metaFileContent, undefined, 2)

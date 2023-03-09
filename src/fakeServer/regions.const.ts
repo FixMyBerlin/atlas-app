@@ -45,8 +45,7 @@ export type RegionPath =
   | 'berlin'
   | 'zes'
   | 'langerwehe'
-  | 'bibi_centerline'
-  | 'trto_centerline'
+  | 'parkraum'
   | 'deutschland'
 
 // This is our regions "Database" until we have a real one
@@ -73,22 +72,6 @@ export const regions: Region[] = [
     backgroundSources: defaultBackgroundSources,
   },
   {
-    name: 'BiBiCenterline',
-    fullName: 'Bietigheim-Bissingen CENTERLINE',
-    path: 'bibi_centerline',
-    map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
-    bbox: {
-      min: [9.0671, 48.9229],
-      max: [9.1753, 48.9838],
-    },
-    logoPath: '/pageRegions/bibi-logo.svg',
-    logoWhiteBackgroundRequired: false,
-    themes: ['bikelanescenterline'],
-    osmUsers: [...adminIds],
-    published: false,
-    backgroundSources: defaultBackgroundSources,
-  },
-  {
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
     path: 'trto',
@@ -101,28 +84,13 @@ export const regions: Region[] = [
     logoWhiteBackgroundRequired: true,
     themes: [
       // The order here specifies the order in the UI
+      'fromTo',
       'bikelanes',
       'lit',
     ],
     osmUsers: [...adminIds],
     published: true,
-    backgroundSources: defaultBackgroundSources,
-  },
-  {
-    name: 'TrToCenterline',
-    fullName: 'Treptower Tollensewinkel CENTERLINE',
-    path: 'trto_centerline',
-    map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
-    bbox: {
-      min: [12.9949, 53.5934],
-      max: [13.4782, 53.8528],
-    },
-    logoPath: '/pageRegions/trto-logo.png',
-    logoWhiteBackgroundRequired: true,
-    themes: ['bikelanescenterline'],
-    osmUsers: [...adminIds],
-    published: false,
-    backgroundSources: defaultBackgroundSources,
+    backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },
   {
     name: 'Berlin',
@@ -166,7 +134,6 @@ export const regions: Region[] = [
       'fromTo',
       'bikelanesZes',
       'bikelanes',
-      'bikelanescenterline',
       'roadClassificationZes',
       'surfaceZes',
       'lit',
@@ -189,6 +156,31 @@ export const regions: Region[] = [
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: defaultBackgroundSources,
+  },
+  {
+    name: 'Parkraum',
+    fullName: 'Deutschlandweiter Parkraum',
+    path: 'parkraum',
+    map: { lat: 52.494, lng: 13.406, zoom: 12 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    themes: ['parking'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'strassenbefahrung',
+      'alkis',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+      'parkraumkarte_neukoelln',
+    ],
   },
   {
     name: 'Download',
