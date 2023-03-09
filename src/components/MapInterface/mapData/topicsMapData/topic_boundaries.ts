@@ -46,8 +46,8 @@ export const topic_boundaries: MapDataTopic = {
           filterConfig: { lookupKey: 'admin_level' },
           inputType: 'radiobutton',
           options: [
-            { id: '7', name: 'Admin Level 7', defaultActive: false },
-            { id: '8', name: 'Admin Level 8', defaultActive: true },
+            { id: '7', name: 'Gemeindeverbund / Amt', defaultActive: false },
+            { id: '8', name: 'Gemeinde / Stadt', defaultActive: true },
           ],
         },
       ],
