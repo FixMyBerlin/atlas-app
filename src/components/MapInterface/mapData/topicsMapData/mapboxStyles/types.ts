@@ -6,6 +6,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_bikelanes_complete'
   | 'atlas_bikelanes_fresh_disabled'
   | 'atlas_bikelanes_verified'
+  | 'atlas_bikelanespresence_complete'
   | 'atlas_boundaries'
   | 'atlas_education'
   | 'atlas_landuse'
@@ -16,6 +17,8 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_places'
   | 'atlas_placescircle'
   | 'atlas_poiclassification'
+  | 'atlas_roadclassification'
+  | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
   | 'parking_bufferkerbintersections'
   | 'parking_debug_driveways'
@@ -31,6 +34,10 @@ export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes_complete'
   | 'atlas_bikelanes_fresh_disabled'
   | 'atlas_bikelanes_verified'
+  | 'atlas_bikelanespresence_complete'
+
+export type MapboxStyleLayerGroupBikelanespresenceIds =
+  'atlas_bikelanespresence_complete'
 
 export type MapboxStyleLayerGroupBoundariesIds = 'atlas_boundaries'
 
@@ -52,6 +59,10 @@ export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
 
 export type MapboxStyleLayerGroupPoiclassificationIds =
   'atlas_poiclassification'
+
+export type MapboxStyleLayerGroupRoadclassificationIds =
+  | 'atlas_roadclassification'
+  | 'atlas_roadclassification_detailed'
 
 export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 

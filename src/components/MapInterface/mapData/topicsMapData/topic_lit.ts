@@ -21,7 +21,7 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
     },
   },
   {
-    id: 'lit',
+    id: 'lit-special',
     name: 'Beleuchtet (Sonderfälle)',
     style: {
       type: 'line',

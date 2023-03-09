@@ -546,6 +546,109 @@
     ]
   },
   {
+    "group": "atlas_bikelanespresence_complete",
+    "layers": [
+      {
+        "type": "line",
+        "id": "left",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "left"],
+            ["missing"],
+            "rgb(250, 128, 225)",
+            ["not_expected"],
+            "rgba(230, 230, 230, 0.68)",
+            ["data_no"],
+            "rgba(248, 216, 216, 0.67)",
+            [
+              "cyclewayOnHighway",
+              "footway_bicycleYes",
+              "needsClarification",
+              "footAndCycleway_shared",
+              "cyclewayAlone",
+              "cyclewaySeparated",
+              "footAndCycleway_segregated",
+              "bicycleRoad",
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
+            ],
+            "rgba(235, 235, 254, 0.7)",
+            "rgba(0, 0, 0, 0.7)"
+          ],
+          "line-width": ["step", ["zoom"], 2, 14, 4],
+          "line-offset": ["step", ["zoom"], 2, 14, 4]
+        },
+        "layout": {}
+      },
+      {
+        "type": "line",
+        "id": "right",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "right"],
+            ["missing"],
+            "rgb(250, 128, 225)",
+            ["not_expected"],
+            "rgba(230, 230, 230, 0.68)",
+            ["data_no"],
+            "rgba(248, 216, 216, 0.67)",
+            [
+              "cyclewayOnHighway",
+              "footway_bicycleYes",
+              "needsClarification",
+              "footAndCycleway_shared",
+              "cyclewayAlone",
+              "cyclewaySeparated",
+              "footAndCycleway_segregated",
+              "bicycleRoad",
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
+            ],
+            "rgba(235, 235, 254, 0.7)",
+            "rgba(0, 0, 0, 0.7)"
+          ],
+          "line-offset": ["step", ["zoom"], -2, 14, -4],
+          "line-width": ["step", ["zoom"], 2, 14, 4]
+        },
+        "layout": {}
+      },
+      {
+        "type": "line",
+        "id": "self",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "self"],
+            ["missing"],
+            "rgb(250, 128, 225)",
+            ["not_expected"],
+            "rgba(230, 230, 230, 0.68)",
+            ["data_no"],
+            "rgba(248, 216, 216, 0.67)",
+            [
+              "cyclewayOnHighway",
+              "footway_bicycleYes",
+              "needsClarification",
+              "footAndCycleway_shared",
+              "cyclewayAlone",
+              "cyclewaySeparated",
+              "footAndCycleway_segregated",
+              "bicycleRoad",
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
+            ],
+            "rgba(235, 235, 254, 0.7)",
+            "rgba(0, 0, 0, 0.7)"
+          ],
+          "line-width": ["step", ["zoom"], 2, 14, 4]
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
     "group": "atlas_boundaries",
     "layers": [
       {
@@ -694,10 +797,24 @@
         }
       },
       {
+        "id": "2_lit-Special-Area",
+        "type": "fill",
+        "paint": {
+          "fill-color": "rgb(255, 172, 56)",
+          "fill-opacity": 0.4
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["special"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ],
+        "layout": {}
+      },
+      {
         "id": "2_lit-Unbeleuchtet",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 86%, 19%)",
+          "line-color": "rgb(90, 72, 7)",
           "line-width": [
             "interpolate",
             ["linear"],
@@ -724,10 +841,24 @@
         "layout": {}
       },
       {
+        "id": "2_lit-Unbeleuchtet-Area",
+        "type": "fill",
+        "paint": {
+          "fill-color": "rgb(90, 72, 7)",
+          "fill-opacity": 0.4
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["unlit"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ],
+        "layout": {}
+      },
+      {
         "id": "2_lit-Beleuchtet-Linie",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 94%, 57%)",
+          "line-color": "rgb(248, 204, 42)",
           "line-width": [
             "interpolate",
             ["linear"],
@@ -763,8 +894,14 @@
         "id": "2_lit-Beleuchtet-Area",
         "type": "fill",
         "paint": {
-          "fill-color": "hsl(47, 94%, 57%)"
+          "fill-color": "rgb(248, 204, 42)",
+          "fill-opacity": 0.4
         },
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["lit"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ],
         "layout": {}
       },
       {
@@ -916,47 +1053,14 @@
     "group": "atlas_lit_fresh",
     "layers": [
       {
-        "id": "3_lit-outdated_update_at",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(0, 100%, 41%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            7,
-            2,
-            12,
-            4.5,
-            16,
-            16
-          ],
-          "line-dasharray": [0.5, 0.1]
-        },
-        "filter": [
-          "all",
-          ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
-          ["==", ["get", "is_present"], true]
-        ]
-      },
-      {
-        "id": "3_lit-fresh_update_at",
+        "id": "3_lit-fresh_update_at-side1",
         "type": "line",
         "paint": {
           "line-color": "hsl(107, 88%, 57%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            7,
-            2,
-            12,
-            4.5,
-            16,
-            16
-          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
           "line-blur": 1,
-          "line-dasharray": [0.5, 0.1]
+          "line-dasharray": [2, 0.8],
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 18, 5]
         },
         "filter": [
           "all",
@@ -965,45 +1069,61 @@
         ]
       },
       {
-        "id": "3_lit-outdated_check_date",
+        "id": "3_lit-fresh_update_at-side2",
         "type": "line",
         "paint": {
-          "line-color": "hsl(0, 100%, 41%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            7,
-            2,
-            12,
-            4.5,
-            16,
-            16
-          ]
+          "line-color": "hsl(107, 88%, 57%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-dasharray": [2, 0.8],
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, -1.5, 18, -5]
         },
         "filter": [
           "all",
-          ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
+          ["match", ["get", "fresh"], ["fresh_update_at"], true, false],
           ["==", ["get", "is_present"], true]
         ]
       },
       {
-        "id": "3_lit-fresh_check_date",
+        "id": "3_lit-outdated_update_at-side1",
         "type": "line",
         "paint": {
-          "line-color": "hsl(107, 88%, 57%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            7,
-            2,
-            12,
-            4.5,
-            16,
-            16
-          ],
-          "line-blur": 1
+          "line-color": "rgb(209, 0, 0)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-dasharray": [2, 0.8],
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 18, 5]
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
+      },
+      {
+        "id": "3_lit-outdated_update_at-side2",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(209, 0, 0)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-dasharray": [2, 0.8],
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, -1.5, 18, -5]
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
+      },
+      {
+        "id": "3_lit-fresh_check_date-side2",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(91, 242, 49)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, -1.5, 18, -5]
         },
         "filter": [
           "all",
@@ -1012,21 +1132,56 @@
         ]
       },
       {
+        "id": "3_lit-fresh_check_date-side1",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(107, 88%, 57%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 18, 5]
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["fresh_check_date"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
+      },
+      {
+        "id": "3_lit-outdated_check_date-side2",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(209, 0, 0)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, -1.5, 18, -5]
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
+      },
+      {
+        "id": "3_lit-outdated_check_date-side1 ",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(209, 0, 0)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 4],
+          "line-blur": 1,
+          "line-offset": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 18, 5]
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
+      },
+      {
         "id": "3_lit-Unbeleuchtet",
         "type": "line",
         "paint": {
           "line-color": "hsl(47, 86%, 19%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            12,
-            3,
-            13,
-            5,
-            18,
-            10
-          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
           "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
           "line-blur": 1
         },
@@ -1040,17 +1195,7 @@
         "type": "line",
         "paint": {
           "line-color": "hsl(35, 100%, 61%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            12,
-            3,
-            13,
-            5,
-            18,
-            10
-          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
           "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
           "line-blur": 1
         },
@@ -1064,17 +1209,7 @@
         "type": "line",
         "paint": {
           "line-color": "hsl(47, 94%, 57%)",
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            12,
-            3,
-            13,
-            5,
-            18,
-            10
-          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
           "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
           "line-blur": 1
         },
@@ -1446,6 +1581,313 @@
             "#952809"
           ]
         }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclassification",
+    "layers": [
+      {
+        "id": "fmc-strassentypen copy",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            0,
+            0.5,
+            13,
+            1.5,
+            22,
+            5
+          ],
+          "line-color": [
+            "case",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
+              ["true"],
+              true,
+              false
+            ],
+            "#3cc8a0",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typHauptUndSammelstrasse"],
+              ["true"],
+              true,
+              false
+            ],
+            "#dc9404",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+              ["true"],
+              true,
+              false
+            ],
+            "hsla(313, 18%, 69%, 0.37)",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typAusserorts"],
+              ["true"],
+              true,
+              false
+            ],
+            "hsl(28, 97%, 47%)",
+            ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
+            "hsla(97, 56%, 51%, 0)",
+            "hsla(97, 56%, 51%, 0)"
+          ],
+          "line-opacity": 0.84
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclassification_detailed",
+    "layers": [
+      {
+        "id": "backup-strassentypen-no-verifikation-done copy 2",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12,
+            1.5,
+            13,
+            5,
+            18,
+            10
+          ],
+          "line-color": "hsl(330, 0%, 38%)",
+          "line-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12,
+            0,
+            12.6,
+            0.5,
+            18,
+            0.7
+          ]
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+            ["false"],
+            true,
+            false
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
+            ["false", "true"],
+            false,
+            true
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
+            ["true"],
+            false,
+            true
+          ]
+        ],
+        "layout": {}
+      },
+      {
+        "id": "strassentypen-no-verifikation-done copy 3",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12,
+            3,
+            12.2,
+            4,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-color": "#fa7fe2",
+          "line-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            12.1,
+            0,
+            12.2,
+            1,
+            18,
+            1
+          ]
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+            ["false"],
+            true,
+            false
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
+            ["false", "true"],
+            false,
+            true
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
+            ["true"],
+            false,
+            true
+          ]
+        ],
+        "layout": {}
+      },
+      {
+        "id": "strassentypen-unverified",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            5,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-color": "hsl(0, 100%, 41%)",
+          "line-dasharray": [1, 0.1]
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+            ["false"],
+            true,
+            false
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
+            ["true"],
+            true,
+            false
+          ]
+        ],
+        "layout": {}
+      },
+      {
+        "id": "strassentypen-verified",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            5,
+            13,
+            8,
+            18,
+            20
+          ],
+          "line-color": "hsl(107, 88%, 57%)",
+          "line-dasharray": [1, 0.1]
+        },
+        "filter": [
+          "all",
+          [
+            "match",
+            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+            ["false"],
+            true,
+            false
+          ],
+          [
+            "match",
+            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
+            ["true"],
+            true,
+            false
+          ]
+        ],
+        "layout": {}
+      },
+      {
+        "id": "fmc-strassentypen",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            11,
+            1,
+            13,
+            2.5,
+            18,
+            10
+          ],
+          "line-color": [
+            "case",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
+              ["true"],
+              true,
+              false
+            ],
+            "#3cc8a0",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typHauptUndSammelstrasse"],
+              ["true"],
+              true,
+              false
+            ],
+            "#dc9404",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
+              ["true"],
+              true,
+              false
+            ],
+            "hsla(313, 18%, 69%, 0.37)",
+            [
+              "match",
+              ["get", "FMC:Category:HighwayTypeData:typAusserorts"],
+              ["true"],
+              true,
+              false
+            ],
+            "hsl(28, 97%, 47%)",
+            ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
+            "hsla(97, 56%, 51%, 0)",
+            "hsla(97, 56%, 51%, 0)"
+          ]
+        },
+        "layout": {}
       }
     ]
   },
