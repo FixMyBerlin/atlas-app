@@ -123,7 +123,10 @@ function osm2pgsql.process_way(object)
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
+
+        -- Freshness of data (ATER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
+
         cycleway.offset = sign * width / 2
         categoryTable:insert({
           category = category,
@@ -136,6 +139,7 @@ function osm2pgsql.process_way(object)
       end
     end
   end
+
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   local data_complete = presence[CENTER_SIGN] or (presence[RIGHT_SIGN] and presence[LEFT_SIGN])
