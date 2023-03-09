@@ -1,18 +1,16 @@
-package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
-require("ToNumber")
--- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
+
 
 local table = osm2pgsql.define_table({
   name = 'places_todoList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
   }
 })
@@ -50,22 +48,21 @@ local function ContinueProcess(object)
   return false
 end
 
-local function ProcessTags(object)
+local function processTags(tags)
   local allowed_tags = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
-  FilterTags(object.tags, allowed_tags)
-  -- ToNumber(object.tags, Set({ "population" }))
-  AddMetadata(object)
+  FilterTags(tags, allowed_tags)
+  -- tags.population = tonumber(tags.population)
 end
 
 function osm2pgsql.process_node(object)
   if not ContinueProcess(object) then return end
 
-  ProcessTags(object)
-  AddUrl("node", object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_point()
   })
 end
@@ -74,11 +71,11 @@ function osm2pgsql.process_way(object)
   if not ContinueProcess(object) then return end
   if not object.is_closed then return end
 
-  ProcessTags(object)
-  AddUrl("way", object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
 end
@@ -87,11 +84,11 @@ function osm2pgsql.process_relation(object)
   if not ContinueProcess(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  ProcessTags(object)
-  AddUrl("relation", object)
+  processTags(object.tags)
 
   table:insert({
     tags = object.tags,
+    meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })
 end

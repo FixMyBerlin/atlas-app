@@ -9,6 +9,10 @@ OSM_DATADIR="/data/" # root for docker
 OSM_GERMANY=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 OSM_REGIONS=${OSM_DATADIR}openstreetmap-regions.osm.pbf
 OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
+
+# POLY FILES for geo filters
+MERGED_POLY_FILE=${FILTER_DIR}merged_regions.poly
+
 # FILTER
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 
@@ -19,21 +23,17 @@ if [ -f "${OSM_GERMANY}" ]; then
   if [ "$SKIP_FILTER" = "skip" ]; then
     echo "💥 SKIPPED with 'SKIP_FILTER=skip' in '/docker-compose.yml'"
   else
-    echo "\e[1m\e[7m Filter regions (create separate files) \e[27m\e[21m"
-    # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
-    osmium extract --overwrite --polygon=${FILTER_DIR}bibi.geojson --output=${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_GERMANY}
-    osmium extract --overwrite --polygon=${FILTER_DIR}trto.geojson --output=${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_GERMANY}
-    osmium extract --overwrite --polygon=${FILTER_DIR}eichwalde.geojson --output=${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_GERMANY}
-    osmium extract --overwrite --polygon=${FILTER_DIR}berlin-ring.geojson --output=${OSM_DATADIR}openstreetmap-berlin.osm.pbf ${OSM_GERMANY}
-    osmium extract --overwrite --polygon=${FILTER_DIR}langerwehe.geojson --output=${OSM_DATADIR}openstreetmap-langerwehe.osm.pbf ${OSM_GERMANY}
-
-    echo "\e[1m\e[7m Filter: Merge regions (create one file) \e[27m\e[21m"
-    # Docs https://docs.osmcode.org/osmium/latest/osmium-merge.html
-    osmium merge --overwrite --output=${OSM_REGIONS} ${OSM_DATADIR}openstreetmap-bibi.osm.pbf ${OSM_DATADIR}openstreetmap-trto.osm.pbf ${OSM_DATADIR}openstreetmap-eichwalde.osm.pbf ${OSM_DATADIR}openstreetmap-berlin.osm.pbf ${OSM_DATADIR}openstreetmap-langerwehe.osm.pbf
-
-    echo "\e[1m\e[7m Filter tags (create filtered file) \e[27m\e[21m"
+    echo "\e[1m\e[7m Filter by regions\e[27m\e[21m"
+    touch ${MERGED_POLY_FILE}
+    for poly in ${FILTER_DIR}regions/*.poly; do
+      cat $poly >> ${MERGED_POLY_FILE};
+    done
+    # # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
+    osmium extract --overwrite --polygon=${MERGED_POLY_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
+    rm ${MERGED_POLY_FILE}
+    echo "\e[1m\e[7m Filter by tags\e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
-    osmium tags-filter --overwrite --output=${OSM_FILTERED_FILE} --expressions ${OSM_FILTER_EXPRESSIONS} ${OSM_REGIONS}
+    osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_REGIONS}
   fi
 
 else

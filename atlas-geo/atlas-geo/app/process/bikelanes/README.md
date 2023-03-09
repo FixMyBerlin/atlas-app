@@ -1,8 +1,8 @@
-# Dataset `bikelanes_skipList`
+# Dataset `bikelanes_excluded`
 
-Holds all the road segments that get discarded during processing of the `bikelanes` dataset. Can be used for debugging.
+Holds all the road segments that where filtered during processing of the `bikelanes` dataset. Can be used for debugging.
 
-The `_skipNotes` give a hint to why a road segment was skipped.
+The `_excludeNotes` give a hint to why a road segment was filtered.
 
 # Dataset `bikelanes`
 
