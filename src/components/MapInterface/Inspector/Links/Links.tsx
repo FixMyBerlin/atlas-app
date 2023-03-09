@@ -12,27 +12,27 @@ type Props = {
 
 export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
   // Normalize id + type for Parking data
-  const osmId = (properties.osm_id || properties.way_id || properties.area_id)
-    ?.toString()
-    ?.split('.') // Parking data are split into segments with dot-notation. First part is the id.
-    ?.at(0)
+  // "atlas-geo" sometimes prefixes `-{id}`
+  const osmId = Math.abs(
+    properties.osm_id || properties.way_id || properties.area_id
+  )
   const osmType: 'W' | 'N' | 'R' | undefined =
     'way_id' in properties
       ? 'W'
       : 'osm_type' in properties
       ? properties.osm_type
-      : // `area_id` is what our boundaries return, they don't have osm_type field (yet)
+      : // `area_id` is what   boundaries return, they don't have osm_type field (yet)
       'area_id' in properties
       ? 'R'
       : undefined
 
-  const osmUrl_ = osmUrl(osmType, osmId)
-  const historyUrl_ = historyUrl(osmType, osmId)
-  const mapillaryUrl_ = mapillaryUrl(geometry)
+  const osmUrlHref = osmUrl(osmType, osmId)
+  const historyUrlHref = historyUrl(osmType, osmId)
+  const mapillaryUrlHref = mapillaryUrl(geometry)
 
-  if (!osmUrl_ && !historyUrl_ && !editors) return null
+  if (!osmUrlHref && !historyUrlHref && !editors) return null
   return (
-    <div className="flex gap-4 border-t bg-white px-4 py-2.5 text-xs">
+    <div className="flex flex-wrap gap-3 border-t bg-white px-4 py-2.5 text-xs">
       {editors?.map(({ urlTemplate, name }) => {
         const url = editorUrl({
           urlTemplate,
@@ -42,44 +42,44 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
         })
         if (!url) return null
         return (
-          <p key={name}>
-            <Link external blank to={url} classNameOverwrite={buttonStyles}>
-              {name}
-            </Link>
-          </p>
+          <Link
+            key={name}
+            external
+            blank
+            to={url}
+            classNameOverwrite={buttonStyles}
+          >
+            {name}
+          </Link>
         )
       })}
-      {osmUrl_ && (
-        <p>
-          <Link external blank to={osmUrl_} classNameOverwrite={buttonStyles}>
-            OpenStreetMap
-          </Link>
-        </p>
-      )}
-      {historyUrl_ && (
-        <p>
-          <Link
-            external
-            blank
-            to={historyUrl_}
-            classNameOverwrite={buttonStyles}
-          >
-            Änderungshistorie
-          </Link>
-        </p>
+
+      {osmUrlHref && (
+        <Link external blank to={osmUrlHref} classNameOverwrite={buttonStyles}>
+          OpenStreetMap
+        </Link>
       )}
 
-      {mapillaryUrl_ && (
-        <p>
-          <Link
-            external
-            blank
-            to={mapillaryUrl_}
-            classNameOverwrite={buttonStyles}
-          >
-            Mapillary
-          </Link>
-        </p>
+      {historyUrlHref && (
+        <Link
+          external
+          blank
+          to={historyUrlHref}
+          classNameOverwrite={buttonStyles}
+        >
+          Änderungshistorie
+        </Link>
+      )}
+
+      {mapillaryUrlHref && (
+        <Link
+          external
+          blank
+          to={mapillaryUrlHref}
+          classNameOverwrite={buttonStyles}
+        >
+          Mapillary
+        </Link>
       )}
     </div>
   )
