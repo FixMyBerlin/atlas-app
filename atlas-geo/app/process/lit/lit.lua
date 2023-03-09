@@ -14,9 +14,9 @@ local table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'category', type = 'text' },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'tags',     type = 'jsonb' },
+    { column = 'meta',     type = 'jsonb' },
+    { column = 'geom',     type = 'linestring' },
   }
 })
 
@@ -42,7 +42,7 @@ local table = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
-  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
+  local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen)
   if not allowed_highways[object.tags.highway] then return end
@@ -55,7 +55,6 @@ function osm2pgsql.process_way(object)
   -- Categorize the data in three groups: "lit", "unlit", "special"
   local category = nil
   if object.tags.lit == nil then
-
     object.tags.is_present = false
   else
     object.tags.is_present = true
@@ -66,11 +65,6 @@ function osm2pgsql.process_way(object)
     if (object.tags.lit == "no") then
       category = "unlit"
     end
-  end
-
-  -- Freshness of data
-  if (object.tags.is_present == true) then
-    IsFresh(object, 'check_date:lit', object.tags)
   end
 
   -- Normalize name info for sidepath'
@@ -96,6 +90,12 @@ function osm2pgsql.process_way(object)
     "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
+
+  -- Freshness of data (ATER `FilterTags`!)
+  if (object.tags.is_present == true) then
+    IsFresh(object, 'check_date:lit', object.tags)
+  end
+
   if object.tags._exclude then
   else
     table:insert({
