@@ -329,10 +329,7 @@ export const sources: MapDataSource<
       dateKey: 'fresh',
     },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'places',
-    },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.buildings.json
