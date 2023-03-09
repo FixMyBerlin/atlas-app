@@ -570,7 +570,8 @@
               "cyclewaySeparated",
               "footAndCycleway_segregated",
               "bicycleRoad",
-              "pedestrianArea_bicycleYes"
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
             ],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
@@ -601,7 +602,8 @@
               "cyclewaySeparated",
               "footAndCycleway_segregated",
               "bicycleRoad",
-              "pedestrianArea_bicycleYes"
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
             ],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
@@ -632,7 +634,8 @@
               "cyclewaySeparated",
               "footAndCycleway_segregated",
               "bicycleRoad",
-              "pedestrianArea_bicycleYes"
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
             ],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
