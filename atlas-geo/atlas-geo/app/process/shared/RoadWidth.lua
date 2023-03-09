@@ -1,15 +1,15 @@
+require("ParseLength")
 -- * @desc TODO
 -- * @returns 8
 function RoadWidth(tags)
-  -- if tags["width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["width"], "[^%s;]+")())
-  -- end
-  -- if tags["est_width"] ~= nil then
-  --   return tonumber(string.gmatch(tags["est_width"], "[^%s;]+")())
-  -- end
-  -- local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
-  -- if streetWidths[tags["highway"]] ~= nil then
-  --   return streetWidths[tags["highway"]]
-  -- end
+  local width = tags["width"] or tags["est_width"]
+  if width then
+    width = ParseLength(width)
+    if width then return width end
+  end
+  local streetWidths = {primary=10, secondary=8, tertiary=6, residential=6}
+  if streetWidths[tags["highway"]] then
+    return streetWidths[tags["highway"]]
+  end
   return 8
 end
