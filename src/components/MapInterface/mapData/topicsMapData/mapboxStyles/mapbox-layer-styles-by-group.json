@@ -720,7 +720,8 @@
           ],
           "line-blur": 1
         },
-        "filter": ["match", ["get", "category"], ["unlit"], true, false]
+        "filter": ["match", ["get", "category"], ["unlit"], true, false],
+        "layout": {}
       },
       {
         "id": "2_lit-Beleuchtet-Linie",
@@ -933,13 +934,10 @@
           "line-dasharray": [0.5, 0.1]
         },
         "filter": [
-          "match",
-          ["get", "fresh"],
-          ["outdated_update_at"],
-          true,
-          false
-        ],
-        "layout": {}
+          "all",
+          ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
       },
       {
         "id": "3_lit-fresh_update_at",
@@ -960,8 +958,11 @@
           "line-blur": 1,
           "line-dasharray": [0.5, 0.1]
         },
-        "filter": ["match", ["get", "fresh"], ["fresh_update_at"], true, false],
-        "layout": {}
+        "filter": [
+          "all",
+          ["match", ["get", "fresh"], ["fresh_update_at"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
       },
       {
         "id": "3_lit-outdated_check_date",
@@ -981,13 +982,10 @@
           ]
         },
         "filter": [
-          "match",
-          ["get", "fresh"],
-          ["outdated_check_date"],
-          true,
-          false
-        ],
-        "layout": {}
+          "all",
+          ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
       },
       {
         "id": "3_lit-fresh_check_date",
@@ -1008,13 +1006,10 @@
           "line-blur": 1
         },
         "filter": [
-          "match",
-          ["get", "fresh"],
-          ["fresh_check_date"],
-          true,
-          false
-        ],
-        "layout": {}
+          "all",
+          ["match", ["get", "fresh"], ["fresh_check_date"], true, false],
+          ["==", ["get", "is_present"], true]
+        ]
       },
       {
         "id": "3_lit-Unbeleuchtet",
