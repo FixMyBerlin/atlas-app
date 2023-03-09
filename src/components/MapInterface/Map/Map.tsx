@@ -18,12 +18,13 @@ import {
   ViewStateChangeEvent,
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
-import { Calculator } from './Calculator/Calculator'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
 import { SourcesLayerRasterBackgrounds } from './backgrounds'
+import { Calculator } from './Calculator/Calculator'
 import { SourceAndLayers } from './SourceAndLayers'
 import { roundPositionForURL } from './utils'
+import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
   const {
@@ -67,6 +68,8 @@ export const Map: React.FC = () => {
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
+
+  useMissingImage(mainMap)
 
   useEffect(() => {
     if (!mainMap) return

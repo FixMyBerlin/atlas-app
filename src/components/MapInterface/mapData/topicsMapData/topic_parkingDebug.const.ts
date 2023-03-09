@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parkingDebug'
 const source = 'parkraumParkingDebug'
@@ -19,88 +20,93 @@ export const topic_parkingDebug: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: [
-        {
-          id: 'buffer_pt_bus',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_pt_bus',
-          paint: {
-            'fill-color': 'RGBA(142, 59, 31, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_pt_tram',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_pt_tram',
-          paint: {
-            'fill-color': 'RGBA(142, 59, 31, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_amenity_parking_points',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_amenity_parking_points',
-          paint: {
-            'fill-color': '#a21caf',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_driveways',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_driveways',
-          paint: {
-            'fill-color': 'RGBA(217, 98, 43, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_highways',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_highways',
-          paint: {
-            'fill-color': 'RGBA(217, 98, 43, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_kerb_intersections',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_kerb_intersections',
-          paint: {
-            'fill-color': 'RGBA(217, 98, 43, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_pedestrian_crossings',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_pedestrian_crossings',
-          paint: {
-            'fill-color': 'RGBA(217, 98, 43, 0.7)',
-          },
-          layout: {},
-        },
-        {
-          id: 'buffer_ramps',
-          type: 'fill',
-          source,
-          'source-layer': 'processing.buffer_ramps',
-          paint: {
-            'fill-color': 'RGBA(217, 98, 43, 0.7)',
-          },
-          layout: {},
-        },
-      ],
+      // layers: [
+      //   {
+      //     id: 'buffer_pt_bus',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_pt_bus',
+      //     paint: {
+      //       'fill-color': 'RGBA(142, 59, 31, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_pt_tram',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_pt_tram',
+      //     paint: {
+      //       'fill-color': 'RGBA(142, 59, 31, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_amenity_parking_points',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_amenity_parking_points',
+      //     paint: {
+      //       'fill-color': '#a21caf',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_driveways',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_driveways',
+      //     paint: {
+      //       'fill-color': 'RGBA(217, 98, 43, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_highways',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_highways',
+      //     paint: {
+      //       'fill-color': 'RGBA(217, 98, 43, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_kerb_intersections',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_kerb_intersections',
+      //     paint: {
+      //       'fill-color': 'RGBA(217, 98, 43, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_pedestrian_crossings',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_pedestrian_crossings',
+      //     paint: {
+      //       'fill-color': 'RGBA(217, 98, 43, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      //   {
+      //     id: 'buffer_ramps',
+      //     type: 'fill',
+      //     source,
+      //     'source-layer': 'processing.buffer_ramps',
+      //     paint: {
+      //       'fill-color': 'RGBA(217, 98, 43, 0.7)',
+      //     },
+      //     layout: {},
+      //   },
+      // ],
+      layers: mapboxStyleLayers({
+        group: 'parking_debug_kerb',
+        source,
+        sourceLayer: 'processing.buffer_kerb_intersections',
+      }),
       interactiveFilters: null,
       legends: [
         {
