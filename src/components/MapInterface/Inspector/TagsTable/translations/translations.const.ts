@@ -112,10 +112,6 @@ export const translations: { [key: string]: string } = {
   'value--tarmac_bikelanes--cycleway--track': 'Separat geführte Infrastruktur (primär vom KfZ separiert)',
   'value--tarmac_bikelanes--oneway--no': '(!) Sonderfall: Zwei-Richtungs-Radweg (in einer Geometrie dargestellt)',
   'value--tarmac_bikelanes--oneway--yes': 'Ein-Richtungs-Radweg',
-  'value--tarmac_bikelanes--traffic_sign--DE:1022-10': 'Zeichen 1022-10, Zusatzzeichen Fahrrad frei',
-  'value--tarmac_bikelanes--traffic_sign--DE:240;1000-31': 'Zeichen 240, Zusatzzeichen 1000-31, Gemeinsamer Geh- und Radweg in beide Richtungen',
-  'value--tarmac_bikelanes--traffic_sign--DE:240': 'Zeichen 240, Gemeinsamer Geh- und Radweg',
-  'value--tarmac_bikelanes--traffic_sign--DE:244.1': 'Zeichen 244.1, Fahrradstraße',
   'value--tarmac_boundaries--admin_level--7': 'Level 7 — Meistens Verwaltungsgemeinschaft, Amt', // https://wiki.openstreetmap.org/wiki/DE:Grenze
   'value--tarmac_boundaries--admin_level--8': 'Level 8 — Meistens (Kreisangehörige) Gemeinde / Stadt',
   'value--tarmac_education--amenity--kindergarten': 'Kindergarten',
