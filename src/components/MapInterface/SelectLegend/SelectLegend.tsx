@@ -149,7 +149,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     value={key}
                   />
                 </div>
-                <div className="ml-2.5 flex items-center text-sm font-medium text-gray-700">
+                <div className="ml-2.5 flex items-center text-sm font-medium leading-none text-gray-700">
                   {legendData.name}
                 </div>
               </label>
