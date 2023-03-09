@@ -1,7 +1,7 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
 import { isDev, isStaging } from '@components/utils'
 import React from 'react'
-import { FormattedMessage, FormattedNumber, FormattedDate } from 'react-intl'
+import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 
 type Props = {
   sourceId: SourcesIds
@@ -21,21 +21,34 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     return <>{tagValue}</>
   }
 
-  const numberKeys = [
-    'capacity',
-    'highway_width_proc_effective',
-    'length',
-    'maxspeed',
-    'population',
-    'width',
+  // https://formatjs.io/docs/react-intl/components/#formattednumber
+  const numberConfigs: { key: string; suffix?: string }[] = [
+    { key: 'capacity', suffix: undefined },
+    { key: 'highway_width_proc_effective', suffix: 'm' },
+    { key: 'length', suffix: 'm' },
+    { key: 'maxspeed', suffix: 'km/h' },
+    { key: 'population', suffix: 'Einwohner:innen' },
+    { key: 'width', suffix: 'm' },
   ]
-  if (numberKeys.includes(tagKey)) {
-    return <FormattedNumber value={parseInt(tagValue)} />
+  const numberConfig = numberConfigs.find((c) => c.key === tagKey)
+  if (numberConfig) {
+    return (
+      <>
+        <FormattedNumber value={parseFloat(tagValue)} /> {numberConfig.suffix}
+      </>
+    )
   }
 
   const dateKeys = ['population:date']
   if (dateKeys.includes(tagKey)) {
-    return <FormattedDate value={tagValue} />
+    return (
+      <span className="group">
+        <FormattedDate value={tagValue} />{' '}
+        <code className="text-gray-50 group-hover:text-gray-600">
+          {tagValue}
+        </code>
+      </span>
+    )
   }
 
   let key = `value--${sourceId}--${tagKey}--${tagValue}`

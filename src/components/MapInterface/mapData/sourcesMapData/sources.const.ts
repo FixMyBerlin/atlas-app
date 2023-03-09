@@ -149,7 +149,7 @@ export const sources: MapDataSource<
         'cycleway__if_present',
         'oneway__if_present',
         'traffic_sign',
-        'width__if_present',
+        'width',
         'composit_surface_smoothness',
         'surface:color__if_present',
         'name',
