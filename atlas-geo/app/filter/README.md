@@ -1,8 +1,11 @@
 # Sources
+All `.poly` files in `./regions` are used in `run-2-filter.sh` to reduce the pbf file of Germany to only those regions we are supporting right now.
+Docs: https://docs.osmcode.org/osmium/latest/osmium-extract.html
 
-Those `.geojson` files are used in `run-2-filter.sh` to reduce the pbf file of Germany to only those reagions we are supporting right now.
+We switched from `.geojson` to `.poly` because joining two poly files is trivial (just concat the files) and thus allows a single run extract which is significantly faster.
+Docs: https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format
 
-Docs: https://osmcode.org/osmium-tool/manual.html#creating-geographic-extracts
+To convert `.geojson` files to the `.poly` format we use the command line tool [geojson2poly](https://www.npmjs.com/package/geojson2poly)
 
 ## Berlin Ring
 

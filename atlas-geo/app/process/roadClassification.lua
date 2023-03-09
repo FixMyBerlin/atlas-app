@@ -1,30 +1,30 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
-require("ToNumber")
--- require("PrintTable")
-require("AddAddress")
 require("MergeArray")
-require("AddMetadata")
-require("AddUrl")
+require("Metadata")
 require("HighwayClasses")
-require("AddSkipInfoToHighways")
-require("AddSkipInfoByWidth")
+require("JoinSets")
+require("ExcludeHighways")
+require("ExcludeByWidth")
+require("IntoExcludeTable")
 
 local table = osm2pgsql.define_table({
-  name = 'roadClassification_new',
+  name = 'roadClassification',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
 
-local skipTable = osm2pgsql.define_table({
-  name = 'roadClassification_skipList',
+local excludeTable = osm2pgsql.define_table({
+  name = 'roadClassification_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
   }
 })
@@ -32,30 +32,35 @@ local skipTable = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   if not object.tags.highway then return end
 
-  local allowed_values = HighwayClasses
+  local allowed_highways = JoinSets({HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses})
   -- values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
-  if not allowed_values[object.tags.highway] then return end
+  if not allowed_highways[object.tags.highway] then return end
 
-  object.tags._skipNotes = "init"
-  object.tags._skip = false
 
-  AddSkipInfoToHighways(object)
-  AddSkipInfoByWidth(object)
-
-  -- Skip sidewalk `(highway=footway) + footway=sidewalk`
+  --TODO: exit here
+  local exclude, reason = ExcludeHighways(object.tags)
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
+  exclude, reason = ExcludeByWidth(object.tags, 2.1)
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
+  -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.footway == "sidewalk" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `footway=sidewalk`"
-    object.tags._skip = true
+    IntoExcludeTable(excludeTable, object, "Exclude `footway=sidewalk`")
+    return
   end
-
-  -- Skip `is_sidepath=yes`
+  -- Exclude `is_sidepath=yes`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.is_sidepath == "yes" then
-    object.tags._skipNotes = object.tags._skipNotes .. ";Skipped `is_sidepath=yes`"
-    object.tags._skip = true
+    IntoExcludeTable(excludeTable, object, "Exclude `is_sidepath=yes`")
+    return
   end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
@@ -82,21 +87,13 @@ function osm2pgsql.process_way(object)
     object.tags.category = "footway"
   end
 
-  local allowed_tags = Set({ "_skip", "_skipNotes", "category", "name", "highway", "footway", "access", "service",
+  local allowed_tags = Set({ "_exclude", "_excludeNotes", "category", "name", "highway", "footway", "access", "service",
     "is_sidepath" })
   FilterTags(object.tags, allowed_tags)
-  AddMetadata(object)
-  AddUrl("way", object)
 
-  if object.tags._skip then
-    skipTable:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
-  else
-    table:insert({
-      tags = object.tags,
-      geom = object:as_linestring()
-    })
-  end
+  table:insert({
+    tags = object.tags,
+    meta = Metadata(object),
+    geom = object:as_linestring()
+  })
 end

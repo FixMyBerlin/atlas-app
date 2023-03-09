@@ -19,10 +19,9 @@ def create_or_replace_export_functions():
       cursor.execute(processed_sql)
 
     conn.commit()
-    cursor.close()
-    conn.close()
-    print('=' * 80)
-    print("Finished INIT of database")
+  conn.close()
+  print('=' * 80)
+  print("Finished INIT of database")
 
 def create_verification_tables():
   conn = psycopg2.connect(conn_string)
@@ -41,10 +40,9 @@ def create_verification_tables():
       cursor.execute(processed_sql)
 
     conn.commit()
-    cursor.close()
-    conn.close()
-    print('=' * 80)
-    print("Finished creating tables for verification")
+  conn.close()
+  print('=' * 80)
+  print("Finished creating tables for verification")
 
 create_verification_tables()
 create_or_replace_export_functions()
