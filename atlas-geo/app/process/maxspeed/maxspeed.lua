@@ -258,8 +258,10 @@ function osm2pgsql.process_way(object)
       )
 
   FilterTags(tags, allowed_tags)
-  -- Freshness of data
+
+  -- Freshness of data (ATER `FilterTags`!)
   IsFresh(object, "checkdate:maxspeed", tags)
+
   tags._maxspeed_source = source
   if maxspeed ~= nil and maxspeed ~= -1 then
     tags.present = true

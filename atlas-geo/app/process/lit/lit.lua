@@ -68,11 +68,6 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Freshness of data
-  if (object.tags.is_present == true) then
-    IsFresh(object, 'check_date:lit', object.tags)
-  end
-
   -- Normalize name info for sidepath'
   -- TODO: Extact into helper
   object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
@@ -96,6 +91,12 @@ function osm2pgsql.process_way(object)
     "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
+
+  -- Freshness of data (ATER `FilterTags`!)
+  if (object.tags.is_present == true) then
+    IsFresh(object, 'check_date:lit', object.tags)
+  end
+
   if object.tags._exclude then
   else
     table:insert({

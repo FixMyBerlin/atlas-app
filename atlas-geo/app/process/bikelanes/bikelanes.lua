@@ -123,7 +123,10 @@ function osm2pgsql.process_way(object)
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
+
+        -- Freshness of data (ATER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
+
         cycleway.offset = sign * width / 2
         categoryTable:insert({
           category = category,
