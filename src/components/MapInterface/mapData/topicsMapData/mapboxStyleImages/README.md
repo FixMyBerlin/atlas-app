@@ -2,7 +2,7 @@
 
 **Context:**
 
-Whenever we use **icon images** or **line patterns** in Mapbox Studio, we need to manually add them here as well.
+Whenever we use **icon images** or **patterns** in Mapbox Studio, we need to manually add them here as well.
 
 **What to do:**
 
