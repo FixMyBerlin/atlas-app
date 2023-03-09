@@ -2,9 +2,9 @@
   "atlas": {
     "key": "atlas",
     "about": "Metadata on the last processing of the atlas styles api response",
-    "processed_at": "9.3.2023, 14:42:19",
+    "processed_at": "9.3.2023, 15:15:59",
     "style_last_published": {
-      "published_at": "9.3.2023, 14:42:12",
+      "published_at": "9.3.2023, 15:15:53",
       "version": 8
     },
     "style_id": "cl706a84j003v14o23n2r81w7",
@@ -13,6 +13,18 @@
     "debug_changed_names": {
       "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
       "changedNamesForDebugging": [
+        {
+          "sourceName": "atlas_roadClassification_detailed",
+          "cleanedName": "atlas_roadclassification_detailed"
+        },
+        {
+          "sourceName": "atlas_roadClassification",
+          "cleanedName": "atlas_roadclassification"
+        },
+        {
+          "sourceName": "atlas_bikelanesPresence_complete",
+          "cleanedName": "atlas_bikelanespresence_complete"
+        },
         {
           "sourceName": "atlas_bikelanes_fresh_DISABLED",
           "cleanedName": "atlas_bikelanes_fresh_disabled"
@@ -23,7 +35,7 @@
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "9.3.2023, 14:42:19",
+    "processed_at": "9.3.2023, 15:15:59",
     "style_last_published": {
       "published_at": "8.3.2023, 16:18:48",
       "version": 8
