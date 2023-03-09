@@ -545,34 +545,33 @@
     "group": "atlas_boundaries",
     "layers": [
       {
-        "layout": {},
-        "type": "line",
-        "id": "admin-level-7",
-        "paint": {
-          "line-color": "hsl(271, 81%, 56%)",
-          "line-width": 2,
-          "line-opacity": 0.35,
-          "line-dasharray": [2, 1]
-        },
-        "filter": [
-          "all",
-          ["has", "admin_level"],
-          ["match", ["get", "admin_level"], ["7"], true, false]
-        ]
-      },
-      {
-        "layout": {},
         "type": "line",
         "id": "admin-level-8",
         "paint": {
-          "line-color": "hsl(271, 89%, 51%)",
-          "line-width": 2,
-          "line-opacity": 0.2
+          "line-color": "#dca7c8",
+          "line-opacity": 0.6,
+          "line-dasharray": [2.5, 1, 1, 1],
+          "line-width": 1.5
         },
         "filter": [
           "all",
           ["has", "admin_level"],
           ["match", ["get", "admin_level"], ["8"], true, false]
+        ]
+      },
+      {
+        "type": "line",
+        "id": "admin-level-7",
+        "paint": {
+          "line-color": "#dca7c8",
+          "line-width": 2,
+          "line-opacity": 0.6,
+          "line-dasharray": [2.5, 1, 1, 1]
+        },
+        "filter": [
+          "all",
+          ["has", "admin_level"],
+          ["match", ["get", "admin_level"], ["7"], true, false]
         ]
       }
     ]
@@ -649,8 +648,7 @@
             "hsla(17, 0%, 100%, 0)"
           ],
           "fill-opacity": 0.2
-        },
-        "layout": {}
+        }
       }
     ]
   },
@@ -1516,6 +1514,30 @@
     ]
   },
   {
+    "group": "parking_highway_area",
+    "layers": [
+      {
+        "type": "fill",
+        "id": "fill highway area",
+        "paint": {
+          "fill-color": "rgb(219, 203, 194)",
+          "fill-antialias": false,
+          "fill-opacity": 0.06
+        }
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "dots highway area",
+        "paint": {
+          "line-color": "rgb(110, 110, 110)",
+          "line-opacity": 0.06,
+          "line-dasharray": [2, 2]
+        }
+      }
+    ]
+  },
+  {
     "group": "parking_parkinglines",
     "layers": [
       {
@@ -1610,7 +1632,7 @@
             ["to-number", ["get", "done_percent"]],
             0,
             "rgb(195, 179, 255)",
-            90,
+            80,
             "rgb(122, 0, 163)"
           ],
           "fill-outline-color": "hsl(0, 100%, 100%)",
@@ -1656,7 +1678,7 @@
             ["to-number", ["get", "lane_km"]],
             0,
             "rgb(163, 255, 189)",
-            100,
+            200,
             "rgb(0, 128, 36)"
           ],
           "fill-outline-color": "hsl(0, 100%, 100%)",
@@ -1704,7 +1726,8 @@
         "type": "line",
         "id": "buffer-crossings-traffic-sign-3hhmfm (1)",
         "paint": {
-          "line-dasharray": [2, 2]
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
         }
       },
       {

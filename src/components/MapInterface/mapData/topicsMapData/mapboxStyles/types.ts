@@ -20,6 +20,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_bufferkerbintersections'
   | 'parking_debug_driveways'
   | 'parking_debug_kerb'
+  | 'parking_highway_area'
   | 'parking_parkinglines'
   | 'parking_stats'
   | 'parking_stats_length'
@@ -60,6 +61,8 @@ export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
 export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_driveways'
   | 'parking_debug_kerb'
+
+export type MapboxStyleLayerGroupHighwayIds = 'parking_highway_area'
 
 export type MapboxStyleLayerGroupParkinglinesIds = 'parking_parkinglines'
 
