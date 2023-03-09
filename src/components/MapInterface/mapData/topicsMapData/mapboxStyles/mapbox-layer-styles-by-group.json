@@ -578,7 +578,8 @@
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4],
           "line-offset": ["step", ["zoom"], 2, 14, 4]
-        }
+        },
+        "layout": {}
       },
       {
         "type": "line",
@@ -610,7 +611,8 @@
           ],
           "line-offset": ["step", ["zoom"], -2, 14, -4],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        }
+        },
+        "layout": {}
       },
       {
         "type": "line",
@@ -641,7 +643,8 @@
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        }
+        },
+        "layout": {}
       }
     ]
   },
@@ -794,10 +797,23 @@
         }
       },
       {
+        "id": "2_lit-Special-Area",
+        "type": "fill",
+        "paint": {
+          "fill-color": "rgb(255, 172, 56)",
+          "fill-opacity": 0.4
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["special"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ]
+      },
+      {
         "id": "2_lit-Unbeleuchtet",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 86%, 19%)",
+          "line-color": "rgb(90, 72, 7)",
           "line-width": [
             "interpolate",
             ["linear"],
@@ -820,14 +836,26 @@
           ],
           "line-blur": 1
         },
-        "filter": ["match", ["get", "category"], ["unlit"], true, false],
-        "layout": {}
+        "filter": ["match", ["get", "category"], ["unlit"], true, false]
+      },
+      {
+        "id": "2_lit-Unbeleuchtet-Area",
+        "type": "fill",
+        "paint": {
+          "fill-color": "rgb(90, 72, 7)",
+          "fill-opacity": 0.4
+        },
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["unlit"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ]
       },
       {
         "id": "2_lit-Beleuchtet-Linie",
         "type": "line",
         "paint": {
-          "line-color": "hsl(47, 94%, 57%)",
+          "line-color": "rgb(248, 204, 42)",
           "line-width": [
             "interpolate",
             ["linear"],
@@ -863,9 +891,14 @@
         "id": "2_lit-Beleuchtet-Area",
         "type": "fill",
         "paint": {
-          "fill-color": "hsl(47, 94%, 57%)"
+          "fill-color": "rgb(248, 204, 42)",
+          "fill-opacity": 0.4
         },
-        "layout": {}
+        "filter": [
+          "all",
+          ["match", ["get", "category"], ["lit"], true, false],
+          ["match", ["get", "area"], ["yes"], true, false]
+        ]
       },
       {
         "id": "2_hitarea-lit",
