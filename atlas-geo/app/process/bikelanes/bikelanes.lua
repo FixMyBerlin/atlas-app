@@ -139,6 +139,7 @@ function osm2pgsql.process_way(object)
       end
     end
   end
+
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   local data_complete = presence[CENTER_SIGN] or (presence[RIGHT_SIGN] and presence[LEFT_SIGN])

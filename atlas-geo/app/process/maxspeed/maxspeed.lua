@@ -178,13 +178,16 @@ function osm2pgsql.process_way(object)
   if not allowed_values[object.tags.highway] then
     return
   end
+
   local meta = Metadata(object)
   local tags = object.tags
+
   local exclude, reason = ExcludeHighways(tags)
   if exclude then
     IntoExcludeTable(excludeTable, object, reason)
     return
   end
+
   if tags.bicycle == "no" then
     IntoExcludeTable(table, object, "no bikes allowed")
     return
@@ -219,6 +222,7 @@ function osm2pgsql.process_way(object)
       source = "inferred from highway"
     end
   end
+
   -- SQL:
   -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
   --  wir nehmen die landuse=residential+industrial+commerical+retail
@@ -253,10 +257,9 @@ function osm2pgsql.process_way(object)
           "zone_traffic",
           "traffic_sign",
           "maxspeed_split",
-          "checkdate:maxspeed"
+          "checkdate:maxspeed",
         }
       )
-
   FilterTags(tags, allowed_tags)
 
   -- Freshness of data (ATER `FilterTags`!)
@@ -276,6 +279,7 @@ function osm2pgsql.process_way(object)
     )
     return
   end
+
   missingTable:insert(
     {
       tags = object.tags,
