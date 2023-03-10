@@ -16,6 +16,7 @@ export type Region = {
   fullName: string
   path: RegionPath
   map: RegionMap
+  /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: [number, number]; max: [number, number] } | null
   logoPath: string | null
   logoWhiteBackgroundRequired: boolean
@@ -159,18 +160,15 @@ export const regions: Region[] = [
   },
   {
     name: 'Parkraum',
-    fullName: 'Deutschlandweiter Parkraum',
+    fullName: 'Parkraumanalyse',
     path: 'parkraum',
-    map: { lat: 52.494, lng: 13.406, zoom: 12 },
-    bbox: {
-      min: [5.8663153, 47.2701114],
-      max: [15.0419309, 55.099161],
-    },
-    logoPath: null,
+    map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
+    bbox: null,
+    logoPath: '/pageRegions/parking.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['parking'],
-    osmUsers: [...adminIds],
-    published: false,
+    osmUsers: [...adminIds], // Note: Not needed, since we don't support verfication, yet
+    published: true,
     backgroundSources: [
       ...defaultBackgroundSources,
       'strassenbefahrung',
