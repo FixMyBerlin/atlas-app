@@ -25,7 +25,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   [
     {
       id: 'strassenbefahrung',
-      name: 'Straßenbefahrung 2014',
+      name: 'Berlin: Straßenbefahrung 2014',
       type: 'raster',
       tiles:
         'https://mapproxy.codefor.de/tiles/1.0.0/strassenbefahrung/mercator/{z}/{x}/{y}.png',
@@ -37,7 +37,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     },
     {
       id: 'alkis',
-      name: 'Alkis',
+      name: 'Berlin: Alkis',
       type: 'raster',
       tiles:
         'https://mapproxy.codefor.de/tiles/1.0.0/alkis_30/mercator/{z}/{x}/{y}.png',
@@ -87,7 +87,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // },
     {
       id: 'areal2022',
-      name: 'Luftbilder 2022',
+      name: 'Berlin: Luftbilder 2022',
       type: 'raster',
       tiles: 'https://tiles.codefor.de/berlin-2022-dop20rgbi/{z}/{x}/{y}.png',
       tileSize: 256,
@@ -98,7 +98,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     },
     {
       id: 'areal2021',
-      name: 'Luftbilder 2021',
+      name: 'Berlin: Luftbilder 2021',
       type: 'raster',
       tiles: 'https://tiles.codefor.de/berlin-2021-dop20rgbi/{z}/{x}/{y}.png',
       tileSize: 256,
@@ -109,7 +109,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     },
     {
       id: 'areal2020',
-      name: 'Luftbilder 2020',
+      name: 'Berlin: Luftbilder 2020',
       type: 'raster',
       tiles: 'https://tiles.codefor.de/berlin-2020-dop20rgb/{z}/{x}/{y}.png',
       tileSize: 256,
@@ -120,7 +120,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     },
     {
       id: 'areal2019',
-      name: 'Luftbilder 2019',
+      name: 'Berlin: Luftbilder 2019',
       type: 'raster',
       tiles: 'https://tiles.codefor.de/berlin-2019-dop20rgb/{z}/{x}/{y}.png',
       tileSize: 256,
@@ -131,7 +131,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     },
     {
       id: 'parkraumkarte_neukoelln',
-      name: 'Parkraumkarte Neukoelln',
+      name: 'Berlin: Parkraumkarte Neukoelln',
       type: 'raster',
       tiles: 'https://tiles.osm-berlin.org/parkraumkarte/{z}/{x}/{y}.jpg',
       tileSize: 256,
