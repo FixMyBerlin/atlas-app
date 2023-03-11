@@ -1,8 +1,10 @@
 import { ThemeConfig } from './type'
 
+type InvalidThemeConfig = { reset: true }
+
 type Props = {
   freshConfig: ThemeConfig[]
-  urlConfig: ThemeConfig[] | undefined
+  urlConfig: ThemeConfig[] | undefined | InvalidThemeConfig
 }
 
 /**
@@ -16,6 +18,8 @@ export const initializeMapRegionConfig = ({
   urlConfig,
 }: Props) => {
   if (!urlConfig) return freshConfig
+  // Whenever the customParse fails, we set `InvalidThemeConfig` so we can reset the config
+  if ('reset' in urlConfig) return freshConfig
 
   const mergedConfig = freshConfig.map((theme) => {
     const urlConfigTheme = urlConfig?.find((t) => t?.id === theme.id)

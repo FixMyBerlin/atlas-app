@@ -6,12 +6,20 @@ import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
 // Using https://github.com/wmertens/jsurl2
 
 export const customParse = (value: string) => {
-  const newEncoding = value.startsWith('!')
-  if (newEncoding) return expandObjectKeys(jsurl.parse(value))
+  // "!" is an array in jsurl2, which is the default for our config
+  // "(" is an object in jsurl2, which is the reset-fallback
+  const newEncoding = value.startsWith('!') || value.startsWith('(')
+
+  if (newEncoding) {
+    return expandObjectKeys(jsurl.tryParse(value, { reset: true }))
+  }
 
   return legacyParse(value)
 }
 
 export const customStringify = (value: Record<string, any>) => {
-  return jsurl.stringify(minimizeObjectKeys(value))
+  return jsurl.stringify(minimizeObjectKeys(value), {
+    rich: true,
+    short: false,
+  })
 }
