@@ -4,7 +4,7 @@ import { layersPresence } from './parking'
 
 const topic = 'parking'
 const source = 'parkraumParking'
-const sourceLayer = 'processing.parking_segments_nn'
+const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
 export type TopicParkingStyleIds = 'default' | 'presence'
 export type TopicParkingStyleFilterIds = '_nofilter'

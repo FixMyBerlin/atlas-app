@@ -19,7 +19,7 @@ export const sourcesParking: MapDataSource<
   {
     id: 'parkraumParking',
     tiles:
-      'https://vts.mapwebbing.eu/processing.parking_segments_nn/{z}/{x}/{y}.pbf',
+      'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
