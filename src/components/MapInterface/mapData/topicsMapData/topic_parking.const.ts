@@ -1,15 +1,12 @@
 import { MapDataTopic } from '../types'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
-import { layersDebugLengthPerCapacity, layersPresence } from './parking'
+import { layersPresence } from './parking'
 
 const topic = 'parking'
 const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
-export type TopicParkingStyleIds =
-  | 'default'
-  | 'presence'
-  | 'debugLengthPerCapacity'
+export type TopicParkingStyleIds = 'default' | 'presence'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
@@ -33,17 +30,7 @@ export const topic_parking: MapDataTopic = {
       id: 'presence',
       name: 'Vollständigkeit',
       desc: null,
-      layers: layersPresence(source, sourceLayer),
-      interactiveFilters: null,
-    },
-    {
-      id: 'debugLengthPerCapacity',
-      name: 'Debug Lange<>Kapazität',
-      desc: null,
-      layers: layersDebugLengthPerCapacity(
-        source,
-        'processing.parking_segments'
-      ),
+      layers: layersPresence(source, sourceLayer), // TODO
       interactiveFilters: null,
     },
   ],
