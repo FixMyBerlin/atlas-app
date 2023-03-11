@@ -24,12 +24,12 @@ export const topic_parkingDebug: MapDataTopic = {
         mapboxStyleLayers({
           group: 'parking_debug_parking_points',
           source,
-          sourceLayer: 'processing.buffer_amenity_parking_points',
+          sourceLayer: 'processing.buffer_amenity_parking_points', // Separate Auto- und Fahrradflächen
         }),
         mapboxStyleLayers({
           group: 'parking_debug_parking_poly',
           source,
-          sourceLayer: 'processing.buffer_amenity_parking_poly',
+          sourceLayer: 'processing.buffer_amenity_parking_poly', // Separate Auto- und Fahrradflächen
         }),
         mapboxStyleLayers({
           group: 'parking_debug_driveways',
@@ -37,20 +37,15 @@ export const topic_parkingDebug: MapDataTopic = {
           sourceLayer: 'processing.buffer_driveways',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_highway_area',
-          source,
-          sourceLayer: 'processing.buffer_highways',
-        }),
-        mapboxStyleLayers({
           group: 'parking_debug_kerb',
           source,
           sourceLayer: 'processing.buffer_kerb_intersections',
         }),
-        // mapboxStyleLayers({
-        //   group: '',
-        //   source,
-        //   sourceLayer: 'processing.buffer_pedestrian_crossings',
-        // }),
+        mapboxStyleLayers({
+          group: 'parking_debug_crossings',
+          source,
+          sourceLayer: 'processing.buffer_pedestrian_crossings',
+        }),
         mapboxStyleLayers({
           group: 'parking_debug_bus_tram',
           source,
@@ -70,31 +65,15 @@ export const topic_parkingDebug: MapDataTopic = {
       interactiveFilters: null,
       legends: [
         {
-          id: 'buffer_pt_bus',
-          name: 'Bushaltestellen',
+          id: 'buffer_pt_bus__buffer_pt_tram',
+          name: 'Bus- und Tramhaltestellen',
           style: {
             type: 'fill',
-            color: 'rgba(255, 82, 194, 0.7)',
+            color: 'rgba(250, 204, 20, 0.7)',
           },
         },
         {
-          id: 'buffer_pt_tram',
-          name: 'Tramhaltestellen',
-          style: {
-            type: 'fill',
-            color: 'rgba(255, 82, 194, 0.7)',
-          },
-        },
-        // {
-        //   id: 'buffer_amenity_parking_points',
-        //   name: 'Separat erfasste Parkfläche (Punkt)',
-        //   style: {
-        //     type: 'fill',
-        //     color: 'rgba(80, 139, 134, 0.7)',
-        //   },
-        // },
-        {
-          id: 'buffer_amenity_parking_poly',
+          id: '1_buffer_amenity_parking_poly__buffer_amenity_parking_points',
           name: 'Separat erfasste Parkfläche',
           style: {
             type: 'fill',
@@ -102,43 +81,43 @@ export const topic_parkingDebug: MapDataTopic = {
           },
         },
         {
-          id: 'buffer_driveways',
-          name: 'Einfahrt',
+          id: '2_buffer_amenity_parking_poly__buffer_amenity_parking_points',
+          name: 'Fahrradständer',
           style: {
             type: 'fill',
+            color: 'rgba(80, 139, 134, 0.7)',
+          },
+        },
+        {
+          id: 'buffer_driveways',
+          name: 'Einfahrten',
+          style: {
+            type: 'circle',
             color: 'rgba(8, 142, 175, 0.7)',
           },
         },
         {
-          id: 'buffer_highways',
-          name: 'Straßenflächen',
-          style: {
-            type: 'fill',
-            color: 'rgba(219, 203, 194, 0.4)',
-          },
-        },
-        {
           id: 'buffer_kerb_intersections',
-          name: 'Kreuzungszone',
+          name: 'Bordsteinschnittpunkte',
           style: {
-            type: 'fill',
+            type: 'circle',
             color: 'rgba(233, 89, 12, 0.7)',
           },
         },
-        // {
-        //   id: 'buffer_pedestrian_crossings',
-        //   name: 'Fußgängerübergänge',
-        //   style: {
-        //     type: 'fill',
-        //     color: 'RGBA(217, 98, 43, 0.7)',
-        //   },
-        // },
+        {
+          id: 'buffer_pedestrian_crossings',
+          name: 'Querungsstellen und Ampeln',
+          style: {
+            type: 'circle',
+            color: 'rgba(33, 196, 93, 0.7)',
+          },
+        },
         {
           id: 'buffer_ramps',
-          name: 'Rampen',
+          name: 'Transport&shy;überwege/Rampen',
           style: {
-            type: 'fill',
-            color: 'rgba(80, 85, 139, 0.7)',
+            type: 'circle',
+            color: 'rgba(148, 163, 184, 0.7)',
           },
         },
       ],

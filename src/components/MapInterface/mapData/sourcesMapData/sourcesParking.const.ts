@@ -29,6 +29,7 @@ export const sourcesParking: MapDataSource<
         'highway',
         'parking',
         'orientation',
+        'position',
         'capacity',
         'source_capacity',
         'length',
@@ -53,7 +54,7 @@ export const sourcesParking: MapDataSource<
   {
     id: 'parkraumParkingDebug',
     tiles:
-      'https://vts.mapwebbing.eu/processing.buffer_amenity_parking_points,processing.buffer_driveways,processing.buffer_highways,processing.buffer_kerb_intersections,processing.buffer_pedestrian_crossings,processing.buffer_pt_bus,processing.buffer_pt_tram,processing.buffer_ramps/{z}/{x}/{y}.pbf',
+      'https://vts.mapwebbing.eu/processing.buffer_amenity_parking_points,processing.buffer_driveways,processing.buffer_highways,processing.buffer_kerb_intersections,processing.buffer_pedestrian_crossings,processing.buffer_pt_bus,processing.buffer_pt_tram,processing.buffer_ramps,processing.buffer_amenity_parking_poly/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: { enabled: false }, // Those layers have no properties anyways
     presence: { enabled: false },

@@ -1,6 +1,5 @@
 export * from './defaultLegend'
 export * from './mapboxStyles'
-export * from './parking'
 export * from './topic_accidents.const'
 export * from './topic_bikelanes'
 export * from './topic_bikelanesPresence'

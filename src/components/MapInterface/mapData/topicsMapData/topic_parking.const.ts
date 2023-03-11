@@ -1,12 +1,12 @@
 import { MapDataTopic } from '../types'
+import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
-import { layersPresence } from './parking'
 
 const topic = 'parking'
 const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
-export type TopicParkingStyleIds = 'default' | 'presence'
+export type TopicParkingStyleIds = 'default' | 'presence' | 'raw'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
@@ -30,7 +30,46 @@ export const topic_parking: MapDataTopic = {
       id: 'presence',
       name: 'Vollständigkeit',
       desc: null,
-      layers: layersPresence(source, sourceLayer), // TODO
+      layers: [
+        mapboxStyleLayers({
+          group: 'parking_parkinglines',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'parking_parkinglines_no_null',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
+      legends: [
+        {
+          id: 'capacity-null',
+          name: 'Daten fehlen noch',
+          style: {
+            type: 'line',
+            color: 'rgb(187, 17, 133)',
+          },
+        },
+        {
+          id: 'position-no',
+          name: 'Parkverbot erfasst',
+          style: {
+            type: 'line',
+            color: 'rgb(102, 21, 168)',
+          },
+        },
+      ],
+      interactiveFilters: null,
+    },
+    {
+      id: 'raw',
+      name: 'Debug',
+      desc: null,
+      layers: debugLayerStyles({
+        source,
+        sourceLayer,
+      }),
       interactiveFilters: null,
     },
   ],
