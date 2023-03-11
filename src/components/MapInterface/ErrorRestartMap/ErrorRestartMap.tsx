@@ -17,8 +17,11 @@ export const ErrorRestartMap: React.FC = () => {
   bg && paramsWithoutConfig.append('bg', bg)
 
   return (
-    <div className="pt-2 text-purple-500">
-      <p>Leider ist ein Fehler ist aufgetreten.</p>
+    <div className="pt-2">
+      <p>
+        Leider ist ein Fehler beim Wiederherstellen der Karten-Einstellungen
+        aufgetreten.
+      </p>
       {!!regionPath && (
         <>
           <p>
