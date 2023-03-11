@@ -48,6 +48,11 @@ export const Inspector: React.FC = () => {
           return null
         }
         renderedLayerPropertyKeys.push(layerPropertyKey)
+        const disclosureTranslationString = sourceKey
+          // @ts-ignore I don't get the TS guiard working :-/
+          .split('--')
+          .at(0)
+          .replace('source:', '')
 
         return (
           <div
@@ -60,7 +65,11 @@ export const Inspector: React.FC = () => {
               defaultLocale="de"
             >
               <Disclosure
-                title={<FormattedMessage id={`title--${sourceKey}`} />}
+                title={
+                  <FormattedMessage
+                    id={`${disclosureTranslationString}--title`}
+                  />
+                }
                 objectId={properties.osm_id}
               >
                 {properties.prefix && (
