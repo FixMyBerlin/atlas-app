@@ -12,7 +12,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
   sourceId,
   tagKey,
 }) => {
-  let key = `key--${sourceId}--${tagKey}`
+  let key = `${sourceId}--${tagKey}--key`
 
   // For some key, we don't want to add translations for each source.
   // For those, we use a simple fallback.
@@ -29,7 +29,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
     'width',
   ]
   if (simpleTranslFallbackKeys.includes(tagKey)) {
-    key = `key--${tagKey}`
+    key = `ALL--${tagKey}--key`
   }
 
   // It will take a while to translate everything. This fallback does look better on production.

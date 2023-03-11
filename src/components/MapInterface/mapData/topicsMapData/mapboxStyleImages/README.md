@@ -16,7 +16,11 @@ Each of those `IMAGE_ID` …
 - They need to be `png` images.
 - TODO what about size?, use `pixelRatio=2`
 
----
+# Tooling
+
+Online SVG to PNG converter https://convertio.co/de/svg-png/
+
+# Dev
 
 **Info: Where to finde the image ids:**
 

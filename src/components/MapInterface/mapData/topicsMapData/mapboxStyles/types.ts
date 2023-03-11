@@ -21,13 +21,17 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
   | 'parking_bufferkerbintersections'
+  | 'parking_debug_bus_tram'
+  | 'parking_debug_crossings'
   | 'parking_debug_driveways'
   | 'parking_debug_kerb'
-  | 'parking_highway_area'
+  | 'parking_debug_parking_points'
+  | 'parking_debug_parking_poly'
+  | 'parking_debug_ramps'
   | 'parking_parkinglines'
+  | 'parking_parkinglines_no_null'
   | 'parking_stats'
   | 'parking_stats_length'
-  | 'parking_xx'
 
 export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes'
@@ -70,15 +74,18 @@ export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
   'parking_bufferkerbintersections'
 
 export type MapboxStyleLayerGroupDebugIds =
+  | 'parking_debug_bus_tram'
+  | 'parking_debug_crossings'
   | 'parking_debug_driveways'
   | 'parking_debug_kerb'
+  | 'parking_debug_parking_points'
+  | 'parking_debug_parking_poly'
+  | 'parking_debug_ramps'
 
-export type MapboxStyleLayerGroupHighwayIds = 'parking_highway_area'
-
-export type MapboxStyleLayerGroupParkinglinesIds = 'parking_parkinglines'
+export type MapboxStyleLayerGroupParkinglinesIds =
+  | 'parking_parkinglines'
+  | 'parking_parkinglines_no_null'
 
 export type MapboxStyleLayerGroupStatsIds =
   | 'parking_stats'
   | 'parking_stats_length'
-
-export type MapboxStyleLayerGroupXxIds = 'parking_xx'

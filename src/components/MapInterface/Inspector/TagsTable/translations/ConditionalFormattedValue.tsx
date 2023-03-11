@@ -51,7 +51,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     )
   }
 
-  let key = `value--${sourceId}--${tagKey}--${tagValue}`
+  let key = `${sourceId}--${tagKey}=${tagValue}`
 
   // Some keys are a duplicate of other Keys.
   // We want them translated only once, so we overwrite them here…
@@ -71,7 +71,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     'oneway',
   ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
-    key = `value--${tagKey}--${tagValue}`
+    key = `ALL--${tagKey}=${tagValue}`
   }
 
   // It will take a while to translate everything. This fallback does look better on production.

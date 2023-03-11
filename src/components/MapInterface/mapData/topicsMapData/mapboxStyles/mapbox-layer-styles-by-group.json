@@ -1900,20 +1900,76 @@
     "layers": []
   },
   {
-    "group": "parking_debug_driveways",
+    "group": "parking_debug_bus_tram",
     "layers": [
       {
         "type": "fill",
-        "id": "buffer-driveways-65xr1j",
+        "id": "parking-bus-tram-area",
         "paint": {
-          "fill-color": "hsla(192, 91%, 36%, 0.7)",
-          "fill-antialias": false
+          "fill-color": "rgba(250, 204, 20, 0.7)"
+        },
+        "minzoom": 15
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "parking-bus-tram-line",
+        "paint": {
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
+        }
+      },
+      {
+        "minzoom": 15,
+        "layout": {
+          "icon-image": "bus_stop",
+          "icon-size": ["interpolate", ["linear"], ["zoom"], 15, 0, 22, 1.5]
+        },
+        "type": "symbol",
+        "id": "parking-bus-tram-icon",
+        "paint": {}
+      }
+    ]
+  },
+  {
+    "group": "parking_debug_crossings",
+    "layers": [
+      {
+        "layout": {},
+        "type": "fill",
+        "id": "buffer-pedestrian-crossings-area",
+        "paint": {
+          "fill-color": "rgba(33, 196, 93, 0.7)"
         }
       },
       {
         "minzoom": 16.5,
         "type": "line",
-        "id": "buffer-driveways-65xr1j (1)",
+        "id": "buffer-pedestrian-crossings-border",
+        "paint": {
+          "line-color": "rgb(0, 0, 0)",
+          "line-dasharray": [2, 2],
+          "line-opacity": 0.7
+        }
+      }
+    ]
+  },
+  {
+    "group": "parking_debug_driveways",
+    "layers": [
+      {
+        "type": "fill",
+        "id": "buffer-driveways-area",
+        "paint": {
+          "fill-color": "rgba(8, 142, 175, 0.7)",
+          "fill-antialias": false
+        },
+        "minzoom": 15
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "buffer-driveways-border",
         "paint": {
           "line-color": "hsl(0, 0%, 0%)",
           "line-dasharray": [2, 2],
@@ -1927,16 +1983,17 @@
     "layers": [
       {
         "type": "fill",
-        "id": "buffer-kerb-intersection-ablgwi",
+        "id": "buffer-kerb-intersection-area",
         "paint": {
           "fill-color": "rgba(233, 89, 12, 0.7)",
           "fill-antialias": false
-        }
+        },
+        "minzoom": 15
       },
       {
         "minzoom": 16.5,
         "type": "symbol",
-        "id": "buffer-kerb-intersection-cent-1weges copy",
+        "id": "buffer-kerb-intersection-icon",
         "paint": {},
         "layout": {
           "icon-size": [
@@ -1958,7 +2015,7 @@
       {
         "minzoom": 16.5,
         "type": "line",
-        "id": "buffer-kerb-intersection-ablgwi (1)",
+        "id": "buffer-kerb-intersection-border",
         "paint": {
           "line-color": "rgb(0, 0, 0)",
           "line-opacity": 0.7,
@@ -1968,25 +2025,70 @@
     ]
   },
   {
-    "group": "parking_highway_area",
+    "group": "parking_debug_parking_points",
     "layers": [
       {
         "type": "fill",
-        "id": "fill highway area",
+        "id": "parking-point-area",
         "paint": {
-          "fill-color": "rgb(219, 203, 194)",
-          "fill-antialias": false,
-          "fill-opacity": 0.06
+          "fill-color": "rgba(80, 139, 134, 0.7)"
+        },
+        "layout": {}
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "parking-point-border",
+        "paint": {
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "parking_debug_parking_poly",
+    "layers": [
+      {
+        "minzoom": 15,
+        "layout": {},
+        "type": "fill",
+        "id": "parking-poly-area",
+        "paint": {
+          "fill-color": "rgba(80, 139, 134, 0.7)"
         }
       },
       {
         "minzoom": 16.5,
         "type": "line",
-        "id": "dots highway area",
+        "id": "parking-poly-border",
         "paint": {
-          "line-color": "rgb(110, 110, 110)",
-          "line-opacity": 0.06,
-          "line-dasharray": [2, 2]
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
+    "group": "parking_debug_ramps",
+    "layers": [
+      {
+        "type": "fill",
+        "id": "parking-ramps-area",
+        "paint": {
+          "fill-color": "rgba(148, 163, 184, 0.7)"
+        },
+        "minzoom": 15
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "parking-ramps-border",
+        "paint": {
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
         }
       }
     ]
@@ -2000,7 +2102,8 @@
         "paint": {
           "line-color": "rgb(22, 163, 74)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
-        }
+        },
+        "filter": ["has", "capacity"]
       },
       {
         "id": "parallel pattern",
@@ -2011,37 +2114,43 @@
           "line-dasharray": [4, 2],
           "line-opacity": 0.67
         },
-        "filter": ["match", ["get", "orientation"], ["parallel"], true, false]
+        "filter": [
+          "all",
+          ["match", ["get", "orientation"], ["parallel"], true, false],
+          ["has", "capacity"]
+        ]
       },
       {
-        "id": "diagonal pattern",
+        "minzoom": 16,
+        "filter": [
+          "all",
+          ["match", ["get", "orientation"], ["diagonal"], true, false],
+          ["has", "capacity"]
+        ],
         "type": "line",
+        "id": "diagonal pattern",
         "paint": {
           "line-color": "rgb(22, 163, 74)",
-          "line-pattern": "parking_diagonal",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
-          "line-opacity": 0.67
-        },
-        "minzoom": 16,
-        "filter": ["match", ["get", "orientation"], ["diagonal"], true, false]
+          "line-opacity": 0.67,
+          "line-pattern": "parking_diagonal"
+        }
       },
       {
-        "id": "perpendicular pattern",
+        "minzoom": 16,
+        "filter": [
+          "all",
+          ["match", ["get", "orientation"], ["perpendicular"], true, false],
+          ["has", "capacity"]
+        ],
         "type": "line",
+        "id": "perpendicular pattern",
         "paint": {
           "line-color": "rgb(22, 163, 74)",
           "line-pattern": "parking_perpendicular",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
           "line-opacity": 0.67
-        },
-        "minzoom": 16,
-        "filter": [
-          "match",
-          ["get", "orientation"],
-          ["perpendicular"],
-          true,
-          false
-        ]
+        }
       },
       {
         "minzoom": 15,
@@ -2053,6 +2162,7 @@
           "text-offset": [0, 0.8],
           "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 18, 16]
         },
+        "filter": ["has", "capacity"],
         "type": "symbol",
         "id": "capacity label-line",
         "paint": {
@@ -2068,6 +2178,43 @@
             2.5
           ]
         }
+      }
+    ]
+  },
+  {
+    "group": "parking_parkinglines_no_null",
+    "layers": [
+      {
+        "id": "position-no",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(102, 21, 168)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
+        },
+        "filter": ["match", ["get", "position"], ["no"], true, false]
+      },
+      {
+        "id": "positon-some-but-processing-null",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(102, 21, 168)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
+          "line-dasharray": [0.5, 0.5]
+        },
+        "filter": ["all", ["!", ["has", "capacity"]], ["has", "position"]]
+      },
+      {
+        "id": "capacity-null",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(187, 17, 133)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
+        },
+        "filter": [
+          "all",
+          ["!", ["has", "capacity"]],
+          ["!", ["has", "position"]]
+        ]
       }
     ]
   },
@@ -2162,37 +2309,6 @@
           "text-halo-color": "hsl(291, 0%, 100%)",
           "text-halo-blur": 1
         }
-      }
-    ]
-  },
-  {
-    "group": "parking_xx",
-    "layers": [
-      {
-        "type": "fill",
-        "id": "buffer-crossings-traffic-sign-cwkn08",
-        "paint": {
-          "fill-color": "rgba(13, 150, 139, 0.7)"
-        }
-      },
-      {
-        "minzoom": 16.5,
-        "type": "line",
-        "id": "buffer-crossings-traffic-sign-3hhmfm (1)",
-        "paint": {
-          "line-dasharray": [2, 2],
-          "line-color": "rgb(0, 0, 0)"
-        }
-      },
-      {
-        "id": "buffer-crossings-angled-cente-7y4s4w",
-        "type": "symbol",
-        "paint": {},
-        "layout": {
-          "icon-image": "oneway-white-large",
-          "icon-rotate": ["get", "angle"]
-        },
-        "minzoom": 16.5
       }
     ]
   }

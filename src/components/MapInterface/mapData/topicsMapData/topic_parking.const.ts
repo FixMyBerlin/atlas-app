@@ -1,15 +1,12 @@
 import { MapDataTopic } from '../types'
+import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
-import { layersDebugLengthPerCapacity, layersPresence } from './parking'
 
 const topic = 'parking'
 const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
-export type TopicParkingStyleIds =
-  | 'default'
-  | 'presence'
-  | 'debugLengthPerCapacity'
+export type TopicParkingStyleIds = 'default' | 'presence' | 'raw'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
@@ -33,17 +30,46 @@ export const topic_parking: MapDataTopic = {
       id: 'presence',
       name: 'Vollständigkeit',
       desc: null,
-      layers: layersPresence(source, sourceLayer),
+      layers: [
+        mapboxStyleLayers({
+          group: 'parking_parkinglines',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'parking_parkinglines_no_null',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
+      legends: [
+        {
+          id: 'capacity-null',
+          name: 'Daten fehlen noch',
+          style: {
+            type: 'line',
+            color: 'rgb(187, 17, 133)',
+          },
+        },
+        {
+          id: 'position-no',
+          name: 'Parkverbot erfasst',
+          style: {
+            type: 'line',
+            color: 'rgb(102, 21, 168)',
+          },
+        },
+      ],
       interactiveFilters: null,
     },
     {
-      id: 'debugLengthPerCapacity',
-      name: 'Debug Lange<>Kapazität',
+      id: 'raw',
+      name: 'Debug',
       desc: null,
-      layers: layersDebugLengthPerCapacity(
+      layers: debugLayerStyles({
         source,
-        'processing.parking_segments'
-      ),
+        sourceLayer,
+      }),
       interactiveFilters: null,
     },
   ],
