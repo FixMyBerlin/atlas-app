@@ -5,7 +5,7 @@ export const layerLabel = (keyForTextField: string): MapDataVisLayer => {
   return {
     id: 'line-label-capacity',
     type: 'symbol',
-    'source-layer': 'processing.parking_segments',
+    'source-layer': 'processing.parking_segments_nn',
     layout: {
       'text-field': `{${keyForTextField}}`,
       'symbol-placement': 'line-center',
