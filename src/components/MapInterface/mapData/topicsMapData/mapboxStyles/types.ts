@@ -30,7 +30,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
   | 'parking_parkinglines'
-  | 'parking_parkinglines_no_null'
+  | 'parking_parkinglines_completeness'
   | 'parking_stats'
   | 'parking_stats_length'
 
@@ -87,7 +87,7 @@ export type MapboxStyleLayerGroupDebugIds =
 
 export type MapboxStyleLayerGroupParkinglinesIds =
   | 'parking_parkinglines'
-  | 'parking_parkinglines_no_null'
+  | 'parking_parkinglines_completeness'
 
 export type MapboxStyleLayerGroupStatsIds =
   | 'parking_stats'

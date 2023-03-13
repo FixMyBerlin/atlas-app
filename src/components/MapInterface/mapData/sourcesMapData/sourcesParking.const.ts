@@ -28,10 +28,11 @@ export const sourcesParking: MapDataSource<
         'highway_name',
         'highway',
         'parking',
+        'capacity_status',
         'orientation',
         'position',
         'capacity',
-        'source_capacity',
+        'source_capacity__if_present', // unfortunatelly it is always present so we "hide" it for some cases with a "-" translation
         'length',
         'highway_width_proc_effective',
         'surface',

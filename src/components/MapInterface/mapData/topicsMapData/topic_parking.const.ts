@@ -32,31 +32,49 @@ export const topic_parking: MapDataTopic = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_parkinglines',
+          group: 'parking_parkinglines_completeness',
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'parking_parkinglines_no_null',
+          group: 'parking_parkinglines',
           source,
           sourceLayer,
         }),
       ].flat(),
       legends: [
         {
-          id: 'capacity-null',
+          id: 'capacity_status--data_missing',
+          name: 'Parkstände',
+          style: {
+            type: 'line',
+            color: 'rgb(22, 163, 74)',
+          },
+        },
+        {
+          id: 'capacity_status--not_processed_yet',
           name: 'Daten fehlen noch',
           style: {
             type: 'line',
             color: 'rgb(187, 17, 133)',
+            dasharray: [5, 4],
           },
         },
         {
-          id: 'position-no',
+          id: 'capacity_status--no_parking',
           name: 'Parkverbot erfasst',
           style: {
             type: 'line',
             color: 'rgb(102, 21, 168)',
+          },
+        },
+        {
+          id: 'capacity_status--segment_too_small',
+          name: 'Segment zu klein',
+          style: {
+            type: 'line',
+            color: 'rgb(102, 21, 168)',
+            dasharray: [5, 4],
           },
         },
       ],

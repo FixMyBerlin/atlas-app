@@ -1063,7 +1063,8 @@
           "all",
           ["match", ["get", "fresh"], ["fresh_update_at"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_update_at-side2",
@@ -1079,7 +1080,8 @@
           "all",
           ["match", ["get", "fresh"], ["fresh_update_at"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_update_at-side1",
@@ -1095,7 +1097,8 @@
           "all",
           ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_update_at-side2",
@@ -1111,7 +1114,8 @@
           "all",
           ["match", ["get", "fresh"], ["outdated_update_at"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_check_date-side2",
@@ -1126,7 +1130,8 @@
           "all",
           ["match", ["get", "fresh"], ["fresh_check_date"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-fresh_check_date-side1",
@@ -1141,7 +1146,8 @@
           "all",
           ["match", ["get", "fresh"], ["fresh_check_date"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_check_date-side2",
@@ -1156,7 +1162,8 @@
           "all",
           ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-outdated_check_date-side1 ",
@@ -1171,7 +1178,8 @@
           "all",
           ["match", ["get", "fresh"], ["outdated_check_date"], true, false],
           ["==", ["get", "is_present"], true]
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "3_lit-Unbeleuchtet",
@@ -2204,38 +2212,68 @@
     ]
   },
   {
-    "group": "parking_parkinglines_no_null",
+    "group": "parking_parkinglines_completeness",
     "layers": [
       {
-        "id": "position-no",
+        "id": "capacity_status-no_parking",
         "type": "line",
         "paint": {
           "line-color": "rgb(102, 21, 168)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
         },
-        "filter": ["match", ["get", "position"], ["no"], true, false]
+        "filter": [
+          "match",
+          ["get", "capacity_status"],
+          ["no_parking"],
+          true,
+          false
+        ]
       },
       {
-        "id": "positon-some-but-processing-null",
+        "id": "capacity_status-segment_too_small",
         "type": "line",
         "paint": {
           "line-color": "rgb(102, 21, 168)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
           "line-dasharray": [0.5, 0.5]
         },
-        "filter": ["all", ["!", ["has", "capacity"]], ["has", "position"]]
+        "filter": [
+          "match",
+          ["get", "capacity_status"],
+          ["segment_too_small"],
+          true,
+          false
+        ]
       },
       {
-        "id": "capacity-null",
+        "id": "capacity_status-data_missing",
         "type": "line",
         "paint": {
           "line-color": "rgb(187, 17, 133)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
         },
         "filter": [
-          "all",
-          ["!", ["has", "capacity"]],
-          ["!", ["has", "position"]]
+          "match",
+          ["get", "capacity_status"],
+          ["data_missing"],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "capacity_status-not_processed_yet",
+        "type": "line",
+        "paint": {
+          "line-color": "rgb(187, 17, 133)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
+          "line-dasharray": [0.5, 0.5]
+        },
+        "filter": [
+          "match",
+          ["get", "capacity_status"],
+          ["not_processed_yet"],
+          true,
+          false
         ]
       }
     ]
