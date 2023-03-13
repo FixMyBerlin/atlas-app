@@ -153,6 +153,8 @@ export const translations: { [key: string]: string } = {
   'tarmac_buildings--title': 'Gebäude',
   'tarmac_buildings--building--key': 'Gebäudeart',
   'tarmac_buildings--building=retail': 'Gebäude des Einzelhandels',
+  'tarmac_buildings--building=garages': 'Mehrere Garagen',
+  'tarmac_buildings--building=garage': 'Garage (einzeln)',
   'tarmac_poiClassification--type=amenity-fast_food': 'Imbiss',
   'tarmac_poiClassification--type=amenity-bank': 'Bank',
 }
