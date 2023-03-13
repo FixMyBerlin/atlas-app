@@ -30,6 +30,13 @@ export const SourceAndLayers: React.FC = () => {
   // Therefore, we look at a flattened topics list for this component.
   const configTopics = flatConfigTopics(configThemesTopics)
 
+  const layerOrder = {
+    symbol: 'housenumber',
+    circle: 'housenumber',
+    line: 'place-hamlet',
+    fill: 'waterway',
+    heatmap: 'waterway',
+  }
   return (
     <>
       {configTopics.map((topicConfig) => {
@@ -93,11 +100,11 @@ export const SourceAndLayers: React.FC = () => {
                     source: sourceId,
                     sourceLayer: layer['source-layer'],
                   }).find((l) => l.type === layer.type)?.paint
-
                 const layerProps = {
                   id: layerId,
                   type: layer.type,
                   source: sourceId,
+                  beforeId: layerOrder[layer.type],
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: filter,
