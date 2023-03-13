@@ -577,42 +577,8 @@
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4],
-          "line-offset": ["step", ["zoom"], 2, 14, 4]
-        },
-        "layout": {}
-      },
-      {
-        "type": "line",
-        "id": "right",
-        "paint": {
-          "line-color": [
-            "match",
-            ["get", "right"],
-            ["missing"],
-            "rgb(250, 128, 225)",
-            ["not_expected"],
-            "rgba(230, 230, 230, 0.68)",
-            ["data_no"],
-            "rgba(248, 216, 216, 0.67)",
-            [
-              "cyclewayOnHighway",
-              "footway_bicycleYes",
-              "needsClarification",
-              "footAndCycleway_shared",
-              "cyclewayAlone",
-              "cyclewaySeparated",
-              "footAndCycleway_segregated",
-              "bicycleRoad",
-              "pedestrianArea_bicycleYes",
-              "cyclewayBetweenLanes"
-            ],
-            "rgba(235, 235, 254, 0.7)",
-            "rgba(0, 0, 0, 0.7)"
-          ],
-          "line-offset": ["step", ["zoom"], -2, 14, -4],
-          "line-width": ["step", ["zoom"], 2, 14, 4]
-        },
-        "layout": {}
+          "line-offset": ["step", ["zoom"], -2, 14, -4]
+        }
       },
       {
         "type": "line",
@@ -643,8 +609,39 @@
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        },
-        "layout": {}
+        }
+      },
+      {
+        "type": "line",
+        "id": "right",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "right"],
+            ["missing"],
+            "rgb(250, 128, 225)",
+            ["not_expected"],
+            "rgba(230, 230, 230, 0.68)",
+            ["data_no"],
+            "rgba(248, 216, 216, 0.67)",
+            [
+              "cyclewayOnHighway",
+              "footway_bicycleYes",
+              "needsClarification",
+              "footAndCycleway_shared",
+              "cyclewayAlone",
+              "cyclewaySeparated",
+              "footAndCycleway_segregated",
+              "bicycleRoad",
+              "pedestrianArea_bicycleYes",
+              "cyclewayBetweenLanes"
+            ],
+            "rgba(235, 235, 254, 0.7)",
+            "rgba(0, 0, 0, 0.7)"
+          ],
+          "line-offset": ["step", ["zoom"], 2, 14, 4],
+          "line-width": ["step", ["zoom"], 2, 14, 4]
+        }
       }
     ]
   },
