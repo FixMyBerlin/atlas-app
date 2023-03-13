@@ -30,6 +30,17 @@ export const SourceAndLayers: React.FC = () => {
   // Therefore, we look at a flattened topics list for this component.
   const configTopics = flatConfigTopics(configThemesTopics)
 
+  // We place our layers between given Maptiler Layer IDs:
+  // Key: LayerType – we group our data based on layer type.
+  // Value: Maptiler Layer ID that our layers are placed on top of.
+  const layerOrder = {
+    symbol: 'housenumber', // Icon + Label
+    circle: 'housenumber', // Points
+    heatmap: 'housenumber',
+    line: 'boundary_country',
+    fill: 'landuse',
+  }
+
   return (
     <>
       {configTopics.map((topicConfig) => {
@@ -101,6 +112,7 @@ export const SourceAndLayers: React.FC = () => {
                   id: layerId,
                   type: layer.type,
                   source: sourceId,
+                  beforeId: layerOrder[layer.type],
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: layerFilter,
