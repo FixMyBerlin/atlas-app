@@ -21,10 +21,8 @@ export const ConditionalFormattedKey: React.FC<Props> = ({
     '_parent_highway',
     'composit_surface_smoothness',
     'highway',
-    'left',
     'name',
     'oneway',
-    'right',
     'traffic_sign',
     'width',
   ]

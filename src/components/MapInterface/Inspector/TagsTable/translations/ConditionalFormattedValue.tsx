@@ -62,16 +62,25 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
 
   // Some TagKeys are not specific per category; we only translate those once
   const nonCategorizedTagKeys = [
-    'highway',
     '_parent_highway',
-    'surface',
-    'smoothness',
-    'left',
-    'right',
+    'highway',
     'oneway',
+    'smoothness',
+    'surface',
   ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
     key = `ALL--${tagKey}=${tagValue}`
+  }
+
+  // Some keys are translated already for a different key else, so lets look there first…
+  const lookThere: Record<string, string> = {
+    self: 'LEFTRIGHTSELF',
+    left: 'LEFTRIGHTSELF',
+    right: 'LEFTRIGHTSELF',
+  }
+  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === tagKey)
+  if (lookThereEntryKey) {
+    key = key.replace(lookThereEntryKey, lookThere[lookThereEntryKey])
   }
 
   // It will take a while to translate everything. This fallback does look better on production.
