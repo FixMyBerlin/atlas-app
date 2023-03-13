@@ -21,6 +21,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
   | 'parking_bufferkerbintersections'
+  | 'parking_calculator'
   | 'parking_debug_bus_tram'
   | 'parking_debug_crossings'
   | 'parking_debug_driveways'
@@ -72,6 +73,8 @@ export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 
 export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
   'parking_bufferkerbintersections'
+
+export type MapboxStyleLayerGroupCalculatorIds = 'parking_calculator'
 
 export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_bus_tram'

@@ -77,9 +77,7 @@ export const sourcesParking: MapDataSource<
     calculator: {
       enabled: true,
       keys: ['capacity'],
-      queryLayers: [
-        'parkraumParkingPoints--parkingPoints--default--parkraumParkingPointsLayer',
-      ],
+      queryLayers: ['parkraumParkingPoints--parkingPoints--default--circle'],
       highlightingKey: 'id',
     },
     export: { enabled: false },
