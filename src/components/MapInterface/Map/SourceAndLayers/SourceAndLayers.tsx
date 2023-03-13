@@ -33,9 +33,9 @@ export const SourceAndLayers: React.FC = () => {
   const layerOrder = {
     symbol: 'housenumber',
     circle: 'housenumber',
-    line: 'place-hamlet',
-    fill: 'waterway',
-    heatmap: 'waterway',
+    line: 'boundary_country',
+    fill: 'landuse',
+    heatmap: 'landuse',
   }
   return (
     <>
