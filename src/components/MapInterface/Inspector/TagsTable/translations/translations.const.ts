@@ -122,6 +122,11 @@ export const translations: { [key: string]: string } = {
   'tarmac_boundaries--admin_level=7': 'Level 7 — Meistens Verwaltungsgemeinschaft, Amt', // https://wiki.openstreetmap.org/wiki/DE:Grenze
   'tarmac_boundaries--admin_level=8': 'Level 8 — Meistens (Kreisangehörige) Gemeinde / Stadt',
   'tarmac_boundaries--title': 'Grenzen',
+  'tarmac_buildings--building--key': 'Gebäudeart',
+  'tarmac_buildings--building=garage': 'Garage (einzeln)',
+  'tarmac_buildings--building=garages': 'Mehrere Garagen',
+  'tarmac_buildings--building=retail': 'Gebäude des Einzelhandels',
+  'tarmac_buildings--title': 'Gebäude',
   'tarmac_education--amenity--key': 'Art der Bildngseinrichtung',
   'tarmac_education--amenity=kindergarten': 'Kindergarten',
   'tarmac_education--amenity=school': 'Schule',
