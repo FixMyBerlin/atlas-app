@@ -33,6 +33,7 @@ local presenceTable = osm2pgsql.define_table({
     { column = 'left',  type = 'text' },
     { column = 'self',  type = 'text' },
     { column = 'right', type = 'text' },
+    { column = 'meta',  type = 'jsonb' }
   }
 })
 
