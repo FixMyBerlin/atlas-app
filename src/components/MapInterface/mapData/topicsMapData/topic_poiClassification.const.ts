@@ -10,7 +10,7 @@ export type TopicPoiClassificationStyleFilterIds_Tarmac = '_nofilter'
 
 export const topic_poiClassification_tarmac: MapDataTopic = {
   id: topic,
-  name: 'Einkauf etc',
+  name: 'Einkauf u.ä.',
   desc: null,
   sourceId: source,
   styles: [
