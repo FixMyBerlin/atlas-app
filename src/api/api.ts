@@ -21,6 +21,7 @@ export type VerificationApiPost = {
   verified_at: string
   verified_by: number | undefined
   verified_status: VerificationStatus | null
+  comment: string | undefined
 }
 
 export type VerificationApiGet = {
@@ -38,6 +39,7 @@ export const updateVerificationStatus = ({
   verified_at,
   verified_by,
   verified_status,
+  comment,
 }: VerificationApiPost) => {
   if (!verified_by || !verified_status) {
     throw Error('updateVerificationStatus: Required data missing')
@@ -48,6 +50,7 @@ export const updateVerificationStatus = ({
   encoded.append('verified_at', verified_at)
   encoded.append('verified_by', verified_by.toString())
   encoded.append('verified_status', verified_status)
+  encoded.append('comment', comment || '')
 
   return api
     .post(`/verify/${apiIdentifier}/${osm_id}?` + encoded)

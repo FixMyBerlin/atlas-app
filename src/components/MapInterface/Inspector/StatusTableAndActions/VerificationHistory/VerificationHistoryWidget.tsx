@@ -7,6 +7,7 @@ type verificationEvent = {
   verified: string
   verified_by: string
   verified_at: string
+  comment: string
 }
 
 type Props = {
@@ -23,7 +24,7 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
           const verifiedBy =
             userById(parseInt(event.verified_by))?.displayName ||
             '(Unbekannter Nutzer)'
-
+          const comment = event.comment
           return (
             <li key={event.verified_at}>
               <div className="m-1 flex space-x-2">
@@ -40,6 +41,7 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
                     <time>{datetimeFormatted}</time>
                   </div>
                 </div>
+                <div>{comment}</div>
               </div>
             </li>
           )
