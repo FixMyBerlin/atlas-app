@@ -10,11 +10,11 @@ local function unnestTags(tags, prefix, side, dest)
         dest[prefix] = val
         dest.side = side
       else
+        -- offset of 2 due to 1-indexing and for removing the ':'
         local prefixlessKey = string.sub(key, prefixLen + 2)
         local infix = string.match(prefixlessKey, '[^:]*')
-        -- avoid projecting sided tags in the implicit case
-        if not Set({ 'left', 'right', 'both' })[infix] then
-          -- offset of 2 due to 1-indexing and for removing the ':'
+        if side ~= '' or not Set({ 'left', 'right', 'both' })[infix] then
+          -- avoid projecting sided tags in the implicit case
           dest[prefixlessKey] = val
           dest.side = side
         end
