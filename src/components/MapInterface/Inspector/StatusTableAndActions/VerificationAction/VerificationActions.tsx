@@ -39,6 +39,7 @@ export const VerificationActions: React.FC<Props> = ({
     verified_at: new Date().toISOString(),
     verified_by: currentUser?.id,
     verified_status: null, // Set inside the Button mutation below
+    comment: 'test comment to check if stuff works',
   }
 
   const queryKey = ['verificationHistory', apiIdentifier, apiData.osm_id]
