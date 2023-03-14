@@ -25,6 +25,7 @@ export type MapDataBackgroundSource<TIds> = {
 
 export type MapDataSourceInspectorEditor = {
   name: string
+  idKey?: string
   urlTemplate: `https://${string}`
 }
 
@@ -162,7 +163,12 @@ export type MapDataVisLayer = (
   | mapboxgl.LineLayer
   | mapboxgl.SymbolLayer
 ) &
-  Required<Pick<mapboxgl.Layer, 'source-layer'>>
+  Required<Pick<mapboxgl.Layer, 'source-layer'>> & {
+    /**
+     * @default `true`
+     * @desc optional `false` will hide the layer from `interactiveLayerIds` */
+    interactive?: false
+  }
 
 /** @desc: Optional interactive filter of the styled data; eg. 'by year' */
 export type MapDataStyleInteractiveFilter = {

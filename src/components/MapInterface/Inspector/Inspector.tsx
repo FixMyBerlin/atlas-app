@@ -6,6 +6,7 @@ import { useMapStateInteraction } from '../mapStateInteraction/useMapStateIntera
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
 import { Links } from './Links'
+import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
 import { OtherProperties } from './OtherProperties'
 import { StatusTableAndVerification } from './StatusTableAndActions/StatusTableAndVerification'
 import { TagsTable } from './TagsTable'
@@ -85,6 +86,8 @@ export const Inspector: React.FC = () => {
                     </p>
                   </details>
                 )}
+
+                <MapillaryIframe properties={properties} sourceId={sourceId} />
 
                 <div className="py-1">{/* Spacer */}</div>
                 <TagsTable

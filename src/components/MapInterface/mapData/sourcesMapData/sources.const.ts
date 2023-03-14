@@ -373,6 +373,25 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
+      editors: [
+        {
+          name: 'Mapillary Image',
+          idKey: 'id',
+          urlTemplate:
+            'https://www.mapillary.com/app/?focus=photo&pKey={osm_id}',
+        },
+        {
+          name: 'Mapillary Panorama',
+          idKey: 'id',
+          urlTemplate:
+            'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
+        },
+        {
+          name: 'Kartaview',
+          urlTemplate:
+            'https://kartaview.org/map/@{latitude},{longitude},{zoom}z',
+        },
+      ],
     },
     presence: { enabled: false },
     verification: { enabled: false },

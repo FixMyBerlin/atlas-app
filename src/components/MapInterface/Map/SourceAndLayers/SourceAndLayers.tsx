@@ -55,8 +55,8 @@ export const SourceAndLayers: React.FC = () => {
             id={sourceId}
             type="vector"
             tiles={[sourceData.tiles]}
-            minzoom={8}
-            maxzoom={22}
+            minzoom={sourceData.minzoom || 8}
+            maxzoom={sourceData.maxzoom || 22}
           >
             {topicConfig.styles.map((styleConfig) => {
               const styleData = getStyleData(curTopicData, styleConfig.id)
@@ -80,19 +80,22 @@ export const SourceAndLayers: React.FC = () => {
                     ? visibility
                     : { ...visibility, ...layer.layout }
 
-                const filter = specifyFilters(
-                  layer.filter,
-                  styleData.interactiveFilters,
-                  styleConfig.filters
-                )
+                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                const layerFilter = useDebugLayerStyles
+                  ? ['all']
+                  : specifyFilters(
+                      layer.filter,
+                      styleData.interactiveFilters,
+                      styleConfig.filters
+                    )
 
-                // Use <DebugMap> to setUseDebugLayerStyles
-                const layerPaint =
-                  useDebugLayerStyles &&
-                  debugLayerStyles({
-                    source: sourceId,
-                    sourceLayer: layer['source-layer'],
-                  }).find((l) => l.type === layer.type)?.paint
+                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                const layerPaint = useDebugLayerStyles
+                  ? debugLayerStyles({
+                      source: sourceId,
+                      sourceLayer: layer['source-layer'],
+                    }).find((l) => l.type === layer.type)?.paint
+                  : (layer.paint as any)
 
                 const layerProps = {
                   id: layerId,
@@ -100,10 +103,8 @@ export const SourceAndLayers: React.FC = () => {
                   source: sourceId,
                   'source-layer': layer['source-layer'],
                   layout: layout,
-                  filter: filter,
-                  paint: layerPaint || (layer.paint as any),
-                  ...(!!layer.minzoom && { minzoom: layer.minzoom }),
-                  ...(!!layer.maxzoom && { maxzoom: layer.maxzoom }),
+                  filter: layerFilter,
+                  paint: layerPaint,
                 }
 
                 // The verification style layer in Mapbox Studio has to include this string

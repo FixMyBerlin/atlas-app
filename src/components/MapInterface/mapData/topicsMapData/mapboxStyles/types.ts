@@ -21,6 +21,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
   | 'parking_bufferkerbintersections'
+  | 'parking_calculator'
   | 'parking_debug_bus_tram'
   | 'parking_debug_crossings'
   | 'parking_debug_driveways'
@@ -28,8 +29,9 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_debug_parking_points'
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
+  | 'parking_obstacles'
   | 'parking_parkinglines'
-  | 'parking_parkinglines_no_null'
+  | 'parking_parkinglines_completeness'
   | 'parking_stats'
   | 'parking_stats_length'
 
@@ -73,6 +75,8 @@ export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
   'parking_bufferkerbintersections'
 
+export type MapboxStyleLayerGroupCalculatorIds = 'parking_calculator'
+
 export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_bus_tram'
   | 'parking_debug_crossings'
@@ -82,9 +86,11 @@ export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
 
+export type MapboxStyleLayerGroupObstaclesIds = 'parking_obstacles'
+
 export type MapboxStyleLayerGroupParkinglinesIds =
   | 'parking_parkinglines'
-  | 'parking_parkinglines_no_null'
+  | 'parking_parkinglines_completeness'
 
 export type MapboxStyleLayerGroupStatsIds =
   | 'parking_stats'

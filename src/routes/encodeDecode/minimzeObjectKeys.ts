@@ -5,6 +5,7 @@ const translateKeys = [
   ['styles', 's'],
   ['default', 'd'],
   ['options', 'o'],
+  ['filters', 'f'],
   // Mainly for ?map (GeoJSON)
   ['type', 't'],
   ['properties', 'p'],

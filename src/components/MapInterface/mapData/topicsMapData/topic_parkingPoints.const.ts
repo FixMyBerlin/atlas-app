@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parkingPoints'
 export type TopicParkingPointsId = typeof topic
@@ -15,38 +16,11 @@ export const topic_parkingPoints: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: [
-        {
-          id: 'parkraumParkingPointsLayer',
-          type: 'circle',
-          source: 'parkraumParkingPoints',
-          'source-layer': 'processing.parking_spaces',
-          paint: {
-            'circle-color': '#6d28d9',
-            'circle-stroke-color': '#fdf4ff',
-            'circle-stroke-opacity': 0.9,
-            'circle-stroke-width': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              16,
-              0,
-              20,
-              2,
-            ],
-            // Config https://studio.mapbox.com/styles/hejco/cl50xbava000u14lyqdo62cdr/edit/#15.68/52.474829/13.434895
-            'circle-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              10,
-              0,
-              17,
-              3,
-            ],
-          },
-        },
-      ],
+      layers: mapboxStyleLayers({
+        group: 'parking_calculator',
+        source: 'parkraumParkingPoints',
+        sourceLayer: 'processing.parking_spaces',
+      }),
       interactiveFilters: null,
     },
   ],

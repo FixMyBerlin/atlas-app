@@ -36,7 +36,7 @@ export const Download: React.FC = () => {
   const flatTopics = flatConfigTopics(configThemesTopics)
 
   return (
-    <div className="absolute bottom-14 left-5">
+    <section>
       <IconModal
         title="Daten des Radverkehrsatlas downloaden"
         titleIcon="download"
@@ -163,6 +163,6 @@ export const Download: React.FC = () => {
           })}
         </ul>
       </IconModal>
-    </div>
+    </section>
   )
 }

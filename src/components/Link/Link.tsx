@@ -39,7 +39,7 @@ export const Link: React.FC<Props> = ({
   )
 
   let mailto: string | undefined = undefined
-  if (to.includes('@')) {
+  if (to.includes('@') && !to.startsWith('http')) {
     const mail = `mailto:${to}`
     const params = [
       mailSubject && `subject=${encodeURIComponent(mailSubject)}`,
