@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS {verification_table} (
 	-- osm_id int8 NOT NULL,
 	verified_at timestamp NOT NULL,
 	verified_by bigint,
-	verified varchar NULL
+	verified varchar NULL,
+  comment text
 );
 -- TODO: ALTER TABLE {verification_table} ALTER COLUMN osm_type TYPE bpchar(1) USING osm_type::bpchar;
 
