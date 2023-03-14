@@ -26,6 +26,11 @@ export const topic_mapillaryCoverage: MapDataTopic = {
             'circle-blur': 0.5,
             'circle-color': 'green',
           },
+          // No dies why this does not work. This was to debug the interactiveFilters
+          // filter: [
+          //   'all',
+          //   ['match', ['get', 'is_pano'], ['false'], true, false],
+          // ],
         },
         {
           id: 'line',
@@ -41,6 +46,7 @@ export const topic_mapillaryCoverage: MapDataTopic = {
         },
       ],
       interactiveFilters: null,
+      // Cannot get this to work. The idea was, to pass an array as string and JSON.parse it in `filterArrayFromMergedDataAndConfig` but first I need to figure out why the manual filter above does not work.
       // interactiveFilters: [
       //   {
       //     id: 'panorama',
@@ -50,7 +56,7 @@ export const topic_mapillaryCoverage: MapDataTopic = {
       //     options: [
       //       { id: 'true', name: 'Ja' },
       //       { id: 'false', name: 'Nein' },
-      //       { id: 'nil', name: 'Egal', defaultActive: true },
+      //       { id: '[true,false]', name: 'Egal', defaultActive: true },
       //     ],
       //   },
       // ],
