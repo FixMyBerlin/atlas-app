@@ -386,6 +386,11 @@ export const sources: MapDataSource<
           urlTemplate:
             'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
         },
+        {
+          name: 'Kartaview',
+          urlTemplate:
+            'https://kartaview.org/map/@{latitude},{longitude},{zoom}z',
+        },
       ],
     },
     presence: { enabled: false },
