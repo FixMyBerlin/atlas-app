@@ -53,7 +53,7 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'bikelanes',
-    name: 'Infrastruktur',
+    name: 'Radinfrastruktur',
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultActive: true },
