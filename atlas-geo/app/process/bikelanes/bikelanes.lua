@@ -141,7 +141,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  -- Bellow is presence logic
+  -- Below is presence logic
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
