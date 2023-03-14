@@ -1,4 +1,4 @@
-FROM ubuntu:kinetic
+FROM ubuntu:lunar
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
