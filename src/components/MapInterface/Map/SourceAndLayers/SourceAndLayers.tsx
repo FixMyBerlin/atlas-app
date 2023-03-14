@@ -80,19 +80,22 @@ export const SourceAndLayers: React.FC = () => {
                     ? visibility
                     : { ...visibility, ...layer.layout }
 
-                const filter = specifyFilters(
-                  layer.filter,
-                  styleData.interactiveFilters,
-                  styleConfig.filters
-                )
+                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                const layerFilter = useDebugLayerStyles
+                  ? ['all']
+                  : specifyFilters(
+                      layer.filter,
+                      styleData.interactiveFilters,
+                      styleConfig.filters
+                    )
 
-                // Use <DebugMap> to setUseDebugLayerStyles
-                const layerPaint =
-                  useDebugLayerStyles &&
-                  debugLayerStyles({
-                    source: sourceId,
-                    sourceLayer: layer['source-layer'],
-                  }).find((l) => l.type === layer.type)?.paint
+                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                const layerPaint = useDebugLayerStyles
+                  ? debugLayerStyles({
+                      source: sourceId,
+                      sourceLayer: layer['source-layer'],
+                    }).find((l) => l.type === layer.type)?.paint
+                  : (layer.paint as any)
 
                 const layerProps = {
                   id: layerId,
