@@ -33,12 +33,13 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
   if (!osmUrlHref && !historyUrlHref && !editors) return null
   return (
     <div className="flex flex-wrap gap-3 border-t bg-white px-4 py-2.5 text-xs">
-      {editors?.map(({ urlTemplate, name }) => {
+      {editors?.map(({ urlTemplate, name, idKey }) => {
+        const id = (idKey && (properties[idKey] as number)) || osmId
         const url = editorUrl({
           urlTemplate,
           geometry,
           osmType: osmType && longOsmType[osmType],
-          osmId,
+          osmId: id,
         })
         if (!url) return null
         return (

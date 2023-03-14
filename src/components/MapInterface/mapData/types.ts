@@ -25,6 +25,7 @@ export type MapDataBackgroundSource<TIds> = {
 
 export type MapDataSourceInspectorEditor = {
   name: string
+  idKey?: string
   urlTemplate: `https://${string}`
 }
 
