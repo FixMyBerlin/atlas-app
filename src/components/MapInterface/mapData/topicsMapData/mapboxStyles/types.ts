@@ -29,6 +29,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_debug_parking_points'
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
+  | 'parking_obstacles'
   | 'parking_parkinglines'
   | 'parking_parkinglines_completeness'
   | 'parking_stats'
@@ -84,6 +85,8 @@ export type MapboxStyleLayerGroupDebugIds =
   | 'parking_debug_parking_points'
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
+
+export type MapboxStyleLayerGroupObstaclesIds = 'parking_obstacles'
 
 export type MapboxStyleLayerGroupParkinglinesIds =
   | 'parking_parkinglines'

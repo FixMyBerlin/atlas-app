@@ -2124,6 +2124,28 @@
     ]
   },
   {
+    "group": "parking_obstacles",
+    "layers": [
+      {
+        "type": "fill",
+        "id": "area",
+        "paint": {
+          "fill-color": "rgba(148, 163, 184, 0.7)"
+        },
+        "minzoom": 15
+      },
+      {
+        "minzoom": 16.5,
+        "type": "line",
+        "id": "border",
+        "paint": {
+          "line-dasharray": [2, 2],
+          "line-color": "rgb(0, 0, 0)"
+        }
+      }
+    ]
+  },
+  {
     "group": "parking_parkinglines",
     "layers": [
       {

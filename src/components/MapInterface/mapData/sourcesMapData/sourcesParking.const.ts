@@ -51,11 +51,21 @@ export const sourcesParking: MapDataSource<
     calculator: { enabled: false },
     export: { enabled: false },
   },
-
   {
     id: 'parkraumParkingDebug',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.buffer_amenity_parking_points,processing.buffer_driveways,processing.buffer_highways,processing.buffer_kerb_intersections,processing.buffer_pedestrian_crossings,processing.buffer_pt_bus,processing.buffer_pt_tram,processing.buffer_ramps,processing.buffer_amenity_parking_poly/{z}/{x}/{y}.pbf',
+    tiles: `https://vts.mapwebbing.eu/${[
+      'processing.buffer_amenity_parking_points',
+      'processing.buffer_amenity_parking_poly',
+      // 'processing.buffer_area_highway', // this is just to cut out fragments, nothing to show
+      'processing.buffer_driveways',
+      'processing.buffer_highways',
+      'processing.buffer_kerb_intersections',
+      'processing.buffer_obstacle_poly',
+      'processing.buffer_pedestrian_crossings',
+      'processing.buffer_pt_bus',
+      'processing.buffer_pt_tram',
+      'processing.buffer_ramps',
+    ].join(',')}/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     inspector: { enabled: false }, // Those layers have no properties anyways
     presence: { enabled: false },

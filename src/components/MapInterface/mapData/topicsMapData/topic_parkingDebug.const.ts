@@ -61,6 +61,11 @@ export const topic_parkingDebug: MapDataTopic = {
           source,
           sourceLayer: 'processing.buffer_ramps',
         }),
+        mapboxStyleLayers({
+          group: 'parking_obstacles',
+          source,
+          sourceLayer: 'processing.buffer_obstacle_poly',
+        }),
       ].flat(),
       interactiveFilters: null,
       legends: [
@@ -115,6 +120,14 @@ export const topic_parkingDebug: MapDataTopic = {
         {
           id: 'buffer_ramps',
           name: 'Transport&shy;überwege/Rampen',
+          style: {
+            type: 'circle',
+            color: 'rgba(148, 163, 184, 0.7)',
+          },
+        },
+        {
+          id: 'parking_debug_obstacles',
+          name: 'Laternen, Bäume, u.ä.',
           style: {
             type: 'circle',
             color: 'rgba(148, 163, 184, 0.7)',
