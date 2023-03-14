@@ -116,15 +116,18 @@ export const Map: React.FC = () => {
     topicConfig.styles.forEach((styleConfig) => {
       const styleData = getStyleData(topicData, styleConfig.id)
       styleData.layers.forEach((layerConfig) => {
+        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
+        const sourceData = getSourceData(topicData.sourceId)
+        if (!sourceData.inspector.enabled) return
+        const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
+        if (layerData?.interactive === false) return
+
         const layerKey = createSourceTopicStyleLayerKey(
           topicData.sourceId,
           topicConfig.id,
           styleConfig.id,
           layerConfig.id
         )
-        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
-        const sourceData = getSourceData(topicData.sourceId)
-        if (!sourceData.inspector.enabled) return
 
         interactiveLayerIds.push(layerKey)
       })

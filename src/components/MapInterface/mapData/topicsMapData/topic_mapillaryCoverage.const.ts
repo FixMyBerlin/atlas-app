@@ -37,6 +37,7 @@ export const topic_mapillaryCoverage: MapDataTopic = {
             'line-opacity': 0.7,
             'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 14, 1],
           },
+          interactive: false,
         },
       ],
       interactiveFilters: null,
