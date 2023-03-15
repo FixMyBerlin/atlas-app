@@ -56,6 +56,7 @@ export const PageRegionMap: React.FC = () => {
           theme: checkedTheme ?? initialConfig?.[0]?.id ?? 'fromTo',
           bg: 'default',
           config: initialConfig,
+          ...old,
         }
       },
       replace: true,
