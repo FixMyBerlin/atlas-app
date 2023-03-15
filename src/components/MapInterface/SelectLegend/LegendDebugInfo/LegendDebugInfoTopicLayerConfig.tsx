@@ -1,8 +1,4 @@
-import {
-  MapDataStyleLegend,
-  MapDataVisLayer,
-  TopicIds,
-} from '@components/MapInterface/mapData'
+import { MapDataStyleLegend, MapDataVisLayer, TopicIds } from '@components/MapInterface/mapData'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { isDev } from '@components/utils'
 import React from 'react'

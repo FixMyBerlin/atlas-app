@@ -17,10 +17,7 @@ export const NavigationDesktopLinks: React.FC<Props> = ({ menuItems }) => {
   return (
     <div className="flex space-x-4">
       {menuItems.map((item) => {
-        const routeWithRegion = item.href.replaceAll(
-          ':regionPath',
-          region?.path || ''
-        )
+        const routeWithRegion = item.href.replaceAll(':regionPath', region?.path || '')
         return (
           <Link
             key={item.name}

@@ -42,8 +42,7 @@ export type MapboxStyleLayerGroupBikelanesIds =
   | 'atlas_bikelanes_verified'
   | 'atlas_bikelanespresence_complete'
 
-export type MapboxStyleLayerGroupBikelanespresenceIds =
-  'atlas_bikelanespresence_complete'
+export type MapboxStyleLayerGroupBikelanespresenceIds = 'atlas_bikelanespresence_complete'
 
 export type MapboxStyleLayerGroupBoundariesIds = 'atlas_boundaries'
 
@@ -57,14 +56,11 @@ export type MapboxStyleLayerGroupLitIds =
   | 'atlas_lit_fresh'
   | 'atlas_lit_verified'
 
-export type MapboxStyleLayerGroupPlacesIds =
-  | 'atlas_places'
-  | 'atlas_placescircle'
+export type MapboxStyleLayerGroupPlacesIds = 'atlas_places' | 'atlas_placescircle'
 
 export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
 
-export type MapboxStyleLayerGroupPoiclassificationIds =
-  'atlas_poiclassification'
+export type MapboxStyleLayerGroupPoiclassificationIds = 'atlas_poiclassification'
 
 export type MapboxStyleLayerGroupRoadclassificationIds =
   | 'atlas_roadclassification'
@@ -72,8 +68,7 @@ export type MapboxStyleLayerGroupRoadclassificationIds =
 
 export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 
-export type MapboxStyleLayerGroupBufferkerbintersectionsIds =
-  'parking_bufferkerbintersections'
+export type MapboxStyleLayerGroupBufferkerbintersectionsIds = 'parking_bufferkerbintersections'
 
 export type MapboxStyleLayerGroupCalculatorIds = 'parking_calculator'
 
@@ -92,6 +87,4 @@ export type MapboxStyleLayerGroupParkinglinesIds =
   | 'parking_parkinglines'
   | 'parking_parkinglines_completeness'
 
-export type MapboxStyleLayerGroupStatsIds =
-  | 'parking_stats'
-  | 'parking_stats_length'
+export type MapboxStyleLayerGroupStatsIds = 'parking_stats' | 'parking_stats_length'

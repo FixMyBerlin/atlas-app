@@ -40,11 +40,7 @@ export const Button: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  className = clsx(
-    baseStyles[variant],
-    variantStyles[variant][color],
-    className
-  )
+  className = clsx(baseStyles[variant], variantStyles[variant][color], className)
 
   return href ? (
     <Link to={href} className={className} {...props}>

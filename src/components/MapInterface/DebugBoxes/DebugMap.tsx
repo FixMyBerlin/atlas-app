@@ -9,12 +9,8 @@ import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { DebugMapDownload } from './DebugMapDownload'
 
 export const DebugMap = () => {
-  const {
-    showDebugInfo,
-    setShowDebugInfo,
-    useDebugLayerStyles,
-    setUseDebugLayerStyles,
-  } = useMapDebugState()
+  const { showDebugInfo, setShowDebugInfo, useDebugLayerStyles, setUseDebugLayerStyles } =
+    useMapDebugState()
   const { mainMap } = useMap()
   const { mapLoaded } = useMapStateInteraction()
   const [triggerRerender, setTriggerRerender] = useState(0)
@@ -35,11 +31,7 @@ export const DebugMap = () => {
     setAtlasLayers(
       allLayers
         .filter((layer) => {
-          return (
-            'source' in layer &&
-            layer.source !== 'openmaptiles' &&
-            layer.type !== 'raster'
-          )
+          return 'source' in layer && layer.source !== 'openmaptiles' && layer.type !== 'raster'
         })
         .flat()
     )
@@ -65,9 +57,7 @@ export const DebugMap = () => {
         </button>
 
         <details>
-          <summary className="cursor-pointer hover:font-semibold">
-            Helper
-          </summary>
+          <summary className="cursor-pointer hover:font-semibold">Helper</summary>
           <div className="flex flex-col gap-1">
             <button
               onClick={() => setUseDebugLayerStyles(!useDebugLayerStyles)}
@@ -79,9 +69,7 @@ export const DebugMap = () => {
         </details>
 
         <details>
-          <summary className="cursor-pointer hover:font-semibold">
-            Sources
-          </summary>
+          <summary className="cursor-pointer hover:font-semibold">Sources</summary>
 
           <details className="ml-2 border-l border-pink-200 pl-2">
             <summary className="cursor-pointer hover:font-semibold">
@@ -102,10 +90,7 @@ export const DebugMap = () => {
         <DebugMapDownload layers={atlasLayers} />
 
         <details>
-          <summary
-            className="cursor-pointer hover:font-semibold"
-            onClick={handleRerender}
-          >
+          <summary className="cursor-pointer hover:font-semibold" onClick={handleRerender}>
             Layers {Object.keys(atlasLayers).length}
           </summary>
 
@@ -119,10 +104,7 @@ export const DebugMap = () => {
 
           {Object.entries(atlasLayers).map(([_key, layer]) => {
             return (
-              <details
-                key={layer.id}
-                className="ml-2 border-l border-pink-200 pl-2"
-              >
+              <details key={layer.id} className="ml-2 border-l border-pink-200 pl-2">
                 <summary
                   className={clsx(
                     // @ts-ignore this weird AnyLayer issue that I don't get worked around…
@@ -133,8 +115,7 @@ export const DebugMap = () => {
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
                   {layer?.layout?.visibility === 'none' && '(off)'}
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
-                  {layer?.layout?.visibility === 'visible' && '(on)'}{' '}
-                  <code>{layer.id}</code>
+                  {layer?.layout?.visibility === 'visible' && '(on)'} <code>{layer.id}</code>
                 </summary>
                 <pre>{JSON.stringify(layer, undefined, 2)}</pre>
               </details>

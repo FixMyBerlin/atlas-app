@@ -38,11 +38,7 @@ type MapDataSourceInspector =
        * Keys of type `composit_*` require their own TableRowCell-Component.
        * Keys of type `*__if_present` are only presented if a value is present.
        * (Keys that are not mentioned here are for debugging only.) */
-      documentedKeys?: (
-        | string
-        | `composit_${string}`
-        | `${string}__if_present`
-      )[]
+      documentedKeys?: (string | `composit_${string}` | `${string}__if_present`)[]
       editors?: MapDataSourceInspectorEditor[]
     }
   | {
@@ -205,11 +201,7 @@ export type MapDataStyleInteractiveFilterOption = {
 }
 
 export type MapData = {
-  sources: MapDataSource<
-    SourcesIds,
-    SourceVerificationApiIdentifier,
-    SourceExportApiIdentifier
-  >[]
+  sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier, SourceExportApiIdentifier>[]
   themes: MapDataTheme[]
   topics: MapDataTopic[]
 }

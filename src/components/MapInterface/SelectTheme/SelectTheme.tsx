@@ -69,15 +69,11 @@ export const SelectTheme = () => {
                 key={themeData.name}
                 onClick={() => selectTheme(themeConfig.id)}
                 className={clsx(
-                  active
-                    ? 'text-gray-900'
-                    : 'text-gray-500 hover:text-gray-700',
+                  active ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
                   index === 0 ? 'rounded-l-lg' : '',
                   index === configThemes.length - 1 ? 'rounded-r-lg' : '',
                   'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
-                  active
-                    ? 'bg-yellow-400'
-                    : 'bg-white hover:bg-yellow-50 focus:z-10'
+                  active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
                 )}
                 disabled={active}
                 aria-current={active ? 'page' : undefined}

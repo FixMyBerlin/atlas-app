@@ -6,10 +6,7 @@ type Props = {
   documentedKeys: string[] | undefined
 }
 
-export const OtherProperties: React.FC<Props> = ({
-  properties,
-  documentedKeys,
-}) => {
+export const OtherProperties: React.FC<Props> = ({ properties, documentedKeys }) => {
   const systemKeys = [
     '_freshNotes',
     '_skip',
@@ -33,9 +30,7 @@ export const OtherProperties: React.FC<Props> = ({
 
   const systemProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .filter(
-      ([key, _v]) => systemKeys.includes(key) && !documentedKeys?.includes(key)
-    )
+    .filter(([key, _v]) => systemKeys.includes(key) && !documentedKeys?.includes(key))
 
   return (
     <details className="border-t bg-white px-4 py-2.5 text-xs [&_summary]:open:mb-1 [&_summary]:open:font-semibold">
@@ -48,8 +43,7 @@ export const OtherProperties: React.FC<Props> = ({
               return (
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
                   <code>
-                    {key}:{' '}
-                    {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
+                    {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
                     <Link
                       blank
                       to={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
@@ -72,8 +66,7 @@ export const OtherProperties: React.FC<Props> = ({
               return (
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
                   <code>
-                    {key}:{' '}
-                    {typeof value === 'boolean' ? JSON.stringify(value) : value}
+                    {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}
                   </code>
                 </p>
               )

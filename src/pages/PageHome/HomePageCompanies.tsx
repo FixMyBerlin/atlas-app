@@ -23,11 +23,7 @@ export const HomePageCompanies: React.FC = () => {
               <ul className="flex flex-col items-center gap-y-8 sm:flex-row sm:gap-x-12 sm:gap-y-0">
                 {group.map((region) => (
                   <li key={region.name} className="flex">
-                    <img
-                      src={region.logo}
-                      alt={region.name}
-                      className="h-10 w-auto"
-                    />
+                    <img src={region.logo} alt={region.name} className="h-10 w-auto" />
                   </li>
                 ))}
               </ul>

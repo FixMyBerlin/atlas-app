@@ -11,10 +11,7 @@ type Props = {
   drawControlRef: DrawControlProps['ref']
 }
 
-export const CalculatorOutput: React.FC<Props> = ({
-  keys: _unused,
-  drawControlRef,
-}) => {
+export const CalculatorOutput: React.FC<Props> = ({ keys: _unused, drawControlRef }) => {
   // <PointCalculator> only sums Point feature. Each point is considere `capacity=1`
   const { calculatorAreasWithFeatures } = useMapStateInteraction()
   const sums = calculatorAreasWithFeatures.map(({ key, features }) => {

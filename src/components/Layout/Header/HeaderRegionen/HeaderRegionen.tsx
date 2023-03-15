@@ -2,10 +2,7 @@ import { NavigationDesktop } from '../NavigationDesktop'
 import { NavigationMobile } from '../NavigationMobile'
 import { NavigationWrapper } from '../NavigationWrapper'
 import { HeaderRegionenLogo } from './HeaderRegionenLogo'
-import {
-  primaryNavigation,
-  secondaryNavigationGrouped,
-} from './navigation.const'
+import { primaryNavigation, secondaryNavigationGrouped } from './navigation.const'
 
 export const HeaderRegionen = () => {
   return (

@@ -27,8 +27,7 @@ export const PageRegions: React.FC = () => {
   const publishedRegions = regions?.filter((r) => r.published)
   const unPublishedRegions = regions?.filter((r) => !r.published)
   const showUnpublishedRegions =
-    unPublishedRegions?.length &&
-    ((currentUser && isAdmin(currentUser)) || isDev || isStaging)
+    unPublishedRegions?.length && ((currentUser && isAdmin(currentUser)) || isDev || isStaging)
 
   return (
     <Layout>

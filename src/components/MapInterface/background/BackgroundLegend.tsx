@@ -7,16 +7,9 @@ import { sourcesBackgroundsRaster } from '../mapData'
 import { replaceZxy } from '../utils'
 
 export const BackgroundLegend: React.FC = () => {
-  const {
-    bg: selectedBackgroundId,
-    lat,
-    lng,
-    zoom,
-  } = useSearch<LocationGenerics>()
+  const { bg: selectedBackgroundId, lat, lng, zoom } = useSearch<LocationGenerics>()
 
-  const selectedBackground = sourcesBackgroundsRaster.find(
-    (b) => b.id === selectedBackgroundId
-  )
+  const selectedBackground = sourcesBackgroundsRaster.find((b) => b.id === selectedBackgroundId)
   if (!selectedBackground?.legendUrl) return null
 
   const enhancedLink = replaceZxy({

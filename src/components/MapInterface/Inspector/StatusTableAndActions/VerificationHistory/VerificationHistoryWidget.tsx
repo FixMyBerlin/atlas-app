@@ -23,8 +23,7 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
           const date = new Date(event.verified_at)
           const datetimeFormatted = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
           const verifiedBy =
-            userById(parseInt(event.verified_by))?.displayName ||
-            '(Unbekannter Nutzer)'
+            userById(parseInt(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
 
           return (
             <li key={event.verified_at}>
@@ -46,10 +45,7 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
               {event.comment && (
                 <details open={true} className="ml-7 mr-1">
                   <summary className="cursor-default">Kommentar</summary>
-                  <Markdown
-                    markdown={event.comment}
-                    className="prose-sm prose-p:text-gray-500"
-                  />
+                  <Markdown markdown={event.comment} className="prose-sm prose-p:text-gray-500" />
                 </details>
               )}
             </li>

@@ -51,9 +51,7 @@ export const NavigationMobile: React.FC<Props> = ({
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
                   )}
-                  aria-current={
-                    matchRoute({ to: item.href }) ? 'page' : undefined
-                  }
+                  aria-current={matchRoute({ to: item.href }) ? 'page' : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -75,9 +73,7 @@ export const NavigationMobile: React.FC<Props> = ({
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'block rounded-md px-3 py-2 text-base font-medium'
                         )}
-                        aria-current={
-                          matchRoute({ to: item.href }) ? 'page' : undefined
-                        }
+                        aria-current={matchRoute({ to: item.href }) ? 'page' : undefined}
                       >
                         {item.name}
                       </Disclosure.Button>

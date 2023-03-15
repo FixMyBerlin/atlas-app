@@ -1,10 +1,5 @@
 import invariant from 'tiny-invariant'
-import {
-  mapData,
-  TopicIds,
-  TopicStyleFilterIds,
-  TopicStyleIds,
-} from '../mapData.const'
+import { mapData, TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../mapData.const'
 import { SourcesIds } from '../sourcesMapData'
 import { MapDataThemeIds, themes } from '../themesMapData'
 import { MapDataStyle, MapDataTopic } from '../types'
@@ -29,9 +24,7 @@ export const getStyleData = (
     const topicData = getTopicData(topicInput)
     styleData = topicData?.styles.find((s) => s.id === styleId) as MapDataStyle // TODO improve types, likely changing the if-statement to something like "if 'id' in topicInput" to make it easier for TS to infer the types; we should also try to remove the 'undefined' more ore lesse everwhere
   } else {
-    styleData = topicInput?.styles.find(
-      (s: MapDataStyle) => s.id === styleId
-    ) as MapDataStyle
+    styleData = topicInput?.styles.find((s: MapDataStyle) => s.id === styleId) as MapDataStyle
   }
   invariant(styleData, `getStyleData: styleData for ${styleId} missing`)
   return styleData

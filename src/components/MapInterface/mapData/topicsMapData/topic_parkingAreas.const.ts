@@ -29,13 +29,7 @@ export const topic_parkingAreas: MapDataTopic = {
           paint: {
             'fill-color': [
               'case',
-              [
-                'match',
-                ['get', 'parking'],
-                ['underground', 'multi-storey'],
-                true,
-                false,
-              ],
+              ['match', ['get', 'parking'], ['underground', 'multi-storey'], true, false],
               'hsl(17, 90%, 80%)',
               ['match', ['get', 'parking'], ['surface'], true, false],
               'hsl(215, 90%, 80%)',
@@ -65,13 +59,7 @@ export const topic_parkingAreas: MapDataTopic = {
           paint: {
             'fill-color': [
               'case',
-              [
-                'match',
-                ['get', 'parking'],
-                ['underground', 'multi-storey'],
-                true,
-                false,
-              ],
+              ['match', ['get', 'parking'], ['underground', 'multi-storey'], true, false],
               'hsl(17, 90%, 80%)',
               ['match', ['get', 'parking'], ['surface'], true, false],
               'hsl(215, 90%, 80%)',

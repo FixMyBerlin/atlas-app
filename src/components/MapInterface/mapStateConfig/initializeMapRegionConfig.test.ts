@@ -127,8 +127,7 @@ describe('initializeMapReagionConfig()', () => {
     // @ts-ignore the object structure is checked manually
     urlConfig[0].topics[2].styles[0].id = 'now_removed_style' // topic:lit topic:landuse style:id changed
     // @ts-ignore the object structure is checked manually
-    urlConfig[1].topics[0].styles[0].filters[0].options[0].id =
-      'now_removed_option' // topic:fromTo topic:boundaries filterOption:id changed
+    urlConfig[1].topics[0].styles[0].filters[0].options[0].id = 'now_removed_option' // topic:fromTo topic:boundaries filterOption:id changed
 
     const result = initializeMapRegionConfig({
       freshConfig,

@@ -14,13 +14,8 @@ export const specifyFilters = (
     return wrapFilterWithAll(layerFilter)
   }
 
-  const filterDataAndConfig = mergeFilterDataWithConfig(
-    filtersData,
-    filtersConfig
-  )
-  const filtersArray = filterDataAndConfig.map((f) =>
-    filterArrayFromMergedDataAndConfig(f)
-  )
+  const filterDataAndConfig = mergeFilterDataWithConfig(filtersData, filtersConfig)
+  const filtersArray = filterDataAndConfig.map((f) => filterArrayFromMergedDataAndConfig(f))
   const mergedFiltersArray = flattenFilterArrays(layerFilter, filtersArray)
   return wrapFilterWithAll(mergedFiltersArray)
 }

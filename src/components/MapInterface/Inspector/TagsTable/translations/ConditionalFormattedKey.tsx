@@ -8,10 +8,7 @@ type Props = {
   tagKey: string
 }
 
-export const ConditionalFormattedKey: React.FC<Props> = ({
-  sourceId,
-  tagKey,
-}) => {
+export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) => {
   let key = `${sourceId}--${tagKey}--key`
 
   // For some key, we don't want to add translations for each source.

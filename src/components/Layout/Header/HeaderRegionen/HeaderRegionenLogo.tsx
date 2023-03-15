@@ -16,8 +16,7 @@ export const HeaderRegionenLogo: React.FC = () => {
       {region.logoPath ? (
         <div
           className={clsx({
-            'rounded-sm bg-white/90 px-1 py-1':
-              region.logoWhiteBackgroundRequired,
+            'rounded-sm bg-white/90 px-1 py-1': region.logoWhiteBackgroundRequired,
           })}
         >
           <img src={region.logoPath} className="h-6 w-auto" alt="" />
@@ -28,14 +27,8 @@ export const HeaderRegionenLogo: React.FC = () => {
           <BuildingLibraryIcon className="hidden h-8 w-auto text-yellow-400 lg:block" />
         </>
       )}
-      <span
-        className={clsx(
-          'ml-2',
-          region.logoPath ? 'text-gray-400' : 'text-yellow-400'
-        )}
-      >
-        Radverkehrsatlas (beta){' '}
-        <span className="hidden md:inline">{region.fullName}</span>
+      <span className={clsx('ml-2', region.logoPath ? 'text-gray-400' : 'text-yellow-400')}>
+        Radverkehrsatlas (beta) <span className="hidden md:inline">{region.fullName}</span>
       </span>
     </>
   )

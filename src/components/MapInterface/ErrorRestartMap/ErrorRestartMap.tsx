@@ -18,10 +18,7 @@ export const ErrorRestartMap: React.FC = () => {
 
   return (
     <div className="pt-2">
-      <p>
-        Leider ist ein Fehler beim Wiederherstellen der Karten-Einstellungen
-        aufgetreten.
-      </p>
+      <p>Leider ist ein Fehler beim Wiederherstellen der Karten-Einstellungen aufgetreten.</p>
       {!!regionPath && (
         <>
           <p>

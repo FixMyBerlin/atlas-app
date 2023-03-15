@@ -12,10 +12,7 @@ import {
 } from '@tanstack/react-location'
 import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
 import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
-import {
-  customParse,
-  customStringify,
-} from './encodeDecode/customParseStringify'
+import { customParse, customStringify } from './encodeDecode/customParseStringify'
 import { fetchRegions } from './fetchRegions'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'
 

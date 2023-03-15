@@ -67,9 +67,7 @@ export const User: React.FC = () => {
 
   const done = (err: XMLHttpRequest | null, result: XMLDocument): void => {
     if (err) {
-      console.error(
-        `Error! Try clearing your browser cache. (${err.responseText}`
-      )
+      console.error(`Error! Try clearing your browser cache. (${err.responseText}`)
       return
     }
     const data = parseResponse(result)
@@ -88,11 +86,7 @@ export const User: React.FC = () => {
           <UserIcon className="h-6 w-6" aria-hidden="true" />
         </button>
       ) : (
-        <LoggedIn
-          user={user}
-          hasPermissions={hasPermissions}
-          onLogout={logout}
-        />
+        <LoggedIn user={user} hasPermissions={hasPermissions} onLogout={logout} />
       )}
     </div>
   )

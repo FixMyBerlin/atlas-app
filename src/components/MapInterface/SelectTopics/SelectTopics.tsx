@@ -12,12 +12,9 @@ import { Toggle } from './Toggle'
 
 export const SelectTopics: React.FC = () => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const themeData = themes.find((t) => t.id === themeId)
-  const topicsConfig = configThemesTopics?.find(
-    (th) => th.id === themeId
-  )?.topics
+  const topicsConfig = configThemesTopics?.find((th) => th.id === themeId)?.topics
 
   const toggleActive = (topicId: TopicIds) => {
     navigate({

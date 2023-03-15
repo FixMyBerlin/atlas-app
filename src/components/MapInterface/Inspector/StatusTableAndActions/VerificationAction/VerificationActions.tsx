@@ -36,10 +36,7 @@ export const VerificationActions: React.FC<Props> = ({
 
   type TFormInput = Pick<VerificationApiPost, 'verified_status' | 'comment'>
   const { register, handleSubmit } = useForm<TFormInput>()
-  const onSubmit: SubmitHandler<TFormInput> = ({
-    verified_status,
-    comment,
-  }) => {
+  const onSubmit: SubmitHandler<TFormInput> = ({ verified_status, comment }) => {
     const apiData: VerificationApiPost = {
       apiIdentifier,
       osm_id: osmId,
@@ -56,13 +53,7 @@ export const VerificationActions: React.FC<Props> = ({
   const mutation = useMutation({
     mutationFn: updateVerificationStatus,
     // When mutate is called:
-    onMutate: async ({
-      osm_id,
-      osm_type,
-      verified_at,
-      verified_status,
-      comment,
-    }) => {
+    onMutate: async ({ osm_id, osm_type, verified_at, verified_status, comment }) => {
       const newHistoryItem: VerificationApiGet = {
         osm_id,
         osm_type,
@@ -77,19 +68,15 @@ export const VerificationActions: React.FC<Props> = ({
       await queryClient.cancelQueries({ queryKey })
 
       // Snapshot the previous value
-      const previousHistory: VerificationApiGet[] | undefined =
-        queryClient.getQueryData(queryKey)
+      const previousHistory: VerificationApiGet[] | undefined = queryClient.getQueryData(queryKey)
 
       // Optimistically update to the new value
-      queryClient.setQueryData(
-        queryKey,
-        (data: undefined | { data: VerificationApiGet[] }) => {
-          const history = data?.data ? data.data : []
-          return {
-            data: [newHistoryItem, ...history],
-          }
+      queryClient.setQueryData(queryKey, (data: undefined | { data: VerificationApiGet[] }) => {
+        const history = data?.data ? data.data : []
+        return {
+          data: [newHistoryItem, ...history],
         }
-      )
+      })
 
       addLocalUpdate(newHistoryItem)
 
@@ -111,8 +98,7 @@ export const VerificationActions: React.FC<Props> = ({
   })
 
   const verificationOptions: VerificationStatus[] = ['approved', 'rejected']
-  const verifiedOnce =
-    verificationStatus && verificationOptions.includes(verificationStatus)
+  const verifiedOnce = verificationStatus && verificationOptions.includes(verificationStatus)
 
   const disabled = mutation.isLoading || outerDisabled
 
@@ -130,8 +116,7 @@ export const VerificationActions: React.FC<Props> = ({
       </h4>
       {disabled && (
         <div className="mb-2">
-          Ein Status kann nur eingetragen werden, wenn die Primärdaten
-          vorliegen.
+          Ein Status kann nur eingetragen werden, wenn die Primärdaten vorliegen.
         </div>
       )}
       <form className="space-y-2" onSubmit={handleSubmit(onSubmit)}>
@@ -139,10 +124,7 @@ export const VerificationActions: React.FC<Props> = ({
 
         <div className="flex">
           {verificationOptions.map((verificationOption) => {
-            const verificationOptionTranslations: Record<
-              VerificationStatus,
-              string
-            > = {
+            const verificationOptionTranslations: Record<VerificationStatus, string> = {
               approved: verifiedOnce ? 'Daten richtig' : 'Richtig',
               rejected: 'Daten überarbeiten',
             }

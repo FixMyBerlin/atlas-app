@@ -16,11 +16,8 @@ type Props = {
 }
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
-  const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } =
-    useMapStateInteraction()
-  const sourceData = getSourceData(
-    extractSourceIdIdFromSourceKey(parentLayerProps.source)
-  )
+  const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } = useMapStateInteraction()
+  const sourceData = getSourceData(extractSourceIdIdFromSourceKey(parentLayerProps.source))
 
   if (!mapLoaded) return null
 

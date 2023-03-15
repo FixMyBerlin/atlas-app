@@ -24,10 +24,7 @@ export type SourcesIds =
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
 
-export type SourceVerificationApiIdentifier =
-  | 'lit'
-  | 'bikelanes'
-  | 'roadclassification'
+export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes' | 'roadclassification'
 
 export type SourceExportApiIdentifier =
   | 'bikelanes_verified'
@@ -176,14 +173,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: [
-        'name',
-        'highway',
-        'self',
-        'left',
-        'right',
-        'oneway__if_present',
-      ],
+      documentedKeys: ['name', 'highway', 'self', 'left', 'right', 'oneway__if_present'],
     },
     presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
@@ -377,19 +367,16 @@ export const sources: MapDataSource<
         {
           name: 'Mapillary Image',
           idKey: 'id',
-          urlTemplate:
-            'https://www.mapillary.com/app/?focus=photo&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?focus=photo&pKey={osm_id}',
         },
         {
           name: 'Mapillary Panorama',
           idKey: 'id',
-          urlTemplate:
-            'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
         },
         {
           name: 'Kartaview',
-          urlTemplate:
-            'https://kartaview.org/map/@{latitude},{longitude},{zoom}z',
+          urlTemplate: 'https://kartaview.org/map/@{latitude},{longitude},{zoom}z',
         },
       ],
     },

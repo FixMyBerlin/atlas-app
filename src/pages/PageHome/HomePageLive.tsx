@@ -44,8 +44,8 @@ export const HomePageLive = () => {
           Den Radverkehrsatlas live erleben (beta)
         </h2>
         <p className="mt-4 text-lg tracking-tight text-slate-700">
-          Hier können Sie die ersten Ergebnisse aus den noch laufenden Projekten
-          einsehen – mehr ist in Arbeit.
+          Hier können Sie die ersten Ergebnisse aus den noch laufenden Projekten einsehen – mehr ist
+          in Arbeit.
         </p>
 
         <div className="mt-6 justify-center space-y-10 lg:flex lg:gap-x-6 lg:space-y-0">

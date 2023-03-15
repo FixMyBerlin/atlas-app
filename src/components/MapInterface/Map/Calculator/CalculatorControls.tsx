@@ -5,10 +5,7 @@ import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect } from 'react'
 import { useMap } from 'react-map-gl'
 import { MapDataSourceCalculator } from '../../mapData'
-import {
-  StoreCalculator,
-  useMapStateInteraction,
-} from '../../mapStateInteraction'
+import { StoreCalculator, useMapStateInteraction } from '../../mapStateInteraction'
 import {
   CalculatorControlsDrawControl,
   DrawArea,
@@ -22,10 +19,7 @@ type Props = {
   drawControlRef: DrawControlProps['ref']
 }
 
-export const CalculatorControls: React.FC<Props> = ({
-  queryLayers,
-  drawControlRef,
-}) => {
+export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRef }) => {
   const { mainMap } = useMap()
 
   const { draw: drawAreasStore } = useSearch<LocationGenerics>()
@@ -43,12 +37,9 @@ export const CalculatorControls: React.FC<Props> = ({
       const northEastPointPixel = mainMap.project(northEast)
       const southWestPointPixel = mainMap.project(southWest)
 
-      const features = mainMap.queryRenderedFeatures(
-        [southWestPointPixel, northEastPointPixel],
-        {
-          layers: queryLayers,
-        }
-      )
+      const features = mainMap.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
+        layers: queryLayers,
+      })
 
       const filteredFeatures = features
         .map((feature) => {
@@ -56,9 +47,7 @@ export const CalculatorControls: React.FC<Props> = ({
             return feature
           }
         })
-        .filter(
-          (feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature
-        )
+        .filter((feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature)
 
       result.push({
         key: selectArea.id,

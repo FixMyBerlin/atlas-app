@@ -7,10 +7,7 @@ type Props = {
   positionClasses?: string
 }
 
-export const CloseButton: React.FC<Props> = ({
-  onClick,
-  positionClasses = 'top-2 right-2',
-}) => {
+export const CloseButton: React.FC<Props> = ({ onClick, positionClasses = 'top-2 right-2' }) => {
   return (
     <button
       type="button"

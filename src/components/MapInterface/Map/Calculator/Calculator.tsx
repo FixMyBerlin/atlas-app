@@ -16,20 +16,16 @@ export const Calculator: React.FC = () => {
     .filter((t) => t.active)
     .map((t) => t.id)
   const activeTopicsData = activeTopicIds.map((id) => getTopicData(id))
-  const sourceDataOfAtiveTopics = activeTopicsData.map((t) =>
-    getSourceData(t.sourceId)
-  )
+  const sourceDataOfAtiveTopics = activeTopicsData.map((t) => getSourceData(t.sourceId))
 
-  const calculatorSources = sourceDataOfAtiveTopics.filter(
-    (s) => s.calculator.enabled
-  )
+  const calculatorSources = sourceDataOfAtiveTopics.filter((s) => s.calculator.enabled)
   const calculatorSource = calculatorSources?.at(0)
   const queryLayers = calculatorSource?.calculator?.queryLayers
   if (calculatorSources.length > 1) {
-    console.log(
-      'ERROR: Calculator found multiple "calculator.enabled". Picking the first',
-      { count: calculatorSources.length, queryLayers }
-    )
+    console.log('ERROR: Calculator found multiple "calculator.enabled". Picking the first', {
+      count: calculatorSources.length,
+      queryLayers,
+    })
   }
 
   const drawControlRef = useRef<MapboxDraw>()
@@ -38,14 +34,8 @@ export const Calculator: React.FC = () => {
 
   return (
     <>
-      <CalculatorControls
-        queryLayers={queryLayers}
-        drawControlRef={drawControlRef}
-      />
-      <CalculatorOutput
-        keys={calculatorSource?.calculator?.keys}
-        drawControlRef={drawControlRef}
-      />
+      <CalculatorControls queryLayers={queryLayers} drawControlRef={drawControlRef} />
+      <CalculatorOutput keys={calculatorSource?.calculator?.keys} drawControlRef={drawControlRef} />
     </>
   )
 }

@@ -1,8 +1,4 @@
-import {
-  CheckBadgeIcon,
-  EyeIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline'
+import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 
 type Feature = {
   name: string
@@ -22,8 +18,7 @@ const features: Feature[] = [
   },
   {
     name: 'Daten prüfen',
-    summary:
-      'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
+    summary: 'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
     description:
       'Diese Funktion ist nur per Login verfügbar. Sie entscheiden als Kommune, welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die Bürger:innen übergeben.',
     icon: <CheckBadgeIcon className="text-white" />,
@@ -40,19 +35,15 @@ const features: Feature[] = [
 
 export const HomePageSecondaryFeaturesJustText = () => {
   return (
-    <section
-      id="secondary-features"
-      className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32"
-    >
+    <section id="secondary-features" className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
             Gemeinsam mit Bürger:innen zum Erfolg
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Die Qualität der Daten lebt von der Beteiligung der Bürger:innen
-            sowie von Ihrer Expertise als Verwaltung. Wir bringen beides
-            zusammen.
+            Die Qualität der Daten lebt von der Beteiligung der Bürger:innen sowie von Ihrer
+            Expertise als Verwaltung. Wir bringen beides zusammen.
           </p>
         </div>
         <div className="mt-12 grid gap-10 md:grid-cols-3">
@@ -64,15 +55,9 @@ export const HomePageSecondaryFeaturesJustText = () => {
                     {feature.icon}
                   </svg>
                 </div>
-                <h3 className="mt-3 text-sm font-medium text-blue-600">
-                  {feature.name}
-                </h3>
-                <p className="font-display mt-2 text-xl text-slate-900">
-                  {feature.summary}
-                </p>
-                <p className="mt-3 text-sm text-slate-600">
-                  {feature.description}
-                </p>
+                <h3 className="mt-3 text-sm font-medium text-blue-600">{feature.name}</h3>
+                <p className="font-display mt-2 text-xl text-slate-900">{feature.summary}</p>
+                <p className="mt-3 text-sm text-slate-600">{feature.description}</p>
               </div>
             )
           })}

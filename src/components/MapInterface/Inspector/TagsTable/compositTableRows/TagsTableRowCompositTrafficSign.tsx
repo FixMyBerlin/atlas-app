@@ -15,8 +15,7 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
       'https://upload.wikimedia.org/wikipedia/commons/0/08/Zeichen_240_-_Gemeinsamer_Fu%C3%9F-_und_Radweg%2C_StVO_1992.svg',
   },
   '241': {
-    title:
-      'Zeichen 241, Getrennter Geh- und Radweg oder Getrennter Rad- und Gehweg',
+    title: 'Zeichen 241, Getrennter Geh- und Radweg oder Getrennter Rad- und Gehweg',
     signUrl:
       'https://upload.wikimedia.org/wikipedia/commons/8/86/Zeichen_241-30_-_getrennter_Rad-_und_Fu%C3%9Fweg%2C_StVO_1992.svg',
   },
@@ -114,16 +113,10 @@ export const TagsTableRowCompositTrafficSign: React.FC<Props> = ({
             return (
               <div key={sign}>
                 <div className="mb-1">
-                  {trafficSigns[sign]?.title || (
-                    <code>{properties['traffic_sign']}</code>
-                  )}
+                  {trafficSigns[sign]?.title || <code>{properties['traffic_sign']}</code>}
                 </div>
                 {trafficSigns[sign]?.signUrl && (
-                  <img
-                    src={trafficSigns[sign].signUrl}
-                    alt=""
-                    className="h-12 max-w-[3rem]"
-                  />
+                  <img src={trafficSigns[sign].signUrl} alt="" className="h-12 max-w-[3rem]" />
                 )}
               </div>
             )

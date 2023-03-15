@@ -13,9 +13,7 @@ type Props = {
 export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
   // Normalize id + type for Parking data
   // "atlas-geo" sometimes prefixes `-{id}`
-  const osmId = Math.abs(
-    properties.osm_id || properties.way_id || properties.area_id
-  )
+  const osmId = Math.abs(properties.osm_id || properties.way_id || properties.area_id)
   const osmType: 'W' | 'N' | 'R' | undefined =
     'way_id' in properties
       ? 'W'
@@ -43,13 +41,7 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
         })
         if (!url) return null
         return (
-          <Link
-            key={name}
-            external
-            blank
-            to={url}
-            classNameOverwrite={buttonStyles}
-          >
+          <Link key={name} external blank to={url} classNameOverwrite={buttonStyles}>
             {name}
           </Link>
         )
@@ -62,23 +54,13 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
       )}
 
       {historyUrlHref && (
-        <Link
-          external
-          blank
-          to={historyUrlHref}
-          classNameOverwrite={buttonStyles}
-        >
+        <Link external blank to={historyUrlHref} classNameOverwrite={buttonStyles}>
           Änderungshistorie
         </Link>
       )}
 
       {mapillaryUrlHref && (
-        <Link
-          external
-          blank
-          to={mapillaryUrlHref}
-          classNameOverwrite={buttonStyles}
-        >
+        <Link external blank to={mapillaryUrlHref} classNameOverwrite={buttonStyles}>
           Mapillary
         </Link>
       )}

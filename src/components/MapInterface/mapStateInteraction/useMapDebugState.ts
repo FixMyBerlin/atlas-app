@@ -12,9 +12,7 @@ type StoreDebugInfo = {
 
 type StoreUseDebugLayer = {
   useDebugLayerStyles: boolean
-  setUseDebugLayerStyles: (
-    useDebugLayerStyles: Store['useDebugLayerStyles']
-  ) => void
+  setUseDebugLayerStyles: (useDebugLayerStyles: Store['useDebugLayerStyles']) => void
 }
 
 export const useMapDebugState = create<Store>((set, _get) => ({

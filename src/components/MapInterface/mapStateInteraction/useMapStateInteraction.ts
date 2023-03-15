@@ -4,10 +4,7 @@ import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreMapState &
-  StoreFeaturesInspector &
-  StoreCalculator &
-  StoreLocalUpdates
+type Store = StoreMapState & StoreFeaturesInspector & StoreCalculator & StoreLocalUpdates
 
 type StoreMapState = {
   mapLoaded: boolean

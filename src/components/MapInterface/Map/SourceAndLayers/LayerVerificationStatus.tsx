@@ -4,9 +4,7 @@ import { Layer, LayerProps } from 'react-map-gl'
 
 let errorLogged = false
 
-export const LayerVerificationStatus: React.FC<LayerProps> = (
-  parentLayerProps
-) => {
+export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) => {
   const { localUpdates } = useMapStateInteraction()
 
   const props = {
@@ -31,16 +29,11 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (
 
   const currentValues = new Map()
 
-  localUpdates.forEach(({ osm_id, verified }) =>
-    currentValues.set(osm_id, verified === 'approved')
-  )
+  localUpdates.forEach(({ osm_id, verified }) => currentValues.set(osm_id, verified === 'approved'))
 
   const cond: any[] = (props.paint['line-color'] = ['case'])
   currentValues.forEach((approved, osmId) => {
-    cond.push(
-      ['==', ['get', 'osm_id'], osmId],
-      approved ? colorApproved : colorRejected
-    )
+    cond.push(['==', ['get', 'osm_id'], osmId], approved ? colorApproved : colorRejected)
   })
 
   cond.push(

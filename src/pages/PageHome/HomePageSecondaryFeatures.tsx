@@ -1,9 +1,5 @@
 import { Tab } from '@headlessui/react'
-import {
-  CheckBadgeIcon,
-  EyeIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline'
+import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
 import screenshotImprove from './images/HomePageSecondaryFeatures/placeholder.png'
 import screenshotCheck from './images/HomePageSecondaryFeatures/placeholder.png'
@@ -29,8 +25,7 @@ const features: Feature[] = [
   },
   {
     name: 'Daten prüfen',
-    summary:
-      'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
+    summary: 'Um die Daten amtlich zu nutzen, prüfen Sie diese in einem geführten Prozess.',
     description:
       'Diese Funktion ist nur per Login verfügbar. Sie entscheiden als Kommune, welche Daten ausreichende Qualität haben. Unvollständige oder veraltete Daten werden als Aufgaben an die Bürger:innen übergeben.',
     image: screenshotCheck,
@@ -58,31 +53,18 @@ function Feature({
   className: string
 }) {
   return (
-    <div
-      className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })}
-      {...props}
-    >
-      <div
-        className={clsx(
-          'w-9 rounded-lg',
-          isActive ? 'bg-blue-600' : 'bg-slate-500'
-        )}
-      >
+    <div className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })} {...props}>
+      <div className={clsx('w-9 rounded-lg', isActive ? 'bg-blue-600' : 'bg-slate-500')}>
         <svg aria-hidden="true" className="h-9 w-9 p-2" fill="none">
           {feature.icon}
         </svg>
       </div>
       <h3
-        className={clsx(
-          'mt-3 text-sm font-medium',
-          isActive ? 'text-blue-600' : 'text-slate-600'
-        )}
+        className={clsx('mt-3 text-sm font-medium', isActive ? 'text-blue-600' : 'text-slate-600')}
       >
         {feature.name}
       </h3>
-      <p className="font-display mt-2 text-xl text-slate-900">
-        {feature.summary}
-      </p>
+      <p className="font-display mt-2 text-xl text-slate-900">{feature.summary}</p>
       <p className="mt-3 text-sm text-slate-600">{feature.description}</p>
     </div>
   )
@@ -170,19 +152,15 @@ const FeaturesDesktop = () => {
 
 export const HomePageSecondaryFeatures = () => {
   return (
-    <section
-      id="secondary-features"
-      className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32"
-    >
+    <section id="secondary-features" className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
             Gemeinsam mit Bürger:innen zum Erfolg
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Die Qualität der Daten lebt von der Beteiligung der Bürger:innen
-            sowie von Ihrer Expertise als Verwaltung. Wir bringen beides
-            zusammen.
+            Die Qualität der Daten lebt von der Beteiligung der Bürger:innen sowie von Ihrer
+            Expertise als Verwaltung. Wir bringen beides zusammen.
           </p>
         </div>
         <FeaturesMobile />

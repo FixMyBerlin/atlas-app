@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-  Disclosure as HeadlessUiDisclosure,
-  Transition,
-} from '@headlessui/react'
+import { Disclosure as HeadlessUiDisclosure, Transition } from '@headlessui/react'
 import { ChevronUpIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 
@@ -13,12 +10,7 @@ type Props = {
   defaultOpen?: boolean
 }
 
-export const Disclosure: React.FC<Props> = ({
-  title,
-  objectId,
-  children,
-  defaultOpen = true,
-}) => {
+export const Disclosure: React.FC<Props> = ({ title, objectId, children, defaultOpen = true }) => {
   return (
     <HeadlessUiDisclosure defaultOpen={defaultOpen}>
       {({ open }) => (

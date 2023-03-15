@@ -8,9 +8,7 @@ export type Props = {
 }
 
 export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
-  const mapboxLayers = mapboxStylesByLayerGroup.find(
-    (g: any) => g.group === group
-  )?.layers
+  const mapboxLayers = mapboxStylesByLayerGroup.find((g: any) => g.group === group)?.layers
   const mapboxLayersClone = structuredClone(mapboxLayers)
 
   if (!mapboxLayersClone) {

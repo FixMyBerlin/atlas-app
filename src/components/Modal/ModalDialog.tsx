@@ -28,54 +28,29 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
 }) => {
   const cancelButtonRef = useRef(null)
 
-  type IconComponent = Record<
-    typeof icon,
-    { bgClass: string; icon: React.ReactNode }
-  >
+  type IconComponent = Record<typeof icon, { bgClass: string; icon: React.ReactNode }>
   const iconComponent: IconComponent = {
     info: {
       bgClass: 'bg-green-100',
-      icon: (
-        <InformationCircleIcon
-          className="h-6 w-6 text-green-600"
-          aria-hidden="true"
-        />
-      ),
+      icon: <InformationCircleIcon className="h-6 w-6 text-green-600" aria-hidden="true" />,
     },
     error: {
       bgClass: 'bg-red-100',
-      icon: (
-        <ExclamationTriangleIcon
-          className="h-6 w-6 text-red-600"
-          aria-hidden="true"
-        />
-      ),
+      icon: <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />,
     },
     copyright: {
       bgClass: 'bg-blue-100',
-      icon: (
-        <BookOpenIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />
-      ),
+      icon: <BookOpenIcon className="h-6 w-6 text-blue-600" aria-hidden="true" />,
     },
     download: {
       bgClass: 'bg-purple-100',
-      icon: (
-        <ArrowDownTrayIcon
-          className="h-6 w-6 text-purple-600"
-          aria-hidden="true"
-        />
-      ),
+      icon: <ArrowDownTrayIcon className="h-6 w-6 text-purple-600" aria-hidden="true" />,
     },
   }
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-20"
-        initialFocus={cancelButtonRef}
-        onClose={setOpen}
-      >
+      <Dialog as="div" className="relative z-20" initialFocus={cancelButtonRef} onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -99,10 +74,7 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6">
-                <CloseButton
-                  onClick={() => setOpen(false)}
-                  positionClasses="top-6 right-3"
-                />
+                <CloseButton onClick={() => setOpen(false)} positionClasses="top-6 right-3" />
                 <div className="sm:flex sm:items-start">
                   <div
                     className={clsx(
@@ -113,10 +85,7 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
                     {iconComponent[icon].icon}
                   </div>
                   <div className="mt-3 text-center sm:mt-2 sm:ml-4 sm:text-left">
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
-                    >
+                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
                       {title}
                     </Dialog.Title>
                     <div className="mt-2">{children}</div>

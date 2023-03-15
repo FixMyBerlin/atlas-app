@@ -15,10 +15,7 @@ type Props = {
   sourceId: SourcesIds
 }
 
-export const StatusTableAndVerification: React.FC<Props> = ({
-  properties,
-  sourceId,
-}) => {
+export const StatusTableAndVerification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
   const { currentUser } = useUserStore()
   const {
@@ -28,15 +25,15 @@ export const StatusTableAndVerification: React.FC<Props> = ({
   const sourceData = getSourceData(sourceId)
 
   const allowVerify =
-    (sourceData.verification.enabled || false) &&
-    hasPermission(currentUser, region)
+    (sourceData.verification.enabled || false) && hasPermission(currentUser, region)
 
   const localVerificationStatus = [...localUpdates]
     .reverse()
     .find((update) => update.osm_id === properties.osm_id)?.verified
 
-  const verificationStatus = (localVerificationStatus ||
-    properties.verified) as VerificationStatus | undefined
+  const verificationStatus = (localVerificationStatus || properties.verified) as
+    | VerificationStatus
+    | undefined
 
   return (
     <div

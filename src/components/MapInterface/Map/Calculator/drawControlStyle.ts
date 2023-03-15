@@ -103,12 +103,7 @@ export const drawControlStyle = [
   {
     id: 'gl-draw-polygon-and-line-vertex-stroke-inactive',
     type: 'circle',
-    filter: [
-      'all',
-      ['==', 'meta', 'vertex'],
-      ['==', '$type', 'Point'],
-      ['!=', 'mode', 'static'],
-    ],
+    filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point'], ['!=', 'mode', 'static']],
     paint: {
       'circle-radius': 5,
       'circle-color': '#fdf4ff',
@@ -117,12 +112,7 @@ export const drawControlStyle = [
   {
     id: 'gl-draw-polygon-and-line-vertex-inactive',
     type: 'circle',
-    filter: [
-      'all',
-      ['==', 'meta', 'vertex'],
-      ['==', '$type', 'Point'],
-      ['!=', 'mode', 'static'],
-    ],
+    filter: ['all', ['==', 'meta', 'vertex'], ['==', '$type', 'Point'], ['!=', 'mode', 'static']],
     paint: {
       'circle-radius': 3,
       'circle-color': '#a21caf',
@@ -162,12 +152,7 @@ export const drawControlStyle = [
   {
     id: 'gl-draw-point-stroke-active',
     type: 'circle',
-    filter: [
-      'all',
-      ['==', '$type', 'Point'],
-      ['==', 'active', 'true'],
-      ['!=', 'meta', 'midpoint'],
-    ],
+    filter: ['all', ['==', '$type', 'Point'], ['==', 'active', 'true'], ['!=', 'meta', 'midpoint']],
     paint: {
       'circle-radius': 8,
       'circle-color': '#fdf4ff',
@@ -176,12 +161,7 @@ export const drawControlStyle = [
   {
     id: 'gl-draw-point-active',
     type: 'circle',
-    filter: [
-      'all',
-      ['==', '$type', 'Point'],
-      ['!=', 'meta', 'midpoint'],
-      ['==', 'active', 'true'],
-    ],
+    filter: ['all', ['==', '$type', 'Point'], ['!=', 'meta', 'midpoint'], ['==', 'active', 'true']],
     paint: {
       'circle-radius': 6,
       'circle-color': '#86198f',

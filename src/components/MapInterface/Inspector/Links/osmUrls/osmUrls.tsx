@@ -15,9 +15,7 @@ export const historyUrl = (type: OsmShortType, id: number | string) => {
   return `https://osmlab.github.io/osm-deep-history/#/${longOsmType[type]}/${id}`
 }
 
-export const mapillaryUrl = (
-  geometry: maplibregl.GeoJSONFeature['geometry']
-) => {
+export const mapillaryUrl = (geometry: maplibregl.GeoJSONFeature['geometry']) => {
   const [lng, lat] = pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 

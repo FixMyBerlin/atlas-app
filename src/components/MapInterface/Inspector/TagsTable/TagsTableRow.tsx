@@ -1,9 +1,6 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
 import React from 'react'
-import {
-  ConditionalFormattedKey,
-  ConditionalFormattedValue,
-} from './translations'
+import { ConditionalFormattedKey, ConditionalFormattedValue } from './translations'
 
 export type TagsTableRowProps =
   | {
@@ -31,11 +28,7 @@ export const TagsTableRow: React.FC<TagsTableRowProps> = ({
   value: ValueCell,
 }) => {
   const TagValueCell = tagValue && (
-    <ConditionalFormattedValue
-      sourceId={sourceId}
-      tagKey={tagKey}
-      tagValue={tagValue}
-    />
+    <ConditionalFormattedValue sourceId={sourceId} tagKey={tagKey} tagValue={tagValue} />
   )
 
   return (
@@ -45,9 +38,7 @@ export const TagsTableRow: React.FC<TagsTableRowProps> = ({
       </td>
       <td className="px-3 py-2 text-sm text-gray-500">
         {TagValueCell || ValueCell || (
-          <span className="text-gray-200 group-hover:text-gray-400">
-            Noch keine Daten
-          </span>
+          <span className="text-gray-200 group-hover:text-gray-400">Noch keine Daten</span>
         )}
       </td>
     </tr>

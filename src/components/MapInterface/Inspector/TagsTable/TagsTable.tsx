@@ -11,11 +11,7 @@ type Props = {
   sourceId: SourcesIds
 }
 
-export const TagsTable: React.FC<Props> = ({
-  properties,
-  sourceDocumentedKeys,
-  sourceId,
-}) => {
+export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {
   const cleanKey = (key: string) => key.replace('__if_present', '')
 
   return (
@@ -28,10 +24,7 @@ export const TagsTable: React.FC<Props> = ({
           >
             Schlüssel
           </th>
-          <th
-            scope="col"
-            className="px-3 py-1.5 text-left text-sm font-semibold text-gray-900"
-          >
+          <th scope="col" className="px-3 py-1.5 text-left text-sm font-semibold text-gray-900">
             Wert
           </th>
         </tr>

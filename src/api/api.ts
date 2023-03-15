@@ -7,10 +7,8 @@ const api = axios.create({
   baseURL: getApiUrl(),
 })
 
-export const getHistory = (
-  apiIdentifier: SourceVerificationApiIdentifier,
-  osmId: number
-) => api.get(`/verify/${apiIdentifier}/${osmId}/history`)
+export const getHistory = (apiIdentifier: SourceVerificationApiIdentifier, osmId: number) =>
+  api.get(`/verify/${apiIdentifier}/${osmId}/history`)
 
 export type VerificationStatus = 'approved' | 'rejected'
 

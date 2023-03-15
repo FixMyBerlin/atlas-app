@@ -53,15 +53,10 @@ export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
             })
             const featureColl = featureCollection(features)
 
-            const dataString = `data:application/json,${JSON.stringify(
-              featureColl
-            )}`
+            const dataString = `data:application/json,${JSON.stringify(featureColl)}`
 
             return (
-              <tr
-                key={layer.id}
-                className="border-b border-pink-200 text-left first:border-t"
-              >
+              <tr key={layer.id} className="border-b border-pink-200 text-left first:border-t">
                 <th className="font-normal">
                   <strong>{layer.id}</strong>
                   <br />
