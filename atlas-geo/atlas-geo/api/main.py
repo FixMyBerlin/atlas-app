@@ -114,6 +114,19 @@ def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id:
       return 'OK'
 
 
+@app.get("/health")
+def retrieve_service_health():
+    with conn.cursor() as cur:
+      try:
+        cur.execute(sql.SQL("SELECT 1"))
+      except:
+        raise HTTPException(status_code=500, detail="DB Connection is dead")
+      else:
+        return "OK"
+
+    raise HTTPException(status_code=500, detail="Unkown server error")
+
+
 @app.on_event("shutdown")
 def shutdown_event():
     conn.close()
