@@ -30,6 +30,7 @@ export type VerificationApiGet = {
   verified_at: string
   verified_by: number | undefined
   verified: VerificationStatus | null
+  comment: string | undefined
 }
 
 export const updateVerificationStatus = ({
