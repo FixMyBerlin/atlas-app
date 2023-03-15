@@ -19,9 +19,9 @@ wr/building
 # Topic: Barriers
 w/railway
 w/waterway
-w/natural
 w/highway
-w/aeroway
+wr/natural
+wr/aeroway
 
 # Topic: Public transport
 w/public_transport
