@@ -1,3 +1,4 @@
+import { VerificationStatus } from '@api/api'
 import { getSourceData, SourcesIds } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { useUserStore } from '@components/MapInterface/UserInfo'
@@ -6,7 +7,6 @@ import { LocationGenerics } from '@routes/routes'
 import { useMatch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React from 'react'
-import { StatusTable } from './StatusTable/StatusTable'
 import { VerificationActions } from './VerificationAction/VerificationActions'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 
@@ -35,7 +35,8 @@ export const StatusTableAndVerification: React.FC<Props> = ({
     .reverse()
     .find((update) => update.osm_id === properties.osm_id)?.verified
 
-  const verificationStatus = localVerificationStatus || properties.verified
+  const verificationStatus = (localVerificationStatus ||
+    properties.verified) as VerificationStatus | undefined
 
   return (
     <div
@@ -46,7 +47,7 @@ export const StatusTableAndVerification: React.FC<Props> = ({
           sourceData.freshness.enabled,
       })}
     >
-      <StatusTable
+      {/* <StatusTable
         presenceVisible={sourceData.presence.enabled}
         verificationVisible={sourceData.verification.enabled}
         freshnessVisible={sourceData.freshness.enabled}
@@ -54,7 +55,7 @@ export const StatusTableAndVerification: React.FC<Props> = ({
         freshnessDateKey={sourceData.freshness.dateKey}
         allowVerify={allowVerify}
         verificationStatus={verificationStatus}
-      />
+      /> */}
       {sourceData.verification.enabled && (
         <>
           <VerificationActions

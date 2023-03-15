@@ -12,7 +12,7 @@ export const getHistory = (
   osmId: number
 ) => api.get(`/verify/${apiIdentifier}/${osmId}/history`)
 
-type VerificationStatus = 'approved' | 'rejected'
+export type VerificationStatus = 'approved' | 'rejected'
 
 export type VerificationApiPost = {
   apiIdentifier: SourceVerificationApiIdentifier

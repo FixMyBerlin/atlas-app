@@ -81,10 +81,6 @@ export const TagsTableRowCompositTrafficSign: React.FC<Props> = ({
   const receivedSigns: string[] | undefined = properties['traffic_sign']
     ?.replace('DE:', '')
     ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
-  console.log(
-    '🚀 ~ file: TagsTableRowCompositTrafficSign.tsx:82 ~ receivedSigns:',
-    receivedSigns
-  )
 
   if (!receivedSigns?.length) {
     return (
