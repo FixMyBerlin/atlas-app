@@ -25,6 +25,8 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
   const { draw: drawAreasStore } = useSearch<LocationGenerics>()
   const { mapLoaded, setCalculatorAreasWithFeatures } = useMapStateInteraction()
 
+  // We store the Calculator Shapes as URL State `draw`
+  // and read from there to do the calculation
   useEffect(() => {
     if (!mainMap || !mapLoaded || !drawAreasStore) return
 
@@ -58,11 +60,13 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
     setCalculatorAreasWithFeatures(result)
   }, [drawAreasStore, mapLoaded])
 
+  // Update the URL, extracted as hook
   const { updateDrawFeatures } = useUpdate()
   const onUpdate = (e: { features: DrawArea[] }) => {
     updateDrawFeatures(drawAreasStore, e.features)
   }
 
+  // Update the URL, extracted as hook
   const { deleteDrawFeatures } = useDelete()
   const onDelete = (e: { features: DrawArea[] }) => {
     deleteDrawFeatures(drawAreasStore, e.features)
@@ -72,7 +76,9 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
   useEffect(() => {
     if (!mapLoaded || !drawAreasStore) return
 
-    drawAreasStore.forEach((feature) => drawControlRef.current?.add(feature))
+    drawAreasStore.forEach((feature) => {
+      return drawControlRef.current?.add(feature)
+    })
     updateDrawFeatures(drawAreasStore, drawAreasStore)
   }, [mapLoaded])
 
