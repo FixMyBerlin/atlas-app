@@ -91,7 +91,7 @@ def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
 
 
 @app.post("/verify/{type_name}/{osm_id}")
-def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str,verified_by: int= None):
+def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str, verified_by: int=None, comment: str=''):
     if type_name not in available_datasets:
       raise HTTPException(status_code=404, detail="verification type unknown")
 
@@ -107,8 +107,8 @@ def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id:
       if results == None:
         raise HTTPException(status_code=404, detail="osm_id not found")
 
-      statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified) VALUES (%s, %s, %s, %s, %s)").format(table_name=sql.Identifier(verification_tables[type_name]))
-      cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status ))
+      statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified, comment) VALUES (%s, %s, %s, %s, %s, %s)").format(table_name=sql.Identifier(verification_tables[type_name]))
+      cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status, comment))
       conn.commit()
 
       return 'OK'
