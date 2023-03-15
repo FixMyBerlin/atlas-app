@@ -1,4 +1,4 @@
-import { isDev } from '@components/utils/isEnv'
+import { isDev, isStaging } from '@components/utils/isEnv'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
@@ -16,7 +16,7 @@ type StoreUseDebugLayer = {
 }
 
 export const useMapDebugState = create<Store>((set, _get) => ({
-  showDebugInfo: isDev,
+  showDebugInfo: isDev || isStaging,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
 
   useDebugLayerStyles: false,
