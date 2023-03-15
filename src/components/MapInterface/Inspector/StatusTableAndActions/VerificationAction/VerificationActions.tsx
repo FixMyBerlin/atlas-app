@@ -11,6 +11,7 @@ import { SmallSpinner } from '@components/Spinner/Spinner'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { clsx } from 'clsx'
 import React from 'react'
+import { ApproveButton, RejectButton } from './VerifcationActionButtons'
 
 type Props = {
   apiIdentifier: SourceVerificationApiIdentifier
@@ -97,48 +98,6 @@ export const VerificationActions: React.FC<Props> = ({
   const verifiedOnce =
     verificationStatus && ['approved', 'rejected'].includes(verificationStatus)
 
-  const ApproveButton = ({ children }: { children: React.ReactNode }) => {
-    if (verifiedOnce && verificationStatus === 'approved') return null
-    return (
-      <button
-        onClick={() => {
-          mutation.mutate({ ...apiData, verified_status: 'approved' })
-        }}
-        disabled={mutation.isLoading || disabled}
-        className={clsx(
-          buttonStyles,
-          'bg-white py-1 px-3',
-          disabled
-            ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
-            : 'border-gray-400 shadow-md'
-        )}
-      >
-        {children}
-      </button>
-    )
-  }
-
-  const RejectButton = ({ children }: { children: React.ReactNode }) => {
-    if (verifiedOnce && verificationStatus === 'rejected') return null
-    return (
-      <button
-        onClick={() => {
-          mutation.mutate({ ...apiData, verified_status: 'rejected' })
-        }}
-        disabled={mutation.isLoading || disabled}
-        className={clsx(
-          buttonStyles,
-          'bg-white py-1 px-3',
-          disabled
-            ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
-            : 'border-gray-400 shadow-md'
-        )}
-      >
-        {children}
-      </button>
-    )
-  }
-
   if (!visible) return null
 
   return (
@@ -158,10 +117,25 @@ export const VerificationActions: React.FC<Props> = ({
       )}
       <div className="space-x-2">
         {mutation.isLoading && <SmallSpinner />}
-        <ApproveButton>
+        <ApproveButton
+          // If already verified, show "the other button", else show both
+          visible={verifiedOnce ? verificationStatus !== 'approved' : true}
+          handleClick={() => {
+            mutation.mutate({ ...apiData, verified_status: 'approved' })
+          }}
+          disabled={mutation.isLoading || disabled}
+        >
           {verifiedOnce ? 'Daten richtig' : 'Richtig'}
         </ApproveButton>
-        <RejectButton>Daten überarbeiten</RejectButton>
+        <RejectButton
+          visible={verifiedOnce ? verificationStatus !== 'rejected' : true}
+          handleClick={() => {
+            mutation.mutate({ ...apiData, verified_status: 'rejected' })
+          }}
+          disabled={mutation.isLoading || disabled}
+        >
+          Daten überarbeiten
+        </RejectButton>
       </div>
     </div>
   )
