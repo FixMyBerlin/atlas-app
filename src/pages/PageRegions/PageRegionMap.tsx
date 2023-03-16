@@ -50,13 +50,13 @@ export const PageRegionMap: React.FC = () => {
     navigate({
       search: (old) => {
         return {
+          ...old,
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
           theme: checkedTheme ?? initialConfig?.[0]?.id ?? 'fromTo',
           bg: 'default',
           config: initialConfig,
-          ...old,
         }
       },
       replace: true,
