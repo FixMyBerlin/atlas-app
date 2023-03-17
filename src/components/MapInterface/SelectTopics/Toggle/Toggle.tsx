@@ -8,17 +8,9 @@ type Props = {
   children: React.ReactNode
 }
 
-export const Toggle: React.FC<Props> = ({
-  active,
-  desc,
-  handleChange,
-  children,
-}) => {
+export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }) => {
   return (
-    <Switch.Group
-      as="div"
-      className="group flex min-h-[1.3rem] cursor-pointer items-center"
-    >
+    <Switch.Group as="div" className="group flex min-h-[1.3rem] cursor-pointer items-center">
       <Switch
         checked={active}
         onChange={handleChange}

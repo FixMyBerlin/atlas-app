@@ -9,14 +9,9 @@ type Props = {
   tagValue: string
 }
 
-export const ConditionalFormattedValue: React.FC<Props> = ({
-  sourceId,
-  tagKey,
-  tagValue,
-}) => {
+export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
   // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
-  const categoryTranslatedAlready =
-    sourceId == 'tarmac_poiClassification' && tagKey == 'category'
+  const categoryTranslatedAlready = sourceId == 'tarmac_poiClassification' && tagKey == 'category'
   if (['name', 'highway_name'].includes(tagKey) || categoryTranslatedAlready) {
     return <>{tagValue}</>
   }
@@ -51,9 +46,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
     return (
       <span className="group">
         <FormattedDate value={tagValue} />{' '}
-        <code className="text-gray-50 group-hover:text-gray-600">
-          {tagValue}
-        </code>
+        <code className="text-gray-50 group-hover:text-gray-600">{tagValue}</code>
       </span>
     )
   }
@@ -68,13 +61,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({
   }
 
   // Some TagKeys are not specific per category; we only translate those once
-  const nonCategorizedTagKeys = [
-    '_parent_highway',
-    'highway',
-    'oneway',
-    'smoothness',
-    'surface',
-  ]
+  const nonCategorizedTagKeys = ['_parent_highway', 'highway', 'oneway', 'smoothness', 'surface']
   if (nonCategorizedTagKeys.includes(tagKey)) {
     key = `ALL--${tagKey}=${tagValue}`
   }

@@ -14,9 +14,7 @@ export const useDelete = () => {
     const currFeatures = drawAreas
     const inputFeatures = features
     const deletedFeaturesIds = inputFeatures.map((f) => f.id)
-    const newDrawAreas = currFeatures.filter(
-      (feature) => !deletedFeaturesIds.includes(feature.id)
-    )
+    const newDrawAreas = currFeatures.filter((feature) => !deletedFeaturesIds.includes(feature.id))
     navigate({
       search: (old) => ({ ...old, draw: newDrawAreas }),
       replace: true,

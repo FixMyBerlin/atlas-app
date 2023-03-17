@@ -8,12 +8,7 @@ import {
 import { isDev } from '@components/utils'
 import { LocationGenerics } from '@routes/routes'
 import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
-import {
-  Navigate,
-  useMatch,
-  useNavigate,
-  useSearch,
-} from '@tanstack/react-location'
+import { Navigate, useMatch, useNavigate, useSearch } from '@tanstack/react-location'
 import { useEffect, useMemo, useState } from 'react'
 
 export const PageRegionMap: React.FC = () => {
@@ -25,13 +20,7 @@ export const PageRegionMap: React.FC = () => {
 
   // Guard aganst false regionPath params which result in empty region-data
   if (!region) {
-    return (
-      <Navigate
-        to="/regionen"
-        search={{ regionPathNotFound: regionPath }}
-        replace
-      />
-    )
+    return <Navigate to="/regionen" search={{ regionPathNotFound: regionPath }} replace />
   }
 
   // Initialize the Map. This will update stale configs.
@@ -54,14 +43,14 @@ export const PageRegionMap: React.FC = () => {
   const [resetConfig, setResetConfig] = useState(true)
   useEffect(() => {
     // It might be, that a existing URL has a theme that we don't support anymore.
-    const checkedTheme =
-      theme && region.themes.includes(theme) ? theme : undefined
+    const checkedTheme = theme && region.themes.includes(theme) ? theme : undefined
 
     if (!resetConfig && checkedTheme && lat && lng && zoom && config) return
 
     navigate({
       search: (old) => {
         return {
+          ...old,
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,

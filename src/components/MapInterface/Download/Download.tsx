@@ -50,8 +50,7 @@ export const Download: React.FC = () => {
 
         {!allowDownload && (
           <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">
-            Hinweis: GeoJSON Export ist für die Region {region?.fullName} nicht
-            eingerichtet.
+            Hinweis: GeoJSON Export ist für die Region {region?.fullName} nicht eingerichtet.
           </p>
         )}
 
@@ -60,17 +59,13 @@ export const Download: React.FC = () => {
           {!!osmDataDate.data?.description && (
             <span>
               {new Date(
-                Date.parse(
-                  JSON.parse(osmDataDate.data?.description)?.osm_data_from
-                )
+                Date.parse(JSON.parse(osmDataDate.data?.description)?.osm_data_from)
               ).toLocaleDateString('de-DE')}
             </span>
           )}
           {!!osmDataDate.isLoading && <SmallSpinner />}
           {!!osmDataDate.error && (
-            <span className="text-orange-500">
-              Fehler beim Laden des Datums
-            </span>
+            <span className="text-orange-500">Fehler beim Laden des Datums</span>
           )}
         </p>
 
@@ -86,31 +81,26 @@ export const Download: React.FC = () => {
 
             return (
               <li key={topicData.id} className="py-5">
-                <h3 className="mb-1 text-sm font-bold text-purple-800">
-                  {topicData.name}:
-                </h3>
+                <h3 className="mb-1 text-sm font-bold text-purple-800">{topicData.name}:</h3>
 
                 <p className="mb-2 text-sm text-gray-500">
                   {topicData.desc}
-                  {!!sourceData.attributionHtml &&
-                    sourceData.attributionHtml !== 'todo' && (
-                      <>
-                        {!!topicData.desc && <br />}
-                        <strong className="font-semibold">Attribution: </strong>
-                        »
-                        <span
-                          dangerouslySetInnerHTML={{
-                            __html: sourceData.attributionHtml,
-                          }}
-                        />
-                        «
-                      </>
-                    )}
+                  {!!sourceData.attributionHtml && sourceData.attributionHtml !== 'todo' && (
+                    <>
+                      {!!topicData.desc && <br />}
+                      <strong className="font-semibold">Attribution: </strong>
+                      »
+                      <span
+                        dangerouslySetInnerHTML={{
+                          __html: sourceData.attributionHtml,
+                        }}
+                      />
+                      «
+                    </>
+                  )}
                   {!!sourceData.licence && (
                     <>
-                      {(!!sourceData.attributionHtml || !!topicData.desc) && (
-                        <br />
-                      )}
+                      {(!!sourceData.attributionHtml || !!topicData.desc) && <br />}
                       <strong className="font-semibold">Lizenz: </strong>
                       {sourceData.licence}
                     </>
@@ -120,11 +110,9 @@ export const Download: React.FC = () => {
                 <div className="flex gap-2">
                   {allowDownload && (
                     <Link
-                      to={`${getApiUrl()}/export/${
-                        sourceData.export.apiIdentifier
-                      }?minlon=${bbox.min[0]}&minlat=${bbox.min[1]}&maxlon=${
-                        bbox.max[0]
-                      }&maxlat=${bbox.max[1]}`}
+                      to={`${getApiUrl()}/export/${sourceData.export.apiIdentifier}?minlon=${
+                        bbox.min[0]
+                      }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${bbox.max[1]}`}
                       classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
                       download
                       blank

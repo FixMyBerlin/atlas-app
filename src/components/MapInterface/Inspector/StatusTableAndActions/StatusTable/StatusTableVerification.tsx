@@ -1,8 +1,4 @@
-import {
-  BoltIcon,
-  QuestionMarkCircleIcon,
-  ShieldCheckIcon,
-} from '@heroicons/react/24/outline'
+import { BoltIcon, QuestionMarkCircleIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { GeoJSONFeature } from 'maplibre-gl'
 
 type Props = {
@@ -27,19 +23,13 @@ export const StatusTableVerification: React.FC<Props> = ({
       <h5 className="mb-2 font-semibold text-gray-600">Prüf-Status (intern)</h5>
       {verificationStatus === 'approved' && (
         <div className="flex gap-1" title="">
-          <ShieldCheckIcon
-            className="h-5 w-5 flex-none text-gray-600"
-            aria-hidden="true"
-          />
+          <ShieldCheckIcon className="h-5 w-5 flex-none text-gray-600" aria-hidden="true" />
           <span>Daten richtig</span>
         </div>
       )}
       {verificationStatus === 'rejected' && (
         <div className="flex gap-1" title="">
-          <BoltIcon
-            className="h-5 w-5 flex-none text-gray-600"
-            aria-hidden="true"
-          />
+          <BoltIcon className="h-5 w-5 flex-none text-gray-600" aria-hidden="true" />
           <span>Überarbeitung notwendig</span>
         </div>
       )}

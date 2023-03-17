@@ -9,11 +9,7 @@ type Props = {
   osmId: number
 }
 
-export const VerificationHistory: React.FC<Props> = ({
-  apiIdentifier,
-  visible,
-  osmId,
-}) => {
+export const VerificationHistory: React.FC<Props> = ({ apiIdentifier, visible, osmId }) => {
   const query = useQuery({
     queryKey: ['verificationHistory', apiIdentifier, osmId],
     queryFn: () => getHistory(apiIdentifier, osmId),
@@ -23,9 +19,7 @@ export const VerificationHistory: React.FC<Props> = ({
 
   return (
     <div>
-      <h3 className="mb-2 font-semibold text-gray-600">
-        Historie des Prüf-Status’
-      </h3>
+      <h3 className="mb-2 font-semibold text-gray-600">Historie des Prüf-Status’</h3>
       <VerificationHistoryWidget history={query.data.data} />
     </div>
   )

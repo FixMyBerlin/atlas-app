@@ -9,10 +9,7 @@ import {
 // In other words: The Style part doe not know about the hierarchy of the Topic part.
 export type TopicStyleKey = `${TopicIds}-${TopicStyleIds}`
 
-export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<
-  TopicStyleFilterIds,
-  ''
->}`
+export type TopicStyleFilterKey = `${TopicStyleKey}-${Exclude<TopicStyleFilterIds, ''>}`
 
 export type TopicStyleLegendKey = `${TopicStyleKey}-${TopicStyleLegendIds}`
 

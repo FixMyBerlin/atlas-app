@@ -1,8 +1,4 @@
-import {
-  MapDataThemeIds,
-  SourcesRasterIds,
-  themes,
-} from '@components/MapInterface/mapData'
+import { MapDataThemeIds, SourcesRasterIds, themes } from '@components/MapInterface/mapData'
 import { adminIds } from './utils'
 
 type RegionMap = {

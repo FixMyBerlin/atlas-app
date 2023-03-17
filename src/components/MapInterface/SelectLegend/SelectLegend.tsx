@@ -10,22 +10,13 @@ import {
   TopicStyleLegendIds,
 } from '../mapData'
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
-import {
-  LegendDebugInfoLayerStyle,
-  LegendDebugInfoTopicLayerConfig,
-} from './LegendDebugInfo'
-import {
-  LegendIconArea,
-  LegendIconCircle,
-  LegendIconLine,
-  LegendIconTypes,
-} from './LegendIcons'
+import { LegendDebugInfoLayerStyle, LegendDebugInfoTopicLayerConfig } from './LegendDebugInfo'
+import { LegendIconArea, LegendIconCircle, LegendIconLine, LegendIconTypes } from './LegendIcons'
 
 type Props = { scopeTopicId: TopicIds }
 
 export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const topicConfig = configThemesTopics
     ?.find((th) => th.id === themeId)
     ?.topics.find((t) => t.id === scopeTopicId)
@@ -38,9 +29,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   if (!styleConfig) return null
 
   const styleData = getStyleData(topicConfig.id, styleConfig.id)
-  const legends = styleData?.legends?.filter(
-    (l) => l.id !== 'ignore' && l.name !== null
-  )
+  const legends = styleData?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
   // (but vor isDev, give us a helper box to fix the config)
   if (!styleData || !legends?.length) {
@@ -86,13 +75,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   }) => {
     switch (type) {
       case 'line':
-        return (
-          <LegendIconLine
-            color={color}
-            width={4}
-            strokeDasharray={dasharray?.join(',')}
-          />
-        )
+        return <LegendIconLine color={color} width={4} strokeDasharray={dasharray?.join(',')} />
       case 'circle':
         return <LegendIconCircle color={color} />
       case 'fill':
@@ -113,11 +96,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             if (legendDataId === 'ignore') return null
 
             const scope = createTopicStyleKey(topicConfig.id, styleConfig.id)
-            const key = createTopicStyleLegendKey(
-              topicConfig.id,
-              styleConfig.id,
-              legendDataId
-            )
+            const key = createTopicStyleLegendKey(topicConfig.id, styleConfig.id, legendDataId)
 
             const active = true // TODO
             const disabled = false // TODO
@@ -131,9 +110,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 })}
                 key={key}
               >
-                <div className="ml-3 h-5 w-5 flex-none">
-                  {iconFromLegend(legendData)}
-                </div>
+                <div className="ml-3 h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center ">
                   <input
                     id={key}
@@ -143,8 +120,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     defaultChecked={active}
                     disabled={disabled}
                     onChange={() =>
-                      interactive &&
-                      handleClick(topicConfig.id, styleConfig.id, legendDataId)
+                      interactive && handleClick(topicConfig.id, styleConfig.id, legendDataId)
                     }
                     value={key}
                   />

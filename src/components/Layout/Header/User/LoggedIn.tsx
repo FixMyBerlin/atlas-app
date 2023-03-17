@@ -11,11 +11,7 @@ type Props = {
   onLogout: () => void
 }
 
-export const LoggedIn: React.FC<Props> = ({
-  user,
-  hasPermissions,
-  onLogout,
-}) => {
+export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
   const showUserId = isAdmin(user)
   const imgSrc = user.avatar ? user.avatar : null
 
@@ -24,12 +20,7 @@ export const LoggedIn: React.FC<Props> = ({
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {imgSrc ? (
-          <img
-            className="h-8 w-8 rounded-full"
-            src={imgSrc}
-            alt=""
-            aria-hidden="true"
-          />
+          <img className="h-8 w-8 rounded-full" src={imgSrc} alt="" aria-hidden="true" />
         ) : (
           <UserIcon className="h-6 w-6 text-gray-300" aria-hidden="true" />
         )}
@@ -60,11 +51,7 @@ export const LoggedIn: React.FC<Props> = ({
               </div>
             )}
           </div>
-          {showUserId && (
-            <div className="bg-pink-300 px-4 py-2 text-sm">
-              OSM ID {user.id}
-            </div>
-          )}
+          {showUserId && <div className="bg-pink-300 px-4 py-2 text-sm">OSM ID {user.id}</div>}
           <Menu.Item>
             {({ active }) => (
               <button

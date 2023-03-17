@@ -27,11 +27,7 @@ export const IconModal: React.FC<Props> = ({
 
   return (
     <>
-      <button
-        type="button"
-        className={triggerStyles[triggerStyle]}
-        onClick={() => setOpen(true)}
-      >
+      <button type="button" className={triggerStyles[triggerStyle]} onClick={() => setOpen(true)}>
         {triggerIcon}
       </button>
       <ModalDialog

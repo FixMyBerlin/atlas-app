@@ -26,14 +26,9 @@ export const StatusTable: React.FC<Props> = ({
 
   return (
     <div className="mb-4">
-      <h4 className="mb-2 font-semibold text-gray-900">
-        Bewertung der Datenqualität
-      </h4>
+      <h4 className="mb-2 font-semibold text-gray-900">Bewertung der Datenqualität</h4>
       <div className="grid grid-cols-3 text-gray-500">
-        <StatusTablePresence
-          visible={presenceVisible}
-          properties={properties}
-        />
+        <StatusTablePresence visible={presenceVisible} properties={properties} />
         <StatusTableVerification
           visible={verificationVisible}
           allowVerify={allowVerify}

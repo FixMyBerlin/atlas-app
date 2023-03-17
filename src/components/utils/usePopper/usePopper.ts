@@ -16,11 +16,7 @@ export function usePopper(
 
     if (cleanupCallback.current) cleanupCallback.current()
 
-    cleanupCallback.current = createPopper(
-      reference.current,
-      popper.current,
-      options
-    ).destroy
+    cleanupCallback.current = createPopper(reference.current, popper.current, options).destroy
   }, [reference, popper, cleanupCallback, options])
 
   return useMemo(

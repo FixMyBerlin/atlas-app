@@ -37,22 +37,15 @@ export const DebugStateInteraction = () => {
           <summary className="cursor-pointer">Helper</summary>
           <div className="flex flex-col gap-1">
             {!!regionPath && (
-              <Link
-                to={`/regionen/${regionPath}`}
-                className="rounded border p-1"
-              >
+              <Link to={`/regionen/${regionPath}`} className="rounded border p-1">
                 Reset URL <code>config</code>
               </Link>
             )}
           </div>
           <div className="font-mono">getApiUrl: {getApiUrl()}</div>
           <div className="font-mono">isDev: {JSON.stringify(isDev)}</div>
-          <div className="font-mono">
-            isStaging: {JSON.stringify(isStaging)}
-          </div>
-          <div className="font-mono">
-            isProduction: {JSON.stringify(isProd)}
-          </div>
+          <div className="font-mono">isStaging: {JSON.stringify(isStaging)}</div>
+          <div className="font-mono">isProduction: {JSON.stringify(isProd)}</div>
         </details>
 
         <details>

@@ -14,8 +14,6 @@ type Store = {
 
 export const useUserStore = create<Store>((set) => ({
   currentUser: null,
-  setCurrentUser: (data) =>
-    set((state: any) => ({ ...state, currentUser: data })),
-  removeCurrentUser: () =>
-    set((state: any) => ({ ...state, currentUser: null })),
+  setCurrentUser: (data) => set((state: any) => ({ ...state, currentUser: data })),
+  removeCurrentUser: () => set((state: any) => ({ ...state, currentUser: null })),
 }))

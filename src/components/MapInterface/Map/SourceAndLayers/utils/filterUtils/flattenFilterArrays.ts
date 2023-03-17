@@ -5,10 +5,7 @@ const removeAll = (array: any[]) => {
   return array
 }
 
-export const flattenFilterArrays = (
-  array1: any[] | undefined,
-  array2: any[] | undefined
-) => {
+export const flattenFilterArrays = (array1: any[] | undefined, array2: any[] | undefined) => {
   if (array1 === undefined) return array2
   if (array2 === undefined) return array1
 

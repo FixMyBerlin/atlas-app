@@ -8,8 +8,7 @@ const faqs: FAQ[][] = [
   [
     {
       question: 'TODO Does TaxPal handle VAT?',
-      answer:
-        'Well no, but if you move your company offshore you can probably ignore it.',
+      answer: 'Well no, but if you move your company offshore you can probably ignore it.',
     },
     {
       question: 'TODO Can I pay for my subscription via purchase order?',
@@ -28,14 +27,12 @@ const faqs: FAQ[][] = [
         'TaxPal is just a software application, ultimately your books are your responsibility.',
     },
     {
-      question:
-        'TaxPal sounds horrible but why do I still feel compelled to purchase?',
+      question: 'TaxPal sounds horrible but why do I still feel compelled to purchase?',
       answer:
         'This is the power of excellent visual design. You just can’t resist it, no matter how poorly it actually functions.',
     },
     {
-      question:
-        'I found other companies called TaxPal, are you sure you can use this name?',
+      question: 'I found other companies called TaxPal, are you sure you can use this name?',
       answer:
         'Honestly not sure at all. We haven’t actually incorporated or anything, we just thought it sounded cool and made this website.',
     },
@@ -81,8 +78,8 @@ export const Faqs = () => {
             Fragen & Antworten
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            TODO If you can’t find what you’re looking for, email our support
-            team and if you’re lucky someone will get back to you.
+            TODO If you can’t find what you’re looking for, email our support team and if you’re
+            lucky someone will get back to you.
           </p>
         </div>
         <ul className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 lg:max-w-none lg:grid-cols-3">

@@ -1,8 +1,5 @@
 import { MapDataSource } from '../types'
-import {
-  SourceExportApiIdentifier,
-  SourceVerificationApiIdentifier,
-} from './sources.const'
+import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './sources.const'
 
 export type SourcesParkingIds =
   | 'parkraumParking'
@@ -18,8 +15,7 @@ export const sourcesParking: MapDataSource<
 >[] = [
   {
     id: 'parkraumParking',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
+    tiles: 'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
@@ -40,8 +36,7 @@ export const sourcesParking: MapDataSource<
       editors: [
         {
           name: 'Parklinien Editor',
-          urlTemplate:
-            'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
+          urlTemplate: 'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
         },
       ],
     },
@@ -76,8 +71,7 @@ export const sourcesParking: MapDataSource<
   },
   {
     id: 'parkraumParkingPoints',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.parking_spaces/{z}/{x}/{y}.pbf',
+    tiles: 'https://vts.mapwebbing.eu/processing.parking_spaces/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: false,
@@ -100,12 +94,7 @@ export const sourcesParking: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'area_id',
-      documentedKeys: [
-        'parking',
-        'access',
-        'capacity__if_present',
-        'building__if_present',
-      ],
+      documentedKeys: ['parking', 'access', 'capacity__if_present', 'building__if_present'],
       editors: [
         {
           name: 'Parkplätze Editor',
@@ -122,8 +111,7 @@ export const sourcesParking: MapDataSource<
   },
   {
     id: 'parkraumParkingStats',
-    tiles:
-      'https://vts.mapwebbing.eu/processing.boundaries_stats/{z}/{x}/{y}.pbf',
+    tiles: 'https://vts.mapwebbing.eu/processing.boundaries_stats/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,

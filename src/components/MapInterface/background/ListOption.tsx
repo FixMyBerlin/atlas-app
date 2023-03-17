@@ -24,10 +24,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
       {({ active, selected }) => (
         <>
           <span
-            className={clsx(
-              'block truncate',
-              active || selected ? 'font-medium' : 'font-normal'
-            )}
+            className={clsx('block truncate', active || selected ? 'font-medium' : 'font-normal')}
           >
             {name}
           </span>

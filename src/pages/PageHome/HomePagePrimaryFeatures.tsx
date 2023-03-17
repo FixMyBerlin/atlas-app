@@ -29,19 +29,16 @@ const features: Feature[] = [
         <span className="hidden xl:inline">Themenkarte</span> Quellen und Ziele
       </>
     ),
-    description:
-      'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
+    description: 'Schulen, Wohn- oder Gewerbegebieten, Einkaufs- und Freizeitmöglichkeiten.',
     image: screenshotPoiClassification,
   },
   {
     title: (
       <>
-        <span className="hidden xl:inline">Themenkarte</span>{' '}
-        Oberflächenqualität
+        <span className="hidden xl:inline">Themenkarte</span> Oberflächenqualität
       </>
     ),
-    description:
-      'Oberflächenqualität und Oberflächenart von Radwegen und Fahrbahnen.',
+    description: 'Oberflächenqualität und Oberflächenart von Radwegen und Fahrbahnen.',
     image: screenshotSurface,
   },
   {
@@ -94,10 +91,8 @@ export const HomePagePrimaryFeatures: React.FC = () => {
             Der Radverkehrsatlas liefert wertvolle Daten
           </h2>
           <p className="mt-6 text-lg tracking-tight text-blue-100">
-            Der Radverkehrsatlas bietet für die Radverkehrsplanung relevante
-            Themenkarten. <br />
-            Sie können die Datensätze aus dem Radverkehrsatlas jederzeit
-            herunterladen.
+            Der Radverkehrsatlas bietet für die Radverkehrsplanung relevante Themenkarten. <br />
+            Sie können die Datensätze aus dem Radverkehrsatlas jederzeit herunterladen.
           </p>
         </div>
         <Tab.Group

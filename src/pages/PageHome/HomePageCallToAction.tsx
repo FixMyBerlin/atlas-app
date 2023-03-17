@@ -3,10 +3,7 @@ import backgroundImage from './images/background-call-to-action.jpg'
 
 export const HomePageCallToAction = () => {
   return (
-    <section
-      id="get-started-today"
-      className="relative overflow-hidden bg-blue-600 py-32"
-    >
+    <section id="get-started-today" className="relative overflow-hidden bg-blue-600 py-32">
       <img
         className="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2"
         src={backgroundImage}
@@ -20,8 +17,8 @@ export const HomePageCallToAction = () => {
             Haben Sie auch Interesse?
           </h2>
           <p className="my-4 text-lg tracking-tight text-white">
-            Sie möchten informiert bleiben und den Radverkehrsatlas als
-            Pilotkommune nutzen? Tragen Sie sich für die Warteliste ein.
+            Sie möchten informiert bleiben und den Radverkehrsatlas als Pilotkommune nutzen? Tragen
+            Sie sich für die Warteliste ein.
           </p>
           <WaitlistButton />
         </div>

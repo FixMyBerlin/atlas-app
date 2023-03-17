@@ -7,12 +7,10 @@ const api = axios.create({
   baseURL: getApiUrl(),
 })
 
-export const getHistory = (
-  apiIdentifier: SourceVerificationApiIdentifier,
-  osmId: number
-) => api.get(`/verify/${apiIdentifier}/${osmId}/history`)
+export const getHistory = (apiIdentifier: SourceVerificationApiIdentifier, osmId: number) =>
+  api.get(`/verify/${apiIdentifier}/${osmId}/history`)
 
-type VerificationStatus = 'approved' | 'rejected'
+export type VerificationStatus = 'approved' | 'rejected'
 
 export type VerificationApiPost = {
   apiIdentifier: SourceVerificationApiIdentifier
@@ -21,6 +19,7 @@ export type VerificationApiPost = {
   verified_at: string
   verified_by: number | undefined
   verified_status: VerificationStatus | null
+  comment: string | undefined
 }
 
 export type VerificationApiGet = {
@@ -29,6 +28,7 @@ export type VerificationApiGet = {
   verified_at: string
   verified_by: number | undefined
   verified: VerificationStatus | null
+  comment: string | undefined
 }
 
 export const updateVerificationStatus = ({
@@ -38,6 +38,7 @@ export const updateVerificationStatus = ({
   verified_at,
   verified_by,
   verified_status,
+  comment,
 }: VerificationApiPost) => {
   if (!verified_by || !verified_status) {
     throw Error('updateVerificationStatus: Required data missing')
@@ -48,6 +49,7 @@ export const updateVerificationStatus = ({
   encoded.append('verified_at', verified_at)
   encoded.append('verified_by', verified_by.toString())
   encoded.append('verified_status', verified_status)
+  encoded.append('comment', comment || '')
 
   return api
     .post(`/verify/${apiIdentifier}/${osm_id}?` + encoded)

@@ -22,10 +22,7 @@ export const Inspector: React.FC = () => {
 
   return (
     <div className="absolute top-0 right-0 bottom-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
-      <InspectorHeader
-        count={inspectorFeatures.length}
-        handleClose={() => resetInspector()}
-      />
+      <InspectorHeader count={inspectorFeatures.length} handleClose={() => resetInspector()} />
 
       {inspectorFeatures.map((inspectObject) => {
         const {
@@ -56,33 +53,21 @@ export const Inspector: React.FC = () => {
           .replace('source:', '')
 
         return (
-          <div
-            key={layerPropertyKey}
-            className="mt-5 w-full rounded-2xl bg-white"
-          >
-            <IntlProvider
-              messages={translations}
-              locale="de"
-              defaultLocale="de"
-            >
+          <div key={layerPropertyKey} className="mt-5 w-full rounded-2xl bg-white">
+            <IntlProvider messages={translations} locale="de" defaultLocale="de">
               <Disclosure
-                title={
-                  <FormattedMessage
-                    id={`${disclosureTranslationString}--title`}
-                  />
-                }
+                title={<FormattedMessage id={`${disclosureTranslationString}--title`} />}
                 objectId={properties.osm_id}
               >
                 {properties.prefix && (
                   <details className="prose prose-sm bg-purple-100 p-1 py-1.5 px-4">
                     <summary>Hinweis: Transformierte Geometrie</summary>
                     <p className="my-0 ml-3">
-                      Diese Geometrie wurde im Rahmen der Datenaufbereitung
-                      künstlich erstellt. In OpenStreetMap sind die Daten an der
-                      Straßen-Geometrie erfasst. Durch die Datenaufbereitung
-                      können die Attribute kompfortabler analysiert und geprüft
-                      werden. Sie sorgt aber auch dafür, dass Verbindungspunkte
-                      kleine Kanten und Lücken aufweisen können.
+                      Diese Geometrie wurde im Rahmen der Datenaufbereitung künstlich erstellt. In
+                      OpenStreetMap sind die Daten an der Straßen-Geometrie erfasst. Durch die
+                      Datenaufbereitung können die Attribute kompfortabler analysiert und geprüft
+                      werden. Sie sorgt aber auch dafür, dass Verbindungspunkte kleine Kanten und
+                      Lücken aufweisen können.
                     </p>
                   </details>
                 )}
@@ -107,10 +92,7 @@ export const Inspector: React.FC = () => {
                   documentedKeys={sourceData.inspector.documentedKeys}
                 />
 
-                <StatusTableAndVerification
-                  properties={properties}
-                  sourceId={sourceId}
-                />
+                <StatusTableAndVerification properties={properties} sourceId={sourceId} />
               </Disclosure>
             </IntlProvider>
           </div>

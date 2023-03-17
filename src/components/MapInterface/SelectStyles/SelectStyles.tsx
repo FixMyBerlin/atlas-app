@@ -13,8 +13,7 @@ type Props = { scopeTopicId: TopicIds }
 
 export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const topicConfig = configThemesTopics
     ?.find((th) => th.id === themeId)
     ?.topics.find((t) => t.id === scopeTopicId)
@@ -76,10 +75,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                   <span className="w-[2rem] text-right">Stil:</span>
                   <span className="truncate">{activeStyleData?.name}</span>
                 </div>
-                <ChevronDownIcon
-                  className="-mr-1 ml-0.5 h-5 w-5"
-                  aria-hidden="true"
-                />
+                <ChevronDownIcon className="-mr-1 ml-0.5 h-5 w-5" aria-hidden="true" />
               </Menu.Button>
             </div>
 
@@ -90,15 +86,9 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
               >
                 <div className="py-1">
                   {topicConfig.styles.map((styleConfig) => {
-                    const styleData = getStyleData(
-                      topicConfig.id,
-                      styleConfig.id
-                    )
+                    const styleData = getStyleData(topicConfig.id, styleConfig.id)
                     if (!styleData) return null
-                    const key = createTopicStyleKey(
-                      topicConfig.id,
-                      styleConfig.id
-                    )
+                    const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
                     return (
                       <Menu.Item key={key}>
                         {({ active }) => (
@@ -111,9 +101,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                               })
                             }
                             className={clsx(
-                              styleConfig.active
-                                ? 'bg-yellow-400 text-gray-900'
-                                : 'text-gray-700',
+                              styleConfig.active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
                               { 'bg-yellow-50': active },
                               'block w-full px-4 py-2 text-left text-sm'
                             )}

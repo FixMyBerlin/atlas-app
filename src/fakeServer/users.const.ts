@@ -44,4 +44,10 @@ export const users: User[] = [
     displayName: 'BAFK_St',
     isAdmin: false,
   },
+  {
+    // http://whosthat.osmz.ru/?q=rush42
+    id: 18717122,
+    displayName: 'rush42',
+    isAdmin: true,
+  },
 ]

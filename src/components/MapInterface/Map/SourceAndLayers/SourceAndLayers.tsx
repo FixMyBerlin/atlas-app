@@ -1,8 +1,4 @@
-import {
-  getSourceData,
-  getStyleData,
-  getTopicData,
-} from '@components/MapInterface/mapData'
+import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
@@ -21,8 +17,7 @@ import { specifyFilters } from './utils'
 // We also use this visbility to add/remove interactive layers.
 export const SourceAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
   if (!configThemesTopics || !currentTheme) return null
 
@@ -30,15 +25,24 @@ export const SourceAndLayers: React.FC = () => {
   // Therefore, we look at a flattened topics list for this component.
   const configTopics = flatConfigTopics(configThemesTopics)
 
+  // We place our layers between given Maptiler Layer IDs:
+  // Key: LayerType – we group our data based on layer type.
+  // Value: Maptiler Layer ID that our layers are placed on top of.
+  const layerOrder = {
+    symbol: 'housenumber', // Icon + Label
+    circle: 'housenumber', // Points
+    heatmap: 'housenumber',
+    line: 'boundary_country',
+    fill: 'landuse',
+  }
+
   return (
     <>
       {configTopics.map((topicConfig) => {
         // We neet look at the currentThemeConfig and currentTopicConfig here…
         // - otherwise the visbility is not based on the theme-topics.
         // - and otherwise the visibility is based on the first topic of our flat list, not the current.
-        const currTopicConfig = currentTheme.topics.find(
-          (t) => t.id === topicConfig.id
-        )
+        const currTopicConfig = currentTheme.topics.find((t) => t.id === topicConfig.id)
         if (!currTopicConfig) return null
 
         const curTopicData = getTopicData(topicConfig.id)
@@ -64,9 +68,7 @@ export const SourceAndLayers: React.FC = () => {
               // … the theme is active (handled above) AND
               // … the topic is active AND
               // … the style is active (which includes 'default' via the config initialization)
-              const visibility = layerVisibility(
-                currTopicConfig.active && styleConfig.active
-              )
+              const visibility = layerVisibility(currTopicConfig.active && styleConfig.active)
 
               return styleData?.layers.map((layer) => {
                 const layerId = createSourceTopicStyleLayerKey(
@@ -76,18 +78,12 @@ export const SourceAndLayers: React.FC = () => {
                   layer.id
                 )
                 const layout =
-                  layer.layout === undefined
-                    ? visibility
-                    : { ...visibility, ...layer.layout }
+                  layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                 const layerFilter = useDebugLayerStyles
                   ? ['all']
-                  : specifyFilters(
-                      layer.filter,
-                      styleData.interactiveFilters,
-                      styleConfig.filters
-                    )
+                  : specifyFilters(layer.filter, styleData.interactiveFilters, styleConfig.filters)
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                 const layerPaint = useDebugLayerStyles
@@ -101,6 +97,7 @@ export const SourceAndLayers: React.FC = () => {
                   id: layerId,
                   type: layer.type,
                   source: sourceId,
+                  beforeId: layerOrder[layer.type],
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: layerFilter,
@@ -108,8 +105,7 @@ export const SourceAndLayers: React.FC = () => {
                 }
 
                 // The verification style layer in Mapbox Studio has to include this string
-                const isVerificationStatusLayer =
-                  layer.id.search('verification-status') != -1
+                const isVerificationStatusLayer = layer.id.search('verification-status') != -1
 
                 return (
                   <>

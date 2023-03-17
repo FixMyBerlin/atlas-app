@@ -4,10 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const topic = 'parkingDebug'
 const source = 'parkraumParkingDebug'
 export type TopicParkingDebugId = typeof topic
-export type TopicParkingDebugStyleIds =
-  | 'default'
-  | 'presence'
-  | 'debugLengthPerCapacity'
+export type TopicParkingDebugStyleIds = 'default' | 'presence' | 'debugLengthPerCapacity'
 export type TopicParkingDebugStyleFilterIds = '_nofilter'
 
 export const topic_parkingDebug: MapDataTopic = {

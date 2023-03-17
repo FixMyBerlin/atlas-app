@@ -1,8 +1,4 @@
-import {
-  getSourceData,
-  getStyleData,
-  getTopicData,
-} from '@components/MapInterface/mapData'
+import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { isDev } from '@components/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
@@ -77,11 +73,7 @@ export const Map: React.FC = () => {
     const mapCenter = mainMap.getCenter()
     const mapZoom = mainMap.getZoom()
 
-    const [lat_, lng_, zoom_] = roundPositionForURL(
-      mapCenter.lat,
-      mapCenter.lng,
-      mapZoom
-    )
+    const [lat_, lng_, zoom_] = roundPositionForURL(mapCenter.lat, mapCenter.lng, mapZoom)
 
     if (lat == lat_ && lng == lng_ && zoom == zoom_) return
 
@@ -101,8 +93,7 @@ export const Map: React.FC = () => {
     })
   }
 
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
   if (!configThemesTopics || !currentTheme) return null
 

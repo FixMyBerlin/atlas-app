@@ -4,17 +4,13 @@ import produce from 'immer'
 import React from 'react'
 import { SelectEntryCheckbox, SelectEntryRadiobutton } from '../components'
 import { getFilterData, getStyleData, TopicIds } from '../mapData'
-import {
-  createTopicStyleFilterKey,
-  createTopicStyleFilterOptionKey,
-} from '../utils'
+import { createTopicStyleFilterKey, createTopicStyleFilterOptionKey } from '../utils'
 
 type Props = { scopeTopicId: TopicIds }
 
 export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configThemesTopics, theme: themeId } =
-    useSearch<LocationGenerics>()
+  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const topicConfig = configThemesTopics
     ?.find((th) => th.id === themeId)
     ?.topics.find((t) => t.id === scopeTopicId)
@@ -37,9 +33,7 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
               ?.topics.find((t) => t.id === eventTopicId)
             const style = topic?.styles.find((s) => s.id === eventStyleId)
             const filter = style?.filters?.find((f) => f.id === eventFilterId)
-            const option = filter?.options.find(
-              (o) => o.id === eventFilterOptionId
-            )
+            const option = filter?.options.find((o) => o.id === eventFilterOptionId)
             if (topic && style && filter && option) {
               const filterData = getFilterData(topic.id, style.id, filter.id)
               if (filterData?.inputType === 'radiobutton') {
@@ -72,9 +66,7 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
       <fieldset>
         <legend className="sr-only">Filter</legend>
         {styleData?.interactiveFilters?.map((filterData) => {
-          const filterConfig = activeTopicStyleConfig?.filters?.find(
-            (f) => f.id === filterData.id
-          )
+          const filterConfig = activeTopicStyleConfig?.filters?.find((f) => f.id === filterData.id)
 
           if (!filterConfig) return null
 
@@ -85,14 +77,10 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
                 className="space-y-2.5"
                 // Radiobuttons need to be triggered on the <form>, Checkboxed on the <input>
                 // @ts-ignore when we console.log what we receive, it is an <input> element. No idea how to tell TS this…
-                onChange={
-                  filterData.inputType === 'radiobutton' ? onChange : undefined
-                }
+                onChange={filterData.inputType === 'radiobutton' ? onChange : undefined}
               >
                 {filterData.options.map((optionData) => {
-                  const optionConfig = filterConfig?.options.find(
-                    (o) => o.id === optionData.id
-                  )
+                  const optionConfig = filterConfig?.options.find((o) => o.id === optionData.id)
                   if (!optionConfig) return null
 
                   const scope = createTopicStyleFilterKey(
@@ -111,8 +99,8 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
                     // The filter list must have one entry, otherwise the map style fails
                     // so we disable the last active one. Therefore, we disable the last active input.
                     const disabled =
-                      filterConfig?.options?.filter((o) => o.active)?.length ===
-                        1 && optionConfig.active
+                      filterConfig?.options?.filter((o) => o.active)?.length === 1 &&
+                      optionConfig.active
 
                     return (
                       <SelectEntryCheckbox

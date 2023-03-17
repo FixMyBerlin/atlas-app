@@ -33,10 +33,7 @@ export const Link: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const classes = clsx(
-    className,
-    classNameOverwrite || (button ? buttonStyles : linkStyles)
-  )
+  const classes = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   let mailto: string | undefined = undefined
   if (to.includes('@') && !to.startsWith('http')) {

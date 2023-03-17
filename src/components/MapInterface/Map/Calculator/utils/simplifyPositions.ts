@@ -16,9 +16,7 @@ const roundPosition = (position: GeoJSON.Position) => {
 
 export const simplifyPositions = (drawAreas: DrawArea[]) => {
   const simplified = drawAreas.map((feature) => {
-    const newCoordinates = feature.geometry.coordinates[0].map((c) =>
-      roundPosition(c)
-    )
+    const newCoordinates = feature.geometry.coordinates[0].map((c) => roundPosition(c))
     const newFeature = feature
     feature.geometry.coordinates[0] = newCoordinates
     return newFeature

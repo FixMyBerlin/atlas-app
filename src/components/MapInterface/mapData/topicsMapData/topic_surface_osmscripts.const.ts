@@ -3,10 +3,7 @@ import { pickLayersByGroup, atlasStyle } from './utils'
 
 const topicId = 'surface_osmscripts'
 export type TopicSurfaceId_Osmscripts = typeof topicId
-export type TopicSurfaceStyleIds_Osmscripts =
-  | 'default'
-  | 'bad'
-  | 'debug-smoothness'
+export type TopicSurfaceStyleIds_Osmscripts = 'default' | 'bad' | 'debug-smoothness'
 export type TopicSurfaceStyleFilterIds_Osmscripts = '_nofilter'
 
 export const topic_surface_osmscripts: MapDataTopic = {

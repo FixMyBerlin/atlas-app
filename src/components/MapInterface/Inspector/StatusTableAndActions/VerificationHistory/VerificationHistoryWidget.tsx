@@ -1,3 +1,4 @@
+import { Markdown } from '@components/text'
 import { userById } from '@fakeServer/utils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import React from 'react'
@@ -7,6 +8,7 @@ type verificationEvent = {
   verified: string
   verified_by: string
   verified_at: string
+  comment?: string
 }
 
 type Props = {
@@ -21,8 +23,7 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
           const date = new Date(event.verified_at)
           const datetimeFormatted = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
           const verifiedBy =
-            userById(parseInt(event.verified_by))?.displayName ||
-            '(Unbekannter Nutzer)'
+            userById(parseInt(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
 
           return (
             <li key={event.verified_at}>
@@ -41,6 +42,12 @@ export const VerificationHistoryWidget: React.FC<Props> = ({ history }) => {
                   </div>
                 </div>
               </div>
+              {event.comment && (
+                <details open={true} className="ml-7 mr-1">
+                  <summary className="cursor-default">Kommentar</summary>
+                  <Markdown markdown={event.comment} className="prose-sm prose-p:text-gray-500" />
+                </details>
+              )}
             </li>
           )
         })}

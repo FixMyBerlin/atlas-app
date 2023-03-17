@@ -1,8 +1,6 @@
 import * as turf from '@turf/turf'
 
-export const pointFromGeometry = (
-  geometry: maplibregl.GeoJSONFeature['geometry']
-) => {
+export const pointFromGeometry = (geometry: maplibregl.GeoJSONFeature['geometry']) => {
   let [lat, lng] = [0, 0]
   switch (geometry.type) {
     case 'Point': {
@@ -10,8 +8,7 @@ export const pointFromGeometry = (
       break
     }
     case 'LineString': {
-      const middle =
-        geometry.coordinates[Math.floor(geometry.coordinates.length / 2) || 0]
+      const middle = geometry.coordinates[Math.floor(geometry.coordinates.length / 2) || 0]
       ;[lng, lat] = middle
       break
     }

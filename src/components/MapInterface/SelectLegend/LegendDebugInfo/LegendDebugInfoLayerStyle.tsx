@@ -8,10 +8,7 @@ import React from 'react'
 
 type Props = { title: string; layers: MapDataVisLayer[] }
 
-export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
-  title,
-  layers,
-}) => {
+export const LegendDebugInfoLayerStyle: React.FC<Props> = ({ title, layers }) => {
   const { showDebugInfo } = useMapDebugState()
 
   if (!isDev || !showDebugInfo) return null
@@ -36,9 +33,7 @@ export const LegendDebugInfoLayerStyle: React.FC<Props> = ({
                 return (
                   <pre key={key} className="my-0.5 text-xs">
                     paint['{key}']{' '}
-                    <span style={{ color: content }}>
-                      {JSON.stringify(content, undefined, 2)}
-                    </span>
+                    <span style={{ color: content }}>{JSON.stringify(content, undefined, 2)}</span>
                   </pre>
                 )
               })}

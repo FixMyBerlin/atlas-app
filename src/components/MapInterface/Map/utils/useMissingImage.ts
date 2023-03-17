@@ -13,11 +13,7 @@ export const useMissingImage = (map: MapRef | undefined) => {
 
       const imageSrc = mapboxStyleImages.get(imageId)
       if (!imageSrc) {
-        console.warn(
-          'useMissingImage NOTICE: Missing image',
-          imageId,
-          mapboxStyleImages
-        )
+        console.warn('useMissingImage NOTICE: Missing image', imageId, mapboxStyleImages)
         return
       }
 
