@@ -12,3 +12,13 @@ export const isStaging = import.meta.env.PROD && import.meta.env.VITE_NETLIFY_CO
 
 // This uses the fallback to .env.DEV in case the .env.local file is not set up.
 export const isDev = import.meta.env.DEV || import.meta.env.VITE_NETLIFY_CONTEXT === 'development'
+
+export const isBrowser = typeof window !== 'undefined'
+
+export const envKey = isProd
+  ? 'production'
+  : isStaging
+  ? 'staging'
+  : isDev
+  ? 'development'
+  : undefined

@@ -1,4 +1,7 @@
+import { Link, linkStyles } from '@components/Link'
+import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { User } from '@components/MapInterface/UserInfo'
+import { getEnvUrl } from '@components/utils/getEnvUrl'
 import { isAdmin } from '@fakeServer/utils'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
@@ -12,7 +15,12 @@ type Props = {
 }
 
 export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
+  const { toggleShowDebugInfo } = useMapDebugState()
   const imgSrc = user.avatar ? user.avatar : null
+
+  const devUrl = getEnvUrl('development')
+  const stagingUrl = getEnvUrl('staging')
+  const prodUrl = getEnvUrl('production')
 
   return (
     <Menu as="div" className="relative ml-3">
@@ -58,6 +66,28 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
                   Toggle <code>mapDebug</code>
                 </button>
               </li>
+              <li>
+                {devUrl && (
+                  <Link external blank to={devUrl}>
+                    Open DEV
+                  </Link>
+                )}
+              </li>
+              <li>
+                {stagingUrl && (
+                  <Link external blank to={stagingUrl}>
+                    Open Staging
+                  </Link>
+                )}
+              </li>
+              <li>
+                {prodUrl && (
+                  <Link external blank to={prodUrl}>
+                    Open Production
+                  </Link>
+                )}
+              </li>
+            </ul>
           )}
           <Menu.Item>
             {({ active }) => (
