@@ -8,6 +8,7 @@ type Store = StoreDebugInfo & StoreUseDebugLayer
 type StoreDebugInfo = {
   showDebugInfo: boolean
   setShowDebugInfo: (showDebugInfo: Store['showDebugInfo']) => void
+  toggleShowDebugInfo: () => void
 }
 
 type StoreUseDebugLayer = {
@@ -15,9 +16,13 @@ type StoreUseDebugLayer = {
   setUseDebugLayerStyles: (useDebugLayerStyles: Store['useDebugLayerStyles']) => void
 }
 
-export const useMapDebugState = create<Store>((set, _get) => ({
+export const useMapDebugState = create<Store>((set, get) => ({
   showDebugInfo: isDev || isStaging,
   setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
+  toggleShowDebugInfo: () => {
+    const { showDebugInfo } = get()
+    set({ showDebugInfo: !showDebugInfo })
+  },
 
   useDebugLayerStyles: false,
   setUseDebugLayerStyles: (useDebugLayerStyles) => set({ useDebugLayerStyles }),

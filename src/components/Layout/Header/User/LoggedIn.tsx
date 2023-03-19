@@ -12,7 +12,6 @@ type Props = {
 }
 
 export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
-  const showUserId = isAdmin(user)
   const imgSrc = user.avatar ? user.avatar : null
 
   return (
@@ -51,7 +50,15 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
               </div>
             )}
           </div>
-          {showUserId && <div className="bg-pink-300 px-4 py-2 text-sm">OSM ID {user.id}</div>}
+          {isAdmin(user) && (
+            <ul className="bg-pink-300 px-4 py-2 text-sm">
+              <li>OSM ID {user.id}</li>
+              <li>
+                <button type="button" onClick={() => toggleShowDebugInfo()} className={linkStyles}>
+                  Toggle <code>mapDebug</code>
+                </button>
+              </li>
+          )}
           <Menu.Item>
             {({ active }) => (
               <button
