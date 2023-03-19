@@ -156,8 +156,10 @@ export const Map: React.FC = () => {
       doubleClickZoom={true}
       dragRotate={false}
     >
-      <SourceAndLayers />
+      {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
+      <SourceAndLayers />
+
       <NavigationControl showCompass={false} />
       <Calculator />
       {/* <GeolocateControl /> */}

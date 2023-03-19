@@ -1,6 +1,7 @@
 import { LayoutMap } from '@components/Layout'
 import { MapInterface } from '@components/MapInterface'
 import { ErrorRestartMap } from '@components/MapInterface/ErrorRestartMap/ErrorRestartMap'
+import { sourcesBackgroundsRaster } from '@components/MapInterface/mapData'
 import {
   createMapRegionConfig,
   initializeMapRegionConfig,
@@ -49,13 +50,17 @@ export const PageRegionMap: React.FC = () => {
 
     navigate({
       search: (old) => {
+        // Check if BG from URL (still) exist and use or fallback
+        const bg =
+          old?.bg && sourcesBackgroundsRaster.some((b) => b.id === old.bg) ? old.bg : 'default'
+
         return {
           ...old,
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
           theme: checkedTheme ?? initialConfig?.[0]?.id ?? 'fromTo',
-          bg: 'default',
+          bg,
           config: initialConfig,
         }
       },

@@ -17,7 +17,11 @@ import { specifyFilters } from './utils'
 // We also use this visbility to add/remove interactive layers.
 export const SourceAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
+  const {
+    config: configThemesTopics,
+    theme: themeId,
+    bg: selectedBackgroundId,
+  } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
   if (!configThemesTopics || !currentTheme) return null
 
@@ -28,6 +32,8 @@ export const SourceAndLayers: React.FC = () => {
   // We place our layers between given Maptiler Layer IDs:
   // Key: LayerType – we group our data based on layer type.
   // Value: Maptiler Layer ID that our layers are placed on top of.
+  // BUT: We only use this for our "default" background.
+  //    For custom raster backgrounds we place all our data on top.
   const layerOrder = {
     symbol: 'housenumber', // Icon + Label
     circle: 'housenumber', // Points
@@ -93,11 +99,14 @@ export const SourceAndLayers: React.FC = () => {
                     }).find((l) => l.type === layer.type)?.paint
                   : (layer.paint as any)
 
+                const beforeId =
+                  selectedBackgroundId === 'default' ? layerOrder[layer.type] : undefined
+
                 const layerProps = {
                   id: layerId,
                   type: layer.type,
                   source: sourceId,
-                  beforeId: layerOrder[layer.type],
+                  beforeId,
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: layerFilter,
