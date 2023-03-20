@@ -25,17 +25,4 @@ w/aeroway
 
 # Topic: Public transport
 w/public_transport
-
-# Topic: Parking
-n/barrier
-n/emergency
-n/highway
 n/public_transport
-n/ramp
-n/traffic_calming
-w/area:highway
-w/barrier
-w/building
-w/highway
-w/leisure
-w/public_transport
