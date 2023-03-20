@@ -5,49 +5,61 @@ type User = {
 }
 
 // This is our users "Database" until we have a real one
-// Note: If the 'whosthat' does not work, one can find the user on the OSM user page => Link "Report this User" => "reportable_id"
+// One way to find the osm user ID is http://whosthat.osmz.ru/?q=tordans
+// But that database takes time to update.
+// A better way is…
+// 1. Open User Profile https://www.openstreetmap.org/user/boooshii (not your own)
+// 2. "Report this User"
+// 3. Copy the user ID from `reportable_id=9142806` (from the URL)
 export const users: User[] = [
   {
-    // http://whosthat.osmz.ru/?q=boooshii
     id: 9142806,
     displayName: 'boooshii',
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=tordans
     id: 11881,
     displayName: 'tordans',
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=elsueno
     id: 17391407,
     displayName: 'elsueno',
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=Henri97
     id: 155680,
     displayName: 'Henri97',
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=hejco
     id: 7302664,
     displayName: 'hejco',
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=BAFK_St
+    id: 18717122,
+    displayName: 'rush42',
+    isAdmin: true,
+  },
+  {
     // Bezirksamt Xhain
     id: 12741863,
     displayName: 'BAFK_St',
     isAdmin: false,
   },
   {
-    // http://whosthat.osmz.ru/?q=rush42
-    id: 18717122,
-    displayName: 'rush42',
-    isAdmin: true,
+    // TrTo
+    // https://www.openstreetmap.org/reports/new?reportable_id=18058212&reportable_type=User
+    id: 18058212,
+    displayName: 'Tüffi',
+    isAdmin: false,
+  },
+  {
+    // TrTo
+    // https://www.openstreetmap.org/reports/new?reportable_id=18058219&reportable_type=User
+    id: 18058219,
+    displayName: 'Manner84',
+    isAdmin: false,
   },
 ]

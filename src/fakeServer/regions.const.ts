@@ -85,7 +85,7 @@ export const regions: Region[] = [
       'bikelanes',
       'lit',
     ],
-    osmUsers: [...adminIds],
+    osmUsers: [...adminIds, 18058212, 18058219],
     published: true,
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },

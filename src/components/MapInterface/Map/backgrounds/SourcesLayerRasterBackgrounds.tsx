@@ -5,7 +5,6 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapData'
 import { layerVisibility } from '../utils'
-import { beforeId } from './beforeId.const'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
   const {
@@ -25,6 +24,12 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
   const backgrounds = sourcesBackgroundsRaster.filter((s) =>
     region.backgroundSources.includes(s.id)
   )
+
+  // Last layer in Array `allLayer.filter((l) => l.source === 'openmaptiles')`
+  // Picking a different layer would who maptiler Vector data on top of the background
+  // Check the list via <Map> => `handleLoad` => `console.log`
+  // See also <SourceAndLayers> => `layerOrder`
+  const beforeId = 'housenumber'
 
   return (
     <>
