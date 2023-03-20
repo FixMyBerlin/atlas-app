@@ -1,0 +1,10 @@
+{
+  "name": "atlas-geo",
+  "version": "0.1.0",
+  "author": "FixMyCity <hello@fixmycity.de>",
+  "license": "AGPL-3.0",
+  "private": true,
+  "scripts": {
+    "release": "echo \"Use this format for the title: 'Release 2023-12-31'\" && gh pr create --base main --head develop --body \"\""
+  }
+}
