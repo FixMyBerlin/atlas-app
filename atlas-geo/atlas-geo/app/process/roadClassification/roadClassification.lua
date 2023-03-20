@@ -23,9 +23,10 @@ local excludeTable = osm2pgsql.define_table({
   name = 'roadClassification_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'tags',   type = 'jsonb' },
+    { column = 'meta',   type = 'jsonb' },
+    { column = 'reason', type = 'text' },
+    { column = 'geom',   type = 'linestring' },
   }
 })
 
@@ -97,7 +98,7 @@ function osm2pgsql.process_way(object)
     object.tags.category = "footway"
   end
 
-  local allowed_tags = Set({ "_exclude", "_excludeNotes", "category", "name", "highway", "footway", "access", "service",
+  local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
     "is_sidepath", "maxspeed", "surface", "smoothness" })
   FilterTags(object.tags, allowed_tags)
 
