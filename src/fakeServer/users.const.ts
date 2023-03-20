@@ -38,16 +38,28 @@ export const users: User[] = [
     isAdmin: true,
   },
   {
-    // http://whosthat.osmz.ru/?q=BAFK_St
+    id: 18717122,
+    displayName: 'rush42',
+    isAdmin: true,
+  },
+  {
     // Bezirksamt Xhain
     id: 12741863,
     displayName: 'BAFK_St',
     isAdmin: false,
   },
   {
-    // http://whosthat.osmz.ru/?q=rush42
-    id: 18717122,
-    displayName: 'rush42',
-    isAdmin: true,
+    // TrTo
+    // https://www.openstreetmap.org/reports/new?reportable_id=18058212&reportable_type=User
+    id: 18058212,
+    displayName: 'Tüffi',
+    isAdmin: false,
+  },
+  {
+    // TrTo
+    // https://www.openstreetmap.org/reports/new?reportable_id=18058219&reportable_type=User
+    id: 18058219,
+    displayName: 'Manner84',
+    isAdmin: false,
   },
 ]
