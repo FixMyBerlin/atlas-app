@@ -19,6 +19,7 @@
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && vitest run",
     "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/components/MapInterface/mapData/topicsMapData/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
+    "release": "echo \"Use this format for the title: 'Release 2023-12-31'\" && gh pr create --base main --head develop --body \"\"",
     "prepare": "husky install"
   },
   "dependencies": {
