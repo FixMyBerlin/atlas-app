@@ -4,10 +4,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
-RUN apt update && apt install -y osm2pgsql osmium-tool luarocks postgresql-client-15 tzdata wget libpq-dev python3 python3-pip && apt upgrade -y
+RUN apt update && apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev python3 python3-pip && apt upgrade -y
 # LUA Libaries:
 # - "dkjson" used by parking.lua to write JSON for debugging
-RUN luarocks install dkjson
+# RUN luarocks install dkjson
 # TODO: We need to find a way to use those packages locally; otherwise using them does not make much sense
 # - "inspect" https://github.com/kikito/inspect.lua
 #   (recommended in https://github.com/openstreetmap/osm2pgsql/blob/master/flex-config/README.md#dependencies)
