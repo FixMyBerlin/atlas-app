@@ -1,4 +1,9 @@
-import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
+import {
+  getSourceData,
+  getStyleData,
+  getTopicData,
+  TBeforeIds,
+} from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
@@ -34,7 +39,7 @@ export const SourceAndLayers: React.FC = () => {
   // Value: Maptiler Layer ID that our layers are placed on top of.
   // BUT: We only use this for our "default" background.
   //    For custom raster backgrounds we place all our data on top.
-  const layerOrder = {
+  const layerOrder: Record<string, TBeforeIds> = {
     symbol: 'housenumber', // Icon + Label
     circle: 'housenumber', // Points
     heatmap: 'housenumber',
@@ -99,8 +104,15 @@ export const SourceAndLayers: React.FC = () => {
                     }).find((l) => l.type === layer.type)?.paint
                   : (layer.paint as any)
 
+                // For all custom background (non 'default'), set beforeId=undefined which puts them at the top
+                // If a specific topic.beforeId is given (which might be `undefined`), take that
+                // … otherwise pick the beforeId base on layer.type.
                 const beforeId =
-                  selectedBackgroundId === 'default' ? layerOrder[layer.type] : undefined
+                  selectedBackgroundId === 'default'
+                    ? 'beforeId' in curTopicData
+                      ? curTopicData.beforeId
+                      : layerOrder[layer.type]
+                    : undefined
 
                 const layerProps = {
                   id: layerId,

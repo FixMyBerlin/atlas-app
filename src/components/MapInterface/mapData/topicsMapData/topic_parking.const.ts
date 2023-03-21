@@ -14,6 +14,7 @@ export const topic_parking: MapDataTopic = {
   name: 'Parkraum',
   desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumParking',
+  beforeId: undefined,
   styles: [
     {
       id: 'default',

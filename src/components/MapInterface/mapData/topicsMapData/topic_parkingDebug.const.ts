@@ -12,6 +12,7 @@ export const topic_parkingDebug: MapDataTopic = {
   name: 'Parkraum Debug',
   desc: '',
   sourceId: 'parkraumParkingDebug',
+  beforeId: undefined,
   styles: [
     {
       id: 'default',

@@ -10,6 +10,7 @@ export const topic_parkingAreas: MapDataTopic = {
   name: 'Flächenparkplätze',
   desc: 'Private und öffentliche Parkplätze.',
   sourceId: 'parkraumParkingAreas',
+  beforeId: undefined,
   styles: [
     {
       id: 'default',
