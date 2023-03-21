@@ -13,6 +13,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { clsx } from 'clsx'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { verifiedColor } from '../verifiedColor.const'
 
 type Props = {
   apiIdentifier: SourceVerificationApiIdentifier
@@ -142,8 +143,9 @@ export const VerificationActions: React.FC<Props> = ({
                     value={verificationOption}
                     id={verificationOption}
                     defaultChecked={active}
-                    className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-yellow-200"
+                    className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-0"
                     disabled={disabled}
+                    style={{ color: verifiedColor[verificationOption] }}
                   />
                 </div>
                 <div className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">

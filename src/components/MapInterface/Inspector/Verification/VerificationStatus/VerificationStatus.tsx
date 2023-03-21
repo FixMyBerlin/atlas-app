@@ -4,6 +4,7 @@ import { Markdown } from '@components/text'
 import { userById } from '@fakeServer/utils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
 import { useQuery } from '@tanstack/react-query'
+import { verifiedColor } from '../verifiedColor.const'
 
 type Props = {
   apiIdentifier: SourceVerificationApiIdentifier
@@ -34,8 +35,7 @@ export const VerificationStatus: React.FC<Props> = ({ apiIdentifier, visible, os
         <div
           className="rounded-full p-2 text-white"
           style={{
-            backgroundColor:
-              latestEntry.verified === 'approved' ? 'hsl(106, 91%, 39%)' : 'hsl(0, 100%, 41%)',
+            backgroundColor: verifiedColor[latestEntry.verified],
           }}
         >
           {latestEntry.verified === 'approved' ? (

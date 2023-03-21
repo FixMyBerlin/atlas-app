@@ -9,7 +9,7 @@ const api = axios.create({
 
 export type THistoryEntry = {
   id: number
-  verified: string
+  verified: TVerificationStatus
   verified_by: string
   verified_at: string
   comment?: string
