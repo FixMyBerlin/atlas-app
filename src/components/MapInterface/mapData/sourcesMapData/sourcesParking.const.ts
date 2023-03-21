@@ -40,7 +40,7 @@ export const sourcesParking: MapDataSource<
         },
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -63,7 +63,7 @@ export const sourcesParking: MapDataSource<
     ].join(',')}/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     inspector: { enabled: false }, // Those layers have no properties anyways
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -76,7 +76,7 @@ export const sourcesParking: MapDataSource<
     inspector: {
       enabled: false,
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: {
@@ -103,7 +103,7 @@ export const sourcesParking: MapDataSource<
         },
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -128,7 +128,7 @@ export const sourcesParking: MapDataSource<
         'length_wo_dual_carriageway',
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },

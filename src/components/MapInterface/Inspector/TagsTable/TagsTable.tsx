@@ -16,7 +16,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
 
   return (
     <table className="w-full">
-      <thead className="sr-only bg-gray-50">
+      <thead className="sr-only">
         <tr>
           <th
             scope="col"
@@ -29,7 +29,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
           </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-200 bg-white">
+      <tbody className="divide-y divide-gray-200">
         {sourceDocumentedKeys?.map((key) => {
           const cleanedKey = cleanKey(key)
 

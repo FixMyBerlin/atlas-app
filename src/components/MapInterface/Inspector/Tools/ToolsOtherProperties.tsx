@@ -6,7 +6,7 @@ type Props = {
   documentedKeys: string[] | undefined
 }
 
-export const OtherProperties: React.FC<Props> = ({ properties, documentedKeys }) => {
+export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKeys }) => {
   const systemKeys = [
     '_freshNotes',
     '_skip',
@@ -33,9 +33,11 @@ export const OtherProperties: React.FC<Props> = ({ properties, documentedKeys })
     .filter(([key, _v]) => systemKeys.includes(key) && !documentedKeys?.includes(key))
 
   return (
-    <details className="border-t bg-white px-4 py-2.5 text-xs [&_summary]:open:mb-1 [&_summary]:open:font-semibold">
-      <summary className="cursor-pointer text-right">Weitere Werte</summary>
-      <div className="grid grid-cols-2 gap-4 break-all">
+    <details className="mt-3">
+      <summary className="ml-1.5 cursor-pointer font-semibold text-gray-600">
+        <span className="ml-1.5">Weitere Daten an diesem Element</span>
+      </summary>
+      <div className="mt-3 grid grid-cols-2 gap-4 break-all text-xs ">
         <div>
           <h5 className="mb-2 font-semibold">Weitere OSM Werte:</h5>
           {otherOsmProperties.length ? (

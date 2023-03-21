@@ -1,8 +1,8 @@
 import {
   updateVerificationStatus,
-  VerificationApiGet,
-  VerificationApiPost,
-  VerificationStatus,
+  TVerificationApiGet,
+  TVerificationApiPost,
+  TVerificationStatus,
 } from '@api/index'
 import { buttonStyles } from '@components/Link'
 import { SourceVerificationApiIdentifier } from '@components/MapInterface/mapData'
@@ -19,7 +19,7 @@ type Props = {
   visible: boolean
   disabled: boolean
   osmId: number
-  verificationStatus: VerificationStatus | undefined
+  verificationStatus: TVerificationStatus | undefined
 }
 
 export const VerificationActions: React.FC<Props> = ({
@@ -34,10 +34,10 @@ export const VerificationActions: React.FC<Props> = ({
 
   const { currentUser } = useUserStore()
 
-  type TFormInput = Pick<VerificationApiPost, 'verified_status' | 'comment'>
+  type TFormInput = Pick<TVerificationApiPost, 'verified_status' | 'comment'>
   const { register, handleSubmit } = useForm<TFormInput>()
   const onSubmit: SubmitHandler<TFormInput> = ({ verified_status, comment }) => {
-    const apiData: VerificationApiPost = {
+    const apiData: TVerificationApiPost = {
       apiIdentifier,
       osm_id: osmId,
       osm_type: 'W',
@@ -54,7 +54,7 @@ export const VerificationActions: React.FC<Props> = ({
     mutationFn: updateVerificationStatus,
     // When mutate is called:
     onMutate: async ({ osm_id, osm_type, verified_at, verified_status, comment }) => {
-      const newHistoryItem: VerificationApiGet = {
+      const newHistoryItem: TVerificationApiGet = {
         osm_id,
         osm_type,
         verified_at,
@@ -68,10 +68,10 @@ export const VerificationActions: React.FC<Props> = ({
       await queryClient.cancelQueries({ queryKey })
 
       // Snapshot the previous value
-      const previousHistory: VerificationApiGet[] | undefined = queryClient.getQueryData(queryKey)
+      const previousHistory: TVerificationApiGet[] | undefined = queryClient.getQueryData(queryKey)
 
       // Optimistically update to the new value
-      queryClient.setQueryData(queryKey, (data: undefined | { data: VerificationApiGet[] }) => {
+      queryClient.setQueryData(queryKey, (data: undefined | { data: TVerificationApiGet[] }) => {
         const history = data?.data ? data.data : []
         return {
           data: [newHistoryItem, ...history],
@@ -97,7 +97,7 @@ export const VerificationActions: React.FC<Props> = ({
     },
   })
 
-  const verificationOptions: VerificationStatus[] = ['approved', 'rejected']
+  const verificationOptions: TVerificationStatus[] = ['approved', 'rejected']
   const verifiedOnce = verificationStatus && verificationOptions.includes(verificationStatus)
 
   const disabled = mutation.isLoading || outerDisabled
@@ -106,14 +106,11 @@ export const VerificationActions: React.FC<Props> = ({
 
   return (
     <div
-      className={clsx('mb-4', {
+      className={clsx('mb-2', {
         'flex flex-col': verifiedOnce,
       })}
     >
-      <h4 className="mb-2 font-semibold text-gray-900">
-        {/* TODO <FormattedMessage id={`${disclosureTranslationString}--title`} /> */}
-        Prüf-Status {verifiedOnce ? 'ändern' : 'eintragen'}
-      </h4>
+      <h4 className="mb-2 font-semibold text-gray-900">Daten prüfen</h4>
       {disabled && (
         <div className="mb-2">
           Ein Status kann nur eingetragen werden, wenn die Primärdaten vorliegen.
@@ -124,7 +121,7 @@ export const VerificationActions: React.FC<Props> = ({
 
         <div className="flex">
           {verificationOptions.map((verificationOption) => {
-            const verificationOptionTranslations: Record<VerificationStatus, string> = {
+            const verificationOptionTranslations: Record<TVerificationStatus, string> = {
               approved: verifiedOnce ? 'Daten richtig' : 'Richtig',
               rejected: 'Daten überarbeiten',
             }
@@ -133,9 +130,10 @@ export const VerificationActions: React.FC<Props> = ({
               : verificationOption === 'approved'
 
             return (
-              <div
+              <label
                 key={verificationOption}
-                className="flex items-start border p-2 first:-mr-px first:rounded-l-md last:rounded-r-md"
+                htmlFor={verificationOption}
+                className="group flex cursor-pointer items-start border border-gray-300 p-2 shadow-sm first:-mr-px first:rounded-l-md last:rounded-r-md hover:bg-gray-50"
               >
                 <div className="flex h-5 items-center">
                   <input
@@ -148,13 +146,10 @@ export const VerificationActions: React.FC<Props> = ({
                     disabled={disabled}
                   />
                 </div>
-                <label
-                  htmlFor={verificationOption}
-                  className="ml-2 block cursor-pointer text-sm font-medium text-gray-700 hover:text-gray-800"
-                >
+                <div className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                   {verificationOptionTranslations[verificationOption]}
-                </label>
-              </div>
+                </div>
+              </label>
             )
           })}
         </div>
@@ -164,11 +159,12 @@ export const VerificationActions: React.FC<Props> = ({
             Optionaler Kommentar
           </label>
           <div className="mt-2">
+            {/* Potentially resize height automatically with https://medium.com/@oherterich/creating-a-textarea-with-dynamic-height-using-react-and-typescript-5ed2d78d9848 */}
             <textarea
               {...register('comment')}
               placeholder="Optionaler Kommentar"
               rows={2}
-              className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:py-1.5 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 bg-gray-50 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:py-1.5 sm:text-sm sm:leading-6"
               defaultValue={''}
               disabled={disabled}
             />
@@ -186,7 +182,7 @@ export const VerificationActions: React.FC<Props> = ({
               : 'border-gray-400 shadow-md'
           )}
         >
-          Status speichern
+          Speichern
         </button>
       </form>
     </div>

@@ -5,12 +5,14 @@ import { getSourceData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'
 import { InspectorHeader } from './InspectorHeader'
-import { Links } from './Links'
+import { ToolsLinks } from './Tools/ToolsLinks'
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
-import { OtherProperties } from './OtherProperties'
-import { StatusTableAndVerification } from './StatusTableAndActions/StatusTableAndVerification'
+import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
+import { Verification } from './Verification/Verification'
 import { TagsTable } from './TagsTable'
 import { translations } from './TagsTable/translations'
+import { ToolsWrapper } from './Tools/ToolsWrapper'
+import { ToolsFreshness } from './Tools/ToolsFreshness'
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, resetInspector } = useMapStateInteraction()
@@ -46,7 +48,7 @@ export const Inspector: React.FC = () => {
           return null
         }
         renderedLayerPropertyKeys.push(layerPropertyKey)
-        const disclosureTranslationString = sourceKey
+        const sourceTranslationKey = sourceKey
           // @ts-ignore I don't get the TS guiard working :-/
           .split('--')
           .at(0)
@@ -56,7 +58,7 @@ export const Inspector: React.FC = () => {
           <div key={layerPropertyKey} className="mt-5 w-full rounded-2xl bg-white">
             <IntlProvider messages={translations} locale="de" defaultLocale="de">
               <Disclosure
-                title={<FormattedMessage id={`${disclosureTranslationString}--title`} />}
+                title={<FormattedMessage id={`${sourceTranslationKey}--title`} />}
                 objectId={properties.osm_id}
               >
                 {properties.prefix && (
@@ -81,18 +83,24 @@ export const Inspector: React.FC = () => {
                   sourceId={sourceId}
                 />
 
-                <Links
-                  properties={properties}
-                  geometry={inspectObject.geometry}
-                  editors={sourceData.inspector.editors}
-                />
+                <Verification properties={properties} sourceId={sourceId} />
 
-                <OtherProperties
-                  properties={properties}
-                  documentedKeys={sourceData.inspector.documentedKeys}
-                />
-
-                <StatusTableAndVerification properties={properties} sourceId={sourceId} />
+                <ToolsWrapper>
+                  <ToolsLinks
+                    properties={properties}
+                    geometry={inspectObject.geometry}
+                    editors={sourceData.inspector.editors}
+                  />
+                  <ToolsFreshness
+                    visible={sourceData.freshness.enabled}
+                    properties={properties}
+                    freshnessDateKey={sourceData.freshness.dateKey}
+                  />
+                  <ToolsOtherProperties
+                    properties={properties}
+                    documentedKeys={sourceData.inspector.documentedKeys}
+                  />
+                </ToolsWrapper>
               </Disclosure>
             </IntlProvider>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Disclosure as HeadlessUiDisclosure, Transition } from '@headlessui/react'
-import { ChevronUpIcon } from '@heroicons/react/20/solid'
+import { ChevronRightIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 
 type Props = {
@@ -17,13 +17,18 @@ export const Disclosure: React.FC<Props> = ({ title, objectId, children, default
         <>
           <HeadlessUiDisclosure.Button
             className={clsx(
-              'flex w-full justify-between border-gray-300 bg-white px-4 py-2 text-left text-sm font-medium text-gray-900 hover:border-gray-500 hover:bg-yellow-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
+              'flex w-full justify-between border-gray-300 bg-gray-50 px-3 py-2 text-left text-sm font-semibold text-gray-900 hover:border-gray-500 hover:bg-yellow-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
               {
                 'rounded-t-lg border border-b-gray-200 bg-gray-100': open,
               },
               { 'rounded-lg border': !open }
             )}
           >
+            <ChevronRightIcon
+              className={clsx('mr-2 h-5 w-5 text-gray-900', {
+                'rotate-90 transform': open,
+              })}
+            />
             <h3 className="w-full">
               <div className="flex w-full justify-between pr-3">
                 <span>{title}</span>
@@ -39,11 +44,6 @@ export const Disclosure: React.FC<Props> = ({ title, objectId, children, default
                 )}
               </div>
             </h3>
-            <ChevronUpIcon
-              className={clsx('h-5 w-5 text-gray-500', {
-                'rotate-180 transform': open,
-              })}
-            />
           </HeadlessUiDisclosure.Button>
           <Transition
             show={open}
@@ -56,7 +56,7 @@ export const Disclosure: React.FC<Props> = ({ title, objectId, children, default
           >
             <HeadlessUiDisclosure.Panel
               static
-              className="overflow-clip rounded-b-lg border border-t-0 border-gray-300 text-sm text-gray-500"
+              className="overflow-clip rounded-b-lg border border-t-0 border-gray-300 bg-gray-50 text-sm text-gray-500"
             >
               {children}
             </HeadlessUiDisclosure.Panel>

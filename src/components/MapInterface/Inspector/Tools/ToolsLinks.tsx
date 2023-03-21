@@ -10,7 +10,7 @@ type Props = {
   editors?: MapDataSourceInspectorEditor[]
 }
 
-export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
+export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) => {
   // Normalize id + type for Parking data
   // "atlas-geo" sometimes prefixes `-{id}`
   const osmId = Math.abs(properties.osm_id || properties.way_id || properties.area_id)
@@ -30,7 +30,7 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
 
   if (!osmUrlHref && !historyUrlHref && !editors) return null
   return (
-    <div className="flex flex-wrap gap-3 border-t bg-white px-4 py-2.5 text-xs">
+    <section className="flex flex-wrap gap-3 pb-1 text-xs">
       {editors?.map(({ urlTemplate, name, idKey }) => {
         const id = (idKey && (properties[idKey] as number)) || osmId
         const url = editorUrl({
@@ -64,6 +64,6 @@ export const Links: React.FC<Props> = ({ properties, geometry, editors }) => {
           Mapillary
         </Link>
       )}
-    </div>
+    </section>
   )
 }

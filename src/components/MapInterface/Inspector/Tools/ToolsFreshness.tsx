@@ -26,18 +26,16 @@ const StatusTableFreshnessCell: React.FC<{
   }
 
   return (
-    <div className="flex gap-1" title="">
+    <div className="flex gap-1 text-gray-400" title="">
       {pickIcon()}
-      <span>{children}</span>
+      <span>
+        <strong className="font-semibold text-gray-600">Aktualität:</strong> {children}
+      </span>
     </div>
   )
 }
 
-export const StatusTableFreshness: React.FC<Props> = ({
-  visible,
-  properties,
-  freshnessDateKey,
-}) => {
+export const ToolsFreshness: React.FC<Props> = ({ visible, properties, freshnessDateKey }) => {
   if (!visible) return null
   const { fresh } = properties
   if (!freshnessDateKey) return null
@@ -51,35 +49,35 @@ export const StatusTableFreshness: React.FC<Props> = ({
       case 'fresh_check_date': {
         return (
           <StatusTableFreshnessCell iconKey="CheckCircle">
-            Daten sind aktuell{' '}
-            <span className="text-gray-400">(als geprüft markiert am {dateCheckDate})</span>
+            <strong className="font-semibold text-gray-600">Daten sind aktuell.</strong>
+            <br /> Attribut <code className="text-[90%]">{freshnessDateKey}</code> wurde am{' '}
+            {dateCheckDate} als geprüft markiert.
           </StatusTableFreshnessCell>
         )
       }
       case 'outdated_check_date': {
         return (
           <StatusTableFreshnessCell iconKey="Bolt">
-            Daten sind älter als 2 Jahre{' '}
-            <span className="text-gray-400">
-              (als geprüft markiert am{''}
-              {dateCheckDate})
-            </span>
+            <strong className="font-semibold text-gray-600">Daten sind älter als 2 Jahre.</strong>
+            <br /> Attribut <code className="text-[90%]">{freshnessDateKey}</code> wurde zuletzt am{' '}
+            {dateCheckDate} als geprüft markiert. Objekt wurde am {dateUpdate} zuletzt generell
+            bearbeitet.
           </StatusTableFreshnessCell>
         )
       }
       case 'fresh_update_at': {
         return (
           <StatusTableFreshnessCell iconKey="CheckCircle">
-            Daten sind vermutlich aktuell{' '}
-            <span className="text-gray-400">(Objekt generell bearbeitet am {dateUpdate})</span>
+            <strong className="font-semibold text-gray-600">Daten sind vermutlich aktuell.</strong>
+            <br /> Objekt wurde am {dateUpdate} generell bearbeitet.
           </StatusTableFreshnessCell>
         )
       }
       case 'outdated_update_at': {
         return (
           <StatusTableFreshnessCell iconKey="Bolt">
-            Daten sind älter als 2 Jahre{' '}
-            <span className="text-gray-400">(Objekt generell bearbeitet am {dateUpdate})</span>
+            <strong className="font-semibold text-gray-600">Daten sind älter als 2 Jahre.</strong>
+            <br /> Objekt wurde am {dateUpdate} zuletzt generell bearbeitet.
           </StatusTableFreshnessCell>
         )
       }
@@ -87,8 +85,8 @@ export const StatusTableFreshness: React.FC<Props> = ({
   })()
 
   return (
-    <section>
-      <h5 className="mb-2 font-semibold text-gray-600">Aktualität</h5>
+    <section className="mt-3">
+      <h5 className="sr-only">Aktualität</h5>
       {fresh ? Table : <span className="text-gray-500">(Keine Aussage möglich)</span>}
     </section>
   )

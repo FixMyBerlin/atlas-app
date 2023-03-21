@@ -103,9 +103,9 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
-  presence: {
-    enabled: boolean
-  }
+  // presence: {
+  //   enabled: boolean
+  // }
   /** @desc Inspector: Enable and configure in app verification */
   verification: MapDataSourceVerifcation<TVerIds>
   /** @desc Inspector: Enable and configure info data on freshness */
