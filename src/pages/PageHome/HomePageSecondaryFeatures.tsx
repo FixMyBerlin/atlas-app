@@ -54,18 +54,18 @@ function Feature({
 }) {
   return (
     <div className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })} {...props}>
-      <div className={clsx('w-9 rounded-lg', isActive ? 'bg-blue-600' : 'bg-slate-500')}>
+      <div className={clsx('w-9 rounded-lg', isActive ? 'bg-blue-600' : 'bg-gray-500')}>
         <svg aria-hidden="true" className="h-9 w-9 p-2" fill="none">
           {feature.icon}
         </svg>
       </div>
       <h3
-        className={clsx('mt-3 text-sm font-medium', isActive ? 'text-blue-600' : 'text-slate-600')}
+        className={clsx('mt-3 text-sm font-medium', isActive ? 'text-blue-600' : 'text-gray-600')}
       >
         {feature.name}
       </h3>
-      <p className="font-display mt-2 text-xl text-slate-900">{feature.summary}</p>
-      <p className="mt-3 text-sm text-slate-600">{feature.description}</p>
+      <p className="font-display mt-2 text-xl text-gray-900">{feature.summary}</p>
+      <p className="mt-3 text-sm text-gray-600">{feature.description}</p>
     </div>
   )
 }
@@ -77,8 +77,8 @@ const FeaturesMobile = () => {
         <div key={featureIndex}>
           <Feature feature={feature} className="mx-auto max-w-2xl" isActive />
           <div className="relative mt-10 pb-10">
-            <div className="absolute -inset-x-4 bottom-0 top-8 bg-slate-200 sm:-inset-x-6" />
-            <div className="relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
+            <div className="absolute -inset-x-4 bottom-0 top-8 bg-gray-200 sm:-inset-x-6" />
+            <div className="relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-gray-900/5 ring-1 ring-gray-500/10">
               <img
                 className="w-full"
                 src={feature.image}
@@ -117,7 +117,7 @@ const FeaturesDesktop = () => {
               />
             ))}
           </Tab.List>
-          <Tab.Panels className="relative mt-12 overflow-hidden rounded-4xl bg-slate-200 px-14 py-16 xl:px-16">
+          <Tab.Panels className="relative mt-12 overflow-hidden rounded-4xl bg-gray-200 px-14 py-16 xl:px-16">
             <div className="-mx-5 flex">
               {features.map((feature, featureIndex) => (
                 <Tab.Panel
@@ -130,7 +130,7 @@ const FeaturesDesktop = () => {
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
                 >
-                  <div className="w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-slate-900/5 ring-1 ring-slate-500/10">
+                  <div className="w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-gray-900/5 ring-1 ring-gray-500/10">
                     <img
                       className="w-full"
                       src={feature.image}
@@ -142,7 +142,7 @@ const FeaturesDesktop = () => {
                 </Tab.Panel>
               ))}
             </div>
-            <div className="pointer-events-none absolute inset-0 rounded-4xl ring-1 ring-inset ring-slate-900/10" />
+            <div className="pointer-events-none absolute inset-0 rounded-4xl ring-1 ring-inset ring-gray-900/10" />
           </Tab.Panels>
         </>
       )}
@@ -155,10 +155,10 @@ export const HomePageSecondaryFeatures = () => {
     <section id="secondary-features" className="pt-20 pb-14 sm:pb-20 sm:pt-32 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-2xl md:text-center">
-          <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+          <h2 className="font-display text-3xl tracking-tight text-gray-900 sm:text-4xl">
             Gemeinsam mit Bürger:innen zum Erfolg
           </h2>
-          <p className="mt-4 text-lg tracking-tight text-slate-700">
+          <p className="mt-4 text-lg tracking-tight text-gray-700">
             Die Qualität der Daten lebt von der Beteiligung der Bürger:innen sowie von Ihrer
             Expertise als Verwaltung. Wir bringen beides zusammen.
           </p>

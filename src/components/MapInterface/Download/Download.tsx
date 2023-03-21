@@ -113,7 +113,7 @@ export const Download: React.FC = () => {
                       to={`${getApiUrl()}/export/${sourceData.export.apiIdentifier}?minlon=${
                         bbox.min[0]
                       }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${bbox.max[1]}`}
-                      classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-stone-50"
+                      classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                       download
                       blank
                     >

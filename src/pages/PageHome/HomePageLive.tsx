@@ -40,10 +40,10 @@ export const HomePageLive = () => {
   return (
     <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl py-16 text-center sm:py-24 lg:max-w-none lg:py-32">
-        <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
+        <h2 className="font-display text-3xl tracking-tight text-gray-900 sm:text-4xl">
           Den Radverkehrsatlas live erleben (beta)
         </h2>
-        <p className="mt-4 text-lg tracking-tight text-slate-700">
+        <p className="mt-4 text-lg tracking-tight text-gray-700">
           Hier können Sie die ersten Ergebnisse aus den noch laufenden Projekten einsehen – mehr ist
           in Arbeit.
         </p>
