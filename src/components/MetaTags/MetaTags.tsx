@@ -22,7 +22,7 @@ export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, 
 
   // On Production, take the prop or `false`. Staging (and everythign else) is set to `true`
   noindex = isProd ? noindex ?? false : true
-  console.log({ noindex })
+
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
