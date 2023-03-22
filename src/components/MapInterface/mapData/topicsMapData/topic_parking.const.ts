@@ -1,5 +1,4 @@
 import { MapDataTopic } from '../types'
-import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parking'
@@ -20,11 +19,18 @@ export const topic_parking: MapDataTopic = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'parking_parkinglines',
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'parking_parkinglines',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'parking_operator_border_below_other_layer',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
       interactiveFilters: null,
     },
     {
@@ -39,6 +45,11 @@ export const topic_parking: MapDataTopic = {
         }),
         mapboxStyleLayers({
           group: 'parking_parkinglines',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'parking_operator_border_below_other_layer',
           source,
           sourceLayer,
         }),
@@ -78,6 +89,22 @@ export const topic_parking: MapDataTopic = {
             dasharray: [5, 4],
           },
         },
+        {
+          id: 'capacity_status-operator_type-public',
+          name: 'Privatweg',
+          style: {
+            type: 'border',
+            color: 'hsl(169, 100%, 32%)',
+          },
+        },
+        {
+          id: 'capacity_status-operator_type-private',
+          name: 'Privatweg',
+          style: {
+            type: 'border',
+            color: 'hsl(342, 100%, 15%)',
+          },
+        },
       ],
       interactiveFilters: null,
     },
@@ -85,11 +112,18 @@ export const topic_parking: MapDataTopic = {
       id: 'surface',
       name: 'Oberflächen',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'parking_parkinglines_surface',
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'parking_parkinglines_surface',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'parking_operator_border_below_other_layer',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
       legends: [
         {
           id: 'surface-soft',
@@ -131,17 +165,16 @@ export const topic_parking: MapDataTopic = {
             color: 'hsl(280, 67%, 26%)',
           },
         },
+        {
+          id: 'surface-operator_type-private',
+          name: 'Privatweg',
+          style: {
+            type: 'border',
+            color: 'hsl(342, 100%, 15%)',
+          },
+        },
       ],
-      interactiveFilters: null,
-    },
-    {
-      id: 'raw',
-      name: 'Debug',
-      desc: null,
-      layers: debugLayerStyles({
-        source,
-        sourceLayer,
-      }),
+
       interactiveFilters: null,
     },
   ],

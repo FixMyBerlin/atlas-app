@@ -76,6 +76,17 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
     switch (type) {
       case 'line':
         return <LegendIconLine color={color} width={4} strokeDasharray={dasharray?.join(',')} />
+      case 'border':
+        return (
+          <div className="relative h-full w-full">
+            <div className="absolute inset-0.5 z-10">
+              <LegendIconLine color="white" width={4} strokeDasharray={dasharray?.join(',')} />
+            </div>
+            <div className="absolute inset-0 z-0">
+              <LegendIconLine color={color} width={7} strokeDasharray={dasharray?.join(',')} />
+            </div>
+          </div>
+        )
       case 'circle':
         return <LegendIconCircle color={color} />
       case 'fill':

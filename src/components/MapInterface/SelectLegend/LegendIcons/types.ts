@@ -1,1 +1,1 @@
-export type LegendIconTypes = 'symbol' | 'line' | 'circle' | 'fill' | 'heatmap'
+export type LegendIconTypes = 'symbol' | 'line' | 'border' | 'circle' | 'fill' | 'heatmap'
