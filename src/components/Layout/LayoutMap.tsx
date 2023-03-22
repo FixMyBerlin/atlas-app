@@ -23,7 +23,7 @@ export const LayoutMap: React.FC<Props> = ({ children }) => {
         <html lang="de" className="fixed overflow-hidden" />
         <body className="fixed overflow-hidden" />
       </Helmet>
-      <MetaTags title={`Radverkehrsatlas (beta) ${region?.fullName}`} />
+      <MetaTags noindex title={`Radverkehrsatlas (beta) ${region?.fullName}`} />
       <div className="flex h-screen flex-col">
         <HeaderRegionen />
         <main className="flex-grow">{children}</main>
