@@ -1644,7 +1644,7 @@
           "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 6, 20, 18],
           "line-opacity": 0.8
         },
-        "filter": ["match", ["operator_type"], ["private"], true, false],
+        "filter": ["match", ["get", "operator_type"], ["private"], true, false],
         "layout": {
           "line-cap": "round"
         }
@@ -1656,7 +1656,7 @@
           "line-color": "hsl(169, 0%, 100%)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 4, 20, 14]
         },
-        "filter": ["match", ["operator_type"], ["private"], true, false],
+        "filter": ["match", ["get", "operator_type"], ["private"], true, false],
         "layout": {
           "line-cap": "round"
         }
@@ -1758,7 +1758,7 @@
           "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 6, 20, 18],
           "line-opacity": 0.8
         },
-        "filter": ["match", ["operator_type"], ["public"], true, false],
+        "filter": ["match", ["get", "operator_type"], ["public"], true, false],
         "layout": {
           "line-cap": "round"
         }
@@ -1770,7 +1770,7 @@
           "line-color": "hsl(169, 0%, 100%)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 4, 20, 14]
         },
-        "filter": ["match", ["operator_type"], ["public"], true, false],
+        "filter": ["match", ["get", "operator_type"], ["public"], true, false],
         "layout": {
           "line-cap": "round"
         }
