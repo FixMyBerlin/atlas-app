@@ -45,6 +45,7 @@
             "footAndCycleway_segregated",
             "bicycleRoad",
             "cyclewayOnHighway",
+            "cyclewayOnHighway_shared",
             "cyclewaySeparated",
             "cyclewayBetweenLanes"
           ],
@@ -258,6 +259,7 @@
             "footAndCycleway_segregated",
             "bicycleRoad",
             "cyclewayOnHighway",
+            "cyclewayOnHighway_shared",
             "cyclewaySeparated",
             "cyclewayBetweenLanes"
           ],
@@ -355,6 +357,7 @@
             "footAndCycleway_segregated",
             "bicycleRoad",
             "cyclewayOnHighway",
+            "cyclewayOnHighway_shared",
             "cyclewaySeparated",
             "cyclewayBetweenLanes"
           ],
@@ -422,7 +425,8 @@
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4],
           "line-offset": ["step", ["zoom"], -2, 14, -4]
-        }
+        },
+        "layout": {}
       },
       {
         "type": "line",
@@ -453,7 +457,8 @@
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        }
+        },
+        "layout": {}
       },
       {
         "type": "line",
@@ -485,7 +490,8 @@
           ],
           "line-offset": ["step", ["zoom"], 2, 14, 4],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        }
+        },
+        "layout": {}
       }
     ]
   },
@@ -539,7 +545,8 @@
           "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 1.5, 12, 3],
           "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1],
           "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
-        }
+        },
+        "layout": {}
       },
       {
         "id": "fmc-poiEducation-label",
@@ -1179,6 +1186,196 @@
     ]
   },
   {
+    "group": "atlas_roadclass_bikeinfra",
+    "layers": [
+      {
+        "id": "Fuehrung mit Fussverkehr copy 6",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+          "line-dasharray": [2, 1],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          ["get", "category"],
+          ["footway_bicycleYes", "footAndCycleway_shared"],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "Getrennte Fuehrung copy 5",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+          "line-color": "#031ab5",
+          "line-offset": 2
+        },
+        "filter": [
+          "match",
+          ["get", "category"],
+          [
+            "cyclewayAlone",
+            "footAndCycleway_segregated",
+            "bicycleRoad",
+            "cyclewayOnHighway",
+            "cyclewayOnHighway_shared",
+            "cyclewaySeparated",
+            "cyclewayBetweenLanes"
+          ],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclass_maxspeed",
+    "layers": [
+      {
+        "id": "fmc-maxspeed copy",
+        "type": "line",
+        "filter": ["match", ["get", "FMC:Category:MaxspeedData"], ["true"], true, false],
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "FMC:Category:MaxspeedData:MaxspeedValue"],
+            ["5", "7", "8", "10", "20", "30", "15", "Verkehrsberuhigter Bereich"],
+            "rgba(18, 226, 25, 0)",
+            ["60", "70", "80"],
+            "#fd5eda",
+            ["100", "120", "130"],
+            "#b0038a",
+            ["50", "40"],
+            "#f0001c",
+            "#000000"
+          ],
+          "line-opacity": 0.98
+        }
+      },
+      {
+        "id": "fmc-maxspeed atlasdaten",
+        "type": "line",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "maxspeed"],
+            ["5", "30"],
+            "rgba(18, 226, 25, 0)",
+            ["", "60", "70", "80"],
+            "#fd5eda",
+            ["100"],
+            "#b0038a",
+            ["50"],
+            "#f0001c",
+            "#000000"
+          ],
+          "line-opacity": 0.98
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclass_oneway",
+    "layers": [
+      {
+        "layout": {},
+        "filter": ["match", ["get", "oneway"], ["true"], true, false],
+        "type": "line",
+        "id": "einbahnstrassen",
+        "paint": {
+          "line-color": "#8238fa",
+          "line-width": 2,
+          "line-pattern": "oneway-atlas"
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclass_roadclass",
+    "layers": [
+      {
+        "id": "roadclassification1-7tkqsx",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "match",
+            ["get", "category"],
+            ["primary", "secondary"],
+            6,
+            ["tertiary"],
+            4,
+            ["unclassified"],
+            3,
+            ["service"],
+            2,
+            1
+          ],
+          "line-color": [
+            "match",
+            ["get", "category"],
+            ["unclassified"],
+            "#e6d6a2",
+            ["tertiary"],
+            "#dab07c",
+            ["residential"],
+            "#969696",
+            ["path", "track", "bridleway"],
+            "#629fb7",
+            [
+              "primary",
+              "motorway",
+              "motorway_link",
+              "secondary_link",
+              "primary_link",
+              "secondary",
+              "tertiary_link"
+            ],
+            "#dab07c",
+            ["living_street", "pedestrian", "bicycle_road"],
+            "#80a3ea",
+            ["footway", "cycleway"],
+            "#629fb7",
+            ["service_drive_through", "trunk", "trunk_link"],
+            "rgba(251, 40, 40, 0)",
+            ["service"],
+            "#e6d6a2",
+            ["service_alley"],
+            "#787878",
+            "#000000"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclass_surface",
+    "layers": [
+      {
+        "minzoom": 11,
+        "type": "line",
+        "id": "surface-bad-good",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
+            ["excellent", "good"],
+            "rgba(19, 240, 15, 0.89)",
+            ["intermediate"],
+            "rgba(110, 109, 111, 0.01)",
+            ["very_bad", "bad"],
+            "#ffffff",
+            "hsla(252, 91%, 38%, 0)"
+          ],
+          "line-dasharray": [1.5, 1.5]
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
     "group": "atlas_roadclassification",
     "layers": [
       {
@@ -1300,7 +1497,7 @@
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
-          "line-color": "hsl(0, 100%, 41%)",
+          "line-color": "#d10000",
           "line-dasharray": [1, 0.1]
         },
         "filter": [
@@ -1327,7 +1524,7 @@
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
-          "line-color": "hsl(107, 88%, 57%)",
+          "line-color": "#5bf231",
           "line-dasharray": [1, 0.1]
         },
         "filter": [

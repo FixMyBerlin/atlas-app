@@ -63,28 +63,6 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
       legends: [...defaultLegend],
     },
-    // {
-    //   id: 'atlas_bikelanes_complete',
-    //   name: 'Inhalte & Vollständigkeit',
-    //   desc: null,
-    //   layers: mapboxStyleLayers({
-    //     group: 'atlas_bikelanes_complete',
-    //     source: 'tarmac_bikelanes',
-    //     sourceLayer: 'public.bikelanes_verified',
-    //   }),
-    //   interactiveFilters: null,
-    //   legends: [
-    //     ...defaultLegend,
-    //     {
-    //       id: 'missing',
-    //       name: 'Daten fehlen (in Arbeit)',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsl(312, 92%, 74%)',
-    //       },
-    //     },
-    //   ],
-    // },
     {
       id: 'atlas_bikelanes_verified',
       name: 'Inhalte & Prüf-Status',
@@ -97,9 +75,6 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
       legends: [
         ...defaultLegend,
-        // {
-        //   id: 'spacer',
-        // },
         {
           id: 'verification-missing',
           name: 'Daten richtig',

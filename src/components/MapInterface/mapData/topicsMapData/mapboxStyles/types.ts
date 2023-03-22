@@ -17,6 +17,11 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_places'
   | 'atlas_placescircle'
   | 'atlas_poiclassification'
+  | 'atlas_roadclass_bikeinfra'
+  | 'atlas_roadclass_maxspeed'
+  | 'atlas_roadclass_oneway'
+  | 'atlas_roadclass_roadclass'
+  | 'atlas_roadclass_surface'
   | 'atlas_roadclassification'
   | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
@@ -63,6 +68,15 @@ export type MapboxStyleLayerGroupPlacesIds = 'atlas_places' | 'atlas_placescircl
 export type MapboxStyleLayerGroupPlacescircleIds = 'atlas_placescircle'
 
 export type MapboxStyleLayerGroupPoiclassificationIds = 'atlas_poiclassification'
+
+export type MapboxStyleLayerGroupRoadclassIds =
+  | 'atlas_roadclass_bikeinfra'
+  | 'atlas_roadclass_maxspeed'
+  | 'atlas_roadclass_oneway'
+  | 'atlas_roadclass_roadclass'
+  | 'atlas_roadclass_surface'
+  | 'atlas_roadclassification'
+  | 'atlas_roadclassification_detailed'
 
 export type MapboxStyleLayerGroupRoadclassificationIds =
   | 'atlas_roadclassification'
