@@ -5,7 +5,7 @@
 // - "--LEFTRIGHTSELF" is replaced with 'left', 'right' or 'self' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
   'ALL--_parent_highway--key': 'Straßentyp zugehörige Straße',
-  'ALL--composit_surface_smoothness--key': 'Oberflächenqualität',
+  'ALL--composit_surface_smoothness--key': 'Oberfläche',
   'ALL--highway--key': 'Straßentyp',
   'ALL--highway=construction': 'Straße ist in Bau',
   'ALL--highway=cycleway': 'Radweg',
