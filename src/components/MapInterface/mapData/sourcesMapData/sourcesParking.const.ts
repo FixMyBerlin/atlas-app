@@ -32,6 +32,7 @@ export const sourcesParking: MapDataSource<
         'length',
         'highway_width_proc_effective',
         'surface',
+        'operator_type',
       ],
       editors: [
         {
@@ -94,7 +95,13 @@ export const sourcesParking: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'area_id',
-      documentedKeys: ['parking', 'access', 'capacity__if_present', 'building__if_present'],
+      documentedKeys: [
+        'parking',
+        'access',
+        'operator_type',
+        'capacity__if_present',
+        'building__if_present',
+      ],
       editors: [
         {
           name: 'Parkplätze Editor',

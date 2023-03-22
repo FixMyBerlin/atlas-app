@@ -32,6 +32,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_obstacles'
   | 'parking_parkinglines'
   | 'parking_parkinglines_completeness'
+  | 'parking_parkinglines_surface'
   | 'parking_stats'
   | 'parking_stats_length'
 
@@ -86,5 +87,6 @@ export type MapboxStyleLayerGroupObstaclesIds = 'parking_obstacles'
 export type MapboxStyleLayerGroupParkinglinesIds =
   | 'parking_parkinglines'
   | 'parking_parkinglines_completeness'
+  | 'parking_parkinglines_surface'
 
 export type MapboxStyleLayerGroupStatsIds = 'parking_stats' | 'parking_stats_length'

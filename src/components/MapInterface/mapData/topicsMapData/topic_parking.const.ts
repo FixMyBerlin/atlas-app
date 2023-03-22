@@ -6,7 +6,7 @@ const topic = 'parking'
 const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
-export type TopicParkingStyleIds = 'default' | 'presence' | 'raw'
+export type TopicParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
 export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
@@ -76,6 +76,59 @@ export const topic_parking: MapDataTopic = {
             type: 'line',
             color: 'rgb(102, 21, 168)',
             dasharray: [5, 4],
+          },
+        },
+      ],
+      interactiveFilters: null,
+    },
+    {
+      id: 'surface',
+      name: 'Oberflächen',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'parking_parkinglines_surface',
+        source,
+        sourceLayer,
+      }),
+      legends: [
+        {
+          id: 'surface-soft',
+          name: 'Durchlässig',
+          style: {
+            type: 'line',
+            color: 'hsl(142, 94%, 40%)',
+          },
+        },
+        {
+          id: 'surface-gaps',
+          name: 'Etwas durchlässig',
+          style: {
+            type: 'line',
+            color: 'hsl(164, 92%, 42%)',
+          },
+        },
+        {
+          id: 'surface-closed',
+          name: 'Undurchlässig',
+          style: {
+            type: 'line',
+            color: 'hsl(344, 93%, 35%)',
+          },
+        },
+        {
+          id: 'surface-unknown',
+          name: 'Unkategorisiert',
+          style: {
+            type: 'line',
+            color: 'hsl(280, 94%, 63%)',
+          },
+        },
+        {
+          id: 'surface-missing',
+          name: 'Daten fehlen',
+          style: {
+            type: 'line',
+            color: 'hsl(280, 67%, 26%)',
           },
         },
       ],
