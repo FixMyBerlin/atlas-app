@@ -54,7 +54,7 @@ end
 
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
-local function footAndCycleway(tags)
+local function footAndCyclewayShared(tags)
   local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if result then
@@ -127,15 +127,19 @@ end
 -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
---    https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
 local function cyclewayOnHighway(tags)
-  local result = false
-  if tags.highway == 'cycleway' then
-    result = (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
-    result = result or tags.cycleway == "shared_lane"
-  end
+  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
   if result then
     return "cyclewayOnHighway"
+  end
+end
+
+-- Case: Cycleway identified via "shared_lane"-tagging ("Anteilig genutzten Fahrstreifen")
+--    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dshared_lane
+local function cyclewayOnHighwayShared(tags)
+  local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
+  if result then
+    return "cyclewayOnHighway_shared"
   end
 end
 
@@ -149,7 +153,6 @@ local function cyclewayBetweenLanes(tags)
     return "cyclewayBetweenLanes"
   end
 end
-
 
 -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
 -- Eg. https://www.openstreetmap.org/way/27701956
@@ -203,11 +206,12 @@ function CategorizeBikelane(tags)
     pedestiranArea,
     livingStreet,
     bicycleRoad,
-    footAndCycleway,
+    footAndCyclewayShared,
     footAndCyclewaySegregated,
     footwayBicycleAllowed,
     cyclewaySeparated,
     cyclewayOnHighway,
+    cyclewayOnHighwayShared,
     cyclewayAlone,
     cyclewayBuslane,
     cyclewayNeedsClarification,
