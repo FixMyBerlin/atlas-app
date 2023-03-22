@@ -12,7 +12,10 @@ import {
 export const HomePage: React.FC = () => {
   return (
     <Layout>
-      <MetaTags title="Radverkehrsatlas" />
+      <MetaTags
+        title="Radverkehrsatlas – Daten für die Radverkehrsplanung"
+        description="Der Radverkehrsatlas beschleunigt die kommunale Radverkehrsplanung, mit umfassenden und amtlich nutzbaren Daten für die Radverkehrsplanung."
+      />
       <HomePageHero />
       <HomePageCompanies />
       <HomePagePrimaryFeatures />

@@ -1,3 +1,4 @@
+import { isProd } from '@components/utils'
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import SocialSharingImage from './assets/default.png'
@@ -16,15 +17,12 @@ type Props = {
   article?: boolean | null
 }
 
-export const MetaTags: React.FC<Props> = ({
-  noindex = false,
-  title,
-  description,
-  image,
-  article,
-}) => {
+export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, article }) => {
   const { defaultTitle, defaultDescription, baseUrl } = seoDefaultValues
 
+  // On Production, take the prop or `false`. Staging (and everythign else) is set to `true`
+  noindex = isProd ? noindex ?? false : true
+  console.log({ noindex })
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
