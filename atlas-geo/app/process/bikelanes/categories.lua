@@ -55,10 +55,16 @@ end
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
 local function footAndCyclewayShared(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
-  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
-  if result then
-    return "footAndCycleway_shared"
+  local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
+  if taggedWithAccessTagging or taggedWithTrafficsign then
+    if tags.is_sidepath == "yes" then
+      return "footAndCycleway_shared_adjoining"
+    end
+    if tags.is_sidepath == "no" then
+      return "footAndCycleway_shared_isolated"
+    end
+    return "footAndCycleway_shared" -- todo "footAndCycleway_shared_unknown"
   end
 end
 
@@ -66,10 +72,16 @@ end
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
 local function footAndCyclewaySegregated(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
-  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
-  if result then
-    return "footAndCycleway_segregated"
+  local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
+  if taggedWithAccessTagging or taggedWithTrafficsign then
+    if tags.is_sidepath == "yes" then
+      return "footAndCycleway_segregated_adjoining"
+    end
+    if tags.is_sidepath == "no" then
+      return "footAndCycleway_segregated_isolated"
+    end
+    return "footAndCycleway_segregated" -- todo "footAndCycleway_segregated_unknown"
   end
 end
 
