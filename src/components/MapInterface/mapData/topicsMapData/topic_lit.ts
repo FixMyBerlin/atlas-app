@@ -60,11 +60,18 @@ export const topic_lit: MapDataTopic = {
       id: 'atlas_lit_complete',
       name: 'Inhalte & Vollständigkeit',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_lit_complete',
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_lit_complete',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_lit',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
       interactiveFilters: null,
       legends: [
         ...defaultLegend,
@@ -82,11 +89,18 @@ export const topic_lit: MapDataTopic = {
       id: 'atlas_lit_verified',
       name: 'Inhalte & Prüf-Status',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_lit_verified',
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_lit_verified',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_lit',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
       interactiveFilters: null,
       legends: [
         ...defaultLegend,
@@ -123,11 +137,18 @@ export const topic_lit: MapDataTopic = {
       id: 'atlas_lit_fresh',
       name: 'Inhalte & Aktualität',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_lit_fresh',
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_lit_fresh',
+          source,
+          sourceLayer,
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_lit',
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
       interactiveFilters: null,
       legends: [...defaultLegend, ...defaultLegendFresh],
     },

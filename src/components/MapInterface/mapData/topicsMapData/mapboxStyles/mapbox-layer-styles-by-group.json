@@ -409,60 +409,6 @@
         },
         "filter": ["==", ["get", "is_present"], false],
         "layout": {}
-      },
-      {
-        "id": "1_lit-Special",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(35, 100%, 61%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 14, 5, 18, 12],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["special"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "1_lit-Unbeleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 86%, 19%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 14, 5, 18, 12],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["unlit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "1_lit-Beleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 94%, 57%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 14, 5, 18, 12],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["lit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "1_hitarea-lit",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(290, 100%, 54%)",
-          "line-opacity": 0,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 15, 10, 22, 12]
-        },
-        "layout": {
-          "line-cap": "round"
-        }
       }
     ]
   },
@@ -600,61 +546,6 @@
           ["==", ["get", "is_present"], true]
         ],
         "layout": {}
-      },
-      {
-        "id": "3_lit-Unbeleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 86%, 19%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["unlit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "3_lit-Special",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(35, 100%, 61%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["special"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "3_lit-Beleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 94%, 57%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 18, 10],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 13, 1, 18, 0.7],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["lit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "3_hitarea-lit",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(290, 100%, 54%)",
-          "line-opacity": 0,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 15, 10, 22, 12]
-        },
-        "layout": {
-          "line-cap": "round"
-        },
-        "filter": ["==", ["get", "is_present"], true]
       }
     ]
   },
@@ -678,61 +569,6 @@
         },
         "filter": ["==", ["get", "is_present"], true],
         "layout": {}
-      },
-      {
-        "id": "4_lit-Unbeleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 86%, 19%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2.5, 14, 4, 18, 10],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.4, 13, 1, 18, 1],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["unlit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "4_lit-Special",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(36, 96%, 69%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2.5, 14, 4, 18, 10],
-          "line-blur": 1,
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.4, 13, 1, 18, 1]
-        },
-        "filter": ["match", ["get", "category"], ["special"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "4_lit-Beleuchtet",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(47, 94%, 57%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 2.5, 14, 4, 18, 10],
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 11, 0.4, 13, 1, 18, 1],
-          "line-blur": 1
-        },
-        "filter": ["match", ["get", "category"], ["lit"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "4_hitarea-lit",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(290, 100%, 54%)",
-          "line-opacity": 0,
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 15, 10, 22, 12]
-        },
-        "layout": {
-          "line-cap": "round"
-        },
-        "filter": ["==", ["get", "is_present"], true]
       }
     ]
   },
