@@ -56,6 +56,7 @@ local allowed_tags = Set({
   'bicycle',
   'conditional',
   'cycleway',
+  'cycleway:lane', -- 'advisory', 'exclusive'
   'dual_carriageway',
   'foot',
   'footway',
