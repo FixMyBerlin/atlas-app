@@ -3,7 +3,7 @@
     "group": "atlas_bikelanes",
     "layers": [
       {
-        "id": "needsClarification copy 2",
+        "id": "needsClarification",
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
@@ -13,17 +13,45 @@
         "filter": ["match", ["get", "category"], ["needsClarification"], true, false]
       },
       {
-        "id": "Fuehrung mit Fussverkehr copy 3",
+        "id": "mixed",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
+          "line-dasharray": [1, 1],
+          "line-color": "hsla(232, 99%, 39%, 0.34)"
+        },
+        "filter": [
+          "match",
+          ["get", "category"],
+          [
+            "pedestrianArea_bicycleYes",
+            "livingStreet",
+            "footway_bicycleYes",
+            "cyclewayOnHighway_shared",
+            "cyclewayBetweenLanes"
+          ],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "shared",
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
           "line-dasharray": [2, 1],
           "line-color": "#031ab5"
         },
-        "filter": ["match", ["get", "category"], ["footAndCycleway_shared"], true, false]
+        "filter": [
+          "match",
+          ["get", "category"],
+          ["footAndCycleway_shared", "cyclewayOnHighway"],
+          true,
+          false
+        ]
       },
       {
-        "id": "Getrennte Fuehrung copy 3",
+        "id": "separated",
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
@@ -36,27 +64,9 @@
             "cyclewayAlone",
             "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewayOnHighway",
-            "cyclewayOnHighway_shared",
             "cyclewaySeparated",
             "cyclewayBetweenLanes"
           ],
-          true,
-          false
-        ]
-      },
-      {
-        "id": "fmc-verkehrsberuhigt copy 4",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [1, 1],
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          ["pedestrianArea_bicycleYes", "livingStreet", "footway_bicycleYes"],
           true,
           false
         ]

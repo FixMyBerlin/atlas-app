@@ -11,6 +11,11 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
   {
     id: 'separated',
     name: 'Getrennte Fuehrung',
+    desc: [
+      'Radweg (frei geführt und Fahrbahnbegleitend)',
+      'Getrennter Geh- und Radweg',
+      'Fahrradstraße',
+    ],
     style: {
       type: 'line',
       color: '#031ab5',
@@ -18,7 +23,8 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
   },
   {
     id: 'shared',
-    name: 'Fuehrung mit Fussverkehr',
+    name: 'Teilgetrennte Führung',
+    desc: ['Gemeinsamer Geh- und Radwege', 'Radfahrstreifen', 'Schutzstreifen'],
     style: {
       type: 'line',
       color: 'hsl(232, 97%, 36%)',
@@ -26,8 +32,15 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
     },
   },
   {
-    id: 'pedestrian',
-    name: 'Verkehrsberuhigt',
+    id: 'mixed',
+    name: 'Mischverkehr',
+    desc: [
+      'Fußgängerzone mit Radfreigabe',
+      'Spielstraße',
+      'Fußwege mit Radfreigabe',
+      'Anteilig genutzten Fahrstreifen',
+      'Fahrradweichen',
+    ],
     style: {
       type: 'line',
       color: 'hsla(232, 99%, 39%, 0.34)',
