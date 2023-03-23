@@ -10,8 +10,7 @@
           "line-color": "#b50382",
           "line-dasharray": [2.5, 0.5]
         },
-        "filter": ["match", ["get", "category"], ["needsClarification"], true, false],
-        "layout": {}
+        "filter": ["match", ["get", "category"], ["needsClarification"], true, false]
       },
       {
         "id": "Fuehrung mit Fussverkehr copy 3",
@@ -21,14 +20,7 @@
           "line-dasharray": [2, 1],
           "line-color": "#031ab5"
         },
-        "filter": [
-          "match",
-          ["get", "category"],
-          ["footway_bicycleYes", "footAndCycleway_shared"],
-          true,
-          false
-        ],
-        "layout": {}
+        "filter": ["match", ["get", "category"], ["footAndCycleway_shared"], true, false]
       },
       {
         "id": "Getrennte Fuehrung copy 3",
@@ -51,8 +43,7 @@
           ],
           true,
           false
-        ],
-        "layout": {}
+        ]
       },
       {
         "id": "fmc-verkehrsberuhigt copy 4",
@@ -62,8 +53,13 @@
           "line-dasharray": [1, 1],
           "line-color": "hsla(232, 99%, 39%, 0.34)"
         },
-        "filter": ["match", ["get", "category"], ["pedestrianArea_bicycleYes"], true, false],
-        "layout": {}
+        "filter": [
+          "match",
+          ["get", "category"],
+          ["pedestrianArea_bicycleYes", "livingStreet", "footway_bicycleYes"],
+          true,
+          false
+        ]
       },
       {
         "id": "hitarea-bikelanes",
@@ -81,225 +77,13 @@
     ]
   },
   {
-    "group": "atlas_bikelanes_complete",
-    "layers": [
-      {
-        "id": "bikelanes-Keine Daten",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 14, 1.5, 18, 3],
-          "line-color": "hsl(312, 92%, 74%)",
-          "line-opacity": 0.7
-        },
-        "filter": ["==", ["get", "is_present"], false],
-        "layout": {}
-      },
-      {
-        "id": "bikelanes-Daten vorhanden",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 14, 1.5, 18, 3],
-          "line-color": "hsl(312, 0%, 34%)",
-          "line-opacity": 0.7
-        },
-        "filter": ["has", "category"],
-        "layout": {}
-      },
-      {
-        "id": "needsClarification",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(317, 97%, 36%)"
-        },
-        "filter": ["match", ["get", "category"], ["needsClarification"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "Fuehrung mit Fussverkehr copy 5",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          ["footway_bicycleYes", "footAndCycleway_shared"],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Getrennte Fuehrung copy 4",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          [
-            "cyclewayAlone",
-            "footAndCycleway_segregated",
-            "bicycleRoad",
-            "cyclewayOnHighway",
-            "cyclewaySeparated",
-            "cyclewayBetweenLanes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "fmc-verkehrsberuhigt copy 5",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [1, 1],
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": ["match", ["get", "category"], ["pedestrianArea_bicycleYes"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "hitarea_complete",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
-          "line-opacity": 0,
-          "line-color": "hsl(290, 100%, 54%)"
-        },
-        "filter": ["has", "category"],
-        "layout": {
-          "line-cap": "round"
-        }
-      }
-    ]
-  },
-  {
-    "group": "atlas_bikelanes_fresh_disabled",
-    "layers": [
-      {
-        "id": "Daten aelter 2020-fake copy",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(0, 100%, 41%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 7, 2, 12, 4, 16, 12]
-        },
-        "filter": ["match", ["get", "category"], ["footway_bicycleYes"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "Daten aktuell",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(107, 88%, 57%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 7, 2, 12, 4, 16, 12]
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          [
-            "cyclewaySeparated",
-            "pedestrianArea_bicycleYes",
-            "cyclewayAlone",
-            "footAndCycleway_segregated"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "needsClarification copy",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(317, 97%, 36%)"
-        },
-        "filter": ["match", ["get", "category"], ["needsClarification"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "Fuehrung mit Fussverkehr copy 2",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          ["footway_bicycleYes", "footAndCycleway_shared"],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Getrennte Fuehrung copy 2",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          [
-            "cyclewayAlone",
-            "footAndCycleway_segregated",
-            "bicycleRoad",
-            "cyclewayOnHighway",
-            "cyclewayOnHighway_shared",
-            "cyclewaySeparated",
-            "cyclewayBetweenLanes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "fmc-verkehrsberuhigt copy 3",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-dasharray": [1, 1],
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": ["match", ["get", "category"], ["pedestrianArea_bicycleYes"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "hitarea-bikelanes-fresh",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
-          "line-opacity": 0,
-          "line-color": "hsl(290, 100%, 54%)"
-        },
-        "filter": ["has", "category"],
-        "layout": {
-          "line-cap": "round"
-        }
-      }
-    ]
-  },
-  {
     "group": "atlas_bikelanes_verified",
     "layers": [
       {
-        "id": "bikelanes-verification-status",
+        "minzoom": 7,
+        "filter": ["has", "category"],
         "type": "line",
+        "id": "bikelanes-verification-status",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
           "line-color": [
@@ -311,83 +95,6 @@
             "#fa7fe2"
           ],
           "line-opacity": ["interpolate", ["linear"], ["zoom"], 11.6, 0, 11.8, 1, 12.2, 1, 18, 1]
-        },
-        "layout": {}
-      },
-      {
-        "id": "needsClarification copy 1",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(317, 97%, 36%)"
-        },
-        "filter": ["match", ["get", "category"], ["needsClarification"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "Fuehrung mit Fussverkehr copy 1",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-dasharray": [2, 1],
-          "line-color": "hsl(232, 97%, 36%)"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          ["footway_bicycleYes", "footAndCycleway_shared"],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "Getrennte Fuehrung copy 1",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-color": "#031ab5"
-        },
-        "filter": [
-          "match",
-          ["get", "category"],
-          [
-            "cyclewayAlone",
-            "footAndCycleway_segregated",
-            "bicycleRoad",
-            "cyclewayOnHighway",
-            "cyclewayOnHighway_shared",
-            "cyclewaySeparated",
-            "cyclewayBetweenLanes"
-          ],
-          true,
-          false
-        ],
-        "layout": {}
-      },
-      {
-        "id": "fmc-verkehrsberuhigt copy 6",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 3],
-          "line-dasharray": [1, 1],
-          "line-color": "hsla(232, 99%, 39%, 0.34)"
-        },
-        "filter": ["match", ["get", "category"], ["pedestrianArea_bicycleYes"], true, false],
-        "layout": {}
-      },
-      {
-        "id": "hitarea-bikelanes-verified",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
-          "line-opacity": 0,
-          "line-color": "hsl(290, 100%, 54%)"
-        },
-        "filter": ["has", "category"],
-        "layout": {
-          "line-cap": "round"
         }
       }
     ]
@@ -1194,7 +901,7 @@
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
           "line-dasharray": [2, 1],
-          "line-color": "#031ab5",
+          "line-color": "rgb(3, 26, 181)",
           "line-offset": 2
         },
         "filter": [
@@ -1203,14 +910,15 @@
           ["footway_bicycleYes", "footAndCycleway_shared"],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "Getrennte Fuehrung copy 5",
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
-          "line-color": "#031ab5",
+          "line-color": "rgb(3, 26, 181)",
           "line-offset": 2
         },
         "filter": [
@@ -1227,7 +935,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   },

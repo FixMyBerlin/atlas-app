@@ -67,11 +67,18 @@ export const topic_bikelanes: MapDataTopic = {
       id: 'atlas_bikelanes_verified',
       name: 'Inhalte & Prüf-Status',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_verified',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes_verified',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+      ].flat(),
       interactiveFilters: null,
       legends: [
         ...defaultLegend,
