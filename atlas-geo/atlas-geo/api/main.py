@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from typing import Union
 from psycopg2 import sql
-from constants import available_datasets, export_geojson_function_from_type, verification_tables, valid_verified_status
+from db_configuration import export_geojson_function_from_type, verification_tables, valid_verified_status
 from db import conn_string
 import psycopg2
 import psycopg2.extras
@@ -53,7 +53,7 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
 
 @app.get("/verify/{type_name}/{osm_id}")
 def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
-    if type_name not in available_datasets:
+    if type_name not in export_geojson_function_from_type.keys():
       raise HTTPException(status_code=404, detail="verification type unknown")
 
     with conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) as cur:
@@ -75,7 +75,7 @@ def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
 
 @app.get("/verify/{type_name}/{osm_id}/history")
 def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
-    if type_name not in available_datasets:
+    if type_name not in export_geojson_function_from_type.keys():
       raise HTTPException(status_code=404, detail="verification type unknown")
 
     with conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) as cur:
@@ -92,7 +92,7 @@ def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
 
 @app.post("/verify/{type_name}/{osm_id}")
 def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str, verified_by: int=None, comment: str=''):
-    if type_name not in available_datasets:
+    if type_name not in export_geojson_function_from_type.keys():
       raise HTTPException(status_code=404, detail="verification type unknown")
 
     if verified_status not in valid_verified_status:
