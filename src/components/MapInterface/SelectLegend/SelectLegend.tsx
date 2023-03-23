@@ -12,6 +12,7 @@ import {
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
 import { LegendDebugInfoLayerStyle, LegendDebugInfoTopicLayerConfig } from './LegendDebugInfo'
 import { LegendIconArea, LegendIconCircle, LegendIconLine, LegendIconTypes } from './LegendIcons'
+import { LegendNameDesc } from './LegendNameDesc'
 
 type Props = { scopeTopicId: TopicIds }
 
@@ -136,10 +137,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     value={key}
                   />
                 </div>
-                <div
-                  className="ml-2.5 flex min-h-[1.75rem] items-center text-sm font-medium leading-none text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: legendData.name }}
-                />
+                <LegendNameDesc name={legendData.name} desc={legendData.desc} />
               </label>
             )
           })}

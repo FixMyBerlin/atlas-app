@@ -183,6 +183,7 @@ export type MapDataStyleInteractiveFilter = {
 export type MapDataStyleLegend = {
   id: string
   name: string
+  desc?: string[]
   style:
     | {
         type: Exclude<LegendIconTypes, 'line'>
