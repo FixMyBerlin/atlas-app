@@ -1,6 +1,6 @@
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { extractSourceIdIdFromSourceKey } from '../Map/SourceAndLayers/utils/extractFromSourceKey'
+import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
 import { getSourceData } from '../mapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { Disclosure } from './Disclosure'

@@ -16,9 +16,12 @@ import {
 import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { createSourceTopicStyleLayerKey } from '../utils'
-import { SourcesLayerRasterBackgrounds } from './backgrounds'
 import { Calculator } from './Calculator/Calculator'
-import { SourceAndLayers } from './SourceAndLayers'
+import {
+  SourcesAndLayers,
+  SourcesLayerDatasets,
+  SourcesLayerRasterBackgrounds,
+} from './SourcesAndLayers'
 import { roundPositionForURL } from './utils'
 import { useMissingImage } from './utils/useMissingImage'
 
@@ -158,7 +161,8 @@ export const Map: React.FC = () => {
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
-      <SourceAndLayers />
+      <SourcesAndLayers />
+      <SourcesLayerDatasets />
 
       <NavigationControl showCompass={false} />
       <Calculator />

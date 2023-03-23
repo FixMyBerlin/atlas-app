@@ -20,7 +20,7 @@ import { specifyFilters } from './utils'
 // We add source+layer map-components for all topics of the given confic.
 // We then toggle the visibility of the layer base on state.
 // We also use this visbility to add/remove interactive layers.
-export const SourceAndLayers: React.FC = () => {
+export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const {
     config: configThemesTopics,

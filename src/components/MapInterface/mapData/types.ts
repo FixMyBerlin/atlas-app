@@ -23,6 +23,16 @@ export type MapDataBackgroundSource<TIds> = {
   tileSize?: mapboxgl.RasterSource['tileSize']
 }
 
+/** @desc: The data sources, configured in 'sourcesDatasets.const.ts' */
+export type MapDataDatasetsSource<TIds> = {
+  id: TIds
+  attributionHtml: string
+  layers: (
+    | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
+    | (mapboxgl.LineLayer & Required<Pick<mapboxgl.LineLayer, 'paint'>>)
+  )[]
+} & { type: 'geojson'; data: GeoJSON.GeoJSON }
+
 export type MapDataSourceInspectorEditor = {
   name: string
   idKey?: string
