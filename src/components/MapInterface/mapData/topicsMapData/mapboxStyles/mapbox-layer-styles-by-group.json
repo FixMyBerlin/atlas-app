@@ -45,7 +45,12 @@
         "filter": [
           "match",
           ["get", "category"],
-          ["footAndCycleway_shared", "cyclewayOnHighway"],
+          [
+            "footAndCycleway_shared",
+            "cyclewayOnHighway_unspecified",
+            "cyclewayOnHighway_advisory",
+            "cyclewayOnHighway_exclusive"
+          ],
           true,
           false
         ]
