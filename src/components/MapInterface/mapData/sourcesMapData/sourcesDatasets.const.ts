@@ -10,7 +10,9 @@ export type SourcesDatasetsIds =
 
 export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
   {
+    regionKey: 'trto',
     id: 'TrtoWunschlinienCrossingPoints',
+    name: 'Wunschlinien: Zangspunkte',
     type: 'geojson',
     data: TrtoWunschlinienCrossingPoints as GeoJSON.FeatureCollection<GeoJSON.Point>,
     attributionHtml: 'FixMyCity',
@@ -29,7 +31,9 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     ],
   },
   {
+    regionKey: 'trto',
     id: 'TrtoWunschlinienLocationPoints',
+    name: 'Wunschlinien: Zielpunkte',
     type: 'geojson',
     data: TrtoWunschlinienLocationPoints as GeoJSON.FeatureCollection<GeoJSON.Point>,
     attributionHtml: 'FixMyCity',
@@ -49,7 +53,9 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     ],
   },
   {
+    regionKey: 'trto',
     id: 'TrtoWunschlinienConnectionLines',
+    name: 'Wunschlinien',
     type: 'geojson',
     data: TrtoWunschlinienConnectionLines as GeoJSON.FeatureCollection<GeoJSON.LineString>,
     attributionHtml: 'FixMyCity',
@@ -65,4 +71,23 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       },
     ],
   },
+  // {
+  //   id: 'TrtoNetzentwurf',
+  //   name: 'Wunschlinien: Netzentwurf',
+  //   type: 'geojson',
+  //   data: TrtoNetzentwurf as GeoJSON.FeatureCollection<GeoJSON.LineString>,
+  //   attributionHtml: 'FixMyCity',
+  //   layers: [
+  //     {
+  //       id: 'netzentwurf',
+  //       type: 'line',
+  //       paint: {
+  //         'line-width': 3,
+  //         'line-opacity': 0.83,
+  //         'line-color': '#dd0303',
+  //         'line-dasharray': [2, 0.7],
+  //       },
+  //     },
+  //   ],
+  // },
 ]

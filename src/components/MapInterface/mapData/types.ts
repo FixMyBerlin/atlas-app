@@ -1,3 +1,4 @@
+import { RegionPath } from '@fakeServer/regions.const'
 import mapboxgl from 'mapbox-gl'
 import { LegendIconTypes } from '../SelectLegend/LegendIcons'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
@@ -25,7 +26,10 @@ export type MapDataBackgroundSource<TIds> = {
 
 /** @desc: The data sources, configured in 'sourcesDatasets.const.ts' */
 export type MapDataDatasetsSource<TIds> = {
+  /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
+  regionKey: RegionPath
   id: TIds
+  name: string
   attributionHtml: string
   layers: (
     | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
