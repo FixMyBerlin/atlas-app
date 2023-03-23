@@ -129,8 +129,18 @@ end
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
 local function cyclewayOnHighway(tags)
   local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+  -- TODO https://github.com/FixMyBerlin/private-issues/issues/574
+  -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
+  -- if result and tags['cycleway:lane'] == 'advisory' then
+  --   DE: Schutzstreifen
+  --   return "cyclewayOnHighway_advisory"
+  -- end
+  -- if result and tags['cycleway:lane'] == 'exclusive' then
+  --   DE: Radfahrstreifen
+  --   return "cyclewayOnHighway_exclusive"
+  -- end
   if result then
-    return "cyclewayOnHighway"
+    return "cyclewayOnHighway_unspecified"
   end
 end
 
