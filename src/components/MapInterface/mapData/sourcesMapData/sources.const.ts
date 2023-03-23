@@ -315,7 +315,7 @@ export const sources: MapDataSource<
       dateKey: 'fresh',
     },
     calculator: { enabled: false },
-    export: { enabled: false },
+    export: { enabled: true },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.buildings.json
@@ -331,7 +331,7 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: { enabled: false },
+    export: { enabled: true },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json

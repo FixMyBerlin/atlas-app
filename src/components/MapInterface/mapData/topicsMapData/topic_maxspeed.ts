@@ -1,15 +1,15 @@
 import { MapDataTopic } from '../types'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
-const tpoicId = 'maxspeed'
+const topicId = 'maxspeed'
 const source = 'tarmac_maxspeed'
 const sourceLayer = 'public.maxspeed'
-export type TopicMaxspeedId = typeof tpoicId
+export type TopicMaxspeedId = typeof topicId
 export type TopicMaxspeedStyleIds = 'default' | 'source'
 export type TopicMaxspeedStyleFilterIds = '_nofilter'
 
 export const topic_maxspeed: MapDataTopic = {
-  id: tpoicId,
+  id: topicId,
   name: 'Höchstgeschwindigkeit',
   desc: '', // todo
   sourceId: source,
