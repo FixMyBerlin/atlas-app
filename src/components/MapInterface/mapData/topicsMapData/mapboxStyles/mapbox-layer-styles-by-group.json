@@ -799,34 +799,13 @@
     "group": "atlas_roadclass_maxspeed",
     "layers": [
       {
-        "id": "fmc-maxspeed copy",
-        "type": "line",
-        "filter": ["match", ["get", "FMC:Category:MaxspeedData"], ["true"], true, false],
-        "paint": {
-          "line-color": [
-            "match",
-            ["get", "FMC:Category:MaxspeedData:MaxspeedValue"],
-            ["5", "7", "8", "10", "20", "30", "15", "Verkehrsberuhigter Bereich"],
-            "rgba(18, 226, 25, 0)",
-            ["60", "70", "80"],
-            "#fd5eda",
-            ["100", "120", "130"],
-            "#b0038a",
-            ["50", "40"],
-            "#f0001c",
-            "#000000"
-          ],
-          "line-opacity": 0.98
-        }
-      },
-      {
-        "id": "fmc-maxspeed atlasdaten",
+        "id": "maxspeed-atlas",
         "type": "line",
         "paint": {
           "line-color": [
             "match",
             ["get", "maxspeed"],
-            ["5", "30"],
+            ["30", "5", "7"],
             "rgba(18, 226, 25, 0)",
             ["", "60", "70", "80"],
             "#fd5eda",
@@ -837,6 +816,19 @@
             "#000000"
           ],
           "line-opacity": 0.98
+        }
+      },
+      {
+        "id": "hitarea-maxspeed",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "hsl(290, 100%, 54%)"
+        },
+        "filter": ["has", "maxspeed"],
+        "layout": {
+          "line-cap": "round"
         }
       }
     ]

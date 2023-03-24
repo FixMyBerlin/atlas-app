@@ -46,7 +46,7 @@ export const themes: MapDataTheme[] = [
       { id: 'publicTransport_tarmac', defaultActive: true },
       { id: 'publicTransport_osmscripts', defaultActive: false },
       { id: 'places', defaultActive: true },
-      { id: 'roadClassification_tarmac', defaultActive: false },
+      { id: 'roadClassification', defaultActive: false },
       { id: 'roadClassification_osmscripts', defaultActive: false },
       { id: 'landuse', defaultActive: true },
     ],
@@ -82,7 +82,7 @@ export const themes: MapDataTheme[] = [
     name: 'Straßentypen',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
-      { id: 'roadClassification_tarmac', defaultActive: true },
+      { id: 'roadClassification', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
       { id: 'maxspeed', defaultActive: false },
       // { id: 'surface_tarmac', defaultActive: false },
@@ -95,7 +95,7 @@ export const themes: MapDataTheme[] = [
     name: 'Straßentypen ZES',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
-      { id: 'roadClassification_tarmac', defaultActive: true },
+      { id: 'roadClassification', defaultActive: true },
       { id: 'roadClassification_osmscripts', defaultActive: false },
       { id: 'bikelanes', defaultActive: false },
       { id: 'bikelanes_osmscripts', defaultActive: false },

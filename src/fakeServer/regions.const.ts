@@ -62,6 +62,7 @@ export const regions: Region[] = [
       // The order here specifies the order in the UI
       'fromTo',
       'bikelanes',
+      'roadClassification',
       'lit',
     ],
     osmUsers: [...adminIds],
@@ -83,6 +84,7 @@ export const regions: Region[] = [
       // The order here specifies the order in the UI
       'fromTo',
       'bikelanes',
+      'roadClassification',
       'lit',
     ],
     osmUsers: [...adminIds, 18058212, 18058219],

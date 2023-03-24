@@ -66,11 +66,11 @@ import {
   TopicPublicTransportStyleIds_Osmscripts,
   TopicPublicTransportStyleIds_Tarmac,
   TopicRoadClassificationId_Osmscripts,
-  TopicRoadClassificationId_Tarmac,
+  TopicRoadClassificationId,
   TopicRoadClassificationStyleFilterIds_Osmscripts,
-  TopicRoadClassificationStyleFilterIds_Tarmac,
+  TopicRoadClassificationStyleFilterIds,
   TopicRoadClassificationStyleIds_Osmscripts,
-  TopicRoadClassificationStyleIds_Tarmac,
+  TopicRoadClassificationStyleIds,
   TopicShopsId_Osmscripts,
   TopicShopsStyleFilterIds_Osmscripts,
   TopicShopsStyleIds_Osmscripts,
@@ -101,7 +101,7 @@ import {
   topic_publicTransport_osmscripts,
   topic_publicTransport_tarmac,
   topic_roadClassification_osmscripts,
-  topic_roadClassification_tarmac,
+  topic_roadClassification,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
   topic_buildings,
@@ -131,7 +131,7 @@ export type TopicIds =
   | TopicPublicTransportId_Osmscripts
   | TopicPublicTransportId_Tarmac
   | TopicRoadClassificationId_Osmscripts
-  | TopicRoadClassificationId_Tarmac
+  | TopicRoadClassificationId
   | TopicShopsId_Osmscripts
   | TopicSurfaceId_Osmscripts
   | TopicSurfaceId_Tarmac
@@ -159,7 +159,7 @@ export type TopicStyleIds =
   | TopicPublicTransportStyleIds_Osmscripts
   | TopicPublicTransportStyleIds_Tarmac
   | TopicRoadClassificationStyleIds_Osmscripts
-  | TopicRoadClassificationStyleIds_Tarmac
+  | TopicRoadClassificationStyleIds
   | TopicShopsStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Tarmac
@@ -187,7 +187,7 @@ export type TopicStyleFilterIds =
   | TopicPublicTransportStyleFilterIds_Osmscripts
   | TopicPublicTransportStyleFilterIds_Tarmac
   | TopicRoadClassificationStyleFilterIds_Osmscripts
-  | TopicRoadClassificationStyleFilterIds_Tarmac
+  | TopicRoadClassificationStyleFilterIds
   | TopicShopsStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Tarmac
@@ -241,7 +241,7 @@ export const mapData: MapData = {
     topic_publicTransport_osmscripts,
     topic_publicTransport_tarmac,
     topic_roadClassification_osmscripts,
-    topic_roadClassification_tarmac,
+    topic_roadClassification,
     topic_shops_osmscripts,
     topic_surface_osmscripts,
     // topic_surface_tarmac,
