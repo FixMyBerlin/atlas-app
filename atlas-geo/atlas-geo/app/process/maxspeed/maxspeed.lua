@@ -234,10 +234,6 @@ function osm2pgsql.process_way(object)
   --  UND dann auch einen "_todo="add 'maxspeed:source=DE:urban' to way"
   -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
 
-
-  -- "is_present": Skip-Values umbauen, so dass alle maxspeed-relevanten daten im haupt datensatz sind
-  --    wenn primärdaten vorhanden, dann is_present=true
-
   -- all tags that are shown on the application
   local allowed_tags =
       Set(
@@ -268,13 +264,10 @@ function osm2pgsql.process_way(object)
 
   tags._maxspeed_source = source
   if maxspeed ~= nil and maxspeed ~= -1 then
-    tags.present = true
     table:insert(
       {
         tags = tags,
         geom = object:as_linestring(),
-        maxspeed = maxspeed,
-        present = true,
         meta = meta
       }
     )
