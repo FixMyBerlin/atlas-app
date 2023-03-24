@@ -26,14 +26,22 @@ export type SourcesIds =
 
 export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes' | 'roadclassification'
 
+// Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
   | 'bikelanes_verified'
+  | 'bikelanes'
+  | 'bikelanesPresence'
+  // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
+  | 'buildings'
   | 'education'
+  | 'landuse'
   | 'lit_verified'
+  | 'lit'
+  | 'maxspeed'
   | 'places'
+  | 'poiClassification'
   | 'publicTransport'
   | 'roadClassification'
-  | 'poiClassification'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -315,7 +323,10 @@ export const sources: MapDataSource<
       dateKey: 'fresh',
     },
     calculator: { enabled: false },
-    export: { enabled: true },
+    export: {
+      enabled: true,
+      apiIdentifier: 'maxspeed',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.buildings.json
@@ -331,7 +342,10 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: { enabled: true },
+    export: {
+      enabled: true,
+      apiIdentifier: 'buildings',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
