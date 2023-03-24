@@ -126,7 +126,7 @@ function osm2pgsql.process_way(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Freshness of data (ATER `FilterTags`!)
+        -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
 
         cycleway.offset = sign * width / 2
