@@ -6,7 +6,7 @@ export_geojson_function_from_type = {
   "bikelanes_verified": "atlas_export_geojson_bikelanes_verified",
   "bikelanes":          "atlas_export_geojson_bikelanes",
   "bikelanesPresence":  "atlas_export_geojson_bikelanesPresence",
-  "boundaries":         "atlas_export_geojson_boundaries",
+  # "boundaries":         "atlas_export_geojson_boundaries", # does not work; we need to align the way we store the tags with the other table (it's) the only one that does not use jsonb
   "buildings":          "atlas_export_geojson_buildings",
   "education":          "atlas_export_geojson_education",
   "landuse":            "atlas_export_geojson_landuse",
