@@ -10,7 +10,8 @@
           "line-color": "#b50382",
           "line-dasharray": [2.5, 0.5]
         },
-        "filter": ["match", ["get", "category"], ["needsClarification"], true, false]
+        "filter": ["match", ["get", "category"], ["needsClarification"], true, false],
+        "layout": {}
       },
       {
         "id": "mixed",
@@ -32,7 +33,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "shared",
@@ -53,7 +55,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "separated",
@@ -74,7 +77,8 @@
           ],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "hitarea-bikelanes",
@@ -698,7 +702,7 @@
         "paint": {
           "circle-color": [
             "match",
-            ["get", "FMC:ShopCategory"],
+            ["get", "category"],
             ["Freizeit"],
             "#960854",
             ["Bildung"],
