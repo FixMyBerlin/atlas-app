@@ -155,8 +155,8 @@ local function maxspeedFromZone(tags)
     ["DE:zone:10"] = 10,
     ["DE:zone10"] = 10,
   }
-  if maxspeed_type[tags["maxspeed_type"]] then
-    return maxspeed_type[tags["maxspeed_type"]], "maxspeed_type"
+  if maxspeed_type[tags["maxspeed:type"]] then
+    return maxspeed_type[tags["maxspeed:type"]], "maxspeed:type"
   end
   if maxspeed_zone[tags["zone:maxspeed"]] then
     return maxspeed_type[tags["zone:maxspeed"]], "zone:maxspeed"
@@ -235,28 +235,27 @@ function osm2pgsql.process_way(object)
   -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
 
   -- all tags that are shown on the application
-  local allowed_tags =
-      Set(
-        {
-          "_todo",
-          "bicycle_road",
-          "bicycle",
-          "cycleway",
-          "name",
-          "highway",
-          "maxspeed",
-          "maxspeed:backward",
-          "maxspeed:forward",
-          "maxspeed:conditional", -- show if present; details TBD
-          "source:maxspeed", -- only for debugging in webapp
-          "maxspeed:type", -- only for debugging in webapp
-          "zone:maxspeed", -- only for debugging in webapp
-          "zone_traffic",
-          "traffic_sign",
-          "maxspeed_split",
-          "checkdate:maxspeed",
-        }
-      )
+  local allowed_tags = Set(
+    {
+      "_todo",
+      "bicycle_road",
+      "bicycle",
+      "cycleway",
+      "name",
+      "highway",
+      "maxspeed",
+      "maxspeed:backward",
+      "maxspeed:forward",
+      "maxspeed:conditional", -- show if present; details TBD
+      "maxspeed:type",        -- only for debugging in webapp
+      "zone:maxspeed",        -- only for debugging in webapp
+      "source:maxspeed",      -- only for debugging in webapp
+      "zone_traffic",
+      "traffic_sign",
+      "maxspeed_split",
+      "checkdate:maxspeed",
+    }
+  )
   FilterTags(tags, allowed_tags)
 
   -- Freshness of data (AFTER `FilterTags`!)
