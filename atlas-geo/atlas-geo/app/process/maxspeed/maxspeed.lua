@@ -142,6 +142,7 @@ local function maxspeedFromZone(tags)
     ["DE:10"] = 10,
     ["10"] = 10,
   }
+
   -- maybe add also traffic signs to parse
   local maxspeed_source = {
     ["DE:rural"] = 100,
@@ -262,7 +263,7 @@ function osm2pgsql.process_way(object)
       )
   FilterTags(tags, allowed_tags)
 
-  -- Freshness of data (ATER `FilterTags`!)
+  -- Freshness of data (AFTER `FilterTags`!)
   IsFresh(object, "checkdate:maxspeed", tags)
 
   tags._maxspeed_source = source
