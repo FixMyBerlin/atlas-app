@@ -6,7 +6,7 @@ AS $function$
 	SELECT json_build_object(
 	    'type',     'FeatureCollection',
       'license', 'ODbL 1.0, https://opendatacommons.org/licenses/odbl/',
-      'attribution', 'OpenStreetMap, https://www.openstreetmap.org/copyright',
+      'attribution', 'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de',
 	    'features', json_agg(features.feature)
 	)
 	FROM (
