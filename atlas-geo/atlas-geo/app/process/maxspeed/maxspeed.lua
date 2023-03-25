@@ -1,55 +1,3 @@
--- Goal:
--- =====
--- A map that shows `maxspeed` data.
-
--- Notes:
--- =====
--- This topic need some discovery, first.
---
--- In general, maxspeed data is not tagged well in OSM.
--- One reasons is, that the data is not visible at all, so no one sees missing data or tagging mistages.
---
--- Approach 1: Just take "maxspeed"
--- Just take the explicitly tagged data. Rely on the community to fill in the blanks.
--- That would work in time; however, OSM does not like tagging implict data. So tagging the whole city with "maxspeed=50" is bad practise.
---
--- Approach 2: Add source-Data to the mix.
--- Whenever the maxspeed is implicit, one could make this fact explicit by addin a source info.
--- Unfortunatelly there are multipe tagging schemas in use, which makes this complex…
--- However, we can use this data to derive maxspeed data for all roads with source-tagging.
--- Which is what I did for our proof of concept.
---    See https://github.com/FixMyBerlin/osm-scripts/blob/main/utils/Highways-MaxspeedData/utils/addMaxspeedProperty.ts
--- I also add my own source-Tag to tell our user where the maxspeed value comes from.
---    See https://github.com/FixMyBerlin/osm-scripts/blob/main/utils/Highways-MaxspeedData/utils/addMaxspeedSourceProperty.ts
---
--- Approach 3: Library
--- After our proof of concept was done, Tobias Zwick released a new library, that does parts of what we did, but with a lot more detail.
---    See https://github.com/westnordost/osm-legal-default-speeds
---    Demo https://westnordost.github.io/osm-legal-default-speeds/#tags=highway%3Dprimary&cc=DE
--- We could use this library to fill in the blanks.
--- However, it is unclear how we would run the library code as part of our technical setup.
---    Update: Something I asked at https://github.com/openstreetmap/osm2pgsql/discussions/1765
--- And the library does not solve the "source" information (yet), so that would be something we need to build ourself.
--- Also, the `*zone*` source schema is not supported (see https://github.com/westnordost/osm-legal-default-speeds/issues/4)
---    Update: Tobias Zwick pointed out, that this is _not_an_issue.
--- Also, the main benefit of the library are very detailed maxsped values for bus and such… which we don't need.
-
--- TodoList
--- =====
--- In addition to the data layer, we will likely need a TodoList Data Layer that guides users to fill in the blanks in spots where … for example …
---    * no maxspeed _and_ no source is given
---    * multiple source taggings are used that are in conflict
-
-
--- Review TodoList
--- =====
--- - [ ] AFAIK the whole bike categorization in this file can be removed. It is likely left over from the copied file(?)
--- - [ ] Can we apply the new "real excludeTable" pattern that does not just mark as excluded but actually exits for this file? Is it worth it?
--- - [ ] Rebase on to of main
--- - [ ] Use our new freshness and presence logic (naming of fields, helper methods)
--- - [ ] Stichproben of the resulted response
--- - [ ] Merge into main so we can run the data on production an use it in a hidden part of the app
-
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("FilterTags")
@@ -223,16 +171,6 @@ function osm2pgsql.process_way(object)
       source = "inferred from highway"
     end
   end
-
-  -- SQL:
-  -- für alle linien die kein maxpseed haben (auch nicht über die source-tags)
-  --  wir nehmen die landuse=residential+industrial+commerical+retail
-  --  buffer von ~10m um die fläche
-  --  dann alle linien die (TODO) vollständig / am meisten / … in der fläche fläche sind
-  --  (tendentizell dafür nicht schneiden, weil wir am liebsten die OSM ways so haben wie in OSM)
-  --  und dann können wir in sql "maxspeed" "maxspeed_source='infereed from landuse'"
-  --  UND dann auch einen "_todo="add 'maxspeed:source=DE:urban' to way"
-  -- hinweis: außerstädtisch extrapolieren wir aber keine daten, da zu wenig "richtig"
 
   -- all tags that are shown on the application
   local allowed_tags = Set(
