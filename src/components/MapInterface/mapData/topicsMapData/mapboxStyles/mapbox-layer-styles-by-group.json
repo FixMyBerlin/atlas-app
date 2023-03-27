@@ -105,6 +105,35 @@
     ]
   },
   {
+    "group": "atlas_bikelanes_unspecified",
+    "layers": [
+      {
+        "minzoom": 7,
+        "filter": [
+          "match",
+          ["get", "category"],
+          [
+            "needsClarification",
+            "cyclewayOnHighway_advisoryOrExclusive",
+            "footAndCyclewayShared_adjoiningOrIsolated",
+            "cycleway_isolatedOrIdjoining",
+            "footwayBicycleYes_adjoiningOrIsolated",
+            "footAndCyclewaySegregated_adjoiningOrIsolated"
+          ],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "unspecified",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
+          "line-color": "#b50382",
+          "line-opacity": 0.3
+        }
+      }
+    ]
+  },
+  {
     "group": "atlas_bikelanes_verified",
     "layers": [
       {

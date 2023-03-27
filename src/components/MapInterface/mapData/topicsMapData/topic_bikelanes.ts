@@ -128,6 +128,35 @@ export const topic_bikelanes: MapDataTopic = {
         },
       ],
     },
+    {
+      id: 'atlas_bikelanes_unspecified',
+      name: 'Unvollständigkeit',
+      desc: null,
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes_unspecified',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+      ].flat(),
+      interactiveFilters: null,
+      legends: [
+        ...defaultLegend,
+        {
+          id: 'unspecified',
+          name: 'Kategorisierung unvollständig',
+          style: {
+            type: 'line',
+            color: '#fa7fe2',
+          },
+        },
+      ],
+    },
     // {
     //   id: 'atlas_bikelanes_fresh',
     //   name: 'Inhalte & Aktualität',
