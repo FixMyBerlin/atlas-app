@@ -109,6 +109,7 @@
     "layers": [
       {
         "minzoom": 7,
+        "layout": {},
         "filter": [
           "match",
           ["get", "category"],
@@ -138,6 +139,7 @@
     "layers": [
       {
         "minzoom": 7,
+        "layout": {},
         "filter": ["has", "category"],
         "type": "line",
         "id": "bikelanes-verification-status",
@@ -837,27 +839,80 @@
     "group": "atlas_roadclass_maxspeed",
     "layers": [
       {
-        "id": "maxspeed-atlas",
+        "id": "maxspeed-data-conditions",
         "type": "line",
         "paint": {
+          "line-opacity": 0.98,
           "line-color": [
             "match",
             ["get", "maxspeed"],
-            ["30", "5", "7"],
-            "rgba(18, 226, 25, 0)",
-            ["", "60", "70", "80"],
-            "#fd5eda",
-            ["100"],
-            "#b0038a",
-            ["50"],
-            "#f0001c",
+            [4, 5, 7, 8, 10, 15, 20, 29, 30],
+            "rgba(0, 0, 0, 0)",
+            [60, 70, 80],
+            "rgb(253, 94, 218)",
+            [100, 120, 130],
+            "rgb(176, 3, 138)",
+            [40, 50],
+            "rgb(240, 0, 28)",
             "#000000"
-          ],
-          "line-opacity": 0.98
-        }
+          ]
+        },
+        "layout": {}
       },
       {
         "id": "hitarea-maxspeed",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "hsl(290, 100%, 54%)"
+        },
+        "filter": ["has", "maxspeed"],
+        "layout": {
+          "line-cap": "round"
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclass_maxspeed_details",
+    "layers": [
+      {
+        "id": "maxspeed-data-range",
+        "type": "line",
+        "paint": {
+          "line-opacity": 0.98,
+          "line-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "maxspeed"],
+            30,
+            "#2c7bb6",
+            40,
+            "#abd9e9",
+            50,
+            "#fdae61",
+            130,
+            "#d7191c"
+          ],
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["get", "maxspeed"],
+            30,
+            1,
+            40,
+            1,
+            50,
+            2,
+            130,
+            3
+          ]
+        },
+        "layout": {}
+      },
+      {
+        "id": "hitarea-maxspeed copy",
         "type": "line",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],

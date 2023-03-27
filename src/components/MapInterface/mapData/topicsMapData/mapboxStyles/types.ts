@@ -18,6 +18,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_poiclassification'
   | 'atlas_roadclass_bikeinfra'
   | 'atlas_roadclass_maxspeed'
+  | 'atlas_roadclass_maxspeed_details'
   | 'atlas_roadclass_oneway'
   | 'atlas_roadclass_roadclass'
   | 'atlas_roadclass_surface'
@@ -70,6 +71,7 @@ export type MapboxStyleLayerGroupPoiclassificationIds = 'atlas_poiclassification
 export type MapboxStyleLayerGroupRoadclassIds =
   | 'atlas_roadclass_bikeinfra'
   | 'atlas_roadclass_maxspeed'
+  | 'atlas_roadclass_maxspeed_details'
   | 'atlas_roadclass_oneway'
   | 'atlas_roadclass_roadclass'
   | 'atlas_roadclass_surface'

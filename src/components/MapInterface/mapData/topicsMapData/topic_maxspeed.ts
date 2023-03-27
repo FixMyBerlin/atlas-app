@@ -5,7 +5,7 @@ const topicId = 'maxspeed'
 const source = 'tarmac_maxspeed'
 const sourceLayer = 'public.maxspeed'
 export type TopicMaxspeedId = typeof topicId
-export type TopicMaxspeedStyleIds = 'default' | 'source'
+export type TopicMaxspeedStyleIds = 'default' | 'details' | 'source'
 export type TopicMaxspeedStyleFilterIds = '_nofilter'
 
 export const topic_maxspeed: MapDataTopic = {
@@ -16,9 +16,16 @@ export const topic_maxspeed: MapDataTopic = {
   styles: [
     {
       id: 'default',
-      name: 'Höchstgeschwindigkeit',
+      name: 'Hohe Geschwindigkeiten',
       desc: '', // todo
       layers: mapboxStyleLayers({ group: 'atlas_roadclass_maxspeed', source, sourceLayer }),
+      interactiveFilters: null,
+    },
+    {
+      id: 'details',
+      name: 'Details',
+      desc: '', // todo
+      layers: mapboxStyleLayers({ group: 'atlas_roadclass_maxspeed_details', source, sourceLayer }),
       interactiveFilters: null,
     },
     // {
