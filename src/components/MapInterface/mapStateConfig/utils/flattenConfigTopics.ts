@@ -1,6 +1,6 @@
 import { ThemeConfig, TopicConfig } from '../type'
 
-export const flatConfigTopics = (configThemesTopics: ThemeConfig[]) => {
+export const flattenConfigTopics = (configThemesTopics: ThemeConfig[]) => {
   const configTopics: TopicConfig[] = []
 
   configThemesTopics.forEach((theme) =>

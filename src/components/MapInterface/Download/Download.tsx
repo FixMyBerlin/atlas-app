@@ -8,7 +8,7 @@ import { regionFromPath } from '@routes/utils'
 import { useMatch, useSearch } from '@tanstack/react-location'
 import { useQuery } from '@tanstack/react-query'
 import { getSourceData, getTopicData } from '../mapData'
-import { flatConfigTopics } from '../mapStateConfig/utils/flatConfigTopics'
+import { flattenConfigTopics } from '../mapStateConfig/utils/flattenConfigTopics'
 
 export const Download: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
@@ -33,7 +33,7 @@ export const Download: React.FC = () => {
   })
 
   if (!configThemesTopics) return null
-  const flatTopics = flatConfigTopics(configThemesTopics)
+  const flatConfigTopics = flattenConfigTopics(configThemesTopics)
 
   return (
     <section>
@@ -70,8 +70,8 @@ export const Download: React.FC = () => {
         </p>
 
         <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
-          {flatTopics.map((topicConfig) => {
-            const topicData = getTopicData(topicConfig.id)
+          {flatConfigTopics.map((flatTopicConfig) => {
+            const topicData = getTopicData(flatTopicConfig.id)
             const sourceData = getSourceData(topicData?.sourceId)
 
             // Download needs to be enabled per source

@@ -5,7 +5,7 @@ import {
   TBeforeIds,
 } from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
-import { flatConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flatConfigTopics'
+import { flattenConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flattenConfigTopics'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
@@ -23,8 +23,8 @@ import { specifyFilters } from './utils'
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const {
-    config: configThemesTopics,
     theme: themeId,
+    config: configThemesTopics,
     bg: selectedBackgroundId,
   } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
@@ -32,7 +32,7 @@ export const SourcesAndLayers: React.FC = () => {
 
   // Sources and layers are based on topics. Themes don't change them; they just duplicate them.
   // Therefore, we look at a flattened topics list for this component.
-  const configTopics = flatConfigTopics(configThemesTopics)
+  const flatConfigTopics = flattenConfigTopics(configThemesTopics)
 
   // We place our layers between given Maptiler Layer IDs:
   // Key: LayerType – we group our data based on layer type.
@@ -49,20 +49,20 @@ export const SourcesAndLayers: React.FC = () => {
 
   return (
     <>
-      {configTopics.map((topicConfig) => {
+      {flatConfigTopics.map((flatTopicConfig) => {
         // We neet look at the currentThemeConfig and currentTopicConfig here…
         // - otherwise the visbility is not based on the theme-topics.
         // - and otherwise the visibility is based on the first topic of our flat list, not the current.
-        const currTopicConfig = currentTheme.topics.find((t) => t.id === topicConfig.id)
+        const currTopicConfig = currentTheme.topics.find((t) => t.id === flatTopicConfig.id)
         if (!currTopicConfig) return null
 
-        const curTopicData = getTopicData(topicConfig.id)
+        const curTopicData = getTopicData(flatTopicConfig.id)
         const sourceData = getSourceData(curTopicData?.sourceId)
 
         // One source can be used by multipe topics, so we need to make the key source-topic-specific.
         // TODO we should try to find a better way for this…
         //  (and first find out if it's a problem at all)
-        const sourceId = `source:${sourceData.id}--topic:${topicConfig.id}--tiles`
+        const sourceId = `source:${sourceData.id}--topic:${flatTopicConfig.id}--tiles`
 
         return (
           <Source
@@ -73,7 +73,7 @@ export const SourcesAndLayers: React.FC = () => {
             minzoom={sourceData.minzoom || 8}
             maxzoom={sourceData.maxzoom || 22}
           >
-            {topicConfig.styles.map((styleConfig) => {
+            {flatTopicConfig.styles.map((styleConfig) => {
               const styleData = getStyleData(curTopicData, styleConfig.id)
               // A style is visible when
               // … the theme is active (handled above) AND
@@ -84,7 +84,7 @@ export const SourcesAndLayers: React.FC = () => {
               return styleData?.layers.map((layer) => {
                 const layerId = createSourceTopicStyleLayerKey(
                   sourceData.id,
-                  topicConfig.id,
+                  flatTopicConfig.id,
                   styleConfig.id,
                   layer.id
                 )

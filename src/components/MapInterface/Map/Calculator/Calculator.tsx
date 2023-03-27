@@ -2,7 +2,7 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React, { useRef } from 'react'
 import { getSourceData, getTopicData } from '../../mapData'
-import { flatConfigTopics } from '../../mapStateConfig/utils/flatConfigTopics'
+import { flattenConfigTopics } from '../../mapStateConfig/utils/flattenConfigTopics'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
 
@@ -13,7 +13,7 @@ export const Calculator: React.FC = () => {
   // by checking the sourceData.
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
   if (!configThemesTopics) return null
-  const activeTopicIds = flatConfigTopics(configThemesTopics)
+  const activeTopicIds = flattenConfigTopics(configThemesTopics)
     .filter((t) => t.active)
     .map((t) => t.id)
   const activeTopicsData = activeTopicIds.map((id) => getTopicData(id))
