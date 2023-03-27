@@ -122,15 +122,20 @@ function osm2pgsql.process_way(object)
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
+
         local freshTag = "check_date"
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
-        cycleway.oneway = cycleway.oneway or 'yes (implicit)'
+
+        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
+        cycleway.oneway = cycleway.oneway or 'implicit_yes'
+
         -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
 
         cycleway.offset = sign * width / 2
+
         categoryTable:insert({
           category = category,
           tags = cycleway,
