@@ -15,7 +15,7 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
       'Radweg (frei geführt und Fahrbahnbegleitend)',
       'Getrennter Geh- und Radweg',
       'Fahrradstraße',
-      'Straßenübergang',
+      'Straßenquerung',
       'Verbindungsstücke',
     ],
     style: {

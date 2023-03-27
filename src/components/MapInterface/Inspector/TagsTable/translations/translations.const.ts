@@ -119,7 +119,7 @@ export const translations: { [key: string]: string } = {
   'parkraumParkingStats--title': 'Statisik zum Parkraum',
   'tarmac_bikelanes--category--key': 'Führungsform',
   'tarmac_bikelanes--category=bicycleRoad': 'Fahrradstraße',
-  'tarmac_bikelanes--category=crossing': 'Straßenübergang',
+  'tarmac_bikelanes--category=crossing': 'Straßenquerung',
   'tarmac_bikelanes--category=cycleway_adjoining': 'Radweg, straßenbegleitend aber baulich von der Fahrbahn abgesetzt',
   'tarmac_bikelanes--category=cycleway_isolated': 'Radweg, frei geführt',
   'tarmac_bikelanes--category=cycleway_isolatedOrIdjoining': 'Radweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
