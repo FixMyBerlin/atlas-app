@@ -25,11 +25,13 @@
           "match",
           ["get", "category"],
           [
-            "pedestrianArea_bicycleYes",
+            "pedestrianAreaBicycleYes",
             "livingStreet",
-            "footway_bicycleYes",
-            "cyclewayOnHighway_shared",
-            "cyclewayBetweenLanes"
+            "sharedMotorVehicleLane",
+            "footwayBicycleYes_isolated",
+            "footwayBicycleYes_adjoining",
+            "footwayBicycleYes_adjoiningOrIsolated",
+            "cyclewayOnHighwayBetweenLanes"
           ],
           true,
           false
@@ -48,10 +50,13 @@
           "match",
           ["get", "category"],
           [
-            "footAndCycleway_shared",
-            "cyclewayOnHighway_unspecified",
+            "footAndCyclewayShared_adjoining",
+            "footAndCyclewayShared_isolated",
+            "footAndCyclewayShared_adjoiningOrIsolated",
             "cyclewayOnHighway_advisory",
-            "cyclewayOnHighway_exclusive"
+            "cyclewayOnHighway_exclusive",
+            "cyclewayOnHighway_advisoryOrExclusive",
+            "sharedBusLane"
           ],
           true,
           false
@@ -69,11 +74,15 @@
           "match",
           ["get", "category"],
           [
-            "cyclewayAlone",
-            "footAndCycleway_segregated",
             "bicycleRoad",
-            "cyclewaySeparated",
-            "cyclewayBetweenLanes"
+            "footAndCyclewaySegregated_adjoining",
+            "footAndCyclewaySegregated_isolated",
+            "footAndCyclewaySegregated_adjoiningOrIsolated",
+            "crossing",
+            "cycleway_adjoining",
+            "cycleway_isolated",
+            "cycleway_isolatedOrIdjoining",
+            "cyclewayLink"
           ],
           true,
           false
