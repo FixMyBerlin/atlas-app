@@ -77,9 +77,12 @@ export const SourcesAndLayers: React.FC = () => {
               const styleData = getStyleData(curTopicData, styleConfig.id)
               // A style is visible when
               // … the theme is active (handled above) AND
-              // … the topic is active AND
-              // … the style is active (which includes 'default' via the config initialization)
-              const visibility = layerVisibility(currTopicConfig.active && styleConfig.active)
+              // … the current topic is active AND
+              // … the current topic's style is active (which includes 'default' via the config initialization)
+              const currStyleConfig = currTopicConfig.styles.find((s) => s.id === styleConfig.id)
+              const visibility = layerVisibility(
+                (currTopicConfig.active && currStyleConfig?.active) || false
+              )
 
               return styleData?.layers.map((layer) => {
                 const layerId = createSourceTopicStyleLayerKey(
