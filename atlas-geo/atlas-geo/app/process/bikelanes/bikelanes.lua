@@ -77,6 +77,7 @@ local allowed_tags = Set({
   'separation',
   'separation:left',
   'separation:right',
+  'lane', -- 'cycleway:SIDE:lane'
 })
 
 function osm2pgsql.process_way(object)
@@ -179,6 +180,7 @@ function osm2pgsql.process_way(object)
     'dual_carriageway',
   })
   FilterTags(tags, allowed_tags_presence)
+
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),

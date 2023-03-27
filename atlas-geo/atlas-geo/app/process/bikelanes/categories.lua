@@ -1,3 +1,5 @@
+require("IsTermInString")
+
 NOT_EXPECTED = 'not_expected'
 -- PREDICATES FOR EACH CATEGORY:
 
@@ -25,10 +27,10 @@ end
 -- Handle `highway=pedestrian + bicycle=yes/!=yes`
 -- Include "Fußgängerzonen" only when explicitly allowed for bikes. "dismount" does counts as "no"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dpedestrian
-local function pedestiranArea(tags)
-  local result = tags.highway == "pedestrian" and tags.bicycle == "yes"
-  if result then
-    return "pedestrianArea_bicycleYes"
+local function pedestrianAreaBicycleYes(tags)
+  -- area=yes is allowed; all other category disallow it
+  if tags.highway == "pedestrian" and tags.bicycle == "yes" then
+    return "pedestrianAreaBicycleYes"
   end
 end
 
@@ -36,170 +38,190 @@ end
 -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
 local function livingStreet(tags)
-  local result = tags.highway == "living_street" and not tags.bicycle == "no"
-  if result then
+  if tags.highway == "living_street" and not tags.bicycle == "no" then
     return "livingStreet"
   end
 end
 
 -- Handle `bicycle_road=yes` and traffic_sign
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
--- tag: "bicycleRoad"
+-- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:244
 local function bicycleRoad(tags)
-  local result = tags.bicycle_road == "yes" or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244")
-  if result then
+  if tags.bicycle_road == "yes"
+      or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
     return "bicycleRoad"
   end
 end
 
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
-local function footAndCyclewayShared(tags)
+local function footAndCyclewaySharedCases(tags)
+  if tags.area == "yes" then return end
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    if tags.is_sidepath == "yes" then
-      return "footAndCycleway_shared_adjoining"
+    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
+      return "footAndCyclewayShared_adjoining"
     end
-    if tags.is_sidepath == "no" then
-      return "footAndCycleway_shared_isolated"
+    -- Eg https://www.openstreetmap.org/way/440072364 highway=service
+    if tags.is_sidepath == "no" or tags.highway == "service" then
+      return "footAndCyclewayShared_isolated"
     end
-    return "footAndCycleway_shared" -- todo "footAndCycleway_shared_unknown"
+    return "footAndCyclewayShared_adjoiningOrIsolated"
   end
 end
 
 -- Handle "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
-local function footAndCyclewaySegregated(tags)
+local function footAndCyclewaySegregatedCases(tags)
+  if tags.area == "yes" then return end
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    if tags.is_sidepath == "yes" then
-      return "footAndCycleway_segregated_adjoining"
+    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
+      return "footAndCyclewaySegregated_adjoining"
     end
     if tags.is_sidepath == "no" then
-      return "footAndCycleway_segregated_isolated"
+      return "footAndCyclewaySegregated_isolated"
     end
-    return "footAndCycleway_segregated" -- todo "footAndCycleway_segregated_unknown"
+    return "footAndCyclewaySegregated_adjoiningOrIsolated"
   end
 end
 
--- Handle "Gehweg, Fahrrad frei"
--- traffic_sign=DE:239,1022-10, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:239
-local function footwayBicycleAllowed(tags)
-  local result = tags.highway == "footway" or tags.highway == "path"
-  -- Note: We might be missing some traffic_sign that have mulibe secondary signs like "DE:239,123,1022-10". That's OK for now…
-  -- Note: For ZES we explicity checked that the traffic_sign is not on a highway=cycleway; we do the same here but differently
-  result = result and
-      (tags.bicycle == "yes" or osm2pgsql.has_prefix(tags.traffic_sign, "DE:239,1022-10") or tags.traffic_sign == 'DE:1022-10')
-  -- The access based tagging would include free running path through woods like https://www.openstreetmap.org/way/23366687
-  -- We filter those based on mtb:scale=*.
-  result = result and not tags["mtb:scale"]
-  if result then
-    return "footway_bicycleYes"
+-- Case: "Gehweg, Fahrrad frei"
+-- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:239
+local function footwayBicycleYesCases(tags)
+  -- mtb:scale=* is a strong indicator for path' that we do not want to show, so we skip them;
+  --    This will likely need a better solution in the future.
+  --    Eg https://www.openstreetmap.org/way/23366687
+  if tags["mtb:scale"] then return end
+  if tags.area == "yes" then return end
+
+  if tags.highway == "footway" or tags.highway == "path" then
+    if tags.bicycle == "yes" or IsTermInString("1022-10", tags.traffic_sign) then
+      -- https://www.openstreetmap.org/way/946438663
+      if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
+        return "footwayBicycleYes_isolated"
+      end
+      if tags.is_sidepath == "no" then
+        return "footwayBicycleYes_adjoining"
+      end
+      return "footwayBicycleYes_adjoiningOrIsolated"
+    end
   end
 end
 
--- Handle "baulich abgesetzte Radwege" ("Protected Bike Lane")
+-- Handle different cases for separated bikelanes ("baulich abgesetzte Radwege")
+-- The sub-tagging specifies if the cycleway is part of a road or a separate way.
 -- This part relies heavly on the `is_sidepath` tagging.
-local function cyclewaySeparated(tags)
-  -- Case: Separate cycleway identified via traffic_sign
-  -- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
-  -- (Note: cycleway==track is not very common)
-  --    Eg https://www.openstreetmap.org/way/964476026
-  local result = tags.traffic_sign == "DE:237"
+local function cyclewaySeparatedCases(tags)
+  -- Case "Hochbordradwege"
+  -- Detailled tagging to separate this case from `footAndCyclewaySegregatedCases`
+  if tags.highway == "path"
+      and (tags.foot == "yes" or tags.foot == "designated")
+      and (tags.bicycle == "yes" or tags.bicycle == "designated")
+      and tags.segregated == "yes"
       and tags.is_sidepath == "yes"
-      and (tags.cycleway == "track" or tags.cycleway == "opposite_track")
-
-  if tags.highway == "cycleway" then
-    -- Case: Separate cycleway next to a road
-    --    Eg https://www.openstreetmap.org/way/278057274
-    result = tags.is_sidepath == "yes"
-    -- Case: The crossing version of a separate cycleway next to a road
-    -- The same case as the is_sidepath=yes above, but on crossings we don't set that.
-    --    Eg https://www.openstreetmap.org/way/963592923
-    result = result or tags.cycleway == "crossing"
-    -- Case: Separate cycleway identified via "track"-tagging. Only handle through center line!
-    --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
-    --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-    result = result or tags.cycleway == "track" or tags.cycleway == "opposite_track"
-
-    -- TODO: Removed for now, we might need it later? (otherwise delete…)
-    -- Case: Separate cycleway
-    --    https://www.openstreetmap.org/way/989837901/
-    -- result = result or tags.bicycle == 'yes' or tags.bicycle == "designated" and (tags.foot == "no" or tags.foot == nil) -- maybe use foot ~= yes instead
+      and not IsTermInString("241", tags.traffic_sign) then
+    return "cycleway_adjoining"
   end
 
+  -- traffic_sign=DE:237, "Radweg", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
+  -- cycleway=track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
+  -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
+  if tags.traffic_sign == "DE:237"
+      or (tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath)) then
+    -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
+    if tags.is_sidepath == "yes" or tags._parent_highway then
+      -- This could be PBLs "Protected Bike Lanes"
+      -- Eg https://www.openstreetmap.org/way/964476026
+      -- Eg https://www.openstreetmap.org/way/278057274
+      return "cycleway_adjoining"
+    end
+    if tags.is_sidepath == "no" then
+      -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
+      -- Eg https://www.openstreetmap.org/way/27701956
+      return "cycleway_isolated"
+    end
+    return "cycleway_isolatedOrIdjoining"
+  end
+end
+
+-- Case: Crossing
+--    Examples https://github.com/FixMyBerlin/atlas-app/issues/23
+local function crossing(tags)
+  local result = tags.highway == "cycleway" and tags.cycleway == "crossing"
+  result = result or
+      tags.highway == "path" and tags.path == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated")
+  result = result or
+      tags.highway == "footway" and tags.footway == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated")
+
   if result then
-    return "cyclewaySeparated"
+    return "crossing"
+  end
+end
+
+-- Case: "Link", a road segment that is required to create a routable network but (most of the time) does not represent physical infrastructure)
+local function cyclewayLink(tags)
+  if tags.highway == "cycleway" and tags.cycleway == "link" then
+    return "cyclewayLink"
   end
 end
 
 -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
-local function cyclewayOnHighway(tags)
-  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
-  -- TODO https://github.com/FixMyBerlin/private-issues/issues/574
-  -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
-  -- if result and tags['cycleway:lane'] == 'advisory' then
-  --   DE: Schutzstreifen
-  --   return "cyclewayOnHighway_advisory"
-  -- end
-  -- if result and tags['cycleway:lane'] == 'exclusive' then
-  --   DE: Radfahrstreifen
-  --   return "cyclewayOnHighway_exclusive"
-  -- end
-  if result then
-    return "cyclewayOnHighway_unspecified"
+local function cyclewayOnHighwayCases(tags)
+  if tags.highway == 'cycleway' then
+    if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
+      -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
+      if tags['lane'] == 'advisory' then
+        -- DE: Schutzstreifen
+        return "cyclewayOnHighway_advisory"
+      end
+      if tags['lane'] == 'exclusive' then
+        -- DE: Radfahrstreifen
+        return "cyclewayOnHighway_exclusive"
+      end
+      return "cyclewayOnHighway_advisoryOrExclusive"
+    end
   end
 end
 
 -- Case: Cycleway identified via "shared_lane"-tagging ("Anteilig genutzten Fahrstreifen")
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dshared_lane
-local function cyclewayOnHighwayShared(tags)
+local function sharedMotorVehicleLane(tags)
   local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
   if result then
-    return "cyclewayOnHighway_shared"
+    return "sharedMotorVehicleLane"
   end
 end
 
-local function cyclewayBetweenLanes(tags)
-  -- Handle  "Radweg in Mittellage", mainly cyclways which are left of the (right) turn lane
-  -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
-  -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
+-- Case: "Radweg in Mittellage", mainly cyclways which are left of the (right) turn lane
+-- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
+-- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
+local function cyclewayOnHighwayBetweenLanes(tags)
   if tags['_parent_highway'] == nil or tags.prefix == 'sidewalk' then return end
-  if tags['cycleway:lanes'] and string.find(tags['cycleway:lanes'], "|lane|", 1, true)
-      or tags['bicycle:lanes'] and string.find(tags['bicycle:lanes'], "|designated|", 1, true) then
-    return "cyclewayBetweenLanes"
+
+  if IsTermInString("|lane|", tags['cycleway:lanes']) or IsTermInString("|designated|", tags['bicycle:lanes']) then
+    return "cyclewayOnHighwayBetweenLanes"
   end
 end
 
--- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
--- Eg. https://www.openstreetmap.org/way/27701956
--- traffic_sign=DE:237, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
--- tag: "cyclewayAlone"
-local function cyclewayAlone(tags)
-  local result = tags.highway == "cycleway" and tags.traffic_sign == "DE:237"
-  result = result and (tags.is_sidepath == nil or tags.is_sidepath == "no")
-  if result then
-    return "cyclewayAlone"
-  end
-end
-
-local function cyclewayBuslane(tags)
-  -- TODO: check for other cases
-  local result = tags.highway == "cycleway"
-  result = result and tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway"
-  if result then
-    return "cyclewayAlone"
+local function sharedBusLane(tags)
+  if tags.highway == "cycleway" then
+    if tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway" then
+      return "sharedBusLane" -- (until 2023-03-2: cyclewayAlone)
+    end
   end
 end
 
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
-local function cyclewayNeedsClarification(tags)
+local function needsClarification(tags)
   if tags.highway == "cycleway" then
     return "needsClarification"
   end
@@ -224,19 +246,22 @@ end
 function CategorizeBikelane(tags)
   -- The order specifies the precedence; first one with a result win.
   local categories = {
-    cyclewayBetweenLanes,
-    pedestiranArea,
+    cyclewayLink,
+    crossing,
     livingStreet,
     bicycleRoad,
-    footAndCyclewayShared,
-    footAndCyclewaySegregated,
-    footwayBicycleAllowed,
-    cyclewaySeparated,
-    cyclewayOnHighway,
-    cyclewayOnHighwayShared,
-    cyclewayAlone,
-    cyclewayBuslane,
-    cyclewayNeedsClarification,
+    sharedBusLane,
+    pedestrianAreaBicycleYes,
+    sharedMotorVehicleLane,
+    -- Detailed tagging cases
+    cyclewayOnHighwayBetweenLanes,
+    footAndCyclewaySharedCases,
+    footAndCyclewaySegregatedCases,
+    cyclewaySeparatedCases,
+    cyclewayOnHighwayCases,
+    footwayBicycleYesCases, -- after `cyclewaySeparatedCases`
+    -- Needs to be last
+    needsClarification,
   }
   return defineCategory(tags, categories)
 end
