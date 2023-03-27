@@ -125,7 +125,7 @@ function osm2pgsql.process_way(object)
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
-
+        cycleway.oneway = cycleway.oneway or 'yes (implicit)'
         -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
 
