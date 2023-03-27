@@ -1,3 +1,5 @@
+require("Metadata")
+
 function IntoExcludeTable(table, object, reason)
   table:insert({
     tags = object.tags,

@@ -1,3 +1,5 @@
+require("Set")
+
 -- * @desc If and why a highway object should be excluded based on its tags.
 -- * @returns { boolean (shouldFilter), string (reason) }
 function ExcludeHighways(tags)

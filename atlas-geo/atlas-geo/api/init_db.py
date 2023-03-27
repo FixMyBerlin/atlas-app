@@ -1,4 +1,4 @@
-from constants import export_geojson_function_from_type, verification_tables, joined_tables
+from db_configuration import export_geojson_function_from_type, verification_tables, joined_tables
 from db import conn_string
 import psycopg2
 from pathlib import Path
