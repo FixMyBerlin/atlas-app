@@ -54,11 +54,17 @@ end
 
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
-local function footAndCycleway(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
-  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
-  if result then
-    return "footAndCycleway_shared"
+local function footAndCyclewayShared(tags)
+  local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
+  if taggedWithAccessTagging or taggedWithTrafficsign then
+    if tags.is_sidepath == "yes" then
+      return "footAndCycleway_shared_adjoining"
+    end
+    if tags.is_sidepath == "no" then
+      return "footAndCycleway_shared_isolated"
+    end
+    return "footAndCycleway_shared" -- todo "footAndCycleway_shared_unknown"
   end
 end
 
@@ -66,10 +72,16 @@ end
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
 local function footAndCyclewaySegregated(tags)
-  local result = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
-  result = result or osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
-  if result then
-    return "footAndCycleway_segregated"
+  local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
+  if taggedWithAccessTagging or taggedWithTrafficsign then
+    if tags.is_sidepath == "yes" then
+      return "footAndCycleway_segregated_adjoining"
+    end
+    if tags.is_sidepath == "no" then
+      return "footAndCycleway_segregated_isolated"
+    end
+    return "footAndCycleway_segregated" -- todo "footAndCycleway_segregated_unknown"
   end
 end
 
@@ -127,15 +139,29 @@ end
 -- Case: Cycleway identified via "lane"-tagging, which means it is part of the highway.
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dlane
 --    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_lane
---    https://wiki.openstreetmap.org/w/index.php?title=Tag:cycleway%3Dshared_lane&uselang=en
 local function cyclewayOnHighway(tags)
-  local result = false
-  if tags.highway == 'cycleway' then
-    result = (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
-    result = result or tags.cycleway == "shared_lane"
-  end
+  local result = tags.highway == 'cycleway' and (tags.cycleway == "lane" or tags.cycleway == "opposite_lane")
+  -- TODO https://github.com/FixMyBerlin/private-issues/issues/574
+  -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
+  -- if result and tags['cycleway:lane'] == 'advisory' then
+  --   DE: Schutzstreifen
+  --   return "cyclewayOnHighway_advisory"
+  -- end
+  -- if result and tags['cycleway:lane'] == 'exclusive' then
+  --   DE: Radfahrstreifen
+  --   return "cyclewayOnHighway_exclusive"
+  -- end
   if result then
-    return "cyclewayOnHighway"
+    return "cyclewayOnHighway_unspecified"
+  end
+end
+
+-- Case: Cycleway identified via "shared_lane"-tagging ("Anteilig genutzten Fahrstreifen")
+--    https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dshared_lane
+local function cyclewayOnHighwayShared(tags)
+  local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
+  if result then
+    return "cyclewayOnHighway_shared"
   end
 end
 
@@ -149,7 +175,6 @@ local function cyclewayBetweenLanes(tags)
     return "cyclewayBetweenLanes"
   end
 end
-
 
 -- Handle "frei geführte Radwege", dedicated cycleways that are not next to a road
 -- Eg. https://www.openstreetmap.org/way/27701956
@@ -203,11 +228,12 @@ function CategorizeBikelane(tags)
     pedestiranArea,
     livingStreet,
     bicycleRoad,
-    footAndCycleway,
+    footAndCyclewayShared,
     footAndCyclewaySegregated,
     footwayBicycleAllowed,
     cyclewaySeparated,
     cyclewayOnHighway,
+    cyclewayOnHighwayShared,
     cyclewayAlone,
     cyclewayBuslane,
     cyclewayNeedsClarification,

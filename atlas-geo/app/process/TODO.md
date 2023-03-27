@@ -1,9 +1,3 @@
-# Straßentypen
-
-Aus Sicht der Viewer App gehe ich davon aus, dass es einen Datensatz "Straßentypen" gibt, den ich auf zwei Weisen visualisieren kann "OSM" oder "Erweitert" (ZES).
-
-=> Ich muss das LUA Script umbauen, die SQL Tabelle heißt "roadtypes", die category heißt "categoryOsm" (vs) categoryCustom??
-
 # Tests
 
 - Bash-Script, dass im Ordner helper alle .test files findet und aufruft.

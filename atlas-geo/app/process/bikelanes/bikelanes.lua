@@ -56,6 +56,7 @@ local allowed_tags = Set({
   'bicycle',
   'conditional',
   'cycleway',
+  'cycleway:lane', -- 'advisory', 'exclusive'
   'dual_carriageway',
   'foot',
   'footway',
@@ -124,8 +125,8 @@ function osm2pgsql.process_way(object)
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
-
-        -- Freshness of data (ATER `FilterTags`!)
+        cycleway.oneway = cycleway.oneway or 'yes (implicit)'
+        -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
 
         cycleway.offset = sign * width / 2

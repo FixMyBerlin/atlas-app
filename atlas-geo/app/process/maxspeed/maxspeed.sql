@@ -18,16 +18,18 @@
 -- add these ways with a constant maxspeed and `present=false` into maxspeed table
 SELECT ST_Transform(geom, 25833) from landuse where tags->>'landuse' = 'residential';
 
-INSERT INTO "maxspeed_transformed"
-  SELECT   maxspeed.*
-  FROM "fromTo_landuse" as landuse, "_maxspeed_missing" as maxspeed
+INSERT INTO "_maxspeed_missing"
+  SELECT maxspeed.*
+  FROM
+    "landuse" as landuse,
+    "_maxspeed_missing" as maxspeed
   WHERE ST_Intersects(maxspeed.geom::geometry , ST_Expand(landuse.geom, 10)::geometry);
 
--- UPDATE "maxspeed_transformed" SET "_maxspeed_source" = 'infereed from landuse';
+update "_maxspeed_missing"
+set tags = jsonb_set(tags, '{maxspeed_source}','"inferred_from_landuse"');
 
-update "maxspeed_transformed"
-set  tags = jsonb_set(tags, '{_maxspeed_source}','"infereed from landuse"');
+update "_maxspeed_missing"
+set tags = jsonb_set(tags, '{maxspeed_confidence}','"low"');
 
-update "maxspeed_transformed"
-set  tags = jsonb_insert(tags, '{maxspeed}','"add maxspeed:source=DE:urban to way"');
-
+update "_maxspeed_missing"
+set tags = jsonb_insert(tags, '{_todo}','"add maxspeed:source=DE:urban to way"');
