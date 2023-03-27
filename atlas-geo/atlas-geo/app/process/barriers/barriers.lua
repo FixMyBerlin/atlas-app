@@ -24,6 +24,16 @@ local lineBarriers = osm2pgsql.define_table({
   }
 })
 
+local excludedLineBarriers = osm2pgsql.define_table({
+  name = 'excludedLineBarriers',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+  }
+})
+
 local areaBarriers = osm2pgsql.define_table({
   name = 'areaBarriers',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -34,8 +44,8 @@ local areaBarriers = osm2pgsql.define_table({
   }
 })
 
-local excludedBarriers = osm2pgsql.define_table({
-  name = 'excludedBarriers',
+local excludedAreaBarriers = osm2pgsql.define_table({
+  name = 'excludedAreaBarriers',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -45,12 +55,20 @@ local excludedBarriers = osm2pgsql.define_table({
 })
 
 
-function isAreaBarrier(object)
+local allowedTags = Set({
+  'tunnel',
+  'waterway',
+  'aerodrome',
+  'name',
+  'natural',
+  'railway',
+  'usage',
+  'circumference',
+  'area',
+})
+
+local function isAreaBarrier(object)
   local tags = object.tags
-  if object.type =='way' and not object.is_closed then
-    --only process ways iff closed
-    return false
-  end
   local isBarrier = false
 
   if tags.natural == 'water' then
@@ -59,16 +77,15 @@ function isAreaBarrier(object)
     -- TODO: IMO it would be better to have this check on the single polygons of a multipolygon
     if area > 100000 then
       isBarrier = true
+      tags.area = area
     elseif object.type == 'way' then
-      isBarrier = isBarrier or object:as_linestring():transform(3857):length() > 1000
-    else
-      excludedBarriers:insert({
-        tags=object.tags,
-        meta=Metadata(object),
-        geom=object:as_multipolygon()
-      })
+      local circumference = object:as_linestring():transform(3857):length()
+      tags.circumference = circumference
+      if circumference > 1000 then
+        isBarrier = isBarrier or (area / circumference) < 3
+        isBarrier = true
+      end
     end
-    --TODO exclude list
   end
 
   isBarrier = isBarrier or tags.aeroway == 'aerodrome'
@@ -77,47 +94,64 @@ function isAreaBarrier(object)
 end
 
 function osm2pgsql.process_way(object)
-  -- isBarrier = isBarrier or tags.aeroway=='aerodrome'
-  if isAreaBarrier(object) then
-  areaBarriers:insert({
-    tags = object.tags,
-    meta=Metadata(object),
-    geom=object:as_multipolygon()
-  })
-  else
+  if object.is_closed then -- process as polygon
+    if isAreaBarrier(object) then
+      FilterTags(object.tags, allowedTags)
+      areaBarriers:insert({
+        tags = object.tags,
+        meta=Metadata(object),
+        geom=object:as_multipolygon()
+      })
+      return
+    end
+    excludedAreaBarriers:insert({
+      tags=object.tags,
+      meta=Metadata(object),
+      geom=object:as_multipolygon()
+    })
+    return
+  else --process as linestring
     local tags = object.tags
     if tags.tunnel =='yes' then return end -- we don't consider tunnels as barriers
 
     local isBarrier = HighwayClasses[tags.highway]
 
-    -- we shouldn't need these as every waterway should have a feature describing its area
-    -- local waterBarriers = Set({"river", "canal"})
-    -- isBarrier = isBarrier or waterBarriers[tags.waterway]
+    -- only need for low zoom levels
+    local waterBarriers = Set({"river", "canal"})
+    isBarrier = isBarrier or waterBarriers[tags.waterway]
 
     local trainBarriers = Set({"main", "branch"})
     isBarrier = isBarrier or (tags.railway == 'rail' and trainBarriers[tags.usage])
-    if tags.natural == 'water' then
-      local coastLength = object:as_linestring():transform(3857):length()
-      isBarrier = isBarrier or coastLength > 1000
-    end
     if isBarrier then
-      -- TODO: filter tags
+      FilterTags(object.tags, allowedTags)
       lineBarriers:insert({
         tags = object.tags,
         meta=Metadata(object),
         geom=object:as_linestring(),
       })
+      return
     end
+    excludedLineBarriers:insert({
+      tags=object.tags,
+      meta=Metadata(object),
+      geom=object:as_linestring()
+    })
   end
 end
 
 function osm2pgsql.process_relation(object)
   if isAreaBarrier(object) then
-    -- TODO: filter tags
+    FilterTags(object.tags, allowedTags)
     areaBarriers:insert({
       tags = object.tags,
       meta=Metadata(object),
       geom=object:as_multipolygon()
     })
+    return
   end
+  excludedAreaBarriers:insert({
+    tags=object.tags,
+    meta=Metadata(object),
+    geom=object:as_multipolygon()
+  })
 end
