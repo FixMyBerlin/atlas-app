@@ -42,7 +42,7 @@ verification_tables = {
   "lit": "lit_verification",
 }
 
-# Format: { "<DV View Name>": "<Verified-Table>"  }
+# Format: { "<DB View Name>": "<Verified-Table>"  }
 # init_db.py: Used as part of the table view creation
 joined_tables = {
   "bikelanes_verification": "bikelanes_verified",

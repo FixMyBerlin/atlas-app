@@ -36,7 +36,7 @@ conn = psycopg2.connect(conn_string)
 
 @app.get("/export/{type_name}")
 def export_region(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
-    if type_name not in valid_verified_datasets:
+    if type_name not in export_geojson_function_from_type:
       raise HTTPException(status_code=404, detail="export type unknown")
 
     with conn.cursor() as cur:
