@@ -1,6 +1,7 @@
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
+import { ConditionalFormattedValue } from '../translations'
 
 type Props = Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
   properties: GeoJSONFeature['properties']
@@ -112,7 +113,13 @@ export const TagsTableRowCompositTrafficSign: React.FC<Props> = ({
         key={tagKey}
         sourceId={sourceId}
         tagKey={tagKey}
-        value={properties['traffic_sign']}
+        value={
+          <ConditionalFormattedValue
+            sourceId={sourceId}
+            tagKey={'traffic_sign'}
+            tagValue={properties['traffic_sign']}
+          />
+        }
       />
     )
   }

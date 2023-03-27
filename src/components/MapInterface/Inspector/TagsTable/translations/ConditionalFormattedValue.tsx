@@ -61,7 +61,14 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   }
 
   // Some TagKeys are not specific per category; we only translate those once
-  const nonCategorizedTagKeys = ['_parent_highway', 'highway', 'oneway', 'smoothness', 'surface']
+  const nonCategorizedTagKeys = [
+    '_parent_highway',
+    'highway',
+    'oneway',
+    'smoothness',
+    'surface',
+    'traffic_sign',
+  ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
     key = `ALL--${tagKey}=${tagValue}`
   }

@@ -53,6 +53,7 @@ export const translations: { [key: string]: string } = {
   'ALL--surface=unhewn_cobblestone': 'Kopfsteinpflaster',
   'ALL--surface=unpaved': 'Unbefestigt (unspezifisch)',
   'ALL--traffic_sign--key': 'Verkehrszeichen',
+  'ALL--traffic_sign=none': 'Unbeschildert',
   'ALL--width--key': 'Breite',
   'mapillary_coverage--title': 'Mapillary Foto',
   'parkraumParking--capacity_status--key': 'Vollständigkeit',
