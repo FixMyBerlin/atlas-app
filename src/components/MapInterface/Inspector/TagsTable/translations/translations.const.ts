@@ -144,6 +144,7 @@ export const translations: { [key: string]: string } = {
   'tarmac_bikelanes--oneway--key': 'Einbahnstraße',
   'tarmac_bikelanes--oneway=no': '(!) Sonderfall: Zwei-Richtungs-Radweg (in einer Geometrie dargestellt)',
   'tarmac_bikelanes--oneway=yes': 'Ein-Richtungs-Radweg',
+  'tarmac_bikelanes--oneway=implicit_yes': 'Ein-Richtungs-Radweg (implizite Angabe)',
   'tarmac_bikelanes--title': 'Daten zur Radinfrastruktur',
   'tarmac_bikelanesPresence--left--key': 'Vollständigkeit Links (Linienrichtung)',
   'tarmac_bikelanesPresence--LEFTRIGHTSELF--key': 'Vollständigkeit Links (Linienrichtung)',
