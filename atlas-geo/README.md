@@ -19,8 +19,20 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 
 ### Server
 
-- https://tiles.radverkehrsatlas.de/
-- https://staging-tiles.radverkehrsatlas.de/
+**Production:**
+
+- Tiles https://tiles.radverkehrsatlas.de/
+- API https://api.radverkehrsatlas.de/export/… (Links available via radverkehrsatlas.de)
+
+**Staging:**
+
+- Tiles https://staging-tiles.radverkehrsatlas.de/
+- API https://staging-api.radverkehrsatlas.de/export/…
+
+**Development:**
+
+- Tiles http://localhost:7800/
+- API http://localhost/export/…
 
 ### Data update
 
