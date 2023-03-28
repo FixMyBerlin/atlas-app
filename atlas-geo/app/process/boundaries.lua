@@ -2,6 +2,7 @@ local srid = 4326
 
 -- TODO: This is the only table that does not use jsonb to store the tags.
 -- Which means it breaks when we try to use our export script.
+-- It also lacks a jsonb meta column.
 -- See also db_configuration.py.
 
 local table = osm2pgsql.define_area_table('boundaries', {
