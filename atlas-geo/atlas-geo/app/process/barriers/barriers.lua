@@ -102,7 +102,7 @@ function osm2pgsql.process_way(object)
     return
   else --process as linestring
     local tags = object.tags
-    if tags.tunnel =='yes' then return end -- we don't consider tunnels as barriers
+    -- if tags.tunnel =='yes' then return end -- we don't consider tunnels as barriers
 
     local isBarrier = HighwayClasses[tags.highway]
 
