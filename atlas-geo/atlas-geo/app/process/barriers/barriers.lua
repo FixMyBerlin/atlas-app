@@ -55,6 +55,8 @@ local allowedTags = Set({
   'usage',
   'circumference',
   'area',
+  'highway',
+  'bridge',
 })
 
 local function isAreaBarrier(object)
