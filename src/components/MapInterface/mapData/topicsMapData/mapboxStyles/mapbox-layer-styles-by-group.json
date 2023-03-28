@@ -958,7 +958,7 @@
             4,
             ["unclassified"],
             3,
-            ["service"],
+            ["service_alley", "service_road"],
             2,
             1
           ],
@@ -987,12 +987,10 @@
             "#80a3ea",
             ["footway", "cycleway"],
             "#629fb7",
-            ["service_drive_through", "trunk", "trunk_link"],
+            ["service_drive_through", "service_parking_aisle", "trunk", "trunk_link"],
             "rgba(251, 40, 40, 0)",
-            ["service"],
+            ["service_road", "service_alley"],
             "#e6d6a2",
-            ["service_alley"],
-            "#787878",
             "#000000"
           ]
         }
@@ -1019,219 +1017,6 @@
             "hsla(252, 91%, 38%, 0)"
           ],
           "line-dasharray": [1.5, 1.5]
-        },
-        "layout": {}
-      }
-    ]
-  },
-  {
-    "group": "atlas_roadclassification",
-    "layers": [
-      {
-        "id": "fmc-strassentypen copy",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.5, 13, 1.5, 22, 5],
-          "line-color": [
-            "case",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
-              ["true"],
-              true,
-              false
-            ],
-            "#3cc8a0",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typHauptUndSammelstrasse"],
-              ["true"],
-              true,
-              false
-            ],
-            "#dc9404",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-              ["true"],
-              true,
-              false
-            ],
-            "hsla(313, 18%, 69%, 0.37)",
-            ["match", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ["true"], true, false],
-            "hsl(28, 97%, 47%)",
-            ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
-            "hsla(97, 56%, 51%, 0)",
-            "hsla(97, 56%, 51%, 0)"
-          ],
-          "line-opacity": 0.84
-        },
-        "layout": {}
-      }
-    ]
-  },
-  {
-    "group": "atlas_roadclassification_detailed",
-    "layers": [
-      {
-        "id": "backup-strassentypen-no-verifikation-done copy 2",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1.5, 13, 5, 18, 10],
-          "line-color": "hsl(330, 0%, 38%)",
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 12, 0, 12.6, 0.5, 18, 0.7]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-            ["false"],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
-            ["false", "true"],
-            false,
-            true
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
-            ["true"],
-            false,
-            true
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "strassentypen-no-verifikation-done copy 3",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 3, 12.2, 4, 13, 8, 18, 20],
-          "line-color": "#fa7fe2",
-          "line-opacity": ["interpolate", ["linear"], ["zoom"], 12.1, 0, 12.2, 1, 18, 1]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-            ["false"],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
-            ["false", "true"],
-            false,
-            true
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
-            ["true"],
-            false,
-            true
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "strassentypen-unverified",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
-          "line-color": "#d10000",
-          "line-dasharray": [1, 0.1]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-            ["false"],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:gehUndRadwegGemeinsam"],
-            ["true"],
-            true,
-            false
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "strassentypen-verified",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 5, 13, 8, 18, 20],
-          "line-color": "#5bf231",
-          "line-dasharray": [1, 0.1]
-        },
-        "filter": [
-          "all",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-            ["false"],
-            true,
-            false
-          ],
-          [
-            "match",
-            ["get", "FMC:Category:BicycleWayData:radwegBaulichAbgesetzt"],
-            ["true"],
-            true,
-            false
-          ]
-        ],
-        "layout": {}
-      },
-      {
-        "id": "fmc-strassentypen",
-        "type": "line",
-        "paint": {
-          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 1, 13, 2.5, 18, 10],
-          "line-color": [
-            "case",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
-              ["true"],
-              true,
-              false
-            ],
-            "#3cc8a0",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typHauptUndSammelstrasse"],
-              ["true"],
-              true,
-              false
-            ],
-            "#dc9404",
-            [
-              "match",
-              ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-              ["true"],
-              true,
-              false
-            ],
-            "hsla(313, 18%, 69%, 0.37)",
-            ["match", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ["true"], true, false],
-            "hsl(28, 97%, 47%)",
-            ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
-            "hsla(97, 56%, 51%, 0)",
-            "hsla(97, 56%, 51%, 0)"
-          ]
         },
         "layout": {}
       }

@@ -22,8 +22,6 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_roadclass_oneway'
   | 'atlas_roadclass_roadclass'
   | 'atlas_roadclass_surface'
-  | 'atlas_roadclassification'
-  | 'atlas_roadclassification_detailed'
   | 'parking_bufferdriveways'
   | 'parking_bufferkerbintersections'
   | 'parking_calculator'
@@ -75,12 +73,6 @@ export type MapboxStyleLayerGroupRoadclassIds =
   | 'atlas_roadclass_oneway'
   | 'atlas_roadclass_roadclass'
   | 'atlas_roadclass_surface'
-  | 'atlas_roadclassification'
-  | 'atlas_roadclassification_detailed'
-
-export type MapboxStyleLayerGroupRoadclassificationIds =
-  | 'atlas_roadclassification'
-  | 'atlas_roadclassification_detailed'
 
 export type MapboxStyleLayerGroupBufferdrivewaysIds = 'parking_bufferdriveways'
 
