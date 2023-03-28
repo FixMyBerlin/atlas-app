@@ -17,6 +17,8 @@ export_geojson_function_from_type = {
   "poiClassification":  "atlas_export_geojson_shops",
   "publicTransport":    "atlas_export_geojson_publictransport",
   "roadClassification": "atlas_export_geojson_roadtypes",
+  "barrierLines":       "atlas_export_geojson_barrierLines",
+  "barrierAreas":       "atlas_export_geojson_barrierAreas"
 }
 
 # main.py: Used as an allow list to guard the /verify/* API
