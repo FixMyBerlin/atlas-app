@@ -111,7 +111,9 @@ function osm2pgsql.process_way(object)
     isBarrier = isBarrier or waterBarriers[tags.waterway]
 
     local trainBarriers = Set({"main", "branch"})
-    isBarrier = isBarrier or (tags.railway == 'rail' and trainBarriers[tags.usage])
+    if (tags.railway == 'rail' or tags.railway == 'lightrail') then
+      isBarrier = isBarrier or trainBarriers[tags.usage]
+    end
     if isBarrier then
       FilterTags(object.tags, allowedTags)
       lineBarriers:insert({
