@@ -80,8 +80,11 @@ function osm2pgsql.process_way(object)
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if object.tags.highway == "service" then
     -- Fallback:
-    object.tags.category = 'service_unspecified'
+    object.tags.category = 'service_uncategorized'
     -- https://taginfo.openstreetmap.org/keys/service#values
+    if object.tags.service == nil then
+      object.tags.category = "service_road"
+    end
     if object.tags.service == 'alley' then
       object.tags.category = "service_alley"
     end
