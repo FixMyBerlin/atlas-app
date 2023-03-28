@@ -4,10 +4,10 @@ CREATE OR REPLACE FUNCTION public.{func_name}(minlon double precision, minlat do
  LANGUAGE sql
 AS $function$
 	SELECT json_build_object(
-	    'type',     'FeatureCollection',
-      'license', 'ODbL 1.0, https://opendatacommons.org/licenses/odbl/',
-      'attribution', 'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de',
-	    'features', json_agg(features.feature)
+	    'type',         'FeatureCollection',
+      'license',      'ODbL 1.0, https://opendatacommons.org/licenses/odbl/',
+      'attribution',  'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de',
+	    'features',     json_agg(features.feature)
 	)
 	FROM (
 	  SELECT jsonb_build_object(
