@@ -25,7 +25,7 @@ local lineBarriers = osm2pgsql.define_table({
 })
 
 local excludedLineBarriers = osm2pgsql.define_table({
-  name = 'excludedLineBarriers',
+  name = 'barrierLines_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
