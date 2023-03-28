@@ -2,6 +2,7 @@
 set -e
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
+ID_FILTER=""
 
 FILTER_DIR="./filter/"
 OSM_DATADIR="/data/" # root for docker
@@ -35,7 +36,10 @@ if [ -f "${OSM_GERMANY}" ]; then
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
     osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_REGIONS}
   fi
-
+  if [ "$ID_FILTER" != "" ]; then
+    echo "\e[1m\e[7m Seacrhing for osm-id: ${ID_FILTER}\e[27m\e[21m"
+    osmium getid --overwrite --output=${OSM_FILTERED_FILE} --verbose-ids ${OSM_FILTERED_FILE} ${ID_FILTER}
+  fi
 else
   echo "Filter: 🧨 file ${OSM_GERMANY} not found"
 fi
