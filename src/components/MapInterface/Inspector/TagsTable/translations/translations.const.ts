@@ -222,4 +222,5 @@ export const translations: { [key: string]: string } = {
   'tarmac_poiClassification--type=amenity-kindergarten': 'Kindergarten',
   'tarmac_poiClassification--type=amenity-place_of_worship': 'Kirche',
   'tarmac_poiClassification--type=amenity-school': 'Schule',
+  'tarmac_publicTransport--title': 'ÖPNV',
 }

@@ -1,5 +1,100 @@
 [
   {
+    "group": "atlas_barriers__area",
+    "layers": [
+      {
+        "id": "water_aerodrome2",
+        "type": "fill",
+        "paint": {
+          "fill-opacity": 0.51
+        }
+      },
+      {
+        "id": "water_aerodrome",
+        "type": "fill",
+        "paint": {
+          "fill-color": [
+            "case",
+            ["match", ["get", "waterway"], ["canal", "drain", "river"], true, false],
+            "hsl(0, 2%, 18%)",
+            ["match", ["get", "aeroway"], ["aerodrome"], true, false],
+            "hsl(230, 22%, 27%)",
+            "hsl(0, 2%, 18%)"
+          ],
+          "fill-opacity": 0.4,
+          "fill-pattern": [
+            "case",
+            ["match", ["get", "aeroway"], ["aerodrome"], true, false],
+            "pedestrian-polygon",
+            ["match", ["get", "waterway"], ["canal", "drain", "river"], true, false],
+            "waterfall",
+            "pedestrian-polygon"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_barriers__line",
+    "layers": [
+      {
+        "minzoom": 9,
+        "type": "line",
+        "id": "fmc-poibarriers_motorway",
+        "paint": {
+          "line-color": [
+            "match",
+            ["get", "highway"],
+            ["motorway", "motorway_link", "primary", "primary_link", "trunk", "trunk_link"],
+            "hsl(0, 0%, 3%)",
+            "rgba(235, 0, 0, 0)"
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 18, 4],
+          "line-opacity": 0.64
+        },
+        "filter": ["has", "highway"]
+      },
+      {
+        "id": "railway-rail",
+        "type": "line",
+        "filter": ["match", ["get", "railway"], ["rail"], true, false],
+        "paint": {
+          "line-color": "hsl(300, 88%, 10%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 2, 18, 4]
+        }
+      },
+      {
+        "id": "railway_rail-white",
+        "type": "line",
+        "filter": ["match", ["get", "railway"], ["rail"], true, false],
+        "paint": {
+          "line-color": "hsl(300, 4%, 97%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1.8, 18, 3.8],
+          "line-dasharray": [1, 1.1]
+        }
+      },
+      {
+        "id": "railway_light_rail",
+        "type": "line",
+        "filter": ["match", ["get", "railway"], ["light_rail"], true, false],
+        "paint": {
+          "line-color": "hsl(300, 88%, 10%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 18, 2]
+        }
+      },
+      {
+        "id": "railway_light_rail-white",
+        "type": "line",
+        "filter": ["match", ["get", "railway"], ["light_rail"], true, false],
+        "paint": {
+          "line-color": "hsl(300, 4%, 97%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.8, 18, 1.8],
+          "line-dasharray": [1.2, 1.4]
+        }
+      }
+    ]
+  },
+  {
     "group": "atlas_bikelanes",
     "layers": [
       {
@@ -37,6 +132,13 @@
           false
         ],
         "layout": {}
+      },
+      {
+        "id": "todo--oneway-no-icon",
+        "type": "line",
+        "paint": {},
+        "layout": {},
+        "filter": ["all", ["has", "category"], ["match", ["get", "oneway"], ["no"], true, false]]
       },
       {
         "id": "shared",
@@ -302,10 +404,30 @@
     "group": "atlas_education",
     "layers": [
       {
-        "id": "fmc-poiEducation",
+        "id": "education",
         "type": "circle",
         "paint": {
-          "circle-color": "hsl(209, 76%, 38%)",
+          "circle-color": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            11,
+            [
+              "match",
+              ["get", "amenity"],
+              ["kindergarten", "childcare"],
+              "rgb(23, 99, 171)",
+              "hsl(209, 76%, 38%)"
+            ],
+            13,
+            [
+              "match",
+              ["get", "amenity"],
+              ["kindergarten", "childcare"],
+              "rgb(119, 23, 171)",
+              "hsl(209, 76%, 38%)"
+            ]
+          ],
           "circle-stroke-color": "hsl(0, 8%, 97%)",
           "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 12, 2],
           "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 1.5, 12, 3],
@@ -315,17 +437,26 @@
         "layout": {}
       },
       {
-        "id": "fmc-poiEducation-label",
+        "id": "education-label",
         "type": "symbol",
         "minzoom": 14,
         "layout": {
           "text-field": ["to-string", ["get", "name"]],
           "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
-          "text-size": 13
+          "text-size": 13,
+          "text-variable-anchor": ["bottom"]
         },
         "paint": {
           "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
-          "text-halo-width": 1
+          "text-halo-width": 1,
+          "text-color": [
+            "match",
+            ["get", "amenity"],
+            ["kindergarten", "childcare"],
+            "rgb(119, 23, 171)",
+            "hsl(209, 76%, 38%)"
+          ],
+          "text-translate": [0, -10]
         }
       }
     ]
@@ -347,7 +478,8 @@
             "hsla(17, 0%, 100%, 0)"
           ],
           "fill-opacity": 0.2
-        }
+        },
+        "layout": {}
       }
     ]
   },
@@ -788,6 +920,23 @@
     ]
   },
   {
+    "group": "atlas_publictransport",
+    "layers": [
+      {
+        "id": "publicTransport-icons",
+        "type": "symbol",
+        "minzoom": 9,
+        "layout": {
+          "icon-image": "de-s-bahn",
+          "icon-size": 0.6,
+          "icon-allow-overlap": true,
+          "icon-ignore-placement": true
+        },
+        "paint": {}
+      }
+    ]
+  },
+  {
     "group": "atlas_roadclass_bikeinfra",
     "layers": [
       {
@@ -865,7 +1014,7 @@
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
           "line-opacity": 0,
-          "line-color": "hsl(290, 100%, 54%)"
+          "line-color": "rgb(216, 20, 255)"
         },
         "filter": ["has", "maxspeed"],
         "layout": {
@@ -993,7 +1142,8 @@
             "#e6d6a2",
             "#000000"
           ]
-        }
+        },
+        "layout": {}
       }
     ]
   },

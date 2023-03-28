@@ -19,6 +19,17 @@ const apiConfigs = [
     mapboxGroupPrefix: 'atlas_',
   },
   {
+    key: 'atlas-style-package-2',
+    // Style https://studio.mapbox.com/styles/hejco/clfs9mdh9007n01t6lw99gyqr/edit/#13.49/48.95568/9.13281
+    apiUrl:
+      import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${
+        import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
+      }`,
+    // Only groups with `atlas_` prefix are used
+    mapboxGroupPrefix: 'atlas_',
+  },
+  {
     key: 'parking',
     // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
     apiUrl:

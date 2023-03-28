@@ -11,6 +11,7 @@ export type SourcesIds =
   | 'mapillary_trafficSigns'
   | 'osmscripts_highways'
   | 'osmscripts_pois'
+  | 'tarmac_barriers'
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
@@ -195,6 +196,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
+      documentedKeys: ['name'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -298,6 +300,25 @@ export const sources: MapDataSource<
     },
   },
   {
+    // https://tiles.radverkehrsatlas.de/public.places.json
+    id: 'tarmac_places',
+    tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['name', 'place', 'population', 'population:date'],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'places',
+    },
+  },
+  {
     // https://tiles.radverkehrsatlas.de/public.maxspeed.json
     id: 'tarmac_maxspeed',
     tiles: `${tilesUrl}/public.maxspeed/{z}/{x}/{y}.pbf`,
@@ -327,6 +348,19 @@ export const sources: MapDataSource<
       enabled: true,
       apiIdentifier: 'maxspeed',
     },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.barrierAreas.json
+    // https://tiles.radverkehrsatlas.de/public.barrierLines.json
+    id: 'tarmac_barriers',
+    tiles: `${tilesUrl}/public.barrierAreas,public.barrierLines/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: { enabled: false },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.buildings.json

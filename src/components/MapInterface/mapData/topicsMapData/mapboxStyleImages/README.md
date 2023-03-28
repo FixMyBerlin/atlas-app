@@ -34,3 +34,11 @@ The relevant file is [mapbox-layer-styles-by-group.json](../mapboxStyles/mapbox-
 **Docs**
 
 Maplibre Docs are linked in [`useMissingImage.ts`](../../../../MapInterface/Map/utils/useMissingImage.ts)
+
+# Sources
+
+- `bus_stop` – @SupaplexOSM
+- `cross` – @SupaplexOSM
+- `parking_diagonal` – @SupaplexOSM
+- `parking_perpendicular` – @SupaplexOSM
+- `sbahn` – https://de.wikipedia.org/wiki/Datei:S-Bahn-Logo.svg

@@ -2,6 +2,8 @@
 // Do not change this file manually
 
 export type MapboxStylesByLayerGroupIds =
+  | 'atlas_barriers__area'
+  | 'atlas_barriers__line'
   | 'atlas_bikelanes'
   | 'atlas_bikelanes_unspecified'
   | 'atlas_bikelanes_verified'
@@ -16,6 +18,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_places'
   | 'atlas_placescircle'
   | 'atlas_poiclassification'
+  | 'atlas_publictransport'
   | 'atlas_roadclass_bikeinfra'
   | 'atlas_roadclass_maxspeed'
   | 'atlas_roadclass_maxspeed_details'
