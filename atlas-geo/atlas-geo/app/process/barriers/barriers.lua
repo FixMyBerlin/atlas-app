@@ -113,7 +113,7 @@ function osm2pgsql.process_way(object)
     isBarrier = isBarrier or waterBarriers[tags.waterway]
 
     local trainBarriers = Set({"main", "branch"})
-    if (tags.railway == 'rail' or tags.railway == 'lightrail') then
+    if (tags.railway == 'rail' or tags.railway == 'light_rail') then
       isBarrier = isBarrier or trainBarriers[tags.usage]
     end
     if isBarrier then
