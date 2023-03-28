@@ -64,7 +64,6 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   const nonCategorizedTagKeys = [
     '_parent_highway',
     'highway',
-    'oneway',
     'smoothness',
     'surface',
     'traffic_sign',
