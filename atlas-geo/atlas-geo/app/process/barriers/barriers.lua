@@ -45,7 +45,7 @@ local areaBarriers = osm2pgsql.define_table({
 })
 
 local excludedAreaBarriers = osm2pgsql.define_table({
-  name = 'excludedAreaBarriers',
+  name = 'barrierAreas_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
