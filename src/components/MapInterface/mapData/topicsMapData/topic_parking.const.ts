@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parking'
@@ -29,6 +30,10 @@ export const topic_parking: MapDataTopic = {
           group: 'parking_operator_border_below_other_layer',
           source,
           sourceLayer,
+        }),
+        debugLayerStyles({
+          source: 'parkraumParking',
+          sourceLayer: 'processing.parking_segments_label',
         }),
       ].flat(),
       interactiveFilters: null,

@@ -15,7 +15,8 @@ export const sourcesParking: MapDataSource<
 >[] = [
   {
     id: 'parkraumParking',
-    tiles: 'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
+    tiles:
+      'https://vts.mapwebbing.eu/processing.parking_segments,processing.parking_segments_label/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
