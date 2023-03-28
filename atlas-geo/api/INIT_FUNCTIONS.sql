@@ -13,7 +13,7 @@ AS $function$
 	  SELECT jsonb_build_object(
 	    'type',       'Feature',
 	    'geometry',   ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb,
-	    'properties', to_jsonb(inputs) - 'geom' || inputs.tags
+	    'properties', inputs.meta || inputs.tags
 	  ) AS feature
 	  FROM (
 	    SELECT * from "{table_name}"
