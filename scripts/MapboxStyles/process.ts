@@ -5,10 +5,10 @@ import fs from 'fs'
 import chalk from 'chalk'
 
 // Configruation:
-const keys = ['atlas', 'parking']
+const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'parking']
 const apiConfigs = [
   {
-    key: 'atlas',
+    key: 'atlas-style-package-1',
     // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
     apiUrl:
       import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN &&
@@ -32,26 +32,18 @@ const apiConfigs = [
 
 // Folder
 const scriptJsonFolder = 'scripts/MapboxStyles/json'
-const componentFolder =
-  'src/components/MapInterface/mapData/topicsMapData/mapboxStyles'
+const componentFolder = 'src/components/MapInterface/mapData/topicsMapData/mapboxStyles'
 
 // Helper:
 const log = (title, object: any = '-') => {
-  console.log(
-    chalk.inverse.bold(` ${title}${object === '-' ? '' : ':'} `),
-    object
-  )
+  console.log(chalk.inverse.bold(` ${title}${object === '-' ? '' : ':'} `), object)
 }
 
 // ============= Collect data per `apiConfig`
 
 type GroupsLayer = { group: string; layers: mapboxgl.AnyLayer[] }
-const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(
-  keys.map((k) => [k, []])
-)
-const metaFileContent: Record<string, any> = Object.fromEntries(
-  keys.map((k) => [k, undefined])
-)
+const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(keys.map((k) => [k, []]))
+const metaFileContent: Record<string, any> = Object.fromEntries(keys.map((k) => [k, undefined]))
 
 await Promise.all(
   apiConfigs.map(async ({ key, apiUrl, mapboxGroupPrefix }) => {
@@ -126,10 +118,9 @@ await Promise.all(
       }
     })
     if (changedNamesForDebugging.length) {
-      log(
-        `${key}: ${changedNamesForDebugging.length} group names where renamed:`,
-        { changedNamesForDebugging }
-      )
+      log(`${key}: ${changedNamesForDebugging.length} group names where renamed:`, {
+        changedNamesForDebugging,
+      })
     }
 
     metaFileContent[key] = {
@@ -160,10 +151,7 @@ const mergedSortedGroupAndLayers = Object.values(groupsAndLayers)
 
 // Write file
 const stylesFile = `${componentFolder}/mapbox-layer-styles-by-group.json`
-fs.writeFileSync(
-  stylesFile,
-  JSON.stringify(mergedSortedGroupAndLayers, undefined, 2)
-)
+fs.writeFileSync(stylesFile, JSON.stringify(mergedSortedGroupAndLayers, undefined, 2))
 log(`Write stylesFile`, stylesFile)
 
 // Script: Generate types file
