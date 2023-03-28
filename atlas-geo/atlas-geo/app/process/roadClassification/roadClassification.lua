@@ -51,6 +51,11 @@ function osm2pgsql.process_way(object)
     return
   end
 
+  if object.tags.area == 'yes' then
+    IntoExcludeTable(excludeTable, object, "Exclude `area=yes`")
+    return
+  end
+
   -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.footway == "sidewalk" then
