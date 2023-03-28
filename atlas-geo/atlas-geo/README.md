@@ -93,6 +93,11 @@ The workflow is…
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
+**Note**
+For the development process it's often usefull to run the processing on a single object.
+For that you can specify an id (list) in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
+See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
+
 **Notes**
 
 Hack into the bash
