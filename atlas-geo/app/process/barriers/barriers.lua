@@ -15,7 +15,7 @@ require("Metadata")
 require("HighwayClasses")
 
 local lineBarriers = osm2pgsql.define_table({
-  name = 'lineBarriers',
+  name = 'barrierLines,
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
