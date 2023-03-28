@@ -1,10 +1,9 @@
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bikelanes'
 export type TopicBikelanesId = typeof topic
-export type TopicBikelanesStyleIds = 'default' | MapboxStyleLayerGroupBikelanesIds
+export type TopicBikelanesStyleIds = 'default' | 'verification' | 'completeness' | 'freshness'
 export type TopicBikelanesStyleFilterIds = '_nofilter'
 
 export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = [
@@ -84,7 +83,7 @@ export const topic_bikelanes: MapDataTopic = {
       legends: [...defaultLegend],
     },
     {
-      id: 'atlas_bikelanes_verified',
+      id: 'verification',
       name: 'Inhalte & Prüf-Status',
       desc: null,
       layers: [
@@ -129,7 +128,7 @@ export const topic_bikelanes: MapDataTopic = {
       ],
     },
     {
-      id: 'atlas_bikelanes_unspecified',
+      id: 'completeness',
       name: 'Unvollständigkeit',
       desc: null,
       layers: [
@@ -158,7 +157,7 @@ export const topic_bikelanes: MapDataTopic = {
       ],
     },
     // {
-    //   id: 'atlas_bikelanes_fresh',
+    //   id: 'freshness',
     //   name: 'Inhalte & Aktualität',
     //   desc: null,
     //   layers: mapboxStyleLayers({

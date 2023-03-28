@@ -1,10 +1,9 @@
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupPlacesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'places'
 export type TopicPlacesId = typeof topic
-export type TopicPlacesStyleIds = 'default' | MapboxStyleLayerGroupPlacesIds
+export type TopicPlacesStyleIds = 'default' | 'circle'
 export type TopicPlacesStyleFilterIds = '_nofilter'
 
 export const topic_places: MapDataTopic = {
@@ -26,7 +25,7 @@ export const topic_places: MapDataTopic = {
       legends: null,
     },
     {
-      id: 'atlas_placescircle',
+      id: 'circle',
       name: 'Ortsname & Einwohner',
       desc: null,
       layers: mapboxStyleLayers({

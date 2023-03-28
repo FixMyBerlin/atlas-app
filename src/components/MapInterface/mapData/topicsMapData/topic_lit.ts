@@ -1,13 +1,12 @@
 import { MapDataTopic } from '../types'
 import { defaultLegendFresh } from './defaultLegend'
-import { MapboxStyleLayerGroupLitIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
 const source = 'tarmac_lit'
 const sourceLayer = 'public.lit_verified'
 export type TopicLitId = typeof topic
-export type TopicLitStyleIds = 'default' | MapboxStyleLayerGroupLitIds
+export type TopicLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
 export type TopicLitStyleFilterIds = '_nofilter'
 export type TopicLitStyleLegendIds = 'lit' | 'unlit' | 'ignore'
 
@@ -57,7 +56,7 @@ export const topic_lit: MapDataTopic = {
       legends: [...defaultLegend],
     },
     {
-      id: 'atlas_lit_complete',
+      id: 'completeness',
       name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: [
@@ -86,7 +85,7 @@ export const topic_lit: MapDataTopic = {
       ],
     },
     {
-      id: 'atlas_lit_verified',
+      id: 'verification',
       name: 'Inhalte & Prüf-Status',
       desc: null,
       layers: [
@@ -134,7 +133,7 @@ export const topic_lit: MapDataTopic = {
       ],
     },
     {
-      id: 'atlas_lit_fresh',
+      id: 'freshness',
       name: 'Inhalte & Aktualität',
       desc: null,
       layers: [

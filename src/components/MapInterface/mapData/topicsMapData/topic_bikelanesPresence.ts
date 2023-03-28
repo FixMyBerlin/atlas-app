@@ -1,5 +1,4 @@
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 import { defaultLegend } from './topic_bikelanes'
 
@@ -7,7 +6,7 @@ const topic = 'bikelanesPresence'
 const source = 'tarmac_bikelanesPresence'
 const sourceLayer = 'public.bikelanesPresence'
 export type TopicBikelanesPresenceId = typeof topic
-export type TopicBikelanesPresenceStyleIds = 'default' | MapboxStyleLayerGroupBikelanesIds
+export type TopicBikelanesPresenceStyleIds = 'default'
 export type TopicBikelanesPresenceStyleFilterIds = '_nofilter'
 
 export const topic_bikelanesPresence: MapDataTopic = {

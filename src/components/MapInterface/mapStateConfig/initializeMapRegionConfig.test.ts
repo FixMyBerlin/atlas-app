@@ -12,9 +12,9 @@ describe('initializeMapReagionConfig()', () => {
           active: true,
           styles: [
             { id: 'default', active: true }, // change to false
-            { id: 'atlas_lit_complete', active: false }, // change to true
-            { id: 'atlas_lit_verified', active: false },
-            { id: 'atlas_lit_fresh', active: false },
+            { id: 'completeness', active: false }, // change to true
+            { id: 'verification', active: false },
+            { id: 'freshness', active: false },
           ],
         },
         {
@@ -22,7 +22,7 @@ describe('initializeMapReagionConfig()', () => {
           active: false, // change to true
           styles: [
             { id: 'default', active: true },
-            { id: 'atlas_placescircle', active: false },
+            { id: 'circle', active: false },
           ],
         },
         {
@@ -86,7 +86,7 @@ describe('initializeMapReagionConfig()', () => {
     const urlConfig = structuredClone(freshConfig)
     urlConfig[0].topics[0].active = false // topic:lit
     urlConfig[0].topics[0].styles[0].active = false // topic:lit style-id:default
-    urlConfig[0].topics[0].styles[1].active = true // topic:lit style-id:atlas_lit_complete
+    urlConfig[0].topics[0].styles[1].active = true // topic:lit style-id:completenes
     urlConfig[0].topics[1].active = true // topic:places
     // @ts-ignore the object structure is checked manually
     urlConfig[1].topics[0].styles[0].filters[0].options[0].active = true // topic:fromTo filterOption-id:7
