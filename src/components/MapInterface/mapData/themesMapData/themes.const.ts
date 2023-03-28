@@ -82,8 +82,8 @@ export const themes: MapDataTheme[] = [
     name: 'Straßentypen',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
-      { id: 'roadClassification', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
+      { id: 'roadClassification', defaultActive: true },
       { id: 'maxspeed', defaultActive: false },
       // { id: 'surface_tarmac', defaultActive: false },
       { id: 'places', defaultActive: true },
