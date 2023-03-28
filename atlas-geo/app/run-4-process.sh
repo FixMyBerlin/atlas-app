@@ -60,6 +60,8 @@ psql -q -f "${PROCESS_DIR}bikelanes/bikelanes.sql"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}maxspeed/maxspeed.lua ${OSM_FILTERED_FILE}
 # psql -q -f "${PROCESS_DIR}maxspeed/maxspeed.sql"
 
+echo "\e[1m\e[7m PROCESS – Topic: barriers \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}barriers/barriers.lua ${OSM_FILTERED_FILE}
 
 # echo "\e[1m\e[7m PROCESS – Topic: parking \e[27m\e[21m"
 # ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}parking.lua ${OSM_FILTERED_FILE}
