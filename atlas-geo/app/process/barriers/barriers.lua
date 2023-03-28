@@ -14,15 +14,15 @@ local lineBarriers = osm2pgsql.define_table({
   }
 })
 
-local excludedLineBarriers = osm2pgsql.define_table({
-  name = 'barrierLines_excluded',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
-})
+-- local excludedLineBarriers = osm2pgsql.define_table({
+--   name = 'barrierLines_excluded',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags', type = 'jsonb' },
+--     { column = 'meta', type = 'jsonb' },
+--     { column = 'geom', type = 'linestring' },
+--   }
+-- })
 
 local areaBarriers = osm2pgsql.define_table({
   name = 'barrierAreas',
@@ -34,15 +34,15 @@ local areaBarriers = osm2pgsql.define_table({
   }
 })
 
-local excludedAreaBarriers = osm2pgsql.define_table({
-  name = 'barrierAreas_excluded',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'multipolygon' },
-  }
-})
+-- local excludedAreaBarriers = osm2pgsql.define_table({
+--   name = 'barrierAreas_excluded',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags', type = 'jsonb' },
+--     { column = 'meta', type = 'jsonb' },
+--     { column = 'geom', type = 'multipolygon' },
+--   }
+-- })
 
 
 local allowedTags = Set({
@@ -96,12 +96,11 @@ function osm2pgsql.process_way(object)
       })
       return
     end
-    excludedAreaBarriers:insert({
-      tags=object.tags,
-      meta=Metadata(object),
-      geom=object:as_multipolygon()
-    })
-    return
+    -- excludedAreaBarriers:insert({
+    --   tags=object.tags,
+    --   meta=Metadata(object),
+    --   geom=object:as_multipolygon()
+    -- })
   else --process as linestring
     local tags = object.tags
     -- if tags.tunnel =='yes' then return end -- we don't consider tunnels as barriers
@@ -125,11 +124,11 @@ function osm2pgsql.process_way(object)
       })
       return
     end
-    excludedLineBarriers:insert({
-      tags=object.tags,
-      meta=Metadata(object),
-      geom=object:as_linestring()
-    })
+    -- excludedLineBarriers:insert({
+    --   tags=object.tags,
+    --   meta=Metadata(object),
+    --   geom=object:as_linestring()
+    -- })
   end
 end
 
@@ -143,9 +142,9 @@ function osm2pgsql.process_relation(object)
     })
     return
   end
-  excludedAreaBarriers:insert({
-    tags=object.tags,
-    meta=Metadata(object),
-    geom=object:as_multipolygon()
-  })
+  -- excludedAreaBarriers:insert({
+  --   tags=object.tags,
+  --   meta=Metadata(object),
+  --   geom=object:as_multipolygon()
+  -- })
 end
