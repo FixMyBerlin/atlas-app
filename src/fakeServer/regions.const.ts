@@ -44,6 +44,7 @@ export type RegionPath =
   | 'langerwehe'
   | 'parkraum'
   | 'rs8'
+  | 'mainz'
   | 'deutschland'
 
 // This is our regions "Database" until we have a real one
@@ -187,6 +188,22 @@ export const regions: Region[] = [
     bbox: {
       min: [9.13736562, 48.81051166],
       max: [9.36731192, 48.93255599],
+    },
+    logoPath: 'https://trassenscout.de/favicon.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Mainz',
+    fullName: 'radnetz-mainz.de',
+    path: 'mainz',
+    map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
+    bbox: {
+      min: [8.1435156, 49.8955342],
+      max: [8.3422611, 50.0353045],
     },
     logoPath: 'https://trassenscout.de/favicon.svg',
     logoWhiteBackgroundRequired: false,
