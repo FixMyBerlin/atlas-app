@@ -36,3 +36,9 @@ npx geojson2poly ./geojson/rs8.geojson rs8.poly
 
 - Gemarkungsgrenzen RS 8, Simplfied with Placemark Play, Merged with Placemark Play
 - One piece of the bottom right polygon was removed because it was not relevant for the RS 8 route.
+
+# Mainz
+
+- https://www.openstreetmap.org/relation/62630
+- https://hanshack.com/geotools/gimmegeodata/
+- https://app.placemark.io/play simplify
