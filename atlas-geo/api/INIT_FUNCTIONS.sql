@@ -13,8 +13,8 @@ AS $function$
 	  SELECT jsonb_build_object(
 	    'type',       'Feature',
 	    'geometry',   ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb,
-      'id',         inputs.osm_id,
-	    'properties', jsonb_build_object('type', inputs.osm_type) || inputs.meta || inputs.tags
+      -- Reminder: All tables that can be exported are required to have a those columns
+	    'properties', jsonb_build_object('osm_id', inputs.osm_id) || jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta || inputs.tags
 	  ) AS feature
 	  FROM (
 	    SELECT * from "{table_name}"
