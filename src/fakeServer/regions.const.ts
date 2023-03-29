@@ -183,7 +183,7 @@ export const regions: Region[] = [
     name: 'RS 8',
     fullName: 'Trassenscout RS 8',
     path: 'rs8',
-    map: { lat: 48.8769, lng: 9.2425, zoom: 5 },
+    map: { lat: 48.8769, lng: 9.2425, zoom: 12 },
     bbox: {
       min: [9.13736562, 48.81051166],
       max: [9.36731192, 48.93255599],
@@ -199,7 +199,7 @@ export const regions: Region[] = [
     name: 'Download',
     fullName: 'Deutschlandweiter Download',
     path: 'deutschland',
-    map: { lat: 51.07, lng: 13.35, zoom: 12 },
+    map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
       min: [5.8663153, 47.2701114],
       max: [15.0419309, 55.099161],
