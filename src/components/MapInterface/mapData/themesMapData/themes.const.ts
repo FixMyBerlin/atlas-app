@@ -26,7 +26,7 @@ export const themes: MapDataTheme[] = [
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
       { id: 'shops', defaultActive: true },
-      { id: 'publicTransport', defaultActive: false },
+      // { id: 'publicTransport', defaultActive: false }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
       { id: 'education', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'buildings', defaultActive: false },
