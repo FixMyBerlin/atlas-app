@@ -1,13 +1,14 @@
 # About
 
 - One test file per helper.
-- Filename: `\*.test.lua``
+- Filename: `\*.test.lua`
 
 # Run
 
 From the root of this file repo, run…
 
 - `lua app/process/helper/__tests__/CheckDateWithinYears.test.lua`
+- Use `npm run test` to run all \*.test.lua files
 
 # Other links
 
