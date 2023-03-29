@@ -85,13 +85,13 @@ function osm2pgsql.process_way(object)
     "smoothness",
     "name",
     "service",
-    "width", -- experimental
+    "width",          -- experimental
     "sidewalk:width", -- experimental
     "cycleway:width", -- experimental
   })
   FilterTags(object.tags, allowed_tags)
 
-  -- Freshness of data (ATER `FilterTags`!)
+  -- Freshness of data (AFTER `FilterTags`!)
   if (object.tags.is_present == true) then
     IsFresh(object, 'check_date:lit', object.tags)
   end

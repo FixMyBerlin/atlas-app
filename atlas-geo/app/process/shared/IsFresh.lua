@@ -1,4 +1,5 @@
 require("CheckDataWithinYears")
+
 -- * @desc Categoize the fresshnews of data.
 --    If present, use `date_tag` (high confidence).
 --    Fall back to `object.timestamp` (low confidence).
@@ -29,3 +30,5 @@ function IsFresh(object, date_tag, dest)
 
   return dest
 end
+
+IsFreshKeys = { 'fresh', 'fresh_age_days' }

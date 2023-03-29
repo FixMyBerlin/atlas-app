@@ -1,5 +1,6 @@
 -- Playground http://tpcg.io/_5LRFVV
 
+-- @desc: Reminder: Mutates input object
 function FilterTags(tags, allowedTags)
   for key, _ in pairs(tags) do
     if not allowedTags[key] then
@@ -18,4 +19,3 @@ end
 --   end
 --   return tagsFiltered
 -- end
-

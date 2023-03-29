@@ -19,13 +19,26 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 
 ### Server
 
-- https://tiles.radverkehrsatlas.de/
-- https://staging-tiles.radverkehrsatlas.de/
+**Production:**
+
+- Tiles https://tiles.radverkehrsatlas.de/
+- API https://api.radverkehrsatlas.de/export/… (Links available via radverkehrsatlas.de)
+
+**Staging:**
+
+- Tiles https://staging-tiles.radverkehrsatlas.de/
+- API https://staging-api.radverkehrsatlas.de/export/…
+
+**Development:**
+
+- Tiles http://localhost:7800/
+- API http://localhost/export/…
 
 ### Data update
 
-- Data is updated once a week, every monday ([cron job definition](https://github.com/FixMyBerlin/atlas-geo/blob/main/.github/workflows/generate-tiles.yml#L3-L6))
-- Data can manually updates [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
+- Data is updated every weekday at 5:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is updated on every deploy
+- Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
@@ -79,6 +92,11 @@ The workflow is…
 
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
+
+**Note**
+For the development process it's often usefull to run the processing on a single object.
+For that you can specify an id (list) in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
+See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 **Notes**
 

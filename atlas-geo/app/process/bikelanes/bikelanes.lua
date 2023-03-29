@@ -56,6 +56,7 @@ local allowed_tags = Set({
   'bicycle',
   'conditional',
   'cycleway',
+  'cycleway:lane', -- 'advisory', 'exclusive'
   'dual_carriageway',
   'foot',
   'footway',
@@ -76,6 +77,7 @@ local allowed_tags = Set({
   'separation',
   'separation:left',
   'separation:right',
+  'lane', -- 'cycleway:SIDE:lane'
 })
 
 function osm2pgsql.process_way(object)
@@ -120,15 +122,20 @@ function osm2pgsql.process_way(object)
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
+
         local freshTag = "check_date"
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Freshness of data (ATER `FilterTags`!)
+        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
+        cycleway.oneway = cycleway.oneway or 'implicit_yes'
+
+        -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
 
         cycleway.offset = sign * width / 2
+
         categoryTable:insert({
           category = category,
           tags = cycleway,
@@ -178,6 +185,7 @@ function osm2pgsql.process_way(object)
     'dual_carriageway',
   })
   FilterTags(tags, allowed_tags_presence)
+
   presenceTable:insert({
     tags = tags,
     geom = object:as_linestring(),

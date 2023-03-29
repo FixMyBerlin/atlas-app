@@ -51,6 +51,11 @@ function osm2pgsql.process_way(object)
     return
   end
 
+  if object.tags.area == 'yes' then
+    IntoExcludeTable(excludeTable, object, "Exclude `area=yes`")
+    return
+  end
+
   -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.footway == "sidewalk" then
@@ -75,8 +80,11 @@ function osm2pgsql.process_way(object)
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if object.tags.highway == "service" then
     -- Fallback:
-    object.tags.category = 'service_unspecified'
+    object.tags.category = 'service_uncategorized'
     -- https://taginfo.openstreetmap.org/keys/service#values
+    if object.tags.service == nil then
+      object.tags.category = "service_road"
+    end
     if object.tags.service == 'alley' then
       object.tags.category = "service_alley"
     end
