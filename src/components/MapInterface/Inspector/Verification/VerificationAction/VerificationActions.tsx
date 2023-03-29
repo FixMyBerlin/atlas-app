@@ -134,7 +134,7 @@ export const VerificationActions: React.FC<Props> = ({
               <label
                 key={verificationOption}
                 htmlFor={verificationOption}
-                className="group flex cursor-pointer select-none items-start border border-gray-300 p-2 shadow-sm first:-mr-px first:rounded-l-md last:rounded-r-md hover:bg-gray-50"
+                className="group flex cursor-pointer select-none items-start border border-gray-300 bg-gray-100 p-2 shadow-sm first:-mr-px first:rounded-l-md last:rounded-r-md hover:bg-gray-50"
               >
                 <div className="flex h-5 items-center">
                   <input

@@ -9,6 +9,7 @@ import React from 'react'
 import { VerificationActions } from './VerificationAction/VerificationActions'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'
+import { verifiedBackgroundColor } from './verifiedColor.const'
 
 type Props = {
   properties: { [key: string]: any }
@@ -38,7 +39,13 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   if (!sourceData.verification.enabled) return null
 
   return (
-    <section className="border-t bg-gray-200 p-4">
+    <section
+      className="border-t bg-gray-200 p-4"
+      style={{
+        backgroundColor:
+          verificationStatus === undefined ? verifiedBackgroundColor['undefined'] : '',
+      }}
+    >
       {verificationStatus === undefined && (
         <VerificationActions
           apiIdentifier={sourceData.verification.apiIdentifier}

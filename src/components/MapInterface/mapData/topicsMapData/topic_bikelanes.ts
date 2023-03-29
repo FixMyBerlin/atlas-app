@@ -1,3 +1,4 @@
+import { verifiedColor } from '@components/MapInterface/Inspector/Verification/verifiedColor.const'
 import { MapDataTopic } from '../types'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -102,11 +103,11 @@ export const topic_bikelanes: MapDataTopic = {
       legends: [
         ...defaultLegend,
         {
-          id: 'verification-missing',
+          id: 'verification-approved',
           name: 'Daten richtig',
           style: {
             type: 'line',
-            color: 'hsl(107, 88%, 57%)',
+            color: verifiedColor['approved'],
           },
         },
         {
@@ -114,15 +115,15 @@ export const topic_bikelanes: MapDataTopic = {
           name: 'Daten überarbeiten',
           style: {
             type: 'line',
-            color: 'hsl(0, 100%, 41%)',
+            color: verifiedColor['rejected'],
           },
         },
         {
-          id: 'verification-accepted',
+          id: 'verification-todo',
           name: 'Überprüfung steht aus',
           style: {
             type: 'line',
-            color: '#fa7fe2',
+            color: verifiedColor['undefined'],
           },
         },
       ],
