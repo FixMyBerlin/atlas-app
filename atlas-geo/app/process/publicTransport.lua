@@ -43,7 +43,18 @@ local function ExitProcessing(object)
 end
 
 local function processTags(tags)
-  local allowed_tags = Set({ "name", "public_transport", "operator", "railway", "bus", "ferry" })
+  local allowed_tags = Set({
+    "name",
+    "network",
+    "network:short",
+    "operator",
+    "public_transport",
+    "railway",
+    "light_rail",
+    "bus",
+    "ferry",
+    "station",
+  })
   FilterTags(tags, allowed_tags)
 end
 
