@@ -12,7 +12,7 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
   {
     regionKey: 'trto',
     id: 'TrtoWunschlinienCrossingPoints',
-    name: 'Wunschlinien: Zangspunkte',
+    name: 'Wunschlinien: Zwangspunkte',
     type: 'geojson',
     data: TrtoWunschlinienCrossingPoints as GeoJSON.FeatureCollection<GeoJSON.Point>,
     attributionHtml: 'FixMyCity',

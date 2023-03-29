@@ -26,7 +26,7 @@ export const themes: MapDataTheme[] = [
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
       { id: 'shops', defaultActive: true },
-      { id: 'publicTransport', defaultActive: false },
+      // { id: 'publicTransport', defaultActive: false }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
       { id: 'education', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'buildings', defaultActive: false },
@@ -50,6 +50,34 @@ export const themes: MapDataTheme[] = [
       { id: 'places', defaultActive: true },
       { id: 'roadClassification', defaultActive: false },
       { id: 'roadClassification_osmscripts', defaultActive: false },
+      { id: 'landuse', defaultActive: true },
+    ],
+  },
+  {
+    id: 'roadClassification',
+    name: 'Straßentypen',
+    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
+    topics: [
+      { id: 'roadClassification', defaultActive: true },
+      { id: 'bikelanes', defaultActive: false },
+      { id: 'maxspeed', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
+      { id: 'places', defaultActive: true },
+      { id: 'landuse', defaultActive: false },
+    ],
+  },
+  {
+    id: 'roadClassificationZes',
+    name: 'Straßentypen ZES',
+    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
+    topics: [
+      { id: 'roadClassification', defaultActive: true },
+      { id: 'roadClassification_osmscripts', defaultActive: false },
+      { id: 'bikelanes', defaultActive: false },
+      { id: 'bikelanes_osmscripts', defaultActive: false },
+      // { id: 'surface_tarmac', defaultActive: false },
+      { id: 'surface_osmscripts', defaultActive: false },
+      { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: true },
     ],
   },
@@ -79,34 +107,7 @@ export const themes: MapDataTheme[] = [
       { id: 'landuse', defaultActive: true },
     ],
   },
-  {
-    id: 'roadClassification',
-    name: 'Straßentypen',
-    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
-    topics: [
-      { id: 'bikelanes', defaultActive: false },
-      { id: 'roadClassification', defaultActive: true },
-      { id: 'maxspeed', defaultActive: false },
-      // { id: 'surface_tarmac', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: false },
-    ],
-  },
-  {
-    id: 'roadClassificationZes',
-    name: 'Straßentypen ZES',
-    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
-    topics: [
-      { id: 'roadClassification', defaultActive: true },
-      { id: 'roadClassification_osmscripts', defaultActive: false },
-      { id: 'bikelanes', defaultActive: false },
-      { id: 'bikelanes_osmscripts', defaultActive: false },
-      // { id: 'surface_tarmac', defaultActive: false },
-      { id: 'surface_osmscripts', defaultActive: false },
-      { id: 'places', defaultActive: true },
-      { id: 'landuse', defaultActive: true },
-    ],
-  },
+
   {
     id: 'surface',
     name: 'Oberflächen',

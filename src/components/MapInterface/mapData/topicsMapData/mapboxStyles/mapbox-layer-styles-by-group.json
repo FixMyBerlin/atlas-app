@@ -1119,9 +1119,9 @@
             ["tertiary"],
             "#dab07c",
             ["residential"],
-            "#969696",
+            "#9a987e",
             ["path", "track", "bridleway"],
-            "#629fb7",
+            "#b4aac0",
             [
               "primary",
               "motorway",
@@ -1135,15 +1135,14 @@
             ["living_street", "pedestrian", "bicycle_road"],
             "#80a3ea",
             ["footway", "cycleway"],
-            "#629fb7",
+            "#b9aac0",
             ["service_drive_through", "service_parking_aisle", "trunk", "trunk_link"],
             "rgba(251, 40, 40, 0)",
             ["service_road", "service_alley"],
             "#e6d6a2",
-            "#000000"
+            "#cfcfcf"
           ]
-        },
-        "layout": {}
+        }
       }
     ]
   },

@@ -2,10 +2,11 @@
 
 // Legend:
 // - "ALL--" stands for "all sources". Those translations are applied without checking the soureId
-// - "--LEFTRIGHTSELF" is replaced with 'left', 'right' or 'self' in `ConditionalFormattedValue`
+// - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
   'ALL--composit_surface_smoothness--key': 'Oberfläche',
   'ALL--highway--key': 'Straßentyp',
+  'ALL--highway=bicycle_road': 'Fahrradstraße', // roadClassification--category
   'ALL--highway=construction': 'Straße ist in Bau',
   'ALL--highway=cycleway': 'Radweg',
   'ALL--highway=footway': 'Fußweg',
@@ -15,11 +16,16 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=primary': 'Bundesstraße/Hauptverbindungsstraße',
   'ALL--highway=residential': 'Anwohnerstraße',
   'ALL--highway=secondary': 'Landesstraße/Wichtige Durchgangsstraße',
+  'ALL--highway=service_alley': 'Gasse', // roadClassification--category
+  'ALL--highway=service_driveway': 'Grundstückszufahrt', // roadClassification--category
+  'ALL--highway=service_parking_aisle': 'Parkplatzweg', // roadClassification--category
+  'ALL--highway=service_road': 'Zufahrtsweg', // roadClassification--category
   'ALL--highway=service': 'Zufahrtsweg',
   'ALL--highway=steps': 'Stufen',
   'ALL--highway=tertiary': 'Kreisstraße/Untergeordnete Durchgangsstraße',
   'ALL--highway=track': 'Wald- / Feldweg',
   'ALL--highway=unclassified': 'Nebenstraße mit Verbindungscharakter',
+  'ALL--highway=unspecified_road_category': 'Unkategorisierte Straße', // roadClassification--category
   'ALL--maxspeed--key': 'Höchstgeschwindigkeit',
   'ALL--name--key': 'Name',
   'ALL--oneway--key': 'Fahrtrichtung',
@@ -223,4 +229,6 @@ export const translations: { [key: string]: string } = {
   'tarmac_poiClassification--type=amenity-place_of_worship': 'Kirche',
   'tarmac_poiClassification--type=amenity-school': 'Schule',
   'tarmac_publicTransport--title': 'ÖPNV',
+  'tarmac_roadClassification--category--key': 'Straßentyp',
+  'tarmac_roadClassification--title': 'Daten zu Straßentypen',
 }
