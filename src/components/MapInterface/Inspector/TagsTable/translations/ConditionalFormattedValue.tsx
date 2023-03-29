@@ -66,11 +66,26 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'highway',
     'smoothness',
     'surface',
+    'category',
     'traffic_sign',
   ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
     key = `ALL--${tagKey}=${tagValue}`
   }
+
+  // Some keys are translated already for a different key else, so lets look there first…
+  const lookThere: Record<string, string> = {
+    category: 'highway',
+  }
+  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === tagKey)
+  if (lookThereEntryKey) {
+    key = key.replace(lookThereEntryKey, lookThere[lookThereEntryKey])
+  }
+  console.log(
+    '🚀 ~ file: ConditionalFormattedValue.tsx:80 ~ lookThereEntryKey:',
+    lookThereEntryKey,
+    key
+  )
 
   // It will take a while to translate everything. This fallback does look better on production.
   const defaultMessage = isDev || isStaging ? key : tagValue
