@@ -1,3 +1,4 @@
+import { RegionPath } from '@fakeServer/regions.const'
 import mapboxgl from 'mapbox-gl'
 import { LegendIconTypes } from '../SelectLegend/LegendIcons'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
@@ -22,6 +23,19 @@ export type MapDataBackgroundSource<TIds> = {
   maxzoom?: mapboxgl.RasterSource['maxzoom']
   tileSize?: mapboxgl.RasterSource['tileSize']
 }
+
+/** @desc: The data sources, configured in 'sourcesDatasets.const.ts' */
+export type MapDataDatasetsSource<TIds> = {
+  /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
+  regionKey: RegionPath
+  id: TIds
+  name: string
+  attributionHtml: string
+  layers: (
+    | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
+    | (mapboxgl.LineLayer & Required<Pick<mapboxgl.LineLayer, 'paint'>>)
+  )[]
+} & { type: 'geojson'; data: GeoJSON.GeoJSON }
 
 export type MapDataSourceInspectorEditor = {
   name: string
@@ -103,9 +117,9 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
-  presence: {
-    enabled: boolean
-  }
+  // presence: {
+  //   enabled: boolean
+  // }
   /** @desc Inspector: Enable and configure in app verification */
   verification: MapDataSourceVerifcation<TVerIds>
   /** @desc Inspector: Enable and configure info data on freshness */
@@ -132,12 +146,15 @@ type MapDataThemeTopic = {
   // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
 
+export type TBeforeIds = 'housenumber' | 'boundary_country' | 'landuse' | undefined
+
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
 export type MapDataTopic = {
   id: TopicIds
   name: string
   desc: string | null
   sourceId: SourcesIds
+  beforeId?: TBeforeIds
   styles: MapDataStyle[]
 }
 
@@ -180,6 +197,7 @@ export type MapDataStyleInteractiveFilter = {
 export type MapDataStyleLegend = {
   id: string
   name: string
+  desc?: string[]
   style:
     | {
         type: Exclude<LegendIconTypes, 'line'>

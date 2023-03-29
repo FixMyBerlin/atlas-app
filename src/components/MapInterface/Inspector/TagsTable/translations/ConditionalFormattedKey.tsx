@@ -22,6 +22,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
     'oneway',
     'traffic_sign',
     'width',
+    'maxspeed',
   ]
   if (simpleTranslFallbackKeys.includes(tagKey)) {
     key = `ALL--${tagKey}--key`

@@ -1,10 +1,9 @@
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupLanduseIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'landuse'
 export type TopicLanduseId = typeof topic
-export type TopicLanduseStyleIds = 'default' | MapboxStyleLayerGroupLanduseIds
+export type TopicLanduseStyleIds = 'default'
 export type TopicLanduseStyleFilterIds = '_nofilter'
 
 export const topic_landuse: MapDataTopic = {

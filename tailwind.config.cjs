@@ -1,4 +1,8 @@
 /* eslint-disable no-undef */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+const colors = require('tailwindcss/colors')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -13,6 +17,14 @@ module.exports = {
       },
       borderRadius: {
         '4xl': '2rem',
+      },
+      // Overwrite `gray` as `zinc`, disable all other gray to remove autocomplete
+      colors: {
+        gray: colors.zinc,
+        slate: null,
+        zinc: null,
+        neutral: null,
+        stone: null,
       },
     },
     // fontFamily: {

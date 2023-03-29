@@ -1,5 +1,5 @@
 import { Listbox } from '@headlessui/react'
-import { CheckIcon } from '@heroicons/react/20/solid'
+import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 import React from 'react'
 import { SourcesRasterIds } from '../mapData/sourcesMapData'
@@ -30,7 +30,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
           </span>
           {!!selected && (
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-white">
-              <CheckIcon className="h-5 w-5" aria-hidden="true" />
+              <ArrowSmallRightIcon className="h-5 w-5" aria-hidden="true" />
             </span>
           )}
         </>

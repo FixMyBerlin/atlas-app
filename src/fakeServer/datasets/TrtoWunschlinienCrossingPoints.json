@@ -1,0 +1,61 @@
+{
+  "type": "FeatureCollection",
+  "name": "crossing_points_web",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.202818677452921, 53.754888388481064] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.229169370569997, 53.727905706407093] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.236389617680379, 53.719571459686151] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.243291130473414, 53.696816932766374] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.330693951478912, 53.769184233801695] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.334452878325388, 53.737749006241501] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.332511527982298, 53.71711448015823] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.329496842108703, 53.709773083288653] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.325563046206458, 53.696183992122222] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.177328614182029, 53.788821813456558] }
+    },
+    {
+      "type": "Feature",
+      "properties": {},
+      "geometry": { "type": "Point", "coordinates": [13.174692819924436, 53.792849854259082] }
+    }
+  ]
+}

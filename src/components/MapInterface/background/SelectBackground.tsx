@@ -26,10 +26,7 @@ export const SelectBackground: React.FC = () => {
   const onChange = (value: SourcesRasterIds) => {
     navigate({
       search: (old) => {
-        return {
-          ...old,
-          bg: value as SourcesRasterIds,
-        }
+        return { ...old, bg: value }
       },
     })
   }
@@ -57,9 +54,7 @@ export const SelectBackground: React.FC = () => {
         <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-[calc(100vh_-_5rem)] w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ListOption key={`${selectedBackgroundId}-default`} value={'default'} name={'Standard'} />
           {backgrounds.map(({ name, id }) => {
-            // TODO – This feels hacky. Research solution.
-            const keyThatRerendersOnceGeschichteIsReady = `${selectedBackgroundId}-${id}`
-            return <ListOption key={keyThatRerendersOnceGeschichteIsReady} value={id} name={name} />
+            return <ListOption key={id} value={id} name={name} />
           })}
         </Listbox.Options>
       </Transition>

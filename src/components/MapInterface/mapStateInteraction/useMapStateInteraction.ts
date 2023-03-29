@@ -1,4 +1,4 @@
-import { VerificationApiGet } from '@api/index'
+import { TVerificationApiGet } from '@api/index'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { create } from 'zustand'
 
@@ -28,9 +28,9 @@ export type StoreCalculator = {
 }
 
 type StoreLocalUpdates = {
-  localUpdates: VerificationApiGet[]
-  addLocalUpdate: (update: VerificationApiGet) => void
-  removeLocalUpdate: (update: VerificationApiGet) => void
+  localUpdates: TVerificationApiGet[]
+  addLocalUpdate: (update: TVerificationApiGet) => void
+  removeLocalUpdate: (update: TVerificationApiGet) => void
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({

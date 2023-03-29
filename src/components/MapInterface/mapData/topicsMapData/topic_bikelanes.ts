@@ -1,16 +1,23 @@
+import { verifiedColor } from '@components/MapInterface/Inspector/Verification/verifiedColor.const'
 import { MapDataTopic } from '../types'
-import { MapboxStyleLayerGroupBikelanesIds } from './mapboxStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bikelanes'
 export type TopicBikelanesId = typeof topic
-export type TopicBikelanesStyleIds = 'default' | MapboxStyleLayerGroupBikelanesIds
+export type TopicBikelanesStyleIds = 'default' | 'verification' | 'completeness' | 'freshness'
 export type TopicBikelanesStyleFilterIds = '_nofilter'
 
 export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = [
   {
     id: 'separated',
     name: 'Getrennte Fuehrung',
+    desc: [
+      'Radweg (frei geführt und Fahrbahnbegleitend)',
+      'Getrennter Geh- und Radweg',
+      'Fahrradstraße',
+      'Straßenquerung',
+      'Verbindungsstücke',
+    ],
     style: {
       type: 'line',
       color: '#031ab5',
@@ -18,7 +25,13 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
   },
   {
     id: 'shared',
-    name: 'Fuehrung mit Fussverkehr',
+    name: 'Teilgetrennte Führung',
+    desc: [
+      'Gemeinsamer Geh- und Radwege',
+      'Radfahrstreifen',
+      'Schutzstreifen',
+      'Gemeinsamer Fahrstreifen mit Bus',
+    ],
     style: {
       type: 'line',
       color: 'hsl(232, 97%, 36%)',
@@ -26,8 +39,15 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
     },
   },
   {
-    id: 'pedestrian',
-    name: 'Verkehrsberuhigt',
+    id: 'mixed',
+    name: 'Mischverkehr',
+    desc: [
+      'Fußgängerzone mit Radfreigabe',
+      'Spielstraße',
+      'Fußwege mit Radfreigabe',
+      'Gemeinsamer Fahrstreifen mit Kfz',
+      'Fahrradweichen',
+    ],
     style: {
       type: 'line',
       color: 'hsla(232, 99%, 39%, 0.34)',
@@ -63,49 +83,31 @@ export const topic_bikelanes: MapDataTopic = {
       interactiveFilters: null,
       legends: [...defaultLegend],
     },
-    // {
-    //   id: 'atlas_bikelanes_complete',
-    //   name: 'Inhalte & Vollständigkeit',
-    //   desc: null,
-    //   layers: mapboxStyleLayers({
-    //     group: 'atlas_bikelanes_complete',
-    //     source: 'tarmac_bikelanes',
-    //     sourceLayer: 'public.bikelanes_verified',
-    //   }),
-    //   interactiveFilters: null,
-    //   legends: [
-    //     ...defaultLegend,
-    //     {
-    //       id: 'missing',
-    //       name: 'Daten fehlen (in Arbeit)',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsl(312, 92%, 74%)',
-    //       },
-    //     },
-    //   ],
-    // },
     {
-      id: 'atlas_bikelanes_verified',
+      id: 'verification',
       name: 'Inhalte & Prüf-Status',
       desc: null,
-      layers: mapboxStyleLayers({
-        group: 'atlas_bikelanes_verified',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
-      }),
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes_verified',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+      ].flat(),
       interactiveFilters: null,
       legends: [
         ...defaultLegend,
-        // {
-        //   id: 'spacer',
-        // },
         {
-          id: 'verification-missing',
+          id: 'verification-approved',
           name: 'Daten richtig',
           style: {
             type: 'line',
-            color: 'hsl(107, 88%, 57%)',
+            color: verifiedColor['approved'],
           },
         },
         {
@@ -113,12 +115,41 @@ export const topic_bikelanes: MapDataTopic = {
           name: 'Daten überarbeiten',
           style: {
             type: 'line',
-            color: 'hsl(0, 100%, 41%)',
+            color: verifiedColor['rejected'],
           },
         },
         {
-          id: 'verification-accepted',
+          id: 'verification-todo',
           name: 'Überprüfung steht aus',
+          style: {
+            type: 'line',
+            color: verifiedColor['undefined'],
+          },
+        },
+      ],
+    },
+    {
+      id: 'completeness',
+      name: 'Unvollständigkeit',
+      desc: null,
+      layers: [
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+        mapboxStyleLayers({
+          group: 'atlas_bikelanes_unspecified',
+          source: 'tarmac_bikelanes',
+          sourceLayer: 'public.bikelanes_verified',
+        }),
+      ].flat(),
+      interactiveFilters: null,
+      legends: [
+        ...defaultLegend,
+        {
+          id: 'unspecified',
+          name: 'Kategorisierung unvollständig',
           style: {
             type: 'line',
             color: '#fa7fe2',
@@ -127,7 +158,7 @@ export const topic_bikelanes: MapDataTopic = {
       ],
     },
     // {
-    //   id: 'atlas_bikelanes_fresh',
+    //   id: 'freshness',
     //   name: 'Inhalte & Aktualität',
     //   desc: null,
     //   layers: mapboxStyleLayers({

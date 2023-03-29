@@ -12,6 +12,7 @@ import {
 import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
 import { LegendDebugInfoLayerStyle, LegendDebugInfoTopicLayerConfig } from './LegendDebugInfo'
 import { LegendIconArea, LegendIconCircle, LegendIconLine, LegendIconTypes } from './LegendIcons'
+import { LegendNameDesc } from './LegendNameDesc'
 
 type Props = { scopeTopicId: TopicIds }
 
@@ -76,6 +77,17 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
     switch (type) {
       case 'line':
         return <LegendIconLine color={color} width={4} strokeDasharray={dasharray?.join(',')} />
+      case 'border':
+        return (
+          <div className="relative h-full w-full">
+            <div className="absolute inset-0.5 z-10">
+              <LegendIconLine color="white" width={4} strokeDasharray={dasharray?.join(',')} />
+            </div>
+            <div className="absolute inset-0 z-0">
+              <LegendIconLine color={color} width={7} strokeDasharray={dasharray?.join(',')} />
+            </div>
+          </div>
+        )
       case 'circle':
         return <LegendIconCircle color={color} />
       case 'fill':
@@ -111,7 +123,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                 key={key}
               >
                 <div className="ml-3 h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
-                <div className="flex h-5 items-center ">
+                <div className="flex h-5 items-center">
                   <input
                     id={key}
                     name={scope}
@@ -125,10 +137,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     value={key}
                   />
                 </div>
-                <div
-                  className="ml-2.5 flex min-h-[1.75rem] items-center text-sm font-medium leading-none text-gray-700"
-                  dangerouslySetInnerHTML={{ __html: legendData.name }}
-                />
+                <LegendNameDesc name={legendData.name} desc={legendData.desc} />
               </label>
             )
           })}

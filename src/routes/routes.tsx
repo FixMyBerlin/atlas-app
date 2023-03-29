@@ -1,5 +1,6 @@
 import { DrawArea } from '@components/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
 import { SourcesRasterIds } from '@components/MapInterface/mapData'
+import { SourcesDatasetsIds } from '@components/MapInterface/mapData/sourcesMapData/sourcesDatasets.const'
 import { Region } from '@fakeServer/index'
 import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
 import { PageRegionMap, PageRegions } from '@pages/PageRegions'
@@ -37,6 +38,7 @@ export type LocationGenerics = MakeGenerics<{
     bg: SourcesRasterIds
     config: ThemeConfig[]
     draw: DrawArea[]
+    data: SourcesDatasetsIds[]
     debugMap: boolean
   }
 }>

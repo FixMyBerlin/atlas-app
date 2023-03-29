@@ -43,6 +43,7 @@ export type RegionPath =
   | 'zes'
   | 'langerwehe'
   | 'parkraum'
+  | 'rs8'
   | 'deutschland'
 
 // This is our regions "Database" until we have a real one
@@ -62,6 +63,7 @@ export const regions: Region[] = [
       // The order here specifies the order in the UI
       'fromTo',
       'bikelanes',
+      'roadClassification',
       'lit',
     ],
     osmUsers: [...adminIds],
@@ -83,6 +85,7 @@ export const regions: Region[] = [
       // The order here specifies the order in the UI
       'fromTo',
       'bikelanes',
+      'roadClassification',
       'lit',
     ],
     osmUsers: [...adminIds, 18058212, 18058219],
@@ -175,6 +178,22 @@ export const regions: Region[] = [
       'areal2019',
       'parkraumkarte_neukoelln',
     ],
+  },
+  {
+    name: 'RS 8',
+    fullName: 'Trassenscout RS 8',
+    path: 'rs8',
+    map: { lat: 48.8769, lng: 9.2425, zoom: 12 },
+    bbox: {
+      min: [9.13736562, 48.81051166],
+      max: [9.36731192, 48.93255599],
+    },
+    logoPath: 'https://trassenscout.de/favicon.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
   },
   {
     name: 'Download',

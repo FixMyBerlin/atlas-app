@@ -1,43 +1,47 @@
 {
-  "atlas": {
-    "key": "atlas",
-    "about": "Metadata on the last processing of the atlas styles api response",
-    "processed_at": "14.3.2023, 08:54:15",
+  "atlas-style-package-1": {
+    "key": "atlas-style-package-1",
+    "about": "Metadata on the last processing of the atlas-style-package-1 styles api response",
+    "processed_at": "28.3.2023, 16:10:08",
     "style_last_published": {
-      "published_at": "13.3.2023, 12:03:03",
+      "published_at": "28.3.2023, 15:35:20",
       "version": 8
     },
     "style_id": "cl706a84j003v14o23n2r81w7",
     "style_owner": "hejco",
-    "style_name": "radverkehrsatlas-styles",
+    "style_name": "radverkehrsatlas-style-package-1",
     "debug_changed_names": {
       "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
       "changedNamesForDebugging": [
         {
-          "sourceName": "atlas_roadClassification_detailed",
-          "cleanedName": "atlas_roadclassification_detailed"
-        },
-        {
-          "sourceName": "atlas_roadClassification",
-          "cleanedName": "atlas_roadclassification"
-        },
-        {
           "sourceName": "atlas_bikelanesPresence_complete",
           "cleanedName": "atlas_bikelanespresence_complete"
-        },
-        {
-          "sourceName": "atlas_bikelanes_fresh_DISABLED",
-          "cleanedName": "atlas_bikelanes_fresh_disabled"
         }
       ]
+    }
+  },
+  "atlas-style-package-2": {
+    "key": "atlas-style-package-2",
+    "about": "Metadata on the last processing of the atlas-style-package-2 styles api response",
+    "processed_at": "28.3.2023, 16:10:08",
+    "style_last_published": {
+      "published_at": "28.3.2023, 16:10:03",
+      "version": 8
+    },
+    "style_id": "clfs9mdh9007n01t6lw99gyqr",
+    "style_owner": "hejco",
+    "style_name": "radverkehrsatlas-style-package-2",
+    "debug_changed_names": {
+      "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
+      "changedNamesForDebugging": []
     }
   },
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "14.3.2023, 08:54:15",
+    "processed_at": "28.3.2023, 16:10:08",
     "style_last_published": {
-      "published_at": "14.3.2023, 08:54:06",
+      "published_at": "22.3.2023, 06:59:54",
       "version": 8
     },
     "style_id": "clev6ho1i00hd01o9bfo80n9q",

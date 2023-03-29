@@ -20,7 +20,7 @@ export const IconModal: React.FC<Props> = ({
 
   const triggerStyles: Record<Props['triggerStyle'], string> = {
     circle:
-      'inline-flex flex-none grow-0 items-center rounded-full border border-transparent bg-slate-300 px-1 py-1 text-sm font-medium leading-4 text-gray-500 shadow-sm hover:bg-yellow-50 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2',
+      'inline-flex flex-none grow-0 items-center rounded-full border border-transparent bg-gray-300 px-1 py-1 text-sm font-medium leading-4 text-gray-500 shadow-sm hover:bg-yellow-50 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2',
     button:
       'inline-flex justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500',
   }

@@ -15,7 +15,8 @@ export const sourcesParking: MapDataSource<
 >[] = [
   {
     id: 'parkraumParking',
-    tiles: 'https://vts.mapwebbing.eu/processing.parking_segments/{z}/{x}/{y}.pbf',
+    tiles:
+      'https://vts.mapwebbing.eu/processing.parking_segments,processing.parking_segments_label/{z}/{x}/{y}.pbf',
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
@@ -32,6 +33,7 @@ export const sourcesParking: MapDataSource<
         'length',
         'highway_width_proc_effective',
         'surface',
+        'operator_type',
       ],
       editors: [
         {
@@ -40,7 +42,7 @@ export const sourcesParking: MapDataSource<
         },
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -63,7 +65,7 @@ export const sourcesParking: MapDataSource<
     ].join(',')}/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
     inspector: { enabled: false }, // Those layers have no properties anyways
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -76,7 +78,7 @@ export const sourcesParking: MapDataSource<
     inspector: {
       enabled: false,
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: {
@@ -94,7 +96,13 @@ export const sourcesParking: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'area_id',
-      documentedKeys: ['parking', 'access', 'capacity__if_present', 'building__if_present'],
+      documentedKeys: [
+        'parking',
+        'access',
+        'operator_type',
+        'capacity__if_present',
+        'building__if_present',
+      ],
       editors: [
         {
           name: 'Parkplätze Editor',
@@ -103,7 +111,7 @@ export const sourcesParking: MapDataSource<
         },
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -128,7 +136,7 @@ export const sourcesParking: MapDataSource<
         'length_wo_dual_carriageway',
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },

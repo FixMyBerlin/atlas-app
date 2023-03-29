@@ -7,27 +7,36 @@ const api = axios.create({
   baseURL: getApiUrl(),
 })
 
-export const getHistory = (apiIdentifier: SourceVerificationApiIdentifier, osmId: number) =>
-  api.get(`/verify/${apiIdentifier}/${osmId}/history`)
+export type THistoryEntry = {
+  id: number
+  verified: TVerificationStatus
+  verified_by: string
+  verified_at: string
+  comment?: string
+}
 
-export type VerificationStatus = 'approved' | 'rejected'
+export const getHistory = (apiIdentifier: SourceVerificationApiIdentifier, osmId: number) => {
+  return api.get<THistoryEntry[]>(`/verify/${apiIdentifier}/${osmId}/history`)
+}
 
-export type VerificationApiPost = {
+export type TVerificationStatus = 'approved' | 'rejected'
+
+export type TVerificationApiPost = {
   apiIdentifier: SourceVerificationApiIdentifier
   osm_id: number
   osm_type: string
   verified_at: string
   verified_by: number | undefined
-  verified_status: VerificationStatus | null
+  verified_status: TVerificationStatus | null
   comment: string | undefined
 }
 
-export type VerificationApiGet = {
+export type TVerificationApiGet = {
   osm_id: number
   osm_type: string
   verified_at: string
   verified_by: number | undefined
-  verified: VerificationStatus | null
+  verified: TVerificationStatus | null
   comment: string | undefined
 }
 
@@ -39,7 +48,7 @@ export const updateVerificationStatus = ({
   verified_by,
   verified_status,
   comment,
-}: VerificationApiPost) => {
+}: TVerificationApiPost) => {
   if (!verified_by || !verified_status) {
     throw Error('updateVerificationStatus: Required data missing')
   }
@@ -53,5 +62,5 @@ export const updateVerificationStatus = ({
 
   return api
     .post(`/verify/${apiIdentifier}/${osm_id}?` + encoded)
-    .then((res) => res.data as VerificationApiGet)
+    .then((res) => res.data as TVerificationApiGet)
 }

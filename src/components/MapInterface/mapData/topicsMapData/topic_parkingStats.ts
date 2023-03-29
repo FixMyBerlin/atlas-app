@@ -13,6 +13,7 @@ export const topic_parkingStats: MapDataTopic = {
   name: 'Statistik',
   desc: 'Auswertung pro adminstrativem Gebiet.',
   sourceId: 'parkraumParkingStats',
+  beforeId: undefined,
   styles: [
     {
       id: 'default',

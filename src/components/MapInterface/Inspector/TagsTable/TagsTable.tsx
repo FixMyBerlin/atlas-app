@@ -1,8 +1,11 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
-import { TagsTableRowCompositSurfaceSmoothness } from './compositTableRows'
-import { TagsTableRowCompositTrafficSign } from './compositTableRows/TagsTableRowCompositTrafficSign'
+import {
+  TagsTableRowCompositHighway,
+  TagsTableRowCompositSurfaceSmoothness,
+  TagsTableRowCompositTrafficSign,
+} from './compositTableRows'
 import { TagsTableRow } from './TagsTableRow'
 
 type Props = {
@@ -16,7 +19,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
 
   return (
     <table className="w-full">
-      <thead className="sr-only bg-gray-50">
+      <thead className="sr-only">
         <tr>
           <th
             scope="col"
@@ -29,7 +32,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
           </th>
         </tr>
       </thead>
-      <tbody className="divide-y divide-gray-200 bg-white">
+      <tbody className="divide-y divide-gray-200">
         {sourceDocumentedKeys?.map((key) => {
           const cleanedKey = cleanKey(key)
 
@@ -38,6 +41,15 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case 'traffic_sign': {
               return (
                 <TagsTableRowCompositTrafficSign
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case 'composit_highway': {
+              return (
+                <TagsTableRowCompositHighway
                   sourceId={sourceId}
                   tagKey={cleanedKey}
                   properties={properties}

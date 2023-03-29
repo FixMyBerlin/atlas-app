@@ -4,6 +4,9 @@ import {
   TopicAccidentsId,
   TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
+  TopicBarriersId,
+  TopicBarriersStyleFilterIds,
+  TopicBarriersStyleIds,
   TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
   TopicBikelanesPresenceId,
@@ -16,19 +19,21 @@ import {
   TopicBoundariesId,
   TopicBoundariesStyleFilterIds,
   TopicBoundariesStyleIds,
+  TopicBuildingsId,
+  TopicBuildingsStyleFilterIds,
+  TopicBuildingsStyleIds,
+  TopicEducationId,
   TopicEducationId_Osmscripts,
-  TopicEducationId_Tarmac,
+  TopicEducationStyleFilterIds,
   TopicEducationStyleFilterIds_Osmscripts,
-  TopicEducationStyleFilterIds_Tarmac,
+  TopicEducationStyleIds,
   TopicEducationStyleIds_Osmscripts,
-  TopicEducationStyleIds_Tarmac,
   TopicLanduseId,
   TopicLanduseStyleFilterIds,
   TopicLanduseStyleIds,
   TopicLitId,
   TopicLitStyleFilterIds,
   TopicLitStyleIds,
-  TopicLitStyleLegendIds,
   TopicMapillaryCoverageId,
   TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
@@ -43,34 +48,31 @@ import {
   TopicParkingDebugStyleIds,
   TopicParkingId,
   TopicParkingPointsId,
-  TopicParkingStatsId,
   TopicParkingPointsStyleFilterIds,
-  TopicParkingStatsStyleFilterIds,
   TopicParkingPointsStyleIds,
+  TopicParkingStatsId,
+  TopicParkingStatsStyleFilterIds,
   TopicParkingStatsStyleIds,
   TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
-  TopicBuildingsId,
   TopicPlacesStyleFilterIds,
-  TopicBuildingsStyleFilterIds,
   TopicPlacesStyleIds,
-  TopicBuildingsStyleIds,
   TopicPoiClassificationId_Tarmac,
   TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicPoiClassificationStyleIds_Tarmac,
+  TopicPublicTransportId,
   TopicPublicTransportId_Osmscripts,
-  TopicPublicTransportId_Tarmac,
+  TopicPublicTransportStyleFilterIds,
   TopicPublicTransportStyleFilterIds_Osmscripts,
-  TopicPublicTransportStyleFilterIds_Tarmac,
+  TopicPublicTransportStyleIds,
   TopicPublicTransportStyleIds_Osmscripts,
-  TopicPublicTransportStyleIds_Tarmac,
+  TopicRoadClassificationId,
   TopicRoadClassificationId_Osmscripts,
-  TopicRoadClassificationId_Tarmac,
+  TopicRoadClassificationStyleFilterIds,
   TopicRoadClassificationStyleFilterIds_Osmscripts,
-  TopicRoadClassificationStyleFilterIds_Tarmac,
+  TopicRoadClassificationStyleIds,
   TopicRoadClassificationStyleIds_Osmscripts,
-  TopicRoadClassificationStyleIds_Tarmac,
   TopicShopsId_Osmscripts,
   TopicShopsStyleFilterIds_Osmscripts,
   TopicShopsStyleIds_Osmscripts,
@@ -81,10 +83,12 @@ import {
   TopicSurfaceStyleIds_Osmscripts,
   TopicSurfaceStyleIds_Tarmac,
   topic_accidents,
+  topic_barriers,
   topic_bikelanes,
   topic_bikelanesPresence,
   topic_bikelanes_osmscripts,
   topic_boundaries,
+  topic_buildings,
   topic_education,
   topic_education_osmscripts,
   topic_landuse,
@@ -98,25 +102,25 @@ import {
   topic_parkingStats,
   topic_places,
   topic_poiClassification_tarmac,
+  topic_publicTransport,
   topic_publicTransport_osmscripts,
-  topic_publicTransport_tarmac,
+  topic_roadClassification,
   topic_roadClassification_osmscripts,
-  topic_roadClassification_tarmac,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
-  topic_buildings,
 } from './topicsMapData'
 import { MapData } from './types'
 
 export type TopicIds =
   | TopicAccidentsId
+  | TopicBarriersId
   | TopicBikelanesId
   | TopicBikelanesId_Osmscripts
   | TopicBikelanesPresenceId
   | TopicBoundariesId
   | TopicBuildingsId
+  | TopicEducationId
   | TopicEducationId_Osmscripts
-  | TopicEducationId_Tarmac
   | TopicLanduseId
   | TopicLitId
   | TopicMapillaryCoverageId
@@ -128,23 +132,24 @@ export type TopicIds =
   | TopicParkingStatsId
   | TopicPlacesId
   | TopicPoiClassificationId_Tarmac
+  | TopicPublicTransportId
   | TopicPublicTransportId_Osmscripts
-  | TopicPublicTransportId_Tarmac
+  | TopicRoadClassificationId
   | TopicRoadClassificationId_Osmscripts
-  | TopicRoadClassificationId_Tarmac
   | TopicShopsId_Osmscripts
   | TopicSurfaceId_Osmscripts
   | TopicSurfaceId_Tarmac
 
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
+  | TopicBarriersStyleIds
   | TopicBikelanesPresenceStyleIds
   | TopicBikelanesStyleIds
   | TopicBikelanesStyleIds_Osmscripts
   | TopicBoundariesStyleIds
   | TopicBuildingsStyleIds
+  | TopicEducationStyleIds
   | TopicEducationStyleIds_Osmscripts
-  | TopicEducationStyleIds_Tarmac
   | TopicLanduseStyleIds
   | TopicLitStyleIds
   | TopicMapillaryCoverageStyleIds
@@ -156,23 +161,24 @@ export type TopicStyleIds =
   | TopicParkingStyleIds
   | TopicPlacesStyleIds
   | TopicPoiClassificationStyleIds_Tarmac
+  | TopicPublicTransportStyleIds
   | TopicPublicTransportStyleIds_Osmscripts
-  | TopicPublicTransportStyleIds_Tarmac
+  | TopicRoadClassificationStyleIds
   | TopicRoadClassificationStyleIds_Osmscripts
-  | TopicRoadClassificationStyleIds_Tarmac
   | TopicShopsStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Tarmac
 
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
+  | TopicBarriersStyleFilterIds
   | TopicBikelanesPresenceStyleFilterIds
   | TopicBikelanesStyleFilterIds
   | TopicBikelanesStyleFilterIds_Osmscripts
   | TopicBoundariesStyleFilterIds
   | TopicBuildingsStyleFilterIds
+  | TopicEducationStyleFilterIds
   | TopicEducationStyleFilterIds_Osmscripts
-  | TopicEducationStyleFilterIds_Tarmac
   | TopicLanduseStyleFilterIds
   | TopicLitStyleFilterIds
   | TopicMapillaryCoverageStyleFilterIds
@@ -184,47 +190,23 @@ export type TopicStyleFilterIds =
   | TopicParkingStyleFilterIds
   | TopicPlacesStyleFilterIds
   | TopicPoiClassificationStyleFilterIds_Tarmac
+  | TopicPublicTransportStyleFilterIds
   | TopicPublicTransportStyleFilterIds_Osmscripts
-  | TopicPublicTransportStyleFilterIds_Tarmac
+  | TopicRoadClassificationStyleFilterIds
   | TopicRoadClassificationStyleFilterIds_Osmscripts
-  | TopicRoadClassificationStyleFilterIds_Tarmac
   | TopicShopsStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Tarmac
 
-export type TopicStyleLegendIds =
-  // | TopicAccidentsStyleLegendIds
-  // | TopicBikelanesStyleLegendIds_Osmscripts
-  // | TopicBikelanesPresenceStyleLegendIds_Osmscripts
-  // | TopicBikelanesStyleLegendIds_Tarmac
-  // | TopicBikelanesPresenceStyleLegendIds_Tarmac
-  // | TopicBoundariesStyleLegendIds
-  // | TopicEducationStyleLegendIds_Osmscripts
-  // | TopicEducationStyleLegendIds_Tarmac
-  // | TopicLanduseStyleLegendIds
-  TopicLitStyleLegendIds
-// | TopicMapillaryCoverageStyleLegendIds
-// | TopicPlacesStyleLegendIds
-// | TopicBuildingsStyleLegendIds
-// | TopicMaxspeedStyleLegendIds
-// | TopicPublicTransportStyleLegendIds_Osmscripts
-// | TopicPublicTransportStyleLegendIds_Tarmac
-// | TopicRoadClassificationStyleLegendIds_Osmscripts
-// | TopicRoadClassificationStyleLegendIds_Tarmac
-// | TopicShopsStyleLegendIds_Osmscripts
-// | TopicPoiClassificationStyleLegendIds_Tarmac
-// | TopicSurfaceStyleLegendIds_Osmscripts
-// | TopicSurfaceStyleLegendIds_Tarmac
-// | TopicParkingStyleLegendIds
-// | TopicParkingPointsStyleLegendIds
-// | TopicParkingStatsStyleLegendIds
-// | TopicParkingAreasStyleLegendIds
+export type TopicStyleLegendIds = string // TODO: We can make this more precise later
 
 export const mapData: MapData = {
   sources,
   themes,
   topics: [
+    // topic_surface_tarmac,
     topic_accidents,
+    topic_barriers,
     topic_bikelanes_osmscripts,
     topic_bikelanes,
     topic_bikelanesPresence,
@@ -236,19 +218,18 @@ export const mapData: MapData = {
     topic_lit,
     topic_mapillaryCoverage,
     topic_maxspeed,
-    topic_places,
-    topic_poiClassification_tarmac,
-    topic_publicTransport_osmscripts,
-    topic_publicTransport_tarmac,
-    topic_roadClassification_osmscripts,
-    topic_roadClassification_tarmac,
-    topic_shops_osmscripts,
-    topic_surface_osmscripts,
-    // topic_surface_tarmac,
     topic_parking,
     topic_parkingAreas,
     topic_parkingDebug,
     topic_parkingPoints,
     topic_parkingStats,
+    topic_places,
+    topic_poiClassification_tarmac,
+    topic_publicTransport_osmscripts,
+    topic_publicTransport,
+    topic_roadClassification_osmscripts,
+    topic_roadClassification,
+    topic_shops_osmscripts,
+    topic_surface_osmscripts,
   ],
 }

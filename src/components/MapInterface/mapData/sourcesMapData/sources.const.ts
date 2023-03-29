@@ -11,6 +11,7 @@ export type SourcesIds =
   | 'mapillary_trafficSigns'
   | 'osmscripts_highways'
   | 'osmscripts_pois'
+  | 'tarmac_barriers'
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
@@ -26,14 +27,22 @@ export type SourcesIds =
 
 export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes' | 'roadclassification'
 
+// Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
   | 'bikelanes_verified'
+  | 'bikelanes'
+  | 'bikelanesPresence'
+  // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
+  | 'buildings'
   | 'education'
+  | 'landuse'
   | 'lit_verified'
+  | 'lit'
+  | 'maxspeed'
   | 'places'
+  | 'poiClassification'
   | 'publicTransport'
   | 'roadClassification'
-  | 'poiClassification'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -63,7 +72,7 @@ export const sources: MapDataSource<
       highlightingKey: 'area_id',
       documentedKeys: ['name', 'admin_level'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -78,7 +87,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'unfall_id',
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -94,7 +103,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: '@id',
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -110,7 +119,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'id',
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -125,7 +134,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -142,19 +151,17 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
+        'composit_highway',
         'category',
-        'cycleway__if_present',
         'oneway__if_present',
         'traffic_sign',
         'width',
         'composit_surface_smoothness',
         'surface:color__if_present',
         'name',
-        'highway__if_present',
-        '_parent_highway',
       ],
     },
-    presence: { enabled: true },
+    // presence: { enabled: true },
     verification: {
       enabled: true,
       apiIdentifier: 'bikelanes',
@@ -175,7 +182,7 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['name', 'highway', 'self', 'left', 'right', 'oneway__if_present'],
     },
-    presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
     freshness: { enabled: true },
     calculator: { enabled: false },
@@ -189,8 +196,9 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
+      documentedKeys: ['name'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -209,7 +217,7 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['amenity', 'name'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -230,7 +238,7 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['category', 'type', 'name'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -257,7 +265,7 @@ export const sources: MapDataSource<
         'composit_surface_smoothness',
       ],
     },
-    presence: { enabled: true },
+    // presence: { enabled: true },
     verification: {
       enabled: true,
       apiIdentifier: 'lit',
@@ -282,7 +290,26 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['name', 'place', 'population', 'population:date'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'places',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.places.json
+    id: 'tarmac_places',
+    tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['name', 'place', 'population', 'population:date'],
+    },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -303,21 +330,35 @@ export const sources: MapDataSource<
         'name',
         'highway',
         'maxspeed',
-        '_maxspeed_source',
-        'traffic_sign__if_present',
+        'maxspeed_source',
         'maxspeed:backward__if_present',
         'maxspeed:forward__if_present',
         'maxspeed:conditional__if_present',
+        'traffic_sign__if_present',
       ],
     },
-    presence: {
-      enabled: true,
-    },
+    // presence: { enabled: true },
     verification: { enabled: false },
     freshness: {
       enabled: true,
       dateKey: 'fresh',
     },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'maxspeed',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.barrierAreas.json
+    // https://tiles.radverkehrsatlas.de/public.barrierLines.json
+    id: 'tarmac_barriers',
+    tiles: `${tilesUrl}/public.barrierAreas,public.barrierLines/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: { enabled: false },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -331,11 +372,14 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['building', 'place', 'population', 'population:date'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'buildings',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
@@ -347,7 +391,7 @@ export const sources: MapDataSource<
       highlightingKey: 'osm_id',
       documentedKeys: ['landuse'],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
@@ -380,7 +424,7 @@ export const sources: MapDataSource<
         },
       ],
     },
-    presence: { enabled: false },
+    // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },

@@ -21,22 +21,26 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<Props> = ({
       tagKey={tagKey}
       value={
         <>
+          {properties['surface'] && (
+            <>
+              {properties['smoothness'] && <>Belag: </>}
+              <ConditionalFormattedValue
+                sourceId={sourceId}
+                tagKey={'surface'}
+                tagValue={properties['surface']}
+              />
+            </>
+          )}
           {properties['smoothness'] && (
             <>
+              <br />
+              Zustand:{' '}
               <ConditionalFormattedValue
                 sourceId={sourceId}
                 tagKey={'smoothness'}
                 tagValue={properties['smoothness']}
-              />{' '}
-              —{' '}
+              />
             </>
-          )}
-          {properties['surface'] && (
-            <ConditionalFormattedValue
-              sourceId={sourceId}
-              tagKey={'surface'}
-              tagValue={properties['surface']}
-            />
           )}
         </>
       }

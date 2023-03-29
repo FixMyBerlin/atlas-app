@@ -8,6 +8,7 @@ import { Map } from './Map'
 import { BackgroundLegend, SelectBackground } from './background'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
+import { SelectDatasets } from './SelectDatasets/SelectDatasets'
 
 export const MapInterface: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ export const MapInterface: React.FC = () => {
         <Inspector />
         <div className="fixed bottom-3 left-5 z-20 flex gap-2">
           <Download />
+          <SelectDatasets />
           <SelectBackground />
           <BackgroundLegend />
         </div>
