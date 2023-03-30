@@ -1,6 +1,7 @@
 package.path = package.path ..
     ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/surfaceQuality/?.lua"
 require("ExcludeHighways")
+require("ExcludeByWidth")
 require("FilterTags")
 require("HighwayClasses")
 require("IntoExcludeTable")
