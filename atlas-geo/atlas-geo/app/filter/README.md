@@ -9,8 +9,7 @@ Docs: https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format
 To convert `.geojson` files to the `.poly` format we use the command line tool [geojson2poly](https://www.npmjs.com/package/geojson2poly):
 
 ```
-cd app/filter/regions
-npx geojson2poly ./geojson/rs8.geojson rs8.poly
+npx geojson2poly app/filter/regions/geojson/lueneburg.geojson app/filter/regions/lueneburg.poly
 ```
 
 ## Berlin Ring
@@ -42,3 +41,8 @@ npx geojson2poly ./geojson/rs8.geojson rs8.poly
 - https://www.openstreetmap.org/relation/62630
 - https://hanshack.com/geotools/gimmegeodata/
 - https://app.placemark.io/play simplify
+
+# Landkreis Lüneburg
+
+- https://www.openstreetmap.org/relation/2084746
+- Placemark Play > Simplify
