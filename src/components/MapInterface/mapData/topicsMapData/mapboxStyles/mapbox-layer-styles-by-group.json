@@ -1142,31 +1142,117 @@
             "#e6d6a2",
             "#cfcfcf"
           ]
-        }
+        },
+        "layout": {}
       }
     ]
   },
   {
-    "group": "atlas_roadclass_surface",
+    "group": "atlas_surface_bad",
     "layers": [
       {
         "minzoom": 11,
         "type": "line",
-        "id": "surface-bad-good",
+        "id": "smoothness-bad",
         "paint": {
           "line-color": [
-            "match",
-            ["get", "FMC:Category:SurfaceData:ScopeMainWay"],
-            ["excellent", "good"],
+            "case",
+            ["match", ["get", "smoothness"], ["excellent", "good"], true, false],
             "rgba(19, 240, 15, 0.89)",
-            ["intermediate"],
+            ["match", ["get", "smoothness"], ["intermediate"], true, false],
+            "rgba(188, 22, 254, 0.85)",
+            ["match", ["get", "smoothness"], ["very_bad", "bad"], true, false],
+            "rgb(251, 40, 40)",
+            "hsla(252, 91%, 38%, 0)"
+          ],
+          "line-dasharray": [1.5, 1.5]
+        },
+        "filter": ["==", ["get", "is_present_smoothness"], true]
+      }
+    ]
+  },
+  {
+    "group": "atlas_surface_fresh",
+    "layers": [
+      {
+        "id": "surface-outdated",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(0, 100%, 41%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 7, 2, 12, 4, 16, 12]
+        },
+        "filter": [
+          "match",
+          ["get", "fresh_smoothness"],
+          ["outdated_check_date", "outdated_update_at"],
+          true,
+          false
+        ]
+      },
+      {
+        "id": "surface-fresh",
+        "type": "line",
+        "paint": {
+          "line-color": "hsl(107, 88%, 57%)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 7, 2, 12, 4, 16, 12]
+        },
+        "filter": [
+          "match",
+          ["get", "fresh_smoothness"],
+          ["fresh_check_date", "fresh_update_at"],
+          true,
+          false
+        ]
+      }
+    ]
+  },
+  {
+    "group": "atlas_surface_good",
+    "layers": [
+      {
+        "minzoom": 11,
+        "type": "line",
+        "id": "smoothness-good",
+        "paint": {
+          "line-color": [
+            "case",
+            ["match", ["get", "smoothness"], ["excellent", "good"], true, false],
+            "rgba(19, 240, 15, 0.89)",
+            ["match", ["get", "smoothness"], ["intermediate"], true, false],
             "rgba(110, 109, 111, 0.01)",
-            ["very_bad", "bad"],
+            ["match", ["get", "smoothness"], ["very_bad", "bad"], true, false],
             "#ffffff",
             "hsla(252, 91%, 38%, 0)"
           ],
           "line-dasharray": [1.5, 1.5]
         },
+        "filter": ["==", ["get", "is_present_smoothness"], true]
+      }
+    ]
+  },
+  {
+    "group": "atlas_surface_present",
+    "layers": [
+      {
+        "id": "surface-Keine Daten",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 14, 1.5, 18, 3],
+          "line-color": "hsl(312, 92%, 74%)",
+          "line-opacity": 0.7
+        },
+        "filter": ["==", ["get", "is_present_smoothness"], false],
+        "layout": {}
+      },
+      {
+        "id": "surface-Daten vorhanden copy",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 14, 1.5, 18, 3],
+          "line-color": "hsl(312, 0%, 34%)",
+          "line-opacity": 0.7
+        },
+        "filter": ["==", ["get", "is_present_smoothness"], true],
         "layout": {}
       }
     ]

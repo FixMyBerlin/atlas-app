@@ -77,11 +77,11 @@ import {
   TopicShopsStyleFilterIds_Osmscripts,
   TopicShopsStyleIds_Osmscripts,
   TopicSurfaceId_Osmscripts,
-  TopicSurfaceId_Tarmac,
+  TopicSurfaceQualityId,
   TopicSurfaceStyleFilterIds_Osmscripts,
-  TopicSurfaceStyleFilterIds_Tarmac,
+  TopicSurfaceQualityStyleFilterIds,
   TopicSurfaceStyleIds_Osmscripts,
-  TopicSurfaceStyleIds_Tarmac,
+  TopicSurfaceStyleQualityIds,
   topic_accidents,
   topic_barriers,
   topic_bikelanes,
@@ -108,6 +108,7 @@ import {
   topic_roadClassification_osmscripts,
   topic_shops_osmscripts,
   topic_surface_osmscripts,
+  topic_surfaceQuality,
 } from './topicsMapData'
 import { MapData } from './types'
 
@@ -138,7 +139,7 @@ export type TopicIds =
   | TopicRoadClassificationId_Osmscripts
   | TopicShopsId_Osmscripts
   | TopicSurfaceId_Osmscripts
-  | TopicSurfaceId_Tarmac
+  | TopicSurfaceQualityId
 
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
@@ -167,7 +168,7 @@ export type TopicStyleIds =
   | TopicRoadClassificationStyleIds_Osmscripts
   | TopicShopsStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Osmscripts
-  | TopicSurfaceStyleIds_Tarmac
+  | TopicSurfaceStyleQualityIds
 
 export type TopicStyleFilterIds =
   | TopicAccidentsStyleFilterIds
@@ -196,7 +197,7 @@ export type TopicStyleFilterIds =
   | TopicRoadClassificationStyleFilterIds_Osmscripts
   | TopicShopsStyleFilterIds_Osmscripts
   | TopicSurfaceStyleFilterIds_Osmscripts
-  | TopicSurfaceStyleFilterIds_Tarmac
+  | TopicSurfaceQualityStyleFilterIds
 
 export type TopicStyleLegendIds = string // TODO: We can make this more precise later
 
@@ -204,7 +205,6 @@ export const mapData: MapData = {
   sources,
   themes,
   topics: [
-    // topic_surface_tarmac,
     topic_accidents,
     topic_barriers,
     topic_bikelanes_osmscripts,
@@ -231,5 +231,6 @@ export const mapData: MapData = {
     topic_roadClassification,
     topic_shops_osmscripts,
     topic_surface_osmscripts,
+    topic_surfaceQuality,
   ],
 }

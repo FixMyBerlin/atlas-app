@@ -44,6 +44,7 @@ export type SourceExportApiIdentifier =
   | 'poiClassification'
   | 'publicTransport'
   | 'roadClassification'
+  | 'surfaceQuality'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -361,6 +362,45 @@ export const sources: MapDataSource<
     export: {
       enabled: true,
       apiIdentifier: 'maxspeed',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.surfaceQuality.json
+    id: 'tarmac_surfaceQuality',
+    tiles: `${tilesUrl}/public.surfaceQuality/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [
+        'name',
+        'highway',
+        'composit_surface_smoothness',
+        'surface_source__if_present',
+        'smoothness_source__if_present',
+      ],
+    },
+    // presence: { enabled: true },
+    verification: { enabled: false },
+    freshness: {
+      enabled: true,
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Belag',
+          freshKey: 'fresh_surface',
+          dateKey: 'check_date:surface',
+        },
+        {
+          primaryKeyTranslation: 'Zustand',
+          freshKey: 'fresh_smoothness',
+          dateKey: 'check_date:smoothness',
+        },
+      ],
+    },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'surfaceQuality',
     },
   },
   {

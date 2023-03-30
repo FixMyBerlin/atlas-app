@@ -61,7 +61,7 @@ export const themes: MapDataTheme[] = [
       { id: 'roadClassification', defaultActive: true },
       { id: 'bikelanes', defaultActive: false },
       { id: 'maxspeed', defaultActive: false },
-      // { id: 'surface_tarmac', defaultActive: false },
+      { id: 'surfaceQuality', defaultActive: false },
       { id: 'places', defaultActive: true },
       { id: 'landuse', defaultActive: false },
     ],
