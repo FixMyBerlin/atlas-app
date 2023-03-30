@@ -205,7 +205,7 @@ export const regions: Region[] = [
       min: [8.1435156, 49.8955342],
       max: [8.3422611, 50.0353045],
     },
-    logoPath: 'https://trassenscout.de/favicon.svg',
+    logoPath: 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
