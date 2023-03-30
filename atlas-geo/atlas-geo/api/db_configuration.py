@@ -3,6 +3,8 @@
 # init_db.py: Create a function per entry by calling INIT_FUNCTIONS.sql
 # main.py: Provide the /export/<DB Table Name> entpoint
 export_geojson_function_from_type = {
+  "barrierAreas":       "atlas_export_geojson_barrierareas",
+  "barrierLines":       "atlas_export_geojson_barrierlines",
   "bikelanes_verified": "atlas_export_geojson_bikelanes_verified",
   "bikelanes":          "atlas_export_geojson_bikelanes",
   "bikelanesPresence":  "atlas_export_geojson_bikelanesPresence",
@@ -17,8 +19,7 @@ export_geojson_function_from_type = {
   "poiClassification":  "atlas_export_geojson_shops",
   "publicTransport":    "atlas_export_geojson_publictransport",
   "roadClassification": "atlas_export_geojson_roadtypes",
-  "barrierLines":       "atlas_export_geojson_barrierlines",
-  "barrierAreas":       "atlas_export_geojson_barrierareas"
+  "surfaceQuality":     "atlas_export_geojson_surfacequality",
 }
 
 # main.py: Used as an allow list to guard the /verify/* API
