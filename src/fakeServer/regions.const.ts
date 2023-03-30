@@ -105,7 +105,13 @@ export const regions: Region[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'lit',
+    ],
     osmUsers: [...adminIds, 12741863],
     published: false,
     backgroundSources: [
