@@ -91,11 +91,16 @@ export const Inspector: React.FC = () => {
                     geometry={inspectObject.geometry}
                     editors={sourceData.inspector.editors}
                   />
-                  <ToolsFreshness
-                    visible={sourceData.freshness.enabled}
-                    properties={properties}
-                    freshnessDateKey={sourceData.freshness.dateKey}
-                  />
+                  {sourceData.freshness.enabled &&
+                    sourceData.freshness.freshConfigs?.map((freshConfig) => {
+                      return (
+                        <ToolsFreshness
+                          key={freshConfig.dateKey}
+                          properties={properties}
+                          freshConfig={freshConfig}
+                        />
+                      )
+                    })}
                   <ToolsOtherProperties
                     properties={properties}
                     documentedKeys={sourceData.inspector.documentedKeys}

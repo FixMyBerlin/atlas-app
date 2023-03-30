@@ -24,8 +24,9 @@ export type SourcesIds =
   | 'tarmac_poiClassification'
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
+  | 'tarmac_surfaceQuality'
 
-export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes' | 'roadclassification'
+export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
 
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
@@ -273,7 +274,13 @@ export const sources: MapDataSource<
     },
     freshness: {
       enabled: true,
-      dateKey: 'check_date:lit',
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Beleuchtung',
+          freshKey: 'fresh',
+          dateKey: 'check_date:lit',
+        },
+      ],
     },
     calculator: { enabled: false },
     export: {
@@ -342,7 +349,13 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: {
       enabled: true,
-      dateKey: 'fresh',
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Höchstgeschwindigkeit',
+          freshKey: 'fresh',
+          dateKey: 'check_date:maxspeed',
+        },
+      ],
     },
     calculator: { enabled: false },
     export: {
