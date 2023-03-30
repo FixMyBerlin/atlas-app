@@ -37,15 +37,16 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionPath =
-  | 'bibi'
-  | 'trto'
   | 'berlin'
-  | 'zes'
+  | 'bibi'
+  | 'deutschland'
   | 'langerwehe'
+  | 'lueneburg'
+  | 'mainz'
   | 'parkraum'
   | 'rs8'
-  | 'mainz'
-  | 'deutschland'
+  | 'trto'
+  | 'zes'
 
 // This is our regions "Database" until we have a real one
 export const regions: Region[] = [
@@ -207,6 +208,23 @@ export const regions: Region[] = [
     },
     logoPath: 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'LK Lüneburg',
+    fullName: 'Landkreis Lüneburg',
+    path: 'lueneburg',
+    map: { lat: 53.2493, lng: 10.4142, zoom: 14 },
+    bbox: {
+      min: [10.041308, 53.0468526],
+      max: [11.1957671, 53.385876],
+    },
+    logoPath:
+      'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
+    logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
     published: false,
