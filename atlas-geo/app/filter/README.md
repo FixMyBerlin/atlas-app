@@ -9,7 +9,7 @@ Docs: https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format
 To convert `.geojson` files to the `.poly` format we use the command line tool [geojson2poly](https://www.npmjs.com/package/geojson2poly):
 
 ```
-npx geojson2poly app/filter/regions/geojson/lueneburg.geojson app/filter/regions/lueneburg.poly
+npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/woldegk.poly
 ```
 
 ## Berlin Ring
@@ -40,9 +40,27 @@ npx geojson2poly app/filter/regions/geojson/lueneburg.geojson app/filter/regions
 
 - https://www.openstreetmap.org/relation/62630
 - https://hanshack.com/geotools/gimmegeodata/
-- https://app.placemark.io/play simplify
+- https://app.placemark.io/play => Simplify
 
 # Landkreis Lüneburg
 
 - https://www.openstreetmap.org/relation/2084746
-- Placemark Play > Simplify
+- Placemark Play => Simplify
+
+# Amt Neukloster-Warin
+
+- https://www.openstreetmap.org/relation/1515757
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- Placemark Play => Buffer 1km, Simplify
+
+# Amt Landhagen
+
+- https://www.openstreetmap.org/relation/1432580
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- Placemark Play => Buffer 1km, Simplify, Add Greifswald
+
+# Amt Woldegk
+
+- https://www.openstreetmap.org/relation/1419902
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- Placemark Play => Buffer 1km, Simplify
