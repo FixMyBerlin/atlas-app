@@ -101,7 +101,7 @@ export const regions: Region[] = [
     name: 'Berlin',
     fullName: 'Berlin Ring',
     path: 'berlin',
-    map: { lat: 52.51, lng: 13.41, zoom: 14 },
+    map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
     bbox: {
       min: [13.2809, 52.46],
       max: [13.4929, 52.5528],
