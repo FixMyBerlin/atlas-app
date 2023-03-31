@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "release": "echo \"Use this format for the title: 'Release 2023-12-31'\" && gh pr create --base main --head develop --body \"\"",
+    "test": "chmod +x ./run_tests.sh && ./run_tests.sh",
     "cleanup": "docker system prune --force && docker system prune --force --volumes"
   }
 }
