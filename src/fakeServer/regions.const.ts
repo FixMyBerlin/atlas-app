@@ -110,6 +110,7 @@ export const regions: Region[] = [
       'fromTo',
       'bikelanes',
       'roadClassification',
+      'parking',
       'lit',
     ],
     osmUsers: [...adminIds, 12741863],
