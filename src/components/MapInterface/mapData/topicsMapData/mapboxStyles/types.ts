@@ -38,6 +38,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'parking_debug_parking_points'
   | 'parking_debug_parking_poly'
   | 'parking_debug_ramps'
+  | 'parking_labels'
   | 'parking_obstacles'
   | 'parking_operator_border_below_other_layer'
   | 'parking_parkinglines'
