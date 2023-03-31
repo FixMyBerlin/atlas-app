@@ -231,4 +231,11 @@ export const translations: { [key: string]: string } = {
   'tarmac_publicTransport--title': 'ÖPNV',
   'tarmac_roadClassification--category--key': 'Straßentyp',
   'tarmac_roadClassification--title': 'Daten zu Straßentypen',
+  'tarmac_surfaceQuality--smoothness_source--key': 'Quelle Zustand',
+  'tarmac_surfaceQuality--smoothness_source=surface_to_smoothness': 'Abgeleitet von Belag',
+  'tarmac_surfaceQuality--smoothness_source=tag': 'OSM-Tag',
+  'tarmac_surfaceQuality--surface_source--key': 'Quelle Belag',
+  'tarmac_surfaceQuality--surface_source=nothing_found': 'Daten fehlen in OpenStreetMap',
+  'tarmac_surfaceQuality--surface_source=tag': 'OSM-Tag',
+  'tarmac_surfaceQuality--title': 'Daten zur Oberflächenqualität',
 }

@@ -151,25 +151,32 @@ export const PrivacyPage: React.FC = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Netlify, Inc.</td>
+            <th className="align-text-top">Netlify, Inc.</th>
             <td>2325 3rd Street, Suite 215, San Francisco, 94107 CA</td>
             <td>USA</td>
             <td>Standarddatenschutzklauseln</td>
             <td>Hosting der Website und Bereitstellung der Inhalte</td>
           </tr>
           <tr>
-            <td>Amazon Web Services, Inc.</td>
+            <th className="align-text-top">Amazon Web Services, Inc.</th>
             <td>410 Terry Avenue North, Seattle, WA 98109-5210</td>
             <td>USA</td>
             <td>Standarddatenschutzklauseln</td>
             <td>Hosting der Website und Bereitstellung der Inhalte</td>
           </tr>
           <tr>
-            <td>IONOS SE</td>
+            <th className="align-text-top">IONOS SE</th>
             <td>Elgendorfer Straße 57, 56410 Montabaur, Deutschland</td>
             <td>-</td>
             <td>-</td>
             <td>Hosting der Website und Bereitstellung der Inhalte</td>
+          </tr>
+          <tr>
+            <th className="align-text-top">SCALEWAY</th>
+            <td>8 rue de la Ville l&lsquo;Ev&ecirc;que, 75008 Paris, Frankreich</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Backup</td>
           </tr>
         </tbody>
       </table>

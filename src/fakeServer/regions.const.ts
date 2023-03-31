@@ -37,14 +37,19 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionPath =
-  | 'bibi'
-  | 'trto'
   | 'berlin'
-  | 'zes'
+  | 'bibi'
+  | 'deutschland'
+  | 'landhagen'
   | 'langerwehe'
+  | 'lueneburg'
+  | 'mainz'
+  | 'neukloster-warin'
   | 'parkraum'
   | 'rs8'
-  | 'deutschland'
+  | 'trto'
+  | 'woldegk'
+  | 'zes'
 
 // This is our regions "Database" until we have a real one
 export const regions: Region[] = [
@@ -103,7 +108,14 @@ export const regions: Region[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'parking',
+      'lit',
+    ],
     osmUsers: [...adminIds, 12741863],
     published: false,
     backgroundSources: [
@@ -189,6 +201,87 @@ export const regions: Region[] = [
       max: [9.36731192, 48.93255599],
     },
     logoPath: 'https://trassenscout.de/favicon.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Mainz',
+    fullName: 'radnetz-mainz.de',
+    path: 'mainz',
+    map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
+    bbox: {
+      min: [8.1435156, 49.8955342],
+      max: [8.3422611, 50.0353045],
+    },
+    logoPath: 'https://radnetz-mainz.de/favicon.ico',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'LK Lüneburg',
+    fullName: 'Landkreis Lüneburg',
+    path: 'lueneburg',
+    map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
+    bbox: {
+      min: [10.041308, 53.0468526],
+      max: [11.1957671, 53.385876],
+    },
+    logoPath:
+      'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Neukloster Warin',
+    fullName: 'Amt Neukloster Warin',
+    path: 'neukloster-warin',
+    map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
+    bbox: {
+      min: [11.534335975016448, 53.75009742157375],
+      max: [11.82534463839858, 53.98345643670576],
+    },
+    logoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Landhagen',
+    fullName: 'Amt Landhagen',
+    path: 'landhagen',
+    map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
+    bbox: {
+      min: [13.201584130847364, 53.95655346659909],
+      max: [13.553934829974303, 54.20224786738606],
+    },
+    logoPath: 'https://www.landhagen.de/images/logo2.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Woldegk',
+    fullName: 'Amt Woldegk',
+    path: 'woldegk',
+    map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
+    bbox: {
+      min: [13.378969848860086, 53.37938986368977],
+      max: [13.74006560910362, 53.613911346911244],
+    },
+    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Woldegk-Wappen.PNG', // Stadt-Wappen, but the use it for their "Der Landbote" as well (https://www.amt.windmuehlenstadt-woldegk.de/der-landbote/)
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],

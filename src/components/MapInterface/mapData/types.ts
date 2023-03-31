@@ -70,15 +70,21 @@ type MapDataSourceVerifcation<TVerIds> =
       apiIdentifier?: undefined
     }
 
+export type MapDataSourceFreshnessConfig = {
+  primaryKeyTranslation: string
+  freshKey: string
+  dateKey: string
+}
+
 type MapDataSourceFreshness =
   | {
       enabled: true
       /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
-      dateKey?: string
+      freshConfigs?: MapDataSourceFreshnessConfig[]
     }
   | {
       enabled: false
-      dateKey?: undefined
+      freshConfigs?: undefined
     }
 
 export type MapDataSourceCalculator =

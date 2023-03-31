@@ -24,8 +24,9 @@ export type SourcesIds =
   | 'tarmac_poiClassification'
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
+  | 'tarmac_surfaceQuality'
 
-export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes' | 'roadclassification'
+export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
 
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
@@ -43,6 +44,7 @@ export type SourceExportApiIdentifier =
   | 'poiClassification'
   | 'publicTransport'
   | 'roadClassification'
+  | 'surfaceQuality'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -273,7 +275,13 @@ export const sources: MapDataSource<
     },
     freshness: {
       enabled: true,
-      dateKey: 'check_date:lit',
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Beleuchtung',
+          freshKey: 'fresh',
+          dateKey: 'check_date:lit',
+        },
+      ],
     },
     calculator: { enabled: false },
     export: {
@@ -342,12 +350,57 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: {
       enabled: true,
-      dateKey: 'fresh',
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Höchstgeschwindigkeit',
+          freshKey: 'fresh',
+          dateKey: 'check_date:maxspeed',
+        },
+      ],
     },
     calculator: { enabled: false },
     export: {
       enabled: true,
       apiIdentifier: 'maxspeed',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.surfaceQuality.json
+    id: 'tarmac_surfaceQuality',
+    tiles: `${tilesUrl}/public.surfaceQuality/{z}/{x}/{y}.pbf`,
+    attributionHtml: 'todo', // TODO
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [
+        'name',
+        'highway',
+        'composit_surface_smoothness',
+        'surface_source__if_present',
+        'smoothness_source__if_present',
+      ],
+    },
+    // presence: { enabled: true },
+    verification: { enabled: false },
+    freshness: {
+      enabled: true,
+      freshConfigs: [
+        {
+          primaryKeyTranslation: 'Belag',
+          freshKey: 'fresh_surface',
+          dateKey: 'check_date:surface',
+        },
+        {
+          primaryKeyTranslation: 'Zustand',
+          freshKey: 'fresh_smoothness',
+          dateKey: 'check_date:smoothness',
+        },
+      ],
+    },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'surfaceQuality',
     },
   },
   {

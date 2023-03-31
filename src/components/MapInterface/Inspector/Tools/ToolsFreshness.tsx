@@ -1,17 +1,19 @@
+import { MapDataSourceFreshnessConfig } from '@components/MapInterface/mapData'
+import { quote } from '@components/text'
 import { BoltIcon, CheckCircleIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 
 type Props = {
-  visible: boolean
   properties: GeoJSONFeature['properties']
-  freshnessDateKey: string | undefined
+  freshConfig: MapDataSourceFreshnessConfig
 }
 
-const StatusTableFreshnessCell: React.FC<{
+const WrapperWithIcon: React.FC<{
   iconKey: 'CheckCircle' | 'QuestionMarkCircle' | 'Bolt'
+  primaryKeyTranslation: string
   children: React.ReactNode
-}> = ({ iconKey, children }) => {
+}> = ({ iconKey, primaryKeyTranslation, children }) => {
   const pickIcon = () => {
     switch (iconKey) {
       case 'CheckCircle':
@@ -26,68 +28,71 @@ const StatusTableFreshnessCell: React.FC<{
   }
 
   return (
-    <div className="flex gap-1 text-gray-400" title="">
+    <div className="flex gap-1 text-gray-400">
       {pickIcon()}
       <span>
-        <strong className="font-semibold text-gray-600">Aktualität:</strong> {children}
+        <strong className="font-semibold text-gray-600">
+          Aktualität {quote(primaryKeyTranslation)}:
+        </strong>{' '}
+        {children}
       </span>
     </div>
   )
 }
 
-export const ToolsFreshness: React.FC<Props> = ({ visible, properties, freshnessDateKey }) => {
-  if (!visible) return null
-  const { fresh } = properties
-  if (!freshnessDateKey) return null
+export const ToolsFreshness: React.FC<Props> = ({ properties, freshConfig }) => {
+  const { primaryKeyTranslation, freshKey, dateKey } = freshConfig
 
-  const dateCheckDate = new Date(properties[freshnessDateKey]).toLocaleDateString()
-
+  const dateCheckDate = new Date(properties[dateKey]).toLocaleDateString()
   const dateUpdate = new Date(properties['update_at']).toLocaleDateString()
-
-  const Table = (() => {
-    switch (fresh) {
-      case 'fresh_check_date': {
-        return (
-          <StatusTableFreshnessCell iconKey="CheckCircle">
-            <strong className="font-semibold text-gray-600">Daten sind aktuell.</strong>
-            <br /> Attribut <code className="text-[90%]">{freshnessDateKey}</code> wurde am{' '}
-            {dateCheckDate} als geprüft markiert.
-          </StatusTableFreshnessCell>
-        )
-      }
-      case 'outdated_check_date': {
-        return (
-          <StatusTableFreshnessCell iconKey="Bolt">
-            <strong className="font-semibold text-gray-600">Daten sind älter als 2 Jahre.</strong>
-            <br /> Attribut <code className="text-[90%]">{freshnessDateKey}</code> wurde zuletzt am{' '}
-            {dateCheckDate} als geprüft markiert. Objekt wurde am {dateUpdate} zuletzt generell
-            bearbeitet.
-          </StatusTableFreshnessCell>
-        )
-      }
-      case 'fresh_update_at': {
-        return (
-          <StatusTableFreshnessCell iconKey="CheckCircle">
-            <strong className="font-semibold text-gray-600">Daten sind vermutlich aktuell.</strong>
-            <br /> Objekt wurde am {dateUpdate} generell bearbeitet.
-          </StatusTableFreshnessCell>
-        )
-      }
-      case 'outdated_update_at': {
-        return (
-          <StatusTableFreshnessCell iconKey="Bolt">
-            <strong className="font-semibold text-gray-600">Daten sind älter als 2 Jahre.</strong>
-            <br /> Objekt wurde am {dateUpdate} zuletzt generell bearbeitet.
-          </StatusTableFreshnessCell>
-        )
-      }
-    }
-  })()
 
   return (
     <section className="mt-3">
-      <h5 className="sr-only">Aktualität</h5>
-      {fresh ? Table : <span className="text-gray-500">(Keine Aussage möglich)</span>}
+      {(() => {
+        switch (properties[freshKey]) {
+          case 'fresh_check_date': {
+            return (
+              <WrapperWithIcon iconKey="CheckCircle" primaryKeyTranslation={primaryKeyTranslation}>
+                <strong className="font-semibold text-gray-600">Daten sind aktuell.</strong>
+                <br /> Attribut <code className="text-[90%]">{dateKey}</code> wurde am{' '}
+                {dateCheckDate} als geprüft markiert.
+              </WrapperWithIcon>
+            )
+          }
+          case 'outdated_check_date': {
+            return (
+              <WrapperWithIcon iconKey="Bolt" primaryKeyTranslation={primaryKeyTranslation}>
+                <strong className="font-semibold text-gray-600">
+                  Daten sind älter als 2 Jahre.
+                </strong>
+                <br /> Attribut <code className="text-[90%]">{dateKey}</code> wurde zuletzt am{' '}
+                {dateCheckDate} als geprüft markiert. Objekt wurde am {dateUpdate} zuletzt generell
+                bearbeitet.
+              </WrapperWithIcon>
+            )
+          }
+          case 'fresh_update_at': {
+            return (
+              <WrapperWithIcon iconKey="CheckCircle" primaryKeyTranslation={primaryKeyTranslation}>
+                <strong className="font-semibold text-gray-600">
+                  Daten sind vermutlich aktuell.
+                </strong>
+                <br /> Objekt wurde am {dateUpdate} generell bearbeitet.
+              </WrapperWithIcon>
+            )
+          }
+          case 'outdated_update_at': {
+            return (
+              <WrapperWithIcon iconKey="Bolt" primaryKeyTranslation={primaryKeyTranslation}>
+                <strong className="font-semibold text-gray-600">
+                  Daten sind älter als 2 Jahre.
+                </strong>
+                <br /> Objekt wurde am {dateUpdate} zuletzt generell bearbeitet.
+              </WrapperWithIcon>
+            )
+          }
+        }
+      })()}
     </section>
   )
 }
