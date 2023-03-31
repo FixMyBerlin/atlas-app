@@ -63,6 +63,9 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 echo "\e[1m\e[7m PROCESS – Topic: barriers \e[27m\e[21m"
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}barriers/barriers.lua ${OSM_FILTERED_FILE}
 
+echo "\e[1m\e[7m PROCESS – Topic: surfaceQuality \e[27m\e[21m"
+${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}surfaceQuality/surfaceQuality.lua ${OSM_FILTERED_FILE}
+
 # ================================================
 # This should be the last step…
 OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`

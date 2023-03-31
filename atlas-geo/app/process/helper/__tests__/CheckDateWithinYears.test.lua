@@ -2,21 +2,23 @@ package.path = package.path .. ";app/process/helper/?.lua"
 require("CheckDataWithinYears")
 require("PrintTable")
 
-local debug = true
+local debug = false
 print('=== Test CheckDataWithinYears ===')
 if (debug) then print('=== Debug true ===') end
 
 -- Format: https://www.lua.org/pil/22.1.html
 local today = os.date("*t")
 
-local desc = "check_date yesterday returns the number of days of this month because we always compare with the beginning of the month"
+local desc =
+"check_date yesterday returns the number of days of this month because we always compare with the beginning of the month"
 local yesterday = os.date("%Y-%m-%d", os.time({ year = today.year, month = today.month, day = tonumber(today.day) - 1 }))
 local withinYears = CheckDataWithinYears(yesterday)
 if (debug) then PrintTableWithHeadline(withinYears, desc) end
 assert(withinYears.result == true)
 assert(withinYears.diffDays == today.day - 1)
 
-local desc = "check_date last year is within range, diffDays somewhere > 300 (the excat values depents on the current month"
+local desc =
+"check_date last year is within range, diffDays somewhere > 300 (the excat values depents on the current month"
 local lastYear = os.date("%Y-%m-%d", os.time({ year = tonumber(today.year) - 1, month = today.month, day = today.day }))
 local withinYears = CheckDataWithinYears(lastYear)
 if (debug) then PrintTableWithHeadline(withinYears, desc) end
