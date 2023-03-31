@@ -40,12 +40,15 @@ export type RegionPath =
   | 'berlin'
   | 'bibi'
   | 'deutschland'
+  | 'landhagen'
   | 'langerwehe'
   | 'lueneburg'
   | 'mainz'
+  | 'neukloster-warin'
   | 'parkraum'
   | 'rs8'
   | 'trto'
+  | 'woldegk'
   | 'zes'
 
 // This is our regions "Database" until we have a real one
@@ -224,7 +227,7 @@ export const regions: Region[] = [
     name: 'LK Lüneburg',
     fullName: 'Landkreis Lüneburg',
     path: 'lueneburg',
-    map: { lat: 53.2493, lng: 10.4142, zoom: 14 },
+    map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
     bbox: {
       min: [10.041308, 53.0468526],
       max: [11.1957671, 53.385876],
@@ -232,6 +235,54 @@ export const regions: Region[] = [
     logoPath:
       'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
     logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Neukloster Warin',
+    fullName: 'Amt Neukloster Warin',
+    path: 'neukloster-warin',
+    map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
+    bbox: {
+      min: [11.534335975016448, 53.75009742157375],
+      max: [11.82534463839858, 53.98345643670576],
+    },
+    logoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Landhagen',
+    fullName: 'Amt Landhagen',
+    path: 'landhagen',
+    map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
+    bbox: {
+      min: [13.201584130847364, 53.95655346659909],
+      max: [13.553934829974303, 54.20224786738606],
+    },
+    logoPath: 'https://www.landhagen.de/images/logo2.png',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Woldegk',
+    fullName: 'Amt Woldegk',
+    path: 'woldegk',
+    map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
+    bbox: {
+      min: [13.378969848860086, 53.37938986368977],
+      max: [13.74006560910362, 53.613911346911244],
+    },
+    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Woldegk-Wappen.PNG', // Stadt-Wappen, but the use it for their "Der Landbote" as well (https://www.amt.windmuehlenstadt-woldegk.de/der-landbote/)
+    logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
     published: false,
