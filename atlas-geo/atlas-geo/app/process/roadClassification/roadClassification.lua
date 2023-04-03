@@ -106,6 +106,14 @@ function osm2pgsql.process_way(object)
     object.tags.category = "footway"
   end
 
+  if object.tags.oneway == 'yes' then
+    if object.tags['oneway:bicycle'] == 'no' then
+      object.tags.oneway = 'car_not_bike'
+    else
+      object.tags.oneway = 'car_and_bike'
+    end
+  end
+
   local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
     "is_sidepath", "maxspeed", "surface", "smoothness" })
   FilterTags(object.tags, allowed_tags)
