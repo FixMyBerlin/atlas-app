@@ -430,22 +430,21 @@
           ],
           "circle-stroke-color": "hsl(0, 8%, 97%)",
           "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 12, 2],
-          "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 1.5, 12, 3],
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 1.5, 15, 5],
           "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1],
           "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
-        },
-        "layout": {}
+        }
       },
       {
-        "id": "education-label",
-        "type": "symbol",
-        "minzoom": 14,
+        "minzoom": 13,
         "layout": {
           "text-field": ["to-string", ["get", "name"]],
           "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
-          "text-size": 13,
-          "text-variable-anchor": ["bottom"]
+          "text-size": 11,
+          "text-anchor": "top"
         },
+        "type": "symbol",
+        "id": "education-label",
         "paint": {
           "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
           "text-halo-width": 1,
@@ -456,7 +455,9 @@
             "rgb(119, 23, 171)",
             "hsl(209, 76%, 38%)"
           ],
-          "text-translate": [0, -10]
+          "text-translate": [0, 8],
+          "text-translate-anchor": "viewport",
+          "text-opacity": ["interpolate", ["linear"], ["zoom"], 13.3, 0, 14, 0.7]
         }
       }
     ]
@@ -1483,7 +1484,7 @@
         "layout": {
           "text-allow-overlap": true,
           "text-ignore-placement": true,
-          "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 20, 20],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 14.99, 0, 15, 9, 20, 20],
           "text-field": ["to-string", ["get", "capacity"]],
           "text-rotate": [
             "case",
