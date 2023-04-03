@@ -15,8 +15,7 @@ end
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
-  local result = tags.parent ~= nil and tags.prefix == 'cycleway' and
-      tags.side == ''                        -- object is created from implicit case
+  local result = tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and
       tags.parent['oneway:bicycle'] ~= 'no'  -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN -- is the left side object
