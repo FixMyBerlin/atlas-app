@@ -56,6 +56,13 @@ local function bicycleRoad(tags)
   end
 end
 
+-- Handle oneway roads that allow bicycle traffic in both directions
+local function oneWayBicycleAllowed(tags)
+  if tags.oneway == 'yes' and tags.parent['oneway:bicycle'] == 'no' then
+    return 'OneWayBicycleAllowed'
+  end
+end
+
 -- Handle "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
 local function footAndCyclewaySharedCases(tags)
@@ -263,6 +270,7 @@ function CategorizeBikelane(tags)
     cyclewaySeparatedCases,
     cyclewayOnHighwayCases,
     footwayBicycleYesCases, -- after `cyclewaySeparatedCases`
+    oneWayBicycleAllowed,
     -- Needs to be last
     needsClarification,
   }
