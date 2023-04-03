@@ -49,6 +49,9 @@ end
 local function bicycleRoad(tags)
   if tags.bicycle_road == "yes"
       or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
+    if tags.oneway == 'yes' and tags.parent['oneway:bicycle'] == 'no' then
+      tags.oneway = 'yes_for_motor_vehicle'
+    end
     return "bicycleRoad"
   end
 end
