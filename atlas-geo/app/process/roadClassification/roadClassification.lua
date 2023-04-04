@@ -8,6 +8,7 @@ require("JoinSets")
 require("ExcludeHighways")
 require("ExcludeByWidth")
 require("IntoExcludeTable")
+require("LegacyConversions")
 
 local table = osm2pgsql.define_table({
   name = 'roadClassification',
@@ -69,6 +70,8 @@ function osm2pgsql.process_way(object)
     IntoExcludeTable(excludeTable, object, "Exclude `is_sidepath=yes`")
     return
   end
+
+  LEGACY_opposite(object.tags)
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM value as category, but have a few special cases below.
