@@ -94,6 +94,15 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
   local meta = Metadata(object)
 
+  --legacy one way scheme
+  -- doesn't handle opposite tagging scheme on nested tags!
+  if osm2pgsql.has_prefix(tags.cycleway, 'opposite') then
+    if tags.oneway == 'yes' then
+      tags['oneway:bicycle'] = 'no'
+      tags.cycleway = string.sub(tags.cycleway, 10)
+    end
+  end
+
   -- transformations
   local footwayTransformation = {
     highway = "footway",
