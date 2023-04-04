@@ -58,7 +58,7 @@ end
 
 -- Handle oneway roads that allow bicycle traffic in both directions
 local function oneWayBicycleAllowed(tags)
-  if tags.oneway == 'yes' and tags.parent['oneway:bicycle'] == 'no' then
+  if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
     return 'OneWayBicycleAllowed'
   end
 end
