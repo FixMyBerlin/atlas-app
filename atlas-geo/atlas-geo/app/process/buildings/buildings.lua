@@ -6,7 +6,7 @@ require("Metadata")
 require("InferAddress")
 
 local table = osm2pgsql.define_table({
-  name = 'buildings',
+  name = '_buildings_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
