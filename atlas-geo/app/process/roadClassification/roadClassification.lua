@@ -115,7 +115,7 @@ function osm2pgsql.process_way(object)
   end
 
   local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
-    "is_sidepath", "maxspeed", "surface", "smoothness" })
+    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" })
   FilterTags(object.tags, allowed_tags)
 
   table:insert({
