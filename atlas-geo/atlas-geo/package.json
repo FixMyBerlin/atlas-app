@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "docker compose --profile osm_processing build && docker compose --profile osm_processing up",
-    "release": "echo \"Use this format for the title: 'Release 2023-12-31'\" && gh pr create --base main --head develop --body \"\"",
+    "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "test": "chmod +x ./run_tests.sh && ./run_tests.sh",
     "cleanup": "docker system prune --force && docker system prune --force --volumes"
   }
