@@ -1,5 +1,4 @@
 import { MapDataTopic } from '../types'
-import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parking'
@@ -31,7 +30,8 @@ export const topic_parking: MapDataTopic = {
           source,
           sourceLayer,
         }),
-        debugLayerStyles({
+        mapboxStyleLayers({
+          group: 'parking_labels',
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
@@ -43,6 +43,11 @@ export const topic_parking: MapDataTopic = {
       name: 'Vollständigkeit',
       desc: null,
       layers: [
+        mapboxStyleLayers({
+          group: 'parking_labels',
+          source: 'parkraumParking',
+          sourceLayer: 'processing.parking_segments_label',
+        }),
         mapboxStyleLayers({
           group: 'parking_parkinglines_completeness',
           source,
@@ -119,6 +124,11 @@ export const topic_parking: MapDataTopic = {
       desc: null,
       layers: [
         mapboxStyleLayers({
+          group: 'parking_labels',
+          source: 'parkraumParking',
+          sourceLayer: 'processing.parking_segments_label',
+        }),
+        mapboxStyleLayers({
           group: 'parking_parkinglines_surface',
           source,
           sourceLayer,
@@ -179,7 +189,6 @@ export const topic_parking: MapDataTopic = {
           },
         },
       ],
-
       interactiveFilters: null,
     },
   ],
