@@ -24,21 +24,23 @@ local function unnestTags(tags, prefix, side, dest)
   return dest
 end
 
--- returns a list of all transformed objects created with the given `transformations` from `tags`
 LEFT_SIGN = 1
 CENTER_SIGN = 0
 RIGHT_SIGN = -1
-SIDES = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
+-- returns a list of all transformed objects created with the given `transformations` from `tags`
+local sideSignMap = {
+  [":left"] = LEFT_SIGN,
+  [":right"] = RIGHT_SIGN
+}
+-- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
+local sideDirectionMap = {
+  [":left"] = 'backward',
+  [":right"] = 'forward',
+}
+
+-- these tags get transformed from the forward backward schema
+local directedTags = { 'cycleway:lanes', 'bicycle:lanes', 'traffic_sign' }
 function GetTransformedObjects(tags, transformations)
-  local sides = {
-    [":left"] = LEFT_SIGN,
-    [":right"] = RIGHT_SIGN
-  }
-  -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
-  local directions = {
-    [LEFT_SIGN] = 'backward',
-    [RIGHT_SIGN] = 'forward',
-  }
   local center = { sign = 0 }
   for k, v in pairs(tags) do center[k] = v end
   local results = { center }
@@ -46,7 +48,7 @@ function GetTransformedObjects(tags, transformations)
     return results
   end
   for _, transformation in pairs(transformations) do
-    for side, sign in pairs(sides) do
+    for side, sign in pairs(sideSignMap) do
       if tags.highway ~= transformation.highway then
         local prefix = transformation.prefix
         local newObj = {
@@ -66,8 +68,8 @@ function GetTransformedObjects(tags, transformations)
             table.insert(results, newObj)
           end
         end
-        for _, key in pairs({ 'cycleway:lanes', 'bicycle:lanes' }) do
-          local directedKey = key .. ':' .. directions[sign]
+        for _, key in pairs(directedTags) do
+          local directedKey = key .. ':' .. sideDirectionMap[side]
           newObj[key] = tags[key] or tags[directedKey]
         end
       end
