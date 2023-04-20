@@ -51,7 +51,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     )
   }
 
-  let key = `${sourceId}--${tagKey}=${tagValue}`
+  let translationKey = `${sourceId}--${tagKey}=${tagValue}`
 
   // Some keys are a duplicate of other Keys.
   // We want them translated only once, so we overwrite them here…
@@ -60,7 +60,19 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     tagKey = keyOverwrites[tagKey]
   }
 
-  // Some TagKeys are not specific per category; we only translate those once
+  // Some sources have their keys translated already for a different key else, so lets look there first…
+  // Keys need to be source specific, otherwise there is interference with the next step.
+  const lookThere: Record<string, string> = {
+    'tarmac_roadClassification--category': 'highway',
+  }
+  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === `${sourceId}--${tagKey}`)
+  if (lookThereEntryKey) {
+    tagKey = lookThere[lookThereEntryKey]
+    translationKey = `ALL--${lookThere[lookThereEntryKey]}=${tagValue}`
+  }
+
+  // Lastly…
+  // Some TagKeys are not specific per source; we only translate those once
   const nonCategorizedTagKeys = [
     '_parent_highway',
     'highway',
@@ -70,25 +82,11 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'traffic_sign',
   ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
-    key = `ALL--${tagKey}=${tagValue}`
+    translationKey = `ALL--${tagKey}=${tagValue}`
   }
-
-  // Some keys are translated already for a different key else, so lets look there first…
-  const lookThere: Record<string, string> = {
-    category: 'highway',
-  }
-  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === tagKey)
-  if (lookThereEntryKey) {
-    key = key.replace(lookThereEntryKey, lookThere[lookThereEntryKey])
-  }
-  console.log(
-    '🚀 ~ file: ConditionalFormattedValue.tsx:80 ~ lookThereEntryKey:',
-    lookThereEntryKey,
-    key
-  )
 
   // It will take a while to translate everything. This fallback does look better on production.
-  const defaultMessage = isDev || isStaging ? key : tagValue
+  const defaultMessage = isDev || isStaging ? translationKey : tagValue
 
-  return <FormattedMessage id={key} defaultMessage={defaultMessage} />
+  return <FormattedMessage id={translationKey} defaultMessage={defaultMessage} />
 }
