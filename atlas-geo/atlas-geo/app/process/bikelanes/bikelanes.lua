@@ -80,6 +80,8 @@ local allowed_tags = Set({
   'lane', -- 'cycleway:SIDE:lane'
 })
 
+local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
+
 function osm2pgsql.process_way(object)
   -- filter highway classes
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
@@ -153,7 +155,7 @@ function osm2pgsql.process_way(object)
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
     -- set the nil values to 'not_expected', for all minor roads and complete data
-    for _, side in pairs(SIDES) do presence[side] = presence[side] or NOT_EXPECTED end
+    for _, side in pairs(sides) do presence[side] = presence[side] or NOT_EXPECTED end
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
@@ -173,7 +175,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- replace all nil values with 'missing'
-  for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
+  for _, side in pairs(sides) do presence[side] = presence[side] or "missing" end
 
   local allowed_tags_presence = Set({
     'left',
