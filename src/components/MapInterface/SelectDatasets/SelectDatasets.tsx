@@ -26,7 +26,7 @@ export const SelectDatasets: React.FC = () => {
     })
   }
 
-  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey === regionPath)
+  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey.includes(regionPath as any))
 
   if (!mainMap) return null
   if (!regionDatasets?.length) return null

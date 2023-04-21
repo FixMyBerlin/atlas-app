@@ -4,6 +4,7 @@ import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
+import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
 import {
   Map as MapGl,
@@ -37,7 +38,7 @@ export const Map: React.FC = () => {
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
-  const { setInspector, setMapLoaded } = useMapStateInteraction()
+  const { setInspector, setMapLoaded, setPmTilesProtocolReady } = useMapStateInteraction()
 
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
@@ -52,6 +53,14 @@ export const Map: React.FC = () => {
   const handleLoad = (_event: MapboxEvent) => {
     // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
     setMapLoaded(true)
+
+    // Add PMTiles Protocol to be use by "Datasets"
+    // TypeScript: We have Mapbox types here but 'addProtocol' is a Maplibre feature
+    // Docs https://maplibre.org/maplibre-gl-js-docs/api/properties/#addprotocol
+    // const map = event.target as unknown as typeof maplibregl
+    const protocol = new pmtiles.Protocol()
+    maplibregl.addProtocol('pmtiles', protocol.tile)
+    setPmTilesProtocolReady(true)
 
     if (isDev) {
       // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'

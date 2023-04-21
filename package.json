@@ -19,10 +19,12 @@
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && vitest run",
     "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/components/MapInterface/mapData/topicsMapData/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
+    "updateDatasets": "node ./datasets/process.cjs && node ./datasets/upload.cjs && node ./datasets/typesAndObject.cjs && prettier \"./datasets\" --write && prettier \"./src/components/MapInterface/mapData/sourcesMapData/datasets\" --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.317.0",
     "@headlessui/react": "^1.7.11",
     "@mapbox/mapbox-gl-draw": "^1.4.1",
     "@popperjs/core": "^2.11.6",
@@ -37,6 +39,7 @@
     "jsurl2": "^2.1.0",
     "maplibre-gl": "^2.4.0",
     "osm-auth": "^2.0.1",
+    "pmtiles": "^2.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",

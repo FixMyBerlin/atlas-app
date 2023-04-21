@@ -1485,7 +1485,7 @@
           "text-allow-overlap": true,
           "text-ignore-placement": true,
           "text-size": ["interpolate", ["linear"], ["zoom"], 14.99, 0, 15, 9, 20, 20],
-          "text-field": ["to-string", ["get", "capacity"]],
+          "text-field": "asdf",
           "text-rotate": [
             "case",
             [">", ["get", "angle"], 90],
@@ -1800,7 +1800,7 @@
         "minzoom": 15,
         "layout": {
           "symbol-placement": "line-center",
-          "text-field": ["to-string", ["get", "capacity"]],
+          "text-field": "bar",
           "text-allow-overlap": true,
           "text-ignore-placement": true,
           "text-offset": [0, 0.8],
@@ -1820,7 +1820,7 @@
         "minzoom": 15,
         "layout": {
           "symbol-placement": "line-center",
-          "text-field": ["to-string", ["get", "surface"]],
+          "text-field": "baz",
           "text-allow-overlap": true,
           "text-ignore-placement": true,
           "text-offset": [0, 0.8],

@@ -1,20 +1,20 @@
-import TrtoWunschlinienConnectionLines from '@fakeServer/datasets/TrtoWunschlinienConnectionLines.json'
-import TrtoWunschlinienCrossingPoints from '@fakeServer/datasets/TrtoWunschlinienCrossingPoints.json'
-import TrtoWunschlinienLocationPoints from '@fakeServer/datasets/TrtoWunschlinienLocationPoints.json'
+import { type DatasetIds, datasets } from './datasets'
+import invariant from 'tiny-invariant'
 import { MapDataDatasetsSource } from '../types'
 
-export type SourcesDatasetsIds =
-  | 'TrtoWunschlinienCrossingPoints'
-  | 'TrtoWunschlinienLocationPoints'
-  | 'TrtoWunschlinienConnectionLines'
+export type SourcesDatasetsIds = DatasetIds
+
+const sourceDatasetIdUrl = (datasetId: DatasetIds) => {
+  invariant(datasets[datasetId], 'Dataset missing')
+  return { id: datasetId, url: `pmtiles://${datasets[datasetId]}` }
+}
 
 export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
   {
-    regionKey: 'trto',
-    id: 'TrtoWunschlinienCrossingPoints',
+    regionKey: ['trto'],
+    ...sourceDatasetIdUrl('TrtoWunschlinienCrossingPoints'),
     name: 'Wunschlinien: Zwangspunkte',
-    type: 'geojson',
-    data: TrtoWunschlinienCrossingPoints as GeoJSON.FeatureCollection<GeoJSON.Point>,
+    type: 'vector',
     attributionHtml: 'FixMyCity',
     layers: [
       {
@@ -31,11 +31,10 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     ],
   },
   {
-    regionKey: 'trto',
-    id: 'TrtoWunschlinienLocationPoints',
+    regionKey: ['trto'],
+    ...sourceDatasetIdUrl('TrtoWunschlinienLocationPoints'),
     name: 'Wunschlinien: Zielpunkte',
-    type: 'geojson',
-    data: TrtoWunschlinienLocationPoints as GeoJSON.FeatureCollection<GeoJSON.Point>,
+    type: 'vector',
     attributionHtml: 'FixMyCity',
     layers: [
       {
@@ -53,11 +52,10 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     ],
   },
   {
-    regionKey: 'trto',
-    id: 'TrtoWunschlinienConnectionLines',
+    regionKey: ['trto'],
+    ...sourceDatasetIdUrl('TrtoWunschlinienConnectionLines'),
     name: 'Wunschlinien',
-    type: 'geojson',
-    data: TrtoWunschlinienConnectionLines as GeoJSON.FeatureCollection<GeoJSON.LineString>,
+    type: 'vector',
     attributionHtml: 'FixMyCity',
     layers: [
       {
@@ -71,11 +69,65 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       },
     ],
   },
+  {
+    regionKey: ['trto'],
+    ...sourceDatasetIdUrl('TrtoRadnetz'),
+    name: 'Radnetz',
+    type: 'vector',
+    attributionHtml: 'Amt Altentreptow',
+    layers: [
+      {
+        id: 'trtoradnetz',
+        type: 'line',
+        paint: {
+          'line-color': '#c026d3',
+          'line-opacity': 0.3,
+          'line-width': 4,
+        },
+      },
+      // TODO: Figure out why those labels do not show up.
+      //       OR… make those Dataset layers interactive optionally.
+      // {
+      //   id: 'trtoradnetz_label',
+      //   type: 'symbol',
+      //   layout: {
+      //     'text-allow-overlap': true,
+      //     'text-ignore-placement': true,
+      //     'text-size': ['interpolate', ['linear'], ['zoom'], 14.99, 0, 15, 9, 20, 20],
+      //     'text-field': 'foo', //['to-string', ['get', 'Wegeklasse_TrTo']],
+      //   },
+      //   paint: {
+      //     'text-color': 'rgb(60, 60, 60)',
+      //     'text-halo-width': ['interpolate', ['linear'], ['zoom'], 15, 1, 18, 2.5],
+      //     'text-halo-color': 'rgb(255, 255, 255)',
+      //     'icon-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0, 14, 0, 15, 1],
+      //   },
+      // },
+    ],
+  },
+  {
+    regionKey: ['berlin', 'parkraum'],
+    ...sourceDatasetIdUrl('berlin-parking-zones-fisbroker'),
+    name: 'Parkzonen',
+    type: 'vector',
+    // https://fbinter.stadt-berlin.de/fb/index.jsp?loginkey=alphaDataStart&alphaDataId=s_parkraumbewirt@senstadt
+    attributionHtml: 'Geoportal Berlin / Parkraumbewirtschaftung',
+    layers: [
+      {
+        id: 'parkraumzonen',
+        type: 'line',
+        paint: {
+          'line-color': '#5b21b6',
+          'line-opacity': 0.63,
+          'line-width': 2,
+        },
+      },
+    ],
+  },
   // {
   //   id: 'TrtoNetzentwurf',
   //   name: 'Wunschlinien: Netzentwurf',
-  //   type: 'geojson',
-  //   data: TrtoNetzentwurf as GeoJSON.FeatureCollection<GeoJSON.LineString>,
+  //   type: 'vector',
   //   attributionHtml: 'FixMyCity',
   //   layers: [
   //     {
