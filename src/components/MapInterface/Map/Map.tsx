@@ -55,9 +55,7 @@ export const Map: React.FC = () => {
     setMapLoaded(true)
 
     // Add PMTiles Protocol to be use by "Datasets"
-    // TypeScript: We have Mapbox types here but 'addProtocol' is a Maplibre feature
     // Docs https://maplibre.org/maplibre-gl-js-docs/api/properties/#addprotocol
-    // const map = event.target as unknown as typeof maplibregl
     const protocol = new pmtiles.Protocol()
     maplibregl.addProtocol('pmtiles', protocol.tile)
     setPmTilesProtocolReady(true)
