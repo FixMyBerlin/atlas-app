@@ -20,6 +20,7 @@ local function ExitProcessing(object)
     return true
   end
 
+  -- We include all buildings … but filter small once in SQL
   -- Docs: https://wiki.openstreetmap.org/wiki/Key:buildings
   -- local allowed_values = Set({
   --   "city",
@@ -31,20 +32,20 @@ local function ExitProcessing(object)
   return false
 end
 
-local function processTags(tags)
-  local allowed_tags = Set({ "building", AddressKeys })
-  FilterTags(tags, allowed_tags)
-end
+-- local function processTags(tags)
+--   local allowed_tags = Set({ "building", AddressKeys })
+--   FilterTags(tags, allowed_tags)
+-- end
 
 function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  processTags(object.tags)
+  -- processTags(object.tags)
 
   table:insert({
-    tags = object.tags,
-    meta = Metadata(object),
+    -- tags = object.tags, -- we only keep the geometry for this dataset
+    -- meta = Metadata(object), -- we only keep the geometry for this dataset
     geom = object:as_multipolygon()
   })
 end
@@ -53,10 +54,11 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  processTags(object.tags)
+  -- processTags(object.tags)
+
   table:insert({
-    tags = object.tags,
-    meta = Metadata(object),
+    -- tags = object.tags, -- we only keep the geometry for this dataset
+    -- meta = Metadata(object), -- we only keep the geometry for this dataset
     geom = object:as_multipolygon()
   })
 end
