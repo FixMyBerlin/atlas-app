@@ -421,19 +421,12 @@ export const sources: MapDataSource<
     id: 'tarmac_buildings',
     tiles: `${tilesUrl}/public.buildings/{z}/{x}/{y}.pbf`,
     attributionHtml: 'todo', // TODO
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: ['building', 'place', 'population', 'population:date'],
-    },
+    inspector: { enabled: false }, // Buidlings have no tags, so nothing to "Inspect"
     // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'buildings',
-    },
+    export: { enabled: false }, // Disabled, since exports only works for datasets with tags
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
