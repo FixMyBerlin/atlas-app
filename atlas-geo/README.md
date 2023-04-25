@@ -82,6 +82,10 @@ The workflow is…
 
 2. Rebuild and restart everything
 
+   ```npm run dev````
+
+   _OR_
+
    ```sh
    docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
