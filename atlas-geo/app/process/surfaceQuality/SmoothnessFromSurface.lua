@@ -84,13 +84,17 @@ function SmoothnessFromSurface(surface)
     confidence = 'medium'
   end
 
-  if surfaceToSmoothnessNonStandardValues[surface] then
+  if not surface then
+    todo = "Please add surface=*"
+  end
+
+  if surface and surfaceToSmoothnessNonStandardValues[surface] then
     todo = "Please review surface=" ..
         surface .. " which is a non standard value (List surfaceToSmoothnessNonStandardValues)"
   end
 
   if surface and smoothness == nil then
-    todo = "Prese review surface=" ..
+    todo = "Please review surface=" ..
         surface ..
         " which is a non standard value. Maybe fix it or add it to our list surfaceToSmoothnessNonStandardValues."
   end
