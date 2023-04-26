@@ -115,6 +115,9 @@ function osm2pgsql.process_way(object)
     else
       object.tags.oneway = 'car_and_bike'
     end
+    if object.tags.dual_carriageway == "yes" then
+      object.tags.oneway = object.tags.oneway .. '_dual_carriageway'
+    end
   end
 
   local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
