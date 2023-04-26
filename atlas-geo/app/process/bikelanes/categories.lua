@@ -51,9 +51,9 @@ local function bicycleRoad(tags)
       or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
     -- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
     -- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
-    -- Which is why we invent a new value `yes_for_motor_vehicle` for the `oneway` tag.
+    -- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
     if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
-      tags.oneway = 'yes_for_motor_vehicle'
+      tags.oneway = 'car_not_bike'
     end
 
     return "bicycleRoad"
