@@ -6,7 +6,7 @@ NOT_EXPECTED = 'not_expected'
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
 local function dataNo(tags)
-  local nos = Set({'no', 'none', 'separate'})
+  local nos = Set({ 'no', 'none', 'separate' })
   if nos[tags.cycleway] then
     return "data_no"
   end
@@ -17,8 +17,8 @@ end
 local function implicitOneWay(tags)
   local result = tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and
-      tags.parent['oneway:bicycle'] ~= 'no'  -- is oneway w/o bike exception
-  result = result and tags.sign == LEFT_SIGN -- is the left side object
+      tags.parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
+  result = result and tags.sign == LEFT_SIGN                   -- is the left side object
   if result then
     return NOT_EXPECTED
   end
@@ -52,6 +52,7 @@ local function bicycleRoad(tags)
     if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
       tags.oneway = 'yes_for_motor_vehicle'
     end
+
     return "bicycleRoad"
   end
 end
