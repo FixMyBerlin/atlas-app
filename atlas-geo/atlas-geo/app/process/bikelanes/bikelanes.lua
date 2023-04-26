@@ -11,7 +11,7 @@ require("transformations")
 require("JoinSets")
 require("PrintTable")
 require("IntoExcludeTable")
-require("LegacyConversions")
+require("ConvertCyclewayOppositeSchema")
 
 local categoryTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
@@ -95,8 +95,8 @@ function osm2pgsql.process_way(object)
   local tags = object.tags
   local meta = Metadata(object)
 
+  ConvertCyclewayOppositeSchema(tags)
 
-  LEGACY_opposite(tags)
   -- transformations
   local footwayTransformation = {
     highway = "footway",
