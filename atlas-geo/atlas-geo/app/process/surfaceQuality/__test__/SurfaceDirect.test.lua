@@ -1,4 +1,4 @@
-package.path = package.path .. ";app/process/surface_smoothness/?.lua"
+package.path = package.path .. ";./app/process/surfaceQuality/?.lua"
 require('SurfaceDirect')
 
 print('=== Test SurfaceDirect: correct source, confidence for tag ===')
