@@ -20,6 +20,7 @@ export type MapboxStylesByLayerGroupIds =
   | 'atlas_poiclassification'
   | 'atlas_publictransport'
   | 'atlas_roadclass_bikeinfra'
+  | 'atlas_roadclass_einbahnstrasse'
   | 'atlas_roadclass_maxspeed'
   | 'atlas_roadclass_maxspeed_details'
   | 'atlas_roadclass_oneway'

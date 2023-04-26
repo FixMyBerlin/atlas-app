@@ -135,7 +135,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['category', 'name', 'composit_surface_smoothness'],
+      documentedKeys: ['category', 'name', 'composit_surface_smoothness', 'oneway'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
