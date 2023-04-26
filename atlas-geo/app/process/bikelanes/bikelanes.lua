@@ -97,6 +97,11 @@ function osm2pgsql.process_way(object)
 
   ConvertCyclewayOppositeSchema(tags)
 
+  -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
+  if tags.bicycle_road == 'yes' then
+    tags.oneway = tags.oneway or 'implicit_no'
+  end
+
   -- transformations
   local footwayTransformation = {
     highway = "footway",
