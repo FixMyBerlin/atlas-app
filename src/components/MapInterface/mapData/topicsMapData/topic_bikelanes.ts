@@ -130,31 +130,31 @@ export const topic_bikelanes: MapDataTopic = {
     },
     {
       id: 'completeness',
-      name: 'Unvollständigkeit',
-      desc: null,
+      name: 'Aufgabe: Führungsform',
+      desc: 'Hervorhebung ',
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_bikelanes',
+          group: 'atlas_bikelanes_unspecified',
           source: 'tarmac_bikelanes',
           sourceLayer: 'public.bikelanes_verified',
         }),
         mapboxStyleLayers({
-          group: 'atlas_bikelanes_unspecified',
+          group: 'atlas_bikelanes',
           source: 'tarmac_bikelanes',
           sourceLayer: 'public.bikelanes_verified',
         }),
       ].flat(),
       interactiveFilters: null,
       legends: [
-        ...defaultLegend,
         {
           id: 'unspecified',
-          name: 'Kategorisierung unvollständig',
+          name: 'Angabe ob Führungs&shy;form straßen&shy;begleitend oder frei geführt unklar',
           style: {
             type: 'line',
             color: '#fa7fe2',
           },
         },
+        ...defaultLegend,
       ],
     },
     // {

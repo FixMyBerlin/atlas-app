@@ -27,15 +27,20 @@ export type MapDataBackgroundSource<TIds> = {
 /** @desc: The data sources, configured in 'sourcesDatasets.const.ts' */
 export type MapDataDatasetsSource<TIds> = {
   /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
-  regionKey: RegionPath
+  regionKey: RegionPath[]
   id: TIds
   name: string
   attributionHtml: string
   layers: (
     | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
     | (mapboxgl.LineLayer & Required<Pick<mapboxgl.LineLayer, 'paint'>>)
+    | (mapboxgl.SymbolLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint' | 'layout'>>)
   )[]
-} & { type: 'geojson'; data: GeoJSON.GeoJSON }
+} & {
+  type: 'vector'
+  /** @desc Required format is `pmtiles://${DatasetFiles}` */
+  url: string
+}
 
 export type MapDataSourceInspectorEditor = {
   name: string

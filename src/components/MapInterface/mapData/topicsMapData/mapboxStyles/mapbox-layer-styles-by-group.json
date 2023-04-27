@@ -986,6 +986,40 @@
     ]
   },
   {
+    "group": "atlas_roadclass_einbahnstrasse",
+    "layers": [
+      {
+        "id": "einbahnstrassen",
+        "type": "line",
+        "paint": {
+          "line-width": [
+            "match",
+            ["get", "category"],
+            ["primary", "secondary"],
+            10,
+            ["tertiary"],
+            8,
+            ["unclassified"],
+            7,
+            ["service_alley", "service_road"],
+            6,
+            5
+          ],
+          "line-color": [
+            "match",
+            ["get", "oneway"],
+            ["car_and_bike"],
+            "rgb(255, 131, 82)",
+            ["car_not_bike"],
+            "rgb(210, 245, 50)",
+            "rgba(207, 207, 207, 0)"
+          ]
+        },
+        "layout": {}
+      }
+    ]
+  },
+  {
     "group": "atlas_roadclass_maxspeed",
     "layers": [
       {
@@ -1078,25 +1112,13 @@
   },
   {
     "group": "atlas_roadclass_oneway",
-    "layers": [
-      {
-        "layout": {},
-        "filter": ["match", ["get", "oneway"], ["true"], true, false],
-        "type": "line",
-        "id": "einbahnstrassen",
-        "paint": {
-          "line-color": "#8238fa",
-          "line-width": 2,
-          "line-pattern": "oneway-atlas"
-        }
-      }
-    ]
+    "layers": []
   },
   {
     "group": "atlas_roadclass_roadclass",
     "layers": [
       {
-        "id": "roadclassification1-7tkqsx",
+        "id": "roadclassification",
         "type": "line",
         "paint": {
           "line-width": [

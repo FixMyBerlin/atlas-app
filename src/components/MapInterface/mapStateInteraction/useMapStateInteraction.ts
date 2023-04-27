@@ -4,11 +4,20 @@ import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreMapState & StoreFeaturesInspector & StoreCalculator & StoreLocalUpdates
+type Store = StoreMapLoadedState &
+  StorePmTilesProtocolState &
+  StoreFeaturesInspector &
+  StoreCalculator &
+  StoreLocalUpdates
 
-type StoreMapState = {
+type StoreMapLoadedState = {
   mapLoaded: boolean
   setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
+}
+
+type StorePmTilesProtocolState = {
+  pmTilesProtocolReady: boolean
+  setPmTilesProtocolReady: (pmTilesProtocolReady: Store['pmTilesProtocolReady']) => void
 }
 
 export type StoreFeaturesInspector = {
@@ -36,6 +45,9 @@ type StoreLocalUpdates = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+
+  pmTilesProtocolReady: false,
+  setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),
 
   // Data for <Inspector> AND <LayerHighlight>
   inspectorFeatures: [],
