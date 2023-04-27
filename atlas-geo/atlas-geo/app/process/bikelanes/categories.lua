@@ -6,7 +6,7 @@ NOT_EXPECTED = 'not_expected'
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
 local function dataNo(tags)
-  local nos = Set({'no', 'none', 'separate'})
+  local nos = Set({ 'no', 'none', 'separate' })
   if nos[tags.cycleway] then
     return "data_no"
   end
@@ -15,11 +15,10 @@ end
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
-  local result = tags.parent ~= nil and tags.prefix == 'cycleway' and
-      tags.side == ''                        -- object is created from implicit case
+  local result = tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
   result = result and tags.parent.oneway == 'yes' and
-      tags.parent['oneway:bicycle'] ~= 'no'  -- is oneway w/o bike exception
-  result = result and tags.sign == LEFT_SIGN -- is the left side object
+      tags.parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
+  result = result and tags.sign == LEFT_SIGN                   -- is the left side object
   if result then
     return NOT_EXPECTED
   end
@@ -50,6 +49,13 @@ end
 local function bicycleRoad(tags)
   if tags.bicycle_road == "yes"
       or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
+    -- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
+    -- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
+    -- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
+    if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
+      tags.oneway = 'car_not_bike'
+    end
+
     return "bicycleRoad"
   end
 end

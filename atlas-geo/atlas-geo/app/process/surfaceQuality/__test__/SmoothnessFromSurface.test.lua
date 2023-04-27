@@ -1,4 +1,4 @@
-package.path = package.path .. ";app/process/surface_smoothness/?.lua"
+package.path = package.path .. ";./app/process/surfaceQuality/?.lua"
 require('SmoothnessFromSurface')
 
 print('=== Test SmoothnessFromSurface: surface "nil" returns "nil" ===')
@@ -6,7 +6,7 @@ local value, source, confidence, todo = SmoothnessFromSurface(nil)
 assert(value == nil)
 assert(source == nil)
 assert(confidence == nil)
-assert(todo == nil)
+assert(todo == "Please add surface=*")
 
 print('=== Test SmoothnessFromSurface: surface "unknown_typo" returns "nil" ===')
 local value, source, confidence, todo = SmoothnessFromSurface("unknown_typo")

@@ -84,8 +84,8 @@ function osm2pgsql.process_way(object)
   FilterTags(tags, Set(allowed_tags))
 
   -- Freshness of data (AFTER `FilterTags`!)
-  IsFresh(object, "checkdate:surface", tags, "surface")
-  IsFresh(object, "checkdate:smoothness", tags, "smoothness")
+  IsFresh(object, "check_date:surface", tags, "surface")
+  IsFresh(object, "check_date:smoothness", tags, "smoothness")
 
   tags.surface = surface
   tags.surface_source = surface_source

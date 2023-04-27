@@ -105,7 +105,7 @@ function osm2pgsql.process_way(object)
   FilterTags(tags, Set(allowed_tags))
 
   -- Freshness of data (AFTER `FilterTags`!)
-  IsFresh(object, "checkdate:maxspeed", tags)
+  IsFresh(object, "check_date:maxspeed", tags)
 
   tags.maxspeed = maxspeed
   tags.maxspeed_source = source

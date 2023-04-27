@@ -1,9 +1,9 @@
-package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";./app/process/helper/?.lua"
 require("CheckDataWithinYears")
 
 -- * @desc Categoize the fresshnews of data.
---    If present, use `date_tag` (high confidence).
---    Fall back to `object.timestamp` (low confidence).
+--    If present, use `date_tag` (eg. `check_date:lit`) => high confidence.
+--    Fall back to `object.timestamp` => low confidence.
 -- * @returns
 --   `dest` with freshness-tags added to it.
 --   If no parameter was provided a new object gets created.
@@ -22,14 +22,14 @@ function IsFresh(object, date_tag, dest, postfix)
   -- Freshness of data, see documentation
   local withinYears = CheckDataWithinYears(date, 2)
 
-  local fresh_key = table.concat({"fresh", postfix}, "_")
+  local fresh_key = table.concat({ "fresh", postfix }, "_")
   if withinYears.result then
     dest[fresh_key] = "fresh_" .. source
   else
     dest[fresh_key] = "outdated_" .. source
   end
 
-  local fresh_age_key = table.concat({"fresh_age_days", postfix}, "_")
+  local fresh_age_key = table.concat({ "fresh_age_days", postfix }, "_")
   dest[fresh_age_key] = withinYears.diffDays
 
   local isFreshKeys = { fresh_key, fresh_age_key }

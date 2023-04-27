@@ -8,6 +8,7 @@ require("JoinSets")
 require("ExcludeHighways")
 require("ExcludeByWidth")
 require("IntoExcludeTable")
+require("ConvertCyclewayOppositeSchema")
 
 local table = osm2pgsql.define_table({
   name = 'roadClassification',
@@ -70,6 +71,8 @@ function osm2pgsql.process_way(object)
     return
   end
 
+  ConvertCyclewayOppositeSchema(object.tags)
+
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM value as category, but have a few special cases below.
   object.tags.category = object.tags.highway
@@ -106,8 +109,19 @@ function osm2pgsql.process_way(object)
     object.tags.category = "footway"
   end
 
+  if object.tags.oneway == 'yes' then
+    if object.tags['oneway:bicycle'] == 'no' then
+      object.tags.oneway = 'car_not_bike'
+    else
+      object.tags.oneway = 'car_and_bike'
+    end
+    if object.tags.dual_carriageway == "yes" then
+      object.tags.oneway = object.tags.oneway .. '_dual_carriageway'
+    end
+  end
+
   local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
-    "is_sidepath", "maxspeed", "surface", "smoothness" })
+    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" })
   FilterTags(object.tags, allowed_tags)
 
   table:insert({
