@@ -268,98 +268,59 @@
         "id": "left",
         "paint": {
           "line-color": [
-            "match",
-            ["get", "left"],
-            ["missing"],
+            "case",
+            ["match", ["get", "left"], ["missing"], true, false],
             "rgb(250, 128, 225)",
-            ["not_expected"],
+            ["match", ["get", "left"], ["not_expected"], true, false],
             "rgba(230, 230, 230, 0.68)",
-            ["data_no"],
+            ["match", ["get", "left"], ["data_no"], true, false],
             "rgba(248, 216, 216, 0.67)",
-            [
-              "cyclewayOnHighway",
-              "footway_bicycleYes",
-              "needsClarification",
-              "footAndCycleway_shared",
-              "cyclewayAlone",
-              "cyclewaySeparated",
-              "footAndCycleway_segregated",
-              "bicycleRoad",
-              "pedestrianArea_bicycleYes",
-              "cyclewayBetweenLanes"
-            ],
+            ["has", "left"],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4],
           "line-offset": ["step", ["zoom"], -2, 14, -4]
-        },
-        "layout": {}
+        }
       },
       {
         "type": "line",
         "id": "self",
         "paint": {
           "line-color": [
-            "match",
-            ["get", "self"],
-            ["missing"],
+            "case",
+            ["match", ["get", "self"], ["missing"], true, false],
             "rgb(250, 128, 225)",
-            ["not_expected"],
+            ["match", ["get", "self"], ["not_expected"], true, false],
             "rgba(230, 230, 230, 0.68)",
-            ["data_no"],
+            ["match", ["get", "self"], ["data_no"], true, false],
             "rgba(248, 216, 216, 0.67)",
-            [
-              "cyclewayOnHighway",
-              "footway_bicycleYes",
-              "needsClarification",
-              "footAndCycleway_shared",
-              "cyclewayAlone",
-              "cyclewaySeparated",
-              "footAndCycleway_segregated",
-              "bicycleRoad",
-              "pedestrianArea_bicycleYes",
-              "cyclewayBetweenLanes"
-            ],
+            ["has", "self"],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        },
-        "layout": {}
+        }
       },
       {
         "type": "line",
         "id": "right",
         "paint": {
           "line-color": [
-            "match",
-            ["get", "right"],
-            ["missing"],
+            "case",
+            ["match", ["get", "right"], ["missing"], true, false],
             "rgb(250, 128, 225)",
-            ["not_expected"],
+            ["match", ["get", "right"], ["not_expected"], true, false],
             "rgba(230, 230, 230, 0.68)",
-            ["data_no"],
+            ["match", ["get", "right"], ["data_no"], true, false],
             "rgba(248, 216, 216, 0.67)",
-            [
-              "cyclewayOnHighway",
-              "footway_bicycleYes",
-              "needsClarification",
-              "footAndCycleway_shared",
-              "cyclewayAlone",
-              "cyclewaySeparated",
-              "footAndCycleway_segregated",
-              "bicycleRoad",
-              "pedestrianArea_bicycleYes",
-              "cyclewayBetweenLanes"
-            ],
+            ["has", "right"],
             "rgba(235, 235, 254, 0.7)",
             "rgba(0, 0, 0, 0.7)"
           ],
           "line-offset": ["step", ["zoom"], 2, 14, 4],
           "line-width": ["step", ["zoom"], 2, 14, 4]
-        },
-        "layout": {}
+        }
       }
     ]
   },
@@ -1175,6 +1136,8 @@
     "layers": [
       {
         "minzoom": 11,
+        "layout": {},
+        "filter": ["==", ["get", "is_present_smoothness"], true],
         "type": "line",
         "id": "smoothness-bad",
         "paint": {
@@ -1189,8 +1152,7 @@
             "hsla(252, 91%, 38%, 0)"
           ],
           "line-dasharray": [1.5, 1.5]
-        },
-        "filter": ["==", ["get", "is_present_smoothness"], true]
+        }
       }
     ]
   },
@@ -1210,7 +1172,8 @@
           ["outdated_check_date", "outdated_update_at"],
           true,
           false
-        ]
+        ],
+        "layout": {}
       },
       {
         "id": "surface-fresh",
@@ -1225,7 +1188,8 @@
           ["fresh_check_date", "fresh_update_at"],
           true,
           false
-        ]
+        ],
+        "layout": {}
       }
     ]
   },
@@ -1234,6 +1198,8 @@
     "layers": [
       {
         "minzoom": 11,
+        "layout": {},
+        "filter": ["==", ["get", "is_present_smoothness"], true],
         "type": "line",
         "id": "smoothness-good",
         "paint": {
@@ -1248,8 +1214,7 @@
             "hsla(252, 91%, 38%, 0)"
           ],
           "line-dasharray": [1.5, 1.5]
-        },
-        "filter": ["==", ["get", "is_present_smoothness"], true]
+        }
       }
     ]
   },
