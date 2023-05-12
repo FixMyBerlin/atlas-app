@@ -53,7 +53,11 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     delete props.paint['line-blur']
     delete props.paint['line-opacity']
   } else if (props.type === 'fill') {
-    props?.paint && (props.paint['fill-color'] = 'red')
+    props.paint = {
+      ...props.paint,
+      'fill-color': 'red',
+      'fill-opacity': 0.8,
+    }
   } else if (props.type === 'circle') {
     props.paint = {
       ...props.paint,

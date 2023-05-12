@@ -95,13 +95,18 @@ export const sourcesParking: MapDataSource<
     attributionHtml: 'todo', // TODO
     inspector: {
       enabled: true,
-      highlightingKey: 'area_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'parking',
         'access',
         'operator_type',
         'capacity__if_present',
         'building__if_present',
+        'fee__if_present',
+        'markings__if_present',
+        'orientation__if_present',
+        'surface__if_present',
+        'description__if_present',
       ],
       editors: [
         {
