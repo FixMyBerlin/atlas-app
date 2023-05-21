@@ -124,6 +124,50 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       },
     ],
   },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
+    name: 'Parkstände',
+    type: 'vector',
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    layers: [
+      {
+        id: 'parking_line',
+        type: 'line',
+        paint: {
+          'line-color': '#5b21b6',
+          'line-opacity': 0.63,
+          'line-width': 2,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bietigheim-bissingen_parking_areas'),
+    name: 'Parkflächen',
+    type: 'vector',
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    layers: [
+      {
+        id: 'parking_area',
+        type: 'fill',
+        paint: {
+          'fill-color': [
+            'case',
+            ['match', ['get', 'parking'], ['underground', 'multi-storey'], true, false],
+            'hsl(17, 90%, 80%)',
+            ['match', ['get', 'parking'], ['surface'], true, false],
+            'hsl(215, 90%, 80%)',
+            'hsl(300, 10%, 80%)',
+          ],
+          'fill-opacity': 0.9,
+        },
+      },
+    ],
+  },
   // {
   //   id: 'TrtoNetzentwurf',
   //   name: 'Wunschlinien: Netzentwurf',

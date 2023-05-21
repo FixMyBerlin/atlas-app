@@ -17,7 +17,8 @@ export const sourcesParking: MapDataSource<
     id: 'parkraumParking',
     tiles:
       'https://vts.mapwebbing.eu/processing.parking_segments,processing.parking_segments_label/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -63,7 +64,8 @@ export const sourcesParking: MapDataSource<
       'processing.buffer_pt_tram',
       'processing.buffer_ramps',
     ].join(',')}/{z}/{x}/{y}.pbf`,
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: { enabled: false }, // Those layers have no properties anyways
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -74,7 +76,8 @@ export const sourcesParking: MapDataSource<
   {
     id: 'parkraumParkingPoints',
     tiles: 'https://vts.mapwebbing.eu/processing.parking_spaces/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: false,
     },
@@ -92,7 +95,8 @@ export const sourcesParking: MapDataSource<
   {
     id: 'parkraumParkingAreas',
     tiles: 'https://vts.mapwebbing.eu/processing.parking_poly/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -125,7 +129,8 @@ export const sourcesParking: MapDataSource<
   {
     id: 'parkraumParkingStats',
     tiles: 'https://vts.mapwebbing.eu/processing.boundaries_stats/{z}/{x}/{y}.pbf',
-    attributionHtml: 'todo', // TODO
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: true,
       highlightingKey: 'id',
