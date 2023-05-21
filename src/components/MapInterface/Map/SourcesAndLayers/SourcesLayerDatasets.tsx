@@ -5,6 +5,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
+import { createDatasetSourceLayerKey } from '@components/MapInterface/utils'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
@@ -14,9 +15,9 @@ export const SourcesLayerDatasets: React.FC = () => {
 
   return (
     <>
-      {sourcesDatasets.map(({ id, type, url, attributionHtml, layers }) => {
-        const datasetTileId = `${id}_tiles__pmTiles_ready_${pmTilesProtocolReady}`
-        const visible = selectedDatasetIds.includes(id)
+      {sourcesDatasets.map(({ id: sourceId, type, url, attributionHtml, layers }) => {
+        const datasetTileId = `${sourceId}_tiles__pmTiles_ready_${pmTilesProtocolReady}`
+        const visible = selectedDatasetIds.includes(sourceId)
         const visibility = layerVisibility(visible)
 
         return (
@@ -31,10 +32,12 @@ export const SourcesLayerDatasets: React.FC = () => {
               const layout =
                 layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
+              const layerId = createDatasetSourceLayerKey(sourceId, layer.id)
+
               return (
                 <Layer
-                  key={layer.id}
-                  id={layer.id}
+                  key={layerId}
+                  id={layerId}
                   source={datasetTileId}
                   source-layer="default" // set in `datasets/process.cjs`
                   type={layer.type}

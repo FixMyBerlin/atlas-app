@@ -1,21 +1,16 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
-import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
+import { useNavigate, useSearch } from '@tanstack/react-location'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
-import {
-  sourcesDatasets,
-  SourcesDatasetsIds,
-} from '../mapData/sourcesMapData/sourcesDatasets.const'
+import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets.const'
 import { ListOption } from './ListOption'
+import { useRegionDatasets } from './utils/useRegionDatasets'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
-  const {
-    params: { regionPath },
-  } = useMatch()
 
   const navigate = useNavigate<LocationGenerics>()
   const onChange = (value: SourcesDatasetsIds[]) => {
@@ -26,7 +21,7 @@ export const SelectDatasets: React.FC = () => {
     })
   }
 
-  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey.includes(regionPath as any))
+  const regionDatasets = useRegionDatasets()
 
   if (!mainMap) return null
   if (!regionDatasets?.length) return null

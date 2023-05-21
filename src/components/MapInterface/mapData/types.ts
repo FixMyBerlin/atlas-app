@@ -31,6 +31,7 @@ export type MapDataDatasetsSource<TIds> = {
   id: TIds
   name: string
   attributionHtml: string
+  inspector: MapDataSourceInspector
   layers: (
     | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
     | (mapboxgl.FillLayer & Required<Pick<mapboxgl.FillLayer, 'paint'>>)

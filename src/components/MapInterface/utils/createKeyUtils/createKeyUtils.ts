@@ -36,3 +36,7 @@ export const createSourceTopicStyleLayerKey = (
 ) => {
   return `${sourceId}--${topicId}--${styleId}--${layerId}`
 }
+
+export const createDatasetSourceLayerKey = (sourceId: string, layerId: string) => {
+  return `${sourceId}--${layerId}`
+}
