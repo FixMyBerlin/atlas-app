@@ -256,4 +256,6 @@ export const translations: { [key: string]: string } = {
   'tarmac_surfaceQuality--surface_source=nothing_found': 'Daten fehlen in OpenStreetMap',
   'tarmac_surfaceQuality--surface_source=tag': 'OSM-Tag',
   'tarmac_surfaceQuality--title': 'Daten zur Oberflächenqualität',
+  'bietigheim-bissingen_on_street_parking_lines--title': 'Parkraum (Statische Daten)',
+  'bietigheim-bissingen_parking_areas--title': 'Parkplatz-Flächen (Statishe Daten)',
 }

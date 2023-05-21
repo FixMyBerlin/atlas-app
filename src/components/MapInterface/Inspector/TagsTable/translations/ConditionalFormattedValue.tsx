@@ -61,15 +61,27 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     tagKey = keyOverwrites[tagKey]
   }
 
-  // Some sources have their keys translated already for a different key else, so lets look there first…
+  // Some sources have their keys translated already for a different source, so lets look there…
+  const lookThereForSource: Record<string, string> = {
+    'bietigheim-bissingen_on_street_parking_lines': 'parkraumParking',
+    'bietigheim-bissingen_parking_areas': 'parkraumParkingAreas',
+  }
+  const lookThereForSourceEntry = Object.keys(lookThereForSource).find((s) => s === sourceId)
+  if (lookThereForSourceEntry) {
+    translationKey = `${lookThereForSource[lookThereForSourceEntry]}--${tagKey}=${tagValue}`
+  }
+
+  // Some tags are translated already for a different key, so lets look there…
   // Keys need to be source specific, otherwise there is interference with the next step.
-  const lookThere: Record<string, string> = {
+  const lookThereForKey: Record<string, string> = {
     'tarmac_roadClassification--category': 'highway',
   }
-  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === `${sourceId}--${tagKey}`)
-  if (lookThereEntryKey) {
-    tagKey = lookThere[lookThereEntryKey]
-    translationKey = `ALL--${lookThere[lookThereEntryKey]}=${tagValue}`
+  const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
+    (k) => k === `${sourceId}--${tagKey}`
+  )
+  if (lookThereForKeyEntry) {
+    tagKey = lookThereForKey[lookThereForKeyEntry]
+    translationKey = `ALL--${lookThereForKey[lookThereForKeyEntry]}=${tagValue}`
   }
 
   // Lastly…
