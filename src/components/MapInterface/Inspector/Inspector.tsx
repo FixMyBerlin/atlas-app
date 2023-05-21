@@ -74,7 +74,7 @@ export const Inspector: React.FC = () => {
                   </details>
                 )}
 
-                <MapillaryIframe properties={properties} sourceId={sourceId} />
+                <MapillaryIframe visible={sourceId.includes('mapillary')} properties={properties} />
 
                 <div className="py-1">{/* Spacer */}</div>
                 <TagsTable
