@@ -1,1 +1,1 @@
-export * from './extractFromSourceKey'
+export * from './extractFromKey'

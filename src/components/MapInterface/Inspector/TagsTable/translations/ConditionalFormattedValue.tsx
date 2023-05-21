@@ -1,10 +1,11 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
+import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 import { isDev, isStaging } from '@components/utils'
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 
 type Props = {
-  sourceId: SourcesIds
+  sourceId: SourcesIds | DatasetIds
   tagKey: string
   tagValue: string
 }

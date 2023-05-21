@@ -136,31 +136,30 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     type: 'vector',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-    // inspector: {
-    //   enabled: true,
-    //   highlightingKey: 'id',
-    //   documentedKeys: [
-    //     'highway_name',
-    //     'highway',
-    //     'parking',
-    //     'capacity_status',
-    //     'orientation',
-    //     'position',
-    //     'capacity',
-    //     'source_capacity__if_present', // unfortunatelly it is always present so we "hide" it for some cases with a "-" translation
-    //     'length',
-    //     'highway_width_proc_effective',
-    //     'surface',
-    //     'operator_type',
-    //   ],
-    //   editors: [
-    //     {
-    //       name: 'Parklinien Editor',
-    //       urlTemplate: 'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
-    //     },
-    //   ],
-    // },
-    inspector: { enabled: false },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        'highway_name',
+        'highway',
+        'parking',
+        'capacity_status',
+        'orientation',
+        'position',
+        'capacity',
+        'source_capacity__if_present', // unfortunatelly it is always present so we "hide" it for some cases with a "-" translation
+        'length',
+        'highway_width_proc_effective',
+        'surface',
+        'operator_type',
+      ],
+      editors: [
+        {
+          name: 'Parklinien Editor',
+          urlTemplate: 'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
+        },
+      ],
+    },
     layers: [
       {
         id: 'parking_line',
@@ -180,30 +179,29 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     type: 'vector',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-    // inspector: {
-    //   enabled: true,
-    //   highlightingKey: 'id',
-    //   documentedKeys: [
-    //     'parking',
-    //     'access',
-    //     'operator_type',
-    //     'capacity__if_present',
-    //     'building__if_present',
-    //     'fee__if_present',
-    //     'markings__if_present',
-    //     'orientation__if_present',
-    //     'surface__if_present',
-    //     'description__if_present',
-    //   ],
-    //   editors: [
-    //     {
-    //       name: 'Parkplätze Editor',
-    //       urlTemplate:
-    //         'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{osm_type}/{osm_id}',
-    //     },
-    //   ],
-    // },
-    inspector: { enabled: false },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        'parking',
+        'access',
+        'operator_type',
+        'capacity__if_present',
+        'building__if_present',
+        'fee__if_present',
+        'markings__if_present',
+        'orientation__if_present',
+        'surface__if_present',
+        'description__if_present',
+      ],
+      editors: [
+        {
+          name: 'Parkplätze Editor',
+          urlTemplate:
+            'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{osm_type}/{osm_id}',
+        },
+      ],
+    },
     layers: [
       {
         id: 'parking_area',

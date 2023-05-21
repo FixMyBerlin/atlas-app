@@ -7,11 +7,12 @@ import {
   TagsTableRowCompositTrafficSign,
 } from './compositTableRows'
 import { TagsTableRow } from './TagsTableRow'
+import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 
 type Props = {
   properties: GeoJSONFeature['properties']
   sourceDocumentedKeys: string[] | undefined
-  sourceId: SourcesIds
+  sourceId: SourcesIds | DatasetIds
 }
 
 export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {

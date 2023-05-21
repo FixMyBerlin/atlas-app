@@ -42,7 +42,7 @@ export const getFilterData = (
   return filterData
 }
 
-export const getSourceData = (sourceId: SourcesIds | undefined) => {
+export const getSourceData = (sourceId: SourcesIds) => {
   const sourceData = mapData?.sources?.find((s) => s.id === sourceId)
   invariant(sourceData, `filterData: sourceData for ${sourceId} missing`)
   return sourceData

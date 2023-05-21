@@ -119,13 +119,13 @@ export const SourcesAndLayers: React.FC = () => {
 
                 const layerProps = {
                   id: layerId,
-                  type: layer.type,
                   source: sourceId,
-                  beforeId,
+                  type: layer.type,
                   'source-layer': layer['source-layer'],
                   layout: layout,
                   filter: layerFilter,
                   paint: layerPaint,
+                  beforeId,
                 }
 
                 // The verification style layer in Mapbox Studio has to include this string
