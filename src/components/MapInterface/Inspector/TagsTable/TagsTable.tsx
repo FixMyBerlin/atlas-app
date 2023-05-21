@@ -41,6 +41,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case 'traffic_sign': {
               return (
                 <TagsTableRowCompositTrafficSign
+                  key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}
                   properties={properties}
@@ -50,6 +51,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case 'composit_highway': {
               return (
                 <TagsTableRowCompositHighway
+                  key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}
                   properties={properties}
@@ -59,6 +61,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case 'composit_surface_smoothness': {
               return (
                 <TagsTableRowCompositSurfaceSmoothness
+                  key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}
                   properties={properties}
