@@ -3,6 +3,7 @@ import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/data
 import { isDev } from '@components/utils'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import { translations } from './translations.const'
 
 type Props = {
   sourceId: SourcesIds | DatasetIds
@@ -13,16 +14,17 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   let key = `${sourceId}--${tagKey}--key`
 
   // Some sources have their keys translated already for a different source, so lets look there…
-  const lookThereForSource: Record<string, string> = {
+  const lookAtFirstSources: Record<string, string> = {
     'bietigheim-bissingen_on_street_parking_lines': 'parkraumParking',
     'bietigheim-bissingen_parking_areas': 'parkraumParkingAreas',
   }
-  const lookThereForSourceEntry = Object.keys(lookThereForSource).find((s) => s === sourceId)
-  if (lookThereForSourceEntry) {
-    key = `${sourceId.replace(
-      lookThereForSourceEntry,
-      lookThereForSource[lookThereForSourceEntry]
+  const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)
+  if (lookAtThisSourceFirst) {
+    const keyCandidate = `${sourceId.replace(
+      lookAtThisSourceFirst,
+      lookAtFirstSources[lookAtThisSourceFirst]
     )}--${tagKey}--key`
+    key = translations[keyCandidate] ? keyCandidate : key
   }
 
   // For some key, we don't want to add translations for each source.
