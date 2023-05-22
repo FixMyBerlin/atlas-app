@@ -16,7 +16,7 @@ export const HeaderRegionenLogo: React.FC = () => {
       {region.logoPath ? (
         <div
           className={clsx({
-            'rounded-sm bg-white/90 px-1 py-1': region.logoWhiteBackgroundRequired,
+            'rounded-sm bg-white px-1 py-1': region.logoWhiteBackgroundRequired,
           })}
         >
           <img src={region.logoPath} className="h-6 w-auto" alt="" />

@@ -282,9 +282,9 @@ export const regions: Region[] = [
       min: [13.378969848860086, 53.37938986368977],
       max: [13.74006560910362, 53.613911346911244],
     },
-    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Woldegk-Wappen.PNG', // Stadt-Wappen, but the use it for their "Der Landbote" as well (https://www.amt.windmuehlenstadt-woldegk.de/der-landbote/)
-    logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification'],
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: [...defaultBackgroundSources],
