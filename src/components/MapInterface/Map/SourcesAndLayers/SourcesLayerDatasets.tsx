@@ -6,6 +6,7 @@ import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
+import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
@@ -41,14 +42,14 @@ export const SourcesLayerDatasets: React.FC = () => {
                 'source-layer': 'default', // set in `datasets/process.cjs`
                 type: layer.type,
                 layout: layout,
-                filter: ['all'],
+                filter: wrapFilterWithAll(layer.filter),
                 paint: layer.paint as any, // Did not get TS going. `paint` is explicitly required but something else is interfering here
                 beforeId: undefined, // on top of everything
               }
 
               return (
                 <>
-                  <Layer {...layerProps} />
+                  <Layer key={layerId} {...layerProps} />
                   {/* To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData */}
                   {/* <LayerHighlight {...layerProps} /> */}
                 </>

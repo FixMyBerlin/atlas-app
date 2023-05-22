@@ -1,6 +1,6 @@
-import { type DatasetIds, datasets } from './datasets'
 import invariant from 'tiny-invariant'
 import { MapDataDatasetsSource } from '../types'
+import { datasets, type DatasetIds } from './datasets'
 
 export type SourcesDatasetsIds = DatasetIds
 
@@ -146,7 +146,7 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
         'condition_class__if_present',
         'highway__if_present',
         'highway:name__if_present',
-        'highway:oneway__if_present',
+        // 'highway:oneway__if_present',
         'informal__if_present',
         'length__if_present',
         'markings__if_present',
@@ -157,7 +157,7 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
         // 'side__if_present',
         // 'source:capacity__if_present',
         'surface__if_present',
-        'vehicle_designated__if_present',
+        // 'vehicle_designated__if_present',
         'width__if_present',
       ],
       editors: [
@@ -169,16 +169,63 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     },
     layers: [
       {
-        id: 'parking_line',
+        id: 'bibi street parking lines',
         type: 'line',
         paint: {
-          'line-color': '#5b21b6',
-          'line-opacity': 0.63,
-          'line-width': 2,
+          'line-color': 'rgb(22, 163, 74)',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 16],
+        },
+        filter: ['has', 'capacity'],
+      },
+      {
+        id: 'bibi parallel pattern',
+        type: 'line',
+        paint: {
+          'line-color': 'rgb(237, 237, 237)',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 16, 0.7, 20, 5],
+          'line-dasharray': [4, 2],
+          'line-opacity': 0.67,
+        },
+        filter: [
+          'all',
+          ['match', ['get', 'orientation'], ['parallel'], true, false],
+          ['has', 'capacity'],
+        ],
+      },
+      {
+        minzoom: 16,
+        filter: [
+          'all',
+          ['match', ['get', 'orientation'], ['diagonal'], true, false],
+          ['has', 'capacity'],
+        ],
+        type: 'line',
+        id: 'bibi diagonal pattern',
+        paint: {
+          'line-color': 'rgb(22, 163, 74)',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 16],
+          'line-opacity': 0.67,
+          'line-pattern': 'parking_diagonal',
         },
       },
       {
-        id: 'hitarea-parking_line',
+        minzoom: 16,
+        filter: [
+          'all',
+          ['match', ['get', 'orientation'], ['perpendicular'], true, false],
+          ['has', 'capacity'],
+        ],
+        type: 'line',
+        id: 'bibi perpendicular pattern',
+        paint: {
+          'line-color': 'rgb(22, 163, 74)',
+          'line-pattern': 'parking_perpendicular',
+          'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 16],
+          'line-opacity': 0.67,
+        },
+      },
+      {
+        id: 'bibi hitarea-parking_line',
         type: 'line',
         paint: {
           'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
@@ -186,6 +233,40 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
           'line-color': 'hsl(290, 100%, 54%)',
         },
         layout: { 'line-cap': 'round' },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines_label_nodes'),
+    name: 'Parkstände Beschriftungen',
+    type: 'vector',
+    attributionHtml:
+      '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    inspector: { enabled: false },
+    layers: [
+      {
+        id: 'bibi-parking_line_label',
+        type: 'symbol',
+        minzoom: 15,
+        layout: {
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+          'text-size': ['interpolate', ['linear'], ['zoom'], 14.99, 0, 15, 9, 20, 20],
+          'text-field': ['to-string', ['get', 'capacity']],
+          'text-rotate': [
+            'case',
+            ['>', ['get', 'angle'], 90],
+            ['-', ['get', 'angle'], 180],
+            ['get', 'angle'],
+          ],
+        },
+        paint: {
+          'text-color': 'rgb(60, 60, 60)',
+          'text-halo-width': ['interpolate', ['linear'], ['zoom'], 15, 1, 18, 2.5],
+          'text-halo-color': 'rgb(255, 255, 255)',
+          'icon-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0, 14, 0, 15, 1],
+        },
       },
     ],
   },
@@ -252,23 +333,4 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       },
     ],
   },
-  // {
-  //   id: 'TrtoNetzentwurf',
-  //   name: 'Wunschlinien: Netzentwurf',
-  //   type: 'vector',
-  //   attributionHtml: 'FixMyCity',
-  //   inspector: { enabled: false },
-  //   layers: [
-  //     {
-  //       id: 'netzentwurf',
-  //       type: 'line',
-  //       paint: {
-  //         'line-width': 3,
-  //         'line-opacity': 0.83,
-  //         'line-color': '#dd0303',
-  //         'line-dasharray': [2, 0.7],
-  //       },
-  //     },
-  //   ],
-  // },
 ]
