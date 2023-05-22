@@ -134,11 +134,11 @@ export const SourcesAndLayers: React.FC = () => {
                 return (
                   <>
                     {isVerificationStatusLayer ? (
-                      <LayerVerificationStatus {...layerProps} />
+                      <LayerVerificationStatus key={`${layerId}_verification`} {...layerProps} />
                     ) : (
-                      <Layer {...layerProps} />
+                      <Layer key={layerId} {...layerProps} />
                     )}
-                    <LayerHighlight {...layerProps} />
+                    <LayerHighlight key={`${layerId}_highlight`} {...layerProps} />
                   </>
                 )
               })
