@@ -177,6 +177,16 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
           'line-width': 2,
         },
       },
+      {
+        id: 'hitarea-parking_line',
+        type: 'line',
+        paint: {
+          'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
+          'line-opacity': 0,
+          'line-color': 'hsl(290, 100%, 54%)',
+        },
+        layout: { 'line-cap': 'round' },
+      },
     ],
   },
   {
