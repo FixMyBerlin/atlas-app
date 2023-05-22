@@ -5,9 +5,10 @@ export type Props = {
   group: MapboxStylesByLayerGroupIds
   source: SourcesIds
   sourceLayer: string
+  idPrefix?: string
 }
 
-export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
+export const mapboxStyleLayers = ({ group, source, sourceLayer, idPrefix }: Props) => {
   const mapboxLayers = mapboxStylesByLayerGroup.find((g: any) => g.group === group)?.layers
   const mapboxLayersClone = structuredClone(mapboxLayers)
 
@@ -28,6 +29,7 @@ export const mapboxStyleLayers = ({ group, source, sourceLayer }: Props) => {
   mapboxLayersClone.forEach((layer: any) => {
     layer['source'] = source
     layer['source-layer'] = sourceLayer
+    layer.id = [idPrefix, layer.id].filter(Boolean).join('--')
   })
 
   return mapboxLayersClone
