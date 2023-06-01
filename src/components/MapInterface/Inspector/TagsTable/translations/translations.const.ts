@@ -291,4 +291,5 @@ export const translations: { [key: string]: string } = {
   'bietigheim-bissingen_parking_areas--parking:levels--key': 'Stockwerke',
   'bietigheim-bissingen_parking_areas--informal--key': 'Geduldet',
   'bietigheim-bissingen_parking_areas--informal=yes': 'Ja',
+  'berlin-parking-polygons-euvm--title': 'Attributtabelle eUVM Projekt',
 }
