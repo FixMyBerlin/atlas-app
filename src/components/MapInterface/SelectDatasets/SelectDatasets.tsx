@@ -7,6 +7,7 @@ import { useMap } from 'react-map-gl'
 import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets.const'
 import { ListOption } from './ListOption'
 import { useRegionDatasets } from './utils/useRegionDatasets'
+import clsx from 'clsx'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
@@ -43,9 +44,32 @@ export const SelectDatasets: React.FC = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-[calc(100vh_-_5rem)] w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          {regionDatasets.map(({ name, id }) => {
-            return <ListOption key={id} value={id} name={name} />
+        <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-[calc(100vh_-_5rem)] min-w-[15rem] max-w-[20rem] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+          {regionDatasets.map(({ id, name, description, attributionHtml }) => {
+            return (
+              <ListOption
+                key={id}
+                value={id}
+                name={
+                  <>
+                    {name}
+                    {description && (
+                      <span
+                        className={clsx(
+                          description?.includes('(!)') ? 'text-red-400' : 'text-gray-400',
+                          'block w-full overflow-visible'
+                        )}
+                      >
+                        {description}
+                      </span>
+                    )}
+                    {attributionHtml && (
+                      <span className="block text-gray-400">{attributionHtml}</span>
+                    )}
+                  </>
+                }
+              />
+            )
           })}
         </Listbox.Options>
       </Transition>

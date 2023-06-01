@@ -4,7 +4,10 @@ import { clsx } from 'clsx'
 import React from 'react'
 import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets.const'
 
-type Props = { value: SourcesDatasetsIds; name: string }
+type Props = {
+  value: SourcesDatasetsIds
+  name: string | React.ReactNode
+}
 
 // https://headlessui.com/react/listbox#styling-the-active-and-selected-option
 export const ListOption: React.FC<Props> = ({ value, name }) => {
@@ -23,9 +26,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
     >
       {({ active, selected }) => (
         <>
-          <span
-            className={clsx('block truncate', active || selected ? 'font-medium' : 'font-normal')}
-          >
+          <span className={clsx('block', active || selected ? 'font-medium' : 'font-normal')}>
             {name}
           </span>
           {!!selected && (

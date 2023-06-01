@@ -30,6 +30,7 @@ export type MapDataDatasetsSource<TIds> = {
   regionKey: RegionPath[]
   id: TIds
   name: string
+  description?: string
   attributionHtml: string
   inspector: MapDataSourceInspector
   layers: (
