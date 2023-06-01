@@ -12,6 +12,12 @@ type Props = {
 }
 
 export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
+  // Some data should not be "translated"; we want to show the raw string.
+  const untranslatedSources = ['berlin-parking-polygons-euvm']
+  if (untranslatedSources.includes(sourceId)) {
+    return <code>{String(tagValue) || '–'}</code>
+  }
+
   // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
   const categoryTranslatedAlready = sourceId == 'tarmac_poiClassification' && tagKey == 'category'
   if (

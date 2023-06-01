@@ -13,6 +13,12 @@ type Props = {
 export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) => {
   let key = `${sourceId}--${tagKey}--key`
 
+  // Some data should not be "translated"; we want to show the raw string.
+  const untranslatedSources = ['berlin-parking-polygons-euvm']
+  if (untranslatedSources.includes(sourceId)) {
+    return <code>{tagKey}</code>
+  }
+
   // Some sources have their keys translated already for a different source, so lets look there…
   const lookAtFirstSources: Record<string, string> = {
     'bietigheim-bissingen_on_street_parking_lines': 'parkraumParking',
