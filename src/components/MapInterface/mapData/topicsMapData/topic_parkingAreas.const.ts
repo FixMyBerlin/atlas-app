@@ -52,11 +52,7 @@ export const topic_parkingAreas: MapDataTopic = {
           type: 'fill',
           source: 'parkraumParkingAreas',
           'source-layer': 'processing.parking_poly',
-          filter: [
-            'all',
-            ['match', ['get', 'parking'], ['street_side', 'lane'], false, true],
-            ['match', ['get', 'amenity'], ['bicycle_parking'], false, true],
-          ],
+          filter: ['all', ['match', ['get', 'amenity'], ['bicycle_parking'], false, true]],
           paint: {
             'fill-color': [
               'case',

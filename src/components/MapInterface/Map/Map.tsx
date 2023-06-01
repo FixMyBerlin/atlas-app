@@ -1,4 +1,3 @@
-import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { isDev } from '@components/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import { useNavigate, useSearch } from '@tanstack/react-location'
@@ -8,15 +7,14 @@ import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
 import {
   Map as MapGl,
-  MapboxEvent,
   MapLayerMouseEvent,
+  MapboxEvent,
   NavigationControl,
-  useMap,
   ViewStateChangeEvent,
+  useMap,
 } from 'react-map-gl'
 import { LocationGenerics } from '../../../routes'
 import { useMapStateInteraction } from '../mapStateInteraction'
-import { createSourceTopicStyleLayerKey } from '../utils'
 import { Calculator } from './Calculator/Calculator'
 import {
   SourcesAndLayers,
@@ -24,6 +22,7 @@ import {
   SourcesLayerRasterBackgrounds,
 } from './SourcesAndLayers'
 import { roundPositionForURL } from './utils'
+import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
@@ -103,37 +102,7 @@ export const Map: React.FC = () => {
     })
   }
 
-  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
-  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
-  if (!configThemesTopics || !currentTheme) return null
-
-  const interactiveLayerIds: string[] = []
-  currentTheme.topics.forEach((topicConfig) => {
-    // Guard: Only pick layer that are part of our current theme
-
-    if (!currentTheme?.topics.some((t) => t.id === topicConfig.id)) return
-    const topicData = getTopicData(topicConfig.id)
-
-    topicConfig.styles.forEach((styleConfig) => {
-      const styleData = getStyleData(topicData, styleConfig.id)
-      styleData.layers.forEach((layerConfig) => {
-        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
-        const sourceData = getSourceData(topicData.sourceId)
-        if (!sourceData.inspector.enabled) return
-        const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
-        if (layerData?.interactive === false) return
-
-        const layerKey = createSourceTopicStyleLayerKey(
-          topicData.sourceId,
-          topicConfig.id,
-          styleConfig.id,
-          layerConfig.id
-        )
-
-        interactiveLayerIds.push(layerKey)
-      })
-    })
-  })
+  const interactiveLayerIds = useInteractiveLayers()
 
   if (lat === undefined || lng === undefined || zoom === undefined) {
     return null

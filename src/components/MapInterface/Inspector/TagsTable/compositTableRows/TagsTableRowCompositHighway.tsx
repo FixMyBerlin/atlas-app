@@ -14,7 +14,6 @@ export const TagsTableRowCompositHighway: React.FC<Props> = ({ sourceId, tagKey,
 
   return (
     <TagsTableRow
-      key={tagKey}
       sourceId={sourceId}
       tagKey={tagKey}
       value={

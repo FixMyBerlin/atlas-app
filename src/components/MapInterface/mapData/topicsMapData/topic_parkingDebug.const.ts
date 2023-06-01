@@ -48,11 +48,13 @@ export const topic_parkingDebug: MapDataTopic = {
           group: 'parking_debug_bus_tram',
           source,
           sourceLayer: 'processing.buffer_pt_bus',
+          idPrefix: 'bus',
         }),
         mapboxStyleLayers({
           group: 'parking_debug_bus_tram',
           source,
           sourceLayer: 'processing.buffer_pt_tram',
+          idPrefix: 'tram',
         }),
         mapboxStyleLayers({
           group: 'parking_debug_ramps',

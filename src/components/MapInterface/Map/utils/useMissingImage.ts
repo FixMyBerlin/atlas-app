@@ -30,11 +30,6 @@ export const useMissingImage = (map: MapRef | undefined) => {
         if (!map.hasImage(imageId)) {
           // Docs https://maplibre.org/maplibre-gl-js-docs/api/map/#map#addimage
           map.addImage(imageId, image, { pixelRatio: 2 })
-          console.log(
-            '🚀 ~ file: useMissingImage.ts:37 ~ map.loadImage ~ imageId, image:',
-            imageId,
-            image
-          )
         }
       })
     })

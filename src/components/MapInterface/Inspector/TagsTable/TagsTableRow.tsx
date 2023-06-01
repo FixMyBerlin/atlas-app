@@ -1,16 +1,17 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
 import React from 'react'
 import { ConditionalFormattedKey, ConditionalFormattedValue } from './translations'
+import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 
 export type TagsTableRowProps =
   | {
-      sourceId: SourcesIds
+      sourceId: SourcesIds | DatasetIds
       tagKey: string
       tagValue: string
       value?: never
     }
   | {
-      sourceId: SourcesIds
+      sourceId: SourcesIds | DatasetIds
       tagKey: string
       tagValue?: never
       value: React.ReactNode

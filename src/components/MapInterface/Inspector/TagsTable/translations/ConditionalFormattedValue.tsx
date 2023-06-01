@@ -1,18 +1,36 @@
 import { SourcesIds } from '@components/MapInterface/mapData'
+import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 import { isDev, isStaging } from '@components/utils'
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
+import { translations } from './translations.const'
 
 type Props = {
-  sourceId: SourcesIds
+  sourceId: SourcesIds | DatasetIds
   tagKey: string
   tagValue: string
 }
 
 export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
+  // Some data should not be "translated"; we want to show the raw string.
+  const untranslatedSources = ['berlin-parking-polygons-euvm']
+  if (untranslatedSources.includes(sourceId)) {
+    return <code>{String(tagValue) || '–'}</code>
+  }
+
   // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
   const categoryTranslatedAlready = sourceId == 'tarmac_poiClassification' && tagKey == 'category'
-  if (['name', 'highway_name'].includes(tagKey) || categoryTranslatedAlready) {
+  if (
+    [
+      'name',
+      'highway_name',
+      'highway:name', // bietigheim-bissingen_parking_areas
+      'maxstay:conditional', // bietigheim-bissingen_parking_areas
+      'operator', // bietigheim-bissingen_parking_areas
+      'description',
+    ].includes(tagKey) ||
+    categoryTranslatedAlready
+  ) {
     return <>{tagValue}</>
   }
 
@@ -31,6 +49,8 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     { key: 'length_wo_dual_carriageway', suffix: 'km' }, // parkraumParkingStats
     { key: 'done_percent', suffix: '%' }, // parkraumParkingStats
     { key: 'admin_level', suffix: undefined },
+    { key: 'maxstay', suffix: 'Minuten' }, // bietigheim-bissingen_parking_areas
+    { key: 'parking:levels', suffix: 'Stockwerke' }, // bietigheim-bissingen_parking_areas
   ]
   const numberConfig = numberConfigs.find((c) => c.key === tagKey)
   if (numberConfig) {
@@ -60,15 +80,30 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     tagKey = keyOverwrites[tagKey]
   }
 
-  // Some sources have their keys translated already for a different key else, so lets look there first…
+  // Some sources have their keys translated already for a different source, so lets look there…
+  const lookAtFirstSources: Record<string, string> = {
+    'bietigheim-bissingen_on_street_parking_lines': 'parkraumParking',
+    'bietigheim-bissingen_parking_areas': 'parkraumParkingAreas',
+  }
+  const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)
+  if (lookAtThisSourceFirst) {
+    const translationKeyCandidate = `${lookAtFirstSources[lookAtThisSourceFirst]}--${tagKey}=${tagValue}`
+    translationKey = translations[translationKeyCandidate]
+      ? translationKeyCandidate
+      : translationKey
+  }
+
+  // Some tags are translated already for a different key, so lets look there…
   // Keys need to be source specific, otherwise there is interference with the next step.
-  const lookThere: Record<string, string> = {
+  const lookThereForKey: Record<string, string> = {
     'tarmac_roadClassification--category': 'highway',
   }
-  const lookThereEntryKey = Object.keys(lookThere).find((k) => k === `${sourceId}--${tagKey}`)
-  if (lookThereEntryKey) {
-    tagKey = lookThere[lookThereEntryKey]
-    translationKey = `ALL--${lookThere[lookThereEntryKey]}=${tagValue}`
+  const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
+    (k) => k === `${sourceId}--${tagKey}`
+  )
+  if (lookThereForKeyEntry) {
+    tagKey = lookThereForKey[lookThereForKeyEntry]
+    translationKey = `ALL--${lookThereForKey[lookThereForKeyEntry]}=${tagValue}`
   }
 
   // Lastly…

@@ -1,15 +1,14 @@
-import { SourcesIds } from '@components/MapInterface/mapData'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 
 type Props = {
+  visible: boolean
   properties: GeoJSONFeature['properties']
-  sourceId: SourcesIds
 }
 
 // Docs https://www.mapillary.com/developer/api-documentation?locale=de_DE#embed
-export const MapillaryIframe: React.FC<Props> = ({ properties, sourceId }) => {
-  if (!sourceId.includes('mapillary')) return null
+export const MapillaryIframe: React.FC<Props> = ({ visible, properties }) => {
+  if (!visible) return null
 
   return (
     <section>

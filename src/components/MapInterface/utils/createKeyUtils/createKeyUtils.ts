@@ -1,3 +1,4 @@
+import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { TopicIds, TopicStyleFilterIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData'
 import {
   TopicStyleFilterKey,
@@ -35,4 +36,16 @@ export const createSourceTopicStyleLayerKey = (
   layerId: string
 ) => {
   return `${sourceId}--${topicId}--${styleId}--${layerId}`
+}
+
+export const createDatasetSourceLayerKey = (sourceId: string, layerId: string) => {
+  return `${sourceId}--${layerId}`
+}
+
+export const createInspectorFeatureKey = (feature: MapboxGeoJSONFeature) => {
+  // TODO, this has a static set of IDs which are defined on `sourceData.inspector.highlightingKey`
+  // Ideally we would pick the value form sourceData, but that does not work for sourceDatasets
+  return `${feature.layer.source}-${
+    feature?.properties?.id || feature?.properties?.area_id || feature?.properties?.osm_id
+  }`
 }
