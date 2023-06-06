@@ -10,13 +10,25 @@ OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 
 run_lua() {
-  echo "\e[1m\e[7m PROCESS – Topic: $1 LUA \e[27m\e[21m"
+  start_time=$(date +%s)
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m – Start Time: $(date)"
+
   ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
+
+  end_time=$(date +%s)
+  diff=$((end_time - start_time))
+  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds"
 }
 
 run_psql() {
-  echo "\e[1m\e[7m PROCESS – Topic: $1 SQL \e[27m\e[21m"
+  start_time=$(date +%s)
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m"
+
   psql -q -f "${PROCESS_DIR}$1.sql"
+
+  end_time=$(date +%s)
+  diff=$((end_time - start_time))
+  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
