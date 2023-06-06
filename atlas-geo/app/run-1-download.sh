@@ -16,9 +16,10 @@ echo "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)"
 if [ "$SKIP_DOWNLOAD" = "skip" ]; then
   echo "💥 SKIPPED with 'SKIP_DOWNLOAD=skip' in '/docker-compose.yml'"
 else
-  # Docs https://www.man7.org/linux/man-pages/man1/wget.1.html
-  # --show-progress  <--- helpfull when running locally
   echo "File: ${OSM_DOWNLOAD_URL}"
+  # LOCAL: (Shows progress)
+  # wget --timestamping --progress=bar:force ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
+  # SERVER:
   wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
   cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 fi
