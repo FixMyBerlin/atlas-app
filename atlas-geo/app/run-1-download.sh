@@ -17,10 +17,8 @@ if [ "$SKIP_DOWNLOAD" = "skip" ]; then
   echo "💥 SKIPPED with 'SKIP_DOWNLOAD=skip' in '/docker-compose.yml'"
 else
   echo "File: ${OSM_DOWNLOAD_URL}"
-  # LOCAL: (Shows progress)
-  # wget --timestamping --progress=bar:force ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
-  # SERVER:
-  wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
+  # Note: Showing the progress (locally) does not work, unfortunately
+  wget --timestamping ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
   cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 fi
 
