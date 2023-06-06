@@ -22,7 +22,7 @@ run_lua() {
 
 run_psql() {
   start_time=$(date +%s)
-  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m"
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m – Start Time: $(date)"
 
   psql -q -f "${PROCESS_DIR}$1.sql"
 
@@ -35,7 +35,8 @@ run_psql() {
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m"
+total_start_time=$(date +%s)
+echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)"
 
 # lit and bikelanes should be at the top, so it's available ASAP
 echo "Reminder: The 'lit' table is available only after Postprocessing finished"
@@ -86,8 +87,11 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
 
+
+total_end_time=$(date +%s)
+diff=$((total_end_time - total_start_time))
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m"
+echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
 echo "Completed:"
 echo "Development http://localhost:7800"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/"
