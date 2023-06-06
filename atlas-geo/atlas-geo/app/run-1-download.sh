@@ -9,7 +9,9 @@ OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 OSM_DOWNLOAD_URL=http://download.geofabrik.de/europe/germany-latest.osm.pbf
 OSM_DOWNLOAD_FILE=germany-latest.osm.pbf
 
-echo "\e[1m\e[7m Download – START \e[27m\e[21m"
+
+start_time=$(date +%s)
+echo "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)"
 
 if [ "$SKIP_DOWNLOAD" = "skip" ]; then
   echo "💥 SKIPPED with 'SKIP_DOWNLOAD=skip' in '/docker-compose.yml'"
@@ -21,4 +23,6 @@ else
   cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 fi
 
-echo "\e[1m\e[7m Download – END \e[27m\e[21m"
+end_time=$(date +%s)
+diff=$((end_time - start_time))
+echo "\e[1m\e[7m DOWNLOAD – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
