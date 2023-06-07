@@ -22,13 +22,13 @@ run_lua() {
 
 run_psql() {
   start_time=$(date +%s)
-  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m – Start Time: $(date)"
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m"
 
   psql -q -f "${PROCESS_DIR}$1.sql"
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds"
+  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
