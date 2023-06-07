@@ -64,3 +64,9 @@ npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/w
 - https://www.openstreetmap.org/relation/1419902
 - https://hanshack.com/geotools/gimmegeodata/ => Download
 - Placemark Play => Buffer 1km, Simplify
+
+# Sigmaringen
+
+- https://www.openstreetmap.org/relation/2806390
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- https://app.placemark.io/play => Buffer 10km / Details 5
