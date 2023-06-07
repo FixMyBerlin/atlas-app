@@ -62,14 +62,14 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   },
   {
     id: 'esri',
-    name: 'Esri',
+    name: 'Luftbild Esri',
     type: 'raster',
     tiles:
       'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     tileSize: 256,
     minzoom: 10,
     maxzoom: 21,
-    attributionHtml: '<a href="https://wiki.openstreetmap.org/wiki/Esri">Terms & Feedback</a>',
+    attributionHtml: '<a href="https://wiki.openstreetmap.org/wiki/Esri">Esri Terms & Feedback</a>',
   },
   // Satellite from 2021 with aerial imagery for selected countries.
   // About https://documentation.maptiler.com/hc/en-us/articles/4405596670865-Satellite-maps#Satellitemaps-MapTilersatellitemaps
