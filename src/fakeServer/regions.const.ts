@@ -13,7 +13,7 @@ export type Region = {
   path: RegionPath
   map: RegionMap
   /** @desc Used by the download panel to pass to the api endpoint */
-  bbox: { min: [number, number]; max: [number, number] } | null
+  bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
   logoPath: string | null
   logoWhiteBackgroundRequired: boolean
   themes: MapDataThemeIds[]
@@ -21,6 +21,21 @@ export type Region = {
   /** @desc published=true regions are visible on production, all others are not */
   published: boolean
   backgroundSources: SourcesRasterIds[]
+}
+
+const bboxToMinMax = (bbox: [number, number, number, number]) => {
+  return {
+    min: [bbox[0], bbox[1]] as const,
+    max: [bbox[0], bbox[1]] as const,
+  }
+}
+
+const pointToLatLng = ({ point, zoom }: { point: GeoJSON.Point; zoom: number }) => {
+  return {
+    lat: point.coordinates[1],
+    lng: point.coordinates[0],
+    zoom,
+  }
 }
 
 const defaultBackgroundSources: SourcesRasterIds[] = [
@@ -50,6 +65,9 @@ export type RegionPath =
   | 'trto'
   | 'woldegk'
   | 'zes'
+  | 'sigmaringen'
+  | 'ostalbkreis'
+  | 'nagold'
 
 // This is our regions "Database" until we have a real one
 export const regions: Region[] = [
@@ -284,7 +302,66 @@ export const regions: Region[] = [
     },
     logoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification'],
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Ostalbkreis',
+    fullName: 'Ostalbkreis',
+    path: 'ostalbkreis',
+    map: pointToLatLng({
+      point: {
+        type: 'Point',
+        coordinates: [10.092577, 48.8364862],
+      },
+      zoom: 10,
+    }),
+    bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
+    logoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
+    logoWhiteBackgroundRequired: true,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Sigmaringen',
+    fullName: 'Stadt Sigmaringen',
+    path: 'sigmaringen',
+    map: pointToLatLng({
+      point: {
+        type: 'Point',
+        coordinates: [9.2175234, 48.0856128],
+      },
+      zoom: 10,
+    }),
+    // BBox für https://www.openstreetmap.org/relation/2806390
+    bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
+    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Nagold',
+    fullName: 'Stadt Nagold',
+    path: 'nagold',
+    map: pointToLatLng({
+      point: {
+        type: 'Point',
+        coordinates: [8.7240494, 48.5511595],
+      },
+      zoom: 11.7,
+    }),
+    // BBox für https://www.openstreetmap.org/relation/2946978
+    bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
+    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: [...defaultBackgroundSources],
