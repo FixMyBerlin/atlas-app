@@ -41,6 +41,7 @@ const pointToLatLng = ({ point, zoom }: { point: GeoJSON.Point; zoom: number }) 
 const defaultBackgroundSources: SourcesRasterIds[] = [
   'mapnik',
   'esri',
+  'maptiler-satellite',
   'cyclosm',
   'thunderforest-opencyclemap',
   'memomaps-transport',
