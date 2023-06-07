@@ -44,7 +44,13 @@ export const SelectDatasets: React.FC = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute bottom-10 left-0 mt-1 max-h-[calc(100vh_-_5rem)] min-w-[15rem] max-w-[20rem] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <Listbox.Options
+          className={clsx(
+            'absolute bottom-10 left-0 mt-1 max-h-[calc(100vh_-_5rem)] min-w-[15rem] max-w-[20rem] overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm',
+            // Style all the hover state of all a-tags inside this element; Helps understand the click target when `attributionHtml` has embedded external links.
+            '[&_a:hover]:underline'
+          )}
+        >
           {regionDatasets.map(({ id, name, description, attributionHtml }) => {
             return (
               <ListOption
