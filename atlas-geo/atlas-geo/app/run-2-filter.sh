@@ -17,7 +17,9 @@ MERGED_POLY_FILE=${FILTER_DIR}merged_regions.poly
 # FILTER
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 
-echo "\e[1m\e[7m Filter – START \e[27m\e[21m"
+
+start_time=$(date +%s)
+echo "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)"
 
 if [ -f "${OSM_GERMANY}" ]; then
 
@@ -44,4 +46,6 @@ else
   echo "Filter: 🧨 file ${OSM_GERMANY} not found"
 fi
 
-echo "\e[1m\e[7m Filter – END \e[27m\e[21m"
+end_time=$(date +%s)
+diff=$((end_time - start_time))
+echo "\e[1m\e[7m FILTER – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
