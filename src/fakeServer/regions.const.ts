@@ -26,7 +26,7 @@ export type Region = {
 const bboxToMinMax = (bbox: [number, number, number, number]) => {
   return {
     min: [bbox[0], bbox[1]] as const,
-    max: [bbox[0], bbox[1]] as const,
+    max: [bbox[2], bbox[2]] as const,
   }
 }
 
