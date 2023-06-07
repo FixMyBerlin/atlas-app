@@ -76,3 +76,9 @@ npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/w
 - https://www.openstreetmap.org/relation/2806390
 - https://hanshack.com/geotools/gimmegeodata/ => Download
 - https://app.placemark.io/play => Buffer 10km / Details 5
+
+# Nagold
+
+- https://www.openstreetmap.org/relation/2946978 (Stadtgebiet wäre https://www.openstreetmap.org/relation/1177445#map=12/48.5435/8.7226)
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- https://app.placemark.io/play => Buffer 10km / Details 5
