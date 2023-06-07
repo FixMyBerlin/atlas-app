@@ -97,11 +97,6 @@ The workflow is…
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
-**Note**
-For the development process it's often usefull to run the processing on a single object.
-For that you can specify an id (list) in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
-See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
-
 **Notes**
 
 Hack into the bash
@@ -117,6 +112,12 @@ You can also run the script locally:
    sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
    ```
 2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
+
+### Process only a single object
+
+For the development process it's often usefull to run the processing on a single object.
+For that you can specify an id (list) as `ID_FILTER` in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
+See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 ### Build & Run only one container
 
