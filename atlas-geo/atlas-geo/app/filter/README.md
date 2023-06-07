@@ -45,25 +45,25 @@ npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/w
 # Landkreis Lüneburg
 
 - https://www.openstreetmap.org/relation/2084746
-- Placemark Play => Simplify
+- https://app.placemark.io/play => Simplify
 
 # Amt Neukloster-Warin
 
 - https://www.openstreetmap.org/relation/1515757
 - https://hanshack.com/geotools/gimmegeodata/ => Download
-- Placemark Play => Buffer 1km, Simplify
+- https://app.placemark.io/play => Buffer 1km, Simplify
 
 # Amt Landhagen
 
 - https://www.openstreetmap.org/relation/1432580
 - https://hanshack.com/geotools/gimmegeodata/ => Download
-- Placemark Play => Buffer 1km, Simplify, Add Greifswald
+- https://app.placemark.io/play => Buffer 1km, Simplify, Add Greifswald
 
 # Amt Woldegk
 
 - https://www.openstreetmap.org/relation/1419902
 - https://hanshack.com/geotools/gimmegeodata/ => Download
-- Placemark Play => Buffer 1km, Simplify
+- https://app.placemark.io/play => Buffer 1km, Simplify
 
 # Ostalbkreis
 
