@@ -10,20 +10,33 @@ OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 
 run_lua() {
-  echo "\e[1m\e[7m PROCESS – Topic: $1 LUA \e[27m\e[21m"
+  start_time=$(date +%s)
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m – Start Time: $(date)"
+
   ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
+
+  end_time=$(date +%s)
+  diff=$((end_time - start_time))
+  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds"
 }
 
 run_psql() {
-  echo "\e[1m\e[7m PROCESS – Topic: $1 SQL \e[27m\e[21m"
+  start_time=$(date +%s)
+  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m"
+
   psql -q -f "${PROCESS_DIR}$1.sql"
+
+  end_time=$(date +%s)
+  diff=$((end_time - start_time))
+  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m"
+total_start_time=$(date +%s)
+echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)"
 
 # lit and bikelanes should be at the top, so it's available ASAP
 echo "Reminder: The 'lit' table is available only after Postprocessing finished"
@@ -74,8 +87,11 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\"}';"
 
+
+total_end_time=$(date +%s)
+diff=$((total_end_time - total_start_time))
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m"
+echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
 echo "Completed:"
 echo "Development http://localhost:7800"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/"
