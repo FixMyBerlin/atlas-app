@@ -7,6 +7,7 @@ export type SourcesRasterIds =
   | 'mapnik'
   | 'esri'
   | 'maptiler-satellite'
+  | 'mapbox-satellite'
   | 'areal2022'
   | 'areal2021'
   | 'areal2020'
@@ -22,6 +23,11 @@ export type SourcesRasterIds =
   | 'waymarkedtrails-hiking'
   | 'trto-radwege'
 
+// https://account.mapbox.com/access-tokens
+// https://account.mapbox.com/access-tokens/clileup4r0b1r3gmp4hxqhou8/
+// Has Domain restrictions
+const tokenMapboxTilesets =
+  'sk.eyJ1IjoiaGVqY28iLCJhIjoiY2xpbGV1cDRyMGIxcjNnbXA0aHhxaG91OCJ9.7ndjc3cZRsoYdoOvCrQ2AA'
 
 // API Key https://cloud.maptiler.com/account/keys/db5f268c-c1ea-4cc4-8414-69ba179d11c0/settings
 // Has Domain restrictions
@@ -87,6 +93,19 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     maxzoom: 20,
     attributionHtml:
       '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>',
+  },
+  // Cost/Usage https://account.mapbox.com/
+  // Docs https://docs.mapbox.com/data/tilesets/reference/mapbox-satellite/
+  // Tileset https://studio.mapbox.com/tilesets/mapbox.satellite/
+  {
+    id: 'mapbox-satellite',
+    name: 'Luftbild Mapbox',
+    type: 'raster',
+    tiles: `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.webp?access_token=${tokenMapboxTilesets}`,
+    tileSize: 512,
+    minzoom: 0,
+    maxzoom: 22,
+    attributionHtml: '<a href="https://www.mapbox.com/feedback/">&copy; Mapbox</a>',
   },
   // This is the version from https://github.com/openstreetmap/iD/blob/HEAD/data/manual_imagery.json
   // More: https://github.com/osmlab/editor-layer-index/issues/1451#issuecomment-1057938706
