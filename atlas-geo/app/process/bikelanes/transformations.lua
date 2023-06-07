@@ -29,6 +29,7 @@ LEFT_SIGN = 1
 CENTER_SIGN = 0
 RIGHT_SIGN = -1
 SIDES = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
+
 function GetTransformedObjects(tags, transformations)
   local sides = {
     [":left"] = LEFT_SIGN,
@@ -42,9 +43,11 @@ function GetTransformedObjects(tags, transformations)
   local center = { sign = 0 }
   for k, v in pairs(tags) do center[k] = v end
   local results = { center }
+
   if PathClasses[tags.highway] then
     return results
   end
+
   for _, transformation in pairs(transformations) do
     for side, sign in pairs(sides) do
       if tags.highway ~= transformation.highway then
@@ -56,16 +59,19 @@ function GetTransformedObjects(tags, transformations)
           prefix = prefix,
           sign = sign
         }
+
         -- we look for tags with the following hirachy: `prefix` < `prefix:both` < `prefix:side`
         -- thus a more specific tag will always overwrite a more general one
         unnestTags(tags, prefix, '', newObj)
         unnestTags(tags, prefix, ':both', newObj)
         unnestTags(tags, prefix, side, newObj)
+
         if newObj.side ~= nil then
           if not transformation.filter or transformation.filter(newObj) then
             table.insert(results, newObj)
           end
         end
+
         for _, key in pairs({ 'cycleway:lanes', 'bicycle:lanes' }) do
           local directedKey = key .. ':' .. directions[sign]
           newObj[key] = tags[key] or tags[directedKey]
@@ -73,5 +79,6 @@ function GetTransformedObjects(tags, transformations)
       end
     end
   end
+
   return results
 end
