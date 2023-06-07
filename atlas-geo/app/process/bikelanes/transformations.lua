@@ -40,8 +40,11 @@ function GetTransformedObjects(tags, transformations)
     [LEFT_SIGN] = 'backward',
     [RIGHT_SIGN] = 'forward',
   }
-  local center = { sign = 0 }
+
+  local center = {}
   for k, v in pairs(tags) do center[k] = v end
+  center.sign = CENTER_SIGN -- Overwrite any OSM tag 'sign'
+
   local results = { center }
 
   if PathClasses[tags.highway] then
