@@ -32,7 +32,17 @@ export type MapDataDatasetsSource<TIds> = {
   name: string
   description?: string
   attributionHtml: string
-  inspector: MapDataSourceInspector
+  inspector:
+    | {
+        enabled: true
+        highlightingKey: 'TODO' // This is not implemented, yet
+        documentedKeys: string[]
+        disableTranslations?: boolean
+        editors?: MapDataSourceInspectorEditor[]
+      }
+    | {
+        enabled: false
+      }
   layers: (
     | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
     | (mapboxgl.FillLayer & Required<Pick<mapboxgl.FillLayer, 'paint'>>)

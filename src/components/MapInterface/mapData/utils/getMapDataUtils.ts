@@ -3,6 +3,7 @@ import { mapData, TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../mapDat
 import { SourcesIds } from '../sourcesMapData'
 import { MapDataThemeIds, themes } from '../themesMapData'
 import { MapDataStyle, MapDataTopic } from '../types'
+import { sourcesDatasets, SourcesDatasetsIds } from '../sourcesMapData/sourcesDatasets.const'
 
 export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
   const themeData = themes.find((the) => the.id === themeId)
@@ -44,6 +45,12 @@ export const getFilterData = (
 
 export const getSourceData = (sourceId: SourcesIds) => {
   const sourceData = mapData?.sources?.find((s) => s.id === sourceId)
-  invariant(sourceData, `filterData: sourceData for ${sourceId} missing`)
+  invariant(sourceData, `getSourceData: sourceData for ${sourceId} missing`)
   return sourceData
+}
+
+export const getDatasetOrSourceData = (sourceId: SourcesDatasetsIds | SourcesIds) => {
+  const sourceData = mapData?.sources?.find((s) => s.id === sourceId)
+  const datasetData = sourcesDatasets?.find((s) => s.id === sourceId)
+  return sourceData || datasetData
 }

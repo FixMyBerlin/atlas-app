@@ -138,7 +138,8 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
     attributionHtml: 'eUVM/SenUMVK', // TODO
     inspector: {
       enabled: true,
-      highlightingKey: 'id',
+      highlightingKey: 'TODO',
+      disableTranslations: true,
       documentedKeys: [
         'ParkingSpaceIsMarked',
         'IsParkingSpace',
@@ -195,7 +196,7 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: true,
-      highlightingKey: 'id',
+      highlightingKey: 'TODO',
       documentedKeys: [
         'access__if_present',
         'operator_type__if_present',
@@ -336,7 +337,7 @@ export const sourcesDatasets: MapDataDatasetsSource<SourcesDatasetsIds>[] = [
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     inspector: {
       enabled: true,
-      highlightingKey: 'id',
+      highlightingKey: 'TODO',
       documentedKeys: [
         'access__if_present',
         'capacity__if_present',
