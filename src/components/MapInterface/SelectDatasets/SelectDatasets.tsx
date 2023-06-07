@@ -64,7 +64,10 @@ export const SelectDatasets: React.FC = () => {
                       </span>
                     )}
                     {attributionHtml && (
-                      <span className="block text-gray-400">{attributionHtml}</span>
+                      <span
+                        className="block text-gray-400"
+                        dangerouslySetInnerHTML={{ __html: attributionHtml }}
+                      />
                     )}
                   </>
                 }
