@@ -35,8 +35,14 @@ if [ -f "${OSM_GERMANY}" ]; then
     osmium extract --overwrite --polygon=${MERGED_POLY_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
     rm ${MERGED_POLY_FILE}
     echo "\e[1m\e[7m Filter by tags\e[27m\e[21m"
+
+    tags_start_time=$(date +%s)
+    echo "\e[1m\e[7m FILTER TAGS – START \e[27m\e[21m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
     osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_REGIONS}
+    tags_end_time=$(date +%s)
+    tags_diff=$((tags_start_time - tags_end_time))
+    echo "\e[1m\e[7m FILTER TAGS – END \e[27m\e[21m took $tags_diff seconds"
   fi
   if [ "$ID_FILTER" != "" ]; then
     echo "\e[1m\e[7m Seacrhing for osm-id: ${ID_FILTER}\e[27m\e[21m"
