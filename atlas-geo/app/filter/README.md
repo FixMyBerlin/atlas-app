@@ -65,6 +65,12 @@ npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/w
 - https://hanshack.com/geotools/gimmegeodata/ => Download
 - Placemark Play => Buffer 1km, Simplify
 
+# Ostalbkreis
+
+- https://www.openstreetmap.org/relation/62708
+- https://hanshack.com/geotools/gimmegeodata/ => Download
+- https://app.placemark.io/play => Buffer 10km, Simplify
+
 # Sigmaringen
 
 - https://www.openstreetmap.org/relation/2806390
