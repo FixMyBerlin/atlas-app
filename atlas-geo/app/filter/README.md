@@ -1,16 +1,12 @@
+# About
+
+- Add a geojson file per region. All data inside this area will be processed.
+- Run `npm run mergeRegions` to update [`regions_merged.geojson`](./regions_merged.geojson).
+  - Use `npm run mergedRegions:preview` to look at the result on geojson.io
+- Note: This process needs to be done manually and locally.
+  (It does not run automatically as part of the docker process.)
+
 # Sources
-
-All `.poly` files in `./regions` are used in `run-2-filter.sh` to reduce the pbf file of Germany to only those regions we are supporting right now.
-Docs: https://docs.osmcode.org/osmium/latest/osmium-extract.html
-
-We switched from `.geojson` to `.poly` because joining two poly files is trivial (just concat the files) and thus allows a single run extract which is significantly faster.
-Docs: https://wiki.openstreetmap.org/wiki/Osmosis/Polygon_Filter_File_Format
-
-To convert `.geojson` files to the `.poly` format we use the command line tool [geojson2poly](https://www.npmjs.com/package/geojson2poly):
-
-```
-npx geojson2poly app/filter/regions/geojson/woldegk.geojson app/filter/regions/woldegk.poly
-```
 
 ## Berlin Ring
 

@@ -6,17 +6,13 @@ ID_FILTER="" # See README.md 'Process only a single object'
 
 FILTER_DIR="./filter/"
 OSM_DATADIR="/data/" # root for docker
-# OSM FILES
+
 OSM_GERMANY=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 OSM_REGIONS=${OSM_DATADIR}openstreetmap-regions.osm.pbf
 OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 
-# POLY FILES for geo filters
-MERGED_POLY_FILE=${FILTER_DIR}merged_regions.poly
-
-# FILTER
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
-
+MERGED_REGIONS_FILE=${FILTER_DIR}regions_merged.geojson
 
 start_time=$(date +%s)
 echo "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)"
@@ -26,15 +22,13 @@ if [ -f "${OSM_GERMANY}" ]; then
   if [ "$SKIP_FILTER" = "skip" ]; then
     echo "💥 SKIPPED with 'SKIP_FILTER=skip' in '/docker-compose.yml'"
   else
-    echo "\e[1m\e[7m Filter by regions\e[27m\e[21m"
-    touch ${MERGED_POLY_FILE}
-    for poly in ${FILTER_DIR}regions/*.poly; do
-      cat $poly >> ${MERGED_POLY_FILE};
-    done
-    # # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
-    osmium extract --overwrite --polygon=${MERGED_POLY_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
-    rm ${MERGED_POLY_FILE}
-    echo "\e[1m\e[7m Filter by tags\e[27m\e[21m"
+    region_start_time=$(date +%s)
+    echo "\e[1m\e[7m FILTER REGIONS – START \e[27m\e[21m"
+    # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
+    osmium extract --overwrite --polygon=${MERGED_REGIONS_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
+    region_end_time=$(date +%s)
+    region_diff=$((region_start_time - region_end_time))
+    echo "\e[1m\e[7m FILTER REGIONS – END \e[27m\e[21m took $region_diff seconds"
 
     tags_start_time=$(date +%s)
     echo "\e[1m\e[7m FILTER TAGS – START \e[27m\e[21m"
