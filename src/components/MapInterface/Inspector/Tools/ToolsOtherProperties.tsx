@@ -3,7 +3,7 @@ import React from 'react'
 
 type Props = {
   properties: { [key: string]: any }
-  documentedKeys: string[] | undefined
+  documentedKeys: string[] | undefined | false
 }
 
 export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKeys }) => {
@@ -30,7 +30,9 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
 
   const systemProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .filter(([key, _v]) => systemKeys.includes(key) && !documentedKeys?.includes(key))
+    .filter(
+      ([key, _v]) => systemKeys.includes(key) && documentedKeys && !documentedKeys?.includes(key)
+    )
 
   return (
     <details className="mt-3">

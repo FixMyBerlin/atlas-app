@@ -36,7 +36,8 @@ export type MapDataDatasetsSource<TIds> = {
     | {
         enabled: true
         highlightingKey: 'TODO' // This is not implemented, yet
-        documentedKeys: string[]
+        /** @desc Array of key strings OR `false` to list all available keys */
+        documentedKeys: string[] | false
         disableTranslations?: boolean
         editors?: MapDataSourceInspectorEditor[]
       }
