@@ -16,7 +16,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
       value={value}
       className={({ active, selected }) =>
         clsx(
-          'relative cursor-pointer select-none py-2 pl-10 pr-4 text-gray-900',
+          'relative cursor-pointer select-none py-2 pl-10 pr-4 leading-tight text-gray-900',
           {
             'bg-yellow-50 text-yellow-900': active && !selected,
           },

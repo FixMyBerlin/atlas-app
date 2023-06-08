@@ -71,7 +71,7 @@ export const SelectDatasets: React.FC = () => {
                     )}
                     {attributionHtml && (
                       <span
-                        className="block text-gray-400"
+                        className="block text-xs leading-4 text-gray-400"
                         dangerouslySetInnerHTML={{ __html: attributionHtml }}
                       />
                     )}
