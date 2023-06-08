@@ -1,5 +1,5 @@
 import { MapDataSourceFreshnessConfig } from '@components/MapInterface/mapData'
-import { quote } from '@components/text'
+import { Quote } from '@components/text'
 import { BoltIcon, CheckCircleIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
@@ -32,7 +32,7 @@ const WrapperWithIcon: React.FC<{
       {pickIcon()}
       <span>
         <strong className="font-semibold text-gray-600">
-          Aktualität {quote(primaryKeyTranslation)}:
+          Aktualität {Quote(primaryKeyTranslation)}:
         </strong>{' '}
         {children}
       </span>
