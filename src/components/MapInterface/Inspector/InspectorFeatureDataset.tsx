@@ -1,3 +1,4 @@
+import { Quote } from '@components/text'
 import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
@@ -10,7 +11,6 @@ import { translations } from './TagsTable/translations'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
-import { FrenchQuote } from '@components/text'
 
 export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
   sourceKey,
@@ -22,19 +22,21 @@ export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
   // The documentedKeys info is placed on the source object
   const sourceId = extractDataIdIdFromDataKey(sourceKey) as DatasetIds
   const sourceData = sourcesDatasets.find((dataset) => dataset.id == sourceId)
-  const sourceTranslationKey = sourceId
 
   if (typeof sourceData === 'undefined') return null
   if (!sourceData.inspector.enabled) return null
-  if (!sourceTranslationKey) return null
 
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
         <Disclosure
-          title={<>Statische Daten {FrenchQuote({ text: <code>{sourceTranslationKey}</code> })}</>}
+          title={<>Statische Daten {Quote(sourceData.name)}</>}
           objectId={properties.osm_id}
         >
+          <p
+            dangerouslySetInnerHTML={{ __html: sourceData.attributionHtml }}
+            className="border-b py-1.5 pl-4 pr-3 text-gray-400"
+          />
           <TagsTable
             properties={properties}
             sourceDocumentedKeys={sourceData.inspector.documentedKeys}
