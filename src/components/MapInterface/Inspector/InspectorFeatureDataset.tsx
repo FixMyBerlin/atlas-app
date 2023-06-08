@@ -1,7 +1,8 @@
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
+import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
+import { sourcesDatasets } from '../mapData/sourcesMapData'
 import { DatasetIds } from '../mapData/sourcesMapData/datasets'
-import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets.const'
 import { Disclosure } from './Disclosure'
 import { InspectorFeature } from './Inspector'
 import { TagsTable } from './TagsTable'
@@ -9,7 +10,6 @@ import { translations } from './TagsTable/translations'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
-import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
 
 export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
   sourceKey,

@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'
 import React from 'react'
-import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets.const'
+import { SourcesDatasetsIds } from '../mapData/sourcesMapData'
 
 type Props = {
   value: SourcesDatasetsIds

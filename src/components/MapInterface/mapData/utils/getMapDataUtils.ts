@@ -1,9 +1,8 @@
 import invariant from 'tiny-invariant'
 import { mapData, TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../mapData.const'
-import { SourcesIds } from '../sourcesMapData'
+import { sourcesDatasets, SourcesDatasetsIds, SourcesIds } from '../sourcesMapData'
 import { MapDataThemeIds, themes } from '../themesMapData'
 import { MapDataStyle, MapDataTopic } from '../types'
-import { sourcesDatasets, SourcesDatasetsIds } from '../sourcesMapData/sourcesDatasets.const'
 
 export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
   const themeData = themes.find((the) => the.id === themeId)

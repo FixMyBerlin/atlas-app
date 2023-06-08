@@ -1,4 +1,4 @@
-import { sourcesDatasets } from '@components/MapInterface/mapData/sourcesMapData/sourcesDatasets.const'
+import { sourcesDatasets } from '@components/MapInterface/mapData/sourcesMapData'
 import { useMatch } from '@tanstack/react-location'
 
 export const useRegionDatasets = () => {

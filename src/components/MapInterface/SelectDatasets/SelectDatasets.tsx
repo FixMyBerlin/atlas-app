@@ -2,12 +2,12 @@ import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
+import clsx from 'clsx'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
-import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets.const'
+import { SourcesDatasetsIds } from '../mapData/sourcesMapData'
 import { ListOption } from './ListOption'
 import { useRegionDatasets } from './utils/useRegionDatasets'
-import clsx from 'clsx'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()

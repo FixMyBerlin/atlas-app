@@ -1,6 +1,6 @@
 import React from 'react'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
-import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets.const'
+import { sourcesDatasets } from '../mapData/sourcesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
