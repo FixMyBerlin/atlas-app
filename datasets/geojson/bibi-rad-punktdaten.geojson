@@ -1,0 +1,147 @@
+{
+  "type": "FeatureCollection",
+  "name": "Alltagsradwegenetz-Punkte",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.137866194731611, 48.948902584581788] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.135588311278285, 48.948444638105002] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "E-Ladestation" },
+      "geometry": { "type": "Point", "coordinates": [9.135514700842711, 48.947950849815427] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "E-Ladestation" },
+      "geometry": { "type": "Point", "coordinates": [9.12608617309014, 48.961329930639806] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.126671178720509, 48.961110319607883] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Werkstatt" },
+      "geometry": { "type": "Point", "coordinates": [9.129178177664564, 48.960526791885918] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "E-Ladestation" },
+      "geometry": { "type": "Point", "coordinates": [9.130897139093845, 48.959934586343195] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.128911753495231, 48.958900878264615] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz offen" },
+      "geometry": { "type": "Point", "coordinates": [9.120403384298443, 48.949864862211804] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "E-Ladestation" },
+      "geometry": { "type": "Point", "coordinates": [9.099721405864923, 48.947257959284464] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz offen" },
+      "geometry": { "type": "Point", "coordinates": [9.126273803444311, 48.959529361189936] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Radinfo" },
+      "geometry": { "type": "Point", "coordinates": [9.136766018306798, 48.949029345560461] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz offen" },
+      "geometry": { "type": "Point", "coordinates": [9.125391987063578, 48.959764265690666] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.124368489866617, 48.958213539951942] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Radinfo" },
+      "geometry": { "type": "Point", "coordinates": [9.131753934451124, 48.958943969751608] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Servicestation" },
+      "geometry": { "type": "Point", "coordinates": [9.135885957432903, 48.948139554890744] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkhaus" },
+      "geometry": { "type": "Point", "coordinates": [9.135514700842711, 48.947950849815427] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Servicestation" },
+      "geometry": { "type": "Point", "coordinates": [9.135514700842711, 48.947950849815427] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.12608617309014, 48.961329930639806] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.130897139093845, 48.959934586343195] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz offen" },
+      "geometry": { "type": "Point", "coordinates": [9.130897139093845, 48.959934586343195] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.099721405864923, 48.947257959284464] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "E-Ladestation" },
+      "geometry": { "type": "Point", "coordinates": [9.096554300372979, 48.948807184550084] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Werkstatt" },
+      "geometry": { "type": "Point", "coordinates": [9.139726397663678, 48.955080222687585] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Werkstatt" },
+      "geometry": { "type": "Point", "coordinates": [9.128317788260569, 48.942155160529261] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Servicestation" },
+      "geometry": { "type": "Point", "coordinates": [9.126042157949446, 48.953405629162695] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.122508563323342, 48.955019741149876] }
+    },
+    {
+      "type": "Feature",
+      "properties": { "BESCHREIBU": "Fahrradparkplatz überdacht" },
+      "geometry": { "type": "Point", "coordinates": [9.123247641236294, 48.955783100807913] }
+    }
+  ]
+}

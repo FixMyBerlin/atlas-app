@@ -1,0 +1,772 @@
+{
+  "type": "FeatureCollection",
+  "name": "gefahrenstellen",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 2,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 4,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zehn",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.13403370839954, 48.95972133039384] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 3,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#neunundvierzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.17578161771017, 48.957912316710072] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 4,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.144260370102392, 48.954784964352974] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 5,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sechszehn",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.136100838336716, 48.949110946965675] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 6,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenfundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.141718478229366, 48.948288396241679] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 7,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sechsundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.146746553302439, 48.947799937922319] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 8,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#siebenundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.147247095927559, 48.945365702073374] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 9,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vierunddreisig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.100878793284584, 48.947037549570013] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 10,
+        "gst_id": 228,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#einundfuenfzig",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.075876121141528, 48.957375141651376] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 11,
+        "gst_id": 239,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#siebzehn",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.13695003100918, 48.960058472681332] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 12,
+        "gst_id": 245,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#neun",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.124732438407291, 48.951407449419904] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 13,
+        "gst_id": 246,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#acht",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.118030720211992, 48.949610627490571] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 14,
+        "gst_id": 248,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#achtundzwanzig",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.101767424212113, 48.94916036318542] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 15,
+        "gst_id": 249,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#neunundzwanzig",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.101960741068094, 48.947967629045493] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 16,
+        "gst_id": 231,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#eins",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.117651511467681, 48.964807038976666] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 17,
+        "gst_id": 232,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zwei",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.123502601517794, 48.962045140121944] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 18,
+        "gst_id": 233,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenf",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.129307030549121, 48.961221016047503] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 19,
+        "gst_id": 236,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vierzehn",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.134570107816119, 48.954802180953664] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 20,
+        "gst_id": 238,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenfzehn",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.135775839758404, 48.960258621156861] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 21,
+        "gst_id": 240,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#achtzehn",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.137593420975154, 48.962630846878206] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 22,
+        "gst_id": 247,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zweiunddreisig",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.095744001078053, 48.946952293530366] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 23,
+        "gst_id": 253,
+        "benutzer_i": "1e522c52-ab9c-4d79-bbaf-7da545eb40fd",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenfundvierzig",
+        "erfassungs": "2019-12-13",
+        "schule_id": "04103561",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.12842155713864, 48.946173045111145] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 24,
+        "gst_id": 262,
+        "benutzer_i": "23b21305-0f20-4501-a2ca-bd0a9b60cb17",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#dreizehn",
+        "erfassungs": "2020-01-03",
+        "schule_id": "04113001",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.133463518352286, 48.952780944353357] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 25,
+        "gst_id": 267,
+        "benutzer_i": "23b21305-0f20-4501-a2ca-bd0a9b60cb17",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zwoelf",
+        "erfassungs": "2020-01-03",
+        "schule_id": "04113001",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.132958298747042, 48.956036902039315] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 26,
+        "gst_id": 268,
+        "benutzer_i": "23b21305-0f20-4501-a2ca-bd0a9b60cb17",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenfzig",
+        "erfassungs": "2020-01-03",
+        "schule_id": "04113001",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.176093855246561, 48.960722511146606] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 27,
+        "gst_id": 263,
+        "benutzer_i": "23b21305-0f20-4501-a2ca-bd0a9b60cb17",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sechs",
+        "erfassungs": "2020-01-03",
+        "schule_id": "04113001",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.129537844192477, 48.956615587551113] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 28,
+        "gst_id": 274,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#drei",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.123231733981523, 48.959720740792456] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 29,
+        "gst_id": 275,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vier",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.129138102522868, 48.95976262746909] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 30,
+        "gst_id": 276,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#elf",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.131634270288647, 48.956123320894569] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 31,
+        "gst_id": 277,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#einunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.129882867178624, 48.946548243503003] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 32,
+        "gst_id": 281,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zweiundzwanzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.139459895109891, 48.941508950240873] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 33,
+        "gst_id": 282,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sechsundvierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.12865633277743, 48.938964472772334] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 34,
+        "gst_id": 283,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vierundvierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.125070269632754, 48.939720485567193] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 35,
+        "gst_id": 292,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#dreiunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.098902957486274, 48.945643959647278] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 36,
+        "gst_id": 293,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sechsunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.102848725822177, 48.943508152642714] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 37,
+        "gst_id": 294,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#siebenunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.106303115030379, 48.940688674796988] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 38,
+        "gst_id": 295,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#fuenfunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.102732569066506, 48.939630443912456] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 39,
+        "gst_id": 284,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#dreiundvierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.119769537236417, 48.943016410460999] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 40,
+        "gst_id": 285,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#einundvierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.116824225745438, 48.942450008042371] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 41,
+        "gst_id": 286,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#zweiundvierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.117190370013425, 48.94209508963403] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 42,
+        "gst_id": 287,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#neununddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.112808359547365, 48.940850487576689] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 43,
+        "gst_id": 288,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#achtunddreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.108572050741211, 48.942766955268894] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 44,
+        "gst_id": 289,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vierzig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.113886326134374, 48.945167579697141] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 45,
+        "gst_id": 290,
+        "benutzer_i": "ae5a68d7-c0e0-4aaf-964d-37d82f7ebbc7",
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#dreisig",
+        "erfassungs": "2020-01-10",
+        "schule_id": "04113013",
+        "wegtyp_id": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [9.109595054339392, 48.945693481200884] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 46,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#neunzehn",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.139887840006146, 48.960619500469925] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 47,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 4,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#vierundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.147898424204685, 48.949992290630668] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 48,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#sieben",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.104227054244824, 48.959845061913299] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 49,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 3,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#dreiundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.147891295648124, 48.952400763640746] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 50,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#achtundvierzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.086737083715096, 48.947077525909137] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 51,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 2,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#siebenundvierzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.084061637725927, 48.945670974019045] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "OBJECTID": 52,
+        "gst_id": 0,
+        "benutzer_i": null,
+        "bearbeiter": null,
+        "gst_art_id": 1,
+        "bemerkung": "http://srvgis/weboffice/custom/Radschulweg/AG Radschulwegplan.html#einundzwanzig",
+        "erfassungs": null,
+        "schule_id": null,
+        "wegtyp_id": 0
+      },
+      "geometry": { "type": "Point", "coordinates": [9.145006701143521, 48.954222284537714] }
+    }
+  ]
+}

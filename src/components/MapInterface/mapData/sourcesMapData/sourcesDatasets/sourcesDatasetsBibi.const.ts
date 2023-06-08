@@ -4,6 +4,164 @@ import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 export const sourcesDatasetsBiBi: SourceDatasets = [
   {
     regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-rad-punktdaten'),
+    name: 'Radschulwegplan Verschiedene Punktdaten',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-rad-punktdaten',
+        type: 'circle',
+        paint: {
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.8,
+          'circle-color': '#4d7c0f',
+          'circle-radius': 4,
+          'circle-stroke-color': '#4d7c0f',
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-abstellplaetze-merged'),
+    name: 'Radschulwegplan Radabstellplätze',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-abstellplaetze-merged',
+        type: 'circle',
+        paint: {
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.8,
+          'circle-color': '#0f766e',
+          'circle-radius': 4,
+          'circle-stroke-color': '#0f766e',
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-problemstellen'),
+    name: 'Radschulwegplan Problemstellen',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-problemstellen',
+        type: 'circle',
+        paint: {
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.8,
+          'circle-color': '#ec4899',
+          'circle-radius': 4,
+          'circle-stroke-color': '#ec4899',
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-radschulwegplan-gefahrenstellen'),
+    name: 'Radschulwegplan Gefahrenstellen',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-radschulwegplan-gefahrenstellen',
+        type: 'circle',
+        paint: {
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.8,
+          'circle-color': '#ec4899',
+          'circle-radius': 4,
+          'circle-stroke-color': '#ec4899',
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-empfohlener-radschulweg'),
+    name: 'Radschulwegplan Empfohlener Radschulweg',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-empfohlener-radschulweg',
+        type: 'line',
+        paint: {
+          'line-color': '#4f46e5',
+          'line-opacity': 0.6,
+          'line-width': 4,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bibi'],
+    ...sourceDatasetIdUrl('bibi-radnetz-alltag'),
+    name: 'Alltagsradwegenetz',
+    type: 'vector',
+    attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2022',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bibi-radnetz-alltag',
+        type: 'line',
+        paint: {
+          'line-color': [
+            'case',
+            ['match', ['get', 'Art'], ['Nah- und kleinräumige Verbindung'], true, false],
+            '#ec4899',
+            '#a855f7',
+          ],
+          'line-opacity': 0.6,
+          'line-width': 4,
+        },
+      },
+    ],
+  },
+  // PARKRAUM:
+  {
+    regionKey: ['bibi'],
     ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
     name: 'Parkstände',
     type: 'vector',

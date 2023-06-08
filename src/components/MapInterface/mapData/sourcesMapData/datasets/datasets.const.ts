@@ -24,6 +24,30 @@ export const datasets = {
   'berlin-parking-zones-fisbroker':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/berlin-parking-zones-fisbroker.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-abstellplaetze-merged.pmtiles'
+  'bibi-abstellplaetze-merged':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-abstellplaetze-merged.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-empfohlener-radschulweg.pmtiles'
+  'bibi-empfohlener-radschulweg':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-empfohlener-radschulweg.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-problemstellen.pmtiles'
+  'bibi-problemstellen':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-problemstellen.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-rad-punktdaten.pmtiles'
+  'bibi-rad-punktdaten':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-rad-punktdaten.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles'
+  'bibi-radnetz-alltag':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radschulwegplan-gefahrenstellen.pmtiles'
+  'bibi-radschulwegplan-gefahrenstellen':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radschulwegplan-gefahrenstellen.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines.pmtiles'
   'bietigheim-bissingen_on_street_parking_lines':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines.pmtiles',
