@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormattedMessage, IntlProvider } from 'react-intl'
+import { IntlProvider } from 'react-intl'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
 import { sourcesDatasets } from '../mapData/sourcesMapData'
 import { DatasetIds } from '../mapData/sourcesMapData/datasets'
@@ -10,6 +10,7 @@ import { translations } from './TagsTable/translations'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
+import { FrenchQuote } from '@components/text'
 
 export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
   sourceKey,
@@ -31,7 +32,7 @@ export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
         <Disclosure
-          title={<FormattedMessage id={`${sourceTranslationKey}--title`} />}
+          title={<>Statische Daten {FrenchQuote({ text: <code>{sourceTranslationKey}</code> })}</>}
           objectId={properties.osm_id}
         >
           <TagsTable
