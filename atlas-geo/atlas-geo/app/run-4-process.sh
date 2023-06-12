@@ -11,24 +11,24 @@ OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 
 run_lua() {
   start_time=$(date +%s)
-  echo "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m – Start Time: $(date)"
+  echo -e "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m – Start Time: $(date)\e[0m"
 
   ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds"
+  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"
 }
 
 run_psql() {
   start_time=$(date +%s)
-  echo "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m"
+  echo -e "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m\e[0m"
 
   psql -q -f "${PROCESS_DIR}$1.sql"
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds"
+  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds\e[0m"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
@@ -36,7 +36,7 @@ run_psql() {
 # Order of topics is important b/c they might rely on their data
 
 total_start_time=$(date +%s)
-echo "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)"
+echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 # lit and bikelanes should be at the top, so it's available ASAP
 echo "Reminder: The 'lit' table is available only after Postprocessing finished"
@@ -66,7 +66,7 @@ run_lua "surfaceQuality/surfaceQuality"
 # ================================================
 # This should be the last step…
 OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
-echo "\e[1m\e[7m PROCESS – Topic: Metadata \e[27m\e[21m"
+echo -e "\e[1m\e[7m PROCESS – Topic: Metadata \e[27m\e[21m\e[0m"
 echo "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} to some metadata table"
 
 ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}metadata.lua ${OSM_FILTERED_FILE}
@@ -91,7 +91,7 @@ psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\
 total_end_time=$(date +%s)
 diff=$((total_end_time - total_start_time))
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
+echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"
 echo "Completed:"
 echo "Development http://localhost:7800"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/"
