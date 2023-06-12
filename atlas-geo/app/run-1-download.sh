@@ -18,7 +18,7 @@ if [ "$SKIP_DOWNLOAD" = "skip" ]; then
 else
   echo "File: ${OSM_DOWNLOAD_URL}"
   # Note: Showing the progress (locally) does not work, unfortunately
-  wget --timestamping ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
+  wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR} || true
   cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 fi
 
