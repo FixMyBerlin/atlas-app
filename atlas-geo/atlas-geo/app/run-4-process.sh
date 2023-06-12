@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
