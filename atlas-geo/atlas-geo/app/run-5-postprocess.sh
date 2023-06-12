@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "\e[1m\e[7m Postprocessing – START \e[27m\e[21m"

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Find all files that end with .test.lua recursively in the current directory
 # and store their paths in the array "test_files"
