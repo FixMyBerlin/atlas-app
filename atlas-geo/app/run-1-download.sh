@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 OSM_DATADIR="/data/" # needs to be root (in docker)
