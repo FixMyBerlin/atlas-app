@@ -10,7 +10,7 @@ OSM_DOWNLOAD_URL=http://download.geofabrik.de/europe/germany-latest.osm.pbf
 OSM_DOWNLOAD_FILE=germany-latest.osm.pbf
 
 start_time=$(date +%s)
-echo "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)"
+echo -e "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 if [ "$SKIP_DOWNLOAD" = "skip" ]; then
   echo "💥 SKIPPED with 'SKIP_DOWNLOAD=skip' in '/docker-compose.yml'"
@@ -26,4 +26,4 @@ fi
 
 end_time=$(date +%s)
 diff=$((end_time - start_time))
-echo "\e[1m\e[7m DOWNLOAD – END \e[27m\e[21m – End Time: $(date), took $diff seconds"
+echo -e "\e[1m\e[7m DOWNLOAD – END \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"
