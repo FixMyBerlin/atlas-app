@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # TODO – Some variables are duplicated now, this can be cleaner I guess…
