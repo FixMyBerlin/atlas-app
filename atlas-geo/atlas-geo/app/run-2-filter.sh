@@ -25,7 +25,7 @@ if [ -f "${OSM_GERMANY}" ]; then
     region_start_time=$(date +%s)
     echo -e "\e[1m\e[7m FILTER REGIONS – START \e[27m\e[21m\e[0m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-extract.html
-    osmium extract --overwrite --polygon=${MERGED_REGIONS_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
+    # osmium extract --overwrite --polygon=${MERGED_REGIONS_FILE} --output=${OSM_REGIONS} ${OSM_GERMANY}
     region_end_time=$(date +%s)
     region_diff=$((region_start_time - region_end_time))
     echo -e "\e[1m\e[7m FILTER REGIONS – END \e[27m\e[21m took $region_diff seconds\e[0m"
@@ -33,7 +33,7 @@ if [ -f "${OSM_GERMANY}" ]; then
     tags_start_time=$(date +%s)
     echo -e "\e[1m\e[7m FILTER TAGS – START \e[27m\e[21m\e[0m"
     # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
-    osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_REGIONS}
+    osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_GERMANY}
     tags_end_time=$(date +%s)
     tags_diff=$((tags_start_time - tags_end_time))
     echo -e "\e[1m\e[7m FILTER TAGS – END \e[27m\e[21m took $tags_diff seconds\e[0m"
