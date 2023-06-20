@@ -13,8 +13,8 @@ local function unnestTags(tags, prefix, side, dest)
         -- offset of 2 due to 1-indexing and for removing the ':'
         local prefixlessKey = string.sub(key, prefixLen + 2)
         local infix = string.match(prefixlessKey, '[^:]*')
+        -- avoid projecting sided tags in the implicit case
         if side ~= '' or not Set({ 'left', 'right', 'both' })[infix] then
-          -- avoid projecting sided tags in the implicit case
           dest[prefixlessKey] = val
           dest.side = side
         end
@@ -44,6 +44,7 @@ function GetTransformedObjects(tags, transformations)
   local center = { sign = 0 }
   for k, v in pairs(tags) do center[k] = v end
   local results = { center }
+  -- don't transform paths
   if PathClasses[tags.highway] then
     return results
   end
