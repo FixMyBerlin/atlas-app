@@ -28,7 +28,7 @@ run_psql() {
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds\e[0m"
+  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 SQL \e[27m\e[21m took $diff seconds\e[0m"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
