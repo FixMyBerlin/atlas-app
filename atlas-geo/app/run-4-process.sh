@@ -4,10 +4,6 @@ set -e
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 
 PROCESS_DIR="./process/"
-OSM_DATADIR="/data/" # root for docker
-OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
-
-OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 
 run_lua() {
   start_time=$(date +%s)
