@@ -95,6 +95,7 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.staging
           echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
+          echo SKIP_REGION_FILTER=1 >> .env.staging
           docker compose --env-file .env.staging -f docker-compose.traefik.yml pull
           docker compose --env-file .env.staging -f docker-compose.staging.yml pull
           docker compose --env-file .env.staging -f docker-compose.traefik.yml up -d

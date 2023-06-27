@@ -11,6 +11,7 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+      SKIP_REGION_FILTER:
     volumes:
       - osmfiles_staging:/data
     networks:
