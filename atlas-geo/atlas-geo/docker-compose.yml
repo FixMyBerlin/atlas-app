@@ -59,9 +59,9 @@ services:
     env_file:
       - ./.env
     environment:
-      POSTGRES_DB: 
-      POSTGRES_USER: 
-      POSTGRES_PASSWORD:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
