@@ -159,6 +159,7 @@ const mergedSortedGroupAndLayers = Object.values(groupsAndLayers)
   .map((layers) => layers)
   .flat()
   .sort((a, b) => a.group.localeCompare(b.group))
+  .filter((layers) => layers.layers.length > 0) // Delete empty folders, which are hidden Mapbox so they cannot be deleted in the UI
 
 // Write file
 const stylesFile = `${componentFolder}/mapbox-layer-styles-by-group.json`

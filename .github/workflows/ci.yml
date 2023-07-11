@@ -13,13 +13,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Read node version from .nvmrc
-        id: nvmrc
-        uses: browniebroke/read-nvmrc-action@v1
-
       - uses: actions/setup-node@v3
         with:
-          node-version: '${{ steps.nvmrc.outputs.node_version }}'
+          node-version-file: '.nvmrc'
 
       - name: Install dependencies (with cache)
         uses: bahmutov/npm-install@HEAD

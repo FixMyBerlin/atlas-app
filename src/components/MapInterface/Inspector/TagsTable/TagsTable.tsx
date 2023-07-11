@@ -11,12 +11,14 @@ import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/data
 
 type Props = {
   properties: GeoJSONFeature['properties']
-  sourceDocumentedKeys: string[] | undefined
+  sourceDocumentedKeys: string[] | undefined | false
   sourceId: SourcesIds | DatasetIds
 }
 
 export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {
   const cleanKey = (key: string) => key.replace('__if_present', '')
+
+  const keys = sourceDocumentedKeys === false ? Object.keys(properties) : sourceDocumentedKeys
 
   return (
     <table className="w-full">
@@ -34,7 +36,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
         </tr>
       </thead>
       <tbody className="divide-y divide-gray-200">
-        {sourceDocumentedKeys?.map((key) => {
+        {keys?.map((key) => {
           const cleanedKey = cleanKey(key)
 
           // Handle _composit_ table rows and default case

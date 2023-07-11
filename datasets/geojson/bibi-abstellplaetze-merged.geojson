@@ -1,0 +1,124 @@
+{
+  "type": "FeatureCollection",
+  "name": "abstellplaetze-merged",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 1,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/AUR_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.133043835169993, 48.952306386330427] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 2,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/BIS_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.118973920622022, 48.942067027843436] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 3,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/BSZ_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.122660465809806, 48.951376071399594] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 4,
+        "OBJECTID": 2,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/BSZ_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.125321156132317, 48.950948049735537] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 5,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": "2",
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/GYM_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.123693698642802, 48.954302011087108] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 6,
+        "OBJECTID": 2,
+        "ERF_ATTRIB": "2",
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/GYM_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.126623379542202, 48.953725908560948] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 7,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/SAN_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.141639323578664, 48.960797742005802] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 8,
+        "OBJECTID": 1,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/WAL_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.11749642520941, 48.94261855617151] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "fid": 9,
+        "OBJECTID": 2,
+        "ERF_ATTRIB": null,
+        "ERF_BEMERK": null,
+        "ERF_DATUM": null,
+        "ERF_UPLOAD": null,
+        "layer": "GES_Radschulwegplan_shp/WAL_Radabstellplatz.shp"
+      },
+      "geometry": { "type": "Point", "coordinates": [9.118513867374009, 48.942690176349004] }
+    }
+  ]
+}

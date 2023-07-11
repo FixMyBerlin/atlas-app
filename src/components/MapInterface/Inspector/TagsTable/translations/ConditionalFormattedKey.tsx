@@ -1,4 +1,4 @@
-import { SourcesIds } from '@components/MapInterface/mapData'
+import { SourcesIds, getDatasetOrSourceData } from '@components/MapInterface/mapData'
 import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 import { isDev } from '@components/utils'
 import React from 'react'
@@ -14,8 +14,12 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   let key = `${sourceId}--${tagKey}--key`
 
   // Some data should not be "translated"; we want to show the raw string.
-  const untranslatedSources = ['berlin-parking-polygons-euvm']
-  if (untranslatedSources.includes(sourceId)) {
+  const sourceData = getDatasetOrSourceData(sourceId)
+  const showRawValues =
+    sourceData &&
+    'disableTranslations' in sourceData.inspector &&
+    sourceData.inspector.disableTranslations === true
+  if (showRawValues) {
     return <code>{tagKey}</code>
   }
 

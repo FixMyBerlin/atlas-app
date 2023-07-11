@@ -9,7 +9,6 @@ type Props = {
 export const InspectorHeader: React.FC<Props> = ({ count, handleClose }) => {
   return (
     <>
-      {' '}
       <h2 className="text-base font-medium text-gray-900">
         Eigenschaften <span>({count})</span>
       </h2>

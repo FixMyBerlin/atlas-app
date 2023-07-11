@@ -31,7 +31,7 @@ export const topic_parking: MapDataTopic = {
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'parking_labels',
+          group: 'parking_parkinglines_labels',
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
@@ -44,7 +44,7 @@ export const topic_parking: MapDataTopic = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_labels',
+          group: 'parking_parkinglines_labels',
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
@@ -124,7 +124,7 @@ export const topic_parking: MapDataTopic = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_labels',
+          group: 'parking_parkinglines_labels',
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),

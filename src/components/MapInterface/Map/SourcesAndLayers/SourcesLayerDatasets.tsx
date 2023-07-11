@@ -1,4 +1,4 @@
-import { sourcesDatasets } from '@components/MapInterface/mapData/sourcesMapData/sourcesDatasets.const'
+import { sourcesDatasets } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { createDatasetSourceLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'

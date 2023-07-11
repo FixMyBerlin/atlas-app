@@ -10,6 +10,7 @@ export const useMissingImage = (map: MapRef | undefined) => {
     // Docs https://maplibre.org/maplibre-gl-js-docs/api/map/#map.event:styleimagemissing
     map.on('styleimagemissing', (e: MapStyleImageMissingEvent) => {
       const imageId = e.id
+      if (imageId === 'null') return // Conditional images with Fallback images "Fill pattern: none" result in e.id=NULL
 
       const imageSrc = mapboxStyleImages.get(imageId)
       if (!imageSrc) {

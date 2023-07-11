@@ -38,8 +38,12 @@ const objectContent = `// Auto-generated file, do not edit
 
 export const datasets = {
   ${Object.entries(datasets)
-    .map(([name, file]) => `  ${name}: ${file}`)
-    .join(',\n')}
+    .map(
+      ([name, file]) => `
+  // Preview: https://protomaps.github.io/PMTiles/?url=${file.replace("'", '')}
+  ${name}: ${file},`
+    )
+    .join('\n')}
 } as const`
 
 fs.writeFileSync(

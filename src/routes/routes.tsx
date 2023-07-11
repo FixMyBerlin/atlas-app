@@ -1,14 +1,13 @@
 import { DrawArea } from '@components/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
-import { SourcesRasterIds } from '@components/MapInterface/mapData'
-import { SourcesDatasetsIds } from '@components/MapInterface/mapData/sourcesMapData/sourcesDatasets.const'
+import { SourcesDatasetsIds, SourcesRasterIds } from '@components/MapInterface/mapData'
 import { Region } from '@fakeServer/index'
-import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
 import { PageRegionMap, PageRegions } from '@pages/PageRegions'
+import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
 import {
   MakeGenerics,
-  parseSearchWith,
   ReactLocation,
   Route,
+  parseSearchWith,
   stringifySearchWith,
 } from '@tanstack/react-location'
 import { MapDataThemeIds } from '../components/MapInterface/mapData/themesMapData'
