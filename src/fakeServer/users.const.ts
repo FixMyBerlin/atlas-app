@@ -68,4 +68,10 @@ export const users: User[] = [
     displayName: 'mlanae',
     isAdmin: false,
   },
+  // See https://github.com/FixMyBerlin/private-issues/issues/886
+  {
+    id: 347746,
+    displayName: 'biker82',
+    isAdmin: false,
+  },
 ]
