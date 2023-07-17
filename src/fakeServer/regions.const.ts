@@ -92,7 +92,7 @@ export const regions: Region[] = [
       'lit',
       'parking',
     ],
-    osmUsers: [...adminIds],
+    osmUsers: [...adminIds, 12518419, 347746],
     published: true,
     backgroundSources: defaultBackgroundSources,
   },
