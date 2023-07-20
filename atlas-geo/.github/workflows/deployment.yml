@@ -80,10 +80,10 @@ jobs:
         script: |
           echo "Stop containers on VPS"
           cd /srv/tarmac/
-          rm .env.production
           docker image prune -fa
           docker compose -f docker-compose.production.yml down
           echo "Start container on VPS"
+          rm .env.production
           touch .env.production
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.production
@@ -91,5 +91,8 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.production
           echo GITHUB_SHA='${{ github.sha }}' >> .env.production
+          echo SKIP_DOWNLOAD=0 >> .env.staging
+          echo SKIP_REGION_FILTER=1 >> .env.staging
+          echo SKIP_TAG_FILTER=0 >> .env.staging
           docker compose --env-file .env.production  -f docker-compose.production.yml pull
           docker compose --env-file .env.production  -f docker-compose.production.yml up -d
