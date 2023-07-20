@@ -26,7 +26,7 @@ else
   region_diff=$((region_start_time - region_end_time))
   echo -e "\e[1m\e[7m FILTER REGIONS – END \e[27m\e[21m took $region_diff seconds\e[0m"
 fi
-if [ $SKIP_REGION_FILTER == 1 ]; then
+if [ $SKIP_TAG_FILTER == 1 ]; then
   echo "💥 SKIPPED tag filter with 'SKIP_TAG_FILTER=1'"
   cp ${OSM_REGIONS} ${OSM_FILTERED_FILE}
 else
