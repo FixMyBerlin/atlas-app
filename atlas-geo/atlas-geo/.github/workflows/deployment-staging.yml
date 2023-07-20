@@ -83,11 +83,11 @@ jobs:
         script: |
           echo "Stop containers on VPS"
           cd /srv/tarmac/
-          rm .env.staging
           docker image prune -fa
           docker compose -f docker-compose.staging.yml down
           docker compose -f docker-compose.traefik.yml down
           echo "Start container on VPS"
+          rm .env.staging
           touch .env.staging
           echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.staging
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.staging
@@ -95,6 +95,7 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
           echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.staging
           echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
+          echo SKIP_DOWNLOAD=0 >> .env.staging
           echo SKIP_REGION_FILTER=1 >> .env.staging
           echo SKIP_TAG_FILTER=0 >> .env.staging
           docker compose --env-file .env.staging -f docker-compose.traefik.yml pull
