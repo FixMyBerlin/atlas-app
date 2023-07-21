@@ -62,7 +62,7 @@ services:
 db_staging:
     image: public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
     env_file:
-      - ./.env
+      - ./.env.staging
     environment:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PGUSER}
