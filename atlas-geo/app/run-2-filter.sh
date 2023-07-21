@@ -16,7 +16,7 @@ echo -e "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 if [ $SKIP_REGION_FILTER == 1 ]; then
   echo "💥 SKIPPED region filter with 'SKIP_REGION_FILTER=1'"
-  ln ${OSM_LOCAL_FILE} ${OSM_REGIONS}
+  ln -f ${OSM_LOCAL_FILE} ${OSM_REGIONS}
 else
   region_start_time=$(date +%s)
   echo -e "\e[1m\e[7m FILTER REGIONS – START \e[27m\e[21m\e[0m"
@@ -28,7 +28,7 @@ else
 fi
 if [ $SKIP_TAG_FILTER == 1 ]; then
   echo "💥 SKIPPED tag filter with 'SKIP_TAG_FILTER=1'"
-  ln ${OSM_REGIONS} ${OSM_FILTERED_FILE}
+  ln -f ${OSM_REGIONS} ${OSM_FILTERED_FILE}
 else
   tags_start_time=$(date +%s)
   echo -e "\e[1m\e[7m FILTER TAGS – START \e[27m\e[21m\e[0m"
