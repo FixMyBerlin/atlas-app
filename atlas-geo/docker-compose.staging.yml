@@ -60,9 +60,9 @@ services:
       db_staging:
         condition: service_healthy
 db_staging:
-    image: public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
     env_file:
       - ./.env.staging
+    image: public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
     environment:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PGUSER}
