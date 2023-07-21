@@ -14,6 +14,9 @@ services:
       - osmfiles_staging:/data
     networks:
       - app_staging_bridge
+    depends_on:
+      db_staging:
+        condition: service_healthy
   tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     env_file:
@@ -23,6 +26,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db_staging/${PGDATABASE}
     ports:
       - "9010:7800"
     labels:
@@ -33,6 +37,9 @@ services:
       - "traefik.http.routers.stagingtiles.tls=true"
     networks:
       - radverkehrsatlas_mesh
+    depends_on:
+      db_staging:
+        condition: service_healthy
   api_staging:
     env_file:
       - ./.env.staging
@@ -49,8 +56,32 @@ services:
       - "traefik.http.routers.stagingapi.tls=true"
     networks:
       - radverkehrsatlas_mesh
+    depends_on:
+      db_staging:
+        condition: service_healthy
+db_staging:
+    image: public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    ports:
+      - "6000:5432"
+    volumes:
+      - geodata_staging:/var/lib/postgresql/data
+    container_name: osmdatabase_staging
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 volumes:
   osmfiles_staging:
+  geodata_staging:
 networks:
   radverkehrsatlas_mesh:
     external: true
