@@ -7,11 +7,9 @@ services:
     entrypoint: /app/run.sh
     container_name: app_staging
     environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
-      SKIP_REGION_FILTER:
+      SKIP_DOWNLOAD: 0
+      SKIP_REGION_FILTER: 1
+      SKIP_TAG_FILTER: 0
     volumes:
       - osmfiles_staging:/data
     networks:
@@ -24,7 +22,6 @@ services:
     container_name: tiles_staging
     restart: always
     environment:
-      DATABASE_URL:
       NODE_ENV: production
     ports:
       - "9010:7800"
@@ -42,11 +39,6 @@ services:
     container_name: api_staging
     restart: always
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
-    environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
     ports:
       - "9020:80"
     labels:
