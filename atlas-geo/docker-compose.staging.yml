@@ -59,26 +59,26 @@ services:
     depends_on:
       db_staging:
         condition: service_healthy
-db_staging:
-    env_file:
-      - ./.env.staging
-    image: public.ecr.aws/n0p8j4k5/tarmac/db:${GITHUB_SHA}
-    environment:
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
-      LANG: en_US.UTF-8
-      LC_ALL: en_US.UTF-8
-    ports:
-      - "6000:5432"
-    volumes:
-      - geodata_staging:/var/lib/postgresql/data
-    container_name: osmdatabase_staging
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+  db_staging:
+      env_file:
+        - ./.env.staging
+      image: public.ecr.aws/n0p8j4k5/tarmac/db:${GITHUB_SHA}
+      environment:
+        POSTGRES_DB: ${PGDATABASE}
+        POSTGRES_USER: ${PGUSER}
+        POSTGRES_PASSWORD: ${PGPASSWORD}
+        LANG: en_US.UTF-8
+        LC_ALL: en_US.UTF-8
+      ports:
+        - "6000:5432"
+      volumes:
+        - geodata_staging:/var/lib/postgresql/data
+      container_name: osmdatabase_staging
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
 volumes:
   osmfiles_staging:
   geodata_staging:
