@@ -20,7 +20,7 @@ fi
 echo "File: ${OSM_DOWNLOAD_URL}"
 # Note: Showing the progress (locally) does not work, unfortunately
 if wget --timestamping ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
-  cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
+  ln ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 else
   echo "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
 fi
