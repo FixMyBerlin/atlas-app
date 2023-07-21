@@ -44,8 +44,8 @@ local missingTable = osm2pgsql.define_table({
 })
 
 function osm2pgsql.process_way(object)
-  local allowed_values = JoinSets({ MajorRoadClasses, MinorRoadClasses })
-  if not allowed_values[object.tags.highway] then
+  local allowed_highways = JoinSets({ MajorRoadClasses, MinorRoadClasses })
+  if not allowed_highways[object.tags.highway] then
     return
   end
 
