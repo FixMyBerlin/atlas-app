@@ -10,8 +10,8 @@ start_time=$(date +%s)
 echo -e "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 if [ $SKIP_DOWNLOAD == 1 ]; then
-  if [ -f "${OSM_LOCAL_FILE}" ]; then 
-    echo "💥 SKIPPED with 'SKIP_DOWNLOAD=1' in '/docker-compose.yml'"
+  if [ -f "${OSM_LOCAL_FILE}" ]; then
+    echo "💥 SKIPPED with 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
     echo "Can't skip download, no file was found."
