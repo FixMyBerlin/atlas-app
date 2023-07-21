@@ -7,15 +7,6 @@ services:
     entrypoint: /app/run.sh
     env_file:
       - ./.env
-    environment:
-      PGHOST: 
-      PGDATABASE: 
-      PGUSER:
-      PGPASSWORD:
-      SKIP_DOWNLOAD:
-      SKIP_TAG_FILTER:
-      SKIP_REGION_FILTER:
-      DEBUG:
     volumes:
       - osmfiles:/data
     depends_on:
@@ -42,11 +33,6 @@ services:
     container_name: api
     env_file:
       - ./.env
-    environment:
-      PGHOST: 
-      PGDATABASE: 
-      PGUSER: 
-      PGPASSWORD:
     ports:
       - 80:80
     depends_on:
