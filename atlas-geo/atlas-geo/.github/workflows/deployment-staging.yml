@@ -104,6 +104,7 @@ jobs:
           echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.staging
           echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.staging
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
+          echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.staging
           echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
           docker compose --env-file .env.staging -f docker-compose.traefik.yml pull
           docker compose --env-file .env.staging -f docker-compose.staging.yml pull
