@@ -95,7 +95,7 @@ jobs:
           echo "Stop containers on VPS"
           cd /srv/tarmac/
           docker image prune -fa
-          docker compose -f docker-compose.staging.yml down
+          docker compose --env-file .env.staging -f docker-compose.staging.yml down
           docker compose -f docker-compose.traefik.yml down
           echo "Start container on VPS"
           rm .env.staging
