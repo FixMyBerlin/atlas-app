@@ -1599,31 +1599,6 @@
     "group": "parking_parkinglines_completeness",
     "layers": [
       {
-        "id": "operator-public-border",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(169, 100%, 32%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 6, 20, 18],
-          "line-opacity": 0.8
-        },
-        "filter": ["match", ["get", "operator_type"], ["public"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "operator-public-border-inner",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(169, 0%, 100%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 4, 20, 14]
-        },
-        "filter": ["match", ["get", "operator_type"], ["public"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
         "id": "capacity_status-no_parking",
         "type": "line",
         "paint": {
