@@ -37,6 +37,7 @@ services:
       - "traefik.http.routers.stagingtiles.tls=true"
     networks:
       - radverkehrsatlas_mesh
+      - app_staging_bridge
     depends_on:
       db_staging:
         condition: service_healthy
