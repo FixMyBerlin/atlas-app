@@ -56,6 +56,7 @@ services:
       - "traefik.http.routers.stagingapi.tls=true"
     networks:
       - radverkehrsatlas_mesh
+      - app_staging_bridge
     depends_on:
       db_staging:
         condition: service_healthy
@@ -79,6 +80,8 @@ services:
         interval: 5s
         timeout: 5s
         retries: 5
+      networks:
+        - app_staging_bridge
 volumes:
   osmfiles_staging:
   geodata_staging:
