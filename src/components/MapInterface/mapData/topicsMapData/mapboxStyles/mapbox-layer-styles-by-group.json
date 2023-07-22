@@ -1530,52 +1530,18 @@
     ]
   },
   {
-    "group": "parking_operator_border_below_other_layer",
-    "layers": [
-      {
-        "id": "operator-private-border",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(342, 100%, 15%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 6, 20, 18],
-          "line-opacity": 0.8
-        },
-        "filter": ["match", ["get", "operator_type"], ["private"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      },
-      {
-        "id": "operator-private-border-inner",
-        "type": "line",
-        "paint": {
-          "line-color": "hsl(169, 0%, 100%)",
-          "line-width": ["interpolate", ["linear"], ["zoom"], 14, 0, 16, 4, 20, 14]
-        },
-        "filter": ["match", ["get", "operator_type"], ["private"], true, false],
-        "layout": {
-          "line-cap": "round"
-        }
-      }
-    ]
-  },
-  {
     "group": "parking_parkinglines",
     "layers": [
       {
         "id": "street parking lines",
         "type": "line",
         "paint": {
-          "line-color": [
-            "match",
-            ["get", "operator_type"],
-            ["private"],
-            "rgba(22, 162, 73, 0.33)",
-            "rgb(22, 163, 74)"
-          ],
-          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 16]
+          "line-color": "rgb(22, 163, 74)",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 16],
+          "line-opacity": ["match", ["get", "operator_type"], ["private"], 0.33, 1]
         },
-        "filter": ["has", "capacity"]
+        "filter": ["has", "capacity"],
+        "layout": {}
       },
       {
         "id": "parallel pattern",
@@ -1590,10 +1556,12 @@
           "all",
           ["match", ["get", "orientation"], ["parallel"], true, false],
           ["has", "capacity"]
-        ]
+        ],
+        "layout": {}
       },
       {
         "minzoom": 16,
+        "layout": {},
         "filter": [
           "all",
           ["match", ["get", "orientation"], ["diagonal"], true, false],
@@ -1602,7 +1570,7 @@
         "type": "line",
         "id": "diagonal pattern",
         "paint": {
-          "line-color": "rgb(22, 163, 74)",
+          "line-color": "rgb(237, 237, 237)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 16],
           "line-opacity": 0.67,
           "line-pattern": "parking_diagonal"
@@ -1610,6 +1578,7 @@
       },
       {
         "minzoom": 16,
+        "layout": {},
         "filter": [
           "all",
           ["match", ["get", "orientation"], ["perpendicular"], true, false],
@@ -1618,7 +1587,7 @@
         "type": "line",
         "id": "perpendicular pattern",
         "paint": {
-          "line-color": "rgb(22, 163, 74)",
+          "line-color": "rgb(237, 237, 237)",
           "line-pattern": "parking_perpendicular",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 16],
           "line-opacity": 0.67
@@ -1752,27 +1721,16 @@
             "hsl(280, 94%, 63%)",
             "hsl(280, 67%, 26%)"
           ],
-          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10]
+          "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
+          "line-opacity": ["match", ["get", "operator_type"], ["private"], 0.33, 1]
         },
-        "filter": ["has", "capacity"],
-        "layout": {}
+        "filter": ["has", "capacity"]
       },
       {
         "id": "parallel pattern copy",
         "type": "line",
         "paint": {
-          "line-color": [
-            "case",
-            ["match", ["get", "surface"], ["ground", "grass_paver", "compacted"], true, false],
-            "hsl(142, 94%, 40%)",
-            ["match", ["get", "surface"], ["concrete", "concrete:plates", "asphalt"], true, false],
-            "hsl(344, 93%, 35%)",
-            ["match", ["get", "surface"], ["cobblestone", "sett", "paving_stones"], true, false],
-            "hsl(164, 92%, 42%)",
-            ["has", "surface"],
-            "hsl(280, 94%, 63%)",
-            "hsl(280, 67%, 26%)"
-          ],
+          "line-color": "rgb(237, 237, 237)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 0.7, 20, 5],
           "line-dasharray": [4, 2],
           "line-opacity": 0.67
@@ -1781,12 +1739,10 @@
           "all",
           ["match", ["get", "orientation"], ["parallel"], true, false],
           ["has", "capacity"]
-        ],
-        "layout": {}
+        ]
       },
       {
         "minzoom": 16,
-        "layout": {},
         "filter": [
           "all",
           ["match", ["get", "orientation"], ["diagonal"], true, false],
@@ -1795,18 +1751,7 @@
         "type": "line",
         "id": "diagonal pattern copy",
         "paint": {
-          "line-color": [
-            "case",
-            ["match", ["get", "surface"], ["ground", "grass_paver", "compacted"], true, false],
-            "hsl(142, 94%, 40%)",
-            ["match", ["get", "surface"], ["concrete", "concrete:plates", "asphalt"], true, false],
-            "hsl(344, 93%, 35%)",
-            ["match", ["get", "surface"], ["cobblestone", "sett", "paving_stones"], true, false],
-            "hsl(164, 92%, 42%)",
-            ["has", "surface"],
-            "hsl(280, 94%, 63%)",
-            "hsl(280, 67%, 26%)"
-          ],
+          "line-color": "rgb(237, 237, 237)",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
           "line-opacity": 0.67,
           "line-pattern": "parking_diagonal"
@@ -1814,7 +1759,6 @@
       },
       {
         "minzoom": 16,
-        "layout": {},
         "filter": [
           "all",
           ["match", ["get", "orientation"], ["perpendicular"], true, false],
@@ -1823,41 +1767,10 @@
         "type": "line",
         "id": "perpendicular pattern copy",
         "paint": {
-          "line-color": [
-            "case",
-            ["match", ["get", "surface"], ["ground", "grass_paver", "compacted"], true, false],
-            "hsl(142, 94%, 40%)",
-            ["match", ["get", "surface"], ["concrete", "concrete:plates", "asphalt"], true, false],
-            "hsl(344, 93%, 35%)",
-            ["match", ["get", "surface"], ["cobblestone", "sett", "paving_stones"], true, false],
-            "hsl(164, 92%, 42%)",
-            ["has", "surface"],
-            "hsl(280, 94%, 63%)",
-            "hsl(280, 67%, 26%)"
-          ],
+          "line-color": "rgb(237, 237, 237)",
           "line-pattern": "parking_perpendicular",
           "line-width": ["interpolate", ["linear"], ["zoom"], 16, 2, 20, 10],
           "line-opacity": 0.67
-        }
-      },
-      {
-        "minzoom": 15,
-        "layout": {
-          "symbol-placement": "line-center",
-          "text-field": ["to-string", ["get", "capacity"]],
-          "text-allow-overlap": true,
-          "text-ignore-placement": true,
-          "text-offset": [0, 0.8],
-          "text-size": ["interpolate", ["linear"], ["zoom"], 15, 9, 18, 16]
-        },
-        "filter": ["has", "capacity"],
-        "type": "symbol",
-        "id": "capacity label-line copy",
-        "paint": {
-          "text-color": "rgb(60, 60, 60)",
-          "text-halo-color": "rgb(255, 255, 255)",
-          "text-halo-width": ["interpolate", ["linear"], ["zoom"], 15, 1, 18, 2.5],
-          "text-opacity": ["interpolate", ["linear"], ["zoom"], 17, 1, 18, 0]
         }
       },
       {
