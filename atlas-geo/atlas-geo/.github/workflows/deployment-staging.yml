@@ -106,7 +106,7 @@ jobs:
           echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
           echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.staging
           echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
-          docker compose --env-file .env.staging -f docker-compose.traefik.yml pull
+          docker compose -f docker-compose.traefik.yml pull
           docker compose --env-file .env.staging -f docker-compose.staging.yml pull
-          docker compose --env-file .env.staging -f docker-compose.traefik.yml up -d
+          docker compose -f docker-compose.traefik.yml up -d
           docker compose --env-file .env.staging -f docker-compose.staging.yml up -d
