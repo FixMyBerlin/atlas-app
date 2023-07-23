@@ -180,6 +180,8 @@ export const translations: { [key: string]: string } = {
   'parkraumParkingAreas--title': 'Parkplatz-Flächen',
   'parkraumParkingStats--admin_level--key': 'Grenzen Level',
   'parkraumParkingStats--d_other_km--key': 'Summe Straßenlänge mit Attribute außer "lane" und "street_side"',
+  'parkraumParkingStats--on_kerb_km--key': 'Summe Straßenlänge mit Attribute on_kerb"',
+  'parkraumParkingStats--half_on_kerb_km--key': 'Summe Straßenlänge mit Attribute half_on_kerb"',
   'parkraumParkingStats--done_percent--key': 'Stand Erfassung Parkraum',
   'parkraumParkingStats--lane_km--key': 'Summe Straßenlänge mit Attribut "lane"',
   'parkraumParkingStats--length_wo_dual_carriageway--key': 'Summe Straßenlänge ohne Berücksichtigung von dual_carriageway',

@@ -49,6 +49,8 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     { key: 'sum_km', suffix: 'km' }, // parkraumParkingStats
     { key: 'lane_km', suffix: 'km' }, // parkraumParkingStats
     { key: 'd_other_km', suffix: 'km' }, // parkraumParkingStats
+    { key: 'on_kerb_km', suffix: 'km' }, // parkraumParkingStats
+    { key: 'half_on_kerb_km', suffix: 'km' }, // parkraumParkingStats
     { key: 'street_side_km', suffix: 'km' }, // parkraumParkingStats
     { key: 'length_wo_dual_carriageway', suffix: 'km' }, // parkraumParkingStats
     { key: 'done_percent', suffix: '%' }, // parkraumParkingStats
