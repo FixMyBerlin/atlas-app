@@ -137,6 +137,8 @@ export const sourcesParking: MapDataSource<
       documentedKeys: [
         'name',
         'd_other_km',
+        'on_kerb_km',
+        'half_on_kerb_km',
         'done_percent',
         'admin_level',
         'aera_sqkm',
