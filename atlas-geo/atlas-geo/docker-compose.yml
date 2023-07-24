@@ -12,7 +12,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    container_name: tarmac
+    container_name: app
     profiles:
       - osm_processing
   tiles:
