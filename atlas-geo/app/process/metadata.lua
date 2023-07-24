@@ -4,6 +4,7 @@ require("FilterTags")
 require("MergeArray")
 require("Metadata")
 
+-- TODO: remove this script and create the table staticly with psql to decrease run time (currently needs 9 min)
 
 local table = osm2pgsql.define_table({
   name = 'metadata',
@@ -18,7 +19,7 @@ local table = osm2pgsql.define_table({
 -- Meta data table.
 -- The content (the changing cities office) is just a placeholder.
 -- We use this table to show metadata.
--- Right now that is only the processed_at date. See "run-3-process" for more.
+-- Right now that is only the processed_at date adn the run time. See "run-3-process" for more.
 
 function osm2pgsql.process_node(object)
   if not object.tags.office then return end
