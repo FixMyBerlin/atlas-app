@@ -62,8 +62,21 @@ local function processTags(tags)
     tags.type = "tourism-" .. tags.tourism
   end
 
+  -- This part was previously a separate dataset "education"
+  local formalEducation = Set({
+    "childcare",
+    "college",
+    "kindergarten",
+    "research_institute",
+    "school",
+    "university"
+  })
+  if formalEducation[tags.amenity] then
+    tags.formalEducation = tags.amenity
+  end
+
   InferAddress(tags, tags)
-  local allowed_tags = MergeArray({ "name", "category", "type" }, AddressKeys)
+  local allowed_tags = MergeArray({ "name", "category", "type", "formalEducation" }, AddressKeys)
   FilterTags(tags, Set(allowed_tags))
 end
 
