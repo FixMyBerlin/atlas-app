@@ -36,7 +36,7 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 
 ### Data update
 
-- Data is updated every weekday at 5:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is updated every weekday at 4:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
 - Data is updated on every deploy
 - Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
