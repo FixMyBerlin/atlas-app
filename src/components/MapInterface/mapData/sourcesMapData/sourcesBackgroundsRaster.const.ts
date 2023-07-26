@@ -21,6 +21,7 @@ export type SourcesRasterIds =
   | 'thunderforest-outdoors'
   | 'waymarkedtrails-cycling'
   | 'waymarkedtrails-hiking'
+  | 'opentopomap'
   | 'trto-radwege'
 
 // https://account.mapbox.com/access-tokens
@@ -282,6 +283,20 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     attributionHtml:
       'Routenoverlay CC-BY-SA <a href="https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}">Waymarked Trails</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     legendUrl: 'https://hiking.waymarkedtrails.org/#?map={z}/{x}/{y}',
+  },
+  {
+    // Usage allowed as long as "moderate" traffic.
+    // https://hiking.waymarkedtrails.org/
+    id: 'opentopomap',
+    name: 'Schwarzkarte, Höhenlinien',
+    type: 'raster',
+    tiles: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
+    minzoom: 0,
+    maxzoom: 17,
+    // TODO the zxy has to go or be fixed, see comment at `const enhancedAttributionHtml`
+    attributionHtml:
+      'Kartendaten: © <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Kartendarstellung: © <a href="http://opentopomap.org">OpenTopoMap</a>',
+    legendUrl: 'https://opentopomap.org/about#legende',
   },
   {
     // https://dienste.btfietz.de/kommsvz/ttw_radwege/wms?request=getCapabilities
