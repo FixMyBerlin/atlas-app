@@ -33,7 +33,6 @@ run_psql() {
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-process_start_time=$(date +%s)
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 # lit and bikelanes should be at the top, so it's available ASAP
@@ -66,37 +65,9 @@ run_lua "maxspeed/maxspeed"
 run_lua "barriers/barriers"
 run_lua "surfaceQuality/surfaceQuality"
 
-# ================================================
-# This should be the last step…
-OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
-echo -e "\e[1m\e[7m PROCESS – Topic: Metadata \e[27m\e[21m\e[0m"
-echo "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} to some metadata table"
-
-${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}metadata.lua ${OSM_FILTERED_FILE}
-# Provide meta data for the frontend application.
-# We missuse a feature of pg_tileserve for this. Inspired by Lars parking_segements code <3.
-# 1. We create the metadata table in LUA with some dummy data
-#    (the office of changing cities; since FMC does not have an OSM node)
-#    But we don't use this geo data in any ways.
-# 2. We use the "comment" feature of gp_tileserve, see https://github.com/CrunchyData/pg_tileserv#layers-list
-#    This levarages a PostgreSQL feature where columns, index and table can have a text "comment".
-#    The "comment" field on the table is retured by the pg_tileserve schema JSON as "description"
-#    See https://tiles.radverkehrsatlas.de/public.metadata.json
-# 3. Our data is a manually stringified JSON which shows…
-#    - osm_data_from – DateTime when Geofabrik (our source of data) processed the OSM data
-#    - processed_at – DateTime of this processing step
-#    Which means, we do not actually know the age of the data,
-#    which would be the DateTime when Geofabrik pulled the data from the OSM server.
-process_end_time=$(date +%s)
-diff=$((process_end_time - process_start_time))
-
-RUN_TIME=`date -d@$diff -u +%H:%M`
-PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
-psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
-
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $RUN_TIME h [0m"
+echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date)\e[0m"
 echo "Completed:"
 echo "Development http://localhost:7800"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/"
