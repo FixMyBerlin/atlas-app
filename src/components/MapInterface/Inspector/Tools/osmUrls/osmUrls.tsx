@@ -1,3 +1,4 @@
+import { editorUrl } from './editorUrl'
 import { pointFromGeometry } from './pointFromGeometry'
 
 export type OsmShortType = 'W' | 'N' | 'R' | undefined
@@ -20,4 +21,36 @@ export const mapillaryUrl = (geometry: maplibregl.GeoJSONFeature['geometry']) =>
   if (!lng || !lat) return undefined
 
   return `https://www.mapillary.com/app/?lat=${lat}&lng=${lng}&z=15`
+}
+
+export const osmUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
+  if (!zoom || !lat || !lng) return
+
+  const urlTemplate = 'https://www.openstreetmap.org/#map={zoom}/{latitude}/{longitude}&layers=N'
+  const geometry = {
+    type: 'Point',
+    coordinates: [lng, lat],
+  } satisfies maplibregl.GeoJSONFeature['geometry']
+
+  return editorUrl({
+    urlTemplate,
+    geometry,
+    zoom,
+  })
+}
+
+export const mapillaryUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
+  if (!zoom || !lat || !lng) return
+
+  const urlTemplate = 'https://www.mapillary.com/app?z={zoom}&lat={latitude}&lng={longitude}'
+  const geometry = {
+    type: 'Point',
+    coordinates: [lng, lat],
+  } satisfies maplibregl.GeoJSONFeature['geometry']
+
+  return editorUrl({
+    urlTemplate,
+    geometry,
+    zoom,
+  })
 }
