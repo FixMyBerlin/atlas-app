@@ -92,7 +92,6 @@ jobs:
             echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.production
             echo GITHUB_SHA='${{ github.sha }}' >> .env.production
             echo SKIP_DOWNLOAD=0 >> .env.staging
-            echo SKIP_REGION_FILTER=1 >> .env.staging
             echo SKIP_TAG_FILTER=0 >> .env.staging
             echo "Start container on VPS"
             docker compose --env-file .env.production  -f docker-compose.production.yml pull

@@ -8,7 +8,6 @@ services:
     container_name: app_staging
     environment:
       SKIP_DOWNLOAD: 0
-      SKIP_REGION_FILTER: 1
       SKIP_TAG_FILTER: 0
       OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
     volumes:

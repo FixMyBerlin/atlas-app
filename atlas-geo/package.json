@@ -8,9 +8,7 @@
     "dev": "docker compose --profile osm_processing build && docker compose --profile osm_processing up",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "test": "chmod +x ./run_tests.sh && ./run_tests.sh",
-    "cleanup": "docker system prune --force && docker system prune --force --volumes",
-    "mergeRegions": "node ./app/filter/merge-regions.cjs && prettier \"./app/filter\" --write",
-    "mergeRegions:preview": "node ./app/filter/preview-merged-regions.cjs"
+    "cleanup": "docker system prune --force && docker system prune --force --volumes"
   },
   "devDependencies": {
     "@turf/turf": "^6.5.0",
