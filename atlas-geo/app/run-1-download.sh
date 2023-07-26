@@ -7,7 +7,7 @@ echo -e "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)\e[0m
 OSM_DOWNLOAD_FILE="${OSM_DATADIR}$(basename $OSM_DOWNLOAD_URL)"
 if [ $SKIP_DOWNLOAD == 1 ]; then
   if [ -f "${OSM_DOWNLOAD_FILE}" ]; then
-    echo "💥 SKIPPED with 'SKIP_DOWNLOAD=1'"
+    echo "💥 SKIPPED with .env 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
     echo "Can't skip download, no file was found."
