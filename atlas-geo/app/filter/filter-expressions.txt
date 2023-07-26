@@ -26,3 +26,6 @@ wr/aeroway
 # Topic: Public transport
 w/public_transport
 n/public_transport
+
+# Topic: poiClassification
+nw/tourism
