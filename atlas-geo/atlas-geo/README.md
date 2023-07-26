@@ -144,11 +144,11 @@ docker exec -it mypipeline bash
 For FixMyCity, the command to inspect the current state of the processing on the server is …
 
 ```
-ssh ionos docker logs --tail --follow app
-```
-
-```
-ssh ionos docker logs --tail --follow app_staging
+ssh ionos
+# then…
+cd /srv/tarmac && docker compose -f docker-compose.production.yml logs app --tail 500
+# or…
+cd /srv/tarmac && docker compose -f docker-compose.staging.yml logs app_staging --tail 500
 ```
 
 ## 💛 Thanks to
