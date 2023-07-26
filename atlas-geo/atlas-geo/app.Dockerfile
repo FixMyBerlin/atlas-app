@@ -23,5 +23,5 @@ WORKDIR /app
 RUN mkdir /data
 COPY app /app/
 COPY api /app/api
-RUN chmod +x /app/run.sh
+RUN chmod +x /app/*.sh
 CMD /app/run.sh
