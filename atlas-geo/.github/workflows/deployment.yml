@@ -82,7 +82,7 @@ jobs:
             cd /srv/tarmac/
             docker image prune -fa
             docker compose -f docker-compose.production.yml down
-            echo "Start container on VPS"
+            echo "Updating '.env.production'"
             rm .env.production
             touch .env.production
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
@@ -94,5 +94,6 @@ jobs:
             echo SKIP_DOWNLOAD=0 >> .env.staging
             echo SKIP_REGION_FILTER=1 >> .env.staging
             echo SKIP_TAG_FILTER=0 >> .env.staging
+            echo "Start container on VPS"
             docker compose --env-file .env.production  -f docker-compose.production.yml pull
             docker compose --env-file .env.production  -f docker-compose.production.yml up -d
