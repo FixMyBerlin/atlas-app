@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
+import { useMap } from 'react-map-gl'
 
 interface Props {
   name?: string
@@ -8,6 +9,7 @@ interface Props {
 
 export const ShowOsmNotes: React.FC<Props> = () => {
   const [active, setActive] = useState(false)
+  const { mainMap } = useMap()
 
   return (
     <div className="ml-2 shadow-lg">
@@ -32,7 +34,9 @@ export const ShowOsmNotes: React.FC<Props> = () => {
         />
       </button>
       <button
-        // onClick={() => selectTheme(themeConfig.id)}
+        onClick={() => {
+          console.warn('BBOX', mainMap.getBounds())
+        }}
         className={clsx(
           'focus:z-9 rounded-r-lg bg-white transition-transform hover:bg-yellow-50',
           active ? 'translate-x-0' : '-translate-x-20',
