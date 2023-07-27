@@ -24,6 +24,7 @@ import {
 import { roundPositionForURL } from './utils'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
+import { DynamicSources } from './SourcesAndLayers/DynamicSources'
 
 export const Map: React.FC = () => {
   const {
@@ -139,6 +140,7 @@ export const Map: React.FC = () => {
       <SourcesLayerRasterBackgrounds />
       <SourcesAndLayers />
       <SourcesLayerDatasets />
+      <DynamicSources />
 
       <NavigationControl showCompass={false} />
       <Calculator />
