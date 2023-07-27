@@ -35,7 +35,7 @@ export const ShowOsmNotes: React.FC<Props> = () => {
       </button>
       <button
         onClick={() => {
-          console.warn('BBOX', mainMap.getBounds())
+          mainMap ? console.warn('BBOX', mainMap.getBounds()) : null
         }}
         className={clsx(
           'focus:z-9 rounded-r-lg bg-white transition-transform hover:bg-yellow-50',
