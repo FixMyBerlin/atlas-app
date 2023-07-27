@@ -9,7 +9,7 @@ import { BackgroundLegend, SelectBackground } from './background'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
 import { SelectDatasets } from './SelectDatasets/SelectDatasets'
-import { ShowOsmNotes } from './ShowOSMNotes/ShowOsmNotes'
+import { ShowOsmNotes } from './ShowOsmNotes'
 
 export const MapInterface: React.FC = () => {
   return (
