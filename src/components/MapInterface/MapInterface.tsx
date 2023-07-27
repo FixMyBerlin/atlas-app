@@ -9,13 +9,17 @@ import { BackgroundLegend, SelectBackground } from './background'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
 import { SelectDatasets } from './SelectDatasets/SelectDatasets'
+import { ShowOsmNotes } from './ShowOSMNotes/ShowOsmNotes'
 
 export const MapInterface: React.FC = () => {
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
         <Map />
-        <SelectTheme />
+        <div className="absolute top-3 left-5 z-10 flex">
+          <SelectTheme />
+          <ShowOsmNotes />
+        </div>
         <SelectTopics />
         <Inspector />
         <div className="fixed bottom-3 left-5 z-20 flex gap-2">

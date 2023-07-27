@@ -26,7 +26,7 @@ export const SelectTheme = () => {
   if (!configThemes) return null
 
   return (
-    <section className="absolute top-3 left-5 z-10">
+    <section className="mr-2">
       {/* Mobile */}
       <div className="sm:hidden">
         <label htmlFor="themeSelect" className="sr-only">
@@ -54,7 +54,7 @@ export const SelectTheme = () => {
       </div>
 
       {/* Desktop */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:inline-block">
         <nav
           className="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow-lg"
           aria-label="Thema auswhälen"
