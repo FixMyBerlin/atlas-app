@@ -10,7 +10,7 @@ services:
       SKIP_DOWNLOAD: 0
       SKIP_REGION_FILTER: 1
       SKIP_TAG_FILTER: 0
-      OSM_DOWNLOAD_FILE: 'http://download.geofabrik.de/europe/germany-latest.osm.pbf'
+      OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
     volumes:
       - osmfiles_staging:/data
     networks:
