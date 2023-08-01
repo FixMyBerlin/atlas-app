@@ -16,4 +16,7 @@ process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
 ./run-5-postprocess.sh
-./run-6-metadata.sh
+
+./run-6-process-buildings.sh
+
+./run-7-metadata.sh

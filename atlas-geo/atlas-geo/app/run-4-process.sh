@@ -25,14 +25,6 @@ run_lua "publicTransport"
 run_lua "poiClassification/poiClassification"
 run_lua_if_debug "poiClassification/poiClassification_todoList"
 
-run_lua "buildings/buildings"
-run_psql "buildings/buildings" # TODO: Deactivated for now, this takes way too long
-#   > app  | PROCESS START – Topic: buildings/buildings SQL
-#   > app  | psql:process/buildings/buildings.sql:1: NOTICE:  table "buildings" does not exist, skipping
-#   > app  | psql:process/buildings/buildings.sql:4: SSL SYSCALL error: EOF detected
-#   > app  | psql:process/buildings/buildings.sql:4: error: connection to server was lost
-#   > app exited with code 2
-
 run_lua "roadClassification/roadClassification"
 run_lua "maxspeed/maxspeed"
 run_lua "barriers/barriers"
