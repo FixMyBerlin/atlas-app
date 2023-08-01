@@ -23,6 +23,24 @@ export const topic_education: MapDataTopic = {
         source,
         sourceLayer,
       }),
+      legends: [
+        {
+          id: 'children',
+          name: 'Kindergarten',
+          style: {
+            type: 'circle',
+            color: 'rgb(119, 23, 171)',
+          },
+        },
+        {
+          id: 'older',
+          name: 'Schule bis Uni',
+          style: {
+            type: 'circle',
+            color: 'hsl(209, 76%, 38%)',
+          },
+        },
+      ],
       interactiveFilters: null,
     },
   ],
