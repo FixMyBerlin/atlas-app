@@ -288,12 +288,11 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // Usage allowed as long as "moderate" traffic.
     // https://hiking.waymarkedtrails.org/
     id: 'opentopomap',
-    name: 'Schwarzkarte, Höhenlinien',
+    name: 'OpenTopoMap',
     type: 'raster',
     tiles: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
     minzoom: 0,
     maxzoom: 17,
-    // TODO the zxy has to go or be fixed, see comment at `const enhancedAttributionHtml`
     attributionHtml:
       'Kartendaten: © <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>, SRTM | Kartendarstellung: © <a href="http://opentopomap.org">OpenTopoMap</a>',
     legendUrl: 'https://opentopomap.org/about#legende',
