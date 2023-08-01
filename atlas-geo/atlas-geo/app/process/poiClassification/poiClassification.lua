@@ -39,6 +39,15 @@ local function ExitProcessing(object)
       or allowed_values[object.tags.amenity]
       or allowed_values[object.tags.tourism]
   then
+    -- Special case: For https://wiki.openstreetmap.org/wiki/Tag:tourism=information
+    -- only allow some values
+    if object.tags.tourism == "information" then
+      if object.tags.information == 'office' or object.tags.information == 'visitor_centre' then
+        return false
+      end
+      return true
+    end
+
     return false
   end
 
