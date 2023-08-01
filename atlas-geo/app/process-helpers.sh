@@ -1,7 +1,8 @@
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
-
 PROCESS_DIR="./process/"
+# Set a default value for DEBUG if it's not defined
+DEBUG=${DEBUG:-0}
 
 run_lua_if_debug() {
   if [ $DEBUG == 1 ]; then
