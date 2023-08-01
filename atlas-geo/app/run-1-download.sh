@@ -15,8 +15,7 @@ if [ $SKIP_DOWNLOAD == 1 ]; then
 fi
 echo "Downloading file: ${OSM_DOWNLOAD_URL}"
 # Note: Showing the progress (locally) is very verbose, unfortunately
-# wget --timestamping …
-if wget ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
+if wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
   ln -f ${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 else
   echo "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
