@@ -16,7 +16,6 @@ export type SourcesIds =
   | 'tarmac_bikelanesPresence'
   | 'tarmac_boundaries'
   | 'tarmac_buildings'
-  | 'tarmac_education'
   | 'tarmac_landuse'
   | 'tarmac_lit'
   | 'tarmac_maxspeed'
@@ -216,26 +215,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.education.json
-    id: 'tarmac_education',
-    tiles: `${tilesUrl}/public.education/{z}/{x}/{y}.pbf`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: ['amenity', 'name'],
-    },
-    // presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'education',
-    },
-  },
-  {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
     id: 'tarmac_poiClassification',
     tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
@@ -245,7 +224,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['category', 'type', 'name'],
+      documentedKeys: ['name', 'category', 'type'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },

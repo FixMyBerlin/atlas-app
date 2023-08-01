@@ -2,8 +2,8 @@ import { MapDataTopic } from '../types'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'education'
-const source = 'tarmac_education'
-const sourceLayer = 'public.education'
+const source = 'tarmac_poiClassification'
+const sourceLayer = 'public.poiClassification'
 export type TopicEducationId = typeof topic
 export type TopicEducationStyleIds = 'default'
 export type TopicEducationStyleFilterIds = '_nofilter'
