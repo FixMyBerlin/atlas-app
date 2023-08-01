@@ -1,14 +1,17 @@
-DROP TABLE IF EXISTS buildings;
+CREATE TABLE buildings AS
+WITH clustered_buildings AS (
+    -- Cluster all intersecting buildings and filter out small buildings at the same time
+    SELECT
+        st_multi(st_unaryunion(cluster.geom)) AS geom
+    FROM (
+        SELECT
+            unnest(st_clusterintersecting(geom)) AS geom
+        FROM _buildings_temp
+        WHERE ST_Area(geom) >= 100 -- Filter out small buildings (< 100 sqm)
+    ) AS cluster
+)
+SELECT * FROM clustered_buildings;
 
--- cluster all intersecting buildings
-SELECT (unnest(st_clusterintersecting(geom))) AS geom INTO buildings FROM _buildings_temp;
 
--- join clusters and convert to multi polygons
-UPDATE buildings SET geom = st_multi(st_unaryunion(geom));
-
--- set CRS (couldn't find a way to infer the CRS)
-ALTER TABLE buildings ALTER COLUMN geom TYPE geometry (MultiPolygon, 3857);
-
--- delete small buildings < 20qm
--- TODO: figure out why "20" does not work as a value; I picked the 100 by checking what looked reasonable for http://localhost:7800/public.buildings.html#15.18/52.441297/13.557327
-DELETE FROM buildings WHERE ST_Area(geom) < 100;
+-- Same index that osm2pgsql create on _buildings_temp
+CREATE INDEX buildings_geom_idx ON buildings USING GIST (geom);
