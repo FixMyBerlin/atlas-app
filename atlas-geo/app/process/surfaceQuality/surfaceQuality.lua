@@ -37,28 +37,18 @@ local excludeTable = osm2pgsql.define_table({
 
 function osm2pgsql.process_way(object)
   -- Same as roadClassification, except for `HighwayClasses`
-  local allowed_highways = JoinSets({ MajorRoadClasses, MinorRoadClasses, PathClasses })
-  if not allowed_highways[object.tags.highway] then return end
 
   local tags = object.tags
-  -- tags.raw_surface = tags.surface       -- Preserve original value since we use `surface` for our processed data
-  -- tags.raw_smoothness = tags.smoothness -- Preserve original value since we use `smoothness` for our processed data
+  local allowed_highways = JoinSets({ MajorRoadClasses, MinorRoadClasses, PathClasses })
 
-  local exclude, reason = ExcludeHighways(object.tags)
-  if exclude then
-    IntoExcludeTable(excludeTable, object, reason)
+  if not allowed_highways[tags.highway] then
     return
   end
 
-  exclude, reason = ExcludeByWidth(object.tags, 2.1)
-  if exclude then
-    IntoExcludeTable(excludeTable, object, reason)
-    return
-  end
 
+  local surface_data = {}
   if object.tags.area == 'yes' then
-    IntoExcludeTable(excludeTable, object, "Exclude `area=yes`")
-    return
+    return {road_class_exlcuded="Exclude `area=yes`"}
   end
 
   local surface, surface_source = SurfaceDirect(tags.surface)
@@ -73,7 +63,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- all tags that are shown on the application
-  local allowed_tags = {
+  SURFACE_TAGS = {
     "name",
     "highway",
     "raw_surface",
@@ -81,27 +71,24 @@ function osm2pgsql.process_way(object)
     "checkdate:surface",
     "checkdate:smoothness",
   }
-  FilterTags(tags, Set(allowed_tags))
+  -- TODO: replace with copy
+  FilterTags(tags, Set(SURFACE_TAGS))
 
   -- Freshness of data (AFTER `FilterTags`!)
   IsFresh(object, "check_date:surface", tags, "surface")
   IsFresh(object, "check_date:smoothness", tags, "smoothness")
 
-  tags.surface = surface
-  tags.surface_source = surface_source
+  surface_data.surface = surface
+  surface_data.surface_source = surface_source
   -- tags.surface_confidence = surface_confidence -- only needed after we extended the surface normalization
 
-  tags.smoothness = smoothness
-  tags.smoothness_source = smoothness_source
-  tags.smoothness_confidence = smoothness_confidence
-  tags._todo = todo
+  surface_data.smoothness = smoothness
+  surface_data.smoothness_source = smoothness_source
+  surface_data.smoothness_confidence = smoothness_confidence
+  surface_data._todo = todo
 
-  tags.is_present_surface = tags.surface ~= nil
-  tags.is_present_smoothness = tags.smoothness ~= nil
+  surface_data.is_present_surface = tags.surface ~= nil
+  surface_data.is_present_smoothness = tags.smoothness ~= nil
 
-  table:insert({
-    tags = tags,
-    meta = Metadata(object),
-    geom = object:as_linestring(),
-  })
+  return surface_data
 end

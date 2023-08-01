@@ -83,15 +83,6 @@ local allowed_tags = Set({
 
 function osm2pgsql.process_way(object)
   -- filter highway classes
-  local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
-  if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
-
-  local exclude, reason = ExcludeHighways(object.tags)
-  if exclude then
-    IntoExcludeTable(excludeTable, object, reason)
-    return
-  end
-
   local tags = object.tags
   local meta = Metadata(object)
 
@@ -136,11 +127,11 @@ function osm2pgsql.process_way(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        cycleway.oneway = cycleway.oneway or 'implicit_yes'
-
         -- Freshness of data (AFTER `FilterTags`!)
         IsFresh(object, freshTag, cycleway)
+
+        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
+        cycleway.oneway = cycleway.oneway or 'implicit_yes'
 
         cycleway.offset = sign * width / 2
 

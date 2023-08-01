@@ -10,54 +10,14 @@ require("MaxspeedFromZone")
 require("Metadata")
 require("Set")
 
-local table = osm2pgsql.define_table({
-  name = "maxspeed",
-  ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-  columns = {
-    { column = "tags", type = "jsonb" },
-    { column = "meta", type = "jsonb" },
-    { column = "geom", type = "linestring" }
-  }
-})
+function InferMaxspeed(object)
 
--- Roads that we exlude from our analysis
-local excludeTable = osm2pgsql.define_table({
-  name = "maxspeed_excluded",
-  ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-  columns = {
-    { column = "tags",   type = "jsonb" },
-    { column = "meta",   type = "jsonb" },
-    { column = "reason", type = "text" },
-    { column = "geom",   type = "linestring" }
-  }
-})
-
--- Define tables with all bicycle related roads that currently dont have speed values
-local missingTable = osm2pgsql.define_table({
-  name = "_maxspeed_missing",
-  ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-  columns = {
-    { column = "tags", type = "jsonb" },
-    { column = "meta", type = "jsonb" },
-    { column = "geom", type = "linestring" }
-  }
-})
-
-function osm2pgsql.process_way(object)
-  local allowed_highways = JoinSets({ MajorRoadClasses, MinorRoadClasses })
+  local tags = object.tags
   if not allowed_highways[object.tags.highway] then
     return
   end
 
-  local tags = object.tags
-  tags.raw_maxspeed = tags.maxspeed -- Preserve original value since we use `maxspeed` for our processed data
-
-  local exclude, reason = ExcludeHighways(tags)
-  if exclude then
-    IntoExcludeTable(excludeTable, object, reason)
-    return
-  end
-
+  local maxspeed_data = {raw_maxspeed = tags.maxspeed} -- Preserve original value since we use `maxspeed` for our processed data
   -- TODO: Why would we want to exclude this based on this tag? (Tobias)
   -- if tags.bicycle == "no" then
   --   IntoExcludeTable(table, object, "no bikes allowed")
@@ -71,11 +31,11 @@ function osm2pgsql.process_way(object)
   -- 4. SQL: intersecting landuse
   local maxspeed, source, confidence = MaxspeedDirect(tags)
 
-  if maxspeed < 0 then
+  if maxspeed == nil then
     maxspeed, source, confidence = MaxspeedFromZone(tags)
   end
 
-  if maxspeed == nil or maxspeed == -1 then
+  if maxspeed == nil then
     local highway_speeds = {
       ["living_street"] = 7
     }
@@ -87,44 +47,28 @@ function osm2pgsql.process_way(object)
   end
 
   -- all tags that are shown on the application
-  local allowed_tags = {
-    "_todo",
-    "name",
-    "highway",
-    "bicycle_road",
-    "raw_maxspeed",
+ local maxspeed_tags = {
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
     "maxspeed:type",
     "zone:maxspeed",
     "source:maxspeed",
-    "traffic_sign",
-    "checkdate:maxspeed",
+    "check_date:maxspeed",
   }
-  FilterTags(tags, Set(allowed_tags))
+  -- TODO: replace with copy
+  CopyTags(tags, maxspeed_data, maxspeed_tags)
 
   -- Freshness of data (AFTER `FilterTags`!)
-  IsFresh(object, "check_date:maxspeed", tags)
+  IsFresh(object, "check_date:maxspeed", maxspeed_data, 'maxspeed')
 
-  tags.maxspeed = maxspeed
-  tags.maxspeed_source = source
-  tags.maxspeed_confidence = confidence
+  maxspeed_data.maxspeed = maxspeed
+  maxspeed_data.maxspeed_source = source
+  maxspeed_data.maxspeed_confidence = confidence
+  maxspeed_data.maxspeed_present = true
 
-  local meta = Metadata(object)
-
-  if maxspeed ~= nil and maxspeed ~= -1 then
-    table:insert({
-      tags = tags,
-      meta = meta,
-      geom = object:as_linestring(),
-    })
-    return
+  if maxspeed ~= nil then
+    return maxspeed_data
   end
-
-  missingTable:insert({
-    tags = object.tags,
-    meta = meta,
-    geom = object:as_linestring(),
-  })
+  return {maxspeed_present = false}
 end
