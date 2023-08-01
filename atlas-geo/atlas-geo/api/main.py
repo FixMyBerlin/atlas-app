@@ -58,9 +58,8 @@ def export_boundaries(response: Response, ids: Annotated[list[int], Query()]):
       statement = sql.SQL("SELECT osm_id FROM boundaries WHERE osm_id IN %s")
       cur.execute(statement, (tuple(ids), ))
       results = cur.fetchall()
-      print(results)
       if results == None or len(results) != len(ids):
-         raise HTTPException(status_code=404, detail="couldn't find given ids")
+         raise HTTPException(status_code=404, detail="Couldn't find given ids. At least one id is wrong or dupplicated.")
 
       response.headers["Content-Disposition"] = 'attachment; filename="boundaries_'+ '_'.join(map(str, ids)) +'.geojson"'
       response.headers["Content-Type"] = 'application/geo+json'
