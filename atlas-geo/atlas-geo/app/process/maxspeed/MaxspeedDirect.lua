@@ -1,5 +1,5 @@
 function MaxspeedDirect(tags)
-  local maxspeed = -1.0
+  local maxspeed = nil
   local source = "nothing_found"
   local confidence = "nothing_found"
   local speed_tags = { "maxspeed:forward", "maxspeed:backward", "maxspeed" }
@@ -8,7 +8,7 @@ function MaxspeedDirect(tags)
     if tags[tag] then
       local val = tonumber(tags[tag])
 
-      if val ~= nil and val > maxspeed then
+      if val ~= nil and (maxspeed == nil or val > maxspeed) then
         maxspeed = val
         source = tag .. "_tag"
         confidence = "high"

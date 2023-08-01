@@ -9,17 +9,6 @@ require("ExcludeHighways")
 require("ExcludeByWidth")
 require("IsFresh")
 
-local table = osm2pgsql.define_table({
-  name = '_lit_temp',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'category', type = 'text' },
-    { column = 'tags',     type = 'jsonb' },
-    { column = 'meta',     type = 'jsonb' },
-    { column = 'geom',     type = 'linestring' },
-  }
-})
-
 -- Notes
 -- =====
 -- Which highways do we look at?
@@ -40,38 +29,32 @@ local table = osm2pgsql.define_table({
 --  We add those ways twice to the data … and post-process the in SQL?
 
 function osm2pgsql.process_way(object)
-  if not object.tags.highway then return end
 
-  local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
-  -- values that we would allow, but skip here:
-  -- "construction", "planned", "proposed", "platform" (Haltestellen)
-  if not allowed_highways[object.tags.highway] then return end
-  if ExcludeHighways(object.tags) or ExcludeByWidth(object.tags, 2.1) then
-    return
-  end
+  local tags = object.tags
+
+  local lit_data = {}
 
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
-  local category = nil
-  if object.tags.lit == nil then
-    object.tags.is_present = false
+  if tags.lit == nil then
+    lit_data.lit_present = false
   else
-    object.tags.is_present = true
-    category = "special"
-    if (object.tags.lit == "yes") then
-      category = "lit"
+    lit_data.lit_present = true
+    lit_data.lit_category = "special"
+    if (tags.lit == "yes") then
+      lit_data.lit_category = "lit"
     end
-    if (object.tags.lit == "no") then
-      category = "unlit"
+    if (tags.lit == "no") then
+      lit_data.lit_category = "unlit"
     end
   end
 
   -- Normalize name info for sidepath'
   -- TODO: Extact into helper
-  object.tags.name = object.tags.name or object.tags['is_sidepath:of:name']
+  tags.name = tags.name or tags['is_sidepath:of:name']
 
-  local allowed_tags = Set({
+  LIT_TAGS = Set({
     "access",
     "area",
     "category",
@@ -89,20 +72,13 @@ function osm2pgsql.process_way(object)
     "sidewalk:width", -- experimental
     "cycleway:width", -- experimental
   })
-  FilterTags(object.tags, allowed_tags)
+
+  -- TODO: replace with copy
+  FilterTags(object.tags, LIT_TAGS)
 
   -- Freshness of data (AFTER `FilterTags`!)
-  if (object.tags.is_present == true) then
-    IsFresh(object, 'check_date:lit', object.tags)
+  if lit_data.lit_present then
+    IsFresh(object, 'check_date:lit', lit_data, 'lit')
   end
-
-  if object.tags._exclude then
-  else
-    table:insert({
-      category = category,
-      tags = object.tags,
-      meta = Metadata(object),
-      geom = object:as_linestring()
-    })
-  end
+  return lit_data
 end
