@@ -53,7 +53,7 @@ run_lua "poiClassification/poiClassification"
 run_lua "poiClassification/poiClassification_todoList"
 
 run_lua "buildings/buildings"
-# run_psql "buildings/buildings" # TODO: Deactivated for now, this takes way too long
+run_psql "buildings/buildings" # TODO: Deactivated for now, this takes way too long
 #   > app  | PROCESS START – Topic: buildings/buildings SQL
 #   > app  | psql:process/buildings/buildings.sql:1: NOTICE:  table "buildings" does not exist, skipping
 #   > app  | psql:process/buildings/buildings.sql:4: SSL SYSCALL error: EOF detected
