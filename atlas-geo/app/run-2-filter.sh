@@ -16,13 +16,8 @@ if [ $SKIP_TAG_FILTER == 1 ]; then
   echo "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
   ln -f ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
 else
-  tags_start_time=$(date +%s)
-  echo -e "\e[1m\e[7m FILTER TAGS – START \e[27m\e[21m\e[0m"
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
   osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_LOCAL_FILE}
-  tags_end_time=$(date +%s)
-  tags_diff=$((tags_start_time - tags_end_time))
-  echo -e "\e[1m\e[7m FILTER TAGS – END \e[27m\e[21m took $tags_diff seconds\e[0m"
 fi
 
 if [ "$ID_FILTER" != "" ]; then
