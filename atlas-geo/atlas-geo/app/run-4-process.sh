@@ -13,7 +13,8 @@ run_lua() {
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $diff seconds\e[0m"
+  run_time=`date -d@$diff -u +%H:%M:%S`
+  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $run_time seconds\e[0m"
 }
 
 run_psql() {
@@ -24,14 +25,15 @@ run_psql() {
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
-  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 SQL \e[27m\e[21m took $diff seconds\e[0m"
+  run_time=`date -d@$diff -u +%H:%M:%S`
+  echo -e "\e[1m\e[7m PROCESS END – Topic: $1 SQL \e[27m\e[21m took $run_time seconds\e[0m"
 }
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-start_time=$(date +%s)
+process_start_time=$(date +%s)
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 # lit and bikelanes should be at the top, so it's available ASAP
@@ -85,8 +87,8 @@ ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR
 #    - processed_at – DateTime of this processing step
 #    Which means, we do not actually know the age of the data,
 #    which would be the DateTime when Geofabrik pulled the data from the OSM server.
-end_time=$(date +%s)
-diff=$((end_time - start_time))
+process_end_time=$(date +%s)
+diff=$((process_end_time - process_start_time))
 
 RUN_TIME=`date -d@$diff -u +%H:%M`
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
@@ -94,7 +96,7 @@ psql -q -c "COMMENT ON TABLE metadata IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\
 
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
-echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"
+echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date), took $RUN_TIME h [0m"
 echo "Completed:"
 echo "Development http://localhost:7800"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/"
