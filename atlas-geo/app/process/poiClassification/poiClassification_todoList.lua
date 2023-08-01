@@ -27,11 +27,6 @@ local table = osm2pgsql.define_table({
 -- * @desc Guards extracted to be used inside projcess_*
 -- * @returns `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
-  -- This file only run when env DEBUG=1 (~= means "not equal")
-  if os.getenv('DEBUG') ~= 1 then
-    return true
-  end
-
   if not (object.tags.amenity or object.tags.shop or object.tags.tourism) then
     return true
   end

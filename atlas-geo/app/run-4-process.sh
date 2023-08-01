@@ -5,6 +5,15 @@ OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 
 PROCESS_DIR="./process/"
 
+run_lua_if_debug() {
+  if [ $DEBUG == 1 ]; then
+    echo "Running $1 with .env 'DEBUG=1'"
+    run_lua $1
+  else
+    echo "SKIPPED $1 with .env 'DEBUG=0'"
+  fi
+}
+
 run_lua() {
   start_time=$(date +%s)
   echo -e "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m\e[0m"
@@ -45,12 +54,12 @@ run_psql "bikelanes/bikelanes"
 
 run_lua "boundaries"
 run_lua "places/places"
-run_lua "places/places_todoList"
+run_lua_if_debug "places/places_todoList"
 run_lua "education"
 run_lua "landuse"
 run_lua "publicTransport"
 run_lua "poiClassification/poiClassification"
-run_lua "poiClassification/poiClassification_todoList"
+run_lua_if_debug "poiClassification/poiClassification_todoList"
 
 run_lua "buildings/buildings"
 run_psql "buildings/buildings" # TODO: Deactivated for now, this takes way too long
