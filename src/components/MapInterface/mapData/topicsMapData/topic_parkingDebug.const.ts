@@ -64,7 +64,7 @@ export const topic_parkingDebug: MapDataTopic = {
         mapboxStyleLayers({
           group: 'parking_obstacles',
           source,
-          sourceLayer: 'processing.buffer_obstacle_poly',
+          sourceLayer: 'processing.buffer_obstacle',
         }),
       ].flat(),
       interactiveFilters: null,
@@ -130,7 +130,7 @@ export const topic_parkingDebug: MapDataTopic = {
           name: 'Laternen, Bäume, u.ä.',
           style: {
             type: 'circle',
-            color: 'rgba(148, 163, 184, 0.7)',
+            color: 'rgb(219, 39, 119)',
           },
         },
       ],

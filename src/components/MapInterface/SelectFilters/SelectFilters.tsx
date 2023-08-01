@@ -72,7 +72,9 @@ export const SelectFilters: React.FC<Props> = ({ scopeTopicId }) => {
 
           return (
             <details className="space-y-2.5" key={filterData.id}>
-              <summary className="text-sm">Filter {filterData.name}</summary>
+              <summary className="cursor-pointer text-sm hover:font-semibold">
+                Filter {filterData.name}
+              </summary>
               <form
                 className="space-y-2.5"
                 // Radiobuttons need to be triggered on the <form>, Checkboxed on the <input>

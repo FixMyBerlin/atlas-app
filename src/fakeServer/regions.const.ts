@@ -51,6 +51,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'thunderforest-outdoors',
   'waymarkedtrails-cycling',
   'waymarkedtrails-hiking',
+  'opentopomap',
 ]
 
 export type RegionPath =

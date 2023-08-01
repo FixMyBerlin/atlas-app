@@ -26,11 +26,6 @@ export const topic_parking: MapDataTopic = {
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'parking_operator_border_below_other_layer',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
           group: 'parking_parkinglines_labels',
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
@@ -55,11 +50,6 @@ export const topic_parking: MapDataTopic = {
         }),
         mapboxStyleLayers({
           group: 'parking_parkinglines',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
-          group: 'parking_operator_border_below_other_layer',
           source,
           sourceLayer,
         }),
@@ -100,19 +90,11 @@ export const topic_parking: MapDataTopic = {
           },
         },
         {
-          id: 'capacity_status-operator_type-public',
-          name: 'Privatweg',
-          style: {
-            type: 'border',
-            color: 'hsl(169, 100%, 32%)',
-          },
-        },
-        {
           id: 'capacity_status-operator_type-private',
-          name: 'Privatweg',
+          name: 'Privatwege sind halbtransparent',
           style: {
-            type: 'border',
-            color: 'hsl(342, 100%, 15%)',
+            type: 'line',
+            color: 'gray',
           },
         },
       ],
@@ -130,11 +112,6 @@ export const topic_parking: MapDataTopic = {
         }),
         mapboxStyleLayers({
           group: 'parking_parkinglines_surface',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
-          group: 'parking_operator_border_below_other_layer',
           source,
           sourceLayer,
         }),
@@ -170,22 +147,6 @@ export const topic_parking: MapDataTopic = {
           style: {
             type: 'line',
             color: 'hsl(280, 94%, 63%)',
-          },
-        },
-        {
-          id: 'surface-missing',
-          name: 'Daten fehlen',
-          style: {
-            type: 'line',
-            color: 'hsl(280, 67%, 26%)',
-          },
-        },
-        {
-          id: 'surface-operator_type-private',
-          name: 'Privatweg',
-          style: {
-            type: 'border',
-            color: 'hsl(342, 100%, 15%)',
           },
         },
       ],

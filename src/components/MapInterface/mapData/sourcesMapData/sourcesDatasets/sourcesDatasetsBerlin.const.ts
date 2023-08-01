@@ -12,12 +12,49 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
     inspector: { enabled: false },
     layers: [
       {
-        id: 'parkraumzonen',
+        id: 'parkraumzonen-linie',
         type: 'line',
         paint: {
-          'line-color': '#5b21b6',
-          'line-opacity': 0.63,
-          'line-width': 2,
+          'line-color': '#f59e0b',
+          'line-width': 3,
+        },
+      },
+      {
+        id: 'parkraumzonen-linieinner',
+        type: 'line',
+        paint: {
+          'line-color': '#f59e0b',
+          'line-opacity': 0.31,
+          'line-width': 6,
+          'line-offset': 4,
+        },
+      },
+      {
+        id: 'parkraumzonen-label',
+        type: 'symbol',
+        paint: {
+          'text-color': '#fffbeb',
+          'text-halo-color': '#f59e0b',
+          'text-halo-width': 3,
+          'text-opacity': 1,
+        },
+        layout: {
+          'text-line-height': 1.1,
+          'text-size': 14,
+          'text-radial-offset': 0,
+          'text-allow-overlap': true,
+          'symbol-avoid-edges': true,
+          'text-ignore-placement': true,
+          'symbol-placement': 'line',
+          'text-justify': 'auto',
+          'text-padding': 0,
+          'text-offset': [0, 0.7],
+          'text-field': [
+            'concat',
+            ['to-string', ['get', 'bezirk']],
+            ' ',
+            ['to-string', ['get', 'parkzone']],
+          ],
         },
       },
     ],

@@ -1,10 +1,16 @@
 import { Link, linkStyles } from '@components/Link'
+import {
+  mapillaryUrlViewport,
+  osmUrlViewport,
+} from '@components/MapInterface/Inspector/Tools/osmUrls'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { User } from '@components/MapInterface/UserInfo'
 import { getEnvUrl } from '@components/utils/getEnvUrl'
 import { isAdmin } from '@fakeServer/utils'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
+import { LocationGenerics } from '@routes/routes'
+import { useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import React, { Fragment } from 'react'
 
@@ -21,6 +27,10 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
   const devUrl = getEnvUrl('development')
   const stagingUrl = getEnvUrl('staging')
   const prodUrl = getEnvUrl('production')
+
+  const { zoom, lat, lng } = useSearch<LocationGenerics>()
+  const osmUrlViewportUrl = osmUrlViewport(zoom, lat, lng)
+  const mapillaryUrlViewportUrl = mapillaryUrlViewport(zoom, lat, lng)
 
   return (
     <Menu as="div" className="relative ml-3">
@@ -87,6 +97,20 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
                   </Link>
                 )}
               </li>
+              {osmUrlViewportUrl && (
+                <li>
+                  <Link external blank to={osmUrlViewportUrl}>
+                    Open OSM
+                  </Link>
+                </li>
+              )}
+              {mapillaryUrlViewportUrl && (
+                <li>
+                  <Link external blank to={mapillaryUrlViewportUrl}>
+                    Open Mapillary
+                  </Link>
+                </li>
+              )}
             </ul>
           )}
           <Menu.Item>

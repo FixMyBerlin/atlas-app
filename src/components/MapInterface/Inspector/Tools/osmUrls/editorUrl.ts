@@ -6,15 +6,16 @@ type Props = {
   geometry: maplibregl.GeoJSONFeature['geometry']
   osmType?: string
   osmId?: number | string
+  zoom?: number
 }
 
-export const editorUrl = ({ urlTemplate, geometry, osmType, osmId }: Props) => {
+export const editorUrl = ({ urlTemplate, geometry, osmType, osmId, zoom }: Props) => {
   const [lng, lat] = pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 
   return urlTemplate
     .toString()
-    .replace('{zoom}', '19')
+    .replace('{zoom}', zoom?.toString() ?? '19')
     .replace('{latitude}', lat.toString())
     .replace('{longitude}', lng.toString())
     .replace('{osm_type}', osmType ?? '')

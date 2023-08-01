@@ -159,7 +159,7 @@ export const sources: MapDataSource<
       documentedKeys: [
         'composit_highway',
         'category',
-        'oneway__if_present',
+        'oneway',
         'traffic_sign',
         'width',
         'composit_surface_smoothness',
