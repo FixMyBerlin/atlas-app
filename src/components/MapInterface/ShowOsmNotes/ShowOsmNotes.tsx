@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import React, { useState } from 'react'
+import React from 'react'
 import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { useMap } from 'react-map-gl'
 import { SmallSpinner } from '@components/Spinner/Spinner'
