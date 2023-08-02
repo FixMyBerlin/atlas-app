@@ -8,11 +8,19 @@ type Store = StoreMapLoadedState &
   StorePmTilesProtocolState &
   StoreFeaturesInspector &
   StoreCalculator &
-  StoreLocalUpdates
+  StoreLocalUpdates &
+  StoreOsmNotesState
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
   setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
+}
+
+type StoreOsmNotesState = {
+  osmNotesLoaded: boolean
+  setOsmNotesLoaded: (osmNotesLoaded: Store['osmNotesLoaded']) => void
+  osmNotesActive: boolean
+  setOsmNotesActive: (osmNotesLoaded: Store['osmNotesActive']) => void
 }
 
 type StorePmTilesProtocolState = {
@@ -45,6 +53,11 @@ type StoreLocalUpdates = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+
+  osmNotesLoaded: false,
+  setOsmNotesLoaded: (osmNotesLoaded) => set({ osmNotesLoaded }),
+  osmNotesActive: false,
+  setOsmNotesActive: (osmNotesActive) => set({ osmNotesActive }),
 
   pmTilesProtocolReady: false,
   setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),
