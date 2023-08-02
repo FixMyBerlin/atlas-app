@@ -6,7 +6,7 @@ import { useMapStateInteraction } from '@components/MapInterface/mapStateInterac
 
 export const DynamicSources: React.FC = () => {
   const { mainMap } = useMap()
-  const { mapLoaded } = useMapStateInteraction()
+  const { mapLoaded, setOsmNotesLoaded, osmNotesActive } = useMapStateInteraction()
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -17,14 +17,18 @@ export const DynamicSources: React.FC = () => {
     if (!mainMap || !mapLoaded) return
 
     mainMap.on('moveend', () => {
-      const bounds = mainMap.getBounds()
+      setOsmNotesLoaded(false)
+      const b = mainMap.getBounds()
       axios
         .get(
-          `https://api.openstreetmap.org/api/0.6/notes?bbox=${bounds._sw.lng},${bounds._sw.lat},${bounds._ne.lng},${bounds._ne.lat}`
+          `https://api.openstreetmap.org/api/0.6/notes?bbox=${b.getSouthWest().lng},${
+            b.getSouthWest().lat
+          },${b.getNorthEast().lng},${b.getNorthEast().lat}`
         )
         .then((res) => {
           console.log(res.data)
           setGeodata(res.data)
+          setOsmNotesLoaded(true)
         })
     })
   }, [mapLoaded])
@@ -52,7 +56,7 @@ export const DynamicSources: React.FC = () => {
       data={geodata}
       attribution="Source osm.org"
     >
-      <Layer key="osmnoteslayer" {...layerProps} />
+      {osmNotesActive && <Layer key="osmnoteslayer" {...layerProps} />}
       {/* To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData */}
       {/* <LayerHighlight {...layerProps} /> */}
     </Source>
