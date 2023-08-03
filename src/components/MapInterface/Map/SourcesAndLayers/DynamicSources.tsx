@@ -61,8 +61,16 @@ export const DynamicSources: React.FC = () => {
     },
     paint: {
       'circle-radius': 5,
-      'circle-color': 'red',
       'circle-stroke-width': 1,
+      'circle-color': [
+        'match',
+        ['get', 'status'],
+        'closed',
+        'green',
+        'open',
+        'red',
+        'blue' /* default color */,
+      ],
     },
   }
 
