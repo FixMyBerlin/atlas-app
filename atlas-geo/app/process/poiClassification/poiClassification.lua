@@ -59,7 +59,7 @@ local function processTags(tags)
   -- Set our custom `category` value with one of our 4 values.
   -- We also introduce `type` as a unified way to speicify the shop-or-amenity type.
   if tags.shop then
-    tags.category = 'shopping'
+    tags.category = 'Einkauf'
     tags.type = "shop-" .. tags.shop
   end
   if tags.amenity then
