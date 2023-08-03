@@ -6,6 +6,7 @@ import { createInspectorFeatureKey } from '../utils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureSource } from './InspectorFeatureSource'
 import { InspectorHeader } from './InspectorHeader'
+import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 
 export type InspectorFeature = {
   sourceKey: string
@@ -16,10 +17,14 @@ export type InspectorFeature = {
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, resetInspector } = useMapStateInteraction()
 
+  // Differentiate between OSM Notes and processed OSM Data
+  const osmNotesFeatures = inspectorFeatures.filter((f) => f.source === 'osm-notes')
+  const osmDataFeatures = inspectorFeatures.filter((f) => f.source !== 'osm-notes')
+
   // When we click on the map, MapLibre returns all Features for all layers.
   // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
   const uniqueKeys: Record<string, boolean> = {}
-  const uniqueInspectorFeatures = inspectorFeatures.reduce(
+  const uniqueInspectorFeatures = osmDataFeatures.reduce(
     (result: typeof inspectorFeatures, feature) => {
       if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
         uniqueKeys[createInspectorFeatureKey(feature)] = true
@@ -30,7 +35,7 @@ export const Inspector: React.FC = () => {
     []
   )
 
-  if (!uniqueInspectorFeatures.length) return null
+  if (!uniqueInspectorFeatures.length && !osmNotesFeatures.length) return null
 
   return (
     <div className="absolute top-0 right-0 bottom-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
@@ -38,6 +43,26 @@ export const Inspector: React.FC = () => {
         count={uniqueInspectorFeatures.length}
         handleClose={() => resetInspector()}
       />
+
+      {osmNotesFeatures.map((inspectObject) => {
+        const sourceKey = String(inspectObject.layer.source)
+        if (!sourceKey) return null
+
+        console.warn('TODO: OSM Notes are not yet implemented', inspectObject)
+
+        if (!inspectObject?.properties?.id) return null
+
+        return (
+          <>
+            <InspectorFeatureOsmNote
+              key={`osm-note-${inspectObject.properties.id}`}
+              sourceKey={sourceKey}
+              properties={inspectObject.properties}
+              geometry={inspectObject.geometry}
+            />
+          </>
+        )
+      })}
 
       {uniqueInspectorFeatures.map((inspectObject) => {
         const sourceKey = String(inspectObject.layer.source)

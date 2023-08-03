@@ -1,6 +1,7 @@
 import { useRegionDatasets } from '@components/MapInterface/SelectDatasets/utils/useRegionDatasets'
 import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { ThemeConfig } from '@components/MapInterface/mapStateConfig'
+import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import {
   createDatasetSourceLayerKey,
   createSourceTopicStyleLayerKey,
@@ -8,9 +9,9 @@ import {
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 
-type Props = { theme: ThemeConfig | undefined }
+type Props = { theme: ThemeConfig | undefined; osmNotes?: boolean }
 
-const collectInteractiveLayerIds = ({ theme }: Props) => {
+const collectInteractiveLayerIds = ({ theme, osmNotes }: Props) => {
   const interactiveLayerIds: string[] = []
 
   theme?.topics?.forEach((topicConfig) => {
@@ -40,6 +41,10 @@ const collectInteractiveLayerIds = ({ theme }: Props) => {
     })
   })
 
+  if (osmNotes) {
+    interactiveLayerIds.push('osmnoteslayer')
+  }
+
   return interactiveLayerIds
 }
 
@@ -47,8 +52,10 @@ export const useInteractiveLayers = () => {
   // active layer from theme
   const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
+  const { osmNotesActive } = useMapStateInteraction()
   const themeActiveLayerIds = collectInteractiveLayerIds({
     theme: currentTheme,
+    osmNotes: osmNotesActive,
   })
 
   // active layer from datasets
