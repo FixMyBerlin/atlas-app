@@ -102,6 +102,7 @@ jobs:
             touch .env.staging
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.staging
             echo PGHOST='db_staging' >> .env.staging
+            echo PGPORT='6000' >> .env.staging
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.staging
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.staging
