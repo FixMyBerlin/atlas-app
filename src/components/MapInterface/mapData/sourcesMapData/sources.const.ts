@@ -34,7 +34,6 @@ export type SourceExportApiIdentifier =
   | 'bikelanesPresence'
   // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
   | 'buildings'
-  | 'education'
   | 'landuse'
   | 'lit_verified'
   | 'lit'
