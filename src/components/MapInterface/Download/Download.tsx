@@ -24,7 +24,7 @@ export const Download: React.FC = () => {
   const osmDataDate = useQuery({
     queryKey: ['metadata'],
     queryFn: async () => {
-      const response = await fetch(`${getTilesUrl()}/public.metadata.json`)
+      const response = await fetch(`${getTilesUrl()}/public.bikelanes.json`)
       if (!response.ok) {
         throw new Error('Network response was not ok')
       }
