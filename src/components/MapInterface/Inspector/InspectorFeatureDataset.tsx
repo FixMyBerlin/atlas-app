@@ -5,14 +5,14 @@ import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extrac
 import { sourcesDatasets } from '../mapData/sourcesMapData'
 import { DatasetIds } from '../mapData/sourcesMapData/datasets'
 import { Disclosure } from './Disclosure'
-import { InspectorFeature } from './Inspector'
+import { InspectorDataFeature } from './Inspector'
 import { TagsTable } from './TagsTable'
 import { translations } from './TagsTable/translations'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 
-export const InspectorFeatureDataset: React.FC<InspectorFeature> = ({
+export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
   sourceKey,
   properties,
   geometry,
