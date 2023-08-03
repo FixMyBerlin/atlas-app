@@ -3,6 +3,7 @@ import { Disclosure } from './Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 import { Link } from '@components/Link'
 import { CheckIcon } from '@heroicons/react/24/solid'
+import dompurify from 'dompurify'
 import {
   ChatBubbleLeftRightIcon,
   ChatBubbleOvalLeftEllipsisIcon,
@@ -42,10 +43,14 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
           <div>
             {JSON.parse(properties?.comments).map((comment: any, index: number) => (
               <div key={index} className="border-t-2">
-                Nutzer <Link to={comment.user_url}>{comment.user}</Link> hat am{' '}
-                <span>{comment.date}</span>{' '}
+                Nutzer{' '}
+                <Link external to={comment.user_url}>
+                  {comment.user}
+                </Link>{' '}
+                hat am <span>{comment.date}</span>{' '}
                 <span>{comment.action == 'opened' ? 'eröffnet' : 'geschlossen'}</span> und
-                geschrieben: <div>{comment.html}</div>
+                geschrieben:{' '}
+                <div dangerouslySetInnerHTML={{ __html: dompurify.sanitize(comment.html) }}></div>
               </div>
             ))}
           </div>
