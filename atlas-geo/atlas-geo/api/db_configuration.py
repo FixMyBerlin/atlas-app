@@ -11,7 +11,6 @@ export_geojson_function_from_type = {
   "bikelanesPresence":  "atlas_export_geojson_bikelanesPresence",
   # "boundaries":         "atlas_export_geojson_boundaries", # does not work; we need to align the way we store the tags with the other table
   # "buildings":          "atlas_export_geojson_buildings", # same as above but due to clustering of connected buildings there is no good way to preseve (merge) tags
-  "education":          "atlas_export_geojson_education",
   "landuse":            "atlas_export_geojson_landuse",
   "lit":                "atlas_export_geojson_lit",
   "maxspeed":           "atlas_export_geojson_maxspeed",
