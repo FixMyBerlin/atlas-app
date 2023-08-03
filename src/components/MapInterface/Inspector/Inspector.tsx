@@ -8,10 +8,15 @@ import { InspectorFeatureSource } from './InspectorFeatureSource'
 import { InspectorHeader } from './InspectorHeader'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 
-export type InspectorFeature = {
+export type InspectorDataFeature = {
   sourceKey: string
   properties: GeoJSON.GeoJsonProperties
   geometry: maplibregl.GeoJSONFeature['geometry']
+}
+
+export type InspectorOsmNoteFeature = {
+  properties: GeoJSON.GeoJsonProperties
+  geometry?: maplibregl.GeoJSONFeature['geometry']
 }
 
 export const Inspector: React.FC = () => {
@@ -56,7 +61,6 @@ export const Inspector: React.FC = () => {
           <>
             <InspectorFeatureOsmNote
               key={`osm-note-${inspectObject.properties.id}`}
-              sourceKey={sourceKey}
               properties={inspectObject.properties}
               geometry={inspectObject.geometry}
             />
