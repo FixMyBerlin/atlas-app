@@ -1,24 +1,29 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/bikelanes/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
+require("RoadWidth")
+require("ExcludeHighways")
 require("IsFresh")
 require("categories")
 require("transformations")
+require("JoinSets")
+require("PrintTable")
 require("IntoExcludeTable")
-require("CopyTags")
-require("RoadWidth")
+require("ConvertCyclewayOppositeSchema")
 
-local bikelanesTable = osm2pgsql.define_table({
-  name = '_bikelanes_temp',
+
+local presenceTable = osm2pgsql.define_table({
+  name = 'bikelanesPresence',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'category', type = 'text' },
-    { column = 'tags',     type = 'jsonb' },
-    { column = 'meta',     type = 'jsonb' },
-    { column = 'geom',     type = 'linestring' },
-    { column = '_offset',  type = 'real' }
+    { column = 'tags',  type = 'jsonb' },
+    { column = 'geom',  type = 'linestring' },
+    { column = 'left',  type = 'text' },
+    { column = 'self',  type = 'text' },
+    { column = 'right', type = 'text' },
+    { column = 'meta',  type = 'jsonb' }
   }
 })
 
@@ -65,9 +70,21 @@ local allowed_tags = Set({
   'lane', -- 'cycleway:SIDE:lane'
 })
 
-function Bikelanes(object)
+function osm2pgsql.process_way(object)
   -- filter highway classes
+  local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
+  if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
+
+  local exclude, reason = ExcludeHighways(object.tags)
+  if exclude then
+    IntoExcludeTable(excludeTable, object, reason)
+    return
+  end
+
   local tags = object.tags
+  local meta = Metadata(object)
+
+  ConvertCyclewayOppositeSchema(tags)
 
   -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
   if tags.bicycle_road == 'yes' then
@@ -108,21 +125,9 @@ function Bikelanes(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Freshness of data (AFTER `FilterTags`!)
-        IsFresh(object, freshTag, cycleway)
-
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         cycleway.oneway = cycleway.oneway or 'implicit_yes'
 
-        cycleway.offset = sign * width / 2
-
-        bikelanesTable:insert({
-          category = category,
-          tags = cycleway,
-          meta = Metadata(object),
-          geom = object:as_linestring(),
-          _offset = cycleway.offset
-        })
         presence[sign] = presence[sign] or category
       end
     end
@@ -137,10 +142,10 @@ function Bikelanes(object)
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
-      return {}
+      return
     elseif tags.motorroad or tags.expressway then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
-      return {}
+      return
       -- elseif tags.maxspeed and tags.maxspeed <= 20 then
       --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
       --   return
@@ -155,16 +160,23 @@ function Bikelanes(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  local presence_tags_cc = Set({
+  local allowed_tags_presence = Set({
+    'left',
+    'right',
+    'self',
     'name',
     'highway',
     'oneway',
     'dual_carriageway',
   })
+  FilterTags(tags, allowed_tags_presence)
 
-  local presence_data = { bikelane_presence_left = presence[LEFT_SIGN], bikelane_presence_self = presence[CENTER_SIGN],
-    bikelane_presence_right = presence[RIGHT_SIGN] }
-  CopyTags(tags, presence_data, presence_tags_cc)
-
-  return presence_data
+  presenceTable:insert({
+    tags = tags,
+    geom = object:as_linestring(),
+    left = presence[LEFT_SIGN],
+    self = presence[CENTER_SIGN],
+    right = presence[RIGHT_SIGN],
+    meta = meta,
+  })
 end
