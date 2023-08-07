@@ -10,24 +10,24 @@ require("ExcludeByWidth")
 require("IntoExcludeTable")
 require("ConvertCyclewayOppositeSchema")
 
-function osm2pgsql.process_way(object)
+function RoadClassification(object)
   -- Values that we would allow, but skip here:
   -- "construction", "planned", "proposed", "platform" (Haltestellen),
   -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
 
-  local class_data = {}
+  local roadClassification = {}
   local tags = object.tags
 
   -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if tags.footway == "sidewalk" then
-    return {road_category_exlcuded="Exclude `footway=sidewalk`"}
+    return { road_category_exlcuded = "Exclude `footway=sidewalk`" }
   end
 
   -- Exclude `is_sidepath=yes`
   -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
   if object.tags.is_sidepath == "yes" then
-    return {road_category_exlcuded="Exclude `is_sidepath=yes`"}
+    return { road_category_exlcuded = "Exclude `is_sidepath=yes`" }
   end
 
   ConvertCyclewayOppositeSchema(tags)
@@ -35,7 +35,7 @@ function osm2pgsql.process_way(object)
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
   local highway_mapping = { road = "unspecified_road_category", steps = "footway" }
-  class_data.road_category = highway_mapping[tags.highway] or tags.highway
+  roadClassification.road_category = highway_mapping[tags.highway] or tags.highway
 
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
@@ -46,7 +46,7 @@ function osm2pgsql.process_way(object)
       parking_isle = 'service_parking_aisle'
     }
     -- Fallback:
-    class_data.road_category = service_mapping[tags.service] or 'service_uncategorized'
+    roadClassification.road_category = service_mapping[tags.service] or 'service_uncategorized'
     -- https://taginfo.openstreetmap.org/keys/service#values
     if tags.service == nil then
       tags.category = "service_road"
@@ -55,7 +55,7 @@ function osm2pgsql.process_way(object)
 
   if tags.bicycle_road == 'yes' then
     -- traffic_sign=DE:244.1
-    class_data.road_category = "bicycle_road"
+    roadClassification.road_category = "bicycle_road"
   end
 
   if tags.oneway == 'yes' then
@@ -69,9 +69,9 @@ function osm2pgsql.process_way(object)
     end
   end
 
-  local allowed_tags = Set({ "category", "name", "highway", "footway", "access", "service",
+  local tags_cc = Set({ "category", "name", "highway", "footway", "access", "service",
     "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" })
-  FilterTags(tags, allowed_tags)
+  CopyTags(tags, roadClassification, tags_cc)
 
-  return class_data
+  return roadClassification
 end

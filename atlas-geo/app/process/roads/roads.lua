@@ -1,5 +1,21 @@
-local streetsTable = osm2pgsql.define_table({
-  name = 'streets',
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roadClassification/?.lua;/app/process/maxspeed/?.lua;/app/process/surfaceQuality/?.lua;/app/process/lit/?.lua;/app/process/bikelanes/?.lua"
+
+require("Set")
+require("JoinSets")
+require("Metadata")
+require("ExcludeHighways")
+require("ExcludeByWidth")
+require("IntoExcludeTable")
+require("Maxspeed")
+require("Lit")
+require("RoadClassification")
+require("SurfaceQuality")
+require("Bikelanes")
+require("MergeTable")
+
+local roadsTable = osm2pgsql.define_table({
+  name = 'roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -8,8 +24,8 @@ local streetsTable = osm2pgsql.define_table({
   }
 })
 
-local excludedStreetsTable = osm2pgsql.define_table({
-  name = 'streets_excluded',
+local excludedRoadsTable = osm2pgsql.define_table({
+  name = 'roads_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags',   type = 'jsonb' },
@@ -32,19 +48,29 @@ function osm2pgsql.process_way(object)
 
   local exclude, reason = ExcludeHighways(tags)
   if exclude then
-    IntoExcludeTable(excludedStreetsTable, object, reason)
+    IntoExcludeTable(excludedRoadsTable, object, reason)
     return
   end
   local exclude, _ = ExcludeByWidth(tags, 2.1)
   if exclude then
     tags.is_narrow = true
   else
-    -- call lit, roadclassification
+    local results = {}
+    MergeTable(results, RoadClassification(object))
+    MergeTable(results, Lit(object))
+    MergeTable(results, Bikelanes(object))
     if not HighwayClasses[tags.highway] then
       -- call surface quality
+      MergeTable(results, SurfaceQuality(object))
       if not PathClasses[tags.highway] then
         -- call maxspeed
+        MergeTable(results, MaxSpeed(object))
       end
     end
+    roadsTable:insert({
+      tags = results,
+      meta = Metadata(object),
+      geom = object:as_linestring()
+    })
   end
 end

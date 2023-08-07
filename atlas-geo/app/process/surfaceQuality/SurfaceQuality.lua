@@ -12,30 +12,9 @@ require("SmoothnessDirect")
 require("SmoothnessFromSurface")
 require("Metadata")
 require("Set")
+require("CopyTags")
 
-local table = osm2pgsql.define_table({
-  name = "surfaceQuality",
-  ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-  columns = {
-    { column = "tags", type = "jsonb" },
-    { column = "meta", type = "jsonb" },
-    { column = "geom", type = "linestring" }
-  }
-})
-
--- Roads that we exlude from our analysis
-local excludeTable = osm2pgsql.define_table({
-  name = "surfaceQuality_excluded",
-  ids = { type = "any", id_column = "osm_id", type_column = "osm_type" },
-  columns = {
-    { column = "tags",   type = "jsonb" },
-    { column = "meta",   type = "jsonb" },
-    { column = "reason", type = "text" },
-    { column = "geom",   type = "linestring" }
-  }
-})
-
-function osm2pgsql.process_way(object)
+function SurfaceQuality(object)
   -- Same as roadClassification, except for `HighwayClasses`
 
   local tags = object.tags
@@ -63,7 +42,7 @@ function osm2pgsql.process_way(object)
   end
 
   -- all tags that are shown on the application
-  SURFACE_TAGS = {
+  local tags_cc = {
     "name",
     "highway",
     "raw_surface",
@@ -72,7 +51,7 @@ function osm2pgsql.process_way(object)
     "checkdate:smoothness",
   }
   -- TODO: replace with copy
-  FilterTags(tags, Set(SURFACE_TAGS))
+  CopyTags(tags, surface_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
   IsFresh(object, "check_date:surface", tags, "surface")

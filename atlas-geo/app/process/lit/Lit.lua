@@ -28,7 +28,7 @@ require("IsFresh")
 --  Could we do this, by adding a _processing_instructions="move left".
 --  We add those ways twice to the data … and post-process the in SQL?
 
-function osm2pgsql.process_way(object)
+function Lit(object)
 
   local tags = object.tags
 
@@ -54,7 +54,7 @@ function osm2pgsql.process_way(object)
   -- TODO: Extact into helper
   tags.name = tags.name or tags['is_sidepath:of:name']
 
-  LIT_TAGS = Set({
+  local tags_cc = Set({
     "access",
     "area",
     "category",
@@ -74,7 +74,7 @@ function osm2pgsql.process_way(object)
   })
 
   -- TODO: replace with copy
-  FilterTags(object.tags, LIT_TAGS)
+  CopyTags(tags, lit_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
   if lit_data.lit_present then

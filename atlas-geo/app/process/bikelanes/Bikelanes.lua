@@ -12,8 +12,9 @@ require("JoinSets")
 require("PrintTable")
 require("IntoExcludeTable")
 require("ConvertCyclewayOppositeSchema")
+require("CopyTags")
 
-local categoryTable = osm2pgsql.define_table({
+local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -22,19 +23,6 @@ local categoryTable = osm2pgsql.define_table({
     { column = 'meta',     type = 'jsonb' },
     { column = 'geom',     type = 'linestring' },
     { column = '_offset',  type = 'real' }
-  }
-})
-
-local presenceTable = osm2pgsql.define_table({
-  name = 'bikelanesPresence',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags',  type = 'jsonb' },
-    { column = 'geom',  type = 'linestring' },
-    { column = 'left',  type = 'text' },
-    { column = 'self',  type = 'text' },
-    { column = 'right', type = 'text' },
-    { column = 'meta',  type = 'jsonb' }
   }
 })
 
@@ -81,7 +69,7 @@ local allowed_tags = Set({
   'lane', -- 'cycleway:SIDE:lane'
 })
 
-function osm2pgsql.process_way(object)
+function Bikelanes(object)
   -- filter highway classes
   local tags = object.tags
   local meta = Metadata(object)
@@ -135,7 +123,7 @@ function osm2pgsql.process_way(object)
 
         cycleway.offset = sign * width / 2
 
-        categoryTable:insert({
+        bikelanesTable:insert({
           category = category,
           tags = cycleway,
           meta = meta,
@@ -156,10 +144,10 @@ function osm2pgsql.process_way(object)
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
-      return
+      return {}
     elseif tags.motorroad or tags.expressway then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
-      return
+      return {}
       -- elseif tags.maxspeed and tags.maxspeed <= 20 then
       --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")
       --   return
@@ -174,23 +162,16 @@ function osm2pgsql.process_way(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  local allowed_tags_presence = Set({
-    'left',
-    'right',
-    'self',
+  local presence_tags_cc = Set({
     'name',
     'highway',
     'oneway',
     'dual_carriageway',
   })
-  FilterTags(tags, allowed_tags_presence)
 
-  presenceTable:insert({
-    tags = tags,
-    geom = object:as_linestring(),
-    left = presence[LEFT_SIGN],
-    self = presence[CENTER_SIGN],
-    right = presence[RIGHT_SIGN],
-    meta = meta,
-  })
+  local presence_data = { bikelane_presence_left = presence[LEFT_SIGN], bikelane_presence_self = presence[CENTER_SIGN],
+    bikelane_presence_right = presence[RIGHT_SIGN] }
+  CopyTags(tags, presence_data, presence_tags_cc)
+
+  return presence_data
 end
