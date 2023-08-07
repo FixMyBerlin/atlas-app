@@ -1,4 +1,4 @@
-from db_configuration import export_geojson_function_from_type, verification_tables, verification_table
+from db_configuration import export_geojson_function_from_type, verification_tables, verification_table, verified_table
 from db import conn_string
 import psycopg2
 from pathlib import Path
@@ -35,7 +35,7 @@ def create_verification_tables():
       processed_sql = sql.format(
         verification_table=verification_table(table_name),
         geometry_table=table_name,
-        joined_table=f'{table_name}_verified',
+        joined_table=verified_table(table_name),
       )
       cursor.execute(processed_sql)
 
