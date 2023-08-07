@@ -58,6 +58,12 @@ function osm2pgsql.process_way(object)
   if exclude then
     tags.is_narrow = true
   else
+    if tags.highway == 'footway' then
+      if tags.footway == 'sidewalk' or tags.bicycle =='no' then
+       return
+      end
+    end
+
     local results = {}
     MergeTable(results, RoadClassification(object))
     MergeTable(results, Lit(object))
