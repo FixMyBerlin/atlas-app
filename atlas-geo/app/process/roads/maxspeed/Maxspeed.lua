@@ -1,11 +1,11 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/maxspeed/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/maxspeed/?.lua"
 require("IsFresh")
 require("MaxspeedDirect")
 require("MaxspeedFromZone")
 require("CopyTags")
 require("Set")
 
-function MaxSpeed(object)
+function Maxspeed(object)
 
   local tags = object.tags
 

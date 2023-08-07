@@ -1,5 +1,10 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
-package.path = package.path .. ";/app/process/roadClassification/?.lua;/app/process/maxspeed/?.lua;/app/process/surfaceQuality/?.lua;/app/process/lit/?.lua;/app/process/bikelanes/?.lua"
+local dir = ";/app/process/roads/"
+package.path = package.path .. dir .. "roadClassification/?.lua"
+package.path = package.path .. dir .. "maxspeed/?.lua"
+package.path = package.path .. dir .. "surfaceQuality/?.lua"
+package.path = package.path .. dir .. "lit/?.lua"
+package.path = package.path .. dir .. "bikelanes/?.lua"
 
 require("Set")
 require("JoinSets")
@@ -54,30 +59,24 @@ function osm2pgsql.process_way(object)
     IntoExcludeTable(excludedRoadsTable, object, reason)
     return
   end
-  local exclude, _ = ExcludeByWidth(tags, 2.1)
-  if exclude then
-    tags.is_narrow = true
-  else
-    if tags.footway == 'sidewalk' then
-      return
-    end
 
-    local results = {}
-    MergeTable(results, RoadClassification(object))
-    MergeTable(results, Lit(object))
-    MergeTable(results, Bikelanes(object))
-    if not HighwayClasses[tags.highway] then
-      -- call surface quality
-      MergeTable(results, SurfaceQuality(object))
-      if not PathClasses[tags.highway] then
-        -- call maxspeed
-        MergeTable(results, MaxSpeed(object))
-      end
-    end
-    roadsTable:insert({
-      tags = results,
-      meta = Metadata(object),
-      geom = object:as_linestring()
-    })
+  -- TODO: move to ExcludeHighways
+  if tags.footway == 'sidewalk' then
+    return
   end
+
+  local results = {}
+  MergeTable(results, RoadClassification(object))
+  MergeTable(results, Lit(object))
+  MergeTable(results, Bikelanes(object))
+  MergeTable(results, SurfaceQuality(object))
+  if not PathClasses[tags.highway] then
+    MergeTable(results, Maxspeed(object))
+  end
+
+  roadsTable:insert({
+    tags = results,
+    meta = Metadata(object),
+    geom = object:as_linestring()
+  })
 end

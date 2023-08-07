@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/maxspeed/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/maxspeed/?.lua"
 require("ExcludeHighways")
 require("FilterTags")
 require("HighwayClasses")

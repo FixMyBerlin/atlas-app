@@ -1,5 +1,4 @@
 function SmoothnessDirect(smoothness)
-  local normalized = nil
   local source = "nothing_found"
   local confidence = "nothing_found"
 
