@@ -58,10 +58,8 @@ function osm2pgsql.process_way(object)
   if exclude then
     tags.is_narrow = true
   else
-    if tags.highway == 'footway' then
-      if tags.footway == 'sidewalk' or tags.bicycle =='no' then
-       return
-      end
+    if tags.footway == 'sidewalk' then
+      return
     end
 
     local results = {}
