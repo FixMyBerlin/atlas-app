@@ -1,11 +1,29 @@
+import { Link } from '@components/Link'
 import React from 'react'
-import { IntlProvider } from 'react-intl'
-import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
-import { sourcesDatasets } from '../mapData/sourcesMapData'
-import { DatasetIds } from '../mapData/sourcesMapData/datasets'
 import { Disclosure } from './Disclosure'
 import { InspectorFeature } from './Inspector'
-import { translations } from './TagsTable/translations'
+import clsx from 'clsx'
+import { proseClasses } from '@components/text'
+
+type Comment = {
+  date: string
+  uid: number
+  user: string
+  user_url: `https://api.openstreetmap.org/user/${string}`
+  action: 'opened' | 'commented' | 'closed'
+  text: string
+  html: string
+}[]
+
+type Thread = {
+  id: number
+  url: `https://api.openstreetmap.org/api/0.6/notes/${number}`
+  comment_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/comment`
+  close_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/close`
+  date_created: string
+  status: 'open'
+  comments: Comment
+}
 
 export const InspectorFeatureOsmNote: React.FC<InspectorFeature> = ({
   sourceKey,
@@ -20,21 +38,58 @@ export const InspectorFeatureOsmNote: React.FC<InspectorFeature> = ({
 
   // if (typeof sourceData === 'undefined') return null
   // if (!sourceData.inspector.enabled) return null
+  if (!properties) return null
+
+  const thread = {
+    ...properties,
+    date_created: new Date(properties.date_created).toLocaleString('de-DE'),
+    comments: JSON.parse(properties.comments as string) as Comment,
+  } as Thread
 
   return (
-    <div className="mt-5 w-full rounded-2xl bg-white">
-      <Disclosure title="OSM Notiz" objectId={properties?.id}>
-        {properties?.date_created}
-        {properties?.date_closed}
-        {properties?.id && (
-          <a
-            href={`https://www.openstreetmap.org/note/${properties.id}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Auf OSM.org ansehen
-          </a>
-        )}
+    <div className="mt-5 w-full rounded-2xl">
+      <Disclosure title="Öffentlicher Kommentar auf openstreetmap.org" objectId={String(thread.id)}>
+        {thread.comments?.map((comment, index) => {
+          const firstComment = index === 0
+          const date = new Date(comment.date).toLocaleString('de-DE')
+          return (
+            <section key={comment.uid} className="border-b border-b-gray-200 bg-teal-50 px-3 py-2">
+              <p className="text-black">
+                <strong>{comment.user || 'Eine anonyme Nutzer:in'}</strong> kommentiert am {date}:
+              </p>
+
+              <div
+                dangerouslySetInnerHTML={{ __html: comment.html }}
+                className={clsx(
+                  proseClasses,
+                  'prose-sm my-2 border-l-4 border-white pl-3 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700'
+                )}
+              />
+              {!firstComment && comment.action === 'opened' && (
+                <p>
+                  <em>Der Kommentar wurde erneut geöffnet.</em>
+                </p>
+              )}
+              {comment.action === 'closed' && (
+                <p>
+                  <em>Der Kommentar wurde geschlossen.</em>
+                </p>
+              )}
+            </section>
+          )
+        })}
+        <div className="space-y-2 px-3 py-2">
+          <p>
+            Erstellt am {thread.date_created}
+            <br />
+            Status: <span className="uppercase">{thread.status}</span>
+          </p>
+          <p>
+            <Link button external blank to={`https://www.openstreetmap.org/note/${thread.id}`}>
+              Auf openstreetmap.org ansehen und kommentieren
+            </Link>
+          </p>
+        </div>
       </Disclosure>
     </div>
   )
