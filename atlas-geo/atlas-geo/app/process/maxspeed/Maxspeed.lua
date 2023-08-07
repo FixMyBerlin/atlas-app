@@ -1,13 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/maxspeed/?.lua"
-require("ExcludeHighways")
-require("FilterTags")
-require("HighwayClasses")
-require("IntoExcludeTable")
 require("IsFresh")
-require("JoinSets")
 require("MaxspeedDirect")
 require("MaxspeedFromZone")
-require("Metadata")
 require("CopyTags")
 require("Set")
 

@@ -1,14 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
-require("FilterTags")
-require("MergeArray")
-require("Metadata")
-require("HighwayClasses")
-require("JoinSets")
-require("ExcludeHighways")
-require("ExcludeByWidth")
-require("IntoExcludeTable")
-require("ConvertCyclewayOppositeSchema")
+require("CopyTags")
 
 function RoadClassification(object)
   -- Values that we would allow, but skip here:
@@ -30,7 +22,6 @@ function RoadClassification(object)
     return { road_category_exlcuded = "Exclude `is_sidepath=yes`" }
   end
 
-  ConvertCyclewayOppositeSchema(tags)
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.

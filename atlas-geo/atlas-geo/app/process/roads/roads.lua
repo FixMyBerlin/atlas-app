@@ -7,6 +7,7 @@ require("Metadata")
 require("ExcludeHighways")
 require("ExcludeByWidth")
 require("IntoExcludeTable")
+require("ConvertCyclewayOppositeSchema")
 require("Maxspeed")
 require("Lit")
 require("RoadClassification")
@@ -38,6 +39,8 @@ local excludedRoadsTable = osm2pgsql.define_table({
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
+
+  ConvertCyclewayOppositeSchema(tags)
   if not tags.highway then return end
 
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })

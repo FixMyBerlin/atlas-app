@@ -1,16 +1,9 @@
 package.path = package.path ..
     ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/surfaceQuality/?.lua"
-require("ExcludeHighways")
-require("ExcludeByWidth")
-require("FilterTags")
-require("HighwayClasses")
-require("IntoExcludeTable")
 require("IsFresh")
-require("JoinSets")
 require("SurfaceDirect")
 require("SmoothnessDirect")
 require("SmoothnessFromSurface")
-require("Metadata")
 require("Set")
 require("CopyTags")
 

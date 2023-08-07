@@ -3,16 +3,12 @@ require("Set")
 require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
-require("RoadWidth")
-require("ExcludeHighways")
 require("IsFresh")
 require("categories")
 require("transformations")
-require("JoinSets")
-require("PrintTable")
 require("IntoExcludeTable")
-require("ConvertCyclewayOppositeSchema")
 require("CopyTags")
+require("RoadWidth")
 
 local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
@@ -72,9 +68,6 @@ local allowed_tags = Set({
 function Bikelanes(object)
   -- filter highway classes
   local tags = object.tags
-  local meta = Metadata(object)
-
-  ConvertCyclewayOppositeSchema(tags)
 
   -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
   if tags.bicycle_road == 'yes' then
@@ -126,7 +119,7 @@ function Bikelanes(object)
         bikelanesTable:insert({
           category = category,
           tags = cycleway,
-          meta = meta,
+          meta = Metadata(object),
           geom = object:as_linestring(),
           _offset = cycleway.offset
         })
