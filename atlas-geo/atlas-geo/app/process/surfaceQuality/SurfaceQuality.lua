@@ -11,12 +11,6 @@ function SurfaceQuality(object)
   -- Same as roadClassification, except for `HighwayClasses`
 
   local tags = object.tags
-  local allowed_highways = JoinSets({ MajorRoadClasses, MinorRoadClasses, PathClasses })
-
-  if not allowed_highways[tags.highway] then
-    return
-  end
-
 
   local surface_data = {}
   if object.tags.area == 'yes' then
