@@ -8,14 +8,12 @@ require("JoinSets")
 require("MaxspeedDirect")
 require("MaxspeedFromZone")
 require("Metadata")
+require("CopyTags")
 require("Set")
 
-function InferMaxspeed(object)
+function MaxSpeed(object)
 
   local tags = object.tags
-  if not allowed_highways[object.tags.highway] then
-    return
-  end
 
   local maxspeed_data = {raw_maxspeed = tags.maxspeed} -- Preserve original value since we use `maxspeed` for our processed data
   -- TODO: Why would we want to exclude this based on this tag? (Tobias)
@@ -47,7 +45,7 @@ function InferMaxspeed(object)
   end
 
   -- all tags that are shown on the application
- local maxspeed_tags = {
+ local tags_cc = {
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
@@ -57,7 +55,7 @@ function InferMaxspeed(object)
     "check_date:maxspeed",
   }
   -- TODO: replace with copy
-  CopyTags(tags, maxspeed_data, maxspeed_tags)
+  CopyTags(tags, maxspeed_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
   IsFresh(object, "check_date:maxspeed", maxspeed_data, 'maxspeed')
