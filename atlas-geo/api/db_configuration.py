@@ -26,28 +26,11 @@ export_geojson_function_from_type = {
 # `atlas-app` only uses approved, rejected for now.
 valid_verified_status = ['approved', 'rejected', 'undefined']
 
-# The list of DB Tables Names that we support.
-# main.py: Used as an allow list to guard the /verify/* API
-valid_verified_datasets = [
-  "bikelanes",
-  "lit",
-]
 
-# Create DB views to join *_verified data with osm2pgsql-data
-#   for pg_tileserv and for our API.
-# Format: { "<osm2pgsql-DB Table Name>": "<DB View Name>"  }
-# init_db.py: Create db views
-# main.py: Used by a guard lookup ("osm_id")
-# main.py: Provide the /verify/<osm2pgsql-DB Table Name> entpoint
-#   (It's our convention to reuse the osm2pgsql-DB Table Name as an identifier.)
-verification_tables = {
-  "bikelanes": "bikelanes_verification",
-  "lit": "lit_verification",
-}
+# The list of DB Tables Names that we support for verification.
+# For each table `a` in the list we create a verification table `a_verification` and a view which joins both
+verification_tables = ["bikelanes", "lit"]
 
-# Format: { "<DB View Name>": "<Verified-Table>"  }
-# init_db.py: Used as part of the table view creation
-joined_tables = {
-  "bikelanes_verification": "bikelanes_verified",
-  "lit_verification": "lit_verified",
-}
+# helper to retrieve the name of the verification table
+def verification_table(table_name: str):
+    return f'{table_name}_verification'
