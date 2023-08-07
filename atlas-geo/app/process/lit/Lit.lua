@@ -1,13 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
-require("Set")
-require("FilterTags")
-require("MergeArray")
-require("JoinSets")
-require("Metadata")
-require("HighwayClasses")
-require("ExcludeHighways")
-require("ExcludeByWidth")
+require("CopyTags")
 require("IsFresh")
+require("Set")
 
 -- Notes
 -- =====
