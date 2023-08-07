@@ -15,7 +15,7 @@ app = FastAPI(
     title="RadverkehrsatlasTools",
     description="Use and interact with OSM data from FixMyCity",
     version="0.1.0",
-    license_information={
+    license_info={
        "name":"ODbL 1.0",
        "url": "https://opendatacommons.org/licenses/odbl/"
       }
