@@ -35,10 +35,13 @@ start_time=$(date +%s)
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 # lit and bikelanes should be at the top, so it's available ASAP
-# echo "Reminder: The 'lit' table is available only after Postprocessing finished"
+echo "Reminder: The 'lit' table is available only after Postprocessing finished"
+run_lua "lit/lit"
 
-# echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
+echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
 run_lua "roads/roads"
+
+run_lua "bikelanes/bikelanes"
 run_psql "bikelanes/bikelanes"
 
 run_lua "boundaries"
@@ -58,7 +61,10 @@ run_lua "buildings/buildings"
 #   > app  | psql:process/buildings/buildings.sql:4: error: connection to server was lost
 #   > app exited with code 2
 
+run_lua "roadClassification/roadClassification"
+run_lua "maxspeed/maxspeed"
 run_lua "barriers/barriers"
+run_lua "surfaceQuality/surfaceQuality"
 
 # ================================================
 # This should be the last step…
