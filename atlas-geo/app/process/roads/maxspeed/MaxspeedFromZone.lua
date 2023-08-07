@@ -30,7 +30,7 @@ function MaxspeedFromZone(tags)
     ["DE:zone10"] = 10,
   }
 
-  local maxspeed = -1.0
+  local maxspeed = nil
   local source = "nothing_found"
   local confidence = "nothing_found"
 

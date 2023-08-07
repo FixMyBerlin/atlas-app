@@ -2,6 +2,7 @@
 # Format: { "<DB Table Name>": "public.<DB Function Name>" }
 # init_db.py: Create a function per entry by calling INIT_FUNCTIONS.sql
 # main.py: Provide the /export/<DB Table Name> entpoint
+# TODO: handle this the same way as the verification tables see below
 export_geojson_function_from_type = {
   "barrierAreas":       "atlas_export_geojson_barrierareas",
   "barrierLines":       "atlas_export_geojson_barrierlines",
@@ -12,7 +13,6 @@ export_geojson_function_from_type = {
   # "buildings":          "atlas_export_geojson_buildings", # same as above but due to clustering of connected buildings there is no good way to preseve (merge) tags
   "education":          "atlas_export_geojson_education",
   "landuse":            "atlas_export_geojson_landuse",
-  "lit_verified":       "atlas_export_geojson_lit_verified",
   "lit":                "atlas_export_geojson_lit",
   "maxspeed":           "atlas_export_geojson_maxspeed",
   "places":             "atlas_export_geojson_places",
@@ -26,28 +26,14 @@ export_geojson_function_from_type = {
 # `atlas-app` only uses approved, rejected for now.
 valid_verified_status = ['approved', 'rejected', 'undefined']
 
-# The list of DB Tables Names that we support.
-# main.py: Used as an allow list to guard the /verify/* API
-valid_verified_datasets = [
-  "bikelanes",
-  "lit",
-]
 
-# Create DB views to join *_verified data with osm2pgsql-data
-#   for pg_tileserv and for our API.
-# Format: { "<osm2pgsql-DB Table Name>": "<DB View Name>"  }
-# init_db.py: Create db views
-# main.py: Used by a guard lookup ("osm_id")
-# main.py: Provide the /verify/<osm2pgsql-DB Table Name> entpoint
-#   (It's our convention to reuse the osm2pgsql-DB Table Name as an identifier.)
-verification_tables = {
-  "bikelanes": "bikelanes_verification",
-  "lit": "lit_verification",
-}
+# The list of DB Tables Names that we support for verification.
+# For each table `a` in the list we create a verification table `a_verification` and a view which joins both
+verification_tables = ["bikelanes"]
 
-# Format: { "<DB View Name>": "<Verified-Table>"  }
-# init_db.py: Used as part of the table view creation
-joined_tables = {
-  "bikelanes_verification": "bikelanes_verified",
-  "lit_verification": "lit_verified",
-}
+# helper to retrieve the name of the verification table
+def verification_table(table_name: str):
+    return f'{table_name}_verification'
+
+def verified_table(table_name: str):
+    return f'{table_name}_verified'

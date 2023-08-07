@@ -10,11 +10,13 @@ echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 # lit and bikelanes should be at the top, so it's available ASAP
 echo "Reminder: The 'lit' table is available only after Postprocessing finished"
-run_lua "lit/lit"
+run_lua "roads/lit/lit"
 
 echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
-run_lua "bikelanes/bikelanes"
-run_psql "bikelanes/bikelanes"
+run_lua "roads/roads"
+
+run_lua "roads/bikelanes/bikelanes"
+run_psql "roads/bikelanes/bikelanes"
 
 run_lua "boundaries"
 run_lua "places/places"
@@ -25,10 +27,10 @@ run_lua "publicTransport"
 run_lua "poiClassification/poiClassification"
 run_lua_if_debug "poiClassification/poiClassification_todoList"
 
-run_lua "roadClassification/roadClassification"
-run_lua "maxspeed/maxspeed"
+run_lua "roads/roadClassification/roadClassification"
+run_lua "roads/maxspeed/maxspeed"
 run_lua "barriers/barriers"
-run_lua "surfaceQuality/surfaceQuality"
+run_lua "roads/surfaceQuality/surfaceQuality"
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date)\e[0m"
