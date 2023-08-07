@@ -34,3 +34,6 @@ verification_tables = ["bikelanes"]
 # helper to retrieve the name of the verification table
 def verification_table(table_name: str):
     return f'{table_name}_verification'
+
+def verified_table(table_name: str):
+    return f'{table_name}_verified'
