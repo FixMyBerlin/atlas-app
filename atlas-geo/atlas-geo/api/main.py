@@ -1,7 +1,7 @@
-from fastapi import FastAPI, Header, Response, Request, HTTPException
+from fastapi import FastAPI, Header, Response, Request, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from typing import Union
+from typing import Union, Annotated
 from psycopg2 import sql
 from db_configuration import valid_verified_datasets, export_geojson_function_from_type, verification_tables, valid_verified_status
 from db import conn_string
@@ -10,10 +10,15 @@ import psycopg2.extras
 import json
 import os
 
+
 app = FastAPI(
     title="RadverkehrsatlasTools",
     description="Use and interact with OSM data from FixMyCity",
     version="0.1.0",
+    license_info={
+       "name":"ODbL 1.0",
+       "url": "https://opendatacommons.org/licenses/odbl/"
+      }
 )
 
 origins = [
@@ -47,6 +52,25 @@ def export_region(response: Response, type_name: str, minlon: float= 13.3, minla
       statement = sql.SQL("SELECT * FROM {table_name} (%s, %s, %s, %s);").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
       cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
       result = cur.fetchone()[0]
+
+      return result
+
+@app.get("/boundaries/")
+def export_boundaries(response: Response, ids: Annotated[list[int], Query()]):
+    with conn.cursor(cursor_factory = psycopg2.extras.RealDictCursor) as cur:
+      # Check if ids are available
+      statement = sql.SQL("SELECT osm_id FROM boundaries WHERE osm_id IN %s")
+      cur.execute(statement, (tuple(ids), ))
+      results = cur.fetchall()
+      if results == None or len(results) != len(ids):
+         raise HTTPException(status_code=404, detail="Couldn't find given ids. At least one id is wrong or dupplicated.")
+
+      response.headers["Content-Disposition"] = 'attachment; filename="boundaries_'+ '_'.join(map(str, ids)) +'.geojson"'
+      response.headers["Content-Type"] = 'application/geo+json'
+
+      statement = sql.SQL("SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom FROM boundaries WHERE osm_id IN %s")
+      cur.execute(statement, (tuple(ids), ) )
+      result = cur.fetchone()['geom']
 
       return result
 
