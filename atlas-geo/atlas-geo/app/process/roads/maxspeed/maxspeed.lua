@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/maxspeed/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/maxspeed/?.lua"
 require("ExcludeHighways")
 require("FilterTags")
 require("HighwayClasses")
@@ -71,11 +71,11 @@ function osm2pgsql.process_way(object)
   -- 4. SQL: intersecting landuse
   local maxspeed, source, confidence = MaxspeedDirect(tags)
 
-  if maxspeed < 0 then
+  if maxspeed == nil then
     maxspeed, source, confidence = MaxspeedFromZone(tags)
   end
 
-  if maxspeed == nil or maxspeed == -1 then
+  if maxspeed == nil then
     local highway_speeds = {
       ["living_street"] = 7
     }
@@ -113,7 +113,7 @@ function osm2pgsql.process_way(object)
 
   local meta = Metadata(object)
 
-  if maxspeed ~= nil and maxspeed ~= -1 then
+  if maxspeed ~= nil then
     table:insert({
       tags = tags,
       meta = meta,

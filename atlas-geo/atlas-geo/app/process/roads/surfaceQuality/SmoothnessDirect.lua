@@ -1,13 +1,12 @@
 function SmoothnessDirect(smoothness)
-  local value = smoothness
   local source = "nothing_found"
   local confidence = "nothing_found"
 
-  if value ~= nil then
+  if smoothness ~= nil then
     source = "tag"
     confidence = "high"
 
-    -- We only support some smoothness values to make thinks easier for the user
+    -- We only support some smoothness values to make things easier for the user
     local smoothnessNormalization = {
       ["excellent"] = "excellent",
       ["very_good"] = "excellent",
@@ -19,18 +18,16 @@ function SmoothnessDirect(smoothness)
       ["horrible"] = "very_bad",
       ["very_horrible"] = "very_bad",
     }
-    value = smoothnessNormalization[value]
+    local normalized = smoothnessNormalization[smoothness]
 
-    if value == nil then
-      value = nil
-      source = "tag_normalized"
+    if normalized == nil then
+      source = "nothing_found"
       confidence = "nothing_found"
-    end
-
-    if value and value ~= smoothness then
+    elseif normalized ~= smoothness then
       source = "tag_normalized"
     end
+    return normalized, source, confidence
   end
 
-  return value, source, confidence
+  return nil, source, confidence
 end
