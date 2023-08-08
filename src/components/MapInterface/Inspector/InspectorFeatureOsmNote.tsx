@@ -1,16 +1,12 @@
 import { Link } from '@components/Link'
 import React from 'react'
 import { Disclosure } from './Disclosure'
-import { InspectorFeature } from './Inspector'
 import clsx from 'clsx'
 import { proseClasses } from '@components/text'
 import { InspectorOsmNoteFeature } from './Inspector'
 import { CheckIcon } from '@heroicons/react/24/solid'
 import dompurify from 'dompurify'
-import {
-  ChatBubbleLeftRightIcon,
-  ChatBubbleOvalLeftEllipsisIcon,
-} from '@heroicons/react/24/outline'
+import { ChatBubbleOvalLeftEllipsisIcon } from '@heroicons/react/24/outline'
 
 type Comment = {
   date: string

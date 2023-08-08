@@ -64,6 +64,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.9",
     "@tanstack/react-location-devtools": "^3.4.4",
+    "@types/dompurify": "^3.0.2",
     "@types/jsurl2": "^2.1.1",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
