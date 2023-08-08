@@ -1,12 +1,6 @@
 import { Link } from '@components/Link'
 import { proseClasses } from '@components/text'
-import {
-  ChatBubbleLeftRightIcon,
-  ChatBubbleOvalLeftEllipsisIcon,
-} from '@heroicons/react/24/outline'
-import { CheckIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
-import dompurify from 'dompurify'
 import React from 'react'
 import { Disclosure } from './Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
