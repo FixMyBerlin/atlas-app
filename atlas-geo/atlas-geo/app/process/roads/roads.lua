@@ -68,6 +68,9 @@ function osm2pgsql.process_way(object)
   if tags.footway == 'sidewalk' then
     return
   end
+  if tags.footway == 'crossing' and tags.bicycle ~= 'yes' then
+    return
+  end
 
   local results = {}
   MergeTable(results, RoadClassification(object))
