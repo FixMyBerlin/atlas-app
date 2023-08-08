@@ -1,11 +1,7 @@
 function SurfaceDirect(surface)
-  local value = surface
-  local source = "nothing_found"
-  local confidence = "nothing_found"
-
-  if value ~= nil then
-    source = "tag"
-    confidence = "high"
+  if surface ~= nil then
+    local source = "tag"
+    local confidence = "high"
 
     -- TODO: Later, we should add this…
     -- We only support some smoothness values to make thinks easier for the user
@@ -31,7 +27,8 @@ function SurfaceDirect(surface)
     -- if value and value ~= surface then
     --   source = "tag_normalized"
     -- end
+    return surface, source, confidence
   end
 
-  return value, source, confidence
+  return nil, nil, nil
 end
