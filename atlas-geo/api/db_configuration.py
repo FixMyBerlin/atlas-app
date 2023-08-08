@@ -22,6 +22,9 @@ export_geojson_function_from_type = {
   "surfaceQuality":     "atlas_export_geojson_surfacequality",
 }
 
+# def export_function(table_name: str):
+#   return f'atlas_export_geojson_{table_name.lower()}'
+
 # main.py: Used as an allow list to guard the /verify/* API
 # `atlas-app` only uses approved, rejected for now.
 valid_verified_status = ['approved', 'rejected', 'undefined']
