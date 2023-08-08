@@ -59,6 +59,10 @@ function osm2pgsql.process_way(object)
     IntoExcludeTable(excludedRoadsTable, object, reason)
     return
   end
+  if object.tags.area == 'yes' then
+    IntoExcludeTable(excludedRoadsTable, object, "Exclude `area=yes`")
+    return
+  end
 
   -- TODO: move to ExcludeHighways
   if tags.footway == 'sidewalk' then

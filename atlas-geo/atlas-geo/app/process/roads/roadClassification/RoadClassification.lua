@@ -10,18 +10,6 @@ function RoadClassification(object)
   local roadClassification = {}
   local tags = object.tags
 
-  -- Exclude sidewalk `(highway=footway) + footway=sidewalk`
-  -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
-  if tags.footway == "sidewalk" then
-    return { road_category_exlcuded = "Exclude `footway=sidewalk`" }
-  end
-
-  -- Exclude `is_sidepath=yes`
-  -- Including "Fahrrad frei" https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:1022-10
-  if object.tags.is_sidepath == "yes" then
-    return { road_category_exlcuded = "Exclude `is_sidepath=yes`" }
-  end
-
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
