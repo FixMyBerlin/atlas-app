@@ -13,9 +13,6 @@ function SurfaceQuality(object)
   local tags = object.tags
 
   local surface_data = {}
-  if object.tags.area == 'yes' then
-    return {road_class_exlcuded="Exclude `area=yes`"}
-  end
 
   local surface, surface_source = SurfaceDirect(tags.surface)
 
