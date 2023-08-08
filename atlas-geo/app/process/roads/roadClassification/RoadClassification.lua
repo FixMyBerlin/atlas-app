@@ -37,6 +37,13 @@ function RoadClassification(object)
     roadClassification.road_category = "bicycle_road"
   end
 
+  -- Mischverkehr
+  if tags.bicycle ~= 'no' and tags.bicycle ~= 'use_sidepath' then
+    if MinorRoadClasses[tags.highway] or MajorRoadClasses[tags.highway] then
+      roadClassification.implicit_shared_lane = true
+    end
+  end
+
   if tags.oneway == 'yes' then
     if tags['oneway:bicycle'] == 'no' then
       tags.oneway = 'car_not_bike'
