@@ -69,7 +69,7 @@ def export_region(response: Response, type_name: str, osm_id: int):
          raise HTTPException(status_code=404, detail="osm_id not found")
       region_name, = results
       # Download file directly
-      response.headers["Content-Disposition"] = f'attachment; filename="{region_name}_{type_name}geojson"'
+      response.headers["Content-Disposition"] = f'attachment; filename="{region_name}_{type_name}.geojson"'
       response.headers["Content-Type"] = 'application/geo+json'
 
       statement = sql.SQL("SELECT * FROM {table_name} (( SELECT ST_Transform(geom, 4326) FROM boundaries WHERE osm_id=%s));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
