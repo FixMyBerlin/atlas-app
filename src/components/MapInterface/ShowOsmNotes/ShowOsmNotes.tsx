@@ -7,6 +7,7 @@ import { useMapStateInteraction } from '../mapStateInteraction'
 import Tooltip from '@components/Tooltip/Tooltip'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/index'
+import { Link } from '@components/Link'
 
 interface Props {
   name?: string
@@ -25,6 +26,8 @@ export const ShowOsmNotes: React.FC<Props> = () => {
       },
     })
   }
+  const centerLocation = mainMap?.getCenter()
+  const currentZoom = mainMap?.getZoom()
 
   return (
     <div className="ml-2 shadow-lg">
@@ -57,11 +60,9 @@ export const ShowOsmNotes: React.FC<Props> = () => {
         </button>
       </Tooltip>
       <Tooltip text="OSM-Note erstellen" className="inline-flex">
-        <button
-          onClick={() => {
-            mainMap ? console.warn('BBOX', mainMap.getBounds()) : null
-          }}
-          // title="OSM-Note erstellen"
+        <Link
+          to={`https://www.openstreetmap.org/note/new#map=${currentZoom}/${centerLocation?.lat}/${centerLocation?.lng}`}
+          blank
           className={clsx(
             'flex-0 group min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
             'focus:z-9 rounded-r-lg bg-white hover:bg-yellow-50',
@@ -73,7 +74,7 @@ export const ShowOsmNotes: React.FC<Props> = () => {
           <div className="h-5 w-5">
             <PlusIcon />
           </div>
-        </button>
+        </Link>
       </Tooltip>
     </div>
   )
