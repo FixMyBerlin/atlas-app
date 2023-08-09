@@ -1,4 +1,6 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/maxspeed/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/maxspeed/?.lua"
 require("IsFresh")
 require("MaxspeedDirect")
 require("MaxspeedFromZone")
@@ -6,10 +8,9 @@ require("CopyTags")
 require("Set")
 
 function Maxspeed(object)
-
   local tags = object.tags
 
-  local maxspeed_data = {raw_maxspeed = tags.maxspeed} -- Preserve original value since we use `maxspeed` for our processed data
+  local maxspeed_data = { raw_maxspeed = tags.maxspeed } -- Preserve original value since we use `maxspeed` for our processed data
   -- TODO: Why would we want to exclude this based on this tag? (Tobias)
   -- if tags.bicycle == "no" then
   --   IntoExcludeTable(table, object, "no bikes allowed")
@@ -39,7 +40,7 @@ function Maxspeed(object)
   end
 
   -- all tags that are shown on the application
- local tags_cc = {
+  local tags_cc = {
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
@@ -61,5 +62,5 @@ function Maxspeed(object)
   if maxspeed ~= nil then
     return maxspeed_data
   end
-  return {} 
+  return {}
 end

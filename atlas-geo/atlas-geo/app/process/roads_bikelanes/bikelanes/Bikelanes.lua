@@ -1,4 +1,6 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/bikelanes/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
 require("Metadata")
@@ -162,8 +164,11 @@ function Bikelanes(object)
     'dual_carriageway',
   })
 
-  local presence_data = { bikelane_presence_left = presence[LEFT_SIGN], bikelane_presence_self = presence[CENTER_SIGN],
-    bikelane_presence_right = presence[RIGHT_SIGN] }
+  local presence_data = {
+    bikelane_presence_left = presence[LEFT_SIGN],
+    bikelane_presence_self = presence[CENTER_SIGN],
+    bikelane_presence_right = presence[RIGHT_SIGN]
+  }
   CopyTags(tags, presence_data, presence_tags_cc)
 
   return presence_data

@@ -1,5 +1,6 @@
-package.path = package.path ..
-    ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/surfaceQuality/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/surfaceQuality/?.lua"
 require("IsFresh")
 require("SurfaceDirect")
 require("SmoothnessDirect")
