@@ -8,16 +8,17 @@ source ./process-helpers.sh
 
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
-run_lua "roads/roads"
-run_psql "roads/bikelanes/bikelanes"
-
-echo "Reminder: The 'lit' table is available only after Postprocessing finished"
-run_lua "lit/lit"
 echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
-run_lua "bikelanes/bikelanes"
-run_lua "surfaceQuality/surfaceQuality"
-run_lua "roadClassification/roadClassification"
-run_lua "maxspeed/maxspeed"
+run_lua "roads_bikelanes/roads_bikelanes"
+run_psql "roads_bikelanes/bikelanes/bikelanes"
+# run_psql "roads_bikelanes/maxspeed/maxspeed"
+
+run_lua "legacy_bikelanes/bikelanesPresence"
+run_lua "legacy_surfaceQuality/surfaceQuality"
+run_lua "legacy_roadClassification/roadClassification"
+run_lua "legacy_maxspeed/maxspeed"
+# Reminder: The 'lit' table is available only after Postprocessing finished
+run_lua "legacy_lit/lit"
 
 run_lua "boundaries"
 run_lua "places/places"
@@ -26,8 +27,6 @@ run_lua "landuse"
 run_lua "publicTransport"
 run_lua "poiClassification/poiClassification"
 run_lua_if_debug "poiClassification/poiClassification_todoList"
-
-
 run_lua "barriers/barriers"
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "

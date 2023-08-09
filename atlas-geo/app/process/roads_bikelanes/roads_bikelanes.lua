@@ -1,5 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
-local dir = ";/app/process/roads/"
+local dir = ";/app/process/roads_bikelanes/"
 package.path = package.path .. dir .. "roadClassification/?.lua"
 package.path = package.path .. dir .. "maxspeed/?.lua"
 package.path = package.path .. dir .. "surfaceQuality/?.lua"

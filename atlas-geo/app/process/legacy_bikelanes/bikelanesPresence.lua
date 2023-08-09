@@ -1,4 +1,6 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/roads/bikelanes/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
 require("Set")
 require("FilterTags")
 require("Metadata")
@@ -10,7 +12,7 @@ require("categories")
 require("transformations")
 require("JoinSets")
 require("PrintTable")
-require("IntoExcludeTable")
+-- require("IntoExcludeTable")
 require("ConvertCyclewayOppositeSchema")
 
 
@@ -27,16 +29,16 @@ local presenceTable = osm2pgsql.define_table({
   }
 })
 
-local excludeTable = osm2pgsql.define_table({
-  name = 'bikelanes_excluded',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags',   type = 'jsonb' },
-    { column = 'meta',   type = 'jsonb' },
-    { column = 'reason', type = 'text' },
-    { column = 'geom',   type = 'linestring' },
-  }
-})
+-- local excludeTable = osm2pgsql.define_table({
+--   name = 'bikelanes_excluded',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags',   type = 'jsonb' },
+--     { column = 'meta',   type = 'jsonb' },
+--     { column = 'reason', type = 'text' },
+--     { column = 'geom',   type = 'linestring' },
+--   }
+-- })
 
 -- whitelist of tags we want to insert intro the DB
 local allowed_tags = Set({
@@ -75,9 +77,9 @@ function osm2pgsql.process_way(object)
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   if not object.tags.highway or not allowed_highways[object.tags.highway] then return end
 
-  local exclude, reason = ExcludeHighways(object.tags)
+  local exclude, _ = ExcludeHighways(object.tags)
   if exclude then
-    IntoExcludeTable(excludeTable, object, reason)
+    -- IntoExcludeTable(excludeTable, object, reason)
     return
   end
 
@@ -141,10 +143,10 @@ function osm2pgsql.process_way(object)
     for _, side in pairs(SIDES) do presence[side] = presence[side] or NOT_EXPECTED end
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
-      IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
+      -- IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return
     elseif tags.motorroad or tags.expressway then
-      IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
+      -- IntoExcludeTable(excludeTable, object, "no infrastructure expected for motorroad and express way")
       return
       -- elseif tags.maxspeed and tags.maxspeed <= 20 then
       --   intoExcludeTable(object, "no infrastructure expected for max speed <= 20 kmh")

@@ -10,12 +10,10 @@ function RoadClassification(object)
   local roadClassification = {}
   local tags = object.tags
 
-
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
   local highway_mapping = { road = "unspecified_road_category", steps = "footway" }
   roadClassification.road_category = highway_mapping[tags.highway] or tags.highway
-
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
