@@ -47,11 +47,12 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
       <Disclosure title="Öffentlicher Kommentar auf openstreetmap.org" objectId={String(thread.id)}>
         {thread.comments?.map((comment, index) => {
           const firstComment = index === 0
-          const date = new Date(comment.date).toLocaleString('de-DE')
+          const splitDate = comment.date.split(' ')
+          const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
           return (
             <section key={comment.uid} className="border-b border-b-gray-200 bg-teal-50 px-3 py-2">
               <p className="text-black">
-                <strong>{comment.user || 'Eine anonyme Nutzer:in'}</strong> kommentiert am {date}:
+                <strong>{comment.user || 'Eine anonyme Nutzer:in'}</strong> kommentierte am {date}:
               </p>
 
               <div
