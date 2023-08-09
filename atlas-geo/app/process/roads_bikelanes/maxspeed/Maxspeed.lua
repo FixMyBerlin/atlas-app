@@ -11,11 +11,6 @@ function Maxspeed(object)
   local tags = object.tags
 
   local maxspeed_data = { raw_maxspeed = tags.maxspeed } -- Preserve original value since we use `maxspeed` for our processed data
-  -- TODO: Why would we want to exclude this based on this tag? (Tobias)
-  -- if tags.bicycle == "no" then
-  --   IntoExcludeTable(table, object, "no bikes allowed")
-  --   return
-  -- end
 
   -- Try to find maxspeed information in the following order:
   -- 1. `maxspeed` tag
