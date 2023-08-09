@@ -23,6 +23,49 @@ export const topic_roadClassification: MapDataTopic = {
         source,
         sourceLayer,
       }),
+      legends: [
+        {
+          id: 'unclassified',
+          name: 'Nebenstraße (…)',
+          style: { type: 'line', color: '#e6d6a2' },
+        },
+        {
+          id: 'tertiary',
+          name: 'Kreisstraße (…)',
+          style: { type: 'line', color: '#dab07c' },
+        },
+        { id: 'residential', name: 'Wohngebiet', style: { type: 'line', color: '#9a987e' } },
+        {
+          id: 'path-track-bridleway',
+          name: 'Pfad, Wald-, Feldweg (…)',
+          style: { type: 'line', color: '#b4aac0' },
+        },
+        {
+          id: 'primary-motorway-secondary-trunk',
+          name: 'Verbindungsstraße (…)',
+          style: { type: 'line', color: '#dab07c' },
+        },
+        {
+          id: 'living_street-pedestrian-bicycle_road',
+          name: 'Verkehrsberuhigt (…)',
+          style: { type: 'line', color: '#80a3ea' },
+        },
+        {
+          id: 'footway-cycleway',
+          name: 'Fuß- & Radwege',
+          style: { type: 'line', color: '#b9aac0' },
+        },
+        {
+          id: 'service_road-service_alley',
+          name: 'Zufahrtsweg',
+          style: { type: 'line', color: '#e6d6a2' },
+        },
+        // {
+        //   id: 'service_drive_through-service_parking_aisle',
+        //   name: 'Zufahrtsweg (…)',
+        //   style: { type: 'line', color: 'rgba(251, 40, 40, 0)' },
+        // },
+      ],
       interactiveFilters: null,
     },
     {
