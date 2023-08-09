@@ -10,7 +10,7 @@ export const DynamicSources: React.FC = () => {
   const { mainMap } = useMap()
   // const [activeRequestEventHandler, setActiveRequestEventHandler] = useState(false)
   const { mapLoaded, setOsmNotesLoaded } = useMapStateInteraction()
-  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
+  const { osmNotes } = useSearch<LocationGenerics>()
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -43,14 +43,14 @@ export const DynamicSources: React.FC = () => {
   useEffect(() => {
     if (!mainMap || !mapLoaded) return
 
-    if (osmNotesActive) {
+    if (osmNotes) {
       mainMap.on('moveend', osmNotesApiRequest)
     }
 
-    if (!osmNotesActive) {
+    if (!osmNotes) {
       mainMap.off('moveend', osmNotesApiRequest)
     }
-  }, [osmNotesActive])
+  }, [osmNotes])
 
   const layerProps: SymbolLayer = {
     id: 'osmnoteslayer',
@@ -79,9 +79,7 @@ export const DynamicSources: React.FC = () => {
       data={geodata}
       attribution="Source osm.org"
     >
-      {osmNotesActive && <Layer key="osmnoteslayer" {...layerProps} />}
-      {/* To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData */}
-      {/* <LayerHighlight {...layerProps} /> */}
+      {osmNotes && <Layer key="osmnoteslayer" {...layerProps} />}
     </Source>
   )
 }

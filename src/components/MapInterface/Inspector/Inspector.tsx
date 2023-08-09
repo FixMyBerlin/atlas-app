@@ -53,18 +53,14 @@ export const Inspector: React.FC = () => {
         const sourceKey = String(inspectObject.layer.source)
         if (!sourceKey) return null
 
-        console.warn('TODO: OSM Notes are not yet implemented', inspectObject)
-
         if (!inspectObject?.properties?.id) return null
 
         return (
-          <>
-            <InspectorFeatureOsmNote
-              key={`osm-note-${inspectObject.properties.id}`}
-              properties={inspectObject.properties}
-              geometry={inspectObject.geometry}
-            />
-          </>
+          <InspectorFeatureOsmNote
+            key={`osm-note-${inspectObject.properties.id}`}
+            properties={inspectObject.properties}
+            geometry={inspectObject.geometry}
+          />
         )
       })}
 
