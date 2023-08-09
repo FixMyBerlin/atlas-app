@@ -9,8 +9,8 @@
    id="svg1312"
    sodipodi:docname="close.svg"
    inkscape:export-filename="close.png"
-   inkscape:export-xdpi="342.85715"
-   inkscape:export-ydpi="342.85715"
+   inkscape:export-xdpi="182.85715"
+   inkscape:export-ydpi="182.85715"
    inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -24,19 +24,30 @@
      bordercolor="#000000"
      borderopacity="0.25"
      inkscape:showpageshadow="2"
-     inkscape:pageopacity="1"
+     inkscape:pageopacity="0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="25.829962"
-     inkscape:cx="8.8463158"
-     inkscape:cy="14.769669"
+     inkscape:cx="8.9237452"
+     inkscape:cy="14.847099"
      inkscape:window-width="1720"
      inkscape:window-height="1371"
      inkscape:window-x="0"
      inkscape:window-y="32"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg1312" />
+  <g
+     id="g2462"
+     transform="translate(0.42219033,0.69340915)">
+    <ellipse
+       style="fill:#ffffff;stroke:none;stroke-width:3.60753"
+       id="path285"
+       cx="11.780688"
+       cy="11.493961"
+       rx="8.6373405"
+       ry="8.2456312" />
+  </g>
   <path
      stroke-linecap="round"
      stroke-linejoin="round"
