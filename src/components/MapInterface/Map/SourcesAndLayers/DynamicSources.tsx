@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { FeatureCollection } from 'geojson'
 import axios from 'axios'
-import { CircleLayer, Layer, Source, useMap } from 'react-map-gl'
+import { Layer, Source, SymbolLayer, useMap } from 'react-map-gl'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 
 export const DynamicSources: React.FC = () => {
@@ -51,26 +51,23 @@ export const DynamicSources: React.FC = () => {
     osmNotesApiRequest()
   }, [])
 
-  const layerProps: CircleLayer = {
+  const layerProps: SymbolLayer = {
     id: 'osmnoteslayer',
     source: 'osm-notes',
     // 'source-layer': 'default', // set in `datasets/process.cjs`
-    type: 'circle',
+    type: 'symbol',
     layout: {
       visibility: 'visible',
-    },
-    paint: {
-      'circle-radius': 5,
-      'circle-stroke-width': 1,
-      'circle-color': [
+      'icon-image': [
         'match',
         ['get', 'status'],
         'closed',
-        'green',
+        'check_icon',
         'open',
-        'red',
-        'blue' /* default color */,
+        'closed_icon',
+        'closed_icon' /* default */,
       ],
+      'icon-size': 0.5,
     },
   }
 
