@@ -19,8 +19,6 @@ type StoreMapLoadedState = {
 type StoreOsmNotesState = {
   osmNotesLoaded: boolean
   setOsmNotesLoaded: (osmNotesLoaded: Store['osmNotesLoaded']) => void
-  osmNotesActive: boolean
-  setOsmNotesActive: (osmNotesLoaded: Store['osmNotesActive']) => void
 }
 
 type StorePmTilesProtocolState = {
@@ -56,8 +54,6 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
 
   osmNotesLoaded: false,
   setOsmNotesLoaded: (osmNotesLoaded) => set({ osmNotesLoaded }),
-  osmNotesActive: false,
-  setOsmNotesActive: (osmNotesActive) => set({ osmNotesActive }),
 
   pmTilesProtocolReady: false,
   setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),

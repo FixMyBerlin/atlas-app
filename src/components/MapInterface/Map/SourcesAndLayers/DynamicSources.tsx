@@ -3,11 +3,14 @@ import { FeatureCollection } from 'geojson'
 import axios from 'axios'
 import { Layer, Source, SymbolLayer, useMap } from 'react-map-gl'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
+import { useSearch } from '@tanstack/react-location'
+import { LocationGenerics } from '@routes/index'
 
 export const DynamicSources: React.FC = () => {
   const { mainMap } = useMap()
   // const [activeRequestEventHandler, setActiveRequestEventHandler] = useState(false)
-  const { mapLoaded, setOsmNotesLoaded, osmNotesActive } = useMapStateInteraction()
+  const { mapLoaded, setOsmNotesLoaded } = useMapStateInteraction()
+  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -31,11 +34,14 @@ export const DynamicSources: React.FC = () => {
       })
   }, [])
 
+  // On first activation, fetch data without map interaction
+  useEffect(() => {
+    osmNotesApiRequest()
+  }, [])
+
   // Handle event handler -> only when osm notes layer is active
   useEffect(() => {
     if (!mainMap || !mapLoaded) return
-
-    console.warn('osmnotes active, fetching data', osmNotesActive)
 
     if (osmNotesActive) {
       mainMap.on('moveend', osmNotesApiRequest)
@@ -45,11 +51,6 @@ export const DynamicSources: React.FC = () => {
       mainMap.off('moveend', osmNotesApiRequest)
     }
   }, [osmNotesActive])
-
-  // On first activation, fetch data without map interaction
-  useEffect(() => {
-    osmNotesApiRequest()
-  }, [])
 
   const layerProps: SymbolLayer = {
     id: 'osmnoteslayer',
@@ -67,7 +68,6 @@ export const DynamicSources: React.FC = () => {
         'closed_icon',
         'closed_icon' /* default */,
       ],
-      'icon-size': 0.5,
     },
   }
 
