@@ -5,14 +5,26 @@ import { useMap } from 'react-map-gl'
 import { SmallSpinner } from '@components/Spinner/Spinner'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import Tooltip from '@components/Tooltip/Tooltip'
+import { useNavigate, useSearch } from '@tanstack/react-location'
+import { LocationGenerics } from '@routes/index'
 
 interface Props {
   name?: string
 }
 
 export const ShowOsmNotes: React.FC<Props> = () => {
-  const { osmNotesLoaded, osmNotesActive, setOsmNotesActive } = useMapStateInteraction()
+  const { osmNotesLoaded } = useMapStateInteraction()
   const { mainMap } = useMap()
+  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
+
+  const navigate = useNavigate<LocationGenerics>()
+  const onChange = (value: boolean) => {
+    navigate({
+      search: (old) => {
+        return { ...old, osmNotes: value }
+      },
+    })
+  }
 
   return (
     <div className="ml-2 shadow-lg">
@@ -21,7 +33,9 @@ export const ShowOsmNotes: React.FC<Props> = () => {
         className="inline-flex"
       >
         <button
-          onClick={() => setOsmNotesActive(!osmNotesActive)}
+          onClick={() => {
+            onChange(!osmNotesActive)
+          }}
           className={clsx(
             'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
             osmNotesActive ? 'rounded-l-lg' : 'rounded-lg',

@@ -34,6 +34,7 @@ export type LocationGenerics = MakeGenerics<{
     lat: number
     lng: number
     zoom: number
+    osmNotes: boolean
     bg: SourcesRasterIds
     config: ThemeConfig[]
     draw: DrawArea[]

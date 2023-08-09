@@ -1,7 +1,6 @@
 import { useRegionDatasets } from '@components/MapInterface/SelectDatasets/utils/useRegionDatasets'
 import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { ThemeConfig } from '@components/MapInterface/mapStateConfig'
-import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import {
   createDatasetSourceLayerKey,
   createSourceTopicStyleLayerKey,
@@ -52,7 +51,8 @@ export const useInteractiveLayers = () => {
   // active layer from theme
   const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
-  const { osmNotesActive } = useMapStateInteraction()
+  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
+
   const themeActiveLayerIds = collectInteractiveLayerIds({
     theme: currentTheme,
     osmNotes: osmNotesActive,
