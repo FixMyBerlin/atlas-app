@@ -3,8 +3,8 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topiId = 'boundaries'
 export type TopicBoundariesId = typeof topiId
-export type TopicBoundariesStyleIds = 'default'
-export type TopicBoundariesStyleFilterIds = 'admin_level'
+export type TopicBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
+export type TopicBoundariesStyleFilterIds = '_nofilter'
 
 export const topic_boundaries: MapDataTopic = {
   id: topiId,
@@ -14,43 +14,39 @@ export const topic_boundaries: MapDataTopic = {
   styles: [
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Gemeindeverbund / Amt',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
         source: 'tarmac_boundaries',
         sourceLayer: 'public.boundaries',
+        additionalFilter: ['match', ['get', 'admin_level'], ['7'], true, false],
       }),
-      // layers: [
-      //   {
-      //     id: 'default',
-      //     type: 'line',
-      //     source: 'vts_boundaries_tiles',
-      //     'source-layer': 'public.boundaries',
-      //     filter: [
-      //       'all',
-      //       ['has', 'admin_level'],
-      //       // ['match', ['get', 'admin_level'], ['9'], true, false],
-      //     ],
-      //     paint: {
-      //       'line-width': 2,
-      //       'line-color': '#9333ea',
-      //       'line-opacity': 0.2,
-      //     },
-      //   },
-      // ],
-      interactiveFilters: [
-        {
-          id: 'admin_level',
-          name: 'Administrative Ebene',
-          filterConfig: { lookupKey: 'admin_level' },
-          inputType: 'radiobutton',
-          options: [
-            { id: '7', name: 'Gemeindeverbund / Amt', defaultActive: false },
-            { id: '8', name: 'Gemeinde / Stadt', defaultActive: true },
-          ],
-        },
-      ],
+      interactiveFilters: null,
+    },
+    {
+      id: 'level-8',
+      name: 'Gemeinde / Stadt',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'atlas_boundaries',
+        source: 'tarmac_boundaries',
+        sourceLayer: 'public.boundaries',
+        additionalFilter: ['match', ['get', 'admin_level'], ['8'], true, false],
+      }),
+      interactiveFilters: null,
+    },
+    {
+      id: 'level-9-10',
+      name: 'Bezirk, Stadtteil',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'atlas_boundaries',
+        source: 'tarmac_boundaries',
+        sourceLayer: 'public.boundaries',
+        additionalFilter: ['match', ['get', 'admin_level'], ['9', '10'], true, false],
+      }),
+      interactiveFilters: null,
     },
   ],
 }

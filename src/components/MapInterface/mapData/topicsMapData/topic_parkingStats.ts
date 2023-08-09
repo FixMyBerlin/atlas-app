@@ -5,8 +5,14 @@ const topic = 'parkingStats'
 const source = 'parkraumParkingStats'
 const sourceLayer = 'processing.boundaries_stats'
 export type TopicParkingStatsId = typeof topic
-export type TopicParkingStatsStyleIds = 'default' | 'length'
-export type TopicParkingStatsStyleFilterIds = 'admin_level'
+export type TopicParkingStatsStyleIds =
+  | 'stats-admin-level-4'
+  | 'default'
+  | 'stats-admin-level-10'
+  | 'length-admin-level-4'
+  | 'length-admin-level-9'
+  | 'length-admin-level-10'
+export type TopicParkingStatsStyleFilterIds = '_nofilter'
 
 export const topic_parkingStats: MapDataTopic = {
   id: topic,
@@ -16,62 +22,76 @@ export const topic_parkingStats: MapDataTopic = {
   beforeId: undefined,
   styles: [
     {
-      id: 'default',
-      name: 'Standard',
+      id: 'stats-admin-level-4',
+      name: 'Stadt (Anzahl)',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats',
         source,
         sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
       }),
-      // layers: [
-      //   {
-      //     id: 'parkraumParkingStatsLayer',
-      //     type: 'fill',
-      //     source: 'parkraumParkingStats',
-      //     'source-layer': 'processing.boundaries_stats',
-      //     paint: {
-      //       'fill-color': 'hsl(17, 90%, 80%)',
-      //       'fill-opacity': 0.9,
-      //     },
-      //   },
-      // ],
-      interactiveFilters: [
-        {
-          id: 'admin_level',
-          name: 'Administrative Ebene',
-          filterConfig: { lookupKey: 'admin_level' },
-          inputType: 'radiobutton',
-          options: [
-            { id: '4', name: 'Admin Level 4 / Stadt', defaultActive: false },
-            { id: '9', name: 'Admin Level 9 / Bezirk', defaultActive: true },
-            { id: '10', name: 'Admin Level 10', defaultActive: false },
-          ],
-        },
-      ],
+      interactiveFilters: null,
     },
     {
-      id: 'length',
-      name: 'Länge (km)',
+      id: 'default', // 'stats-admin-level-9',
+      name: 'Bezirk (Anzahl)',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'parking_stats',
+        source,
+        sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
+      }),
+      interactiveFilters: null,
+    },
+    {
+      id: 'stats-admin-level-10',
+      name: 'Stadtteil (Anzahl)',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'parking_stats',
+        source,
+        sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],
+      }),
+      interactiveFilters: null,
+    },
+    {
+      id: 'length-admin-level-4',
+      name: 'Stadt (Länge in km)',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats_length',
         source,
         sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
       }),
-      interactiveFilters: [
-        {
-          id: 'admin_level',
-          name: 'Administrative Ebene',
-          filterConfig: { lookupKey: 'admin_level' },
-          inputType: 'radiobutton',
-          options: [
-            { id: '4', name: 'Admin Level 4 / Stadt', defaultActive: false },
-            { id: '9', name: 'Admin Level 9 / Bezirk', defaultActive: true },
-            { id: '10', name: 'Admin Level 10', defaultActive: false },
-          ],
-        },
-      ],
+      interactiveFilters: null,
+    },
+    {
+      id: 'length-admin-level-9',
+      name: 'Bezirk (Länge in km)',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'parking_stats_length',
+        source,
+        sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
+      }),
+      interactiveFilters: null,
+    },
+    {
+      id: 'length-admin-level-10',
+      name: 'Stadtteil (Länge in km)',
+      desc: null,
+      layers: mapboxStyleLayers({
+        group: 'parking_stats_length',
+        source,
+        sourceLayer,
+        additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],
+      }),
+      interactiveFilters: null,
     },
   ],
 }

@@ -329,7 +329,7 @@
     "layers": [
       {
         "type": "line",
-        "id": "admin-level-8",
+        "id": "admin-level-8-plus",
         "paint": {
           "line-color": "hsl(323, 43%, 76%)",
           "line-opacity": 0.6,
@@ -339,7 +339,7 @@
         "filter": [
           "all",
           ["has", "admin_level"],
-          ["match", ["get", "admin_level"], ["8"], true, false]
+          ["match", ["get", "admin_level"], ["8", "9", "10"], true, false]
         ],
         "layout": {}
       },

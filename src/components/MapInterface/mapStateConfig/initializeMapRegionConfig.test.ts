@@ -44,7 +44,7 @@ describe('initializeMapReagionConfig()', () => {
               active: true,
               filters: [
                 {
-                  id: 'admin_level',
+                  id: '_nofilter',
                   options: [
                     { id: '7', active: false }, // change id to 'id_changed', change to true
                     { id: '8', active: true },
