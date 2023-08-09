@@ -68,6 +68,7 @@ export const DynamicSources: React.FC = () => {
         'closed_icon',
         'closed_icon' /* default */,
       ],
+      'icon-allow-overlap': true,
     },
   }
 
