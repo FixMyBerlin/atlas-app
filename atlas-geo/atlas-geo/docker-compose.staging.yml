@@ -72,7 +72,7 @@ services:
         LANG: en_US.UTF-8
         LC_ALL: en_US.UTF-8
       ports:
-        - "6000:5432"
+        - "${PGPORT}:5432"
       volumes:
         - geodata_staging:/var/lib/postgresql/data
       container_name: db_staging
