@@ -61,4 +61,5 @@ function Maxspeed(object)
   if maxspeed ~= nil then
     return maxspeed_data
   end
+  return {} 
 end
