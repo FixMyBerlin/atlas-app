@@ -98,7 +98,7 @@ jobs:
             touch .env.production
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
             echo PGHOST='db' >> .env.production
-            echo PGPORT='6000' >> .env.production
+            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env.production
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.production
