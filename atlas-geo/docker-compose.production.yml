@@ -68,7 +68,7 @@ services:
   db:
       env_file:
         - ./.env.production
-      image: postgis/postgis:15-3.3-alpine
+      image: postgis/postgis:14-3.3-alpine
       environment:
         POSTGRES_DB: ${PGDATABASE}
         POSTGRES_USER: ${PGUSER}
