@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/surfaceQuality/?.lua"
+package.path = package.path .. ";./app/process/roads/surfaceQuality/?.lua"
 require('SmoothnessFromSurface')
 
 print('=== Test SmoothnessFromSurface: surface "nil" returns "nil" ===')

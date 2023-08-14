@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/surfaceQuality/?.lua"
+package.path = package.path .. ";./app/process/roads/surfaceQuality/?.lua"
 require('SurfaceDirect')
 
 print('=== Test SurfaceDirect: correct source, confidence for tag ===')
@@ -10,5 +10,5 @@ assert(confidence == "high")
 print('=== Test SurfaceDirect: correct source, confidence for nil ===')
 local value, source, confidence = SurfaceDirect(nil)
 assert(value == nil)
-assert(source == "nothing_found")
-assert(confidence == "nothing_found")
+assert(source == nil)
+assert(confidence == nil)
