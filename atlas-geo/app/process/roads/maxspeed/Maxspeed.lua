@@ -57,10 +57,8 @@ function Maxspeed(object)
   maxspeed_data.maxspeed = maxspeed
   maxspeed_data.maxspeed_source = source
   maxspeed_data.maxspeed_confidence = confidence
-  maxspeed_data.maxspeed_present = true
 
   if maxspeed ~= nil then
     return maxspeed_data
   end
-  return {maxspeed_present = false}
 end
