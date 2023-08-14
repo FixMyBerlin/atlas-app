@@ -7,14 +7,16 @@ services:
     entrypoint: /app/run.sh
     container_name: app
     environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
+      SKIP_DOWNLOAD: 0
+      SKIP_TAG_FILTER: 0
+      OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
     volumes:
       - osmfiles:/data
     networks:
       - app_bridge
+    depends_on:
+      db:
+        condition: service_healthy
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
@@ -23,8 +25,8 @@ services:
     container_name: tiles
     restart: always
     environment:
-      DATABASE_URL:
       NODE_ENV: production
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
     ports:
       - "8010:7800"
     labels:
@@ -39,17 +41,16 @@ services:
       # - "traefik.http.routers.service=prodtiles"
     networks:
       - radverkehrsatlas_mesh
+      - app_bridge
+    depends_on:
+      db:
+        condition: service_healthy
   api:
     env_file:
       - ./.env.production
     image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
     container_name: api
     restart: always
-    environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
     ports:
       - "8020:80"
     labels:
@@ -60,8 +61,35 @@ services:
       - "traefik.http.routers.prodapi.tls=true"
     networks:
       - radverkehrsatlas_mesh
+      - app_bridge
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+      env_file:
+        - ./.env.production
+      image: public.ecr.aws/n0p8j4k5/tarmac/db:${GITHUB_SHA}
+      environment:
+        POSTGRES_DB: ${PGDATABASE}
+        POSTGRES_USER: ${PGUSER}
+        POSTGRES_PASSWORD: ${PGPASSWORD}
+        LANG: en_US.UTF-8
+        LC_ALL: en_US.UTF-8
+      ports:
+        - "6000:5432"
+      volumes:
+        - geodata:/var/lib/postgresql/data
+      container_name: db
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U postgres"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+      networks:
+        - app_bridge
 volumes:
   osmfiles:
+  geodata:
 networks:
   radverkehrsatlas_mesh:
     external: true
