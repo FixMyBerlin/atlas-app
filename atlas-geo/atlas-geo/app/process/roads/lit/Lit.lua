@@ -31,10 +31,7 @@ function Lit(object)
   -- https://wiki.openstreetmap.org/wiki/Key:lit
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
-  if tags.lit == nil then
-    lit_data.lit_present = false
-  else
-    lit_data.lit_present = true
+  if tags.lit ~= nil then
     lit_data.lit_category = "special"
     if (tags.lit == "yes") then
       lit_data.lit_category = "lit"
@@ -71,7 +68,7 @@ function Lit(object)
   CopyTags(tags, lit_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
-  if lit_data.lit_present then
+  if lit_data.lit_category then
     IsFresh(object, 'check_date:lit', lit_data, 'lit')
   end
   return lit_data

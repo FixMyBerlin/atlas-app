@@ -50,8 +50,5 @@ function SurfaceQuality(object)
   surface_data.smoothness_confidence = smoothness_confidence
   surface_data._todo = todo
 
-  surface_data.is_present_surface = tags.surface ~= nil
-  surface_data.is_present_smoothness = tags.smoothness ~= nil
-
   return surface_data
 end
