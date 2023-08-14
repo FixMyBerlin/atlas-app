@@ -64,17 +64,6 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
 
-      - name: Build DB image
-        run: >
-          docker build .
-          --file ./db.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
-
-      - name: Push DB image
-        run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/tarmac/db:${{ github.sha }}
-
       - name: Copy files to server
         uses: appleboy/scp-action@master
         with:
