@@ -76,28 +76,26 @@ function SmoothnessFromSurface(surface)
     ["tiles"] = "bad",
   }
 
-  local smoothness = surfaceToSmoothness[surface] or surfaceToSmoothnessNonStandardValues[surface] or nil
+  if not surface then
+    return nil, nil, nil, "Please add surface=*"
+  end
+  local smoothness = surfaceToSmoothness[surface]
   local source, confidence, todo = nil, nil, nil
-
   if smoothness ~= nil then
     source = 'surface_to_smoothness'
     confidence = 'medium'
-  end
-
-  if not surface then
-    todo = "Please add surface=*"
-  end
-
-  if surface and surfaceToSmoothnessNonStandardValues[surface] then
-    todo = "Please review surface=" ..
+  else
+    smoothness = surfaceToSmoothnessNonStandardValues[surface]
+    if smoothness then
+      source = 'surface_to_smoothness'
+      confidence = 'medium'
+      todo = "Please review surface=" ..
         surface .. " which is a non standard value (List surfaceToSmoothnessNonStandardValues)"
+    else
+      todo = "Please review surface=" ..
+      surface ..
+      " which is a non standard value. Maybe fix it or add it to our list surfaceToSmoothnessNonStandardValues."
+    end
   end
-
-  if surface and smoothness == nil then
-    todo = "Please review surface=" ..
-        surface ..
-        " which is a non standard value. Maybe fix it or add it to our list surfaceToSmoothnessNonStandardValues."
-  end
-
   return smoothness, source, confidence, todo
 end
