@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}:{PGPORT}/${PGDATABASE}
     ports:
       - "8010:7800"
     labels:
