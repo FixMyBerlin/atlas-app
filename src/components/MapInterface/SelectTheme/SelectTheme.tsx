@@ -26,7 +26,7 @@ export const SelectTheme = () => {
   if (!configThemes) return null
 
   return (
-    <section className="mr-2">
+    <section>
       {/* Mobile */}
       <div className="sm:hidden">
         <label htmlFor="themeSelect" className="sr-only">

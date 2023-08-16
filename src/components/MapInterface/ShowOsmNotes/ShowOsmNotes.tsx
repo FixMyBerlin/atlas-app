@@ -46,10 +46,7 @@ export const ShowOsmNotes: React.FC<Props> = () => {
             osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
           )}
         >
-          <div className="h-5 w-5">
-            {osmNotesLoaded && <ChatBubbleLeftRightIcon />}
-            {!osmNotesLoaded && <SmallSpinner />}
-          </div>
+          {osmNotesLoaded ? <ChatBubbleLeftRightIcon className="h-5 w-5" /> : <SmallSpinner className="h-5 w-5" />}
           <span
             aria-hidden="true"
             className={clsx(
@@ -71,9 +68,8 @@ export const ShowOsmNotes: React.FC<Props> = () => {
             osmNotesActive ? 'inline-flex' : 'hidden'
           )}
         >
-          <div className="h-5 w-5">
-            <PlusIcon />
-          </div>
+          <PlusIcon className="h-5 w-5" />
+          <span class="sr-only">Neuen Hinweis auf openstreetmap.org auf der Karte erstellen</span>
         </Link>
       </Tooltip>
     </div>

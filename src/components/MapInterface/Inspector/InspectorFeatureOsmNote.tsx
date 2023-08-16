@@ -26,14 +26,6 @@ type Thread = {
 }
 
 export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ properties }) => {
-  // if (!sourceKey || !properties) return null
-
-  // The documentedKeys info is placed on the source object
-  // const sourceId = extractDataIdIdFromDataKey(sourceKey) as DatasetIds
-  // const sourceData = sourcesDatasets.find((dataset) => dataset.id == sourceId)
-
-  // if (typeof sourceData === 'undefined') return null
-  // if (!sourceData.inspector.enabled) return null
   if (!properties) return null
 
   const thread = {

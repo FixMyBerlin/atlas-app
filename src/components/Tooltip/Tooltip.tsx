@@ -15,7 +15,7 @@ const Tooltip: React.FC<Props> = ({ text, children, className }) => {
     if (parentWrapperRef.current) {
       setHeight(parentWrapperRef.current.clientHeight)
     }
-  })
+  }, [parentWrapperRef.current])
 
   return (
     <div className={clsx('has-tooltip', className)} ref={parentWrapperRef}>
