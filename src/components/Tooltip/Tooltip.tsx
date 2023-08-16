@@ -18,13 +18,13 @@ const Tooltip: React.FC<Props> = ({ text, children, className }) => {
   }, [parentWrapperRef.current])
 
   return (
-    <div className={clsx('has-tooltip', className)} ref={parentWrapperRef}>
-      <span
-        className={`tooltip hyphens-nonte w-max cursor-default select-none break-keep rounded bg-gray-900 p-2 text-white shadow-md`}
+    <div className={clsx('group/tooltip', className)} ref={parentWrapperRef}>
+      <div
+        className={`hyphens-none absolute hidden cursor-default select-none break-keep rounded bg-gray-900 p-2 text-white shadow-md group-hover/tooltip:z-50 group-hover/tooltip:block`}
         style={{ top: height + 3 }}
       >
         {text}
-      </span>
+      </div>
       {children}
     </div>
   )
