@@ -39,7 +39,7 @@ export const Disclosure: React.FC<Props> = ({
             <h3 className="w-full">
               <div className="flex w-full justify-between pr-3">
                 <span>{title}</span>
-                <span className="flex">
+                <div className="flex">
                   {statusIcon}
                   {!!objectId && (
                     <span
@@ -51,7 +51,7 @@ export const Disclosure: React.FC<Props> = ({
                       #{objectId}
                     </span>
                   )}
-                </span>
+                </div>
               </div>
             </h3>
           </HeadlessUiDisclosure.Button>

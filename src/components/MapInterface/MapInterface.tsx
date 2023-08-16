@@ -16,7 +16,7 @@ export const MapInterface: React.FC = () => {
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
         <Map />
-        <div className="absolute top-3 left-5 z-10 flex">
+        <div className="absolute top-3 left-5 z-10 flex gap-2">
           <SelectTheme />
           <ShowOsmNotes />
         </div>
