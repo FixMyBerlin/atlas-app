@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}:${PGPORT}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
     ports:
       - "8010:7800"
     labels:
@@ -76,7 +76,7 @@ services:
         LANG: en_US.UTF-8
         LC_ALL: en_US.UTF-8
       ports:
-        - "${PGPORT}:5432"
+        - "5432:${PGPORT}"
       volumes:
         - geodata:/var/lib/postgresql/data
       container_name: db

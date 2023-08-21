@@ -20,7 +20,7 @@ services:
     image: pramsey/pg_tileserv
     container_name: tileserver
     environment:
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db:${PGPORT}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
     ports:
       - 7800:7800
     depends_on:
