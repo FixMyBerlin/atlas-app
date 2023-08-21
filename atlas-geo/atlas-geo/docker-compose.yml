@@ -51,7 +51,7 @@ services:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
-      - "${PGPORT}:5432"
+      - "${DATABASEPORT}:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
     container_name: osmdatabase

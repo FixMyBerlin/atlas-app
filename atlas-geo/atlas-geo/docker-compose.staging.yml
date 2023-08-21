@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}:${PGPORT}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
     ports:
       - "9010:7800"
     labels:
@@ -69,10 +69,11 @@ services:
         POSTGRES_DB: ${PGDATABASE}
         POSTGRES_USER: ${PGUSER}
         POSTGRES_PASSWORD: ${PGPASSWORD}
+        POSTGRES_PORT: 5432
         LANG: en_US.UTF-8
         LC_ALL: en_US.UTF-8
       ports:
-        - "${PGPORT}:5432"
+        - "${DATABASEPORT}:5432"
       volumes:
         - geodata_staging:/var/lib/postgresql/data
       container_name: db_staging
