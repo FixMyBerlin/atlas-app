@@ -21,6 +21,7 @@ import {
   SourcesLayerDatasets,
   SourcesLayerRasterBackgrounds,
 } from './SourcesAndLayers'
+import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
 import { roundPositionForURL } from './utils'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
@@ -140,6 +141,7 @@ export const Map: React.FC = () => {
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
+      <SourcesLayerRegionalMask />
       <SourcesAndLayers />
       <SourcesLayerDatasets />
       <SourcesLayersOsmNotes />

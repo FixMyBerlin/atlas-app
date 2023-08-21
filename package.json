@@ -19,7 +19,10 @@
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && vitest run",
     "updateStyles": "npx vite-node ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/components/MapInterface/mapData/topicsMapData/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
-    "updateDatasets": "node ./datasets/process.cjs && node ./datasets/upload.cjs && node ./datasets/typesAndObject.cjs && prettier \"./datasets\" --write && prettier \"./src/components/MapInterface/mapData/sourcesMapData/datasets\" --write",
+    "updateDatasets": "node ./datasets/process.cjs && node ./datasets/upload.cjs && node ./datasets/typesAndObject.cjs && prettier \"./src/components/MapInterface/mapData/sourcesMapData/datasets\" --write",
+    "updateMasks": "npm run updateMasks:createGeojson && npm run updateMasks:createAndUploadMbtiles && github",
+    "updateMasks:createGeojson": "npx vite-node ./scripts/RegionalMasks/createGeojson.ts && prettier \"scripts/RegionalMasks/geojson/\" --write",
+    "updateMasks:createAndUploadMbtiles": "npx vite-node ./scripts/RegionalMasks/createMbtiles.ts && npm run updateDatasets",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install"
   },
@@ -51,6 +54,7 @@
     "react-remark": "^2.1.0",
     "tiny-invariant": "^1.3.1",
     "zipson": "^0.2.12",
+    "zod": "^3.22.2",
     "zustand": "^4.3.3"
   },
   "overrides": {

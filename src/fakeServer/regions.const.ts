@@ -11,6 +11,8 @@ export type Region = {
   name: string
   fullName: string
   path: RegionPath
+  /** @desc 1-n relation IDs, used for the mask and export bbox — @href use https://hanshack.com/geotools/gimmegeodata/ to get the ids */
+  osmRelationIds: number[] | []
   map: RegionMap
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
@@ -78,6 +80,7 @@ export const regions: Region[] = [
     name: 'BiBi',
     fullName: 'Bietigheim-Bissingen',
     path: 'bibi',
+    osmRelationIds: [1613510],
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
     bbox: {
       min: [9.0671, 48.9229],
@@ -101,6 +104,7 @@ export const regions: Region[] = [
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
     path: 'trto',
+    osmRelationIds: [1427697],
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     bbox: {
       min: [12.9949, 53.5934],
@@ -123,6 +127,10 @@ export const regions: Region[] = [
     name: 'Berlin',
     fullName: 'Berlin Ring',
     path: 'berlin',
+    osmRelationIds: [
+      62422,
+      // 11905744, // Hundekopf not 'adminstration' and therefore not present
+    ],
     map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
     bbox: {
       min: [13.2809, 52.46],
@@ -156,6 +164,14 @@ export const regions: Region[] = [
     name: 'ZES+',
     fullName: 'ZES+',
     path: 'zes',
+    osmRelationIds: [
+      55775, // Zeuthen
+      55773, //Eichwalde
+      55774, // Schulzendorf
+      55776, // Wildau
+      5583556, // Königs Wusterhausen
+      55772, // Schönefeld
+    ],
     map: { lat: 52.35, lng: 13.61, zoom: 12 },
     bbox: {
       min: [13.3579, 52.2095],
@@ -179,23 +195,10 @@ export const regions: Region[] = [
     backgroundSources: defaultBackgroundSources,
   },
   {
-    name: 'Langerwehe',
-    fullName: 'Langerwehe',
-    path: 'langerwehe',
-    map: { lat: 50.82, lng: 6.37, zoom: 15 },
-    // todo, needs the right bbox
-    bbox: null,
-    logoPath: null,
-    logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
-    osmUsers: [...adminIds],
-    published: false,
-    backgroundSources: defaultBackgroundSources,
-  },
-  {
     name: 'Parkraum',
     fullName: 'Parkraumanalyse',
     path: 'parkraum',
+    osmRelationIds: [],
     map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
     bbox: null,
     logoPath: '/pageRegions/parking.svg',
@@ -218,6 +221,11 @@ export const regions: Region[] = [
     name: 'RS 8',
     fullName: 'Trassenscout RS 8',
     path: 'rs8',
+    osmRelationIds: [
+      405292, // Stadt Ludwigsburg
+      405291, // Remseck am Neckar
+      401697, // Stadt Waiblingen (inkl. Exklave, die wir eigentlich nicht brauchen)
+    ],
     map: { lat: 48.8769, lng: 9.2425, zoom: 12 },
     bbox: {
       min: [9.13736562, 48.81051166],
@@ -234,6 +242,7 @@ export const regions: Region[] = [
     name: 'Mainz',
     fullName: 'radnetz-mainz.de',
     path: 'mainz',
+    osmRelationIds: [62630],
     map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
     bbox: {
       min: [8.1435156, 49.8955342],
@@ -250,6 +259,7 @@ export const regions: Region[] = [
     name: 'LK Lüneburg',
     fullName: 'Landkreis Lüneburg',
     path: 'lueneburg',
+    osmRelationIds: [2084746],
     map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
     bbox: {
       min: [10.041308, 53.0468526],
@@ -267,6 +277,7 @@ export const regions: Region[] = [
     name: 'Neukloster Warin',
     fullName: 'Amt Neukloster Warin',
     path: 'neukloster-warin',
+    osmRelationIds: [1515757],
     map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
     bbox: {
       min: [11.534335975016448, 53.75009742157375],
@@ -283,6 +294,7 @@ export const regions: Region[] = [
     name: 'Landhagen',
     fullName: 'Amt Landhagen',
     path: 'landhagen',
+    osmRelationIds: [1432580],
     map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
     bbox: {
       min: [13.201584130847364, 53.95655346659909],
@@ -299,6 +311,7 @@ export const regions: Region[] = [
     name: 'Woldegk',
     fullName: 'Amt Woldegk',
     path: 'woldegk',
+    osmRelationIds: [1419902],
     map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
     bbox: {
       min: [13.378969848860086, 53.37938986368977],
@@ -315,6 +328,7 @@ export const regions: Region[] = [
     name: 'Ostalbkreis',
     fullName: 'Ostalbkreis',
     path: 'ostalbkreis',
+    osmRelationIds: [62708],
     map: pointToLatLng({
       point: {
         type: 'Point',
@@ -334,6 +348,7 @@ export const regions: Region[] = [
     name: 'Sigmaringen',
     fullName: 'Stadt Sigmaringen',
     path: 'sigmaringen',
+    osmRelationIds: [2806390],
     map: pointToLatLng({
       point: {
         type: 'Point',
@@ -354,6 +369,7 @@ export const regions: Region[] = [
     name: 'Nagold',
     fullName: 'Stadt Nagold',
     path: 'nagold',
+    osmRelationIds: [2946978],
     map: pointToLatLng({
       point: {
         type: 'Point',
@@ -374,6 +390,7 @@ export const regions: Region[] = [
     name: 'Download',
     fullName: 'Deutschlandweiter Download',
     path: 'deutschland',
+    osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
       min: [5.8663153, 47.2701114],

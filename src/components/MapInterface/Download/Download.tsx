@@ -1,24 +1,22 @@
 import { Link } from '@components/Link'
 import { IconModal } from '@components/Modal'
 import { SmallSpinner } from '@components/Spinner/Spinner'
-import { getApiUrl, getTilesUrl } from '@components/utils'
+import { getTilesUrl } from '@components/utils'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
-import { regionFromPath } from '@routes/utils'
 import { useMatch, useSearch } from '@tanstack/react-location'
 import { useQuery } from '@tanstack/react-query'
 import { getSourceData, getTopicData } from '../mapData'
 import { flattenConfigTopics } from '../mapStateConfig/utils/flattenConfigTopics'
+import { exportApiUrlBbox } from './exportApiUrl'
 
 export const Download: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
 
   // Get the bbox from our region data
   const {
-    params: { regionPath },
-  } = useMatch()
-  const region = regionFromPath(regionPath)
-  const bbox = region?.bbox ? region.bbox : { min: [0, 0], max: [0, 0] }
+    data: { region },
+  } = useMatch<LocationGenerics>()
   const allowDownload = region?.bbox ? true : false
 
   const osmDataDate = useQuery({
@@ -59,7 +57,7 @@ export const Download: React.FC = () => {
           {!!osmDataDate.data?.description && (
             <span>
               {new Date(
-                Date.parse(JSON.parse(osmDataDate.data?.description)?.osm_data_from)
+                Date.parse(JSON.parse(osmDataDate.data?.description)?.osm_data_from),
               ).toLocaleDateString('de-DE')}
             </span>
           )}
@@ -108,11 +106,9 @@ export const Download: React.FC = () => {
                 </p>
 
                 <div className="flex gap-2">
-                  {allowDownload && (
+                  {allowDownload && region?.bbox && (
                     <Link
-                      to={`${getApiUrl()}/export/${sourceData.export.apiIdentifier}?minlon=${
-                        bbox.min[0]
-                      }&minlat=${bbox.min[1]}&maxlon=${bbox.max[0]}&maxlat=${bbox.max[1]}`}
+                      to={exportApiUrlBbox(sourceData.export.apiIdentifier, region?.bbox)}
                       classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                       download
                       blank

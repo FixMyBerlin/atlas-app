@@ -25,8 +25,7 @@ export const SourcesLayerDatasets: React.FC = () => {
   return (
     <>
       {uniqueRegionDatasets.map(({ id: sourceId, type, url, attributionHtml, layers }) => {
-        const datasetTileId = `source:${sourceId}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
-
+        const datasetTileId = `source:${sourceId}`
         const visible = selectedDatasetIds.includes(sourceId)
         const visibility = layerVisibility(visible)
 
@@ -55,13 +54,9 @@ export const SourcesLayerDatasets: React.FC = () => {
                 beforeId: undefined, // on top of everything
               }
 
-              return (
-                <>
-                  <Layer key={layerId} {...layerProps} />
-                  {/* To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData */}
-                  {/* <LayerHighlight {...layerProps} /> */}
-                </>
-              )
+              // To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData
+              // <LayerHighlight {...layerProps} />
+              return <Layer key={layerId} {...layerProps} />
             })}
           </Source>
         )

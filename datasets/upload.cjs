@@ -17,6 +17,8 @@ const s3 = new S3({
   region: 'eu-central-1',
 })
 
+console.log('INFO: Uploading all files from ./pmtiles to S3 bucket atlas-tiles')
+
 const pmtilesFiles = fs
   .readdirSync(path.resolve(__dirname, './pmtiles'))
   .filter((file) => path.extname(file) === '.pmtiles')
@@ -32,6 +34,8 @@ pmtilesFiles.forEach((file) => {
       return
     }
     const previewUrl = `https://atlas-tiles.s3.eu-central-1.amazonaws.com/${file}`
-    console.log(`Test uploaded file: https://protomaps.github.io/PMTiles/?url=${previewUrl}`)
+    console.log(
+      `INFO: Test uploaded file at https://protomaps.github.io/PMTiles/?url=${previewUrl}`
+    )
   })
 })
