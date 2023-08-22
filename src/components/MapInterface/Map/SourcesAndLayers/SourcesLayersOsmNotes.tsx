@@ -20,14 +20,10 @@ export const SourcesLayersOsmNotes: React.FC = () => {
   // Cache function, otherwise deactivating the event handler will not work
   const osmNotesApiRequest = useCallback(() => {
     if (!mainMap) return
-    const b = mainMap.getBounds()
     setOsmNotesLoading(true)
+    const mapBounds = mainMap.getBounds().toArray()
     axios
-      .get(
-        `https://api.openstreetmap.org/api/0.6/notes?bbox=${b.getSouthWest().lng},${
-          b.getSouthWest().lat
-        },${b.getNorthEast().lng},${b.getNorthEast().lat}`
-      )
+      .get(`https://api.openstreetmap.org/api/0.6/notes?bbox=${mapBounds.join(',')}`)
       .then((res) => {
         setGeodata(res.data)
         setOsmNotesLoading(false)
