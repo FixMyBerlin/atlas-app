@@ -5,11 +5,11 @@ import { DebugMap } from './DebugBoxes/DebugMap'
 import { Download } from './Download/Download'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
-import { BackgroundLegend, SelectBackground } from './background'
+import { SelectDatasets } from './SelectDatasets/SelectDatasets'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
-import { SelectDatasets } from './SelectDatasets/SelectDatasets'
 import { ShowOsmNotes } from './ShowOsmNotes'
+import { BackgroundLegend, SelectBackground } from './background'
 
 export const MapInterface: React.FC = () => {
   return (

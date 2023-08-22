@@ -9,31 +9,25 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/index'
 import { Link } from '@components/Link'
 
-interface Props {
-  name?: string
-}
-
-export const ShowOsmNotes: React.FC<Props> = () => {
+export const ShowOsmNotes: React.FC = () => {
   const { osmNotesLoading } = useMapStateInteraction()
   const { mainMap } = useMap()
   const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
 
   const navigate = useNavigate<LocationGenerics>()
   const onChange = (value: boolean) => {
-    navigate({
-      search: (old) => {
-        return { ...old, osmNotes: value }
-      },
-    })
+    navigate({ search: (old) => ({ ...old, osmNotes: value }) })
   }
   const centerLocation = mainMap?.getCenter()
-  const currentZoom = mainMap?.getZoom()
 
   return (
-    <div className="ml-2 shadow-lg">
+    <div className="ml-2 flex shadow-lg">
       <Tooltip
-        text={osmNotesActive ? 'OSM-Notes ausblenden' : 'OSM-Notes anzeigen'}
-        className="inline-flex"
+        text={
+          osmNotesActive
+            ? 'Hinweise von openstreetmap.org ausblenden'
+            : 'Hinweise von openstreetmap.org anzeigen'
+        }
       >
         <button
           onClick={() => {
@@ -56,9 +50,10 @@ export const ShowOsmNotes: React.FC<Props> = () => {
           />
         </button>
       </Tooltip>
-      <Tooltip text="OSM-Note erstellen" className="inline-flex">
+      <Tooltip text="Hinweis auf openstreetmap.org erstellen">
         <Link
-          to={`https://www.openstreetmap.org/note/new#map=${currentZoom}/${centerLocation?.lat}/${centerLocation?.lng}`}
+          // Default zoom since Note pins on osm.org are only visible when zoomed in…
+          to={`https://www.openstreetmap.org/note/new#map=15/${centerLocation?.lat}/${centerLocation?.lng}`}
           blank
           className={clsx(
             'flex-0 group min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
@@ -69,7 +64,9 @@ export const ShowOsmNotes: React.FC<Props> = () => {
           )}
         >
           <PlusIcon className="h-5 w-5" />
-          <span class="sr-only">Neuen Hinweis auf openstreetmap.org auf der Karte erstellen</span>
+          <span className="sr-only">
+            Neuen Hinweis auf openstreetmap.org auf der Karte erstellen
+          </span>
         </Link>
       </Tooltip>
     </div>

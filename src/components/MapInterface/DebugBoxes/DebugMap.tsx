@@ -4,10 +4,10 @@ import { useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl'
+import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { DebugMapDownload } from './DebugMapDownload'
-import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 
 export const DebugMap = () => {
   const { showDebugInfo, setShowDebugInfo, useDebugLayerStyles, setUseDebugLayerStyles } =
