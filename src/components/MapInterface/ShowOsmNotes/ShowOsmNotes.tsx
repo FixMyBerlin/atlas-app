@@ -40,7 +40,14 @@ export const ShowOsmNotes: React.FC = () => {
             osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
           )}
         >
-          {osmNotesLoading ? <SmallSpinner /> : <ChatBubbleLeftRightIcon className="h-5 w-5" />}
+          {osmNotesLoading ? (
+            <div className="flex h-5 w-5 items-center justify-center overflow-hidden">
+              {/* Wrapper required to cut off some additional space that <Spinner> has */}
+              <SmallSpinner />
+            </div>
+          ) : (
+            <ChatBubbleLeftRightIcon className="h-5 w-5" />
+          )}
           <span
             aria-hidden="true"
             className={clsx(
