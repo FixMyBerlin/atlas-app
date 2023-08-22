@@ -1,16 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { FeatureCollection } from 'geojson'
-import axios from 'axios'
-import { Layer, Source, SymbolLayer, useMap } from 'react-map-gl'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
-import { useSearch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/index'
+import { useSearch } from '@tanstack/react-location'
+import axios from 'axios'
+import { FeatureCollection } from 'geojson'
+import React, { useEffect, useState } from 'react'
+import { Layer, Source, useMap } from 'react-map-gl'
 
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
-  // const [activeRequestEventHandler, setActiveRequestEventHandler] = useState(false)
-  const { osmNotes } = useSearch<LocationGenerics>()
   const { mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
+  const { osmNotes, lat, lng } = useSearch<LocationGenerics>()
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -18,7 +17,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
   })
 
   // Cache function, otherwise deactivating the event handler will not work
-  const osmNotesApiRequest = useCallback(() => {
+  const osmNotesApiRequest = () => {
     if (!mainMap) return
     setOsmNotesLoading(true)
     const mapBounds = mainMap.getBounds().toArray()
@@ -28,25 +27,12 @@ export const SourcesLayersOsmNotes: React.FC = () => {
         setGeodata(res.data)
         setOsmNotesLoading(false)
       })
-  }, [])
+  }
 
-  // On first activation, fetch data without map interaction
+  // (Re)fetch whenever the view port changes
   useEffect(() => {
-    osmNotesApiRequest()
-  }, [])
-
-  // Handle event handler -> only when osm notes layer is active
-  useEffect(() => {
-    if (!mainMap || !mapLoaded) return
-
-    if (osmNotes) {
-      mainMap.on('moveend', osmNotesApiRequest)
-    }
-
-    if (!osmNotes) {
-      mainMap.off('moveend', osmNotesApiRequest)
-    }
-  }, [osmNotes])
+    mapLoaded && osmNotes && osmNotesApiRequest()
+  }, [mapLoaded, osmNotes, lat, lng])
 
   return (
     <Source

@@ -95,6 +95,8 @@ export const Map: React.FC = () => {
 
   const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
+    // Note: <SourcesAndLayersOsmNotes> simulates a moveEnd by watching the lat/lng url params
+
     const { latitude, longitude, zoom } = event.viewState
     const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
     navigate({
