@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const ShowOsmNotes: React.FC<Props> = () => {
-  const { osmNotesLoaded } = useMapStateInteraction()
+  const { osmNotesLoading } = useMapStateInteraction()
   const { mainMap } = useMap()
   const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
 
@@ -46,7 +46,7 @@ export const ShowOsmNotes: React.FC<Props> = () => {
             osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
           )}
         >
-          {osmNotesLoaded ? <ChatBubbleLeftRightIcon className="h-5 w-5" /> : <SmallSpinner className="h-5 w-5" />}
+          {osmNotesLoading ? <SmallSpinner /> : <ChatBubbleLeftRightIcon className="h-5 w-5" />}
           <span
             aria-hidden="true"
             className={clsx(

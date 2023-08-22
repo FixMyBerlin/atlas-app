@@ -9,8 +9,8 @@ import { LocationGenerics } from '@routes/index'
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
   // const [activeRequestEventHandler, setActiveRequestEventHandler] = useState(false)
-  const { mapLoaded, setOsmNotesLoaded } = useMapStateInteraction()
   const { osmNotes } = useSearch<LocationGenerics>()
+  const { mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -20,8 +20,8 @@ export const SourcesLayersOsmNotes: React.FC = () => {
   // Cache function, otherwise deactivating the event handler will not work
   const osmNotesApiRequest = useCallback(() => {
     if (!mainMap) return
-    setOsmNotesLoaded(false)
     const b = mainMap.getBounds()
+    setOsmNotesLoading(true)
     axios
       .get(
         `https://api.openstreetmap.org/api/0.6/notes?bbox=${b.getSouthWest().lng},${
@@ -30,7 +30,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
       )
       .then((res) => {
         setGeodata(res.data)
-        setOsmNotesLoaded(true)
+        setOsmNotesLoading(false)
       })
   }, [])
 
