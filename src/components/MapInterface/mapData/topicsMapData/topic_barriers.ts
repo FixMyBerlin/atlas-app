@@ -5,7 +5,6 @@ const topic = 'barriers'
 const source = 'tarmac_barriers'
 export type TopicBarriersId = typeof topic
 export type TopicBarriersStyleIds = 'default'
-export type TopicBarriersStyleFilterIds = '_nofilter'
 
 export const topic_barriers: MapDataTopic = {
   id: topic,
@@ -29,7 +28,6 @@ export const topic_barriers: MapDataTopic = {
           sourceLayer: 'public.barrierLines',
         }),
       ].flat(),
-      interactiveFilters: null,
     },
   ],
 }

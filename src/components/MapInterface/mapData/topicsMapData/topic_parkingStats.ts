@@ -12,7 +12,6 @@ export type TopicParkingStatsStyleIds =
   | 'length-admin-level-4'
   | 'length-admin-level-9'
   | 'length-admin-level-10'
-export type TopicParkingStatsStyleFilterIds = '_nofilter'
 
 export const topic_parkingStats: MapDataTopic = {
   id: topic,
@@ -31,7 +30,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
       }),
-      interactiveFilters: null,
     },
     {
       id: 'default', // 'stats-admin-level-9',
@@ -43,7 +41,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
       }),
-      interactiveFilters: null,
     },
     {
       id: 'stats-admin-level-10',
@@ -55,7 +52,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],
       }),
-      interactiveFilters: null,
     },
     {
       id: 'length-admin-level-4',
@@ -67,7 +63,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
       }),
-      interactiveFilters: null,
     },
     {
       id: 'length-admin-level-9',
@@ -79,7 +74,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
       }),
-      interactiveFilters: null,
     },
     {
       id: 'length-admin-level-10',
@@ -91,7 +85,6 @@ export const topic_parkingStats: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],
       }),
-      interactiveFilters: null,
     },
   ],
 }

@@ -5,7 +5,6 @@ const source = 'tarmac_buildings'
 const sourceLayer = 'public.buildings'
 export type TopicBuildingsId = typeof topic
 export type TopicBuildingsStyleIds = 'default'
-export type TopicBuildingsStyleFilterIds = '_nofilter'
 
 export const topic_buildings: MapDataTopic = {
   id: topic,
@@ -30,7 +29,6 @@ export const topic_buildings: MapDataTopic = {
           },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

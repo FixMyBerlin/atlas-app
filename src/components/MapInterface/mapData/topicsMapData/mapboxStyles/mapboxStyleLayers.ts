@@ -1,5 +1,7 @@
-import { flattenFilterArrays } from '@components/MapInterface/Map/SourcesAndLayers/utils/filterUtils/flattenFilterArrays'
-import { wrapFilterWithAll } from '@components/MapInterface/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
+import {
+  flattenFilterArrays,
+  wrapFilterWithAll,
+} from '@components/MapInterface/Map/SourcesAndLayers/utils/filterUtils'
 import { mapboxStylesByLayerGroup, MapboxStylesByLayerGroupIds } from '.'
 import { SourcesIds } from '../../sourcesMapData'
 

@@ -6,7 +6,6 @@ const source = 'tarmac_poiClassification'
 const sourceLayer = 'public.poiClassification'
 export type TopicEducationId = typeof topic
 export type TopicEducationStyleIds = 'default'
-export type TopicEducationStyleFilterIds = '_nofilter'
 
 export const topic_education: MapDataTopic = {
   id: topic,
@@ -41,7 +40,6 @@ export const topic_education: MapDataTopic = {
           },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

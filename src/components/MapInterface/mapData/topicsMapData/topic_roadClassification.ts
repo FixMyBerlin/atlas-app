@@ -6,7 +6,6 @@ const source = 'tarmac_roadClassification'
 const sourceLayer = 'public.roadClassification'
 export type TopicRoadClassificationId = typeof tpoicId
 export type TopicRoadClassificationStyleIds = 'default' | 'oneway'
-export type TopicRoadClassificationStyleFilterIds = '_nofilter'
 
 export const topic_roadClassification: MapDataTopic = {
   id: tpoicId,
@@ -66,7 +65,6 @@ export const topic_roadClassification: MapDataTopic = {
         //   style: { type: 'line', color: 'rgba(251, 40, 40, 0)' },
         // },
       ],
-      interactiveFilters: null,
     },
     {
       id: 'oneway',
@@ -102,7 +100,6 @@ export const topic_roadClassification: MapDataTopic = {
           },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

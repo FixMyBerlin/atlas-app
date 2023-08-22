@@ -6,7 +6,6 @@ const source = 'parkraumParkingAreas'
 const sourceLayer = 'processing.parking_poly'
 export type TopicParkingAreasId = typeof topic
 export type TopicParkingAreasStyleIds = 'default' | 'street_side'
-export type TopicParkingAreasStyleFilterIds = '_nofilter'
 
 const defaultLegend = [
   {
@@ -48,7 +47,6 @@ export const topic_parkingAreas: MapDataTopic = {
         sourceLayer,
         additionalFilter: ['match', ['get', 'parking'], ['street_side'], false, true],
       }),
-      interactiveFilters: null,
       legends: defaultLegend,
     },
     {
@@ -60,7 +58,6 @@ export const topic_parkingAreas: MapDataTopic = {
         source,
         sourceLayer,
       }),
-      interactiveFilters: null,
       legends: [
         ...defaultLegend,
         {

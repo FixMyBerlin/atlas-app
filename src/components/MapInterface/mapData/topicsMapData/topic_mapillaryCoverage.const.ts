@@ -3,7 +3,6 @@ import { MapDataTopic } from '../types'
 const topicId = 'mapillaryCoverage'
 export type TopicMapillaryCoverageId = typeof topicId
 export type TopicMapillaryCoverageStyleIds = 'default'
-export type TopicMapillaryCoverageStyleFilterIds = 'panorama'
 
 export const topic_mapillaryCoverage: MapDataTopic = {
   id: topicId,
@@ -45,7 +44,6 @@ export const topic_mapillaryCoverage: MapDataTopic = {
           interactive: false,
         },
       ],
-      interactiveFilters: null,
       // Cannot get this to work. The idea was, to pass an array as string and JSON.parse it in `filterArrayFromMergedDataAndConfig` but first I need to figure out why the manual filter above does not work.
       // interactiveFilters: [
       //   {

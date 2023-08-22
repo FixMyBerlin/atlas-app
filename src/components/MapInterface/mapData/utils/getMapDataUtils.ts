@@ -1,5 +1,5 @@
 import invariant from 'tiny-invariant'
-import { mapData, TopicIds, TopicStyleFilterIds, TopicStyleIds } from '../mapData.const'
+import { mapData, TopicIds, TopicStyleIds } from '../mapData.const'
 import { sourcesDatasets, SourcesDatasetsIds, SourcesIds } from '../sourcesMapData'
 import { MapDataThemeIds, themes } from '../themesMapData'
 import { MapDataStyle, MapDataTopic } from '../types'
@@ -28,18 +28,6 @@ export const getStyleData = (
   }
   invariant(styleData, `getStyleData: styleData for ${styleId} missing`)
   return styleData
-}
-
-export const getFilterData = (
-  topicId: TopicIds | undefined,
-  styleId: TopicStyleIds | undefined,
-  filterId: TopicStyleFilterIds | undefined
-) => {
-  const topicD = getTopicData(topicId)
-  const styleD = getStyleData(topicD, styleId)
-  const filterData = styleD?.interactiveFilters?.find((f) => f.id === filterId)
-  invariant(filterData, `getFilterData: filterData for ${filterId} missing`)
-  return filterData
 }
 
 export const getSourceData = (sourceId: SourcesIds) => {

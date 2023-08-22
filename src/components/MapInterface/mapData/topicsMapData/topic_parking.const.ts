@@ -6,7 +6,6 @@ const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type TopicParkingId = typeof topic
 export type TopicParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
-export type TopicParkingStyleFilterIds = '_nofilter'
 
 export const topic_parking: MapDataTopic = {
   id: topic,
@@ -31,7 +30,6 @@ export const topic_parking: MapDataTopic = {
           sourceLayer: 'processing.parking_segments_label',
         }),
       ].flat(),
-      interactiveFilters: null,
     },
     {
       id: 'presence',
@@ -98,7 +96,6 @@ export const topic_parking: MapDataTopic = {
           },
         },
       ],
-      interactiveFilters: null,
     },
     {
       id: 'surface',
@@ -150,7 +147,6 @@ export const topic_parking: MapDataTopic = {
           },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

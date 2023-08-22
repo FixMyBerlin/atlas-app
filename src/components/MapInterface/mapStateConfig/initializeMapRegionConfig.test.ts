@@ -42,15 +42,6 @@ describe('initializeMapReagionConfig()', () => {
             {
               id: 'default',
               active: true,
-              filters: [
-                {
-                  id: '_nofilter',
-                  options: [
-                    { id: '7', active: false }, // change id to 'id_changed', change to true
-                    { id: '8', active: true },
-                  ],
-                },
-              ],
             },
           ],
         },
@@ -88,8 +79,6 @@ describe('initializeMapReagionConfig()', () => {
     urlConfig[0].topics[0].styles[0].active = false // topic:lit style-id:default
     urlConfig[0].topics[0].styles[1].active = true // topic:lit style-id:completenes
     urlConfig[0].topics[1].active = true // topic:places
-    // @ts-ignore the object structure is checked manually
-    urlConfig[1].topics[0].styles[0].filters[0].options[0].active = true // topic:fromTo filterOption-id:7
 
     const result = initializeMapRegionConfig({
       freshConfig,
@@ -105,10 +94,7 @@ describe('initializeMapReagionConfig()', () => {
   test('New config entries are added (with default active state); UseCase url config is missing options that where added later', () => {
     const urlConfig = structuredClone(freshConfig)
     delete urlConfig[0].topics[1] // topic:lit topic:landuse style removed
-    // @ts-ignore the object structure is checked manually
     delete urlConfig[0].topics[2].styles[1] // topic:lit topic:landuse style removed
-    // @ts-ignore the object structure is checked manually
-    delete urlConfig[1].topics[0].styles[0].filters[0].options[0] // topic:fromTo topic:boundaries filterOption removed
     delete urlConfig[2] // topic:bikelanes
 
     const result = initializeMapRegionConfig({
@@ -124,10 +110,8 @@ describe('initializeMapReagionConfig()', () => {
 
   test('Deleted/old config entries are ignored; UseCase url config holds old entries that where removed now.', () => {
     const urlConfig = structuredClone(freshConfig)
-    // @ts-ignore the object structure is checked manually
+    // @ts-expect-error the object structure is checked manually
     urlConfig[0].topics[2].styles[0].id = 'now_removed_style' // topic:lit topic:landuse style:id changed
-    // @ts-ignore the object structure is checked manually
-    urlConfig[1].topics[0].styles[0].filters[0].options[0].id = 'now_removed_option' // topic:fromTo topic:boundaries filterOption:id changed
 
     const result = initializeMapRegionConfig({
       freshConfig,

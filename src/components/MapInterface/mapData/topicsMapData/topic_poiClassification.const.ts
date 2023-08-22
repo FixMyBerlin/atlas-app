@@ -6,7 +6,6 @@ const source = 'tarmac_poiClassification'
 const sourceLayer = 'public.poiClassification'
 export type TopicPoiClassificationId_Tarmac = typeof topic
 export type TopicPoiClassificationStyleIds_Tarmac = 'default'
-export type TopicPoiClassificationStyleFilterIds_Tarmac = '_nofilter'
 
 export const topic_poiClassification_tarmac: MapDataTopic = {
   id: topic,
@@ -45,7 +44,6 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
           style: { type: 'circle', color: '#0e3ecd' },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

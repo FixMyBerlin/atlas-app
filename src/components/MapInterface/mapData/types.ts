@@ -1,11 +1,11 @@
 import { RegionPath } from '@fakeServer/regions.const'
 import mapboxgl from 'mapbox-gl'
 import { LegendIconTypes } from '../SelectLegend/LegendIcons'
-import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
+import { TopicIds, TopicStyleIds } from './mapData.const'
 import {
   SourceExportApiIdentifier,
-  SourcesIds,
   SourceVerificationApiIdentifier,
+  SourcesIds,
 } from './sourcesMapData'
 import { MapDataThemeIds } from './themesMapData'
 
@@ -189,7 +189,6 @@ export type MapDataStyle = {
   name: string
   desc: null | string
   layers: MapDataVisLayer[]
-  interactiveFilters: null | MapDataStyleInteractiveFilter[]
   legends?: null | MapDataStyleLegend[]
 }
 
@@ -208,17 +207,7 @@ export type MapDataVisLayer = (
     interactive?: false
   }
 
-/** @desc: Optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataStyleInteractiveFilter = {
-  id: TopicStyleFilterIds
-  name: string
-  desc?: string
-  inputType: 'checkbox' | 'radiobutton'
-  filterConfig: { lookupKey: string }
-  options: MapDataStyleInteractiveFilterOption[]
-}
-
-/** @desc: Optional legend that allows filtering the given layer */
+/** @desc: Optional legend to explain a given layer */
 export type MapDataStyleLegend = {
   id: string
   name: string
@@ -234,13 +223,6 @@ export type MapDataStyleLegend = {
         color: string
         dasharray?: number[]
       }
-}
-
-/** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataStyleInteractiveFilterOption = {
-  id: string
-  name: string
-  defaultActive?: boolean
 }
 
 export type MapData = {

@@ -2,84 +2,57 @@ import { sources } from './sourcesMapData/sources.const'
 import { themes } from './themesMapData'
 import {
   TopicAccidentsId,
-  TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
   TopicBarriersId,
-  TopicBarriersStyleFilterIds,
   TopicBarriersStyleIds,
   TopicBikelanesId,
   TopicBikelanesId_Osmscripts,
   TopicBikelanesPresenceId,
-  TopicBikelanesPresenceStyleFilterIds,
   TopicBikelanesPresenceStyleIds,
-  TopicBikelanesStyleFilterIds,
-  TopicBikelanesStyleFilterIds_Osmscripts,
   TopicBikelanesStyleIds,
   TopicBikelanesStyleIds_Osmscripts,
   TopicBoundariesId,
-  TopicBoundariesStyleFilterIds,
   TopicBoundariesStyleIds,
   TopicBuildingsId,
-  TopicBuildingsStyleFilterIds,
   TopicBuildingsStyleIds,
   TopicEducationId,
   TopicEducationId_Osmscripts,
-  TopicEducationStyleFilterIds,
-  TopicEducationStyleFilterIds_Osmscripts,
   TopicEducationStyleIds,
   TopicEducationStyleIds_Osmscripts,
   TopicLanduseId,
-  TopicLanduseStyleFilterIds,
   TopicLanduseStyleIds,
   TopicLitId,
-  TopicLitStyleFilterIds,
   TopicLitStyleIds,
   TopicMapillaryCoverageId,
-  TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
   TopicMaxspeedId,
-  TopicMaxspeedStyleFilterIds,
   TopicMaxspeedStyleIds,
   TopicParkingAreasId,
-  TopicParkingAreasStyleFilterIds,
   TopicParkingAreasStyleIds,
   TopicParkingDebugId,
-  TopicParkingDebugStyleFilterIds,
   TopicParkingDebugStyleIds,
   TopicParkingId,
   TopicParkingPointsId,
-  TopicParkingPointsStyleFilterIds,
   TopicParkingPointsStyleIds,
   TopicParkingStatsId,
-  TopicParkingStatsStyleFilterIds,
   TopicParkingStatsStyleIds,
-  TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
-  TopicPlacesStyleFilterIds,
   TopicPlacesStyleIds,
   TopicPoiClassificationId_Tarmac,
-  TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicPoiClassificationStyleIds_Tarmac,
   TopicPublicTransportId,
   TopicPublicTransportId_Osmscripts,
-  TopicPublicTransportStyleFilterIds,
-  TopicPublicTransportStyleFilterIds_Osmscripts,
   TopicPublicTransportStyleIds,
   TopicPublicTransportStyleIds_Osmscripts,
   TopicRoadClassificationId,
   TopicRoadClassificationId_Osmscripts,
-  TopicRoadClassificationStyleFilterIds,
-  TopicRoadClassificationStyleFilterIds_Osmscripts,
   TopicRoadClassificationStyleIds,
   TopicRoadClassificationStyleIds_Osmscripts,
   TopicShopsId_Osmscripts,
-  TopicShopsStyleFilterIds_Osmscripts,
   TopicShopsStyleIds_Osmscripts,
   TopicSurfaceId_Osmscripts,
   TopicSurfaceQualityId,
-  TopicSurfaceStyleFilterIds_Osmscripts,
-  TopicSurfaceQualityStyleFilterIds,
   TopicSurfaceStyleIds_Osmscripts,
   TopicSurfaceStyleQualityIds,
   topic_accidents,
@@ -169,35 +142,6 @@ export type TopicStyleIds =
   | TopicShopsStyleIds_Osmscripts
   | TopicSurfaceStyleIds_Osmscripts
   | TopicSurfaceStyleQualityIds
-
-export type TopicStyleFilterIds =
-  | TopicAccidentsStyleFilterIds
-  | TopicBarriersStyleFilterIds
-  | TopicBikelanesPresenceStyleFilterIds
-  | TopicBikelanesStyleFilterIds
-  | TopicBikelanesStyleFilterIds_Osmscripts
-  | TopicBoundariesStyleFilterIds
-  | TopicBuildingsStyleFilterIds
-  | TopicEducationStyleFilterIds
-  | TopicEducationStyleFilterIds_Osmscripts
-  | TopicLanduseStyleFilterIds
-  | TopicLitStyleFilterIds
-  | TopicMapillaryCoverageStyleFilterIds
-  | TopicMaxspeedStyleFilterIds
-  | TopicParkingAreasStyleFilterIds
-  | TopicParkingDebugStyleFilterIds
-  | TopicParkingPointsStyleFilterIds
-  | TopicParkingStatsStyleFilterIds
-  | TopicParkingStyleFilterIds
-  | TopicPlacesStyleFilterIds
-  | TopicPoiClassificationStyleFilterIds_Tarmac
-  | TopicPublicTransportStyleFilterIds
-  | TopicPublicTransportStyleFilterIds_Osmscripts
-  | TopicRoadClassificationStyleFilterIds
-  | TopicRoadClassificationStyleFilterIds_Osmscripts
-  | TopicShopsStyleFilterIds_Osmscripts
-  | TopicSurfaceStyleFilterIds_Osmscripts
-  | TopicSurfaceQualityStyleFilterIds
 
 export type TopicStyleLegendIds = string // TODO: We can make this more precise later
 

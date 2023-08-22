@@ -4,10 +4,9 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import produce from 'immer'
 import React from 'react'
 import { ErrorRestartMap } from '../ErrorRestartMap/ErrorRestartMap'
-import { getTopicData, themes, TopicIds } from '../mapData'
-import { SelectFilters } from '../SelectFilters'
 import { SelectLegend } from '../SelectLegend'
 import { SelectStyles } from '../SelectStyles'
+import { TopicIds, getTopicData, themes } from '../mapData'
 import { Toggle } from './Toggle'
 
 export const SelectTopics: React.FC = () => {
@@ -59,7 +58,6 @@ export const SelectTopics: React.FC = () => {
                   </Toggle>
                   <SelectStyles scopeTopicId={topicConfig.id} />
                   <SelectLegend scopeTopicId={topicConfig.id} />
-                  <SelectFilters scopeTopicId={topicConfig.id} />
                 </div>
               )
             })}

@@ -5,7 +5,6 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const topic = 'bikelanes'
 export type TopicBikelanesId = typeof topic
 export type TopicBikelanesStyleIds = 'default' | 'verification' | 'completeness' | 'freshness'
-export type TopicBikelanesStyleFilterIds = '_nofilter'
 
 export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = [
   {
@@ -80,7 +79,6 @@ export const topic_bikelanes: MapDataTopic = {
         source: 'tarmac_bikelanes',
         sourceLayer: 'public.bikelanes_verified',
       }),
-      interactiveFilters: null,
       legends: [...defaultLegend],
     },
     {
@@ -99,7 +97,6 @@ export const topic_bikelanes: MapDataTopic = {
           sourceLayer: 'public.bikelanes_verified',
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         ...defaultLegend,
         {
@@ -144,7 +141,6 @@ export const topic_bikelanes: MapDataTopic = {
           sourceLayer: 'public.bikelanes_verified',
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         {
           id: 'unspecified',
@@ -166,8 +162,7 @@ export const topic_bikelanes: MapDataTopic = {
     //     source: 'tarmac_bikelanes',
     //     sourceLayer: 'public.bikelanes_verified',
     //   }),
-    //   interactiveFilters: null,
-    //   legends: [
+    //       //   legends: [
     //     ...defaultLegend,
     //     {
     //       id: 'fresh_check_date',

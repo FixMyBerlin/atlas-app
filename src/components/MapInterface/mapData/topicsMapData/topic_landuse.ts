@@ -4,7 +4,6 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const topic = 'landuse'
 export type TopicLanduseId = typeof topic
 export type TopicLanduseStyleIds = 'default'
-export type TopicLanduseStyleFilterIds = '_nofilter'
 
 export const topic_landuse: MapDataTopic = {
   id: topic,
@@ -33,7 +32,6 @@ export const topic_landuse: MapDataTopic = {
           style: { type: 'fill', color: 'hsl(215, 88%, 78%)' },
         },
       ],
-      interactiveFilters: null,
     },
   ],
 }

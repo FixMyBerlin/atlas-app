@@ -6,7 +6,6 @@ const source = 'tarmac_publicTransport'
 const sourceLayer = 'public.publicTransport'
 export type TopicPublicTransportId = typeof tpoicId
 export type TopicPublicTransportStyleIds = 'default'
-export type TopicPublicTransportStyleFilterIds = '_nofilter'
 
 export const topic_publicTransport: MapDataTopic = {
   id: tpoicId,
@@ -23,7 +22,6 @@ export const topic_publicTransport: MapDataTopic = {
         source,
         sourceLayer,
       }),
-      interactiveFilters: null,
     },
   ],
 }

@@ -4,7 +4,6 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const topic = 'parkingPoints'
 export type TopicParkingPointsId = typeof topic
 export type TopicParkingPointsStyleIds = 'default'
-export type TopicParkingPointsStyleFilterIds = '_nofilter'
 
 export const topic_parkingPoints: MapDataTopic = {
   id: topic,
@@ -22,7 +21,6 @@ export const topic_parkingPoints: MapDataTopic = {
         source: 'parkraumParkingPoints',
         sourceLayer: 'processing.parking_spaces',
       }),
-      interactiveFilters: null,
     },
   ],
 }

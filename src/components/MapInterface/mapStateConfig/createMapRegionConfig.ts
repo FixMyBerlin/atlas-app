@@ -26,17 +26,6 @@ export const createMapRegionConfig = ({ regionThemeIds }: Props) => {
             return {
               id: style.id,
               active: style.id === 'default',
-              filters: style?.interactiveFilters?.map((filter) => {
-                return {
-                  id: filter.id,
-                  options: filter.options.map((option) => {
-                    return {
-                      id: option.id,
-                      active: option.defaultActive,
-                    }
-                  }),
-                }
-              }),
             }
           }),
         }

@@ -35,40 +35,12 @@ export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => 
             return {
               id: style.id,
               active: urlConfigTopicStyle ? urlConfigTopicStyle.active : style.id === 'default',
-              filters: style?.filters?.map((filter) => {
-                return {
-                  id: filter.id,
-                  options: filter?.options?.map((option) => {
-                    const urlConfigTopicStyleFilterOption = urlConfigTopicStyle?.filters
-                      ?.find((f) => f.id == filter.id)
-                      ?.options?.find((o) => o?.id === option.id)
-
-                    return {
-                      id: option.id,
-                      active: urlConfigTopicStyleFilterOption
-                        ? urlConfigTopicStyleFilterOption.active
-                        : option.active,
-                    }
-                  }),
-                }
-              }),
             }
           }),
         }
       }),
     }
   }) satisfies ThemeConfig[]
-
-  // Cleanup the "filters: undefined" which the url config does not have
-  mergedConfig.forEach((c) =>
-    c.topics.forEach((t) => {
-      t.styles.forEach((s) => {
-        if (s.filters === undefined) {
-          delete s.filters
-        }
-      })
-    })
-  )
 
   return mergedConfig
 }

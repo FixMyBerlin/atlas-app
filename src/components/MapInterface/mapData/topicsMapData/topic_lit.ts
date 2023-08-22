@@ -7,8 +7,6 @@ const source = 'tarmac_lit'
 const sourceLayer = 'public.lit_verified'
 export type TopicLitId = typeof topic
 export type TopicLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
-export type TopicLitStyleFilterIds = '_nofilter'
-export type TopicLitStyleLegendIds = 'lit' | 'unlit' | 'ignore'
 
 const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   {
@@ -52,7 +50,6 @@ export const topic_lit: MapDataTopic = {
         source,
         sourceLayer,
       }),
-      interactiveFilters: null,
       legends: [...defaultLegend],
     },
     {
@@ -71,7 +68,6 @@ export const topic_lit: MapDataTopic = {
           sourceLayer,
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         ...defaultLegend,
         {
@@ -100,7 +96,6 @@ export const topic_lit: MapDataTopic = {
           sourceLayer,
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         ...defaultLegend,
         // {
@@ -148,7 +143,6 @@ export const topic_lit: MapDataTopic = {
           sourceLayer,
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [...defaultLegend, ...defaultLegendFresh],
     },
   ],

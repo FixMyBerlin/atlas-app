@@ -4,7 +4,6 @@ import { pickLayersByGroup, atlasStyle } from './utils'
 const tpoicId = 'roadClassification_osmscripts'
 export type TopicRoadClassificationId_Osmscripts = typeof tpoicId
 export type TopicRoadClassificationStyleIds_Osmscripts = 'default'
-export type TopicRoadClassificationStyleFilterIds_Osmscripts = '_nofilter'
 
 export const topic_roadClassification_osmscripts: MapDataTopic = {
   id: tpoicId,
@@ -17,7 +16,6 @@ export const topic_roadClassification_osmscripts: MapDataTopic = {
       name: 'Standard',
       desc: null,
       layers: pickLayersByGroup(atlasStyle.layers, 'fmc-strassentypen'),
-      interactiveFilters: null,
     },
   ],
 }

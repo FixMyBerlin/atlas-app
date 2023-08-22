@@ -7,7 +7,6 @@ const source = 'tarmac_bikelanesPresence'
 const sourceLayer = 'public.bikelanesPresence'
 export type TopicBikelanesPresenceId = typeof topic
 export type TopicBikelanesPresenceStyleIds = 'default'
-export type TopicBikelanesPresenceStyleFilterIds = '_nofilter'
 
 export const topic_bikelanesPresence: MapDataTopic = {
   id: topic,
@@ -82,7 +81,6 @@ export const topic_bikelanesPresence: MapDataTopic = {
       //     },
       //   },
       // ],
-      interactiveFilters: null,
       legends: [
         ...defaultLegend,
         {

@@ -11,7 +11,6 @@ export type TopicSurfaceStyleQualityIds =
   | 'debug-smoothness'
   | 'completeness'
   | 'freshness'
-export type TopicSurfaceQualityStyleFilterIds = '_nofilter'
 
 export const topic_surfaceQuality: MapDataTopic = {
   id: topicId,
@@ -24,14 +23,12 @@ export const topic_surfaceQuality: MapDataTopic = {
       name: 'Standard',
       desc: null,
       layers: mapboxStyleLayers({ group: 'atlas_surface_good', source, sourceLayer }),
-      interactiveFilters: null,
     },
     {
       id: 'bad',
       name: 'Schlechte Oberflächen',
       desc: 'Hervorhebung von schlechten Oberflächen.',
       layers: mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
-      interactiveFilters: null,
     },
     {
       id: 'completeness',
@@ -41,7 +38,6 @@ export const topic_surfaceQuality: MapDataTopic = {
         mapboxStyleLayers({ group: 'atlas_surface_present', source, sourceLayer }),
         mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         {
           id: 'missing',
@@ -61,7 +57,6 @@ export const topic_surfaceQuality: MapDataTopic = {
         mapboxStyleLayers({ group: 'atlas_surface_fresh', source, sourceLayer }),
         mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
       ].flat(),
-      interactiveFilters: null,
       legends: [],
     },
   ],

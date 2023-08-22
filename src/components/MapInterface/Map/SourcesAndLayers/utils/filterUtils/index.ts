@@ -1,4 +1,2 @@
-export * from './filterArrayFromMergedDataAndConfig'
-export * from './mergeFilterDataWithConfig'
-export * from './specifyFilters'
-export * from './types'
+export * from './flattenFilterArrays'
+export * from './wrapFilterWithAll'
