@@ -14,7 +14,7 @@ export type InspectorDataFeature = {
   geometry: maplibregl.GeoJSONFeature['geometry']
 }
 
-export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, "sourceKey">
+export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, resetInspector } = useMapStateInteraction()

@@ -10,8 +10,12 @@ export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
-  const { mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
+  const { inspectorFeatures, mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
   const { osmNotes, lat, lng } = useSearch<LocationGenerics>()
+
+  const osmNotesFeatureIds = inspectorFeatures
+    .filter((feature) => feature.source === 'osm-notes')
+    .map((feature) => (feature?.properties?.id || 0) as number)
 
   const [geodata, setGeodata] = useState<FeatureCollection>({
     type: 'FeatureCollection',
@@ -45,24 +49,40 @@ export const SourcesLayersOsmNotes: React.FC = () => {
       attribution="Notes: openstreetmap.org"
     >
       {osmNotes && (
-        <Layer
-          id={osmNotesLayerId}
-          key="osm-notes"
-          type="symbol"
-          layout={{
-            visibility: 'visible',
-            'icon-image': [
-              'match',
-              ['get', 'status'],
-              'closed' /* status=closed */,
-              'check_icon',
-              'open' /* status=open */,
-              'closed_icon',
-              'closed_icon' /* default */,
-            ],
-            'icon-allow-overlap': true,
-          }}
-        />
+        <>
+          <Layer
+            id="osm-notes-hover"
+            key="osm-notes-hover"
+            source="osm-notes"
+            type="circle"
+            paint={{
+              'circle-radius': 14,
+              'circle-color': '#115e59', // teal-800 https://tailwindcss.com/docs/customizing-colors
+              'circle-opacity': 0.6,
+              'circle-blur': 0.3,
+            }}
+            filter={['in', 'id', ...osmNotesFeatureIds]}
+          />
+          <Layer
+            id={osmNotesLayerId}
+            key="osm-notes"
+            source="osm-notes"
+            type="symbol"
+            layout={{
+              visibility: 'visible',
+              'icon-image': [
+                'match',
+                ['get', 'status'],
+                'closed' /* status=closed */,
+                'check_icon',
+                'open' /* status=open */,
+                'closed_icon',
+                'closed_icon' /* default */,
+              ],
+              'icon-allow-overlap': true,
+            }}
+          />
+        </>
       )}
     </Source>
   )
