@@ -7,6 +7,7 @@ import { useMap } from 'react-map-gl'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { DebugMapDownload } from './DebugMapDownload'
+import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 
 export const DebugMap = () => {
   const { showDebugInfo, setShowDebugInfo, useDebugLayerStyles, setUseDebugLayerStyles } =
@@ -15,6 +16,8 @@ export const DebugMap = () => {
   const { mapLoaded } = useMapStateInteraction()
   const [triggerRerender, setTriggerRerender] = useState(0)
   const [atlasLayers, setAtlasLayers] = useState<mapboxgl.AnyLayer[]>([])
+
+  const interactiveLayerIds = useInteractiveLayers()
 
   // The default is to showDebugInfo on isDev.
   // However, we can overwrite this with `?debugMap=true` on production
@@ -121,6 +124,16 @@ export const DebugMap = () => {
               </details>
             )
           })}
+        </details>
+
+        <details>
+          <summary className="cursor-pointer hover:font-semibold">interactiveLayerIds</summary>
+
+          <ul>
+            {interactiveLayerIds.map((layerId) => (
+              <li key={layerId}>{layerId}</li>
+            ))}
+          </ul>
         </details>
       </div>
     </>
