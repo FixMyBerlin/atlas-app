@@ -52,35 +52,34 @@ export const SourcesLayersOsmNotes: React.FC = () => {
     }
   }, [osmNotes])
 
-  const layerProps: SymbolLayer = {
-    id: 'osmnoteslayer',
-    source: 'osm-notes',
-    // 'source-layer': 'default', // set in `datasets/process.cjs`
-    type: 'symbol',
-    layout: {
-      visibility: 'visible',
-      'icon-image': [
-        'match',
-        ['get', 'status'],
-        'closed',
-        'check_icon',
-        'open',
-        'closed_icon',
-        'closed_icon' /* default */,
-      ],
-      'icon-allow-overlap': true,
-    },
-  }
-
   return (
     <Source
       id="osm-notes"
       key="osm-notes"
       type="geojson"
       data={geodata}
-      attribution="Source osm.org"
+      attribution="Notes: openstreetmap.org"
     >
-      {osmNotes && <Layer key="osmnoteslayer" {...layerProps} />}
+      {osmNotes && (
+        <Layer
+          id="osm-notes"
+          key="osm-notes"
+          type="symbol"
+          layout={{
+            visibility: 'visible',
+            'icon-image': [
+              'match',
+              ['get', 'status'],
+              'closed' /* status=closed */,
+              'check_icon',
+              'open' /* status=open */,
+              'closed_icon',
+              'closed_icon' /* default */,
+            ],
+            'icon-allow-overlap': true,
+          }}
+        />
+      )}
     </Source>
   )
 }
