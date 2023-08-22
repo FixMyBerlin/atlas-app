@@ -1,7 +1,12 @@
 import { Link } from '@components/Link'
+import Tooltip from '@components/Tooltip/Tooltip'
 import { proseClasses } from '@components/text'
+import { CheckBadgeIcon } from '@heroicons/react/24/solid'
+import { LocationGenerics } from '@routes/routes'
+import { useMatch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React from 'react'
+import { hasPermissionByDisplayName } from '../UserInfo'
 import { Disclosure } from './Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 
@@ -25,17 +30,36 @@ type Thread = {
   comments: Comment[]
 }
 
-const OsmUserLink = ({ user }: Pick<Comment, 'user'>) => {
+const OsmUserLink = ({
+  user,
+  hasPermission,
+}: Pick<Comment, 'user'> & { hasPermission: boolean }) => {
   if (!user) return <>Eine anonyme Nutzer:in</>
 
   return (
-    <Link external blank to={`https://www.openstreetmap.org/user/${user}`}>
-      {user}
+    <Link
+      external
+      blank
+      to={`https://www.openstreetmap.org/user/${user}`}
+      className="relative inline-flex gap-1"
+    >
+      {user}{' '}
+      {hasPermission ? (
+        <Tooltip text="Ist Mitarbeiter:in dieser Region">
+          <CheckBadgeIcon className="h-5 w-5" />
+        </Tooltip>
+      ) : (
+        ''
+      )}
     </Link>
   )
 }
 
 export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ properties }) => {
+  const {
+    data: { region },
+  } = useMatch<LocationGenerics>()
+
   if (!properties) return null
 
   const thread = {
@@ -51,11 +75,19 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
           const firstComment = index === 0
           const splitDate = comment.date.split(' ')
           const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
+          const userHasPermssionOnRegion = hasPermissionByDisplayName(comment.user, region)
+
           return (
-            <section key={comment.uid} className="border-b border-b-gray-200 bg-teal-50 px-3 py-2">
+            <section
+              key={comment.uid}
+              className={clsx(
+                'border-b border-b-gray-200 px-3 py-5',
+                userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50'
+              )}
+            >
               <p className="text-black">
                 <strong>
-                  <OsmUserLink user={comment.user} />
+                  <OsmUserLink user={comment.user} hasPermission={userHasPermssionOnRegion} />
                 </strong>{' '}
                 kommentierte am {date}:
               </p>
