@@ -56,12 +56,23 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             source="osm-notes"
             type="circle"
             paint={{
-              'circle-radius': 14,
+              'circle-radius': 15,
               'circle-color': '#115e59', // teal-800 https://tailwindcss.com/docs/customizing-colors
               'circle-opacity': 0.6,
               'circle-blur': 0.3,
             }}
             filter={['in', 'id', ...osmNotesFeatureIds]}
+          />
+          <Layer
+            // The PNGs are transparent so we add this background
+            id="osm-notes-background"
+            key="osm-notes-background"
+            source="osm-notes"
+            type="circle"
+            paint={{
+              'circle-radius': 11,
+              'circle-color': 'white',
+            }}
           />
           <Layer
             id={osmNotesLayerId}
