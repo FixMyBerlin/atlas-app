@@ -15,6 +15,7 @@ import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
+import { wrapFilterWithAll } from './utils'
 
 // We add source+layer map-components for all topics of the given confic.
 // We then toggle the visibility of the layer base on state.
@@ -94,7 +95,7 @@ export const SourcesAndLayers: React.FC = () => {
                   layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                const layerFilter = useDebugLayerStyles ? ['all'] : layer.filter
+                const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                 const layerPaint = useDebugLayerStyles
