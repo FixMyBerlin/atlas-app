@@ -6,6 +6,8 @@ import { FeatureCollection } from 'geojson'
 import React, { useEffect, useState } from 'react'
 import { Layer, Source, useMap } from 'react-map-gl'
 
+export const osmNotesLayerId = 'osm-notes'
+
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
   const { mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
@@ -44,7 +46,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
     >
       {osmNotes && (
         <Layer
-          id="osm-notes"
+          id={osmNotesLayerId}
           key="osm-notes"
           type="symbol"
           layout={{

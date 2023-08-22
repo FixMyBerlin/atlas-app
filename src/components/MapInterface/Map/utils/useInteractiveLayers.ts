@@ -7,10 +7,11 @@ import {
 } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
+import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
-type Props = { theme: ThemeConfig | undefined; osmNotes?: boolean }
+type Props = { theme: ThemeConfig | undefined }
 
-const collectInteractiveLayerIds = ({ theme, osmNotes }: Props) => {
+const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
   const interactiveLayerIds: string[] = []
 
   theme?.topics?.forEach((topicConfig) => {
@@ -40,10 +41,6 @@ const collectInteractiveLayerIds = ({ theme, osmNotes }: Props) => {
     })
   })
 
-  if (osmNotes) {
-    interactiveLayerIds.push('osmnoteslayer')
-  }
-
   return interactiveLayerIds
 }
 
@@ -51,12 +48,13 @@ export const useInteractiveLayers = () => {
   // active layer from theme
   const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
-  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
 
-  const themeActiveLayerIds = collectInteractiveLayerIds({
-    theme: currentTheme,
-    osmNotes: osmNotesActive,
-  })
+  const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ theme: currentTheme })
+
+  const { osmNotes } = useSearch<LocationGenerics>()
+  if (osmNotes) {
+    themeActiveLayerIds.push(osmNotesLayerId)
+  }
 
   // active layer from datasets
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
