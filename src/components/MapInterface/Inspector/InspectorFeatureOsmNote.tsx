@@ -9,6 +9,8 @@ import React from 'react'
 import { hasPermissionByDisplayName } from '../UserInfo'
 import { Disclosure } from './Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
+import { ReactComponent as SvgNotesClosed } from '@components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_closed.svg'
+import { ReactComponent as SvgNotesOpen } from '@components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_open.svg'
 
 type Comment = {
   date: string
@@ -112,12 +114,22 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
             </section>
           )
         })}
-        <div className="space-y-2 px-3 py-2">
-          <p>
-            Erstellt am {thread.date_created}
-            <br />
-            Status: {thread.status === 'closed' && 'geschlossen'}
-            {thread.status === 'open' && 'offen'}
+        <div className="space-y-3 px-3 py-3">
+          <p>Erstellt am {thread.date_created}</p>
+          <p className="flex items-center gap-2">
+            Status:{' '}
+            {thread.status === 'closed' && (
+              <span className="inline-flex gap-1">
+                <SvgNotesClosed className="h-5 w-5" />
+                geschlossen
+              </span>
+            )}
+            {thread.status === 'open' && (
+              <span className="inline-flex gap-1">
+                <SvgNotesOpen className="h-5 w-5" />
+                offen
+              </span>
+            )}
           </p>
           <p>
             <Link button external blank to={`https://www.openstreetmap.org/note/${thread.id}`}>
