@@ -6,7 +6,7 @@ import { useMapStateInteraction } from '@components/MapInterface/mapStateInterac
 import { useSearch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/index'
 
-export const DynamicSources: React.FC = () => {
+export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
   // const [activeRequestEventHandler, setActiveRequestEventHandler] = useState(false)
   const { mapLoaded, setOsmNotesLoaded } = useMapStateInteraction()
