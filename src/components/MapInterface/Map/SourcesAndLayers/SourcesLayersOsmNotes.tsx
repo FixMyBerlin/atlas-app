@@ -74,11 +74,12 @@ export const SourcesLayersOsmNotes: React.FC = () => {
                 'match',
                 ['get', 'status'],
                 'closed' /* status=closed */,
-                'check_icon',
+                'notes_closed',
                 'open' /* status=open */,
-                'closed_icon',
-                'closed_icon' /* default */,
+                'notes_open',
+                'notes_open' /* default */,
               ],
+              'icon-size': 0.65,
               'icon-allow-overlap': true,
             }}
           />
