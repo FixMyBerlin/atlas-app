@@ -8,12 +8,12 @@ import { InspectorOsmNoteFeature } from './Inspector'
 type Comment = {
   date: string
   uid: number
-  user: string
+  user: string | undefined
   user_url: `https://api.openstreetmap.org/user/${string}`
   action: 'opened' | 'commented' | 'closed'
   text: string
   html: string
-}[]
+}
 
 type Thread = {
   id: number
@@ -21,8 +21,18 @@ type Thread = {
   comment_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/comment`
   close_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/close`
   date_created: string
-  status: 'open'
-  comments: Comment
+  status: 'open' | 'closed'
+  comments: Comment[]
+}
+
+const OsmUserLink = ({ user }: Pick<Comment, 'user'>) => {
+  if (!user) return <>Eine anonyme Nutzer:in</>
+
+  return (
+    <Link external blank to={`https://www.openstreetmap.org/user/${user}`}>
+      {user}
+    </Link>
+  )
 }
 
 export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ properties }) => {
@@ -31,7 +41,7 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
   const thread = {
     ...properties,
     date_created: new Date(properties.date_created).toLocaleString('de-DE'),
-    comments: JSON.parse(properties.comments as string) as Comment,
+    comments: JSON.parse(properties.comments as string) as Comment[],
   } as Thread
 
   return (
@@ -44,7 +54,10 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
           return (
             <section key={comment.uid} className="border-b border-b-gray-200 bg-teal-50 px-3 py-2">
               <p className="text-black">
-                <strong>{comment.user || 'Eine anonyme Nutzer:in'}</strong> kommentierte am {date}:
+                <strong>
+                  <OsmUserLink user={comment.user} />
+                </strong>{' '}
+                kommentierte am {date}:
               </p>
 
               <div
@@ -71,7 +84,8 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
           <p>
             Erstellt am {thread.date_created}
             <br />
-            Status: <span className="uppercase">{thread.status}</span>
+            Status: {thread.status === 'closed' && 'geschlossen'}
+            {thread.status === 'open' && 'offen'}
           </p>
           <p>
             <Link button external blank to={`https://www.openstreetmap.org/note/${thread.id}`}>
