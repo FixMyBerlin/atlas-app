@@ -2,7 +2,7 @@ import { sourcesDatasets } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import { createDatasetSourceLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
-import { useSearch } from '@tanstack/react-location'
+import { useMatch, useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
@@ -11,12 +11,20 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 export const SourcesLayerDatasets: React.FC = () => {
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
   const { pmTilesProtocolReady } = useMapStateInteraction()
+  const {
+    params: { regionPath },
+  } = useMatch()
 
-  if (!selectedDatasetIds || !pmTilesProtocolReady) return null
+  const uniqueRegionDatasets = sourcesDatasets
+    .filter((data) => (data.regionKey as string[]).includes(regionPath))
+    // Make the array unique by data.url
+    .filter((dataset, index, self) => index === self.findIndex((d) => d.url === dataset.url))
+
+  if (!uniqueRegionDatasets || !selectedDatasetIds || !pmTilesProtocolReady) return null
 
   return (
     <>
-      {sourcesDatasets.map(({ id: sourceId, type, url, attributionHtml, layers }) => {
+      {uniqueRegionDatasets.map(({ id: sourceId, type, url, attributionHtml, layers }) => {
         const datasetTileId = `source:${sourceId}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
 
         const visible = selectedDatasetIds.includes(sourceId)
