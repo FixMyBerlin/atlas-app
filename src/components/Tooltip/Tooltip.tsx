@@ -21,7 +21,7 @@ const Tooltip: React.FC<Props> = ({ text, children, className }) => {
     <div className={clsx('group/tooltip', className)} ref={parentWrapperRef}>
       <div
         className={`absolute hidden select-none whitespace-nowrap rounded bg-gray-900/90 p-2 text-xs text-white shadow-md group-hover/tooltip:z-50 group-hover/tooltip:block`}
-        style={{ top: positionTop + 3 }}
+        style={{ top: -positionTop }}
       >
         {text}
       </div>

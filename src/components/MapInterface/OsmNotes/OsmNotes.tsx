@@ -9,7 +9,7 @@ import { useNavigate, useSearch } from '@tanstack/react-location'
 import { LocationGenerics } from '@routes/index'
 import { Link } from '@components/Link'
 
-export const ShowOsmNotes: React.FC = () => {
+export const OsmNotes: React.FC = () => {
   const { osmNotesLoading } = useMapStateInteraction()
   const { mainMap } = useMap()
   const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
@@ -34,10 +34,10 @@ export const ShowOsmNotes: React.FC = () => {
             onChange(!osmNotesActive)
           }}
           className={clsx(
-            'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
-            osmNotesActive ? 'rounded-l-lg' : 'rounded-lg',
-            osmNotesActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
-            osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
+            'z-0 inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium shadow-md focus:relative focus:z-10 focus:outline-none  focus:ring-2 focus:ring-yellow-500',
+            osmNotesActive ? 'rounded-l-md' : 'rounded-md',
+            osmNotesActive ? 'text-gray-700' : 'text-gray-500 hover:text-gray-700',
+            osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50'
           )}
         >
           {osmNotesLoading ? (
@@ -48,13 +48,6 @@ export const ShowOsmNotes: React.FC = () => {
           ) : (
             <ChatBubbleLeftRightIcon className="h-5 w-5" />
           )}
-          <span
-            aria-hidden="true"
-            className={clsx(
-              osmNotesActive ? 'bg-yellow-500' : 'bg-transparent',
-              'absolute inset-x-0 bottom-0 h-0.5'
-            )}
-          />
         </button>
       </Tooltip>
       <Tooltip text="Hinweis auf openstreetmap.org erstellen">
@@ -63,10 +56,8 @@ export const ShowOsmNotes: React.FC = () => {
           to={`https://www.openstreetmap.org/note/new#map=15/${centerLocation?.lat}/${centerLocation?.lng}`}
           blank
           className={clsx(
-            'flex-0 group min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
-            'focus:z-9 rounded-r-lg bg-white hover:bg-yellow-50',
             osmNotesActive ? 'translate-x-0' : '-translate-x-20',
-            'text-gray-500 hover:text-gray-700',
+            'z-0 -ml-px justify-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 shadow-md hover:bg-yellow-50 hover:text-gray-700 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500',
             osmNotesActive ? 'inline-flex' : 'hidden'
           )}
         >
