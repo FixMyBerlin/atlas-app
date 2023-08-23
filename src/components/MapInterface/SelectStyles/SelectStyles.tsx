@@ -48,8 +48,6 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
   }
 
   if (!topicConfig) return null
-  // Hide UI for inactive topics
-  if (!topicConfig.active) return null
   // Hide UI for topics with only one style
   if (topicConfig.styles.length === 1) return null
 
@@ -72,7 +70,6 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                 )}
               >
                 <div className="flex gap-1 truncate">
-                  <span className="w-[2rem] text-right">Stil:</span>
                   <span className="truncate">{activeStyleData?.name}</span>
                 </div>
                 <ChevronDownIcon className="-mr-1 ml-0.5 h-5 w-5" aria-hidden="true" />
@@ -106,7 +103,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                               'block w-full px-4 py-2 text-left text-sm'
                             )}
                           >
-                            Stil: {styleData.name}
+                            {styleData.name}
                           </button>
                         )}
                       </Menu.Item>

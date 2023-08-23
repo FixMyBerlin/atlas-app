@@ -1,7 +1,7 @@
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
-import { Toggle } from '../SelectTopics/Toggle'
+import { Toggle } from './Toggle'
 import { getThemeData } from '../mapData'
 import { MapDataThemeIds } from '../mapData/themesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction'

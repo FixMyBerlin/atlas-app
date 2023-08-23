@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'surfaceQuality'
@@ -18,6 +19,7 @@ export const topic_surfaceQuality: MapDataTopic = {
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

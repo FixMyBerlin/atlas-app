@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 
 // Data https://studio.mapbox.com/tilesets/hejco.86v96gzk/#17.29/52.564196/13.327916
 // Style https://studio.mapbox.com/styles/hejco/cl6upu3zo000015o3im4kug1n/edit/#17.29/52.564196/13.327916
@@ -16,6 +17,7 @@ export const topic_accidents: MapDataTopic = {
   desc: 'Unfallatlass',
   sourceId: 'accidents_unfallatlas',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

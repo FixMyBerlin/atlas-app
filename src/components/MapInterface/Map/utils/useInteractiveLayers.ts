@@ -22,6 +22,8 @@ const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
 
     topicConfig.styles.forEach((styleConfig) => {
       const styleData = getStyleData(topicData, styleConfig.id)
+      if (styleData.id === 'hidden') return
+
       styleData.layers.forEach((layerConfig) => {
         // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
         const sourceData = getSourceData(topicData.sourceId)

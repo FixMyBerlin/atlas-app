@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'maxspeed'
@@ -13,6 +14,7 @@ export const topic_maxspeed: MapDataTopic = {
   desc: '', // todo
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Hohe Geschwindigkeiten',

@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 
 const topicId = 'mapillaryCoverage'
 export type TopicMapillaryCoverageId = typeof topicId
@@ -10,6 +11,7 @@ export const topic_mapillaryCoverage: MapDataTopic = {
   desc: null,
   sourceId: 'mapillary_coverage',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

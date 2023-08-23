@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topiId = 'boundaries'
@@ -11,6 +12,7 @@ export const topic_boundaries: MapDataTopic = {
   desc: '',
   sourceId: 'tarmac_boundaries',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Gemeindeverbund / Amt',

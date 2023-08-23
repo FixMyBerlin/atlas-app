@@ -19,7 +19,7 @@ export const PageRegionMap: React.FC = () => {
     params: { regionPath },
   } = useMatch<LocationGenerics>()
 
-  // Guard aganst false regionPath params which result in empty region-data
+  // Guard against false regionPath params which result in empty region-data
   if (!region) {
     return <Navigate to="/regionen" search={{ regionPathNotFound: regionPath }} replace />
   }
@@ -32,10 +32,6 @@ export const PageRegionMap: React.FC = () => {
   const freshConfig = useMemo(() => {
     return createMapRegionConfig({ regionThemeIds: region.themes })
   }, [region.themes])
-  const initialConfig = initializeMapRegionConfig({
-    freshConfig,
-    urlConfig: config,
-  })
 
   // When we change stuff in our config, our URL config needs to change.
   // Otherwise things blow up, becaues we look for config entries that where removed.
@@ -47,6 +43,11 @@ export const PageRegionMap: React.FC = () => {
     const checkedTheme = theme && region.themes.includes(theme) ? theme : undefined
 
     if (!resetConfig && checkedTheme && lat && lng && zoom && config) return
+
+    const initialConfig = initializeMapRegionConfig({
+      freshConfig,
+      urlConfig: config,
+    })
 
     navigate({
       search: (old) => {
@@ -67,7 +68,7 @@ export const PageRegionMap: React.FC = () => {
       replace: true,
     })
     setResetConfig(false)
-  }, [resetConfig, theme, lat, lng, zoom, config, initialConfig])
+  }, [resetConfig, theme, lat, lng, zoom, config])
 
   return (
     <LayoutMap>

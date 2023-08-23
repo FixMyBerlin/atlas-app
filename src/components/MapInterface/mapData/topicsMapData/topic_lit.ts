@@ -1,5 +1,6 @@
 import { MapDataTopic } from '../types'
 import { defaultLegendFresh } from './defaultLegend'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
@@ -41,6 +42,7 @@ export const topic_lit: MapDataTopic = {
   desc: null,
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Inhalte',

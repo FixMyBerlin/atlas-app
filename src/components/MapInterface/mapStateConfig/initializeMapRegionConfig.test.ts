@@ -9,7 +9,6 @@ describe('initializeMapReagionConfig()', () => {
       topics: [
         {
           id: 'lit',
-          active: true,
           styles: [
             { id: 'default', active: true }, // change to false
             { id: 'completeness', active: false }, // change to true
@@ -19,7 +18,6 @@ describe('initializeMapReagionConfig()', () => {
         },
         {
           id: 'places',
-          active: false, // change to true
           styles: [
             { id: 'default', active: true },
             { id: 'circle', active: false },
@@ -27,7 +25,6 @@ describe('initializeMapReagionConfig()', () => {
         },
         {
           id: 'landuse',
-          active: false,
           styles: [{ id: 'default', active: true }], // change id to name_changed
         },
       ],
@@ -37,7 +34,6 @@ describe('initializeMapReagionConfig()', () => {
       topics: [
         {
           id: 'boundaries',
-          active: true,
           styles: [
             {
               id: 'default',
@@ -52,7 +48,6 @@ describe('initializeMapReagionConfig()', () => {
       topics: [
         {
           id: 'bikelanes',
-          active: true,
           styles: [
             {
               id: 'default',
@@ -75,10 +70,8 @@ describe('initializeMapReagionConfig()', () => {
 
   test('`active` states are re-applied (if `id` stayed the same)', () => {
     const urlConfig = structuredClone(freshConfig)
-    urlConfig[0].topics[0].active = false // topic:lit
     urlConfig[0].topics[0].styles[0].active = false // topic:lit style-id:default
     urlConfig[0].topics[0].styles[1].active = true // topic:lit style-id:completenes
-    urlConfig[0].topics[1].active = true // topic:places
 
     const result = initializeMapRegionConfig({
       freshConfig,

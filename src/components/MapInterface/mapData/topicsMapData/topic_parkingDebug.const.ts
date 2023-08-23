@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parkingDebug'
@@ -13,6 +14,7 @@ export const topic_parkingDebug: MapDataTopic = {
   sourceId: 'parkraumParkingDebug',
   beforeId: undefined,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

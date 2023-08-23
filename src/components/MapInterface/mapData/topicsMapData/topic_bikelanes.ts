@@ -1,5 +1,6 @@
 import { verifiedColor } from '@components/MapInterface/Inspector/Verification/verifiedColor.const'
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bikelanes'
@@ -70,6 +71,7 @@ export const topic_bikelanes: MapDataTopic = {
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_bikelanes',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Inhalte',

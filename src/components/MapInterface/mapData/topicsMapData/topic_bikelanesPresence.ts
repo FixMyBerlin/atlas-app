@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 import { defaultLegend } from './topic_bikelanes'
 
@@ -14,6 +15,7 @@ export const topic_bikelanesPresence: MapDataTopic = {
   desc: '',
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Inhalte & Vollständigkeit',

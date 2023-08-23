@@ -1,5 +1,6 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, atlasStyle } from './utils'
+import { defaultStyleHidden } from './defaultStyle'
+import { atlasStyle, pickLayersByGroup } from './utils'
 
 const topicId = 'surface_osmscripts'
 export type TopicSurfaceId_Osmscripts = typeof topicId
@@ -11,6 +12,7 @@ export const topic_surface_osmscripts: MapDataTopic = {
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: 'osmscripts_highways',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'shops'
@@ -13,6 +14,7 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
   desc: null,
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

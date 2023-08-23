@@ -1,5 +1,6 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, atlasStyle } from './utils'
+import { defaultStyleHidden } from './defaultStyle'
+import { atlasStyle, pickLayersByGroup } from './utils'
 
 const tpoicId = 'roadClassification_osmscripts'
 export type TopicRoadClassificationId_Osmscripts = typeof tpoicId
@@ -11,6 +12,7 @@ export const topic_roadClassification_osmscripts: MapDataTopic = {
   desc: null,
   sourceId: 'osmscripts_highways',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

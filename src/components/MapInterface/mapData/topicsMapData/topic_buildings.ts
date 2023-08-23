@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 
 const topic = 'buildings'
 const source = 'tarmac_buildings'
@@ -12,6 +13,7 @@ export const topic_buildings: MapDataTopic = {
   desc: null,
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

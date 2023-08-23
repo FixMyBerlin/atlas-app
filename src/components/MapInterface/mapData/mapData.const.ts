@@ -80,10 +80,10 @@ import {
   topic_roadClassification,
   topic_roadClassification_osmscripts,
   topic_shops_osmscripts,
-  topic_surface_osmscripts,
   topic_surfaceQuality,
+  topic_surface_osmscripts,
 } from './topicsMapData'
-import { MapData } from './types'
+import { MapData, MapDataTheme } from './types'
 
 export type TopicIds =
   | TopicAccidentsId
@@ -114,7 +114,10 @@ export type TopicIds =
   | TopicSurfaceId_Osmscripts
   | TopicSurfaceQualityId
 
+type TopicStyleIdDefaults = MapDataTheme['topics'][number]['defaultStyle']
+
 export type TopicStyleIds =
+  | TopicStyleIdDefaults
   | TopicAccidentsStyleIds
   | TopicBarriersStyleIds
   | TopicBikelanesPresenceStyleIds

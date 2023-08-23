@@ -1,4 +1,5 @@
 export * from './defaultLegend'
+export * from './defaultStyle'
 export * from './mapboxStyles'
 export * from './topic_accidents.const'
 export * from './topic_barriers'

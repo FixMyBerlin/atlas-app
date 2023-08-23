@@ -7,7 +7,6 @@ export type ThemeConfig = {
 
 export type TopicConfig = {
   id: TopicIds
-  active: boolean
   styles: {
     id: TopicStyleIds
     active: boolean

@@ -28,13 +28,12 @@ export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => 
 
         return {
           id: themeTopic.id,
-          active: urlConfigTopic ? urlConfigTopic.active : themeTopic.active,
           styles: themeTopic.styles.map((style) => {
             const urlConfigTopicStyle = urlConfigTopic?.styles?.find((s) => s.id === style.id)
 
             return {
               id: style.id,
-              active: urlConfigTopicStyle ? urlConfigTopicStyle.active : style.id === 'default',
+              active: urlConfigTopicStyle ? urlConfigTopicStyle.active : style.active,
             }
           }),
         }

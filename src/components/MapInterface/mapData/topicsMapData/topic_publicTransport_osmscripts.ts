@@ -1,5 +1,6 @@
 import { MapDataTopic } from '../types'
-import { pickLayersByGroup, atlasStyle } from './utils'
+import { defaultStyleHidden } from './defaultStyle'
+import { atlasStyle, pickLayersByGroup } from './utils'
 
 const tpoicId = 'publicTransport_osmscripts'
 export type TopicPublicTransportId_Osmscripts = typeof tpoicId
@@ -11,6 +12,7 @@ export const topic_publicTransport_osmscripts: MapDataTopic = {
   desc: null,
   sourceId: 'osmscripts_pois',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

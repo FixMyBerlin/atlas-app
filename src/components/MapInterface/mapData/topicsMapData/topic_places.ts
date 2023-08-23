@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'places'
@@ -11,6 +12,7 @@ export const topic_places: MapDataTopic = {
   desc: null,
   sourceId: 'tarmac_places',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Ortsnamen',

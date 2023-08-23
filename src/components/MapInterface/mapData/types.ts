@@ -167,7 +167,7 @@ export type MapDataTheme = {
 
 type MapDataThemeTopic = {
   id: TopicIds
-  defaultActive: boolean
+  defaultStyle: 'default' | 'hidden'
   // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
 
@@ -184,13 +184,21 @@ export type MapDataTopic = {
 }
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type MapDataStyle = {
-  id: TopicStyleIds
-  name: string
-  desc: null | string
-  layers: MapDataVisLayer[]
-  legends?: null | MapDataStyleLegend[]
-}
+export type MapDataStyle =
+  | {
+      id: TopicStyleIds
+      name: string
+      desc: null | string
+      layers: MapDataVisLayer[]
+      legends?: null | MapDataStyleLegend[]
+    }
+  | {
+      id: 'hidden'
+      name: string
+      desc: null | string
+      layers?: never
+      legends?: never
+    }
 
 /** @desc: The technical glue between sources and styles. name fixed by library */
 export type MapDataVisLayer = (

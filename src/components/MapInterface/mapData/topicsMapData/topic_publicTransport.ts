@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const tpoicId = 'publicTransport'
@@ -13,6 +14,7 @@ export const topic_publicTransport: MapDataTopic = {
   desc: null,
   sourceId: 'tarmac_publicTransport',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

@@ -56,6 +56,11 @@ export const SourcesAndLayers: React.FC = () => {
         const currTopicConfig = currentTheme.topics.find((t) => t.id === flatTopicConfig.id)
         if (!currTopicConfig) return null
 
+        const currTopicActive = currTopicConfig.styles
+          .filter((s) => s.id !== 'hidden')
+          .some((s) => s.active)
+        if (!currTopicActive) return null
+
         const curTopicData = getTopicData(flatTopicConfig.id)
         const sourceData = getSourceData(curTopicData?.sourceId)
 
@@ -75,16 +80,33 @@ export const SourcesAndLayers: React.FC = () => {
           >
             {flatTopicConfig.styles.map((styleConfig) => {
               const styleData = getStyleData(curTopicData, styleConfig.id)
+
+              if (styleConfig.id === 'hidden') {
+                const layerId = createSourceTopicStyleLayerKey(
+                  sourceData.id,
+                  flatTopicConfig.id,
+                  styleConfig.id,
+                  'hidden'
+                )
+                return (
+                  <Layer
+                    key={layerId}
+                    source-layer={sourceId}
+                    type="line"
+                    layout={{ visibility: 'none' }}
+                  />
+                )
+              }
+
               // A style is visible when
               // … the theme is active (handled above) AND
               // … the current topic is active AND
+              //               ^--- TODO This is wrong now, topics are always active but themes get active/hidden
               // … the current topic's style is active (which includes 'default' via the config initialization)
               const currStyleConfig = currTopicConfig.styles.find((s) => s.id === styleConfig.id)
-              const visibility = layerVisibility(
-                (currTopicConfig.active && currStyleConfig?.active) || false
-              )
+              const visibility = layerVisibility(currStyleConfig?.active || false)
 
-              return styleData?.layers.map((layer) => {
+              return styleData?.layers?.map((layer) => {
                 const layerId = createSourceTopicStyleLayerKey(
                   sourceData.id,
                   flatTopicConfig.id,

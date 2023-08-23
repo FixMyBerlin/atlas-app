@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { atlasStyle, pickLayersByGroup } from './utils'
 
 const topicId = 'education_osmscripts'
@@ -11,6 +12,7 @@ export const topic_education_osmscripts: MapDataTopic = {
   desc: null,
   sourceId: 'osmscripts_pois',
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
