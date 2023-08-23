@@ -1,6 +1,7 @@
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
+import { Toggle } from '../SelectTopics/Toggle'
 import { getThemeData } from '../mapData'
 import { MapDataThemeIds } from '../mapData/themesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction'
@@ -65,9 +66,8 @@ export const SelectTheme = () => {
             const active = themeId === themeConfig.id
 
             return (
-              <button
+              <div
                 key={themeData.name}
-                onClick={() => selectTheme(themeConfig.id)}
                 className={clsx(
                   active ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
                   index === 0 ? 'rounded-l-lg' : '',
@@ -75,11 +75,12 @@ export const SelectTheme = () => {
                   'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
                   active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
                 )}
-                disabled={active}
                 aria-current={active ? 'page' : undefined}
                 title={themeData.desc}
               >
-                <span>{themeData.name}</span>
+                <Toggle active={active} handleChange={() => selectTheme(themeConfig.id)}>
+                  {themeData.name}
+                </Toggle>
                 <span
                   aria-hidden="true"
                   className={clsx(
@@ -87,7 +88,7 @@ export const SelectTheme = () => {
                     'absolute inset-x-0 bottom-0 h-0.5'
                   )}
                 />
-              </button>
+              </div>
             )
           })}
         </nav>
