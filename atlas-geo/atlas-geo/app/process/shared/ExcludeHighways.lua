@@ -43,5 +43,5 @@ function ExcludeHighways(tags)
     return true, "Excluded by `man_made=pier`"
   end
 
-  return false, nil
+  return false, ""
 end

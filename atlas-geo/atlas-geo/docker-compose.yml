@@ -5,19 +5,14 @@ services:
       context: .
       dockerfile: ./app.Dockerfile
     entrypoint: /app/run.sh
-    environment:
-      PGHOST: db
-      PGDATABASE: postgres
-      PGUSER: postgres
-      PGPASSWORD: mysecretpassword
-      SKIP_DOWNLOAD: 'skip'
-      SKIP_FILTER: 'skip'
+    env_file:
+      - ./.env
     volumes:
       - osmfiles:/data
     depends_on:
       db:
         condition: service_healthy
-    container_name: tarmac
+    container_name: app
     profiles:
       - osm_processing
   tiles:
@@ -25,7 +20,7 @@ services:
     image: pramsey/pg_tileserv
     container_name: tileserver
     environment:
-      DATABASE_URL: postgres://postgres:mysecretpassword@db/postgres
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
     ports:
       - 7800:7800
     depends_on:
@@ -36,11 +31,8 @@ services:
       context: .
       dockerfile: ./api.Dockerfile
     container_name: api
-    environment:
-      PGHOST: db
-      PGDATABASE: postgres
-      PGUSER: postgres
-      PGPASSWORD: mysecretpassword
+    env_file:
+      - ./.env
     ports:
       - 80:80
     depends_on:
@@ -50,14 +42,16 @@ services:
     build:
       context: .
       dockerfile: ./db.Dockerfile
+    env_file:
+      - ./.env
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
-      - "6000:5432"
+      - "${PGPORT}:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
     container_name: osmdatabase

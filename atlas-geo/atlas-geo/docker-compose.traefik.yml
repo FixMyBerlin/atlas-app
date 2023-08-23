@@ -1,7 +1,7 @@
 version: "3"
 services:
   traefik:
-    image: traefik:v2.9
+    image: traefik:v2.10
     container_name: traefik
     restart: always
     env_file:
@@ -20,6 +20,7 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.letsencrypt.acme.email=dev-team@fixmycity.de"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--serversTransport.forwardingTimeouts.dialTimeout=100s"
     ports:
       - "80:80"
       - "443:443"

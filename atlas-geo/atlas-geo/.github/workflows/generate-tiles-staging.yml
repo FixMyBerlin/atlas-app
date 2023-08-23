@@ -8,13 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Restart tarmac staging
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          echo "Restart tarmac container"
-          cd /srv/tarmac/
-          docker compose -f docker-compose.staging.yml restart -t 30 app
+      - name: Restart tarmac staging
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "Restart tarmac container"
+            cd /srv/tarmac/
+            docker compose -f docker-compose.staging.yml restart -t 30 app

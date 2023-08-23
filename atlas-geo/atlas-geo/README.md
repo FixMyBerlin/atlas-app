@@ -36,7 +36,7 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 
 ### Data update
 
-- Data is updated every weekday at 5:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is updated every weekday at 4:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
 - Data is updated on every deploy
 - Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
@@ -89,8 +89,6 @@ The workflow is…
    ```sh
    docker compose --profile osm_processing build && docker compose --profile osm_processing up
    ```
-
-   The default `/docker-compose.yml` does set `SKIP_DOWNLOAD` and `SKIP_FILTER`. For your first run, you need to remove those.
 
 3. Inspect the new results
 
@@ -146,11 +144,11 @@ docker exec -it mypipeline bash
 For FixMyCity, the command to inspect the current state of the processing on the server is …
 
 ```
-ssh ionos docker logs --tail --follow app
-```
-
-```
-ssh ionos docker logs --tail --follow app_staging
+ssh ionos
+# then…
+cd /srv/tarmac && docker compose -f docker-compose.production.yml logs app --tail 500
+# or…
+cd /srv/tarmac && docker compose -f docker-compose.staging.yml logs app_staging --tail 500
 ```
 
 ## 💛 Thanks to
