@@ -46,23 +46,23 @@ jobs:
         run: >
           docker build .
           --file ./app.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+          --tag public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Push the app image
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+          docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Build API image
         run: >
           docker build .
           --file ./api.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+          --tag public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
       - name: Push API image
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+          docker push public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
       - name: Copy files to server
         uses: appleboy/scp-action@master
