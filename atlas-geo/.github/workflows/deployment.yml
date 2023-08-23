@@ -3,7 +3,7 @@ name: Deployment Production
 on:
   push:
     branches:
-      - 'main'
+      - "main"
 
 jobs:
   build_and_deploy:
@@ -19,77 +19,79 @@ jobs:
       TILESERVER_PORT: 9090
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Upgrade AWS CLI version and setup lightsailctl
-      run: |
-       aws --version
-       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-       unzip awscliv2.zip
-       sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-       which aws
-       aws --version
-       sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
-       sudo chmod +x /usr/local/bin/lightsailctl
+      - name: Upgrade AWS CLI version and setup lightsailctl
+        run: |
+          aws --version
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          which aws
+          aws --version
+          sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Build app image
-      run: >
-        docker build .
-        --file ./app.Dockerfile
-        --tag public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+      - name: Build app image
+        run: >
+          docker build .
+          --file ./app.Dockerfile
+          --tag public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
 
-    - name: Push the app image
-      run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-        docker push public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+      - name: Push the app image
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
 
-    - name: Build API image
-      run: >
-        docker build .
-        --file ./api.Dockerfile
-        --tag public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+      - name: Build API image
+        run: >
+          docker build .
+          --file ./api.Dockerfile
+          --tag public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
 
-    - name: Push API image
-      run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-        docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+      - name: Push API image
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
 
-    - name: Copy files to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        source: "docker-compose.production.yml,docker-compose.traefik.yml"
-        target: "/srv/tarmac/"
-        overwrite: true
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "docker-compose.production.yml,docker-compose.traefik.yml"
+          target: "/srv/tarmac/"
+          overwrite: true
 
-    - name: Stop & start container on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          echo "Stop containers on VPS"
-          cd /srv/tarmac/
-          rm .env.production
-          docker image prune -fa
-          docker compose -f docker-compose.production.yml down
-          echo "Start container on VPS"
-          touch .env.production
-          echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
-          echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.production
-          echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
-          echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
-          echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.production
-          echo GITHUB_SHA='${{ github.sha }}' >> .env.production
-          docker compose --env-file .env.production  -f docker-compose.production.yml pull
-          docker compose --env-file .env.production  -f docker-compose.production.yml up -d
+      - name: Stop & start container on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "Stop containers on VPS"
+            cd /srv/tarmac/
+            docker image prune -fa
+            docker compose --env-file .env.production -f docker-compose.production.yml down
+            echo "Updating '.env.production'"
+            rm .env.production
+            touch .env.production
+            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
+            echo PGHOST='db' >> .env.production
+            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env.production
+            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
+            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
+            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.production
+            echo GITHUB_SHA='${{ github.sha }}' >> .env.production
+            echo "Start container on VPS"
+            docker compose --env-file .env.production  -f docker-compose.production.yml pull
+            docker compose --env-file .env.production  -f docker-compose.production.yml up -d

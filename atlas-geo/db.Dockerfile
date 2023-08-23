@@ -9,7 +9,7 @@
 #     https://github.com/baosystems the company has no red flags at first sight
 # This code uses the last option in that list…
 
-FROM ghcr.io/baosystems/postgis:14-3.2
+FROM ghcr.io/baosystems/postgis:14-3.3
 # logs can be found in /var/lib/postgresql/data/pg_log/
 CMD [ \
   "postgres", \
@@ -20,4 +20,4 @@ CMD [ \
   "-clog_filename=postgresql-%Y-%m-%d_%H%M%S.log", \
   "-clog_statement=mod", \
   "-cwork_mem=16MB" \
-]
+  ]
