@@ -15,7 +15,7 @@ export const SelectTopics: React.FC = () => {
   if (!topicsConfig) return null
 
   return (
-    <section className="fixed top-32 left-5 max-h-[calc(100vh-12rem)] w-60 overflow-y-auto overflow-x-visible rounded bg-white/90 pt-1 pb-3 shadow-md">
+    <section className="absolute top-2.5 left-5 max-h-[calc(100vh-5.5rem)] w-60 overflow-y-auto overflow-x-visible rounded bg-white/90 pt-1 pb-3 shadow-md">
       <Sentry.ErrorBoundary fallback={<ErrorRestartMap />}>
         <fieldset>
           <legend className="sr-only">
