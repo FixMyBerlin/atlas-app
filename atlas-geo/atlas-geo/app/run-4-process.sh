@@ -19,7 +19,9 @@ run_lua "legacy_maxspeed/maxspeed"
 # Reminder: The 'lit' table is available only after Postprocessing finished
 run_lua "legacy_lit/lit"
 
-run_lua "boundaries"
+run_lua "legacy_boundaries/boundaries"
+run_lua "boundaries/boundaries"
+
 run_lua "places/places"
 run_lua_if_debug "places/places_todoList"
 run_lua "landuse"
