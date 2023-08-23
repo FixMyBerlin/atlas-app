@@ -3,7 +3,7 @@ services:
   app:
     env_file:
       - ./.env.production
-    image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: app
     environment:
@@ -48,7 +48,7 @@ services:
   api:
     env_file:
       - ./.env.production
-    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
     restart: always
     ports:
