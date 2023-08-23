@@ -16,5 +16,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Restart all production services"
-            cd /srv/tarmac/
+            cd /srv/processing/
             docker compose -f docker-compose.production.yml up -d tiles api

@@ -8,6 +8,9 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://radverkehrsatlas.de
 
     env:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
@@ -43,23 +46,23 @@ jobs:
         run: >
           docker build .
           --file ./app.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+          --tag public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Push the app image
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+          docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Build API image
         run: >
           docker build .
           --file ./api.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+          --tag public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
       - name: Push API image
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+          docker push public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
       - name: Copy files to server
         uses: appleboy/scp-action@master
@@ -68,7 +71,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "docker-compose.production.yml,docker-compose.traefik.yml"
-          target: "/srv/tarmac/"
+          target: "/srv/processing/"
           overwrite: true
 
       - name: Stop & start container on VPS
@@ -79,7 +82,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Stop containers on VPS"
-            cd /srv/tarmac/
+            cd /srv/processing/
             docker image prune -fa
             docker compose --env-file .env.production -f docker-compose.production.yml down
             echo "Updating '.env.production'"
