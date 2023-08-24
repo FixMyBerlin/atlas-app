@@ -21,7 +21,7 @@ export const MapInterface: React.FC = () => {
         </div>
         <SelectTopics />
         <Inspector />
-        <div className="fixed bottom-4 right-2.5 z-20 flex gap-1.5  ">
+        <div className="fixed bottom-4 right-2.5 z-0 flex gap-1.5  ">
           <OsmNotes />
           <Download />
           <SelectDatasets />
