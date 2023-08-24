@@ -75,7 +75,7 @@ export const Inspector: React.FC = () => {
         // Inspector-Block for Features
         return (
           <InspectorFeatureSource
-            key={sourceKey}
+            key={createInspectorFeatureKey(inspectObject)}
             sourceKey={sourceKey}
             properties={inspectObject.properties}
             geometry={inspectObject.geometry}
