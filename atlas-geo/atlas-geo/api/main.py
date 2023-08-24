@@ -50,7 +50,7 @@ def export_bbox(response: Response, type_name: str, minlon: float= 13.3, minlat 
       response.headers["Content-Disposition"] = f'attachment; filename="{type_name}.geojson"'
       response.headers["Content-Type"] = 'application/geo+json'
 
-      statement = sql.SQL("SELECT * FROM {table_name} (( SELECT * FROM ST_MakeEnvelope(%s, %s, %s, %s) ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
+      statement = sql.SQL("SELECT * FROM {table_name} (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(%s, %s, %s, %s), 4326) ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
       cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
       result = cur.fetchone()[0]
 
