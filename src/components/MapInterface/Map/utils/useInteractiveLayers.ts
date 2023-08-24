@@ -15,9 +15,6 @@ const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
   const interactiveLayerIds: string[] = []
 
   theme?.topics?.forEach((topicConfig) => {
-    // Guard: Only pick layer that are part of our current theme
-
-    if (!theme?.topics.some((t) => t.id === topicConfig.id)) return
     const topicData = getTopicData(topicConfig.id)
 
     topicConfig.styles.forEach((styleConfig) => {
