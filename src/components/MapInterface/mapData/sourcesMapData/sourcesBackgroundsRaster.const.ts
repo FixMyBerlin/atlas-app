@@ -8,6 +8,7 @@ export type SourcesRasterIds =
   | 'esri'
   | 'maptiler-satellite'
   | 'mapbox-satellite'
+  | 'areal2023'
   | 'areal2022'
   | 'areal2021'
   | 'areal2020'
@@ -123,6 +124,17 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   //   attribution:
   //     "<a href='https://wiki.openstreetmap.org/wiki/DigitalGlobe'>Terms & Feedback</a>",
   // },
+  {
+    id: 'areal2023',
+    name: 'Berlin: Luftbilder 2023',
+    type: 'raster',
+    tiles: 'https://tiles.codefor.de/berlin-2023-dop20rgbi/{z}/{x}/{y}.png',
+    tileSize: 256,
+    minzoom: 10,
+    maxzoom: 21,
+    attributionHtml:
+      '<a target="_blank" href="https://gdi.berlin.de/geonetwork/srv/ger/catalog.search#/metadata/07ec4c16-723f-32ea-9580-411d8fe4f7e7">Geoportal Berlin / Digitale farbige TrueOrthophotos 2023 (DOP20RGBI)</a>',
+  },
   {
     id: 'areal2022',
     name: 'Berlin: Luftbilder 2022',

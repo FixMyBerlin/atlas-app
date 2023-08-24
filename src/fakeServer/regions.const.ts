@@ -144,6 +144,7 @@ export const regions: Region[] = [
       ...defaultBackgroundSources,
       'strassenbefahrung',
       'alkis',
+      'areal2023',
       'areal2022',
       'areal2021',
       'areal2020',
