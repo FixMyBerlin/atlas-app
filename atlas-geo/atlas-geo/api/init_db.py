@@ -1,13 +1,13 @@
 from db_configuration import export_geojson_function_from_type, verification_tables, verification_table, verified_table
 from db import conn_string
-import psycopg2
+import psycopg
 from pathlib import Path
 
 sql_functions_path = Path(__file__).with_name('INIT_FUNCTIONS.sql')
 sql_views_path = Path(__file__).with_name('INIT_VERIFICATION_VIEWS.sql')
 
 def create_or_replace_export_functions():
-  conn = psycopg2.connect(conn_string)
+  conn = psycopg.connect(conn_string)
 
   with conn.cursor() as cursor:
     print("Starting INIT of database for exports")
@@ -24,7 +24,7 @@ def create_or_replace_export_functions():
   print("Finished INIT of database")
 
 def create_verification_tables():
-  conn = psycopg2.connect(conn_string)
+  conn = psycopg.connect(conn_string)
 
   with conn.cursor() as cursor:
     print("Starting creating tables for verification")
