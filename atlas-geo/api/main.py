@@ -180,8 +180,3 @@ async def retrieve_service_health():
           return "OK"
 
       raise HTTPException(status_code=500, detail="Unkown server error")
-
-
-@app.on_event("shutdown")
-def shutdown_event():
-    conn.close()
