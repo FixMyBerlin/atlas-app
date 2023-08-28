@@ -39,9 +39,7 @@ services:
       db:
         condition: service_healthy
   db:
-    build:
-      context: .
-      dockerfile: ./db.Dockerfile
+    image: ghcr.io/baosystems/postgis:14-3.3
     env_file:
       - ./.env
     environment:
@@ -53,7 +51,9 @@ services:
     ports:
       - "${PGPORT}:5432"
     volumes:
-      - geodata:/var/lib/postgresql/data
+      - geodata:/var/lib/postgresql/data      
+      - ./postgres.develop.conf:/etc/postgresql/postgresql.conf
+    command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
     container_name: osmdatabase
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
