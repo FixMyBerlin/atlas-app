@@ -10,6 +10,7 @@ export_geojson_function_from_type = {
   "bikelanes":          "atlas_export_geojson_bikelanes",
   "bikelanesPresence":  "atlas_export_geojson_bikelanesPresence",
   "boundaries":         "atlas_export_geojson_boundaries",
+  "roads":              "atlas_export_geojson_roads",
   # "buildings":          "atlas_export_geojson_buildings", # does not work
   "landuse":            "atlas_export_geojson_landuse",
   "lit":                "atlas_export_geojson_lit",
