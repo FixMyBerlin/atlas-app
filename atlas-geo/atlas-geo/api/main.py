@@ -171,7 +171,7 @@ async def verify_osm_object(response: Response, type_name: str, osm_type: str, o
 @app.get("/health")
 async def retrieve_service_health():
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
-      with conn.cursor() as cur:
+      async with conn.cursor() as cur:
         try:
           cur.execute(sql.SQL("SELECT 1"))
         except:
