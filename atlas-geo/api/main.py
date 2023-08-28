@@ -65,7 +65,7 @@ async def export_region(response: Response, type_name: str, osm_id: int):
 
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
       async with conn.cursor() as cur:
-        statement = sql.SQL("SELECT name FROM boundaries WHERE osm_id=%s")
+        statement = sql.SQL("SELECT tags->'name' FROM boundaries WHERE osm_id=%s")
         await cur.execute(statement, (osm_id, ))
         results = await cur.fetchone()
         if results == None:
