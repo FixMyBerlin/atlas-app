@@ -308,7 +308,7 @@ export const regions: Region[] = [
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
-    published: false,
+    published: true,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
