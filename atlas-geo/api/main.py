@@ -96,8 +96,8 @@ async def export_boundaries(response: Response, ids: Annotated[list[int], Query(
         response.headers["Content-Disposition"] = 'attachment; filename="boundaries_'+ '_'.join(map(str, ids)) +'.geojson"'
         response.headers["Content-Type"] = 'application/geo+json'
 
-        statement = sql.SQL("SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom FROM boundaries WHERE osm_id IN %s")
-        await cur.execute(statement, (tuple(ids), ) )
+        statement = sql.SQL("SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom FROM boundaries WHERE osm_id = ANY(%s)")
+        await cur.execute(statement, (ids, ) )
         result = await cur.fetchone()
 
         return result['geom']
