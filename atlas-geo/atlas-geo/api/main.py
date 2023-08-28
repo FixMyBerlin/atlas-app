@@ -144,6 +144,7 @@ async def retrieve_verify_history(response: Response, type_name: str, osm_id: in
         return results
 
 
+# TODO: guard osm_type
 @app.post("/verify/{type_name}/{osm_id}")
 async def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str, verified_by: int=None, comment: str=''):
     if type_name not in verification_tables:
