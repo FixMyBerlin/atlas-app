@@ -36,7 +36,6 @@ services:
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
     networks:
-      - radverkehrsatlas_mesh
       - app_staging_bridge
     depends_on:
       db_staging:
@@ -56,7 +55,6 @@ services:
       - "traefik.http.routers.stagingapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingapi.tls=true"
     networks:
-      - radverkehrsatlas_mesh
       - app_staging_bridge
     depends_on:
       db_staging:
@@ -90,6 +88,4 @@ volumes:
   osmfiles_staging:
   geodata_staging:
 networks:
-  radverkehrsatlas_mesh:
-    external: true
   app_staging_bridge:
