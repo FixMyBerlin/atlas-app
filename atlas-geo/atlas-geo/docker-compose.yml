@@ -52,7 +52,7 @@ services:
       - "${PGPORT}:5432"
     volumes:
       - geodata:/var/lib/postgresql/data      
-      - ./postgres.develop.conf:/etc/postgresql/postgresql.conf
+      - ./postgres/postgres.develop.conf:/etc/postgresql/postgresql.conf
     command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
     container_name: osmdatabase
     healthcheck:
