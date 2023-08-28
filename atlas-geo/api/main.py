@@ -116,7 +116,6 @@ async def retrieve_verify_status(response: Response, type_name: str, osm_id: int
 
         results = await cur.fetchone()
         if results == None:
-          # TODO: remove statement below ?
           statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name))
           await cur.execute(statement, (osm_id,))
           results = await cur.fetchone()
