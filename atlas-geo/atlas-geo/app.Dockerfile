@@ -6,7 +6,7 @@ LABEL maintainer="FixMyCity - https://fixmycity.de"
 
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && \
-  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev && \
+  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev python3-psycopg && \
   apt upgrade -y
 # LUA Libaries:
 # - "dkjson" used by parking.lua to write JSON for debugging
