@@ -6,8 +6,6 @@ services:
     # See https://techoverflow.net/2021/06/11/how-to-fix-traefik-gateway-timeout-for-docker-services/ for network_mode
     network_mode: host
     restart: always
-    env_file:
-      - ./.env.staging
     command:
       - "--log.level=WARN"
       - "--api.insecure=false"
