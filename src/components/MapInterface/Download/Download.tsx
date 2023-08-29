@@ -135,7 +135,7 @@ export const Download: React.FC = () => {
                       id={topicData.id}
                       className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm"
                       placeholder="Vector Tile URL"
-                      value={sourceData.tiles}
+                      defaultValue={sourceData.tiles}
                       onFocus={(event: React.ChangeEvent<HTMLInputElement>) =>
                         event.target.select()
                       }
