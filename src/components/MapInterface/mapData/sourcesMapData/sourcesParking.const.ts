@@ -19,6 +19,7 @@ export const sourcesParking: MapDataSource<
       'https://vts.mapwebbing.eu/processing.parking_segments,processing.parking_segments_label/{z}/{x}/{y}.pbf',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    licence: 'ODbL',
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -66,6 +67,7 @@ export const sourcesParking: MapDataSource<
     ].join(',')}/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    licence: 'ODbL',
     inspector: { enabled: false }, // Those layers have no properties anyways
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -78,6 +80,7 @@ export const sourcesParking: MapDataSource<
     tiles: 'https://vts.mapwebbing.eu/processing.parking_spaces/{z}/{x}/{y}.pbf',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    licence: 'ODbL',
     inspector: {
       enabled: false,
     },
@@ -97,6 +100,7 @@ export const sourcesParking: MapDataSource<
     tiles: 'https://vts.mapwebbing.eu/processing.parking_poly/{z}/{x}/{y}.pbf',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    licence: 'ODbL',
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -131,6 +135,7 @@ export const sourcesParking: MapDataSource<
     tiles: 'https://vts.mapwebbing.eu/processing.boundaries_stats/{z}/{x}/{y}.pbf',
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    licence: 'ODbL',
     inspector: {
       enabled: true,
       highlightingKey: 'id',

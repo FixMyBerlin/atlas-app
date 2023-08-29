@@ -1,68 +1,54 @@
 import { Link } from '@components/Link'
 import { LocationGenerics } from '@routes/routes'
-import { useMatch, useSearch } from '@tanstack/react-location'
-import { getSourceData, getTopicData } from '../mapData'
-import { flattenConfigTopics } from '../mapStateConfig/utils/flattenConfigTopics'
+import { useMatch } from '@tanstack/react-location'
+import { sources } from '../mapData'
 import { exportApiUrlBbox } from './exportApiUrl'
 
 type Props = { visible: boolean }
 
 export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
-  const { config: configThemesTopics } = useSearch<LocationGenerics>()
+  const exportEnabledSources = sources.filter((source) => source.export.enabled)
 
   // Get the bbox from our region data
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
-  const allowDownload = region?.bbox ? true : false
+  const { data } = useMatch<LocationGenerics>()
+  const bbox = data?.region?.bbox
 
-  if (!configThemesTopics || !visible) return null
-  const flatConfigTopics = flattenConfigTopics(configThemesTopics)
+  if (!visible) return null
 
   return (
     <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
-      {flatConfigTopics.map((flatTopicConfig) => {
-        const topicData = getTopicData(flatTopicConfig.id)
-        const sourceData = getSourceData(topicData?.sourceId)
-
-        // Download needs to be enabled per source
-        if (!sourceData.export.enabled) {
-          return null
-        }
+      {exportEnabledSources.map((sourceData) => {
+        if (!sourceData.export.apiIdentifier) return null
 
         return (
-          <li key={topicData.id} className="py-5">
-            <h3 className="mb-1 text-sm font-bold text-purple-800">{topicData.name}:</h3>
+          <li key={sourceData.id} className="py-5">
+            <h3 className="mb-1 text-sm font-bold text-purple-800">{sourceData.export.title}:</h3>
 
-            <p className="mb-2 text-sm text-gray-500">
-              {topicData.desc}
-              {!!sourceData.attributionHtml && sourceData.attributionHtml !== 'todo' && (
-                <>
-                  {!!topicData.desc && <br />}
-                  <strong className="font-semibold">Attribution: </strong>
-                  »
-                  <span
-                    dangerouslySetInnerHTML={{
-                      __html: sourceData.attributionHtml,
-                    }}
-                  />
-                  «
-                </>
-              )}
-              {!!sourceData.licence && (
-                <>
-                  {(!!sourceData.attributionHtml || !!topicData.desc) && <br />}
-                  <strong className="font-semibold">Lizenz: </strong>
-                  {sourceData.licence}
-                </>
-              )}
-            </p>
+            <table className="text-sm text-gray-500 my-2">
+              <tr>
+                <th className="w-24 text-xs font-medium text-gray-900 align-top">Beschreibung:</th>
+                <td className="pl-2">{sourceData.export.desc}</td>
+              </tr>
+              <tr>
+                <th className="w-24 text-xs font-medium text-gray-900 align-top">Attribution:</th>
+                <td
+                  className="pl-2"
+                  dangerouslySetInnerHTML={{
+                    __html: sourceData.attributionHtml !== 'todo' ? sourceData.attributionHtml : '',
+                  }}
+                ></td>
+              </tr>
+              <tr>
+                <th className="w-24 text-xs font-medium text-gray-900 align-top">Lizenz:</th>
+                <td className="pl-2">{sourceData.licence}</td>
+              </tr>
+            </table>
 
             <div className="flex gap-2">
-              {allowDownload && region?.bbox && (
+              {bbox && (
                 <Link
-                  to={exportApiUrlBbox(sourceData.export.apiIdentifier, region?.bbox)}
-                  classNameOverwrite="w-30 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
+                  to={exportApiUrlBbox(sourceData.export.apiIdentifier, bbox)}
+                  classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                   download
                   blank
                 >
@@ -77,15 +63,15 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
 
               <div className="grow rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">
                 <label
-                  htmlFor={topicData.id}
+                  htmlFor={sourceData.id}
                   className="mb-0.5 block text-xs font-medium text-gray-900"
                 >
                   Vector Tile URL:
                 </label>
                 <input
                   type="text"
-                  name={topicData.id}
-                  id={topicData.id}
+                  name={sourceData.id}
+                  id={sourceData.id}
                   className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="Vector Tile URL"
                   defaultValue={sourceData.tiles}

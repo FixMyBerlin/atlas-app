@@ -126,10 +126,14 @@ type MapDataSourceExport<TExpIds> =
       enabled: true
       /** @desc Identifier for the export API URL; export is only allowed when present */
       apiIdentifier: TExpIds
+      title: string
+      desc: string
     }
   | {
       enabled: false
       apiIdentifier?: undefined
+      title?: undefined
+      desc?: undefined
     }
 
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
@@ -138,7 +142,7 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
-  licence?: 'ODbL'
+  licence: 'ODbL' | undefined
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
