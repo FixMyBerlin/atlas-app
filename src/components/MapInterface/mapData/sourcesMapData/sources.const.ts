@@ -151,7 +151,7 @@ export const sources: MapDataSource<
       enabled: true,
       apiIdentifier: 'roadClassification',
       title: 'Straßenklassifizierung',
-      desc: '(Will be removed soon)',
+      desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
     },
   },
   {
