@@ -4,16 +4,14 @@ import { MapDataTheme } from '../types'
 export type MapDataThemeIds =
   | 'fromTo'
   | 'bikelanes'
+  | 'bikelanes_NEW' // TODO TEMP
   | 'roadClassification'
+  | 'roadClassification_NEW' // TODO TEMP
   | 'surface'
+  | 'surface_NEW' // TODO TEMP
   | 'parking'
   | 'lit'
-  // ZES only:
-  | 'fromToZes'
-  | 'bikelanesZes'
-  | 'roadClassificationZes'
-  | 'maxspeed'
-  | 'surfaceZes'
+  | 'lit_NEW' // TODO TEMP
   // Special only:
   | 'mapillary'
   | 'accidents'
@@ -36,49 +34,32 @@ export const themes: MapDataTheme[] = [
     ],
   },
   {
-    id: 'fromToZes',
-    name: 'Quellen & Ziele ZES',
-    desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
-    // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
-    topics: [
-      { id: 'shops', defaultStyle: 'default' },
-      { id: 'shops_osmscripts', defaultStyle: 'hidden' },
-      { id: 'education', defaultStyle: 'default' },
-      { id: 'education_osmscripts', defaultStyle: 'hidden' },
-      { id: 'publicTransport', defaultStyle: 'default' },
-      { id: 'publicTransport_osmscripts', defaultStyle: 'hidden' },
-      { id: 'places', defaultStyle: 'default' },
-      { id: 'roadClassification', defaultStyle: 'hidden' },
-      { id: 'roadClassification_osmscripts', defaultStyle: 'hidden' },
-      { id: 'landuse', defaultStyle: 'default' },
-    ],
-  },
-  {
     id: 'roadClassification',
     name: 'Straßentypen',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
-      { id: 'roadClassification', defaultStyle: 'default' },
+      { id: 'roadClassification_legacy', defaultStyle: 'default' },
       { id: 'bikelanes', defaultStyle: 'hidden' },
-      { id: 'maxspeed', defaultStyle: 'hidden' },
-      { id: 'surfaceQuality', defaultStyle: 'hidden' },
+      { id: 'maxspeed_legacy', defaultStyle: 'hidden' },
+      { id: 'surfaceQuality_legacy', defaultStyle: 'hidden' },
       { id: 'places', defaultStyle: 'default' },
       { id: 'landuse', defaultStyle: 'hidden' },
     ],
   },
   {
-    id: 'roadClassificationZes',
-    name: 'Straßentypen ZES',
+    id: 'roadClassification_NEW',
+    name: 'Straßentypen NEW',
     desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
     topics: [
+      { id: 'roadClassification_legacy', defaultStyle: 'hidden' },
       { id: 'roadClassification', defaultStyle: 'default' },
-      { id: 'roadClassification_osmscripts', defaultStyle: 'hidden' },
       { id: 'bikelanes', defaultStyle: 'hidden' },
-      { id: 'bikelanes_osmscripts', defaultStyle: 'hidden' },
-      // { id: 'surface_tarmac', defaultStyle: "hidden" },
-      { id: 'surface_osmscripts', defaultStyle: 'hidden' },
-      { id: 'places', defaultStyle: 'default' },
-      { id: 'landuse', defaultStyle: 'default' },
+      { id: 'maxspeed_legacy', defaultStyle: 'hidden' },
+      { id: 'maxspeed', defaultStyle: 'hidden' },
+      { id: 'surfaceQuality_legacy', defaultStyle: 'hidden' },
+      { id: 'surfaceQuality', defaultStyle: 'hidden' },
+      { id: 'places', defaultStyle: 'hidden' },
+      { id: 'landuse', defaultStyle: 'hidden' },
     ],
   },
   {
@@ -87,49 +68,34 @@ export const themes: MapDataTheme[] = [
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
       { id: 'bikelanes', defaultStyle: 'default' },
-      { id: 'bikelanesPresence', defaultStyle: 'hidden' },
+      { id: 'bikelanesPresence_legacy', defaultStyle: 'hidden' },
       // { id: 'surface_tarmac', defaultStyle: "hidden" },
       { id: 'places', defaultStyle: 'default' },
       { id: 'landuse', defaultStyle: 'hidden' },
     ],
   },
   {
-    id: 'bikelanesZes',
-    name: 'Infrastruktur ZES',
+    id: 'bikelanes_NEW',
+    name: 'Radinfrastruktur NEW',
     desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
     topics: [
-      { id: 'bikelanes', defaultStyle: 'default' },
-      { id: 'bikelanesPresence', defaultStyle: 'hidden' },
-      { id: 'bikelanes_osmscripts', defaultStyle: 'hidden' },
-      // { id: 'surface_tarmac', defaultStyle: "hidden" },
-      { id: 'surface_osmscripts', defaultStyle: 'hidden' },
-      { id: 'places', defaultStyle: 'default' },
-      { id: 'landuse', defaultStyle: 'default' },
+      { id: 'bikelanes', defaultStyle: 'hidden' },
+      { id: 'bikelanesPresence_legacy', defaultStyle: 'hidden' },
+      { id: 'bikelanesPresence', defaultStyle: 'default' },
+      { id: 'places', defaultStyle: 'hidden' },
+      { id: 'landuse', defaultStyle: 'hidden' },
     ],
   },
-
   {
     id: 'surface',
-    name: 'Oberflächen',
+    name: 'Oberflächen NEW',
     desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
     topics: [
-      // { id: 'surface_tarmac', defaultStyle: "default" },
+      { id: 'surfaceQuality', defaultStyle: 'default' },
+      { id: 'surfaceQuality_legacy', defaultStyle: 'hidden' },
       { id: 'bikelanes', defaultStyle: 'hidden' },
-      { id: 'places', defaultStyle: 'default' },
-      { id: 'landuse', defaultStyle: 'default' },
-    ],
-  },
-  {
-    id: 'surfaceZes',
-    name: 'Oberflächen ZES',
-    desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
-    topics: [
-      // { id: 'surface_tarmac', defaultStyle: "default" },
-      { id: 'surface_osmscripts', defaultStyle: 'hidden' },
-      { id: 'bikelanes', defaultStyle: 'hidden' },
-      { id: 'bikelanes_osmscripts', defaultStyle: 'hidden' },
-      { id: 'places', defaultStyle: 'default' },
-      { id: 'landuse', defaultStyle: 'default' },
+      { id: 'places', defaultStyle: 'hidden' },
+      { id: 'landuse', defaultStyle: 'hidden' },
     ],
   },
   {
@@ -153,7 +119,19 @@ export const themes: MapDataTheme[] = [
     name: 'Beleuchtung',
     desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
     topics: [
-      { id: 'lit', defaultStyle: 'default' },
+      { id: 'lit_legacy', defaultStyle: 'default' },
+      // { id: 'surface_tarmac', defaultStyle: "hidden" },
+      { id: 'places', defaultStyle: 'hidden' },
+      { id: 'landuse', defaultStyle: 'hidden' },
+    ],
+  },
+  {
+    id: 'lit_NEW',
+    name: 'Beleuchtung NEW',
+    desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
+    topics: [
+      { id: 'lit', defaultStyle: 'hidden' },
+      { id: 'lit_legacy', defaultStyle: 'default' },
       // { id: 'surface_tarmac', defaultStyle: "hidden" },
       { id: 'places', defaultStyle: 'hidden' },
       { id: 'landuse', defaultStyle: 'hidden' },

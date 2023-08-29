@@ -2,15 +2,15 @@ import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const tpoicId = 'roadClassification'
+const topicId = 'roadClassification'
 const source = 'tarmac_roadClassification'
 const sourceLayer = 'public.roadClassification'
-export type TopicRoadClassificationId = typeof tpoicId
+export type TopicRoadClassificationId = typeof topicId
 export type TopicRoadClassificationStyleIds = 'default' | 'oneway'
 
 export const topic_roadClassification: MapDataTopic = {
-  id: tpoicId,
-  name: 'Straßentypen',
+  id: topicId,
+  name: 'Straßentypen (new)',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: source,
   styles: [

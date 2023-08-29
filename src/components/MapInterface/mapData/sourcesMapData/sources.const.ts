@@ -23,6 +23,7 @@ export type SourcesIds =
   | 'tarmac_poiClassification'
   | 'tarmac_publicTransport'
   | 'tarmac_roadClassification'
+  | 'tarmac_roads'
   | 'tarmac_surfaceQuality'
 
 export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
@@ -42,6 +43,7 @@ export type SourceExportApiIdentifier =
   | 'poiClassification'
   | 'publicTransport'
   | 'roadClassification'
+  | 'roads'
   | 'surfaceQuality'
 
 // https://account.mapbox.com/access-tokens
@@ -184,6 +186,28 @@ export const sources: MapDataSource<
       apiIdentifier: 'bikelanes_verified',
       title: 'Fahrradinfrastruktur',
       desc: 'Prozessierte Infrastrukturdaten (ohne Mischverkehr)',
+    },
+  },
+  {
+    id: 'tarmac_roads',
+    tiles: `${tilesUrl}/public.roads/{z}/{x}/{y}.pbf`,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['name', 'highway', 'oneway'], // TODO
+    },
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'roads',
+      title: 'Straßennetz',
+      desc: 'Straßentyp, Beleuchtung, Oberfläche, Höchstgeschwindigkeit',
     },
   },
   {

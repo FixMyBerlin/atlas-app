@@ -3,11 +3,11 @@ import { defaultLegendFresh } from './defaultLegend'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topic = 'lit'
+const topic = 'lit_legacy'
 const source = 'tarmac_lit'
 const sourceLayer = 'public.lit_verified'
-export type TopicLitId = typeof topic
-export type TopicLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
+export type TopicLitIdLegacy = typeof topic
+export type TopicLitStyleIdsLegacy = 'default' | 'completeness' | 'verification' | 'freshness'
 
 const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   {
@@ -36,7 +36,7 @@ const defaultLegend: MapDataTopic['styles'][0]['legends'] = [
   },
 ]
 
-export const topic_lit: MapDataTopic = {
+export const topic_lit_legacy: MapDataTopic = {
   id: topic,
   name: 'Beleuchtung',
   desc: null,

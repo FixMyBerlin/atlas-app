@@ -66,6 +66,7 @@ export type RegionPath =
   | 'mainz'
   | 'neukloster-warin'
   | 'parkraum'
+  | 'testing'
   | 'rs8'
   | 'trto'
   | 'woldegk'
@@ -181,12 +182,8 @@ export const regions: Region[] = [
     logoWhiteBackgroundRequired: false,
     themes: [
       // The order here specifies the order in the UI
-      'fromToZes',
       'fromTo',
-      'bikelanesZes',
       'bikelanes',
-      'roadClassificationZes',
-      'surfaceZes',
       'lit',
       'mapillary',
     ],
@@ -398,7 +395,24 @@ export const regions: Region[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((t) => !t.endsWith('Zes')),
+    themes: themes.map((t) => t.id),
+    osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Testing',
+    fullName: 'Test new processing',
+    path: 'testing',
+    osmRelationIds: [],
+    map: { lat: 51.07, lng: 13.35, zoom: 5 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    themes: themes.map((t) => t.id).filter((id) => id.endsWith('_NEW')),
     osmUsers: [...adminIds],
     published: false,
     backgroundSources: [...defaultBackgroundSources],

@@ -2,20 +2,20 @@ import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topicId = 'surfaceQuality'
-const source = 'tarmac_roads'
-const sourceLayer = 'public.roads'
-export type TopicSurfaceQualityId = typeof topicId
-export type TopicSurfaceStyleQualityIds =
+const topicId = 'surfaceQuality_legacy'
+const source = 'tarmac_surfaceQuality'
+const sourceLayer = 'public.surfaceQuality'
+export type TopicSurfaceQualityIdLegacy = typeof topicId
+export type TopicSurfaceStyleQualityIdsLegacy =
   | 'default'
   | 'bad'
   | 'debug-smoothness'
   | 'completeness'
   | 'freshness'
 
-export const topic_surfaceQuality: MapDataTopic = {
+export const topic_surfaceQuality_legacy: MapDataTopic = {
   id: topicId,
-  name: 'Oberflächenqualität (new)',
+  name: 'Oberflächenqualität',
   desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
   sourceId: source,
   styles: [

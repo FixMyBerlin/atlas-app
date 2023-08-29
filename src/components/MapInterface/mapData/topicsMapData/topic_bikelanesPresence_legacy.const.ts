@@ -1,15 +1,15 @@
 import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
-import { defaultLegend } from './topic_bikelanes'
+import { defaultLegend } from './topic_bikelanes.const'
 
-const topic = 'bikelanesPresence'
+const topic = 'bikelanesPresence_legacy'
 const source = 'tarmac_bikelanesPresence'
 const sourceLayer = 'public.bikelanesPresence'
-export type TopicBikelanesPresenceId = typeof topic
-export type TopicBikelanesPresenceStyleIds = 'default'
+export type TopicBikelanesPresenceIdLegacy = typeof topic
+export type TopicBikelanesPresenceStyleIdsLegacy = 'default'
 
-export const topic_bikelanesPresence: MapDataTopic = {
+export const topic_bikelanesPresence_legacy: MapDataTopic = {
   id: topic,
   name: 'Vollständigkeit Radinfrastruktur',
   desc: '',

@@ -2,13 +2,13 @@ import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topicId = 'maxspeed'
+const topicId = 'maxspeed_legacy'
 const source = 'tarmac_maxspeed'
 const sourceLayer = 'public.maxspeed'
-export type TopicMaxspeedId = typeof topicId
-export type TopicMaxspeedStyleIds = 'default' | 'details' | 'source'
+export type TopicMaxspeedIdLegacy = typeof topicId
+export type TopicMaxspeedStyleIdsLegacy = 'default' | 'details' | 'source'
 
-export const topic_maxspeed: MapDataTopic = {
+export const topic_maxspeed_legacy: MapDataTopic = {
   id: topicId,
   name: 'Höchstgeschwindigkeit',
   desc: '', // todo
