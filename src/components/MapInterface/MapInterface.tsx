@@ -2,7 +2,7 @@ import React from 'react'
 import { MapProvider } from 'react-map-gl'
 import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
 import { DebugMap } from './DebugBoxes/DebugMap'
-import { Download } from './Download/Download'
+import { DownloadModal } from './DownloadModal/DownloadModal'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
 import { SelectDatasets } from './SelectDatasets/SelectDatasets'
@@ -23,7 +23,7 @@ export const MapInterface: React.FC = () => {
         <Inspector />
         <div className="fixed bottom-4 right-2.5 z-0 flex gap-1.5  ">
           <OsmNotes />
-          <Download />
+          <DownloadModal />
           <SelectDatasets />
           <SelectBackground />
           <BackgroundLegend />
