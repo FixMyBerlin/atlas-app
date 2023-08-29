@@ -6,7 +6,11 @@ export const exportApiUrlBbox = (
   apiIdentifier: SourceExportApiIdentifier,
   bbox: NonNullable<Region['bbox']>,
 ) => {
-  return `${getApiUrl()}/export/${apiIdentifier}?minlon=${bbox.min[0]}&minlat=${
-    bbox.min[1]
-  }&maxlon=${bbox.max[0]}&maxlat=${bbox.max[1]}`
+  const url = new URL(`${getApiUrl()}/export/${apiIdentifier}`)
+  url.searchParams.append('minlon', String(bbox.min[0]))
+  url.searchParams.append('minlat', String(bbox.min[1]))
+  url.searchParams.append('maxlon', String(bbox.max[0]))
+  url.searchParams.append('maxlat', String(bbox.max[1]))
+
+  return url.href
 }
