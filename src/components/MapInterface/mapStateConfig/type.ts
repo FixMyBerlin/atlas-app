@@ -1,10 +1,4 @@
-import {
-  TopicIds,
-  TopicStyleIds,
-  TopicStyleFilterIds,
-  MapDataThemeIds,
-  TopicStyleLegendIds,
-} from '../mapData'
+import { MapDataThemeIds, TopicIds, TopicStyleIds } from '../mapData'
 
 export type ThemeConfig = {
   id: MapDataThemeIds
@@ -13,26 +7,8 @@ export type ThemeConfig = {
 
 export type TopicConfig = {
   id: TopicIds
-  active: boolean
   styles: {
     id: TopicStyleIds
     active: boolean
-    filters?: TopicStyleFilterConfig[]
-    legends?: TopicStyleLegendConfig[]
   }[]
-}
-
-export type TopicStyleFilterConfig = {
-  id: TopicStyleFilterIds
-  options: TopicStyleFilterOptionConfig[]
-}
-
-export type TopicStyleLegendConfig = {
-  id: TopicStyleLegendIds
-  options: TopicStyleFilterOptionConfig[]
-}
-
-export type TopicStyleFilterOptionConfig = {
-  id: string
-  active: boolean
 }

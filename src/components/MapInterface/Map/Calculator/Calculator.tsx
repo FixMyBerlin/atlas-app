@@ -14,7 +14,8 @@ export const Calculator: React.FC = () => {
   const { config: configThemesTopics } = useSearch<LocationGenerics>()
   if (!configThemesTopics) return null
   const activeTopicIds = flattenConfigTopics(configThemesTopics)
-    .filter((t) => t.active)
+    // a topic is active, when any style is active that is not "hidden"
+    .filter((t) => t.styles.filter((s) => s.id !== 'hidden').some((s) => s.active))
     .map((t) => t.id)
   const activeTopicsData = activeTopicIds.map((id) => getTopicData(id))
   const sourceDataOfActiveTopics = activeTopicsData.map((t) => getSourceData(t.sourceId))
@@ -26,7 +27,7 @@ export const Calculator: React.FC = () => {
       'ERROR: Calculator found multiple "calculator.enabled".',
       { count: calculatorSources.length },
       'Picking the first',
-      { queryLayers }
+      { queryLayers },
     )
   }
   if (!queryLayers) return null

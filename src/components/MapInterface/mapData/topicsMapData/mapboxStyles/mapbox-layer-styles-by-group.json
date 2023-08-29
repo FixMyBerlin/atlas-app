@@ -43,9 +43,14 @@
         "id": "fmc-poibarriers_motorway",
         "paint": {
           "line-color": [
-            "match",
-            ["get", "highway"],
-            ["motorway", "motorway_link", "primary", "primary_link", "trunk", "trunk_link"],
+            "case",
+            [
+              "match",
+              ["get", "highway"],
+              ["motorway", "motorway_link", "trunk", "trunk_link"],
+              true,
+              false
+            ],
             "hsl(0, 0%, 3%)",
             "rgba(235, 0, 0, 0)"
           ],
@@ -329,7 +334,7 @@
     "layers": [
       {
         "type": "line",
-        "id": "admin-level-8",
+        "id": "admin-level-8-plus",
         "paint": {
           "line-color": "hsl(323, 43%, 76%)",
           "line-opacity": 0.6,
@@ -339,7 +344,7 @@
         "filter": [
           "all",
           ["has", "admin_level"],
-          ["match", ["get", "admin_level"], ["8"], true, false]
+          ["match", ["get", "admin_level"], ["8", "9", "10"], true, false]
         ],
         "layout": {}
       },
@@ -375,7 +380,7 @@
             11,
             [
               "match",
-              ["get", "amenity"],
+              ["get", "formalEducation"],
               ["kindergarten", "childcare"],
               "rgb(23, 99, 171)",
               "hsl(209, 76%, 38%)"
@@ -383,7 +388,7 @@
             13,
             [
               "match",
-              ["get", "amenity"],
+              ["get", "formalEducation"],
               ["kindergarten", "childcare"],
               "rgb(119, 23, 171)",
               "hsl(209, 76%, 38%)"
@@ -394,7 +399,8 @@
           "circle-radius": ["interpolate", ["linear"], ["zoom"], 11, 1.5, 15, 5],
           "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1],
           "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
-        }
+        },
+        "filter": ["has", "formalEducation"]
       },
       {
         "minzoom": 13,
@@ -404,6 +410,7 @@
           "text-size": 11,
           "text-anchor": "top"
         },
+        "filter": ["has", "formalEducation"],
         "type": "symbol",
         "id": "education-label",
         "paint": {
@@ -411,7 +418,7 @@
           "text-halo-width": 1,
           "text-color": [
             "match",
-            ["get", "amenity"],
+            ["get", "formalEducation"],
             ["kindergarten", "childcare"],
             "rgb(119, 23, 171)",
             "hsl(209, 76%, 38%)"
@@ -1109,14 +1116,16 @@
               "secondary_link",
               "primary_link",
               "secondary",
-              "tertiary_link"
+              "tertiary_link",
+              "trunk_link",
+              "trunk"
             ],
             "#dab07c",
             ["living_street", "pedestrian", "bicycle_road"],
             "#80a3ea",
             ["footway", "cycleway"],
             "#b9aac0",
-            ["service_drive_through", "service_parking_aisle", "trunk", "trunk_link"],
+            ["service_drive_through", "service_parking_aisle"],
             "rgba(251, 40, 40, 0)",
             ["service_road", "service_alley"],
             "#e6d6a2",
@@ -1124,6 +1133,25 @@
           ]
         },
         "layout": {}
+      },
+      {
+        "id": "hitarea-roadclass",
+        "type": "line",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "filter": [
+          "match",
+          ["get", "highway"],
+          ["service_drive_through", "service_parking_aisle"],
+          false,
+          true
+        ],
+        "layout": {
+          "line-cap": "round"
+        }
       }
     ]
   },

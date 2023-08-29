@@ -8,7 +8,7 @@ export const flattenConfigTopics = (configThemesTopics: ThemeConfig[]) => {
       if (!configTopics.some((t) => t.id === topic.id)) {
         configTopics.push(topic)
       }
-    })
+    }),
   )
   return configTopics
 }

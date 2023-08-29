@@ -1,11 +1,11 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parkingDebug'
 const source = 'parkraumParkingDebug'
 export type TopicParkingDebugId = typeof topic
 export type TopicParkingDebugStyleIds = 'default' | 'presence' | 'debugLengthPerCapacity'
-export type TopicParkingDebugStyleFilterIds = '_nofilter'
 
 export const topic_parkingDebug: MapDataTopic = {
   id: topic,
@@ -14,6 +14,7 @@ export const topic_parkingDebug: MapDataTopic = {
   sourceId: 'parkraumParkingDebug',
   beforeId: undefined,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
@@ -67,7 +68,6 @@ export const topic_parkingDebug: MapDataTopic = {
           sourceLayer: 'processing.buffer_obstacle',
         }),
       ].flat(),
-      interactiveFilters: null,
       legends: [
         {
           id: 'buffer_pt_bus__buffer_pt_tram',

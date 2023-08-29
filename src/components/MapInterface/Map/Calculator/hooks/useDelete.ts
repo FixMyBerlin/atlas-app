@@ -7,7 +7,7 @@ export const useDelete = () => {
 
   const deleteDrawFeatures = (
     drawAreas: DrawArea[] | undefined,
-    features: DrawArea[] | undefined
+    features: DrawArea[] | undefined,
   ) => {
     if (!drawAreas || !features) return
 

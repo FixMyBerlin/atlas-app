@@ -21,22 +21,10 @@ export const createMapRegionConfig = ({ regionThemeIds }: Props) => {
         const topicData = getTopicData(themeTopic.id)
         return {
           id: themeTopic.id,
-          active: themeTopic.defaultActive,
           styles: topicData.styles.map((style) => {
             return {
               id: style.id,
-              active: style.id === 'default',
-              filters: style?.interactiveFilters?.map((filter) => {
-                return {
-                  id: filter.id,
-                  options: filter.options.map((option) => {
-                    return {
-                      id: option.id,
-                      active: option.defaultActive,
-                    }
-                  }),
-                }
-              }),
+              active: style.id === themeTopic.defaultStyle,
             }
           }),
         }

@@ -181,7 +181,7 @@ export const VerificationActions: React.FC<Props> = ({
             'bg-white py-1 px-3',
             disabled
               ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
-              : 'border-gray-400 shadow-md'
+              : 'border-gray-400 shadow-md',
           )}
         >
           Speichern

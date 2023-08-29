@@ -3,7 +3,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey'
 import { getSourceData } from '../mapData'
 import { Disclosure } from './Disclosure'
-import { InspectorFeature } from './Inspector'
+import { InspectorDataFeature } from './Inspector'
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
 import { TagsTable } from './TagsTable'
 import { translations } from './TagsTable/translations'
@@ -13,7 +13,7 @@ import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { Verification } from './Verification/Verification'
 
-export const InspectorFeatureSource: React.FC<InspectorFeature> = ({
+export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
   sourceKey,
   properties,
   geometry,

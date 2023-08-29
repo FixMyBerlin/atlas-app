@@ -21,7 +21,7 @@ export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
       // @ts-ignore this weird AnyLayer issue that I don't get worked around…
       !layer?.id.includes('-highlight') &&
       !layer?.id.includes('-hitarea') &&
-      layer?.id.includes('default')
+      layer?.id.includes('default'),
   )
 
   // TODO: Figure out why `querySourceFeatures` does not work.

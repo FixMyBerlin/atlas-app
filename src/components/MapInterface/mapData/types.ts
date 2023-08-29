@@ -1,11 +1,11 @@
 import { RegionPath } from '@fakeServer/regions.const'
 import mapboxgl from 'mapbox-gl'
 import { LegendIconTypes } from '../SelectLegend/LegendIcons'
-import { TopicIds, TopicStyleFilterIds, TopicStyleIds } from './mapData.const'
+import { TopicIds, TopicStyleIds } from './mapData.const'
 import {
   SourceExportApiIdentifier,
-  SourcesIds,
   SourceVerificationApiIdentifier,
+  SourcesIds,
 } from './sourcesMapData'
 import { MapDataThemeIds } from './themesMapData'
 
@@ -126,10 +126,14 @@ type MapDataSourceExport<TExpIds> =
       enabled: true
       /** @desc Identifier for the export API URL; export is only allowed when present */
       apiIdentifier: TExpIds
+      title: string
+      desc: string
     }
   | {
       enabled: false
       apiIdentifier?: undefined
+      title?: undefined
+      desc?: undefined
     }
 
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
@@ -138,7 +142,7 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   /** @desc URL of the vector tiles */
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
-  licence?: 'ODbL'
+  licence: 'ODbL' | undefined
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
@@ -167,7 +171,7 @@ export type MapDataTheme = {
 
 type MapDataThemeTopic = {
   id: TopicIds
-  defaultActive: boolean
+  defaultStyle: 'default' | 'hidden'
   // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
 
@@ -184,14 +188,21 @@ export type MapDataTopic = {
 }
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type MapDataStyle = {
-  id: TopicStyleIds
-  name: string
-  desc: null | string
-  layers: MapDataVisLayer[]
-  interactiveFilters: null | MapDataStyleInteractiveFilter[]
-  legends?: null | MapDataStyleLegend[]
-}
+export type MapDataStyle =
+  | {
+      id: TopicStyleIds
+      name: string
+      desc: null | string
+      layers: MapDataVisLayer[]
+      legends?: null | MapDataStyleLegend[]
+    }
+  | {
+      id: 'hidden'
+      name: string
+      desc: null | string
+      layers?: never
+      legends?: never
+    }
 
 /** @desc: The technical glue between sources and styles. name fixed by library */
 export type MapDataVisLayer = (
@@ -208,17 +219,7 @@ export type MapDataVisLayer = (
     interactive?: false
   }
 
-/** @desc: Optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataStyleInteractiveFilter = {
-  id: TopicStyleFilterIds
-  name: string
-  desc?: string
-  inputType: 'checkbox' | 'radiobutton'
-  filterConfig: { lookupKey: string }
-  options: MapDataStyleInteractiveFilterOption[]
-}
-
-/** @desc: Optional legend that allows filtering the given layer */
+/** @desc: Optional legend to explain a given layer */
 export type MapDataStyleLegend = {
   id: string
   name: string
@@ -234,13 +235,6 @@ export type MapDataStyleLegend = {
         color: string
         dasharray?: number[]
       }
-}
-
-/** @desc: Options for the optional interactive filter of the styled data; eg. 'by year' */
-export type MapDataStyleInteractiveFilterOption = {
-  id: string
-  name: string
-  defaultActive?: boolean
 }
 
 export type MapData = {

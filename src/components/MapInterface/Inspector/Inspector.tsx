@@ -4,14 +4,17 @@ import { sourcesDatasets } from '../mapData/sourcesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
+import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureSource } from './InspectorFeatureSource'
 import { InspectorHeader } from './InspectorHeader'
 
-export type InspectorFeature = {
+export type InspectorDataFeature = {
   sourceKey: string
   properties: GeoJSON.GeoJsonProperties
   geometry: maplibregl.GeoJSONFeature['geometry']
 }
+
+export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 
 export const Inspector: React.FC = () => {
   const { inspectorFeatures, resetInspector } = useMapStateInteraction()
@@ -27,7 +30,7 @@ export const Inspector: React.FC = () => {
       }
       return result
     },
-    []
+    [],
   )
 
   if (!uniqueInspectorFeatures.length) return null
@@ -43,8 +46,20 @@ export const Inspector: React.FC = () => {
         const sourceKey = String(inspectObject.layer.source)
         if (!sourceKey) return null
 
+        // Inspector-Block for Notes
+        if (inspectObject.source === 'osm-notes') {
+          return (
+            <InspectorFeatureOsmNote
+              key={`osm-note-${inspectObject?.properties?.id}`}
+              properties={inspectObject.properties}
+              geometry={inspectObject.geometry}
+            />
+          )
+        }
+
+        // Inspector-Block for Datasets
         const isDataset = sourcesDatasets.some(
-          (d) => d.id === extractDataIdIdFromDataKey(sourceKey)
+          (d) => d.id === extractDataIdIdFromDataKey(sourceKey),
         )
         if (isDataset) {
           return (
@@ -57,9 +72,10 @@ export const Inspector: React.FC = () => {
           )
         }
 
+        // Inspector-Block for Features
         return (
           <InspectorFeatureSource
-            key={sourceKey}
+            key={createInspectorFeatureKey(inspectObject)}
             sourceKey={sourceKey}
             properties={inspectObject.properties}
             geometry={inspectObject.geometry}

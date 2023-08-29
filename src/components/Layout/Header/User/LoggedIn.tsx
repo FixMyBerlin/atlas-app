@@ -119,7 +119,7 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
                 onClick={onLogout}
                 className={clsx(
                   active ? 'bg-gray-100' : '',
-                  'w-full px-4 py-2 text-left text-sm text-gray-700'
+                  'w-full px-4 py-2 text-left text-sm text-gray-700',
                 )}
               >
                 Ausloggen

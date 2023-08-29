@@ -72,12 +72,8 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
               )
             }
             default: {
-              // `sourceDocumentedKeys` are specified on the source.const object.
-              // Handle sourceDocumentedKeys that should _only show if a value is present_
-              if (!Object.keys(properties).includes(cleanedKey)) {
-                return null
-              }
-              if (!properties[cleanedKey]) {
+              // Hide all properties that should only be shown if a value is present.
+              if (!properties[cleanedKey] && key.includes('__if_present')) {
                 return null
               }
 

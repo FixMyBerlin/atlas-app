@@ -1,12 +1,12 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'education'
-const source = 'tarmac_education'
-const sourceLayer = 'public.education'
+const source = 'tarmac_poiClassification'
+const sourceLayer = 'public.poiClassification'
 export type TopicEducationId = typeof topic
 export type TopicEducationStyleIds = 'default'
-export type TopicEducationStyleFilterIds = '_nofilter'
 
 export const topic_education: MapDataTopic = {
   id: topic,
@@ -14,6 +14,7 @@ export const topic_education: MapDataTopic = {
   desc: null,
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
@@ -23,7 +24,24 @@ export const topic_education: MapDataTopic = {
         source,
         sourceLayer,
       }),
-      interactiveFilters: null,
+      legends: [
+        {
+          id: 'children',
+          name: 'Kindergarten',
+          style: {
+            type: 'circle',
+            color: 'rgb(119, 23, 171)',
+          },
+        },
+        {
+          id: 'older',
+          name: 'Schule bis Uni',
+          style: {
+            type: 'circle',
+            color: 'hsl(209, 76%, 38%)',
+          },
+        },
+      ],
     },
   ],
 }

@@ -43,7 +43,7 @@ export const CalculatorControlsDrawControl = React.forwardRef<
     },
     {
       position: props.position,
-    }
+    },
   )
 
   React.useImperativeHandle(ref, () => drawRef, [drawRef]) // This way I exposed drawRef outside the component

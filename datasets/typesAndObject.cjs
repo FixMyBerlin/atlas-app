@@ -40,7 +40,7 @@ export const datasets = {
   ${Object.entries(datasets)
     .map(
       ([name, file]) => `
-  // Preview: https://protomaps.github.io/PMTiles/?url=${file.replace("'", '')}
+  // Preview: https://protomaps.github.io/PMTiles/?url=${file.replaceAll("'", '')}
   ${name}: ${file},`
     )
     .join('\n')}

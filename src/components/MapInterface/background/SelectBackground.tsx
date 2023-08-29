@@ -19,7 +19,7 @@ export const SelectBackground: React.FC = () => {
   if (!region?.backgroundSources) return null
 
   const backgrounds = sourcesBackgroundsRaster.filter((s) =>
-    region.backgroundSources.includes(s.id)
+    region.backgroundSources.includes(s.id),
   )
 
   const navigate = useNavigate<LocationGenerics>()

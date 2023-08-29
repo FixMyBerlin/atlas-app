@@ -1,10 +1,10 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'parkingPoints'
 export type TopicParkingPointsId = typeof topic
 export type TopicParkingPointsStyleIds = 'default'
-export type TopicParkingPointsStyleFilterIds = '_nofilter'
 
 export const topic_parkingPoints: MapDataTopic = {
   id: topic,
@@ -13,6 +13,7 @@ export const topic_parkingPoints: MapDataTopic = {
   sourceId: 'parkraumParkingPoints',
   beforeId: undefined,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
@@ -22,7 +23,6 @@ export const topic_parkingPoints: MapDataTopic = {
         source: 'parkraumParkingPoints',
         sourceLayer: 'processing.parking_spaces',
       }),
-      interactiveFilters: null,
     },
   ],
 }

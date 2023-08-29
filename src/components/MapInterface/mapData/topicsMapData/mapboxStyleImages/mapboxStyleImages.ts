@@ -4,6 +4,8 @@ import png_parking_perpendicular from './images/parking_perpendicular.png'
 import png_bus_stop from './images/bus_stop.png'
 import png_sbahn from './images/sbahn.png'
 import png_stripe_texture from './images/stripe_texture.png'
+import png_notes_closed from './images/notes_closed.png'
+import png_notes_open from './images/notes_open.png'
 
 type MapboxStyleImages = Map<string, string>
 
@@ -16,4 +18,6 @@ export const mapboxStyleImages: MapboxStyleImages = new Map([
   ['de-s-bahn', png_sbahn],
   ['pedestrian-polygon', png_parking_diagonal], // TODO Image
   ['stripe_texture', png_stripe_texture],
+  ['notes_closed', png_notes_closed],
+  ['notes_open', png_notes_open],
 ])

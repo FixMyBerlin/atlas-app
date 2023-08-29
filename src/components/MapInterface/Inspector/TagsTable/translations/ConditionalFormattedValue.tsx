@@ -105,7 +105,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'tarmac_roadClassification--category': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
-    (k) => k === `${sourceId}--${tagKey}`
+    (k) => k === `${sourceId}--${tagKey}`,
   )
   if (lookThereForKeyEntry) {
     tagKey = lookThereForKey[lookThereForKeyEntry]

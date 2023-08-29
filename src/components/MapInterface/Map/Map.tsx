@@ -21,9 +21,11 @@ import {
   SourcesLayerDatasets,
   SourcesLayerRasterBackgrounds,
 } from './SourcesAndLayers'
+import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
 import { roundPositionForURL } from './utils'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
+import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 
 export const Map: React.FC = () => {
   const {
@@ -94,6 +96,8 @@ export const Map: React.FC = () => {
 
   const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
+    // Note: <SourcesAndLayersOsmNotes> simulates a moveEnd by watching the lat/lng url params
+
     const { latitude, longitude, zoom } = event.viewState
     const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
     navigate({
@@ -137,8 +141,10 @@ export const Map: React.FC = () => {
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
+      <SourcesLayerRegionalMask />
       <SourcesAndLayers />
       <SourcesLayerDatasets />
+      <SourcesLayersOsmNotes />
 
       <NavigationControl showCompass={false} />
       <Calculator />

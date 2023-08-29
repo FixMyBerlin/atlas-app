@@ -28,14 +28,14 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     highlightingKey = sourceData.inspector.highlightingKey
     featureIds = extractHighlightFeatureIds(
       inspectorFeatures.filter((f) => f.layer.id === parentLayerProps.id),
-      highlightingKey
+      highlightingKey,
     )
   }
   if (sourceData.calculator.enabled) {
     highlightingKey = sourceData.calculator.highlightingKey
     featureIds = extractHighlightFeatureIds(
       calculatorAreasWithFeatures.map((e) => e.features).flat(),
-      highlightingKey
+      highlightingKey,
     )
   }
 

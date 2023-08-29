@@ -2,24 +2,28 @@ import React from 'react'
 import { MapProvider } from 'react-map-gl'
 import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
 import { DebugMap } from './DebugBoxes/DebugMap'
-import { Download } from './Download/Download'
+import { DownloadModal } from './DownloadModal/DownloadModal'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
-import { BackgroundLegend, SelectBackground } from './background'
+import { SelectDatasets } from './SelectDatasets/SelectDatasets'
 import { SelectTheme } from './SelectTheme'
 import { SelectTopics } from './SelectTopics'
-import { SelectDatasets } from './SelectDatasets/SelectDatasets'
+import { OsmNotes } from './OsmNotes'
+import { BackgroundLegend, SelectBackground } from './background'
 
 export const MapInterface: React.FC = () => {
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
         <Map />
-        <SelectTheme />
+        <div className="absolute top-2.5 left-[17rem] z-10 flex gap-2">
+          <SelectTheme />
+        </div>
         <SelectTopics />
         <Inspector />
-        <div className="fixed bottom-3 left-5 z-20 flex gap-2">
-          <Download />
+        <div className="fixed bottom-4 right-2.5 z-0 flex gap-1.5  ">
+          <OsmNotes />
+          <DownloadModal />
           <SelectDatasets />
           <SelectBackground />
           <BackgroundLegend />

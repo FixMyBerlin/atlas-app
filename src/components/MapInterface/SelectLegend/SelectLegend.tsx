@@ -21,9 +21,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const topicConfig = configThemesTopics
     ?.find((th) => th.id === themeId)
     ?.topics.find((t) => t.id === scopeTopicId)
-
-  // Guard: Hide UI for inactive topics
-  if (!topicConfig?.active) return null
+  if (!topicConfig) return null
 
   // Guard: One active style config
   const styleConfig = topicConfig.styles.find((s) => s.active)
@@ -32,12 +30,10 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const styleData = getStyleData(topicConfig.id, styleConfig.id)
   const legends = styleData?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
-  // (but vor isDev, give us a helper box to fix the config)
   if (!styleData || !legends?.length) {
     return (
       <section className="relative">
         <LegendDebugInfoTopicLayerConfig
-          legends={styleData?.legends}
           topicId={topicConfig.id}
           styleDataLayers={styleData?.layers}
         />
@@ -48,7 +44,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const handleClick = (
     topicId: TopicIds,
     styleId: TopicStyleIds,
-    legendId: TopicStyleLegendIds
+    legendId: TopicStyleLegendIds,
   ) => {
     console.log('not implemented,yet', { topicId, styleId, legendId })
   }

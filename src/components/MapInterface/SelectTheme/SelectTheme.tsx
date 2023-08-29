@@ -1,6 +1,7 @@
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
+import { Toggle } from './Toggle'
 import { getThemeData } from '../mapData'
 import { MapDataThemeIds } from '../mapData/themesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction'
@@ -26,7 +27,7 @@ export const SelectTheme = () => {
   if (!configThemes) return null
 
   return (
-    <section className="absolute top-3 left-5 z-10">
+    <section>
       {/* Mobile */}
       <div className="sm:hidden">
         <label htmlFor="themeSelect" className="sr-only">
@@ -54,7 +55,7 @@ export const SelectTheme = () => {
       </div>
 
       {/* Desktop */}
-      <div className="hidden sm:block">
+      <div className="hidden sm:inline-block">
         <nav
           className="relative z-0 flex divide-x divide-gray-200 rounded-lg shadow-lg"
           aria-label="Thema auswhälen"
@@ -65,29 +66,29 @@ export const SelectTheme = () => {
             const active = themeId === themeConfig.id
 
             return (
-              <button
+              <div
                 key={themeData.name}
-                onClick={() => selectTheme(themeConfig.id)}
                 className={clsx(
                   active ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700',
                   index === 0 ? 'rounded-l-lg' : '',
                   index === configThemes.length - 1 ? 'rounded-r-lg' : '',
                   'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
-                  active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
+                  active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10',
                 )}
-                disabled={active}
                 aria-current={active ? 'page' : undefined}
                 title={themeData.desc}
               >
-                <span>{themeData.name}</span>
+                <Toggle active={active} handleChange={() => selectTheme(themeConfig.id)}>
+                  {themeData.name}
+                </Toggle>
                 <span
                   aria-hidden="true"
                   className={clsx(
                     active ? 'bg-yellow-500' : 'bg-transparent',
-                    'absolute inset-x-0 bottom-0 h-0.5'
+                    'absolute inset-x-0 bottom-0 h-0.5',
                   )}
                 />
-              </button>
+              </div>
             )
           })}
         </nav>

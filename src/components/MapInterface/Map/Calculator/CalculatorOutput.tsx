@@ -33,7 +33,7 @@ export const CalculatorOutput: React.FC<Props> = ({ keys: _unused, drawControlRe
     <section
       className={clsx(
         'z-1000 absolute flex items-center rounded-md bg-fuchsia-800/90 py-0.5 px-2 text-xl leading-tight text-white shadow-xl',
-        sums.length ? 'items-center' : 'items-start'
+        sums.length ? 'items-center' : 'items-start',
       )}
       style={{
         right: '7px',

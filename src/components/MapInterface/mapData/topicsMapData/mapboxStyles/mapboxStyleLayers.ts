@@ -1,3 +1,7 @@
+import {
+  flattenFilterArrays,
+  wrapFilterWithAll,
+} from '@components/MapInterface/Map/SourcesAndLayers/utils/filterUtils'
 import { mapboxStylesByLayerGroup, MapboxStylesByLayerGroupIds } from '.'
 import { SourcesIds } from '../../sourcesMapData'
 
@@ -6,9 +10,16 @@ export type Props = {
   source: SourcesIds
   sourceLayer: string
   idPrefix?: string
+  additionalFilter?: ['match', ['get', string], string[], boolean, boolean]
 }
 
-export const mapboxStyleLayers = ({ group, source, sourceLayer, idPrefix }: Props) => {
+export const mapboxStyleLayers = ({
+  group,
+  source,
+  sourceLayer,
+  idPrefix,
+  additionalFilter,
+}: Props) => {
   const mapboxLayers = mapboxStylesByLayerGroup.find((g: any) => g.group === group)?.layers
   const mapboxLayersClone = structuredClone(mapboxLayers)
 
@@ -20,7 +31,7 @@ export const mapboxStyleLayers = ({ group, source, sourceLayer, idPrefix }: Prop
         source,
         sourceLayer,
         mapboxStylesByLayerGroup,
-      }
+      },
     )
     return undefined
   }
@@ -30,6 +41,9 @@ export const mapboxStyleLayers = ({ group, source, sourceLayer, idPrefix }: Prop
     layer['source'] = source
     layer['source-layer'] = sourceLayer
     layer.id = [idPrefix, layer.id].filter(Boolean).join('--')
+    layer.filter = additionalFilter
+      ? wrapFilterWithAll(flattenFilterArrays(layer.filter, additionalFilter))
+      : layer.filter
   })
 
   return mapboxLayersClone

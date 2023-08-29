@@ -6,11 +6,18 @@ import { clsx } from 'clsx'
 type Props = {
   title: string | React.ReactNode
   objectId?: string
+  statusIcon?: React.ReactNode
   children: React.ReactNode
   defaultOpen?: boolean
 }
 
-export const Disclosure: React.FC<Props> = ({ title, objectId, children, defaultOpen = true }) => {
+export const Disclosure: React.FC<Props> = ({
+  title,
+  objectId,
+  statusIcon,
+  children,
+  defaultOpen = true,
+}) => {
   return (
     <HeadlessUiDisclosure defaultOpen={defaultOpen}>
       {({ open }) => (
@@ -21,7 +28,7 @@ export const Disclosure: React.FC<Props> = ({ title, objectId, children, default
               {
                 'rounded-t-lg border border-b-gray-200 bg-gray-100': open,
               },
-              { 'rounded-lg border': !open }
+              { 'rounded-lg border': !open },
             )}
           >
             <ChevronRightIcon
@@ -32,16 +39,19 @@ export const Disclosure: React.FC<Props> = ({ title, objectId, children, default
             <h3 className="w-full">
               <div className="flex w-full justify-between pr-3">
                 <span>{title}</span>
-                {!!objectId && (
-                  <span
-                    className={clsx(
-                      'rounded  px-1 py-0 font-mono',
-                      open ? 'bg-white' : 'bg-gray-100'
-                    )}
-                  >
-                    #{objectId}
-                  </span>
-                )}
+                <div className="flex">
+                  {statusIcon}
+                  {!!objectId && (
+                    <span
+                      className={clsx(
+                        'rounded  px-1 py-0 font-mono',
+                        open ? 'bg-white' : 'bg-gray-100',
+                      )}
+                    >
+                      #{objectId}
+                    </span>
+                  )}
+                </div>
               </div>
             </h3>
           </HeadlessUiDisclosure.Button>

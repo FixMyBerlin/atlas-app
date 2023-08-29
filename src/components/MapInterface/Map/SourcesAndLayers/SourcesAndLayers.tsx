@@ -15,7 +15,7 @@ import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
-import { specifyFilters } from './utils'
+import { wrapFilterWithAll } from './utils'
 
 // We add source+layer map-components for all topics of the given confic.
 // We then toggle the visibility of the layer base on state.
@@ -56,6 +56,11 @@ export const SourcesAndLayers: React.FC = () => {
         const currTopicConfig = currentTheme.topics.find((t) => t.id === flatTopicConfig.id)
         if (!currTopicConfig) return null
 
+        const currTopicActive = currTopicConfig.styles
+          .filter((s) => s.id !== 'hidden')
+          .some((s) => s.active)
+        if (!currTopicActive) return null
+
         const curTopicData = getTopicData(flatTopicConfig.id)
         const sourceData = getSourceData(curTopicData?.sourceId)
 
@@ -75,29 +80,44 @@ export const SourcesAndLayers: React.FC = () => {
           >
             {flatTopicConfig.styles.map((styleConfig) => {
               const styleData = getStyleData(curTopicData, styleConfig.id)
-              // A style is visible when
-              // … the theme is active (handled above) AND
-              // … the current topic is active AND
-              // … the current topic's style is active (which includes 'default' via the config initialization)
-              const currStyleConfig = currTopicConfig.styles.find((s) => s.id === styleConfig.id)
-              const visibility = layerVisibility(
-                (currTopicConfig.active && currStyleConfig?.active) || false
-              )
 
-              return styleData?.layers.map((layer) => {
+              if (styleConfig.id === 'hidden') {
                 const layerId = createSourceTopicStyleLayerKey(
                   sourceData.id,
                   flatTopicConfig.id,
                   styleConfig.id,
-                  layer.id
+                  'hidden',
+                )
+                return (
+                  <Layer
+                    key={layerId}
+                    source-layer={sourceId}
+                    type="line"
+                    layout={{ visibility: 'none' }}
+                  />
+                )
+              }
+
+              // A style is visible when
+              // … the theme is active (handled above) AND
+              // … the current topic is active AND
+              //               ^--- TODO This is wrong now, topics are always active but themes get active/hidden
+              // … the current topic's style is active (which includes 'default' via the config initialization)
+              const currStyleConfig = currTopicConfig.styles.find((s) => s.id === styleConfig.id)
+              const visibility = layerVisibility(currStyleConfig?.active || false)
+
+              return styleData?.layers?.map((layer) => {
+                const layerId = createSourceTopicStyleLayerKey(
+                  sourceData.id,
+                  flatTopicConfig.id,
+                  styleConfig.id,
+                  layer.id,
                 )
                 const layout =
                   layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                const layerFilter = useDebugLayerStyles
-                  ? ['all']
-                  : specifyFilters(layer.filter, styleData.interactiveFilters, styleConfig.filters)
+                const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
 
                 // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                 const layerPaint = useDebugLayerStyles

@@ -8,11 +8,17 @@ type Store = StoreMapLoadedState &
   StorePmTilesProtocolState &
   StoreFeaturesInspector &
   StoreCalculator &
-  StoreLocalUpdates
+  StoreLocalUpdates &
+  StoreOsmNotesState
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
   setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
+}
+
+type StoreOsmNotesState = {
+  osmNotesLoading: boolean
+  setOsmNotesLoading: (osmNotesLoaded: Store['osmNotesLoading']) => void
 }
 
 type StorePmTilesProtocolState = {
@@ -32,7 +38,7 @@ export type StoreCalculator = {
     features: MapboxGeoJSONFeature[]
   }[]
   setCalculatorAreasWithFeatures: (
-    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures']
+    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures'],
   ) => void
 }
 
@@ -45,6 +51,9 @@ type StoreLocalUpdates = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+
+  osmNotesLoading: false,
+  setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
 
   pmTilesProtocolReady: false,
   setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),

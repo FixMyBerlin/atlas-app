@@ -2,7 +2,7 @@ import { useRef, useCallback, useMemo } from 'react'
 import { createPopper, Options } from '@popperjs/core'
 
 export function usePopper(
-  options?: Partial<Options>
+  options?: Partial<Options>,
 ): [React.RefCallback<Element | null>, React.RefCallback<HTMLElement | null>] {
   const reference = useRef<Element | null>(null)
   const popper = useRef<HTMLElement | null>(null)
@@ -30,6 +30,6 @@ export function usePopper(
         instantiatePopper()
       },
     ],
-    [reference, popper, instantiatePopper]
+    [reference, popper, instantiatePopper],
   )
 }

@@ -17,7 +17,7 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
           {
             'cursor-pointer bg-yellow-50 text-yellow-900': active && !selected,
           },
-          { 'bg-yellow-400': selected }
+          { 'bg-yellow-400': selected },
         )
       }
     >

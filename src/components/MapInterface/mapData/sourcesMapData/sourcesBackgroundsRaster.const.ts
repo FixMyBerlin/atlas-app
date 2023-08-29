@@ -8,6 +8,7 @@ export type SourcesRasterIds =
   | 'esri'
   | 'maptiler-satellite'
   | 'mapbox-satellite'
+  | 'areal2023'
   | 'areal2022'
   | 'areal2021'
   | 'areal2020'
@@ -124,6 +125,17 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   //     "<a href='https://wiki.openstreetmap.org/wiki/DigitalGlobe'>Terms & Feedback</a>",
   // },
   {
+    id: 'areal2023',
+    name: 'Berlin: Luftbilder 2023',
+    type: 'raster',
+    tiles: 'https://tiles.codefor.de/berlin-2023-dop20rgbi/{z}/{x}/{y}.png',
+    tileSize: 256,
+    minzoom: 10,
+    maxzoom: 21,
+    attributionHtml:
+      '<a target="_blank" href="https://gdi.berlin.de/geonetwork/srv/ger/catalog.search#/metadata/07ec4c16-723f-32ea-9580-411d8fe4f7e7">Geoportal Berlin / Digitale farbige TrueOrthophotos 2023 (DOP20RGBI)</a>',
+  },
+  {
     id: 'areal2022',
     name: 'Berlin: Luftbilder 2022',
     type: 'raster',
@@ -131,8 +143,9 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     tileSize: 256,
     minzoom: 10,
     maxzoom: 21,
+    // Scheinbar gibt es keinen Link mehr der nur die Orthophotos representiert. Der Link unten enthält die Daten aber auch.
     attributionHtml:
-      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2022_true_rgbi@senstadt&type=FEED">Geoportal Berlin / Digitale farbige TrueOrthophotos 2022 (DOP20RGBI)</a>',
+      '<a target="_blank" href="https://gdi.berlin.de/geonetwork/srv/ger/catalog.search#/metadata/804a9581-a128-37cc-9c25-2b2474ba45eb">Geoportal Berlin / Digitale farbige TrueOrthophotos 2022 (DOP20RGBI)</a>',
   },
   {
     id: 'areal2021',
@@ -143,7 +156,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     minzoom: 10,
     maxzoom: 21,
     attributionHtml:
-      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2021_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2021 (DOP20RGBI)</a>',
+      '<a target="_blank" href="https://gdi.berlin.de/geonetwork/srv/ger/catalog.search#/metadata/0682e22d-cd98-3c13-b6fa-a91db67c780e">Geoportal Berlin / Digitale farbige Orthophotos 2021 (DOP20RGBI)</a>',
   },
   {
     id: 'areal2020',
@@ -154,7 +167,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     minzoom: 10,
     maxzoom: 21,
     attributionHtml:
-      '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2020_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2020 (DOP20RGB)</a>',
+      '<a target="_blank" href="https://gdi.berlin.de/geonetwork/srv/ger/catalog.search#/metadata/a338e6ee-5d3a-34c6-9259-ef8a5c0ba66a">Geoportal Berlin / Digitale farbige Orthophotos 2020 (DOP20RGB)</a>',
   },
   {
     id: 'areal2019',
@@ -164,6 +177,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     tileSize: 256,
     minzoom: 10,
     maxzoom: 21,
+    // TODO: Es gibt keine aktuelle Datenquelle mehr
     attributionHtml:
       '<a target="_blank" href="https://fbinter.stadt-berlin.de/fb/berlin/service.jsp?id=a_luftbild2019_rgb@senstadt&type=FEED">Geoportal Berlin / Digitale farbige Orthophotos 2019 (DOP20RGB)</a>',
   },

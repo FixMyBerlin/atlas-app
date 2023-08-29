@@ -7,24 +7,26 @@ import {
 } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
+import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { theme: ThemeConfig | undefined }
 
-const collectInteractiveLayerIds = ({ theme }: Props) => {
+const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
   const interactiveLayerIds: string[] = []
 
   theme?.topics?.forEach((topicConfig) => {
-    // Guard: Only pick layer that are part of our current theme
-
-    if (!theme?.topics.some((t) => t.id === topicConfig.id)) return
     const topicData = getTopicData(topicConfig.id)
 
     topicConfig.styles.forEach((styleConfig) => {
       const styleData = getStyleData(topicData, styleConfig.id)
+      if (styleData.id === 'hidden') return
+      if (styleConfig.active === false) return
+
       styleData.layers.forEach((layerConfig) => {
         // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
         const sourceData = getSourceData(topicData.sourceId)
         if (!sourceData.inspector.enabled) return
+
         const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
         if (layerData?.interactive === false) return
 
@@ -32,7 +34,7 @@ const collectInteractiveLayerIds = ({ theme }: Props) => {
           topicData.sourceId,
           topicConfig.id,
           styleConfig.id,
-          layerConfig.id
+          layerConfig.id,
         )
 
         interactiveLayerIds.push(layerKey)
@@ -47,9 +49,13 @@ export const useInteractiveLayers = () => {
   // active layer from theme
   const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
   const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
-  const themeActiveLayerIds = collectInteractiveLayerIds({
-    theme: currentTheme,
-  })
+
+  const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ theme: currentTheme })
+
+  const { osmNotes } = useSearch<LocationGenerics>()
+  if (osmNotes) {
+    themeActiveLayerIds.push(osmNotesLayerId)
+  }
 
   // active layer from datasets
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
@@ -59,7 +65,7 @@ export const useInteractiveLayers = () => {
       .filter((dataset) => dataset.inspector.enabled)
       .filter((dataset) => selectedDatasetIds?.includes(dataset.id))
       .map((dataset) =>
-        dataset.layers.map((layer) => createDatasetSourceLayerKey(dataset.id, layer.id))
+        dataset.layers.map((layer) => createDatasetSourceLayerKey(dataset.id, layer.id)),
       )
       .flat() || []
 

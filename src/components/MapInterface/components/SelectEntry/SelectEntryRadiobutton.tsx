@@ -25,7 +25,7 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
         className={clsx(
           'h-4 w-4 cursor-pointer rounded-full border-gray-300',
           { 'text-indigo-600 focus:ring-indigo-500': !disabled },
-          { 'text-gray-600': disabled }
+          { 'text-gray-600': disabled },
         )}
         defaultChecked={active}
         disabled={disabled}

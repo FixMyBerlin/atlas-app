@@ -4,6 +4,7 @@ import { useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl'
+import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { DebugMapDownload } from './DebugMapDownload'
@@ -15,6 +16,8 @@ export const DebugMap = () => {
   const { mapLoaded } = useMapStateInteraction()
   const [triggerRerender, setTriggerRerender] = useState(0)
   const [atlasLayers, setAtlasLayers] = useState<mapboxgl.AnyLayer[]>([])
+
+  const interactiveLayerIds = useInteractiveLayers()
 
   // The default is to showDebugInfo on isDev.
   // However, we can overwrite this with `?debugMap=true` on production
@@ -33,17 +36,17 @@ export const DebugMap = () => {
         .filter((layer) => {
           return 'source' in layer && layer.source !== 'openmaptiles' && layer.type !== 'raster'
         })
-        .flat()
+        .flat(),
     )
   }, [mapLoaded, mainMap, showDebugInfo, triggerRerender])
 
   if (!showDebugInfo || !mapLoaded || !mainMap) return null
 
   const vectorSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'vector'
+    ([_key, value]) => value.type === 'vector',
   )
   const rasterSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'raster'
+    ([_key, value]) => value.type === 'raster',
   )
 
   return (
@@ -109,7 +112,7 @@ export const DebugMap = () => {
                   className={clsx(
                     // @ts-ignore this weird AnyLayer issue that I don't get worked around…
                     { 'font-bold': layer?.layout?.visibility === 'visible' },
-                    'cursor-pointer hover:font-semibold'
+                    'cursor-pointer hover:font-semibold',
                   )}
                 >
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
@@ -121,6 +124,16 @@ export const DebugMap = () => {
               </details>
             )
           })}
+        </details>
+
+        <details>
+          <summary className="cursor-pointer hover:font-semibold">interactiveLayerIds</summary>
+
+          <ul>
+            {interactiveLayerIds.map((layerId) => (
+              <li key={layerId}>{layerId}</li>
+            ))}
+          </ul>
         </details>
       </div>
     </>

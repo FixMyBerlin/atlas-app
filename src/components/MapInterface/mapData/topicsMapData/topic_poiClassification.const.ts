@@ -1,4 +1,5 @@
 import { MapDataTopic } from '../types'
+import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'shops'
@@ -6,7 +7,6 @@ const source = 'tarmac_poiClassification'
 const sourceLayer = 'public.poiClassification'
 export type TopicPoiClassificationId_Tarmac = typeof topic
 export type TopicPoiClassificationStyleIds_Tarmac = 'default'
-export type TopicPoiClassificationStyleFilterIds_Tarmac = '_nofilter'
 
 export const topic_poiClassification_tarmac: MapDataTopic = {
   id: topic,
@@ -14,6 +14,7 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
   desc: null,
   sourceId: source,
   styles: [
+    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
@@ -23,7 +24,28 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
         source,
         sourceLayer,
       }),
-      interactiveFilters: null,
+      legends: [
+        {
+          id: 'freizeit',
+          name: 'Freizeit',
+          style: { type: 'circle', color: '#960854' },
+        },
+        {
+          id: 'bildung',
+          name: 'Bildung',
+          style: { type: 'circle', color: '#626060' },
+        },
+        {
+          id: 'besorgungen',
+          name: 'Besorgungen',
+          style: { type: 'circle', color: '#e709fb' },
+        },
+        {
+          id: 'einkauf',
+          name: 'Einkauf',
+          style: { type: 'circle', color: '#0e3ecd' },
+        },
+      ],
     },
   ],
 }

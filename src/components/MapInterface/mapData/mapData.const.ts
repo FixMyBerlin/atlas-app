@@ -2,99 +2,71 @@ import { sources } from './sourcesMapData/sources.const'
 import { themes } from './themesMapData'
 import {
   TopicAccidentsId,
-  TopicAccidentsStyleFilterIds,
   TopicAccidentsStyleIds,
   TopicBarriersId,
-  TopicBarriersStyleFilterIds,
   TopicBarriersStyleIds,
   TopicBikelanesId,
-  TopicBikelanesId_Osmscripts,
   TopicBikelanesPresenceId,
-  TopicBikelanesPresenceStyleFilterIds,
+  TopicBikelanesPresenceIdLegacy,
   TopicBikelanesPresenceStyleIds,
-  TopicBikelanesStyleFilterIds,
-  TopicBikelanesStyleFilterIds_Osmscripts,
+  TopicBikelanesPresenceStyleIdsLegacy,
   TopicBikelanesStyleIds,
-  TopicBikelanesStyleIds_Osmscripts,
   TopicBoundariesId,
-  TopicBoundariesStyleFilterIds,
   TopicBoundariesStyleIds,
   TopicBuildingsId,
-  TopicBuildingsStyleFilterIds,
   TopicBuildingsStyleIds,
   TopicEducationId,
-  TopicEducationId_Osmscripts,
-  TopicEducationStyleFilterIds,
-  TopicEducationStyleFilterIds_Osmscripts,
   TopicEducationStyleIds,
-  TopicEducationStyleIds_Osmscripts,
   TopicLanduseId,
-  TopicLanduseStyleFilterIds,
   TopicLanduseStyleIds,
   TopicLitId,
-  TopicLitStyleFilterIds,
+  TopicLitIdLegacy,
   TopicLitStyleIds,
+  TopicLitStyleIdsLegacy,
   TopicMapillaryCoverageId,
-  TopicMapillaryCoverageStyleFilterIds,
   TopicMapillaryCoverageStyleIds,
   TopicMaxspeedId,
-  TopicMaxspeedStyleFilterIds,
+  TopicMaxspeedIdLegacy,
   TopicMaxspeedStyleIds,
+  TopicMaxspeedStyleIdsLegacy,
   TopicParkingAreasId,
-  TopicParkingAreasStyleFilterIds,
   TopicParkingAreasStyleIds,
   TopicParkingDebugId,
-  TopicParkingDebugStyleFilterIds,
   TopicParkingDebugStyleIds,
   TopicParkingId,
   TopicParkingPointsId,
-  TopicParkingPointsStyleFilterIds,
   TopicParkingPointsStyleIds,
   TopicParkingStatsId,
-  TopicParkingStatsStyleFilterIds,
   TopicParkingStatsStyleIds,
-  TopicParkingStyleFilterIds,
   TopicParkingStyleIds,
   TopicPlacesId,
-  TopicPlacesStyleFilterIds,
   TopicPlacesStyleIds,
   TopicPoiClassificationId_Tarmac,
-  TopicPoiClassificationStyleFilterIds_Tarmac,
   TopicPoiClassificationStyleIds_Tarmac,
   TopicPublicTransportId,
-  TopicPublicTransportId_Osmscripts,
-  TopicPublicTransportStyleFilterIds,
-  TopicPublicTransportStyleFilterIds_Osmscripts,
   TopicPublicTransportStyleIds,
-  TopicPublicTransportStyleIds_Osmscripts,
   TopicRoadClassificationId,
-  TopicRoadClassificationId_Osmscripts,
-  TopicRoadClassificationStyleFilterIds,
-  TopicRoadClassificationStyleFilterIds_Osmscripts,
+  TopicRoadClassificationIdLegacy,
   TopicRoadClassificationStyleIds,
-  TopicRoadClassificationStyleIds_Osmscripts,
-  TopicShopsId_Osmscripts,
-  TopicShopsStyleFilterIds_Osmscripts,
-  TopicShopsStyleIds_Osmscripts,
-  TopicSurfaceId_Osmscripts,
+  TopicRoadClassificationStyleIdsLegacy,
   TopicSurfaceQualityId,
-  TopicSurfaceStyleFilterIds_Osmscripts,
-  TopicSurfaceQualityStyleFilterIds,
-  TopicSurfaceStyleIds_Osmscripts,
+  TopicSurfaceQualityIdLegacy,
   TopicSurfaceStyleQualityIds,
+  TopicSurfaceStyleQualityIdsLegacy,
   topic_accidents,
   topic_barriers,
   topic_bikelanes,
   topic_bikelanesPresence,
-  topic_bikelanes_osmscripts,
+  topic_bikelanesPresence_legacy,
   topic_boundaries,
   topic_buildings,
   topic_education,
-  topic_education_osmscripts,
   topic_landuse,
   topic_lit,
+  topic_lit_legacy,
   topic_mapillaryCoverage,
   topic_maxspeed,
+  topic_maxspeed_legacy,
   topic_parking,
   topic_parkingAreas,
   topic_parkingDebug,
@@ -103,29 +75,28 @@ import {
   topic_places,
   topic_poiClassification_tarmac,
   topic_publicTransport,
-  topic_publicTransport_osmscripts,
   topic_roadClassification,
-  topic_roadClassification_osmscripts,
-  topic_shops_osmscripts,
-  topic_surface_osmscripts,
+  topic_roadClassification_legacy,
   topic_surfaceQuality,
+  topic_surfaceQuality_legacy,
 } from './topicsMapData'
-import { MapData } from './types'
+import { MapData, MapDataTheme } from './types'
 
 export type TopicIds =
   | TopicAccidentsId
   | TopicBarriersId
   | TopicBikelanesId
-  | TopicBikelanesId_Osmscripts
   | TopicBikelanesPresenceId
+  | TopicBikelanesPresenceIdLegacy
   | TopicBoundariesId
   | TopicBuildingsId
   | TopicEducationId
-  | TopicEducationId_Osmscripts
   | TopicLanduseId
   | TopicLitId
+  | TopicLitIdLegacy
   | TopicMapillaryCoverageId
   | TopicMaxspeedId
+  | TopicMaxspeedIdLegacy
   | TopicParkingAreasId
   | TopicParkingDebugId
   | TopicParkingId
@@ -134,27 +105,28 @@ export type TopicIds =
   | TopicPlacesId
   | TopicPoiClassificationId_Tarmac
   | TopicPublicTransportId
-  | TopicPublicTransportId_Osmscripts
   | TopicRoadClassificationId
-  | TopicRoadClassificationId_Osmscripts
-  | TopicShopsId_Osmscripts
-  | TopicSurfaceId_Osmscripts
+  | TopicRoadClassificationIdLegacy
   | TopicSurfaceQualityId
+  | TopicSurfaceQualityIdLegacy
+
+type TopicStyleIdDefaults = MapDataTheme['topics'][number]['defaultStyle']
 
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBarriersStyleIds
   | TopicBikelanesPresenceStyleIds
+  | TopicBikelanesPresenceStyleIdsLegacy
   | TopicBikelanesStyleIds
-  | TopicBikelanesStyleIds_Osmscripts
   | TopicBoundariesStyleIds
   | TopicBuildingsStyleIds
   | TopicEducationStyleIds
-  | TopicEducationStyleIds_Osmscripts
   | TopicLanduseStyleIds
   | TopicLitStyleIds
+  | TopicLitStyleIdsLegacy
   | TopicMapillaryCoverageStyleIds
   | TopicMaxspeedStyleIds
+  | TopicMaxspeedStyleIdsLegacy
   | TopicParkingAreasStyleIds
   | TopicParkingDebugStyleIds
   | TopicParkingPointsStyleIds
@@ -163,41 +135,11 @@ export type TopicStyleIds =
   | TopicPlacesStyleIds
   | TopicPoiClassificationStyleIds_Tarmac
   | TopicPublicTransportStyleIds
-  | TopicPublicTransportStyleIds_Osmscripts
   | TopicRoadClassificationStyleIds
-  | TopicRoadClassificationStyleIds_Osmscripts
-  | TopicShopsStyleIds_Osmscripts
-  | TopicSurfaceStyleIds_Osmscripts
+  | TopicRoadClassificationStyleIdsLegacy
+  | TopicStyleIdDefaults
   | TopicSurfaceStyleQualityIds
-
-export type TopicStyleFilterIds =
-  | TopicAccidentsStyleFilterIds
-  | TopicBarriersStyleFilterIds
-  | TopicBikelanesPresenceStyleFilterIds
-  | TopicBikelanesStyleFilterIds
-  | TopicBikelanesStyleFilterIds_Osmscripts
-  | TopicBoundariesStyleFilterIds
-  | TopicBuildingsStyleFilterIds
-  | TopicEducationStyleFilterIds
-  | TopicEducationStyleFilterIds_Osmscripts
-  | TopicLanduseStyleFilterIds
-  | TopicLitStyleFilterIds
-  | TopicMapillaryCoverageStyleFilterIds
-  | TopicMaxspeedStyleFilterIds
-  | TopicParkingAreasStyleFilterIds
-  | TopicParkingDebugStyleFilterIds
-  | TopicParkingPointsStyleFilterIds
-  | TopicParkingStatsStyleFilterIds
-  | TopicParkingStyleFilterIds
-  | TopicPlacesStyleFilterIds
-  | TopicPoiClassificationStyleFilterIds_Tarmac
-  | TopicPublicTransportStyleFilterIds
-  | TopicPublicTransportStyleFilterIds_Osmscripts
-  | TopicRoadClassificationStyleFilterIds
-  | TopicRoadClassificationStyleFilterIds_Osmscripts
-  | TopicShopsStyleFilterIds_Osmscripts
-  | TopicSurfaceStyleFilterIds_Osmscripts
-  | TopicSurfaceQualityStyleFilterIds
+  | TopicSurfaceStyleQualityIdsLegacy
 
 export type TopicStyleLegendIds = string // TODO: We can make this more precise later
 
@@ -207,16 +149,17 @@ export const mapData: MapData = {
   topics: [
     topic_accidents,
     topic_barriers,
-    topic_bikelanes_osmscripts,
     topic_bikelanes,
     topic_bikelanesPresence,
+    topic_bikelanesPresence_legacy,
     topic_boundaries,
     topic_buildings,
-    topic_education_osmscripts,
     topic_education,
     topic_landuse,
+    topic_lit_legacy,
     topic_lit,
     topic_mapillaryCoverage,
+    topic_maxspeed_legacy,
     topic_maxspeed,
     topic_parking,
     topic_parkingAreas,
@@ -225,12 +168,10 @@ export const mapData: MapData = {
     topic_parkingStats,
     topic_places,
     topic_poiClassification_tarmac,
-    topic_publicTransport_osmscripts,
     topic_publicTransport,
-    topic_roadClassification_osmscripts,
+    topic_roadClassification_legacy,
     topic_roadClassification,
-    topic_shops_osmscripts,
-    topic_surface_osmscripts,
+    topic_surfaceQuality_legacy,
     topic_surfaceQuality,
   ],
 }

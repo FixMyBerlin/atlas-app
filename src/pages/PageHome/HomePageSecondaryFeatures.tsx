@@ -125,7 +125,7 @@ const FeaturesDesktop = () => {
                   key={featureIndex}
                   className={clsx(
                     'px-5 transition duration-500 ease-in-out [&:not(:focus-visible)]:focus:outline-none',
-                    { 'opacity-60': featureIndex !== selectedIndex }
+                    { 'opacity-60': featureIndex !== selectedIndex },
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
