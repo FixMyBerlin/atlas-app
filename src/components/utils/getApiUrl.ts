@@ -4,7 +4,7 @@ import { isStaging } from './isEnv'
 
 export const apiBaseUrl = {
   development: 'http://localhost:80',
-  staging: 'https://staging-api.radverkehrsatlas.de',
+  staging: 'https://test-api.radverkehrsatlas.de',
   production: 'https://api.radverkehrsatlas.de',
 }
 

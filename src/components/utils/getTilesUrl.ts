@@ -2,7 +2,7 @@ import { isStaging } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
-  staging: 'https://staging-tiles.radverkehrsatlas.de',
+  staging: 'https://test.radverkehrsatlas.de',
   production: 'https://tiles.radverkehrsatlas.de',
 }
 
