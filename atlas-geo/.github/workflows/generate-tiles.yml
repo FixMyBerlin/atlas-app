@@ -7,6 +7,9 @@ on:
 
 jobs:
   trigger_generation:
+    environment:
+      name: production
+      url: https://tiles.radverkehrsatlas.de
     runs-on: ubuntu-latest
 
     steps:

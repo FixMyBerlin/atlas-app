@@ -5,6 +5,9 @@ on:
 
 jobs:
   trigger_generation:
+    environment:
+      name: staging
+      url: https://staging-tiles.radverkehrsatlas.de
     runs-on: ubuntu-latest
 
     steps:
