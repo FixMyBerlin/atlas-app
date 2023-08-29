@@ -70,7 +70,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.staging.yml,docker-compose.traefik.yml"
+          source: "docker-compose.staging.yml,docker-compose.traefik.yml,postgres/postgres.conf"
           target: "/srv/tarmac/"
           overwrite: true
 
