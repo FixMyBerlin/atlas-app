@@ -74,8 +74,10 @@ services:
         - "5432:${PGPORT}"
       volumes:
         - geodata_staging:/var/lib/postgresql/data
-        - ./postgres/postgres.conf:/etc/postgresql/postgresql.conf
-      command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
+      configs:
+        - source: postgres_conf
+          target: /postgresql/postgresql.conf
+      command: ["-c", "config_file=/postgresql/postgresql.conf"]
       container_name: db_staging
       healthcheck:
         test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -89,3 +91,6 @@ volumes:
   geodata_staging:
 networks:
   app_staging_bridge:
+configs:
+  postgres_conf:
+    file: ./postgres/postgres.conf
