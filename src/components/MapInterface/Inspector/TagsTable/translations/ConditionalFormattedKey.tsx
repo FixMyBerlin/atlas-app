@@ -32,7 +32,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   if (lookAtThisSourceFirst) {
     const keyCandidate = `${sourceId.replace(
       lookAtThisSourceFirst,
-      lookAtFirstSources[lookAtThisSourceFirst]
+      lookAtFirstSources[lookAtThisSourceFirst],
     )}--${tagKey}--key`
     key = translations[keyCandidate] ? keyCandidate : key
   }

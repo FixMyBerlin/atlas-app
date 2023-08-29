@@ -31,7 +31,7 @@ export const mapboxStyleLayers = ({
         source,
         sourceLayer,
         mapboxStylesByLayerGroup,
-      }
+      },
     )
     return undefined
   }

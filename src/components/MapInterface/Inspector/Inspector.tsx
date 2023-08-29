@@ -30,7 +30,7 @@ export const Inspector: React.FC = () => {
       }
       return result
     },
-    []
+    [],
   )
 
   if (!uniqueInspectorFeatures.length) return null
@@ -59,7 +59,7 @@ export const Inspector: React.FC = () => {
 
         // Inspector-Block for Datasets
         const isDataset = sourcesDatasets.some(
-          (d) => d.id === extractDataIdIdFromDataKey(sourceKey)
+          (d) => d.id === extractDataIdIdFromDataKey(sourceKey),
         )
         if (isDataset) {
           return (

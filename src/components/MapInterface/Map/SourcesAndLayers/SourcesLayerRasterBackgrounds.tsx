@@ -22,7 +22,7 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
   if (!region?.backgroundSources) return null
 
   const backgrounds = sourcesBackgroundsRaster.filter((s) =>
-    region.backgroundSources.includes(s.id)
+    region.backgroundSources.includes(s.id),
   )
 
   // Last layer in Array `allLayer.filter((l) => l.source === 'openmaptiles')`

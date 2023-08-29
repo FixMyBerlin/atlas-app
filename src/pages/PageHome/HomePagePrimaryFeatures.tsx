@@ -111,7 +111,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                         'group relative rounded-full py-1 px-4 lg:rounded-r-none lg:rounded-l-xl lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
-                          : 'hover:bg-white/10 lg:hover:bg-white/5'
+                          : 'hover:bg-white/10 lg:hover:bg-white/5',
                       )}
                     >
                       <h3>
@@ -120,7 +120,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                             'font-display text-lg [&:not(:focus-visible)]:focus:outline-none',
                             selectedIndex === featureIndex
                               ? 'text-blue-600 lg:text-white'
-                              : 'text-blue-100 hover:text-white lg:text-white'
+                              : 'text-blue-100 hover:text-white lg:text-white',
                           )}
                         >
                           <span className="absolute inset-0 rounded-full lg:rounded-r-none lg:rounded-l-xl" />
@@ -132,7 +132,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                           'mt-2 hidden text-sm lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'
-                            : 'text-blue-100 group-hover:text-white'
+                            : 'text-blue-100 group-hover:text-white',
                         )}
                       >
                         {feature.description}

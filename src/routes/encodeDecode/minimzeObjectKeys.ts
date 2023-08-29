@@ -35,7 +35,7 @@ const replaceKeyInNestedObject = <TInput>(input: TInput, searchKey: string, newK
       const output = replaceKeyInNestedObject<TObjectInput>(
         innerInput as TObjectInput,
         searchKey,
-        newKey
+        newKey,
       ) as Record<string, TInput>
       return output
     })
@@ -51,10 +51,10 @@ const replaceKeyInNestedObject = <TInput>(input: TInput, searchKey: string, newK
             : value
         const output = [innerKey === searchKey ? newKey : innerKey, newValue] as [
           string,
-          TObjectInput
+          TObjectInput,
         ]
         return output
-      })
+      }),
     )
     return output
   }
@@ -68,7 +68,7 @@ export const minimizeObjectKeys = (inputObject: Record<string, any>) => {
     minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
       minimizedObject,
       fromKey,
-      toKey
+      toKey,
     )
   })
 
@@ -81,7 +81,7 @@ export const expandObjectKeys = (inputObject: Record<string, any>) => {
     minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
       minimizedObject,
       fromKey,
-      toKey
+      toKey,
     )
   })
 

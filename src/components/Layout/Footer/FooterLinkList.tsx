@@ -14,7 +14,7 @@ export const FooterLinkList: React.FC<Props> = ({ linkList, className }) => {
     <ul
       className={clsx(
         'flex flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left',
-        className
+        className,
       )}
     >
       {linkList.map((item) => (

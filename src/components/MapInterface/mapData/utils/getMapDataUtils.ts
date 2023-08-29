@@ -17,7 +17,7 @@ export const getTopicData = (topicId: TopicIds | undefined) => {
 
 export const getStyleData = (
   topicInput: TopicIds | MapDataTopic | undefined,
-  styleId: TopicStyleIds | undefined
+  styleId: TopicStyleIds | undefined,
 ) => {
   let styleData = undefined
   if (typeof topicInput === 'string') {

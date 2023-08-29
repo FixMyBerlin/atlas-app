@@ -73,7 +73,7 @@ export const SelectTheme = () => {
                   index === 0 ? 'rounded-l-lg' : '',
                   index === configThemes.length - 1 ? 'rounded-r-lg' : '',
                   'flex-0 group relative min-w-0 overflow-hidden whitespace-nowrap py-2 px-3 text-center text-sm font-medium',
-                  active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10'
+                  active ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50 focus:z-10',
                 )}
                 aria-current={active ? 'page' : undefined}
                 title={themeData.desc}
@@ -85,7 +85,7 @@ export const SelectTheme = () => {
                   aria-hidden="true"
                   className={clsx(
                     active ? 'bg-yellow-500' : 'bg-transparent',
-                    'absolute inset-x-0 bottom-0 h-0.5'
+                    'absolute inset-x-0 bottom-0 h-0.5',
                   )}
                 />
               </div>

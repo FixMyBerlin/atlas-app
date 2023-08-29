@@ -34,7 +34,7 @@ const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
           topicData.sourceId,
           topicConfig.id,
           styleConfig.id,
-          layerConfig.id
+          layerConfig.id,
         )
 
         interactiveLayerIds.push(layerKey)
@@ -65,7 +65,7 @@ export const useInteractiveLayers = () => {
       .filter((dataset) => dataset.inspector.enabled)
       .filter((dataset) => selectedDatasetIds?.includes(dataset.id))
       .map((dataset) =>
-        dataset.layers.map((layer) => createDatasetSourceLayerKey(dataset.id, layer.id))
+        dataset.layers.map((layer) => createDatasetSourceLayerKey(dataset.id, layer.id)),
       )
       .flat() || []
 

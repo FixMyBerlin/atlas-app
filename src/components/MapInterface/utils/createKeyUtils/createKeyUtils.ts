@@ -8,14 +8,14 @@ export const createTopicStyleKey = (topicId: TopicIds, styleId: TopicStyleIds): 
 export const createTopicStyleLegendKey = (
   topicId: TopicIds,
   styleId: TopicStyleIds,
-  legendId: TopicStyleLegendIds
+  legendId: TopicStyleLegendIds,
 ): TopicStyleLegendKey => `${topicId}-${styleId}-${legendId}`
 
 export const createSourceTopicStyleLayerKey = (
   sourceId: string,
   topicId: string,
   styleId: string,
-  layerId: string
+  layerId: string,
 ) => {
   return `${sourceId}--${topicId}--${styleId}--${layerId}`
 }

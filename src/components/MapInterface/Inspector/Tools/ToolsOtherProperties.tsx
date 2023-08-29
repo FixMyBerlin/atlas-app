@@ -31,7 +31,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
   const systemProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
     .filter(
-      ([key, _v]) => systemKeys.includes(key) && documentedKeys && !documentedKeys?.includes(key)
+      ([key, _v]) => systemKeys.includes(key) && documentedKeys && !documentedKeys?.includes(key),
     )
 
   return (

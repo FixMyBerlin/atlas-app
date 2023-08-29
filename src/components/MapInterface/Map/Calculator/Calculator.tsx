@@ -27,7 +27,7 @@ export const Calculator: React.FC = () => {
       'ERROR: Calculator found multiple "calculator.enabled".',
       { count: calculatorSources.length },
       'Picking the first',
-      { queryLayers }
+      { queryLayers },
     )
   }
   if (!queryLayers) return null

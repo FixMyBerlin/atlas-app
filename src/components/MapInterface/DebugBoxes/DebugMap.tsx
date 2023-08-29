@@ -36,17 +36,17 @@ export const DebugMap = () => {
         .filter((layer) => {
           return 'source' in layer && layer.source !== 'openmaptiles' && layer.type !== 'raster'
         })
-        .flat()
+        .flat(),
     )
   }, [mapLoaded, mainMap, showDebugInfo, triggerRerender])
 
   if (!showDebugInfo || !mapLoaded || !mainMap) return null
 
   const vectorSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'vector'
+    ([_key, value]) => value.type === 'vector',
   )
   const rasterSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'raster'
+    ([_key, value]) => value.type === 'raster',
   )
 
   return (
@@ -112,7 +112,7 @@ export const DebugMap = () => {
                   className={clsx(
                     // @ts-ignore this weird AnyLayer issue that I don't get worked around…
                     { 'font-bold': layer?.layout?.visibility === 'visible' },
-                    'cursor-pointer hover:font-semibold'
+                    'cursor-pointer hover:font-semibold',
                   )}
                 >
                   {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}

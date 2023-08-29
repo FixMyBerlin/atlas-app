@@ -14,7 +14,7 @@ export const CloseButton: React.FC<Props> = ({ onClick, positionClasses = 'top-2
       onClick={onClick}
       className={clsx(
         positionClasses,
-        'absolute  inline-flex items-center justify-center rounded-md border border-gray-300 p-1.5 text-gray-900 transition-colors hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'
+        'absolute  inline-flex items-center justify-center rounded-md border border-gray-300 p-1.5 text-gray-900 transition-colors hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white',
       )}
     >
       <span className="sr-only">Schließen</span>

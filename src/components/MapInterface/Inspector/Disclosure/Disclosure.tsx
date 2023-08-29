@@ -28,7 +28,7 @@ export const Disclosure: React.FC<Props> = ({
               {
                 'rounded-t-lg border border-b-gray-200 bg-gray-100': open,
               },
-              { 'rounded-lg border': !open }
+              { 'rounded-lg border': !open },
             )}
           >
             <ChevronRightIcon
@@ -45,7 +45,7 @@ export const Disclosure: React.FC<Props> = ({
                     <span
                       className={clsx(
                         'rounded  px-1 py-0 font-mono',
-                        open ? 'bg-white' : 'bg-gray-100'
+                        open ? 'bg-white' : 'bg-gray-100',
                       )}
                     >
                       #{objectId}

@@ -41,7 +41,7 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) 
     colorApproved,
     ['==', ['get', 'verified'], 'rejected'],
     colorRejected,
-    colorNull
+    colorNull,
   )
 
   return <Layer {...props} />

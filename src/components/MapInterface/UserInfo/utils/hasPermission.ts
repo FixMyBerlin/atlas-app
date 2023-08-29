@@ -8,7 +8,7 @@ export const hasPermission = (currentUser: User | null, region: Region | undefin
 
 export const hasPermissionByDisplayName = (
   userDisplayName: User['displayName'] | null | undefined,
-  region: Region | undefined
+  region: Region | undefined,
 ) => {
   if (!region) return false
   if (!userDisplayName) return false

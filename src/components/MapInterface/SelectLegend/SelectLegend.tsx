@@ -44,7 +44,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
   const handleClick = (
     topicId: TopicIds,
     styleId: TopicStyleIds,
-    legendId: TopicStyleLegendIds
+    legendId: TopicStyleLegendIds,
   ) => {
     console.log('not implemented,yet', { topicId, styleId, legendId })
   }

@@ -52,7 +52,7 @@ export const NavigationDesktopMenu: React.FC<Props> = ({ menuItems }) => {
                                     className={clsx(
                                       active ? 'bg-gray-100' : '',
                                       matchRoute({ to: item.href }) ? 'bg-gray-200' : '',
-                                      'block px-4 py-2 text-sm text-gray-700'
+                                      'block px-4 py-2 text-sm text-gray-700',
                                     )}
                                   >
                                     {item.name}

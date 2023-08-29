@@ -84,7 +84,7 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
               key={comment.uid}
               className={clsx(
                 'border-b border-b-gray-200 px-3 py-5',
-                userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50'
+                userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50',
               )}
             >
               <p className="text-black">
@@ -98,7 +98,7 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
                 dangerouslySetInnerHTML={{ __html: comment.html }}
                 className={clsx(
                   proseClasses,
-                  'prose-sm my-2 border-l-4 border-white pl-3 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700'
+                  'prose-sm my-2 border-l-4 border-white pl-3 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700',
                 )}
               />
               {!firstComment && comment.action === 'opened' && (

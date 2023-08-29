@@ -12,7 +12,7 @@ describe('flattenConfigTopics()', () => {
     // console.log('intialConfig', JSON.stringify(initialMapConfig, undefined, 2))
     const check = uniqueArray(
       initialMapConfig[0].topics.map((t) => t.id),
-      initialMapConfig[1].topics.map((t) => t.id)
+      initialMapConfig[1].topics.map((t) => t.id),
     ).length
 
     const result = flattenConfigTopics(initialMapConfig)

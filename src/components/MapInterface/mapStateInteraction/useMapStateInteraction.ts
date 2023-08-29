@@ -38,7 +38,7 @@ export type StoreCalculator = {
     features: MapboxGeoJSONFeature[]
   }[]
   setCalculatorAreasWithFeatures: (
-    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures']
+    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures'],
   ) => void
 }
 

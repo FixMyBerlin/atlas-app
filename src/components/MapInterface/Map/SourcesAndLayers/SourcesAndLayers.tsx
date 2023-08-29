@@ -86,7 +86,7 @@ export const SourcesAndLayers: React.FC = () => {
                   sourceData.id,
                   flatTopicConfig.id,
                   styleConfig.id,
-                  'hidden'
+                  'hidden',
                 )
                 return (
                   <Layer
@@ -111,7 +111,7 @@ export const SourcesAndLayers: React.FC = () => {
                   sourceData.id,
                   flatTopicConfig.id,
                   styleConfig.id,
-                  layer.id
+                  layer.id,
                 )
                 const layout =
                   layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }

@@ -66,7 +66,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                 className={clsx(
                   'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50',
                   'focus:shadow-md focus:outline-none',
-                  { 'shadow-md': open }
+                  { 'shadow-md': open },
                 )}
               >
                 <div className="flex gap-1 truncate">
@@ -100,7 +100,7 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
                             className={clsx(
                               styleConfig.active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
                               { 'bg-yellow-50': active },
-                              'block w-full px-4 py-2 text-left text-sm'
+                              'block w-full px-4 py-2 text-left text-sm',
                             )}
                           >
                             {styleData.name}

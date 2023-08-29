@@ -4,7 +4,7 @@ import { MapboxGeoJSONFeature } from 'react-map-gl'
 /** @desc Get two sets of arrays of GeoJSONFeatures and make sure they are unique by comparing their IDs */
 export const uniqueGeoJSONFeatureArray = (
   existingFeatures: MapboxGeoJSONFeature[],
-  featuresToAdd: MapboxGeoJSONFeature[]
+  featuresToAdd: MapboxGeoJSONFeature[],
 ) => {
   // We consider a fixed set of IDs for our comparison
   // TODO: Am I overthinking this? It might be enough to just check for `properties.id`. Which is what we do for `removeFromCalculator`.
