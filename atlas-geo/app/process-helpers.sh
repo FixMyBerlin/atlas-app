@@ -17,6 +17,11 @@ run_lua() {
   start_time=$(date +%s)
   echo -e "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m\e[0m"
 
+  # optional log output:
+  # https://osm2pgsql.org/doc/manual.html#logging
+  # `--verbose` (for --log-level=debug)
+  # `--log-sql`
+  # maybe even `--log-sql-data` // "This will write out a huge amount of data! "
   ${OSM2PGSQL_BIN} --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)

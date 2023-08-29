@@ -9,8 +9,9 @@ export_geojson_function_from_type = {
   "bikelanes_verified": "atlas_export_geojson_bikelanes_verified",
   "bikelanes":          "atlas_export_geojson_bikelanes",
   "bikelanesPresence":  "atlas_export_geojson_bikelanesPresence",
-  # "boundaries":         "atlas_export_geojson_boundaries", # does not work; we need to align the way we store the tags with the other table
-  # "buildings":          "atlas_export_geojson_buildings", # same as above but due to clustering of connected buildings there is no good way to preseve (merge) tags
+  "boundaries":         "atlas_export_geojson_boundaries",
+  "roads":              "atlas_export_geojson_roads",
+  # "buildings":          "atlas_export_geojson_buildings", # does not work
   "landuse":            "atlas_export_geojson_landuse",
   "lit":                "atlas_export_geojson_lit",
   "maxspeed":           "atlas_export_geojson_maxspeed",

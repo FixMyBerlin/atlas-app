@@ -3,7 +3,7 @@ services:
   app:
     env_file:
       - ./.env.production
-    image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: app
     environment:
@@ -35,12 +35,7 @@ services:
       - "traefik.http.routers.prodtiles.entrypoints=websecure"
       - "traefik.http.routers.prodtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prodtiles.tls=true"
-      # HTTP & HTTPS Do not work simulatenously
-      # - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
-      # - "traefik.http.routers.prodtiles.entrypoints=web"
-      # - "traefik.http.routers.service=prodtiles"
     networks:
-      - radverkehrsatlas_mesh
       - app_bridge
     depends_on:
       db:
@@ -48,7 +43,7 @@ services:
   api:
     env_file:
       - ./.env.production
-    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
     restart: always
     ports:
@@ -60,7 +55,6 @@ services:
       - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.prodapi.tls=true"
     networks:
-      - radverkehrsatlas_mesh
       - app_bridge
     depends_on:
       db:
@@ -79,6 +73,8 @@ services:
         - "5432:${PGPORT}"
       volumes:
         - geodata:/var/lib/postgresql/data
+        - ./postgres/postgres.conf:/etc/postgresql/postgresql.conf
+      command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
       container_name: db
       healthcheck:
         test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -91,6 +87,4 @@ volumes:
   osmfiles:
   geodata:
 networks:
-  radverkehrsatlas_mesh:
-    external: true
   app_bridge:
