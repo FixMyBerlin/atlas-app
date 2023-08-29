@@ -3,7 +3,7 @@ services:
   app_staging:
     env_file:
       - ./.env.staging
-    image: public.ecr.aws/n0p8j4k5/tarmac/app:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: app_staging
     environment:
@@ -26,7 +26,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}:${PGPORT}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
     ports:
       - "9010:7800"
     labels:
@@ -36,7 +36,6 @@ services:
       - "traefik.http.routers.stagingtiles.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingtiles.tls=true"
     networks:
-      - radverkehrsatlas_mesh
       - app_staging_bridge
     depends_on:
       db_staging:
@@ -46,7 +45,7 @@ services:
       - ./.env.staging
     container_name: api_staging
     restart: always
-    image: public.ecr.aws/n0p8j4k5/tarmac/api:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     ports:
       - "9020:80"
     labels:
@@ -56,7 +55,6 @@ services:
       - "traefik.http.routers.stagingapi.tls.certresolver=letsencrypt"
       - "traefik.http.routers.stagingapi.tls=true"
     networks:
-      - radverkehrsatlas_mesh
       - app_staging_bridge
     depends_on:
       db_staging:
@@ -73,9 +71,11 @@ services:
         LANG: en_US.UTF-8
         LC_ALL: en_US.UTF-8
       ports:
-        - "${PGPORT}:5432"
+        - "5432:${PGPORT}"
       volumes:
         - geodata_staging:/var/lib/postgresql/data
+        - ./postgres/postgres.conf:/etc/postgresql/postgresql.conf
+      command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
       container_name: db_staging
       healthcheck:
         test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -88,6 +88,4 @@ volumes:
   osmfiles_staging:
   geodata_staging:
 networks:
-  radverkehrsatlas_mesh:
-    external: true
   app_staging_bridge:

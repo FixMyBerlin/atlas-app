@@ -5,14 +5,16 @@ local srid = 4326
 -- It also lacks a jsonb meta column.
 -- See also db_configuration.py.
 
-local table = osm2pgsql.define_table({ name = 'boundaries',
-    ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-    columns={
+local table = osm2pgsql.define_table({
+  name = 'legacy_boundaries',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
     { column = 'name',        type = 'text' },
     { column = 'admin_level', sql_type = 'numeric' },
     { column = 'geom',        type = 'geometry',   projection = srid },
     { column = 'area',        type = 'area' },
-  }})
+  }
+})
 
 function osm2pgsql.process_relation(object)
   if object.tags.type == 'boundary' and
