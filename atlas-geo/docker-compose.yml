@@ -43,7 +43,7 @@ services:
     #   We are using a non-standard postgis docker image to support Apple M1:
     #   https://github.com/postgis/docker-postgis/issues/216 is the Github issue for a official M1 support but that issue is stuck
     #   We are using an image by baosystems https://github.com/baosystems/docker-postgis/pkgs/container/postgis
-    #   Source https://github.com/postgis/docker-postgis/issues/216#issuecomment-981824739 
+    #   Source https://github.com/postgis/docker-postgis/issues/216#issuecomment-981824739
     image: ghcr.io/baosystems/postgis:14-3.3
     env_file:
       - ./.env
@@ -56,9 +56,11 @@ services:
     ports:
       - "${PGPORT}:5432"
     volumes:
-      - geodata:/var/lib/postgresql/data      
-      - ./postgres/postgres.develop.conf:/etc/postgresql/postgresql.conf
-    command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
+      - geodata:/var/lib/postgresql/data
+    configs:
+      - source: postgres_conf
+        target: /postgresql/postgresql.conf
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
     container_name: osmdatabase
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -68,3 +70,6 @@ services:
 volumes:
   geodata:
   osmfiles:
+configs:
+  postgres_conf:
+    file: ./postgres/postgres.develop.conf
