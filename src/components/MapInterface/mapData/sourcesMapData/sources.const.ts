@@ -311,7 +311,7 @@ export const sources: MapDataSource<
     calculator: { enabled: false },
     export: {
       enabled: true,
-      apiIdentifier: 'lit_verified',
+      apiIdentifier: 'lit',
       title: 'Beleuchtung',
       desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
     },
