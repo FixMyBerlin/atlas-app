@@ -23,4 +23,4 @@ jobs:
           script: |
             echo "Restart tarmac container"
             cd /srv/processing/
-            docker compose -f docker-compose.production.yml restart -t 30 app
+            docker compose -f docker-compose.production.yml --env-file .env.production restart -t 30 app
