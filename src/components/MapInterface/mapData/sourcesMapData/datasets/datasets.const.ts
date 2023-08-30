@@ -63,4 +63,8 @@ export const datasets = {
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles
   'bietigheim-bissingen_parking_areas':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/woldegk-radnetz-vorschlaege.pmtiles
+  'woldegk-radnetz-vorschlaege':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/woldegk-radnetz-vorschlaege.pmtiles',
 } as const

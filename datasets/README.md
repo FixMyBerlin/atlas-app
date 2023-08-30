@@ -24,4 +24,4 @@ This folder is used to store and document static, external datasets.
 
 ## b. Configure files
 
-The `<SelectDataset>` component uses [sourcesDatasets.const.ts](../src/components/MapInterface/mapData/sourcesMapData/sourcesDatasets.const.ts) for all information on the dataset and the relation to a given region.
+The `<SelectDataset>` component uses [sourcesDatasets.const.ts](/src/components/MapInterface/mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const.ts) for all information on the dataset and the relation to a given region.
