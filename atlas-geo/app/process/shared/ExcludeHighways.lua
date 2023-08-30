@@ -6,15 +6,17 @@ function ExcludeHighways(tags)
   -- Skip all non standard access values
   local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
   if tags.access and forbidden_accesses[tags.access] then
-    return true, "Excluded by `forbidden_accesses`"
+    return true, "Excluded by `forbidden_accesses` for `access=" .. tags.access .. "`"
+  end
+  if tags.foot and forbidden_accesses[tags.foot] then
+    return true, "Excluded by `forbidden_accesses` for `foot=" .. tags.foot .. "`"
+  end
+  if tags.bicycle and forbidden_accesses[tags.bicycle] then
+    return true, "Excluded by `forbidden_accesses` for `bicycle=" .. tags.bicycle .. "`"
   end
 
   if tags.operator == 'private' then
     return true, "Excluded by `operator=private`"
-  end
-
-  if tags.foot == 'private' then
-    return true, "Excluded by `foot=private`"
   end
 
   if tags.indoor == 'yes' then

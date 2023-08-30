@@ -8,6 +8,7 @@ jobs:
     environment:
       name: staging
       url: https://staging-tiles.radverkehrsatlas.de
+      BRANCH_NAME: "develop"
     runs-on: ubuntu-latest
 
     steps:
