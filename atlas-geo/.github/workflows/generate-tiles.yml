@@ -10,7 +10,6 @@ jobs:
     environment:
       name: production
       url: https://tiles.radverkehrsatlas.de
-      BRANCH_NAME: "main"
     runs-on: ubuntu-latest
 
     steps:
