@@ -46,7 +46,13 @@ const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
     })
   })
 
-  return interactiveLayerIds
+  // For some reasons we have duplicated layerIds. Those do not show up as duplicates from <SourcesAndLayers />
+  // For now, we just clean them in place…
+  const duplicatesRemoved = interactiveLayerIds.filter((value, index, self) => {
+    return self.indexOf(value) === index
+  })
+
+  return duplicatesRemoved
 }
 
 export const useInteractiveLayers = () => {
