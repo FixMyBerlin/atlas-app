@@ -1,8 +1,7 @@
-import { getSourceData } from '@components/MapInterface/mapData'
+import { MapData } from '@components/MapInterface/mapData'
 import { useMapStateInteraction } from '@components/MapInterface/mapStateInteraction'
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl'
-import { extractSourceIdIdFromSourceKey } from './utils/extractFromSourceKey'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 
 type Props = {
@@ -13,11 +12,12 @@ type Props = {
   filter: undefined | object
   type: string
   'source-layer': undefined | string
+  sourceData: MapData['sources'][number]
 }
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } = useMapStateInteraction()
-  const sourceData = getSourceData(extractSourceIdIdFromSourceKey(parentLayerProps.source))
+  const { sourceData } = parentLayerProps
 
   if (!mapLoaded) return null
 

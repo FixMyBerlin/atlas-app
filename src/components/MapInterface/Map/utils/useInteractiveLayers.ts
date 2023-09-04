@@ -14,8 +14,10 @@ type Props = { themes: ThemeConfig[] | undefined }
 const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
   const interactiveLayerIds: string[] = []
 
-  themes?.forEach((theme) => {
-    return theme?.topics?.forEach((topicConfig) => {
+  themes?.forEach((themeConfig) => {
+    if (themeConfig.active === false) return
+
+    return themeConfig?.topics?.forEach((topicConfig) => {
       const topicData = getTopicData(topicConfig.id)
 
       topicConfig.styles.forEach((styleConfig) => {

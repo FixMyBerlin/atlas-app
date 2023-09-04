@@ -2,7 +2,7 @@ import { SourcesIds, TopicIds } from '@components/MapInterface/mapData'
 import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
 
 export const extractTopicIdFromSourceKey = (sourceKey: string) => {
-  return sourceKey.split('--')[1].replace('topic:', '') as TopicIds
+  return sourceKey.split('--')[2].replace('topic:', '') as TopicIds
 }
 
 export const extractSourceIdIdFromSourceKey = (sourceKey: string) => {

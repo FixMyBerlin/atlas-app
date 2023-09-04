@@ -1,7 +1,7 @@
 import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
-import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
+import { createSourceKey, createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
@@ -22,6 +22,7 @@ import { useBeforeId } from './utils/useBeforeId'
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const { config: configThemes } = useSearch<LocationGenerics>()
+
   const activeConfigThemes = configThemes?.filter((th) => th.active === true)
   if (!activeConfigThemes?.length) return null
 
@@ -35,9 +36,7 @@ export const SourcesAndLayers: React.FC = () => {
               const sourceData = getSourceData(curTopicData?.sourceId)
 
               // One source can be used by multipe topics, so we need to make the key source-topic-specific.
-              // TODO we should try to find a better way for this…
-              //  (and first find out if it's a problem at all)
-              const sourceId = `source:${sourceData.id}--topic:${topicConfig.id}--tiles`
+              const sourceId = createSourceKey(activeConfigTheme.id, sourceData.id, topicConfig.id)
 
               return (
                 <Source
@@ -61,6 +60,7 @@ export const SourcesAndLayers: React.FC = () => {
                       return (
                         <Layer
                           key={layerId}
+                          id={layerId}
                           source-layer={sourceId}
                           type="line"
                           layout={{ visibility: 'none' }}
@@ -128,7 +128,11 @@ export const SourcesAndLayers: React.FC = () => {
                           ) : (
                             <Layer key={layerId} {...layerProps} />
                           )}
-                          <LayerHighlight key={`${layerId}_highlight`} {...layerProps} />
+                          <LayerHighlight
+                            key={`${layerId}_highlight`}
+                            {...layerProps}
+                            sourceData={sourceData}
+                          />
                         </React.Fragment>
                       )
                     })

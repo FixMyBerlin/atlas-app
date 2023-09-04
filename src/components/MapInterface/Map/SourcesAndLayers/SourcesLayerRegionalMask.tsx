@@ -18,6 +18,7 @@ export const SourcesLayerRegionalMask: React.FC = () => {
   return (
     <Source id="mask" key={datasetTileId} type="vector" url={url}>
       <Layer
+        id="mask-buffer"
         type="fill"
         source="mask"
         source-layer="default"
@@ -28,6 +29,7 @@ export const SourcesLayerRegionalMask: React.FC = () => {
         filter={['all', ['==', 'region', region.path], ['==', 'kind', 'buffer']]}
       />
       <Layer
+        id="mask-boundary"
         type="line"
         source="mask"
         source-layer="default"
