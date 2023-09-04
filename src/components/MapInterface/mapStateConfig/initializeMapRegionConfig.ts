@@ -1,3 +1,4 @@
+import { produce } from 'immer'
 import { ThemeConfig } from './type'
 
 type InvalidThemeConfig = { reset: true }
@@ -14,9 +15,14 @@ type Props = {
  * - If the options stayed the same, the URL active states are preserved
  */
 export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => {
-  if (!urlConfig) return freshConfig
-  // Whenever the customParse fails, we set `InvalidThemeConfig` so we can reset the config
-  if ('reset' in urlConfig) return freshConfig
+  // Case: Initial page render without an `urlConfig`.
+  // Case: Whenever the customParse fails, we set `InvalidThemeConfig` so we can reset the config
+  // Both: We set the first theme as active.
+  if (!urlConfig || 'reset' in urlConfig) {
+    return produce(freshConfig, (old) => {
+      old?.[0] && (old[0].active = true)
+    })
+  }
 
   const mergedConfig = freshConfig.map((theme) => {
     const urlConfigTheme = urlConfig?.find((t) => t?.id === theme.id)
