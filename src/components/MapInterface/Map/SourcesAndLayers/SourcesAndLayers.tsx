@@ -1,9 +1,4 @@
-import {
-  getSourceData,
-  getStyleData,
-  getTopicData,
-  TBeforeIds,
-} from '@components/MapInterface/mapData'
+import { getSourceData, getStyleData, getTopicData } from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
@@ -15,6 +10,7 @@ import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { wrapFilterWithAll } from './utils'
+import { useBeforeId } from './utils/useBeforeId'
 
 // We add source+layer map-components for all themes and all topics of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -25,22 +21,9 @@ import { wrapFilterWithAll } from './utils'
 // However, we do not want to bloat our DOM, so we only render active themes and topics.
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const { config: configThemes, bg: selectedBackgroundId } = useSearch<LocationGenerics>()
+  const { config: configThemes } = useSearch<LocationGenerics>()
   const activeConfigThemes = configThemes?.filter((th) => th.active === true)
   if (!activeConfigThemes?.length) return null
-
-  // We place our layers between given Maptiler Layer IDs:
-  // Key: LayerType – we group our data based on layer type.
-  // Value: Maptiler Layer ID that our layers are placed on top of.
-  // BUT: We only use this for our "default" background.
-  //    For custom raster backgrounds we place all our data on top.
-  const layerOrder: Record<string, TBeforeIds> = {
-    symbol: 'housenumber', // Icon + Label
-    circle: 'housenumber', // Points
-    heatmap: 'housenumber',
-    line: 'boundary_country',
-    fill: 'landuse',
-  }
 
   return (
     <>
@@ -116,15 +99,10 @@ export const SourcesAndLayers: React.FC = () => {
                           }).find((l) => l.type === layer.type)?.paint
                         : (layer.paint as any)
 
-                      // For all custom background (non 'default'), set beforeId=undefined which puts them at the top
-                      // If a specific topic.beforeId is given (which might be `undefined`), take that
-                      // … otherwise pick the beforeId base on layer.type.
-                      const beforeId =
-                        selectedBackgroundId === 'default'
-                          ? 'beforeId' in curTopicData
-                            ? curTopicData.beforeId
-                            : layerOrder[layer.type]
-                          : undefined
+                      const beforeId = useBeforeId({
+                        topicData: curTopicData,
+                        layerType: layer.type,
+                      })
 
                       const layerProps = {
                         id: layerId,
