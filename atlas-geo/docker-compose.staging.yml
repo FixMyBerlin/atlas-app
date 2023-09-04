@@ -19,9 +19,9 @@ services:
         condition: service_healthy
   tiles_staging:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    image: pramsey/pg_tileserv
     env_file:
       - ./.env
-    image: pramsey/pg_tileserv
     container_name: tiles_staging
     restart: always
     environment:
@@ -43,9 +43,9 @@ services:
   api_staging:
     env_file:
       - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api_staging
     restart: always
-    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     ports:
       - "9020:80"
     labels:
@@ -67,7 +67,6 @@ services:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
-      POSTGRES_PORT: 5432
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
