@@ -19,5 +19,5 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Restart tarmac container"
-            cd /srv/tarmac/
-            docker compose -f docker-compose.staging.yml restart -t 30 app
+            cd /srv/processing/
+            docker compose -f docker-compose.production.yml restart -t 30 app
