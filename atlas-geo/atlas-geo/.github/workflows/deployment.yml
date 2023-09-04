@@ -74,7 +74,7 @@ jobs:
           target: "/srv/processing/"
           overwrite: true
 
-      - name: Stop & start container on VPS
+      - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -85,6 +85,7 @@ jobs:
             cd /srv/processing/
             docker image prune -fa
             docker compose -f docker-compose.production.yml down
+            docker compose -f docker-compose.traefik.yml down
             echo "Updating '.env'"
             rm .env
             touch .env
@@ -96,5 +97,7 @@ jobs:
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
-            docker compose  -f docker-compose.production.yml pull
-            docker compose  -f docker-compose.production.yml up -d
+            docker compose -f docker-compose.traefik.yml pull
+            docker compose -f docker-compose.production.yml pull
+            docker compose -f docker-compose.traefik.yml up -d
+            docker compose -f docker-compose.production.yml up -d
