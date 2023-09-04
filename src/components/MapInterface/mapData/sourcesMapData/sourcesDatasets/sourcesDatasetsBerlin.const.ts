@@ -1,7 +1,84 @@
 import { SourceDatasets } from './sourcesDatasets.const'
 import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
+const filter = (filter: any) => {
+  return [
+    'all',
+    filter,
+    ['!=', ['get', 'CC_Netzkategorie'], null],
+    ['>=', ['get', 'Monitor_JahrLetzteErneuerung'], 2018],
+    [
+      'any',
+      ['in', ['get', 'Monitor_Breite'], ['literal', ['E', 'T', 'U']]],
+      ['in', ['get', 'Monitor_Führungsform'], ['literal', ['E', 'T', 'U']]],
+      ['in', ['get', 'Monitor_Oberfläche'], ['literal', ['E', 'T', 'U']]],
+      ['in', ['get', 'Monitor_KfzStörungVermeiden'], ['literal', ['E', 'T', 'U']]],
+    ],
+  ]
+}
+
 export const sourcesDatasetsBerlin: SourceDatasets = [
+  {
+    regionKey: ['berlin'],
+    ...sourceDatasetIdUrl('changing-cities-radnetz-monitoring'),
+    name: 'Changing Cities Radnetz Monitoring',
+    type: 'vector',
+    attributionHtml:
+      '&copy; Geoportal Berlin/Radverkehrsnetz, GB infraVelo GmbH/Radschnellverbindungen, Changing Cities/Monitoring zum Radverkehrsnetz',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'RSV',
+        type: 'line',
+        paint: {
+          'line-color': '#000000',
+          'line-width': 7,
+        },
+        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'RSV']),
+      },
+      {
+        id: 'RSV-highlight',
+        type: 'line',
+        paint: {
+          'line-color': '#ff6011',
+          'line-width': 5,
+        },
+        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'RSV']),
+      },
+      {
+        id: 'Vorrangnetz',
+        type: 'line',
+        paint: {
+          'line-color': '#db1e2a',
+          'line-width': 5,
+        },
+        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'Vorrangnetz']),
+      },
+      {
+        id: 'Ergänzungsnetz',
+        type: 'line',
+        paint: {
+          'line-color': '#f7801e',
+          'line-width': 3,
+        },
+        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'Ergänzungsnetz']),
+      },
+      {
+        id: 'HVS',
+        type: 'line',
+        paint: {
+          'line-color': '#db2ac3',
+          'line-width': 3,
+        },
+        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'HVS']),
+      },
+    ],
+  },
   {
     regionKey: ['berlin', 'parkraum'],
     ...sourceDatasetIdUrl('berlin-parking-zones-fisbroker'),
