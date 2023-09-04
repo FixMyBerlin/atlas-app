@@ -6,11 +6,10 @@ export const ErrorRestartMap: React.FC = () => {
   const {
     params: { regionPath },
   } = useMatch()
-  const { theme, lat, lng, zoom, bg } = useSearch<LocationGenerics>()
+  const { lat, lng, zoom, bg } = useSearch<LocationGenerics>()
 
   // We cannot use react-location for the Link, since this will not force a reload of the page.
   const paramsWithoutConfig = new URLSearchParams()
-  theme && paramsWithoutConfig.append('theme', theme)
   lat && paramsWithoutConfig.append('lat', lat.toString())
   lng && paramsWithoutConfig.append('lng', lng.toString())
   zoom && paramsWithoutConfig.append('zoom', zoom.toString())

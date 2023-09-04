@@ -9,35 +9,37 @@ import { LocationGenerics } from '@routes/routes'
 import { useSearch } from '@tanstack/react-location'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
-type Props = { theme: ThemeConfig | undefined }
+type Props = { themes: ThemeConfig[] | undefined }
 
-const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
+const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
   const interactiveLayerIds: string[] = []
 
-  theme?.topics?.forEach((topicConfig) => {
-    const topicData = getTopicData(topicConfig.id)
+  themes?.forEach((theme) => {
+    return theme?.topics?.forEach((topicConfig) => {
+      const topicData = getTopicData(topicConfig.id)
 
-    topicConfig.styles.forEach((styleConfig) => {
-      const styleData = getStyleData(topicData, styleConfig.id)
-      if (styleData.id === 'hidden') return
-      if (styleConfig.active === false) return
+      topicConfig.styles.forEach((styleConfig) => {
+        const styleData = getStyleData(topicData, styleConfig.id)
+        if (styleData.id === 'hidden') return
+        if (styleConfig.active === false) return
 
-      styleData.layers.forEach((layerConfig) => {
-        // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
-        const sourceData = getSourceData(topicData.sourceId)
-        if (!sourceData.inspector.enabled) return
+        styleData.layers.forEach((layerConfig) => {
+          // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
+          const sourceData = getSourceData(topicData.sourceId)
+          if (!sourceData.inspector.enabled) return
 
-        const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
-        if (layerData?.interactive === false) return
+          const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
+          if (layerData?.interactive === false) return
 
-        const layerKey = createSourceTopicStyleLayerKey(
-          topicData.sourceId,
-          topicConfig.id,
-          styleConfig.id,
-          layerConfig.id,
-        )
+          const layerKey = createSourceTopicStyleLayerKey(
+            topicData.sourceId,
+            topicConfig.id,
+            styleConfig.id,
+            layerConfig.id,
+          )
 
-        interactiveLayerIds.push(layerKey)
+          interactiveLayerIds.push(layerKey)
+        })
       })
     })
   })
@@ -47,10 +49,10 @@ const collectInteractiveLayerIdsFromTheme = ({ theme }: Props) => {
 
 export const useInteractiveLayers = () => {
   // active layer from theme
-  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
-  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
+  const { config: configThemes } = useSearch<LocationGenerics>()
+  const currentThemes = configThemes?.filter((th) => th.active === true)
 
-  const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ theme: currentTheme })
+  const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ themes: currentThemes })
 
   const { osmNotes } = useSearch<LocationGenerics>()
   if (osmNotes) {

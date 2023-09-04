@@ -22,14 +22,13 @@ import {
   SourcesLayerRasterBackgrounds,
 } from './SourcesAndLayers'
 import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
+import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
-import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 
 export const Map: React.FC = () => {
   const {
-    theme: _theme,
     lat,
     lng,
     zoom,

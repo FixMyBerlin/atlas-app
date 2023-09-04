@@ -2,21 +2,19 @@ import { Portal, usePopper } from '@components/utils'
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { LocationGenerics } from '@routes/routes'
-import { useNavigate, useSearch } from '@tanstack/react-location'
+import { useNavigate } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import produce from 'immer'
 import React from 'react'
-import { getStyleData, TopicIds } from '../mapData'
+import { SelectLegend } from '../SelectLegend'
+import { MapDataThemeIds, MapDataTopic, getStyleData } from '../mapData'
+import { TopicConfig } from '../mapStateConfig'
 import { createTopicStyleKey } from '../utils'
 
-type Props = { scopeTopicId: TopicIds }
+type Props = { themeId: MapDataThemeIds; topicData: MapDataTopic; topicConfig: TopicConfig }
 
-export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
+export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig }) => {
   const navigate = useNavigate<LocationGenerics>()
-  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
-  const topicConfig = configThemesTopics
-    ?.find((th) => th.id === themeId)
-    ?.topics.find((t) => t.id === scopeTopicId)
 
   const [trigger, container] = usePopper({
     placement: 'bottom-start',
@@ -30,12 +28,14 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
       search: (old) => {
         const oldConfig = old?.config
         if (!oldConfig) return { ...old }
+
         return {
           ...old,
           config: produce(oldConfig, (draft) => {
             const topic = draft
               ?.find((th) => th.id === themeId)
               ?.topics.find((t) => t.id === topicId)
+
             if (topic) {
               const style = topic.styles.find((s) => s.id === styleId)
               topic.styles.forEach((s) => (s.active = false))
@@ -47,12 +47,10 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
     })
   }
 
-  if (!topicConfig) return null
-  // Hide UI for topics with only one style
-  if (topicConfig.styles.length === 1) return null
+  if (!topicData || !topicConfig) return null
 
-  const activeStyleConfig = topicConfig?.styles.find((s) => s.active)
-  const activeStyleData = getStyleData(topicConfig.id, activeStyleConfig?.id)
+  const activeStyleConfig = topicConfig.styles.find((s) => s.active)
+  const activeStyleData = getStyleData(topicData.id, activeStyleConfig?.id)
 
   return (
     <section className="mt-1.5">
@@ -115,6 +113,8 @@ export const SelectStyles: React.FC<Props> = ({ scopeTopicId }) => {
           </>
         )}
       </Menu>
+
+      <SelectLegend topicId={topicConfig.id} styleData={activeStyleData} />
     </section>
   )
 }

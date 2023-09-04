@@ -5,7 +5,6 @@ import {
   TBeforeIds,
 } from '@components/MapInterface/mapData'
 import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
-import { flattenConfigTopics } from '@components/MapInterface/mapStateConfig/utils/flattenConfigTopics'
 import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
 import { createSourceTopicStyleLayerKey } from '@components/MapInterface/utils'
 import { LocationGenerics } from '@routes/routes'
@@ -17,22 +16,18 @@ import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { wrapFilterWithAll } from './utils'
 
-// We add source+layer map-components for all topics of the given confic.
-// We then toggle the visibility of the layer base on state.
+// We add source+layer map-components for all themes and all topics of the given config.
+// We then toggle the visibility of the layer base on the URL state (config).
 // We also use this visbility to add/remove interactive layers.
+//
+// Performance Note:
+// Maplibre GL JS will only create network request for sources that are used by a visible layer.
+// However, we do not want to bloat our DOM, so we only render active themes and topics.
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const {
-    theme: themeId,
-    config: configThemesTopics,
-    bg: selectedBackgroundId,
-  } = useSearch<LocationGenerics>()
-  const currentTheme = configThemesTopics?.find((th) => th.id === themeId)
-  if (!configThemesTopics || !currentTheme) return null
-
-  // Sources and layers are based on topics. Themes don't change them; they just duplicate them.
-  // Therefore, we look at a flattened topics list for this component.
-  const flatConfigTopics = flattenConfigTopics(configThemesTopics)
+  const { config: configThemes, bg: selectedBackgroundId } = useSearch<LocationGenerics>()
+  const activeConfigThemes = configThemes?.filter((th) => th.active === true)
+  if (!activeConfigThemes?.length) return null
 
   // We place our layers between given Maptiler Layer IDs:
   // Key: LayerType – we group our data based on layer type.
@@ -49,121 +44,121 @@ export const SourcesAndLayers: React.FC = () => {
 
   return (
     <>
-      {flatConfigTopics.map((flatTopicConfig) => {
-        // We neet look at the currentThemeConfig and currentTopicConfig here…
-        // - otherwise the visbility is not based on the theme-topics.
-        // - and otherwise the visibility is based on the first topic of our flat list, not the current.
-        const currTopicConfig = currentTheme.topics.find((t) => t.id === flatTopicConfig.id)
-        if (!currTopicConfig) return null
-
-        const currTopicActive = currTopicConfig.styles
-          .filter((s) => s.id !== 'hidden')
-          .some((s) => s.active)
-        if (!currTopicActive) return null
-
-        const curTopicData = getTopicData(flatTopicConfig.id)
-        const sourceData = getSourceData(curTopicData?.sourceId)
-
-        // One source can be used by multipe topics, so we need to make the key source-topic-specific.
-        // TODO we should try to find a better way for this…
-        //  (and first find out if it's a problem at all)
-        const sourceId = `source:${sourceData.id}--topic:${flatTopicConfig.id}--tiles`
-
+      {activeConfigThemes.map((activeConfigTheme) => {
         return (
-          <Source
-            key={sourceId}
-            id={sourceId}
-            type="vector"
-            tiles={[sourceData.tiles]}
-            minzoom={sourceData.minzoom || 8}
-            maxzoom={sourceData.maxzoom || 22}
-          >
-            {flatTopicConfig.styles.map((styleConfig) => {
-              const styleData = getStyleData(curTopicData, styleConfig.id)
+          <>
+            {activeConfigTheme.topics.map((topicConfig) => {
+              const curTopicData = getTopicData(topicConfig.id)
+              const sourceData = getSourceData(curTopicData?.sourceId)
 
-              if (styleConfig.id === 'hidden') {
-                const layerId = createSourceTopicStyleLayerKey(
-                  sourceData.id,
-                  flatTopicConfig.id,
-                  styleConfig.id,
-                  'hidden',
-                )
-                return (
-                  <Layer
-                    key={layerId}
-                    source-layer={sourceId}
-                    type="line"
-                    layout={{ visibility: 'none' }}
-                  />
-                )
-              }
+              // One source can be used by multipe topics, so we need to make the key source-topic-specific.
+              // TODO we should try to find a better way for this…
+              //  (and first find out if it's a problem at all)
+              const sourceId = `source:${sourceData.id}--topic:${topicConfig.id}--tiles`
 
-              // A style is visible when
-              // … the theme is active (handled above) AND
-              // … the current topic is active AND
-              //               ^--- TODO This is wrong now, topics are always active but themes get active/hidden
-              // … the current topic's style is active (which includes 'default' via the config initialization)
-              const currStyleConfig = currTopicConfig.styles.find((s) => s.id === styleConfig.id)
-              const visibility = layerVisibility(currStyleConfig?.active || false)
+              return (
+                <Source
+                  key={sourceId}
+                  id={sourceId}
+                  type="vector"
+                  tiles={[sourceData.tiles]}
+                  minzoom={sourceData.minzoom || 8}
+                  maxzoom={sourceData.maxzoom || 22}
+                >
+                  {topicConfig.styles.map((styleConfig) => {
+                    const styleData = getStyleData(curTopicData, styleConfig.id)
 
-              return styleData?.layers?.map((layer) => {
-                const layerId = createSourceTopicStyleLayerKey(
-                  sourceData.id,
-                  flatTopicConfig.id,
-                  styleConfig.id,
-                  layer.id,
-                )
-                const layout =
-                  layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
+                    if (styleConfig.id === 'hidden') {
+                      const layerId = createSourceTopicStyleLayerKey(
+                        sourceData.id,
+                        topicConfig.id,
+                        styleConfig.id,
+                        'hidden',
+                      )
+                      return (
+                        <Layer
+                          key={layerId}
+                          source-layer={sourceId}
+                          type="line"
+                          layout={{ visibility: 'none' }}
+                        />
+                      )
+                    }
 
-                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+                    // A style is visible when
+                    // … the theme is active (handled above) AND
+                    // … the current topic is active AND
+                    //               ^--- TODO This is wrong now, topics are always active but themes get active/hidden
+                    // … the current topic's style is active (which includes 'default' via the config initialization)
+                    const currStyleConfig = topicConfig.styles.find((s) => s.id === styleConfig.id)
+                    const visibility = layerVisibility(currStyleConfig?.active || false)
 
-                // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                const layerPaint = useDebugLayerStyles
-                  ? debugLayerStyles({
-                      source: sourceId,
-                      sourceLayer: layer['source-layer'],
-                    }).find((l) => l.type === layer.type)?.paint
-                  : (layer.paint as any)
+                    return styleData?.layers?.map((layer) => {
+                      const layerId = createSourceTopicStyleLayerKey(
+                        sourceData.id,
+                        topicConfig.id,
+                        styleConfig.id,
+                        layer.id,
+                      )
+                      const layout =
+                        layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
-                // For all custom background (non 'default'), set beforeId=undefined which puts them at the top
-                // If a specific topic.beforeId is given (which might be `undefined`), take that
-                // … otherwise pick the beforeId base on layer.type.
-                const beforeId =
-                  selectedBackgroundId === 'default'
-                    ? 'beforeId' in curTopicData
-                      ? curTopicData.beforeId
-                      : layerOrder[layer.type]
-                    : undefined
+                      // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                      const layerFilter = useDebugLayerStyles
+                        ? ['all']
+                        : wrapFilterWithAll(layer.filter)
 
-                const layerProps = {
-                  id: layerId,
-                  source: sourceId,
-                  type: layer.type,
-                  'source-layer': layer['source-layer'],
-                  layout: layout,
-                  filter: layerFilter,
-                  paint: layerPaint,
-                  beforeId,
-                }
+                      // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+                      const layerPaint = useDebugLayerStyles
+                        ? debugLayerStyles({
+                            source: sourceId,
+                            sourceLayer: layer['source-layer'],
+                          }).find((l) => l.type === layer.type)?.paint
+                        : (layer.paint as any)
 
-                // The verification style layer in Mapbox Studio has to include this string
-                const isVerificationStatusLayer = layer.id.search('verification-status') != -1
+                      // For all custom background (non 'default'), set beforeId=undefined which puts them at the top
+                      // If a specific topic.beforeId is given (which might be `undefined`), take that
+                      // … otherwise pick the beforeId base on layer.type.
+                      const beforeId =
+                        selectedBackgroundId === 'default'
+                          ? 'beforeId' in curTopicData
+                            ? curTopicData.beforeId
+                            : layerOrder[layer.type]
+                          : undefined
 
-                return (
-                  <>
-                    {isVerificationStatusLayer ? (
-                      <LayerVerificationStatus key={`${layerId}_verification`} {...layerProps} />
-                    ) : (
-                      <Layer key={layerId} {...layerProps} />
-                    )}
-                    <LayerHighlight key={`${layerId}_highlight`} {...layerProps} />
-                  </>
-                )
-              })
+                      const layerProps = {
+                        id: layerId,
+                        source: sourceId,
+                        type: layer.type,
+                        'source-layer': layer['source-layer'],
+                        layout: layout,
+                        filter: layerFilter,
+                        paint: layerPaint,
+                        beforeId,
+                      }
+
+                      // The verification style layer in Mapbox Studio has to include this string
+                      const isVerificationStatusLayer = layer.id.search('verification-status') != -1
+
+                      return (
+                        <>
+                          {isVerificationStatusLayer ? (
+                            <LayerVerificationStatus
+                              key={`${layerId}_verification`}
+                              {...layerProps}
+                            />
+                          ) : (
+                            <Layer key={layerId} {...layerProps} />
+                          )}
+                          <LayerHighlight key={`${layerId}_highlight`} {...layerProps} />
+                        </>
+                      )
+                    })
+                  })}
+                </Source>
+              )
             })}
-          </Source>
+          </>
         )
       })}
     </>

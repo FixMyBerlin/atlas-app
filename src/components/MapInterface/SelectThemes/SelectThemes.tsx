@@ -1,14 +1,14 @@
 import { LocationGenerics } from '@routes/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
-import { Toggle } from './Toggle'
+import { produce } from 'immer'
 import { getThemeData } from '../mapData'
-import { MapDataThemeIds } from '../mapData/themesMapData'
 import { useMapStateInteraction } from '../mapStateInteraction'
+import { Toggle } from './Toggle'
 
 // Source https://tailwindui.com/components/application-ui/navigation/tabs#component-83b472fc38b57e49a566805a5e5bb2f7
-export const SelectTheme = () => {
-  const { config: configThemes, theme: themeId } = useSearch<LocationGenerics>()
+export const SelectThemes = () => {
+  const { config: configThemes } = useSearch<LocationGenerics>()
   const { resetInspector } = useMapStateInteraction()
 
   const navigate = useNavigate<LocationGenerics>()
@@ -16,15 +16,25 @@ export const SelectTheme = () => {
     resetInspector()
     navigate({
       search: (old) => {
+        const oldConfig = old?.config
+        if (!oldConfig) return { ...old }
+
         return {
           ...old,
-          theme: themeId as MapDataThemeIds,
+          config: produce(oldConfig, (draft) => {
+            const theme = draft.find((th) => th.id === themeId)
+            if (theme) {
+              theme.active = !theme.active
+            }
+          }),
         }
       },
     })
   }
 
   if (!configThemes) return null
+
+  const activeThemeIds = configThemes.filter((theme) => theme.active).map((theme) => theme.id)
 
   return (
     <section>
@@ -38,8 +48,9 @@ export const SelectTheme = () => {
           name="themeSelect"
           className="block w-full rounded-md border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
           onChange={(event) => selectTheme(event.target.value)}
+          multiple
           // TODO Only the default state is selected on page load; not the selectedState (that only becomes available later)
-          defaultValue={themeId}
+          defaultValue={activeThemeIds}
         >
           {configThemes.map((themeConfig) => {
             const themeData = getThemeData(themeConfig.id)
@@ -63,7 +74,7 @@ export const SelectTheme = () => {
           {configThemes.map((themeConfig, index) => {
             const themeData = getThemeData(themeConfig.id)
             if (!themeConfig || !themeData) return null
-            const active = themeId === themeConfig.id
+            const active = activeThemeIds.includes(themeConfig.id)
 
             return (
               <div

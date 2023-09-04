@@ -6,6 +6,7 @@ describe('initializeMapReagionConfig()', () => {
   const freshConfig = [
     {
       id: 'lit',
+      active: true,
       topics: [
         {
           id: 'lit',
@@ -31,6 +32,7 @@ describe('initializeMapReagionConfig()', () => {
     },
     {
       id: 'fromTo',
+      active: false,
       topics: [
         {
           id: 'boundaries',
@@ -45,6 +47,7 @@ describe('initializeMapReagionConfig()', () => {
     },
     {
       id: 'bikelanes',
+      active: false,
       topics: [
         {
           id: 'bikelanes',

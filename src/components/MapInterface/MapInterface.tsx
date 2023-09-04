@@ -5,10 +5,10 @@ import { DebugMap } from './DebugBoxes/DebugMap'
 import { DownloadModal } from './DownloadModal/DownloadModal'
 import { Inspector } from './Inspector'
 import { Map } from './Map'
-import { SelectDatasets } from './SelectDatasets/SelectDatasets'
-import { SelectTheme } from './SelectTheme'
-import { SelectTopics } from './SelectTopics'
 import { OsmNotes } from './OsmNotes'
+import { SelectDatasets } from './SelectDatasets/SelectDatasets'
+import { SelectThemes } from './SelectThemes'
+import { SelectTopics } from './SelectTopics'
 import { BackgroundLegend, SelectBackground } from './background'
 
 export const MapInterface: React.FC = () => {
@@ -17,7 +17,7 @@ export const MapInterface: React.FC = () => {
       <div className="relative flex h-full w-full flex-row gap-4">
         <Map />
         <div className="absolute top-2.5 left-[17rem] z-10 flex gap-2">
-          <SelectTheme />
+          <SelectThemes />
         </div>
         <SelectTopics />
         <Inspector />

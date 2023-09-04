@@ -2,6 +2,7 @@ import { MapDataThemeIds, TopicIds, TopicStyleIds } from '../mapData'
 
 export type ThemeConfig = {
   id: MapDataThemeIds
+  active: boolean
   topics: TopicConfig[]
 }
 

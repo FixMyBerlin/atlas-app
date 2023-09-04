@@ -10,7 +10,7 @@ export const DebugStateInteraction = () => {
   const {
     params: { regionPath },
   } = useMatch()
-  const { config: configThemesTopics, draw: drawAreasStore } = useSearch<LocationGenerics>()
+  const { config: configThemes, draw: drawAreasStore } = useSearch<LocationGenerics>()
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
@@ -55,7 +55,7 @@ export const DebugStateInteraction = () => {
 
         <details>
           <summary className="cursor-pointer">URL Config</summary>
-          <pre>{JSON.stringify(configThemesTopics, undefined, 2)}</pre>
+          <pre>{JSON.stringify(configThemes, undefined, 2)}</pre>
         </details>
 
         {Boolean(drawAreasStore?.length) &&

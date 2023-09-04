@@ -13,7 +13,7 @@ import { Navigate, useMatch, useNavigate, useSearch } from '@tanstack/react-loca
 import { useEffect, useMemo, useState } from 'react'
 
 export const PageRegionMap: React.FC = () => {
-  const { theme, lat, lng, zoom, config } = useSearch<LocationGenerics>()
+  const { lat, lng, zoom, config } = useSearch<LocationGenerics>()
   const {
     data: { region },
     params: { regionPath },
@@ -30,7 +30,7 @@ export const PageRegionMap: React.FC = () => {
   // Also guard against empty default searchParams; set them if any is missing (or empty)
   const navigate = useNavigate<LocationGenerics>()
   const freshConfig = useMemo(() => {
-    return createMapRegionConfig({ regionThemeIds: region.themes })
+    return createMapRegionConfig(region.themes)
   }, [region.themes])
 
   // When we change stuff in our config, our URL config needs to change.
@@ -39,10 +39,7 @@ export const PageRegionMap: React.FC = () => {
   // We re-use this reset to update the config on the first render.
   const [resetConfig, setResetConfig] = useState(true)
   useEffect(() => {
-    // It might be, that a existing URL has a theme that we don't support anymore.
-    const checkedTheme = theme && region.themes.includes(theme) ? theme : undefined
-
-    if (!resetConfig && checkedTheme && lat && lng && zoom && config) return
+    if (!resetConfig && lat && lng && zoom && config) return
 
     const initialConfig = initializeMapRegionConfig({
       freshConfig,
@@ -60,7 +57,6 @@ export const PageRegionMap: React.FC = () => {
           lat: old?.lat ?? region.map.lat,
           lng: old?.lng ?? region.map.lng,
           zoom: old?.zoom ?? region.map.zoom,
-          theme: checkedTheme ?? initialConfig?.[0]?.id ?? 'fromTo',
           bg,
           config: initialConfig,
         }
@@ -68,7 +64,7 @@ export const PageRegionMap: React.FC = () => {
       replace: true,
     })
     setResetConfig(false)
-  }, [resetConfig, theme, lat, lng, zoom, config])
+  }, [resetConfig, lat, lng, zoom, config])
 
   return (
     <LayoutMap>

@@ -11,9 +11,9 @@ export const Calculator: React.FC = () => {
 
   // This blob ist just to check if the Calculator should be enabled
   // by checking the sourceData.
-  const { config: configThemesTopics } = useSearch<LocationGenerics>()
-  if (!configThemesTopics) return null
-  const activeTopicIds = flattenConfigTopics(configThemesTopics)
+  const { config: configThemes } = useSearch<LocationGenerics>()
+  if (!configThemes) return null
+  const activeTopicIds = flattenConfigTopics(configThemes)
     // a topic is active, when any style is active that is not "hidden"
     .filter((t) => t.styles.filter((s) => s.id !== 'hidden').some((s) => s.active))
     .map((t) => t.id)

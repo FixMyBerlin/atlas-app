@@ -1,9 +1,7 @@
-import { LocationGenerics } from '@routes/routes'
-import { useSearch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import React from 'react'
 import {
-  getStyleData,
+  MapDataStyle,
   MapDataStyleLegend,
   TopicIds,
   TopicStyleIds,
@@ -14,29 +12,15 @@ import { LegendDebugInfoLayerStyle, LegendDebugInfoTopicLayerConfig } from './Le
 import { LegendIconArea, LegendIconCircle, LegendIconLine, LegendIconTypes } from './LegendIcons'
 import { LegendNameDesc } from './LegendNameDesc'
 
-type Props = { scopeTopicId: TopicIds }
+type Props = { topicId: TopicIds; styleData: MapDataStyle }
 
-export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
-  const { config: configThemesTopics, theme: themeId } = useSearch<LocationGenerics>()
-  const topicConfig = configThemesTopics
-    ?.find((th) => th.id === themeId)
-    ?.topics.find((t) => t.id === scopeTopicId)
-  if (!topicConfig) return null
-
-  // Guard: One active style config
-  const styleConfig = topicConfig.styles.find((s) => s.active)
-  if (!styleConfig) return null
-
-  const styleData = getStyleData(topicConfig.id, styleConfig.id)
+export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
   const legends = styleData?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
   if (!styleData || !legends?.length) {
     return (
       <section className="relative">
-        <LegendDebugInfoTopicLayerConfig
-          topicId={topicConfig.id}
-          styleDataLayers={styleData?.layers}
-        />
+        <LegendDebugInfoTopicLayerConfig topicId={topicId} styleDataLayers={styleData?.layers} />
       </section>
     )
   }
@@ -103,8 +87,8 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             const legendDataId = legendData.id as TopicStyleLegendIds
             if (legendDataId === 'ignore') return null
 
-            const scope = createTopicStyleKey(topicConfig.id, styleConfig.id)
-            const key = createTopicStyleLegendKey(topicConfig.id, styleConfig.id, legendDataId)
+            const scope = createTopicStyleKey(topicId, styleData.id)
+            const key = createTopicStyleLegendKey(topicId, styleData.id, legendDataId)
 
             const active = true // TODO
             const disabled = false // TODO
@@ -127,9 +111,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
                     className="sr-only"
                     defaultChecked={active}
                     disabled={disabled}
-                    onChange={() =>
-                      interactive && handleClick(topicConfig.id, styleConfig.id, legendDataId)
-                    }
+                    onChange={() => interactive && handleClick(topicId, styleData.id, legendDataId)}
                     value={key}
                   />
                 </div>
@@ -138,7 +120,7 @@ export const SelectLegend: React.FC<Props> = ({ scopeTopicId }) => {
             )
           })}
           <LegendDebugInfoLayerStyle
-            title={`Debug info: All layer and their styles for topic "${topicConfig.id}" (since topic config does not specify layers (yet or by design))`}
+            title={`Debug info: All layer and their styles for topic "${topicId}" (since topic config does not specify layers (yet or by design))`}
             layers={styleData.layers}
           />
         </div>

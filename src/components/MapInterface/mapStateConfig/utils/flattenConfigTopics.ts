@@ -1,9 +1,9 @@
 import { ThemeConfig, TopicConfig } from '../type'
 
-export const flattenConfigTopics = (configThemesTopics: ThemeConfig[]) => {
+export const flattenConfigTopics = (configThemes: ThemeConfig[]) => {
   const configTopics: TopicConfig[] = []
 
-  configThemesTopics.forEach((theme) =>
+  configThemes.forEach((theme) =>
     theme.topics.map((topic) => {
       if (!configTopics.some((t) => t.id === topic.id)) {
         configTopics.push(topic)

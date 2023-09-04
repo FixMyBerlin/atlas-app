@@ -23,6 +23,7 @@ export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => 
 
     return {
       id: theme.id,
+      active: urlConfigTheme?.active || theme.active,
       topics: theme.topics.map((themeTopic) => {
         const urlConfigTopic = urlConfigTheme?.topics?.find((t) => t?.id === themeTopic.id)
 
