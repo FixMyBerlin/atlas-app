@@ -5,9 +5,13 @@ import { MapDataTheme, getTopicData } from '../../mapData'
 import { ThemeConfig } from '../../mapStateConfig'
 import { SelectStyles } from '../SelectStyles/SelectStyles'
 
-type Props = { themeData: MapDataTheme; themeConfig: ThemeConfig }
+type Props = {
+  themeData: MapDataTheme
+  themeConfig: ThemeConfig
+  disabled: boolean
+}
 
-export const SelectTopic: React.FC<Props> = ({ themeData, themeConfig }) => {
+export const SelectTopic: React.FC<Props> = ({ themeData, themeConfig, disabled }) => {
   if (!themeData.topics || !themeConfig.topics) return null
 
   return (
@@ -32,6 +36,7 @@ export const SelectTopic: React.FC<Props> = ({ themeData, themeConfig }) => {
                   themeId={themeConfig.id}
                   topicData={topicData}
                   topicConfig={topicConfig}
+                  disabled={disabled}
                 />
               </div>
             )

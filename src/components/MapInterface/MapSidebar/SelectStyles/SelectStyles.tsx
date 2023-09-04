@@ -11,9 +11,14 @@ import { TopicConfig } from '../../mapStateConfig'
 import { createTopicStyleKey } from '../../utils'
 import { SelectLegend } from '../SelectLegend/SelectLegend'
 
-type Props = { themeId: MapDataThemeIds; topicData: MapDataTopic; topicConfig: TopicConfig }
+type Props = {
+  themeId: MapDataThemeIds
+  topicData: MapDataTopic
+  topicConfig: TopicConfig
+  disabled: boolean
+}
 
-export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig }) => {
+export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig, disabled }) => {
   const navigate = useNavigate<LocationGenerics>()
 
   const [trigger, container] = usePopper({
@@ -60,11 +65,14 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig 
             <div>
               <Menu.Button
                 ref={trigger}
+                disabled={disabled}
                 // `w-*` has to be set fo the `truncate` to work
                 className={clsx(
-                  'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50',
-                  'focus:shadow-md focus:outline-none',
-                  { 'shadow-md': open },
+                  'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300  px-3 py-1.5 text-sm font-medium shadow-sm',
+                  open ? 'shadow-md' : '',
+                  disabled
+                    ? 'text-gray-400 bg-gray-50'
+                    : 'text-gray-700 focus:shadow-md bg-white hover:bg-gray-50 focus:outline-none',
                 )}
               >
                 <div className="flex gap-1 truncate">

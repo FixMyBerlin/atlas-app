@@ -64,7 +64,7 @@ export const SelectTheme = ({ themeConfig, active }: Props) => {
             leaveTo="transform scale-95 opacity-0"
           >
             <Disclosure.Panel static>
-              <SelectTopic themeData={themeData} themeConfig={themeConfig} />
+              <SelectTopic themeData={themeData} themeConfig={themeConfig} disabled={!active} />
             </Disclosure.Panel>
           </Transition>
         </>
