@@ -70,7 +70,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.staging.yml,docker-compose.traefik.yml,postgres/postgres.conf"
+          source: "docker-compose.production.yml,docker-compose.traefik.yml,postgres/postgres.conf"
           target: "/srv/tarmac/"
           overwrite: true
 
@@ -82,15 +82,15 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             echo "Stop containers on VPS"
-            cd /srv/tarmac/
+            cd /srv/processing/
             docker image prune -fa
-            docker compose -f docker-compose.staging.yml down
+            docker compose -f docker-compose.production.yml down
             docker compose -f docker-compose.traefik.yml down
             echo "Updating '.env'"
             rm .env
             touch .env
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGHOST='db_staging' >> .env
+            echo PGHOST='db' >> .env
             echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
@@ -98,6 +98,6 @@ jobs:
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
             docker compose -f docker-compose.traefik.yml pull
-            docker compose -f docker-compose.staging.yml pull
+            docker compose -f docker-compose.production.yml pull
             docker compose -f docker-compose.traefik.yml up -d
-            docker compose -f docker-compose.staging.yml up -d
+            docker compose -f docker-compose.production.yml up -d
