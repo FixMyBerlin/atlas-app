@@ -2,7 +2,7 @@ version: "3"
 services:
   app:
     env_file:
-      - ./.env.production
+      - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
     container_name: app
@@ -21,7 +21,7 @@ services:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
     env_file:
-      - ./.env.production
+      - ./.env
     container_name: tiles
     restart: always
     environment:
@@ -42,7 +42,7 @@ services:
         condition: service_healthy
   api:
     env_file:
-      - ./.env.production
+      - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
     restart: always
@@ -61,7 +61,7 @@ services:
         condition: service_healthy
   db:
     env_file:
-      - ./.env.production
+      - ./.env
     image: postgis/postgis:14-3.3-alpine
     environment:
       POSTGRES_DB: ${PGDATABASE}

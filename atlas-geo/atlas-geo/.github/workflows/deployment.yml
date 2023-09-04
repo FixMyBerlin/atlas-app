@@ -84,17 +84,17 @@ jobs:
             echo "Stop containers on VPS"
             cd /srv/processing/
             docker image prune -fa
-            docker compose --env-file .env.production -f docker-compose.production.yml down
-            echo "Updating '.env.production'"
-            rm .env.production
-            touch .env.production
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
-            echo PGHOST='db' >> .env.production
-            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env.production
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
-            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.production
-            echo GITHUB_SHA='${{ github.sha }}' >> .env.production
+            docker compose -f docker-compose.production.yml down
+            echo "Updating '.env'"
+            rm .env
+            touch .env
+            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
+            echo PGHOST='db' >> .env
+            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env
+            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
+            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
+            echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
-            docker compose --env-file .env.production  -f docker-compose.production.yml pull
-            docker compose --env-file .env.production  -f docker-compose.production.yml up -d
+            docker compose  -f docker-compose.production.yml pull
+            docker compose  -f docker-compose.production.yml up -d

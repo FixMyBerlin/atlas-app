@@ -84,20 +84,20 @@ jobs:
             echo "Stop containers on VPS"
             cd /srv/tarmac/
             docker image prune -fa
-            docker compose --env-file .env.staging -f docker-compose.staging.yml down
+            docker compose -f docker-compose.staging.yml down
             docker compose -f docker-compose.traefik.yml down
-            echo "Updating '.env.staging'"
-            rm .env.staging
-            touch .env.staging
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.staging
-            echo PGHOST='db_staging' >> .env.staging
-            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env.staging
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.staging
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.staging
-            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.staging
-            echo GITHUB_SHA='${{ github.sha }}' >> .env.staging
+            echo "Updating '.env'"
+            rm .env
+            touch .env
+            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
+            echo PGHOST='db_staging' >> .env
+            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env
+            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
+            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
+            echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
             docker compose -f docker-compose.traefik.yml pull
-            docker compose --env-file .env.staging -f docker-compose.staging.yml pull
+            docker compose -f docker-compose.staging.yml pull
             docker compose -f docker-compose.traefik.yml up -d
-            docker compose --env-file .env.staging -f docker-compose.staging.yml up -d
+            docker compose -f docker-compose.staging.yml up -d
