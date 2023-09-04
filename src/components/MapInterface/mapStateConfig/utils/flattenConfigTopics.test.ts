@@ -5,7 +5,10 @@ import { flattenConfigTopics } from './flattenConfigTopics'
 
 describe('flattenConfigTopics()', () => {
   test('Flatten removes duplicate topics', () => {
-    const initialMapConfig = createMapRegionConfig(['bikelanes', 'lit'])
+    const initialMapConfig = createMapRegionConfig({
+      regionThemeIds: ['bikelanes', 'lit'],
+      defaultActiveThemeId: 'bikelanes',
+    })
 
     // console.log('intialConfig', JSON.stringify(initialMapConfig, undefined, 2))
     const check = uniqueArray(

@@ -30,7 +30,10 @@ export const PageRegionMap: React.FC = () => {
   // Also guard against empty default searchParams; set them if any is missing (or empty)
   const navigate = useNavigate<LocationGenerics>()
   const freshConfig = useMemo(() => {
-    return createMapRegionConfig(region.themes)
+    return createMapRegionConfig({
+      regionThemeIds: region.themes,
+      defaultActiveThemeId: region.themes.at(0) || 'fromTo',
+    })
   }, [region.themes])
 
   // When we change stuff in our config, our URL config needs to change.
