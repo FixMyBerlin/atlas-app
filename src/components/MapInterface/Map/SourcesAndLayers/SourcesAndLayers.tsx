@@ -29,7 +29,7 @@ export const SourcesAndLayers: React.FC = () => {
     <>
       {activeConfigThemes.map((activeConfigTheme) => {
         return (
-          <>
+          <React.Fragment key={activeConfigTheme.id}>
             {activeConfigTheme.topics.map((topicConfig) => {
               const curTopicData = getTopicData(topicConfig.id)
               const sourceData = getSourceData(curTopicData?.sourceId)
@@ -119,7 +119,7 @@ export const SourcesAndLayers: React.FC = () => {
                       const isVerificationStatusLayer = layer.id.search('verification-status') != -1
 
                       return (
-                        <>
+                        <React.Fragment key={layerId}>
                           {isVerificationStatusLayer ? (
                             <LayerVerificationStatus
                               key={`${layerId}_verification`}
@@ -129,14 +129,14 @@ export const SourcesAndLayers: React.FC = () => {
                             <Layer key={layerId} {...layerProps} />
                           )}
                           <LayerHighlight key={`${layerId}_highlight`} {...layerProps} />
-                        </>
+                        </React.Fragment>
                       )
                     })
                   })}
                 </Source>
               )
             })}
-          </>
+          </React.Fragment>
         )
       })}
     </>
