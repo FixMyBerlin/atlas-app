@@ -7,10 +7,13 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl'
 import { layerVisibility } from '../utils'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
+import { useMapDebugState } from '@components/MapInterface/mapStateInteraction/useMapDebugState'
+import { debugLayerStyles } from '@components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
   const { pmTilesProtocolReady } = useMapStateInteraction()
+  const { useDebugLayerStyles } = useMapDebugState()
   const {
     params: { regionPath },
   } = useMatch()
@@ -42,6 +45,16 @@ export const SourcesLayerDatasets: React.FC = () => {
                 layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
               const layerId = createDatasetSourceLayerKey(sourceId, layer.id)
+              // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+              const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+
+              // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
+              const layerPaint = useDebugLayerStyles
+                ? debugLayerStyles({
+                    source: sourceId,
+                    sourceLayer: 'default',
+                  }).find((l) => l.type === layer.type)?.paint
+                : (layer.paint as any)
 
               const layerProps = {
                 id: layerId,
@@ -49,8 +62,8 @@ export const SourcesLayerDatasets: React.FC = () => {
                 'source-layer': 'default', // set in `datasets/process.cjs`
                 type: layer.type,
                 layout: layout,
-                filter: wrapFilterWithAll(layer.filter),
-                paint: layer.paint as any, // Did not get TS going. `paint` is explicitly required but something else is interfering here
+                filter: layerFilter,
+                paint: layerPaint,
                 beforeId: undefined, // on top of everything
               }
 
