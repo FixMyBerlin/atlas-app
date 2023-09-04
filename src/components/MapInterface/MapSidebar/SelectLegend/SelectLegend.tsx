@@ -6,8 +6,8 @@ import {
   TopicIds,
   TopicStyleIds,
   TopicStyleLegendIds,
-} from '../mapData'
-import { createTopicStyleKey, createTopicStyleLegendKey } from '../utils'
+} from '../../mapData'
+import { createTopicStyleKey, createTopicStyleLegendKey } from '../../utils'
 import { LegendDebugInfoLayerStyle, LegendDebugInfoTopicLayerConfig } from './LegendDebugInfo'
 import { LegendIconArea, LegendIconCircle, LegendIconLine, LegendIconTypes } from './LegendIcons'
 import { LegendNameDesc } from './LegendNameDesc'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapDataStyleLegend } from '../mapData'
+import { MapDataStyleLegend } from '../../mapData'
 
 type Props = Pick<MapDataStyleLegend, 'name' | 'desc'>
 

@@ -1,6 +1,6 @@
 import { RegionPath } from '@fakeServer/regions.const'
 import mapboxgl from 'mapbox-gl'
-import { LegendIconTypes } from '../SelectLegend/LegendIcons'
+import { LegendIconTypes } from '../MapSidebar/SelectLegend/LegendIcons'
 import { TopicIds, TopicStyleIds } from './mapData.const'
 import {
   SourceExportApiIdentifier,

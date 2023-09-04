@@ -11,10 +11,20 @@ type Props = {
 export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }) => {
   return (
     <Switch.Group as="div" className="group flex min-h-[1.3rem] cursor-pointer items-center">
+      <Switch.Label
+        as="div"
+        className={clsx(
+          'ml-2 w-full text-sm leading-[17px]',
+          active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
+        )}
+        title={desc ? desc : undefined}
+      >
+        {children}
+      </Switch.Label>
       <Switch
         checked={active}
         onChange={handleChange}
-        className="relative inline-flex h-5 w-10 flex-shrink-0 items-center justify-center rounded-full focus:outline-none"
+        className="relative inline-flex h-5 w-10 flex-shrink-0 items-center justify-center rounded-full focus:outline-none rotate-90"
       >
         <span
           aria-hidden="true"
@@ -35,16 +45,6 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
           )}
         />
       </Switch>
-      <Switch.Label
-        as="div"
-        className={clsx(
-          'ml-2 w-full text-sm font-semibold leading-[17px]',
-          active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
-        )}
-        title={desc ? desc : undefined}
-      >
-        {children}
-      </Switch.Label>
     </Switch.Group>
   )
 }

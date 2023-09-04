@@ -2,10 +2,10 @@ import { LocationGenerics } from '@routes/routes'
 import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
-import { ErrorRestartMap } from '../ErrorRestartMap/ErrorRestartMap'
-import { SelectStyles } from '../SelectStyles'
-import { MapDataTheme, getTopicData, themes } from '../mapData'
-import { ThemeConfig } from '../mapStateConfig'
+import { ErrorRestartMap } from '../../ErrorRestartMap/ErrorRestartMap'
+import { MapDataTheme, getTopicData, themes } from '../../mapData'
+import { ThemeConfig } from '../../mapStateConfig'
+import { SelectStyles } from '../SelectStyles/SelectStyles'
 
 export const SelectTopics: React.FC = () => {
   const { config: configThemes } = useSearch<LocationGenerics>()
@@ -36,12 +36,10 @@ export const SelectTopicsOneTheme: React.FC<Props> = ({ themeData, themeConfig }
   if (!themeData.topics || !themeConfig.topics) return null
 
   return (
-    <section className="absolute top-2.5 left-5 max-h-[calc(100vh-5.5rem)] w-60 overflow-y-auto overflow-x-visible rounded bg-white/90 pt-1 pb-3 shadow-md">
+    <section>
       <Sentry.ErrorBoundary fallback={<ErrorRestartMap />}>
         <fieldset>
-          <legend className="sr-only">
-            Datensätze für die ausgewählte Themenkarte {themeData.name}
-          </legend>
+          <legend className="sr-only">Daten für das Thema {themeData.name}</legend>
           <div>
             {themeData.topics.map((themeDataTopic) => {
               const topicData = getTopicData(themeDataTopic.id)

@@ -6,10 +6,10 @@ import { useNavigate } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import produce from 'immer'
 import React from 'react'
-import { SelectLegend } from '../SelectLegend'
-import { MapDataThemeIds, MapDataTopic, getStyleData } from '../mapData'
-import { TopicConfig } from '../mapStateConfig'
-import { createTopicStyleKey } from '../utils'
+import { MapDataThemeIds, MapDataTopic, getStyleData } from '../../mapData'
+import { TopicConfig } from '../../mapStateConfig'
+import { createTopicStyleKey } from '../../utils'
+import { SelectLegend } from '../SelectLegend/SelectLegend'
 
 type Props = { themeId: MapDataThemeIds; topicData: MapDataTopic; topicConfig: TopicConfig }
 
