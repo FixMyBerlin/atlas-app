@@ -20,7 +20,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'fromTo',
     name: 'Quellen & Ziele',
-    desc: 'Darstellung von häufigen Start- und Zielpunkten für die Radnetzplanung.',
+    desc: 'Start- und Zielpunkten für die Radnetzplanung.',
     // TODO We will likely want overwrites per region. In this case, we might want to move the relation region>theme>topic inside the region so we can specify theme+topic on region level.
     topics: [
       { id: 'shops', defaultStyle: 'default' },
@@ -36,7 +36,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'roadClassification',
     name: 'Straßentypen',
-    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
+    desc: 'Klassifiziert zur Radnetzplanung.',
     topics: [
       { id: 'roadClassification_legacy', defaultStyle: 'default' },
       { id: 'bikelanes', defaultStyle: 'hidden' },
@@ -49,7 +49,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'roadClassification_NEW',
     name: 'Straßentypen NEW',
-    desc: 'Darstellung des Straßenlandes anhand von Klassifizierungskriterien zur Radnetzplanung.',
+    desc: 'Klassifiziert zur Radnetzplanung.',
     topics: [
       { id: 'roadClassification_legacy', defaultStyle: 'hidden' },
       { id: 'roadClassification', defaultStyle: 'default' },
@@ -65,7 +65,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'bikelanes',
     name: 'Radinfrastruktur',
-    desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
+    desc: 'Führungsformen Radinfrastruktur.',
     topics: [
       { id: 'bikelanes', defaultStyle: 'default' },
       { id: 'bikelanesPresence_legacy', defaultStyle: 'hidden' },
@@ -77,7 +77,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'bikelanes_NEW',
     name: 'Radinfrastruktur NEW',
-    desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
+    desc: 'Führungsformen Radinfrastruktur.',
     topics: [
       { id: 'bikelanes', defaultStyle: 'hidden' },
       { id: 'bikelanesPresence_legacy', defaultStyle: 'hidden' },
@@ -89,7 +89,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'surface',
     name: 'Oberflächen NEW',
-    desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
+    desc: 'Oberflächen und Oberflächenqualität.',
     topics: [
       { id: 'surfaceQuality', defaultStyle: 'default' },
       { id: 'surfaceQuality_legacy', defaultStyle: 'hidden' },
@@ -101,7 +101,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'parking',
     name: 'Parkraum',
-    desc: 'Auswertung zum Parken im Straßenraum',
+    desc: 'Parken im Straßenraum.',
     topics: [
       { id: 'parking', defaultStyle: 'default' },
       // { id: 'parkingLegacy', defaultStyle: "hidden" },
@@ -117,7 +117,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'lit',
     name: 'Beleuchtung',
-    desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
+    desc: 'Beleuchtung im Straßenland',
     topics: [
       { id: 'lit_legacy', defaultStyle: 'default' },
       // { id: 'surface_tarmac', defaultStyle: "hidden" },
@@ -128,7 +128,7 @@ export const themes: MapDataTheme[] = [
   {
     id: 'lit_NEW',
     name: 'Beleuchtung NEW',
-    desc: 'Darstellung der Beleuchtung im Straßenland für Auto-, Rad- und Fußverkehr',
+    desc: 'Beleuchtung im Straßenland.  ',
     topics: [
       { id: 'lit', defaultStyle: 'hidden' },
       { id: 'lit_legacy', defaultStyle: 'default' },
