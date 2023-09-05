@@ -228,11 +228,13 @@ export type MapDataStyleLegend = {
     | {
         type: Exclude<LegendIconTypes, 'line'>
         color: string
+        width?: never
         dasharray?: never
       }
     | {
         type: Extract<LegendIconTypes, 'line'>
         color: string
+        width?: number
         dasharray?: number[]
       }
 }

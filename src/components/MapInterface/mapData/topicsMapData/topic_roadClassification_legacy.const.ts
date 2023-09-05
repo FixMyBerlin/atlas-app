@@ -25,52 +25,57 @@ export const topic_roadClassification_legacy: MapDataTopic = {
         sourceLayer,
       }),
       legends: [
+        // See https://wiki.openstreetmap.org/wiki/DE:Key:highway
         {
-          id: 'unclassified',
-          name: 'Nebenstraße (…)',
-          style: { type: 'line', color: '#e6d6a2' },
+          id: 'primary-motorway-secondary-trunk',
+          name: 'Hauptstraßen u.a.',
+          style: { type: 'line', width: 9, color: '#dab07c' },
         },
         {
           id: 'tertiary',
-          name: 'Kreisstraße (…)',
-          style: { type: 'line', color: '#dab07c' },
-        },
-        { id: 'residential', name: 'Wohngebiet', style: { type: 'line', color: '#9a987e' } },
-        {
-          id: 'path-track-bridleway',
-          name: 'Pfad, Wald-, Feldweg (…)',
-          style: { type: 'line', color: '#b4aac0' },
+          name: 'Verbindungsstraßen',
+          style: { type: 'line', width: 7, color: '#dab07c' },
         },
         {
-          id: 'primary-motorway-secondary-trunk',
-          name: 'Verbindungsstraße (…)',
-          style: { type: 'line', color: '#dab07c' },
+          id: 'unclassified',
+          name: 'Nebenstraße u.a.',
+          style: { type: 'line', width: 6, color: '#e6d6a2' },
+        },
+        {
+          id: 'residential',
+          name: 'Wohnstraße',
+          style: { type: 'line', width: 2, color: '#9a987e' },
         },
         {
           id: 'living_street-pedestrian-bicycle_road',
-          name: 'Verkehrsberuhigt (…)',
-          style: { type: 'line', color: '#80a3ea' },
-        },
-        {
-          id: 'footway-cycleway',
-          name: 'Fuß- & Radwege',
-          style: { type: 'line', color: '#b9aac0' },
+          name: 'Verkehrsberuhigt u.a.',
+          style: { type: 'line', width: 2, color: '#80a3ea' },
         },
         {
           id: 'service_road-service_alley',
           name: 'Zufahrtsweg',
-          style: { type: 'line', color: '#e6d6a2' },
+          style: { type: 'line', width: 2, color: '#e6d6a2' },
         },
         // {
         //   id: 'service_drive_through-service_parking_aisle',
         //   name: 'Zufahrtsweg (…)',
-        //   style: { type: 'line', color: 'rgba(251, 40, 40, 0)' },
+        //   style: { type: 'line', width: 2, color: 'rgba(251, 40, 40, 0)' },
         // },
+        {
+          id: 'path-track-bridleway',
+          name: 'Pfad, Wald-, Feldweg u.a.',
+          style: { type: 'line', width: 2, color: '#b4aac0' },
+        },
+        {
+          id: 'footway-cycleway',
+          name: 'Fuß- & Radwege',
+          style: { type: 'line', width: 2, color: '#b9aac0' },
+        },
       ],
     },
     {
       id: 'oneway',
-      name: 'Einbahnstrahßen',
+      name: 'Einbahnstraßen',
       desc: 'Hervorhebung von Einbahnstraßen.',
       layers: [
         mapboxStyleLayers({

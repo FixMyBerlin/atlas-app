@@ -41,22 +41,26 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
       })
       return null
     }
-    const { type, color, dasharray } = legend.style
-    return iconByStyle({ type, color, dasharray })
+    const { type, color, width, dasharray } = legend.style
+    return iconByStyle({ type, color, width, dasharray })
   }
 
   const iconByStyle = ({
     type,
     color,
+    width,
     dasharray,
   }: {
     type: LegendIconTypes
-    color: string
-    dasharray?: number[]
+    color: MapDataStyleLegend['style']['color']
+    width?: MapDataStyleLegend['style']['width']
+    dasharray?: MapDataStyleLegend['style']['dasharray']
   }) => {
     switch (type) {
       case 'line':
-        return <LegendIconLine color={color} width={4} strokeDasharray={dasharray?.join(',')} />
+        return (
+          <LegendIconLine color={color} width={width || 4} strokeDasharray={dasharray?.join(',')} />
+        )
       case 'border':
         return (
           <div className="relative h-full w-full">
