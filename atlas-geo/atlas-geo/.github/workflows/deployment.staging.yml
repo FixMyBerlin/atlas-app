@@ -10,7 +10,7 @@ jobs:
     environment:
       name: staging
       url: staging-tiles.radverkehrsatlas.de
-    uses: .github/workflows/deployment.yml
+    uses: ./.github/workflows/deployment.yml
     with:
       DATABASE_PORT: ${{ vars.DATABASE_PORT }}
       DATABASE_HOST: ${{ vars.DATABASE_HOST }}
