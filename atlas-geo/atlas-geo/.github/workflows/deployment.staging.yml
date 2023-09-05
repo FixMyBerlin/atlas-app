@@ -7,13 +7,12 @@ on:
 
 jobs:
   build_and_deploy:
-    environment:
-      name: staging
-      url: staging-tiles.radverkehrsatlas.de
     uses: ./.github/workflows/deployment.yml
     with:
       DATABASE_PORT: ${{ vars.DATABASE_PORT }}
       DATABASE_HOST: ${{ vars.DATABASE_HOST }}
+      ENVIRONMENT: staging
+      URL: staging-tiles.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_HOST: ${{ secrets.DATABASE_HOST }}

@@ -22,10 +22,19 @@ on:
       DATABSE_HOST:
         type: string
         required: true
+      ENVIRONMENT:
+        type: string
+        required: true
+      URL:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.ENVIRONMENT }}
+      url: ${{ inputs.URL }}
     steps:
       - uses: actions/checkout@v3
 
