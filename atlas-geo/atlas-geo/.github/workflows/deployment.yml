@@ -97,6 +97,6 @@ jobs:
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
             docker compose -f docker-compose.traefik.yml pull
-            docker compose -f docker-compose.traefik.yml up -d
             docker compose pull
+            docker compose -f docker-compose.traefik.yml up -d
             docker compose up -d
