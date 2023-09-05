@@ -11,8 +11,10 @@ jobs:
     with:
       ENVIRONMENT: staging
       URL: https://radverkehrsatlas.de
-      TRAEFIK_DNS: prodapi
-      SERVICE_DNS: api.radverkehrsatlas.de
+      TILES_TRAEFIK_DNS: prodtiles
+      TILES_DNS: tiles.radverkehrsatlas.de
+      API_TRAEFIK_DNS: prodapi
+      API_DNS: api.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
