@@ -1,4 +1,4 @@
-name: Deployment to IONOS
+name: Deploy to IONOS
 
 on:
   wokrflow_call:
