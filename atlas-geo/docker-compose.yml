@@ -7,6 +7,7 @@ services:
     entrypoint: /app/run.sh
     container_name: app
     environment:
+      PGHOST: db
       SKIP_DOWNLOAD: 0
       SKIP_TAG_FILTER: 0
       OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
@@ -26,7 +27,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@db/${PGDATABASE}
     ports:
       - "8010:7800"
     labels:
@@ -45,6 +46,8 @@ services:
       - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
+    environment:
+      PGHOST: db
     restart: always
     ports:
       - "8020:80"
