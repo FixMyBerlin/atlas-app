@@ -11,7 +11,8 @@ jobs:
     with:
       ENVIRONMENT: staging
       URL: https://radverkehrsatlas.de
-      SERVICE_REVERSE_DNS: traefik.http.routers.prodapi
+      TRAEFIK_DNS: prodapi
+      SERVICE_DNS: api.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}

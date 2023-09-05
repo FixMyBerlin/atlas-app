@@ -32,7 +32,10 @@ on:
       URL:
         type: string
         required: true
-      SERVICE_REVERSE_DNS:
+      TRAEFIK_DNS:
+        type: string
+        required: true
+      SERVICE_DNS:
         type: string
         required: true
 
@@ -113,8 +116,8 @@ jobs:
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
-            echo SERVICE_REVERSE_DNS='${{inputs.SERVICE_REVERSE_DNS}}' >> .env
-            echo URL='${{ inputs.URL }}' >> .env
+            echo TRAEFIK_DNS='${{ inputs.TRAEFIK_DNS }}' >> .env
+            echo SERVICE_DNS='${{ inputs.SERVICE_DNS }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
