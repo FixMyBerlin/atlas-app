@@ -58,12 +58,12 @@ ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the co
 First create a `.env` file. You can use the `.env.example` file as a template.
 
 ```sh
-docker compose up
+docker compose -f docker-compose.local.yml up
 # or
-docker compose up -d
+docker compose -f docker-compose.local.yml up -d
 
 # With osm processing, which runs the "app" docker image with `ruh.sh`
-docker compose --profile osm_processing up -d
+docker compose -f docker-compose.local.yml --profile osm_processing up -d
 ```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
@@ -103,7 +103,7 @@ The workflow is…
 Hack into the bash
 
 ```sh
-docker compose exec app bash
+docker compose -f docker-compose.local.yml exec app bash
 ```
 
 You can also run the script locally:
