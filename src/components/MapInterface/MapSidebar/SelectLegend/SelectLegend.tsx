@@ -82,7 +82,7 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
   }
 
   return (
-    <section className="relative mt-1 px-2 pt-0.5">
+    <section className="relative mt-1 pt-0.5">
       <fieldset>
         <legend className="sr-only">Legende</legend>
         <div className="space-y-1">
@@ -106,7 +106,7 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
                 })}
                 key={key}
               >
-                <div className="ml-3 h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
+                <div className="h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center">
                   <input
                     id={key}
