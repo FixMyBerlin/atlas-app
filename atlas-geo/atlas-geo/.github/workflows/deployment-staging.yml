@@ -70,7 +70,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.production.yml,docker-compose.traefik.yml,postgres/postgres.conf"
+          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf"
           target: "/srv/processing/"
           overwrite: true
 
@@ -84,7 +84,7 @@ jobs:
             echo "Stop containers on VPS"
             cd /srv/processing/
             docker image prune -fa
-            docker compose -f docker-compose.production.yml down
+            docker compose -f docker-compose.yml down
             docker compose -f docker-compose.traefik.yml down
             echo "Updating '.env'"
             rm .env
@@ -98,6 +98,6 @@ jobs:
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
             docker compose -f docker-compose.traefik.yml pull
-            docker compose -f docker-compose.production.yml pull
+            docker compose -f docker-compose.yml pull
             docker compose -f docker-compose.traefik.yml up -d
-            docker compose -f docker-compose.production.yml up -d
+            docker compose -f docker-compose.yml up -d
