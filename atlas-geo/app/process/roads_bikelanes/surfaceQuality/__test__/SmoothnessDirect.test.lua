@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/roads/surfaceQuality/?.lua;./app/process/helper/?.lua"
+package.path = package.path .. ";./app/process/roads_bikelanes/surfaceQuality/?.lua;./app/process/helper/?.lua"
 require("SmoothnessDirect")
 
 print('=== Test SmoothnessDirect: normalization works for "good"=>"good" ===')
