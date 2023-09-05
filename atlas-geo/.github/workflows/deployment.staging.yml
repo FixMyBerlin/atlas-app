@@ -9,12 +9,10 @@ jobs:
   build_and_deploy:
     uses: ./.github/workflows/deployment.yml
     with:
-      DATABASE_HOST: ${{ vars.DATABASE_HOST }}
       ENVIRONMENT: staging
-      URL: staging-tiles.radverkehrsatlas.de
+      URL: https://staging-tiles.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_USER: ${{ secrets.DATABASE_USER }}
@@ -25,4 +23,3 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-

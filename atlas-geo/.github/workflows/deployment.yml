@@ -28,9 +28,6 @@ on:
       SSH_PASSWORD:
         required: true
     inputs:
-      DATABASE_HOST:
-        type: string
-        required: true
       ENVIRONMENT:
         type: string
         required: true
@@ -113,7 +110,7 @@ jobs:
             rm .env
             touch .env
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGHOST='${{ inputs.DATABASE_HOST }}` >> .env
+            echo PGHOST='${{ vars.DATABASE_HOST }}` >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env

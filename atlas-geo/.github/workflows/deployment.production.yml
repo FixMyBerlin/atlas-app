@@ -9,12 +9,10 @@ jobs:
   build_and_deploy:
     uses: ./.github/workflows/deployment.yml
     with:
-      DATABASE_HOST: ${{ vars.DATABASE_HOST }}
       ENVIRONMENT: staging
-      URL: radverkehrsatlas.de
+      URL: https://radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_USER: ${{ secrets.DATABASE_USER }}
