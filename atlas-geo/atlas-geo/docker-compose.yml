@@ -53,10 +53,10 @@ services:
       - "8020:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.prodapi.rule=Host(`api.radverkehrsatlas.de`)"
-      - "traefik.http.routers.prodapi.entrypoints=websecure"
-      - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.prodapi.tls=true"
+      - "${SERVICE_REVERSE_DNS}.rule=Host(`${URL}`)"
+      - "${SERVICE_REVERSE_DNS}.entrypoints=websecure"
+      - "${SERVICE_REVERSE_DNS}.tls.certresolver=letsencrypt"
+      - "${SERVICE_REVERSE_DNS}.tls=true"
     networks:
       - app_bridge
     depends_on:
