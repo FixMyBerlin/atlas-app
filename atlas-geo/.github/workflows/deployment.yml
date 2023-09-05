@@ -17,8 +17,10 @@ on:
         required: true
     inputs:
       DATBASE_PORT:
+        type: string
         required: true
       DATABSE_HOST:
+        type: string
         required: true
 
 jobs:
