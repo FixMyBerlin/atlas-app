@@ -149,9 +149,7 @@ For FixMyCity, the command to inspect the current state of the processing on the
 ```
 ssh ionos
 # then…
-cd /srv/tarmac && docker compose -f docker-compose.production.yml logs app --tail 500
-# or…
-cd /srv/tarmac && docker compose -f docker-compose.staging.yml logs app_staging --tail 500
+cd /srv/processing && docker compose -f docker-compose.production.yml logs app --tail 500
 ```
 
 ## 💛 Thanks to
