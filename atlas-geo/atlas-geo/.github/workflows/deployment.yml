@@ -1,16 +1,16 @@
-name: Deployment Production
+name: Deployment ${{ github.ref_name == 'main' && 'Production' || 'Staging' }}
 
 on:
   push:
     branches:
       - "main"
+      - "develop"
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: https://radverkehrsatlas.de
+      name: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
 
     env:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
@@ -84,13 +84,13 @@ jobs:
             echo "Stop containers on VPS"
             cd /srv/processing/
             docker image prune -fa
-            docker compose -f docker-compose.yml down
+            docker compose down
             docker compose -f docker-compose.traefik.yml down
             echo "Updating '.env'"
             rm .env
             touch .env
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGHOST='db' >> .env
+            echo PGHOST='${{ vars.DATABASE_HOST }}` >> .env
             echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
@@ -98,6 +98,6 @@ jobs:
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
             docker compose -f docker-compose.traefik.yml pull
-            docker compose -f docker-compose.yml pull
             docker compose -f docker-compose.traefik.yml up -d
-            docker compose -f docker-compose.yml up -d
+            docker compose pull
+            docker compose up -d
