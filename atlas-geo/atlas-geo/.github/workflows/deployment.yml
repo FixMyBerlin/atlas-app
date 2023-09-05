@@ -1,25 +1,29 @@
-name: Deployment ${{ github.ref_name == 'main' && 'Production' || 'Staging' }}
+name: Deployment to IONOS
 
 on:
-  push:
-    branches:
-      - "main"
-      - "develop"
+  wokrflow_call:
+    secrets:
+      SERVICE_NAME:
+        required: true
+      DATABASE_HOST:
+        required: true
+      DATABASE_NAME:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      DATABASE_USER:
+        required: true
+      DATABASE_PASSWORD_ENCODED:
+        required: true
+    vars:
+      DATBASE_PORT:
+        required: true
+      DATABSE_HOST:
+        required: true
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-    environment: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
-
-    env:
-      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
-      TILESERVER_PORT: 9090
-
     steps:
       - uses: actions/checkout@v3
 

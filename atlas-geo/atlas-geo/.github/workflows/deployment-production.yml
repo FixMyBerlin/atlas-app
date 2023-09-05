@@ -1,0 +1,23 @@
+name: Deployment Production
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build_and_deploy:
+    environment:
+      name: staging
+      url: radverkehrsatlas.de
+    uses: .github/workflows/deployment.yml
+    secrets:
+      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
+    vars:
+      DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+      DATABASE_HOST: ${{ vars.DATABASE_HOST }}
