@@ -23,6 +23,8 @@ on:
         required: true
       SSH_PASSWORD:
         required: true
+      SSH_HOST:
+        required: true
     inputs:
       ENVIRONMENT:
         type: string
