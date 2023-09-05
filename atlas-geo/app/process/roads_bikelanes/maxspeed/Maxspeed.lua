@@ -48,6 +48,7 @@ function Maxspeed(object)
   CopyTags(tags, maxspeed_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
+  -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
   IsFresh(object, "check_date:maxspeed", maxspeed_data, 'maxspeed')
 
   maxspeed_data.maxspeed = maxspeed
