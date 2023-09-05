@@ -58,12 +58,12 @@ ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the co
 First create a `.env` file. You can use the `.env.example` file as a template.
 
 ```sh
-docker compose up
+docker compose -f docker-compose.development.yml up
 # or
-docker compose up -d
+docker compose -f docker-compose.development.yml up -d
 
 # With osm processing, which runs the "app" docker image with `ruh.sh`
-docker compose --profile osm_processing up -d
+docker compose -f docker-compose.development.yml --profile osm_processing up -d
 ```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
@@ -90,7 +90,7 @@ The workflow is…
    _OR_
 
    ```sh
-   docker compose --profile osm_processing build && docker compose --profile osm_processing up
+   docker compose -f docker-compose.development.yml build && docker compose  -f docker-compose.development.yml --profile osm_processing up
    ```
 
 3. Inspect the new results
@@ -103,7 +103,7 @@ The workflow is…
 Hack into the bash
 
 ```sh
-docker compose exec app bash
+docker compose -f docker-compose.development.yml exec app bash
 ```
 
 You can also run the script locally:
@@ -149,9 +149,7 @@ For FixMyCity, the command to inspect the current state of the processing on the
 ```
 ssh ionos
 # then…
-cd /srv/tarmac && docker compose -f docker-compose.production.yml logs app --tail 500
-# or…
-cd /srv/tarmac && docker compose -f docker-compose.staging.yml logs app_staging --tail 500
+cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
 ```
 
 ## 💛 Thanks to
