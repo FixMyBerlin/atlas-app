@@ -105,11 +105,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Stop containers on VPS"
-            cd /srv/processing/
-            docker image prune -fa
-            docker compose down
-            docker compose -f docker-compose.traefik.yml down
             echo "Updating '.env'"
             rm .env
             touch .env
@@ -120,8 +115,11 @@ jobs:
             echo SERVICE_DNS='${{ inputs.SERVICE_DNS }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
+            echo "Stop containers on VPS"
+            cd /srv/processing/
+            docker compose down
+            docker compose -f docker-compose.traefik.yml down
             echo "Start container on VPS"
-            docker compose -f docker-compose.traefik.yml pull
-            docker compose pull
             docker compose -f docker-compose.traefik.yml up -d
             docker compose up -d
+            docker image prune -fa
