@@ -111,6 +111,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            cd /srv/processing/
             echo "Updating '.env'"
             rm .env
             touch .env
@@ -124,7 +125,6 @@ jobs:
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Stop containers on VPS"
-            cd /srv/processing/
             docker compose down
             docker compose -f docker-compose.traefik.yml down
             echo "Start container on VPS"
