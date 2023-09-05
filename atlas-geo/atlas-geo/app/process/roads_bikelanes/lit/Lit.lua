@@ -23,7 +23,6 @@ require("Set")
 --  We add those ways twice to the data … and post-process the in SQL?
 
 function Lit(object)
-
   local tags = object.tags
 
   local lit_data = {}
@@ -68,6 +67,7 @@ function Lit(object)
   CopyTags(tags, lit_data, tags_cc)
 
   -- Freshness of data (AFTER `FilterTags`!)
+  -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
   if lit_data.lit_category then
     IsFresh(object, 'check_date:lit', lit_data, 'lit')
   end
