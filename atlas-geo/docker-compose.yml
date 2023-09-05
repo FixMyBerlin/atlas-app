@@ -53,10 +53,10 @@ services:
       - "8020:80"
     labels:
       - "traefik.enable=true"
-      - "${SERVICE_REVERSE_DNS}.rule=Host(`${URL}`)"
-      - "${SERVICE_REVERSE_DNS}.entrypoints=websecure"
-      - "${SERVICE_REVERSE_DNS}.tls.certresolver=letsencrypt"
-      - "${SERVICE_REVERSE_DNS}.tls=true"
+      - "traefik.http.routers.${TRAEFIK_DNS}.rule=Host(`${SERVICE_DNS}`)"
+      - "traefik.http.routers.${TRAEFIK_DNS}.entrypoints=websecure"
+      - "traefik.http.routers.${TRAEFIK_DNS}.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.${TRAEFIK_DNS}.tls=true"
     networks:
       - app_bridge
     depends_on:
