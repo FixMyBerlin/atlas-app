@@ -53,7 +53,7 @@ services:
       - "8020:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${API_TRAEFIK_DNS}.rule=Host(`${SERVICE_DNS}`)"
+      - "traefik.http.routers.${API_TRAEFIK_DNS}.rule=Host(`${API_DNS}`)"
       - "traefik.http.routers.${API_TRAEFIK_DNS}.entrypoints=websecure"
       - "traefik.http.routers.${API_TRAEFIK_DNS}.tls.certresolver=letsencrypt"
       - "traefik.http.routers.${API_TRAEFIK_DNS}.tls=true"
