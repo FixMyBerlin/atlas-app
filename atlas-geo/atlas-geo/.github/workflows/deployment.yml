@@ -16,10 +16,10 @@ on:
       DATABASE_PASSWORD_ENCODED:
         required: true
     inputs:
-      DATBASE_PORT:
+      DATABASE_PORT:
         type: string
         required: true
-      DATABSE_HOST:
+      DATABASE_HOST:
         type: string
         required: true
       ENVIRONMENT:
