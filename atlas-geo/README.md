@@ -90,7 +90,7 @@ The workflow is…
    _OR_
 
    ```sh
-   docker compose --profile osm_processing build && docker compose --profile osm_processing up
+   docker compose -f docker-compose.local.yml --profile osm_processing build && docker compose  -f docker-compose.local.yml --profile osm_processing up
    ```
 
 3. Inspect the new results
@@ -149,7 +149,7 @@ For FixMyCity, the command to inspect the current state of the processing on the
 ```
 ssh ionos
 # then…
-cd /srv/processing && docker compose -f docker-compose.production.yml logs app --tail 500
+cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
 ```
 
 ## 💛 Thanks to

@@ -1,52 +1,68 @@
 version: "3"
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./app.Dockerfile
-    entrypoint: /app/run.sh
     env_file:
       - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
+    entrypoint: /app/run.sh
+    container_name: app
+    environment:
+      SKIP_DOWNLOAD: 0
+      SKIP_TAG_FILTER: 0
+      OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
     volumes:
       - osmfiles:/data
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
-    container_name: app
-    profiles:
-      - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver
+    env_file:
+      - ./.env
+    container_name: tiles
+    restart: always
     environment:
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+      NODE_ENV: production
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@${PGHOST}/${PGDATABASE}
     ports:
-      - 7800:7800
+      - "8010:7800"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prodtiles.rule=Host(`tiles.radverkehrsatlas.de`)"
+      - "traefik.http.routers.prodtiles.entrypoints=websecure"
+      - "traefik.http.routers.prodtiles.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prodtiles.tls=true"
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
   api:
-    build:
-      context: .
-      dockerfile: ./api.Dockerfile
-    container_name: api
     env_file:
       - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
+    container_name: api
+    restart: always
     ports:
-      - 80:80
+      - "8020:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.prodapi.rule=Host(`api.radverkehrsatlas.de`)"
+      - "traefik.http.routers.prodapi.entrypoints=websecure"
+      - "traefik.http.routers.prodapi.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prodapi.tls=true"
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
   db:
-    # About Apple M1 ARM64 builds…
-    #   We are using a non-standard postgis docker image to support Apple M1:
-    #   https://github.com/postgis/docker-postgis/issues/216 is the Github issue for a official M1 support but that issue is stuck
-    #   We are using an image by baosystems https://github.com/baosystems/docker-postgis/pkgs/container/postgis
-    #   Source https://github.com/postgis/docker-postgis/issues/216#issuecomment-981824739
-    image: ghcr.io/baosystems/postgis:14-3.3
     env_file:
       - ./.env
+    image: postgis/postgis:14-3.3-alpine
     environment:
       POSTGRES_DB: ${PGDATABASE}
       POSTGRES_USER: ${PGUSER}
@@ -54,22 +70,26 @@ services:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
-      - "${PGPORT}:5432"
+      - "5432:${PGPORT}"
     volumes:
       - geodata:/var/lib/postgresql/data
     configs:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
-    container_name: osmdatabase
+    container_name: db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - app_bridge
 volumes:
-  geodata:
   osmfiles:
+  geodata:
+networks:
+  app_bridge:
 configs:
   postgres_conf:
-    file: ./postgres/postgres.develop.conf
+    file: ./postgres/postgres.conf
