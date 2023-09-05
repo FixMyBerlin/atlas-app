@@ -11,6 +11,9 @@ jobs:
       name: staging
       url: radverkehrsatlas.de
     uses: .github/workflows/deployment.yml
+    with:
+      DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+      DATABASE_HOST: ${{ vars.DATABASE_HOST }}
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
@@ -18,6 +21,3 @@ jobs:
       DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       DATABASE_USER: ${{ secrets.DATABASE_USER }}
       DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
-    vars:
-      DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-      DATABASE_HOST: ${{ vars.DATABASE_HOST }}

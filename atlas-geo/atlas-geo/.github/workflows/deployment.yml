@@ -15,7 +15,7 @@ on:
         required: true
       DATABASE_PASSWORD_ENCODED:
         required: true
-    vars:
+    inputs:
       DATBASE_PORT:
         required: true
       DATABSE_HOST:
@@ -93,8 +93,8 @@ jobs:
             rm .env
             touch .env
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGHOST='${{ vars.DATABASE_HOST }}` >> .env
-            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env
+            echo PGHOST='${{ inputs.DATABASE_HOST }}` >> .env
+            echo PGPORT='${{ inputs.DATABASE_PORT }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
