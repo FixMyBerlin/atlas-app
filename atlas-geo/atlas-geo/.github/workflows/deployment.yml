@@ -21,6 +21,12 @@ on:
         required: true
       AWS_REGION:
         required: true
+      SSH_HOST:
+        required: true
+      SSH_USERNAME:
+        required: true
+      SSH_PASSWORD:
+        required: true
     inputs:
       DATABASE_PORT:
         type: string
