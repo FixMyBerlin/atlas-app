@@ -11,6 +11,7 @@ jobs:
     with:
       ENVIRONMENT: staging
       URL: https://staging-tiles.radverkehrsatlas.de
+      SERVICE_REVERSE_DNS: traefik.http.routers.stagingtiles
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}

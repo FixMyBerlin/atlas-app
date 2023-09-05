@@ -32,6 +32,9 @@ on:
       URL:
         type: string
         required: true
+      SERVICE_REVERSE_DNS:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
@@ -110,6 +113,8 @@ jobs:
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo SERVICE_REVERSE_DNS='${{inputs.SERVICE_REVERSE_DNS}}' >> .env
+            echo URL='${{ inputs.URL }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Start container on VPS"
