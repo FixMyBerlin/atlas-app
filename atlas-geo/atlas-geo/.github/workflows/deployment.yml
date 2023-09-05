@@ -32,10 +32,16 @@ on:
       URL:
         type: string
         required: true
-      TRAEFIK_DNS:
+      TILES_TRAEFIK_DNS:
         type: string
         required: true
-      SERVICE_DNS:
+      TILES_DNS:
+        type: string
+        required: true
+      API_TRAEFIK_DNS:
+        type: string
+        required: true
+      API_DNS:
         type: string
         required: true
 
@@ -111,8 +117,10 @@ jobs:
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
-            echo TRAEFIK_DNS='${{ inputs.TRAEFIK_DNS }}' >> .env
-            echo SERVICE_DNS='${{ inputs.SERVICE_DNS }}' >> .env
+            echo TILES_TRAEFIK_DNS='${{ inputs.TILES_TRAEFIK_DNS }}' >> .env
+            echo TILES_DNS='${{ inputs.TILES_DNS }}' >> .env
+            echo API_TRAEFIK_DNS='${{ inputs.API_TRAEFIK_DNS }}' >> .env
+            echo API_DNS='${{ inputs.API_DNS }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
             echo "Stop containers on VPS"
