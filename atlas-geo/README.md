@@ -147,7 +147,9 @@ docker exec -it mypipeline bash
 For FixMyCity, the command to inspect the current state of the processing on the server is …
 
 ```
-ssh ionos
+ssh atlas-staging
+# OR
+ssh atlas-prd
 # then…
 cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
 ```
