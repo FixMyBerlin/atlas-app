@@ -53,8 +53,8 @@ function RoadClassification(object)
     end
   end
 
-  local tags_cc = Set({ "category", "name", "highway", "footway", "access", "service",
-    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" })
+  local tags_cc = { "category", "name", "highway", "footway", "access", "service",
+    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" }
   CopyTags(tags, roadClassification, tags_cc)
 
   return roadClassification
