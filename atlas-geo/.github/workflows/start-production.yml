@@ -17,4 +17,4 @@ jobs:
           script: |
             echo "Restart all production services"
             cd /srv/processing/
-            docker compose -f docker-compose.yml up -d tiles api
+            docker compose up -d tiles api
