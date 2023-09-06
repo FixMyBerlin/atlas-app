@@ -165,9 +165,9 @@ function Bikelanes(object)
   }
 
   local presence_data = {
-    bikelane_presence_left = presence[LEFT_SIGN],
-    bikelane_presence_self = presence[CENTER_SIGN],
-    bikelane_presence_right = presence[RIGHT_SIGN]
+    bikelane_left = presence[LEFT_SIGN],
+    bikelane_self = presence[CENTER_SIGN],
+    bikelane_right = presence[RIGHT_SIGN]
   }
   CopyTags(tags, presence_data, presence_tags_cc, "osm_")
 
