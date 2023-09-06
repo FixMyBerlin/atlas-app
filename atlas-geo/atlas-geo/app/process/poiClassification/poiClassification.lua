@@ -24,23 +24,34 @@ local table = osm2pgsql.define_table({
 -- * @desc Guards extracted to be used inside osm2pgsql.process_*
 -- * @returns `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
-  if not (object.tags.amenity or object.tags.shop) then
+  if not (object.tags.amenity or object.tags.shop or object.tags.tourism) then
     return true
   end
 
-  local shouldExit = false
-
-  local allowed_values = Set(ExtractKeys(ShoppingAllowedListWithCategories))
-  -- We allow all shop=* but heavily filter amenity
-  if not allowed_values[object.tags.amenity] then
-    shouldExit = true
-  end
   -- Ignore all which are explicity restricted
   if object.tags.access == "private" then
-    shouldExit = true
+    return true
   end
 
-  return shouldExit
+  -- We allow all shop=* but heavily filter amenity, tourism
+  local allowed_values = Set(ExtractKeys(ShoppingAllowedListWithCategories))
+  if object.tags.shop
+      or allowed_values[object.tags.amenity]
+      or allowed_values[object.tags.tourism]
+  then
+    -- Special case: For https://wiki.openstreetmap.org/wiki/Tag:tourism=information
+    -- only allow some values
+    if object.tags.tourism == "information" then
+      if object.tags.information == 'office' or object.tags.information == 'visitor_centre' then
+        return false
+      end
+      return true
+    end
+
+    return false
+  end
+
+  return true
 end
 
 -- Tag processing extracted to be used inside projcess_*
@@ -48,16 +59,33 @@ local function processTags(tags)
   -- Set our custom `category` value with one of our 4 values.
   -- We also introduce `type` as a unified way to speicify the shop-or-amenity type.
   if tags.shop then
-    tags.category = 'shopping'
+    tags.category = 'Einkauf'
     tags.type = "shop-" .. tags.shop
   end
   if tags.amenity then
     tags.category = ShoppingAllowedListWithCategories[tags.amenity]
     tags.type = "amenity-" .. tags.amenity
   end
+  if tags.tourism then
+    tags.category = ShoppingAllowedListWithCategories[tags.tourism]
+    tags.type = "tourism-" .. tags.tourism
+  end
+
+  -- This part was previously a separate dataset "education"
+  local formalEducation = Set({
+    "childcare",
+    "college",
+    "kindergarten",
+    "research_institute",
+    "school",
+    "university"
+  })
+  if formalEducation[tags.amenity] then
+    tags.formalEducation = tags.amenity
+  end
 
   InferAddress(tags, tags)
-  local allowed_tags = MergeArray({ "name", "category", "type" }, AddressKeys)
+  local allowed_tags = MergeArray({ "name", "category", "type", "formalEducation" }, AddressKeys)
   FilterTags(tags, Set(allowed_tags))
 end
 

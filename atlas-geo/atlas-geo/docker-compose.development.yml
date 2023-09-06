@@ -1,0 +1,75 @@
+version: "3"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    entrypoint: /app/run.sh
+    env_file:
+      - ./.env
+    volumes:
+      - osmfiles:/data
+    depends_on:
+      db:
+        condition: service_healthy
+    container_name: app
+    profiles:
+      - osm_processing
+  tiles:
+    # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
+    image: pramsey/pg_tileserv
+    container_name: tileserver
+    environment:
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+    ports:
+      - 7800:7800
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    build:
+      context: .
+      dockerfile: ./api.Dockerfile
+    container_name: api
+    env_file:
+      - ./.env
+    ports:
+      - 80:80
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    # About Apple M1 ARM64 builds…
+    #   We are using a non-standard postgis docker image to support Apple M1:
+    #   https://github.com/postgis/docker-postgis/issues/216 is the Github issue for a official M1 support but that issue is stuck
+    #   We are using an image by baosystems https://github.com/baosystems/docker-postgis/pkgs/container/postgis
+    #   Source https://github.com/postgis/docker-postgis/issues/216#issuecomment-981824739
+    image: ghcr.io/baosystems/postgis:14-3.3
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+    ports:
+      - "5432:5432"
+    volumes:
+      - geodata:/var/lib/postgresql/data
+    configs:
+      - source: postgres_conf
+        target: /postgresql/postgresql.conf
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
+    container_name: osmdatabase
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+volumes:
+  geodata:
+  osmfiles:
+configs:
+  postgres_conf:
+    file: ./postgres/postgres.develop.conf

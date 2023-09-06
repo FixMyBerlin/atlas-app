@@ -1,14 +1,15 @@
 version: "3"
 services:
   traefik:
-    image: traefik:v2.9
+    image: traefik:v2.10
     container_name: traefik
+    # See https://techoverflow.net/2021/06/11/how-to-fix-traefik-gateway-timeout-for-docker-services/ for network_mode
+    network_mode: host
     restart: always
-    env_file:
-      - ./.env.staging
     command:
       - "--log.level=WARN"
       - "--api.insecure=false"
+      - "--api.dashboard=false"
       - "--providers.docker=true"
       # Do not expose containers unless explicitly told so
       - "--providers.docker.exposedbydefault=false"
@@ -20,6 +21,7 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.letsencrypt.acme.email=dev-team@fixmycity.de"
       - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--serversTransport.forwardingTimeouts.dialTimeout=100s"
     ports:
       - "80:80"
       - "443:443"
@@ -27,9 +29,3 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
-    networks:
-      - mesh
-networks:
-  mesh:
-    name: radverkehrsatlas_mesh
-    driver: bridge

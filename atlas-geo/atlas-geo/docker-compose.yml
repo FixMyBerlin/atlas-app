@@ -1,71 +1,98 @@
 version: "3"
 services:
   app:
-    build:
-      context: .
-      dockerfile: ./app.Dockerfile
+    env_file:
+      - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     entrypoint: /app/run.sh
+    container_name: app
     environment:
       PGHOST: db
-      PGDATABASE: postgres
-      PGUSER: postgres
-      PGPASSWORD: mysecretpassword
-      SKIP_DOWNLOAD: 'skip'
-      SKIP_FILTER: 'skip'
+      SKIP_DOWNLOAD: 0
+      SKIP_TAG_FILTER: 0
+      OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
     volumes:
       - osmfiles:/data
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
-    container_name: tarmac
-    profiles:
-      - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver
+    env_file:
+      - ./.env
+    container_name: tiles
+    restart: always
     environment:
-      DATABASE_URL: postgres://postgres:mysecretpassword@db/postgres
+      NODE_ENV: production
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@db/${PGDATABASE}
     ports:
-      - 7800:7800
+      - "8010:7800"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
+      - "traefik.http.routers.tiles.entrypoints=websecure"
+      - "traefik.http.routers.tiles.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tiles.tls=true"
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
   api:
-    build:
-      context: .
-      dockerfile: ./api.Dockerfile
+    env_file:
+      - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
     environment:
       PGHOST: db
-      PGDATABASE: postgres
-      PGUSER: postgres
-      PGPASSWORD: mysecretpassword
+    restart: always
     ports:
-      - 80:80
+      - "8020:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api.rule=Host(`${API_URL}`)"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.api.tls=true"
+    networks:
+      - app_bridge
     depends_on:
       db:
         condition: service_healthy
   db:
-    build:
-      context: .
-      dockerfile: ./db.Dockerfile
+    env_file:
+      - ./.env
+    image: postgis/postgis:14-3.3-alpine
     environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
-      - "6000:5432"
+      - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
-    container_name: osmdatabase
+    configs:
+      - source: postgres_conf
+        target: /postgresql/postgresql.conf
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
+    container_name: db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - app_bridge
 volumes:
-  geodata:
   osmfiles:
+  geodata:
+networks:
+  app_bridge:
+configs:
+  postgres_conf:
+    file: ./postgres/postgres.conf

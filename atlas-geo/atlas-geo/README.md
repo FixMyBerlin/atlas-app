@@ -22,21 +22,24 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 **Production:**
 
 - Tiles https://tiles.radverkehrsatlas.de/
+- API Docs https://api.radverkehrsatlas.de/docs/
 - API https://api.radverkehrsatlas.de/export/… (Links available via radverkehrsatlas.de)
 
 **Staging:**
 
 - Tiles https://staging-tiles.radverkehrsatlas.de/
+- API Docs https://staging-api.radverkehrsatlas.de/docs/
 - API https://staging-api.radverkehrsatlas.de/export/…
 
 **Development:**
 
 - Tiles http://localhost:7800/
+- API Docs http://localhost/docs/
 - API http://localhost/export/…
 
 ### Data update
 
-- Data is updated every weekday at 5:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is updated every weekday at 4:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
 - Data is updated on every deploy
 - Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
@@ -55,12 +58,12 @@ ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the co
 First create a `.env` file. You can use the `.env.example` file as a template.
 
 ```sh
-docker compose up
+docker compose -f docker-compose.development.yml up
 # or
-docker compose up -d
+docker compose -f docker-compose.development.yml up -d
 
 # With osm processing, which runs the "app" docker image with `ruh.sh`
-docker compose --profile osm_processing up -d
+docker compose -f docker-compose.development.yml --profile osm_processing up -d
 ```
 
 This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
@@ -82,28 +85,25 @@ The workflow is…
 
 2. Rebuild and restart everything
 
-   ```sh
-   docker compose --profile osm_processing build && docker compose --profile osm_processing up
-   ```
+   ```npm run dev````
 
-   The default `/docker-compose.yml` does set `SKIP_DOWNLOAD` and `SKIP_FILTER`. For your first run, you need to remove those.
+   _OR_
+
+   ```sh
+   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up
+   ```
 
 3. Inspect the new results
 
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
-**Note**
-For the development process it's often usefull to run the processing on a single object.
-For that you can specify an id (list) in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
-See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
-
 **Notes**
 
 Hack into the bash
 
 ```sh
-docker compose exec app bash
+docker compose -f docker-compose.development.yml exec app bash
 ```
 
 You can also run the script locally:
@@ -113,6 +113,12 @@ You can also run the script locally:
    sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
    ```
 2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
+
+### Process only a single object
+
+For the development process it's often usefull to run the processing on a single object.
+For that you can specify an id (list) as `ID_FILTER` in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
+See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 ### Build & Run only one container
 
@@ -141,11 +147,11 @@ docker exec -it mypipeline bash
 For FixMyCity, the command to inspect the current state of the processing on the server is …
 
 ```
-ssh ionos docker logs --tail --follow app
-```
-
-```
-ssh ionos docker logs --tail --follow app_staging
+ssh atlas-staging
+# OR
+ssh atlas-prd
+# then…
+cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
 ```
 
 ## 💛 Thanks to

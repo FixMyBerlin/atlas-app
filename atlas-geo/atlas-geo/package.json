@@ -5,8 +5,13 @@
   "license": "AGPL-3.0",
   "private": true,
   "scripts": {
-    "release": "echo \"Use this format for the title: 'Release 2023-12-31'\" && gh pr create --base main --head develop --body \"\"",
+    "dev": "docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up",
+    "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "test": "chmod +x ./run_tests.sh && ./run_tests.sh",
     "cleanup": "docker system prune --force && docker system prune --force --volumes"
+  },
+  "devDependencies": {
+    "@turf/turf": "^6.5.0",
+    "prettier": "^2.8.8"
   }
 }

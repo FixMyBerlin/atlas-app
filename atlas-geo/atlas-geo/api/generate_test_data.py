@@ -1,16 +1,17 @@
 # this is _supposed_ to be quick'n'dirty
-import psycopg2
+import psycopg
 from datetime import datetime, timedelta
 from random import randint
 from db import conn_string
 
+# TODO: 'lit' does not have a verification table anymore
 geometry_table = 'lit'
 verification_table = 'lit_verification'
 
 num_chunks = 100
 chunk_size = 10000
 
-conn = psycopg2.connect(conn_string)
+conn = psycopg.connect(conn_string)
 cursor = conn.cursor()
 cursor.execute(f'select distinct osm_id from {geometry_table};')
 ids = cursor.fetchall()
