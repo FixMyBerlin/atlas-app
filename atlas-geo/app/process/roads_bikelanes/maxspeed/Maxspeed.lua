@@ -44,8 +44,8 @@ function Maxspeed(object)
     "source:maxspeed",
     "check_date:maxspeed",
   }
-  -- TODO: replace with copy
-  CopyTags(tags, maxspeed_data, tags_cc)
+
+  CopyTags(tags, maxspeed_data, tags_cc, "osm_")
 
   -- Freshness of data (AFTER `FilterTags`!)
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed

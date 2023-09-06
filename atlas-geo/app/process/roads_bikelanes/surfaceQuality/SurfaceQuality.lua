@@ -36,7 +36,7 @@ function SurfaceQuality(object)
     "checkdate:smoothness",
   }
   -- TODO: replace with copy
-  CopyTags(tags, surface_data, tags_cc)
+  CopyTags(tags, surface_data, tags_cc, "osm_")
 
   -- Freshness of data (AFTER `FilterTags`!)
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
