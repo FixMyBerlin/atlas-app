@@ -31,12 +31,10 @@ function Lit(object)
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
   if tags.lit ~= nil then
-    lit_data.lit = "special"
-    if (tags.lit == "yes") then
-      lit_data.lit = "lit"
-    end
-    if (tags.lit == "no") then
-      lit_data.lit = "unlit"
+    if (tags.lit == "yes" or tags.lit == "no") then
+      lit_data.lit = tags.lit
+    else
+      lit_data.lit = "special"
     end
   end
 
