@@ -10,7 +10,7 @@ require("ExcludeByWidth")
 require("IsFresh")
 
 local table = osm2pgsql.define_table({
-  name = '_lit_temp',
+  name = 'lit',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'category', type = 'text' },
