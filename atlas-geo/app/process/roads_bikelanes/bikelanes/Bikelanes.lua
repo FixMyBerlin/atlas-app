@@ -71,11 +71,6 @@ function Bikelanes(object)
   -- filter highway classes
   local tags = object.tags
 
-  -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-  if tags.bicycle_road == 'yes' then
-    tags.oneway = tags.oneway or 'implicit_no'
-  end
-
   -- transformations
   local footwayTransformation = {
     highway = "footway",
@@ -114,7 +109,13 @@ function Bikelanes(object)
         IsFresh(object, freshTag, cycleway)
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        cycleway.oneway = cycleway.oneway or 'implicit_yes'
+        if cycleway.oneway == nil then
+          if tags.bicycle_road == 'yes' then
+            tags.oneway = 'implicit_no'
+          else
+            tags.oneway = 'implict_yes'
+          end
+        end
 
         cycleway.offset = sign * width / 2
 
