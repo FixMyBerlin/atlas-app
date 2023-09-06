@@ -12,8 +12,8 @@ function RoadClassification(object)
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
-  local highway_mapping = { road = "unspecified_road_category", steps = "footway" }
-  roadClassification.road_category = highway_mapping[tags.highway] or tags.highway
+  local highway_mapping = { road = "unspecified_road", steps = "footway" }
+  roadClassification.road = highway_mapping[tags.highway] or tags.highway
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
@@ -23,7 +23,7 @@ function RoadClassification(object)
       parking_isle = 'service_parking_aisle'
     }
     -- Fallback:
-    roadClassification.road_category = service_mapping[tags.service] or 'service_uncategorized'
+    roadClassification.road = service_mapping[tags.service] or 'service_uncategorized'
     -- https://taginfo.openstreetmap.org/keys/service#values
     if tags.service == nil then
       tags.category = "service_road"
@@ -32,7 +32,7 @@ function RoadClassification(object)
 
   if tags.bicycle_road == 'yes' then
     -- traffic_sign=DE:244.1
-    roadClassification.road_category = "bicycle_road"
+    roadClassification.road = "bicycle_road"
   end
 
   -- Mischverkehr
@@ -53,7 +53,7 @@ function RoadClassification(object)
     end
   end
 
-  local tags_cc = { "category", "name", "highway", "footway", "access", "service",
+  local tags_cc = { "name", "highway", "footway", "access", "service",
     "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" }
   CopyTags(tags, roadClassification, tags_cc, "osm_")
 
