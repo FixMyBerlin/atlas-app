@@ -16,8 +16,7 @@ run_psql "roads_bikelanes/bikelanes/bikelanes"
 # run_lua "legacy_surfaceQuality/surfaceQuality"
 # run_lua "legacy_roadClassification/roadClassification"
 # run_lua "legacy_maxspeed/maxspeed"
-# Reminder: The 'lit' table is available only after Postprocessing finished
-# run_lua "legacy_lit/lit"
+run_lua "legacy_lit/lit"
 
 # run_lua "legacy_boundaries/boundaries"
 run_lua "boundaries/boundaries"
