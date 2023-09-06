@@ -38,7 +38,7 @@ function RoadClassification(object)
   -- Mischverkehr
   if tags.bicycle ~= 'no' and tags.bicycle ~= 'use_sidepath' then
     if MinorRoadClasses[tags.highway] or MajorRoadClasses[tags.highway] then
-      roadClassification.implicit_shared_lane = true
+      roadClassification.road_implicit_shared_lane = true
     end
   end
 
