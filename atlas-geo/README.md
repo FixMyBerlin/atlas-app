@@ -90,7 +90,7 @@ The workflow is…
    _OR_
 
    ```sh
-   docker compose -f docker-compose.development.yml build && docker compose  -f docker-compose.development.yml --profile osm_processing up
+   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up
    ```
 
 3. Inspect the new results
