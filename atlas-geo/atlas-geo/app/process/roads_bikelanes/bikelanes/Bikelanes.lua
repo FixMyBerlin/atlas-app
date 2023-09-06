@@ -169,7 +169,7 @@ function Bikelanes(object)
     bikelane_presence_self = presence[CENTER_SIGN],
     bikelane_presence_right = presence[RIGHT_SIGN]
   }
-  CopyTags(tags, presence_data, presence_tags_cc)
+  CopyTags(tags, presence_data, presence_tags_cc, "osm_")
 
   return presence_data
 end

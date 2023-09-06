@@ -55,7 +55,7 @@ function RoadClassification(object)
 
   local tags_cc = { "category", "name", "highway", "footway", "access", "service",
     "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" }
-  CopyTags(tags, roadClassification, tags_cc)
+  CopyTags(tags, roadClassification, tags_cc, "osm_")
 
   return roadClassification
 end

@@ -63,8 +63,8 @@ function Lit(object)
     "cycleway:width", -- experimental
   }
 
-  -- TODO: replace with copy
-  CopyTags(tags, lit_data, tags_cc)
+
+  CopyTags(tags, lit_data, tags_cc, "osm_")
 
   -- Freshness of data (AFTER `FilterTags`!)
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
