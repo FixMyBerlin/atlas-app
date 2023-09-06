@@ -32,10 +32,10 @@ services:
       - "8010:7800"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${TILES_TRAEFIK_DNS}.rule=Host(`${TILES_DNS}`)"
-      - "traefik.http.routers.${TILES_TRAEFIK_DNS}.entrypoints=websecure"
-      - "traefik.http.routers.${TILES_TRAEFIK_DNS}.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.${TILES_TRAEFIK_DNS}.tls=true"
+      - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
+      - "traefik.http.routers.tiles.entrypoints=websecure"
+      - "traefik.http.routers.tiles.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.tiles.tls=true"
     networks:
       - app_bridge
     depends_on:
@@ -53,10 +53,10 @@ services:
       - "8020:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.${API_TRAEFIK_DNS}.rule=Host(`${API_DNS}`)"
-      - "traefik.http.routers.${API_TRAEFIK_DNS}.entrypoints=websecure"
-      - "traefik.http.routers.${API_TRAEFIK_DNS}.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.${API_TRAEFIK_DNS}.tls=true"
+      - "traefik.http.routers.api.rule=Host(`${API_URL}`)"
+      - "traefik.http.routers.api.entrypoints=websecure"
+      - "traefik.http.routers.api.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.api.tls=true"
     networks:
       - app_bridge
     depends_on:
