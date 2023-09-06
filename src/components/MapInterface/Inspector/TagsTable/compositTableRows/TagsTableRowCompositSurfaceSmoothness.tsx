@@ -20,29 +20,30 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<Props> = ({
       sourceId={sourceId}
       tagKey={tagKey}
       value={
-        <>
-          {properties['surface'] && (
-            <>
-              {properties['smoothness'] && <>Belag: </>}
-              <ConditionalFormattedValue
-                sourceId={sourceId}
-                tagKey={'surface'}
-                tagValue={properties['surface']}
-              />
-            </>
-          )}
-          {properties['smoothness'] && (
-            <>
-              <br />
-              Zustand:{' '}
-              <ConditionalFormattedValue
-                sourceId={sourceId}
-                tagKey={'smoothness'}
-                tagValue={properties['smoothness']}
-              />
-            </>
-          )}
-        </>
+        <table className="leading-4 w-full">
+          <tbody>
+            <tr>
+              <th className="text-left pr-2 font-medium py-1">Belag</th>
+              <td className="w-full py-1">
+                <ConditionalFormattedValue
+                  sourceId={sourceId}
+                  tagKey={'surface'}
+                  tagValue={properties['surface']}
+                />
+              </td>
+            </tr>
+            <tr className="border-t">
+              <th className="text-left pr-2 font-medium py-1">Zustand</th>
+              <td className="w-full py-1">
+                <ConditionalFormattedValue
+                  sourceId={sourceId}
+                  tagKey={'smoothness'}
+                  tagValue={properties['smoothness']}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       }
     />
   )
