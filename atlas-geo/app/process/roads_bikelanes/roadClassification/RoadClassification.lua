@@ -42,19 +42,18 @@ function RoadClassification(object)
     end
   end
 
-  if tags.oneway == 'yes' then
-    if tags['oneway:bicycle'] == 'no' then
-      tags.oneway = 'car_not_bike'
-    else
-      tags.oneway = 'car_and_bike'
+  if tags.oneway == 'yes' or tags.oneway == 'no' then
+    roadClassification.road_oneway = tags.oneway
+    if tags.oneway == 'yes' and tags.dual_carriageway == "yes" then
+      roadClassification.road_oneway = tags.oneway .. '_dual_carriageway'
     end
-    if tags.dual_carriageway == "yes" then
-      tags.oneway = tags.oneway .. '_dual_carriageway'
-    end
+  end
+  if tags['oneway:bicycle'] == 'no' or tags['oneway:bicycle'] then
+    roadClassification['road_oneway:bicycle'] = tags['oneway:bicycle']
   end
 
   local tags_cc = { "name", "highway", "footway", "access", "service",
-    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway" }
+    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway", "oneway:bicycle" }
   CopyTags(tags, roadClassification, tags_cc, "osm_")
 
   return roadClassification
