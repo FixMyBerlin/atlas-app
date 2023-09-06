@@ -27,17 +27,20 @@ local table = osm2pgsql.define_table({
 -- * @desc Guards extracted to be used inside projcess_*
 -- * @returns `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
-  if not object.tags.amenity then
+  if not (object.tags.amenity or object.tags.shop or object.tags.tourism) then
     return true
   end
 
-  -- We skip values that are on the allow list:
-  if ShoppingAllowedListWithCategories[object.tags.amenity] then
+  -- We skip shop=* because we allow the all; we skip values that are on the allow list
+  if object.tags.shop
+      or ShoppingAllowedListWithCategories[object.tags.amenity]
+      or ShoppingAllowedListWithCategories[object.tags.tourism]
+  then
     return true
   end
 
   -- We skip values that we explicitly desided to ignore:
-  local skip_list = Set({
+  local skip_list_amenity = Set({
     "adult_gaming_centre",
     "animal_breeding",
     "animal_shelter",
@@ -79,9 +82,11 @@ local function ExitProcessing(object)
     "lamp",
     "letter_box",
     "loading_dock",
+    "loading_ramp",
     "lounger",
     "luggage_locker",
     "mobile_library",
+    "mobility_hub",
     "motorcycle_parking",
     "nest_box",
     "nursing_home",
@@ -102,6 +107,7 @@ local function ExitProcessing(object)
     "sanitary_dump_station",
     "shelter",
     "shower",
+    "small_electric_vehicle_parking",
     "smoking_area",
     "stripclub",
     "studio",
@@ -126,9 +132,25 @@ local function ExitProcessing(object)
     "water",
     "watering_place",
     "workshop",
+    "yes",
+  })
+  if skip_list_amenity[object.tags.amenity] then
+    return true
+  end
+  local skip_list_tourism = Set({
+    "wilderness_hut",
+    "guest_house",
+    "gallery",
+    "chalet",
+    "artwork",
+    "apartment",
+    "alpine_hut",
+    "trail_riding_station",
+    "wine_cellar",
+    "no",
     "yes"
   })
-  if skip_list[object.tags.amenity] then
+  if skip_list_tourism[object.tags.tourism] then
     return true
   end
 
@@ -138,9 +160,15 @@ end
 -- Tag processing extracted to be used inside projcess_*
 local function processTags(tags)
   InferAddress(tags, tags)
-  local allowed_tags = MergeArray({ "name", "category", "type", "amenity" }, AddressKeys)
+  local allowed_tags = MergeArray({ "name", "amenity", "tourism" }, AddressKeys)
   FilterTags(tags, Set(allowed_tags))
-  tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
+
+  if (tags.amenity) then
+    tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
+  end
+  if (tags.tourism) then
+    tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/tourism=" .. tags.tourism
+  end
 end
 
 function osm2pgsql.process_node(object)

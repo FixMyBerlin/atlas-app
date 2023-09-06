@@ -1,95 +1,125 @@
-name: Deployment Production
+name: Deploy to IONOS
 
 on:
-  push:
-    branches:
-      - 'main'
+  workflow_call:
+    secrets:
+      SERVICE_NAME:
+        required: true
+      DATABASE_NAME:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      DATABASE_USER:
+        required: true
+      DATABASE_PASSWORD_ENCODED:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      SSH_USERNAME:
+        required: true
+      SSH_PASSWORD:
+        required: true
+      SSH_HOST:
+        required: true
+    inputs:
+      ENVIRONMENT:
+        type: string
+        required: true
+      URL:
+        type: string
+        required: true
+      TILES_URL:
+        type: string
+        required: true
+      API_URL:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-
-    env:
-      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
-      TILESERVER_PORT: 9090
-
+    environment:
+      name: ${{ inputs.ENVIRONMENT }}
+      url: ${{ inputs.URL }}
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Upgrade AWS CLI version and setup lightsailctl
-      run: |
-       aws --version
-       curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-       unzip awscliv2.zip
-       sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
-       which aws
-       aws --version
-       sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
-       sudo chmod +x /usr/local/bin/lightsailctl
+      - name: Upgrade AWS CLI version and setup lightsailctl
+        run: |
+          aws --version
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          which aws
+          aws --version
+          sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
 
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Build app image
-      run: >
-        docker build .
-        --file ./app.Dockerfile
-        --tag public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+      - name: Build app image
+        run: >
+          docker build .
+          --file ./app.Dockerfile
+          --tag public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
-    - name: Push the app image
-      run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-        docker push public.ecr.aws/n0p8j4k5/tarmac/app:${{ github.sha }}
+      - name: Push the app image
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
-    - name: Build API image
-      run: >
-        docker build .
-        --file ./api.Dockerfile
-        --tag public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+      - name: Build API image
+        run: >
+          docker build .
+          --file ./api.Dockerfile
+          --tag public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
-    - name: Push API image
-      run: |
-        aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-        docker push public.ecr.aws/n0p8j4k5/tarmac/api:${{ github.sha }}
+      - name: Push API image
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
-    - name: Copy files to server
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        source: "docker-compose.production.yml,docker-compose.traefik.yml"
-        target: "/srv/tarmac/"
-        overwrite: true
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf"
+          target: "/srv/processing/"
+          overwrite: true
 
-    - name: Stop & start container on VPS
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
-        script: |
-          echo "Stop containers on VPS"
-          cd /srv/tarmac/
-          rm .env.production
-          docker image prune -fa
-          docker compose -f docker-compose.production.yml down
-          echo "Start container on VPS"
-          touch .env.production
-          echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
-          echo PGHOST='${{ secrets.DATABASE_HOST }}' >> .env.production
-          echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
-          echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
-          echo DATABASE_URL='postgres://${{ secrets.DATABASE_USER}}:${{ secrets.DATABASE_PASSWORD_ENCODED}}@${{ secrets.DATABASE_HOST }}/${{ secrets.DATABASE_NAME}}' >> .env.production
-          echo GITHUB_SHA='${{ github.sha }}' >> .env.production
-          docker compose --env-file .env.production  -f docker-compose.production.yml pull
-          docker compose --env-file .env.production  -f docker-compose.production.yml up -d
+      - name: Stop & Start containers on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/processing/
+            echo "Updating '.env'"
+            rm .env
+            touch .env
+            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
+            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
+            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
+            echo API_URL='${{ inputs.API_URL }}' >> .env
+            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
+            echo GITHUB_SHA='${{ github.sha }}' >> .env
+            echo "Stop containers on VPS"
+            docker compose down
+            docker compose -f docker-compose.traefik.yml down
+            echo "Start container on VPS"
+            docker compose -f docker-compose.traefik.yml up -d
+            docker compose up -d
+            docker image prune -fa

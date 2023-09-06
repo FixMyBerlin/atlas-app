@@ -1,24 +1,26 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-OSM_DATADIR="/data/" # needs to be root (in docker)
-OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
+start_time=$(date +%s)
+echo -e "\e[1m\e[7m DOWNLOAD – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
-# OSM_DOWNLOAD_URL=http://download.geofabrik.de/europe/germany/berlin-latest.osm.pbf
-# OSM_DOWNLOAD_FILE=berlin-latest.osm.pbf
-OSM_DOWNLOAD_URL=http://download.geofabrik.de/europe/germany-latest.osm.pbf
-OSM_DOWNLOAD_FILE=germany-latest.osm.pbf
-
-echo "\e[1m\e[7m Download – START \e[27m\e[21m"
-
-if [ "$SKIP_DOWNLOAD" = "skip" ]; then
-  echo "💥 SKIPPED with 'SKIP_DOWNLOAD=skip' in '/docker-compose.yml'"
+OSM_DOWNLOAD_FILE="${OSM_DATADIR}$(basename $OSM_DOWNLOAD_URL)"
+if [ $SKIP_DOWNLOAD == 1 ]; then
+  if [ -f "${OSM_DOWNLOAD_FILE}" ]; then
+    echo "💥 SKIPPED with .env 'SKIP_DOWNLOAD=1'"
+    exit 0;
+  else
+    echo "Can't skip download, no file was found."
+  fi
+fi
+echo "Downloading file: ${OSM_DOWNLOAD_URL}"
+# Note: Showing the progress (locally) is very verbose, unfortunately
+if wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
+  ln -f ${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 else
-  # Docs https://www.man7.org/linux/man-pages/man1/wget.1.html
-  # --show-progress  <--- helpfull when running locally
-  echo "File: ${OSM_DOWNLOAD_URL}"
-  wget --timestamping --quiet ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}
-  cp ${OSM_DATADIR}${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
+  echo "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
 fi
 
-echo "\e[1m\e[7m Download – END \e[27m\e[21m"
+end_time=$(date +%s)
+diff=$((end_time - start_time))
+echo -e "\e[1m\e[7m DOWNLOAD – END \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"

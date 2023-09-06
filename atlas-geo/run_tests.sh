@@ -7,6 +7,6 @@ test_files=($(find . -name "*.test.lua"))
 # Loop through the array "test_files" and run each file with the "lua" command
 for file in "${test_files[@]}"
 do
-    echo "Running lua $file"
+    printf "\033[1m\033[7m Running lua %s \033[0m\n" "$file"
     lua "$file"
 done

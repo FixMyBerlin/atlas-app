@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION public.{func_name}(minlon double precision, minlat double precision, maxlon double precision, maxlat double precision)
+CREATE OR REPLACE FUNCTION public.{func_name}(region geometry)
  RETURNS json
  LANGUAGE sql
 AS $function$
@@ -18,7 +18,7 @@ AS $function$
 	  ) AS feature
 	  FROM (
 	    SELECT * from "{table_name}"
-	    WHERE ST_Transform(geom, 4326) && ST_MakeEnvelope(minlon , minlat , maxlon , maxlat )
+	    WHERE ST_Transform(geom, 4326) && region
 	  ) inputs
 	) features;
 $function$
