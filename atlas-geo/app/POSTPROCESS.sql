@@ -1,5 +1,4 @@
 BEGIN;
-DROP TABLE IF EXISTS lit CASCADE;
 DROP TABLE IF EXISTS bikelanes CASCADE;
 
 ALTER TABLE _bikelanes_temp RENAME TO bikelanes;
