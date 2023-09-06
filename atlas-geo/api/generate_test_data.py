@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from random import randint
 from db import conn_string
 
+# TODO: 'lit' does not have a verification table anymore
 geometry_table = 'lit'
 verification_table = 'lit_verification'
 
