@@ -196,7 +196,13 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['name', 'highway', 'oneway'], // TODO
+      documentedKeys: [
+        'name',
+        'highway',
+        'oneway',
+        //
+        'composit_bikelane_presence',
+      ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },

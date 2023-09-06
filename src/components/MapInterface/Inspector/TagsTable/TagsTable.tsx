@@ -8,6 +8,7 @@ import {
 } from './compositTableRows'
 import { TagsTableRow } from './TagsTableRow'
 import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
+import { TagsTableRowCompositBikelanePresence } from './compositTableRows/TagsTableRowCompositBikelanePresence'
 
 type Props = {
   properties: GeoJSONFeature['properties']
@@ -64,6 +65,16 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case 'composit_surface_smoothness': {
               return (
                 <TagsTableRowCompositSurfaceSmoothness
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case 'composit_bikelane_presence': {
+              return (
+                <TagsTableRowCompositBikelanePresence
                   key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}
