@@ -58,30 +58,6 @@ async def export_bbox(response: Response, type_name: str, minlon: float= 13.3, m
       result = await cur.fetchone()
       return result[0]
 
-@app.get("/export/{type_name}/{osm_id}")
-async def export_region(response: Response, type_name: str, osm_id: int):
-    if type_name not in export_geojson_function_from_type:
-      raise HTTPException(status_code=404, detail="export type unknown")
-
-    async with await psycopg.AsyncConnection.connect(conn_string) as conn:
-      async with conn.cursor() as cur:
-        statement = sql.SQL("SELECT tags->'name' FROM boundaries WHERE osm_id=%s")
-        await cur.execute(statement, (osm_id, ))
-        results = await cur.fetchone()
-        if results == None:
-          raise HTTPException(status_code=404, detail="osm_id not found")
-        region_name, = results
-
-        # Download file directly
-        response.headers["Content-Disposition"] = f'attachment; filename="{region_name}_{type_name}.geojson"'
-        response.headers["Content-Type"] = 'application/geo+json'
-
-        statement = sql.SQL("SELECT * FROM {table_name} (( SELECT ST_Transform(geom, 4326) FROM boundaries WHERE osm_id=%s ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
-        await cur.execute(statement, (osm_id,) )
-        result = await cur.fetchone()
-
-        return result[0]
-
 @app.get("/boundaries/")
 async def export_boundaries(response: Response, ids: Annotated[list[int], Query()]):
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:

@@ -18,7 +18,7 @@ AS $function$
 	  ) AS feature
 	  FROM (
 	    SELECT * from "{table_name}"
-	    WHERE ST_Intersects(ST_Transform(geom, 4326), region)
+	    WHERE ST_Transform(geom, 4326) && region
 	  ) inputs
 	) features;
 $function$
