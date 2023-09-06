@@ -157,12 +157,12 @@ function Bikelanes(object)
   -- replace all nil values with 'missing'
   for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
 
-  local presence_tags_cc = Set({
+  local presence_tags_cc = {
     'name',
     'highway',
     'oneway',
     'dual_carriageway',
-  })
+  }
 
   local presence_data = {
     bikelane_presence_left = presence[LEFT_SIGN],

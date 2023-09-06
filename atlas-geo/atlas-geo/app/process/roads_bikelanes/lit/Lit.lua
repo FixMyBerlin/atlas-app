@@ -44,7 +44,7 @@ function Lit(object)
   -- TODO: Extact into helper
   tags.name = tags.name or tags['is_sidepath:of:name']
 
-  local tags_cc = Set({
+  local tags_cc = {
     "access",
     "area",
     "category",
@@ -61,7 +61,7 @@ function Lit(object)
     "width",          -- experimental
     "sidewalk:width", -- experimental
     "cycleway:width", -- experimental
-  })
+  }
 
   -- TODO: replace with copy
   CopyTags(tags, lit_data, tags_cc)
