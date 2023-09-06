@@ -31,12 +31,12 @@ function Lit(object)
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
   if tags.lit ~= nil then
-    lit_data.lit_category = "special"
+    lit_data.lit = "special"
     if (tags.lit == "yes") then
-      lit_data.lit_category = "lit"
+      lit_data.lit = "lit"
     end
     if (tags.lit == "no") then
-      lit_data.lit_category = "unlit"
+      lit_data.lit = "unlit"
     end
   end
 
@@ -47,11 +47,8 @@ function Lit(object)
   local tags_cc = {
     "access",
     "area",
-    "category",
-    "check_date:lit",
     "footway",
     "highway",
-    "is_present",
     "is_sidepath",
     "lit",
     "surface",
@@ -68,7 +65,7 @@ function Lit(object)
 
   -- Freshness of data (AFTER `FilterTags`!)
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
-  if lit_data.lit_category then
+  if lit_data.lit then
     IsFresh(object, 'check_date:lit', lit_data, 'lit')
   end
   return lit_data

@@ -30,10 +30,8 @@ function SurfaceQuality(object)
   local tags_cc = {
     "name",
     "highway",
-    "raw_surface",
-    "raw_smoothness",
-    "checkdate:surface",
-    "checkdate:smoothness",
+    "surface",
+    "smoothness",
   }
   -- TODO: replace with copy
   CopyTags(tags, surface_data, tags_cc, "osm_")

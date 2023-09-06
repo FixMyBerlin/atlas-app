@@ -10,7 +10,7 @@ require("Set")
 function Maxspeed(object)
   local tags = object.tags
 
-  local maxspeed_data = { raw_maxspeed = tags.maxspeed } -- Preserve original value since we use `maxspeed` for our processed data
+  local maxspeed_data = {}
 
   -- Try to find maxspeed information in the following order:
   -- 1. `maxspeed` tag
@@ -36,13 +36,13 @@ function Maxspeed(object)
 
   -- all tags that are shown on the application
   local tags_cc = {
+    "maxspeed",
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
     "maxspeed:type",
     "zone:maxspeed",
     "source:maxspeed",
-    "check_date:maxspeed",
   }
 
   CopyTags(tags, maxspeed_data, tags_cc, "osm_")
