@@ -37,7 +37,7 @@ export const topic_poiClassification_tarmac: MapDataTopic = {
         },
         {
           id: 'besorgungen',
-          name: 'Besorgungen',
+          name: 'Grundversorgung',
           style: { type: 'circle', color: '#e709fb' },
         },
         {
