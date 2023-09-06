@@ -5,7 +5,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit_legacy'
 const source = 'tarmac_lit'
-const sourceLayer = 'public.lit_verified'
+const sourceLayer = 'public.lit'
 export type TopicLitIdLegacy = typeof topic
 export type TopicLitStyleIdsLegacy = 'default' | 'completeness' | 'verification' | 'freshness'
 

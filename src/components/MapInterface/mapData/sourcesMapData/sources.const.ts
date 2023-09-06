@@ -36,7 +36,6 @@ export type SourceExportApiIdentifier =
   // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
   | 'buildings'
   | 'landuse'
-  | 'lit_verified'
   | 'lit'
   | 'maxspeed'
   | 'places'
@@ -275,9 +274,8 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
-    // https://tiles.radverkehrsatlas.de/public.lit_verified.json
     id: 'tarmac_lit',
-    tiles: `${tilesUrl}/public.lit_verified/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
@@ -294,10 +292,7 @@ export const sources: MapDataSource<
       ],
     },
     // presence: { enabled: true },
-    verification: {
-      enabled: true,
-      apiIdentifier: 'lit',
-    },
+    verification: { enabled: false },
     freshness: {
       enabled: true,
       freshConfigs: [
