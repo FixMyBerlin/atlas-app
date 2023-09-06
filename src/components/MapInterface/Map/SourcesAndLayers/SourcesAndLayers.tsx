@@ -10,7 +10,7 @@ import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { wrapFilterWithAll } from './utils'
-import { useBeforeId } from './utils/useBeforeId'
+import { beforeId } from './utils/beforeId'
 
 // We add source+layer map-components for all themes and all topics of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -21,7 +21,7 @@ import { useBeforeId } from './utils/useBeforeId'
 // However, we do not want to bloat our DOM, so we only render active themes and topics.
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const { config: configThemes } = useSearch<LocationGenerics>()
+  const { config: configThemes, bg: backgroundId } = useSearch<LocationGenerics>()
 
   const activeConfigThemes = configThemes?.filter((th) => th.active === true)
   if (!activeConfigThemes?.length) return null
@@ -99,11 +99,6 @@ export const SourcesAndLayers: React.FC = () => {
                           }).find((l) => l.type === layer.type)?.paint
                         : (layer.paint as any)
 
-                      const beforeId = useBeforeId({
-                        topicData: curTopicData,
-                        layerType: layer.type,
-                      })
-
                       const layerProps = {
                         id: layerId,
                         source: sourceId,
@@ -112,7 +107,11 @@ export const SourcesAndLayers: React.FC = () => {
                         layout: layout,
                         filter: layerFilter,
                         paint: layerPaint,
-                        beforeId,
+                        beforeId: beforeId({
+                          backgroundId,
+                          topicData: curTopicData,
+                          layerType: layer.type,
+                        }),
                       }
 
                       // The verification style layer in Mapbox Studio has to include this string
