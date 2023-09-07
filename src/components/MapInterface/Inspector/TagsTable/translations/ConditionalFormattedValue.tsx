@@ -11,6 +11,11 @@ type Props = {
   tagValue: string
 }
 
+// In atlas-geo, we started to prefix all raw values with `osm__`.
+const prefixWithOsm = (tagKey: string) => {
+  return `osm_${tagKey}`
+}
+
 export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
   // Some data should not be "translated"; we want to show the raw string.
   const sourceData = getDatasetOrSourceData(sourceId)
@@ -22,19 +27,22 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     return <code>{String(tagValue) || '–'}</code>
   }
 
-  // Some values shall be exposed as is, since they are untranslatable (`name`) or translated in `atlas-geo`.
+  // Some values are translated in the DB in `atlas-geo`, we keep them as is.
   const categoryTranslatedAlready = sourceId == 'tarmac_poiClassification' && tagKey == 'category'
-  if (
-    [
-      'name',
-      'highway_name',
-      'highway:name', // bietigheim-bissingen_parking_areas
-      'maxstay:conditional', // bietigheim-bissingen_parking_areas
-      'operator', // bietigheim-bissingen_parking_areas
-      'description',
-    ].includes(tagKey) ||
-    categoryTranslatedAlready
-  ) {
+  if (categoryTranslatedAlready) {
+    return <>{tagValue}</>
+  }
+
+  // Some values are untranslatable (eg. `name`), we keep them as is.
+  const keepAsIs = [
+    'name',
+    'highway_name',
+    'highway:name', // bietigheim-bissingen_parking_areas
+    'maxstay:conditional', // bietigheim-bissingen_parking_areas
+    'operator', // bietigheim-bissingen_parking_areas
+    'description',
+  ]
+  if (keepAsIs.includes(tagKey) || keepAsIs.map((v) => prefixWithOsm(v)).includes(tagKey)) {
     return <>{tagValue}</>
   }
 
@@ -43,6 +51,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     { key: 'capacity', suffix: undefined },
     { key: 'highway_width_proc_effective', suffix: 'm' }, // parkraumParkingStats
     { key: 'length', suffix: 'm' },
+    { key: 'maxspeed', suffix: 'km/h' },
     { key: 'maxspeed', suffix: 'km/h' },
     { key: 'population', suffix: 'Einwohner:innen' },
     { key: 'width', suffix: 'm' },
@@ -58,7 +67,9 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     { key: 'maxstay', suffix: 'Minuten' }, // bietigheim-bissingen_parking_areas
     { key: 'parking:levels', suffix: 'Stockwerke' }, // bietigheim-bissingen_parking_areas
   ]
-  const numberConfig = numberConfigs.find((c) => c.key === tagKey)
+  const numberConfig = numberConfigs.find(
+    (c) => c.key === tagKey || prefixWithOsm(c.key) === tagKey,
+  )
   if (numberConfig) {
     return (
       <>
@@ -68,7 +79,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   }
 
   const dateKeys = ['population:date']
-  if (dateKeys.includes(tagKey)) {
+  if (dateKeys.includes(tagKey) || dateKeys.map((v) => prefixWithOsm(v)).includes(tagKey)) {
     return (
       <span className="group">
         <FormattedDate value={tagValue} />{' '}
@@ -103,6 +114,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   // Keys need to be source specific, otherwise there is interference with the next step.
   const lookThereForKey: Record<string, string> = {
     'tarmac_roadClassification--category': 'highway',
+    'tarmac_roads--road': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
     (k) => k === `${sourceId}--${tagKey}`,
