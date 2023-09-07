@@ -1,13 +1,14 @@
-import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
-import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
+import { TagsTableRow } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations'
+import { CompositTableRow } from './types'
 
-type Props = Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
-  properties: GeoJSONFeature['properties']
-}
-
-export const TagsTableRowCompositHighway: React.FC<Props> = ({ sourceId, tagKey, properties }) => {
+export const tableKeyHighway = 'composit_highway'
+export const TagsTableRowCompositHighway: React.FC<CompositTableRow> = ({
+  sourceId,
+  tagKey,
+  properties,
+}) => {
   if (!properties['highway'] && !properties['_parent_highway']) return null
 
   const precedenceHighway = properties['_parent_highway'] || properties['highway']

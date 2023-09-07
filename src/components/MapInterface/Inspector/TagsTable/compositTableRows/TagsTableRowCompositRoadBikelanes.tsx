@@ -1,11 +1,7 @@
-import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations'
-
-type Props = Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
-  properties: GeoJSONFeature['properties']
-}
+import { CompositTableRow } from './types'
 
 const CompositRoadBikelanesTableValue = ({
   sourceId, // always tarmac_roads
@@ -21,7 +17,8 @@ const CompositRoadBikelanesTableValue = ({
   return <ConditionalFormattedValue sourceId={sourceId} tagKey={'category'} tagValue={tagValue} />
 }
 
-export const TagsTableRowCompositRoadBikelanes: React.FC<Props> = ({
+export const tableKeyRoadBikelanes = 'composit_road_bikelanes'
+export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
   sourceId, // always tarmac_roads
   tagKey, // 'composit_bikelane' used to look the key translation
   properties,

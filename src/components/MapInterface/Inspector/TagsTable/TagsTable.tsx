@@ -5,10 +5,21 @@ import {
   TagsTableRowCompositHighway,
   TagsTableRowCompositSurfaceSmoothness,
   TagsTableRowCompositTrafficSign,
+  tableKeyHighway,
+  tableKeySurfaceSmoothness,
+  tableKeyTrafficSign,
 } from './compositTableRows'
 import { TagsTableRow } from './TagsTableRow'
 import { DatasetIds } from '@components/MapInterface/mapData/sourcesMapData/datasets'
-import { TagsTableRowCompositRoadBikelanes } from './compositTableRows/TagsTableRowCompositRoadBikelanes'
+import {
+  TagsTableRowCompositRoadBikelanes,
+  tableKeyRoadBikelanes,
+} from './compositTableRows/TagsTableRowCompositRoadBikelanes'
+import {
+  TagsTableRowCompositMaxspeed,
+  tableKeyMaxspeed,
+} from './compositTableRows/TagsTableRowCompositMaxspeed'
+import { TagsTableRowCompositLit, tableKeyLit } from './compositTableRows/TagsTableRowCompositLit'
 
 type Props = {
   properties: GeoJSONFeature['properties']
@@ -42,7 +53,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
 
           // Handle _composit_ table rows and default case
           switch (cleanedKey) {
-            case 'traffic_sign': {
+            case tableKeyTrafficSign: {
               return (
                 <TagsTableRowCompositTrafficSign
                   key={cleanedKey}
@@ -52,7 +63,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
                 />
               )
             }
-            case 'composit_highway': {
+            case tableKeyHighway: {
               return (
                 <TagsTableRowCompositHighway
                   key={cleanedKey}
@@ -62,7 +73,7 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
                 />
               )
             }
-            case 'composit_surface_smoothness': {
+            case tableKeySurfaceSmoothness: {
               return (
                 <TagsTableRowCompositSurfaceSmoothness
                   key={cleanedKey}
@@ -72,9 +83,29 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
                 />
               )
             }
-            case 'composit_road_bikelanes': {
+            case tableKeyRoadBikelanes: {
               return (
                 <TagsTableRowCompositRoadBikelanes
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyMaxspeed: {
+              return (
+                <TagsTableRowCompositMaxspeed
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyLit: {
+              return (
+                <TagsTableRowCompositLit
                   key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}

@@ -1,11 +1,7 @@
-import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
-import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
+import { TagsTableRow } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations'
-
-type Props = Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
-  properties: GeoJSONFeature['properties']
-}
+import { CompositTableRow } from './types'
 
 // Gute Liste:
 // https://wiki.openstreetmap.org/wiki/DE:Verkehrszeichen_in_Deutschland
@@ -87,7 +83,8 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const TagsTableRowCompositTrafficSign: React.FC<Props> = ({
+export const tableKeyTrafficSign = 'traffic_sign'
+export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,
   properties,

@@ -133,6 +133,8 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'surface',
     'category',
     'traffic_sign',
+    'confidence', // true key is `maxspeed_confidence`, `surface_confidence`, … but we overwrite that when passing props
+    'fresh', // true key is `maxspeed_fresh`, `surface_fresh`, … but we overwrite that when passing props
   ]
   if (nonCategorizedTagKeys.includes(tagKey)) {
     translationKey = `ALL--${tagKey}=${tagValue}`
