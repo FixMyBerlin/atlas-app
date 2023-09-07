@@ -200,8 +200,8 @@ export const sources: MapDataSource<
         'name',
         'highway',
         'oneway',
+        'composit_road_bikelanes',
         //
-        'composit_bikelane_presence',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
