@@ -197,11 +197,26 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
-        'name',
-        'highway',
-        'oneway',
+        'osm_name',
+        'road',
+        'road_oneway',
+        'road_oneway:bicycle__if_present',
+        //
+        'composit_surface_smoothness',
+        //
+        'lit',
+        'osm_lit__if_present',
+        //
+        'maxspeed',
+        'maxspeed_source',
+        'maxspeed:backward__if_present',
+        'maxspeed:forward__if_present',
+        'maxspeed:conditional__if_present',
+        //
         'composit_road_bikelanes',
         //
+        'traffic_sign',
+        // TODO
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
