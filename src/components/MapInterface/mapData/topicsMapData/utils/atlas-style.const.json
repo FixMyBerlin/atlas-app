@@ -304,10 +304,7 @@
       "source-layer": "osmHighwaysUnclipped",
       "filter": [
         "match",
-        [
-          "get",
-          "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"
-        ],
+        ["get", "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"],
         ["true"],
         true,
         false
@@ -373,13 +370,7 @@
             false
           ],
           "hsl(47, 94%, 46%)",
-          [
-            "match",
-            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Right"],
-            ["bad"],
-            true,
-            false
-          ],
+          ["match", ["get", "FMC:Category:SurfaceData:ScopeCycleway:Right"], ["bad"], true, false],
           "#fa610f",
           [
             "match",
@@ -397,13 +388,7 @@
             false
           ],
           "#e4b407",
-          [
-            "match",
-            ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"],
-            ["bad"],
-            true,
-            false
-          ],
+          ["match", ["get", "FMC:Category:SurfaceData:ScopeCycleway:Left"], ["bad"], true, false],
           "#fa610f",
           "hsla(252, 94%, 10%, 0.16)"
         ],
@@ -654,9 +639,11 @@
         "line-width": ["interpolate", ["linear"], ["zoom"], 10, 0.5, 13, 2],
         "line-color": [
           "case",
+          ["match", ["get", "FMC:Category:BicycleWayData:stufen"], ["true"], true, false],
+          "hsla(232, 99%, 39%, 0.34)",
           [
             "match",
-            ["get", "FMC:Category:BicycleWayData:stufen"],
+            ["get", "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"],
             ["true"],
             true,
             false
@@ -664,21 +651,7 @@
           "hsla(232, 99%, 39%, 0.34)",
           [
             "match",
-            [
-              "get",
-              "FMC:Category:BicycleWayData:verkehrsberuhigterBereichMitFahrradFrei"
-            ],
-            ["true"],
-            true,
-            false
-          ],
-          "hsla(232, 99%, 39%, 0.34)",
-          [
-            "match",
-            [
-              "get",
-              "FMC:Category:BicycleWayData:fussgaengerzonenWegFahrradFrei"
-            ],
+            ["get", "FMC:Category:BicycleWayData:fussgaengerzonenWegFahrradFrei"],
             ["true"],
             true,
             false
@@ -700,26 +673,10 @@
       "source": "composite",
       "source-layer": "osmHighwaysUnclipped",
       "paint": {
-        "line-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          0,
-          0.5,
-          11.36,
-          1.5,
-          22,
-          5
-        ],
+        "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.5, 11.36, 1.5, 22, 5],
         "line-color": [
           "case",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"],
-            ["true"],
-            true,
-            false
-          ],
+          ["match", ["get", "FMC:Category:HighwayTypeData:typWohnstrasse"], ["true"], true, false],
           "hsl(163, 56%, 51%)",
           [
             "match",
@@ -729,21 +686,9 @@
             false
           ],
           "hsl(40, 96%, 44%)",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"],
-            ["true"],
-            true,
-            false
-          ],
+          ["match", ["get", "FMC:Category:HighwayTypeData:typFreiGefuehrt"], ["true"], true, false],
           "hsla(313, 18%, 69%, 0.37)",
-          [
-            "match",
-            ["get", "FMC:Category:HighwayTypeData:typAusserorts"],
-            ["true"],
-            true,
-            false
-          ],
+          ["match", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ["true"], true, false],
           "hsl(18, 97%, 47%)",
           ["==", ["get", "FMC:Category:HighwayTypeData:typAusserorts"], ""],
           "hsla(97, 56%, 51%, 0)",
@@ -757,13 +702,7 @@
       "type": "line",
       "source": "composite",
       "source-layer": "osmHighwaysUnclipped",
-      "filter": [
-        "match",
-        ["get", "FMC:Category:MaxspeedData"],
-        ["true"],
-        true,
-        false
-      ],
+      "filter": ["match", ["get", "FMC:Category:MaxspeedData"], ["true"], true, false],
       "paint": {
         "line-color": [
           "match",
@@ -923,7 +862,7 @@
           "#960854",
           ["Bildung"],
           "#626060",
-          ["Besorgungen"],
+          ["Grundversorgung"],
           "#e709fb",
           ["Einkauf"],
           "#0e3ecd",
@@ -977,26 +916,10 @@
       "paint": {
         "circle-color": "hsl(209, 76%, 38%)",
         "circle-stroke-color": "hsl(0, 8%, 97%)",
-        "circle-stroke-width": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          10,
-          1,
-          12,
-          2
-        ],
+        "circle-stroke-width": ["interpolate", ["linear"], ["zoom"], 10, 1, 12, 2],
         "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 1.5, 12, 3],
         "circle-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1],
-        "circle-stroke-opacity": [
-          "interpolate",
-          ["linear"],
-          ["zoom"],
-          10,
-          0,
-          11,
-          1
-        ]
+        "circle-stroke-opacity": ["interpolate", ["linear"], ["zoom"], 10, 0, 11, 1]
       }
     },
     {
@@ -1033,14 +956,7 @@
         "line-color": [
           "match",
           ["get", "highway"],
-          [
-            "motorway",
-            "motorway_link",
-            "primary",
-            "primary_link",
-            "trunk",
-            "trunk_link"
-          ],
+          ["motorway", "motorway_link", "primary", "primary_link", "trunk", "trunk_link"],
           "hsl(0, 0%, 3%)",
           "hsla(0, 90%, 5%, 0)"
         ],
@@ -1133,13 +1049,7 @@
       "paint": {
         "fill-color": [
           "case",
-          [
-            "match",
-            ["get", "waterway"],
-            ["canal", "drain", "river"],
-            true,
-            false
-          ],
+          ["match", ["get", "waterway"], ["canal", "drain", "river"], true, false],
           "hsl(0, 2%, 18%)",
           ["match", ["get", "aeroway"], ["aerodrome"], true, false],
           "hsl(230, 22%, 27%)",
@@ -1150,13 +1060,7 @@
           "case",
           ["match", ["get", "aeroway"], ["aerodrome"], true, false],
           "pedestrian-polygon",
-          [
-            "match",
-            ["get", "waterway"],
-            ["canal", "drain", "river"],
-            true,
-            false
-          ],
+          ["match", ["get", "waterway"], ["canal", "drain", "river"], true, false],
           "waterfall",
           "pedestrian-polygon"
         ]
@@ -1171,26 +1075,12 @@
       },
       "source": "composite",
       "source-layer": "poiPlaces",
-      "filter": [
-        "match",
-        ["get", "FMC:Category:poiPlaces"],
-        ["true"],
-        true,
-        false
-      ],
+      "filter": ["match", ["get", "FMC:Category:poiPlaces"], ["true"], true, false],
       "paint": {
         "circle-stroke-color": "#d8cd03",
         "circle-opacity": 0.7,
         "circle-stroke-width": 2,
-        "circle-radius": [
-          "interpolate",
-          ["linear"],
-          ["get", "population"],
-          100,
-          5,
-          91116,
-          40
-        ]
+        "circle-radius": ["interpolate", ["linear"], ["get", "population"], 100, 5, 91116, 40]
       }
     },
     {
@@ -1225,10 +1115,7 @@
           1
         ],
         "text-anchor": "top",
-        "text-field": [
-          "to-string",
-          ["concat", ["get", "name"], " \n ", ["get", "population"]]
-        ],
+        "text-field": ["to-string", ["concat", ["get", "name"], " \n ", ["get", "population"]]],
         "icon-padding": 0
       },
       "paint": {

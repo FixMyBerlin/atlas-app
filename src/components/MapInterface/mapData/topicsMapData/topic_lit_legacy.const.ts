@@ -48,7 +48,7 @@ export const topic_lit_legacy: MapDataTopic = {
       name: 'Inhalte',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_lit',
+        group: 'atlas_old_lit',
         source,
         sourceLayer,
       }),
@@ -60,12 +60,12 @@ export const topic_lit_legacy: MapDataTopic = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_lit_complete',
+          group: 'atlas_lit_complete', // only roads
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'atlas_lit',
+          group: 'atlas_old_lit',
           source,
           sourceLayer,
         }),
@@ -83,64 +83,17 @@ export const topic_lit_legacy: MapDataTopic = {
       ],
     },
     {
-      id: 'verification',
-      name: 'Inhalte & Prüf-Status',
-      desc: null,
-      layers: [
-        mapboxStyleLayers({
-          group: 'atlas_lit_verified',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
-          group: 'atlas_lit',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [
-        ...defaultLegend,
-        // {
-        //   id: 'spacer',
-        // },
-        {
-          id: 'verification-missing',
-          name: 'Daten richtig',
-          style: {
-            type: 'line',
-            color: 'hsl(107, 88%, 57%)',
-          },
-        },
-        {
-          id: 'verification-rejected',
-          name: 'Daten überarbeiten',
-          style: {
-            type: 'line',
-            color: 'hsl(0, 100%, 41%)',
-          },
-        },
-        {
-          id: 'verification-accepted',
-          name: 'Überprüfung steht aus',
-          style: {
-            type: 'line',
-            color: '#fa7fe2',
-          },
-        },
-      ],
-    },
-    {
       id: 'freshness',
       name: 'Inhalte & Aktualität',
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_lit_fresh',
+          group: 'atlas_old_lit_fresh',
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'atlas_lit',
+          group: 'atlas_old_lit',
           source,
           sourceLayer,
         }),

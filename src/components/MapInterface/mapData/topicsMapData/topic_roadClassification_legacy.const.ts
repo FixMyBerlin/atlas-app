@@ -20,7 +20,7 @@ export const topic_roadClassification_legacy: MapDataTopic = {
       name: 'Standard',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
-        group: 'atlas_roadclass_roadclass',
+        group: 'atlas_old_roadclassification',
         source,
         sourceLayer,
       }),
@@ -79,12 +79,12 @@ export const topic_roadClassification_legacy: MapDataTopic = {
       desc: 'Hervorhebung von Einbahnstraßen.',
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_roadclass_einbahnstrasse',
+          group: 'atlas_oneway',
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'atlas_roadclass_roadclass',
+          group: 'atlas_old_roadclassification',
           source,
           sourceLayer,
         }),

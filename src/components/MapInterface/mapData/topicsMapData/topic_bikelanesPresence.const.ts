@@ -21,7 +21,7 @@ export const topic_bikelanesPresence: MapDataTopic = {
       name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_bikelanespresence_complete',
+        group: 'atlas_bikelane_presence',
         source,
         sourceLayer,
       }),

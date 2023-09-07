@@ -19,13 +19,13 @@ export const topic_maxspeed: MapDataTopic = {
       id: 'default',
       name: 'Hohe Geschwindigkeiten',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_roadclass_maxspeed', source, sourceLayer }),
+      layers: mapboxStyleLayers({ group: 'atlas_maxspeed', source, sourceLayer }),
     },
     {
       id: 'details',
       name: 'Details',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_roadclass_maxspeed_details', source, sourceLayer }),
+      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_details', source, sourceLayer }),
     },
     // {
     //   id: 'source',

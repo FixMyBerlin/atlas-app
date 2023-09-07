@@ -3,11 +3,10 @@ import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'roadClassification'
-const source = 'tarmac_roadClassification'
-const sourceLayer = 'public.roadClassification'
+const source = 'tarmac_roads'
+const sourceLayer = 'public.roads'
 export type TopicRoadClassificationId = typeof topicId
-export type TopicRoadClassificationStyleIds = 'default' | 'oneway'
-
+export type TopicRoadClassificationStyleIds = 'default' | 'oneway' | 'road_implicit_shared_lane'
 export const topic_roadClassification: MapDataTopic = {
   id: topicId,
   name: 'Straßentypen (new)',
@@ -20,7 +19,7 @@ export const topic_roadClassification: MapDataTopic = {
       name: 'Standard',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
-        group: 'atlas_roadclass_roadclass',
+        group: 'atlas_roadclassification',
         source,
         sourceLayer,
       }),
@@ -74,12 +73,12 @@ export const topic_roadClassification: MapDataTopic = {
       desc: 'Hervorhebung von Einbahnstraßen.',
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_roadclass_einbahnstrasse',
+          group: 'atlas_oneway',
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'atlas_roadclass_roadclass',
+          group: 'atlas_roadclassification',
           source,
           sourceLayer,
         }),
@@ -102,6 +101,17 @@ export const topic_roadClassification: MapDataTopic = {
           },
         },
       ],
+    },
+    {
+      id: 'road_implicit_shared_lane',
+      name: 'Mischverkehr',
+      desc: 'Fahrrad führung im Mischverkehr.',
+      layers: mapboxStyleLayers({
+        group: 'atlas_mischverkehr',
+        source,
+        sourceLayer,
+      }),
+      legends: undefined,
     },
   ],
 }

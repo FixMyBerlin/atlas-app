@@ -83,53 +83,6 @@ export const topic_lit: MapDataTopic = {
       ],
     },
     {
-      id: 'verification',
-      name: 'Inhalte & Prüf-Status',
-      desc: null,
-      layers: [
-        mapboxStyleLayers({
-          group: 'atlas_lit_verified',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
-          group: 'atlas_lit',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [
-        ...defaultLegend,
-        // {
-        //   id: 'spacer',
-        // },
-        {
-          id: 'verification-missing',
-          name: 'Daten richtig',
-          style: {
-            type: 'line',
-            color: 'hsl(107, 88%, 57%)',
-          },
-        },
-        {
-          id: 'verification-rejected',
-          name: 'Daten überarbeiten',
-          style: {
-            type: 'line',
-            color: 'hsl(0, 100%, 41%)',
-          },
-        },
-        {
-          id: 'verification-accepted',
-          name: 'Überprüfung steht aus',
-          style: {
-            type: 'line',
-            color: '#fa7fe2',
-          },
-        },
-      ],
-    },
-    {
       id: 'freshness',
       name: 'Inhalte & Aktualität',
       desc: null,
