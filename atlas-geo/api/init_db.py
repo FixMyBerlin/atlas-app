@@ -1,4 +1,4 @@
-from db_configuration import export_geojson_function_from_type, verification_tables, verification_table, verified_table
+from db_configuration import export_tables, verification_tables, verification_table, verified_table, export_function
 from db import conn_string
 import psycopg
 from pathlib import Path
@@ -13,9 +13,10 @@ def create_or_replace_export_functions():
     print("Starting INIT of database for exports")
     with open(sql_functions_path, "r") as f:
       sql = f.read()
-    for table_name, func_name in export_geojson_function_from_type.items():
-      print('Create function', func_name, ' for table ', table_name)
-      processed_sql = sql.replace('{func_name}', func_name).replace('{table_name}', table_name)
+    for table_name in export_tables:
+      function_name = export_function(table_name)
+      print('Create function', function_name, ' for table ', table_name)
+      processed_sql = sql.replace('{function_name}', function_name).replace('{table_name}', table_name)
       cursor.execute(processed_sql)
 
     conn.commit()

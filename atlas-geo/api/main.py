@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from typing import Union, Annotated
 from psycopg import sql
 from psycopg.rows import dict_row
-from db_configuration import valid_verified_status, export_geojson_function_from_type, verification_tables, verification_table
+from db_configuration import valid_verified_status, export_tables, verification_tables, verification_table, export_function
 from db import conn_string
 import psycopg
 import json
@@ -44,7 +44,7 @@ app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 @app.get("/export/{type_name}")
 async def export_bbox(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
-  if type_name not in export_geojson_function_from_type:
+  if type_name not in export_tables:
     raise HTTPException(status_code=404, detail="export type unknown")
 
   async with await psycopg.AsyncConnection.connect(conn_string) as conn:
@@ -53,7 +53,7 @@ async def export_bbox(response: Response, type_name: str, minlon: float= 13.3, m
       response.headers["Content-Disposition"] = f'attachment; filename="{type_name}.geojson"'
       response.headers["Content-Type"] = 'application/geo+json'
 
-      statement = sql.SQL("SELECT * FROM {table_name} (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(%s, %s, %s, %s), 4326) ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
+      statement = sql.SQL("SELECT * FROM geo.{table_name} (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(%s, %s, %s, %s), 4326) ));").format(table_name=sql.Identifier(export_function(type_name)))
       await cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
       result = await cur.fetchone()
       return result[0]
@@ -63,7 +63,7 @@ async def export_boundaries(response: Response, ids: Annotated[list[int], Query(
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:
       async with conn.cursor() as cur:
         # Check if ids are available
-        statement = sql.SQL("SELECT osm_id FROM boundaries WHERE osm_id = ANY(%s)")
+        statement = sql.SQL("SELECT osm_id FROM geo.boundaries WHERE osm_id = ANY(%s)")
         await cur.execute(statement, (ids, ))
         results = await cur.fetchall()
         if results == None or len(results) != len(ids):
@@ -72,7 +72,7 @@ async def export_boundaries(response: Response, ids: Annotated[list[int], Query(
         response.headers["Content-Disposition"] = 'attachment; filename="boundaries_'+ '_'.join(map(str, ids)) +'.geojson"'
         response.headers["Content-Type"] = 'application/geo+json'
 
-        statement = sql.SQL("SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom FROM boundaries WHERE osm_id = ANY(%s)")
+        statement = sql.SQL("SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom FROM geo.boundaries WHERE osm_id = ANY(%s)")
         await cur.execute(statement, (ids, ) )
         result = await cur.fetchone()
 
@@ -87,12 +87,12 @@ async def retrieve_verify_status(response: Response, type_name: str, osm_id: int
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC LIMIT 1").format(table_name=sql.Identifier(verification_table(type_name)))
+        statement = sql.SQL("SELECT * FROM geo.{table_name} WHERE osm_id = %s ORDER BY verified_at DESC LIMIT 1").format(table_name=sql.Identifier(verification_table(type_name)))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchone()
         if results == None:
-          statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name))
+          statement = sql.SQL("SELECT * FROM geo.{table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name))
           await cur.execute(statement, (osm_id,))
           results = await cur.fetchone()
           if results == None:
@@ -111,7 +111,7 @@ async def retrieve_verify_history(response: Response, type_name: str, osm_id: in
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC").format(table_name=sql.Identifier(verification_table(type_name)))
+        statement = sql.SQL("SELECT * FROM geo.{table_name} WHERE osm_id = %s ORDER BY verified_at DESC").format(table_name=sql.Identifier(verification_table(type_name)))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchall()
@@ -132,7 +132,7 @@ async def verify_osm_object(response: Response, type_name: str, osm_type: str, o
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT osm_id FROM {table_name} l WHERE l.osm_id = %s").format(table_name=sql.Identifier(type_name))
+        statement = sql.SQL("SELECT osm_id FROM geo.{table_name} l WHERE l.osm_id = %s").format(table_name=sql.Identifier(type_name))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchone()
