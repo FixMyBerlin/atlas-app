@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION {function_name}(region geometry)
+CREATE OR REPLACE FUNCTION geo.{function_name}(region geometry)
  RETURNS json
  LANGUAGE sql
 AS $function$
