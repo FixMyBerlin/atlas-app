@@ -24,6 +24,6 @@ RUN_TIME=`date -d@$PROCESS_RUN_TIME_DIFF -u +%H:%M`
 echo "Processing took $RUN_TIME h"
 echo "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} and runtime to metadata table 'bikelanes'"
 
-psql -q -c "COMMENT ON TABLE bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
+psql -q -c "COMMENT ON TABLE geo.bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
 
 echo -e "\e[1m\e[7m Metadata – END \e[27m\e[21m\e[0m"

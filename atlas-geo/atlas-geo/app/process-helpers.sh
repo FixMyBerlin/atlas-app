@@ -22,7 +22,7 @@ run_lua() {
   # `--verbose` (for --log-level=debug)
   # `--log-sql`
   # maybe even `--log-sql-data` // "This will write out a huge amount of data! "
-  ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
+  ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --schema=geo --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
