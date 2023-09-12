@@ -3,7 +3,7 @@ CREATE SCHEMA geo;
 
 CREATE SCHEMA postgis;
 
-ALTER DATABASE postgres SET search_path = "$user",public,topology,tiger,postgis;
+ALTER DATABASE postgres SET search_path = "$user",public,topology,tiger,postgis,geo;
 
 -- Temporarily made postis relocatable
 UPDATE pg_extension SET extrelocatable = true WHERE extname = 'postgis';
