@@ -7,13 +7,13 @@
 -- additionally we check wether the geometry is `simple` because otherwise we might get a MLString
 -- for the same reason we simplify the geometries
 -- TODO: check parameters `quad_segs` and  `join`
-UPDATE geo."_bikelanes_temp"
+UPDATE "_bikelanes_temp"
   SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "_offset", 'quad_segs=4 join=round'), 3857))
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "_offset"!=0;
 
 -- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
 -- In turn this brakes updating tables via osm2pgsql
-UPDATE geo."_bikelanes_temp"
+UPDATE "_bikelanes_temp"
   SET osm_id=osm_id*SIGN("_offset") WHERE "_offset"!=0;
 
 -- ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";

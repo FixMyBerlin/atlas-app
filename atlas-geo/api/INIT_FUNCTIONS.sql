@@ -1,5 +1,5 @@
 
-CREATE OR REPLACE FUNCTION geo.{function_name}(region geometry)
+CREATE OR REPLACE FUNCTION {function_name}(region geometry)
  RETURNS json
  LANGUAGE sql
 AS $function$
@@ -17,7 +17,7 @@ AS $function$
 	    'properties', jsonb_build_object('osm_id', inputs.osm_id) || jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta || inputs.tags
 	  ) AS feature
 	  FROM (
-	    SELECT * from geo."{table_name}"
+	    SELECT * from "{table_name}"
 	    WHERE ST_Transform(geom, 4326) && region
 	  ) inputs
 	) features;
