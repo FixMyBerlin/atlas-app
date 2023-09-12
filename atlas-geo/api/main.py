@@ -151,7 +151,7 @@ async def retrieve_service_health():
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
       async with conn.cursor() as cur:
         try:
-          cur.execute(sql.SQL("SELECT 1"))
+          await cur.execute(sql.SQL("SELECT 1"))
         except:
           raise HTTPException(status_code=500, detail="DB Connection is dead")
         else:
