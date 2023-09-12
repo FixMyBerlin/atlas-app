@@ -72,4 +72,4 @@ volumes:
   osmfiles:
 configs:
   postgres_conf:
-    file: ./postgres/postgres.develop.conf
+    file: ./postgres/postgres.development.conf
