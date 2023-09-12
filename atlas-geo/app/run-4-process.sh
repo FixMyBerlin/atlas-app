@@ -8,7 +8,6 @@ source ./process-helpers.sh
 
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
-psql -q -f "./CREATE_SCHEMA.sql"
 
 echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
 run_lua "roads_bikelanes/roads_bikelanes"
