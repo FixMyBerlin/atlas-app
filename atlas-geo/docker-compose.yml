@@ -76,10 +76,6 @@ services:
       - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
-    configs:
-      - source: postgres_conf
-        target: /postgresql/postgresql.conf
-    command: ["-c", "config_file=/postgresql/postgresql.conf"]
     container_name: db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
@@ -93,6 +89,3 @@ volumes:
   geodata:
 networks:
   app_bridge:
-configs:
-  postgres_conf:
-    file: ./postgres/postgres.conf
