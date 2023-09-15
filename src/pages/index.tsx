@@ -1,11 +1,11 @@
-import { Suspense } from "react"
-import Link from "next/link"
-import Layout from "src/core/layouts/Layout"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
-import logout from "src/auth/mutations/logout"
+import { BlitzPage, Routes } from "@blitzjs/next"
 import { useMutation } from "@blitzjs/rpc"
-import { Routes, BlitzPage } from "@blitzjs/next"
+import Link from "next/link"
+import { Suspense } from "react"
+import logout from "src/auth/mutations/logout"
+import Layout from "src/core/layouts/Layout"
 import styles from "src/styles/Home.module.css"
+import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -52,7 +52,11 @@ const Home: BlitzPage = () => {
   return (
     <Layout title="Home">
       <div className={styles.globe} />
-
+      <div className={styles.toastContainer}>
+        <p>
+          <Link href={Routes.BikelaneVerificationsPage()}>List bikelane verifications</Link>
+        </p>
+      </div>
       <div className={styles.container}>
         <div className={styles.toastContainer}>
           <p>
