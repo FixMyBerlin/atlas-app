@@ -119,6 +119,10 @@ function Bikelanes(object)
 
         cycleway.offset = sign * width / 2
 
+        -- Hotfix export which requires the category to be part of the tags
+        -- Keeping the category column as well which pg_tileserf should resolve somehow…
+        tags.category = category
+
         bikelanesTable:insert({
           category = category,
           tags = cycleway,
