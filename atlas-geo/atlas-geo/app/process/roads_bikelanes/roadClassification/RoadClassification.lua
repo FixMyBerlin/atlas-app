@@ -41,6 +41,7 @@ function RoadClassification(object)
     roadClassification.road = "residential_priority_road"
   end
 
+  -- Service
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
     local service_mapping = {
@@ -56,6 +57,7 @@ function RoadClassification(object)
     end
   end
 
+  -- Fahrradstraßen
   if tags.bicycle_road == 'yes' then
     -- traffic_sign=DE:244.1
     roadClassification.road = "bicycle_road"
@@ -79,8 +81,19 @@ function RoadClassification(object)
     roadClassification['road_oneway:bicycle'] = tags['oneway:bicycle']
   end
 
-  local tags_cc = { "name", "highway", "footway", "access", "service",
-    "is_sidepath", "maxspeed", "surface", "smoothness", "oneway", "oneway:bicycle" }
+  local tags_cc = {
+    "name",
+    "highway",
+    "footway",
+    "access",
+    "service",
+    "is_sidepath",
+    "maxspeed",
+    "surface",
+    "smoothness",
+    "oneway",
+    "oneway:bicycle",
+  }
   CopyTags(tags, roadClassification, tags_cc, "osm_")
 
   return roadClassification
