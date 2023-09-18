@@ -65,7 +65,9 @@ function osm2pgsql.process_way(object)
   end
 
   -- TODO: move to ExcludeHighways
-  if tags.footway == 'sidewalk' then
+  -- TODO: This is in conflict with what we do in RoadClassification, where we have code that is explicit for sidewalks
+  if tags.footway == 'sidewalk'
+      or tags.steps == 'sidewalk' then
     return
   end
   if tags.footway == 'crossing' and tags.bicycle ~= 'yes' then
