@@ -12,7 +12,10 @@ function RoadClassification(object)
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
-  local highway_mapping = { road = "unspecified_road", steps = "footway" }
+  local highway_mapping = {
+    road = "unspecified_road",
+    steps = "footway_steps",
+  }
   roadClassification.road = highway_mapping[tags.highway] or tags.highway
 
   -- Sidewalks
