@@ -65,6 +65,7 @@ services:
   db:
     env_file:
       - ./.env
+    # There is no Apple M1 ARM 64 build, see https://github.com/postgis/docker-postgis/issues/216
     image: postgis/postgis:14-3.3-alpine
     environment:
       POSTGRES_DB: ${PGDATABASE}
