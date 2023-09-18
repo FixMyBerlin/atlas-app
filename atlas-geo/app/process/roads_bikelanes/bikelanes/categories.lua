@@ -48,12 +48,20 @@ end
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:244
 local function bicycleRoad(tags)
   if tags.bicycle_road == "yes"
-      or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
+      or osm2pgsql.has_prefix(tags.traffic_sign, 'DE:244') then
     -- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
     -- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
     -- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
     if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
       tags.oneway = 'car_not_bike'
+    end
+
+    -- Subcategory when bicycle road allows vehicle traffic
+    if tags.traffic_sign == 'DE:244.1,1020-30'
+        or tags.traffic_sign == 'DE:244,1020-30'
+        or tags.vehicle == 'destination'
+        or tags.motor_vehicle == 'destination' then
+      return "bicycleRoad_vehicleDestination"
     end
 
     return "bicycleRoad"
