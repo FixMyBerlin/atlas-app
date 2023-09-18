@@ -21,6 +21,16 @@ function RoadClassification(object)
     roadClassification.road = "footway_sidewalk"
   end
 
+  -- Sidewalks Crossing
+  if tags.highway == 'footway' and tags.footway == 'crossing' then
+    roadClassification.road = "footway_crossing"
+  end
+
+  -- Bikelane Crossing
+  if tags.highway == 'cycleway' and tags.cycleway == 'crossing' then
+    roadClassification.road = "cycleway_crossing"
+  end
+
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
     local service_mapping = {
