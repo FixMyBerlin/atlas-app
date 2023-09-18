@@ -15,6 +15,12 @@ function RoadClassification(object)
   local highway_mapping = { road = "unspecified_road", steps = "footway" }
   roadClassification.road = highway_mapping[tags.highway] or tags.highway
 
+  -- Sidewalks
+  if (tags.highway == 'footway' and tags.footway == 'sidewalk')
+      or (tags.highway == 'path' and tags.is_sidepath == 'yes') then
+    roadClassification.road = "footway_sidewalk"
+  end
+
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
     local service_mapping = {
