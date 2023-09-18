@@ -62,11 +62,12 @@ function RoadClassification(object)
   end
 
   -- Mischverkehr
-  if tags.bicycle ~= 'no' and tags.bicycle ~= 'use_sidepath' then
-    if MinorRoadClasses[tags.highway] or MajorRoadClasses[tags.highway] then
-      roadClassification.road_implicit_shared_lane = true
-    end
-  end
+  -- INFO: Deactivated for now. Not needed during styling and buggy ATM.
+  -- if tags.bicycle ~= 'no' and tags.bicycle ~= 'use_sidepath' then
+  --   if MinorRoadClasses[tags.highway] or MajorRoadClasses[tags.highway] then
+  --     roadClassification.road_implicit_shared_lane = true
+  --   end
+  -- end
 
   if tags.oneway == 'yes' or tags.oneway == 'no' then
     roadClassification.road_oneway = tags.oneway
