@@ -167,6 +167,9 @@ function Bikelanes(object)
     'highway',
     'oneway',
     'dual_carriageway',
+    -- https://wiki.openstreetmap.org/wiki/Proposal:Separation
+    'separation:left',
+    'separation:right',
   }
 
   local presence_data = {
