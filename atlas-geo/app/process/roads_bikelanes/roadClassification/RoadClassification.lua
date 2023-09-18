@@ -31,6 +31,13 @@ function RoadClassification(object)
     roadClassification.road = "cycleway_crossing"
   end
 
+  -- Vorfahrtsstraße, Zubringerstraße
+  -- https://wiki.openstreetmap.org/wiki/DE:Key:priority_road
+  if (tags.highway == 'residential' and tags.priority_road == 'designated')
+      or (tags.highway == 'residential' and tags.priority_road == 'yes_unposted') then
+    roadClassification.road = "residential_priority_road"
+  end
+
   -- https://wiki.openstreetmap.org/wiki/DE:Key:service
   if tags.highway == "service" then
     local service_mapping = {
