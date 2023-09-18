@@ -8,10 +8,12 @@ function ExcludeHighways(tags)
   if tags.access and forbidden_accesses[tags.access] then
     return true, "Excluded by `forbidden_accesses` for `access=" .. tags.access .. "`"
   end
-  if tags.foot and forbidden_accesses[tags.foot] then
+  if (tags.highway == "footway" or tags.highway == "path")
+      and tags.foot and forbidden_accesses[tags.foot] then
     return true, "Excluded by `forbidden_accesses` for `foot=" .. tags.foot .. "`"
   end
-  if tags.bicycle and forbidden_accesses[tags.bicycle] then
+  if tags.highway == 'cycleway'
+      and tags.bicycle and forbidden_accesses[tags.bicycle] then
     return true, "Excluded by `forbidden_accesses` for `bicycle=" .. tags.bicycle .. "`"
   end
 
