@@ -13,7 +13,6 @@
     "cleanup": "docker system prune --force && docker system prune --force --volumes"
   },
   "devDependencies": {
-    "@turf/turf": "^6.5.0",
     "prettier": "^2.8.8"
   }
 }
