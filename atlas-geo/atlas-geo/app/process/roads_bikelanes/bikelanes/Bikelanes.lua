@@ -172,11 +172,16 @@ function Bikelanes(object)
     'separation:right',
   }
 
-  local presence_data = {
-    bikelane_left = presence[LEFT_SIGN],
-    bikelane_self = presence[CENTER_SIGN],
-    bikelane_right = presence[RIGHT_SIGN]
-  }
+  local presence_data = {}
+  -- Only apply presence-tags on roads need them, not "highway=cycleway|path|footway|track"
+  if not PathClasses[tags.highway] then
+    presence_data = {
+      bikelane_left = presence[LEFT_SIGN],
+      bikelane_self = presence[CENTER_SIGN],
+      bikelane_right = presence[RIGHT_SIGN]
+    }
+  end
+
   CopyTags(tags, presence_data, presence_tags_cc, "osm_")
 
   return presence_data
