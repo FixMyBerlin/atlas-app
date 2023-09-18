@@ -38,9 +38,9 @@ function SurfaceQuality(object)
 
   -- Freshness of data (AFTER `FilterTags`!)
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
-  IsFresh(object, "check_date:surface", tags, "surface")
+  IsFresh(object, "check_date:surface", surface_data, "surface")
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asmoothness
-  IsFresh(object, "check_date:smoothness", tags, "smoothness")
+  IsFresh(object, "check_date:smoothness", surface_data, "smoothness")
 
   surface_data.surface = surface
   surface_data.surface_source = surface_source
