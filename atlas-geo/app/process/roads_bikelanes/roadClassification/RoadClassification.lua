@@ -71,9 +71,10 @@ function RoadClassification(object)
   --   end
   -- end
 
-  if tags.oneway == 'yes' or tags.oneway == 'no' then
+  if tags.oneway == 'yes' then
+    -- Note: We do not pass 'oneway=no' to the 'road_oneway' key
     roadClassification.road_oneway = tags.oneway
-    if tags.oneway == 'yes' and tags.dual_carriageway == "yes" then
+    if tags.dual_carriageway == "yes" then
       roadClassification.road_oneway = tags.oneway .. '_dual_carriageway'
     end
   end
