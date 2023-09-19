@@ -76,7 +76,7 @@ function GetTransformedObjects(tags, transformations)
         end
         for _, key in pairs(directedTags) do
           local directedKey = key .. ':' .. sideDirectionMap[side]
-          newObj[key] = tags[key] or tags[directedKey]
+          newObj[key] = newObj[key] or tags[key] or tags[directedKey]
         end
       end
     end
