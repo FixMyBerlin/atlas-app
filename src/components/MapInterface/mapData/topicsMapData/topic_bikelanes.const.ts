@@ -5,7 +5,12 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bikelanes'
 export type TopicBikelanesId = typeof topic
-export type TopicBikelanesStyleIds = 'default' | 'verification' | 'completeness' | 'freshness'
+export type TopicBikelanesStyleIds =
+  | 'default'
+  | 'verification'
+  | 'completeness'
+  | 'freshness'
+  | 'bikelane_oneway_arrows'
 
 export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = [
   {
@@ -154,6 +159,26 @@ export const topic_bikelanes: MapDataTopic = {
         },
         ...defaultLegend,
       ],
+    },
+    {
+      id: 'bikelane_oneway_arrows',
+      name: 'DEBUG: Einbahnstraßen Pfeile',
+      desc: '',
+      layers: [
+        {
+          id: 'oneway-bikelanes',
+          source: 'tarmac_bikelanes',
+          'source-layer': 'public.bikelanes_verified',
+          type: 'line',
+          paint: {
+            'line-width': 15,
+            'line-pattern': 'oneway',
+            'line-color': 'gray',
+          },
+          filter: ['has', '_parent_highway'],
+        },
+      ],
+      legends: undefined,
     },
     // {
     //   id: 'freshness',

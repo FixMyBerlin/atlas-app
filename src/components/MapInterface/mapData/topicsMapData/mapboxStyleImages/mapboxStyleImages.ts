@@ -7,6 +7,7 @@ import png_stripe_texture from './images/stripe_texture.png'
 import png_notes_closed from './images/notes_closed.png'
 import png_notes_open from './images/notes_open.png'
 import png_cross_hatch_barriers from './images/cross_hatch_barriers.png'
+import png_oneway from './images/oneway.png'
 
 type MapboxStyleImages = Map<string, string>
 
@@ -22,4 +23,5 @@ export const mapboxStyleImages: MapboxStyleImages = new Map([
   ['notes_closed', png_notes_closed],
   ['notes_open', png_notes_open],
   ['cross-hatch-barriers', png_cross_hatch_barriers],
+  ['oneway', png_oneway],
 ])

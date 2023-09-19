@@ -6,7 +6,11 @@ const topicId = 'roadClassification'
 const source = 'tarmac_roads'
 const sourceLayer = 'public.roads'
 export type TopicRoadClassificationId = typeof topicId
-export type TopicRoadClassificationStyleIds = 'default' | 'oneway' | 'road_implicit_shared_lane'
+export type TopicRoadClassificationStyleIds =
+  | 'default'
+  | 'oneway'
+  | 'road_implicit_shared_lane'
+  | 'road_oneway_arrows'
 export const topic_roadClassification: MapDataTopic = {
   id: topicId,
   name: 'Straßentypen (new)',
@@ -111,6 +115,26 @@ export const topic_roadClassification: MapDataTopic = {
         source,
         sourceLayer,
       }),
+      legends: undefined,
+    },
+    {
+      id: 'road_oneway_arrows',
+      name: 'DEBUG: Einbahnstraßen Pfeile',
+      desc: '',
+      layers: [
+        {
+          id: 'oneway-roads',
+          source: 'tarmac_roads',
+          'source-layer': 'public.roads',
+          type: 'line',
+          paint: {
+            'line-width': 15,
+            'line-pattern': 'oneway',
+            'line-color': 'gray',
+          },
+          filter: ['has', 'road_oneway'],
+        },
+      ],
       legends: undefined,
     },
   ],
