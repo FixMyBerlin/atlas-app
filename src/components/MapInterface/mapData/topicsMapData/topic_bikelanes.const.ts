@@ -3,8 +3,10 @@ import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topic = 'bikelanes'
-export type TopicBikelanesId = typeof topic
+const topicId = 'bikelanes'
+const source = 'tarmac_bikelanes'
+const sourceLayer = 'public.bikelanes_verified'
+export type TopicBikelanesId = typeof topicId
 export type TopicBikelanesStyleIds =
   | 'default'
   | 'verification'
@@ -71,7 +73,7 @@ export const defaultLegend: NonNullable<MapDataTopic['styles'][0]['legends']> = 
 ]
 
 export const topic_bikelanes: MapDataTopic = {
-  id: topic,
+  id: topicId,
   name: 'Radinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'tarmac_bikelanes',
@@ -83,8 +85,8 @@ export const topic_bikelanes: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_bikelanes',
-        source: 'tarmac_bikelanes',
-        sourceLayer: 'public.bikelanes_verified',
+        source,
+        sourceLayer,
       }),
       legends: [...defaultLegend],
     },
@@ -95,13 +97,13 @@ export const topic_bikelanes: MapDataTopic = {
       layers: [
         mapboxStyleLayers({
           group: 'atlas_bikelanes_verified',
-          source: 'tarmac_bikelanes',
-          sourceLayer: 'public.bikelanes_verified',
+          source,
+          sourceLayer,
         }),
         mapboxStyleLayers({
           group: 'atlas_bikelanes',
-          source: 'tarmac_bikelanes',
-          sourceLayer: 'public.bikelanes_verified',
+          source,
+          sourceLayer,
         }),
       ].flat(),
       legends: [
@@ -139,13 +141,13 @@ export const topic_bikelanes: MapDataTopic = {
       layers: [
         mapboxStyleLayers({
           group: 'atlas_bikelanes_unspecified',
-          source: 'tarmac_bikelanes',
-          sourceLayer: 'public.bikelanes_verified',
+          source,
+          sourceLayer,
         }),
         mapboxStyleLayers({
           group: 'atlas_bikelanes',
-          source: 'tarmac_bikelanes',
-          sourceLayer: 'public.bikelanes_verified',
+          source,
+          sourceLayer,
         }),
       ].flat(),
       legends: [
@@ -167,8 +169,8 @@ export const topic_bikelanes: MapDataTopic = {
       layers: [
         {
           id: 'oneway-bikelanes',
-          source: 'tarmac_bikelanes',
-          'source-layer': 'public.bikelanes_verified',
+          source,
+          'source-layer': sourceLayer,
           type: 'line',
           paint: {
             'line-width': 15,
@@ -186,8 +188,8 @@ export const topic_bikelanes: MapDataTopic = {
     //   desc: null,
     //   layers: mapboxStyleLayers({
     //     group: 'atlas_bikelanes_fresh',
-    //     source: 'tarmac_bikelanes',
-    //     sourceLayer: 'public.bikelanes_verified',
+    //     source,
+    //     sourceLayer,
     //   }),
     //       //   legends: [
     //     ...defaultLegend,
