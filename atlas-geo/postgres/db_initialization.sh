@@ -9,18 +9,18 @@ export PGUSER="$POSTGRES_USER"
     CREATE SCHEMA geo;
 EOSQL
 
-echo "Move postgis extension to separate schema"
-"${psql[@]}" <<-EOSQL
-    CREATE SCHEMA postgis;
+# echo "Move postgis extension to separate schema"
+# "${psql[@]}" <<-EOSQL
+#     CREATE SCHEMA postgis;
 
-    ALTER DATABASE $POSTGRES_DB SET search_path = "\$user",public,topology,tiger,postgis,geo;
+#     ALTER DATABASE $POSTGRES_DB SET search_path = "\$user",public,topology,tiger,postgis,geo;
 
-    -- Temporarily make postis relocatable
-    UPDATE pg_extension SET extrelocatable = true WHERE extname = 'postgis';
+#     -- Temporarily make postis relocatable
+#     UPDATE pg_extension SET extrelocatable = true WHERE extname = 'postgis';
 
-    -- Relocate it
-    ALTER EXTENSION postgis SET SCHEMA postgis;
+#     -- Relocate it
+#     ALTER EXTENSION postgis SET SCHEMA postgis;
 
-    -- Made postis non relocatable
-    UPDATE pg_extension SET extrelocatable = false WHERE extname = 'postgis';
-EOSQL
+#     -- Made postis non relocatable
+#     UPDATE pg_extension SET extrelocatable = false WHERE extname = 'postgis';
+# EOSQL
