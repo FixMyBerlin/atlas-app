@@ -52,6 +52,7 @@ services:
       - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
+      - ./postgres/db_initialization.sh:/docker-entrypoint-initdb.d/11_postgis.sh
     configs:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
