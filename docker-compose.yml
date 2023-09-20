@@ -12,6 +12,7 @@ services:
       - "5432:5432"
     volumes:
       - atlas-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     container_name: atlas-db
 volumes:
   atlas-data:
