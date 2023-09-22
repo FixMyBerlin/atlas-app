@@ -1,5 +1,6 @@
-function MergeTable(a, b)
-  for k, v in pairs(b) do
-    a[k] = v
+-- Copy all key value pairs from src to dst
+function MergeTable(dst, src)
+  for k, v in pairs(src) do
+    dst[k] = v
   end
 end
