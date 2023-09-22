@@ -2,7 +2,7 @@ DROP INDEX IF EXISTS {geometry_table}_osm_id_idx;
 CREATE INDEX {geometry_table}_osm_id_idx ON {geometry_table} USING btree (osm_id);
 
 
-CREATE TABLE IF NOT EXISTS geo.{verification_table} (
+CREATE TABLE IF NOT EXISTS public.{verification_table} (
 	osm_type varchar NOT NULL,
   -- osm_type bpchar(1) NOT NULL,
 	osm_id bigint NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS geo.{verification_table} (
 -- TODO: ALTER TABLE {verification_table} ALTER COLUMN osm_type TYPE bpchar(1) USING osm_type::bpchar;
 
 DROP TABLE IF EXISTS {joined_table};
-CREATE TABLE geo.{joined_table} AS (
+CREATE TABLE public.{joined_table} AS (
   SELECT g.osm_type, g.osm_id, g.category, g.tags, g.meta, g.geom, v.verified_at, v.verified_by, v.verified
   FROM {geometry_table} g
   LEFT JOIN (
