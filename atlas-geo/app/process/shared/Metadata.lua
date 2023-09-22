@@ -1,3 +1,6 @@
+package.path = package.path .. ";/app/process/helper/?.lua"
+require("TimeUtils")
+
 -- * @desc Metadata of the given osm object
 -- * @returns `meta` object
 function Metadata(object)
