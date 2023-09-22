@@ -8,9 +8,12 @@
 -- for the same reason we simplify the geometries
 -- TODO: check parameters `quad_segs` and  `join`
 UPDATE "_bikelanes_temp"
-  SET geom=ST_Reverse(ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "_offset", 'quad_segs=4 join=round'), 3857))
+  SET geom=ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "_offset"), 3857)
   WHERE ST_IsSimple(geom) and not ST_IsClosed(geom) and "_offset"!=0;
 
+UPDATE "_bikelanes_temp"
+  SET geom=ST_Reverse(geom)
+  WHERE "_offset">0;
 -- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
 -- In turn this brakes updating tables via osm2pgsql
 UPDATE "_bikelanes_temp"
