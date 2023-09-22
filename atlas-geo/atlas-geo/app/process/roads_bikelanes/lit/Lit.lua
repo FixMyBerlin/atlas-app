@@ -62,8 +62,8 @@ function Lit(object)
   CopyTags(tags, lit_data, tags_cc, "osm_")
   
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
-  if object["check_date:lit"] then
-    lit_data.age_smoothness = AgeInDays(ParseDate(object["check_date:lit"]))
+  if tags["check_date:lit"] then
+    lit_data.age_smoothness = AgeInDays(ParseDate(tags["check_date:lit"]))
   end
 
   return lit_data
