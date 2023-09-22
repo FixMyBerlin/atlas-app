@@ -5,7 +5,7 @@ require("Set")
 require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
-require("IsFresh")
+require("TimeUtils")
 require("categories")
 require("transformations")
 require("IntoExcludeTable")
@@ -106,8 +106,10 @@ function Bikelanes(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Freshness of data (AFTER `FilterTags`!)
-        IsFresh(object, freshTag, cycleway)
+        if object[freshTag] then
+          cycleway.age_smoothness = AgeInDays(ParseDate(object[freshTag]))
+        end
+      
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then

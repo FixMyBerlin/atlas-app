@@ -1,6 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("CopyTags")
-require("IsFresh")
+require("TimeUtils")
 require("Set")
 
 -- Notes
@@ -60,11 +60,11 @@ function Lit(object)
 
 
   CopyTags(tags, lit_data, tags_cc, "osm_")
-
-  -- Freshness of data (AFTER `FilterTags`!)
+  
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
-  if lit_data.lit then
-    IsFresh(object, 'check_date:lit', lit_data, 'lit')
+  if object["check_date:lit"] then
+    lit_data.age_smoothness = AgeInDays(ParseDate(object["check_date:lit"]))
   end
+
   return lit_data
 end
