@@ -106,8 +106,8 @@ function Bikelanes(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        if object[freshTag] then
-          cycleway.age_smoothness = AgeInDays(ParseDate(object[freshTag]))
+        if tags[freshTag] then
+          cycleway.age_smoothness = AgeInDays(ParseDate(tags[freshTag]))
         end
       
 

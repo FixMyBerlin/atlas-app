@@ -36,12 +36,12 @@ function SurfaceQuality(object)
   CopyTags(tags, surface_data, tags_cc, "osm_")
 
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
-  if object["check_date:surface"] then
-    surface_data.age_surface = AgeInDays(ParseDate(object["check_date:surface"]))
+  if tags["check_date:surface"] then
+    surface_data.age_surface = AgeInDays(ParseDate(tags["check_date:surface"]))
   end
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asmoothness
-  if object["check_date:smoothness"] then
-    surface_data.age_smoothness = AgeInDays(ParseDate(object["check_date:smoothness"]))
+  if tags["check_date:smoothness"] then
+    surface_data.age_smoothness = AgeInDays(ParseDate(tags["check_date:smoothness"]))
   end
 
   surface_data.surface = surface
