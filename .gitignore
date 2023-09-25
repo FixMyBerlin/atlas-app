@@ -62,3 +62,6 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+# Sentry Auth Token
+.sentryclirc
