@@ -6,7 +6,7 @@ services:
     env_file:
       - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/blitz:${GITHUB_SHA}
-    container_name: blitz
+    container_name: atlas-db
     environment:
       SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
       DATABASE_URL: ${DATABASE_URL}
