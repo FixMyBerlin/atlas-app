@@ -63,7 +63,7 @@ function Lit(object)
   
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
   if tags["check_date:lit"] then
-    lit_data.age_smoothness = AgeInDays(ParseDate(tags["check_date:lit"]))
+    lit_data.lit_age= AgeInDays(ParseDate(tags["check_date:lit"]))
   end
 
   return lit_data

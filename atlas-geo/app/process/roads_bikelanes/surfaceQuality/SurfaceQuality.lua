@@ -37,11 +37,11 @@ function SurfaceQuality(object)
 
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
   if tags["check_date:surface"] then
-    surface_data.age_surface = AgeInDays(ParseDate(tags["check_date:surface"]))
+    surface_data.surface_age = AgeInDays(ParseDate(tags["check_date:surface"]))
   end
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asmoothness
   if tags["check_date:smoothness"] then
-    surface_data.age_smoothness = AgeInDays(ParseDate(tags["check_date:smoothness"]))
+    surface_data.smoothness_age = AgeInDays(ParseDate(tags["check_date:smoothness"]))
   end
 
   surface_data.surface = surface
