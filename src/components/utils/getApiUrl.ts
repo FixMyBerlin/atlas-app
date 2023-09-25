@@ -9,12 +9,12 @@ export const apiBaseUrl = {
 }
 
 export const getApiUrl = () => {
-  // VITE_API_ENV is undefined in Netlify (unless we explicity add it)
-  if (import.meta.env.VITE_API_ENV) {
-    return apiBaseUrl[import.meta.env.VITE_API_ENV]
+  // NEXT_PUBLIC_API_ENV is undefined in Netlify (unless we explicity add it)
+  if (process.env.NEXT_PUBLIC_API_ENV) {
+    return apiBaseUrl[process.env.NEXT_PUBLIC_API_ENV]
   }
 
-  if (import.meta.env.DEV) {
+  if (process.env.DEV) {
     return apiBaseUrl.development
   } else if (isStaging) {
     return apiBaseUrl.staging

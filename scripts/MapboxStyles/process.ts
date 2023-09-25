@@ -11,10 +11,8 @@ const apiConfigs = [
     key: 'atlas-style-package-1',
     // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
     apiUrl:
-      import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN &&
-      `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${
-        import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
-      }`,
+      process.env.MAPBOX_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
     // Only groups with `atlas_` prefix are used
     mapboxGroupPrefix: 'atlas_',
   },
@@ -22,10 +20,8 @@ const apiConfigs = [
     key: 'atlas-style-package-2',
     // Style https://studio.mapbox.com/styles/hejco/clfs9mdh9007n01t6lw99gyqr/edit/#13.49/48.95568/9.13281
     apiUrl:
-      import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN &&
-      `https://api.mapbox.com/styles/v1/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${
-        import.meta.env.VITE_MAPBOX_STYLE_ACCESS_TOKEN
-      }`,
+      process.env.MAPBOX_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
     // Only groups with `atlas_` prefix are used
     mapboxGroupPrefix: 'atlas_',
   },
@@ -33,10 +29,8 @@ const apiConfigs = [
     key: 'parking',
     // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
     apiUrl:
-      import.meta.env.VITE_MAPBOX_PARKING_STYLE_ACCESS_TOKEN &&
-      `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${
-        import.meta.env.VITE_MAPBOX_PARKING_STYLE_ACCESS_TOKEN
-      }`,
+      process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN &&
+      `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
     mapboxGroupPrefix: 'parking_',
   },
 ].filter((c) => Boolean(c.apiUrl))
@@ -72,7 +66,7 @@ await Promise.all(
     // Script: For debugging, write the rawData
     fs.writeFileSync(
       `${scriptJsonFolder}/raw-api-response_${key}.json`,
-      JSON.stringify(rawData, undefined, 2)
+      JSON.stringify(rawData, undefined, 2),
     )
     // log(`${key}: Received raw data`, rawData)
     log(`${key}: Received raw data`)
@@ -112,7 +106,7 @@ await Promise.all(
         delete layer.source
         delete layer['source-layer']
         delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
-      })
+      }),
     )
 
     // Cleanup layer names & collect debugging info
@@ -150,7 +144,7 @@ await Promise.all(
         changedNamesForDebugging,
       },
     }
-  })
+  }),
 )
 
 // ============= Now, we bring all `apiConfigs` back together
@@ -182,6 +176,6 @@ log(`Write typesFile`, typesFileContent)
 
 fs.writeFileSync(
   `${scriptJsonFolder}/metadata_last_process.json`,
-  JSON.stringify(metaFileContent, undefined, 2)
+  JSON.stringify(metaFileContent, undefined, 2),
 )
 log(`Store metadata on processing`, metaFileContent)

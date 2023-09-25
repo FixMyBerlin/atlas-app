@@ -7,12 +7,12 @@ const tilesBaseUrl = {
 }
 
 export const getTilesUrl = () => {
-  // VITE_TILES_ENV is undefined in Netlify (unless we explicity add it)
-  if (import.meta.env.VITE_TILES_ENV) {
-    return tilesBaseUrl[import.meta.env.VITE_TILES_ENV]
+  // NEXT_PUBLIC_TILES_ENV is undefined in Netlify (unless we explicity add it)
+  if (process.env.NEXT_PUBLIC_TILES_ENV) {
+    return tilesBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
   }
 
-  if (import.meta.env.DEV) {
+  if (process.env.DEV) {
     return tilesBaseUrl.development
   } else if (isStaging) {
     return tilesBaseUrl.staging
