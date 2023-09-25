@@ -1,7 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
 package.path = package.path .. ";/app/process/shared/?.lua"
 package.path = package.path .. ";/app/process/roads_bikelanes/surfaceQuality/?.lua"
-require("IsFresh")
+require("TimeUtils")
 require("SurfaceDirect")
 require("SmoothnessDirect")
 require("SmoothnessFromSurface")
@@ -33,14 +33,16 @@ function SurfaceQuality(object)
     "surface",
     "smoothness",
   }
-  -- TODO: replace with copy
   CopyTags(tags, surface_data, tags_cc, "osm_")
 
-  -- Freshness of data (AFTER `FilterTags`!)
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
-  IsFresh(object, "check_date:surface", surface_data, "surface")
+  if tags["check_date:surface"] then
+    surface_data.surface_age = AgeInDays(ParseDate(tags["check_date:surface"]))
+  end
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asmoothness
-  IsFresh(object, "check_date:smoothness", surface_data, "smoothness")
+  if tags["check_date:smoothness"] then
+    surface_data.smoothness_age = AgeInDays(ParseDate(tags["check_date:smoothness"]))
+  end
 
   surface_data.surface = surface
   surface_data.surface_source = surface_source
