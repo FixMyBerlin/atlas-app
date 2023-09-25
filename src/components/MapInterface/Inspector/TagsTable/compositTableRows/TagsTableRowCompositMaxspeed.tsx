@@ -26,7 +26,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
                 tagValue={properties['maxspeed']}
               />
             </summary>
-            <p className="leading-tight mt-1">
+            <p className="mt-1 leading-tight">
               <em>Quelle:</em>{' '}
               <ConditionalFormattedValue
                 sourceId={sourceId}
@@ -34,7 +34,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
                 tagValue={properties['maxspeed_source']}
               />
             </p>
-            <p className="leading-tight mt-1">
+            <p className="mt-1 leading-tight">
               <em>Genauigkeit der Quelle:</em>{' '}
               <ConditionalFormattedValue
                 sourceId={sourceId}
@@ -42,7 +42,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
                 tagValue={properties['maxspeed_confidence']}
               />
             </p>
-            <p className="leading-tight mt-1">
+            <p className="mt-1 leading-tight">
               <em>Aktualität:</em>{' '}
               <ConditionalFormattedValue
                 sourceId={sourceId}
@@ -59,7 +59,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
               <summary>Weitere Angaben aus OpenStreetMap</summary>
 
               {properties['maxspeed:backward'] && (
-                <p className="leading-tight mt-1">
+                <p className="mt-1 leading-tight">
                   <em>Höchstgeschwindigkeit entgegend der OSM Linienrichtung:</em>{' '}
                   <ConditionalFormattedValue
                     sourceId={sourceId}
@@ -69,7 +69,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
                 </p>
               )}
               {properties['maxspeed:forward'] && (
-                <p className="leading-tight mt-1">
+                <p className="mt-1 leading-tight">
                   <em>Höchstgeschwindigkeit in OSM Linienrichtung:</em>{' '}
                   <ConditionalFormattedValue
                     sourceId={sourceId}
@@ -79,7 +79,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
                 </p>
               )}
               {properties['maxspeed:conditional'] && (
-                <p className="leading-tight mt-1">
+                <p className="mt-1 leading-tight">
                   <em>Konditionale Angaben:</em>{' '}
                   <ConditionalFormattedValue
                     sourceId={sourceId}

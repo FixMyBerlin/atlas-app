@@ -37,10 +37,10 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
       tagKey={tagKey}
       value={
         <>
-          <table className="leading-4 w-full">
+          <table className="w-full leading-4">
             <tbody>
               <tr>
-                <th className="text-left pr-2 font-medium py-1">Links</th>
+                <th className="py-1 pr-2 text-left font-medium">Links</th>
                 <td className="w-full py-1">
                   <CompositRoadBikelanesTableValue
                     sourceId={sourceId}
@@ -50,7 +50,7 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
                 </td>
               </tr>
               <tr className="border-t">
-                <th className="text-left pr-2 font-medium py-1">Fahrbahn</th>
+                <th className="py-1 pr-2 text-left font-medium">Fahrbahn</th>
                 <td className="w-full py-1">
                   <CompositRoadBikelanesTableValue
                     sourceId={sourceId}
@@ -69,7 +69,7 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
                 </td>
               </tr>
               <tr className="border-t">
-                <th className="text-left pr-2 font-medium py-1">Rechts</th>
+                <th className="py-1 pr-2 text-left font-medium">Rechts</th>
                 <td className="w-full py-1">
                   <CompositRoadBikelanesTableValue
                     sourceId={sourceId}
@@ -80,7 +80,7 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
               </tr>
             </tbody>
           </table>
-          <p className="mt-1 text-gray-400 text-xs">Angaben in Linienrichtung (OSM).</p>
+          <p className="mt-1 text-xs text-gray-400">Angaben in Linienrichtung (OSM).</p>
         </>
       }
     />

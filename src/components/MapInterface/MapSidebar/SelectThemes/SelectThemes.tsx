@@ -10,7 +10,7 @@ export const SelectThemes = () => {
   const activeThemeIds = configThemes.filter((theme) => theme.active).map((theme) => theme.id)
 
   return (
-    <nav className="relative z-0 flex divide-x divide-gray-200 flex-col">
+    <nav className="relative z-0 flex flex-col divide-x divide-gray-200">
       {configThemes.map((themeConfig) => {
         if (!themeConfig) return null
         const active = activeThemeIds.includes(themeConfig.id)

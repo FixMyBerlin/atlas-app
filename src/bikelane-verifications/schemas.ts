@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export const CreateBikelaneVerificationSchema = z.object({
   // template: __fieldName__: z.__zodType__(),

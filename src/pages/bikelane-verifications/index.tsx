@@ -1,9 +1,9 @@
-import { Suspense } from "react"
-import Head from "next/head"
-import { usePaginatedQuery } from "@blitzjs/rpc"
-import { useRouter } from "next/router"
-import Layout from "src/core/layouts/Layout"
-import getBikelaneVerifications from "src/bikelane-verifications/queries/getBikelaneVerifications"
+import { Suspense } from 'react'
+import Head from 'next/head'
+import { usePaginatedQuery } from '@blitzjs/rpc'
+import { useRouter } from 'next/router'
+import Layout from 'src/core/layouts/Layout'
+import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 
 const ITEMS_PER_PAGE = 100
 
@@ -11,7 +11,7 @@ export const BikelaneVerificationsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
   const [{ bikelaneVerifications, hasMore }] = usePaginatedQuery(getBikelaneVerifications, {
-    orderBy: { id: "asc" },
+    orderBy: { id: 'asc' },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })

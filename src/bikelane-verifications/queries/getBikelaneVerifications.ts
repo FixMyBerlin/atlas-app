@@ -1,9 +1,9 @@
-import { paginate } from "blitz"
-import { resolver } from "@blitzjs/rpc"
-import db, { Prisma } from "db"
+import { paginate } from 'blitz'
+import { resolver } from '@blitzjs/rpc'
+import db, { Prisma } from 'db'
 
 interface GetBikelaneVerificationsInput
-  extends Pick<Prisma.BikelaneVerificationFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
+  extends Pick<Prisma.BikelaneVerificationFindManyArgs, 'where' | 'orderBy' | 'skip' | 'take'> {}
 
 export default resolver.pipe(
   async ({ where, orderBy, skip = 0, take = 100 }: GetBikelaneVerificationsInput) => {
@@ -27,5 +27,5 @@ export default resolver.pipe(
       hasMore,
       count,
     }
-  }
+  },
 )

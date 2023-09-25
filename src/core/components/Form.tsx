@@ -1,17 +1,17 @@
-import { useState, ReactNode, PropsWithoutRef } from "react"
-import { FormProvider, useForm, UseFormProps } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+import { useState, ReactNode, PropsWithoutRef } from 'react'
+import { FormProvider, useForm, UseFormProps } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 export interface FormProps<S extends z.ZodType<any, any>>
-  extends Omit<PropsWithoutRef<JSX.IntrinsicElements["form"]>, "onSubmit"> {
+  extends Omit<PropsWithoutRef<JSX.IntrinsicElements['form']>, 'onSubmit'> {
   /** All your form fields */
   children?: ReactNode
   /** Text to display in the submit button */
   submitText?: string
   schema?: S
   onSubmit: (values: z.infer<S>) => Promise<void | OnSubmitResult>
-  initialValues?: UseFormProps<z.infer<S>>["defaultValues"]
+  initialValues?: UseFormProps<z.infer<S>>['defaultValues']
 }
 
 interface OnSubmitResult {
@@ -19,7 +19,7 @@ interface OnSubmitResult {
   [prop: string]: any
 }
 
-export const FORM_ERROR = "FORM_ERROR"
+export const FORM_ERROR = 'FORM_ERROR'
 
 export function Form<S extends z.ZodType<any, any>>({
   children,
@@ -30,7 +30,7 @@ export function Form<S extends z.ZodType<any, any>>({
   ...props
 }: FormProps<S>) {
   const ctx = useForm<z.infer<S>>({
-    mode: "onBlur",
+    mode: 'onBlur',
     resolver: schema ? zodResolver(schema) : undefined,
     defaultValues: initialValues,
   })
@@ -46,7 +46,7 @@ export function Form<S extends z.ZodType<any, any>>({
               setFormError(value)
             } else {
               ctx.setError(key as any, {
-                type: "submit",
+                type: 'submit',
                 message: value,
               })
             }
@@ -59,7 +59,7 @@ export function Form<S extends z.ZodType<any, any>>({
         {children}
 
         {formError && (
-          <div role="alert" style={{ color: "red" }}>
+          <div role="alert" style={{ color: 'red' }}>
             {formError}
           </div>
         )}

@@ -24,13 +24,13 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
           <li key={sourceData.id} className="py-5">
             <h3 className="mb-1 text-sm font-bold text-purple-800">{sourceData.export.title}:</h3>
 
-            <table className="text-sm text-gray-500 my-2">
+            <table className="my-2 text-sm text-gray-500">
               <tr>
-                <th className="w-24 text-xs font-medium text-gray-900 align-top">Beschreibung:</th>
+                <th className="w-24 align-top text-xs font-medium text-gray-900">Beschreibung:</th>
                 <td className="pl-2">{sourceData.export.desc}</td>
               </tr>
               <tr>
-                <th className="w-24 text-xs font-medium text-gray-900 align-top">Attribution:</th>
+                <th className="w-24 align-top text-xs font-medium text-gray-900">Attribution:</th>
                 <td
                   className="pl-2"
                   dangerouslySetInnerHTML={{
@@ -39,7 +39,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
                 ></td>
               </tr>
               <tr>
-                <th className="w-24 text-xs font-medium text-gray-900 align-top">Lizenz:</th>
+                <th className="w-24 align-top text-xs font-medium text-gray-900">Lizenz:</th>
                 <td className="pl-2">{sourceData.licence}</td>
               </tr>
             </table>

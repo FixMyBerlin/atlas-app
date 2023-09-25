@@ -1,10 +1,10 @@
-import { BlitzPage, Routes } from "@blitzjs/next"
-import { useMutation } from "@blitzjs/rpc"
-import Link from "next/link"
-import { Suspense } from "react"
-import logout from "src/auth/mutations/logout"
-import Layout from "src/core/layouts/Layout"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
+import { BlitzPage, Routes } from '@blitzjs/next'
+import { useMutation } from '@blitzjs/rpc'
+import Link from 'next/link'
+import { Suspense } from 'react'
+import logout from 'src/auth/mutations/logout'
+import Layout from 'src/core/layouts/Layout'
+import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -118,7 +118,7 @@ const Home: BlitzPage = () => {
                     <span>4</span>
                     <pre>
                       <code>
-                        Go to{" "}
+                        Go to{' '}
                         <Link href="/projects" className="border">
                           /projects
                         </Link>

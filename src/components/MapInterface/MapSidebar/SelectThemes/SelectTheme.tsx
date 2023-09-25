@@ -40,16 +40,16 @@ export const SelectTheme = ({ themeConfig, active }: Props) => {
     <Disclosure key={themeData.name}>
       {({ open }) => (
         <>
-          <div className="flex justify-between border-t border-t-gray-200 pt-2 mt-2 first:mt-0 first:border-t-transparent">
+          <div className="mt-2 flex justify-between border-t border-t-gray-200 pt-2 first:mt-0 first:border-t-transparent">
             <Toggle active={active} handleChange={() => selectTheme(themeConfig.id)}>
               <h2 className="font-semibold">{themeData.name}</h2>
-              <p className="text-xs text-gray-400 leading-3 mt-1">{themeData.desc}</p>
+              <p className="mt-1 text-xs leading-3 text-gray-400">{themeData.desc}</p>
             </Toggle>
-            <Disclosure.Button className="flex justify-center items-center px-1 border-l border-gray-200 flex-none hover:bg-yellow-50 text-yellow-500">
+            <Disclosure.Button className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
               {open ? (
-                <ChevronDownIcon className="w-7 h-7" />
+                <ChevronDownIcon className="h-7 w-7" />
               ) : (
-                <ChevronLeftIcon className="w-7 h-7" />
+                <ChevronLeftIcon className="h-7 w-7" />
               )}
             </Disclosure.Button>
           </div>

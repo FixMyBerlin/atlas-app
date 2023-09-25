@@ -71,8 +71,8 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
                   'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300  px-3 py-1.5 text-sm font-medium shadow-sm',
                   open ? 'shadow-md' : '',
                   disabled
-                    ? 'text-gray-400 bg-gray-50'
-                    : 'text-gray-700 focus:shadow-md bg-white hover:bg-gray-50 focus:outline-none',
+                    ? 'bg-gray-50 text-gray-400'
+                    : 'bg-white text-gray-700 hover:bg-gray-50 focus:shadow-md focus:outline-none',
                 )}
               >
                 <div className="flex gap-1 truncate">

@@ -28,7 +28,7 @@ export const TagsTableRowCompositLit: React.FC<CompositTableRow> = ({
           {properties['osm_lit'] &&
             properties['osm_lit'] !== 'yes' &&
             properties['osm_lit'] !== 'no' && (
-              <p className="leading-tight mt-1">
+              <p className="mt-1 leading-tight">
                 <em>Detaillierte Angaben direkt aus OSM:</em>{' '}
                 <ConditionalFormattedValue
                   sourceId={sourceId}
@@ -37,7 +37,7 @@ export const TagsTableRowCompositLit: React.FC<CompositTableRow> = ({
                 />
               </p>
             )}
-          <p className="leading-tight mt-1">
+          <p className="mt-1 leading-tight">
             <em>Aktualität:</em>{' '}
             <ConditionalFormattedValue
               sourceId={sourceId}

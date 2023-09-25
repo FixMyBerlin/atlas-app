@@ -17,10 +17,10 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
       sourceId={sourceId}
       tagKey={tagKey}
       value={
-        <table className="leading-4 w-full">
+        <table className="w-full leading-4">
           <tbody>
             <tr>
-              <th className="text-left pr-2 font-medium py-1">Belag</th>
+              <th className="py-1 pr-2 text-left font-medium">Belag</th>
               <td className="w-full py-1">
                 <details>
                   <summary>
@@ -42,7 +42,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
               </td>
             </tr>
             <tr className="border-t">
-              <th className="text-left pr-2 font-medium py-1">Zustand</th>
+              <th className="py-1 pr-2 text-left font-medium">Zustand</th>
               <td className="w-full py-1">
                 <details>
                   <summary>
@@ -52,7 +52,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
                       tagValue={properties['smoothness']}
                     />
                   </summary>
-                  <p className="leading-tight mt-1">
+                  <p className="mt-1 leading-tight">
                     <em>Quelle:</em>{' '}
                     <ConditionalFormattedValue
                       sourceId={sourceId}
@@ -60,7 +60,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
                       tagValue={properties['smoothness_source']}
                     />
                   </p>
-                  <p className="leading-tight mt-1">
+                  <p className="mt-1 leading-tight">
                     <em>Genauigkeit der Quelle:</em>{' '}
                     <ConditionalFormattedValue
                       sourceId={sourceId}

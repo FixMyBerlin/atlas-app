@@ -12,7 +12,7 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
   return (
     <Switch.Group
       as="div"
-      className="group flex min-h-[1.3rem] cursor-pointer items-center justify-between w-full"
+      className="group flex min-h-[1.3rem] w-full cursor-pointer items-center justify-between"
     >
       <Switch.Label
         as="div"
@@ -27,7 +27,7 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
       <Switch
         checked={active}
         onChange={handleChange}
-        className="relative inline-flex h-5 w-10 flex-shrink-0 items-center justify-center rounded-full focus:outline-none rotate-90"
+        className="relative inline-flex h-5 w-10 flex-shrink-0 rotate-90 items-center justify-center rounded-full focus:outline-none"
       >
         <span
           aria-hidden="true"

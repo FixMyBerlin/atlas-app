@@ -1,13 +1,13 @@
-import Layout from "src/core/layouts/Layout"
-import { LabeledTextField } from "src/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "src/core/components/Form"
-import { ResetPassword } from "src/auth/schemas"
-import resetPassword from "src/auth/mutations/resetPassword"
-import { BlitzPage, Routes } from "@blitzjs/next"
-import { useRouter } from "next/router"
-import { useMutation } from "@blitzjs/rpc"
-import Link from "next/link"
-import { assert } from "blitz"
+import Layout from 'src/core/layouts/Layout'
+import { LabeledTextField } from 'src/core/components/LabeledTextField'
+import { Form, FORM_ERROR } from 'src/core/components/Form'
+import { ResetPassword } from 'src/auth/schemas'
+import resetPassword from 'src/auth/mutations/resetPassword'
+import { BlitzPage, Routes } from '@blitzjs/next'
+import { useRouter } from 'next/router'
+import { useMutation } from '@blitzjs/rpc'
+import Link from 'next/link'
+import { assert } from 'blitz'
 
 const ResetPasswordPage: BlitzPage = () => {
   const router = useRouter()
@@ -30,22 +30,22 @@ const ResetPasswordPage: BlitzPage = () => {
           submitText="Reset Password"
           schema={ResetPassword}
           initialValues={{
-            password: "",
-            passwordConfirmation: "",
+            password: '',
+            passwordConfirmation: '',
             token,
           }}
           onSubmit={async (values) => {
             try {
-              assert(token, "token is required.")
+              assert(token, 'token is required.')
               await resetPasswordMutation({ ...values, token })
             } catch (error: any) {
-              if (error.name === "ResetPasswordError") {
+              if (error.name === 'ResetPasswordError') {
                 return {
                   [FORM_ERROR]: error.message,
                 }
               } else {
                 return {
-                  [FORM_ERROR]: "Sorry, we had an unexpected error. Please try again.",
+                  [FORM_ERROR]: 'Sorry, we had an unexpected error. Please try again.',
                 }
               }
             }
@@ -63,7 +63,7 @@ const ResetPasswordPage: BlitzPage = () => {
   )
 }
 
-ResetPasswordPage.redirectAuthenticatedTo = "/"
+ResetPasswordPage.redirectAuthenticatedTo = '/'
 ResetPasswordPage.getLayout = (page) => <Layout title="Reset Your Password">{page}</Layout>
 
 export default ResetPasswordPage
