@@ -24,7 +24,7 @@ export const DebugMap = () => {
   const { debugMap } = useSearch<LocationGenerics>()
   useEffect(() => {
     if (debugMap === true) setShowDebugInfo(debugMap)
-  }, [debugMap])
+  }, [debugMap, setShowDebugInfo])
 
   const handleRerender = () => setTriggerRerender((prev) => prev + 1)
   useEffect(() => {
