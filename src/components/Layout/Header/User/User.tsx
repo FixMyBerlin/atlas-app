@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 // @ts-ignore but it works
-import { osmAuth } from 'osm-auth'
-import { useUserStore } from '@components/MapInterface/UserInfo/useUserStore'
-import { UserIcon } from '@heroicons/react/24/outline'
-import { LoggedIn } from './LoggedIn'
-import { useMatch } from '@tanstack/react-location'
-import { LocationGenerics } from '@routes/routes'
+import { useParam } from '@blitzjs/next'
 import { hasPermission } from '@components/MapInterface/UserInfo'
+import { useUserStore } from '@components/MapInterface/UserInfo/useUserStore'
+import { regions } from '@fakeServer/regions.const'
+import { UserIcon } from '@heroicons/react/24/outline'
+import { osmAuth } from 'osm-auth'
+import { LoggedIn } from './LoggedIn'
 
 const redirectPath = window.location.origin
 const redirectUri = `${redirectPath}/auth.html`
@@ -24,9 +24,9 @@ const parseResponse = (result: XMLDocument) => {
   const img = result.getElementsByTagName('img')[0]
   // @ts-ignore let's not overcomplicate things
   const avatar = img ? img.attributes.href.value : null
-  const displayName = user.getAttribute('display_name')
-  const userId = Number(user.getAttribute('id'))
-  const count = changeSets.getAttribute('count')
+  const displayName = user?.getAttribute('display_name')
+  const userId = Number(user?.getAttribute('id'))
+  const count = changeSets?.getAttribute('count')
   return { user, changeSets, avatar, displayName, userId, count }
 }
 
@@ -35,14 +35,31 @@ export const User: React.FC = () => {
   const setCurrentUser = useUserStore((state) => state.setCurrentUser)
   const removeCurrentUser = useUserStore((state) => state.removeCurrentUser)
 
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const regionPath = useParam('regionSlug', 'string')
+  const region = regions.find((r) => r.path === regionPath)
   const hasPermissions = hasPermission(user, region)
+
+  const update = useCallback(() => {
+    const done = (err: XMLHttpRequest | null, result: XMLDocument): void => {
+      if (err) {
+        console.error(`Error! Try clearing your browser cache. (${err.responseText}`)
+        return
+      }
+      const data = parseResponse(result)
+      const { userId: id, displayName, avatar } = data
+      setCurrentUser({ id, displayName, avatar })
+    }
+
+    if (auth.authenticated()) {
+      auth.xhr({ method: 'GET', path: '/api/0.6/user/details' }, done)
+    } else {
+      console.error('Auth failed')
+    }
+  }, [setCurrentUser])
 
   useEffect(() => {
     update()
-  }, [])
+  }, [update])
 
   const login = (): void => {
     if (!auth.bringPopupWindowToFront()) {
@@ -55,24 +72,6 @@ export const User: React.FC = () => {
   const logout = (): void => {
     auth.logout()
     removeCurrentUser()
-  }
-
-  const update = (): void => {
-    if (auth.authenticated()) {
-      auth.xhr({ method: 'GET', path: '/api/0.6/user/details' }, done)
-    } else {
-      console.error('Auth failed')
-    }
-  }
-
-  const done = (err: XMLHttpRequest | null, result: XMLDocument): void => {
-    if (err) {
-      console.error(`Error! Try clearing your browser cache. (${err.responseText}`)
-      return
-    }
-    const data = parseResponse(result)
-    const { userId: id, displayName, avatar } = data
-    setCurrentUser({ id, displayName, avatar })
   }
 
   return (
