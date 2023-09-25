@@ -1,0 +1,94 @@
+name: Deploy to Ionos
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+      APP_ORIGIN:
+        required: true
+        type: string
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      DATABASE_URL:
+        required: true
+      SESSION_SECRET_KEY:
+        required: true
+      SSH_HOST:
+        required: true
+      SSH_PASSWORD:
+        required: true
+      SSH_USERNAME:
+        required: true
+
+jobs:
+  build-push-deploy-docker-images:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.ENVIRONMENT }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Upgrade AWS CLI version and setup lightsailctl
+        run: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build app image
+        uses: docker/build-push-action@v3
+        with:
+          file: ./docker/Dockerfile
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+
+      - name: Push image
+        run: |
+          echo push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: "docker/docker-compose.yml"
+          target: "/srv/blitz"
+          strip_components: 1
+          overwrite: true
+
+      - name: Stop & Start container on Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/blitz/
+            echo "Updating '.env'"
+            echo GITHUB_SHA='${{ github.sha }}' > .env
+            echo DATABASE_URL='${{ secrets.DATABASE_URL }}' >> .env
+            echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
+            docker compose down
+            docker compose up -d
+            docker image prune -fa

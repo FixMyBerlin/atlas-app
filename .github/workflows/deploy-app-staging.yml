@@ -1,0 +1,19 @@
+name: Deploy Staging
+on:
+  push:
+    branches:
+      - blitz
+jobs:
+  call-deploy-app:
+    uses: ./.github/workflows/deploy-app.yml
+    with:
+      ENVIRONMENT: staging
+      APP_ORIGIN: http://staging.radverkehrsatlas.de
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      SESSION_SECRET_KEY: ${{ secrets.SESSION_SECRET_KEY }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
