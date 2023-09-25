@@ -1,7 +1,7 @@
 -- return the number of days that passed since a given timestamp in unix format
 -- currently everything >730 is considered outdated
 function AgeInDays(timestamp) 
-    local diff = os.clock() - timestamp
+    local diff = os.time() - timestamp
     return math.floor(diff / (3600 * 24))
 end
 
