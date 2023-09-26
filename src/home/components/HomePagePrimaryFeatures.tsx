@@ -6,11 +6,12 @@ import screenshotBikelanes from './images/HomePagePrimaryFeatures/bikelanes.jpg'
 import screenshotOther from './images/HomePagePrimaryFeatures/other.jpg'
 import screenshotPoiClassification from './images/HomePagePrimaryFeatures/poiclassification.jpg'
 import screenshotSurface from './images/HomePagePrimaryFeatures/surface.jpg'
+import Image, { StaticImageData } from 'next/image'
 
 type Feature = {
   title: string | React.ReactNode
   description: string
-  image: React.ReactNode
+  image: StaticImageData
 }
 
 const features: Feature[] = [
@@ -78,9 +79,9 @@ export const HomePagePrimaryFeatures: React.FC = () => {
       aria-label="Features for running your books"
       className="relative overflow-hidden bg-blue-600 pt-20 pb-28 sm:py-32"
     >
-      <img
-        className="absolute top-1/2 left-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
+      <Image
         src={backgroundImage}
+        className="absolute top-1/2 left-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
         alt=""
         width={2245}
         height={1636}
@@ -151,9 +152,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                       </p>
                     </div>
                     <div className="mt-6 w-[45rem] overflow-hidden rounded-xl bg-gray-50 shadow-xl shadow-blue-900/20 sm:w-auto lg:mt-0 lg:w-[67.8125rem]">
-                      {typeof feature.image === 'string' && (
-                        <img className="w-full" src={feature.image} alt="" />
-                      )}
+                      <Image className="w-full" src={feature.image} alt="" />
                     </div>
                   </Tab.Panel>
                 ))}
