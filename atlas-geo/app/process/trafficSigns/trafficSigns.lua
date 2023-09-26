@@ -85,7 +85,7 @@ local function ExitProcessing(object)
   return true
 end
 
-local toDirect = {}
+local to_orient = {}
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
@@ -99,7 +99,7 @@ function osm2pgsql.process_node(object)
     if direction ~= nil then
       tags.direction = tags.direction
     else
-      toDirect[object.id] = true
+      to_orient[object.id] = true
     end
   end
   for _, traffic_sign in pairs(splitDirections(tags)) do
@@ -111,46 +111,47 @@ function osm2pgsql.process_node(object)
   end
 end
 
--- function osm2pgsql.process_way(object)
---   local anterior, sign, posterior = nil, nil, nil
---   local node_id = nil
---   for idx, id in pairs(object.nodes) do
---     if sign == nil then 
---       if toDirect[id] then
---         sign = idx
---         node_id = id
---       else
---         anterior = idx
---       end
---     elseif posterior == nil then
---       posterior = idx
---     end
---   end
---   if node_id ~= nil then
---     print("Found sign indices")
---     if anterior ~= nil then
---       directionTable:insert({
---         node_id = node_id,
---         root = anterior,
---         direction = sign,
---         geom = object:as_linestring()
---       })
---     end
---     if posterior ~= nil then
---       directionTable:insert({
---         node_id = node_id,
---         root = sign,
---         direction = posterior,
---         geom = object:as_linestring()
---       })
---     end
---   end
---   if ExitProcessing(object) then return end
---   if object.is_closed or object.tags.traffic_sing == 'None' then return end
+function osm2pgsql.process_way(object)
+  local previous_idx = nil
+  local previous_was_sign = false
+  local node_id = nil
+  for idx, id in pairs(object.nodes) do
+    if to_orient[id] or previous_was_sign then -- checks wether the current node or the previous node is a traffic sign
+      if not previous_was_sign then node_id = id end -- if the current node is a traffic sign update the node_id
+      if previous_idx ~= nil then
+        directionTable:insert({
+          node_id = node_id,
+          root = previous_idx,
+          direction = idx,
+          geom = object:as_linestring()
+        })
+      end
+      previous_was_sign = not previous_was_sign -- if the current node is a traffic sign set previous_was_sign flag if not unset it
+      -- the lines below also respect the case of two adjacent traffic signs (don't know if we need this)
+      -- if previous_was_sign then
+      --   if to_orient[id] then
+      --     node_id = id
+      --     directionTable:insert({
+      --       node_id = node_id,
+      --       root = previous_idx,
+      --       direction = idx,
+      --       geom = object:as_linestring()
+      --     })
+      --   else
+      --     previous_was_sign = false
+      --   end
+      -- else
+      --   previous_was_sign = true
+      -- end
+    end
+    previous_idx = idx
+  end
+  if ExitProcessing(object) then return end
+  if object.is_closed or object.tags.traffic_sing == 'None' then return end
   
---   trafficSignWays:insert({
---     tags = object.tags,
---     meta = Metadata(object),
---     geom = object:as_linestring(),
---   })
--- end
+  trafficSignWays:insert({
+    tags = object.tags,
+    meta = Metadata(object),
+    geom = object:as_linestring(),
+  })
+end
