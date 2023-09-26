@@ -1,9 +1,9 @@
-import {src/core/components--TODO-MIGRATE/MapInterface/mapData
+import {
   MapDataThemeIds,
-  SourcesRasterIds,
   themes,
-} from 'src/components--TODO-MIGRATE/MapInterface/mapData'
+} from '@components/MapInterface/mapData/themesMapData/themes.const'
 import { adminIds } from '../../users/components/utils'
+import { SourcesRasterIds } from '@components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
 
 type RegionMap = {
   lat: number
@@ -33,14 +33,6 @@ const bboxToMinMax = (bbox: [number, number, number, number]) => {
   return {
     min: [bbox[2], bbox[1]] as const,
     max: [bbox[0], bbox[3]] as const,
-  }
-}
-
-const pointToLatLng = ({ point, zoom }: { point: GeoJSON.Point; zoom: number }) => {
-  return {
-    lat: point.coordinates[1],
-    lng: point.coordinates[0],
-    zoom,
   }
 }
 
@@ -330,13 +322,7 @@ export const regions: Region[] = [
     fullName: 'Ostalbkreis',
     path: 'ostalbkreis',
     osmRelationIds: [62708],
-    map: pointToLatLng({
-      point: {
-        type: 'Point',
-        coordinates: [10.092577, 48.8364862],
-      },
-      zoom: 10,
-    }),
+    map: { lat: 48.8364862, lng: 10.092577, zoom: 10 },
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
     logoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
@@ -350,13 +336,7 @@ export const regions: Region[] = [
     fullName: 'Stadt Sigmaringen',
     path: 'sigmaringen',
     osmRelationIds: [2806390],
-    map: pointToLatLng({
-      point: {
-        type: 'Point',
-        coordinates: [9.2175234, 48.0856128],
-      },
-      zoom: 10,
-    }),
+    map: { lat: 48.0856128, lng: 9.2175234, zoom: 10 },
     // BBox für https://www.openstreetmap.org/relation/2806390
     bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
     logoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
@@ -371,13 +351,7 @@ export const regions: Region[] = [
     fullName: 'Stadt Nagold',
     path: 'nagold',
     osmRelationIds: [2946978],
-    map: pointToLatLng({
-      point: {
-        type: 'Point',
-        coordinates: [8.7240494, 48.5511595],
-      },
-      zoom: 11.7,
-    }),
+    map: { lat: 48.5511595, lng: 8.7240494, zoom: 11.7 },
     // BBox für https://www.openstreetmap.org/relation/2946978
     bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
     logoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',

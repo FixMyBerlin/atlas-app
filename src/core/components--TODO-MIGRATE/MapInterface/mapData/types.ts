@@ -1,4 +1,4 @@
-import { RegionPath } from 'src/regions/components/regions.const'
+import { RegionPath } from 'src/regions/components/additionalRegionAttributes.const'
 import mapboxgl from 'mapbox-gl'
 import { LegendIconTypes } from '../MapSidebar/SelectLegend/LegendIcons'
 import { TopicIds, TopicStyleIds } from './mapData.const'
