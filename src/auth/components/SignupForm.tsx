@@ -1,5 +1,5 @@
-import { LabeledTextField } from 'src/core/components/LabeledTextField'
-import { Form, FORM_ERROR } from 'src/core/components/Form'
+import { LabeledTextField } from 'src/core/components/forms/LabeledTextField'
+import { Form, FORM_ERROR } from 'src/core/components/forms/Form'
 import signup from 'src/auth/mutations/signup'
 import { Signup } from 'src/auth/schemas'
 import { useMutation } from '@blitzjs/rpc'

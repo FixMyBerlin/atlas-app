@@ -1,4 +1,4 @@
-import { LayoutMapPage } from 'src/core/components--TODO-MIGRATE/Layout'
+import { LayoutMapPage } from 'src/core/layouts/Layout--TODO-MIGRATE'
 import { Navigate, useMatch } from '@tanstack/react-location'
 
 export const PageRegionAction: React.FC = () => {

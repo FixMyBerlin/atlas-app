@@ -1,4 +1,4 @@
-import { Link } from 'src/core/components--TODO-MIGRATE/Link'
+import { Link } from 'src/core/components/links'
 import screenshotBiBi from './images/HomePageLive/bibi.jpg'
 import screenshotTrTo from './images/HomePageLive/trto.jpg'
 import screenshotNudafa from './images/HomePageLive/zes.jpg'

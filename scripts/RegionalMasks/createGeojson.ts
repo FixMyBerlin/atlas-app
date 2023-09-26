@@ -13,7 +13,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import { z } from 'zod'
-import { apiBaseUrl } from '../../src/core/components--TODO-MIGRATE/utils/getApiUrl'
+import { apiBaseUrl } from '../../src/core/utils/getApiUrl'
 import { regions } from '../../src/regions/components/additionalRegionAttributes.const'
 
 const geojsonPolygon = z.object({

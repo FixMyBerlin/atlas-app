@@ -1,9 +1,9 @@
 import {
   MapDataThemeIds,
   themes,
-} from '@components/MapInterface/mapData/themesMapData/themes.const'
+} from 'src/core/components/MapInterface/mapData/themesMapData/themes.const'
 import { adminIds } from '../../users/components/utils'
-import { SourcesRasterIds } from '@components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+import { SourcesRasterIds } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
 
 type RegionMap = {
   lat: number

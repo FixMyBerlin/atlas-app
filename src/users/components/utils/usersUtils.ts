@@ -1,4 +1,4 @@
-import { User } from 'src/core/components--TODO-MIGRATE/MapInterface/UserInfo'
+import { User } from 'src/core/components/MapInterface/UserInfo'
 import { users } from 'src/users/components/users.const'
 
 export const adminIds = users.filter((u) => u.isAdmin).map((u) => u.id)

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { getApiUrl } from 'src/core/components--TODO-MIGRATE/utils'
-import { SourceVerificationApiIdentifier } from 'src/core/components--TODO-MIGRATE/MapInterface/mapData'
+import { getApiUrl } from 'src/core/utils'
+import { SourceVerificationApiIdentifier } from 'src/core/components/MapInterface/mapData'
 
 const api = axios.create({
   baseURL: getApiUrl(),

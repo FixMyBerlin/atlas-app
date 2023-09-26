@@ -1,4 +1,4 @@
-import { DrawArea } from 'src/core/components--TODO-MIGRATE/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
+import { DrawArea } from 'src/core/components/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
 import {src/core/components--TODO-MIGRATE/MapInterface/mapData
   SourcesDatasetsIds,
   SourcesRasterIds,

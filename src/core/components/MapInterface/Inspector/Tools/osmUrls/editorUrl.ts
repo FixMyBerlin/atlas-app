@@ -1,0 +1,23 @@
+import { MapDataSourceInspectorEditor } from 'src/core/components/MapInterface/mapData/types'
+import { pointFromGeometry } from './pointFromGeometry'
+
+type Props = {
+  urlTemplate: MapDataSourceInspectorEditor['urlTemplate']
+  geometry: maplibregl.GeoJSONFeature['geometry']
+  osmType?: string
+  osmId?: number | string
+  zoom?: number
+}
+
+export const editorUrl = ({ urlTemplate, geometry, osmType, osmId, zoom }: Props) => {
+  const [lng, lat] = pointFromGeometry(geometry)
+  if (!lng || !lat) return undefined
+
+  return urlTemplate
+    .toString()
+    .replace('{zoom}', zoom?.toString() ?? '19')
+    .replace('{latitude}', lat.toString())
+    .replace('{longitude}', lng.toString())
+    .replace('{osm_type}', osmType ?? '')
+    .replace('{osm_id}', osmId?.toString() ?? '')
+}

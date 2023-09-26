@@ -1,7 +1,7 @@
-import { LayoutPage } from 'src/core/components--TODO-MIGRATE/Layout'
-import { Link } from 'src/core/components--TODO-MIGRATE/Link'
-import { MetaTags } from 'src/core/components--TODO-MIGRATE/MetaTags'
-import { TableOfContents, TocHashLink } from 'src/core/components--TODO-MIGRATE/TableOfContents'
+import { LayoutPage } from 'src/core/layouts/Layout--TODO-MIGRATE'
+import { Link } from 'src/core/components/links'
+import { MetaTags } from 'src/core/layouts/MetaTags'
+import { TableOfContents, TocHashLink } from 'src/core/components/pages/TableOfContents'
 import React from 'react'
 
 // DEAKTIVIERT

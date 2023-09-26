@@ -1,4 +1,4 @@
-import { Link } from 'src/core/components--TODO-MIGRATE/Link'
+import { Link } from 'src/core/components/links'
 import { EnvelopeIcon } from '@heroicons/react/20/solid'
 
 export const WaitlistButton: React.FC = () => {

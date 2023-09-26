@@ -1,8 +1,8 @@
-import { Form, FormProps } from 'src/core/components/Form'
-import { LabeledTextField } from 'src/core/components/LabeledTextField'
+import { Form, FormProps } from 'src/core/components/forms/Form'
+import { LabeledTextField } from 'src/core/components/forms/LabeledTextField'
 
 import { z } from 'zod'
-export { FORM_ERROR } from 'src/core/components/Form'
+export { FORM_ERROR } from 'src/core/components/forms/Form'
 
 export function RegionForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   return (
