@@ -1,3 +1,4 @@
+import Image, { StaticImageData } from 'next/image'
 import { Link } from 'src/core/components/links'
 import screenshotBiBi from './images/HomePageLive/bibi.jpg'
 import screenshotTrTo from './images/HomePageLive/trto.jpg'
@@ -6,7 +7,7 @@ import screenshotNudafa from './images/HomePageLive/zes.jpg'
 type Callout = {
   name: string
   description: string
-  image: React.ReactNode
+  image: StaticImageData
   imageAlt: string
   href: string
 }
@@ -57,8 +58,8 @@ export const HomePageLive = () => {
               classNameOverwrite="block group relative lg:max-w-[26rem]"
             >
               <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:h-64">
-                <img
-                  src={callout.image as string}
+                <Image
+                  src={callout.image}
                   alt={callout.imageAlt}
                   className="h-full w-full object-cover object-center"
                 />
