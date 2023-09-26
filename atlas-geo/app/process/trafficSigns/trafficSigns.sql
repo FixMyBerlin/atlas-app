@@ -1,0 +1,1 @@
+INSERT INTO "trafficSigns" SELECT osm_id, tags, meta, ST_StartPoint(geom) as geom from "_trafficSigns_tmp"; 
