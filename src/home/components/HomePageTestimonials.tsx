@@ -1,10 +1,15 @@
+import Image, { StaticImageData } from 'next/image'
 import avatarImage1 from './images/HomePageTestimonials/avatar-1.png'
 import avatarImage3 from './images/HomePageTestimonials/avatar-3.png'
 import avatarChristoph from './images/HomePageTestimonials/christoph.jpg'
 
 type Testimonial = {
   content: string
-  author: { name: string; role: string; image: React.ReactNode }
+  author: {
+    name: string
+    role: string
+    image: StaticImageData
+  }
 }
 
 const testimonials: Testimonial[][] = [
@@ -87,15 +92,13 @@ export const HomePageTestimonials = () => {
                           </div>
                         </div>
                         <div className="overflow-hidden rounded-full bg-gray-50">
-                          {typeof testimonial.author.image === 'string' && (
-                            <img
-                              className="h-14 w-14 object-cover"
-                              src={testimonial.author.image}
-                              alt=""
-                              width={56}
-                              height={56}
-                            />
-                          )}
+                          <Image
+                            src={testimonial.author.image}
+                            className="h-14 w-14 object-cover"
+                            alt=""
+                            width={56}
+                            height={56}
+                          />
                         </div>
                       </figcaption>
                     </figure>

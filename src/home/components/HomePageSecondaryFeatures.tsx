@@ -1,19 +1,22 @@
 import { Tab } from '@headlessui/react'
 import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
-import screenshotImprove from './images/HomePageSecondaryFeatures/placeholder.png'
-import screenshotCheck from './images/HomePageSecondaryFeatures/placeholder.png'
-import screenshotView from './images/HomePageSecondaryFeatures/placeholder.png'
+import Image, { StaticImageData } from 'next/image'
+import {
+  default as screenshotCheck,
+  default as screenshotImprove,
+  default as screenshotView,
+} from './images/HomePageSecondaryFeatures/placeholder.png'
 
-type Feature = {
+type TFeature = {
   name: string | React.ReactNode
   summary: string
   description: string
-  image: string
+  image: StaticImageData
   icon: React.ReactNode
 }
 
-const features: Feature[] = [
+const features: TFeature[] = [
   {
     name: 'Daten Betrachten',
     summary:
@@ -48,7 +51,7 @@ function Feature({
   className,
   ...props
 }: {
-  feature: Feature
+  feature: TFeature
   isActive: boolean
   className: string
 }) {
@@ -79,12 +82,14 @@ const FeaturesMobile = () => {
           <div className="relative mt-10 pb-10">
             <div className="absolute -inset-x-4 bottom-0 top-8 bg-gray-200 sm:-inset-x-6" />
             <div className="relative mx-auto w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-gray-900/5 ring-1 ring-gray-500/10">
-              <img
-                className="w-full"
+              <Image
                 src={feature.image}
+                className="w-full"
+                style={{
+                  width: '52.75rem',
+                  height: '52.75rem',
+                }}
                 alt=""
-                width="52.75rem"
-                height="52.75rem"
               />
             </div>
           </div>
@@ -131,12 +136,14 @@ const FeaturesDesktop = () => {
                   aria-hidden={featureIndex !== selectedIndex}
                 >
                   <div className="w-[52.75rem] overflow-hidden rounded-xl bg-white shadow-lg shadow-gray-900/5 ring-1 ring-gray-500/10">
-                    <img
-                      className="w-full"
+                    <Image
                       src={feature.image}
+                      className="w-full"
+                      style={{
+                        width: '52.75rem',
+                        height: '52.75rem',
+                      }}
                       alt=""
-                      width="52.75rem"
-                      height="52.75rem"
                     />
                   </div>
                 </Tab.Panel>

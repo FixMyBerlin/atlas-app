@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import backgroundImage from './images/background-faqs.jpg'
 
 type FAQ = {
@@ -62,9 +63,9 @@ export const Faqs = () => {
       aria-labelledby="faq-title"
       className="relative overflow-hidden bg-gray-50 py-20 sm:py-32"
     >
-      <img
-        className="absolute top-0 left-1/2 max-w-none translate-x-[-30%] -translate-y-1/4"
+      <Image
         src={backgroundImage}
+        className="absolute top-0 left-1/2 max-w-none translate-x-[-30%] -translate-y-1/4"
         alt=""
         width={1558}
         height={946}

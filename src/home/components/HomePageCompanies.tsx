@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import imageBiBi from '../assets/bibi-logo.svg'
-import imageTrTo from '../assets/trto-logo.png'
 import imageNudafa from '../assets/nudafa-logo.svg'
+import imageTrTo from '../assets/trto-logo.png'
 
 export const HomePageCompanies: React.FC = () => {
   return (

@@ -1,12 +1,12 @@
 import { Tab } from '@headlessui/react'
 import { clsx } from 'clsx'
+import Image, { StaticImageData } from 'next/image'
 import { useEffect, useState } from 'react'
-import backgroundImage from './images/background-features.jpg'
 import screenshotBikelanes from './images/HomePagePrimaryFeatures/bikelanes.jpg'
 import screenshotOther from './images/HomePagePrimaryFeatures/other.jpg'
 import screenshotPoiClassification from './images/HomePagePrimaryFeatures/poiclassification.jpg'
 import screenshotSurface from './images/HomePagePrimaryFeatures/surface.jpg'
-import Image, { StaticImageData } from 'next/image'
+import backgroundImage from './images/background-features.jpg'
 
 type Feature = {
   title: string | React.ReactNode

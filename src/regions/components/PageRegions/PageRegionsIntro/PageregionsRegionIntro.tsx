@@ -1,12 +1,13 @@
-import { Region } from 'src/users/components/fakeServer/index'
+import Image from 'next/image'
+import { TPublicRegion } from 'src/regions/queries/getPublicRegions'
 
-type Props = { regions: Region[] | undefined }
+type Props = { regions: TPublicRegion[] | undefined }
 
 export const PageregionsRegionIntro: React.FC<Props> = ({ regions }) => {
   return (
     <div className="bg-blue-gray-800 relative pb-36 pt-10 md:pt-10">
       <div className="absolute inset-0">
-        <img
+        <Image
           className="h-full w-full object-cover"
           src="https://images.unsplash.com/photo-1562504208-03d85cc8c23e?ixlib=rb-1.2.1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1920&q=60&&sat=-100"
           alt=""
