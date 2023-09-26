@@ -1,5 +1,8 @@
-import { DrawArea } from '@components/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
-import { SourcesDatasetsIds, SourcesRasterIds } from '@components/MapInterface/mapData'
+import { DrawArea } from 'src/core/components--TODO-MIGRATE/MapInterface/Map/Calculator/CalculatorControlsDrawControl'
+import {src/core/components--TODO-MIGRATE/MapInterface/mapData
+  SourcesDatasetsIds,
+  SourcesRasterIds,
+} from 'src/components--TODO-MIGRATE/MapInterface/mapData'
 import { Region } from '@fakeServer/index'
 import { PageRegionMap, PageRegions } from '@pages/PageRegions'
 import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
@@ -7,10 +10,10 @@ import {
   MakeGenerics,
   ReactLocation,
   Route,
-  parseSearchWith,
+  parseSearchWith,../core/components--TODO-MIGRATE/MapInterface/mapStateConfig
   stringifySearchWith,
 } from '@tanstack/react-location'
-import { ThemeConfig } from '../components/MapInterface/mapStateConfig'
+import { ThemeConfig } from '../components--TODO-MIGRATE/MapInterface/mapStateConfig'
 import { customParse, customStringify } from './encodeDecode/customParseStringify'
 import { fetchRegions } from './fetchRegions'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'

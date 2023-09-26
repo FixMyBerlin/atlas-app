@@ -1,6 +1,6 @@
-import { LayoutPage } from '@components/Layout'
-import { Link } from '@components/Link'
-import { MetaTags } from '@components/MetaTags'
+import { LayoutPage } from 'src/core/components--TODO-MIGRATE/Layout'
+import { Link } from 'src/core/components--TODO-MIGRATE/Link'
+import { MetaTags } from 'src/core/components--TODO-MIGRATE/MetaTags'
 import MfundLogo from '@pages/assets/PageContact/logo-mfund.png'
 import { ReactComponent as ImageLogoBmdvFoerderung } from './assets/PageContact/logo-bmdv-foerderung.svg'
 

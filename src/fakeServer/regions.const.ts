@@ -1,4 +1,8 @@
-import { MapDataThemeIds, SourcesRasterIds, themes } from '@components/MapInterface/mapData'
+import {src/core/components--TODO-MIGRATE/MapInterface/mapData
+  MapDataThemeIds,
+  SourcesRasterIds,
+  themes,
+} from 'src/components--TODO-MIGRATE/MapInterface/mapData'
 import { adminIds } from './utils'
 
 type RegionMap = {

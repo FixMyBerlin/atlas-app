@@ -1,4 +1,4 @@
-import { Link } from '@components/Link'
+import { Link } from 'src/core/components--TODO-MIGRATE/Link'
 import { clsx } from 'clsx'
 
 const baseStyles = {

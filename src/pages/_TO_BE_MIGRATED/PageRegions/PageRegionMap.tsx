@@ -1,12 +1,12 @@
-import { LayoutMap } from '@components/Layout'
-import { MapInterface } from '@components/MapInterface'
-import { ErrorRestartMap } from '@components/MapInterface/ErrorRestartMap/ErrorRestartMap'
-import { sourcesBackgroundsRaster } from '@components/MapInterface/mapData'
+import { LayoutMap } from 'src/core/components--TODO-MIGRATE/Layout'
+import { MapInterface } from 'src/core/components--TODO-MIGRATE/MapInterface'
+import { ErrorRestartMap } from 'src/core/components--TODO-MIGRATE/MapInterface/ErrorRestartMap/ErrorRestartMap'
+import { sourcesBackgroundsRaster } from 'src/core/components--TODO-MIGRATE/MapInterface/mapData'
 import {
   createMapRegionConfig,
   initializeMapRegionConfig,
-} from '@components/MapInterface/mapStateConfig'
-import { isDev } from '@components/utils'
+} from 'src/core/components--TODO-MIGRATE/MapInterface/mapStateConfig'
+import { isDev } from 'src/core/components--TODO-MIGRATE/utils'
 import { LocationGenerics } from '@routes/routes'
 import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import { Navigate, useMatch, useNavigate, useSearch } from '@tanstack/react-location'

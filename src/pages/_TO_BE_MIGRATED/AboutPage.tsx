@@ -1,5 +1,5 @@
-import { LayoutPage } from '@components/Layout'
-import { MetaTags } from '@components/MetaTags'
+import { LayoutPage } from 'src/core/components--TODO-MIGRATE/Layout'
+import { MetaTags } from 'src/core/components--TODO-MIGRATE/MetaTags'
 
 export const AboutPage: React.FC = () => {
   return (

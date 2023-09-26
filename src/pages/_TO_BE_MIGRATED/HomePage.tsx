@@ -1,5 +1,5 @@
-import { Layout } from '@components/Layout'
-import { MetaTags } from '@components/MetaTags'
+import { Layout } from 'src/core/components--TODO-MIGRATE/Layout'
+import { MetaTags } from 'src/core/components--TODO-MIGRATE/MetaTags'
 import {
   HomePageCallToAction,
   HomePageCompanies,
