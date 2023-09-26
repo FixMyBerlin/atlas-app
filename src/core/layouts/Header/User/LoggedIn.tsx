@@ -38,7 +38,14 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {imgSrc ? (
-          <Image src={imgSrc} className="h-8 w-8 rounded-full" alt="" aria-hidden="true" />
+          <Image
+            src={imgSrc}
+            width={32}
+            height={32}
+            className="h-8 w-8 rounded-full"
+            alt=""
+            aria-hidden="true"
+          />
         ) : (
           <UserIcon className="h-6 w-6 text-gray-300" aria-hidden="true" />
         )}

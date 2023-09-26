@@ -1,10 +1,23 @@
-const { withBlitz } = require("@blitzjs/next")
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withBlitz } = require('@blitzjs/next')
+const { withSentryConfig } = require('@sentry/nextjs')
 
 /**
  * @type {import('@blitzjs/next').BlitzConfig}
  **/
-const config = {}
+const config = {
+  images: {
+    // Allowlist of external image sources for next/image <Image />
+    // Docs https://nextjs.org/docs/messages/next-image-unconfigured-host
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'www.gravatar.com',
+        port: '',
+        pathname: '/avatar/**',
+      },
+    ],
+  },
+}
 
 module.exports = withBlitz(config)
 
@@ -16,8 +29,8 @@ module.exports = withSentryConfig(
 
     // Suppresses source map uploading logs during build
     silent: true,
-    org: "fixmycity-gmbh",
-    project: "radverkehrsatlas",
+    org: 'fixmycity-gmbh',
+    project: 'radverkehrsatlas',
   },
   {
     // For all available options, see:
@@ -30,12 +43,12 @@ module.exports = withSentryConfig(
     transpileClientSDK: true,
 
     // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
+    tunnelRoute: '/monitoring',
 
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
 
     // Automatically tree-shake Sentry logger statements to reduce bundle size
     disableLogger: true,
-  }
-);
+  },
+)
