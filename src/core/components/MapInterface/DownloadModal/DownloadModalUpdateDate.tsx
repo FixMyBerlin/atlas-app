@@ -1,4 +1,4 @@
-import { SmallSpinner } from 'src/core/components/Spinner/Spinner'
+import { SmallSpinner } from 'src/core/components/Spinner/SmallSpinner'
 import { getTilesUrl } from 'src/core/utils'
 import { useQuery } from '@tanstack/react-query'
 

@@ -3,7 +3,7 @@ import { usePaginatedQuery } from '@blitzjs/rpc'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Suspense } from 'react'
-import { SmallSpinner } from 'src/core/components/Spinner/Spinner'
+import { Spinner } from 'src/core/components/Spinner/Spinner'
 import { Layout } from 'src/core/layouts/Layout'
 import { isDev, isStaging } from 'src/core/utils'
 import { PageRegionsRegionList } from 'src/regions/components/PageRegions/PageRegionsRegionList'
@@ -55,7 +55,7 @@ const RegionsPage = () => {
   return (
     <Layout>
       {/* TODO MIGRATEION: add title tag logi */}
-      <Suspense fallback={<SmallSpinner />}>
+      <Suspense fallback={<Spinner />}>
         <RegionsList />
       </Suspense>
       {/* TODO MIGRATION: Wrap into admin box, copy adminbox from TS to here */}
