@@ -79,35 +79,35 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
               </li>
               <li>
                 {devUrl && (
-                  <Link external blank to={devUrl}>
+                  <Link external blank href={devUrl}>
                     Open DEV
                   </Link>
                 )}
               </li>
               <li>
                 {stagingUrl && (
-                  <Link external blank to={stagingUrl}>
+                  <Link external blank href={stagingUrl}>
                     Open Staging
                   </Link>
                 )}
               </li>
               <li>
                 {prodUrl && (
-                  <Link external blank to={prodUrl}>
+                  <Link external blank href={prodUrl}>
                     Open Production
                   </Link>
                 )}
               </li>
               {osmUrlViewportUrl && (
                 <li>
-                  <Link external blank to={osmUrlViewportUrl}>
+                  <Link external blank href={osmUrlViewportUrl}>
                     Open OSM
                   </Link>
                 </li>
               )}
               {mapillaryUrlViewportUrl && (
                 <li>
-                  <Link external blank to={mapillaryUrlViewportUrl}>
+                  <Link external blank href={mapillaryUrlViewportUrl}>
                     Open Mapillary
                   </Link>
                 </li>

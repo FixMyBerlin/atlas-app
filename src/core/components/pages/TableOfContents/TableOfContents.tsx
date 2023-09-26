@@ -28,7 +28,7 @@ export const TableOfContents: React.FC<Props> = ({ items }) => {
       <ul>
         {items.map(([itemHash, itemlink]) => (
           <li key={itemHash}>
-            <Link to={itemHash} className="block w-full py-1.5 leading-5">
+            <Link href={itemHash} className="block w-full py-1.5 leading-5">
               {itemlink}
             </Link>
           </li>

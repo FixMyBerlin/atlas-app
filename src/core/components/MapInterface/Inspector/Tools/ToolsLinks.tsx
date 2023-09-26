@@ -41,26 +41,26 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
         })
         if (!url) return null
         return (
-          <Link key={name} external blank to={url} classNameOverwrite={buttonStyles}>
+          <Link key={name} external blank href={url} classNameOverwrite={buttonStyles}>
             {name}
           </Link>
         )
       })}
 
       {osmUrlHref && (
-        <Link external blank to={osmUrlHref} classNameOverwrite={buttonStyles}>
+        <Link external blank href={osmUrlHref} classNameOverwrite={buttonStyles}>
           OpenStreetMap
         </Link>
       )}
 
       {historyUrlHref && (
-        <Link external blank to={historyUrlHref} classNameOverwrite={buttonStyles}>
+        <Link external blank href={historyUrlHref} classNameOverwrite={buttonStyles}>
           Änderungshistorie
         </Link>
       )}
 
       {mapillaryUrlHref && (
-        <Link external blank to={mapillaryUrlHref} classNameOverwrite={buttonStyles}>
+        <Link external blank href={mapillaryUrlHref} classNameOverwrite={buttonStyles}>
           Mapillary
         </Link>
       )}

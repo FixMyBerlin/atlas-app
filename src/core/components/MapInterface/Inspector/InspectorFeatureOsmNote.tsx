@@ -42,7 +42,7 @@ const OsmUserLink = ({
     <Link
       external
       blank
-      to={`https://www.openstreetmap.org/user/${user}`}
+      href={`https://www.openstreetmap.org/user/${user}`}
       className="relative inline-flex gap-1"
     >
       {user}{' '}
@@ -132,7 +132,7 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
             )}
           </p>
           <p>
-            <Link button external blank to={`https://www.openstreetmap.org/note/${thread.id}`}>
+            <Link button external blank href={`https://www.openstreetmap.org/note/${thread.id}`}>
               Auf openstreetmap.org ansehen und kommentieren
             </Link>
           </p>

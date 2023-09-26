@@ -53,7 +53,7 @@ export const OsmNotes: React.FC = () => {
       <Tooltip text="Hinweis auf openstreetmap.org erstellen">
         <Link
           // Default zoom since Note pins on osm.org are only visible when zoomed in…
-          to={`https://www.openstreetmap.org/note/new#map=15/${centerLocation?.lat}/${centerLocation?.lng}`}
+          href={`https://www.openstreetmap.org/note/new#map=15/${centerLocation?.lat}/${centerLocation?.lng}`}
           blank
           className={clsx(
             osmNotesActive ? 'translate-x-0' : '-translate-x-20',

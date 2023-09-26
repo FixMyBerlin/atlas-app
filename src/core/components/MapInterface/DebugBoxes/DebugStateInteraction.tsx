@@ -37,7 +37,7 @@ export const DebugStateInteraction = () => {
           <summary className="cursor-pointer">Helper</summary>
           <div className="flex flex-col gap-1">
             {!!regionPath && (
-              <Link to={`/regionen/${regionPath}`} className="rounded border p-1">
+              <Link href={`/regionen/${regionPath}`} className="rounded border p-1">
                 Reset URL <code>config</code>
               </Link>
             )}

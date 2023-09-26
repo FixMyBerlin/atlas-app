@@ -47,7 +47,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
             <div className="flex gap-2">
               {bbox && (
                 <Link
-                  to={exportApiUrlBbox(sourceData.export.apiIdentifier, bbox)}
+                  href={exportApiUrlBbox(sourceData.export.apiIdentifier, bbox)}
                   classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                   download
                   blank

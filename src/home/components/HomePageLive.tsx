@@ -52,7 +52,7 @@ export const HomePageLive = () => {
         <div className="mt-6 justify-center space-y-10 lg:flex lg:gap-x-6 lg:space-y-0">
           {callouts.map((callout) => (
             <Link
-              to={callout.href}
+              href={callout.href}
               external={callout.href.startsWith('http')}
               key={callout.name}
               classNameOverwrite="block group relative lg:max-w-[26rem]"

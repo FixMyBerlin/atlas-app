@@ -50,7 +50,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
                     <Link
                       blank
-                      to={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
+                      href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
                       title="OpenStreetMap Wiki"
                     >
                       W

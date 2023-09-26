@@ -21,7 +21,7 @@ export const BackgroundLegend: React.FC = () => {
 
   return (
     <Link
-      to={enhancedLink}
+      href={enhancedLink}
       blank
       external
       classNameOverwrite="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 group"
