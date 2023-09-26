@@ -1,36 +1,29 @@
-import { Routes } from '@blitzjs/next'
-import { usePaginatedQuery } from '@blitzjs/rpc'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 import { Spinner } from 'src/core/components/Spinner/Spinner'
 import { Layout } from 'src/core/layouts/Layout'
-import { isDev, isStaging } from 'src/core/utils'
 import { PageRegionsRegionList } from 'src/regions/components/PageRegions/PageRegionsRegionList'
 import getPublicRegions from 'src/regions/queries/getPublicRegions'
-import { isAdmin } from 'src/users/components/utils'
+import getCurrentUser from 'src/users/queries/getCurrentUser'
 
 export const RegionsList = () => {
-  const router = useRouter()
-  const [regions] = usePaginatedQuery(getPublicRegions, {})
-
-  const { currentUser } = { currentUser: undefined } // TODO useUserStore()
+  const [regions] = useQuery(getPublicRegions, {})
 
   // TODO MIGRATION: This part can be solved better in Blitz, now…
-  if (router.query.regionPathNotFound) {
-    return (
-      <Layout>
-        <p>
-          <code>{router.query.regionPathNotFound}</code> konnte nicht gefunden werden.
-        </p>
-      </Layout>
-    )
-  }
+  // const router = useRouter()
+  // if (router.query.regionPathNotFound) {
+  //   return (
+  //     <Layout>
+  //       <p>
+  //         <code>{router.query.regionPathNotFound}</code> konnte nicht gefunden werden.
+  //       </p>
+  //     </Layout>
+  //   )
+  // }
 
   // TODO MIGRATION: Re add list of unpublished Regions based on permissions
   const unPublishedRegions = regions?.filter((r) => !r.published)
-  const showUnpublishedRegions =
-    unPublishedRegions?.length && ((currentUser && isAdmin(currentUser)) || isDev || isStaging)
+  const showUnpublishedRegions = unPublishedRegions?.length // TODO
 
   return (
     <>
@@ -54,7 +47,7 @@ export const RegionsList = () => {
 const RegionsPage = () => {
   return (
     <Layout>
-      {/* TODO MIGRATEION: add title tag logi */}
+      {/* TODO MIGRATION: add title tag logic */}
       <Suspense fallback={<Spinner />}>
         <RegionsList />
       </Suspense>
@@ -62,4 +55,5 @@ const RegionsPage = () => {
   )
 }
 
+RegionsPage.authenticate = false
 export default RegionsPage

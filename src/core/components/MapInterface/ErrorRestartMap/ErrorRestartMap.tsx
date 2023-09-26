@@ -1,35 +1,22 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch, useSearch } from '@tanstack/react-location'
+import { Routes, useParam } from '@blitzjs/next'
+import { useRouter } from 'next/router'
 import React from 'react'
+import { Link } from '../../links'
 
 export const ErrorRestartMap: React.FC = () => {
-  const {
-    params: { regionPath },
-  } = useMatch()
-  const { lat, lng, zoom, bg } = useSearch<LocationGenerics>()
+  const regionSlug = useParam('regionSlug', 'string')
+  const router = useRouter()
 
-  // We cannot use react-location for the Link, since this will not force a reload of the page.
-  const paramsWithoutConfig = new URLSearchParams()
-  lat && paramsWithoutConfig.append('lat', lat.toString())
-  lng && paramsWithoutConfig.append('lng', lng.toString())
-  zoom && paramsWithoutConfig.append('zoom', zoom.toString())
-  bg && paramsWithoutConfig.append('bg', bg)
+  delete router.query.config
 
   return (
     <div className="pt-2">
       <p>Leider ist ein Fehler beim Wiederherstellen der Karten-Einstellungen aufgetreten.</p>
-      {!!regionPath && (
-        <>
-          <p>
-            <a
-              href={`/regionen/${regionPath}?${paramsWithoutConfig.toString()}`}
-              className="underline"
-            >
-              Bitte laden Sie die Karte neu…
-            </a>
-          </p>
-        </>
-      )}
+      <p>
+        <Link href={Routes.ShowRegionPage({ regionSlug: regionSlug! })} className="underline">
+          Bitte laden Sie die Karte neu…
+        </Link>
+      </p>
     </div>
   )
 }

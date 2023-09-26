@@ -1,65 +1,69 @@
-import { Suspense } from 'react'
-import { Routes } from '@blitzjs/next'
-import Head from 'next/head'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useQuery, useMutation } from '@blitzjs/rpc'
 import { useParam } from '@blitzjs/next'
-
-import Layout from 'src/core/layouts/Layout'
+import { useQuery } from '@blitzjs/rpc'
+import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
+import { parseAsFloat, useQueryState } from 'next-usequerystate'
+import { useRouter } from 'next/router'
+import { Suspense } from 'react'
+import { ErrorRestartMap } from 'src/core/components/MapInterface/ErrorRestartMap/ErrorRestartMap'
+import { Spinner } from 'src/core/components/Spinner/Spinner'
+import { LayoutMap } from 'src/core/layouts/LayoutMap'
+import { MetaTags } from 'src/core/layouts/MetaTags'
+import { customParse, customStringify } from 'src/core/useQueryState/customParseStringify'
+import { isDev } from 'src/core/utils'
 import getRegion from 'src/regions/queries/getRegion'
-import deleteRegion from 'src/regions/mutations/deleteRegion'
 
 export const Region = () => {
-  const router = useRouter()
-  const regionSlug = useParam('regionSlug', 'number')
-  const [deleteRegionMutation] = useMutation(deleteRegion)
-  const [region] = useQuery(getRegion, { id: regionSlug })
+  const regionSlug = useParam('regionSlug', 'string')
+  const [region] = useQuery(getRegion, { slug: regionSlug! })
+
+  // const { lat, lng, zoom, config } = useSearch<LocationGenerics>()
+  useQueryState('lat', parseAsFloat)
+  useQueryState('lng', parseAsFloat)
+  useQueryState('zoom', parseAsFloat)
+  useQueryState('config', {
+    parse: (query: string) => customParse(query),
+    serialize: (value) => customStringify(value),
+  })
 
   return (
     <>
-      <Head>
-        <title>Region {region.id}</title>
-      </Head>
-
-      <div>
-        <h1>Region {region.id}</h1>
-        <pre>{JSON.stringify(region, null, 2)}</pre>
-
-        <Link href={Routes.EditRegionPage({ rg: region.id })}>Edit</Link>
-
-        <button
-          type="button"
-          onClick={async () => {
-            if (window.confirm('This will be deleted')) {
-              await deleteRegionMutation({ id: region.id })
-              await router.push(Routes.RegionsPage())
-            }
-          }}
-          style={{ marginLeft: '0.5rem' }}
-        >
-          Delete
-        </button>
-      </div>
+      <MetaTags noindex title={`Radverkehrsatlas (beta) ${region.name}`} />
+      <Sentry.ErrorBoundary
+        // TODO MIGRATION
+        // onError={() => setResetConfig(true)}
+        fallback={
+          <div className="flex h-full w-full items-center justify-center">
+            <div>
+              <ErrorRestartMap />
+              {isDev && (
+                <div className="mt-5 rounded bg-pink-300 p-1">
+                  Do a reload intead. Changing the config breaks live reloading.
+                  <br />
+                  But our usecase is page (re)load, so that is fine.
+                  <br />
+                  See <code>PageRegionMap.tsx</code> for more.
+                </div>
+              )}
+            </div>
+          </div>
+        }
+      >
+        {/* TODO MIGRATION */}
+        {/* <MapInterface /> */}
+      </Sentry.ErrorBoundary>
     </>
   )
 }
 
 const ShowRegionPage = () => {
   return (
-    <div>
-      <p>
-        <Link href={Routes.RegionsPage()}>Regions</Link>
-      </p>
-
-      <Suspense fallback={<div>Loading...</div>}>
+    <LayoutMap>
+      <Suspense fallback={<Spinner />}>
         <Region />
       </Suspense>
-    </div>
+    </LayoutMap>
   )
 }
 
-ShowRegionPage.authenticate = true
-ShowRegionPage.getLayout = (page) => <Layout>{page}</Layout>
-
+ShowRegionPage.authenticate = false
 export default ShowRegionPage

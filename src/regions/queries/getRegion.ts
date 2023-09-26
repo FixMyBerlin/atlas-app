@@ -5,13 +5,17 @@ import { z } from 'zod'
 
 const GetRegion = z.object({
   // This accepts type of undefined, but is required at runtime
-  id: z.number().optional().refine(Boolean, 'Required'),
+  slug: z.string().optional().refine(String, 'Required'),
 })
 
-export default resolver.pipe(resolver.zod(GetRegion), resolver.authorize(), async ({ id }) => {
-  const region = await db.region.findFirst({ where: { id } })
+export default resolver.pipe(
+  resolver.zod(GetRegion),
+  // resolver.authorize(),
+  async ({ slug }) => {
+    const region = await db.region.findFirst({ where: { slug } })
 
-  if (!region) throw new NotFoundError()
+    if (!region) throw new NotFoundError()
 
-  return region
-})
+    return region
+  },
+)
