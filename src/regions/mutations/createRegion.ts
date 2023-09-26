@@ -4,7 +4,7 @@ import { CreateRegionSchema } from '../schemas'
 
 export default resolver.pipe(
   resolver.zod(CreateRegionSchema),
-  resolver.authorize(),
+  resolver.authorize('ADMIN'),
   async (input) => {
     const region = await db.region.create({ data: input })
 
