@@ -1,18 +1,18 @@
-import { Link, linkStyles } from 'src/core/components/links'
+import { useParams } from '@blitzjs/next'
+import { Menu, Transition } from '@headlessui/react'
+import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
+import { clsx } from 'clsx'
+import Image from 'next/image'
+import React, { Fragment } from 'react'
 import {
   mapillaryUrlViewport,
   osmUrlViewport,
 } from 'src/core/components/MapInterface/Inspector/Tools/osmUrls'
-import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
 import { User } from 'src/core/components/MapInterface/UserInfo'
+import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
+import { Link, linkStyles } from 'src/core/components/links'
 import { getEnvUrl } from 'src/core/utils/getEnvUrl'
 import { isAdmin } from 'src/users/components/utils'
-import { Menu, Transition } from '@headlessui/react'
-import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
-import { clsx } from 'clsx'
-import React, { Fragment } from 'react'
 
 type Props = {
   user: User
@@ -28,16 +28,17 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
   const stagingUrl = getEnvUrl('staging')
   const prodUrl = getEnvUrl('production')
 
-  const { zoom, lat, lng } = useSearch<LocationGenerics>()
-  const osmUrlViewportUrl = osmUrlViewport(zoom, lat, lng)
-  const mapillaryUrlViewportUrl = mapillaryUrlViewport(zoom, lat, lng)
+  // TODO MIGRATION: Move to new next-usequerystate
+  const { zoom, lat, lng } = useParams()
+  const osmUrlViewportUrl = osmUrlViewport(Number(zoom), Number(lat), Number(lng))
+  const mapillaryUrlViewportUrl = mapillaryUrlViewport(Number(zoom), Number(lat), Number(lng))
 
   return (
     <Menu as="div" className="relative ml-3">
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {imgSrc ? (
-          <img className="h-8 w-8 rounded-full" src={imgSrc} alt="" aria-hidden="true" />
+          <Image src={imgSrc} className="h-8 w-8 rounded-full" alt="" aria-hidden="true" />
         ) : (
           <UserIcon className="h-6 w-6 text-gray-300" aria-hidden="true" />
         )}

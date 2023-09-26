@@ -1,34 +1,31 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { Link, useMatch, useMatchRoute } from '@tanstack/react-location'
 import clsx from 'clsx'
+import Link from 'next/link'
 import React from 'react'
 import { PrimaryNavigationProps } from '../types'
+import { useRouter } from 'next/router'
 
 type Props = {
   menuItems: PrimaryNavigationProps['primaryNavigation']
 }
 
 export const NavigationDesktopLinks: React.FC<Props> = ({ menuItems }) => {
-  const matchRoute = useMatchRoute()
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const { pathname } = useRouter()
 
   return (
     <div className="flex space-x-4">
       {menuItems.map((item) => {
-        const routeWithRegion = item.href.replaceAll(':regionPath', region?.path || '')
+        const current = item.href === pathname
         return (
           <Link
             key={item.name}
-            to={routeWithRegion}
+            href={item.href}
             className={clsx(
-              matchRoute({ to: item.href })
+              current
                 ? 'cursor-default bg-gray-900 text-white'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',
               'rounded-md px-3 py-2 text-sm font-medium',
             )}
-            aria-current={matchRoute({ to: item.href }) ? 'page' : undefined}
+            aria-current={current ? 'page' : undefined}
           >
             {item.name}
           </Link>

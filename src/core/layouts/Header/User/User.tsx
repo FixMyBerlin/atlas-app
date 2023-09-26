@@ -3,13 +3,12 @@ import React, { useCallback, useEffect } from 'react'
 import { useParam } from '@blitzjs/next'
 import { hasPermission } from 'src/core/components/MapInterface/UserInfo'
 import { useUserStore } from 'src/core/components/MapInterface/UserInfo/useUserStore'
-import { regions } from 'src/regions/components/additionalRegionAttributes.const'
+import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 import { UserIcon } from '@heroicons/react/24/outline'
 import { osmAuth } from 'osm-auth'
 import { LoggedIn } from './LoggedIn'
 
-const redirectPath = window.location.origin
-const redirectUri = `${redirectPath}/auth.html`
+const redirectUri = `${process.env.APP_ORIGIN}/auth.html`
 
 const auth = osmAuth({
   client_id: 'hj0UJ1sYG-DyUBWpLuod2cJUCJD6SavqRixv41HUAas',
@@ -36,7 +35,7 @@ export const User: React.FC = () => {
   const removeCurrentUser = useUserStore((state) => state.removeCurrentUser)
 
   const regionPath = useParam('regionSlug', 'string')
-  const region = regions.find((r) => r.path === regionPath)
+  const region = additionalRegionAttributes.find((r) => r.slug === regionPath)
   const hasPermissions = hasPermission(user, region)
 
   const update = useCallback(() => {

@@ -1,13 +1,13 @@
+import { useParam } from '@blitzjs/next'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
+import Image from 'next/image'
 import React from 'react'
+import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 
 export const HeaderRegionenLogo: React.FC = () => {
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const regionSlug = useParam('regionSlug', 'string')
+  const region = additionalRegionAttributes.find((r) => r.slug === regionSlug)
 
   if (!region) return null
 
@@ -19,7 +19,7 @@ export const HeaderRegionenLogo: React.FC = () => {
             'rounded-sm bg-white px-1 py-1': region.logoWhiteBackgroundRequired,
           })}
         >
-          <img src={region.logoPath} className="h-6 w-auto" alt="" />
+          <Image src={region.logoPath} className="h-6 w-auto" alt="" />
         </div>
       ) : (
         <>

@@ -1,7 +1,7 @@
 import { TailwindResponsiveHelper } from 'src/core/layouts/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import React from 'react'
-import { Footer } from '../Footer'
-import { HeaderApp } from '../Header'
+import { Footer } from './Footer'
+import { HeaderApp } from './Header'
 
 type Props = {
   header?: React.ReactNode

@@ -1,10 +1,10 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { useMatchRoute } from '@tanstack/react-location'
 import { clsx } from 'clsx'
+import { useRouter } from 'next/router'
 import React from 'react'
-import { PrimaryNavigationProps } from '../types'
 import { User } from '../User'
+import { PrimaryNavigationProps } from '../types'
 
 type Props = PrimaryNavigationProps & {
   logo: React.ReactElement
@@ -15,7 +15,7 @@ export const NavigationMobile: React.FC<Props> = ({
   secondaryNavigation,
   logo: Logo,
 }) => {
-  const matchRoute = useMatchRoute()
+  const { pathname } = useRouter()
 
   return (
     <Disclosure as="div" className="relative flex flex-col sm:hidden">
@@ -40,40 +40,44 @@ export const NavigationMobile: React.FC<Props> = ({
 
           <Disclosure.Panel className="divide-y-2 divide-gray-900">
             <div className="space-y-1 pt-2 pb-3">
-              {primaryNavigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={clsx(
-                    matchRoute({ to: item.href })
-                      ? 'bg-gray-900 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium',
-                  )}
-                  aria-current={matchRoute({ to: item.href }) ? 'page' : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
+              {primaryNavigation.map((item) => {
+                const current = item.href === pathname
+                return (
+                  <Disclosure.Button
+                    key={item.name}
+                    as="a"
+                    href={item.href}
+                    className={clsx(
+                      current
+                        ? 'bg-gray-900 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'block rounded-md px-3 py-2 text-base font-medium',
+                    )}
+                    aria-current={current ? 'page' : undefined}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                )
+              })}
             </div>
 
             {secondaryNavigation.map((group, i) => {
               return (
                 <div key={i} className="space-y-1 pt-2 pb-3">
                   {group.map((item) => {
+                    const current = item.href === pathname
                     return (
                       <Disclosure.Button
                         key={item.name}
                         as="a"
                         href={item.href}
                         className={clsx(
-                          matchRoute({ to: item.href })
+                          current
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'block rounded-md px-3 py-2 text-base font-medium',
                         )}
-                        aria-current={matchRoute({ to: item.href }) ? 'page' : undefined}
+                        aria-current={current ? 'page' : undefined}
                       >
                         {item.name}
                       </Disclosure.Button>

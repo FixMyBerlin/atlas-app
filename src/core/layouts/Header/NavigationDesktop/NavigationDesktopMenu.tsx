@@ -1,7 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, useMatchRoute } from '@tanstack/react-location'
 import { clsx } from 'clsx'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React, { Fragment } from 'react'
 import { PrimaryNavigationProps } from '../types'
 
@@ -10,7 +11,7 @@ type Props = {
 }
 
 export const NavigationDesktopMenu: React.FC<Props> = ({ menuItems }) => {
-  const matchRoute = useMatchRoute()
+  const { pathname } = useRouter()
 
   return (
     <Menu as={Fragment}>
@@ -44,14 +45,15 @@ export const NavigationDesktopMenu: React.FC<Props> = ({ menuItems }) => {
                       return (
                         <div className="px-1 py-1" key={i}>
                           {group.map((item, gi) => {
+                            const current = item.href === pathname
                             return (
                               <Menu.Item key={gi}>
                                 {({ active }) => (
                                   <Link
-                                    to={item.href}
+                                    href={item.href}
                                     className={clsx(
                                       active ? 'bg-gray-100' : '',
-                                      matchRoute({ to: item.href }) ? 'bg-gray-200' : '',
+                                      current ? 'bg-gray-200' : '',
                                       'block px-4 py-2 text-sm text-gray-700',
                                     )}
                                   >
