@@ -73,3 +73,13 @@ model BikelaneVerification {
   verified    String
   comment     String?
 }
+
+model Region {
+  id        Int           @id @default(autoincrement())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  slug      String        @unique
+  shortName String
+  name      String
+  public    Boolean       @default(false)
+}
