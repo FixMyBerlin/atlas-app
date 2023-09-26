@@ -14,7 +14,7 @@ type RegionMap = {
 export type Region = {
   name: string
   fullName: string
-  path: RegionPath
+  slug: RegionPath
   /** @desc 1-n relation IDs, used for the mask and export bbox — @href use https://hanshack.com/geotools/gimmegeodata/ to get the ids */
   osmRelationIds: number[] | []
   map: RegionMap
@@ -72,11 +72,11 @@ export type RegionPath =
   | 'nagold'
 
 // This is our regions "Database" until we have a real one
-export const regions: Region[] = [
+export const additionalRegionAttributes: Region[] = [
   {
     name: 'BiBi',
     fullName: 'Bietigheim-Bissingen',
-    path: 'bibi',
+    slug: 'bibi',
     osmRelationIds: [1613510],
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
     bbox: {
@@ -100,7 +100,7 @@ export const regions: Region[] = [
   {
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
-    path: 'trto',
+    slug: 'trto',
     osmRelationIds: [1427697],
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     bbox: {
@@ -123,7 +123,7 @@ export const regions: Region[] = [
   {
     name: 'Berlin',
     fullName: 'Berlin Ring',
-    path: 'berlin',
+    slug: 'berlin',
     osmRelationIds: [
       62422,
       // 11905744, // Hundekopf not 'adminstration' and therefore not present
@@ -160,7 +160,7 @@ export const regions: Region[] = [
   {
     name: 'ZES+',
     fullName: 'ZES+',
-    path: 'zes',
+    slug: 'zes',
     osmRelationIds: [
       55775, // Zeuthen
       55773, //Eichwalde
@@ -190,7 +190,7 @@ export const regions: Region[] = [
   {
     name: 'Parkraum',
     fullName: 'Parkraumanalyse',
-    path: 'parkraum',
+    slug: 'parkraum',
     osmRelationIds: [],
     map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
     bbox: null,
@@ -213,7 +213,7 @@ export const regions: Region[] = [
   {
     name: 'RS 8',
     fullName: 'Trassenscout RS 8',
-    path: 'rs8',
+    slug: 'rs8',
     osmRelationIds: [
       405292, // Stadt Ludwigsburg
       405291, // Remseck am Neckar
@@ -234,7 +234,7 @@ export const regions: Region[] = [
   {
     name: 'Mainz',
     fullName: 'radnetz-mainz.de',
-    path: 'mainz',
+    slug: 'mainz',
     osmRelationIds: [62630],
     map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
     bbox: {
@@ -251,7 +251,7 @@ export const regions: Region[] = [
   {
     name: 'LK Lüneburg',
     fullName: 'Landkreis Lüneburg',
-    path: 'lueneburg',
+    slug: 'lueneburg',
     osmRelationIds: [2084746],
     map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
     bbox: {
@@ -269,7 +269,7 @@ export const regions: Region[] = [
   {
     name: 'Neukloster Warin',
     fullName: 'Amt Neukloster Warin',
-    path: 'neukloster-warin',
+    slug: 'neukloster-warin',
     osmRelationIds: [1515757],
     map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
     bbox: {
@@ -286,7 +286,7 @@ export const regions: Region[] = [
   {
     name: 'Landhagen',
     fullName: 'Amt Landhagen',
-    path: 'landhagen',
+    slug: 'landhagen',
     osmRelationIds: [1432580],
     map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
     bbox: {
@@ -303,7 +303,7 @@ export const regions: Region[] = [
   {
     name: 'Woldegk',
     fullName: 'Amt Woldegk',
-    path: 'woldegk',
+    slug: 'woldegk',
     osmRelationIds: [1419902],
     map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
     bbox: {
@@ -320,7 +320,7 @@ export const regions: Region[] = [
   {
     name: 'Ostalbkreis',
     fullName: 'Ostalbkreis',
-    path: 'ostalbkreis',
+    slug: 'ostalbkreis',
     osmRelationIds: [62708],
     map: { lat: 48.8364862, lng: 10.092577, zoom: 10 },
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
@@ -334,7 +334,7 @@ export const regions: Region[] = [
   {
     name: 'Sigmaringen',
     fullName: 'Stadt Sigmaringen',
-    path: 'sigmaringen',
+    slug: 'sigmaringen',
     osmRelationIds: [2806390],
     map: { lat: 48.0856128, lng: 9.2175234, zoom: 10 },
     // BBox für https://www.openstreetmap.org/relation/2806390
@@ -349,7 +349,7 @@ export const regions: Region[] = [
   {
     name: 'Nagold',
     fullName: 'Stadt Nagold',
-    path: 'nagold',
+    slug: 'nagold',
     osmRelationIds: [2946978],
     map: { lat: 48.5511595, lng: 8.7240494, zoom: 11.7 },
     // BBox für https://www.openstreetmap.org/relation/2946978
@@ -364,7 +364,7 @@ export const regions: Region[] = [
   {
     name: 'Download',
     fullName: 'Deutschlandweiter Download',
-    path: 'deutschland',
+    slug: 'deutschland',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
@@ -381,7 +381,7 @@ export const regions: Region[] = [
   {
     name: 'Testing',
     fullName: 'Test new processing',
-    path: 'testing',
+    slug: 'testing',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {

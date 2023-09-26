@@ -14,7 +14,7 @@ import fs from 'fs'
 import path from 'path'
 import { z } from 'zod'
 import { apiBaseUrl } from '../../src/core/utils/getApiUrl'
-import { regions } from '../../src/regions/components/additionalRegionAttributes.const'
+import { additionalRegionAttributes } from '../../src/regions/components/additionalRegionAttributes.const'
 
 const geojsonPolygon = z.object({
   type: z.literal('Polygon'),
@@ -116,7 +116,7 @@ const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeatur
 
 // 1. Collect the boundary and mask per region
 const collectedFeatures: ReturnType<typeof createBufferFeature>[] = []
-for (const region of regions) {
+for (const region of additionalRegionAttributes) {
   const { path: regionName, osmRelationIds } = region
   if (!osmRelationIds.length) continue
   console.info(chalk.inverse.bold('INFO: Now working on region', regionName))
