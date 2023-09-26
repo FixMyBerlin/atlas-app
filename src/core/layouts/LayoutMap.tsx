@@ -4,7 +4,7 @@ import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { HeaderRegionen } from '../Header'
+import { HeaderRegionen } from './Header'
 
 type Props = {
   children?: React.ReactNode

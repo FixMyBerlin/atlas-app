@@ -1,4 +1,4 @@
-import { WaitlistButton } from './components'
+import { WaitlistButton } from './buttons'
 import backgroundImage from './images/background-call-to-action.jpg'
 
 export const HomePageCallToAction = () => {

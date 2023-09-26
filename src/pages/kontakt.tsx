@@ -1,10 +1,12 @@
-import { LayoutPage } from 'src/core/layouts/Layout--TODO-MIGRATE'
+import { BlitzPage } from '@blitzjs/auth'
+import Image from 'next/image'
 import { Link } from 'src/core/components/links'
+import { LayoutPage } from 'src/core/layouts/LayoutPage'
 import { MetaTags } from 'src/core/layouts/MetaTags'
-import MfundLogo from '@pages/assets/PageContact/logo-mfund.png'
-import { ReactComponent as ImageLogoBmdvFoerderung } from './assets/PageContact/logo-bmdv-foerderung.svg'
+import imageMfund from 'src/kontakt/assets/logo-mfund.png'
+import imageBmdv from 'src/kontakt/assets/logo-bmdv-foerderung.svg'
 
-export const ContactPage: React.FC = () => {
+const Kontakt: BlitzPage = () => {
   return (
     <LayoutPage>
       <MetaTags
@@ -87,16 +89,18 @@ export const ContactPage: React.FC = () => {
       </p>
       <div className="grid grid-cols-2 gap-2">
         <Link to="https://bmdv.bund.de/" external blank>
-          <ImageLogoBmdvFoerderung title="Förderung durch BMDV" />
+          <Image src={imageBmdv} alt="Förderung durch BMDV" className="w-40" />
         </Link>
         <Link
           to="https://www.bmvi.de/DE/Themen/Digitales/mFund/Ueberblick/ueberblick.html"
           external
           blank
         >
-          <img src={MfundLogo} alt="Förderung durch den mFund" className="w-40" />
+          <Image src={imageMfund} alt="Förderung durch den mFund" className="w-40" />
         </Link>
       </div>
     </LayoutPage>
   )
 }
+
+export default Kontakt

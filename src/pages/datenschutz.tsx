@@ -1,8 +1,8 @@
-import { LayoutPage } from 'src/core/layouts/Layout--TODO-MIGRATE'
+import { BlitzPage } from '@blitzjs/next'
 import { Link } from 'src/core/components/links'
-import { MetaTags } from 'src/core/layouts/MetaTags'
 import { TableOfContents, TocHashLink } from 'src/core/components/pages/TableOfContents'
-import React from 'react'
+import { LayoutPage } from 'src/core/layouts/LayoutPage'
+import { MetaTags } from 'src/core/layouts/MetaTags'
 
 // DEAKTIVIERT
 // TODO: Domain einrichten und ändern
@@ -16,22 +16,22 @@ import React from 'react'
 //   )
 // }
 
+const tocItems: TocHashLink = [
+  ['#responsible', 'Verantwortlichkeit'],
+  ['#hosting', 'Bereitstellung'],
+  // ['#analytics', 'Webanalyse'],
+  ['#youtube', 'YouTube'],
+  ['#contact', 'Kontaktmöglichkeit'],
+  // ['#newsletter', 'Newsletter'],
+  ['#rights', 'Ihre Rechte'],
+  ['#updates', 'Aktualität und Änderungen'],
+]
+
 /*
   Original Dokument https://docs.google.com/document/d/1Tymx04eNjC0atCuQje5Df_bxxn8HJAyr/edit
 */
 
-export const PrivacyPage: React.FC = () => {
-  const tocItems: TocHashLink = [
-    ['#responsible', 'Verantwortlichkeit'],
-    ['#hosting', 'Bereitstellung'],
-    // ['#analytics', 'Webanalyse'],
-    ['#youtube', 'YouTube'],
-    ['#contact', 'Kontaktmöglichkeit'],
-    // ['#newsletter', 'Newsletter'],
-    ['#rights', 'Ihre Rechte'],
-    ['#updates', 'Aktualität und Änderungen'],
-  ]
-
+const Datenschutz: BlitzPage = () => {
   return (
     <LayoutPage>
       <MetaTags noindex title="Datenschutzerklärung" />
@@ -498,3 +498,5 @@ export const PrivacyPage: React.FC = () => {
     </LayoutPage>
   )
 }
+
+export default Datenschutz

@@ -1,21 +1,19 @@
-import Head from 'next/head'
-import React, { FC } from 'react'
-import { BlitzLayout } from '@blitzjs/next'
+import React from 'react'
+import { Footer } from './Footer'
+import { HeaderApp } from './Header'
+import { TailwindResponsiveHelper } from './TailwindResponsiveHelper/TailwindResponsiveHelper'
 
-const Layout: BlitzLayout<{ title?: string; children?: React.ReactNode }> = ({
-  title,
-  children,
-}) => {
-  return (
-    <>
-      <Head>
-        <title>{title || 'atlas2'}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      {children}
-    </>
-  )
+type Props = {
+  children?: React.ReactNode
 }
 
-export default Layout
+export const Layout: React.FC<Props> = ({ children }) => {
+  return (
+    <div className="relative flex h-full flex-col">
+      <HeaderApp />
+      <main>{children}</main>
+      <Footer />
+      <TailwindResponsiveHelper />
+    </div>
+  )
+}

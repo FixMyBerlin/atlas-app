@@ -1,4 +1,4 @@
-import { WaitlistButton } from './components'
+import { WaitlistButton } from './buttons'
 
 export const HomePageHero: React.FC = () => {
   return (
