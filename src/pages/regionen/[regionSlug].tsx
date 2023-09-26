@@ -2,7 +2,6 @@ import { useParam } from '@blitzjs/next'
 import { useQuery } from '@blitzjs/rpc'
 import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import { parseAsFloat, useQueryState } from 'next-usequerystate'
-import { useRouter } from 'next/router'
 import { Suspense } from 'react'
 import { ErrorRestartMap } from 'src/core/components/MapInterface/ErrorRestartMap/ErrorRestartMap'
 import { Spinner } from 'src/core/components/Spinner/Spinner'
@@ -58,7 +57,7 @@ export const Region = () => {
 const ShowRegionPage = () => {
   return (
     <LayoutMap>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner page />}>
         <Region />
       </Suspense>
     </LayoutMap>

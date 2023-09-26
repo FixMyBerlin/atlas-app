@@ -16,22 +16,29 @@ export const AdminRegionsList = () => {
 
   return (
     <>
-      {regions.map((region) => (
-        <div key={region.slug}>
-          <PageRegionsRegionTeaser region={region} />
-          <button
-            type="button"
-            onClick={async () => {
-              if (window.confirm(`${region.name} wirklich unwiderruflich löschen?`)) {
-                await deleteRegionMutation({ id: region.id })
-                await router.push(Routes.AdminRegionsPage())
-              }
-            }}
-          >
-            Löschen
-          </button>
-        </div>
-      ))}
+      <ul>
+        {regions.map((region) => (
+          <li key={region.slug}>
+            <PageRegionsRegionTeaser region={region} />
+            <button
+              type="button"
+              onClick={async () => {
+                if (window.confirm(`${region.name} wirklich unwiderruflich löschen?`)) {
+                  await deleteRegionMutation({ id: region.id })
+                  await router.push(Routes.AdminRegionsPage())
+                }
+              }}
+            >
+              Löschen
+            </button>
+            <Link href={Routes.EditRegionPage({ regionSlug: region.slug })}>Bearbeiten</Link>
+          </li>
+        ))}
+      </ul>
+
+      <Link href={Routes.NewRegionPage()} button>
+        Neue Region
+      </Link>
     </>
   )
 }
@@ -42,7 +49,6 @@ const AdminRegionsPage = () => {
       <Suspense fallback={<Spinner />}>
         <AdminRegionsList />
       </Suspense>
-      <Link href={Routes.NewRegionPage()}>Create Region</Link>
     </Layout>
   )
 }

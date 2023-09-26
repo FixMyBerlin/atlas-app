@@ -2,9 +2,8 @@ import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 import { Spinner } from 'src/core/components/Spinner/Spinner'
 import { Layout } from 'src/core/layouts/Layout'
-import { PageRegionsRegionList } from 'src/regions/components/PageRegions/PageRegionsRegionList'
+import { PageRegionsRegionList } from 'src/regions/components/PageRegions'
 import getPublicRegions from 'src/regions/queries/getPublicRegions'
-import getCurrentUser from 'src/users/queries/getCurrentUser'
 
 export const RegionsList = () => {
   const [regions] = useQuery(getPublicRegions, {})
@@ -48,7 +47,7 @@ const RegionsPage = () => {
   return (
     <Layout>
       {/* TODO MIGRATION: add title tag logic */}
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner page />}>
         <RegionsList />
       </Suspense>
     </Layout>
