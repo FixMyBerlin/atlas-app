@@ -58,10 +58,6 @@ const RegionsPage = () => {
       <Suspense fallback={<Spinner />}>
         <RegionsList />
       </Suspense>
-      {/* TODO MIGRATION: Wrap into admin box, copy adminbox from TS to here */}
-      <p className="bg-pink-100">
-        <Link href={Routes.NewRegionPage()}>Create Region</Link>
-      </p>
     </Layout>
   )
 }
