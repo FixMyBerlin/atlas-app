@@ -1,6 +1,5 @@
 import { Routes, useParam } from '@blitzjs/next'
 import { useMutation, useQuery } from '@blitzjs/rpc'
-import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Suspense } from 'react'
@@ -26,36 +25,30 @@ export const AdminEditRegion = () => {
 
   return (
     <>
-      <Head>
-        <title>Edit Region {region.id}</title>
-      </Head>
-
-      <div>
-        <h1>Edit Region {region.id}</h1>
-        <pre>{JSON.stringify(region, null, 2)}</pre>
-        <Suspense fallback={<Spinner />}>
-          <RegionForm
-            submitText="Update Region"
-            schema={UpdateRegionSchema}
-            initialValues={region}
-            onSubmit={async (values) => {
-              try {
-                const updated = await updateRegionMutation({
-                  ...values,
-                  id: region.id,
-                })
-                await setQueryData(updated)
-                await router.push(Routes.ShowRegionPage({ regionSlug: updated.slug }))
-              } catch (error: any) {
-                console.error(error)
-                return {
-                  [FORM_ERROR]: error.toString(),
-                }
+      <h1>Edit Region {region.id}</h1>
+      <pre>{JSON.stringify(region, null, 2)}</pre>
+      <Suspense fallback={<Spinner />}>
+        <RegionForm
+          submitText="Update Region"
+          schema={UpdateRegionSchema}
+          initialValues={region}
+          onSubmit={async (values) => {
+            try {
+              const updated = await updateRegionMutation({
+                ...values,
+                id: region.id,
+              })
+              await setQueryData(updated)
+              await router.push(Routes.ShowRegionPage({ regionSlug: updated.slug }))
+            } catch (error: any) {
+              console.error(error)
+              return {
+                [FORM_ERROR]: error.toString(),
               }
-            }}
-          />
-        </Suspense>
-      </div>
+            }
+          }}
+        />
+      </Suspense>
     </>
   )
 }
