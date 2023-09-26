@@ -1,3 +1,8 @@
+import Image from 'next/image'
+import imageBiBi from '../assets/bibi-logo.svg'
+import imageTrTo from '../assets/trto-logo.png'
+import imageNudafa from '../assets/nudafa-logo.svg'
+
 export const HomePageCompanies: React.FC = () => {
   return (
     <section className="mx-auto max-w-7xl px-4 pb-16 text-center sm:px-6 lg:px-8">
@@ -10,20 +15,20 @@ export const HomePageCompanies: React.FC = () => {
             [
               {
                 name: 'Bietigheim-Bissingen',
-                logo: '/pageRegions/bibi-logo.svg',
+                logo: imageBiBi,
               },
               {
                 name: 'Treptower Tollensewinkel',
-                logo: '/pageRegions/trto-logo.png',
+                logo: imageTrTo,
               },
-              { name: 'NUDAFA', logo: '/pageRegions/zesplus-logo.png' },
+              { name: 'NUDAFA', logo: imageNudafa },
             ],
           ].map((group, groupIndex) => (
             <li key={groupIndex}>
               <ul className="flex flex-col items-center gap-y-8 sm:flex-row sm:gap-x-12 sm:gap-y-0">
                 {group.map((region) => (
                   <li key={region.name} className="flex">
-                    <img src={region.logo} alt={region.name} className="h-10 w-auto" />
+                    <Image src={region.logo} alt={region.name} className="h-10 w-auto" />
                   </li>
                 ))}
               </ul>

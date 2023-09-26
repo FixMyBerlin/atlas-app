@@ -79,15 +79,6 @@ export const routes: Route<LocationGenerics>[] = [
             // TODO figure out how to use the error-Handling to catch non-existing regionPath's
             // errorElement: <MapIndexPage regionPathNotFound />,
           },
-          // {
-          //   path: '/mitmachen',
-          //   element: <PageRegionAction />,
-          //   loader: async ({ params: { regionPath } }) => {
-          //     return {
-          //       region: await fetchRegionByPath(regionPath),
-          //     }
-          //   },
-          // },
         ],
       },
     ],

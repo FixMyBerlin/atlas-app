@@ -1,10 +1,10 @@
 import { getApiUrl } from 'src/core/utils'
 import { SourceExportApiIdentifier } from '../mapData'
-import { Region } from 'src/regions/components/additionalRegionAttributes.const'
+import { AdditionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 
 export const exportApiUrlBbox = (
   apiIdentifier: SourceExportApiIdentifier,
-  bbox: NonNullable<Region['bbox']>,
+  bbox: NonNullable<AdditionalRegionAttributes['bbox']>,
 ) => {
   const url = new URL(`${getApiUrl()}/export/${apiIdentifier}`)
   url.searchParams.append('minlon', String(bbox.min[0]))

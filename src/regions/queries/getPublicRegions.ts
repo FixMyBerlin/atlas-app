@@ -1,8 +1,11 @@
 import { resolver } from '@blitzjs/rpc'
 import db, { Prisma } from 'db'
 import { additionalRegionAttributes } from '../components/additionalRegionAttributes.const'
+import getPublicRegions from './getPublicRegions'
 
-interface GetRegionsInput extends Pick<Prisma.RegionFindManyArgs, 'where'> {}
+type GetRegionsInput = Pick<Prisma.RegionFindManyArgs, 'where'>
+
+export type TPublicRegion = Awaited<ReturnType<typeof getPublicRegions>>[number]
 
 export default resolver.pipe(async ({ where }: GetRegionsInput) => {
   const regions = await db.region.findMany({

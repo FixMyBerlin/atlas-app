@@ -1,9 +1,14 @@
+import imageBibi from 'src/home/assets/bibi-logo.svg'
+import imageParking from 'src/home/assets/parking.svg'
+import imageNudafa from 'src/home/assets/nudafa-logo.svg'
+import imageTrTo from 'src/home/assets/trto-logo.png'
 import {
   MapDataThemeIds,
   themes,
 } from 'src/core/components/MapInterface/mapData/themesMapData/themes.const'
 import { adminIds } from '../../users/components/utils'
 import { SourcesRasterIds } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+import { StaticImageData } from 'next/image'
 
 type RegionMap = {
   lat: number
@@ -11,7 +16,7 @@ type RegionMap = {
   zoom: number
 }
 
-export type Region = {
+export type AdditionalRegionAttributes = {
   name: string
   fullName: string
   slug: RegionPath
@@ -20,7 +25,7 @@ export type Region = {
   map: RegionMap
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
-  logoPath: string | null
+  logoPath: StaticImageData | null
   logoWhiteBackgroundRequired: boolean
   themes: MapDataThemeIds[]
   osmUsers: number[]
@@ -72,7 +77,7 @@ export type RegionPath =
   | 'nagold'
 
 // This is our regions "Database" until we have a real one
-export const additionalRegionAttributes: Region[] = [
+export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
   {
     name: 'BiBi',
     fullName: 'Bietigheim-Bissingen',
@@ -83,7 +88,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [9.0671, 48.9229],
       max: [9.1753, 48.9838],
     },
-    logoPath: '/pageRegions/bibi-logo.svg',
+    logoPath: imageBibi,
     logoWhiteBackgroundRequired: false,
     themes: [
       // The order here specifies the order in the UI
@@ -107,7 +112,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [12.9949, 53.5934],
       max: [13.4782, 53.8528],
     },
-    logoPath: '/pageRegions/trto-logo.png',
+    logoPath: imageTrTo,
     logoWhiteBackgroundRequired: true,
     themes: [
       // The order here specifies the order in the UI
@@ -174,7 +179,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [13.3579, 52.2095],
       max: [13.825, 52.4784],
     },
-    logoPath: '/pageRegions/zesplus-logo.png',
+    logoPath: imageNudafa,
     logoWhiteBackgroundRequired: false,
     themes: [
       // The order here specifies the order in the UI
@@ -194,7 +199,7 @@ export const additionalRegionAttributes: Region[] = [
     osmRelationIds: [],
     map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
     bbox: null,
-    logoPath: '/pageRegions/parking.svg',
+    logoPath: imageParking,
     logoWhiteBackgroundRequired: false,
     themes: ['parking'],
     osmUsers: [...adminIds], // Note: Not needed, since we don't support verfication, yet
@@ -224,7 +229,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [9.13736562, 48.81051166],
       max: [9.36731192, 48.93255599],
     },
-    logoPath: 'https://trassenscout.de/favicon.svg',
+    logoPath: null, // TODO MIGRATION 'https://trassenscout.de/favicon.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -241,7 +246,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [8.1435156, 49.8955342],
       max: [8.3422611, 50.0353045],
     },
-    logoPath: 'https://radnetz-mainz.de/favicon.ico',
+    logoPath: null, // TODO MIGRATION 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -258,8 +263,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [10.041308, 53.0468526],
       max: [11.1957671, 53.385876],
     },
-    logoPath:
-      'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
+    logoPath: null, // TODO MIGRATION 'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -276,7 +280,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [11.534335975016448, 53.75009742157375],
       max: [11.82534463839858, 53.98345643670576],
     },
-    logoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
+    logoPath: null, // TODO MIGRATION 'https://layout.verwaltungsportal.de/8383/img/logo.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -293,7 +297,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [13.201584130847364, 53.95655346659909],
       max: [13.553934829974303, 54.20224786738606],
     },
-    logoPath: 'https://www.landhagen.de/images/logo2.png',
+    logoPath: null, // TODO MIGRATION 'https://www.landhagen.de/images/logo2.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -310,7 +314,7 @@ export const additionalRegionAttributes: Region[] = [
       min: [13.378969848860086, 53.37938986368977],
       max: [13.74006560910362, 53.613911346911244],
     },
-    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
+    logoPath: null, // TODO MIGRATION 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -324,7 +328,7 @@ export const additionalRegionAttributes: Region[] = [
     osmRelationIds: [62708],
     map: { lat: 48.8364862, lng: 10.092577, zoom: 10 },
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
-    logoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
+    logoPath: null, // TODO MIGRATION 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -339,7 +343,7 @@ export const additionalRegionAttributes: Region[] = [
     map: { lat: 48.0856128, lng: 9.2175234, zoom: 10 },
     // BBox für https://www.openstreetmap.org/relation/2806390
     bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
-    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
+    logoPath: null, // TODO MIGRATION 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
@@ -354,7 +358,7 @@ export const additionalRegionAttributes: Region[] = [
     map: { lat: 48.5511595, lng: 8.7240494, zoom: 11.7 },
     // BBox für https://www.openstreetmap.org/relation/2946978
     bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
-    logoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
+    logoPath: null, // TODO MIGRATION 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],

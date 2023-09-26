@@ -1,14 +1,17 @@
-import { Region } from 'src/regions/components/additionalRegionAttributes.const'
+import { AdditionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 import { User } from '../useUserStore'
 import { users } from 'src/users/components/users.const'
 
-export const hasPermission = (currentUser: User | null, region: Region | undefined) => {
+export const hasPermission = (
+  currentUser: User | null,
+  region: AdditionalRegionAttributes | undefined,
+) => {
   return !!currentUser && !!region ? region.osmUsers.includes(currentUser.id) : false
 }
 
 export const hasPermissionByDisplayName = (
   userDisplayName: User['displayName'] | null | undefined,
-  region: Region | undefined,
+  region: AdditionalRegionAttributes | undefined,
 ) => {
   if (!region) return false
   if (!userDisplayName) return false
