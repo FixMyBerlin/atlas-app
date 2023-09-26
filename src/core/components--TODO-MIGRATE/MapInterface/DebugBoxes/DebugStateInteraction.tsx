@@ -1,5 +1,5 @@
 import { getApiUrl, isDev, isProd, isStaging } from 'src/core/components--TODO-MIGRATE/utils'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { Link, useMatch, useSearch } from '@tanstack/react-location'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'

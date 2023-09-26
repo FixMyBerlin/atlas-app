@@ -6,9 +6,9 @@
     "paths": {
       "@components/*": ["src/core/components--TODO-MIGRATE/*"],
       "@pages/*": ["src/pages/*"],
-      "@routes/*": ["src/routes/*"],
+      "@routes/*": ["src/TODO-MIRGRATE-REMOVE/*"],
       "@assets/*": ["src/assets/*"],
-      "@fakeServer/*": ["src/fakeServer/*"],
+      "@fakeServer/*": ["src/users/components/fakeServer/*"],
       "@api/*": ["src/api/*"]
     },
     "allowJs": true,

@@ -3,7 +3,7 @@ import { getSourceData, SourcesIds } from 'src/core/components--TODO-MIGRATE/Map
 import { useMapStateInteraction } from 'src/core/components--TODO-MIGRATE/MapInterface/mapStateInteraction'
 import { useUserStore } from 'src/core/components--TODO-MIGRATE/MapInterface/UserInfo'
 import { hasPermission } from 'src/core/components--TODO-MIGRATE/MapInterface/UserInfo/utils'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import React from 'react'
 import { VerificationActions } from './VerificationAction/VerificationActions'

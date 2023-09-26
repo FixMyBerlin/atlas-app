@@ -1,5 +1,5 @@
 import { Outlet, Router } from '@tanstack/react-location'
-import { location, routes } from './routes'
+import { location, routes } from './TODO-MIRGRATE-REMOVE'
 
 const App = () => {
   return (

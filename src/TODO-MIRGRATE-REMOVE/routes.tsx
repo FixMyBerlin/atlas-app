@@ -3,7 +3,7 @@ import {src/core/components--TODO-MIGRATE/MapInterface/mapData
   SourcesDatasetsIds,
   SourcesRasterIds,
 } from 'src/components--TODO-MIGRATE/MapInterface/mapData'
-import { Region } from '@fakeServer/index'
+import { Region } from 'src/users/components/fakeServer/index'
 import { PageRegionMap, PageRegions } from '@pages/PageRegions'
 import { ContactPage, HomePage, NotFoundPage, PrivacyPage } from '@pages/index'
 import {

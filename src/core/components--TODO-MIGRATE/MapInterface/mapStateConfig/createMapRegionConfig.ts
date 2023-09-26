@@ -1,4 +1,4 @@
-import { Region } from '@fakeServer/index'
+import { Region } from 'src/users/components/fakeServer/index'
 import { getThemeData, getTopicData } from '../mapData'
 import { ThemeConfig } from './type'
 

@@ -1,5 +1,5 @@
 import { getTilesUrl } from 'src/core/components--TODO-MIGRATE/utils'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'

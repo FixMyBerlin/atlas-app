@@ -1,5 +1,5 @@
 import { Link } from 'src/core/components--TODO-MIGRATE/Link'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import { sources } from '../mapData'
 import { exportApiUrlBbox } from './exportApiUrl'

@@ -3,7 +3,7 @@ import {
   MapDataVisLayer,
   TBeforeIds,
 } from 'src/core/components--TODO-MIGRATE/MapInterface/mapData'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 
 // We place our layers between given Maptiler Layer IDs:
 // Key: LayerType – we group our data based on layer type.

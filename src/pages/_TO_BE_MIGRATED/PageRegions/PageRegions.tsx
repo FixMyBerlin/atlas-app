@@ -2,7 +2,7 @@ import { Layout } from 'src/core/components--TODO-MIGRATE/Layout'
 import { useUserStore } from 'src/core/components--TODO-MIGRATE/MapInterface/UserInfo/useUserStore'
 import { PageRegionsRegionList } from 'src/core/components--TODO-MIGRATE/PageRegions/PageRegionsRegionList'
 import { isDev, isStaging } from 'src/core/components--TODO-MIGRATE/utils'
-import { isAdmin } from '@fakeServer/utils'
+import { isAdmin } from 'src/users/components/utils'
 import { useMatch } from '@tanstack/react-location'
 import { LocationGenerics } from '../../routes'
 

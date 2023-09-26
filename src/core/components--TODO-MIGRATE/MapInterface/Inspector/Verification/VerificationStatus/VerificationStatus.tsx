@@ -1,7 +1,7 @@
 import { getHistory } from '@api/index'
 import { SourceVerificationApiIdentifier } from 'src/core/components--TODO-MIGRATE/MapInterface/mapData'
 import { Markdown } from 'src/core/components--TODO-MIGRATE/text'
-import { userById } from '@fakeServer/utils'
+import { userById } from 'src/users/components/utils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
 import { useQuery } from '@tanstack/react-query'
 import { verifiedColor } from '../verifiedColor.const'

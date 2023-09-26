@@ -1,6 +1,6 @@
 import { THistoryEntry } from '@api/api'
 import { Markdown } from 'src/core/components--TODO-MIGRATE/text'
-import { userById } from '@fakeServer/utils'
+import { userById } from 'src/users/components/utils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 

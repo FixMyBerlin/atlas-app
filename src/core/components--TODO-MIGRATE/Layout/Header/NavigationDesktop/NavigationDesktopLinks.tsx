@@ -1,4 +1,4 @@
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { Link, useMatch, useMatchRoute } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React from 'react'

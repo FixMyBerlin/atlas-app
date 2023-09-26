@@ -1,6 +1,6 @@
 import { IconModal } from 'src/core/components--TODO-MIGRATE/Modal'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'

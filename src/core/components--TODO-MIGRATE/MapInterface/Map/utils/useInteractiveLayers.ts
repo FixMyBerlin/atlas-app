@@ -9,7 +9,7 @@ import {
   createDatasetSourceLayerKey,
   createSourceTopicStyleLayerKey,
 } from 'src/core/components--TODO-MIGRATE/MapInterface/utils'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useSearch } from '@tanstack/react-location'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 

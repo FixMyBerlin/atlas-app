@@ -1,5 +1,5 @@
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import React from 'react'

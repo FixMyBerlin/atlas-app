@@ -1,6 +1,6 @@
 import { MetaTags } from 'src/core/components--TODO-MIGRATE/MetaTags'
 import { TailwindResponsiveHelper } from 'src/core/components--TODO-MIGRATE/TailwindResponsiveHelper/TailwindResponsiveHelper'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import React from 'react'
 import { Helmet } from 'react-helmet'

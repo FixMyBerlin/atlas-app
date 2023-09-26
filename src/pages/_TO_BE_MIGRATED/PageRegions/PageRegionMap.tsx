@@ -7,7 +7,7 @@ import {
   initializeMapRegionConfig,
 } from 'src/core/components--TODO-MIGRATE/MapInterface/mapStateConfig'
 import { isDev } from 'src/core/components--TODO-MIGRATE/utils'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import { Navigate, useMatch, useNavigate, useSearch } from '@tanstack/react-location'
 import { useEffect, useMemo, useState } from 'react'

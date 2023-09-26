@@ -1,6 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useNavigate, useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React, { Fragment } from 'react'

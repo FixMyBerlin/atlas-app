@@ -1,4 +1,4 @@
-import { Region } from '@fakeServer/index'
+import { Region } from 'src/users/components/fakeServer/index'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import { Link } from '@tanstack/react-location'
 

@@ -13,7 +13,7 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl'
-import { LocationGenerics } from '../../../../routes'
+import { LocationGenerics } from '../../../../TODO-MIRGRATE-REMOVE'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { Calculator } from './Calculator/Calculator'
 import {

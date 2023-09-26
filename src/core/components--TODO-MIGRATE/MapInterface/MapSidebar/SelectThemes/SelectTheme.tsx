@@ -1,7 +1,7 @@
 import { ThemeConfig } from 'src/core/components--TODO-MIGRATE/MapInterface/mapStateConfig'
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useNavigate } from '@tanstack/react-location'
 import { produce } from 'immer'
 import { getThemeData } from '../../mapData'

@@ -3,7 +3,7 @@ import {src/core/components--TODO-MIGRATE/MapInterface/mapData
   SourcesRasterIds,
   themes,
 } from 'src/components--TODO-MIGRATE/MapInterface/mapData'
-import { adminIds } from './utils'
+import { adminIds } from '../../users/components/utils'
 
 type RegionMap = {
   lat: number

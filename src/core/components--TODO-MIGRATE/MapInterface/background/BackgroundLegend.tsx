@@ -1,6 +1,6 @@
 import { Link } from 'src/core/components--TODO-MIGRATE/Link'
 import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { sourcesBackgroundsRaster } from '../mapData'

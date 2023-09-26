@@ -1,4 +1,4 @@
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useSearch } from '@tanstack/react-location'
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'

@@ -1,6 +1,6 @@
-import { Region } from '@fakeServer/regions.const'
+import { Region } from 'src/regions/components/regions.const'
 import { User } from '../useUserStore'
-import { users } from '@fakeServer/users.const'
+import { users } from 'src/users/components/users.const'
 
 export const hasPermission = (currentUser: User | null, region: Region | undefined) => {
   return !!currentUser && !!region ? region.osmUsers.includes(currentUser.id) : false

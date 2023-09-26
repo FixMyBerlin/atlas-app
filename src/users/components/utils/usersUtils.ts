@@ -1,5 +1,5 @@
 import { User } from 'src/core/components--TODO-MIGRATE/MapInterface/UserInfo'
-import { users } from '@fakeServer/users.const'
+import { users } from 'src/users/components/users.const'
 
 export const adminIds = users.filter((u) => u.isAdmin).map((u) => u.id)
 

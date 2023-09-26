@@ -1,4 +1,4 @@
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useNavigate } from '@tanstack/react-location'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 import { simplifyPositions } from '../utils/simplifyPositions'

@@ -1,6 +1,6 @@
 import { getApiUrl } from 'src/core/components--TODO-MIGRATE/utils'
 import { SourceExportApiIdentifier } from '../mapData'
-import { Region } from '@fakeServer/regions.const'
+import { Region } from 'src/regions/components/regions.const'
 
 export const exportApiUrlBbox = (
   apiIdentifier: SourceExportApiIdentifier,

@@ -1,4 +1,4 @@
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch, useSearch } from '@tanstack/react-location'
 import React from 'react'
 

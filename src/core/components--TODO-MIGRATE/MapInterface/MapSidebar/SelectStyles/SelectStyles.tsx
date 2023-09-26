@@ -1,7 +1,7 @@
 import { Portal, usePopper } from 'src/core/components--TODO-MIGRATE/utils'
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from '@routes/routes'
+import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
 import { useNavigate } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import produce from 'immer'
