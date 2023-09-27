@@ -1,22 +1,24 @@
-import { Link } from 'src/core/components/links'
 import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
 import React from 'react'
+import { Link } from 'src/core/components/links'
+import { useBackgroundParam } from 'src/core/useQueryState/useBackgroundParam'
+import { useMapParam } from 'src/core/useQueryState/useMapParam'
 import { sourcesBackgroundsRaster } from '../mapData'
 import { replaceZxy } from '../utils'
 
 export const BackgroundLegend: React.FC = () => {
-  const { bg: selectedBackgroundId, lat, lng, zoom } = useSearch<LocationGenerics>()
+  const { backgroundParam } = useBackgroundParam()
+  const { mapParam } = useMapParam()
 
-  const selectedBackground = sourcesBackgroundsRaster.find((b) => b.id === selectedBackgroundId)
+  const selectedBackground = sourcesBackgroundsRaster.find((b) => b.id === backgroundParam)
   if (!selectedBackground?.legendUrl) return null
+  if (!mapParam) return null
 
   const enhancedLink = replaceZxy({
     url: selectedBackground.legendUrl,
-    zoom,
-    lat,
-    lng,
+    zoom: mapParam.zoom,
+    lat: mapParam.lat,
+    lng: mapParam.lng,
   })
 
   return (

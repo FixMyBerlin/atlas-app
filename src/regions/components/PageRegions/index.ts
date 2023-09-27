@@ -1,3 +1,3 @@
-export * from './PageRegionsIntro'
-export * from './PageRegionsRegionList'
-export * from './PageRegionsRegionTeaser'
+export * from './RegionIntro'
+export * from './RegionList'
+export * from './RegionTeaser'

@@ -1,16 +1,19 @@
+import { Routes } from '@blitzjs/next'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
 import { getApiUrl, isDev, isProd, isStaging } from 'src/core/utils'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { Link, useMatch, useSearch } from '@tanstack/react-location'
+import { Link } from '../../links'
+import { useRegionSlug } from '../../regionUtils/useRegionSlug'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
+import { useDrawParam } from 'src/core/useQueryState/useDrawParam'
 
 export const DebugStateInteraction = () => {
+  const regionSlug = useRegionSlug()
   const zustandValues = useMapStateInteraction()
   const { showDebugInfo, setShowDebugInfo } = useMapDebugState()
-  const {
-    params: { regionPath },
-  } = useMatch()
-  const { config: configThemes, draw: drawAreasStore } = useSearch<LocationGenerics>()
+  const { configParam } = useConfigParam()
+  const { drawParam } = useDrawParam()
+  // const { config: configThemes, draw: drawAreasStore } = useSearch<LocationGenerics>()
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
@@ -36,11 +39,9 @@ export const DebugStateInteraction = () => {
         <details>
           <summary className="cursor-pointer">Helper</summary>
           <div className="flex flex-col gap-1">
-            {!!regionPath && (
-              <Link href={`/regionen/${regionPath}`} className="rounded border p-1">
-                Reset URL <code>config</code>
-              </Link>
-            )}
+            <Link href={Routes.ShowRegionPage({ regionSlug })} className="rounded border p-1">
+              Reset URL <code>config</code>
+            </Link>
           </div>
           <div className="font-mono">getApiUrl: {getApiUrl()}</div>
           <div className="font-mono">isDev: {JSON.stringify(isDev)}</div>
@@ -55,11 +56,11 @@ export const DebugStateInteraction = () => {
 
         <details>
           <summary className="cursor-pointer">URL Config</summary>
-          <pre>{JSON.stringify(configThemes, undefined, 2)}</pre>
+          <pre>{JSON.stringify(configParam, undefined, 2)}</pre>
         </details>
 
-        {Boolean(drawAreasStore?.length) &&
-          drawAreasStore?.map((draw) => {
+        {Boolean(drawParam?.length) &&
+          drawParam?.map((draw) => {
             return (
               <details key={draw.id}>
                 <summary className="cursor-pointer">{draw.id}</summary>

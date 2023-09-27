@@ -1,16 +1,10 @@
-import { LayoutMap } from 'src/core/layouts/Layout--TODO-MIGRATE'
-import { MapInterface } from 'src/core/components/MapInterface'
-import { ErrorRestartMap } from 'src/core/components/MapInterface/ErrorRestartMap/ErrorRestartMap'
+import { useEffect, useMemo, useState } from 'react'
+import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
 import { sourcesBackgroundsRaster } from 'src/core/components/MapInterface/mapData'
 import {
   createMapRegionConfig,
   initializeMapRegionConfig,
 } from 'src/core/components/MapInterface/mapStateConfig'
-import { isDev } from 'src/core/utils'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
-import { Navigate, useMatch, useNavigate, useSearch } from '@tanstack/react-location'
-import { useEffect, useMemo, useState } from 'react'
 
 export const PageRegionMap: React.FC = () => {
   const { lat, lng, zoom, config } = useSearch<LocationGenerics>()
@@ -67,28 +61,28 @@ export const PageRegionMap: React.FC = () => {
   }, [resetConfig, lat, lng, zoom, config])
 
   return (
-    <LayoutMap>
-      <Sentry.ErrorBoundary
-        onError={() => setResetConfig(true)}
-        fallback={
-          <div className="flex h-full w-full items-center justify-center">
-            <div>
-              <ErrorRestartMap />
-              {isDev && (
-                <div className="mt-5 rounded bg-pink-300 p-1">
-                  Do a reload intead. Changing the config breaks live reloading.
-                  <br />
-                  But our usecase is page (re)load, so that is fine.
-                  <br />
-                  See <code>PageRegionMap.tsx</code> for more.
-                </div>
-              )}
-            </div>
-          </div>
-        }
-      >
-        <MapInterface />
-      </Sentry.ErrorBoundary>
-    </LayoutMap>
+    // <LayoutMap>
+    //   <Sentry.ErrorBoundary
+    //     onError={() => setResetConfig(true)}
+    //     fallback={
+    //       <div className="flex h-full w-full items-center justify-center">
+    //         <div>
+    //           <ErrorRestartMap />
+    //           {isDev && (
+    //             <div className="mt-5 rounded bg-pink-300 p-1">
+    //               Do a reload intead. Changing the config breaks live reloading.
+    //               <br />
+    //               But our usecase is page (re)load, so that is fine.
+    //               <br />
+    //               See <code>PageRegionMap.tsx</code> for more.
+    //             </div>
+    //           )}
+    //         </div>
+    //       </div>
+    //     }
+    //   >
+    //     <MapInterface />
+    //   </Sentry.ErrorBoundary>
+    // </LayoutMap>
   )
 }

@@ -1,14 +1,11 @@
-import { IconModal } from 'src/core/components/Modal'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
+import { IconModal } from 'src/core/components/Modal'
+import { useRegion } from '../../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
 
 export const DownloadModal: React.FC = () => {
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const region = useRegion()
   const allowDownload = region?.bbox ? true : false
 
   return (
@@ -28,7 +25,7 @@ export const DownloadModal: React.FC = () => {
 
         {!allowDownload && (
           <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">
-            Hinweis: GeoJSON Export ist für diese Region {region?.fullName} nicht eingerichtet.
+            Hinweis: GeoJSON Export ist für diese Region {region.fullName} nicht eingerichtet.
           </p>
         )}
         <DownloadModalDownloadList visible={allowDownload} />

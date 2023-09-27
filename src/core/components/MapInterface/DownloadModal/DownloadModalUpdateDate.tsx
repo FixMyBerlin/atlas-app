@@ -1,31 +1,36 @@
+import { useEffect, useState } from 'react'
 import { SmallSpinner } from 'src/core/components/Spinner/SmallSpinner'
 import { getTilesUrl } from 'src/core/utils'
-import { useQuery } from '@tanstack/react-query'
 
 export const DownloadModalUpdateDate: React.FC = () => {
-  const osmDataDate = useQuery({
-    queryKey: ['metadata'],
-    queryFn: async () => {
-      const response = await fetch(`${getTilesUrl()}/public.bikelanes.json`)
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-      return response.json()
-    },
-  })
+  const [osmDataDate, setOsmDataDate] = useState<null | any>(null)
+  const [isLoading, setLoading] = useState(true)
+  const [isError, setError] = useState(false)
+  const apiUrl = `${getTilesUrl()}/public.bikelanes.json`
+
+  useEffect(() => {
+    void fetch(apiUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.description) {
+          setOsmDataDate(JSON.parse(data.description))
+        }
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error(`DownloadModalUpdateDate: Error when fetching from ${apiUrl}`, error)
+        setError(true)
+      })
+  }, [apiUrl])
 
   return (
     <p className="flex items-center gap-2 pb-5 text-sm">
       Letzte Aktualisierung:{' '}
-      {!!osmDataDate.data?.description && (
-        <span>
-          {new Date(
-            Date.parse(JSON.parse(osmDataDate.data?.description)?.osm_data_from),
-          ).toLocaleDateString('de-DE')}
-        </span>
+      {osmDataDate && (
+        <span>{new Date(Date.parse(osmDataDate?.osm_data_from)).toLocaleDateString('de-DE')}</span>
       )}
-      {!!osmDataDate.isLoading && <SmallSpinner />}
-      {!!osmDataDate.error && <span className="text-orange-500">Fehler beim Laden des Datums</span>}
+      {isLoading && <SmallSpinner />}
+      {isError && <span className="text-orange-500">Fehler beim Laden des Datums</span>}
     </p>
   )
 }

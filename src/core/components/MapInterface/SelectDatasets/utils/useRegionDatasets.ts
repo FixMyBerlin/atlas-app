@@ -1,12 +1,9 @@
 import { sourcesDatasets } from 'src/core/components/MapInterface/mapData/sourcesMapData'
-import { useMatch } from '@tanstack/react-location'
+import { useRegionSlug } from 'src/core/components/regionUtils/useRegionSlug'
 
 export const useRegionDatasets = () => {
-  const {
-    params: { regionPath },
-  } = useMatch()
-
-  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey.includes(regionPath as any))
+  const regionSlug = useRegionSlug()
+  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey.includes(regionSlug as any))
 
   return regionDatasets
 }

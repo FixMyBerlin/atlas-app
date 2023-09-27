@@ -14,7 +14,7 @@ import {
   stringifySearchWith,
 } from '@tanstack/react-location'
 import { ThemeConfig } from '../components--TODO-MIGRATE/MapInterface/mapStateConfig'
-import { customParse, customStringify } from './encodeDecode/customParseStringify'
+import { customParse, customStringify } from '../useConfigParamParser/customParseStringify'
 import { fetchRegions } from './fetchRegions'
 import { fetchRegionByPath } from './utils/fetchRegionByPath'
 
@@ -32,15 +32,15 @@ export type LocationGenerics = MakeGenerics<{
   }
   Search: {
     regionPathNotFound: string
-    lat: number
-    lng: number
-    zoom: number
-    osmNotes: boolean
-    bg: SourcesRasterIds
-    config: ThemeConfig[]
-    draw: DrawArea[]
-    data: SourcesDatasetsIds[]
-    debugMap: boolean
+    // lat: number
+    // lng: number
+    // zoom: number
+    // osmNotes: boolean
+    // bg: SourcesRasterIds
+    // config: ThemeConfig[]
+    // draw: DrawArea[]
+    // data: SourcesDatasetsIds[]
+    // debugMap: boolean
   }
 }>
 

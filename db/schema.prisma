@@ -10,47 +10,71 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// This is an optional zod helper script:
+// It will generate zod schemas based on this prisma-schema in `/db/zod-schema-inspiration`
+// We can use those, to improve our own zod schema files.
+// However, we cannot have this active all the time, due to an issue with blitz.
+// How to use:
+// 1. Remove comment below
+// 2. Use `npx blitz prisma generate` (mind the `x`)
+// 3. Copy what you need to your own schema
+// 4. Revert (1)
+//
+// generator zod {
+//   provider                 = "zod-prisma"
+//   output                   = "./zod-schema-inspiration"
+//   relationModel            = true
+//   modelCase                = "PascalCase"
+//   modelSuffix              = "Model"
+//   useDecimalJs             = true
+//   imports                  = null
+//   prismaJsonNullability    = true
+// }
+
 // --------------------------------------
 
 model User {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id             Int       @id @default(autoincrement())
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  //
   name           String?
-  email          String   @unique
+  email          String    @unique
   hashedPassword String?
-  role           String   @default("USER")
-
-  tokens   Token[]
-  sessions Session[]
+  role           String    @default("USER")
+  //
+  tokens         Token[]
+  sessions       Session[]
 }
 
 model Session {
   id                 Int       @id @default(autoincrement())
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
+  //
   expiresAt          DateTime?
   handle             String    @unique
   hashedSessionToken String?
   antiCSRFToken      String?
   publicData         String?
   privateData        String?
-
-  user   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  //
+  user               User?     @relation(fields: [userId], references: [id])
+  userId             Int?
 }
 
 model Token {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  //
   hashedToken String
   type        TokenType
   expiresAt   DateTime
   sentTo      String
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  //
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
 
   @@unique([hashedToken, type])
 }
@@ -61,6 +85,7 @@ enum TokenType {
 
 model BikelaneVerification {
   id          Int      @id @default(autoincrement())
+  //
   osm_type    String   @db.VarChar
   osm_id      BigInt
   verified_at DateTime @default(now())
@@ -70,11 +95,12 @@ model BikelaneVerification {
 }
 
 model Region {
-  id        Int           @id @default(autoincrement())
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
-  slug      String        @unique
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  //
+  slug      String   @unique
   shortName String
   name      String
-  public    Boolean       @default(false)
+  public    Boolean  @default(false)
 }

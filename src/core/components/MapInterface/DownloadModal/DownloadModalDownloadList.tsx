@@ -1,8 +1,7 @@
 import { Link } from 'src/core/components/links'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
 import { sources } from '../mapData'
 import { exportApiUrlBbox } from './exportApiUrl'
+import { useRegion } from '../../regionUtils/useRegion'
 
 type Props = { visible: boolean }
 
@@ -10,8 +9,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
   const exportEnabledSources = sources.filter((source) => source.export.enabled)
 
   // Get the bbox from our region data
-  const { data } = useMatch<LocationGenerics>()
-  const bbox = data?.region?.bbox
+  const { bbox } = useRegion()
 
   if (!visible) return null
 

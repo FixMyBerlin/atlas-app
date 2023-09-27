@@ -11,6 +11,7 @@ export default resolver.pipe(async ({ where }: GetRegionsInput) => {
   const regions = await db.region.findMany({
     where: { ...where, public: true },
     orderBy: { id: 'asc' },
+    // Only public data:
     select: { slug: true, shortName: true, name: true },
   })
 

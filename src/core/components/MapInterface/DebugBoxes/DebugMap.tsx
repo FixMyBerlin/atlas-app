@@ -1,9 +1,7 @@
-import { getTilesUrl } from 'src/core/utils'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl'
+import { getTilesUrl } from 'src/core/utils'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
@@ -18,13 +16,6 @@ export const DebugMap = () => {
   const [atlasLayers, setAtlasLayers] = useState<mapboxgl.AnyLayer[]>([])
 
   const interactiveLayerIds = useInteractiveLayers()
-
-  // The default is to showDebugInfo on isDev.
-  // However, we can overwrite this with `?debugMap=true` on production
-  const { debugMap } = useSearch<LocationGenerics>()
-  useEffect(() => {
-    if (debugMap === true) setShowDebugInfo(debugMap)
-  }, [debugMap, setShowDebugInfo])
 
   const handleRerender = () => setTriggerRerender((prev) => prev + 1)
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { MapProvider } from 'react-map-gl'
-import { DebugStateInteraction, DebugStateReactLocation } from './DebugBoxes'
+import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DownloadModal } from './DownloadModal/DownloadModal'
 import { Inspector } from './Inspector'
@@ -26,7 +26,6 @@ export const MapInterface: React.FC = () => {
         </div>
         <DebugMap />
         <DebugStateInteraction />
-        <DebugStateReactLocation />
       </div>
     </MapProvider>
   )

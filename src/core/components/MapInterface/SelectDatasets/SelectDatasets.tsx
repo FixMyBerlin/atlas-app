@@ -1,25 +1,19 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useNavigate, useSearch } from '@tanstack/react-location'
 import clsx from 'clsx'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl'
+import { useDataParam } from 'src/core/useQueryState/useDataParam'
 import { SourcesDatasetsIds } from '../mapData/sourcesMapData'
 import { ListOption } from './ListOption'
 import { useRegionDatasets } from './utils/useRegionDatasets'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
-  const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
+  const { dataParam, setDataParam } = useDataParam()
 
-  const navigate = useNavigate<LocationGenerics>()
   const onChange = (value: SourcesDatasetsIds[]) => {
-    navigate({
-      search: (old) => {
-        return { ...old, data: value }
-      },
-    })
+    void setDataParam(value)
   }
 
   const regionDatasets = useRegionDatasets()
@@ -28,7 +22,7 @@ export const SelectDatasets: React.FC = () => {
   if (!regionDatasets?.length) return null
 
   return (
-    <Listbox multiple as="section" className="" value={selectedDatasetIds} onChange={onChange}>
+    <Listbox multiple as="section" className="" value={dataParam} onChange={onChange}>
       <div>
         <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
           Statische Daten

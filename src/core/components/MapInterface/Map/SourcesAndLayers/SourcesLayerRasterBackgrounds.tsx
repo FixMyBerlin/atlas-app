@@ -1,5 +1,5 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { regionFromPath } from 'src/TODO-MIRGRATE-REMOVE/utils'
+import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
+import { regionFromPath } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/utils'
 import { useMatch, useSearch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'

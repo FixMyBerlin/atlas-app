@@ -1,10 +1,9 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useNavigate } from '@tanstack/react-location'
+import { useDrawParam } from 'src/core/useQueryState/useDrawParam'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 import { simplifyPositions } from '../utils/simplifyPositions'
 
 export const useUpdate = () => {
-  const navigate = useNavigate<LocationGenerics>()
+  const { setDrawParam } = useDrawParam()
 
   const updateDrawFeatures = (drawAreas: DrawArea[] | undefined, inputFeatures: DrawArea[]) => {
     const currFeatures = drawAreas || []
@@ -19,10 +18,7 @@ export const useUpdate = () => {
     const untouchedFeatures = currFeatures.filter((cF) => !modifiedFeatureIds.includes(cF.id))
     const newDrawAreas = [...newFeatures, ...modifiedFeatures, ...untouchedFeatures]
     const simplifiedDrawAreas = simplifyPositions(newDrawAreas)
-    navigate({
-      search: (old) => ({ ...old, draw: simplifiedDrawAreas }),
-      replace: true,
-    })
+    void setDrawParam(simplifiedDrawAreas)
   }
   return { updateDrawFeatures }
 }

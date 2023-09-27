@@ -45,6 +45,7 @@ export type StoreCalculator = {
 type StoreLocalUpdates = {
   localUpdates: TVerificationApiGet[]
   addLocalUpdate: (update: TVerificationApiGet) => void
+  // TODO MIGRATION: Do we still need removeLocalUpdate ?
   removeLocalUpdate: (update: TVerificationApiGet) => void
 }
 

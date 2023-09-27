@@ -26,7 +26,7 @@ export type SourcesIds =
   | 'tarmac_roads'
   | 'tarmac_surfaceQuality'
 
-export type SourceVerificationApiIdentifier = 'lit' | 'bikelanes'
+export type SourceVerificationApiIdentifier = 'bikelanes'
 
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =

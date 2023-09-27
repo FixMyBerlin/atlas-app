@@ -1,6 +1,6 @@
 import { sourceDatasetIdUrl } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesDatasets/utils/sourceDatasetIdUrl'
 import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
+import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
 import { useMatch } from '@tanstack/react-location'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'

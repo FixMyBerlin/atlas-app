@@ -7,7 +7,7 @@ import { Spinner } from 'src/core/components/Spinner/Spinner'
 import { Layout } from 'src/core/layouts/Layout'
 import { FORM_ERROR, RegionForm } from 'src/regions/components/RegionForm'
 import updateRegion from 'src/regions/mutations/updateRegion'
-import getRegion from 'src/regions/queries/getRegion'
+import getRegion from 'src/regions/queries/getPublicRegion'
 import { UpdateRegionSchema } from 'src/regions/schemas'
 
 export const AdminEditRegion = () => {

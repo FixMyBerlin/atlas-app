@@ -1,17 +1,16 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
 import { SelectTheme } from './SelectTheme'
 
 export const SelectThemes = () => {
-  const { config: configThemes } = useSearch<LocationGenerics>()
+  const [configParam] = useConfigParam()
 
-  if (!configThemes) return null
+  if (!configParam) return null
 
-  const activeThemeIds = configThemes.filter((theme) => theme.active).map((theme) => theme.id)
+  const activeThemeIds = configParam.filter((theme) => theme.active).map((theme) => theme.id)
 
   return (
     <nav className="relative z-0 flex flex-col divide-x divide-gray-200">
-      {configThemes.map((themeConfig) => {
+      {configParam.map((themeConfig) => {
         if (!themeConfig) return null
         const active = activeThemeIds.includes(themeConfig.id)
 

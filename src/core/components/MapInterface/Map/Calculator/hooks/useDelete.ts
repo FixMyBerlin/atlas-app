@@ -1,9 +1,8 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useNavigate } from '@tanstack/react-location'
+import { useDrawParam } from 'src/core/useQueryState/useDrawParam'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 
 export const useDelete = () => {
-  const navigate = useNavigate<LocationGenerics>()
+  const { setDrawParam } = useDrawParam()
 
   const deleteDrawFeatures = (
     drawAreas: DrawArea[] | undefined,
@@ -15,10 +14,7 @@ export const useDelete = () => {
     const inputFeatures = features
     const deletedFeaturesIds = inputFeatures.map((f) => f.id)
     const newDrawAreas = currFeatures.filter((feature) => !deletedFeaturesIds.includes(feature.id))
-    navigate({
-      search: (old) => ({ ...old, draw: newDrawAreas }),
-      replace: true,
-    })
+    void setDrawParam(newDrawAreas)
   }
 
   return { deleteDrawFeatures }

@@ -9,14 +9,14 @@ const roundPosition = (position: GeoJSON.Position) => {
   const precision = 4
   const factor = Math.pow(10, precision)
   const [a, b] = position
-  const aRouned = py2_round(a * factor)
-  const bRounded = py2_round(b * factor)
+  const aRouned = py2_round(a! * factor)
+  const bRounded = py2_round(b! * factor)
   return [aRouned / factor, bRounded / factor] as GeoJSON.Position
 }
 
 export const simplifyPositions = (drawAreas: DrawArea[]) => {
   const simplified = drawAreas.map((feature) => {
-    const newCoordinates = feature.geometry.coordinates[0].map((c) => roundPosition(c))
+    const newCoordinates = feature.geometry.coordinates[0]!.map((c) => roundPosition(c))
     const newFeature = feature
     feature.geometry.coordinates[0] = newCoordinates
     return newFeature

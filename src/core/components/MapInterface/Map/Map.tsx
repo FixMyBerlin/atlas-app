@@ -1,6 +1,4 @@
-import { isDev } from 'src/core/utils'
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-import { useNavigate, useSearch } from '@tanstack/react-location'
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as pmtiles from 'pmtiles'
@@ -13,7 +11,8 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl'
-import { LocationGenerics } from '../../../../TODO-MIRGRATE-REMOVE'
+import { useMapParam } from 'src/core/useQueryState/useMapParam'
+import { isDev } from 'src/core/utils'
 import { useMapStateInteraction } from '../mapStateInteraction'
 import { Calculator } from './Calculator/Calculator'
 import {
@@ -28,13 +27,7 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
-  const {
-    lat,
-    lng,
-    zoom,
-    bg: _selectedBackgroundId,
-    config: _TODO_config,
-  } = useSearch<LocationGenerics>()
+  const [mapParam, setMapParam] = useMapParam()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
@@ -85,29 +78,26 @@ export const Map: React.FC = () => {
 
     const [lat_, lng_, zoom_] = roundPositionForURL(mapCenter.lat, mapCenter.lng, mapZoom)
 
-    if (lat == lat_ && lng == lng_ && zoom == zoom_) return
+    if (mapParam?.lat == lat_ && mapParam?.lng == lng_ && mapParam?.zoom == zoom_) return
 
     mainMap.flyTo({
-      center: [lng || 0, lat || 0],
-      zoom: zoom,
+      center: [mapParam?.lng || 0, mapParam?.lat || 0],
+      zoom: mapParam?.zoom,
     })
-  }, [lat, lng, zoom])
+  }, [mainMap, mapParam])
 
-  const navigate = useNavigate<LocationGenerics>()
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
     // Note: <SourcesAndLayersOsmNotes> simulates a moveEnd by watching the lat/lng url params
 
     const { latitude, longitude, zoom } = event.viewState
     const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
-    navigate({
-      search: (old) => ({ ...old, lat: lat_, lng: lng_, zoom: zoom_ }),
-      replace: true,
-    })
+    // TODO MIGRATION: Test out if this secondary param actually works …
+    void setMapParam({ zoom: zoom_ ?? 2, lat: lat_ ?? 2, lng: lng_ ?? 2 }, { history: 'replace' })
   }
 
   const interactiveLayerIds = useInteractiveLayers()
 
-  if (lat === undefined || lng === undefined || zoom === undefined) {
+  if (!mapParam) {
     return null
   }
 
@@ -115,9 +105,9 @@ export const Map: React.FC = () => {
     <MapGl
       id="mainMap"
       initialViewState={{
-        longitude: lng,
-        latitude: lat,
-        zoom: zoom,
+        longitude: mapParam.lng,
+        latitude: mapParam.lat,
+        zoom: mapParam.zoom,
       }}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}

@@ -6,7 +6,7 @@
     "paths": {
       "@components/*": ["src/core/components--TODO-MIGRATE/*"],
       "@pages/*": ["src/pages/*"],
-      "@routes/*": ["src/TODO-MIRGRATE-REMOVE/*"],
+      "@routes/*": ["src/core/useQueryState/TODO-MIRGRATE-REMOVE/*"],
       "@assets/*": ["src/assets/*"],
       "@fakeServer/*": ["src/users/components/fakeServer/*"],
       "@api/*": ["src/api/*"]

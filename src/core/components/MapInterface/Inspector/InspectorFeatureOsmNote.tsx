@@ -1,16 +1,17 @@
-import { Link } from 'src/core/components/links'
-import Tooltip from 'src/core/components/Tooltip/Tooltip'
-import { proseClasses } from 'src/core/components/text'
+import SvgNotesClosed from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_closed.svg'
+import SvgNotesOpen from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_open.svg'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
 import clsx from 'clsx'
-import React from 'react'
+import Image from 'next/image'
+import { Suspense } from 'react'
+import Tooltip from 'src/core/components/Tooltip/Tooltip'
+import { Link } from 'src/core/components/links'
+import { proseClasses } from 'src/core/components/text'
+import { Spinner } from '../../Spinner/Spinner'
+import { useRegion } from '../../regionUtils/useRegion'
 import { hasPermissionByDisplayName } from '../UserInfo'
 import { Disclosure } from './Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
-import { ReactComponent as SvgNotesClosed } from '@components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_closed.svg'
-import { ReactComponent as SvgNotesOpen } from '@components/MapInterface/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_open.svg'
 
 type Comment = {
   date: string
@@ -57,10 +58,10 @@ const OsmUserLink = ({
   )
 }
 
-export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ properties }) => {
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+type Props = Pick<InspectorOsmNoteFeature, 'properties'>
+
+const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
+  const region = useRegion()
 
   if (!properties) return null
 
@@ -120,13 +121,13 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
             Status:{' '}
             {thread.status === 'closed' && (
               <span className="inline-flex gap-1">
-                <SvgNotesClosed className="h-5 w-5" />
+                <Image src={SvgNotesClosed} className="h-5 w-5" alt="" />
                 geschlossen
               </span>
             )}
             {thread.status === 'open' && (
               <span className="inline-flex gap-1">
-                <SvgNotesOpen className="h-5 w-5" />
+                <Image src={SvgNotesOpen} className="h-5 w-5" alt="" />
                 offen
               </span>
             )}
@@ -139,5 +140,13 @@ export const InspectorFeatureOsmNote: React.FC<InspectorOsmNoteFeature> = ({ pro
         </div>
       </Disclosure>
     </div>
+  )
+}
+
+export const InspectorFeatureOsmNote = ({ properties }: Props) => {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <InspectorFeatureOsmNoteWithQuery properties={properties} />
+    </Suspense>
   )
 }

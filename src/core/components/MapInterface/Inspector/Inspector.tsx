@@ -55,7 +55,6 @@ export const Inspector: React.FC = () => {
               <InspectorFeatureOsmNote
                 key={`osm-note-${inspectObject?.properties?.id}`}
                 properties={inspectObject.properties}
-                geometry={inspectObject.geometry}
               />
             )
           }

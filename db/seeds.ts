@@ -1,3 +1,4 @@
+import seedBikelaneVerification from './seeds/bikelaneVerification'
 import seedRegions from './seeds/regions'
 
 /*
@@ -5,6 +6,7 @@ import seedRegions from './seeds/regions'
  */
 const seed = async () => {
   await seedRegions()
+  await seedBikelaneVerification()
 }
 
 export default seed

@@ -1,9 +1,8 @@
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect } from 'react'
 import { useMap } from 'react-map-gl'
+import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
 import { MapDataSourceCalculator } from '../../mapData'
 import { StoreCalculator, useMapStateInteraction } from '../../mapStateInteraction'
 import {
@@ -13,6 +12,7 @@ import {
 } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 import { useUpdate } from './hooks/useUpdate'
+import { useDrawParam } from 'src/core/useQueryState/useDrawParam'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
@@ -21,18 +21,17 @@ type Props = {
 
 export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRef }) => {
   const { mainMap } = useMap()
-
-  const { draw: drawAreasStore } = useSearch<LocationGenerics>()
+  const { drawParam } = useDrawParam()
   const { mapLoaded, setCalculatorAreasWithFeatures } = useMapStateInteraction()
 
   // We store the Calculator Shapes as URL State `draw`
   // and read from there to do the calculation
   useEffect(() => {
-    if (!mainMap || !mapLoaded || !drawAreasStore) return
+    if (!mainMap || !mapLoaded || !drawParam) return
 
     const result: StoreCalculator['calculatorAreasWithFeatures'] = []
 
-    drawAreasStore.forEach((selectArea) => {
+    drawParam.forEach((selectArea) => {
       const polygonBbox = bbox(selectArea)
       const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
       const northEast: mapboxgl.LngLatLike = [polygonBbox[2], polygonBbox[3]]
@@ -58,29 +57,29 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
     })
 
     setCalculatorAreasWithFeatures(result)
-  }, [drawAreasStore, mapLoaded])
+  }, [drawParam, mainMap, mapLoaded, queryLayers, setCalculatorAreasWithFeatures])
 
   // Update the URL, extracted as hook
   const { updateDrawFeatures } = useUpdate()
   const onUpdate = (e: { features: DrawArea[] }) => {
-    updateDrawFeatures(drawAreasStore, e.features)
+    updateDrawFeatures(drawParam, e.features)
   }
 
   // Update the URL, extracted as hook
   const { deleteDrawFeatures } = useDelete()
   const onDelete = (e: { features: DrawArea[] }) => {
-    deleteDrawFeatures(drawAreasStore, e.features)
+    deleteDrawFeatures(drawParam, e.features)
   }
 
   // OnInit, add drawAreas from store to the UI
   useEffect(() => {
-    if (!mapLoaded || !drawAreasStore) return
+    if (!mapLoaded || !drawParam) return
 
-    drawAreasStore.forEach((feature) => {
+    drawParam.forEach((feature) => {
       return drawControlRef.current?.add(feature)
     })
-    updateDrawFeatures(drawAreasStore, drawAreasStore)
-  }, [mapLoaded])
+    updateDrawFeatures(drawParam, drawParam)
+  }, [drawControlRef, drawParam, mapLoaded, updateDrawFeatures])
 
   return (
     <CalculatorControlsDrawControl

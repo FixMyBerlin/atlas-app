@@ -1,22 +1,20 @@
+import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import React from 'react'
-import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
 import { useMap } from 'react-map-gl'
 import { SmallSpinner } from 'src/core/components/Spinner/SmallSpinner'
-import { useMapStateInteraction } from '../mapStateInteraction'
 import Tooltip from 'src/core/components/Tooltip/Tooltip'
-import { useNavigate, useSearch } from '@tanstack/react-location'
-import { LocationGenerics } from '@routes/index'
 import { Link } from 'src/core/components/links'
+import { useOsmNotesParam } from 'src/core/useQueryState/useOsmNotesParam'
+import { useMapStateInteraction } from '../mapStateInteraction'
 
 export const OsmNotes: React.FC = () => {
   const { osmNotesLoading } = useMapStateInteraction()
   const { mainMap } = useMap()
-  const { osmNotes: osmNotesActive } = useSearch<LocationGenerics>()
+  const { osmNotesParam: osmNotesActive, setOsmNotesParam } = useOsmNotesParam()
 
-  const navigate = useNavigate<LocationGenerics>()
   const onChange = (value: boolean) => {
-    navigate({ search: (old) => ({ ...old, osmNotes: value }) })
+    void setOsmNotesParam(value)
   }
   const centerLocation = mainMap?.getCenter()
 
@@ -30,9 +28,7 @@ export const OsmNotes: React.FC = () => {
         }
       >
         <button
-          onClick={() => {
-            onChange(!osmNotesActive)
-          }}
+          onClick={() => onChange(!osmNotesActive)}
           className={clsx(
             'z-0 inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium shadow-md focus:relative focus:z-10 focus:outline-none  focus:ring-2 focus:ring-yellow-500',
             osmNotesActive ? 'rounded-l-md' : 'rounded-md',

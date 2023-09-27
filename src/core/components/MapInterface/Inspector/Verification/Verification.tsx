@@ -1,15 +1,13 @@
-import { type TVerificationStatus } from '@api/api'
 import { getSourceData, SourcesIds } from 'src/core/components/MapInterface/mapData'
 import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
 import { useUserStore } from 'src/core/components/MapInterface/UserInfo'
 import { hasPermission } from 'src/core/components/MapInterface/UserInfo/utils'
-import { LocationGenerics } from 'src/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
-import React from 'react'
-import { VerificationActions } from './VerificationAction/VerificationActions'
+import { VerificationAction } from './VerificationAction/VerificationAction'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'
 import { verifiedBackgroundColor } from './verifiedColor.const'
+import { useRegion } from 'src/core/components/regionUtils/useRegion'
+import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
 
 type Props = {
   properties: { [key: string]: any }
@@ -19,10 +17,7 @@ type Props = {
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
   const { currentUser } = useUserStore()
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
-
+  const region = useRegion()
   const sourceData = getSourceData(sourceId)
 
   const allowVerify =
@@ -36,7 +31,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
     | TVerificationStatus
     | undefined
 
-  if (!sourceData.verification.enabled) return null
+  if (!sourceData.verification.enabled || !allowVerify) return null
 
   return (
     <section
@@ -47,7 +42,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
       }}
     >
       {verificationStatus === undefined && (
-        <VerificationActions
+        <VerificationAction
           apiIdentifier={sourceData.verification.apiIdentifier}
           visible={allowVerify}
           disabled={!properties?.category}
@@ -65,7 +60,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
           <details className="mt-3">
             <summary className="cursor-pointer font-semibold text-gray-600">Status ändern</summary>
             <div className="mt-2">
-              <VerificationActions
+              <VerificationAction
                 apiIdentifier={sourceData.verification.apiIdentifier}
                 visible={allowVerify}
                 disabled={!properties?.category}
