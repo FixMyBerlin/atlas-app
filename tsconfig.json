@@ -4,12 +4,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/core/components--TODO-MIGRATE/*"],
-      "@pages/*": ["src/pages/*"],
-      "@routes/*": ["src/core/useQueryState/TODO-MIRGRATE-REMOVE/*"],
-      "@assets/*": ["src/assets/*"],
-      "@fakeServer/*": ["src/users/components/fakeServer/*"],
-      "@api/*": ["src/api/*"]
+      "@components/*": ["src/core/components/*"],
+      "@pages/*": ["src/pages/*"]
     },
     "allowJs": true,
     "skipLibCheck": true,
