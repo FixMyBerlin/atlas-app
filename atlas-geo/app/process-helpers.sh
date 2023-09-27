@@ -1,8 +1,15 @@
+#!/bin/bash
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 PROCESS_DIR="./process/"
 # Set a default value for DEBUG if it's not defined
 DEBUG=${DEBUG:-0}
+
+notify() {
+  local text="ENV=$NODE_ENV: $1"
+  local url="https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=%22kybZaJRzo7TVtD0dSuIjybHKF2LCh5FcwnhRuk0wvZaBsHzF74600vSouotE9jIP%22&payload={\"text\": \"$text\"}"
+  wget --header="Content-Type: application/json" --post-data='{}' "$url" -O /dev/null
+}
 
 run_lua_if_debug() {
   if [ $DEBUG == 1 ]; then
@@ -16,6 +23,7 @@ run_lua_if_debug() {
 run_lua() {
   start_time=$(date +%s)
   echo -e "\e[1m\e[7m PROCESS START – Topic: $1 LUA \e[27m\e[21m\e[0m"
+  notify "PROCESS START – Topic: $1 LUA"
 
   # optional log output:
   # https://osm2pgsql.org/doc/manual.html#logging
@@ -27,17 +35,22 @@ run_lua() {
   end_time=$(date +%s)
   diff=$((end_time - start_time))
   run_time=`date -d@$diff -u +%H:%M:%S`
+
+  notify "PROCESS END – Topic: $1 LUA – took $run_time"
   echo -e "\e[1m\e[7m PROCESS END – Topic: $1 LUA \e[27m\e[21m took $run_time\e[0m"
 }
 
 run_psql() {
   start_time=$(date +%s)
   echo -e "\e[1m\e[7m PROCESS START – Topic: $1 SQL \e[27m\e[21m\e[0m"
+  notify "PROCESS START – Topic: $1 SQL"
 
   psql -q -f "${PROCESS_DIR}$1.sql"
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
   run_time=`date -d@$diff -u +%H:%M:%S`
+
+  notify "PROCESS END – Topic: $1 SQL – took $run_time"
   echo -e "\e[1m\e[7m PROCESS END – Topic: $1 SQL \e[27m\e[21m took $run_time\e[0m"
 }
