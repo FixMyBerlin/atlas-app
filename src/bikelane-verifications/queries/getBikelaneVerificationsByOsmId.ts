@@ -4,12 +4,12 @@ import db, { Prisma } from 'db'
 
 type GetBikelaneVerificationsInput = Pick<
   Prisma.BikelaneVerificationFindManyArgs,
-  'where' | 'skip' | 'take'
->
+  'skip' | 'take'
+> & { osmId: number }
 
 export default resolver.pipe(
-  resolver.authorize('ADMIN'),
-  async ({ where, skip = 0, take = 100 }: GetBikelaneVerificationsInput) => {
+  // resolver.authorize(), // TODO Migration
+  async ({ osmId, skip = 0, take = 100 }: GetBikelaneVerificationsInput) => {
     const {
       items: verifications,
       hasMore,
@@ -18,11 +18,11 @@ export default resolver.pipe(
     } = await paginate({
       skip,
       take,
-      count: () => db.bikelaneVerification.count({ where }),
+      count: () => db.bikelaneVerification.count({ where: { osm_id: osmId, osm_type: 'W' } }),
       query: (paginateArgs) =>
         db.bikelaneVerification.findMany({
           ...paginateArgs,
-          where,
+          where: { osm_id: osmId, osm_type: 'W' },
           orderBy: { verified_at: 'desc' },
         }),
     })

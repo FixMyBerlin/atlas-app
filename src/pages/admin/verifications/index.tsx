@@ -2,16 +2,16 @@ import { Suspense } from 'react'
 import Head from 'next/head'
 import { usePaginatedQuery } from '@blitzjs/rpc'
 import { useRouter } from 'next/router'
-import Layout from 'src/core/layouts/Layout'
+import { Layout } from 'src/core/layouts/Layout'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
+import { Markdown } from '@components/text'
 
 const ITEMS_PER_PAGE = 100
 
-export const BikelaneVerificationsList = () => {
+export const AdminBikelaneVerificationsList = () => {
   const router = useRouter()
   const page = Number(router.query.page) || 0
-  const [{ bikelaneVerifications, hasMore }] = usePaginatedQuery(getBikelaneVerifications, {
-    orderBy: { id: 'asc' },
+  const [{ verifications, hasMore }] = usePaginatedQuery(getBikelaneVerifications, {
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
@@ -29,20 +29,21 @@ export const BikelaneVerificationsList = () => {
             <td>osm_id</td>
             <td>verified_at</td>
             <td>verified_by</td>
-            <td>verified</td>
             <td>comment</td>
           </tr>
         </thead>
         <tbody>
-          {bikelaneVerifications.map((row) => (
+          {verifications.map((row) => (
             <tr key={row.id}>
               <td>{row.id}</td>
               <td>{row.osm_type}</td>
               <td>{Number(row.osm_id)}</td>
-              <td>verified_at</td>
-              <td>verified_by</td>
+              <td>{row.verified_at.toLocaleDateString()}</td>
+              <td>{Number(row.verified_by)}</td>
               <td>{row.verified}</td>
-              <td>{row.comment}</td>
+              <td>
+                <Markdown markdown={row.comment} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -58,20 +59,20 @@ export const BikelaneVerificationsList = () => {
   )
 }
 
-const BikelaneVerificationsPage = () => {
+const AdminBikelaneVerificationsPage = () => {
   return (
     <Layout>
       <Head>
-        <title>BikelaneVerifications</title>
+        <title>Eine liste aller (bikelane) Verifications</title>
       </Head>
 
       <div>
         <Suspense fallback={<div>Loading...</div>}>
-          <BikelaneVerificationsList />
+          <AdminBikelaneVerificationsList />
         </Suspense>
       </div>
     </Layout>
   )
 }
 
-export default BikelaneVerificationsPage
+export default AdminBikelaneVerificationsPage

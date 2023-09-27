@@ -1,14 +1,14 @@
-import { THistoryEntry } from '@api/api'
 import { Markdown } from 'src/core/components/text'
 import { userById } from 'src/users/components/utils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import React from 'react'
+import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 
 type Props = {
-  history: THistoryEntry[]
+  history: Awaited<ReturnType<typeof getBikelaneVerifications>>['verifications']
 }
 
-export const VerificationHistoryEntry: React.FC<Props> = ({ history }) => {
+export const VerificationHistoryEntries = ({ history }: Props) => {
   return (
     <div className="mt-2 flow-root">
       <ul>
@@ -16,10 +16,10 @@ export const VerificationHistoryEntry: React.FC<Props> = ({ history }) => {
           const date = new Date(event.verified_at)
           const datetimeFormatted = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
           const verifiedBy =
-            userById(parseInt(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
+            userById(Number(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
 
           return (
-            <li key={event.verified_at} className="flex gap-2">
+            <li key={event.id} className="flex gap-2">
               <span className="flex h-5 w-5 items-center justify-center rounded-full">
                 {event.verified === 'approved' ? (
                   <ShieldCheckIcon className="h-4 w-4" aria-hidden="true" />

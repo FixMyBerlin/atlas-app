@@ -1,9 +1,11 @@
-import { getHistory } from '@api/index'
+import { useQuery } from '@blitzjs/rpc'
+import { Spinner } from '@components/Spinner/Spinner'
+import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
+import { Suspense } from 'react'
+import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 import { SourceVerificationApiIdentifier } from 'src/core/components/MapInterface/mapData'
 import { Markdown } from 'src/core/components/text'
 import { userById } from 'src/users/components/utils'
-import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
-import { useQuery } from '@tanstack/react-query'
 import { verifiedColor } from '../verifiedColor.const'
 
 type Props = {
@@ -12,22 +14,17 @@ type Props = {
   osmId: number
 }
 
-export const VerificationStatus: React.FC<Props> = ({ apiIdentifier, visible, osmId }) => {
-  const query = useQuery({
-    queryKey: ['verificationHistory', apiIdentifier, osmId],
-    queryFn: () => getHistory(apiIdentifier, osmId),
-  })
+const VerificationStatusWithQuery = ({ osmId }: Pick<Props, 'osmId'>) => {
+  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId })
 
-  if (!visible || query?.status !== 'success') return null
-
-  const latestEntry = query.data.data?.at(0)
+  const latestEntry = verifications?.at(0)
 
   if (!latestEntry) return null
 
   const date = new Date(latestEntry.verified_at)
   const datetimeFormatted = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
   const verifiedBy =
-    userById(parseInt(latestEntry.verified_by))?.displayName || '(Unbekannter Nutzer)'
+    userById(Number(latestEntry.verified_by))?.displayName || '(Unbekannter Nutzer)'
 
   return (
     <div className="flex gap-3">
@@ -63,5 +60,19 @@ export const VerificationStatus: React.FC<Props> = ({ apiIdentifier, visible, os
         )}
       </div>
     </div>
+  )
+}
+
+export const VerificationStatus: React.FC<Props> = ({ apiIdentifier, visible, osmId }) => {
+  if (apiIdentifier !== 'bikelanes') {
+    console.warn('Invalid apiIdentifier', apiIdentifier)
+    return null
+  }
+  if (!visible) return null
+
+  return (
+    <Suspense fallback={<Spinner />}>
+      <VerificationStatusWithQuery osmId={osmId} />
+    </Suspense>
   )
 }
