@@ -1,25 +1,23 @@
-import { sourcesDatasets } from 'src/core/components/MapInterface/mapData'
-import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
-import { createDatasetSourceLayerKey } from 'src/core/components/MapInterface/utils'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch, useSearch } from '@tanstack/react-location'
+import { useRegionSlug } from '@components/regionUtils/useRegionSlug'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
+import { sourcesDatasets } from 'src/core/components/MapInterface/mapData'
+import { debugLayerStyles } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
+import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
+import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
+import { createDatasetSourceLayerKey } from 'src/core/components/MapInterface/utils'
+import { useDataParam } from 'src/core/useQueryState/useDataParam'
 import { layerVisibility } from '../utils'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
-import { debugLayerStyles } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 
 export const SourcesLayerDatasets: React.FC = () => {
-  const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
+  const { dataParam: selectedDatasetIds } = useDataParam()
   const { pmTilesProtocolReady } = useMapStateInteraction()
   const { useDebugLayerStyles } = useMapDebugState()
-  const {
-    params: { regionPath },
-  } = useMatch()
+  const regionSlug = useRegionSlug()
 
   const uniqueRegionDatasets = sourcesDatasets
-    .filter((data) => (data.regionKey as string[]).includes(regionPath))
+    .filter((data) => (data.regionKey as string[]).includes(regionSlug))
     // Make the array unique by data.url
     .filter((dataset, index, self) => index === self.findIndex((d) => d.url === dataset.url))
 

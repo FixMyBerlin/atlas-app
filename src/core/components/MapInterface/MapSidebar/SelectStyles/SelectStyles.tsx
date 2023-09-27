@@ -1,11 +1,10 @@
-import { Portal, usePopper } from 'src/core/utils'
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useNavigate } from '@tanstack/react-location'
 import { clsx } from 'clsx'
 import produce from 'immer'
 import React from 'react'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
+import { Portal, usePopper } from 'src/core/utils'
 import { MapDataThemeIds, MapDataTopic, getStyleData } from '../../mapData'
 import { TopicConfig } from '../../mapStateConfig'
 import { createTopicStyleKey } from '../../utils'
@@ -19,7 +18,7 @@ type Props = {
 }
 
 export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig, disabled }) => {
-  const navigate = useNavigate<LocationGenerics>()
+  const { configParam, setConfigParam } = useConfigParam()
 
   const [trigger, container] = usePopper({
     placement: 'bottom-start',
@@ -29,27 +28,17 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
 
   type ToggleActiveProps = { topicId: string; styleId: string }
   const toggleActive = ({ topicId, styleId }: ToggleActiveProps) => {
-    navigate({
-      search: (old) => {
-        const oldConfig = old?.config
-        if (!oldConfig) return { ...old }
+    const oldConfig = configParam
+    const newConfig = produce(oldConfig, (draft) => {
+      const topic = draft?.find((th) => th.id === themeId)?.topics.find((t) => t.id === topicId)
 
-        return {
-          ...old,
-          config: produce(oldConfig, (draft) => {
-            const topic = draft
-              ?.find((th) => th.id === themeId)
-              ?.topics.find((t) => t.id === topicId)
-
-            if (topic) {
-              const style = topic.styles.find((s) => s.id === styleId)
-              topic.styles.forEach((s) => (s.active = false))
-              style && (style.active = !style.active)
-            }
-          }),
-        }
-      },
+      if (topic) {
+        const style = topic.styles.find((s) => s.id === styleId)
+        topic.styles.forEach((s) => (s.active = false))
+        style && (style.active = !style.active)
+      }
     })
+    void setConfigParam(newConfig)
   }
 
   if (!topicData || !topicConfig) return null

@@ -1,19 +1,16 @@
-import { sourceDatasetIdUrl } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesDatasets/utils/sourceDatasetIdUrl'
-import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useMatch } from '@tanstack/react-location'
+import { useRegionSlug } from '@components/regionUtils/useRegionSlug'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
+import { sourceDatasetIdUrl } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesDatasets/utils/sourceDatasetIdUrl'
+import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
 
 export const SourcesLayerRegionalMask: React.FC = () => {
-  const {
-    data: { region },
-  } = useMatch<LocationGenerics>()
+  const regionSlug = useRegionSlug()
   const { pmTilesProtocolReady } = useMapStateInteraction()
   const { id, url } = sourceDatasetIdUrl('atlas-regional-masks')
   const datasetTileId = `source:${id}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
 
-  if (!region || !pmTilesProtocolReady) return null
+  if (!regionSlug || !pmTilesProtocolReady) return null
 
   return (
     <Source id="mask" key={datasetTileId} type="vector" url={url}>
@@ -26,7 +23,7 @@ export const SourcesLayerRegionalMask: React.FC = () => {
           'fill-color': '#27272a',
           'fill-opacity': 0.8,
         }}
-        filter={['all', ['==', 'region', region.path], ['==', 'kind', 'buffer']]}
+        filter={['all', ['==', 'region', regionSlug], ['==', 'kind', 'buffer']]}
       />
       <Layer
         id="mask-boundary"
@@ -38,7 +35,7 @@ export const SourcesLayerRegionalMask: React.FC = () => {
           'line-width': 5,
           'line-opacity': 0.6,
         }}
-        filter={['all', ['==', 'region', region.path], ['==', 'kind', 'boundary']]}
+        filter={['all', ['==', 'region', regionSlug], ['==', 'kind', 'boundary']]}
       />
     </Source>
   )

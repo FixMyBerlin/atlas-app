@@ -1,9 +1,8 @@
-import { ThemeConfig } from 'src/core/components/MapInterface/mapStateConfig'
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useNavigate } from '@tanstack/react-location'
 import { produce } from 'immer'
+import { ThemeConfig } from 'src/core/components/MapInterface/mapStateConfig'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
 import { getThemeData } from '../../mapData'
 import { useMapStateInteraction } from '../../mapStateInteraction'
 import { SelectTopic } from '../SelectTopic/SelectTopic'
@@ -14,26 +13,17 @@ type Props = { themeConfig: ThemeConfig; active: boolean }
 export const SelectTheme = ({ themeConfig, active }: Props) => {
   const { resetInspector } = useMapStateInteraction()
   const themeData = getThemeData(themeConfig.id)
+  const { configParam, setConfigParam } = useConfigParam()
 
-  const navigate = useNavigate<LocationGenerics>()
   const selectTheme = (themeId: string) => {
-    resetInspector()
-    navigate({
-      search: (old) => {
-        const oldConfig = old?.config
-        if (!oldConfig) return { ...old }
-
-        return {
-          ...old,
-          config: produce(oldConfig, (draft) => {
-            const theme = draft.find((th) => th.id === themeId)
-            if (theme) {
-              theme.active = !theme.active
-            }
-          }),
-        }
-      },
+    const newConfig = produce(configParam, (draft) => {
+      const theme = draft.find((th) => th.id === themeId)
+      if (theme) {
+        theme.active = !theme.active
+      }
     })
+    void setConfigParam(newConfig)
+    resetInspector()
   }
 
   return (

@@ -2,7 +2,7 @@ import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
 import { SelectTheme } from './SelectTheme'
 
 export const SelectThemes = () => {
-  const [configParam] = useConfigParam()
+  const { configParam } = useConfigParam()
 
   if (!configParam) return null
 

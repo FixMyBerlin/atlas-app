@@ -1,28 +1,18 @@
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { regionFromPath } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/utils'
-import { useMatch, useSearch } from '@tanstack/react-location'
+import { useRegion } from '@components/regionUtils/useRegion'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl'
+import { useBackgroundParam } from 'src/core/useQueryState/useBackgroundParam'
 import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapData'
 import { layerVisibility } from '../utils'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
-  const {
-    // See TODO A, below.
-    // lat,
-    // lng,
-    // zoom,
-    bg: selectedBackgroundId,
-  } = useSearch<LocationGenerics>()
-  const {
-    params: { regionPath },
-  } = useMatch()
-  const region = regionFromPath(regionPath)
+  const { backgroundParam } = useBackgroundParam()
+  const region = useRegion()
 
   if (!region?.backgroundSources) return null
 
   const backgrounds = sourcesBackgroundsRaster.filter((s) =>
-    region.backgroundSources.includes(s.id),
+    region.backgroundSources!.includes(s.id),
   )
 
   // Last layer in Array `allLayer.filter((l) => l.source === 'openmaptiles')`
@@ -39,7 +29,7 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
         // const optTileSizeProp = tileSize ? { tileSize } : {}
         const backgroundId = `${id}_tiles`
 
-        const visible = selectedBackgroundId === id
+        const visible = backgroundParam === id
 
         const enhancedAttributionHtml = attributionHtml
         // TODO A: The idea was to be able to use {x}… params in the attribution string

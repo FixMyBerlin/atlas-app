@@ -1,3 +1,5 @@
+import React from 'react'
+import { Layer, Source } from 'react-map-gl'
 import { getSourceData, getStyleData, getTopicData } from 'src/core/components/MapInterface/mapData'
 import { debugLayerStyles } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
@@ -5,10 +7,8 @@ import {
   createSourceKey,
   createSourceTopicStyleLayerKey,
 } from 'src/core/components/MapInterface/utils'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
-import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import { useBackgroundParam } from 'src/core/useQueryState/useBackgroundParam'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
 import { layerVisibility } from '../utils'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
@@ -24,9 +24,10 @@ import { beforeId } from './utils/beforeId'
 // However, we do not want to bloat our DOM, so we only render active themes and topics.
 export const SourcesAndLayers: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
-  const { config: configThemes, bg: backgroundId } = useSearch<LocationGenerics>()
+  const { configParam } = useConfigParam()
+  const { backgroundParam } = useBackgroundParam()
 
-  const activeConfigThemes = configThemes?.filter((th) => th.active === true)
+  const activeConfigThemes = configParam?.filter((th) => th.active === true)
   if (!activeConfigThemes?.length) return null
 
   return (
@@ -79,6 +80,7 @@ export const SourcesAndLayers: React.FC = () => {
                     const currStyleConfig = topicConfig.styles.find((s) => s.id === styleConfig.id)
                     const visibility = layerVisibility(currStyleConfig?.active || false)
 
+                    // TODO MIGRATION
                     return styleData?.layers?.map((layer) => {
                       const layerId = createSourceTopicStyleLayerKey(
                         sourceData.id,
@@ -111,7 +113,7 @@ export const SourcesAndLayers: React.FC = () => {
                         filter: layerFilter,
                         paint: layerPaint,
                         beforeId: beforeId({
-                          backgroundId,
+                          backgroundId: backgroundParam,
                           topicData: curTopicData,
                           layerType: layer.type,
                         }),

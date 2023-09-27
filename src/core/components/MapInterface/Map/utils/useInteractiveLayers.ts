@@ -5,8 +5,9 @@ import {
   createDatasetSourceLayerKey,
   createSourceTopicStyleLayerKey,
 } from 'src/core/components/MapInterface/utils'
-import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
-import { useSearch } from '@tanstack/react-location'
+import { useConfigParam } from 'src/core/useQueryState/useConfigParam'
+import { useDataParam } from 'src/core/useQueryState/useDataParam'
+import { useOsmNotesParam } from 'src/core/useQueryState/useOsmNotesParam'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { themes: ThemeConfig[] | undefined }
@@ -57,18 +58,18 @@ const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
 
 export const useInteractiveLayers = () => {
   // active layer from theme
-  const { config: configThemes } = useSearch<LocationGenerics>()
-  const currentThemes = configThemes?.filter((th) => th.active === true)
+  const { configParam } = useConfigParam()
+  const currentThemes = configParam?.filter((th) => th.active === true)
 
   const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ themes: currentThemes })
 
-  const { osmNotes } = useSearch<LocationGenerics>()
-  if (osmNotes) {
+  const { osmNotesParam } = useOsmNotesParam()
+  if (osmNotesParam) {
     themeActiveLayerIds.push(osmNotesLayerId)
   }
 
   // active layer from datasets
-  const { data: selectedDatasetIds } = useSearch<LocationGenerics>()
+  const { dataParam: selectedDatasetIds } = useDataParam()
   const regionDatasets = useRegionDatasets()
   const datasetsActiveLayerIds =
     regionDatasets

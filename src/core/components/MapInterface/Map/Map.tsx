@@ -27,7 +27,7 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
-  const [mapParam, setMapParam] = useMapParam()
+  const { mapParam, setMapParam } = useMapParam()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
 
