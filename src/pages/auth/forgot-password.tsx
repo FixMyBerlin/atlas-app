@@ -1,4 +1,4 @@
-import Layout from 'src/core/layouts/Layout'
+import { Layout } from 'src/core/layouts/Layout'
 import { LabeledTextField } from 'src/core/components/forms/LabeledTextField'
 import { Form, FORM_ERROR } from 'src/core/components/forms/Form'
 import { ForgotPassword } from 'src/auth/schemas'
