@@ -1,12 +1,11 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-import maplibregl from 'maplibre-gl'
+import maplibregl, { MapLibreEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
 import {
   Map as MapGl,
   MapLayerMouseEvent,
-  MapboxEvent,
   NavigationControl,
   ViewStateChangeEvent,
   useMap,
@@ -43,7 +42,7 @@ export const Map: React.FC = () => {
     event.features && setInspector(event.features)
   }
 
-  const handleLoad = (_event: MapboxEvent) => {
+  const handleLoad = (_event: MapLibreEvent<undefined>) => {
     // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
     setMapLoaded(true)
 
