@@ -1,15 +1,16 @@
-import png_cross from './images/cross.png'
-import png_parking_diagonal from './images/parking_diagonal.png'
-import png_parking_perpendicular from './images/parking_perpendicular.png'
+import { StaticImageData } from 'next/image'
 import png_bus_stop from './images/bus_stop.png'
-import png_sbahn from './images/sbahn.png'
-import png_stripe_texture from './images/stripe_texture.png'
+import png_cross from './images/cross.png'
+import png_cross_hatch_barriers from './images/cross_hatch_barriers.png'
 import png_notes_closed from './images/notes_closed.png'
 import png_notes_open from './images/notes_open.png'
-import png_cross_hatch_barriers from './images/cross_hatch_barriers.png'
 import png_oneway from './images/oneway.png'
+import png_parking_diagonal from './images/parking_diagonal.png'
+import png_parking_perpendicular from './images/parking_perpendicular.png'
+import png_sbahn from './images/sbahn.png'
+import png_stripe_texture from './images/stripe_texture.png'
 
-type MapboxStyleImages = Map<string, string>
+type MapboxStyleImages = Map<string, StaticImageData>
 
 export const mapboxStyleImages: MapboxStyleImages = new Map([
   ['cross', png_cross],
