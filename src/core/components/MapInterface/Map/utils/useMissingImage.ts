@@ -1,7 +1,7 @@
 import { mapboxStyleImages } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyleImages/mapboxStyleImages'
 import { type MapStyleImageMissingEvent } from 'maplibre-gl'
 import { useEffect } from 'react'
-import { type MapRef } from 'react-map-gl'
+import { type MapRef } from 'react-map-gl/maplibre'
 
 export const useMissingImage = (map: MapRef | undefined) => {
   useEffect(() => {

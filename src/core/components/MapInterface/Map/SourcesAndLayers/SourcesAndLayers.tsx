@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import { Layer, Source } from 'react-map-gl/maplibre'
 import { getSourceData, getStyleData, getTopicData } from 'src/core/components/MapInterface/mapData'
 import { debugLayerStyles } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'

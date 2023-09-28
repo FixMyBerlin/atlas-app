@@ -1,5 +1,5 @@
 import { TVerificationApiGet } from '@api/index'
-import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapboxGeoJSONFeature } from 'react-map-gl/maplibre'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware

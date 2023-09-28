@@ -1,4 +1,4 @@
-import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapboxGeoJSONFeature } from 'react-map-gl/maplibre'
 // We use `MapboxGeoJSONFeature` here, since the `MapLayerMouseEvent` on onClick etc on the map returns this kind of type.
 
 /** @desc Get two sets of arrays of GeoJSONFeatures and make sure they are unique by comparing their IDs */

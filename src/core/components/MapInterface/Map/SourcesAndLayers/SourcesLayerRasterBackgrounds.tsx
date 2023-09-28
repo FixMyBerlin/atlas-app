@@ -1,6 +1,6 @@
 import { useRegion } from '@components/regionUtils/useRegion'
 import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import { Layer, Source } from 'react-map-gl/maplibre'
 import { useBackgroundParam } from 'src/core/useQueryState/useBackgroundParam'
 import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapData'
 import { layerVisibility } from '../utils'

@@ -1,6 +1,6 @@
 import { useRegionSlug } from '@components/regionUtils/useRegionSlug'
 import React from 'react'
-import { Layer, Source } from 'react-map-gl'
+import { Layer, Source } from 'react-map-gl/maplibre'
 import { sourcesDatasets } from 'src/core/components/MapInterface/mapData'
 import { debugLayerStyles } from 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'

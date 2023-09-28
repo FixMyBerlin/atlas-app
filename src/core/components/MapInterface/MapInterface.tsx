@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapProvider } from 'react-map-gl'
+import { MapProvider } from 'react-map-gl/maplibre'
 import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DownloadModal } from './DownloadModal/DownloadModal'

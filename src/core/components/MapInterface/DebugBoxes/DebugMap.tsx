@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { useMap } from 'react-map-gl'
+import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl } from 'src/core/utils'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapStateInteraction } from '../mapStateInteraction'

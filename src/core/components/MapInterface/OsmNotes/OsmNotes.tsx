@@ -1,7 +1,7 @@
 import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
 import clsx from 'clsx'
 import React from 'react'
-import { useMap } from 'react-map-gl'
+import { useMap } from 'react-map-gl/maplibre'
 import { SmallSpinner } from 'src/core/components/Spinner/SmallSpinner'
 import Tooltip from 'src/core/components/Tooltip/Tooltip'
 import { Link } from 'src/core/components/links'

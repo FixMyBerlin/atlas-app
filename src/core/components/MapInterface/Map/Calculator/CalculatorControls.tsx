@@ -1,7 +1,7 @@
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect } from 'react'
-import { useMap } from 'react-map-gl'
+import { useMap } from 'react-map-gl/maplibre'
 import { LocationGenerics } from 'src/core/useQueryState/TODO-MIRGRATE-REMOVE/routes'
 import { MapDataSourceCalculator } from '../../mapData'
 import { StoreCalculator, useMapStateInteraction } from '../../mapStateInteraction'

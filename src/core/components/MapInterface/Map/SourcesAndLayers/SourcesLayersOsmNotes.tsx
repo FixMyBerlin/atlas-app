@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { FeatureCollection } from 'geojson'
 import React, { useEffect, useState } from 'react'
-import { Layer, Source, useMap } from 'react-map-gl'
+import { Layer, Source, useMap } from 'react-map-gl/maplibre'
 import { useMapStateInteraction } from 'src/core/components/MapInterface/mapStateInteraction'
 import { useOsmNotesParam } from 'src/core/useQueryState/useOsmNotesParam'
 

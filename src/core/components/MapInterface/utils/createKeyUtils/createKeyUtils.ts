@@ -1,4 +1,4 @@
-import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapboxGeoJSONFeature } from 'react-map-gl/maplibre'
 import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData'
 import { TopicStyleKey, TopicStyleLegendKey } from './types'
 

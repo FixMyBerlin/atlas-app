@@ -1,7 +1,7 @@
 import { AnyLayer } from 'mapbox-gl'
 import React from 'react'
 import { featureCollection } from '@turf/helpers'
-import { useMap } from 'react-map-gl'
+import { useMap } from 'react-map-gl/maplibre'
 import { useMapStateInteraction } from '../mapStateInteraction'
 
 type Props = { layers: AnyLayer[] }
