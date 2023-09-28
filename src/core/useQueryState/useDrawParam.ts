@@ -7,7 +7,7 @@ export const useDrawParam = () => {
     serialize: (value) => customStringify(value),
   }).withOptions({ history: 'replace' })
 
-  const [drawParam, setDrawParam] = useQueryState('config', drawParamParser)
+  const [drawParam, setDrawParam] = useQueryState('draw', drawParamParser)
 
   // TODO: Fix 'any' types on those.
   return { drawParam, setDrawParam }
