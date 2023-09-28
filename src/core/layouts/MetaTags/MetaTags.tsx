@@ -1,7 +1,7 @@
 import { isProd } from 'src/core/utils'
 import React from 'react'
-import { Helmet } from 'react-helmet'
 import SocialSharingImage from './assets/default.png'
+import Head from 'next/head'
 
 const seoDefaultValues = {
   defaultTitle: 'Radverkehrsatlas',
@@ -31,17 +31,17 @@ export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, 
 
   if (noindex === true) {
     return (
-      <Helmet>
+      <Head>
         <title>{seo.title}</title>
         <meta name="robots" content="noindex" />
-      </Helmet>
+      </Head>
     )
   }
 
   // FYI, we do not inlcude the url meta tags since is work to handle edge cases but let the browser handle this.
   // We do not have propper SocialSharing anyways, since we don't generate static content.
   return (
-    <Helmet>
+    <Head>
       <title>{seo.title}</title>
       <meta property="og:title" content={seo.title} />
       <meta name="twitter:title" content={seo.title} />
@@ -58,6 +58,6 @@ export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, 
       <meta name="twitter:card" content="summary_large_image" />
 
       <meta name="theme-color" content="#facc15" />
-    </Helmet>
+    </Head>
   )
 }

@@ -1,9 +1,8 @@
-import { useParam } from '@blitzjs/next'
 import React from 'react'
-import { Helmet } from 'react-helmet'
 import { MetaTags } from 'src/core/layouts/MetaTags'
 import { TailwindResponsiveHelper } from 'src/core/layouts/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import { HeaderRegionen } from './Header'
+import Head from 'next/head'
 
 type Props = {
   children?: React.ReactNode
@@ -14,10 +13,10 @@ type Props = {
 export const LayoutMap: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <Helmet>
+      <Head>
         <html lang="de" className="fixed overflow-hidden" />
         <body className="fixed overflow-hidden" />
-      </Helmet>
+      </Head>
       <MetaTags noindex />
       <div className="flex h-screen flex-col">
         <HeaderRegionen />
