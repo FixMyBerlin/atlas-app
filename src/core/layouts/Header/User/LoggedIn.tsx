@@ -1,16 +1,17 @@
-import { useParams } from '@blitzjs/next'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import React, { Fragment } from 'react'
 import {
+  googleMapsUrlViewport,
   mapillaryUrlViewport,
   osmUrlViewport,
 } from 'src/core/components/MapInterface/Inspector/Tools/osmUrls'
 import { User } from 'src/core/components/MapInterface/UserInfo'
 import { useMapDebugState } from 'src/core/components/MapInterface/mapStateInteraction/useMapDebugState'
 import { Link, linkStyles } from 'src/core/components/links'
+import { useMapParam } from 'src/core/useQueryState/useMapParam'
 import { getEnvUrl } from 'src/core/utils/getEnvUrl'
 import { isAdmin } from 'src/users/components/utils'
 
@@ -28,10 +29,12 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
   const stagingUrl = getEnvUrl('staging')
   const prodUrl = getEnvUrl('production')
 
-  // TODO MIGRATION: Move to new next-usequerystate
-  const { zoom, lat, lng } = useParams()
-  const osmUrlViewportUrl = osmUrlViewport(Number(zoom), Number(lat), Number(lng))
-  const mapillaryUrlViewportUrl = mapillaryUrlViewport(Number(zoom), Number(lat), Number(lng))
+  const { mapParam } = useMapParam()
+  const osmUrlViewportUrl = mapParam && osmUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
+  const mapillaryUrlViewportUrl =
+    mapParam && mapillaryUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
+  const googleMapsViewportUrl =
+    mapParam && googleMapsUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
 
   return (
     <Menu as="div" className="relative ml-3">
@@ -116,6 +119,13 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
                 <li>
                   <Link external blank href={mapillaryUrlViewportUrl}>
                     Open Mapillary
+                  </Link>
+                </li>
+              )}
+              {googleMapsViewportUrl && (
+                <li>
+                  <Link external blank href={googleMapsViewportUrl}>
+                    Open GoogleMaps
                   </Link>
                 </li>
               )}

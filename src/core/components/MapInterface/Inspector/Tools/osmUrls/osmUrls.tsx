@@ -54,3 +54,19 @@ export const mapillaryUrlViewport = (zoom?: number, lat?: number, lng?: number) 
     zoom,
   })
 }
+
+export const googleMapsUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
+  if (!zoom || !lat || !lng) return
+
+  const urlTemplate = 'https://www.google.de/maps/@{latitude},{longitude},{zoom}z/data=!5m1!1e4'
+  const geometry = {
+    type: 'Point',
+    coordinates: [lng, lat],
+  } satisfies maplibregl.GeoJSONFeature['geometry']
+
+  return editorUrl({
+    urlTemplate,
+    geometry,
+    zoom,
+  })
+}
