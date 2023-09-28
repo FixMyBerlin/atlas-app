@@ -30,6 +30,7 @@
     "updateMasks": "npm run updateMasks:createGeojson && npm run updateMasks:createAndUploadMbtiles && github",
     "updateMasks:createGeojson": "npx vite-node ./scripts/RegionalMasks/createGeojson.ts && prettier \"scripts/RegionalMasks/geojson/\" --write",
     "updateMasks:createAndUploadMbtiles": "npx vite-node ./scripts/RegionalMasks/createMbtiles.ts && npm run updateDatasets",
+    "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install"
   },
