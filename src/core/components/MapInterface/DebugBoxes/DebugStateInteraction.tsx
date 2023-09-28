@@ -7,6 +7,20 @@ import { useMapStateInteraction } from '../mapStateInteraction'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { useDrawParam } from 'src/core/useQueryState/useDrawParam'
 
+// A custom formatter to get a more compact output
+// Prefix [ signals an array, { signals an object
+function formatConfig(config: any, indent = 0): string {
+  let result = ''
+  const keys = Object.keys(config)
+  for (const key of keys) {
+    const value = config[key]
+    const formattedValue = typeof value === 'object' ? formatConfig(value, indent + 2) : value
+    const prefix = Array.isArray(value) ? '[ ' : '{ '
+    result += `\n${' '.repeat(indent)}${prefix}${key}: ${formattedValue}`
+  }
+  return result
+}
+
 export const DebugStateInteraction = () => {
   const regionSlug = useRegionSlug()
   const zustandValues = useMapStateInteraction()
@@ -56,7 +70,17 @@ export const DebugStateInteraction = () => {
 
         <details>
           <summary className="cursor-pointer">URL Config</summary>
-          <pre>{JSON.stringify(configParam, undefined, 2)}</pre>
+          {Boolean(configParam?.length) &&
+            configParam?.map((config) => {
+              return (
+                <details key={config.id}>
+                  <summary className="cursor-pointer">{config.id}</summary>
+                  <pre>
+                    <code>{formatConfig(config)}</code>
+                  </pre>
+                </details>
+              )
+            })}
         </details>
 
         {Boolean(drawParam?.length) &&
