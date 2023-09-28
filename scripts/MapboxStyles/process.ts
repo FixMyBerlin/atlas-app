@@ -1,6 +1,4 @@
-// We use bun.sh to run this vile via `npm run updateStyles`
-// Bun will auto install the chalk import.
-
+// We use bun.sh to run this file
 import chalk from 'chalk'
 
 // Configruation:

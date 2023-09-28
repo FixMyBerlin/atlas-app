@@ -1,15 +1,16 @@
 // Write a types.ts file that describes our datasets
 
-const fs = require('fs')
-const path = require('path')
+// We use bun.sh to run this file
+import fs from 'node:fs'
+import path from 'node:path'
 
 const pmtilesFiles = fs
   .readdirSync(path.resolve(__dirname, './pmtiles'))
   .filter((file) => path.extname(file) === '.pmtiles')
 
-const urlStrings = []
-const filesNameStrings = []
-const datasets = {}
+const urlStrings: string[] = []
+const filesNameStrings: string[] = []
+const datasets: Record<string, string> = {}
 
 pmtilesFiles.forEach((file) => {
   const urlString = `'https://atlas-tiles.s3.eu-central-1.amazonaws.com/${file}'`
@@ -29,9 +30,9 @@ export type DatasetIds =
 export type DatasetFiles =
 | ${urlStrings.join('\n  | ')}`
 
-fs.writeFileSync(
-  path.resolve('./src/components/MapInterface/mapData/sourcesMapData/datasets', './types.ts'),
-  typesContent
+Bun.write(
+  path.resolve('./src/core/components/MapInterface/mapData/sourcesMapData/datasets', './types.ts'),
+  typesContent,
 )
 
 const objectContent = `// Auto-generated file, do not edit
@@ -41,15 +42,15 @@ export const datasets = {
     .map(
       ([name, file]) => `
   // Preview: https://protomaps.github.io/PMTiles/?url=${file.replaceAll("'", '')}
-  ${name}: ${file},`
+  ${name}: ${file},`,
     )
     .join('\n')}
 } as const`
 
-fs.writeFileSync(
+Bun.write(
   path.resolve(
-    './src/components/MapInterface/mapData/sourcesMapData/datasets',
-    './datasets.const.ts'
+    './src/core/components/MapInterface/mapData/sourcesMapData/datasets',
+    './datasets.const.ts',
   ),
-  objectContent
+  objectContent,
 )

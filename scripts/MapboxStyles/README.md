@@ -15,10 +15,6 @@ Create a `.env.local` file with a `VITE_MAPBOX_STYLE_ACCESS_TOKEN` key. See `.en
 1. Publish the style in Mapbox Studio (only then the API output is updated).
 1. Run `npm run updateStyles`.
    - We use [Bun](https://bun.sh/docs/installation) to run this script.
-   - This way we are not bound to the settings in our tsconfig.json
-     like a target that supports top level await.
-     But we can also import npm packages in our scripts that are not part of the package.json
-     which keeps the main app clean.
 1. Check the generated files and update the `mapData` if needed.
    Including the source-attribute (see below).
 

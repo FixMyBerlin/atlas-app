@@ -26,7 +26,7 @@
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && npm run test:run",
     "updateStyles": "bun ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/components/MapInterface/mapData/topicsMapData/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
-    "updateDatasets": "node ./datasets/process.cjs && node ./datasets/upload.cjs && node ./datasets/typesAndObject.cjs && prettier \"./src/components/MapInterface/mapData/sourcesMapData/datasets\" --write",
+    "updateDatasets": "bun ./datasets/process.ts && bun ./datasets/upload.ts && bun ./datasets/typesAndObject.ts && prettier \"./src/core/components/MapInterface/mapData/sourcesMapData/datasets\" --write",
     "updateMasks": "npm run updateMasks:createGeojson && npm run updateMasks:createAndUploadMbtiles && github",
     "updateMasks:createGeojson": "bun ./scripts/RegionalMasks/createGeojson.ts && prettier \"scripts/RegionalMasks/geojson/\" --write",
     "updateMasks:createAndUploadMbtiles": "bun ./scripts/RegionalMasks/createMbtiles.ts && npm run updateDatasets",
@@ -38,7 +38,6 @@
     "schema": "db/schema.prisma"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.317.0",
     "@blitzjs/auth": "2.0.0-beta.33",
     "@blitzjs/next": "2.0.0-beta.33",
     "@blitzjs/rpc": "2.0.0-beta.33",
@@ -77,6 +76,7 @@
     "zustand": "^4.3.3"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "3.421.0",
     "@heroicons/react": "^2.0.15",
     "@next/bundle-analyzer": "12.0.8",
     "@next/env": "13.4.19",
@@ -87,7 +87,6 @@
     "@testing-library/react": "13.4.0",
     "@testing-library/react-hooks": "8.0.1",
     "@total-typescript/ts-reset": "0.5.1",
-    "bun-types": "1.0.3",
     "@types/dompurify": "^3.0.2",
     "@types/jsurl2": "^2.1.1",
     "@types/node": "18.11.9",
@@ -98,6 +97,7 @@
     "@vitejs/plugin-react": "4.1.0",
     "@vitest/ui": "^0.28.5",
     "autoprefixer": "^10.4.13",
+    "bun-types": "1.0.3",
     "chalk": "^5.2.0",
     "eslint": "8.27.0",
     "eslint-config-next": "12.3.1",

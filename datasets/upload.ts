@@ -9,23 +9,29 @@
 //    aws_secret_access_key = b123
 // Docs: https://docs.aws.amazon.com/sdk-for-javascript/v3/developer-guide/loading-node-credentials-shared.html
 
-const { S3 } = require('@aws-sdk/client-s3')
-const fs = require('fs')
-const path = require('path')
+// We use bun.sh to run this file
+import { S3 } from '@aws-sdk/client-s3'
+import chalk from 'chalk'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const s3 = new S3({
   region: 'eu-central-1',
 })
 
-console.log('INFO: Uploading all files from ./pmtiles to S3 bucket atlas-tiles')
+console.log(
+  chalk.inverse.bold('INFO'),
+  'Uploading all files from ./pmtiles to S3 bucket atlas-tiles',
+)
 
 const pmtilesFiles = fs
   .readdirSync(path.resolve(__dirname, './pmtiles'))
   .filter((file) => path.extname(file) === '.pmtiles')
 
-pmtilesFiles.forEach((file) => {
+for (const file of pmtilesFiles) {
   const Key = file
-  const Body = fs.readFileSync(path.resolve(__dirname, './pmtiles', file))
+  const bunFile = Bun.file(path.resolve(__dirname, './pmtiles', file))
+  const Body = (await bunFile.arrayBuffer()) as any
   const ContentType = 'application/x-protobuf'
 
   s3.putObject({ Bucket: 'atlas-tiles', Key, Body, ContentType }, (err, _data) => {
@@ -35,7 +41,8 @@ pmtilesFiles.forEach((file) => {
     }
     const previewUrl = `https://atlas-tiles.s3.eu-central-1.amazonaws.com/${file}`
     console.log(
-      `INFO: Test uploaded file at https://protomaps.github.io/PMTiles/?url=${previewUrl}`
+      chalk.inverse.bold('INFO'),
+      `Test-URL: https://protomaps.github.io/PMTiles/?url=${previewUrl}`,
     )
   })
-})
+}
