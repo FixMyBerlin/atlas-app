@@ -14,14 +14,15 @@ export const LayoutMap: React.FC<Props> = ({ children }) => {
   return (
     <>
       <Head>
-        <html lang="de" className="fixed overflow-hidden" />
         <body className="fixed overflow-hidden" />
       </Head>
       <MetaTags noindex />
+
       <div className="flex h-screen flex-col">
         <HeaderRegionen />
         <main className="flex-grow">{children}</main>
       </div>
+
       <TailwindResponsiveHelper />
     </>
   )
