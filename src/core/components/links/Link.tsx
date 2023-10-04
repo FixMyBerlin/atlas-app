@@ -6,8 +6,8 @@ import { UrlObject } from 'url'
 
 export type LinkProps = {
   href: RouteUrlObject | UrlObject | string
-  classNameOverwrite?: string
   className?: string
+  classNameOverwrite?: string
   blank?: boolean
   external?: boolean
   button?: boolean
@@ -26,8 +26,8 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
   (
     {
       href,
-      classNameOverwrite,
       className,
+      classNameOverwrite,
       blank = false,
       external = false,
       button = false,
@@ -38,7 +38,7 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
     },
     ref,
   ) => {
-    const classes = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
+    const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
     // external link
     if (typeof href === 'string') {
@@ -46,7 +46,7 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
         <a
           ref={ref}
           href={href}
-          className={classes}
+          className={classNames}
           rel="noopener noreferrer"
           {...{ target: blank ? '_blank' : undefined }}
           {...props}
@@ -60,7 +60,7 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
       <NextLink
         href={href}
         ref={ref}
-        className={classes}
+        className={classNames}
         {...props}
         {...{ target: blank ? '_blank' : undefined }}
       >

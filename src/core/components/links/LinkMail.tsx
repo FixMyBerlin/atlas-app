@@ -3,6 +3,7 @@ import { LinkProps, buttonStyles, linkStyles } from './Link'
 
 type Props = {
   className?: string
+  classNameOverwrite?: string
   mailto?: string
   subject?: string
   body?: string
@@ -12,6 +13,7 @@ type Props = {
 
 export const LinkMail: React.FC<Props> = ({
   className,
+  classNameOverwrite,
   mailto,
   subject,
   body,
@@ -19,7 +21,7 @@ export const LinkMail: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const classes = clsx(className || (button ? buttonStyles : linkStyles))
+  const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   const url = new URL(`mailto:${mailto || children}`)
   if (subject) {
@@ -30,7 +32,7 @@ export const LinkMail: React.FC<Props> = ({
   }
 
   return (
-    <a href={url.href} className={classes} {...props}>
+    <a href={url.href} className={classNames} {...props}>
       {children}
     </a>
   )
