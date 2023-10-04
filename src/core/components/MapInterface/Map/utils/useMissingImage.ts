@@ -19,9 +19,9 @@ export const useMissingImage = (map: MapRef | undefined) => {
       }
 
       // Docs https://maplibre.org/maplibre-gl-js-docs/api/map/#map#loadimage
-      map.loadImage(imageSrc, (error, image) => {
+      map.loadImage(imageSrc.src, (error, image) => {
         if (error) {
-          console.warn('useMissingImage ERROR:', imageId, imageSrc, error)
+          console.warn('useMissingImage ERROR:', imageId, imageSrc.src, error)
           return
         }
         if (!image) return
