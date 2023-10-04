@@ -11,6 +11,8 @@ require("transformations")
 require("IntoExcludeTable")
 require("CopyTags")
 require("RoadWidth")
+require("ToMarkdownList")
+require("BikelanesTodos")
 
 local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
@@ -109,7 +111,7 @@ function Bikelanes(object)
         if tags[freshTag] then
           cycleway.smoothness_age = AgeInDays(ParseDate(tags[freshTag]))
         end
-      
+
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
@@ -125,6 +127,8 @@ function Bikelanes(object)
         -- Hotfix export which requires the category to be part of the tags
         -- Keeping the category column as well which pg_tileserf should resolve somehow…
         cycleway.category = category
+
+        cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         bikelanesTable:insert({
           category = category,
