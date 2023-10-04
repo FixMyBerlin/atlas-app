@@ -1,4 +1,6 @@
 import { BlitzPage } from '@blitzjs/next'
+import { LinkMail } from '@components/links/LinkMail'
+import { LinkTel } from '@components/links/LinkTel'
 import { Link } from 'src/core/components/links'
 import { TableOfContents, TocHashLink } from 'src/core/components/pages/TableOfContents'
 import { LayoutPage } from 'src/core/layouts/LayoutPage'
@@ -55,9 +57,9 @@ const Datenschutz: BlitzPage = () => {
         <br />
         12099 Berlin
         <br />
-        E-Mail: <Link to="hello@fixmycity.de">hello@fixmycity.de</Link>
+        E-Mail: <LinkMail>hello@fixmycity.de</LinkMail>
         <br />
-        Telefon: <Link to="tel:+403054908665">+40 30 549 08 665</Link>
+        Telefon: <LinkTel tel="+403054908665">+40 30 549 08 665</LinkTel>
       </p>
       <h3>Datenschutzbeauftragter</h3>
       <p>Unsere Datenschutzbeauftragten erreichen Sie wie folgt:</p>
@@ -69,9 +71,9 @@ const Datenschutz: BlitzPage = () => {
         Steinhöft 9<br />
         20459 Hamburg
         <br />
-        E-Mail: <Link to="dsb@secjur.com">dsb@secjur.com</Link>
+        E-Mail: <LinkMail>dsb@secjur.com</LinkMail>
         <br />
-        Telefon: <Link to="tel:+4940228599520">+49 40 228 599 520</Link>
+        Telefon: <LinkTel tel="+4940228599520">+49 40 228 599 520</LinkTel>
       </p>
       <p>
         Sie können sich jederzeit bei allen Fragen und Anregungen zum Datenschutz sowie zur Ausübung
@@ -236,7 +238,7 @@ const Datenschutz: BlitzPage = () => {
       <p>
         Google Cloud EMEA Limited, 70 Sir John Rogerson’s Quay, Dublin 2, Irland. Weiter
         Informationen erhalten Sie{' '}
-        <Link external blank to="https://policies.google.com/privacy?hl=de">
+        <Link blank href="https://policies.google.com/privacy?hl=de">
           in der Datenschutzerklärung von Google
         </Link>
         .
@@ -395,10 +397,7 @@ const Datenschutz: BlitzPage = () => {
             <td>USA</td>
             <td>Standarddatenschutzklauseln</td>
             <td>
-              <Link
-                to="https://www.mailjet.com/de/rechtliches/av-vertrag/"
-                external
-              >
+              <Link href="https://www.mailjet.com/de/rechtliches/av-vertrag/">
                 mailjet.com/de/rechtliches/av-vertrag
               </Link>
             </td>

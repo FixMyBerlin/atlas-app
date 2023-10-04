@@ -53,7 +53,6 @@ export const HomePageLive = () => {
           {callouts.map((callout) => (
             <Link
               href={callout.href}
-              external={callout.href.startsWith('http')}
               key={callout.name}
               classNameOverwrite="block group relative lg:max-w-[26rem]"
             >

@@ -1,10 +1,12 @@
 import { BlitzPage } from '@blitzjs/auth'
+import { LinkMail } from '@components/links/LinkMail'
+import { LinkTel } from '@components/links/LinkTel'
 import Image from 'next/image'
 import { Link } from 'src/core/components/links'
 import { LayoutPage } from 'src/core/layouts/LayoutPage'
 import { MetaTags } from 'src/core/layouts/MetaTags'
-import imageMfund from 'src/kontakt/assets/logo-mfund.png'
 import imageBmdv from 'src/kontakt/assets/logo-bmdv-foerderung.svg'
+import imageMfund from 'src/kontakt/assets/logo-mfund.png'
 
 const Kontakt: BlitzPage = () => {
   return (
@@ -22,11 +24,9 @@ const Kontakt: BlitzPage = () => {
         <br />
         12099 Berlin
         <br />
-        <Link to="feedback@fixmycity.de" mailSubject="Feedback Radverkehrsatlas">
-          feedback@fixmycity.de
-        </Link>
+        <LinkMail subject="Feedback Radverkehrsatlas">feedback@fixmycity.de</LinkMail>
         <br />
-        Telefon: <Link to="tel:+49-30-54908665">+49-30-54908665</Link>
+        Telefon: <LinkTel>+49-30-54908665</LinkTel>
         <br />
       </p>
       <p>Gesellschafter: Boris Hekele und Heiko Rintelen</p>
@@ -40,27 +40,25 @@ const Kontakt: BlitzPage = () => {
       <h2>Feedback &amp; Kontakt</h2>
       <p>
         Wir freuen uns über Kommentare Anregungen und Unterstützung an{' '}
-        <Link to="feedback@fixmycity.de" mailSubject="Feedback Radverkehrsatlas">
-          feedback@fixmycity.de
-        </Link>
+        <LinkMail subject="Feedback Radverkehrsatlas">feedback@fixmycity.de</LinkMail>
       </p>
       <p>
         Du findest uns auch auf{' '}
-        <Link external blank to="https://twitter.com/fixmyberlin">
+        <Link blank href="https://twitter.com/fixmyberlin">
           Twitter
         </Link>{' '}
         und{' '}
-        <Link external blank to="https://www.linkedin.com/company/fixmycity">
+        <Link blank href="https://www.linkedin.com/company/fixmycity">
           LinkedIn
         </Link>
       </p>
       <p>
         Sofern du Bugs oder Verbesserungsvorschläge hast, gib uns gerne{' '}
-        <Link external blank to="https://github.com/FixMyBerlin/atlas-app">
+        <Link blank href="https://github.com/FixMyBerlin/atlas-app">
           auf GitHub Feedback
         </Link>
         . Du kannst den Source Code auch weiterentwickeln. Lizenz:{' '}
-        <Link to="https://github.com/FixMyBerlin/atlas-app/blob/develop/LICENSE.md" external blank>
+        <Link href="https://github.com/FixMyBerlin/atlas-app/blob/develop/LICENSE.md" blank>
           AGPL v3
         </Link>
         .
@@ -68,7 +66,7 @@ const Kontakt: BlitzPage = () => {
       <h2>Urheberrechte Fotos</h2>
       <p>
         Wenn nicht anders angegeben stehen die auf dieser Website verwendeten Fotos unter{' '}
-        <Link external blank to="https://creativecommons.org/licenses/by-nc/4.0/">
+        <Link blank href="https://creativecommons.org/licenses/by-nc/4.0/">
           Creative Commons-Lizenz BY-NC 4.0
         </Link>
         .
@@ -80,22 +78,17 @@ const Kontakt: BlitzPage = () => {
         Digitales und Verkehr (BMDV) gefördert. <br />
         Förderkennzeichen 19F1096A,{' '}
         <Link
-          external
           blank
-          to="https://www.bmdv.bund.de/SharedDocs/DE/Artikel/DG/mfund-projekte/osm-rvp.html"
+          href="https://www.bmdv.bund.de/SharedDocs/DE/Artikel/DG/mfund-projekte/osm-rvp.html"
         >
           <strong>Projektsteckbrief</strong>
         </Link>
       </p>
       <div className="grid grid-cols-2 gap-2">
-        <Link to="https://bmdv.bund.de/" external blank>
+        <Link blank href="https://bmdv.bund.de/">
           <Image src={imageBmdv} alt="Förderung durch BMDV" className="w-40" />
         </Link>
-        <Link
-          to="https://www.bmvi.de/DE/Themen/Digitales/mFund/Ueberblick/ueberblick.html"
-          external
-          blank
-        >
+        <Link blank href="https://www.bmvi.de/DE/Themen/Digitales/mFund/Ueberblick/ueberblick.html">
           <Image src={imageMfund} alt="Förderung durch den mFund" className="w-40" />
         </Link>
       </div>

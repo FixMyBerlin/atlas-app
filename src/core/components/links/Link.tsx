@@ -9,7 +9,6 @@ export type LinkProps = {
   className?: string
   classNameOverwrite?: string
   blank?: boolean
-  external?: boolean
   button?: boolean
   mailSubject?: string
   mailBody?: string
@@ -29,7 +28,6 @@ export const Link: React.FC<LinkProps> = forwardRef<HTMLAnchorElement, LinkProps
       className,
       classNameOverwrite,
       blank = false,
-      external = false,
       button = false,
       mailSubject,
       mailBody,

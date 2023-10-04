@@ -19,7 +19,7 @@ export default function Page404() {
                 Leider konnten wir diese Seite nicht finden.
               </p>
               <div className="mt-6">
-                <Link to="/">
+                <Link href="/">
                   Zur Startseite
                   <span aria-hidden="true"> &rarr;</span>
                 </Link>
