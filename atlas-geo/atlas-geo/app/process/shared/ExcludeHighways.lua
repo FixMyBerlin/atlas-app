@@ -29,13 +29,6 @@ function ExcludeHighways(tags)
     return true, "Excluded by `informal=yes`"
   end
 
-  if tags['mtb:scale'] then
-    return true, "Excluded since `mtb:scale` indicates a special interest path"
-  end
-
-  if tags.tracktype == "grade5" then
-    return true, "Excluded since `tracktype=grade5` indicates a special interest path"
-  end
 
   -- Skip all unwanted `highway=service + service=<value>` values
   -- The key can have random values, we mainly want to skip
