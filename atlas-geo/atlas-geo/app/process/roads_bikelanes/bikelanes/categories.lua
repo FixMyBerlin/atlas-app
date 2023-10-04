@@ -234,6 +234,17 @@ local function sharedBusLane(tags)
   end
 end
 
+-- Explicit tagging as "Mischverkehr" without any traffic sign or road marking
+-- In our style, we ignore this tagging and do not assign an explicit category.
+-- The default for highways is, that they are shared unless forbidden.
+-- This is an explicit category so that it is not rendered as "needsClarification"
+-- Example https://www.openstreetmap.org/way/35396829/history
+local function sharedLane(tags)
+  if tags.cycleway == "shared" then
+    return "explicitSharedLaneButNoSignage"
+  end
+end
+
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local function needsClarification(tags)
@@ -267,6 +278,7 @@ function CategorizeBikelane(tags)
     livingStreet,
     bicycleRoad,
     sharedBusLane,
+    sharedLane,
     pedestrianAreaBicycleYes,
     sharedMotorVehicleLane,
     -- Detailed tagging cases
