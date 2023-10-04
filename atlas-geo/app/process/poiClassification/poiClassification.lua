@@ -24,7 +24,7 @@ local table = osm2pgsql.define_table({
 -- * @desc Guards extracted to be used inside osm2pgsql.process_*
 -- * @returns `true` whenever we want to exit processing the given data
 local function ExitProcessing(object)
-  if not (object.tags.amenity or object.tags.shop or object.tags.tourism) then
+  if not (object.tags.amenity or object.tags.shop or object.tags.tourism or object.tags.leisure) then
     return true
   end
 
@@ -33,11 +33,12 @@ local function ExitProcessing(object)
     return true
   end
 
-  -- We allow all shop=* but heavily filter amenity, tourism
+  -- We allow all shop=* but heavily filter amenity, tourism, leisure
   local allowed_values = Set(ExtractKeys(ShoppingAllowedListWithCategories))
   if object.tags.shop
       or allowed_values[object.tags.amenity]
       or allowed_values[object.tags.tourism]
+      or allowed_values[object.tags.leisure]
   then
     -- Special case: For https://wiki.openstreetmap.org/wiki/Tag:tourism=information
     -- only allow some values
@@ -69,6 +70,10 @@ local function processTags(tags)
   if tags.tourism then
     tags.category = ShoppingAllowedListWithCategories[tags.tourism]
     tags.type = "tourism-" .. tags.tourism
+  end
+  if tags.leisure then
+    tags.category = ShoppingAllowedListWithCategories[tags.leisure]
+    tags.type = "leisure-" .. tags.leisure
   end
 
   -- This part was previously a separate dataset "education"
