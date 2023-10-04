@@ -114,9 +114,9 @@ function Bikelanes(object)
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
           if tags.bicycle_road == 'yes' then
-            tags.oneway = 'implicit_no'
+            cycleway.oneway = 'implicit_no'
           else
-            tags.oneway = 'implict_yes'
+            cycleway.oneway = 'implict_yes'
           end
         end
 
