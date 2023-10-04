@@ -13,9 +13,6 @@ type Props = {
 export const LayoutMap: React.FC<Props> = ({ children }) => {
   return (
     <>
-      <Head>
-        <body className="fixed overflow-hidden" />
-      </Head>
       <MetaTags noindex />
 
       <div className="flex h-screen flex-col">

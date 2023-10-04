@@ -11,7 +11,7 @@ class MyDocument extends Document {
     return (
       <Html lang="de" className="h-full">
         <Head />
-        {/* Don't use <body className> since our layout expect some classes to be present always (which are in index.css) and other applied conditionally in LayoutMap.tsx. It looks like there is no easy way to merge classes using next/head. */}
+        {/* Remidner: With next/head we cannot add className via <html className> or <body className>. They will error with the false "next-head-count is missing" message */}
         <body>
           <Main />
           <NextScript />
