@@ -3,18 +3,14 @@
 @tailwind utilities;
 
 @layer base {
-  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L11 and LaouytMap.tsx */
-  html {
-    @apply h-full;
-  }
-
-  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L32 and LaouytMap.tsx */
+  /* Source: https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/pages/_document.js#L32 */
+  /* See also src/pages/_document.tsx */
   body {
     @apply flex min-h-full w-full;
-    @apply text-gray-800;
+    @apply text-gray-800 antialiased;
   }
 
-  /* https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/css/main.css#L14-L19 */
+  /* Source: https://github.com/tailwindlabs/play.tailwindcss.com/blob/master/src/css/main.css#L14-L19 */
   #__next {
     @apply flex w-full flex-none flex-col;
   }
