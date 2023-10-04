@@ -237,9 +237,8 @@ end
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local function needsClarification(tags)
-  local result = tags.highway == "cycleway"
-  result = result or (tags.highway == "path" and tags.bicycle == "designated")
-  if result then
+  if tags.highway == "cycleway"
+      or (tags.highway == "path" and tags.bicycle == "designated") then
     return "needsClarification"
   end
 end
