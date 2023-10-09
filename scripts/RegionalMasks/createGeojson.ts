@@ -13,8 +13,10 @@ import {
 import chalk from 'chalk'
 import path from 'node:path'
 import { z } from 'zod'
-import { apiBaseUrl } from '../../src/core/utils/getApiUrl'
-import { additionalRegionAttributes } from '../../src/regions/components/additionalRegionAttributes.const'
+import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { apiBaseUrl } from 'src/core/utils'
+
+console.log(chalk.inverse.bold('START'), __filename)
 
 const geojsonPolygon = z.object({
   type: z.literal('Polygon'),
@@ -42,10 +44,10 @@ const handleError = (error: (string | Record<string, string | number>)[]) => {
   console.error(chalk.bgYellow.black(...error))
 }
 
-const saveErrors = () => {
+const saveErrors = async () => {
   const fileName = 'error.log'
   const filePath = path.resolve(__dirname, fileName)
-  Bun.write(filePath, JSON.stringify(errorLog, undefined, 2))
+  await Bun.write(filePath, JSON.stringify(errorLog, undefined, 2))
 }
 
 const downloadGeoJson = async (idsString: string) => {
@@ -60,13 +62,12 @@ const downloadGeoJson = async (idsString: string) => {
       url.searchParams.append('ids', String(id))
     })
 
-  console.info('\n\n', chalk.inverse.bold('INFO'), 'downloading', url.href)
+  console.info(chalk.inverse.bold('DOWNLOAD'), url.href)
   const response = await fetch(url.href)
 
   try {
     const data = await response.json()
     const geoJson = geojsonInputSchema.parse(data)
-    console.info('\n\n', chalk.inverse.bold('INFO'), 'download succeeded for', url.href)
     return geoJson
   } catch (error) {
     handleError([
@@ -133,12 +134,12 @@ for (const region of additionalRegionAttributes) {
     collectedFeatures.push(mask)
 
     // Store separate files for debugging
-    Bun.write(
+    await Bun.write(
       path.resolve(__dirname, `./geojson/${regionName}-regional-mask-for-debugging.geojson`),
       JSON.stringify(boundaryFeature),
     )
     // And also store the bbox and centerOfMass for use in regions.const.ts
-    Bun.write(
+    await Bun.write(
       path.resolve(__dirname, `./geojson/${regionName}-bbox-center-for-reference.geojson`),
       JSON.stringify(
         point(centerOfMass(boundaryFeature).geometry.coordinates, {
@@ -152,7 +153,7 @@ for (const region of additionalRegionAttributes) {
 // 2. Save them locally to be picked up by createMbtiles
 const collectedFeatureCollection = featureCollection(collectedFeatures)
 const boundariesAndMaskGeojson = path.resolve(__dirname, './geojson/atlas-regional-masks.geojson')
-Bun.write(boundariesAndMaskGeojson, JSON.stringify(collectedFeatureCollection))
+await Bun.write(boundariesAndMaskGeojson, JSON.stringify(collectedFeatureCollection))
 
-saveErrors()
+await saveErrors()
 console.info(chalk.inverse.bold('FINISHED createGeojson'))

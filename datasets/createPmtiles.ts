@@ -6,6 +6,8 @@ import chalk from 'chalk'
 import fs from 'node:fs'
 import path from 'node:path'
 
+console.info(chalk.inverse.bold('START'), __filename)
+
 const geojsonFiles = fs
   .readdirSync(path.resolve(__dirname, 'geojson'))
   .filter((file) => path.extname(file) === '.geojson')

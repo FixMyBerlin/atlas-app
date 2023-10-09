@@ -20,7 +20,8 @@ const s3 = new S3({
 })
 
 console.log(
-  chalk.inverse.bold('INFO'),
+  chalk.inverse.bold('START'),
+  __filename,
   'Uploading all files from ./pmtiles to S3 bucket atlas-tiles',
 )
 

@@ -1,8 +1,11 @@
 // Write a types.ts file that describes our datasets
 
 // We use bun.sh to run this file
+import chalk from 'chalk'
 import fs from 'node:fs'
 import path from 'node:path'
+
+console.info(chalk.inverse.bold('START'), __filename)
 
 const pmtilesFiles = fs
   .readdirSync(path.resolve(__dirname, './pmtiles'))
