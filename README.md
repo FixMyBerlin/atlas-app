@@ -1,6 +1,6 @@
 <div align="center">
   <!-- <img src="src/images/" height="80" /> -->
-  <h1 align="center"><a href="https://radverkehtsatlas.de">Radverkehrsatlas.de</a></h1>
+  <h1 align="center"><a href="https://radverkehrsatlas.de/">radverkehrsatlas.de</a></h1>
   <h3><strong>(!)</strong> This project ist still in development</h3>
 </div>
 
