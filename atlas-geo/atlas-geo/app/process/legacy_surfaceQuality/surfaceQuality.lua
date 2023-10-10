@@ -9,8 +9,8 @@ require("IntoExcludeTable")
 require("IsFresh")
 require("JoinSets")
 require("SurfaceDirect")
-require("SmoothnessDirect")
-require("SmoothnessFromSurface")
+require("NormalizeSmoothness")
+require("DeriveSmoothness")
 require("Metadata")
 require("Set")
 
@@ -68,9 +68,15 @@ function osm2pgsql.process_way(object)
   -- 1. `smoothess` tag
   -- 2. `smoothess` extrapolated from surface data
   local todo = nil
-  local smoothness, smoothness_source, smoothness_confidence = SmoothnessDirect(tags.smoothness)
+  local smoothness, smoothness_source, smoothness_confidence = NormalizeSmoothness(tags.smoothness)
   if smoothness == nil then
-    smoothness, smoothness_source, smoothness_confidence, todo = SmoothnessFromSurface(tags.surface)
+    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromSurface(tags.surface)
+  end
+  if smoothness == nil then
+    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromTrackType(tags.tracktype)
+  end
+  if smoothness == nil then
+    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromMTBScale(tags["mtb:scale"])
   end
 
   -- all tags that are shown on the application
