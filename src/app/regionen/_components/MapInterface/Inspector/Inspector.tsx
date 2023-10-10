@@ -1,16 +1,14 @@
 'use client'
 
-import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import React from 'react'
-import { ErrorRestartMap } from '../ErrorRestartMap/ErrorRestartMap'
+import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
+import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
+import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureSource } from './InspectorFeatureSource'
 import { InspectorHeader } from './InspectorHeader'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
-import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
-import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
-import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 
 export type InspectorDataFeature = {
   sourceKey: string
@@ -41,60 +39,58 @@ export const Inspector: React.FC = () => {
 
   return (
     <div className="absolute bottom-0 right-0 top-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
-      <Sentry.ErrorBoundary fallback={<ErrorRestartMap />}>
-        <InspectorHeader
-          count={uniqueInspectorFeatures.length}
-          handleClose={() => resetInspector()}
-        />
+      <InspectorHeader
+        count={uniqueInspectorFeatures.length}
+        handleClose={() => resetInspector()}
+      />
 
-        {uniqueInspectorFeatures.map((inspectObject) => {
-          const sourceKey = String(inspectObject.layer.source) // Format: `theme:lit--source:tarmac_lit--topic:lit`
-          if (!sourceKey) return null
+      {uniqueInspectorFeatures.map((inspectObject) => {
+        const sourceKey = String(inspectObject.layer.source) // Format: `theme:lit--source:tarmac_lit--topic:lit`
+        if (!sourceKey) return null
 
-          // Inspector-Block for Notes
-          if (inspectObject.source === 'osm-notes') {
-            return (
-              <InspectorFeatureOsmNote
-                key={`osm-note-${inspectObject?.properties?.id}`}
-                properties={inspectObject.properties}
-              />
-            )
-          }
-
-          // Inspector-Block for Datasets
-          const isDataset = sourcesDatasets.some(
-            (d) => d.id === extractDataIdIdFromDataKey(sourceKey),
-          )
-          if (isDataset) {
-            return (
-              <InspectorFeatureDataset
-                key={createInspectorFeatureKey(inspectObject)}
-                sourceKey={sourceKey}
-                properties={inspectObject.properties}
-                geometry={inspectObject.geometry}
-              />
-            )
-          }
-
-          // Inspector-Block for Features
+        // Inspector-Block for Notes
+        if (inspectObject.source === 'osm-notes') {
           return (
-            <InspectorFeatureSource
+            <InspectorFeatureOsmNote
+              key={`osm-note-${inspectObject?.properties?.id}`}
+              properties={inspectObject.properties}
+            />
+          )
+        }
+
+        // Inspector-Block for Datasets
+        const isDataset = sourcesDatasets.some(
+          (d) => d.id === extractDataIdIdFromDataKey(sourceKey),
+        )
+        if (isDataset) {
+          return (
+            <InspectorFeatureDataset
               key={createInspectorFeatureKey(inspectObject)}
               sourceKey={sourceKey}
               properties={inspectObject.properties}
               geometry={inspectObject.geometry}
             />
           )
-        })}
+        }
 
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
+        // Inspector-Block for Features
+        return (
+          <InspectorFeatureSource
+            key={createInspectorFeatureKey(inspectObject)}
+            sourceKey={sourceKey}
+            properties={inspectObject.properties}
+            geometry={inspectObject.geometry}
+          />
+        )
+      })}
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
             .maplibregl-ctrl-top-right { right: 35rem }
           `,
-          }}
-        />
-      </Sentry.ErrorBoundary>
+        }}
+      />
     </div>
   )
 }

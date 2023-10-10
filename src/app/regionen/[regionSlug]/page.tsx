@@ -1,17 +1,14 @@
 import { useQuery } from '@blitzjs/rpc'
-import * as Sentry from '@sentry/react' // https://docs.sentry.io/platforms/javascript/guides/react/features/error-boundary/
 import { Metadata } from 'next'
 import { useMemo, useState } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
-import { isDev } from 'src/app/_components/utils/isEnv'
-import { ErrorRestartMap } from 'src/app/regionen/_components/MapInterface/ErrorRestartMap/ErrorRestartMap'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { useMapParam } from 'src/app/regionen/_components/useQueryState/useMapParam'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
+import invariant from 'tiny-invariant'
 import { MapInterface } from '../_components/MapInterface/MapInterface'
 import { createMapRegionConfig } from '../_components/MapInterface/mapStateConfig/createMapRegionConfig'
 import { initializeMapRegionConfig } from '../_components/MapInterface/mapStateConfig/initializeMapRegionConfig'
-import invariant from 'tiny-invariant'
 
 export const metadata: Metadata = {
   title: 'Radverkehrsatlas Region-Karte', // TODO MIGRATION ADD NAME
@@ -61,28 +58,7 @@ export default function ShowRegionPage() {
 
   return (
     <>
-      {/* <MetaTags noindex title={`Radverkehrsatlas (beta) ${region.name}`} /> */}
-      <Sentry.ErrorBoundary
-        onError={() => setInitializeAndReset(true)}
-        fallback={
-          <div className="flex h-full w-full items-center justify-center">
-            <div>
-              <ErrorRestartMap />
-              {isDev && (
-                <div className="mt-5 rounded bg-pink-300 p-1">
-                  Do a reload intead. Changing the config breaks live reloading.
-                  <br />
-                  But our usecase is page (re)load, so that is fine.
-                  <br />
-                  See <code>PageRegionMap.tsx</code> for more.
-                </div>
-              )}
-            </div>
-          </div>
-        }
-      >
-        <MapInterface />
-      </Sentry.ErrorBoundary>
+      <MapInterface />
     </>
   )
 }
