@@ -14,7 +14,7 @@ import chalk from 'chalk'
 import path from 'node:path'
 import { z } from 'zod'
 import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { apiBaseUrl } from 'src/core/utils'
+import { apiBaseUrl } from 'src/app/_components/utils/getApiUrl'
 
 console.log(chalk.inverse.bold('START'), __filename)
 

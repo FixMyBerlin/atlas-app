@@ -1,0 +1,66 @@
+'use client'
+
+import { usePaginatedQuery } from '@blitzjs/rpc'
+import { Metadata } from 'next'
+import { useRouter } from 'next/router'
+import { Markdown } from 'src/app/_components/text/Markdown'
+import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
+
+export const metadata: Metadata = {
+  title: 'ADMIN Verifizierungen',
+}
+
+const ITEMS_PER_PAGE = 100
+
+export default function AdminBikelaneVerificationsPage() {
+  const router = useRouter()
+  const page = Number(router.query.page) || 0
+  const [{ verifications, hasMore }] = usePaginatedQuery(getBikelaneVerifications, {
+    skip: ITEMS_PER_PAGE * page,
+    take: ITEMS_PER_PAGE,
+  })
+
+  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
+
+  return (
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <td>id</td>
+            <td>osm_type</td>
+            <td>osm_id</td>
+            <td>verified_at</td>
+            <td>verified_by</td>
+            <td>comment</td>
+          </tr>
+        </thead>
+        <tbody>
+          {verifications.map((row) => (
+            <tr key={row.id}>
+              <td>{row.id}</td>
+              <td>{row.osm_type}</td>
+              <td>{Number(row.osm_id)}</td>
+              <td>{row.verified_at.toLocaleDateString()}</td>
+              <td>{Number(row.verified_by)}</td>
+              <td>{row.verified}</td>
+              <td>
+                <Markdown markdown={row.comment} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <button disabled={page === 0} onClick={goToPreviousPage}>
+        Previous
+      </button>
+      <button disabled={!hasMore} onClick={goToNextPage}>
+        Next
+      </button>
+    </div>
+  )
+}
+
+AdminBikelaneVerificationsPage.authenticate = true

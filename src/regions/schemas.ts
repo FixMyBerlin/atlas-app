@@ -9,10 +9,10 @@ export const CreateRegionSchema = z.object({
 
 export const UpdateRegionSchema = CreateRegionSchema.merge(
   z.object({
-    id: z.number(),
+    slug: z.string(),
   }),
 )
 
 export const DeleteRegionSchema = z.object({
-  id: z.number(),
+  slug: z.string(),
 })

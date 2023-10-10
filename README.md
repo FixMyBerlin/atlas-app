@@ -40,6 +40,13 @@ npm run build
 
 If you find any bugs, feel free to open an issue in this repository.
 
+## NextJS
+
+- Favicons:
+  `icon.svg` https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons
+  Generator for `favicon.ico` https://realfavicongenerator.net/
+
+
 ## License
 
 This project is licensed under the AGPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for more information.

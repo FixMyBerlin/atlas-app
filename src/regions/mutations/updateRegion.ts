@@ -5,8 +5,8 @@ import { UpdateRegionSchema } from '../schemas'
 export default resolver.pipe(
   resolver.zod(UpdateRegionSchema),
   resolver.authorize('ADMIN'),
-  async ({ id, ...data }) => {
-    const region = await db.region.update({ where: { id }, data })
+  async ({ slug, ...data }) => {
+    const region = await db.region.update({ where: { slug }, data })
 
     return region
   },

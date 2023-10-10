@@ -4,8 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/core/components/*"],
-      "@pages/*": ["src/pages/*"]
+      // "@foo/*": ["src/*"],
     },
     "allowJs": true,
     "skipLibCheck": true,
@@ -22,8 +21,13 @@
     "jsx": "preserve",
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
-    "types": ["bun-types"] // We use bun.sh for our scripts
+    "types": ["bun-types"], // We use bun.sh for our scripts
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": ["node_modules", "**/*.e2e.ts", "cypress"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types", ".next/types/**/*.ts"]
 }

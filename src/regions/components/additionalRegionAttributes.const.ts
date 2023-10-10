@@ -1,14 +1,14 @@
-import imageBibi from 'src/home/assets/bibi-logo.svg'
-import imageParking from 'src/home/assets/parking.svg'
-import imageNudafa from 'src/home/assets/nudafa-logo.svg'
-import imageTrTo from 'src/home/assets/trto-logo.png'
+import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
+import imageParking from 'src/app/_components/assets/parking.svg'
+import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
+import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
   MapDataThemeIds,
   themes,
-} from 'src/core/components/MapInterface/mapData/themesMapData/themes.const'
-import { adminIds } from '../../users/components/utils'
-import { SourcesRasterIds } from 'src/core/components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+} from 'src/app/regionen/_components/MapInterface/mapData/themesMapData/themes.const'
+import { SourcesRasterIds } from 'src/app/regionen/_components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
 import { StaticImageData } from 'next/image'
+import { adminIds } from 'src/users/components/utils/usersUtils'
 
 type RegionMap = {
   lat: number

@@ -12,8 +12,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, './src/components/'),
-      '@pages': path.resolve(__dirname, './src/pages/'),
+      // '@foo': path.resolve(__dirname, './src/foo/'),
     },
   },
   test: {

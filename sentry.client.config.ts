@@ -3,7 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
-import { envKey, isDev } from 'src/core/utils'
+import { envKey, isDev } from 'src/app/_components/utils/isEnv'
 
 Sentry.init({
   enabled: !isDev,
