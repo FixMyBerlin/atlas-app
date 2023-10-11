@@ -1,6 +1,5 @@
 'use client'
 
-import { Routes } from '@blitzjs/next'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 import { getApiUrl } from 'src/app/_components/utils/getApiUrl'
@@ -56,7 +55,7 @@ export const DebugStateInteraction = () => {
         <details>
           <summary className="cursor-pointer">Helper</summary>
           <div className="flex flex-col gap-1">
-            <Link href={Routes.ShowRegionPage({ regionSlug })} className="rounded border p-1">
+            <Link href={`/regionen/${regionSlug}`} className="rounded border p-1">
               Reset URL <code>config</code>
             </Link>
           </div>

@@ -5,10 +5,10 @@ import { useMutation } from '@blitzjs/rpc'
 import { assert } from 'blitz'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import resetPassword from 'src/auth/mutations/resetPassword'
-import { ResetPassword } from 'src/auth/schemas'
 import { Form, FORM_ERROR } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
+import resetPassword from 'src/auth/mutations/resetPassword'
+import { ResetPassword } from 'src/auth/schemas'
 
 export default function ResetPasswordPage() {
   const router = useRouter()
@@ -23,7 +23,7 @@ export default function ResetPasswordPage() {
         <div>
           <h2>Password Reset Successfully</h2>
           <p>
-            Go to the <Link href={Routes.Home()}>homepage</Link>
+            Go to the <Link href="/">homepage</Link>
           </p>
         </div>
       ) : (

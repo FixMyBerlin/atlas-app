@@ -1,13 +1,13 @@
 'use client'
 
 import { clsx } from 'clsx'
-import { LinkProps, buttonStyles, linkStyles } from './Link'
+import { buttonStyles, linkStyles } from './Link'
 
 type Props = {
   className?: string
   classNameOverwrite?: string
   tel?: string
-  button?: LinkProps['button']
+  button?: boolean
   children: React.ReactNode
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>
 

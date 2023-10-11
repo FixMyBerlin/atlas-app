@@ -1,6 +1,5 @@
 'use client'
 
-import { Routes } from '@blitzjs/next'
 import { useMutation } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -29,7 +28,7 @@ export default function AdminNewRegionPage() {
           onSubmit={async (values) => {
             try {
               const region = await createRegionMutation(values)
-              await router.push(Routes.ShowRegionPage({ regionSlug: region.slug }))
+              await router.push(`/regionen/${region.slug}`)
             } catch (error: any) {
               console.error(error)
               return {
@@ -40,7 +39,7 @@ export default function AdminNewRegionPage() {
         />
       </Suspense>
       <p>
-        <Link href={Routes.RegionsPage()}>Regions</Link>
+        <Link href="/regionen">Regions</Link>
       </p>
     </>
   )

@@ -1,4 +1,3 @@
-import { Routes } from '@blitzjs/next'
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
 
@@ -10,10 +9,10 @@ export default function AdminDashboard() {
   return (
     <ul>
       <li>
-        <Link href={Routes.AdminRegionsPage()}>Regionen</Link>
+        <Link href="/admin/regions">Regionen</Link>
       </li>
       <li>
-        <Link href={Routes.AdminBikelaneVerificationsPage()}>Verifications</Link>
+        <Link href="/admin/verifications">Verifications</Link>
       </li>
     </ul>
   )

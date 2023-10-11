@@ -1,4 +1,3 @@
-import { Routes } from '@blitzjs/next'
 import { useMutation, usePaginatedQuery } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import { useRouter } from 'next/router'
@@ -26,18 +25,18 @@ export default function AdminRegionsPage() {
               onClick={async () => {
                 if (window.confirm(`${region.name} wirklich unwiderruflich löschen?`)) {
                   await deleteRegionMutation({ slug: region.slug })
-                  await router.push(Routes.AdminRegionsPage())
+                  await router.push('/admin/regions')
                 }
               }}
             >
               Löschen
             </button>
-            <Link href={Routes.AdminEditRegionPage({ regionSlug: region.slug })}>Bearbeiten</Link>
+            <Link href={`/admin/regions/${region.slug}/edit`}>Bearbeiten</Link>
           </li>
         ))}
       </ul>
 
-      <Link href={Routes.AdminNewRegionPage()} button>
+      <Link href="/admin/regions/new" button>
         Neue Region
       </Link>
     </>

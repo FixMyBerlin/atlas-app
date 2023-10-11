@@ -9,7 +9,7 @@ type Props = {
   mailto?: string
   subject?: string
   body?: string
-  button?: LinkProps['button']
+  button?: boolean
   children: React.ReactNode
 } & React.AnchorHTMLAttributes<HTMLAnchorElement>
 

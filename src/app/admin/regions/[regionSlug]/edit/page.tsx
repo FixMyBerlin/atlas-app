@@ -1,4 +1,3 @@
-import { Routes } from '@blitzjs/next'
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -44,7 +43,7 @@ export default function AdminEditRegionPage() {
                 slug: region.slug,
               })
               await setQueryData(updated)
-              await router.push(Routes.ShowRegionPage({ regionSlug: updated.slug }))
+              await router.push(`/regionen/${updated.slug}`)
             } catch (error: any) {
               console.error(error)
               return {
@@ -55,7 +54,7 @@ export default function AdminEditRegionPage() {
         />
       </Suspense>
       <p>
-        <Link href={Routes.RegionsPage()}>Regionen</Link>
+        <Link href="/regionen">Regionen</Link>
       </p>
     </>
   )
