@@ -1,10 +1,12 @@
+'use client'
+
 import { Metadata } from 'next'
 import { PublicRegionList } from './_components/regions/PublicRegionList'
 
-export const metadata: Metadata = {
-  title: 'Radverkehrsatlas Regionenübersicht',
-  robots: 'noindex',
-}
+// export const metadata: Metadata = {
+//   title: 'Radverkehrsatlas Regionenübersicht',
+//   robots: 'noindex',
+// }
 
 export default function RegionsPage() {
   // TODO MIGRATION: Re add list of unpublished Regions based on permissions

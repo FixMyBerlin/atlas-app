@@ -1,5 +1,6 @@
+'use client'
+
 import { useQuery } from '@blitzjs/rpc'
-import { Metadata } from 'next'
 import { useMemo, useState } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
@@ -10,10 +11,10 @@ import { MapInterface } from '../_components/MapInterface/MapInterface'
 import { createMapRegionConfig } from '../_components/MapInterface/mapStateConfig/createMapRegionConfig'
 import { initializeMapRegionConfig } from '../_components/MapInterface/mapStateConfig/initializeMapRegionConfig'
 
-export const metadata: Metadata = {
-  title: 'Radverkehrsatlas Region-Karte', // TODO MIGRATION ADD NAME
-  robots: 'noindex',
-}
+// export const metadata: Metadata = {
+//   title: 'Radverkehrsatlas Region-Karte', // TODO MIGRATION ADD NAME
+//   robots: 'noindex',
+// }
 
 export default function ShowRegionPage() {
   const regionSlug = useRegionSlug()

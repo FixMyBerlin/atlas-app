@@ -1,3 +1,5 @@
+'use client'
+
 import { TailwindResponsiveHelper } from 'src/app/_components/layouts/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import { HeaderRegionen } from '../_components/layouts/Header/HeaderRegionen/HeaderRegionen'
 
@@ -12,7 +14,6 @@ export default function MapLayout({ children }: { children: React.ReactNode }) {
         <HeaderRegionen />
         <main className="flex-grow">{children}</main>
       </div>
-      <TailwindResponsiveHelper />
     </>
   )
 }
