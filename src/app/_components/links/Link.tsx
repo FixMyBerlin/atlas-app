@@ -27,7 +27,6 @@ export function Link<T extends string>({
   const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   if (typeof href === 'string' && href.startsWith('http')) {
-    console.log('external Link')
     return (
       <a
         href={href}
@@ -40,7 +39,7 @@ export function Link<T extends string>({
       </a>
     )
   }
-  console.log('internal Link')
+
   return (
     <NextLink
       // TODO MIGRATION: Why does this error?
