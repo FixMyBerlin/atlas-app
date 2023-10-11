@@ -1,6 +1,6 @@
 'use client'
 
-import { Metadata } from 'next'
+import { Footer } from '../_components/layouts/Footer/Footer'
 import { PublicRegionList } from './_components/regions/PublicRegionList'
 
 // export const metadata: Metadata = {
@@ -28,6 +28,7 @@ export default function RegionsPage() {
           <PageRegionsRegionList regions={unPublishedRegions} />
         </div>
       )} */}
+      <Footer />
     </>
   )
 }
