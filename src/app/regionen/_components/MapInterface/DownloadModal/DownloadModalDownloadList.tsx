@@ -25,23 +25,28 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
             <h3 className="mb-1 text-sm font-bold text-purple-800">{sourceData.export.title}:</h3>
 
             <table className="my-2 text-sm text-gray-500">
-              <tr>
-                <th className="w-24 align-top text-xs font-medium text-gray-900">Beschreibung:</th>
-                <td className="pl-2">{sourceData.export.desc}</td>
-              </tr>
-              <tr>
-                <th className="w-24 align-top text-xs font-medium text-gray-900">Attribution:</th>
-                <td
-                  className="pl-2"
-                  dangerouslySetInnerHTML={{
-                    __html: sourceData.attributionHtml !== 'todo' ? sourceData.attributionHtml : '',
-                  }}
-                ></td>
-              </tr>
-              <tr>
-                <th className="w-24 align-top text-xs font-medium text-gray-900">Lizenz:</th>
-                <td className="pl-2">{sourceData.licence}</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th className="w-24 align-top text-xs font-medium text-gray-900">
+                    Beschreibung:
+                  </th>
+                  <td className="pl-2">{sourceData.export.desc}</td>
+                </tr>
+                <tr>
+                  <th className="w-24 align-top text-xs font-medium text-gray-900">Attribution:</th>
+                  <td
+                    className="pl-2"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        sourceData.attributionHtml !== 'todo' ? sourceData.attributionHtml : '',
+                    }}
+                  ></td>
+                </tr>
+                <tr>
+                  <th className="w-24 align-top text-xs font-medium text-gray-900">Lizenz:</th>
+                  <td className="pl-2">{sourceData.licence}</td>
+                </tr>
+              </tbody>
             </table>
 
             <div className="flex gap-2">
