@@ -4,6 +4,8 @@ import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import Image from 'next/image'
 import { Suspense } from 'react'
+import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
+import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import Tooltip from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { proseClasses } from 'src/app/_components/text/prose'
@@ -12,8 +14,6 @@ import SvgNotesOpen from 'src/app/regionen/_components/MapInterface/mapData/topi
 import { hasPermissionByDisplayName } from '../UserInfo/utils/hasPermission'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
-import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
-import { Spinner } from 'src/app/_components/Spinner/Spinner'
 
 type Comment = {
   date: string

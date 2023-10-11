@@ -5,7 +5,8 @@ import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import React, { Fragment } from 'react'
-import { Link, linkStyles } from 'src/app/_components/links/Link'
+import { Link } from 'src/app/_components/links/Link'
+import { linkStyles } from 'src/app/_components/links/styles'
 import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
 import {
   googleMapsUrlViewport,

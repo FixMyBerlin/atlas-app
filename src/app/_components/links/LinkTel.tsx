@@ -1,7 +1,7 @@
 'use client'
 
 import { clsx } from 'clsx'
-import { buttonStyles, linkStyles } from './Link'
+import { buttonStyles, linkStyles } from './styles'
 
 type Props = {
   className?: string
