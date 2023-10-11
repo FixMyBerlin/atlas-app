@@ -42,3 +42,5 @@ export default function ForgotPasswordPage() {
     </>
   )
 }
+
+ForgotPasswordPage.authenticate = false

@@ -11,7 +11,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <main>{children}</main>
         <Footer />
       </div>
-      <TailwindResponsiveHelper />
     </>
   )
 }

@@ -17,3 +17,5 @@ export default function LoginPage() {
     </>
   )
 }
+
+LoginPage.authenticate = false

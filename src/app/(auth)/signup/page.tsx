@@ -13,3 +13,5 @@ export default function SignupPage() {
     </>
   )
 }
+
+SignupPage.authenticate = false
