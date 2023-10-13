@@ -1,5 +1,3 @@
-'use client'
-
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
@@ -13,20 +11,24 @@ import {
   mapillaryUrlViewport,
   osmUrlViewport,
 } from 'src/app/regionen/_components/MapInterface/Inspector/Tools/osmUrls/osmUrls'
-import { User } from 'src/app/regionen/_components/MapInterface/UserInfo/useUserStore'
 import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'
 import { useMapParam } from 'src/app/regionen/_components/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 
 type Props = {
-  user: User
+  user: {
+    id: number
+    name: string | null
+    email: string
+    role: string
+  }
   hasPermissions: boolean
   onLogout: () => void
 }
 
 export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
   const { toggleShowDebugInfo } = useMapDebugState()
-  const imgSrc = user.avatar ? user.avatar : null
+  const imgSrc = null
 
   const devUrl = getEnvUrl('development')
   const stagingUrl = getEnvUrl('staging')
@@ -69,7 +71,7 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
         <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700">
             <p className="mb-1">
-              <strong>Angemeldet als {user.displayName}</strong>
+              <strong>Angemeldet als {user.email}</strong>
             </p>
             {hasPermissions ? (
               <div className="flex items-center gap-1 text-xs leading-4">
