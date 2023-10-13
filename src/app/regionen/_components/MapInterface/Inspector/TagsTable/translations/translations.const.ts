@@ -254,7 +254,7 @@ export const translations: { [key: string]: string } = {
   'tarmac_lit--title': 'Daten zur Beleuchtung',
   'tarmac_maxspeed--maxspeed_source--key': 'Quelle',
   'tarmac_maxspeed--maxspeed_source=inferred_from_highway': 'Abgeleitet vom `highway`-Tag.',
-  'tarmac_maxspeed--maxspeed_source=maxspeed_tag': 'In OSM erfasst über einen `maxspeed`-Kategorie-Tag.',
+  'tarmac_maxspeed--maxspeed_source=maxspeed_tag': 'In OSM explizit erfasst.',
   'tarmac_maxspeed--maxspeed_source=maxspeed': 'In OSM erfasst als Tag `maxspeed`.',
   'tarmac_maxspeed--maxspeed:backward': 'Spezielle Höchstgeschwindigkeit gegen die Linienrichtung',
   'tarmac_maxspeed--maxspeed:conditional': 'Spezielle Höchstgeschwindigkeit mit Einschränkungen',
