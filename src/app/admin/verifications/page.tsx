@@ -1,16 +1,13 @@
 'use client'
 
 import { usePaginatedQuery } from '@blitzjs/rpc'
-import { Metadata } from 'next'
-import { usePathname } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 
-export const metadata: Metadata = {
-  title: 'ADMIN Verifizierungen',
-}
+// export const metadata: Metadata = {
+//   title: 'ADMIN Verifizierungen',
+// }
 
 const ITEMS_PER_PAGE = 100
 

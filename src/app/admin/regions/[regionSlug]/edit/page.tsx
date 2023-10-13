@@ -1,5 +1,6 @@
+'use client'
+
 import { useMutation, useQuery } from '@blitzjs/rpc'
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
@@ -10,9 +11,9 @@ import updateRegion from 'src/regions/mutations/updateRegion'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
 import { UpdateRegionSchema } from 'src/regions/schemas'
 
-export const metadata: Metadata = {
-  title: 'ADMIN Region bearbeiten',
-}
+// export const metadata: Metadata = {
+//   title: 'ADMIN Region bearbeiten',
+// }
 
 export default function AdminEditRegionPage() {
   const router = useRouter()
