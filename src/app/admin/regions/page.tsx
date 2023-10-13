@@ -1,6 +1,6 @@
 import { useMutation, usePaginatedQuery } from '@blitzjs/rpc'
 import { Metadata } from 'next'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Link } from 'src/app/_components/links/Link'
 import deleteRegion from 'src/regions/mutations/deleteRegion'
 import getRegions from 'src/regions/queries/getRegions'

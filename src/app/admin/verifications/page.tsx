@@ -2,7 +2,9 @@
 
 import { usePaginatedQuery } from '@blitzjs/rpc'
 import { Metadata } from 'next'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 
@@ -14,14 +16,17 @@ const ITEMS_PER_PAGE = 100
 
 export default function AdminBikelaneVerificationsPage() {
   const router = useRouter()
-  const page = Number(router.query.page) || 0
+  const pathname = usePathname()
+  const page = Number(useSearchParams()?.get('page')) || 0
   const [{ verifications, hasMore }] = usePaginatedQuery(getBikelaneVerifications, {
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
   })
 
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
-  const goToNextPage = () => router.push({ query: { page: page + 1 } })
+  // @ts-expect-error same as with the `next` login/page
+  const goToPreviousPage = () => pathname && router.push(`${pathname}?page=${page - 1}`)
+  // @ts-expect-error same as with the `next` login/page
+  const goToNextPage = () => pathname && router.push(`${pathname}?page=${page + 1}`)
 
   return (
     <div>

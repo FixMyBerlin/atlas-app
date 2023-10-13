@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'

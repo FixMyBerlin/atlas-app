@@ -1,18 +1,17 @@
 'use client'
 
-import { Routes } from '@blitzjs/next'
 import { useMutation } from '@blitzjs/rpc'
 import { assert } from 'blitz'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { Form, FORM_ERROR } from 'src/app/_components/forms/Form'
+import { useSearchParams } from 'next/navigation'
+import { FORM_ERROR, Form } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
 import resetPassword from 'src/auth/mutations/resetPassword'
 import { ResetPassword } from 'src/auth/schemas'
 
 export default function ResetPasswordPage() {
-  const router = useRouter()
-  const token = router.query.token?.toString()
+  const searchParams = useSearchParams()
+  const token = String(searchParams?.get('token'))
   const [resetPasswordMutation, { isSuccess }] = useMutation(resetPassword)
 
   return (

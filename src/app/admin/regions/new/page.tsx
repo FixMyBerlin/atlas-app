@@ -3,7 +3,7 @@
 import { useMutation } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { FORM_ERROR, RegionForm } from 'src/app/regionen/_components/regions/RegionForm'
 import createRegion from 'src/regions/mutations/createRegion'
