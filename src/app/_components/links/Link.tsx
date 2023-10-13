@@ -7,7 +7,7 @@ import React from 'react'
 import { buttonStyles, linkStyles } from './styles'
 
 export type LinkProps<T extends string> = {
-  href: Route<T> | URL
+  href: Route<T> | URL | string
   className?: string
   classNameOverwrite?: string
   blank?: boolean

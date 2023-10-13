@@ -1,7 +1,8 @@
 'use client'
 
-import { Link } from 'src/app/_components/links/Link'
 import { clsx } from 'clsx'
+import { Route } from 'next'
+import { Link } from 'src/app/_components/links/Link'
 
 const baseStyles = {
   solid:
@@ -26,22 +27,22 @@ const variantStyles = {
   },
 }
 
-type Props = {
+type Props<T extends string> = {
   variant?: 'solid' | 'outline'
   color?: 'slate' | 'white'
   className?: string
-  href: string
+  href: Route<T> | URL
   children: React.ReactNode
 }
 
-export const Button: React.FC<Props> = ({
+export function Button<T extends string>({
   variant = 'solid',
   color = 'slate',
   className,
   href,
   children,
   ...props
-}) => {
+}: Props<T>) {
   className = clsx(baseStyles[variant], variantStyles[variant][color], className)
 
   return href ? (
