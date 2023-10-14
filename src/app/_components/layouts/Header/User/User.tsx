@@ -4,6 +4,7 @@ import React, { useCallback, useEffect } from 'react'
 // @ts-ignore but it works
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { UserIcon } from '@heroicons/react/24/outline'
+// @ts-expect-error TODO hwy is this… `Module '"osm-auth"' has no exported member 'osmAuth'.ts(2305)`
 import { osmAuth } from 'osm-auth'
 import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 import { hasPermission } from 'src/app/regionen/_components/MapInterface/UserInfo/utils/hasPermission'
