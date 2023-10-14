@@ -166,15 +166,15 @@ end
 -- Case: Crossing
 --    Examples https://github.com/FixMyBerlin/atlas-app/issues/23
 local function crossing(tags)
-  local result = tags.highway == "cycleway" and tags.cycleway == "crossing"
-  result = result or
-      tags.highway == "path" and tags.path == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-  result = result or
-      tags.highway == "footway" and tags.footway == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-
-  if result then
+  if tags.highway == "cycleway" and tags.cycleway == "crossing" then
+    return "crossing"
+  end
+  if tags.highway == "path" and tags.path == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
+    return "crossing"
+  end
+  if tags.highway == "footway" and tags.footway == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
     return "crossing"
   end
 end
