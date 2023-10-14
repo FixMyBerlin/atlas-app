@@ -22,16 +22,10 @@ export const getTopicData = (topicId: TopicIds | undefined) => {
 }
 
 export const getStyleData = (
-  topicInput: TopicIds | MapDataTopic | undefined,
+  topicData: MapDataTopic | undefined,
   styleId: TopicStyleIds | undefined,
 ) => {
-  let styleData = undefined
-  if (typeof topicInput === 'string') {
-    const topicData = getTopicData(topicInput)
-    styleData = topicData?.styles.find((s) => s.id === styleId) as MapDataStyle // TODO improve types, likely changing the if-statement to something like "if 'id' in topicInput" to make it easier for TS to infer the types; we should also try to remove the 'undefined' more ore lesse everwhere
-  } else {
-    styleData = topicInput?.styles.find((s: MapDataStyle) => s.id === styleId) as MapDataStyle
-  }
+  const styleData = topicData?.styles.find((s) => s.id === styleId)
   invariant(styleData, `getStyleData: styleData for ${styleId} missing`)
   return styleData
 }

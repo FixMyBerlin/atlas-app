@@ -10,7 +10,7 @@ import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { MapDataThemeIds } from '../../mapData/themesMapData/themes.const'
 import { MapDataTopic } from '../../mapData/types'
-import { getStyleData } from '../../mapData/utils/getMapDataUtils'
+import { getStyleData, getTopicData } from '../../mapData/utils/getMapDataUtils'
 import { TopicConfig } from '../../mapStateConfig/type'
 import { createTopicStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
 import { SelectLegend } from '../SelectLegend/SelectLegend'
@@ -49,7 +49,7 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
   if (!topicData || !topicConfig) return null
 
   const activeStyleConfig = topicConfig.styles.find((s) => s.active)
-  const activeStyleData = getStyleData(topicData.id, activeStyleConfig?.id)
+  const activeStyleData = getStyleData(topicData, activeStyleConfig?.id)
 
   return (
     <section className="mt-1.5">
@@ -83,7 +83,8 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
               >
                 <div className="py-1">
                   {topicConfig.styles.map((styleConfig) => {
-                    const styleData = getStyleData(topicConfig.id, styleConfig.id)
+                    const topicData = getTopicData(topicConfig.id)
+                    const styleData = getStyleData(topicData, styleConfig.id)
                     if (!styleData) return null
                     const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
                     return (
