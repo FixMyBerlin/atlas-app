@@ -2,7 +2,6 @@
 
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
-import { useRouter } from 'next/router'
 import { useFormContext } from 'react-hook-form'
 import Form, { FORM_ERROR, FormProps } from 'src/app/_components/forms/Form'
 import { buttonStyles } from 'src/app/_components/links/styles'
@@ -25,7 +24,6 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
   },
 ) {
   const { disabled, verificationStatus } = props
-  const router = useRouter()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
   const { currentUser } = useUserStore()
   // TODO MIGRATION: Do we still need removeLocalUpdate ?
