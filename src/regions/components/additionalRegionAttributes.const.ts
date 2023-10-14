@@ -75,6 +75,7 @@ export type RegionPath =
   | 'sigmaringen'
   | 'ostalbkreis'
   | 'nagold'
+  | 'magdeburg'
 
 // This is our regions "Database" until we have a real one
 export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
@@ -355,13 +356,28 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     fullName: 'Stadt Nagold',
     slug: 'nagold',
     osmRelationIds: [2946978],
-    map: { lat: 48.5511595, lng: 8.7240494, zoom: 11.7 },
+    map: { lat: 52.1364, lng: 11.6369, zoom: 13 },
     // BBox für https://www.openstreetmap.org/relation/2946978
     bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
     logoPath: null, // TODO MIGRATION 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     osmUsers: [...adminIds],
+    published: false,
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Magdeburg',
+    fullName: 'Verwaltungsgemeinschaft Nagold',
+    slug: 'magdeburg',
+    osmRelationIds: [62481],
+    map: { lat: 52.1364, lng: 11.6369, zoom: 13 },
+    // BBox für https://www.openstreetmap.org/relation/62481
+    bbox: bboxToMinMax([11.5172379, 52.0237486, 11.7639936, 52.2283566]),
+    logoPath: null, // TODO MIGRATION 'https://upload.wikimedia.org/wikipedia/commons/7/73/Wappen_Magdeburg.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    osmUsers: [...adminIds, 13565],
     published: false,
     backgroundSources: [...defaultBackgroundSources],
   },

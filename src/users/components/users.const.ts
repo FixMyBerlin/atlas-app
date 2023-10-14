@@ -74,4 +74,10 @@ export const users: User[] = [
     displayName: 'biker82',
     isAdmin: false,
   },
+  // OSM Community, Magdeburg, OSM Hackweekenc 2023-10
+  {
+    id: 13565,
+    displayName: 'hadhuey',
+    isAdmin: false,
+  },
 ]
