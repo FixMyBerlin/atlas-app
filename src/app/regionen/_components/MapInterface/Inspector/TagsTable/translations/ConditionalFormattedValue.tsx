@@ -129,7 +129,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     (k) => k === `${sourceId}--${tagKey}`,
   )
   if (lookThereForKeyEntry) {
-    tagKey = lookThereForKey[lookThereForKeyEntry]
+    tagKey = lookThereForKey[lookThereForKeyEntry]!
     translationKey = `ALL--${lookThereForKey[lookThereForKeyEntry]}=${tagValue}`
   }
 
