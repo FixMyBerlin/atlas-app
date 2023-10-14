@@ -38,8 +38,16 @@ end
 -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
 local function livingStreet(tags)
-  if tags.highway == "living_street" and not tags.bicycle == "no" then
-    return "livingStreet"
+  if tags.highway == "living_street" then
+    -- No vehicle except bicycles
+    if tags.vehicle == "no" and not tags.bicycle == "yes" then
+      return "livingStreet"
+    end
+    -- Nothing about vehicle but bicycle=yes or similar
+    if (tags.vehicle == nil or tags.vehicle == "yes")
+        and not tags.bicycle == "no" then
+      return "livingStreet"
+    end
   end
 end
 
