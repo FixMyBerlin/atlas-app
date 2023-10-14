@@ -1,13 +1,15 @@
 'use client'
 
+import { Route } from 'next'
+
 export type PrimaryNavigation = {
   name: string
-  href: string
+  href: Route
 }
 
 export type SecondaryNavigation = {
   name: string
-  href: string
+  href: Route
 }
 
 export type PrimaryNavigationProps = {
