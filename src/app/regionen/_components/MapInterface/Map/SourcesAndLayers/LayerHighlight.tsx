@@ -7,15 +7,8 @@ import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInt
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 
 type Props = {
-  id: string
-  paint: any
-  layout: object
-  source: string
-  filter: undefined | object
-  type: string
-  'source-layer': undefined | string
   sourceData: MapData['sources'][number]
-}
+} & LayerProps
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
   const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } = useMapStateInteraction()
@@ -47,7 +40,7 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     ...parentLayerProps,
     id: parentLayerProps.id + '--highlight',
     paint: structuredClone(parentLayerProps.paint),
-  } as LayerProps
+  }
 
   if (props.type === 'line') {
     if (!props.paint) props.paint = {}
@@ -79,5 +72,5 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
     props.filter = ['in', highlightingKey, ...featureIds]
   }
 
-  return <Layer {...props} />
+  return <Layer {...(props as LayerProps)} />
 }

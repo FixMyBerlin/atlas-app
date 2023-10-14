@@ -4,12 +4,13 @@ import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/_components/MapInterface/mapData/types'
+import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
 import { editorUrl } from './osmUrls/editorUrl'
 import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls/osmUrls'
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
-  geometry: maplibregl.GeoJSONFeature['geometry']
+  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
   editors?: MapDataSourceInspectorEditor[]
 }
 

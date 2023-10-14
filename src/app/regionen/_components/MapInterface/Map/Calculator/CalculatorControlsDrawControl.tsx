@@ -31,6 +31,7 @@ export const CalculatorControlsDrawControl = React.forwardRef<
         styles: drawControlStyle,
       })
     },
+    // @ts-expect-error Missmatched types from Mapbox Library with Maplibre Map
     ({ map }: { map: MapRef }) => {
       // onAdd – MapboxDraw initialized
       props.onCreate && map.on('draw.create', props.onCreate)

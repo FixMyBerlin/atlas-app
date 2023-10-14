@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Layer, Source } from 'react-map-gl/maplibre'
+import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { debugLayerStyles } from 'src/app/regionen/_components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'
@@ -69,7 +69,7 @@ export const SourcesLayerDatasets: React.FC = () => {
 
               // To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData
               // <LayerHighlight {...layerProps} />
-              return <Layer key={layerId} {...layerProps} />
+              return <Layer key={layerId} {...(layerProps as LayerProps)} />
             })}
           </Source>
         )

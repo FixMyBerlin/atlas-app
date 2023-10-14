@@ -24,6 +24,7 @@ import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
+import { MapGeoJSONFeature } from 'react-map-gl'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -38,8 +39,10 @@ export const Map: React.FC = () => {
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
     setCursorStyle('grab')
   }
+
   const handleClick = (event: MapLayerMouseEvent) => {
-    event.features && setInspector(event.features)
+    // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
+    event.features && setInspector(event.features as MapGeoJSONFeature[])
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {

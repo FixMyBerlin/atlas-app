@@ -1,9 +1,15 @@
 'use client'
 
 import { MapboxGeoJSONFeature } from 'mapbox-gl'
+import {
+  StoreCalculator,
+  StoreFeaturesInspector,
+} from '../../../mapStateInteraction/useMapStateInteraction'
 
 export const extractHighlightFeatureIds = (
-  features: MapboxGeoJSONFeature[],
+  features:
+    | StoreFeaturesInspector['inspectorFeatures']
+    | StoreCalculator['calculatorAreasWithFeatures'][number]['features'],
   key: string | undefined,
 ) => {
   const highlightFeatureIds = features

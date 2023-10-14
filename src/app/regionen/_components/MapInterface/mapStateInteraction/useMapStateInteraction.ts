@@ -1,7 +1,6 @@
 'use client'
 
-import { MapLayerMouseEvent, MapboxGeoJSONFeature } from 'react-map-gl'
-import { Prettify } from 'src/app/_components/types/types'
+import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 
@@ -30,7 +29,8 @@ type StorePmTilesProtocolState = {
 }
 
 export type StoreFeaturesInspector = {
-  inspectorFeatures: NonNullable<MapLayerMouseEvent['features']>
+  // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
+  inspectorFeatures: MapGeoJSONFeature[]
   setInspector: (inspectObject: Store['inspectorFeatures']) => void
   resetInspector: () => void
 }

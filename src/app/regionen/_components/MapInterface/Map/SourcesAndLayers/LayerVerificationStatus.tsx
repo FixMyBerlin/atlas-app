@@ -11,13 +11,12 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) 
 
   const props = {
     ...parentLayerProps,
-    // @ts-ignore TODO: check ts
     paint: structuredClone(parentLayerProps.paint),
   }
 
   let colorApproved: string, colorRejected: string, colorNull: string
   try {
-    const [_0, _1, _a, _2, _r, _n] = props.paint['line-color']
+    const [_0, _1, _a, _2, _r, _n] = props.paint!['line-color']
     colorApproved = _a || 'hsl(107, 88%, 57%)'
     colorRejected = _r || 'hsl(0, 100%, 41%)'
     colorNull = _n || '#fa7fe2'
@@ -26,14 +25,14 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) 
       console.error(e)
       errorLogged = true
     }
-    return <Layer {...props} />
+    return <Layer {...(props as LayerProps)} />
   }
 
   const currentValues = new Map()
 
   localUpdates.forEach(({ osm_id, verified }) => currentValues.set(osm_id, verified === 'approved'))
 
-  const cond: any[] = (props.paint['line-color'] = ['case'])
+  const cond: any[] = (props.paint!['line-color'] = ['case'])
   currentValues.forEach((approved, osmId) => {
     cond.push(['==', ['get', 'osm_id'], osmId], approved ? colorApproved : colorRejected)
   })
@@ -46,5 +45,5 @@ export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) 
     colorNull,
   )
 
-  return <Layer {...props} />
+  return <Layer {...(props as LayerProps)} />
 }

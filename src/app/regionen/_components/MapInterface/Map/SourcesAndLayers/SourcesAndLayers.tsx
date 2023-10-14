@@ -1,7 +1,8 @@
 'use client'
 
+import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
-import { Layer, Source } from 'react-map-gl/maplibre'
+import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { debugLayerStyles } from 'src/app/regionen/_components/MapInterface/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/_components/useQueryState/useBackgroundParam'
@@ -112,7 +113,7 @@ export const SourcesAndLayers: React.FC = () => {
                         type: layer.type,
                         'source-layer': layer['source-layer'],
                         layout: layout,
-                        filter: layerFilter,
+                        filter: layerFilter as FilterSpecification | undefined,
                         paint: layerPaint,
                         beforeId: beforeId({
                           backgroundId: backgroundParam,
@@ -132,7 +133,7 @@ export const SourcesAndLayers: React.FC = () => {
                               {...layerProps}
                             />
                           ) : (
-                            <Layer key={layerId} {...layerProps} />
+                            <Layer key={layerId} {...(layerProps as LayerProps)} />
                           )}
                           <LayerHighlight
                             key={`${layerId}_highlight`}

@@ -3,7 +3,10 @@
 import React from 'react'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import {
+  StoreFeaturesInspector,
+  useMapStateInteraction,
+} from '../mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
@@ -13,7 +16,7 @@ import { InspectorHeader } from './InspectorHeader'
 export type InspectorDataFeature = {
   sourceKey: string
   properties: GeoJSON.GeoJsonProperties
-  geometry: maplibregl.GeoJSONFeature['geometry']
+  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
 }
 
 export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
@@ -45,7 +48,7 @@ export const Inspector: React.FC = () => {
       />
 
       {uniqueInspectorFeatures.map((inspectObject) => {
-        const sourceKey = String(inspectObject.layer.source) // Format: `theme:lit--source:tarmac_lit--topic:lit`
+        const sourceKey = String(inspectObject.source) // Format: `theme:lit--source:tarmac_lit--topic:lit`
         if (!sourceKey) return null
 
         // Inspector-Block for Notes

@@ -17,6 +17,7 @@ import {
 } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 import { useUpdate } from './hooks/useUpdate'
+import { MapGeoJSONFeature } from 'react-map-gl'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
@@ -52,10 +53,11 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
             return feature
           }
         })
-        .filter((feature): feature is mapboxgl.MapboxGeoJSONFeature => !!feature)
+        .filter(Boolean)
 
       result.push({
         key: selectArea.id,
+        // @ts-expect-error we use a MapboxGL Library with styles from Maplibre Gl JS
         features: filteredFeatures,
       })
     })
