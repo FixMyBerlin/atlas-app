@@ -6,6 +6,7 @@ import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
 import { DatasetIds } from '../../../mapData/sourcesMapData/datasets/types'
 import { SourcesIds } from '../../../mapData/sourcesMapData/sources.const'
 import { getDatasetOrSourceData } from '../../../mapData/utils/getMapDataUtils'
+import { NodataFallback } from '../compositTableRows/NodataFallback'
 import { translations } from './translations.const'
 
 type Props = {
@@ -20,6 +21,10 @@ const prefixWithOsm = (tagKey: string) => {
 }
 
 export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
+  if (typeof tagValue === 'undefined') {
+    return <NodataFallback />
+  }
+
   // Some data should not be "translated"; we want to show the raw string.
   const sourceData = getDatasetOrSourceData(sourceId)
   const showRawValues =

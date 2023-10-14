@@ -1,10 +1,11 @@
 'use client'
 
 import React from 'react'
-import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
 import { DatasetIds } from '../../mapData/sourcesMapData/datasets/types'
-import { ConditionalFormattedValue } from './translations/ConditionalFormattedValue'
+import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
+import { NodataFallback } from './compositTableRows/NodataFallback'
 import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
+import { ConditionalFormattedValue } from './translations/ConditionalFormattedValue'
 
 export type TagsTableRowProps =
   | {
@@ -19,11 +20,6 @@ export type TagsTableRowProps =
       tagValue?: never
       value: React.ReactNode
     }
-// type Props = {
-//   sourceId: SourcesIds
-//   tagKey: string
-//   tagValue: string
-// }
 
 export const TagsTableRow: React.FC<TagsTableRowProps> = ({
   sourceId,
@@ -41,9 +37,7 @@ export const TagsTableRow: React.FC<TagsTableRowProps> = ({
         <ConditionalFormattedKey sourceId={sourceId} tagKey={tagKey} />
       </td>
       <td className="px-3 py-2 text-sm text-gray-500">
-        {TagValueCell || ValueCell || (
-          <span className="text-gray-200 group-hover:text-gray-400">Noch keine Daten</span>
-        )}
+        {TagValueCell || ValueCell || <NodataFallback />}
       </td>
     </tr>
   )
