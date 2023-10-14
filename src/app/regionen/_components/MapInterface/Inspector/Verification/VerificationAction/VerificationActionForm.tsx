@@ -2,7 +2,7 @@
 
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
-import { useFormContext } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Form, { FORM_ERROR, FormProps } from 'src/app/_components/forms/Form'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import { useUserStore } from 'src/app/regionen/_components/MapInterface/UserInfo/useUserStore'
@@ -31,7 +31,7 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
   const {
     register,
     formState: { isSubmitting, errors },
-  } = useFormContext()
+  } = useForm()
 
   const handleSubmit = async (values) => {
     try {
@@ -58,10 +58,10 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
   const verifiedOnce = verificationStatus && verificationStatusOptions.includes(verificationStatus)
 
   return (
-    <Form<S> {...props} onSubmit={handleSubmit} className="space-y-2">
+    <Form<S> {...props} onSubmit={handleSubmit}>
       <fieldset
         disabled={disabled || isSubmitting}
-        className={clsx('mb-2', {
+        className={clsx('mb-2 space-y-2', {
           'flex flex-col': verifiedOnce,
         })}
       >
