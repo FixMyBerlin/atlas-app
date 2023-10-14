@@ -13,6 +13,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     '_freshNotes',
     '_skip',
     '_skipNotes',
+    '_todos',
     'fresh_age_days',
     'fresh',
     'is_present',
