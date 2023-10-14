@@ -118,7 +118,7 @@ function Bikelanes(object)
           if tags.bicycle_road == 'yes' then
             cycleway.oneway = 'implicit_no'
           else
-            cycleway.oneway = 'implict_yes'
+            cycleway.oneway = 'implicit_yes'
           end
         end
 
