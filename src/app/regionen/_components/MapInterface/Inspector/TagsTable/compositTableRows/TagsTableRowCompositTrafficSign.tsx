@@ -138,7 +138,13 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
                 </div>
                 {trafficSigns[sign]?.signUrl && (
                   // Why do I need to "!" this when I just guarded it…?
-                  <Image src={trafficSigns[sign]!.signUrl} alt="" className="h-12 max-w-[3rem]" />
+                  <Image
+                    src={trafficSigns[sign]!.signUrl}
+                    width={48}
+                    height={48}
+                    alt=""
+                    className="h-12 max-w-[3rem]"
+                  />
                 )}
               </div>
             )
