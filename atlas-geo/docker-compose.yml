@@ -7,7 +7,10 @@ services:
     entrypoint: /app/run.sh
     container_name: app
     environment:
-      PGHOST: db
+      PGHOST: osmdatabase
+      PGDATABASE: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
       SKIP_DOWNLOAD: 0
       SKIP_TAG_FILTER: 0
       OSM_DOWNLOAD_URL: http://download.geofabrik.de/europe/germany-latest.osm.pbf
@@ -27,7 +30,7 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD_ENCODED}@db/${PGDATABASE}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
     ports:
       - "8010:7800"
     labels:
@@ -68,9 +71,9 @@ services:
     # There is no Apple M1 ARM 64 build, see https://github.com/postgis/docker-postgis/issues/216
     image: postgis/postgis:14-3.3-alpine
     environment:
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
