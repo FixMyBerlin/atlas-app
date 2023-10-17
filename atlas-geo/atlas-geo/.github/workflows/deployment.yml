@@ -48,11 +48,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: docker/setup-buildx-action@v1
-      - uses: docker/build-push-action@v3
-        with:
-          context: api.Dockerfile,app.Dockerfile
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         run: |
@@ -73,10 +68,13 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Build app image
-        run: >
-          docker build .
-          --file ./app.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: app.Dockerfile
+          tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - name: Push the app image
         run: |
