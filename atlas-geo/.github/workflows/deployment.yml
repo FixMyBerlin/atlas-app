@@ -47,7 +47,7 @@ jobs:
       url: ${{ inputs.URL }}
     steps:
       - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v1
+      - uses: docker/setup-buildx-action@v3
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         run: |
@@ -67,18 +67,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
       - name: Build app image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: app.Dockerfile
+          push: true
           tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Push the app image
         run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Build API image
