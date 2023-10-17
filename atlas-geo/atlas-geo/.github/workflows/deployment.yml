@@ -76,13 +76,14 @@ jobs:
         with:
           context: .
           file: app.Dockerfile
-          push: true
+          push: false
           tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
       - name: Push the app image
         run: |
+          docker images
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Build API image
