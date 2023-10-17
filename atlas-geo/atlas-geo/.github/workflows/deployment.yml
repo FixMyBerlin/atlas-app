@@ -109,9 +109,9 @@ jobs:
             echo "Updating '.env'"
             rm .env
             touch .env
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo POSTGRES_USER='${{ secrets.DATABASE_USER }}' >> .env
+            echo POSTGRES_PASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo POSTGRES_DB='${{ secrets.DATABASE_NAME }}' >> .env
             echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
             echo API_URL='${{ inputs.API_URL }}' >> .env
             echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env
