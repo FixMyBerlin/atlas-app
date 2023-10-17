@@ -7,6 +7,10 @@ services:
     entrypoint: /app/run.sh
     env_file:
       - ./.env
+    environment:
+      PGDATABASE: ${POSTGRES_DB}
+      PGUSER: ${POSTGRES_USER}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - osmfiles:/data
     depends_on:
@@ -20,7 +24,7 @@ services:
     image: pramsey/pg_tileserv
     container_name: tileserver
     environment:
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
     ports:
       - 7800:7800
     depends_on:
@@ -43,9 +47,9 @@ services:
     env_file:
       - ./.env
     environment:
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB:
+      POSTGRES_USER:
+      POSTGRES_PASSWORD:
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
