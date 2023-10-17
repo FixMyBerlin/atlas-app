@@ -147,5 +147,3 @@ async def retrieve_service_health():
           raise HTTPException(status_code=500, detail="DB Connection is dead")
         else:
           return "OK"
-
-      raise HTTPException(status_code=500, detail="Unkown server error")
