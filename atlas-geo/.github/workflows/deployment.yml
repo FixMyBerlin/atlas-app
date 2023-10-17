@@ -46,7 +46,7 @@ jobs:
       name: ${{ inputs.ENVIRONMENT }}
       url: ${{ inputs.URL }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         run: |
