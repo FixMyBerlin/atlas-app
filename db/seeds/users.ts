@@ -12,13 +12,15 @@ const seedUsers = async () => {
     {
       email: 'admin@fixmycity.de',
       role: 'ADMIN',
-      name: 'Admin',
+      firstName: "Admin",
+      lastName: "Admin",
       hashedPassword,
     },
     {
       email: 'user@fixmycity.de',
       role: 'USER',
-      name: 'User',
+      firstName: "User",
+      lastName: "User",
       hashedPassword,
     },
   ]

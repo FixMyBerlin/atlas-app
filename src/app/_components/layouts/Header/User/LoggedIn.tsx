@@ -18,7 +18,8 @@ import { isAdmin } from 'src/users/components/utils/usersUtils'
 type Props = {
   user: {
     id: number
-    name: string | null
+    firstName: string | null
+    lastName: string | null
     email: string
     role: string
   }
