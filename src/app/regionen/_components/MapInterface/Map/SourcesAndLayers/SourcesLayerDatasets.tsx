@@ -19,7 +19,7 @@ export const SourcesLayerDatasets: React.FC = () => {
   const regionSlug = useRegionSlug()
 
   const uniqueRegionDatasets = sourcesDatasets
-    .filter((data) => (data.regionKey as string[]).includes(regionSlug))
+    .filter((data) => (data.regionKey as string[]).includes(regionSlug!))
     // Make the array unique by data.url
     .filter((dataset, index, self) => index === self.findIndex((d) => d.url === dataset.url))
 
