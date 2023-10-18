@@ -1,9 +1,5 @@
-'use client'
-
-import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
-import { useUserStore } from '../../UserInfo/useUserStore'
-import { hasPermission } from '../../UserInfo/utils/hasPermission'
+import { useHasPermissions } from 'src/app/hooks/useHasPermissions'
 import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
 import { getSourceData } from '../../mapData/utils/getMapDataUtils'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
@@ -19,12 +15,10 @@ type Props = {
 
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
-  const { currentUser } = useUserStore()
-  const region = useRegion()
   const sourceData = getSourceData(sourceId)
 
-  const allowVerify =
-    (sourceData.verification.enabled || false) && hasPermission(currentUser, region)
+  const hasPermissions = useHasPermissions()
+  const allowVerify = (sourceData.verification.enabled || false) && hasPermissions
 
   const localVerificationStatus = [...localUpdates]
     .reverse()

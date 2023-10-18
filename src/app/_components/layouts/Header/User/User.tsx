@@ -1,30 +1,19 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { UserIcon } from '@heroicons/react/24/outline'
-// import { hasPermission } from 'src/app/regionen/_components/MapInterface/UserInfo/utils/hasPermission' TODO: remove
 // import { useUserStore } from 'src/app/regionen/_components/MapInterface/UserInfo/useUserStore' TODO: remove
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
-import { useQuery, useMutation } from '@blitzjs/rpc'
-import membershipExists from 'src/memberships/queries/membershipExists'
+import { useMutation } from '@blitzjs/rpc'
 import logout from 'src/auth/mutations/logout'
 import { LoggedIn } from './LoggedIn'
+import { useHasPermissions } from 'src/app/hooks/useHasPermissions'
 
 export const User: React.FC = () => {
   const user = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
   const router = useRouter()
-
-  const regionSlug = useRegionSlug()
-  let [membership] = useQuery(
-    membershipExists,
-    { userId: user?.id || 0, regionSlug: regionSlug || '' },
-    { enabled: !!user && user.role !== 'ADMIN' && !!regionSlug },
-  )
-  if (membership === undefined) membership = false
-
-  const hasPermissions = regionSlug ? user?.role === 'ADMIN' || membership : null
+  const hasPermissions = useHasPermissions()
 
   return (
     <div className="sm:ml-6">
