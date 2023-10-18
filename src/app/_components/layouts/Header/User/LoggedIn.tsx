@@ -23,7 +23,7 @@ type Props = {
     email: string
     role: string
   }
-  hasPermissions: boolean
+  hasPermissions: boolean | null
   onLogout: () => void
 }
 
@@ -74,12 +74,13 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
             <p className="mb-1">
               <strong>Angemeldet als {user.email}</strong>
             </p>
-            {hasPermissions ? (
+            {hasPermissions === true && (
               <div className="flex items-center gap-1 text-xs leading-4">
                 <CheckBadgeIcon className="inline-block h-6 w-6" />
                 <span>Sie sind Mitarbeiter dieser Region</span>
               </div>
-            ) : (
+            )}
+            {hasPermissions === false && (
               <div className="text-xs leading-4">
                 Sie haben zur Zeit keine Zugriffsrechte in dieser Region.
               </div>

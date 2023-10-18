@@ -3,13 +3,12 @@ import { useRouter } from 'next/navigation'
 
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { UserIcon } from '@heroicons/react/24/outline'
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { hasPermission } from 'src/app/regionen/_components/MapInterface/UserInfo/utils/hasPermission'
+// import { hasPermission } from 'src/app/regionen/_components/MapInterface/UserInfo/utils/hasPermission' TODO: remove
 // import { useUserStore } from 'src/app/regionen/_components/MapInterface/UserInfo/useUserStore' TODO: remove
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
-import { useMutation } from '@blitzjs/rpc'
+import { useQuery, useMutation } from '@blitzjs/rpc'
+import membershipExists from 'src/memberships/queries/membershipExists'
 import logout from 'src/auth/mutations/logout'
-import { TRegion } from 'src/regions/queries/getPublicRegion'
 import { LoggedIn } from './LoggedIn'
 
 export const User: React.FC = () => {
@@ -18,11 +17,14 @@ export const User: React.FC = () => {
   const router = useRouter()
 
   const regionSlug = useRegionSlug()
-  // TODO MIGRATION: Get rid of the casting
-  const region = additionalRegionAttributes.find((r) => r.slug === regionSlug) as TRegion
-  // const hasPermissions = region ? hasPermission(user, region) || false : false
-  // TODO: make this work
-  const hasPermissions = false
+  let [membership] = useQuery(
+    membershipExists,
+    { userId: user?.id || 0, regionSlug: regionSlug || '' },
+    { enabled: !!user && user.role !== 'ADMIN' && !!regionSlug },
+  )
+  if (membership === undefined) membership = false
+
+  const hasPermissions = regionSlug ? user?.role === 'ADMIN' || membership : null
 
   return (
     <div className="sm:ml-6">
