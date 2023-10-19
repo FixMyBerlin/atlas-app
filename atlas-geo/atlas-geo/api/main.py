@@ -5,7 +5,7 @@ from fastapi.responses import FileResponse
 from typing import Union, Annotated
 from psycopg import sql
 from psycopg.rows import dict_row
-from db_configuration import VerificationTable, ExportTable, VerifiedState,  verified_table
+from db_configuration import VerificationTable, ExportTable, VerifiedState, verified_table
 from db import conn_string, api_secret
 import psycopg
 from pathlib import Path
@@ -129,7 +129,7 @@ async def verify_osm_object(response: Response, type_name: VerificationTable, os
         await conn.commit()
 
         return 'OK'
-      
+
 @app.get("/init")
 async def init_api(response: Response, secret: str):
   if secret != api_secret:
