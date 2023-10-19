@@ -12,5 +12,6 @@ echo -e "\e[1m\e[7m Postprocessing – START \e[27m\e[21m\e[0m"
 # unlock database
 
 psql -q -f "./POSTPROCESS.sql"
+
+# Creating verification tables and export functions in api service
 curl -G -d "secret=$API_SECRET" api/init
-# TODO: call api init endpoint
