@@ -1,5 +1,5 @@
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
-import { TVerificationSchema } from 'src/bikelane-verifications/schemas'
+import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
@@ -44,10 +44,10 @@ export type StoreCalculator = {
 }
 
 type StoreLocalUpdates = {
-  localUpdates: Omit<TVerificationSchema, 'id'>[]
-  addLocalUpdate: (update: Omit<TVerificationSchema, 'id'>) => void
+  localUpdates: Omit<TCreateVerificationSchema, 'id'>[]
+  addLocalUpdate: (update: Omit<TCreateVerificationSchema, 'id'>) => void
   // TODO MIGRATION: Do we still need removeLocalUpdate ?
-  removeLocalUpdate: (update: Omit<TVerificationSchema, 'id'>) => void
+  removeLocalUpdate: (update: Omit<TCreateVerificationSchema, 'id'>) => void
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({

@@ -3,15 +3,13 @@ import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
 import Form, { FORM_ERROR, FormProps } from 'src/app/_components/forms/Form'
 import { buttonStyles } from 'src/app/_components/links/styles'
-import { useUserStore } from 'src/app/regionen/_components/MapInterface/UserInfo/useUserStore'
 import { useMapStateInteraction } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
-  TVerificationSchema,
+  TCreateVerificationSchema,
   TVerificationStatus,
   verificationStatusOptions,
 } from 'src/bikelane-verifications/schemas'
-import invariant from 'tiny-invariant'
 import { z } from 'zod'
 import { verifiedColor } from '../verifiedColor.const'
 
@@ -23,7 +21,6 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
 ) {
   const { disabled, verificationStatus } = props
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
-  const { currentUser } = useUserStore()
   // TODO MIGRATION: Do we still need removeLocalUpdate ?
   const { addLocalUpdate } = useMapStateInteraction()
   const {
@@ -31,15 +28,13 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
     formState: { isSubmitting, errors },
   } = useForm()
 
+  console.log('errors', errors)
+
   const handleSubmit = async (values) => {
     try {
-      invariant(currentUser?.id, 'User is required')
-
-      const newVerificationItem: Omit<TVerificationSchema, 'id'> = {
-        osm_id: BigInt(values.osm_id),
+      const newVerificationItem: TCreateVerificationSchema = {
         osm_type: 'W',
-        verified_at: new Date().toISOString(),
-        verified_by: BigInt(currentUser.id),
+        osm_id: BigInt(values.osm_id),
         verified: values.verified_status,
         comment: values.comment.trim(),
       }

@@ -8,10 +8,16 @@ export const VerificationSchema = z.object({
   verified_by: z.coerce.bigint(), // OSM User ID, _not_ OSM Username; Note, this is optional in DB but not in UI.
   verified: z.enum(['approved', 'rejected']),
   comment: z.string().optional(),
-  // template: __fieldName__: z.__zodType__(),
 })
 
-export type TVerificationSchema = z.infer<typeof VerificationSchema>
+export const CreateVerificationSchema = VerificationSchema.pick({
+  osm_type: true,
+  osm_id: true,
+  verified: true,
+  comment: true
+})
+
+export type TCreateVerificationSchema = z.infer<typeof CreateVerificationSchema>
 
 export const verificationStatusOptions: [TVerificationStatus, TVerificationStatus] = [
   'approved',
