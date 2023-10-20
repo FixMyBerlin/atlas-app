@@ -1,5 +1,3 @@
-'use client'
-
 import { GeoJSONFeature } from 'maplibre-gl'
 import { TagsTableRowProps } from '../TagsTableRow'
 

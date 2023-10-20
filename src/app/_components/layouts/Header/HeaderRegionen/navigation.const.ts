@@ -1,5 +1,3 @@
-'use client'
-
 import { defaultSecondaryNavigation } from '../HeaderApp/navigation.const'
 import { PrimaryNavigation, SecondaryNavigation } from '../types'
 

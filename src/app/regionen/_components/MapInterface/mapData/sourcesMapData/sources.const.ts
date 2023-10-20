@@ -1,5 +1,3 @@
-'use client'
-
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingIds } from './sourcesParking.const'

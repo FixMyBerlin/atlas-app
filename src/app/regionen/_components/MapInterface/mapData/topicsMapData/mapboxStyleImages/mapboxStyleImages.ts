@@ -1,5 +1,3 @@
-'use client'
-
 import { StaticImageData } from 'next/image'
 import png_bus_stop from './images/bus_stop.png'
 import png_cross from './images/cross.png'

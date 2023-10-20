@@ -1,5 +1,3 @@
-'use client'
-
 // https://de.wikipedia.org/wiki/Anf%C3%BChrungszeichen
 
 export const Quote = (input: string | Record<'text', React.ReactNode>) => {

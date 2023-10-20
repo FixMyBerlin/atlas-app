@@ -1,5 +1,3 @@
-'use client'
-
 // We use `MapboxGeoJSONFeature` here, since the `MapLayerMouseEvent` on onClick etc on the map returns this kind of type.
 
 import { MapboxGeoJSONFeature } from 'react-map-gl'

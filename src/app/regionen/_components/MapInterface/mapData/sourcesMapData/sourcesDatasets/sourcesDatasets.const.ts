@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataDatasetsSource } from '../../types'
 import { DatasetIds } from '../datasets/types'
 import { sourcesDatasetsBerlin } from './sourcesDatasetsBerlin.const'

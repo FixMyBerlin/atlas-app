@@ -1,5 +1,3 @@
-'use client'
-
 import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'

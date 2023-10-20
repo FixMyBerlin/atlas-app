@@ -1,5 +1,3 @@
-'use client'
-
 import { Link } from 'src/app/_components/links/Link'
 import { exportApiUrlBbox } from './exportApiUrl'
 import { sources } from '../mapData/sourcesMapData/sources.const'

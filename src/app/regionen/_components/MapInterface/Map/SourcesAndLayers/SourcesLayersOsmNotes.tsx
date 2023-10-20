@@ -1,5 +1,3 @@
-'use client'
-
 import axios from 'axios'
 import { FeatureCollection } from 'geojson'
 import React, { useEffect, useState } from 'react'

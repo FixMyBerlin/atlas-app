@@ -1,5 +1,3 @@
-'use client'
-
 import { Switch } from '@headlessui/react'
 import { clsx } from 'clsx'
 

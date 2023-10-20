@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { DatasetIds } from '../../mapData/sourcesMapData/datasets/types'
 import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'

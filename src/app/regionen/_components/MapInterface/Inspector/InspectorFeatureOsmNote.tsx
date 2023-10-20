@@ -1,5 +1,3 @@
-'use client'
-
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import clsx from 'clsx'
 import Image from 'next/image'

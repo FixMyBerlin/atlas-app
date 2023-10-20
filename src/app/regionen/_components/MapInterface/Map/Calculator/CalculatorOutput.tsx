@@ -1,5 +1,3 @@
-'use client'
-
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/20/solid'
 import clsx from 'clsx'
 import { MapDataSourceCalculator } from '../../mapData/types'

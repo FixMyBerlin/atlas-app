@@ -1,5 +1,3 @@
-'use client'
-
 import { editorUrl } from './editorUrl'
 import { pointFromGeometry } from './pointFromGeometry'
 

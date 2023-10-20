@@ -1,5 +1,3 @@
-'use client'
-
 import { useQuery } from '@blitzjs/rpc'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
 import { Suspense } from 'react'

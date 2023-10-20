@@ -1,5 +1,3 @@
-'use client'
-
 import { WaitlistButton } from './buttons/WaitlistButton'
 
 export const HomePageHero: React.FC = () => {

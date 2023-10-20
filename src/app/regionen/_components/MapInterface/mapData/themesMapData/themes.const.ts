@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataTheme } from '../types'
 
 // TODO type MapDataConfigThemeIds = typeof sources[number]['id']

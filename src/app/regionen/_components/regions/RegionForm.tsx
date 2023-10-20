@@ -1,5 +1,3 @@
-'use client'
-
 import { Form, FormProps } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
 import { z } from 'zod'

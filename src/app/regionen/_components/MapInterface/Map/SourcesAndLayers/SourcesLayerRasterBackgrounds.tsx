@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'

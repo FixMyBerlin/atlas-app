@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'

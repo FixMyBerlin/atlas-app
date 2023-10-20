@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
 import { CompositTableRow } from './types'

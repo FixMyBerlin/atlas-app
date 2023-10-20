@@ -1,5 +1,3 @@
-'use client'
-
 import React, { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { TVerificationStatus, VerificationSchema } from 'src/bikelane-verifications/schemas'

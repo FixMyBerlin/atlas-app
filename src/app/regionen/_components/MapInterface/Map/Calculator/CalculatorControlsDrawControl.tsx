@@ -1,5 +1,3 @@
-'use client'
-
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
 import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl/maplibre'

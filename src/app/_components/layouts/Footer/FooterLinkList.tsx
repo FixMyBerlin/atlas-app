@@ -1,5 +1,3 @@
-'use client'
-
 import { Link } from 'src/app/_components/links/Link'
 import { clsx } from 'clsx'
 import React from 'react'

@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataSource } from '../types'
 import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './sources.const'
 

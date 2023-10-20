@@ -1,5 +1,3 @@
-'use client'
-
 import { ThemeConfig, TopicConfig } from '../type'
 
 export const flattenConfigTopics = (configThemes: ThemeConfig[]) => {

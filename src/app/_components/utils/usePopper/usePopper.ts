@@ -1,5 +1,3 @@
-'use client'
-
 import { useRef, useCallback, useMemo } from 'react'
 import { createPopper, Options } from '@popperjs/core'
 

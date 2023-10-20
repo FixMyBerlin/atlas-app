@@ -1,5 +1,3 @@
-'use client'
-
 import { describe, expect, test } from 'vitest'
 import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
 

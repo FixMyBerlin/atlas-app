@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useState } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'

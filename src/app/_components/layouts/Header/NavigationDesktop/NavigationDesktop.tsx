@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { PrimaryNavigationProps } from '../types'
 import { NavigationDesktopLinks } from './NavigationDesktopLinks'

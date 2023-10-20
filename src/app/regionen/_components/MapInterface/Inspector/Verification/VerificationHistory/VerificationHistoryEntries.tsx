@@ -1,5 +1,3 @@
-'use client'
-
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'

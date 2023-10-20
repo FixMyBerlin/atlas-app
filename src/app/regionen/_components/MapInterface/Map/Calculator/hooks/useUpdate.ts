@@ -1,5 +1,3 @@
-'use client'
-
 import { useDrawParam } from 'src/app/regionen/_components/useQueryState/useDrawParam'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 import { simplifyPositions } from '../utils/simplifyPositions'

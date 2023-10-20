@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
 

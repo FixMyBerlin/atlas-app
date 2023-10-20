@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataTopic, MapDataVisLayer, TBeforeIds } from '../../../mapData/types'
 
 // We place our layers between given Maptiler Layer IDs:

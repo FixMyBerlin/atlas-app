@@ -1,5 +1,3 @@
-'use client'
-
 import { MapIcon } from '@heroicons/react/24/outline'
 import { FooterLinkList } from './FooterLinkList'
 import { footerLinks } from './footerLinks.const'

@@ -1,5 +1,3 @@
-'use client'
-
 import { Route } from 'next'
 
 export type PrimaryNavigation = {

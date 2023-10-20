@@ -1,5 +1,3 @@
-'use client'
-
 import { flattenFilterArrays } from '../../../Map/SourcesAndLayers/utils/filterUtils/flattenFilterArrays'
 import { wrapFilterWithAll } from '../../../Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
 import { SourcesIds } from '../../sourcesMapData/sources.const'

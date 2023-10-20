@@ -1,5 +1,3 @@
-'use client'
-
 import { parseAsArrayOf, parseAsString, useQueryState } from 'next-usequerystate'
 
 export const useDataParam = () => {

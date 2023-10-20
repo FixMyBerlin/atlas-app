@@ -1,5 +1,3 @@
-'use client'
-
 type Props = {
   url: string
   zoom: number | undefined

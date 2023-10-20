@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'

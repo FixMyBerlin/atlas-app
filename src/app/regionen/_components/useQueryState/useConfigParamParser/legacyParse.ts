@@ -1,5 +1,3 @@
-'use client'
-
 import { parse } from 'zipson/lib'
 
 // See https://react-location.tanstack.com/guides/custom-search-param-serialization#safe-binary-encodingdecoding

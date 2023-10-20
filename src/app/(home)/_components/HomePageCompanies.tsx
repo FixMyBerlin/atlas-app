@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import imageBiBi from 'src/app/_components/assets/bibi-logo.svg'
 import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'

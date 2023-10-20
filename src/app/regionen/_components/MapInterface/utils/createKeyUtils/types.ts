@@ -1,5 +1,3 @@
-'use client'
-
 import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
 
 // These Types holds a combination of all Topic>Styles, even those that are not actually there.

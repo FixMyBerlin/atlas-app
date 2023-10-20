@@ -1,5 +1,3 @@
-'use client'
-
 export const wrapFilterWithAll = (filterArray: any[] | undefined) => {
   // Case: Input empty/undefined
   if (!filterArray) {

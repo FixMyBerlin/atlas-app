@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'

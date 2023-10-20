@@ -1,5 +1,3 @@
-'use client'
-
 import { SourceDatasets } from './sourcesDatasets.const'
 import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 

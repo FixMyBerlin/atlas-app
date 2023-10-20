@@ -1,5 +1,3 @@
-'use client'
-
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
 import { create } from 'zustand'
 

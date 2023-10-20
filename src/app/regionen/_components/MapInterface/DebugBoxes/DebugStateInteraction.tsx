@@ -1,5 +1,3 @@
-'use client'
-
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 import { getApiUrl } from 'src/app/_components/utils/getApiUrl'

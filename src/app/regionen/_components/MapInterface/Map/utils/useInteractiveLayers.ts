@@ -1,5 +1,3 @@
-'use client'
-
 import { useRegionDatasets } from 'src/app/regionen/_components/MapInterface/SelectDatasets/utils/useRegionDatasets'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { useDataParam } from 'src/app/regionen/_components/useQueryState/useDataParam'

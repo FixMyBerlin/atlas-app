@@ -1,5 +1,3 @@
-'use client'
-
 import invariant from 'tiny-invariant'
 import { TopicIds } from '../../../../mapData/mapData.const'
 import { DatasetIds } from '../../../../mapData/sourcesMapData/datasets/types'

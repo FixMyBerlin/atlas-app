@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataStyleLegend } from '../../types'
 
 export const defaultLegendFresh: MapDataStyleLegend[] = [

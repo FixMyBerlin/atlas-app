@@ -1,5 +1,3 @@
-'use client'
-
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'

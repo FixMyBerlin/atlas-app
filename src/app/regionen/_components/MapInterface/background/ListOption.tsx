@@ -1,5 +1,3 @@
-'use client'
-
 import { Listbox } from '@headlessui/react'
 import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'

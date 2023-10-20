@@ -1,4 +1,3 @@
-'use client'
 /* eslint-disable react/no-unescaped-entities */
 
 import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'

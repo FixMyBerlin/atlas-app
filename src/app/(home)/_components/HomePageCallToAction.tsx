@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import backgroundImage from './assets/background-call-to-action.jpg'
 import { WaitlistButton } from './buttons/WaitlistButton'

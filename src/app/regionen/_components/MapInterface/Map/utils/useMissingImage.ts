@@ -1,5 +1,3 @@
-'use client'
-
 import { mapboxStyleImages } from 'src/app/regionen/_components/MapInterface/mapData/topicsMapData/mapboxStyleImages/mapboxStyleImages'
 import { type MapStyleImageMissingEvent } from 'maplibre-gl'
 import { useEffect } from 'react'

@@ -1,5 +1,3 @@
-'use client'
-
 import { forwardRef, PropsWithoutRef, ComponentPropsWithoutRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'

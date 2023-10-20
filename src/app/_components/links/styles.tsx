@@ -1,5 +1,3 @@
-'use client'
-
 export const linkStyles =
   'underline decoration-yellow-600 underline-offset-4 hover:decoration-2 active:decoration-2 hover:text-yellow-700 active:text-yellow-700'
 export const buttonStyles =

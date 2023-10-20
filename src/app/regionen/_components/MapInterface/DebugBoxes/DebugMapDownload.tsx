@@ -1,5 +1,3 @@
-'use client'
-
 import { featureCollection } from '@turf/helpers'
 import { LayerSpecification } from 'maplibre-gl'
 import React from 'react'

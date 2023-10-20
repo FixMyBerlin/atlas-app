@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataVisLayer } from '../../types'
 
 export const debugLayerStyles = ({

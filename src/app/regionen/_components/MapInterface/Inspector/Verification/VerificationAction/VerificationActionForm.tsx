@@ -1,5 +1,3 @@
-'use client'
-
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'

@@ -1,5 +1,3 @@
-'use client'
-
 import { PrimaryNavigation, SecondaryNavigation } from '../types'
 
 export const primaryNavigation: PrimaryNavigation[] = [

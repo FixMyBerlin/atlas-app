@@ -1,5 +1,3 @@
-'use client'
-
 import { describe, expect, test } from 'vitest'
 import { createMapRegionConfig } from '../createMapRegionConfig'
 import { flattenConfigTopics } from './flattenConfigTopics'

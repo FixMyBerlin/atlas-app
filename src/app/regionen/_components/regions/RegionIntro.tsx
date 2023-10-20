@@ -1,5 +1,3 @@
-'use client'
-
 import Image from 'next/image'
 import { TPublicRegion } from 'src/regions/queries/getPublicRegions'
 

@@ -1,5 +1,3 @@
-'use client'
-
 const removeAll = (array: any[]) => {
   if (array[0] === 'all') {
     return array.slice(1)

@@ -1,5 +1,3 @@
-'use client'
-
 import invariant from 'tiny-invariant'
 import { datasets } from '../../datasets/datasets.const'
 import { DatasetIds } from '../../datasets/types'

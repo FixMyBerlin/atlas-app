@@ -1,5 +1,3 @@
-'use client'
-
 import { NavigationDesktop } from '../NavigationDesktop/NavigationDesktop'
 import { NavigationMobile } from '../NavigationMobile/NavigationMobile'
 import { NavigationWrapper } from '../NavigationWrapper/NavigationWrapper'

@@ -1,5 +1,3 @@
-'use client'
-
 import { AdditionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
 import { SourceExportApiIdentifier } from '../mapData/sourcesMapData/sources.const'
 import { getApiUrl } from 'src/app/_components/utils/getApiUrl'

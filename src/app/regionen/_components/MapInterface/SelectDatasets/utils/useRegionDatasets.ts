@@ -1,5 +1,3 @@
-'use client'
-
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { sourcesDatasets } from '../../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
 

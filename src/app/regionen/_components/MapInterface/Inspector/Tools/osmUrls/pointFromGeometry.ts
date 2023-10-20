@@ -1,5 +1,3 @@
-'use client'
-
 import * as turf from '@turf/turf'
 
 export const pointFromGeometry = (geometry: maplibregl.GeoJSONFeature['geometry']) => {

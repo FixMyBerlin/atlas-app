@@ -1,5 +1,3 @@
-'use client'
-
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
 import { useRegion } from '../../../../(pages)/_components/regionUtils/useRegion'

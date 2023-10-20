@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import SocialSharingImage from './assets/default.png'
 import { StaticImageData } from 'next/image'

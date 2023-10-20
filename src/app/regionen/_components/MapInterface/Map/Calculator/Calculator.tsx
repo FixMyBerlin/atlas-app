@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useRef } from 'react'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { getSourceData, getTopicData } from '../../mapData/utils/getMapDataUtils'

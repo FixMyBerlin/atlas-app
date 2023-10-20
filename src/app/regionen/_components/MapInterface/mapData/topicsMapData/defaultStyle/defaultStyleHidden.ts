@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataStyle } from '../../types'
 
 export const defaultStyleHidden: MapDataStyle[] = [

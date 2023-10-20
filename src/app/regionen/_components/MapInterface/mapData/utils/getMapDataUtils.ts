@@ -1,5 +1,3 @@
-'use client'
-
 import invariant from 'tiny-invariant'
 import { mapData, TopicIds, TopicStyleIds } from '../mapData.const'
 import { SourcesIds } from '../sourcesMapData/sources.const'

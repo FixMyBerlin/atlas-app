@@ -1,5 +1,3 @@
-'use client'
-
 import { useQuery } from '@blitzjs/rpc'
 import getPublicRegions from 'src/regions/queries/getPublicRegions'
 import { RegionTeaser } from './RegionTeaser'

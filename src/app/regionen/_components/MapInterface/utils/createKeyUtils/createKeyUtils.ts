@@ -1,5 +1,3 @@
-'use client'
-
 import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
 import { TopicStyleKey, TopicStyleLegendKey } from './types'

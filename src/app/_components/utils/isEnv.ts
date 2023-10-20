@@ -1,5 +1,3 @@
-'use client'
-
 export const isProd =
   process.env.NODE_ENV === 'production' && process.env.APP_ORIGIN === 'http://radverkehrsatlas.de'
 

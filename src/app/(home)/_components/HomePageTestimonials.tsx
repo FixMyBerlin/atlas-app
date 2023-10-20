@@ -1,5 +1,3 @@
-'use client'
-
 import Image, { StaticImageData } from 'next/image'
 import avatarImage1 from './images/HomePageTestimonials/avatar-1.png'
 import avatarImage3 from './images/HomePageTestimonials/avatar-3.png'

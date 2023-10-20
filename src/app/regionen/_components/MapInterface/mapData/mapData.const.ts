@@ -1,5 +1,3 @@
-'use client'
-
 import { sources } from './sourcesMapData/sources.const'
 import { themes } from './themesMapData/themes.const'
 import {

@@ -1,5 +1,3 @@
-'use client'
-
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import maplibregl, { MapLibreEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'

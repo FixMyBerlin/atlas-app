@@ -1,5 +1,3 @@
-'use client'
-
 import { describe, expect, test } from 'vitest'
 import { initializeMapRegionConfig } from './initializeMapRegionConfig'
 import { ThemeConfig } from './type'

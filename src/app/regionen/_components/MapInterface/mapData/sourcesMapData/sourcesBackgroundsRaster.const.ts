@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataBackgroundSource } from 'src/app/regionen/_components/MapInterface/mapData/types'
 
 export type SourcesRasterIds =

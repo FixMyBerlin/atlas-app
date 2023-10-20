@@ -1,3 +1,5 @@
+'use client'
+
 import { TailwindResponsiveHelper } from 'src/app/_components/layouts/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import { HeaderApp } from '../_components/layouts/Header/HeaderApp/HeaderApp'
 import { Footer } from '../_components/layouts/Footer/Footer'

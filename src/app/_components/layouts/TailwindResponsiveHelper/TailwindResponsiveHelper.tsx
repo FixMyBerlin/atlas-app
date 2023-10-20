@@ -1,5 +1,3 @@
-'use client'
-
 import { isDev } from '../../utils/isEnv'
 
 export const TailwindResponsiveHelper = () => {

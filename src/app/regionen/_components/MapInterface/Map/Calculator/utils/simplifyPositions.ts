@@ -1,5 +1,3 @@
-'use client'
-
 import { DrawArea } from '../CalculatorControlsDrawControl'
 
 // https://github.com/placemark/polyline/blob/main/lib/index.ts#L10-L14

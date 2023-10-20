@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import { MapData } from '../../mapData/types'

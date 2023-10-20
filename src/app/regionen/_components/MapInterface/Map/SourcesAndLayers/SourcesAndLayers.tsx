@@ -1,5 +1,3 @@
-'use client'
-
 import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'

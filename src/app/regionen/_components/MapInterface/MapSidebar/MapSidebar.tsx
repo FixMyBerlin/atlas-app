@@ -1,5 +1,3 @@
-'use client'
-
 import { SelectThemes } from './SelectThemes/SelectThemes'
 
 export const MapSidebar = () => {

@@ -1,5 +1,3 @@
-'use client'
-
 const translateKeys = [
   // Mainly for ?config
   ['id', 'i'],

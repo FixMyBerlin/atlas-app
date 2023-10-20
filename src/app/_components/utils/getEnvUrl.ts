@@ -1,5 +1,3 @@
-'use client'
-
 import { isBrowser } from './isDev'
 import { envKey } from './isEnv'
 

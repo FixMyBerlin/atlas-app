@@ -1,5 +1,3 @@
-'use client'
-
 // Docs https://github.com/mapbox/mapbox-gl-draw/blob/main/docs/API.md#styling-draw
 // Example https://github.com/mapbox/mapbox-gl-draw/blob/main/docs/EXAMPLES.md#lines-and-polygons
 // Style based on https://maplibre.org/maplibre-gl-js-docs/example/mapbox-gl-draw/

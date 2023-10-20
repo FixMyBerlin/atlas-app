@@ -1,5 +1,3 @@
-'use client'
-
 import { parseAsBoolean, useQueryState } from 'next-usequerystate'
 import { isDev } from 'src/app/_components/utils/isEnv'
 

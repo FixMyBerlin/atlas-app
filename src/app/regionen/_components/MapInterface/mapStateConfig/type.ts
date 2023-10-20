@@ -1,5 +1,3 @@
-'use client'
-
 import { TopicIds, TopicStyleIds } from '../mapData/mapData.const'
 import { MapDataThemeIds } from '../mapData/themesMapData/themes.const'
 

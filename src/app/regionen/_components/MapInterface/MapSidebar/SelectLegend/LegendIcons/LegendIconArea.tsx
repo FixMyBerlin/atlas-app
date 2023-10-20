@@ -1,5 +1,3 @@
-'use client'
-
 type Props = {
   color?: string
   borderColor?: string

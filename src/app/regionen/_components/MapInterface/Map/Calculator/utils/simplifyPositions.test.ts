@@ -1,5 +1,3 @@
-'use client'
-
 import { describe, expect, test } from 'vitest'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 import { simplifyPositions } from './simplifyPositions'

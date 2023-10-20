@@ -1,5 +1,3 @@
-'use client'
-
 import { clsx } from 'clsx'
 import { Route } from 'next'
 import { Link } from 'src/app/_components/links/Link'

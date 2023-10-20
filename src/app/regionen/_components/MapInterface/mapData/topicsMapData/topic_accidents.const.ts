@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 

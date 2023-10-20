@@ -1,5 +1,3 @@
-'use client'
-
 import Image, { StaticImageData } from 'next/image'
 import screenshotBiBi from './assets/HomePageLive/bibi.jpg'
 import screenshotTrTo from './assets/HomePageLive/trto.jpg'

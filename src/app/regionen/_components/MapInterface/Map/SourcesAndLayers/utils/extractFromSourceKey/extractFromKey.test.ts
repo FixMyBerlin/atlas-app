@@ -1,5 +1,3 @@
-'use client'
-
 import { describe, expect, test } from 'vitest'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
 import { extractTopicIdFromSourceKey } from './extractFromKey'

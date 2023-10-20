@@ -1,5 +1,3 @@
-'use client'
-
 export type FooterMenuItem = {
   name: string
   to: string

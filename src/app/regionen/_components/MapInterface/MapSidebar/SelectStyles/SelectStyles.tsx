@@ -1,5 +1,3 @@
-'use client'
-
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'

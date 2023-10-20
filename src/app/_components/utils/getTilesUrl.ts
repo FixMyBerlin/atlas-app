@@ -1,5 +1,3 @@
-'use client'
-
 import { isStaging } from './isEnv'
 
 const tilesBaseUrl = {

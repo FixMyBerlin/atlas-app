@@ -1,5 +1,3 @@
-'use client'
-
 import { verifiedColor } from 'src/app/regionen/_components/MapInterface/Inspector/Verification/verifiedColor.const'
 import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'

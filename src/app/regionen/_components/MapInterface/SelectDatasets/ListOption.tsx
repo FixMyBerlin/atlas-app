@@ -1,5 +1,3 @@
-'use client'
-
 import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { clsx } from 'clsx'

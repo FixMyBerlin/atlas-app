@@ -1,5 +1,3 @@
-'use client'
-
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect } from 'react'

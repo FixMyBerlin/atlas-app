@@ -1,5 +1,3 @@
-'use client'
-
 import { clsx } from 'clsx'
 import type { Route } from 'next'
 import NextLink from 'next/link'

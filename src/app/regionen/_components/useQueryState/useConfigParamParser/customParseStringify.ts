@@ -1,5 +1,3 @@
-'use client'
-
 import jsurl from 'jsurl2'
 import { legacyParse } from './legacyParse'
 import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'

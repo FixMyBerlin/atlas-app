@@ -1,5 +1,3 @@
-'use client'
-
 import { Remark } from 'react-remark'
 import clsx from 'clsx'
 import { proseClasses } from './prose'

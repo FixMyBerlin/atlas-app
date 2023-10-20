@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Disclosure as HeadlessUiDisclosure, Transition } from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'

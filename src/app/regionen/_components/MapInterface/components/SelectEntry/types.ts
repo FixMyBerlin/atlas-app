@@ -1,5 +1,3 @@
-'use client'
-
 export type EntryProps = {
   /** @desc scope to separate input-id's from one form and another */
   scope: string

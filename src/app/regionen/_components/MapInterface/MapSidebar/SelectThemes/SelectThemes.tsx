@@ -1,5 +1,3 @@
-'use client'
-
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { SelectTheme } from './SelectTheme'
 

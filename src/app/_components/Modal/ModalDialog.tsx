@@ -1,5 +1,3 @@
-'use client'
-
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
 import { Dialog, Transition } from '@headlessui/react'
 import {

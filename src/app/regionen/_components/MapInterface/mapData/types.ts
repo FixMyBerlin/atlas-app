@@ -1,5 +1,3 @@
-'use client'
-
 import { RegionPath } from 'src/regions/components/additionalRegionAttributes.const'
 import { TopicIds, TopicStyleIds } from './mapData.const'
 import {

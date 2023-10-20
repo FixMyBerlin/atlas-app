@@ -1,5 +1,3 @@
-'use client'
-
 import mapboxgl from 'mapbox-gl'
 
 export const layerVisibility = (visibile: boolean) => {

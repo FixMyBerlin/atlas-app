@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
 

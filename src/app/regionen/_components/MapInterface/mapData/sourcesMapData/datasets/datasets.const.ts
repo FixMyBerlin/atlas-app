@@ -1,5 +1,3 @@
-'use client'
-
 // Auto-generated file, do not edit
 
 export const datasets = {

@@ -1,5 +1,3 @@
-'use client'
-
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
 import React from 'react'

@@ -1,5 +1,3 @@
-'use client'
-
 import { Tab } from '@headlessui/react'
 import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'

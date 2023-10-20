@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataTopic } from '../types'
 import { defaultLegendFresh } from './defaultLegend/defaultLegendFresh'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'

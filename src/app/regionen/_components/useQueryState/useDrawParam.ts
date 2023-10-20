@@ -1,5 +1,3 @@
-'use client'
-
 import { createParser, useQueryState } from 'next-usequerystate'
 import { customParse, customStringify } from './useConfigParamParser/customParseStringify'
 

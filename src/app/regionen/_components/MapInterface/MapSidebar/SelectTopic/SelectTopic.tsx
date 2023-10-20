@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { SelectStyles } from '../SelectStyles/SelectStyles'
 import { getTopicData } from '../../mapData/utils/getMapDataUtils'

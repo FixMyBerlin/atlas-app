@@ -1,5 +1,3 @@
-'use client'
-
 /* eslint-env node */
 
 import { isStaging } from './isEnv'

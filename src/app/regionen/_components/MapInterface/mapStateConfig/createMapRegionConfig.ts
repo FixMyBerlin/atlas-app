@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataThemeIds } from '../mapData/themesMapData/themes.const'
 import { getThemeData, getTopicData } from '../mapData/utils/getMapDataUtils'
 import { ThemeConfig } from './type'

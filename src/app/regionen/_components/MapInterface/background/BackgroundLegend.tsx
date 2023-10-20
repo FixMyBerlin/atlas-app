@@ -1,5 +1,3 @@
-'use client'
-
 import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { Link } from 'src/app/_components/links/Link'

@@ -1,5 +1,3 @@
-'use client'
-
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/_components/MapInterface/mapData/types'
 import { pointFromGeometry } from './pointFromGeometry'
 

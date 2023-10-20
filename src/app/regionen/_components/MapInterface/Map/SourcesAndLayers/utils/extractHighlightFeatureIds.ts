@@ -1,5 +1,3 @@
-'use client'
-
 import { MapboxGeoJSONFeature } from 'mapbox-gl'
 import {
   StoreCalculator,

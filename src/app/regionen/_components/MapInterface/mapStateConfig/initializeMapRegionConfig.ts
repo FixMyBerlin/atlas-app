@@ -1,5 +1,3 @@
-'use client'
-
 import { produce } from 'immer'
 import { ThemeConfig } from './type'
 

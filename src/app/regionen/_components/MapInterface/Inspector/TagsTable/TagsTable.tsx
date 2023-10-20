@@ -1,5 +1,3 @@
-'use client'
-
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 import { DatasetIds } from '../../mapData/sourcesMapData/datasets/types'
