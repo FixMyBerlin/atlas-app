@@ -55,8 +55,10 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
 
   const verifiedOnce = verificationStatus && verificationStatusOptions.includes(verificationStatus)
 
+  const { schema, initialValues } = props
+
   return (
-    <Form<S> {...props} onSubmit={handleSubmit}>
+    <Form<S> schema={schema} initialValues={initialValues} onSubmit={handleSubmit}>
       <fieldset
         disabled={disabled || isSubmitting}
         className={clsx('mb-2 space-y-2', {
