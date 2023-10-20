@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { TVerificationStatus, VerificationSchema } from 'src/bikelane-verifications/schemas'
+import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
 import { SourceVerificationApiIdentifier } from '../../../mapData/sourcesMapData/sources.const'
 import { VerificationActionForm } from './VerificationActionForm'
 
@@ -29,7 +29,6 @@ export const VerificationAction: React.FC<Props> = ({
     <Suspense fallback={<Spinner />}>
       <VerificationActionForm
         disabled={outerDisabled}
-        schema={VerificationSchema}
         verificationStatus={verificationStatus}
         initialValues={{ osm_id: BigInt(osmId) }}
       />

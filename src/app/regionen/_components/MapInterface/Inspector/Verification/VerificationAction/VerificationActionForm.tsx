@@ -1,24 +1,26 @@
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
 import { useForm } from 'react-hook-form'
-import Form, { FORM_ERROR, FormProps } from 'src/app/_components/forms/Form'
+
+import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import { useMapStateInteraction } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
+  VerificationSchema,
   TCreateVerificationSchema,
   TVerificationStatus,
   verificationStatusOptions,
 } from 'src/bikelane-verifications/schemas'
-import { z } from 'zod'
 import { verifiedColor } from '../verifiedColor.const'
 
-export function VerificationActionForm<S extends z.ZodType<any, any>>(
-  props: Omit<FormProps<S>, 'onSubmit'> & {
-    disabled: boolean
-    verificationStatus: TVerificationStatus | undefined
-  },
-) {
+type Props = {
+  initialValues: Record<string, any>
+  disabled: boolean
+  verificationStatus: TVerificationStatus | undefined
+}
+
+export function VerificationActionForm(props: Props) {
   const { disabled, verificationStatus } = props
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
   // TODO MIGRATION: Do we still need removeLocalUpdate ?
@@ -27,8 +29,6 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
     register,
     formState: { isSubmitting, errors },
   } = useForm()
-
-  console.log('errors', errors)
 
   const handleSubmit = async (values) => {
     try {
@@ -50,10 +50,10 @@ export function VerificationActionForm<S extends z.ZodType<any, any>>(
 
   const verifiedOnce = verificationStatus && verificationStatusOptions.includes(verificationStatus)
 
-  const { schema, initialValues } = props
+  const { initialValues } = props
 
   return (
-    <Form<S> schema={schema} initialValues={initialValues} onSubmit={handleSubmit}>
+    <Form schema={VerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>
       <fieldset
         disabled={disabled || isSubmitting}
         className={clsx('mb-2 space-y-2', {
