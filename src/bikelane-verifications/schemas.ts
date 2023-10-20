@@ -14,7 +14,7 @@ export const CreateVerificationSchema = VerificationSchema.pick({
   osm_type: true,
   osm_id: true,
   verified: true,
-  comment: true
+  comment: true,
 })
 
 export type TCreateVerificationSchema = z.infer<typeof CreateVerificationSchema>
