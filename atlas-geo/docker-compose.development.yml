@@ -1,16 +1,21 @@
 version: "3"
 services:
   app:
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     build:
       context: .
       dockerfile: ./app.Dockerfile
     entrypoint: /app/run.sh
-    env_file:
-      - ./.env
     environment:
-      PGDATABASE: ${POSTGRES_DB}
-      PGUSER: ${POSTGRES_USER}
-      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGHOST:
+      PGDATABASE: 
+      PGUSER:
+      PGPASSWORD:
+      OSM_DOWNLOAD_URL:
+      SKIP_DOWNLOAD:
+      SKIP_TAG_FILTER:
+      DEBUG:
+      ID_FILTER:
     volumes:
       - osmfiles:/data
     depends_on:
@@ -24,7 +29,7 @@ services:
     image: pramsey/pg_tileserv
     container_name: tileserver
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db/${POSTGRES_DB}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
     ports:
       - 7800:7800
     depends_on:
@@ -35,8 +40,11 @@ services:
       context: .
       dockerfile: ./api.Dockerfile
     container_name: api
-    env_file:
-      - ./.env
+    environment:
+      PGHOST:
+      PGDATABASE: 
+      PGUSER:
+      PGPASSWORD:
     ports:
       - 80:80
     depends_on:
@@ -44,12 +52,10 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
-    env_file:
-      - ./.env
     environment:
-      POSTGRES_DB:
-      POSTGRES_USER:
-      POSTGRES_PASSWORD:
+      PGUSER:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
@@ -60,9 +66,9 @@ services:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
-    container_name: osmdatabase
+    container_name: db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER}"]
       interval: 5s
       timeout: 5s
       retries: 5
