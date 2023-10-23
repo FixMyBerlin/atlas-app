@@ -14,6 +14,7 @@ services:
       SKIP_TAG_FILTER:
       DEBUG:
       ID_FILTER:
+      API_SECRET:
     volumes:
       - osmfiles:/data
     networks:
@@ -49,6 +50,7 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+      API_SECRET:
     restart: always
     ports:
       - "8020:80"

@@ -16,6 +16,7 @@ services:
       SKIP_TAG_FILTER:
       DEBUG:
       ID_FILTER:
+      API_SECRET:
     volumes:
       - osmfiles:/data
     depends_on:
@@ -44,6 +45,7 @@ services:
       PGDATABASE: 
       PGUSER:
       PGPASSWORD:
+      API_SECRET:
     ports:
       - 80:80
     depends_on:
