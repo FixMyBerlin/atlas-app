@@ -41,7 +41,7 @@ local sideDirectionMap = {
 -- these tags get transformed from the forward backward schema
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes', 'traffic_sign' }
 function GetTransformedObjects(tags, transformations)
-  local center = { sign = 0 }
+  local center = {}
   for k, v in pairs(tags) do center[k] = v end
   center.sign = CENTER_SIGN -- Overwrite any OSM tag 'sign'
 
