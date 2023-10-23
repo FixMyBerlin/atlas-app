@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: ./app.Dockerfile
     entrypoint: /app/run.sh
+    container_name: app
     environment:
       PGHOST:
       PGDATABASE: 
@@ -20,13 +21,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    container_name: app
     profiles:
       - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver
+    container_name: tiles
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
     ports:

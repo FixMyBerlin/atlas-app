@@ -9,9 +9,11 @@ services:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
+      OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
-      OSM_DOWNLOAD_URL:
+      DEBUG:
+      ID_FILTER:
     volumes:
       - osmfiles:/data
     networks:
@@ -25,7 +27,6 @@ services:
     container_name: tiles
     restart: always
     environment:
-      NODE_ENV: production
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
     ports:
       - "8010:7800"
@@ -63,7 +64,6 @@ services:
       db:
         condition: service_healthy
   db:
-    # There is no Apple M1 ARM 64 build, see https://github.com/postgis/docker-postgis/issues/216
     image: postgis/postgis:14-3.3-alpine
     environment:
       PGUSER:
@@ -84,7 +84,7 @@ services:
     networks:
       - app_bridge
 volumes:
-  osmfiles:
   geodata:
+  osmfiles:
 networks:
   app_bridge:
