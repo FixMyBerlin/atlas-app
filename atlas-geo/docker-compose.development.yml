@@ -1,7 +1,6 @@
 version: "3"
 services:
   app:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     build:
       context: .
       dockerfile: ./app.Dockerfile
