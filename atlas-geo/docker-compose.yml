@@ -7,7 +7,7 @@ services:
     entrypoint: /app/run.sh
     container_name: app
     environment:
-      PGHOST: osmdatabase
+      PGHOST: db
       PGDATABASE: ${POSTGRES_DB}
       PGUSER: ${POSTGRES_USER}
       PGPASSWORD: ${POSTGRES_PASSWORD}
