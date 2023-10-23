@@ -78,7 +78,7 @@ function Bikelanes(object)
     highway = "footway",
     prefix = "sidewalk",
     filter = function(tags)
-      return not (tags.footway == 'no' or tags.footway == 'separate' or tags.bicycle_road == 'yes')
+      return not (tags.footway == 'no' or tags.footway == 'separate' or tags._parent_highway.bicycle_road == 'yes')
     end
   }
   -- cycleway transformer:
@@ -86,7 +86,7 @@ function Bikelanes(object)
     highway = "cycleway",
     prefix = "cycleway",
     filter = function(tags)
-      return tags.bicycle_road ~= 'yes'
+      return tags._parent_highway.bicycle_road ~= 'yes'
     end
   }
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
