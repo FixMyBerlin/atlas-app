@@ -5,11 +5,10 @@ from fastapi.responses import FileResponse
 from typing import Union, Annotated
 from psycopg import sql
 from psycopg.rows import dict_row
-from db_configuration import VerificationTable, ExportTable, VerifiedState
-from db import conn_string
+from db_configuration import VerificationTable, ExportTable, VerifiedState, verified_table
+from db import conn_string, api_secret
 import psycopg
-import json
-import os
+from pathlib import Path
 
 
 app = FastAPI(
@@ -130,6 +129,46 @@ async def verify_osm_object(response: Response, type_name: VerificationTable, os
         await conn.commit()
 
         return 'OK'
+
+@app.get("/init")
+async def init_api(response: Response, secret: str):
+  if secret != api_secret:
+    raise HTTPException(status_code=401, detail="the API secret is wrong. Access denied!")
+  async with await psycopg.AsyncConnection.connect(conn_string) as conn:
+    async with conn.cursor() as cur:
+      print("Starting creation of verification tables")
+
+      sql_views_path = Path(__file__).with_name('INIT_VERIFICATION_VIEWS.sql')
+      with open(sql_views_path, "r") as f:
+        sql = f.read()
+      for table in VerificationTable:
+        print('Create verification table and view ', table.value)
+        processed_sql = sql.format(
+          verification_table=table.name,
+          geometry_table=table.value,
+          joined_table=verified_table(table.value),
+        )
+        await cur.execute(processed_sql)
+      await conn.commit()
+
+      print('=' * 80)
+      print("Finished creation of verification tables")
+
+      print("Starting creation of database exports")
+      sql_functions_path = Path(__file__).with_name('INIT_FUNCTIONS.sql')
+      with open(sql_functions_path, "r") as f:
+        sql = f.read()
+      for table in ExportTable:
+        function_name = table.name
+        print('Create function', function_name, ' for table ', table.value)
+        processed_sql = sql.replace('{function_name}', function_name).replace('{table_name}', table.value)
+        await cur.execute(processed_sql)
+      await conn.commit()
+
+      print('=' * 80)
+      print("Finished creation of database exports")
+      print('=' * 80)
+      print("Finished database initialization")
 
 
 @app.get("/health")

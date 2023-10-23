@@ -117,6 +117,7 @@ jobs:
             echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
             echo API_URL='${{ inputs.API_URL }}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
+            echo API_SECRET=$(echo $RANDOM | md5sum | head -c 20) >> .env
             echo "Stop containers on VPS"
             docker compose down
             docker compose -f docker-compose.traefik.yml down
