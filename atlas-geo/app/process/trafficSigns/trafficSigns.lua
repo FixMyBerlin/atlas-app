@@ -35,23 +35,24 @@ local table = osm2pgsql.define_table({
 --   }
 -- })
 
--- @desc TODO
-local function splitDirections(tags)
-  local directionOffsets = { ["forward"] = 0, ["backward"] = 180 }
-  local traffic_signs = {}
-  for direction, offset in pairs(directionOffsets) do
-    local directedTag = "traffic_sing:" .. direction
-    if tags[directedTag] then
-      traffic_signs[direction] = { ["traffic_sign"] = tags[directedTag], ["offset"] = offset }
-    elseif tags.direction == direction or tags["traffic_sign:direction"] == direction then
-      traffic_signs[direction] = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = offset }
-    end
-  end
-  if traffic_signs.forward == nil and traffic_signs.backward == nil then
-    traffic_signs.forward = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = 0 }
-  end
-  return { [1] = traffic_signs.forward, [2] = traffic_signs.backward }
-end
+-- this function is for splitting traffic signs which are tagged with the :forward :backward sign e.g. nodes containing information about two traffic signs
+-- the idea is to include two db entries where the traffic_sign:backward entry is rotated by 180 degrees
+-- local function splitDirections(tags)
+--   local directionOffsets = { ["forward"] = 0, ["backward"] = 180 }
+--   local traffic_signs = {}
+--   for direction, offset in pairs(directionOffsets) do
+--     local directedTag = "traffic_sing:" .. direction
+--     if tags[directedTag] then
+--       traffic_signs[direction] = { ["traffic_sign"] = tags[directedTag], ["offset"] = offset }
+--     elseif tags.direction == direction or tags["traffic_sign:direction"] == direction then
+--       traffic_signs[direction] = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = offset }
+--     end
+--   end
+--   if traffic_signs.forward == nil and traffic_signs.backward == nil then
+--     traffic_signs.forward = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = 0 }
+--   end
+--   return { [1] = traffic_signs.forward, [2] = traffic_signs.backward }
+-- end
 
 -- local function cardinalDirection2Degree(direction)
 --   local directionMap = {
