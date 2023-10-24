@@ -53,31 +53,31 @@ local function splitDirections(tags)
   return { [1] = traffic_signs.forward, [2] = traffic_signs.backward }
 end
 
-local function cardinalDirection2Degree(direction)
-  local directionMap = {
-    ["north"] = 0,
-    ["east"] = 90,
-    ["south"] = 180,
-    ["west"] = 270,
-    ["N"] = 0,
-    ["NNE"] = 22,
-    ["NE"] = 45,
-    ["ENE"] = 67,
-    ["E"] = 90,
-    ["ESE"] = 112,
-    ["SE"] = 135,
-    ["SSE"] = 157,
-    ["S"] = 180,
-    ["SSW"] = 202,
-    ["SW"] = 225,
-    ["WSW"] = 247,
-    ["W"] = 270,
-    ["WNW"] = 292,
-    ["NW"] = 315,
-    ["NNW"] = 337
-  }
-  return directionMap[direction]
-end
+-- local function cardinalDirection2Degree(direction)
+--   local directionMap = {
+--     ["north"] = 0,
+--     ["east"] = 90,
+--     ["south"] = 180,
+--     ["west"] = 270,
+--     ["N"] = 0,
+--     ["NNE"] = 22,
+--     ["NE"] = 45,
+--     ["ENE"] = 67,
+--     ["E"] = 90,
+--     ["ESE"] = 112,
+--     ["SE"] = 135,
+--     ["SSE"] = 157,
+--     ["S"] = 180,
+--     ["SSW"] = 202,
+--     ["SW"] = 225,
+--     ["WSW"] = 247,
+--     ["W"] = 270,
+--     ["WNW"] = 292,
+--     ["NW"] = 315,
+--     ["NNW"] = 337
+--   }
+--   return directionMap[direction]
+-- end
 
 local function ExitProcessing(object)
   local required_tags = { "traffic_sign", "traffic_sign:froward", "traffic_sign:backward" }
