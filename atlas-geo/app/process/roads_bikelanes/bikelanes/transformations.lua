@@ -39,7 +39,7 @@ local sideDirectionMap = {
 }
 
 -- these tags get transformed from the forward backward schema
-local directedTags = { 'cycleway:lanes', 'bicycle:lanes', 'traffic_sign' }
+local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 function GetTransformedObjects(tags, transformations)
   local center = {}
   for k, v in pairs(tags) do center[k] = v end
