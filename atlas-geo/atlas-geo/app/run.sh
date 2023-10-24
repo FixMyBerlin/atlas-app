@@ -23,6 +23,4 @@ export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used b
 
 ./run-5-postprocess.sh
 
-./run-6-process-buildings.sh
-
 ./run-7-metadata.sh
