@@ -70,7 +70,8 @@ function osm2pgsql.process_way(object)
       or tags.steps == 'sidewalk' then
     return
   end
-  if tags.footway == 'crossing' and tags.bicycle ~= 'yes' then
+  -- Keep in line with categories.lua crossing()
+  if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
     return
   end
 

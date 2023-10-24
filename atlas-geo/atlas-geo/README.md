@@ -90,7 +90,7 @@ The workflow is…
    _OR_
 
    ```sh
-   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up
+   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
    ```
 
 3. Inspect the new results
@@ -151,7 +151,7 @@ ssh atlas-staging
 # OR
 ssh atlas-prd
 # then…
-cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
+cd /srv/processing && docker compose logs app --tail 500
 ```
 
 ## 💛 Thanks to

@@ -1,5 +1,5 @@
 require("Set")
-function SmoothnessDirect(smoothness)
+function NormalizeSmoothness(smoothness)
   if smoothness ~= nil then
     local smoothnessDirect = Set({
       "excellent",
