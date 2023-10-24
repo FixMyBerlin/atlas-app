@@ -29,7 +29,7 @@ local directionTable = osm2pgsql.define_table({
   name = '_trafficSignDirections',
   ids = { type = 'way', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'node_id', type = 'int' },
+    { column = 'node_id', type = 'bigint' },
     { column = 'idx', type = 'int' },
     { column = 'geom', type = 'linestring' },
   }
