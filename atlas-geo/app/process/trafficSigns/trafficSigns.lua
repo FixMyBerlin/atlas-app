@@ -89,7 +89,7 @@ local function ExitProcessing(object)
   return true
 end
 
-local to_orient = {}
+-- local to_orient = {}
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
