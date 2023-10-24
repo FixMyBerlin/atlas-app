@@ -1,1 +1,1 @@
-select degrees(ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx+1))), node_id, geom from "_trafficSignDirections";
+select avg(degrees(ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx+1)))), node_id from "_trafficSignDirections" group by node_id;
