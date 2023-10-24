@@ -152,7 +152,7 @@ end
 --   end
 --   if ExitProcessing(object) then return end
 --   if object.is_closed or object.tags.traffic_sing == 'None' then return end
-  
+
 --   trafficSignWays:insert({
 --     tags = object.tags,
 --     meta = Metadata(object),
