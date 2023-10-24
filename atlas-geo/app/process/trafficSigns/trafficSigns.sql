@@ -1,1 +1,1 @@
-INSERT INTO "trafficSigns" SELECT osm_id, tags, meta, ST_StartPoint(geom) as geom from "_trafficSigns_tmp"; 
+select degrees(ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx+1))), node_id, geom from "_trafficSignDirections";
