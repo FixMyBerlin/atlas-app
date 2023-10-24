@@ -1,4 +1,4 @@
-function SmoothnessFromSurface(surface)
+function DeriveSmoothnessFromSurface(surface)
   local surfaceToSmoothness = {
     ["cobblestone:flattened"] = "bad",
     ["concrete:lanes"] = "intermediate",
@@ -98,4 +98,38 @@ function SmoothnessFromSurface(surface)
     end
   end
   return smoothness, source, confidence, todo
+end
+
+-- https://wiki.openstreetmap.org/wiki/Key:mtb:scale
+-- https://taginfo.openstreetmap.org/keys/mtb%3Ascale#values
+function DeriveSmoothnessFromMTBScale(scale)
+  if not scale then
+    return nil, nil, nil, "No MTB scale was given"
+  end
+  if Set({"0", "0+", "0-"})[scale] then
+    return "bad", "MTB scale to smoothness", "medium", nil
+  end
+  return "very_bad", "MTB scale to smoothness", "medium", nil
+end
+
+-- Wiki https://wiki.openstreetmap.org/wiki/Key:tracktype
+-- Categories that cyclosm.org use https://github.com/cyclosm/cyclosm-cartocss-style/wiki/Tag-to-Render
+-- Mapping of Smoothness<>Surface https://wiki.openstreetmap.org/wiki/Key:smoothness/Gallery
+-- Mapping of Smoothness<>Surface (Legacy) https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/smoothness
+function DeriveSmoothnessFromTrackType(type)
+  if not type then
+    return nil, nil, nil, "No track type was given"
+  end
+  local trackTypeToSmoothness = {
+    ["grade1"] = "good",
+    ["grade2"] = "intermediate",
+    ["grade3"] = "bad",
+    ["grade4"] = "bad",
+    ["grade5"] = "very_bad"
+  }
+  local smoothness = trackTypeToSmoothness[type]
+  if smoothness then
+    return smoothness, "track type to smoothness", "medium", nil
+  end
+  return nil, nil, nil, nil
 end
