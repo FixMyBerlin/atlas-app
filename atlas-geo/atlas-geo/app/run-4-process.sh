@@ -8,8 +8,6 @@ source ./process-helpers.sh
 
 echo -e "\e[1m\e[7m PROCESS – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
-
-
 echo "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
 run_lua "roads_bikelanes/roads_bikelanes"
 run_psql "roads_bikelanes/bikelanes/bikelanes"
@@ -19,7 +17,6 @@ run_lua "legacy_surfaceQuality/surfaceQuality"
 run_lua "legacy_roadClassification/roadClassification"
 run_lua "legacy_maxspeed/maxspeed"
 run_lua "legacy_lit/lit"
-
 
 run_lua "trafficSigns/trafficSigns"
 # run_psql "trafficSigns/trafficSigns"
