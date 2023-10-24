@@ -14,4 +14,7 @@ echo -e "\e[1m\e[7m Postprocessing – START \e[27m\e[21m\e[0m"
 psql -q -f "./POSTPROCESS.sql"
 
 # Creating verification tables and export functions in api service
+echo -e "INFO: Call api/init to create verification tables and export functions"
 curl -G -d "secret=$API_SECRET" api/init
+
+echo -e "\e[1m\e[7m Postprocessing – END \e[27m\e[21m\e[0m"
