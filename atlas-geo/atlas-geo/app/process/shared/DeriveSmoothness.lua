@@ -1,4 +1,41 @@
-function DeriveSmoothnessFromSurface(surface)
+  -- Try to find smoothess information in the following order:
+  -- 1. `smoothess` tag
+  -- 2. `smoothess` extrapolated from `surface` data
+  -- 3. `smoothess` extrapolated from `tracktype` tag, mostly on `highway=track`
+  -- 4. `smoothess` extrapolated from `mtb:scale` tag, mostly on `highway=path`
+  
+require("Set")
+
+local function normalizeSmoothness(smoothness)
+  if smoothness ~= nil then
+    local smoothnessDirect = Set({
+      "excellent",
+      "good",
+      "intermediate",
+      "bad",
+      "very_bad"
+    })
+    -- We only support some smoothness values to make things easier for the user
+    local smoothnessNormalization = {
+      ["very_good"] = "excellent",
+      ["impassable"] = "very_bad",
+      ["horrible"] = "very_bad",
+      ["very_horrible"] = "very_bad",
+    }
+    if smoothnessDirect[smoothness] then
+      return smoothness, "tag", "high"
+    else
+      local normalized = smoothnessNormalization[smoothness]
+      if normalized then
+        return normalized, "tag_normalized", "high"
+      end
+    end
+  end
+  return nil, nil, nil
+end
+
+
+local function deriveSmoothnessFromSurface(surface)
   local surfaceToSmoothness = {
     ["cobblestone:flattened"] = "bad",
     ["concrete:lanes"] = "intermediate",
@@ -102,7 +139,7 @@ end
 
 -- https://wiki.openstreetmap.org/wiki/Key:mtb:scale
 -- https://taginfo.openstreetmap.org/keys/mtb%3Ascale#values
-function DeriveSmoothnessFromMTBScale(scale)
+local function deriveSmoothnessFromMTBScale(scale)
   if not scale then
     return nil, nil, nil, "No MTB scale was given"
   end
@@ -116,7 +153,7 @@ end
 -- Categories that cyclosm.org use https://github.com/cyclosm/cyclosm-cartocss-style/wiki/Tag-to-Render
 -- Mapping of Smoothness<>Surface https://wiki.openstreetmap.org/wiki/Key:smoothness/Gallery
 -- Mapping of Smoothness<>Surface (Legacy) https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/smoothness
-function DeriveSmoothnessFromTrackType(type)
+local function deriveSmoothnessFromTrackType(type)
   if not type then
     return nil, nil, nil, "No track type was given"
   end
@@ -132,4 +169,18 @@ function DeriveSmoothnessFromTrackType(type)
     return smoothness, "track type to smoothness", "medium", nil
   end
   return nil, nil, nil, nil
+end
+
+function DeriveSmoothness(tags)
+  local smoothness, smoothness_source, smoothness_confidence = normalizeSmoothness(tags.smoothness)
+  if smoothness == nil then
+    smoothness, smoothness_source, smoothness_confidence = deriveSmoothnessFromSurface(tags.surface)
+  end
+  if smoothness == nil then
+    smoothness, smoothness_source, smoothness_confidence = deriveSmoothnessFromTrackType(tags.tracktype)
+  end
+  if smoothness == nil then
+    smoothness, smoothness_source, smoothness_confidence = deriveSmoothnessFromMTBScale(tags["mtb:scale"])
+  end
+  return smoothness, smoothness_source, smoothness_confidence
 end
