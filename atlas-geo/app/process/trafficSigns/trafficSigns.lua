@@ -35,6 +35,7 @@ local table = osm2pgsql.define_table({
 --   }
 -- })
 
+-- @desc TODO
 local function splitDirections(tags)
   local directionOffsets = { ["forward"] = 0, ["backward"] = 180 }
   local traffic_signs = {}
