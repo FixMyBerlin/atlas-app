@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@blitzjs/rpc'
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { useMapParam } from 'src/app/regionen/_components/useQueryState/useMapParam'
@@ -39,25 +39,23 @@ export default function ShowRegionPage() {
   // We re-use this reset to update the config on the first render.
   const [initializeAndReset, setInitializeAndReset] = useState(true)
 
-  useEffect(() => {
-    if (initializeAndReset === true) {
-      // The order in which we initially call set*Param is the order we see in the URL.
-      const map = mapParam || {
-        zoom: Number(region?.map?.zoom ?? 12),
-        lat: Number(region?.map?.lat ?? 52.507),
-        lng: Number(region?.map?.lng ?? 13.367),
-      }
-      void setMapParam(map)
-
-      const initialConfig = initializeMapRegionConfig({
-        freshConfig,
-        urlConfig: configParam,
-      })
-      void setConfigParam(initialConfig)
-
-      setInitializeAndReset(false)
+  if (initializeAndReset === true) {
+    // The order in which we initially call set*Param is the order we see in the URL.
+    const map = mapParam || {
+      zoom: Number(region?.map?.zoom ?? 12),
+      lat: Number(region?.map?.lat ?? 52.507),
+      lng: Number(region?.map?.lng ?? 13.367),
     }
-  }, [])
+    void setMapParam(map)
+
+    const initialConfig = initializeMapRegionConfig({
+      freshConfig,
+      urlConfig: configParam,
+    })
+    void setConfigParam(initialConfig)
+
+    setInitializeAndReset(false)
+  }
 
   return <MapInterface />
 }
