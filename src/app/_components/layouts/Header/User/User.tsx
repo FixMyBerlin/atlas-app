@@ -7,7 +7,7 @@ import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 import { useMutation } from '@blitzjs/rpc'
 import logout from 'src/auth/mutations/logout'
 import { LoggedIn } from './LoggedIn'
-import { useHasPermissions } from 'src/app/hooks/useHasPermissions'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
 export const User: React.FC = () => {
   const user = useCurrentUser()
