@@ -21,7 +21,6 @@ type Props = {
 }
 
 // https://www.npmjs.com/package/react-helmet-async#usage-without-context
-const helmetData = new HelmetData({})
 
 export const MetaTags = ({ noindex, title, description, image, article }: Props) => {
   const { defaultTitle, defaultDescription, baseUrl } = defaults
@@ -29,17 +28,17 @@ export const MetaTags = ({ noindex, title, description, image, article }: Props)
   // On Production, take the prop or allow indexing (`noindex=false`).
   // Staging (and everything else) is set to `noindex=true`
   noindex = isProd ? noindex ?? false : true
-
   const seo = {
     title: title ?? defaultTitle,
     description: description ?? defaultDescription,
     image: `${baseUrl}${image?.src ?? SocialSharingImage.src}`,
   }
+  console.log(seo)
 
   // FYI, we do not inlcude the url meta tags since is work to handle edge cases but let the browser handle this.
   // We do not have propper SocialSharing anyways, since we don't generate static content.
   return (
-    <Helmet helmetData={helmetData}>
+    <Helmet>
       <title>{seo.title}</title>
 
       {/* Even when `noindex`, still render the meta tags so Social Sharing still looks nice */}
