@@ -7,13 +7,6 @@ import { HomePageLive } from './_components/HomePageLive'
 import { HomePagePrimaryFeatures } from './_components/HomePagePrimaryFeatures'
 import { HomePageSecondaryFeaturesJustText } from './_components/HomePageSecondaryFeaturesJustText'
 
-// TODO: use react-helmet
-// export const metadata: Metadata = {
-//   title: 'Radverkehrsatlas – Daten für die Radverkehrsplanung',
-//   description:
-//     'Der Radverkehrsatlas beschleunigt die kommunale Radverkehrsplanung, mit umfassenden und amtlich nutzbaren Daten für die Radverkehrsplanung.',
-// }
-
 export default function Home() {
   return (
     <>
