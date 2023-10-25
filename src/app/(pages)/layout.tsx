@@ -1,5 +1,3 @@
-'use client'
-
 import { Footer } from '../_components/layouts/Footer/Footer'
 import { HeaderApp } from '../_components/layouts/Header/HeaderApp/HeaderApp'
 
