@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 
 type Feature = {

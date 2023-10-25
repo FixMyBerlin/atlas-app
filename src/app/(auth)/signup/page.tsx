@@ -1,15 +1,14 @@
-'use client'
-
+import { Metadata } from 'next'
 import { useRouter } from 'next/navigation'
-import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
-import { SignupForm } from 'src/auth/components/SignupForm'
+import { SignupForm } from 'src/app/(auth)/_components/SignupForm'
+
+export const metadata: Metadata = { title: 'Anmelden' }
 
 export default function SignupPage() {
   const router = useRouter()
 
   return (
     <>
-      <MetaTags noindex title="Anmelden" />
       <SignupForm onSuccess={() => router.push('/')} />
     </>
   )

@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { MapProvider } from 'react-map-gl/maplibre'
 import { DebugMap } from './DebugBoxes/DebugMap'

@@ -1,8 +1,8 @@
-'use client'
-
+import { Metadata } from 'next'
 import { Footer } from '../_components/layouts/Footer/Footer'
-import { MetaTags } from '../_components/layouts/MetaTags/MetaTags'
 import { PublicRegionList } from './_components/regions/PublicRegionList'
+
+export const metadata: Metadata = { title: 'Regionenauswahl' }
 
 export default function RegionsPage() {
   // TODO MIGRATION: Re add list of unpublished Regions based on permissions
@@ -11,8 +11,7 @@ export default function RegionsPage() {
 
   return (
     <>
-      {/* <PageregionsRegionIntro regions={regions} /> */}
-      <MetaTags title={`Radverkehrsatlas (beta) – Regionenauswahl`} />
+      {/* <RegionIntro regions={regions} /> */}
       <PublicRegionList />
       {/* {Boolean(showUnpublishedRegions) && (
         <div className="mt-4 bg-pink-200 py-10">

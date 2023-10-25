@@ -1,4 +1,12 @@
-import { MetaTags } from '../_components/layouts/MetaTags/MetaTags'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  robots: 'noindex',
+  title: {
+    default: 'ADMIN Radverkehrsatlas',
+    template: 'ADMIN: %s – radverkehrsatlas.de',
+  },
+}
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   // await useAuthenticatedBlitzContext({
@@ -9,7 +17,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <>
-      <MetaTags noindex title="ADMIN Radverkehrsatlas" />
       <div className="bg-pink-300">{children}</div>
     </>
   )

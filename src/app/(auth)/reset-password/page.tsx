@@ -6,9 +6,11 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { FORM_ERROR, Form } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
-import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 import resetPassword from 'src/auth/mutations/resetPassword'
 import { ResetPassword } from 'src/auth/schemas'
+
+// TODO: Formular in client component extrahieren und page zu server component machen
+// export const metadata: Metadata = { title: 'Passwort neu vergeben' }
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams()
@@ -17,8 +19,6 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <MetaTags noindex title="Passwort neu vergeben" />
-
       <h1>Passwort neu vergeben</h1>
 
       {isSuccess ? (
