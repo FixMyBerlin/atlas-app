@@ -1,14 +1,10 @@
-import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
-
-export const metadata: Metadata = {
-  title: '"Seite nicht gefunden (Fehler 404)"',
-  robots: 'noindex',
-}
+import { MetaTags } from '../_components/layouts/MetaTags/MetaTags'
 
 export default function Page404() {
   return (
     <div className="flex min-h-full flex-col bg-white pb-12 pt-16">
+      <MetaTags noindex title="Region nicht gefunden (Fehler 404)" />
       <main className="mx-auto flex w-full max-w-7xl flex-grow flex-col justify-center px-4 sm:px-6 lg:px-8">
         <div className="py-16">
           <div className="text-center">

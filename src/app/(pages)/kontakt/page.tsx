@@ -1,20 +1,20 @@
-import { LinkMail } from 'src/app/_components/links/LinkMail'
-import { LinkTel } from 'src/app/_components/links/LinkTel'
-import { Metadata } from 'next'
 import Image from 'next/image'
 import imageBmdv from 'src/app/(pages)/kontakt/assets/logo-bmdv-foerderung.svg'
 import imageMfund from 'src/app/(pages)/kontakt/assets/logo-mfund.png'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 import { Link } from 'src/app/_components/links/Link'
-
-export const metadata: Metadata = {
-  title: 'Kontakt und Impressum',
-  description: 'Kontakt, Impressum sowie weitere Rechtliche Angaben',
-  robots: 'noindex',
-}
+import { LinkMail } from 'src/app/_components/links/LinkMail'
+import { LinkTel } from 'src/app/_components/links/LinkTel'
 
 export default function Kontakt() {
   return (
     <>
+      <MetaTags
+        noindex
+        title="Kontakt und Impressum"
+        description="Kontakt, Impressum sowie weitere rechtliche Angaben"
+      />
+
       <h1>Kontakt und Impressum</h1>
       <p>
         <strong>FixMyCity GmbH</strong>

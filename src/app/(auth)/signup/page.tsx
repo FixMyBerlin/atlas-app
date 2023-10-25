@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 import { SignupForm } from 'src/auth/components/SignupForm'
 
 export default function SignupPage() {
@@ -8,6 +9,7 @@ export default function SignupPage() {
 
   return (
     <>
+      <MetaTags noindex title="Anmelden" />
       <SignupForm onSuccess={() => router.push('/')} />
     </>
   )

@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { FORM_ERROR, Form } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 import resetPassword from 'src/auth/mutations/resetPassword'
 import { ResetPassword } from 'src/auth/schemas'
 
@@ -16,7 +17,9 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <h1>Set a New Password</h1>
+      <MetaTags noindex title="Passwort neu vergeben" />
+
+      <h1>Passwort neu vergeben</h1>
 
       {isSuccess ? (
         <div>

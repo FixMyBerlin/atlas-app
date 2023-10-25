@@ -11,10 +11,6 @@ import updateRegion from 'src/regions/mutations/updateRegion'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
 import { UpdateRegionSchema } from 'src/regions/schemas'
 
-// export const metadata: Metadata = {
-//   title: 'ADMIN Region bearbeiten',
-// }
-
 export default function AdminEditRegionPage() {
   const router = useRouter()
   const regionSlug = useRegionSlug()

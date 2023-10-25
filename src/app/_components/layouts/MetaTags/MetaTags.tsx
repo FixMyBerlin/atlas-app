@@ -1,11 +1,14 @@
-import React from 'react'
-import SocialSharingImage from './assets/default.png'
-import { StaticImageData } from 'next/image'
-import { isProd } from '../../utils/isEnv'
+'use client'
 
-const seoDefaultValues = {
-  defaultTitle: 'Radverkehrsatlas',
-  defaultDescription: 'Daten zum Radverkehr.',
+import { StaticImageData } from 'next/image'
+import { Helmet, HelmetData } from 'react-helmet-async'
+import { isProd } from '../../utils/isEnv'
+import SocialSharingImage from './assets/default.png'
+
+const defaults = {
+  defaultTitle: 'Radverkehrsatlas – Daten für die Radverkehrsplanung',
+  defaultDescription:
+    'Der Radverkehrsatlas beschleunigt die kommunale Radverkehrsplanung, mit umfassenden und amtlich nutzbaren Daten für die Radverkehrsplanung.',
   baseUrl: 'https://radverkehrsatlas.de',
 }
 
@@ -17,11 +20,14 @@ type Props = {
   article?: boolean | null
 }
 
-// TODO MIGRATION: Migrate to Metatags next app router
-export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, article }) => {
-  const { defaultTitle, defaultDescription, baseUrl } = seoDefaultValues
+// https://www.npmjs.com/package/react-helmet-async#usage-without-context
+const helmetData = new HelmetData({})
 
-  // On Production, take the prop or `false`. Staging (and everythign else) is set to `true`
+export const MetaTags = ({ noindex, title, description, image, article }: Props) => {
+  const { defaultTitle, defaultDescription, baseUrl } = defaults
+
+  // On Production, take the prop or allow indexing (`noindex=false`).
+  // Staging (and everything else) is set to `noindex=true`
   noindex = isProd ? noindex ?? false : true
 
   const seo = {
@@ -33,7 +39,7 @@ export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, 
   // FYI, we do not inlcude the url meta tags since is work to handle edge cases but let the browser handle this.
   // We do not have propper SocialSharing anyways, since we don't generate static content.
   return (
-    <>
+    <Helmet helmetData={helmetData}>
       <title>{seo.title}</title>
 
       {/* Even when `noindex`, still render the meta tags so Social Sharing still looks nice */}
@@ -54,6 +60,6 @@ export const MetaTags: React.FC<Props> = ({ noindex, title, description, image, 
       <meta name="twitter:card" content="summary_large_image" />
 
       <meta name="theme-color" content="#eab308" />
-    </>
+    </Helmet>
   )
 }

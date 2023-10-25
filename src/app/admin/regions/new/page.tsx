@@ -8,10 +8,6 @@ import { FORM_ERROR, RegionForm } from 'src/app/regionen/_components/regions/Reg
 import createRegion from 'src/regions/mutations/createRegion'
 import { CreateRegionSchema } from 'src/regions/schemas'
 
-// export const metadata: Metadata = {
-//   title: 'ADMIN neue Region',
-// }
-
 export default function AdminNewRegionPage() {
   const router = useRouter()
   const [createRegionMutation] = useMutation(createRegion)

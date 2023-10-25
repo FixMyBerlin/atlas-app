@@ -5,10 +5,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 
-// export const metadata: Metadata = {
-//   title: 'ADMIN Verifizierungen',
-// }
-
 const ITEMS_PER_PAGE = 100
 
 export default function AdminBikelaneVerificationsPage() {

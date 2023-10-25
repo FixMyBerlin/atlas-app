@@ -6,10 +6,6 @@ import { Link } from 'src/app/_components/links/Link'
 import deleteRegion from 'src/regions/mutations/deleteRegion'
 import getRegions from 'src/regions/queries/getRegions'
 
-// export const metadata: Metadata = {
-//   title: 'ADMIN Regionen',
-// }
-
 export default function AdminRegionsPage() {
   const router = useRouter()
   const [{ regions }] = usePaginatedQuery(getRegions, {})

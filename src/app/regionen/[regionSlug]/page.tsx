@@ -3,6 +3,7 @@
 import { useQuery } from '@blitzjs/rpc'
 import { useMemo, useState } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 import { useConfigParam } from 'src/app/regionen/_components/useQueryState/useConfigParam'
 import { useMapParam } from 'src/app/regionen/_components/useQueryState/useMapParam'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
@@ -10,11 +11,6 @@ import invariant from 'tiny-invariant'
 import { MapInterface } from '../_components/MapInterface/MapInterface'
 import { createMapRegionConfig } from '../_components/MapInterface/mapStateConfig/createMapRegionConfig'
 import { initializeMapRegionConfig } from '../_components/MapInterface/mapStateConfig/initializeMapRegionConfig'
-
-// export const metadata: Metadata = {
-//   title: 'Radverkehrsatlas Region-Karte', // TODO MIGRATION ADD NAME
-//   robots: 'noindex',
-// }
 
 export default function ShowRegionPage() {
   const regionSlug = useRegionSlug()
@@ -57,7 +53,12 @@ export default function ShowRegionPage() {
     setInitializeAndReset(false)
   }
 
-  return <MapInterface />
+  return (
+    <>
+      <MetaTags noindex title={`Radverkehrsatlas (beta) ${region?.fullName}`} />
+      <MapInterface />
+    </>
+  )
 }
 
 ShowRegionPage.authenticate = false

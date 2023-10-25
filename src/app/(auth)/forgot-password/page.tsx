@@ -5,13 +5,16 @@ import forgotPassword from 'src/auth/mutations/forgotPassword'
 import { ForgotPassword } from 'src/auth/schemas'
 import { Form, FORM_ERROR } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
 
 export default function ForgotPasswordPage() {
   const [forgotPasswordMutation, { isSuccess }] = useMutation(forgotPassword)
 
   return (
     <>
-      <h1>Forgot your password?</h1>
+      <MetaTags noindex title="Passwort vergessen" />
+
+      <h1>Passwort vergessen</h1>
 
       {isSuccess ? (
         <div>

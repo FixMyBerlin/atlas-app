@@ -1,14 +1,9 @@
+import { TableOfContents } from 'src/app/(pages)/_components/TableOfContents/TableOfContents'
+import { TocHashLink } from 'src/app/(pages)/_components/TableOfContents/types'
+import { MetaTags } from 'src/app/_components/layouts/MetaTags/MetaTags'
+import { Link } from 'src/app/_components/links/Link'
 import { LinkMail } from 'src/app/_components/links/LinkMail'
 import { LinkTel } from 'src/app/_components/links/LinkTel'
-import { TocHashLink } from 'src/app/(pages)/_components/TableOfContents/types'
-import { Metadata } from 'next'
-import { Link } from 'src/app/_components/links/Link'
-import { TableOfContents } from 'src/app/(pages)/_components/TableOfContents/TableOfContents'
-
-export const metadata: Metadata = {
-  title: 'Datenschutzerklärung',
-  robots: 'noindex',
-}
 
 // DEAKTIVIERT
 // TODO: Domain einrichten und ändern
@@ -40,6 +35,8 @@ const tocItems: TocHashLink = [
 export default function Datenschutz() {
   return (
     <>
+      <MetaTags noindex title="Datenschutzerklärung" />
+
       <h1>Datenschutzerklärung</h1>
       <TableOfContents items={tocItems} />
       <h2>Einleitung</h2>
