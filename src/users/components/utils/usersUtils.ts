@@ -1,11 +1,10 @@
-import { User } from '@prisma/client'
+import { User } from 'db'
 import { users } from 'src/users/components/users.const'
 
 export const adminIds = users.filter((u) => u.isAdmin).map((u) => u.id)
 
-// MIGRATION: DELETE
 export const isAdmin = (user: User) => {
-  return adminIds?.includes(user?.id) || false
+  return user.role === 'ADMIN'
 }
 
 // MIGRATION: DELETE
