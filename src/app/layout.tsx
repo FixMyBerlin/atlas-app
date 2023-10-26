@@ -9,8 +9,9 @@ import { isProd } from './_components/utils/isEnv'
 // https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 
 export const metadata: Metadata = {
-  ...{ robots: true ? undefined : 'noindex' },
-  // ...{ robots: isProd ? undefined : 'noindex' },
+  // 'noindex': No default on Production, but everyting is 'noindex' on Staging & Development
+  // For testing, use ...{ robots: true ? undefined : 'noindex' },
+  ...{ robots: isProd ? undefined : 'noindex' },
   title: {
     default: 'Radverkehrsatlas – Daten für die Radverkehrsplanung',
     template: '%s – radverkehrsatlas.de',
