@@ -10,9 +10,9 @@ import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
   osmUrlViewport,
-} from 'src/app/regionen/_components/MapInterface/Inspector/Tools/osmUrls/osmUrls'
-import { useMapDebugState } from 'src/app/regionen/_components/MapInterface/mapStateInteraction/useMapDebugState'
-import { useMapParam } from 'src/app/regionen/_components/useQueryState/useMapParam'
+} from 'src/app/regionen/[regionSlug]/_components/Inspector/Tools/osmUrls/osmUrls'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
+import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 
 type Props = {

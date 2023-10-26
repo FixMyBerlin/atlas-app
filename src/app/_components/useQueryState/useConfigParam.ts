@@ -2,7 +2,7 @@ import { createParser, useQueryState } from 'next-usequerystate'
 import {
   customParse,
   customStringify,
-} from 'src/app/regionen/_components/useQueryState/useConfigParamParser/customParseStringify'
+} from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/customParseStringify'
 
 export const useConfigParam = () => {
   const configParamParser = createParser({

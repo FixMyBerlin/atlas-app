@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { Footer } from '../../_components/layouts/Footer/Footer'
-import { PublicRegionList } from '../_components/regions/PublicRegionList'
+import { PublicRegionList } from './_components/PublicRegionList'
 
 export const metadata: Metadata = { title: 'Regionenauswahl' }
 

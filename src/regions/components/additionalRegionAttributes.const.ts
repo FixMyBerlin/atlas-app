@@ -5,8 +5,8 @@ import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
   MapDataThemeIds,
   themes,
-} from 'src/app/regionen/_components/MapInterface/mapData/themesMapData/themes.const'
-import { SourcesRasterIds } from 'src/app/regionen/_components/MapInterface/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+} from 'src/app/regionen/[regionSlug]/_components/mapData/themesMapData/themes.const'
+import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
 import { StaticImageData } from 'next/image'
 import { adminIds } from 'src/users/components/utils/usersUtils'
 
