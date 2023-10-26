@@ -17,6 +17,7 @@ export type DatasetIds =
   | 'bietigheim-bissingen_on_street_parking_lines'
   | 'bietigheim-bissingen_on_street_parking_lines_label_nodes'
   | 'bietigheim-bissingen_parking_areas'
+  | 'changing-cities-radnetz-monitoring'
   | 'woldegk-radnetz-vorschlaege'
 
 export type DatasetFiles =
@@ -36,4 +37,5 @@ export type DatasetFiles =
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines_label_nodes.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles'
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/changing-cities-radnetz-monitoring.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/woldegk-radnetz-vorschlaege.pmtiles'
