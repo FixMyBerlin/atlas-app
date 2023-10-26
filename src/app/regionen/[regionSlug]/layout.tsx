@@ -1,4 +1,4 @@
-import { HeaderRegionen } from '../_components/layouts/Header/HeaderRegionen/HeaderRegionen'
+import { HeaderRegionen } from '../../_components/layouts/Header/HeaderRegionen/HeaderRegionen'
 
 export default function MapLayout({ children }: { children: React.ReactNode }) {
   return (

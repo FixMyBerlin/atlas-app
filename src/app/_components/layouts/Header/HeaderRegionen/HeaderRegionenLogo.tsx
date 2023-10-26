@@ -1,13 +1,11 @@
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import React from 'react'
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
 
 export const HeaderRegionenLogo: React.FC = () => {
-  const regionSlug = useRegionSlug()
-  const region = additionalRegionAttributes.find((r) => r.slug === regionSlug)
+  const region = useRegion()
 
   if (!region) return null
 
