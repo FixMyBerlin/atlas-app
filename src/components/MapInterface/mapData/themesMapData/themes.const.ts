@@ -88,6 +88,17 @@ export const themes: MapDataTheme[] = [
   },
   {
     id: 'surface',
+    name: 'Oberflächen',
+    desc: 'Darstellung der Oberflächenqualität des Straßenlades für Auto-, Rad- und Fußverkehr',
+    topics: [
+      { id: 'surfaceQuality', defaultStyle: 'default' },
+      { id: 'bikelanes', defaultStyle: 'hidden' },
+      { id: 'places', defaultStyle: 'hidden' },
+      { id: 'landuse', defaultStyle: 'hidden' },
+    ],
+  },
+  {
+    id: 'surface_NEW',
     name: 'Oberflächen NEW',
     desc: 'Oberflächen und Oberflächenqualität.',
     topics: [
