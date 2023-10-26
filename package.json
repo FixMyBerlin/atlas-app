@@ -35,7 +35,8 @@
     "updateMasks:createPmtiles": "bun ./scripts/RegionalMasks/createPmtiles.ts",
     "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
-    "prepare": "husky install"
+    "prepare": "husky install; npm run fix-nextauth",
+    "fix-nextauth": "sed -i '34 i \\\"./core/*\\\": \\\"./core/*.js\\\",' node_modules/next-auth/package.json"
   },
   "prisma": {
     "schema": "db/schema.prisma"
@@ -59,6 +60,7 @@
     "jsurl2": "^2.1.0",
     "maplibre-gl": "^2.4.0",
     "next": "13.5.6",
+    "next-auth": "4.24.3",
     "next-usequerystate": "1.9.1",
     "pmtiles": "^2.11.0",
     "prisma": "5.5.2",
