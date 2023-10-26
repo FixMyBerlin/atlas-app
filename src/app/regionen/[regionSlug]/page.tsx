@@ -1,10 +1,11 @@
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { invoke } from 'src/blitz-server'
+import getPublicRegion from 'src/regions/queries/getPublicRegion'
 import { MapInterface } from '../_components/MapInterface/MapInterface'
 import { MapInterfaceInitialization } from '../_components/MapInterface/MapInterfaceInitialization'
 
 export async function generateMetadata({ params }) {
-  // TODO Migration: Ask in Blitz how to solve this…
-  const region = additionalRegionAttributes.find((region) => region.slug === params.regionSlug)
+  const region = await invoke(getPublicRegion, { slug: params.regionSlug })
+
   return {
     robots: 'noindex',
     title: { absolute: `${region?.fullName} im Radverkehrsatlas` },
