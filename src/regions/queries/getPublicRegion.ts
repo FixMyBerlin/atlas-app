@@ -16,6 +16,8 @@ export default resolver.pipe(
   resolver.zod(GetRegion),
   // resolver.authorize(), // This data is public
   async ({ slug }) => {
+    if (!slug) throw new NotFoundError()
+
     const region = await db.region.findFirst({
       where: { slug },
       // Only public data:
