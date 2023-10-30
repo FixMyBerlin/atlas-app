@@ -1,11 +1,13 @@
+import { useMutation } from '@blitzjs/rpc'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
 import Image from 'next/image'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
@@ -13,27 +15,25 @@ import {
 } from 'src/app/regionen/[regionSlug]/_components/Inspector/Tools/osmUrls/osmUrls'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import logout from 'src/auth/mutations/logout'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
+import { CurrentUser } from 'src/users/queries/getCurrentUser'
 
 type Props = {
-  user: {
-    id: number
-    firstName: string | null
-    lastName: string | null
-    email: string
-    role: string
-  }
-  hasPermissions: boolean | null
-  onLogout: () => void
+  user: NonNullable<CurrentUser>
 }
 
-export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) => {
+export const UserLoggedIn = ({ user }: Props) => {
   const { toggleShowDebugInfo } = useMapDebugState()
   const imgSrc = null
 
   const devUrl = getEnvUrl('development')
   const stagingUrl = getEnvUrl('staging')
   const prodUrl = getEnvUrl('production')
+
+  const [logoutMutation] = useMutation(logout)
+
+  const hasPermissions = useHasPermissions()
 
   const { mapParam } = useMapParam()
   const osmUrlViewportUrl = mapParam && osmUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
@@ -43,7 +43,7 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
     mapParam && googleMapsUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
 
   return (
-    <Menu as="div" className="relative ml-3">
+    <Menu as="div" className="relative ml-3 sm:ml-6">
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {imgSrc ? (
@@ -86,8 +86,7 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
               </div>
             )}
           </div>
-          {/* TODO MIGRATION: Fix `any` with propper permission lookup */}
-          {isAdmin(user as any) && (
+          {isAdmin(user) && (
             <ul className="bg-pink-300 px-4 py-2 text-sm">
               <li>OSM ID {user.id}</li>
               <li>
@@ -142,7 +141,9 @@ export const LoggedIn: React.FC<Props> = ({ user, hasPermissions, onLogout }) =>
           <Menu.Item>
             {({ active }) => (
               <button
-                onClick={onLogout}
+                onClick={async () => {
+                  await logoutMutation()
+                }}
                 className={clsx(
                   active ? 'bg-gray-100' : '',
                   'w-full px-4 py-2 text-left text-sm text-gray-700',
