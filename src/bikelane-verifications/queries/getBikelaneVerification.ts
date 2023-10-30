@@ -10,7 +10,7 @@ const GetBikelaneVerification = z.object({
 
 export default resolver.pipe(
   resolver.zod(GetBikelaneVerification),
-  // resolver.authorize(), // TODO MIGRATION
+  // resolver.authorize(), // TODO MIGRATION AUTH
   async ({ id }) => {
     const bikelaneVerification = await db.bikelaneVerification.findFirst({
       where: { id },

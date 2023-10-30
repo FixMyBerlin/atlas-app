@@ -5,7 +5,7 @@ import { PublicRegionList } from './_components/PublicRegionList'
 export const metadata: Metadata = { title: 'Regionenauswahl' }
 
 export default function RegionsPage() {
-  // TODO MIGRATION: Re add list of unpublished Regions based on permissions
+  // TODO MIGRATION AUTH: Re add list of unpublished Regions based on permissions
   // const unPublishedRegions = regions?.filter((r) => !r.published)
   // const showUnpublishedRegions = unPublishedRegions?.length // TODO
 

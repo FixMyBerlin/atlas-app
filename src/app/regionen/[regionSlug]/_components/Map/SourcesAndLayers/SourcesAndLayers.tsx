@@ -81,7 +81,6 @@ export const SourcesAndLayers: React.FC = () => {
                     const currStyleConfig = topicConfig.styles.find((s) => s.id === styleConfig.id)
                     const visibility = layerVisibility(currStyleConfig?.active || false)
 
-                    // TODO MIGRATION
                     return styleData?.layers?.map((layer) => {
                       const layerId = createSourceTopicStyleLayerKey(
                         sourceData.id,
