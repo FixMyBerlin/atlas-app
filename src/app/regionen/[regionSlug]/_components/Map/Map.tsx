@@ -88,10 +88,8 @@ export const Map: React.FC = () => {
 
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
     // Note: <SourcesAndLayersOsmNotes> simulates a moveEnd by watching the lat/lng url params
-
     const { latitude, longitude, zoom } = event.viewState
     const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
-    // TODO MIGRATION: Test out if this secondary param actually works …
     void setMapParam({ zoom: zoom_ ?? 2, lat: lat_ ?? 2, lng: lng_ ?? 2 }, { history: 'replace' })
   }
 
