@@ -8,8 +8,7 @@ require("HighwayClasses")
 require("IntoExcludeTable")
 require("IsFresh")
 require("JoinSets")
-require("SurfaceDirect")
-require("NormalizeSmoothness")
+require("DeriveSurface")
 require("DeriveSmoothness")
 require("Metadata")
 require("Set")
@@ -62,22 +61,13 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  local surface, surface_source = SurfaceDirect(tags.surface)
+  local surface, surface_source = DeriveSurface(tags)
 
   -- Try to find smoothess information in the following order:
   -- 1. `smoothess` tag
   -- 2. `smoothess` extrapolated from surface data
   local todo = nil
-  local smoothness, smoothness_source, smoothness_confidence = NormalizeSmoothness(tags.smoothness)
-  if smoothness == nil then
-    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromSurface(tags.surface)
-  end
-  if smoothness == nil then
-    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromTrackType(tags.tracktype)
-  end
-  if smoothness == nil then
-    smoothness, smoothness_source, smoothness_confidence, todo = DeriveSmoothnessFromMTBScale(tags["mtb:scale"])
-  end
+  local smoothness, smoothness_source, smoothness_confidence = DeriveSmoothness(tags)
 
   -- all tags that are shown on the application
   local allowed_tags = {
