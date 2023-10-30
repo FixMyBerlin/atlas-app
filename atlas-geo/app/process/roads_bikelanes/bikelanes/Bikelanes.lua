@@ -12,6 +12,8 @@ require("IntoExcludeTable")
 require("CopyTags")
 require("RoadWidth")
 require("ToMarkdownList")
+require("DeriveSurface")
+require("DeriveSmoothness")
 require("BikelanesTodos")
 
 local bikelanesTable = osm2pgsql.define_table({
@@ -112,7 +114,7 @@ function Bikelanes(object)
         end
 
         if tags[freshTag] then
-          cycleway.smoothness_age = AgeInDays(ParseDate(tags[freshTag]))
+          cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
 
@@ -128,7 +130,9 @@ function Bikelanes(object)
         cycleway.offset = sign * width / 2
 
 
-        cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
+        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
+        cycleway.smoothness, cycleway.smoothness_source, cycleway.smoothness_confidence = DeriveSmoothness(cycleway)
+        cycleway.surface, cycleway.surface_source = DeriveSurface(cycleway)
 
         bikelanesTable:insert({
           tags = cycleway,
