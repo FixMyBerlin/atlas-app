@@ -21,6 +21,7 @@
     "jsx": "preserve",
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
+    "noErrorTruncation": true, // https://stackoverflow.com/a/53131824
     "types": [
       "bun-types", // We use bun.sh for our scripts
       "web" // Once we add bun-types, "lib":["dom"] is not enough, see https://github.com/oven-sh/bun/issues/3030#issuecomment-1712671248
