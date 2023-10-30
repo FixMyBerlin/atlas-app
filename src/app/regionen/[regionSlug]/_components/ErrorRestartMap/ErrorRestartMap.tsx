@@ -1,22 +1,21 @@
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 
-export const ErrorRestartMap: React.FC = () => {
+export const ErrorRestartMap = () => {
   const regionSlug = useRegionSlug()
-  const router = useRouter()
+  const searchParams = useSearchParams()
+  if (searchParams && 'config' in searchParams) {
+    delete searchParams.config
+  }
 
-  // TODO MIGRATION: Previously this kept all itesm except for the config param.
-  // However, need to be done differently, now.
-  //
-  // delete router.query.config
+  const reloadUrl = `/regionen/${regionSlug}?${new URLSearchParams(searchParams || {})}`
 
   return (
     <div className="pt-2">
       <p>Leider ist ein Fehler beim Wiederherstellen der Karten-Einstellungen aufgetreten.</p>
       <p>
-        <Link href={`/regionen/${regionSlug}`} className="underline">
+        <Link href={reloadUrl} className="underline">
           Bitte laden Sie die Karte neu…
         </Link>
       </p>
