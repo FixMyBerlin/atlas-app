@@ -7,7 +7,7 @@
   "scripts": {
     "start": "blitz start",
     "dev": "blitz dev --hostname 127.0.0.1 --port 5173",
-    "predev": "# TODO CHECK/START DOCKER IN ATLAS-GEO # if [[ $(docker inspect -f '{{.State.Running}}' atlas-db) = \"true\" ]]; then echo Docker: Skipping – Container already running; else docker compose up --detach; fi",
+    "predev": "if [[ $(docker inspect -f '{{.State.Running}}' atlas-db) = \"true\" ]]; then echo DOCKER: atlas-geo already running; else echo IMPORTANT: Start atlas-geo with npm run dev:up; fi",
     "build": "blitz build",
     "studio": "blitz prisma studio",
     "openTypes": "code \"node_modules/.prisma/client/index.d.ts\"",
