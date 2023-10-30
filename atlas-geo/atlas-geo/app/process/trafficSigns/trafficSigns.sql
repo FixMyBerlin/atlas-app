@@ -7,6 +7,8 @@ update "trafficSigns"
     from orientations 
     where "trafficSigns".osm_id = "orientations".node_id;
 
+--TODO: extract modulo operation into seperate line to get rid of negative directions e.g. (direction+360) % 360
+
 -- inverse the sign off all traffic signs which have an offset to avoid ambiguities
 update "trafficSigns" set osm_id=osm_id*-1 where tags->>'offset' = '180';
 
