@@ -94,6 +94,7 @@ end
 
 local to_orient = {}
 
+-- TODO: add a direction_source tag
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
