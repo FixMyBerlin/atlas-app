@@ -1,5 +1,5 @@
-import { NotFoundError } from 'blitz'
 import { resolver } from '@blitzjs/rpc'
+import { NotFoundError } from 'blitz'
 import db from 'db'
 import { z } from 'zod'
 import { additionalRegionAttributes } from '../components/additionalRegionAttributes.const'
@@ -29,6 +29,8 @@ export default resolver.pipe(
     const additionalData = additionalRegionAttributes.find(
       (addData) => addData.slug === region.slug,
     )
+
+    if (!additionalData) throw new NotFoundError()
 
     return { ...region, ...additionalData }
   },
