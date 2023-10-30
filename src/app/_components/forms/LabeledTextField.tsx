@@ -21,38 +21,21 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
     } = useFormContext()
 
     return (
-      <div {...outerProps}>
-        <label {...labelProps}>
+      <div className="" {...outerProps}>
+        <label className="block font-semibold" {...labelProps}>
           {label}
-          <input disabled={isSubmitting} {...register(name)} {...props} />
         </label>
+        <input disabled={isSubmitting} {...register(name)} {...props} />
 
         <ErrorMessage
           render={({ message }) => (
-            <div role="alert" style={{ color: 'red' }}>
+            <div role="alert" className="text-red-500">
               {message}
             </div>
           )}
           errors={errors}
           name={name}
         />
-
-        <style jsx>{`
-          label {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            font-size: 1rem;
-          }
-          input {
-            font-size: 1rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 3px;
-            border: 1px solid purple;
-            appearance: none;
-            margin-top: 0.5rem;
-          }
-        `}</style>
       </div>
     )
   },

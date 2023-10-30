@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { PropsWithoutRef, ReactNode, useState } from 'react'
 import { FormProvider, UseFormProps, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { buttonStyles } from '../links/styles'
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements['form']>, 'onSubmit'> {
@@ -52,7 +53,7 @@ export function Form<S extends z.ZodType<any, any>>({
             }
           }
         })}
-        className="form"
+        className="space-y-4"
         {...props}
       >
         {/* Form fields supplied as children are rendered here */}
@@ -65,16 +66,10 @@ export function Form<S extends z.ZodType<any, any>>({
         )}
 
         {submitText && (
-          <button type="submit" disabled={ctx.formState.isSubmitting}>
+          <button type="submit" disabled={ctx.formState.isSubmitting} className={buttonStyles}>
             {submitText}
           </button>
         )}
-
-        <style global jsx>{`
-          .form > * + * {
-            margin-top: 1rem;
-          }
-        `}</style>
       </form>
     </FormProvider>
   )

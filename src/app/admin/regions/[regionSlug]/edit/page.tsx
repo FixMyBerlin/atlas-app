@@ -1,12 +1,18 @@
 'use client'
 
 import { useMutation, useQuery } from '@blitzjs/rpc'
-import Link from 'next/link'
+import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { FORM_ERROR, RegionForm } from 'src/app/regionen/(index)/_components/RegionForm'
+import { Link } from 'src/app/_components/links/Link'
+import { linkStyles } from 'src/app/_components/links/styles'
+import { FrenchQuote } from 'src/app/_components/text/Quotes'
+import {
+  FORM_ERROR,
+  RegionForm,
+} from 'src/app/admin/regions/[regionSlug]/edit/_components/RegionForm'
 import updateRegion from 'src/regions/mutations/updateRegion'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
 import { UpdateRegionSchema } from 'src/regions/schemas'
@@ -26,8 +32,18 @@ export default function AdminEditRegionPage() {
 
   return (
     <>
-      <h1>Edit Region {region.slug}</h1>
-      <pre>{JSON.stringify(region, null, 2)}</pre>
+      <header>
+        <h1>
+          <Link href="/regionen">Regionen</Link> / {FrenchQuote(region.slug)} bearbeiten
+        </h1>
+        <p></p>
+      </header>
+
+      <details className="prose-sm my-10">
+        <summary className={clsx(linkStyles, 'cursor-pointer')}>JSON Dump</summary>
+        <pre>{JSON.stringify(region, null, 2)}</pre>
+      </details>
+
       <Suspense fallback={<Spinner />}>
         <RegionForm
           submitText="Update Region"
@@ -50,9 +66,6 @@ export default function AdminEditRegionPage() {
           }}
         />
       </Suspense>
-      <p>
-        <Link href="/regionen">Regionen</Link>
-      </p>
     </>
   )
 }
