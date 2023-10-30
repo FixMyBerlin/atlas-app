@@ -23,13 +23,12 @@ type Props = {
 export function VerificationActionForm(props: Props) {
   const { disabled, verificationStatus } = props
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
-  // TODO MIGRATION: Do we still need removeLocalUpdate ?
-  const { addLocalUpdate } = useMapStateInteraction()
   const {
     register,
     formState: { isSubmitting, errors },
   } = useForm()
 
+  const { addLocalUpdate } = useMapStateInteraction()
   const handleSubmit = async (values) => {
     try {
       const newVerificationItem: TCreateVerificationSchema = {

@@ -45,9 +45,7 @@ export type StoreCalculator = {
 
 type StoreLocalUpdates = {
   localUpdates: Omit<TCreateVerificationSchema, 'id'>[]
-  addLocalUpdate: (update: Omit<TCreateVerificationSchema, 'id'>) => void
-  // TODO MIGRATION: Do we still need removeLocalUpdate ?
-  removeLocalUpdate: (update: Omit<TCreateVerificationSchema, 'id'>) => void
+  addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
@@ -76,12 +74,6 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
     const { localUpdates } = get()
     set({
       localUpdates: [...localUpdates, update],
-    })
-  },
-  removeLocalUpdate: (updateToRemove) => {
-    const { localUpdates } = get()
-    set({
-      localUpdates: localUpdates.filter((update) => update === updateToRemove),
     })
   },
 }))
