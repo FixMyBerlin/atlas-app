@@ -63,9 +63,6 @@ function osm2pgsql.process_way(object)
 
   local surface, surface_source = DeriveSurface(tags)
 
-  -- Try to find smoothess information in the following order:
-  -- 1. `smoothess` tag
-  -- 2. `smoothess` extrapolated from surface data
   local todo = nil
   local smoothness, smoothness_source, smoothness_confidence = DeriveSmoothness(tags)
 
