@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { FeatureCollection } from 'geojson'
 import React, { useEffect, useState } from 'react'
 import { Layer, Source, useMap } from 'react-map-gl/maplibre'
@@ -9,7 +8,8 @@ export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
-  const { inspectorFeatures, mapLoaded, setOsmNotesLoading } = useMapStateInteraction()
+  const { inspectorFeatures, mapLoaded, setOsmNotesLoading, setOsmNotesError } =
+    useMapStateInteraction()
   const { osmNotesParam } = useOsmNotesParam()
 
   const osmNotesFeatureIds = inspectorFeatures
@@ -23,22 +23,32 @@ export const SourcesLayersOsmNotes: React.FC = () => {
 
   // (Re)fetch whenever the view port changes
   useEffect(() => {
-    // Cache function, otherwise deactivating the event handler will not work
-    const osmNotesApiRequest = () => {
-      if (!mainMap) return
-      setOsmNotesLoading(true)
-      const mapBounds = mainMap.getBounds().toArray()
-      // TODO MIGRATION: Use the same fetching pattern for <DownloadModalUpdateDate />. Either this or the other…
-      void axios
-        .get(`https://api.openstreetmap.org/api/0.6/notes?bbox=${mapBounds.join(',')}`)
-        .then((res) => {
-          setGeodata(res.data)
-          setOsmNotesLoading(false)
-        })
+    if (mapLoaded && osmNotesParam) {
+      osmNotesApiRequest()
     }
 
-    mapLoaded && osmNotesParam && osmNotesApiRequest()
-  }, [mapLoaded, osmNotesParam, mainMap, setOsmNotesLoading])
+    // Cache function, otherwise deactivating the event handler will not work
+    function osmNotesApiRequest() {
+      if (!mainMap) return
+      setOsmNotesLoading(true)
+
+      const apiUrl = `https://api.openstreetmap.org/api/0.6/notes?bbox=${mainMap
+        .getBounds()
+        .toArray()
+        .join(',')}`
+
+      void fetch(apiUrl, { headers: { Accept: 'application/json' } })
+        .then((res) => res.json())
+        .then((json) => {
+          setGeodata(json)
+          setOsmNotesLoading(false)
+        })
+        .catch((error) => {
+          console.error(`SourcesLayersOsmNotes: Error when fetching from ${apiUrl}`, error)
+          setOsmNotesError(true)
+        })
+    }
+  }, [mapLoaded, osmNotesParam, mainMap, setOsmNotesLoading, setOsmNotesError])
 
   return (
     <Source

@@ -9,7 +9,7 @@ import { useOsmNotesParam } from '../../_hooks/useQueryState/useOsmNotesParam'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 
 export const OsmNotes: React.FC = () => {
-  const { osmNotesLoading } = useMapStateInteraction()
+  const { osmNotesLoading, osmNotesError } = useMapStateInteraction()
   const { mainMap } = useMap()
   const { osmNotesParam: osmNotesActive, setOsmNotesParam } = useOsmNotesParam()
 
@@ -43,6 +43,9 @@ export const OsmNotes: React.FC = () => {
             </div>
           ) : (
             <ChatBubbleLeftRightIcon className="h-5 w-5" />
+          )}
+          {osmNotesError && (
+            <span className="ml-1 text-orange-500">Fehler beim Laden der Hinweise</span>
           )}
         </button>
       </Tooltip>

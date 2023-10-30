@@ -16,14 +16,16 @@ type StoreMapLoadedState = {
   setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
 }
 
-type StoreOsmNotesState = {
-  osmNotesLoading: boolean
-  setOsmNotesLoading: (osmNotesLoaded: Store['osmNotesLoading']) => void
-}
-
 type StorePmTilesProtocolState = {
   pmTilesProtocolReady: boolean
   setPmTilesProtocolReady: (pmTilesProtocolReady: Store['pmTilesProtocolReady']) => void
+}
+
+type StoreOsmNotesState = {
+  osmNotesLoading: boolean
+  setOsmNotesLoading: (osmNotesLoaded: Store['osmNotesLoading']) => void
+  osmNotesError: boolean
+  setOsmNotesError: (osmNotesError: Store['osmNotesError']) => void
 }
 
 export type StoreFeaturesInspector = {
@@ -52,11 +54,14 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
-  osmNotesLoading: false,
-  setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
-
   pmTilesProtocolReady: false,
   setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),
+
+  // We store this globally to separate the fetching from the UI logic
+  osmNotesLoading: false,
+  setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
+  osmNotesError: false,
+  setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
 
   // Data for <Inspector> AND <LayerHighlight>
   inspectorFeatures: [],

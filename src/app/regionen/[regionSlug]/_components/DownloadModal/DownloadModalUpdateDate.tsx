@@ -11,9 +11,9 @@ export const DownloadModalUpdateDate: React.FC = () => {
   useEffect(() => {
     void fetch(apiUrl)
       .then((res) => res.json())
-      .then((data) => {
-        if (data?.description) {
-          setOsmDataDate(JSON.parse(data.description))
+      .then((json) => {
+        if (json?.description) {
+          setOsmDataDate(JSON.parse(json.description))
         }
         setLoading(false)
       })
