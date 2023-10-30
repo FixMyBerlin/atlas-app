@@ -7,7 +7,6 @@ export function usePopper(
   const reference = useRef<Element | null>(null)
   const popper = useRef<HTMLElement | null>(null)
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const cleanupCallback = useRef(() => {})
 
   const instantiatePopper = useCallback(() => {
