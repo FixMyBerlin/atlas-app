@@ -1,4 +1,4 @@
-function SurfaceDirect(surface)
+local function surfaceDirect(surface)
   if surface ~= nil then
     local source = "tag"
     local confidence = "high"
@@ -31,4 +31,8 @@ function SurfaceDirect(surface)
   end
 
   return nil, nil, nil
+end
+
+function DeriveSurface(tags) 
+  return surfaceDirect(tags.surface)
 end
