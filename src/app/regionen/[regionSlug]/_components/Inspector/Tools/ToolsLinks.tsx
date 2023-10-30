@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'src/app/_components/links/Link'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_components/mapData/types'
 import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
@@ -43,28 +43,28 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
         })
         if (!url) return null
         return (
-          <Link key={name} blank href={url} classNameOverwrite={buttonStyles}>
+          <LinkExternal key={name} blank button href={url}>
             {name}
-          </Link>
+          </LinkExternal>
         )
       })}
 
       {osmUrlHref && (
-        <Link blank href={osmUrlHref} classNameOverwrite={buttonStyles}>
+        <LinkExternal blank button href={osmUrlHref}>
           OpenStreetMap
-        </Link>
+        </LinkExternal>
       )}
 
       {historyUrlHref && (
-        <Link blank href={historyUrlHref} classNameOverwrite={buttonStyles}>
+        <LinkExternal blank button href={historyUrlHref}>
           Änderungshistorie
-        </Link>
+        </LinkExternal>
       )}
 
       {mapillaryUrlHref && (
-        <Link blank href={mapillaryUrlHref} classNameOverwrite={buttonStyles}>
+        <LinkExternal blank button href={mapillaryUrlHref}>
           Mapillary
-        </Link>
+        </LinkExternal>
       )}
     </section>
   )

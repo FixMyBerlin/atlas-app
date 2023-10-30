@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import screenshotBiBi from './assets/HomePageLive/bibi.jpg'
 import screenshotTrTo from './assets/HomePageLive/trto.jpg'
 import screenshotNudafa from './assets/HomePageLive/zes.jpg'
-import { Link } from '../../_components/links/Link'
 
 type Callout = {
   name: string
@@ -51,7 +51,7 @@ export const HomePageLive = () => {
 
         <div className="mt-6 justify-center space-y-10 lg:flex lg:gap-x-6 lg:space-y-0">
           {callouts.map((callout) => (
-            <Link
+            <LinkExternal
               href={callout.href}
               key={callout.name}
               classNameOverwrite="block group relative lg:max-w-[26rem]"
@@ -70,7 +70,7 @@ export const HomePageLive = () => {
                 <span className="absolute inset-0" />
                 {callout.description}
               </p>
-            </Link>
+            </LinkExternal>
           ))}
         </div>
       </div>

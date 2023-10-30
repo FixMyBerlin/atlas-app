@@ -29,7 +29,7 @@ type Props<T extends string> = {
   variant?: 'solid' | 'outline'
   color?: 'slate' | 'white'
   className?: string
-  href: Route<T> | URL
+  href: Route<T>
   children: React.ReactNode
 }
 

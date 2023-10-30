@@ -1,10 +1,10 @@
 import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import { Link } from 'src/app/_components/links/Link'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { replaceZxy } from '../utils/replaceZxy/replaceZxy'
 import { sourcesBackgroundsRaster } from '../mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+import { replaceZxy } from '../utils/replaceZxy/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {
   const { backgroundParam } = useBackgroundParam()
@@ -22,7 +22,7 @@ export const BackgroundLegend: React.FC = () => {
   })
 
   return (
-    <Link
+    <LinkExternal
       href={enhancedLink}
       blank
       classNameOverwrite="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500 group"
@@ -39,6 +39,6 @@ export const BackgroundLegend: React.FC = () => {
         />
       </div>
       Legende
-    </Link>
+    </LinkExternal>
   )
 }

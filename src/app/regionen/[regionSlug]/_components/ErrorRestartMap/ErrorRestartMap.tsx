@@ -1,3 +1,4 @@
+import { Route } from 'next'
 import { useSearchParams } from 'next/navigation'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
@@ -9,7 +10,7 @@ export const ErrorRestartMap = () => {
     delete searchParams.config
   }
 
-  const reloadUrl = `/regionen/${regionSlug}?${new URLSearchParams(searchParams || {})}`
+  const reloadUrl = `/regionen/${regionSlug}?${new URLSearchParams(searchParams || {})}` as Route
 
   return (
     <div className="pt-2">

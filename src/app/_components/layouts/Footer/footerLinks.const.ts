@@ -1,6 +1,8 @@
+import { Route } from 'next'
+
 export type FooterMenuItem = {
   name: string
-  to: string
+  to: Route
 }
 
 export const footerLinks: FooterMenuItem[] = [

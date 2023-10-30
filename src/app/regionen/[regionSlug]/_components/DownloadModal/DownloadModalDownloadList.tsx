@@ -1,7 +1,7 @@
-import { Link } from 'src/app/_components/links/Link'
-import { exportApiUrlBbox } from './exportApiUrl'
-import { sources } from '../mapData/sourcesMapData/sources.const'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
+import { sources } from '../mapData/sourcesMapData/sources.const'
+import { exportApiUrlBbox } from './exportApiUrl'
 
 type Props = { visible: boolean }
 
@@ -49,7 +49,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
 
             <div className="flex gap-2">
               {bbox && (
-                <Link
+                <LinkExternal
                   href={exportApiUrlBbox(sourceData.export.apiIdentifier, bbox)}
                   classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                   download
@@ -61,7 +61,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
                   <span className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm">
                     GeoJSON
                   </span>
-                </Link>
+                </LinkExternal>
               )}
 
               <div className="grow rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:border-yellow-500 focus-within:ring-1 focus-within:ring-yellow-500">

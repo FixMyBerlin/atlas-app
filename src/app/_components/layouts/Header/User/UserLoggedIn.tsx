@@ -4,7 +4,7 @@ import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import { Fragment } from 'react'
-import { Link } from 'src/app/_components/links/Link'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
@@ -96,44 +96,44 @@ export const UserLoggedIn = ({ user }: Props) => {
               </li>
               <li>
                 {devUrl && (
-                  <Link blank href={devUrl}>
+                  <LinkExternal blank href={devUrl}>
                     Open DEV
-                  </Link>
+                  </LinkExternal>
                 )}
               </li>
               <li>
                 {stagingUrl && (
-                  <Link blank href={stagingUrl}>
+                  <LinkExternal blank href={stagingUrl}>
                     Open Staging
-                  </Link>
+                  </LinkExternal>
                 )}
               </li>
               <li>
                 {prodUrl && (
-                  <Link blank href={prodUrl}>
+                  <LinkExternal blank href={prodUrl}>
                     Open Production
-                  </Link>
+                  </LinkExternal>
                 )}
               </li>
               {osmUrlViewportUrl && (
                 <li>
-                  <Link blank href={osmUrlViewportUrl}>
+                  <LinkExternal blank href={osmUrlViewportUrl}>
                     Open OSM
-                  </Link>
+                  </LinkExternal>
                 </li>
               )}
               {mapillaryUrlViewportUrl && (
                 <li>
-                  <Link blank href={mapillaryUrlViewportUrl}>
+                  <LinkExternal blank href={mapillaryUrlViewportUrl}>
                     Open Mapillary
-                  </Link>
+                  </LinkExternal>
                 </li>
               )}
               {googleMapsViewportUrl && (
                 <li>
-                  <Link blank href={googleMapsViewportUrl}>
+                  <LinkExternal blank href={googleMapsViewportUrl}>
                     Open GoogleMaps
-                  </Link>
+                  </LinkExternal>
                 </li>
               )}
             </ul>

@@ -5,7 +5,7 @@ import React from 'react'
 import { buttonStyles, linkStyles } from './styles'
 
 export type LinkProps<T extends string> = {
-  href: Route<T> | URL | string
+  href: Route<T>
   className?: string
   classNameOverwrite?: string
   blank?: boolean
@@ -24,24 +24,8 @@ export function Link<T extends string>({
 }: LinkProps<T>) {
   const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
-  if (typeof href === 'string' && href.startsWith('http')) {
-    return (
-      <a
-        href={href}
-        className={classNames}
-        rel="noopener noreferrer"
-        {...{ target: blank ? '_blank' : undefined }}
-        {...props}
-      >
-        {children}
-      </a>
-    )
-  }
-
   return (
     <NextLink
-      // TODO MIGRATION: Why does this error?
-      // @ts-expect-error
       href={href}
       className={classNames}
       {...props}
