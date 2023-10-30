@@ -19,7 +19,7 @@ run_lua "legacy_maxspeed/maxspeed"
 run_lua "legacy_lit/lit"
 
 run_lua "trafficSigns/trafficSigns"
-# run_psql "trafficSigns/trafficSigns"
+run_psql "trafficSigns/trafficSigns"
 
 run_lua "legacy_boundaries/boundaries"
 run_lua "boundaries/boundaries"
