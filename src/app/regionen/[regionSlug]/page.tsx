@@ -1,4 +1,4 @@
-import { invoke } from 'src/blitz-server'
+import { invoke } from '@blitzjs/rpc'
 import getPublicRegion from 'src/regions/queries/getPublicRegion'
 import { MapInterface } from './_components/MapInterface'
 import { MapInterfaceInitialization } from './_components/MapInterfaceInitialization'
