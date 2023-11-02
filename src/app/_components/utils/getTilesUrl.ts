@@ -1,4 +1,4 @@
-import { isStaging } from './isEnv'
+import { envKey, isStaging } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
@@ -7,16 +7,10 @@ const tilesBaseUrl = {
 }
 
 export const getTilesUrl = () => {
-  // NEXT_PUBLIC_TILES_ENV is undefined in Netlify (unless we explicity add it)
+  // NEXT_PUBLIC_TILES_ENV is a helper for local develoment
   if (process.env.NEXT_PUBLIC_TILES_ENV) {
     return tilesBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
   }
 
-  if (process.env.DEV) {
-    return tilesBaseUrl.development
-  } else if (isStaging) {
-    return tilesBaseUrl.staging
-  } else {
-    return tilesBaseUrl.production
-  }
+  return tilesBaseUrl[envKey]
 }

@@ -14,7 +14,7 @@ import chalk from 'chalk'
 import path from 'node:path'
 import { z } from 'zod'
 import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { apiBaseUrl } from 'src/app/_components/utils/getApiUrl'
+import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
 
 console.log(chalk.inverse.bold('START'), __filename)
 
@@ -53,7 +53,7 @@ const saveErrors = async () => {
 const downloadGeoJson = async (idsString: string) => {
   // We always use the production DB since that holds all relevant releations
   // TODO: Change this to production once the api is deployed there
-  const url = new URL(`${apiBaseUrl.staging}/boundaries/`)
+  const url = new URL(`${exportApiBaseUrl.staging}/boundaries/`)
   idsString
     .split(',')
     .map(Number)

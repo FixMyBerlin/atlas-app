@@ -7,10 +7,12 @@ export const isStaging =
 
 export const isDev = process.env.NODE_ENV === 'development'
 
+export const isBrowser = typeof window !== 'undefined'
+
 export const envKey = isProd
   ? 'production'
   : isStaging
   ? 'staging'
   : isDev
   ? 'development'
-  : undefined
+  : 'development' // Fallback
