@@ -36,7 +36,8 @@
     "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install; npm run fix-nextauth",
-    "fix-nextauth": "sed -i '34 i \\\"./core/*\\\": \\\"./core/*.js\\\",' node_modules/next-auth/package.json"
+    "fix-nextauth": "sed -i '34 i \\\"./core/*\\\": \\\"./core/*.js\\\",' node_modules/next-auth/package.json",
+    "postinstall": "patch-package"
   },
   "prisma": {
     "schema": "db/schema.prisma"
@@ -108,6 +109,7 @@
     "eslint-config-prettier": "^9.0.0",
     "husky": "8.0.3",
     "jsdom": "20.0.3",
+    "patch-package": "8.0.0",
     "postcss": "^8.4.31",
     "prettier": "3.0.3",
     "prettier-plugin-prisma": "5.0.0",
