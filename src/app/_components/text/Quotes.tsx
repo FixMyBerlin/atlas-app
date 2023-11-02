@@ -1,17 +1,33 @@
 // https://de.wikipedia.org/wiki/Anf%C3%BChrungszeichen
 
-export const Quote = (input: string | Record<'text', React.ReactNode>) => {
-  return <>„{typeof input === 'string' ? input : input.text}“</>
+export const Quote = ({ children }: { children: React.ReactNode }) => {
+  return <>„{children}“</>
 }
 
-export const QuoteSingle = (input: string | Record<'text', React.ReactNode>) => {
-  return <>‚{typeof input === 'string' ? input : input.text}‘</>
+export const QuoteSingle = ({ children }: { children: React.ReactNode }) => {
+  return <>‚{children}‘</>
 }
 
-export const FrenchQuote = (input: string | Record<'text', React.ReactNode>) => {
-  return <>»{typeof input === 'string' ? input : input.text}«</>
+export const FrenchQuote = ({ children }: { children: React.ReactNode }) => {
+  return <>»{children}«</>
 }
 
-export const FrenchQuoteSingle = (input: string | Record<'text', React.ReactNode>) => {
-  return <>›{typeof input === 'string' ? input : input.text}‹</>
+export const FrenchQuoteSingle = ({ children }: { children: React.ReactNode }) => {
+  return <>›{children}‹</>
+}
+
+export const quote = (input: string) => {
+  return <>„{input}“</>
+}
+
+export const quoteSingle = (input: string) => {
+  return <>‚{input}‘</>
+}
+
+export const frenchQuote = (input: string) => {
+  return <>»{input}«</>
+}
+
+export const frenchQuoteSingle = (input: string) => {
+  return <>›{input}‹</>
 }

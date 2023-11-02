@@ -1,16 +1,16 @@
 import React from 'react'
 import { IntlProvider } from 'react-intl'
-import { InspectorDataFeature } from './Inspector'
-import { ToolsLinks } from './Tools/ToolsLinks'
-import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
-import { ToolsWrapper } from './Tools/ToolsWrapper'
+import { quote } from 'src/app/_components/text/Quotes'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 import { DatasetIds } from '../mapData/sourcesMapData/datasets/types'
 import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
-import { translations } from './TagsTable/translations/translations.const'
 import { Disclosure } from './Disclosure/Disclosure'
-import { Quote } from 'src/app/_components/text/Quotes'
+import { InspectorDataFeature } from './Inspector'
 import { TagsTable } from './TagsTable/TagsTable'
+import { translations } from './TagsTable/translations/translations.const'
+import { ToolsLinks } from './Tools/ToolsLinks'
+import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
+import { ToolsWrapper } from './Tools/ToolsWrapper'
 
 export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
   sourceKey,
@@ -30,7 +30,7 @@ export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
         <Disclosure
-          title={<>Statische Daten {Quote(sourceData.name)}</>}
+          title={<>Statische Daten {quote(sourceData.name)}</>}
           objectId={properties.osm_id}
         >
           <p

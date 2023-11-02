@@ -8,7 +8,7 @@ import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegion
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
-import { FrenchQuote } from 'src/app/_components/text/Quotes'
+import { frenchQuote } from 'src/app/_components/text/Quotes'
 import {
   FORM_ERROR,
   RegionForm,
@@ -34,7 +34,7 @@ export default function AdminEditRegionPage() {
     <>
       <header>
         <h1>
-          <Link href="/regionen">Regionen</Link> / {FrenchQuote(region.slug)} bearbeiten
+          <Link href="/regionen">Regionen</Link> / {frenchQuote(region.slug)} bearbeiten
         </h1>
         <p></p>
       </header>
