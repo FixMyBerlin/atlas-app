@@ -101,6 +101,7 @@ function osm2pgsql.process_node(object)
   local tags = object.tags
 
   tags.direction = tags.direction or tags['traffic_sign:direction'] -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
+  local direction_source = nil
   if tags.direction ~= nil then
     -- orinetation is given in degree
     local direction = tonumber(tags.direction)
@@ -110,11 +111,13 @@ function osm2pgsql.process_node(object)
     end
     if direction ~= nil then -- one of the previous cases worked and we have a direction in degrees
       tags.direction = direction
+      direction_source = 'tag'
     else -- we don't have a direction in degrees and now try to orient the traffic sign by the way it is part of
       to_orient[object.id] = true
     end
   end
   for _, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
+    traffic_sign.direction_source = direction_source
     table:insert({
       tags = traffic_sign,
       meta = Metadata(object),
