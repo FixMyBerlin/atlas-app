@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 
 export const UserLoggedOut = () => {
   const router = useRouter()
-  const loginUrl = `/login?next=${encodeURIComponent(
+  const loginUrl = `/api/auth/osm/login?next=${encodeURIComponent(
     `${location.pathname}${location.search}`,
   ).toString()}` as Route
 

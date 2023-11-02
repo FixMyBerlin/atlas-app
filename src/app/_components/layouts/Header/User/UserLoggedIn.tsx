@@ -72,7 +72,7 @@ export const UserLoggedIn = ({ user }: Props) => {
         <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700">
             <p className="mb-1">
-              <strong>Angemeldet als {user.email}</strong>
+              <strong>Angemeldet als {user.name}</strong>
             </p>
             {hasPermissions === true && (
               <div className="flex items-center gap-1 text-xs leading-4">

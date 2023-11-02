@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   await useAuthenticatedBlitzContext({
-    redirectTo: '/login',
+    redirectTo: '/api/auth/osm/login',
     // TODO MIGRATION AUTH: See https://github.com/blitz-js/blitz/issues/4246
     // redirectAuthenticatedTo: '/admin',
     role: ['ADMIN'],
