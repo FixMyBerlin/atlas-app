@@ -6,6 +6,7 @@ SELECT
             ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx + 1))
         )
     ) AS orientation,
+    count(DISTINCT osm_id) AS ways_aggregated,
     node_id
 FROM
     "_trafficSignDirections"
@@ -27,7 +28,8 @@ SET
 FROM
     orientations
 WHERE
-    "trafficSigns".osm_id = "orientations".node_id;
+    "trafficSigns".osm_id = "orientations".node_id
+    AND "orientations".ways_aggregated <= 2;
 
 -- format the direction s.t. it always lays between 0 an 360
 UPDATE
