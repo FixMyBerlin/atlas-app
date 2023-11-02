@@ -3,13 +3,16 @@ create temp table orientations as select avg(degrees(ST_Azimuth(st_pointn(geom, 
 
 -- update the traffic signs for which we could compute an orientation from the query above taking the `offset` into account
 update "trafficSigns" 
-    set tags=(tags || jsonb_build_object('direction', (orientations.orientation + (tags->>'offset')::INTEGER)::numeric % 360)) 
+    set tags=(tags || jsonb_build_object('direction', orientations.orientation + (tags->>'offset')::INTEGER))
     from orientations 
     where "trafficSigns".osm_id = "orientations".node_id;
 
---TODO: extract modulo operation into seperate line to get rid of negative directions e.g. (direction+360) % 360
+-- format the direction s.t. it always lays between 0 an 360
+update "trafficSigns" 
+    set tags=jsonb_set(tags, '{direction}', to_jsonb(((tags->>'direction')::numeric + 360) % 360)) 
+    where tags?'direction';
 
--- inverse the sign off all traffic signs which have an offset to avoid ambiguities
+-- inverse the sign off all traffic signs which have offset=180 to avoid ambiguities
 update "trafficSigns" set osm_id=osm_id*-1 where tags->>'offset' = '180';
 
 -- remove `offset` from tags
