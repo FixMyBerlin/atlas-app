@@ -96,9 +96,8 @@ local to_orient = {}
 
 -- TODO: add a direction_source tag
 function osm2pgsql.process_node(object)
-  if ExitProcessing(object) then return end
-
   local tags = object.tags
+  if ExitProcessing(object) or tags.highway == nil then return end
 
   tags.direction = tags.direction or tags['traffic_sign:direction'] -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
   local direction_source = nil
