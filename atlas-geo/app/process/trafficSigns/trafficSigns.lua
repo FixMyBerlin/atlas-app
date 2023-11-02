@@ -117,6 +117,7 @@ function osm2pgsql.process_node(object)
   end
   for _, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
     traffic_sign.direction_source = direction_source
+    for k,v in pairs(tags) do traffic_sign['osm_' .. k] = v end
     table:insert({
       tags = traffic_sign,
       meta = Metadata(object),
