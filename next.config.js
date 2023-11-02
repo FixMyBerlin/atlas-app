@@ -1,9 +1,10 @@
 const { withBlitz } = require('@blitzjs/next')
+const { withNextAuthAdapter } = require("@blitzjs/auth")
 
 /**
  * @type {import('@blitzjs/next').BlitzConfig}
  **/
-module.exports = withBlitz({
+module.exports = withBlitz(withNextAuthAdapter({
   experimental: {
     // https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links
     typedRoutes: true,
@@ -20,4 +21,4 @@ module.exports = withBlitz({
       },
     ],
   },
-})
+}))
