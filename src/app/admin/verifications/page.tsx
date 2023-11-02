@@ -3,8 +3,10 @@
 import { usePaginatedQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { buttonStyles } from 'src/app/_components/links/styles'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
+import { Breadcrumb } from '../_components/Breadcrumb'
 
 const ITEMS_PER_PAGE = 100
 
@@ -21,16 +23,18 @@ export default function AdminBikelaneVerificationsPage() {
   const goToNextPage = () => pathname && router.push(`${pathname}?page=${page + 1}` as Route)
 
   return (
-    <div>
-      <table>
+    <>
+      <Breadcrumb pages={[{ href: '/admin/verifications', name: 'Prüfungen' }]} />
+      <table className="overflow-clip rounded bg-white/50">
         <thead>
-          <tr>
-            <td>id</td>
-            <td>osm_type</td>
-            <td>osm_id</td>
-            <td>verified_at</td>
-            <td>verified_by</td>
-            <td>comment</td>
+          <tr className="bg-white/90">
+            <th>id</th>
+            <th>osm_type</th>
+            <th>osm_id</th>
+            <th>verified_at</th>
+            <th>verified_by</th>
+            <th>status</th>
+            <th>comment</th>
           </tr>
         </thead>
         <tbody>
@@ -50,14 +54,14 @@ export default function AdminBikelaneVerificationsPage() {
         </tbody>
       </table>
 
-      <button disabled={page === 0} onClick={goToPreviousPage}>
+      <button disabled={page === 0} onClick={goToPreviousPage} className={buttonStyles}>
         Previous
       </button>
-      <button disabled={!hasMore} onClick={goToNextPage}>
+      <button disabled={!hasMore} onClick={goToNextPage} className={buttonStyles}>
         Next
       </button>
-    </div>
+    </>
   )
 }
 
-AdminBikelaneVerificationsPage.authenticate = true
+AdminBikelaneVerificationsPage.authenticate = { role: 'ADMIN' }

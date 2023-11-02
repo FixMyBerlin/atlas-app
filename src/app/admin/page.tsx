@@ -1,19 +1,24 @@
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
+import { Breadcrumb } from './_components/Breadcrumb'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
-export default function AdminDashboard() {
+export default async function AdminDashboard() {
   return (
-    <ul>
-      <li>
-        <Link href="/admin/regions">Regionen</Link>
-      </li>
-      <li>
-        <Link href="/admin/verifications">Verifications</Link>
-      </li>
-    </ul>
+    <>
+      <Breadcrumb pages={[{ href: '/admin', name: 'Dashboard' }]} />
+      <ul>
+        <li>
+          <Link href="/admin/regions">Regionen</Link>
+        </li>
+        <li>
+          <Link href="/admin/verifications">Verifications</Link>
+        </li>
+        <li>
+          <Link href="/admin/memberships">Memberships</Link>
+        </li>
+      </ul>
+    </>
   )
 }
-
-AdminDashboard.authenticate = true

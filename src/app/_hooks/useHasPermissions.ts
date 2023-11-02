@@ -7,6 +7,7 @@ import { useSession } from '@blitzjs/auth'
 export const useHasPermissions = () => {
   const session = useSession()
   const regionSlug = useRegionSlug()
+
   let [membership] = useQuery(
     membershipExists,
     { userId: session.userId || 0, regionSlug: regionSlug || '' },

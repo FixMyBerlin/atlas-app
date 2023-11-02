@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import { useAuthenticatedBlitzContext } from 'src/blitz-server'
 
 export const metadata: Metadata = {
   robots: 'noindex',
@@ -9,11 +10,12 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  // await useAuthenticatedBlitzContext({
-  //   redirectTo: '/auth/login',
-  //   role: ['admin'],
-  //   redirectAuthenticatedTo: '/admin',
-  // })
+  await useAuthenticatedBlitzContext({
+    redirectTo: '/login',
+    // TODO MIGRATION AUTH: See https://github.com/blitz-js/blitz/issues/4246
+    // redirectAuthenticatedTo: '/admin',
+    role: ['ADMIN'],
+  })
 
   return (
     <>

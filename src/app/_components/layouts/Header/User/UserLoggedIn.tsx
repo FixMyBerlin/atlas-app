@@ -85,6 +85,7 @@ export const UserLoggedIn = ({ user }: Props) => {
                 Sie haben zur Zeit keine Zugriffsrechte in dieser Region.
               </div>
             )}
+            {isAdmin(user) && <div className="bg-pink-300 text-xs leading-4">Du bist Admin.</div>}
           </div>
           {isAdmin(user) && (
             <ul className="bg-pink-300 px-4 py-2 text-sm">

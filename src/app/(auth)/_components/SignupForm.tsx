@@ -1,16 +1,14 @@
 'use client'
 
 import { useMutation } from '@blitzjs/rpc'
-import signup from 'src/auth/mutations/signup'
-import { Signup } from 'src/auth/schemas'
+import { useRouter } from 'next/router'
 import { Form, FORM_ERROR } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
+import signup from 'src/auth/mutations/signup'
+import { Signup } from 'src/auth/schemas'
 
-type SignupFormProps = {
-  onSuccess?: () => void
-}
-
-export const SignupForm = (props: SignupFormProps) => {
+export const SignupForm = () => {
+  const router = useRouter()
   const [signupMutation] = useMutation(signup)
   return (
     <>
@@ -23,7 +21,7 @@ export const SignupForm = (props: SignupFormProps) => {
         onSubmit={async (values) => {
           try {
             await signupMutation(values)
-            props.onSuccess?.()
+            router.push('/')
           } catch (error: any) {
             if (error.code === 'P2002' && error.meta?.target?.includes('email')) {
               // This error comes from Prisma

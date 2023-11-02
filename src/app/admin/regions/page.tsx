@@ -6,6 +6,7 @@ import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import deleteRegion from 'src/regions/mutations/deleteRegion'
 import getRegions from 'src/regions/queries/getRegions'
+import { Breadcrumb } from '../_components/Breadcrumb'
 
 export default function AdminRegionsPage() {
   const router = useRouter()
@@ -14,6 +15,7 @@ export default function AdminRegionsPage() {
 
   return (
     <>
+      <Breadcrumb pages={[{ href: '/admin/regions', name: 'Regionen' }]} />
       <table className="overflow-clip rounded bg-white/50">
         <thead>
           <tr className="bg-white/90">
@@ -26,7 +28,7 @@ export default function AdminRegionsPage() {
           {regions.map((region) => (
             <tr key={region.slug}>
               <th>
-                <strong>{region.fullName}</strong>
+                <strong>{region.name}</strong>
               </th>
               <td>
                 <button
