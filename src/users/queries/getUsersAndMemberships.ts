@@ -24,8 +24,7 @@ export default resolver.pipe(
           orderBy,
           select: {
             id: true,
-            firstName: true,
-            lastName: true,
+            name: true,
             email: true,
             role: true,
             // We cannot pass this part via select in the page component since TS will not be able to infer the types then
