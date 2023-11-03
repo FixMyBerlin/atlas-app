@@ -7,10 +7,7 @@ import { linkStyles } from 'src/app/_components/links/styles'
 import { Pill } from 'src/app/_components/text/Pill'
 import deleteMembership from 'src/memberships/mutations/deleteMembership'
 import getUsersAndMemberships from 'src/users/queries/getUsersAndMemberships'
-import { Breadcrumb, TBreadcrumb } from '../_components/Breadcrumb'
 import { getFullname } from './_components/utils/getFullname'
-
-export const breadcrump: TBreadcrumb = { href: '/admin/memberships', name: 'Mitgliedschaften' }
 
 export default function AdminMembershipsPage() {
   const [{ users: userAndMemberships }] = useQuery(getUsersAndMemberships, {})
@@ -32,7 +29,6 @@ export default function AdminMembershipsPage() {
 
   return (
     <>
-      <Breadcrumb pages={[breadcrump]} />
       <table className="min-w-full divide-y divide-gray-300">
         <thead className="bg-gray-50">
           <tr>
