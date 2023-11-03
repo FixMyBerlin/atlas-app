@@ -14,7 +14,9 @@ export const RegionTeaser = ({ region }: Props) => {
       >
         <div className="aspect-auto h-20 overflow-hidden rounded-lg border border-gray-200 bg-white group-hover:opacity-75">
           <span className="flex h-full w-full items-center justify-center object-cover object-center py-2">
+            {/* @ts-ignore */}
             {region.logoPath ? (
+              // @ts-ignore
               <Image src={region.logoPath} className="max-h-full w-auto" alt="" />
             ) : (
               <BuildingLibraryIcon className="block h-20 w-auto" />
@@ -24,6 +26,7 @@ export const RegionTeaser = ({ region }: Props) => {
         <div className="pb-4 pt-10 text-center">
           <h3 className="text-xl font-medium text-gray-900">
             Radverkehrsatlas <br />
+            {/* @ts-ignore */}
             {region.fullName}
           </h3>
         </div>
