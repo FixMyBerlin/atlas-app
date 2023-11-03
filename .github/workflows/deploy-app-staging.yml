@@ -2,7 +2,7 @@ name: Deploy Staging
 on:
   push:
     branches:
-      - blitz
+      - develop
 jobs:
   call-deploy-app:
     uses: ./.github/workflows/deploy-app.yml
