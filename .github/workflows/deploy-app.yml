@@ -91,6 +91,7 @@ jobs:
             cd /srv/blitz/
             echo "Updating '.env'"
             echo GITHUB_SHA='${{ github.sha }}' > .env
+            echo APP_ORIGIN='${{ inputs.APP_ORIGIN }}' >> .env
             echo DATABASE_URL='${{ secrets.DATABASE_URL }}' >> .env
             echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
             echo OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}' >> .env
