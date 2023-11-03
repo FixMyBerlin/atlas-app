@@ -14,8 +14,7 @@ Create a `.env.local` file with a `VITE_MAPBOX_STYLE_ACCESS_TOKEN` key. See `.en
 1. Style in Mapbox Studio.
 1. Publish the style in Mapbox Studio (only then the API output is updated).
 1. Run `npm run updateStyles`.
-   We use [Vite-Node](https://www.npmjs.com/package/vite-node) to run this script.
-   This way we stay close to vite and vitest and it allows using imports and TS.
+   - We use [Bun](https://bun.sh/docs/installation) to run this script.
 1. Check the generated files and update the `mapData` if needed.
    Including the source-attribute (see below).
 
