@@ -16,5 +16,4 @@ RUN npx blitz prisma generate && npx blitz build
 
 EXPOSE 3000
 
-#CMD npx blitz prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 3000
-CMD exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 3000
+CMD npx blitz prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 3000
