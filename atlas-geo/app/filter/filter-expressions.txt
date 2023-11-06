@@ -29,3 +29,6 @@ n/public_transport
 
 # Topic: poiClassification
 nw/tourism
+
+# Topic: Traffic signs
+n/traffic_sign*

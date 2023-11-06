@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.{verification_table} (
 
 DROP TABLE IF EXISTS {joined_table};
 CREATE TABLE public.{joined_table} AS (
-  SELECT g.osm_type, g.osm_id, g.category, g.tags, g.meta, g.geom, v.verified_at, v.verified_by, v.verified
+  SELECT g.osm_type, g.osm_id, g.tags, g.meta, g.geom, v.verified_at, v.verified_by, v.verified
   FROM {geometry_table} g
   LEFT JOIN (
     SELECT DISTINCT ON (v.osm_id) * FROM {verification_table} v ORDER BY v.osm_id, verified_at DESC

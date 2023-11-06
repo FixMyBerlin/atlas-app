@@ -11,12 +11,15 @@ require("transformations")
 require("IntoExcludeTable")
 require("CopyTags")
 require("RoadWidth")
+require("ToMarkdownList")
+require("DeriveSurface")
+require("DeriveSmoothness")
+require("BikelanesTodos")
 
 local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'category', type = 'text' },
     { column = 'tags',     type = 'jsonb' },
     { column = 'meta',     type = 'jsonb' },
     { column = 'geom',     type = 'linestring' },
@@ -100,6 +103,7 @@ function Bikelanes(object)
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
+        cycleway.category = category
 
         local freshTag = "check_date"
         if cycleway.prefix then
@@ -107,27 +111,27 @@ function Bikelanes(object)
         end
 
         if tags[freshTag] then
-          cycleway.smoothness_age = AgeInDays(ParseDate(tags[freshTag]))
+          cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
         end
-      
+
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
           if tags.bicycle_road == 'yes' then
-            tags.oneway = 'implicit_no'
+            cycleway.oneway = 'implicit_no'
           else
-            tags.oneway = 'implict_yes'
+            cycleway.oneway = 'implicit_yes'
           end
         end
 
         cycleway.offset = sign * width / 2
 
-        -- Hotfix export which requires the category to be part of the tags
-        -- Keeping the category column as well which pg_tileserf should resolve somehow…
-        cycleway.category = category
+
+        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
+        cycleway.smoothness, cycleway.smoothness_source, cycleway.smoothness_confidence = DeriveSmoothness(cycleway)
+        cycleway.surface, cycleway.surface_source = DeriveSurface(cycleway)
 
         bikelanesTable:insert({
-          category = category,
           tags = cycleway,
           meta = Metadata(object),
           geom = object:as_linestring(),

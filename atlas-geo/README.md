@@ -1,6 +1,6 @@
 <div align="center">
   <!-- <img src="src/images/" height="80" /> -->
-  <h1 align="center"><a href="https://radverkehtsatlas.de">Radverkehrsatlas.de</a> — processing repository</h1>
+  <h1 align="center"><a href="https://radverkehrsatlas.de/">radverkehrsatlas.de</a> — processing repository</h1>
   <h3><strong>(!)</strong> This project ist still in development</h3>
 </div>
 
@@ -90,7 +90,7 @@ The workflow is…
    _OR_
 
    ```sh
-   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up
+   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
    ```
 
 3. Inspect the new results
@@ -151,7 +151,7 @@ ssh atlas-staging
 # OR
 ssh atlas-prd
 # then…
-cd /srv/processing && docker compose -f docker-compose.yml logs app --tail 500
+cd /srv/processing && docker compose logs app --tail 500
 ```
 
 ## 💛 Thanks to
