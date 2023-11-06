@@ -36,7 +36,7 @@
     "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install; npm run fix-nextauth",
-    "fix-nextauth": "sed -i '34 i \\\"./core/*\\\": \\\"./core/*.js\\\",' node_modules/next-auth/package.json",
+    "fix-nextauth": "chmod +x packagePatches.sh ; ./packagePatches.sh",
     "postinstall": "patch-package"
   },
   "prisma": {
