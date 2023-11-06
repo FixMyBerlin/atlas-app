@@ -11,7 +11,7 @@ notify() {
   fi
   local payload="{\"text\": \"$ENVIRONMENT: $1\"}"
   local url="https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token=$SYNOLOGY_TOKEN"
-  curl -s -X POST $url -d "payload=$payload"
+  curl -X POST $url -d "payload=$payload" --silent --output "./response"
 }
 
 run_lua_if_debug() {
