@@ -3,8 +3,10 @@ import { Prisma } from '@prisma/client'
 
 type Users = Prisma.UserUncheckedCreateInput[]
 
-export const generateUserEmail = (slug: string) => `${slug}@fixmycity.de`
+export const generateUserEmail = (slug: string) => `${slug}@example.com`
+
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
 let osmId = 1000
 
 const seedUsers = async () => {
@@ -16,7 +18,7 @@ const seedUsers = async () => {
   const genericUsers: Users = [
     {
       osmId: osmId++,
-      email: 'admin@fixmycity.de',
+      email: 'admin@example.com',
       role: 'ADMIN',
       name: 'Admin',
       phone: '030 549 086 65 - 90',
@@ -24,7 +26,7 @@ const seedUsers = async () => {
     },
     {
       osmId: osmId++,
-      email: 'all-regions@fixmycity.de',
+      email: 'all-regions@example.com',
       role: 'USER',
       name: 'All-Regions',
       phone: '030 549 086 65 - 91',
@@ -32,7 +34,7 @@ const seedUsers = async () => {
     },
     {
       osmId: osmId++,
-      email: 'no-region@fixmycity.de',
+      email: 'no-region@example.com',
       role: 'USER',
       name: 'No-Region',
       phone: '030 549 086 65 - 92',

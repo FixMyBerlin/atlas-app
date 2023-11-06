@@ -16,8 +16,8 @@ const seedMemberships = async () => {
   }))
 
   // @ts-ignore
-  const allRegionsAdminId = usersByEmail["all-regions@fixmycity.de"].id
   let allMemberships: Memberships = regions.map(({ id }) => ({
+  const allRegionsAdminId = usersByEmail['all-regions@example.com'].id
     regionId: id,
     // @ts-ignore
     userId: allRegionsAdminId,
