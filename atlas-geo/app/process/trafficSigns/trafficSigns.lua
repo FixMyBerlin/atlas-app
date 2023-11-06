@@ -4,7 +4,7 @@ require("Metadata")
 
 local table = osm2pgsql.define_table({
   name = 'trafficSigns',
-  ids = { type = 'node', id_column = 'osm_id', type_column = 'osm_type' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
@@ -14,7 +14,7 @@ local table = osm2pgsql.define_table({
 
 -- local trafficSignWays = osm2pgsql.define_table({
 --   name = '_trafficSigns_tmp',
---   ids = { type = 'way', id_column = 'osm_id', type_column = 'osm_type' },
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
 --   columns = {
 --     { column = 'tags', type = 'jsonb' },
 --     { column = 'meta', type = 'jsonb' },
@@ -28,7 +28,7 @@ local table = osm2pgsql.define_table({
 -- A single entry holds the osm id of the traffic sign as `node_id`, and one index from which the angle is to be taken (in way direction)
 local directionTable = osm2pgsql.define_table({
   name = '_trafficSignDirections',
-  ids = { type = 'way', id_column = 'osm_id', type_column = 'osm_type' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'node_id', type = 'bigint' },
     { column = 'idx', type = 'int' },
