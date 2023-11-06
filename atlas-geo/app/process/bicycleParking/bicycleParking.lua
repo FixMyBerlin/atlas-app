@@ -1,5 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
-require("Set")
+require("CopyTags")
 require("Metadata")
 
 local nodeTable = osm2pgsql.define_table({
@@ -47,9 +47,13 @@ function capacityNormalization(tags)
   return capacities
 end
 
+-- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
+local tags_cc = {"area", "operator", "covered", "indoor", "foot_traffi", "access", "capacity", "fee","bicycle_parking","cyclestreets_id", "maxstay", "surveillance"}
+
 function osm2pgsql.process_node(object)
-  local tags = object.tags
   if ExitProcessing(object) then return end
+  local tags = capacityNormalization(object.tags)
+  CopyTags(object.tags, tags, tags_cc, "osm_")
   nodeTable:insert({
     tags = capacityNormalization(tags),
     meta = Metadata(object),
@@ -60,14 +64,16 @@ end
 function osm2pgsql.process_way(object)
   if ExitProcessing(object) or not object.is_closed then return end
 
-  local tags = object.tags
+  local tags = capacityNormalization(object.tags)
+  CopyTags(object.tags, tags, tags_cc, "osm_")
+  
   areaTable:insert({
-    tags = capacityNormalization(tags),
+    tags = tags,
     meta = Metadata(object),
     geom = object:as_polygon(),
   })
   nodeTable:insert({
-    tags = capacityNormalization(tags),
+    tags = tags,
     meta = Metadata(object),
     geom = object:as_polygon():centroid(),
   })
