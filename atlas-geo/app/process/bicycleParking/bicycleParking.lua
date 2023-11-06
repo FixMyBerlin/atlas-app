@@ -66,4 +66,9 @@ function osm2pgsql.process_way(object)
     meta = Metadata(object),
     geom = object:as_polygon(),
   })
+  nodeTable:insert({
+    tags = capacityNormalization(tags),
+    meta = Metadata(object),
+    geom = object:as_polygon():centroid(),
+  })
 end
