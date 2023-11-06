@@ -94,10 +94,9 @@ end
 
 local to_orient = {}
 
--- TODO: add a direction_source tag
 function osm2pgsql.process_node(object)
   local tags = object.tags
-  if ExitProcessing(object) or tags.highway == nil then return end
+  if ExitProcessing(object) then return end
 
   tags.direction = tags.direction or tags['traffic_sign:direction'] -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
   local direction_source = nil
@@ -127,11 +126,11 @@ function osm2pgsql.process_node(object)
 end
 
 function osm2pgsql.process_way(object)
+  if object.tags.highway == nil then return end
   local prev_idx = nil
   local prev_was_sign = false
   local prev_node_id = nil
   local is_sign = false
-  -- TODO: guard one highway
   for idx, id in pairs(object.nodes) do
     is_sign = to_orient[id]
     if is_sign then
