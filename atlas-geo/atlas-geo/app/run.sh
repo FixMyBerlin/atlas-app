@@ -6,6 +6,12 @@ export OSM_DATADIR="/data/"
 export OSM_LOCAL_FILE=${OSM_DATADIR}openstreetmap-latest.osm.pbf
 export OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 
+# define default args
+export SKIP_DOWNLOAD=${SKIP_DOWNLOAD:-0}
+export SKIP_TAG_FILTER=${SKIP_TAG_FILTER:-0}
+export DEBUG=${DEBUG:-0}
+export ID_FILTER=${ID_FILTER:-''}
+
 ./run-1-download.sh
 ./run-2-filter.sh
 ./run-3-migration.sh
@@ -16,7 +22,5 @@ process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
 ./run-5-postprocess.sh
-
-./run-6-process-buildings.sh
 
 ./run-7-metadata.sh

@@ -38,8 +38,16 @@ end
 -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
 local function livingStreet(tags)
-  if tags.highway == "living_street" and not tags.bicycle == "no" then
-    return "livingStreet"
+  if tags.highway == "living_street" then
+    -- No vehicle except bicycles
+    if tags.vehicle == "no" and not tags.bicycle == "yes" then
+      return "livingStreet"
+    end
+    -- Nothing about vehicle but bicycle=yes or similar
+    if (tags.vehicle == nil or tags.vehicle == "yes")
+        and not tags.bicycle == "no" then
+      return "livingStreet"
+    end
   end
 end
 
@@ -166,15 +174,15 @@ end
 -- Case: Crossing
 --    Examples https://github.com/FixMyBerlin/atlas-app/issues/23
 local function crossing(tags)
-  local result = tags.highway == "cycleway" and tags.cycleway == "crossing"
-  result = result or
-      tags.highway == "path" and tags.path == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-  result = result or
-      tags.highway == "footway" and tags.footway == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-
-  if result then
+  if tags.highway == "cycleway" and tags.cycleway == "crossing" then
+    return "crossing"
+  end
+  if tags.highway == "path" and tags.path == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
+    return "crossing"
+  end
+  if tags.highway == "footway" and tags.footway == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
     return "crossing"
   end
 end
@@ -234,12 +242,22 @@ local function sharedBusLane(tags)
   end
 end
 
+-- Explicit tagging as "Mischverkehr" without any traffic sign or road marking
+-- In our style, we ignore this tagging and do not assign an explicit category.
+-- The default for highways is, that they are shared unless forbidden.
+-- This is an explicit category so that it is not rendered as "needsClarification"
+-- Example https://www.openstreetmap.org/way/35396829/history
+local function sharedLane(tags)
+  if tags.cycleway == "shared" then
+    return "explicitSharedLaneButNoSignage"
+  end
+end
+
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local function needsClarification(tags)
-  local result = tags.highway == "cycleway"
-  result = result or (tags.highway == "path" and tags.bicycle == "designated")
-  if result then
+  if tags.highway == "cycleway"
+      or (tags.highway == "path" and tags.bicycle == "designated") then
     return "needsClarification"
   end
 end
@@ -268,6 +286,7 @@ function CategorizeBikelane(tags)
     livingStreet,
     bicycleRoad,
     sharedBusLane,
+    sharedLane,
     pedestrianAreaBicycleYes,
     sharedMotorVehicleLane,
     -- Detailed tagging cases

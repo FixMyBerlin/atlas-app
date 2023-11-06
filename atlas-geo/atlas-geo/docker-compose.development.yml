@@ -5,22 +5,31 @@ services:
       context: .
       dockerfile: ./app.Dockerfile
     entrypoint: /app/run.sh
-    env_file:
-      - ./.env
+    container_name: app
+    environment:
+      PGHOST:
+      PGDATABASE: 
+      PGUSER:
+      PGPASSWORD:
+      OSM_DOWNLOAD_URL:
+      SKIP_DOWNLOAD:
+      SKIP_TAG_FILTER:
+      DEBUG:
+      ID_FILTER:
+      API_SECRET:
     volumes:
       - osmfiles:/data
     depends_on:
       db:
         condition: service_healthy
-    container_name: app
     profiles:
       - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
-    container_name: tileserver
+    container_name: tiles
     environment:
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@db/${PGDATABASE}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
     ports:
       - 7800:7800
     depends_on:
@@ -31,8 +40,12 @@ services:
       context: .
       dockerfile: ./api.Dockerfile
     container_name: api
-    env_file:
-      - ./.env
+    environment:
+      PGHOST:
+      PGDATABASE: 
+      PGUSER:
+      PGPASSWORD:
+      API_SECRET:
     ports:
       - 80:80
     depends_on:
@@ -40,11 +53,9 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
-    env_file:
-      - ./.env
     environment:
+      PGUSER:
       POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_USER: ${PGUSER}
       POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
@@ -56,9 +67,9 @@ services:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
-    container_name: osmdatabase
+    container_name: db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
       interval: 5s
       timeout: 5s
       retries: 5
