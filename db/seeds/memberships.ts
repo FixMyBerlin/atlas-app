@@ -1,6 +1,6 @@
-import { Prisma } from "@prisma/client"
-import db from "../index"
-import { generateUserEmail } from "./users"
+import { Prisma } from '@prisma/client'
+import db from '../index'
+import { generateUserEmail } from './users'
 
 type Memberships = Prisma.MembershipUncheckedCreateInput[]
 
@@ -9,17 +9,14 @@ const seedMemberships = async () => {
   const users = await db.user.findMany()
   const usersByEmail = Object.fromEntries(users.map((user) => [user.email, user]))
 
-  let regionMemberships: Memberships = regions.map(({ id, slug }) => ({
+  const regionMemberships: Memberships = regions.map(({ id, slug }) => ({
     regionId: id,
-    // @ts-ignore
     userId: usersByEmail[generateUserEmail(slug)].id,
   }))
 
-  // @ts-ignore
-  let allMemberships: Memberships = regions.map(({ id }) => ({
   const allRegionsAdminId = usersByEmail['all-regions@example.com'].id
+  const allMemberships: Memberships = regions.map(({ id }) => ({
     regionId: id,
-    // @ts-ignore
     userId: allRegionsAdminId,
   }))
 
