@@ -50,9 +50,8 @@ const seedUsers = async () => {
   }))
 
   const users = [...genericUsers, ...regionAdmins]
-  for (let i = 0; i < users.length; i++) {
-    // @ts-ignore
-    await db.user.create({ data: users[i] })
+  for (const user of users) {
+    await db.user.create({ data: user })
   }
 }
 

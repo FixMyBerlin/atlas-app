@@ -52,8 +52,7 @@ const seedRegions = async () => {
     },
   ]
 
-  for (let i = 0; i < seedRegions.length; i++) {
-    const data = seedRegions[i]
+  for (const data of seedRegions) {
     if (data) {
       await db.region.create({ data })
     }

@@ -25,8 +25,7 @@ const seedMemberships = async () => {
 
   const memberships = [...regionMemberships, ...allMemberships]
 
-  for (let i = 0; i < memberships.length; i++) {
-    const data = memberships[i]
+  for (const data of memberships) {
     if (data) {
       await db.membership.create({ data })
     }

@@ -33,8 +33,7 @@ const seedBikelaneVerification = async () => {
     },
   ]
 
-  for (let i = 0; i < seedBikelaneVerification.length; i++) {
-    const data = seedBikelaneVerification[i]
+  for (const data of seedBikelaneVerification) {
     if (data) {
       await db.bikelaneVerification.create({ data })
     }
