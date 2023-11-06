@@ -12,15 +12,31 @@ export SKIP_TAG_FILTER=${SKIP_TAG_FILTER:-0}
 export DEBUG=${DEBUG:-0}
 export ID_FILTER=${ID_FILTER:-''}
 
-./run-1-download.sh
-./run-2-filter.sh
-./run-3-migration.sh
+source ./process-helpers.sh
+
+if ! ./run-1-download.sh; then 
+    notify 'ERROR: download exited with non-zero status code'
+fi
+
+if ! ./run-2-filter.sh; then 
+    notify 'ERROR: Filter exited with non-zero status code'
+fi
+
+if ! ./run-3-migration.sh; then 
+    notify 'ERROR: Migration exited with non-zero status code'
+fi
 
 process_start_time=$(date +%s)
-./run-4-process.sh
+if ! ./run-4-process.sh; then 
+    notify 'ERROR: Process exited with non-zero status code'
+fi
 process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
-./run-5-postprocess.sh
+if ! ./run-5-postprocess.sh; then 
+    notify 'ERROR: Postprocess exited with non-zero status code'
+fi
 
-./run-7-metadata.sh
+if ! ./run-7-metadata.sh; then 
+    notify 'ERROR: Metadata exited with non-zero status code'
+fi
