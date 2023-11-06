@@ -9,7 +9,7 @@ jobs:
   build_and_deploy:
     uses: ./.github/workflows/deployment.yml
     with:
-      ENVIRONMENT: staging
+      ENVIRONMENT: production
       URL: https://tiles.radverkehrsatlas.de
       TILES_URL: tiles.radverkehrsatlas.de
       API_URL: api.radverkehrsatlas.de
