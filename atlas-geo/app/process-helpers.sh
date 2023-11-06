@@ -2,8 +2,6 @@
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 PROCESS_DIR="./process/"
-# Set a default value for DEBUG if it's not defined
-DEBUG=${DEBUG:-0}
 
 notify() {
   if [ -z $SYNOLOGY_TOKEN ]; then 
