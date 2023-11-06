@@ -17,6 +17,8 @@ services:
       DEBUG:
       ID_FILTER:
       API_SECRET:
+      ENVIRONMENT:
+      SYNOLOGY_TOKEN:
     volumes:
       - osmfiles:/data
     depends_on:
