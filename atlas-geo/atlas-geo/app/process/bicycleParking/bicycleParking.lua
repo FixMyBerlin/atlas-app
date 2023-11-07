@@ -29,7 +29,7 @@ function ExitProcessing(object)
 end
 
 function capacityNormalization(tags)
-  local capacities = { capacity = tonumber(tags.capacity)}
+  local capacities = { capacity = tonumber(tags.capacity) }
   if capacities.capacity == nil then return capacities end
   for key, val in pairs(tags) do
     if osm2pgsql.has_prefix(key, "capacity") then
@@ -48,16 +48,26 @@ function capacityNormalization(tags)
   return capacities
 end
 
--- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
--- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
-local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
-  "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
-  "bicycle_parking:count", "bicycle_parking:position", "traffic_sign" }
+local function processTags(tags)
+  -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
+  -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
+  local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
+    "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
+    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign" }
+  local processedTags = capacityNormalization(tags)
+  CopyTags(processedTags, tags, tags_cc, "osm_")
+
+  local checkDateTag = "check_date:amenity"
+  if tags[checkDateTag] then
+    processedTags.age = AgeInDays(ParseDate(tags[checkDateTag]))
+  end
+  return processedTags
+end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
-  local tags = capacityNormalization(object.tags)
-  CopyTags(object.tags, tags, tags_cc, "osm_")
+  local tags = processTags(object.tags)
+
   nodeTable:insert({
     tags = tags,
     meta = Metadata(object),
@@ -67,10 +77,7 @@ end
 
 function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
-
-  local tags = capacityNormalization(object.tags)
-  CopyTags(object.tags, tags, tags_cc, "osm_")
-
+  local tags = processTags(object.tags)
   local meta = Metadata(object)
 
   nodeTable:insert({
@@ -78,6 +85,7 @@ function osm2pgsql.process_way(object)
     meta = meta,
     geom = object:as_polygon():centroid(),
   })
+
   if not object.is_closed then return end
   areaTable:insert({
     tags = tags,
