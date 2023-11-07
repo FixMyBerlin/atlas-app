@@ -17,9 +17,9 @@ type RegionMap = {
 }
 
 export type AdditionalRegionAttributes = {
+  slug: RegionPath
   name: string
   fullName: string
-  slug: RegionPath
   /** @desc 1-n relation IDs, used for the mask and export bbox — @href use https://hanshack.com/geotools/gimmegeodata/ to get the ids */
   osmRelationIds: number[] | []
   map: RegionMap
@@ -27,9 +27,6 @@ export type AdditionalRegionAttributes = {
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
   logoWhiteBackgroundRequired: boolean
   themes: MapDataThemeIds[]
-  osmUsers: number[]
-  /** @desc published=true regions are visible on production, all others are not */
-  published: boolean
   backgroundSources: SourcesRasterIds[]
 } & (
   | {
@@ -89,9 +86,9 @@ export type RegionPath =
 // This is our regions "Database" until we have a real one
 export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
   {
+    slug: 'bibi',
     name: 'BiBi',
     fullName: 'Bietigheim-Bissingen',
-    slug: 'bibi',
     osmRelationIds: [1613510],
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
     bbox: {
@@ -108,14 +105,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'lit',
       'parking',
     ],
-    osmUsers: [...adminIds, 12518419, 347746],
-    published: true,
     backgroundSources: defaultBackgroundSources,
   },
   {
+    slug: 'trto',
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
-    slug: 'trto',
     osmRelationIds: [1427697],
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     bbox: {
@@ -131,14 +126,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'roadClassification',
       'lit',
     ],
-    osmUsers: [...adminIds, 18058212, 18058219],
-    published: true,
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },
   {
+    slug: 'berlin',
     name: 'Berlin',
     fullName: 'Berlin Ring',
-    slug: 'berlin',
     osmRelationIds: [
       62422,
       // 11905744, // Hundekopf not 'adminstration' and therefore not present
@@ -158,8 +151,6 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'parking',
       'lit',
     ],
-    osmUsers: [...adminIds, 12741863],
-    published: false,
     backgroundSources: [
       ...defaultBackgroundSources,
       'strassenbefahrung',
@@ -198,22 +189,18 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'lit',
       'mapillary',
     ],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: defaultBackgroundSources,
   },
   {
+    slug: 'parkraum',
     name: 'Parkraum',
     fullName: 'Parkraumanalyse',
-    slug: 'parkraum',
     osmRelationIds: [],
     map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
     bbox: null,
     logoPath: imageParking,
     logoWhiteBackgroundRequired: false,
     themes: ['parking'],
-    osmUsers: [...adminIds], // Note: Not needed, since we don't support verfication, yet
-    published: true,
     backgroundSources: [
       ...defaultBackgroundSources,
       'strassenbefahrung',
@@ -226,9 +213,9 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     ],
   },
   {
+    slug: 'rs8',
     name: 'RS 8',
     fullName: 'Trassenscout RS 8',
-    slug: 'rs8',
     osmRelationIds: [
       405292, // Stadt Ludwigsburg
       405291, // Remseck am Neckar
@@ -242,14 +229,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://trassenscout.de/favicon.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'mainz',
     name: 'Mainz',
     fullName: 'radnetz-mainz.de',
-    slug: 'mainz',
     osmRelationIds: [62630],
     map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
     bbox: {
@@ -259,14 +244,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'lueneburg',
     name: 'LK Lüneburg',
     fullName: 'Landkreis Lüneburg',
-    slug: 'lueneburg',
     osmRelationIds: [2084746],
     map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
     bbox: {
@@ -277,14 +260,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'neukloster-warin',
     name: 'Neukloster Warin',
     fullName: 'Amt Neukloster Warin',
-    slug: 'neukloster-warin',
     osmRelationIds: [1515757],
     map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
     bbox: {
@@ -294,14 +275,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'landhagen',
     name: 'Landhagen',
     fullName: 'Amt Landhagen',
-    slug: 'landhagen',
     osmRelationIds: [1432580],
     map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
     bbox: {
@@ -311,14 +290,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://www.landhagen.de/images/logo2.png',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'woldegk',
     name: 'Woldegk',
     fullName: 'Amt Woldegk',
-    slug: 'woldegk',
     osmRelationIds: [1419902],
     map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
     bbox: {
@@ -328,28 +305,24 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: true,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'ostalbkreis',
     name: 'Ostalbkreis',
     fullName: 'Ostalbkreis',
-    slug: 'ostalbkreis',
     osmRelationIds: [62708],
     map: { lat: 48.8364862, lng: 10.092577, zoom: 10 },
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
     externalLogoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'sigmaringen',
     name: 'Sigmaringen',
     fullName: 'Stadt Sigmaringen',
-    slug: 'sigmaringen',
     osmRelationIds: [2806390],
     map: { lat: 48.0856128, lng: 9.2175234, zoom: 10 },
     // BBox für https://www.openstreetmap.org/relation/2806390
@@ -357,14 +330,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'nagold',
     name: 'Nagold',
     fullName: 'Stadt Nagold',
-    slug: 'nagold',
     osmRelationIds: [2946978],
     map: { lat: 52.1364, lng: 11.6369, zoom: 13 },
     // BBox für https://www.openstreetmap.org/relation/2946978
@@ -372,8 +343,6 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
     logoWhiteBackgroundRequired: false,
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds],
-    published: false,
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -440,9 +409,9 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'deutschland',
     name: 'Download',
     fullName: 'Deutschlandweiter Download',
-    slug: 'deutschland',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
@@ -451,16 +420,14 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    osmUsers: [...adminIds],
-    published: false,
     // themes: themes.map((t) => t.id).filter((id) => !id.endsWith('_NEW')),
     themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    slug: 'testing',
     name: 'Testing',
     fullName: 'Test new processing',
-    slug: 'testing',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
@@ -469,8 +436,6 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    osmUsers: [...adminIds],
-    published: false,
     themes: themes.map((t) => t.id),
     backgroundSources: [...defaultBackgroundSources],
   },
