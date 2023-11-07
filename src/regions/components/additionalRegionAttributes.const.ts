@@ -172,9 +172,9 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     ],
   },
   {
-    name: 'ZES+',
-    fullName: 'ZES+',
-    slug: 'zes',
+    slug: 'nudafa',
+    name: 'NUDAFA',
+    fullName: 'NUDAFA',
     osmRelationIds: [
       55775, // Zeuthen
       55773, //Eichwalde
