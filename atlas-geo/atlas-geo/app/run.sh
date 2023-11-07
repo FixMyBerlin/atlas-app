@@ -25,28 +25,28 @@ alert() {
 }
 
 if ! ./run-1-download.sh; then 
-    alert 'ERROR: download exited with non-zero status code'
+    alert '*ERROR*: #Download exited with non-zero status code'
 fi
 
 if ! ./run-2-filter.sh; then 
-    alert 'ERROR: Filter exited with non-zero status code'
+    alert '*ERROR*: #Filter exited with non-zero status code'
 fi
 
 if ! ./run-3-migration.sh; then 
-    alert 'ERROR: Migration exited with non-zero status code'
+    alert '*ERROR*: #Migration exited with non-zero status code'
 fi
 
 process_start_time=$(date +%s)
 if ! ./run-4-process.sh; then 
-    alert 'ERROR: Process exited with non-zero status code'
+    alert '*ERROR*: #Process exited with non-zero status code'
 fi
 process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
 if ! ./run-5-postprocess.sh; then 
-    alert 'ERROR: Postprocess exited with non-zero status code'
+    alert '*ERROR*: #Postprocess exited with non-zero status code'
 fi
 
 if ! ./run-7-metadata.sh; then 
-    alert 'ERROR: Metadata exited with non-zero status code'
+    alert '*ERROR*: #Metadata exited with non-zero status code'
 fi
