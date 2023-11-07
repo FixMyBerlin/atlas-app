@@ -1,7 +1,6 @@
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
 import db, { Prisma } from 'db'
-import { Prettify } from 'src/app/_components/types/types'
 import { additionalRegionAttributes } from '../components/additionalRegionAttributes.const'
 import getPublicRegions from './getPublicRegions'
 
@@ -14,7 +13,7 @@ export default resolver.pipe(async ({ where }: GetRegionsInput) => {
     where: { ...where, public: true },
     orderBy: { id: 'asc' },
     // Only public data:
-    select: { slug: true, shortName: true, name: true },
+    select: { slug: true },
   })
 
   const regionsWithAdditionalData = regions.map((region) => {

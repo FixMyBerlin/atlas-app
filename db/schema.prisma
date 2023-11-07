@@ -103,8 +103,6 @@ model Region {
   updatedAt DateTime @updatedAt
   //
   slug      String   @unique
-  shortName String
-  name      String
   public    Boolean  @default(false)
 
   Membership Membership[]

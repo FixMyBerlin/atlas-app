@@ -19,9 +19,9 @@ export default resolver.pipe(
     if (!slug) throw new NotFoundError()
 
     const region = await db.region.findFirst({
-      where: { slug },
+      where: { slug, public: true },
       // Only public data:
-      select: { slug: true, shortName: true, name: true },
+      select: { slug: true },
     })
 
     if (!region) throw new NotFoundError()
