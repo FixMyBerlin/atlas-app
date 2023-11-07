@@ -16,7 +16,8 @@ services:
       ID_FILTER:
       API_SECRET:
       ENVIRONMENT:
-      SYNOLOGY_TOKEN:
+      SYNOLOGY_LOG_TOKEN:
+      SYNOLOGY_ERROR_LOG_TOKEN:
     volumes:
       - osmfiles:/data
     networks:
