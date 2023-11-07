@@ -25,6 +25,10 @@ on:
         required: true
       SSH_HOST:
         required: true
+      SYNOLOGY_LOG_TOKEN:
+        required: true
+      SYNOLOGY_ERROR_LOG_TOKEN:
+        required: true
     inputs:
       ENVIRONMENT:
         type: string
