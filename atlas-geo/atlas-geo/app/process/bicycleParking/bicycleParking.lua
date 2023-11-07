@@ -28,7 +28,7 @@ function ExitProcessing(object)
   end
 end
 
-function capacityNormalization(tags)
+local function capacityNormalization(tags)
   local capacities = { capacity = tonumber(tags.capacity) }
   if capacities.capacity == nil then return capacities end
   for key, val in pairs(tags) do
