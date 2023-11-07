@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import clsx from 'clsx'
+import { Route } from 'next'
 import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
@@ -9,6 +10,7 @@ import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { frenchQuote } from 'src/app/_components/text/Quotes'
+import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
 import {
   FORM_ERROR,
   RegionForm,
@@ -32,12 +34,13 @@ export default function AdminEditRegionPage() {
 
   return (
     <>
-      <header>
-        <h1>
-          <Link href="/regionen">Regionen</Link> / {frenchQuote(region.slug)} bearbeiten
-        </h1>
-        <p></p>
-      </header>
+      <Breadcrumb
+        pages={[
+          { href: '/admin/regions', name: 'Regionen' },
+          // TS: No idea why this "as" is needed. `regionSlug` is a simple string so it should work.
+          { href: `/admin/regions/${regionSlug}/edit` as Route, name: 'Anlegen' },
+        ]}
+      />
 
       <details className="prose-sm my-10">
         <summary className={clsx(linkStyles, 'cursor-pointer')}>JSON Dump</summary>

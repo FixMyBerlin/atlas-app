@@ -10,6 +10,7 @@ import {
 } from 'src/app/admin/regions/[regionSlug]/edit/_components/RegionForm'
 import createRegion from 'src/regions/mutations/createRegion'
 import { CreateRegionSchema } from 'src/regions/schemas'
+import { Breadcrumb } from '../../_components/Breadcrumb'
 
 export default function AdminNewRegionPage() {
   const router = useRouter()
@@ -17,7 +18,12 @@ export default function AdminNewRegionPage() {
 
   return (
     <>
-      <h1>Create New Region</h1>
+      <Breadcrumb
+        pages={[
+          { href: '/admin/regions', name: 'Regionen' },
+          { href: '/admin/regions/new', name: 'Anlegen' },
+        ]}
+      />
       <Suspense fallback={<div>Loading...</div>}>
         <RegionForm
           submitText="Create Region"
