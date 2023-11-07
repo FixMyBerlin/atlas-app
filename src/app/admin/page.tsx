@@ -16,7 +16,7 @@ export default async function AdminDashboard() {
           <Link href="/admin/verifications">Verifications</Link>
         </li>
         <li>
-          <Link href="/admin/memberships">Memberships</Link>
+          <Link href="/admin/memberships">Nutzer & Mitgliedschaften</Link>
         </li>
       </ul>
     </>

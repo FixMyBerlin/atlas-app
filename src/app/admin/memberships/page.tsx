@@ -30,7 +30,8 @@ export default function AdminMembershipsPage() {
 
   return (
     <>
-      <Breadcrumb pages={[{ href: '/admin/memberships', name: 'Mitgliedschaften' }]} />
+      <Breadcrumb pages={[{ href: '/admin/memberships', name: 'Nutzer & Mitgliedschaften' }]} />
+
       <table className="min-w-full divide-y divide-gray-300">
         <thead className="bg-gray-50">
           <tr>
@@ -49,13 +50,15 @@ export default function AdminMembershipsPage() {
               <tr key={user.id}>
                 <td className="h-20 py-4 pl-4 pr-3 text-sm sm:pl-6">
                   <strong>{getFullname(user)}</strong>
-                  <br />
-                  {user.email}
                   {user.role === 'ADMIN' && (
                     <Pill color="yellow" className="ml-1">
                       Admin
                     </Pill>
                   )}
+                  <br />
+                  {user.email}
+                  <br />
+                  OSM ID: {user.osmId}
                 </td>
                 <td className="h-20 py-4 pl-4 pr-3 text-sm sm:pr-6">
                   {user?.Membership?.length === 0 && <>Bisher keine Rechte</>}
