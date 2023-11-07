@@ -51,7 +51,18 @@ const seedUsers = async () => {
     hashedPassword,
   }))
 
-  const users = [...genericUsers, ...regionAdmins]
+  const fmcAdmins: Users = [
+    {
+      osmId: 11881,
+      email: 'tobias@fixmycity.de',
+      role: 'ADMIN',
+      name: `Tobias`,
+      phone: undefined,
+      hashedPassword,
+    },
+  ]
+
+  const users = [...genericUsers, ...regionAdmins, ...fmcAdmins]
   for (const user of users) {
     await db.user.create({ data: user })
   }
