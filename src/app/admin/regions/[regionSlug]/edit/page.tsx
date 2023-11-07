@@ -55,7 +55,6 @@ export default function AdminEditRegionPage() {
                 ...values,
                 slug: region.slug,
               })
-              {/* @ts-ignore */}
               await setQueryData(updated)
               await router.push(`/regionen/${updated.slug}`)
             } catch (error: any) {
