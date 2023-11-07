@@ -7,6 +7,7 @@ import { buttonStyles } from 'src/app/_components/links/styles'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 import { Breadcrumb } from '../_components/Breadcrumb'
+import { HeaderWrapper } from '../_components/HeaderWrapper'
 
 const ITEMS_PER_PAGE = 100
 
@@ -24,7 +25,10 @@ export default function AdminBikelaneVerificationsPage() {
 
   return (
     <>
-      <Breadcrumb pages={[{ href: '/admin/verifications', name: 'Prüfungen' }]} />
+      <HeaderWrapper>
+        <Breadcrumb pages={[{ href: '/admin/verifications', name: 'Prüfungen' }]} />
+      </HeaderWrapper>
+
       <table className="overflow-clip rounded bg-white/50">
         <thead>
           <tr className="bg-white/90">

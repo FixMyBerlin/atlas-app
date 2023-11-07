@@ -8,6 +8,7 @@ import { Pill } from 'src/app/_components/text/Pill'
 import deleteMembership from 'src/memberships/mutations/deleteMembership'
 import getUsersAndMemberships from 'src/users/queries/getUsersAndMemberships'
 import { Breadcrumb } from '../_components/Breadcrumb'
+import { HeaderWrapper } from '../_components/HeaderWrapper'
 import { getFullname } from './_components/utils/getFullname'
 
 export default function AdminMembershipsPage() {
@@ -30,7 +31,9 @@ export default function AdminMembershipsPage() {
 
   return (
     <>
-      <Breadcrumb pages={[{ href: '/admin/memberships', name: 'Nutzer & Mitgliedschaften' }]} />
+      <HeaderWrapper>
+        <Breadcrumb pages={[{ href: '/admin/memberships', name: 'Nutzer & Mitgliedschaften' }]} />
+      </HeaderWrapper>
 
       <table className="min-w-full divide-y divide-gray-300">
         <thead className="bg-gray-50">

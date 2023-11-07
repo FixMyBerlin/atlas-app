@@ -13,7 +13,7 @@ export const Breadcrumb = ({ pages }: Props) => {
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
-      <ol role="list" className="flex space-x-4 rounded-md bg-white px-6 shadow">
+      <ol role="list" className="my-0 flex space-x-4 rounded-md bg-white px-6 shadow">
         <li className="flex">
           <div className="flex items-center">
             <a href="/admin" className="text-gray-400 hover:text-gray-500">

@@ -1,13 +1,17 @@
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
 import { Breadcrumb } from './_components/Breadcrumb'
+import { HeaderWrapper } from './_components/HeaderWrapper'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
 export default async function AdminDashboard() {
   return (
     <>
-      <Breadcrumb pages={[{ href: '/admin', name: 'Dashboard' }]} />
+      <HeaderWrapper>
+        <Breadcrumb pages={[{ href: '/admin', name: 'Dashboard' }]} />
+      </HeaderWrapper>
+
       <ul>
         <li>
           <Link href="/admin/regions">Regionen</Link>

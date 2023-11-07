@@ -1,15 +1,13 @@
 import { z } from 'zod'
 
-export const CreateRegionSchema = z.object({
+export const RegionSchema = z.object({
   slug: z.string(),
-  shortName: z.string(),
-  name: z.string(),
-  public: z.boolean(),
+  public: z.coerce.boolean(),
 })
 
-export const UpdateRegionSchema = CreateRegionSchema.merge(
+export const RegionFormSchema = RegionSchema.merge(
   z.object({
-    slug: z.string(),
+    public: z.string(),
   }),
 )
 

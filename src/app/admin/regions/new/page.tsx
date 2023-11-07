@@ -1,50 +1,45 @@
 'use client'
 
 import { useMutation } from '@blitzjs/rpc'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { Suspense } from 'react'
-import {
-  FORM_ERROR,
-  RegionForm,
-} from 'src/app/admin/regions/[regionSlug]/edit/_components/RegionForm'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { FORM_ERROR, RegionForm } from 'src/app/admin/regions/_components/RegionForm'
 import createRegion from 'src/regions/mutations/createRegion'
-import { CreateRegionSchema } from 'src/regions/schemas'
+import { RegionFormSchema } from 'src/regions/schemas'
 import { Breadcrumb } from '../../_components/Breadcrumb'
+import { HeaderWrapper } from '../../_components/HeaderWrapper'
 
 export default function AdminNewRegionPage() {
   const router = useRouter()
+  const searchParamSlug = useSearchParams()?.get('slug') || undefined
   const [createRegionMutation] = useMutation(createRegion)
 
   return (
     <>
-      <Breadcrumb
-        pages={[
-          { href: '/admin/regions', name: 'Regionen' },
-          { href: '/admin/regions/new', name: 'Anlegen' },
-        ]}
-      />
-      <Suspense fallback={<div>Loading...</div>}>
-        <RegionForm
-          submitText="Create Region"
-          schema={CreateRegionSchema}
-          // initialValues={{}}
-          onSubmit={async (values) => {
-            try {
-              const region = await createRegionMutation(values)
-              await router.push(`/regionen/${region.slug}`)
-            } catch (error: any) {
-              console.error(error)
-              return {
-                [FORM_ERROR]: error.toString(),
-              }
-            }
-          }}
+      <HeaderWrapper>
+        <Breadcrumb
+          pages={[
+            { href: '/admin/regions', name: 'Regionen' },
+            { href: '/admin/regions/new', name: 'Anlegen' },
+          ]}
         />
-      </Suspense>
-      <p>
-        <Link href="/regionen">Regions</Link>
-      </p>
+      </HeaderWrapper>
+
+      <RegionForm
+        submitText="Region anlegen"
+        schema={RegionFormSchema}
+        initialValues={{ slug: searchParamSlug, public: 'false' }}
+        onSubmit={async (values) => {
+          try {
+            await createRegionMutation(values)
+            router.push(`/admin/regions`)
+          } catch (error: any) {
+            console.error(error)
+            return {
+              [FORM_ERROR]: error.toString(),
+            }
+          }
+        }}
+      />
     </>
   )
 }
