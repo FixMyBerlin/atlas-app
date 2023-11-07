@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import createMembership from 'src/memberships/mutations/createMembership'
 import { Breadcrumb } from '../../_components/Breadcrumb'
 import { FORM_ERROR, MembershipForm } from '../_components/MembershipForm'
-import { breadcrump } from '../page'
 
 export default function AdminNewMembershipPage() {
   const router = useRouter()
@@ -26,7 +25,12 @@ export default function AdminNewMembershipPage() {
 
   return (
     <>
-      <Breadcrumb pages={[breadcrump, { href: '/admin/memberships/new', name: 'Anlegen' }]} />
+      <Breadcrumb
+        pages={[
+          { href: '/admin/memberships', name: 'Mitgliedschaften' },
+          { href: '/admin/memberships/new', name: 'Anlegen' },
+        ]}
+      />
       <MembershipForm
         initialValues={{ userId: params?.get('userId') }}
         submitText="Erstellen"
