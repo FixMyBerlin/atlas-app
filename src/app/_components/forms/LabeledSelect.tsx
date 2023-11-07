@@ -10,7 +10,7 @@ export interface LabeledSelectProps extends PropsWithoutRef<JSX.IntrinsicElement
   options: [string | number | '', string][]
   /** Field label. */
   label: string
-  help?: string
+  help?: string | React.ReactNode
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements['div']>
   labelProps?: ComponentPropsWithoutRef<'label'>
   optional?: boolean
