@@ -80,6 +80,7 @@ function osm2pgsql.process_way(object)
   local tags = processTags(object.tags)
   local meta = Metadata(object)
 
+  -- convert bicycle parking mapped as lines or areas to points by taking the centroid
   nodeTable:insert({
     tags = tags,
     meta = meta,
