@@ -19,8 +19,8 @@ import { UpdateRegionSchema } from 'src/regions/schemas'
 
 export default function AdminEditRegionPage() {
   const router = useRouter()
-  const regionSlug = useRegionSlug()
-  const [region, { setQueryData }] = useQuery(
+  const regionSlug = useRegionSlug()!
+  const [region] = useQuery(
     getPublicRegion,
     { slug: regionSlug },
     {
@@ -51,12 +51,11 @@ export default function AdminEditRegionPage() {
           initialValues={region}
           onSubmit={async (values) => {
             try {
-              const updated = await updateRegionMutation({
+              await updateRegionMutation({
                 ...values,
                 slug: region.slug,
               })
-              await setQueryData(updated)
-              await router.push(`/regionen/${updated.slug}`)
+              router.push('/admin/regions')
             } catch (error: any) {
               console.error(error)
               return {
