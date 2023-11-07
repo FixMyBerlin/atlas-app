@@ -69,21 +69,22 @@ export type RegionPath =
   | 'berlin'
   | 'bibi'
   | 'deutschland'
+  | 'herrenberg'
   | 'landhagen'
   | 'langerwehe'
   | 'lueneburg'
+  | 'magdeburg'
   | 'mainz'
+  | 'nagold'
   | 'neukloster-warin'
+  | 'nudafa'
+  | 'ostalbkreis'
   | 'parkraum'
-  | 'testing'
   | 'rs8'
+  | 'sigmaringen'
+  | 'testing'
   | 'trto'
   | 'woldegk'
-  | 'zes'
-  | 'sigmaringen'
-  | 'ostalbkreis'
-  | 'nagold'
-  | 'magdeburg'
 
 // This is our regions "Database" until we have a real one
 export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
@@ -376,18 +377,66 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     backgroundSources: [...defaultBackgroundSources],
   },
   {
+    name: 'Langerwehe',
+    fullName: 'Gemeinde Langerwehe',
+    slug: 'langerwehe',
+    osmRelationIds: [162550],
+    map: { lat: 50.8176382, lng: 6.3580711, zoom: 12 },
+    bbox: {
+      min: [6.298514, 50.7564788],
+      max: [6.4182952, 50.8355042],
+    },
+    externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/1/12/DEU_Langerwehe_COA.jpg',
+    logoWhiteBackgroundRequired: false,
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'lit',
+    ],
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Herrenberg',
+    fullName: 'Stadt Herrenberg',
+    slug: 'herrenberg',
+    osmRelationIds: [722073],
+    map: { lat: 48.5959, lng: 8.8675, zoom: 11 },
+    bbox: {
+      min: [8.7898756, 48.5602164],
+      max: [8.9819058, 48.6392506],
+    },
+    externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Wappen_Herrenberg.svg',
+    logoWhiteBackgroundRequired: false,
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'lit',
+    ],
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
     name: 'Magdeburg',
-    fullName: 'Verwaltungsgemeinschaft Nagold',
+    fullName: 'Stadt Magdeburg',
     slug: 'magdeburg',
     osmRelationIds: [62481],
-    map: { lat: 52.1364, lng: 11.6369, zoom: 13 },
-    // BBox für https://www.openstreetmap.org/relation/62481
-    bbox: bboxToMinMax([11.5172379, 52.0237486, 11.7639936, 52.2283566]),
+    map: { lat: 52.1257, lng: 11.6423, zoom: 11 },
+    bbox: {
+      min: [11.5172379, 52.0237486],
+      max: [11.7639936, 52.2283566],
+    },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Wappen_Magdeburg.svg',
     logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
-    osmUsers: [...adminIds, 13565],
-    published: false,
+    themes: [
+      // The order here specifies the order in the UI
+      'fromTo',
+      'bikelanes',
+      'roadClassification',
+      'lit',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
