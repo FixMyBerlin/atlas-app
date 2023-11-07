@@ -9,7 +9,6 @@ import { Link } from 'src/app/_components/links/Link'
 import { proseClasses } from 'src/app/_components/text/prose'
 import SvgNotesClosed from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_closed.svg'
 import SvgNotesOpen from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_open.svg'
-import { hasPermissionByDisplayName } from '../UserInfo/utils/hasPermission'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 
@@ -77,7 +76,8 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
           const firstComment = index === 0
           const splitDate = comment.date.split(' ')
           const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
-          const userHasPermssionOnRegion = hasPermissionByDisplayName(comment.user, region)
+          // TODO MIGRATION AUTH: Re-Add a check if the given user has permissions on the region. But we need the osm Username for that, which we do not have reliably ATM.
+          const userHasPermssionOnRegion = false
 
           return (
             <section
