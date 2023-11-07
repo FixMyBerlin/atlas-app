@@ -57,7 +57,7 @@ local function processTags(tags)
   local processedTags = capacityNormalization(tags)
   CopyTags(processedTags, tags, tags_cc, "osm_")
 
-  local checkDateTag = "check_date:amenity"
+  local checkDateTag = "check_date"
   if tags[checkDateTag] then
     processedTags.age = AgeInDays(ParseDate(tags[checkDateTag]))
   end
