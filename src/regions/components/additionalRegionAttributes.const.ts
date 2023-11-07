@@ -402,9 +402,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((id) => !id.endsWith('_NEW')),
     osmUsers: [...adminIds],
     published: false,
+    // themes: themes.map((t) => t.id).filter((id) => !id.endsWith('_NEW')),
+    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -419,9 +420,9 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id).filter((id) => id.endsWith('_NEW')),
     osmUsers: [...adminIds],
     published: false,
+    themes: themes.map((t) => t.id),
     backgroundSources: [...defaultBackgroundSources],
   },
 ]
