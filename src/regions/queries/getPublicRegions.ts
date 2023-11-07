@@ -1,5 +1,7 @@
 import { resolver } from '@blitzjs/rpc'
+import { NotFoundError } from 'blitz'
 import db, { Prisma } from 'db'
+import { Prettify } from 'src/app/_components/types/types'
 import { additionalRegionAttributes } from '../components/additionalRegionAttributes.const'
 import getPublicRegions from './getPublicRegions'
 
@@ -19,6 +21,10 @@ export default resolver.pipe(async ({ where }: GetRegionsInput) => {
     const additionalData = additionalRegionAttributes.find(
       (addData) => addData.slug === region.slug,
     )
+
+    // This is a TS guard to make sure TS understands that we will always have `additionalData` which we really should, unless we manually break things.
+    if (!additionalData) throw new NotFoundError()
+
     return {
       ...region,
       ...additionalData,
