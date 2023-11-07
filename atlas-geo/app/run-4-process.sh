@@ -12,6 +12,8 @@ echo "Reminder: The 'bikelanes' table is available only after Postprocessing fin
 run_lua "roads_bikelanes/roads_bikelanes"
 run_psql "roads_bikelanes/bikelanes/bikelanes"
 
+run_lua "bicycleParking/bicycleParking"
+
 run_lua "legacy_bikelanes/bikelanesPresence"
 run_lua "legacy_surfaceQuality/surfaceQuality"
 run_lua "legacy_roadClassification/roadClassification"
