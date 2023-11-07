@@ -55,26 +55,29 @@ function osm2pgsql.process_node(object)
   local tags = capacityNormalization(object.tags)
   CopyTags(object.tags, tags, tags_cc, "osm_")
   nodeTable:insert({
-    tags = capacityNormalization(tags),
+    tags = tags,
     meta = Metadata(object),
     geom = object:as_point()
   })
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) or not object.is_closed then return end
+  if ExitProcessing(object) then return end
 
   local tags = capacityNormalization(object.tags)
   CopyTags(object.tags, tags, tags_cc, "osm_")
+
+  local meta =  Metadata(object)
   
-  areaTable:insert({
-    tags = tags,
-    meta = Metadata(object),
-    geom = object:as_polygon(),
-  })
   nodeTable:insert({
     tags = tags,
-    meta = Metadata(object),
+    meta = meta,
     geom = object:as_polygon():centroid(),
+  })
+  if not object.is_closed then return end
+  areaTable:insert({
+    tags = tags,
+    meta = meta,
+    geom = object:as_polygon(),
   })
 end
