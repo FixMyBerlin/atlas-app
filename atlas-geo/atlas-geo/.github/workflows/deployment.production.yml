@@ -9,7 +9,7 @@ jobs:
   build_and_deploy:
     uses: ./.github/workflows/deployment.yml
     with:
-      ENVIRONMENT: staging
+      ENVIRONMENT: production
       URL: https://tiles.radverkehrsatlas.de
       TILES_URL: tiles.radverkehrsatlas.de
       API_URL: api.radverkehrsatlas.de
@@ -25,3 +25,5 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
+      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}

@@ -25,3 +25,5 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
+      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}
