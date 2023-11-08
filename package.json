@@ -35,8 +35,7 @@
     "updateMasks:createPmtiles": "bun ./scripts/RegionalMasks/createPmtiles.ts",
     "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
-    "prepare": "husky install; npm run fix-nextauth",
-    "fix-nextauth": "chmod +x packagePatches.sh ; ./packagePatches.sh",
+    "prepare": "husky install",
     "postinstall": "patch-package"
   },
   "prisma": {

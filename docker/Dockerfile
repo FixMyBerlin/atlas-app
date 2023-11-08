@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN npm install --global pm2
 
-COPY package.json package-lock.json packagePatches.sh ./
+COPY package.json package-lock.json ./
 COPY patches ./patches
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
