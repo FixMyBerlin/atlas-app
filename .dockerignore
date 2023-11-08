@@ -1,2 +1,12 @@
 *
-!init.sql
+!package.json
+!package-lock.json
+!patches
+!db
+!mailers
+!public
+!src
+!.eslintrc.js
+!next.config.js
+!tsconfig.json
+!types.ts
