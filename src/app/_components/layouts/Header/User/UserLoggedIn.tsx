@@ -89,7 +89,6 @@ export const UserLoggedIn = ({ user }: Props) => {
           </div>
           {isAdmin(user) && (
             <ul className="bg-pink-300 px-4 py-2 text-sm">
-              <li>OSM ID {user.id}</li>
               <li>
                 <button type="button" onClick={() => toggleShowDebugInfo()} className={linkStyles}>
                   Toggle <code>mapDebug</code>
