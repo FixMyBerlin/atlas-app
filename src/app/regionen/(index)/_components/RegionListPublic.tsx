@@ -1,11 +1,9 @@
-'use client'
-
-import { useQuery } from '@blitzjs/rpc'
+import { invoke } from '@blitzjs/rpc'
 import getPublicRegions from 'src/regions/queries/getPublicRegions'
 import { RegionTeaser } from './RegionTeaser'
 
-export const PublicRegionList = () => {
-  const [regions] = useQuery(getPublicRegions, {})
+export const RegionListPublic = async () => {
+  const regions = await invoke(getPublicRegions, {})
 
   return (
     <div className="bg-transparent">
