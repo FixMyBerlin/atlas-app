@@ -114,6 +114,7 @@ jobs:
             rm .env
             touch .env
             echo PGHOST='${{ vars.DATABASE_HOST }}' >> .env
+            echo ENVIRONMENT='${{ inputs.ENVIRONMENT }}' >> .env
             echo SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}' >> .env
             echo SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}' >> .env
             echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
