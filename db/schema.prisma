@@ -41,13 +41,18 @@ model User {
   //
   email          String?      @unique
   hashedPassword String?
-  role           String       @default("USER")
+  role           UserRoleEnum @default(USER)
   name           String?
   phone          String?
   //
   tokens         Token[]
   sessions       Session[]
   Membership     Membership[]
+}
+
+enum UserRoleEnum {
+  USER
+  ADMIN
 }
 
 model Session {
