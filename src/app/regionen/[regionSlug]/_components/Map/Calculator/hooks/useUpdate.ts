@@ -5,7 +5,10 @@ import { simplifyPositions } from '../utils/simplifyPositions'
 export const useUpdate = () => {
   const { setDrawParam } = useDrawParam()
 
-  const updateDrawFeatures = (drawAreas: DrawArea[] | undefined, inputFeatures: DrawArea[]) => {
+  const updateDrawFeatures = (
+    drawAreas: DrawArea[] | null | undefined,
+    inputFeatures: DrawArea[],
+  ) => {
     const currFeatures = drawAreas || []
     // Input can be added, modified or multi select modification
     // Case new feature(s):

@@ -3,6 +3,7 @@ import maplibregl, { MapLibreEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
+import { MapGeoJSONFeature } from 'react-map-gl'
 import {
   Map as MapGl,
   MapLayerMouseEvent,
@@ -22,7 +23,6 @@ import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useMissingImage } from './utils/useMissingImage'
-import { MapGeoJSONFeature } from 'react-map-gl'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
