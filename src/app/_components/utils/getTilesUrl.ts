@@ -1,4 +1,4 @@
-import { envKey, isStaging } from './isEnv'
+import { envKey } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
