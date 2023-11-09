@@ -14,9 +14,9 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
   const resetUrl = `${process.env.NEXT_PUBLIC_APP_ORIGIN}/auth/reset-password?token=${token}`
 
   const msg = {
-    from: "TODO@example.com",
+    from: 'TODO@example.com',
     to,
-    subject: "Your Password Reset Instructions",
+    subject: 'Your Password Reset Instructions',
     html: `
       <h1>Reset Your Password</h1>
       <h3>NOTE: You must set up a production email integration in mailers/forgotPasswordMailer.ts</h3>
@@ -29,13 +29,13 @@ export function forgotPasswordMailer({ to, token }: ResetPasswordMailer) {
 
   return {
     async send() {
-      if (process.env.NODE_ENV === "production") {
+      if (process.env.NODE_ENV === 'production') {
         // TODO - send the production email, like this:
         // await postmark.sendEmail(msg)
-        throw new Error("No production email implementation in mailers/forgotPasswordMailer")
+        throw new Error('No production email implementation in mailers/forgotPasswordMailer')
       } else {
         // Preview email in the browser
-        const previewEmail = (await import("preview-email")).default
+        const previewEmail = (await import('preview-email')).default
         await previewEmail(msg)
       }
     },

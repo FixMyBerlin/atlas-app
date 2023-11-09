@@ -19,7 +19,7 @@
     "seed": "npm run predev && npm run migrate && blitz prisma migrate reset && blitz db seed",
     "type-check": "tsc --noEmit",
     "lint": "next lint",
-    "format": "prettier --ignore-path .gitignore \"src/**/*.+(ts|js|tsx)\" --write",
+    "format": "prettier --ignore-path .gitignore \"(src|mailers)/**/*.+(ts|js|tsx)\" --write",
     "test": "vitest watch",
     "test:run": "vitest run --passWithNoTests",
     "test:ui": "vitest --ui",
