@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.png'
 import { BlitzProvider } from 'src/blitz-client'
-import { TailwindResponsiveHelper } from './_components/layouts/TailwindResponsiveHelper/TailwindResponsiveHelper'
 import './_components/layouts/global.css'
+import { TailwindResponsiveHelper } from './_components/layouts/helper/TailwindResponsiveHelper'
 import { isProd } from './_components/utils/isEnv'
 
 // https://nextjs.org/docs/app/building-your-application/optimizing/metadata
