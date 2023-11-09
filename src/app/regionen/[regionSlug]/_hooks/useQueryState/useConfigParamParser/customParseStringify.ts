@@ -1,4 +1,5 @@
 import jsurl from 'jsurl2'
+import { ThemeConfig } from '../../../_components/mapStateConfig/type'
 import { legacyParse } from './legacyParse'
 import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
 
@@ -11,10 +12,10 @@ export const customParse = (value: string) => {
   const newEncoding = value.startsWith('!') || value.startsWith('(')
 
   if (newEncoding) {
-    return expandObjectKeys(jsurl.tryParse(value, { reset: true }))
+    return expandObjectKeys(jsurl.tryParse(value, { reset: true })) as ThemeConfig[]
   }
 
-  return legacyParse(value)
+  return legacyParse(value) as ThemeConfig[]
 }
 
 export const customStringify = (value: Record<string, any>) => {

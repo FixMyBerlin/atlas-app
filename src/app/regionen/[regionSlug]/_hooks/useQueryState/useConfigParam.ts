@@ -9,6 +9,5 @@ export const useConfigParam = () => {
 
   const [configParam, setConfigParam] = useQueryState('config', configParamParser)
 
-  // TODO: Fix 'any' types on those.
   return { configParam, setConfigParam }
 }
