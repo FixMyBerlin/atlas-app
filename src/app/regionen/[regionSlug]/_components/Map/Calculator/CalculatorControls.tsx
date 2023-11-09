@@ -15,7 +15,6 @@ import {
 } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 import { useUpdate } from './hooks/useUpdate'
-import { MapGeoJSONFeature } from 'react-map-gl'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
