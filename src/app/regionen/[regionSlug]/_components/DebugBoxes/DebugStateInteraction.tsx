@@ -60,8 +60,8 @@ export const DebugStateInteraction = () => {
         <div className="font-mono">isStaging: {JSON.stringify(isStaging)}</div>
         <div className="font-mono">isProduction: {JSON.stringify(isProd)}</div>
         <div className="font-mono">getExportApiUrl: {getExportApiUrl()}</div>
-        <div className="font-mono">env.APP_ORIGIN: {JSON.stringify(process.env.APP_ORIGIN)}</div>
-        <div className="font-mono">env.NODE_ENV: {JSON.stringify(process.env.NODE_ENV)}</div>
+        <div className="font-mono">env.*APP_ORIGIN: {process.env.NEXT_PUBLIC_APP_ORIGIN}</div>
+        <div className="font-mono">env.NODE_ENV: {process.env.NODE_ENV}</div>
       </details>
 
       <details>

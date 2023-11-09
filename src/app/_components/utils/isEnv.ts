@@ -1,9 +1,10 @@
 export const isProd =
-  process.env.NODE_ENV === 'production' && process.env.APP_ORIGIN === 'https://radverkehrsatlas.de'
+  process.env.NODE_ENV === 'production' &&
+  process.env.NEXT_PUBLIC_APP_ORIGIN === 'https://radverkehrsatlas.de'
 
 export const isStaging =
   process.env.NODE_ENV === 'production' &&
-  process.env.APP_ORIGIN === 'https://staging.radverkehrsatlas.de'
+  process.env.NEXT_PUBLIC_APP_ORIGIN === 'https://staging.radverkehrsatlas.de'
 
 export const isDev = process.env.NODE_ENV === 'development'
 
