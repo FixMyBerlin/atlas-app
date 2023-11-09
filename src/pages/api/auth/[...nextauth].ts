@@ -56,6 +56,7 @@ export default api(
         source: 'osm',
       }
       await session.$create(publicData)
+      // TODO MIGRATION AUTH: We pass a next URL param to the Auth but it looks like we have no way to access the request/params from here
       return { redirectUrl: '/' }
     },
   }),

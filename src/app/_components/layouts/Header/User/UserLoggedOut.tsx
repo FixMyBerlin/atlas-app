@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation'
 
 export const UserLoggedOut = () => {
   const router = useRouter()
+  // TODO MIGRATION AUTH: next param does not work; is not supported by src/pages/api/auth/[...nextauth].ts
   const loginUrl = `/api/auth/osm/login?next=${encodeURIComponent(
     `${location.pathname}${location.search}`,
-  ).toString()}` as Route
+  )}` as Route
 
   return (
     <button
