@@ -1,6 +1,6 @@
 /* eslint-env node */
 
-import { envKey } from './isEnv'
+import { envKeyWithFallback } from './isEnv'
 
 export const exportApiBaseUrl = {
   development: 'http://localhost:80',
@@ -14,5 +14,5 @@ export const getExportApiUrl = () => {
     return exportApiBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
   }
 
-  return exportApiBaseUrl[envKey]
+  return exportApiBaseUrl[envKeyWithFallback]
 }

@@ -1,4 +1,4 @@
-import { envKey } from './isEnv'
+import { envKeyWithFallback } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:7800',
@@ -12,5 +12,5 @@ export const getTilesUrl = () => {
     return tilesBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
   }
 
-  return tilesBaseUrl[envKey]
+  return tilesBaseUrl[envKeyWithFallback]
 }

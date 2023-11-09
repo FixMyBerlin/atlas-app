@@ -15,4 +15,6 @@ export const envKey = isProd
   ? 'staging'
   : isDev
   ? 'development'
-  : 'development' // Fallback
+  : undefined
+
+export const envKeyWithFallback = envKey || 'development' // Fallback
