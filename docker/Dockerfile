@@ -14,7 +14,8 @@ RUN npm run postinstall
 # see .dockerignore for what is getting copied
 COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npx blitz prisma generate && npx blitz build
+RUN npx blitz prisma generate
+RUN npx blitz build
 
 EXPOSE 3000
 
