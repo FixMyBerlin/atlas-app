@@ -23,7 +23,7 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 // Performance Note:
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
 // However, we do not want to bloat our DOM, so we only render active themes and topics.
-export const SourcesAndLayer = () => {
+export const SourcesAndLayers = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const { configParam } = useConfigParam()
   const { backgroundParam } = useBackgroundParam()
