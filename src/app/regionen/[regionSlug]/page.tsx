@@ -1,10 +1,10 @@
 import { invoke } from 'src/blitz-server'
-import getPublicRegion from 'src/regions/queries/getPublicRegion'
+import getRegion from 'src/regions/queries/getRegion'
 import { MapInterface } from './_components/MapInterface'
 import { MapInterfaceInitialization } from './_components/MapInterfaceInitialization'
 
 export async function generateMetadata({ params }) {
-  const region = await invoke(getPublicRegion, { slug: params.regionSlug })
+  const region = await invoke(getRegion, { slug: params.regionSlug })
 
   return {
     robots: 'noindex',

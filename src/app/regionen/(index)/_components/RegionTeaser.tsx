@@ -1,9 +1,9 @@
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'
-import { TPublicRegion } from 'src/regions/queries/getPublicRegions'
+import { TRegion } from 'src/regions/queries/getRegion'
 
-type Props = { region: TPublicRegion }
+type Props = { region: TRegion }
 
 export const RegionTeaser = ({ region }: Props) => {
   return (

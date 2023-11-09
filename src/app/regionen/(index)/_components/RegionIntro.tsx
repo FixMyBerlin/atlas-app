@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import { TPublicRegion } from 'src/regions/queries/getPublicRegions'
+import { TRegion } from 'src/regions/queries/getRegion'
 
-type Props = { regions: TPublicRegion[] | undefined }
+type Props = { regions: TRegion[] | undefined }
 
 export const RegionIntro: React.FC<Props> = ({ regions }) => {
   return (

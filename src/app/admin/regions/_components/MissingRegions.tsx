@@ -2,7 +2,7 @@
 
 import { Link } from 'src/app/_components/links/Link'
 import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { TRegion } from 'src/regions/queries/getRegions'
+import { TRegion } from 'src/regions/queries/getRegion'
 import { ObjectDump } from '../../_components/ObjectDump'
 
 export const MissingRegions = ({ regions }: { regions: TRegion[] }) => {

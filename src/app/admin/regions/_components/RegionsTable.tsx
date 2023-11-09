@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import deleteRegion from 'src/regions/mutations/deleteRegion'
-import { TRegion } from 'src/regions/queries/getRegions'
+import { TRegion } from 'src/regions/queries/getRegion'
 import { ObjectDump } from '../../_components/ObjectDump'
 
 export const RegionsTable = ({ regions }: { regions: TRegion[] }) => {

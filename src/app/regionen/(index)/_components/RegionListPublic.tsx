@@ -1,9 +1,9 @@
 import { invoke } from '@blitzjs/rpc'
-import getPublicRegions from 'src/regions/queries/getPublicRegions'
+import getRegions from 'src/regions/queries/getRegions'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListPublic = async () => {
-  const regions = await invoke(getPublicRegions, {})
+  const regions = await invoke(getRegions, { where: { public: true } })
 
   return (
     <div className="bg-transparent">

@@ -5,14 +5,14 @@ import { useMemo, useState } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import getPublicRegion from 'src/regions/queries/getPublicRegion'
+import getRegion from 'src/regions/queries/getRegion'
 import invariant from 'tiny-invariant'
 import { createMapRegionConfig } from './mapStateConfig/createMapRegionConfig'
 import { initializeMapRegionConfig } from './mapStateConfig/initializeMapRegionConfig'
 
 export const MapInterfaceInitialization = ({ children }: { children: React.ReactNode }) => {
   const regionSlug = useRegionSlug()
-  const [region] = useQuery(getPublicRegion, { slug: regionSlug })
+  const [region] = useQuery(getRegion, { slug: regionSlug })
 
   // Initialize the Map. This will update stale configs.
   // BUT, only on hard reload; hot reloading is not in scope for this.
