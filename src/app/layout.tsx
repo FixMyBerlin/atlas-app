@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BlitzProvider>
           <div className="relative flex-auto">{children}</div>
         </BlitzProvider>
-        <EnvWarning />
+        {/*<EnvWarning />*/}
         <TailwindResponsiveHelper />
       </body>
     </html>
