@@ -63,6 +63,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           tags: public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+          build-args: |
+            "NEXT_PUBLIC_APP_ORIGIN=${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}"
 
       - name: Push image
         run: |
