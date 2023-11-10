@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.png'
 import { BlitzProvider } from 'src/blitz-client'
 import './_components/layouts/global.css'
-import { EnvWarning } from './_components/layouts/helper/EnvWarning'
+import { MissingEnvError } from './_components/layouts/helper/MissingEnvError'
 import { TailwindResponsiveHelper } from './_components/layouts/helper/TailwindResponsiveHelper'
 import { isProd } from './_components/utils/isEnv'
 
@@ -47,7 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <BlitzProvider>
           <div className="relative flex-auto">{children}</div>
         </BlitzProvider>
-        {/*<EnvWarning />*/}
+        <MissingEnvError />
         <TailwindResponsiveHelper />
       </body>
     </html>
