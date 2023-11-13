@@ -25,7 +25,7 @@ const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }) => {
             <div className="flex h-5 items-center">
               <input
                 type="radio"
-                {...register('verified_status')}
+                {...register('verified')}
                 value={verificationOption}
                 id={verificationOption}
                 defaultChecked={active}

@@ -14,6 +14,12 @@ export const VerificationSchema = z.object({
   comment: z.string().optional().nullable(),
 })
 
+export const FormVerificationSchema = VerificationSchema.pick({
+  osm_id: true,
+  verified: true,
+  comment: true,
+})
+
 export const CreateVerificationSchema = VerificationSchema.pick({
   osm_type: true,
   osm_id: true,

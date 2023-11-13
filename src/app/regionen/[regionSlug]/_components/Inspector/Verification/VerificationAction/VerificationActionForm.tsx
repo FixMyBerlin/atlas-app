@@ -7,13 +7,14 @@ import { buttonStyles } from 'src/app/_components/links/styles'
 import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
+  FormVerificationSchema,
   TCreateVerificationSchema,
   TVerificationStatus,
   verificationStatusOptions,
 } from 'src/bikelane-verifications/schemas'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
-import VerificationRadio from './VerificationRadio'
 import invariant from 'tiny-invariant'
+import VerificationRadio from './VerificationRadio'
 
 type Props = {
   initialValues: Record<string, any>
@@ -40,7 +41,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
         osm_type: 'W',
         osm_id: values.osm_id,
         verified_by: user.osmId,
-        verified: values.verified_status,
+        verified: values.verified,
         comment: values.comment?.trim(),
       }
       await createBikelaneVerificationMutation(newVerificationItem)
@@ -56,7 +57,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
   const verifiedOnce = verificationStatus && verificationStatusOptions.includes(verificationStatus)
 
   return (
-    <Form schema={VerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>
+    <Form schema={FormVerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>
       <fieldset
         disabled={disabled || isSubmitting}
         className={clsx('mb-2 space-y-2', {
