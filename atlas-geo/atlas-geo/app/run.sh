@@ -15,8 +15,10 @@ export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYN
 
 source ./process-helpers.sh
 
+# Post messages to Synology Chat Channel
+# The alert `text` uses Markdown and #Hash tags to highlight the message in Synology Chat
 alert() {
-  if [ -z $SYNOLOGY_ERROR_LOG_TOKEN ]; then 
+  if [ -z $SYNOLOGY_ERROR_LOG_TOKEN ]; then
     return 0;
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
@@ -24,29 +26,29 @@ alert() {
   curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
 }
 
-if ! ./run-1-download.sh; then 
-    alert '*ERROR*: #Download exited with non-zero status code'
+if ! ./run-1-download.sh; then
+    alert '*ERROR*: #run-1-download exited with non-zero status code'
 fi
 
-if ! ./run-2-filter.sh; then 
-    alert '*ERROR*: #Filter exited with non-zero status code'
+if ! ./run-2-filter.sh; then
+    alert '*ERROR*: #run-2-filter exited with non-zero status code'
 fi
 
-if ! ./run-3-migration.sh; then 
-    alert '*ERROR*: #Migration exited with non-zero status code'
+if ! ./run-3-migration.sh; then
+    alert '*ERROR*: #run-3-migration exited with non-zero status code'
 fi
 
 process_start_time=$(date +%s)
-if ! ./run-4-process.sh; then 
-    alert '*ERROR*: #Process exited with non-zero status code'
+if ! ./run-4-process.sh; then
+    alert '*ERROR*: #run-4-process exited with non-zero status code'
 fi
 process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
-if ! ./run-5-postprocess.sh; then 
-    alert '*ERROR*: #Postprocess exited with non-zero status code'
+if ! ./run-5-postprocess.sh; then
+    alert '*ERROR*: #run-5-postprocess exited with non-zero status code'
 fi
 
-if ! ./run-7-metadata.sh; then 
-    alert '*ERROR*: #Metadata exited with non-zero status code'
+if ! ./run-7-metadata.sh; then
+    alert '*ERROR*: #run-7-metadata exited with non-zero status code'
 fi
