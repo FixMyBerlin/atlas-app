@@ -14,7 +14,8 @@ import {
 } from 'src/bikelane-verifications/schemas'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 import invariant from 'tiny-invariant'
-import VerificationRadio from './VerificationRadio'
+import { VerificationComment } from './VerificationComment'
+import { VerificationRadio } from './VerificationRadio'
 
 type Props = {
   initialValues: Record<string, any>
@@ -26,12 +27,8 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
   const user = useCurrentUser()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
   const {
-    register,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = useForm()
-  if (Object.keys(errors).length) {
-    console.log('errors', errors)
-  }
 
   const { addLocalUpdate } = useMapStateInteraction()
   const handleSubmit = async (values) => {
@@ -76,23 +73,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
           verificationStatus={verificationStatus}
           disabled={disabled}
         />
-
-        <div>
-          <label htmlFor="comment" className="sr-only">
-            Optionaler Kommentar
-          </label>
-          <div className="mt-2">
-            {/* Potentially resize height automatically with https://medium.com/@oherterich/creating-a-textarea-with-dynamic-height-using-react-and-typescript-5ed2d78d9848 */}
-            <textarea
-              {...register('comment')}
-              placeholder="Optionaler Kommentar"
-              rows={2}
-              className="block w-full rounded-md border-0 bg-gray-50 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:py-1.5 sm:text-sm sm:leading-6"
-              defaultValue={''}
-              disabled={disabled}
-            />
-          </div>
-        </div>
+        <VerificationComment disabled={disabled} />
 
         <button
           type="submit"

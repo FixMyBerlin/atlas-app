@@ -12,13 +12,13 @@ type Props = {
   verificationStatus: TVerificationStatus | undefined
 }
 
-export const VerificationAction: React.FC<Props> = ({
+export const VerificationAction = ({
   apiIdentifier,
   visible,
   disabled: outerDisabled,
   osmId,
   verificationStatus,
-}) => {
+}: Props) => {
   if (apiIdentifier !== 'bikelanes') {
     console.warn('Invalid apiIdentifier', apiIdentifier)
     return null

@@ -2,7 +2,13 @@ import { useFormContext } from 'react-hook-form'
 import { TVerificationStatus, verificationStatusOptions } from 'src/bikelane-verifications/schemas'
 import { verifiedColor } from '../verifiedColor.const'
 
-const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }) => {
+type Props = {
+  verifiedOnce: boolean | undefined
+  verificationStatus: TVerificationStatus | undefined
+  disabled: boolean
+}
+
+export const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }: Props) => {
   const { register } = useFormContext()
 
   return (
@@ -43,5 +49,3 @@ const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }) => {
     </div>
   )
 }
-
-export default VerificationRadio
