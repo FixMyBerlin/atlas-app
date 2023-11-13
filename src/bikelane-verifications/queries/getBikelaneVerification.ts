@@ -1,7 +1,8 @@
-import { NotFoundError } from 'blitz'
 import { resolver } from '@blitzjs/rpc'
+import { NotFoundError } from 'blitz'
 import db from 'db'
 import { z } from 'zod'
+import { VerificationSchema } from '../schemas'
 
 const GetBikelaneVerification = z.object({
   // This accepts type of undefined, but is required at runtime
@@ -18,6 +19,7 @@ export default resolver.pipe(
 
     if (!bikelaneVerification) throw new NotFoundError()
 
-    return bikelaneVerification
+    // Transforms bigInt to number
+    return VerificationSchema.parse(bikelaneVerification)
   },
 )

@@ -6,13 +6,14 @@ import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
-import VerificationRadio from './VerificationRadio'
 import {
-  VerificationSchema,
   TCreateVerificationSchema,
   TVerificationStatus,
   verificationStatusOptions,
 } from 'src/bikelane-verifications/schemas'
+import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
+import VerificationRadio from './VerificationRadio'
+import invariant from 'tiny-invariant'
 
 type Props = {
   initialValues: Record<string, any>
@@ -20,22 +21,27 @@ type Props = {
   verificationStatus: TVerificationStatus | undefined
 }
 
-export function VerificationActionForm(props: Props) {
-  const { disabled, verificationStatus } = props
+export function VerificationActionForm({ initialValues, disabled, verificationStatus }: Props) {
+  const user = useCurrentUser()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
   const {
     register,
     formState: { isSubmitting, errors },
   } = useForm()
+  if (Object.keys(errors).length) {
+    console.log('errors', errors)
+  }
 
   const { addLocalUpdate } = useMapStateInteraction()
   const handleSubmit = async (values) => {
     try {
+      invariant(user)
       const newVerificationItem: TCreateVerificationSchema = {
         osm_type: 'W',
-        osm_id: BigInt(values.osm_id),
+        osm_id: values.osm_id,
+        verified_by: user.osmId,
         verified: values.verified_status,
-        comment: values.comment.trim(),
+        comment: values.comment?.trim(),
       }
       await createBikelaneVerificationMutation(newVerificationItem)
       addLocalUpdate(newVerificationItem)
@@ -48,8 +54,6 @@ export function VerificationActionForm(props: Props) {
   }
 
   const verifiedOnce = verificationStatus && verificationStatusOptions.includes(verificationStatus)
-
-  const { initialValues } = props
 
   return (
     <Form schema={VerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>

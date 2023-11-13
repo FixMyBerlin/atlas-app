@@ -31,6 +31,7 @@ export const DebugStateInteraction = () => {
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
+      if (typeof value === 'function') return null
       return (
         <div key={key}>
           <strong>{key}:</strong> {JSON.stringify(value)}

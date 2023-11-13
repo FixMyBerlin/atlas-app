@@ -30,7 +30,7 @@ export const VerificationAction: React.FC<Props> = ({
       <VerificationActionForm
         disabled={outerDisabled}
         verificationStatus={verificationStatus}
-        initialValues={{ osm_id: BigInt(osmId) }}
+        initialValues={{ osm_id: osmId }}
       />
     </Suspense>
   )

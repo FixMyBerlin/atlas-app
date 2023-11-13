@@ -10,15 +10,15 @@ const seedBikelaneVerification = async () => {
       osm_type: 'W',
       // Weigantufer https://www.openstreetmap.org/way/859427215
       // Location 18/52.48408/13.44557
-      osm_id: BigInt(859427215),
-      verified_by: BigInt(11881), // tordans
+      osm_id: 859427215,
+      verified_by: 11881, // tordans
       verified: 'approved',
       comment: undefined,
     },
     {
       osm_type: 'W',
-      osm_id: BigInt(859427215),
-      verified_by: BigInt(11881), // tordans
+      osm_id: 859427215,
+      verified_by: 11881, // tordans
       verified: 'rejected',
       comment: `Korrektur:
 
@@ -26,8 +26,8 @@ const seedBikelaneVerification = async () => {
     },
     {
       osm_type: 'W',
-      osm_id: BigInt(859427215),
-      verified_by: BigInt(7302664), // hejco
+      osm_id: 859427215,
+      verified_by: 7302664, // hejco
       verified: 'approved',
       comment: 'Danke, Breite ist jetzt korrigiert',
     },

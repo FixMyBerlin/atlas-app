@@ -1,6 +1,7 @@
-import { paginate } from 'blitz'
 import { resolver } from '@blitzjs/rpc'
+import { paginate } from 'blitz'
 import db, { Prisma } from 'db'
+import { VerificationSchema } from '../schemas'
 
 type GetBikelaneVerificationsInput = Pick<
   Prisma.BikelaneVerificationFindManyArgs,
@@ -27,8 +28,11 @@ export default resolver.pipe(
         }),
     })
 
+    // Transforms bigInt to number
+    const transformed = verifications.map((v) => VerificationSchema.parse(v))
+
     return {
-      verifications,
+      verifications: transformed,
       nextPage,
       hasMore,
       count,

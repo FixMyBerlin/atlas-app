@@ -3,20 +3,26 @@ import { z } from 'zod'
 export const VerificationSchema = z.object({
   id: z.number(),
   osm_type: z.literal('W'),
-  osm_id: z.coerce.bigint(),
-  verified_at: z.string().datetime(),
-  verified_by: z.coerce.bigint(), // OSM User ID, _not_ OSM Username; Note, this is optional in DB but not in UI.
+  // BigInt in db but number in the frontend
+  osm_id: z.coerce.number(),
+  // BigInt in db but number in the frontend
+  // OSM User ID, _not_ OSM Username
+  // Note, this is optional in DB but not in UI.
+  verified_by: z.coerce.number(),
+  verified_at: z.date(),
   verified: z.enum(['approved', 'rejected']),
-  comment: z.string().optional(),
+  comment: z.string().optional().nullable(),
 })
 
 export const CreateVerificationSchema = VerificationSchema.pick({
   osm_type: true,
   osm_id: true,
+  verified_by: true,
   verified: true,
   comment: true,
 })
 
+export type TGetVerificationSchema = z.infer<typeof VerificationSchema>
 export type TCreateVerificationSchema = z.infer<typeof CreateVerificationSchema>
 
 export const verificationStatusOptions: [TVerificationStatus, TVerificationStatus] = [
