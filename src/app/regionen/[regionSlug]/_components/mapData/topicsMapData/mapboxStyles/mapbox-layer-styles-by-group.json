@@ -246,6 +246,7 @@
           ["get", "category"],
           [
             "bicycleRoad",
+            "bicycleRoad_vehicleDestination",
             "footAndCyclewaySegregated_adjoining",
             "footAndCyclewaySegregated_isolated",
             "footAndCyclewaySegregated_adjoiningOrIsolated",

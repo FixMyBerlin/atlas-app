@@ -5,6 +5,7 @@
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
   'ALL--category=bicycleRoad': 'Fahrradstraße',
+  'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
   'ALL--category=crossing': 'Straßenquerung',
   'ALL--category=cycleway_adjoining': 'Radweg (baulich von der Fahrbahn abgesetzt aber straßenbegleitend)',
   'ALL--category=cycleway_isolated': 'Radweg, frei geführt',
