@@ -133,6 +133,12 @@ local function ExitProcessing(object)
     "watering_place",
     "workshop",
     "yes",
+    "todo",
+    "barrier",
+    "warehouse",
+    "closed",
+    "cooking_school",
+    "seat",
   })
   if skip_list_amenity[object.tags.amenity] then
     return true
