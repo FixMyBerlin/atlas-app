@@ -10,3 +10,7 @@
 --   ADD IF NOT EXISTS comment text
 --   NULL
 --   DEFAULT NULL;
+
+-- We now use the prisma.BikelaneVerification table for this
+ALTER TABLE bikelanes_verification
+  RENAME TO bikelanes_verification__archive;
