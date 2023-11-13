@@ -1,8 +1,11 @@
 from enum import Enum
 
-# helper to retrieve the name of the verification table
+# Helper to retrieve the name of the verification table
+# The verification table is owned by prisma and part of the prisma schema.
+# See https://github.com/FixMyBerlin/atlas-app/blob/develop/db/schema.prisma
 def verification_table(table_name: str):
-    return f'{table_name}_verification'
+    # needs to be wrapped in quotes to preserve capitalization
+    return f'"{table_name}Verification"'
 
 def verified_table(table_name: str):
     return f'{table_name}_verified'
@@ -34,7 +37,12 @@ ExportTable = Enum('Export Table', [(export_function(name), name) for name in [
 
 # The list of DB Tables that support verification.
 # For each table `a` in the list we create a verification table `a_verification` and a view which joins both
-VerificationTable = Enum('Verication Table', [(verification_table(name), name) for name in ["bikelanes"]])
+# TODO: This part is not used ATM. Instead in api/main.py we pass the names manually.
+# The issue is, that the Verification Table is now owned by Prisma with consols the naming schema.
+# Also we have it as BikelaneVerificaition (singular) in Prisma.
+# We need to either fix our conventions or change this Enum to an object that holds the name for all
+# three tables `verification_table`, `geometry_table`, `joined_table`
+VerificationTable = Enum('Verication Table', [(verification_table(name), name) for name in ["Bikelane"]])
 
 # main.py: Used as an allow list to guard the /verify/* API
 # `atlas-app` only uses approved, rejected for now.

@@ -144,9 +144,9 @@ async def init_api(response: Response, secret: str):
       for table in VerificationTable:
         print('Create verification table and view ', table.value)
         processed_sql = sql.format(
-          verification_table=table.name,
-          geometry_table=table.value,
-          joined_table=verified_table(table.value),
+          verification_table="BikelaneVerification", # table.name,
+          geometry_table="bikelanes", # table.value,
+          joined_table="bikelanes_verified", # verified_table(table.value),
         )
         await cur.execute(processed_sql)
       await conn.commit()
