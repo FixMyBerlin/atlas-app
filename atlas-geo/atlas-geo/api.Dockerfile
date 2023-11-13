@@ -1,4 +1,4 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.11
+FROM ghcr.io/multi-py/python-uvicorn:py3.11-0.24.0
 
 COPY ./api/requirements.txt /app/requirements.txt
 
