@@ -49,6 +49,10 @@ if ! ./run-5-postprocess.sh; then
     alert '*ERROR*: #run-5-postprocess exited with non-zero status code'
 fi
 
+if ! ./run-6-api.sh; then
+    alert '*ERROR*: #run-6-api exited with non-zero status code'
+fi
+
 if ! ./run-7-metadata.sh; then
     alert '*ERROR*: #run-7-metadata exited with non-zero status code'
 fi
