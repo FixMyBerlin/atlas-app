@@ -22,6 +22,14 @@ ExportTable = Enum('Export Table', [(export_function(name), name) for name in [
   "places",
   "poiClassification",
   "publicTransport",
+  "trafficSigns",
+  # TODO, this causes the error…
+    # api    |   File "/app/main.py", line 165, in init_api
+    # api    |     await cur.execute(processed_sql)     (…)
+    # api    | psycopg.errors.SyntaxError: syntax error at or near "-"
+    # api    | LINE 2: ...UNCTION public.atlas_export_geojson_bicycleparking-points(re...
+  # "bicycleParking-points",
+  # "bicycleParking-areas"
 ]])
 
 # The list of DB Tables that support verification.
