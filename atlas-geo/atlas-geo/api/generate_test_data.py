@@ -17,7 +17,7 @@ cursor.execute(f'select distinct osm_id from {geometry_table};')
 ids = cursor.fetchall()
 ids = [id[0] for id in ids]
 
-cursor.execute(f'TRUNCATE TABLE {verification_table};')
+cursor.execute(f'TRUNCATE TABLE prisma."{verification_table}";')
 
 start_dt = datetime(year=2022, month=1, day=1)
 ms = 11 * 30 * 24 * 60 * 60 * 1000  # 11 months
@@ -26,7 +26,7 @@ print(f'inserting {num_chunks * chunk_size} rows...')
 
 for chunk in range(num_chunks):
   print(f'chunk {chunk} / {num_chunks}')
-  sql = f'INSERT INTO {verification_table} (osm_type,osm_id,verified_at,verified_by,verified) VALUES\n'
+  sql = f'INSERT INTO prisma."{verification_table}" (osm_type,osm_id,verified_at,verified_by,verified) VALUES\n'
   for line in range(chunk_size):
     id = ids[randint(0, len(ids) - 1)]
     dt = (start_dt + timedelta(milliseconds=randint(0, ms))).isoformat()
