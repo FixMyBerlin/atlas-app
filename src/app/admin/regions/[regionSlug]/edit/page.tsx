@@ -62,4 +62,4 @@ export default function AdminEditRegionPage() {
   )
 }
 
-AdminEditRegionPage.authenticate = true
+AdminEditRegionPage.authenticate = { role: 'ADMIN' }

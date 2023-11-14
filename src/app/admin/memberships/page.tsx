@@ -97,4 +97,4 @@ export default function AdminMembershipsPage() {
   )
 }
 
-// AdminMembershipsPage.authenticate = { role: 'ADMIN' }
+AdminMembershipsPage.authenticate = { role: 'ADMIN' }

@@ -19,5 +19,3 @@ export default function ShowRegionPage() {
     </MapInterfaceInitialization>
   )
 }
-
-ShowRegionPage.authenticate = false
