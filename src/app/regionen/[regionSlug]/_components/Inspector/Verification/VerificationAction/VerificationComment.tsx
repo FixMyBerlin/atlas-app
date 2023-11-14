@@ -1,7 +1,10 @@
 import { useFormContext } from 'react-hook-form'
 
-export const VerificationComment = ({ disabled }) => {
-  const { register } = useFormContext()
+export const VerificationComment = () => {
+  const {
+    formState: { isSubmitting },
+    register,
+  } = useFormContext()
 
   return (
     <div>
@@ -15,7 +18,7 @@ export const VerificationComment = ({ disabled }) => {
           placeholder="Optionaler Kommentar"
           rows={2}
           className="block w-full rounded-md border-0 bg-gray-50 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:py-1.5 sm:text-sm sm:leading-6"
-          disabled={disabled}
+          disabled={isSubmitting}
         />
       </div>
     </div>

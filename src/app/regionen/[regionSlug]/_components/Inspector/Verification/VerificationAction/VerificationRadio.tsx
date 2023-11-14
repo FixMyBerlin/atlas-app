@@ -5,11 +5,13 @@ import { verifiedColor } from '../verifiedColor.const'
 type Props = {
   verifiedOnce: boolean | undefined
   verificationStatus: TVerificationStatus | undefined
-  disabled: boolean
 }
 
-export const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }: Props) => {
-  const { register } = useFormContext()
+export const VerificationRadio = ({ verifiedOnce, verificationStatus }: Props) => {
+  const {
+    formState: { isSubmitting },
+    register,
+  } = useFormContext()
 
   return (
     <div className="flex">
@@ -36,7 +38,7 @@ export const VerificationRadio = ({ verifiedOnce, verificationStatus, disabled }
                 id={verificationOption}
                 defaultChecked={active}
                 className="h-4 w-4 border-gray-300 text-yellow-500 focus:ring-0"
-                disabled={disabled}
+                disabled={isSubmitting}
                 style={{ color: verifiedColor[verificationOption] }}
               />
             </div>

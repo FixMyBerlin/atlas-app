@@ -1,9 +1,7 @@
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
-import { useForm } from 'react-hook-form'
 
 import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
-import { buttonStyles } from 'src/app/_components/links/styles'
 import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
@@ -14,6 +12,7 @@ import {
 } from 'src/bikelane-verifications/schemas'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 import invariant from 'tiny-invariant'
+import { VerificationButton } from './VerificationButton'
 import { VerificationComment } from './VerificationComment'
 import { VerificationRadio } from './VerificationRadio'
 
@@ -26,9 +25,8 @@ type Props = {
 export function VerificationActionForm({ initialValues, disabled, verificationStatus }: Props) {
   const user = useCurrentUser()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
-  const {
-    formState: { isSubmitting },
-  } = useForm()
+
+  // Reminder: We cannot use useForm() here. Instead we need to use useFormContext() from a child component of <Form>
 
   const { addLocalUpdate } = useMapStateInteraction()
   const handleSubmit = async (values) => {
@@ -56,7 +54,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
   return (
     <Form schema={FormVerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>
       <fieldset
-        disabled={disabled || isSubmitting}
+        disabled={disabled}
         className={clsx('mb-2 space-y-2', {
           'flex flex-col': verifiedOnce,
         })}
@@ -68,26 +66,10 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
           </div>
         )}
 
-        <VerificationRadio
-          verifiedOnce={verifiedOnce}
-          verificationStatus={verificationStatus}
-          disabled={disabled}
-        />
-        <VerificationComment disabled={disabled} />
+        <VerificationRadio verifiedOnce={verifiedOnce} verificationStatus={verificationStatus} />
+        <VerificationComment />
 
-        <button
-          type="submit"
-          disabled={disabled}
-          className={clsx(
-            buttonStyles,
-            'bg-white px-3 py-1',
-            disabled
-              ? 'cursor-not-allowed border-gray-300 text-gray-400 shadow-sm hover:bg-white'
-              : 'border-gray-400 shadow-md',
-          )}
-        >
-          Speichern
-        </button>
+        <VerificationButton />
       </fieldset>
     </Form>
   )
