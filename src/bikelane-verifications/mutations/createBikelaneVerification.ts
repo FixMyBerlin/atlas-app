@@ -11,8 +11,6 @@ export default resolver.pipe(
   resolver.zod(Schema),
   authorizeRegionAdmin(getRegionIdBySlug),
   async ({ regionSlug: _, ...input }) => {
-    console.log('################################################################################')
-    console.log('LOG createBikelaneVerification', input, typeof input.osm_id)
     return await db.bikelaneVerification.create({
       data: {
         ...input,

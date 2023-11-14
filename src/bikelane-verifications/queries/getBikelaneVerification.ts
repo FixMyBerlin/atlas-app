@@ -26,10 +26,6 @@ export default resolver.pipe(
     if (!bikelaneVerification) throw new NotFoundError()
 
     // Transforms bigInt to number
-    const parsed = VerificationSchema.parse(bikelaneVerification)
-
-    console.log('################################################################################')
-    console.log('LOG createBikelaneVerification', parsed, typeof parsed.osm_id)
-    return parsed
+    return VerificationSchema.parse(bikelaneVerification)
   },
 )
