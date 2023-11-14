@@ -30,6 +30,11 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
 
   if (!sourceData.verification.enabled || !allowVerify) return null
 
+  // TODO: I don't quite get why this is here.
+  // It looks like this will only work for bikelanes(?) and given that redundant to apiIdentifier !== 'bikelanes'.
+  // We will have to revisit this once we add a second validation layer.
+  const disabled = !properties?.category
+
   return (
     <section
       className="border-t bg-gray-200 p-4"
@@ -42,7 +47,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
         <VerificationAction
           apiIdentifier={sourceData.verification.apiIdentifier}
           visible={allowVerify}
-          disabled={!properties?.category}
+          disabled={disabled}
           osmId={properties.osm_id}
           verificationStatus={verificationStatus}
         />
@@ -60,7 +65,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
               <VerificationAction
                 apiIdentifier={sourceData.verification.apiIdentifier}
                 visible={allowVerify}
-                disabled={!properties?.category}
+                disabled={disabled}
                 osmId={properties.osm_id}
                 verificationStatus={verificationStatus}
               />
