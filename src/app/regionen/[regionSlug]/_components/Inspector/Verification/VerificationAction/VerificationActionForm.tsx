@@ -15,6 +15,7 @@ import invariant from 'tiny-invariant'
 import { VerificationButton } from './VerificationButton'
 import { VerificationComment } from './VerificationComment'
 import { VerificationRadio } from './VerificationRadio'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 
 type Props = {
   initialValues: Record<string, any>
@@ -24,6 +25,7 @@ type Props = {
 
 export function VerificationActionForm({ initialValues, disabled, verificationStatus }: Props) {
   const user = useCurrentUser()
+  const regionSlug = useRegionSlug()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
 
   // Reminder: We cannot use useForm() here. Instead we need to use useFormContext() from a child component of <Form>
@@ -39,7 +41,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
         verified: values.verified,
         comment: values.comment?.trim(),
       }
-      await createBikelaneVerificationMutation(newVerificationItem)
+      await createBikelaneVerificationMutation({ regionSlug: regionSlug!, ...newVerificationItem })
       addLocalUpdate(newVerificationItem)
     } catch (error: any) {
       console.error(error)

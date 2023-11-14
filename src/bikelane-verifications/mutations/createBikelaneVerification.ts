@@ -3,11 +3,14 @@ import db from 'db'
 import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { CreateVerificationSchema } from '../schemas'
+import { z } from 'zod'
+
+const Schema = CreateVerificationSchema.merge(z.object({ regionSlug: z.string() }))
 
 export default resolver.pipe(
-  resolver.zod(CreateVerificationSchema),
+  resolver.zod(Schema),
   authorizeRegionAdmin(getRegionIdBySlug),
-  async (input) => {
+  async ({ regionSlug: _, ...input }) => {
     return await db.bikelaneVerification.create({
       data: {
         ...input,

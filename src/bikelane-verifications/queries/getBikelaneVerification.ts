@@ -9,12 +9,13 @@ import { VerificationSchema } from '../schemas'
 const GetBikelaneVerification = z.object({
   // This accepts type of undefined, but is required at runtime
   id: z.number().optional().refine(Boolean, 'Required'),
+  regionSlug: z.string(),
 })
 
 export default resolver.pipe(
   resolver.zod(GetBikelaneVerification),
   authorizeRegionAdmin(getRegionIdBySlug),
-  async ({ id }) => {
+  async ({ regionSlug: _, id }) => {
     const bikelaneVerification = await db.bikelaneVerification.findFirst({
       where: { id },
     })
