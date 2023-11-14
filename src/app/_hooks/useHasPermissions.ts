@@ -1,19 +1,21 @@
 import { useQuery } from '@blitzjs/rpc'
 
+import { useSession } from '@blitzjs/auth'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import membershipExists from 'src/memberships/queries/membershipExists'
-import { useSession } from '@blitzjs/auth'
 
 export const useHasPermissions = () => {
-  const session = useSession()
+  const { userId, role } = useSession()
   const regionSlug = useRegionSlug()
 
   let [membership] = useQuery(
     membershipExists,
-    { userId: session.userId || 0, regionSlug: regionSlug || '' },
-    { enabled: !!session.userId && session.role !== 'ADMIN' && !!regionSlug },
+    { userId, regionSlug },
+    { enabled: Boolean(regionSlug) && Boolean(userId) && role !== 'ADMIN' },
   )
-  if (membership === undefined) membership = false
 
-  return regionSlug ? session.role === 'ADMIN' || membership : null
+  if (!regionSlug) return null
+  if (role === 'ADMIN') return true
+
+  return Boolean(membership)
 }
