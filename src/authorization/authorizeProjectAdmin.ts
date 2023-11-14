@@ -36,6 +36,7 @@ export function authorizeRegionAdmin(getRegionId: GetterFn) {
           userId: ctx.session.userId,
           regionId,
         },
+        select: { id: true },
       })
     ) {
       return input
