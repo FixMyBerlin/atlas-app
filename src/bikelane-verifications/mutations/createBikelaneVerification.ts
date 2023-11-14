@@ -1,10 +1,12 @@
 import { resolver } from '@blitzjs/rpc'
 import db from 'db'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
+import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { CreateVerificationSchema } from '../schemas'
 
 export default resolver.pipe(
   resolver.zod(CreateVerificationSchema),
-  // resolver.authorize(), // TODO MIGRATION AUTH
+  authorizeRegionAdmin(getRegionIdBySlug),
   async (input) => {
     return await db.bikelaneVerification.create({
       data: {

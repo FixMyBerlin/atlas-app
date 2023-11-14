@@ -1,6 +1,7 @@
 import { useQuery } from '@blitzjs/rpc'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
 import { Suspense } from 'react'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
@@ -15,7 +16,8 @@ type Props = {
 }
 
 const VerificationStatusWithQuery = ({ osmId }: Pick<Props, 'osmId'>) => {
-  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId })
+  const regionSlug = useRegionSlug()
+  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId, regionSlug })
 
   const latestEntry = verifications?.at(0)
 

@@ -1,5 +1,6 @@
 import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 import { SourceVerificationApiIdentifier } from '../../../mapData/sourcesMapData/sources.const'
@@ -12,7 +13,8 @@ type Props = {
 }
 
 const VerificationHistoryWithQuery = ({ osmId }: Pick<Props, 'osmId'>) => {
-  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId })
+  const regionSlug = useRegionSlug()
+  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId, regionSlug })
 
   // The first Item is shown by <VerificationStatus>
   const historyExceptFirst = verifications.slice(1)

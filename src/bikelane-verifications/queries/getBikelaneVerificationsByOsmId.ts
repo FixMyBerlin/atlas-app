@@ -1,15 +1,17 @@
 import { resolver } from '@blitzjs/rpc'
 import { paginate } from 'blitz'
 import db, { Prisma } from 'db'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
+import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { VerificationSchema } from '../schemas'
 
 type GetBikelaneVerificationsInput = Pick<
   Prisma.BikelaneVerificationFindManyArgs,
   'skip' | 'take'
-> & { osmId: number }
+> & { osmId: number; regionSlug: string }
 
 export default resolver.pipe(
-  // resolver.authorize(), // TODO Migration
+  authorizeRegionAdmin(getRegionIdBySlug),
   async ({ osmId, skip = 0, take = 100 }: GetBikelaneVerificationsInput) => {
     const {
       items: verifications,

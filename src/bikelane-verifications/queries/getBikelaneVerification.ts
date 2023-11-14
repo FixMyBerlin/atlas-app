@@ -1,6 +1,8 @@
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
 import db from 'db'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
+import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { z } from 'zod'
 import { VerificationSchema } from '../schemas'
 
@@ -11,7 +13,7 @@ const GetBikelaneVerification = z.object({
 
 export default resolver.pipe(
   resolver.zod(GetBikelaneVerification),
-  // resolver.authorize(), // TODO MIGRATION AUTH
+  authorizeRegionAdmin(getRegionIdBySlug),
   async ({ id }) => {
     const bikelaneVerification = await db.bikelaneVerification.findFirst({
       where: { id },
