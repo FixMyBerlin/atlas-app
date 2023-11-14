@@ -2,7 +2,7 @@ import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 
 const topic = 'buildings'
-const source = 'tarmac_buildings'
+const source = 'atlas_buildings'
 const sourceLayer = 'public.buildings'
 export type TopicBuildingsId = typeof topic
 export type TopicBuildingsStyleIds = 'default'

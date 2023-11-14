@@ -4,7 +4,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit_legacy'
-const source = 'tarmac_lit'
+const source = 'atlas_lit'
 const sourceLayer = 'public.lit'
 export type TopicLitIdLegacy = typeof topic
 export type TopicLitStyleIdsLegacy = 'default' | 'completeness' | 'verification' | 'freshness'

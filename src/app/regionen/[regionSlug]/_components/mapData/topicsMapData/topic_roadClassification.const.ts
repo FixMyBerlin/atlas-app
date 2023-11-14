@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'roadClassification'
-const source = 'tarmac_roads'
+const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
 export type TopicRoadClassificationId = typeof topicId
 export type TopicRoadClassificationStyleIds =
@@ -124,7 +124,7 @@ export const topic_roadClassification: MapDataTopic = {
       layers: [
         {
           id: 'oneway-roads',
-          source: 'tarmac_roads',
+          source: 'atlas_roads',
           'source-layer': 'public.roads',
           type: 'line',
           paint: {

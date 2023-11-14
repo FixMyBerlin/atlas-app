@@ -46,7 +46,7 @@ export const Inspector: React.FC = () => {
       />
 
       {uniqueInspectorFeatures.map((inspectObject) => {
-        const sourceKey = String(inspectObject.source) // Format: `theme:lit--source:tarmac_lit--topic:lit`
+        const sourceKey = String(inspectObject.source) // Format: `theme:lit--source:atlas_lit--topic:lit`
         if (!sourceKey) return null
 
         // Inspector-Block for Notes

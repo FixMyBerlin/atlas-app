@@ -4,7 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 import { defaultLegend } from './topic_bikelanes.const'
 
 const topic = 'bikelanesPresence'
-const source = 'tarmac_roads'
+const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
 export type TopicBikelanesPresenceId = typeof topic
 export type TopicBikelanesPresenceStyleIds = 'default'

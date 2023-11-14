@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'maxspeed'
-const source = 'tarmac_roads'
+const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
 export type TopicMaxspeedId = typeof topicId
 export type TopicMaxspeedStyleIds = 'default' | 'details' | 'source'

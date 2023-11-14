@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'roadClassification_legacy'
-const source = 'tarmac_roadClassification'
+const source = 'atlas_roadClassification'
 const sourceLayer = 'public.roadClassification'
 export type TopicRoadClassificationIdLegacy = typeof topicId
 export type TopicRoadClassificationStyleIdsLegacy = 'default' | 'oneway'

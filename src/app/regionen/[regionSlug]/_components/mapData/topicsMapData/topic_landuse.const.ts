@@ -10,7 +10,7 @@ export const topic_landuse: MapDataTopic = {
   id: topic,
   name: 'Wohn- und Gewerbegebiete',
   desc: null,
-  sourceId: 'tarmac_landuse',
+  sourceId: 'atlas_landuse',
   styles: [
     ...defaultStyleHidden,
     {
@@ -19,7 +19,7 @@ export const topic_landuse: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_landuse',
-        source: 'tarmac_landuse',
+        source: 'atlas_landuse',
         sourceLayer: 'public.landuse',
       }),
       legends: [

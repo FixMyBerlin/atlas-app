@@ -4,7 +4,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'bikelanes'
-const source = 'tarmac_bikelanes'
+const source = 'atlas_bikelanes'
 const sourceLayer = 'public.bikelanes_verified'
 export type TopicBikelanesId = typeof topicId
 export type TopicBikelanesStyleIds =
@@ -76,7 +76,7 @@ export const topic_bikelanes: MapDataTopic = {
   id: topicId,
   name: 'Radinfrastruktur',
   desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
-  sourceId: 'tarmac_bikelanes',
+  sourceId: 'atlas_bikelanes',
   styles: [
     ...defaultStyleHidden,
     {

@@ -4,7 +4,7 @@ import { CompositTableRow } from './types'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 
 const CompositRoadBikelanesTableValue = ({
-  sourceId, // always tarmac_roads
+  sourceId, // always atlas_roads
   tagKey, // one of … 'bikelane_left','bikelane_self','bikelane_right'
   tagValue,
 }: Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
@@ -19,7 +19,7 @@ const CompositRoadBikelanesTableValue = ({
 
 export const tableKeyRoadBikelanes = 'composit_road_bikelanes'
 export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
-  sourceId, // always tarmac_roads
+  sourceId, // always atlas_roads
   tagKey, // 'composit_bikelane' used to look the key translation
   properties,
 }) => {

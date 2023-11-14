@@ -34,7 +34,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   }
 
   // Some values are translated in the DB in `atlas-geo`, we keep them as is.
-  const categoryTranslatedAlready = sourceId == 'tarmac_poiClassification' && tagKey == 'category'
+  const categoryTranslatedAlready = sourceId == 'atlas_poiClassification' && tagKey == 'category'
   if (categoryTranslatedAlready) {
     return <>{tagValue}</>
   }
@@ -120,8 +120,8 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   // Some tags are translated already for a different key, so lets look there…
   // Keys need to be source specific, otherwise there is interference with the next step.
   const lookThereForKey: Record<string, string> = {
-    'tarmac_roadClassification--category': 'highway',
-    'tarmac_roads--road': 'highway',
+    'atlas_roadClassification--category': 'highway',
+    'atlas_roads--road': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
     (k) => k === `${sourceId}--${tagKey}`,

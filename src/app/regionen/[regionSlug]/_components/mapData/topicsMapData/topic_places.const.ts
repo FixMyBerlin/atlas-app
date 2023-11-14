@@ -10,7 +10,7 @@ export const topic_places: MapDataTopic = {
   id: topic,
   name: 'Orte',
   desc: null,
-  sourceId: 'tarmac_places',
+  sourceId: 'atlas_places',
   styles: [
     ...defaultStyleHidden,
     {
@@ -19,7 +19,7 @@ export const topic_places: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_places',
-        source: 'tarmac_places',
+        source: 'atlas_places',
         sourceLayer: 'public.places',
       }),
       legends: null,
@@ -30,7 +30,7 @@ export const topic_places: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_placescircle',
-        source: 'tarmac_places',
+        source: 'atlas_places',
         sourceLayer: 'public.places',
       }),
       legends: null,

@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'education'
-const source = 'tarmac_poiClassification'
+const source = 'atlas_poiClassification'
 const sourceLayer = 'public.poiClassification'
 export type TopicEducationId = typeof topic
 export type TopicEducationStyleIds = 'default'

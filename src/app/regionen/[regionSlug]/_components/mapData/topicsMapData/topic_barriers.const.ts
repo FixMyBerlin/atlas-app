@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'barriers'
-const source = 'tarmac_barriers'
+const source = 'atlas_barriers'
 export type TopicBarriersId = typeof topic
 export type TopicBarriersStyleIds = 'default'
 

@@ -9,20 +9,20 @@ export type SourcesIds =
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
-  | 'tarmac_barriers'
-  | 'tarmac_bikelanes'
-  | 'tarmac_bikelanesPresence'
-  | 'tarmac_boundaries'
-  | 'tarmac_buildings'
-  | 'tarmac_landuse'
-  | 'tarmac_lit'
-  | 'tarmac_maxspeed'
-  | 'tarmac_places'
-  | 'tarmac_poiClassification'
-  | 'tarmac_publicTransport'
-  | 'tarmac_roadClassification'
-  | 'tarmac_roads'
-  | 'tarmac_surfaceQuality'
+  | 'atlas_barriers'
+  | 'atlas_bikelanes'
+  | 'atlas_bikelanesPresence'
+  | 'atlas_boundaries'
+  | 'atlas_buildings'
+  | 'atlas_landuse'
+  | 'atlas_lit'
+  | 'atlas_maxspeed'
+  | 'atlas_places'
+  | 'atlas_poiClassification'
+  | 'atlas_publicTransport'
+  | 'atlas_roadClassification'
+  | 'atlas_roads'
+  | 'atlas_surfaceQuality'
 
 export type SourceVerificationApiIdentifier = 'bikelanes'
 
@@ -61,7 +61,7 @@ export const sources: MapDataSource<
 >[] = [
   ...sourcesParking,
   {
-    id: 'tarmac_boundaries',
+    id: 'atlas_boundaries',
     tiles: `${tilesUrl}/public.boundaries/{z}/{x}/{y}.pbf`,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
@@ -94,7 +94,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.roadClassification.json
-    id: 'tarmac_roadClassification',
+    id: 'atlas_roadClassification',
     tiles: `${tilesUrl}/public.roadClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -116,7 +116,7 @@ export const sources: MapDataSource<
     },
   },
   {
-    id: 'tarmac_bikelanes',
+    id: 'atlas_bikelanes',
     tiles: `${tilesUrl}/public.bikelanes_verified/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -150,7 +150,7 @@ export const sources: MapDataSource<
     },
   },
   {
-    id: 'tarmac_roads',
+    id: 'atlas_roads',
     tiles: `${tilesUrl}/public.roads/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -182,7 +182,7 @@ export const sources: MapDataSource<
     },
   },
   {
-    id: 'tarmac_bikelanesPresence',
+    id: 'atlas_bikelanesPresence',
     tiles: `${tilesUrl}/public.bikelanesPresence/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -200,7 +200,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.publicTransport.json
-    id: 'tarmac_publicTransport',
+    id: 'atlas_publicTransport',
     tiles: `${tilesUrl}/public.publicTransport/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -223,7 +223,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.poiClassification.json
-    id: 'tarmac_poiClassification',
+    id: 'atlas_poiClassification',
     tiles: `${tilesUrl}/public.poiClassification/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -246,7 +246,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.lit.json
-    id: 'tarmac_lit',
+    id: 'atlas_lit',
     tiles: `${tilesUrl}/public.lit/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -285,7 +285,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.places.json
-    id: 'tarmac_places',
+    id: 'atlas_places',
     tiles: `${tilesUrl}/public.places/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -308,7 +308,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.maxspeed.json
-    id: 'tarmac_maxspeed',
+    id: 'atlas_maxspeed',
     tiles: `${tilesUrl}/public.maxspeed/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -349,7 +349,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.surfaceQuality.json
-    id: 'tarmac_surfaceQuality',
+    id: 'atlas_surfaceQuality',
     tiles: `${tilesUrl}/public.surfaceQuality/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -393,7 +393,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/public.barrierAreas.json
     // https://tiles.radverkehrsatlas.de/public.barrierLines.json
-    id: 'tarmac_barriers',
+    id: 'atlas_barriers',
     tiles: `${tilesUrl}/public.barrierAreas,public.barrierLines/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -407,7 +407,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.buildings.json
-    id: 'tarmac_buildings',
+    id: 'atlas_buildings',
     tiles: `${tilesUrl}/public.buildings/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -421,7 +421,7 @@ export const sources: MapDataSource<
   },
   {
     // https://tiles.radverkehrsatlas.de/public.landuse.json
-    id: 'tarmac_landuse',
+    id: 'atlas_landuse',
     tiles: `${tilesUrl}/public.landuse/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',

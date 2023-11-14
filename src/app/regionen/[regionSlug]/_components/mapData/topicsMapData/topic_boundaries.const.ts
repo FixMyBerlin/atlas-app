@@ -10,7 +10,7 @@ export const topic_boundaries: MapDataTopic = {
   id: topiId,
   name: 'Grenzen',
   desc: '',
-  sourceId: 'tarmac_boundaries',
+  sourceId: 'atlas_boundaries',
   styles: [
     ...defaultStyleHidden,
     {
@@ -19,7 +19,7 @@ export const topic_boundaries: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
-        source: 'tarmac_boundaries',
+        source: 'atlas_boundaries',
         sourceLayer: 'public.boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['7'], true, false],
       }),
@@ -30,7 +30,7 @@ export const topic_boundaries: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
-        source: 'tarmac_boundaries',
+        source: 'atlas_boundaries',
         sourceLayer: 'public.boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['8'], true, false],
       }),
@@ -41,7 +41,7 @@ export const topic_boundaries: MapDataTopic = {
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
-        source: 'tarmac_boundaries',
+        source: 'atlas_boundaries',
         sourceLayer: 'public.boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['9', '10'], true, false],
       }),

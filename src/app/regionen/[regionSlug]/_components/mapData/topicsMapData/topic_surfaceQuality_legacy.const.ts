@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topicId = 'surfaceQuality_legacy'
-const source = 'tarmac_surfaceQuality'
+const source = 'atlas_surfaceQuality'
 const sourceLayer = 'public.surfaceQuality'
 export type TopicSurfaceQualityIdLegacy = typeof topicId
 export type TopicSurfaceStyleQualityIdsLegacy =

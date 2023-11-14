@@ -4,7 +4,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'lit'
-const source = 'tarmac_roads'
+const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
 export type TopicLitId = typeof topic
 export type TopicLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
