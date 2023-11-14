@@ -351,6 +351,7 @@ export const translations: { [key: string]: string } = {
   'atlas_bicycleParking--capacity:cargo_bike--key': 'Anzahl Lastenfahrrad-Stellplätze',
   'atlas_surfaceQuality--smoothness_source--key': 'Quelle Zustand',
   'atlas_surfaceQuality--smoothness_source=surface_to_smoothness': 'Abgeleitet von Belag',
+  'atlas_trafficSigns--title': 'Verkehrszeichen',
   'atlas_surfaceQuality--smoothness_source=tag': 'OSM-Tag',
   'atlas_surfaceQuality--surface_source--key': 'Quelle Belag',
   'atlas_surfaceQuality--surface_source=nothing_found': 'Daten fehlen in OpenStreetMap',

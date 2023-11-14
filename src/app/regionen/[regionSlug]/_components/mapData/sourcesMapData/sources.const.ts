@@ -21,6 +21,7 @@ export type SourcesIds =
   | 'atlas_roadClassification'
   | 'atlas_roads'
   | 'atlas_surfaceQuality'
+  | 'atlas_trafficSigns'
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
@@ -450,6 +451,24 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: ['capacity', 'capacity:cargo_bike__if_present'],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false }, // TODO
+    export: { enabled: false }, // TODO
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.trafficSigns.json
+    id: 'atlas_trafficSigns',
+    tiles: `${tilesUrl}/public.trafficSigns/{z}/{x}/{y}.pbf`,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['traffic_sign'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },

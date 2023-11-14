@@ -91,7 +91,7 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   properties,
 }) => {
   const receivedSigns: string[] | undefined = properties['traffic_sign']
-    ?.replace('DE:', '')
+    ?.replaceAll('DE:', '')
     ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
 
   if (!receivedSigns?.length) {
@@ -121,6 +121,7 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
       />
     )
   }
+
   return (
     <TagsTableRow
       key={tagKey}
@@ -132,7 +133,11 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
             return (
               <div key={sign}>
                 <div className="mb-1">
-                  {trafficSigns[sign]?.title || <code>{properties['traffic_sign']}</code>}
+                  {trafficSigns[sign]?.title || (
+                    <code className="rounded-md border border-gray-500 bg-gray-50 p-1.5 text-xs">
+                      {sign}
+                    </code>
+                  )}
                 </div>
                 {trafficSigns[sign]?.signUrl && (
                   // Why do I need to "!" this when I just guarded it…?

@@ -131,6 +131,11 @@ import {
   TopicSurfaceStyleQualityIdsLegacy,
   topic_surfaceQuality_legacy,
 } from './topicsMapData/topic_surfaceQuality_legacy.const'
+import {
+  TopicTrafficSignsId,
+  TopicTrafficSignsStyleIds,
+  topic_trafficSigns,
+} from './topicsMapData/topic_trafficSigns'
 import { MapData, MapDataTheme } from './types'
 
 export type TopicIds =
@@ -161,6 +166,7 @@ export type TopicIds =
   | TopicRoadClassificationIdLegacy
   | TopicSurfaceQualityId
   | TopicSurfaceQualityIdLegacy
+  | TopicTrafficSignsId
 
 type TopicStyleIdDefaults = MapDataTheme['topics'][number]['defaultStyle']
 
@@ -193,6 +199,7 @@ export type TopicStyleIds =
   | TopicStyleIdDefaults
   | TopicSurfaceStyleQualityIds
   | TopicSurfaceStyleQualityIdsLegacy
+  | TopicTrafficSignsStyleIds
 
 export type TopicStyleLegendIds = string // TODO: We can make this more precise later
 
@@ -202,6 +209,7 @@ export const mapData: MapData = {
   topics: [
     topic_accidents,
     topic_barriers,
+    topic_bicycleParking,
     topic_bikelanes,
     topic_bikelanesPresence_legacy,
     topic_bikelanesPresence,
@@ -226,6 +234,6 @@ export const mapData: MapData = {
     topic_roadClassification,
     topic_surfaceQuality_legacy,
     topic_surfaceQuality,
-    topic_bicycleParking,
+    topic_trafficSigns,
   ],
 }
