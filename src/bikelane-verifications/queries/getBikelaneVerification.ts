@@ -19,13 +19,14 @@ export default resolver.pipe(
   resolver.zod(GetBikelaneVerification),
   authorizeRegionAdmin(getRegionIdBySlug),
   async ({ regionSlug: _, id }) => {
-    const bikelaneVerification = await db.bikelaneVerification.findFirst({
+    const result = await db.bikelaneVerification.findFirst({
       where: { id },
     })
 
-    if (!bikelaneVerification) throw new NotFoundError()
+    if (!result) throw new NotFoundError()
 
     // Transforms bigInt to number
-    return VerificationSchema.parse(bikelaneVerification)
+    const transformed = VerificationSchema.parse(result)
+    return transformed
   },
 )

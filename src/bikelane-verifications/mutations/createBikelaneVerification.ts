@@ -2,8 +2,8 @@ import { resolver } from '@blitzjs/rpc'
 import db from 'db'
 import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
-import { CreateVerificationSchema } from '../schemas'
 import { z } from 'zod'
+import { CreateVerificationSchema, VerificationSchema } from '../schemas'
 
 const Schema = CreateVerificationSchema.merge(z.object({ regionSlug: z.string() }))
 
@@ -11,7 +11,7 @@ export default resolver.pipe(
   resolver.zod(Schema),
   authorizeRegionAdmin(getRegionIdBySlug),
   async ({ regionSlug: _, ...input }) => {
-    return await db.bikelaneVerification.create({
+    const result = await db.bikelaneVerification.create({
       data: {
         ...input,
         // The DB stores osm_id and verified_by as BigInt to be consistent with osm2pgsql.
@@ -21,5 +21,8 @@ export default resolver.pipe(
         verified_by: input.verified_by,
       },
     })
+    // Transforms bigInt to number
+    const transformed = VerificationSchema.parse(result)
+    return transformed
   },
 )
