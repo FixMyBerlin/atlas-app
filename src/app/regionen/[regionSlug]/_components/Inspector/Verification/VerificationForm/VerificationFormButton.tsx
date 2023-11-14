@@ -4,7 +4,7 @@ import { useFormContext } from 'react-hook-form'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStyles } from 'src/app/_components/links/styles'
 
-export const VerificationButton = () => {
+export const VerificationFormButton = () => {
   const {
     formState: { isSubmitting, isSubmitSuccessful },
     reset,

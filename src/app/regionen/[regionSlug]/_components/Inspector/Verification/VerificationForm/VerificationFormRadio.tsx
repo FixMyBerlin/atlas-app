@@ -7,7 +7,7 @@ type Props = {
   verificationStatus: TVerificationStatus | undefined
 }
 
-export const VerificationRadio = ({ verifiedOnce, verificationStatus }: Props) => {
+export const VerificationFormRadio = ({ verifiedOnce, verificationStatus }: Props) => {
   const {
     formState: { isSubmitting },
     register,

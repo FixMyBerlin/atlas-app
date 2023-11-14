@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form'
 
-export const VerificationComment = () => {
+export const VerificationFormComment = () => {
   const {
     formState: { isSubmitting },
     register,

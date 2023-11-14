@@ -1,9 +1,12 @@
-import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
+import { useQuery } from '@blitzjs/rpc'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
+import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
+import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
 import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
 import { getSourceData } from '../../mapData/utils/getMapDataUtils'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
-import { VerificationAction } from './VerificationAction/VerificationAction'
+import { VerificationForm } from './VerificationForm/VerificationForm'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'
 import { verifiedBackgroundColor } from './verifiedColor.const'
@@ -16,6 +19,16 @@ type Props = {
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
   const sourceData = getSourceData(sourceId)
+
+  // We fetch the list of verifications here in the parent component so we can refetch it in one place after form sumbission.
+  const regionSlug = useRegionSlug()
+  const [{ verifications }, { refetch: refetchVerifications }] = useQuery(
+    getBikelaneVerificationsByOsmId,
+    {
+      osmId: properties.osm_id,
+      regionSlug,
+    },
+  )
 
   const localVerificationStatus = [...localUpdates]
     .reverse()
@@ -33,6 +46,11 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   // We will have to revisit this once we add a second validation layer.
   const disabled = !properties?.category
 
+  if (sourceData.verification.apiIdentifier !== 'bikelanes') {
+    console.warn('Invalid apiIdentifier', sourceData)
+    return null
+  }
+
   return (
     <section
       className="border-t bg-gray-200 p-4"
@@ -42,37 +60,35 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
       }}
     >
       {verificationStatus === undefined && (
-        <VerificationAction
-          apiIdentifier={sourceData.verification.apiIdentifier}
+        <VerificationForm
           disabled={disabled}
           osmId={properties.osm_id}
           verificationStatus={verificationStatus}
+          refetchVerifications={refetchVerifications}
         />
       )}
       {verificationStatus !== undefined && (
         <>
           <VerificationStatus
-            apiIdentifier={sourceData.verification.apiIdentifier}
+            verifications={verifications}
             visible={verificationStatus !== undefined}
-            osmId={properties.osm_id}
           />
           <details className="mt-3">
             <summary className="cursor-pointer font-semibold text-gray-600">Status ändern</summary>
             <div className="mt-2">
-              <VerificationAction
-                apiIdentifier={sourceData.verification.apiIdentifier}
+              <VerificationForm
                 disabled={disabled}
                 osmId={properties.osm_id}
                 verificationStatus={verificationStatus}
+                refetchVerifications={refetchVerifications}
               />
             </div>
           </details>
         </>
       )}
       <VerificationHistory
-        apiIdentifier={sourceData.verification.apiIdentifier}
+        verifications={verifications}
         visible={verificationStatus !== undefined}
-        osmId={properties.osm_id}
       />
     </section>
   )

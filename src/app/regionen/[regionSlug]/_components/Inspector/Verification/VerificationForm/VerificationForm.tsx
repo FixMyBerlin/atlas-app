@@ -1,6 +1,8 @@
 import { useMutation } from '@blitzjs/rpc'
 import { clsx } from 'clsx'
-
+import { Suspense } from 'react'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
 import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
@@ -12,18 +14,18 @@ import {
 } from 'src/bikelane-verifications/schemas'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 import invariant from 'tiny-invariant'
-import { VerificationButton } from './VerificationButton'
-import { VerificationComment } from './VerificationComment'
-import { VerificationRadio } from './VerificationRadio'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { VerificationFormButton } from './VerificationFormButton'
+import { VerificationFormComment } from './VerificationFormComment'
+import { VerificationFormRadio } from './VerificationFormRadio'
 
-type Props = {
+export function VerificationFormWithQuery({
+  initialValues,
+  disabled,
+  verificationStatus,
+  refetchVerifications,
+}: {
   initialValues: Record<string, any>
-  disabled: boolean
-  verificationStatus: TVerificationStatus | undefined
-}
-
-export function VerificationActionForm({ initialValues, disabled, verificationStatus }: Props) {
+} & Pick<Props, 'disabled' | 'verificationStatus' | 'refetchVerifications'>) {
   const user = useCurrentUser()
   const regionSlug = useRegionSlug()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
@@ -43,6 +45,7 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
       }
       await createBikelaneVerificationMutation({ regionSlug: regionSlug!, ...newVerificationItem })
       addLocalUpdate(newVerificationItem)
+      refetchVerifications()
     } catch (error: any) {
       console.error(error)
       return {
@@ -68,11 +71,39 @@ export function VerificationActionForm({ initialValues, disabled, verificationSt
           </div>
         )}
 
-        <VerificationRadio verifiedOnce={verifiedOnce} verificationStatus={verificationStatus} />
-        <VerificationComment />
+        <VerificationFormRadio
+          verifiedOnce={verifiedOnce}
+          verificationStatus={verificationStatus}
+        />
+        <VerificationFormComment />
 
-        <VerificationButton />
+        <VerificationFormButton />
       </fieldset>
     </Form>
+  )
+}
+
+type Props = {
+  disabled: boolean
+  osmId: number
+  verificationStatus: TVerificationStatus | undefined
+  refetchVerifications: () => void
+}
+
+export const VerificationForm = ({
+  disabled: outerDisabled,
+  osmId,
+  verificationStatus,
+  refetchVerifications,
+}: Props) => {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <VerificationFormWithQuery
+        disabled={outerDisabled}
+        verificationStatus={verificationStatus}
+        initialValues={{ osm_id: osmId }}
+        refetchVerifications={refetchVerifications}
+      />
+    </Suspense>
   )
 }

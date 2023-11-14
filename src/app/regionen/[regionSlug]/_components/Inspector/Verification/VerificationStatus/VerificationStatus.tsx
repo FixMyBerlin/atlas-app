@@ -1,26 +1,18 @@
-import { useQuery } from '@blitzjs/rpc'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/solid'
-import { Suspense } from 'react'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
-import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Markdown } from 'src/app/_components/text/Markdown'
-import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
+import { TVerification } from 'src/bikelane-verifications/queries/getBikelaneVerification'
 import { userById } from 'src/users/components/utils/usersUtils'
-import { SourceVerificationApiIdentifier } from '../../../mapData/sourcesMapData/sources.const'
 import { verifiedColor } from '../verifiedColor.const'
 
 type Props = {
-  apiIdentifier: SourceVerificationApiIdentifier
+  verifications: TVerification[]
   visible: boolean
-  osmId: number
 }
 
-const VerificationStatusWithQuery = ({ osmId }: Pick<Props, 'osmId'>) => {
-  const regionSlug = useRegionSlug()
-  const [{ verifications }] = useQuery(getBikelaneVerificationsByOsmId, { osmId, regionSlug })
+export const VerificationStatus: React.FC<Props> = ({ verifications, visible }) => {
+  if (!visible) return null
 
   const latestEntry = verifications?.at(0)
-
   if (!latestEntry) return null
 
   const date = new Date(latestEntry.verified_at)
@@ -62,19 +54,5 @@ const VerificationStatusWithQuery = ({ osmId }: Pick<Props, 'osmId'>) => {
         )}
       </div>
     </div>
-  )
-}
-
-export const VerificationStatus: React.FC<Props> = ({ apiIdentifier, visible, osmId }) => {
-  if (apiIdentifier !== 'bikelanes') {
-    console.warn('Invalid apiIdentifier', apiIdentifier)
-    return null
-  }
-  if (!visible) return null
-
-  return (
-    <Suspense fallback={<Spinner />}>
-      <VerificationStatusWithQuery osmId={osmId} />
-    </Suspense>
   )
 }
