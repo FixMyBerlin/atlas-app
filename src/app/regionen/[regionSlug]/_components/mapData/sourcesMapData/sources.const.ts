@@ -9,8 +9,6 @@ export type SourcesIds =
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
-  | 'osmscripts_highways'
-  | 'osmscripts_pois'
   | 'tarmac_barriers'
   | 'tarmac_bikelanes'
   | 'tarmac_bikelanesPresence'
@@ -87,42 +85,6 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'unfall_id',
-    },
-    // presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
-    // Temporary, nur für den Datenabgleich
-    // https://studio.mapbox.com/tilesets/hejco.d7mywzd3/
-    id: 'osmscripts_highways',
-    tiles: `https://api.mapbox.com/v4/hejco.d7mywzd3/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: '@id',
-    },
-    // presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
-    // Temporary, nur für den Datenabgleich
-    // https://studio.mapbox.com/tilesets/hejco.3hccfujx/
-    id: 'osmscripts_pois',
-    tiles: `https://api.mapbox.com/v4/hejco.3hccfujx/{z}/{x}/{y}.vector.pbf?access_token=${apiKeyMapbox}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'id',
     },
     // presence: { enabled: false },
     verification: { enabled: false },
