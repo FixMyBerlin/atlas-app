@@ -17,9 +17,6 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
   const sourceData = getSourceData(sourceId)
 
-  const hasPermissions = useHasPermissions()
-  const allowVerify = (sourceData.verification.enabled || false) && hasPermissions
-
   const localVerificationStatus = [...localUpdates]
     .reverse()
     .find((update) => update.osm_id === properties.osm_id)?.verified
@@ -28,7 +25,8 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
     | TVerificationStatus
     | undefined
 
-  if (!sourceData.verification.enabled || !allowVerify) return null
+  const hasPermissions = useHasPermissions()
+  if (!sourceData.verification.enabled || !hasPermissions) return null
 
   // TODO: I don't quite get why this is here.
   // It looks like this will only work for bikelanes(?) and given that redundant to apiIdentifier !== 'bikelanes'.
@@ -46,7 +44,6 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
       {verificationStatus === undefined && (
         <VerificationAction
           apiIdentifier={sourceData.verification.apiIdentifier}
-          visible={allowVerify}
           disabled={disabled}
           osmId={properties.osm_id}
           verificationStatus={verificationStatus}
@@ -56,7 +53,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
         <>
           <VerificationStatus
             apiIdentifier={sourceData.verification.apiIdentifier}
-            visible={allowVerify && verificationStatus !== undefined}
+            visible={verificationStatus !== undefined}
             osmId={properties.osm_id}
           />
           <details className="mt-3">
@@ -64,7 +61,6 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
             <div className="mt-2">
               <VerificationAction
                 apiIdentifier={sourceData.verification.apiIdentifier}
-                visible={allowVerify}
                 disabled={disabled}
                 osmId={properties.osm_id}
                 verificationStatus={verificationStatus}
@@ -75,7 +71,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
       )}
       <VerificationHistory
         apiIdentifier={sourceData.verification.apiIdentifier}
-        visible={allowVerify && verificationStatus !== undefined}
+        visible={verificationStatus !== undefined}
         osmId={properties.osm_id}
       />
     </section>

@@ -6,7 +6,6 @@ import { VerificationActionForm } from './VerificationActionForm'
 
 type Props = {
   apiIdentifier: SourceVerificationApiIdentifier
-  visible: boolean
   disabled: boolean
   osmId: number
   verificationStatus: TVerificationStatus | undefined
@@ -14,7 +13,6 @@ type Props = {
 
 export const VerificationAction = ({
   apiIdentifier,
-  visible,
   disabled: outerDisabled,
   osmId,
   verificationStatus,
@@ -23,7 +21,6 @@ export const VerificationAction = ({
     console.warn('Invalid apiIdentifier', apiIdentifier)
     return null
   }
-  if (!visible) return null
 
   return (
     <Suspense fallback={<Spinner />}>

@@ -14,7 +14,7 @@ export const useHasPermissions = () => {
     { enabled: Boolean(regionSlug) && Boolean(userId) && role !== 'ADMIN' },
   )
 
-  if (!regionSlug) return null
+  if (!regionSlug) return false
   if (role === 'ADMIN') return true
 
   return Boolean(membership)
