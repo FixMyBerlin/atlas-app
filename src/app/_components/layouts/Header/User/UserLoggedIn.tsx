@@ -4,6 +4,7 @@ import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import { Fragment } from 'react'
+import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
@@ -33,6 +34,7 @@ export const UserLoggedIn = ({ user }: Props) => {
 
   const [logoutMutation] = useMutation(logout)
 
+  const isRegionsPage = Boolean(useRegionSlug())
   const hasPermissions = useHasPermissions()
 
   const { mapParam } = useMapParam()
@@ -74,19 +76,20 @@ export const UserLoggedIn = ({ user }: Props) => {
             <p className="mb-1">
               <strong>Angemeldet als {user.name}</strong>
             </p>
-            {hasPermissions === true && (
+            {isRegionsPage && hasPermissions === true && !isAdmin(user) && (
               <div className="flex items-center gap-1 text-xs leading-4">
                 <CheckBadgeIcon className="inline-block h-6 w-6" />
                 <span>Sie sind Mitarbeiter dieser Region</span>
               </div>
             )}
-            {hasPermissions === false && (
+            {isRegionsPage && hasPermissions === false && (
               <div className="text-xs leading-4">
                 Sie haben zur Zeit keine Zugriffsrechte in dieser Region.
               </div>
             )}
             {isAdmin(user) && <div className="bg-pink-300 text-xs leading-4">Du bist Admin.</div>}
           </div>
+
           {isAdmin(user) && (
             <ul className="bg-pink-300 px-4 py-2 text-sm">
               <li>
@@ -138,6 +141,7 @@ export const UserLoggedIn = ({ user }: Props) => {
               )}
             </ul>
           )}
+
           <Menu.Item>
             {({ active }) => (
               <button
