@@ -8,7 +8,10 @@ export default resolver.pipe(
   async ({ slug, ...input }) => {
     const region = await db.region.update({
       where: { slug },
-      data: { ...input, public: Boolean(input.public) },
+      data: {
+        ...input,
+        public: input.public === 'true' ? true : false,
+      },
     })
 
     return region
