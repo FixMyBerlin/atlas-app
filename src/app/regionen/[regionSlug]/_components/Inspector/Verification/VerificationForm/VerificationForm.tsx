@@ -43,6 +43,10 @@ export function VerificationFormWithQuery({
         verified: values.verified,
         comment: values.comment?.trim(),
       }
+      console.log(
+        '################################################################################',
+      )
+      console.log('newVerificationItem', newVerificationItem, typeof values.osm_id)
       await createBikelaneVerificationMutation({ regionSlug: regionSlug!, ...newVerificationItem })
       addLocalUpdate(newVerificationItem)
       refetchVerifications()

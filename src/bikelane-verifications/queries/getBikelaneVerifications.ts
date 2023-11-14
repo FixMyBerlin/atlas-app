@@ -31,6 +31,8 @@ export default resolver.pipe(
     // Transforms bigInt to number
     const transformed = verifications.map((v) => VerificationSchema.parse(v))
 
+    console.log('################################################################################')
+    console.log('LOG getBikelaneVerifications', transformed, typeof transformed?.at(1)?.osm_id)
     return {
       verifications: transformed,
       nextPage,
