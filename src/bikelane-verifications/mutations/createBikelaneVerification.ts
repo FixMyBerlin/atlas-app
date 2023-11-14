@@ -1,5 +1,4 @@
 import { resolver } from '@blitzjs/rpc'
-import { AuthenticationError, Ctx } from 'blitz'
 import db from 'db'
 import { CreateVerificationSchema } from '../schemas'
 
@@ -10,11 +9,11 @@ export default resolver.pipe(
     return await db.bikelaneVerification.create({
       data: {
         ...input,
-        // We store BigInt in the database to be consistent with osm2pgsql.
-        // But we need regular numbers in the UI since JS does not handle BigInt well
-        // (eg. JSON.stringify fails with BigInts present).
-        osm_id: BigInt(input.osm_id),
-        verified_by: BigInt(input.verified_by),
+        // The DB stores osm_id and verified_by as BigInt to be consistent with osm2pgsql.
+        // But we get Error 500 TypeError "Do not know how to serialize a BigInt" if we use BigInt here.
+        // Luckily we don't need to, because Postgres transforms the input just fine.
+        osm_id: input.osm_id,
+        verified_by: input.verified_by,
       },
     })
   },
