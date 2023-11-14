@@ -7,32 +7,45 @@ export const translations: { [key: string]: string } = {
   'ALL--category=bicycleRoad': 'Fahrradstraße',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
   'ALL--category=crossing': 'Straßenquerung',
-  'ALL--category=cycleway_adjoining': 'Radweg (baulich von der Fahrbahn abgesetzt aber straßenbegleitend)',
+  'ALL--category=cycleway_adjoining':
+    'Radweg (baulich von der Fahrbahn abgesetzt aber straßenbegleitend)',
   'ALL--category=cycleway_isolated': 'Radweg, frei geführt',
-  'ALL--category=cycleway_isolatedOrIdjoining': 'Radweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
-  'ALL--category=cyclewayLink': 'Radweg-Verbindungsstück. Häufig in OpenStreetMap verwendet um Routenfähiges Netz zu erzeugen; repräsentiert nur selten physische Infrastruktur.',
+  'ALL--category=cycleway_isolatedOrIdjoining':
+    'Radweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
+  'ALL--category=cyclewayLink':
+    'Radweg-Verbindungsstück. Häufig in OpenStreetMap verwendet um Routenfähiges Netz zu erzeugen; repräsentiert nur selten physische Infrastruktur.',
   'ALL--category=cyclewayOnHighway_advisory': 'Schutzstreifen',
-  'ALL--category=cyclewayOnHighway_advisoryOrExclusive': 'Radfahrstreifen oder Schutzstreifen (Kategorisierung unklar)',
+  'ALL--category=cyclewayOnHighway_advisoryOrExclusive':
+    'Radfahrstreifen oder Schutzstreifen (Kategorisierung unklar)',
   'ALL--category=cyclewayOnHighway_exclusive': 'Radfahrstreifen',
   'ALL--category=cyclewayOnHighwayBetweenLanes': 'Radfahrstreifen in Mittellage (Fahrradweiche)',
-  'ALL--category=footAndCyclewaySegregated_adjoining': 'Getrennter Rad- und Gehweg, straßenbegleitend',
-  'ALL--category=footAndCyclewaySegregated_adjoiningOrIsolated': 'Getrennter Rad- und Gehweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
+  'ALL--category=footAndCyclewaySegregated_adjoining':
+    'Getrennter Rad- und Gehweg, straßenbegleitend',
+  'ALL--category=footAndCyclewaySegregated_adjoiningOrIsolated':
+    'Getrennter Rad- und Gehweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
   'ALL--category=footAndCyclewaySegregated_isolated': 'Getrennter Rad- und Gehweg, frei geführt',
   'ALL--category=footAndCyclewayShared_adjoining': 'Gemeinsamer Geh- und Radweg, straßenbegleitend',
-  'ALL--category=footAndCyclewayShared_adjoiningOrIsolated': 'Gemeinsamer Geh- und Radweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
+  'ALL--category=footAndCyclewayShared_adjoiningOrIsolated':
+    'Gemeinsamer Geh- und Radweg (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
   'ALL--category=footAndCyclewayShared_isolated': 'Gemeinsamer Geh- und Radweg, frei geführt',
   'ALL--category=footwayBicycleYes_adjoining': 'Gehweg mit Radwegfreigabe, straßenbegleitend',
-  'ALL--category=footwayBicycleYes_adjoiningOrIsolated': 'Gehweg mit Radwegfreigabe (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
+  'ALL--category=footwayBicycleYes_adjoiningOrIsolated':
+    'Gehweg mit Radwegfreigabe (Straßenbegleitend oder frei geführt; Kategorisierung unklar)',
   'ALL--category=footwayBicycleYes_isolated': 'Gehweg mit Radwegfreigabe, frei geführt',
   'ALL--category=livingStreet': 'Verkehrsberuhigter Bereich (Spielstraße)',
-  'ALL--category=needsClarification': 'Führungsform unklar. Die Attribute in OpenStreetMap sind nicht ausreichend, um die Führungsform zu kategorisieren. Das deutet darauf hin, dass zusätzlich Attribute in OSM ergänzt werden müssen.',
+  'ALL--category=needsClarification':
+    'Führungsform unklar. Die Attribute in OpenStreetMap sind nicht ausreichend, um die Führungsform zu kategorisieren. Das deutet darauf hin, dass zusätzlich Attribute in OSM ergänzt werden müssen.',
   'ALL--composit_surface_smoothness--key': 'Oberflächenqualität',
   'ALL--confidence=high': 'Hoch',
   'ALL--confidence=medium': 'Mittel',
-  'ALL--fresh=fresh_check_at': 'Wert wurde in den letzten 2 Jahre überprüft und die Prüfung explizit vermerkt.',
-  'ALL--fresh=fresh_update_at': 'Wert ist wahrscheinlich aktuell da die Attribute der Geometrie in den letzten 2 Jahren editiert wurden.',
-  'ALL--fresh=outdated_check_at': 'Es wurde ein explizites Prüf-Datum erfasst das aber älter als 2 Jahre ist.',
-  'ALL--fresh=outdated_update_at': 'Die Attribute dieser Geometrie wurden länger als 2 Jahre nicht bearbeitet.',
+  'ALL--fresh=fresh_check_at':
+    'Wert wurde in den letzten 2 Jahre überprüft und die Prüfung explizit vermerkt.',
+  'ALL--fresh=fresh_update_at':
+    'Wert ist wahrscheinlich aktuell da die Attribute der Geometrie in den letzten 2 Jahren editiert wurden.',
+  'ALL--fresh=outdated_check_at':
+    'Es wurde ein explizites Prüf-Datum erfasst das aber älter als 2 Jahre ist.',
+  'ALL--fresh=outdated_update_at':
+    'Die Attribute dieser Geometrie wurden länger als 2 Jahre nicht bearbeitet.',
   'ALL--highway--key': 'Straßentyp',
   'ALL--highway=bicycle_road': 'Fahrradstraße', // roadClassification--category
   'ALL--highway=construction': 'Straße ist in Bau',
@@ -86,25 +99,37 @@ export const translations: { [key: string]: string } = {
   'ALL--traffic_sign=none': 'Unbeschildert',
   'ALL--width--key': 'Breite',
   'bietigheim-bissingen_on_street_parking_lines--condition_class--key': 'Parkbeschränkungen',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=access_restriction': 'Zugangsbeschränkung (z.B. privat, nur für Kunden oder Rettungsfahrzeuge)',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=car_sharing': 'Nur für Carsharing-Fahrzeuge',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=charging': 'Laden von Elektrofahrzeugen',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=disabled_private': 'Behindertenparkplatz mit Parkausweis',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=access_restriction':
+    'Zugangsbeschränkung (z.B. privat, nur für Kunden oder Rettungsfahrzeuge)',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=car_sharing':
+    'Nur für Carsharing-Fahrzeuge',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=charging':
+    'Laden von Elektrofahrzeugen',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=disabled_private':
+    'Behindertenparkplatz mit Parkausweis',
   'bietigheim-bissingen_on_street_parking_lines--condition_class=disabled': 'Behindertenparkplatz',
   'bietigheim-bissingen_on_street_parking_lines--condition_class=free': 'Keine Parkbeschränkungen',
   'bietigheim-bissingen_on_street_parking_lines--condition_class=loading': 'Ladezone',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=mixed': 'Mit Bewohnerparkausweis oder Parkschein',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=no_parking': 'Parkverbot / Eingeschränktes Haltverbot',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=no_stopping': 'Halteverbot / Absolutes Haltverbot',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=mixed':
+    'Mit Bewohnerparkausweis oder Parkschein',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=no_parking':
+    'Parkverbot / Eingeschränktes Haltverbot',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=no_stopping':
+    'Halteverbot / Absolutes Haltverbot',
   'bietigheim-bissingen_on_street_parking_lines--condition_class=paid': 'Nur mit Parkschein',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=residents': 'Nur mit Bewohnerparkausweis',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=residents':
+    'Nur mit Bewohnerparkausweis',
   'bietigheim-bissingen_on_street_parking_lines--condition_class=taxi': 'Taxenstand',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=time_limited': 'zeitliche Beschränkung (Parkscheibe)',
-  'bietigheim-bissingen_on_street_parking_lines--condition_class=vehicle_restriction': 'Beschränkung auf/Verbot für ausgewiesene Fahrzeugklassen (spezifiziert durch Attribute „vehicle_designated“ und „vehicle_excluded“)',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=time_limited':
+    'zeitliche Beschränkung (Parkscheibe)',
+  'bietigheim-bissingen_on_street_parking_lines--condition_class=vehicle_restriction':
+    'Beschränkung auf/Verbot für ausgewiesene Fahrzeugklassen (spezifiziert durch Attribute „vehicle_designated“ und „vehicle_excluded“)',
   'bietigheim-bissingen_on_street_parking_lines--highway:name--key': 'Name',
   'bietigheim-bissingen_on_street_parking_lines--markings--key': 'Straßenmarkierungen',
-  'bietigheim-bissingen_on_street_parking_lines--markings=no': 'Keine Straßenmarkierungen im Parkbereich',
-  'bietigheim-bissingen_on_street_parking_lines--markings=yes': 'Parkbereich mit Straßenmarkierungen',
+  'bietigheim-bissingen_on_street_parking_lines--markings=no':
+    'Keine Straßenmarkierungen im Parkbereich',
+  'bietigheim-bissingen_on_street_parking_lines--markings=yes':
+    'Parkbereich mit Straßenmarkierungen',
   'bietigheim-bissingen_parking_areas--informal--key': 'Geduldet',
   'bietigheim-bissingen_parking_areas--informal=yes': 'Ja',
   'bietigheim-bissingen_parking_areas--markings=no': 'Keine Straßenmarkierungen im Parkbereich',
@@ -114,11 +139,13 @@ export const translations: { [key: string]: string } = {
   'bietigheim-bissingen_parking_areas--parking:levels--key': 'Stockwerke',
   'mapillary_coverage--title': 'Mapillary Foto',
   'parkraumParking--capacity_status--key': 'Vollständigkeit',
-  'parkraumParking--capacity_status=data_missing': 'Daten fehlen – bisher wurden noch keine Daten in OSM hinterlegt',
+  'parkraumParking--capacity_status=data_missing':
+    'Daten fehlen – bisher wurden noch keine Daten in OSM hinterlegt',
   'parkraumParking--capacity_status=no_parking': 'Daten erfasst (Parken verboten)',
   'parkraumParking--capacity_status=not_processed_yet': 'Daten fehlen – Prozessierung in Arbeit',
   'parkraumParking--capacity_status=other': 'Daten erfasst',
-  'parkraumParking--capacity_status=segment_too_small': 'Daten erfasst und prozessiert aber Segment zu klein für einen Parkstand',
+  'parkraumParking--capacity_status=segment_too_small':
+    'Daten erfasst und prozessiert aber Segment zu klein für einen Parkstand',
   'parkraumParking--capacity--key': 'Stellplatzanzahl',
   'parkraumParking--highway_name--key': 'Straßenname',
   'parkraumParking--highway_width_proc_effective--key': 'Nutzbare Fahrbahnbreite',
@@ -139,7 +166,8 @@ export const translations: { [key: string]: string } = {
   'parkraumParking--position=lane': 'Auf der Fahrbahn',
   'parkraumParking--position=no': 'Park- oder Halteverbot (implizit oder Beschildert)',
   'parkraumParking--position=on_kerb': 'Auf dem Gehweg',
-  'parkraumParking--position=separate': 'Parkstand als separate Geometrie erfasst; Detailattribute bitte an der separaten Geometrie ablesen.',
+  'parkraumParking--position=separate':
+    'Parkstand als separate Geometrie erfasst; Detailattribute bitte an der separaten Geometrie ablesen.',
   'parkraumParking--position=shoulder': 'Seitenstreifen',
   'parkraumParking--position=street_side': 'Parkbucht',
   'parkraumParking--source_capacity--key': 'Quelle Stellplatzanzahl',
@@ -189,7 +217,8 @@ export const translations: { [key: string]: string } = {
   'parkraumParkingStats--done_percent--key': 'Stand Erfassung Parkraum',
   'parkraumParkingStats--half_on_kerb_km--key': 'Straßen-km parken halb auf dem Gehweg',
   'parkraumParkingStats--lane_km--key': 'Straßen-km parken auf der Fahrbahn',
-  'parkraumParkingStats--length_wo_dual_carriageway--key': 'Straßen-km (alle Attribute) ohne Filterung von zweispurig erfassten Fahrbahnen ("dual_carriageway")',
+  'parkraumParkingStats--length_wo_dual_carriageway--key':
+    'Straßen-km (alle Attribute) ohne Filterung von zweispurig erfassten Fahrbahnen ("dual_carriageway")',
   'parkraumParkingStats--on_kerb_km--key': 'Straßen-km parken auf dem Gehweg',
   'parkraumParkingStats--street_side_km--key': 'Straßen-km parken in Parkbuchten',
   'parkraumParkingStats--sum_km--key': 'Straßen-km (alle Attribute)',
@@ -208,18 +237,21 @@ export const translations: { [key: string]: string } = {
   'atlas_bikelanesPresence--left--key': 'Vollständigkeit Links (Linienrichtung)',
   'atlas_bikelanesPresence--left=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_bikelanesPresence--left=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--left=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_bikelanesPresence--left=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_bikelanesPresence--oneway=implicit_yes': 'Einrichtungsradweg (implizite Angabe)',
   'atlas_bikelanesPresence--oneway=no': 'Zweirichtungsradwege',
   'atlas_bikelanesPresence--oneway=yes': 'Einrichtungsradweg',
   'atlas_bikelanesPresence--right--key': 'Vollständigkeit Rechts (Linienrichtung)',
   'atlas_bikelanesPresence--right=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_bikelanesPresence--right=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--right=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_bikelanesPresence--right=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_bikelanesPresence--self--key': 'Vollständigkeit Mittellinie',
   'atlas_bikelanesPresence--self=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_bikelanesPresence--self=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--self=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_bikelanesPresence--self=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_boundaries--admin_level--key': 'Grenzen Level',
   'atlas_boundaries--admin_level=7': 'Level 7 — Meistens Verwaltungsgemeinschaft, Amt', // https://wiki.openstreetmap.org/wiki/DE:Grenze
   'atlas_boundaries--admin_level=8': 'Level 8 — Meistens (Kreisangehörige) Gemeinde / Stadt',
@@ -295,22 +327,27 @@ export const translations: { [key: string]: string } = {
   'atlas_poiClassification--type=tourism-museum': 'Museum',
   'atlas_publicTransport--title': 'ÖPNV',
   'atlas_roadClassification--category--key': 'Straßentyp',
-  'atlas_roadClassification--oneway=car_and_bike_dual_carriageway': 'Einbahnstraße aufgrund getrennt erfasster Fahrspuren für Kfz- und Radverkehr',
+  'atlas_roadClassification--oneway=car_and_bike_dual_carriageway':
+    'Einbahnstraße aufgrund getrennt erfasster Fahrspuren für Kfz- und Radverkehr',
   'atlas_roadClassification--oneway=car_and_bike': 'Einbahnstraße für Kfz- und Radverkehr',
-  'atlas_roadClassification--oneway=car_not_bike_dual_carriageway': 'Einbahnstraße aufgrund getrennt erfasster Fahrspuren für Kfz aber Zweirichtungsradweg',
+  'atlas_roadClassification--oneway=car_not_bike_dual_carriageway':
+    'Einbahnstraße aufgrund getrennt erfasster Fahrspuren für Kfz aber Zweirichtungsradweg',
   'atlas_roadClassification--oneway=car_not_bike': 'Einbahnstraße für Kfz aber Zweirichtungsradweg',
   'atlas_roadClassification--title': 'Daten zu Straßentypen',
   'atlas_roads--bikelane_left=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_roads--bikelane_left=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_roads--bikelane_left=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_roads--bikelane_left=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_roads--bikelane_right--key': 'Radfinfrastruktur Vollständigkeit Rechts (Linienrichtung)',
   'atlas_roads--bikelane_right=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_roads--bikelane_right=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_roads--bikelane_right=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_roads--bikelane_right=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_roads--bikelane_self--key': 'Radfinfrastruktur Vollständigkeit Mittellinie',
   'atlas_roads--bikelane_self=data_no': 'Keine Radinfrastruktur (explizit)',
   'atlas_roads--bikelane_self=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_roads--bikelane_self=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
+  'atlas_roads--bikelane_self=not_expected':
+    'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_roads--bikelane_title': 'Daten zu Radfinfrastruktur Vollständigkeit der Führungsform',
   'atlas_roads--composit_lit--key': 'Beleuchtung',
   'atlas_roads--composit_maxspeed--key': 'Höchstgeschwindigkeit',
@@ -320,7 +357,8 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--lit=yes': 'Beleuchtet',
   'atlas_roads--maxspeed_source--key': 'Höchstgeschwindigkeit Quelle',
   'atlas_roads--maxspeed_source=inferred_from_highway': 'Abgeleitet vom `highway`-Tag.',
-  'atlas_roads--maxspeed_source=maxspeed_tag': 'In OSM erfasst über einen `maxspeed`-Kategorie-Tag.',
+  'atlas_roads--maxspeed_source=maxspeed_tag':
+    'In OSM erfasst über einen `maxspeed`-Kategorie-Tag.',
   'atlas_roads--maxspeed_source=maxspeed': 'In OSM erfasst als Tag `maxspeed`.',
   'atlas_roads--maxspeed_source=zone': 'OSM-Zonen-Tag',
   'atlas_roads--osm_lit--key': 'Beleuchtung Details',
@@ -342,10 +380,14 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--road_oneway=yes_dual_carriageway': 'Einbahnstraße da separate Geometrie pro Seite',
   'atlas_roads--road_oneway=yes': 'Einbahnstraße',
   'atlas_roads--road--key': 'Straßentyp',
-  'atlas_roads--smoothness_source=surface_to_smoothness': 'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
+  'atlas_roads--smoothness_source=surface_to_smoothness':
+    'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
   'atlas_roads--smoothness_source=tag': 'OSM-Tag `smoothness`',
   'atlas_roads--surface_source=tag': 'OSM-Tag `surface`',
   'atlas_roads--title': 'Daten zur Straße',
+  'atlas_bicycleParking--title': 'Fahrradstellplätze',
+  'atlas_bicycleParking--capacity--key': 'Anzahl Fahrrad-Stellplätze',
+  'atlas_bicycleParking--capacity:cargo_bike--key': 'Anzahl Lastenfahrrad-Stellplätze',
   'atlas_surfaceQuality--smoothness_source--key': 'Quelle Zustand',
   'atlas_surfaceQuality--smoothness_source=surface_to_smoothness': 'Abgeleitet von Belag',
   'atlas_surfaceQuality--smoothness_source=tag': 'OSM-Tag',

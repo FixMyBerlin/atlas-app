@@ -11,6 +11,11 @@ import {
   topic_barriers,
 } from './topicsMapData/topic_barriers.const'
 import {
+  TopicBicycleParkingId,
+  TopicBicycleParkingStyleIds,
+  topic_bicycleParking,
+} from './topicsMapData/topic_bicycleParking'
+import {
   TopicBikelanesId,
   TopicBikelanesStyleIds,
   topic_bikelanes,
@@ -131,6 +136,7 @@ import { MapData, MapDataTheme } from './types'
 export type TopicIds =
   | TopicAccidentsId
   | TopicBarriersId
+  | TopicBicycleParkingId
   | TopicBikelanesId
   | TopicBikelanesPresenceId
   | TopicBikelanesPresenceIdLegacy
@@ -161,6 +167,7 @@ type TopicStyleIdDefaults = MapDataTheme['topics'][number]['defaultStyle']
 export type TopicStyleIds =
   | TopicAccidentsStyleIds
   | TopicBarriersStyleIds
+  | TopicBicycleParkingStyleIds
   | TopicBikelanesPresenceStyleIds
   | TopicBikelanesPresenceStyleIdsLegacy
   | TopicBikelanesStyleIds
@@ -196,8 +203,8 @@ export const mapData: MapData = {
     topic_accidents,
     topic_barriers,
     topic_bikelanes,
-    topic_bikelanesPresence,
     topic_bikelanesPresence_legacy,
+    topic_bikelanesPresence,
     topic_boundaries,
     topic_buildings,
     topic_education,
@@ -219,5 +226,6 @@ export const mapData: MapData = {
     topic_roadClassification,
     topic_surfaceQuality_legacy,
     topic_surfaceQuality,
+    topic_bicycleParking,
   ],
 }

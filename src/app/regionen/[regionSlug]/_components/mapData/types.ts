@@ -97,6 +97,7 @@ type MapDataSourceVerifcation<TVerIds> =
       apiIdentifier?: undefined
     }
 
+// TODO: We change the data format in atlas-geo but did not update atlas-app, yet
 export type MapDataSourceFreshnessConfig = {
   primaryKeyTranslation: string
   freshKey: string

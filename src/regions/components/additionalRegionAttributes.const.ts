@@ -66,6 +66,7 @@ export type RegionPath =
   | 'berlin'
   | 'bibi'
   | 'deutschland'
+  | 'fahrradstellplaetze'
   | 'herrenberg'
   | 'landhagen'
   | 'langerwehe'
@@ -405,6 +406,25 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'bikelanes',
       'roadClassification',
       'lit',
+    ],
+    backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Fahrradstellplätze',
+    fullName: 'Fahrradstellplätze',
+    slug: 'fahrradstellplaetze',
+    osmRelationIds: [],
+    map: { lat: 51.07, lng: 13.35, zoom: 5 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    externalLogoPath:
+      'https://raw.githubusercontent.com/rapideditor/temaki/main/icons/bicycle_parked.svg',
+    logoWhiteBackgroundRequired: true,
+    themes: [
+      // The order here specifies the order in the UI
+      'bicycleParking',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },

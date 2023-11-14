@@ -6,10 +6,8 @@ import { sourcesParking, SourcesParkingIds } from './sourcesParking.const'
 export type SourcesIds =
   | SourcesParkingIds
   | 'accidents_unfallatlas'
-  | 'mapillary_coverage'
-  | 'mapillary_mapfeatures'
-  | 'mapillary_trafficSigns'
   | 'atlas_barriers'
+  | 'atlas_bicycleParking'
   | 'atlas_bikelanes'
   | 'atlas_bikelanesPresence'
   | 'atlas_boundaries'
@@ -23,6 +21,9 @@ export type SourcesIds =
   | 'atlas_roadClassification'
   | 'atlas_roads'
   | 'atlas_surfaceQuality'
+  | 'mapillary_coverage'
+  | 'mapillary_mapfeatures'
+  | 'mapillary_trafficSigns'
 
 export type SourceVerificationApiIdentifier = 'bikelanes'
 
@@ -436,6 +437,25 @@ export const sources: MapDataSource<
     freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/public.bicycleParking-points.json
+    // https://tiles.radverkehrsatlas.de/public.bicycleParking-areas.json
+    id: 'atlas_bicycleParking',
+    tiles: `${tilesUrl}/public.bicycleParking-points,public.bicycleParking-areas/{z}/{x}/{y}.pbf`,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['capacity', 'capacity:cargo_bike__if_present'],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false }, // TODO
+    export: { enabled: false }, // TODO
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles

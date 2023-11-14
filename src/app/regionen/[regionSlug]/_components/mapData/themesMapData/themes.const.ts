@@ -2,16 +2,17 @@ import { MapDataTheme } from '../types'
 
 // TODO type MapDataConfigThemeIds = typeof sources[number]['id']
 export type MapDataThemeIds =
-  | 'fromTo'
-  | 'bikelanes'
+  | 'bicycleParking'
   | 'bikelanes_NEW' // TODO TEMP
-  | 'roadClassification'
-  | 'roadClassification_NEW' // TODO TEMP
-  | 'surface'
-  | 'surface_NEW' // TODO TEMP
-  | 'parking'
-  | 'lit'
+  | 'bikelanes'
+  | 'fromTo'
   | 'lit_NEW' // TODO TEMP
+  | 'lit'
+  | 'parking'
+  | 'roadClassification_NEW' // TODO TEMP
+  | 'roadClassification'
+  | 'surface_NEW' // TODO TEMP
+  | 'surface'
   // Special only:
   | 'mapillary'
   | 'accidents'
@@ -139,13 +140,25 @@ export const themes: MapDataTheme[] = [
   {
     id: 'lit_NEW',
     name: 'Beleuchtung NEW',
-    desc: 'Beleuchtung im Straßenland.  ',
+    desc: 'Beleuchtung im Straßenland.',
     topics: [
       { id: 'lit', defaultStyle: 'hidden' },
       { id: 'lit_legacy', defaultStyle: 'default' },
       // { id: 'surface_tarmac', defaultStyle: "hidden" },
       { id: 'places', defaultStyle: 'hidden' },
       { id: 'landuse', defaultStyle: 'hidden' },
+    ],
+  },
+  {
+    id: 'bicycleParking',
+    name: 'Fahrradstellplätze',
+    desc: '',
+    topics: [
+      { id: 'bicycleParking', defaultStyle: 'default' },
+      { id: 'landuse', defaultStyle: 'hidden' },
+      { id: 'publicTransport', defaultStyle: 'hidden' }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
+      { id: 'barriers', defaultStyle: 'default' },
+      { id: 'boundaries', defaultStyle: 'default' },
     ],
   },
   {

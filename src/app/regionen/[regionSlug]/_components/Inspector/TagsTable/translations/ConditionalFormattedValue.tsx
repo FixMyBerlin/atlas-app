@@ -55,6 +55,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   // https://formatjs.io/docs/react-intl/components/#formattednumber
   const numberConfigs: { key: string; suffix?: string }[] = [
     { key: 'capacity', suffix: undefined },
+    { key: 'capacity:cargo_bike', suffix: undefined },
     { key: 'highway_width_proc_effective', suffix: 'm' }, // parkraumParkingStats
     { key: 'length', suffix: 'm' },
     { key: 'maxspeed', suffix: 'km/h' },
