@@ -20,11 +20,11 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
     'way_id' in properties
       ? 'W'
       : 'osm_type' in properties
-      ? properties.osm_type
-      : // `area_id` is what   boundaries return, they don't have osm_type field (yet)
-      'area_id' in properties
-      ? 'R'
-      : undefined
+        ? properties.osm_type
+        : // `area_id` is what   boundaries return, they don't have osm_type field (yet)
+          'area_id' in properties
+          ? 'R'
+          : undefined
 
   const osmUrlHref = osmUrl(osmType, osmId)
   const historyUrlHref = historyUrl(osmType, osmId)

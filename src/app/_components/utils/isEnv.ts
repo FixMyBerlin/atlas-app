@@ -13,9 +13,9 @@ export const isBrowser = typeof window !== 'undefined'
 export const envKey = isProd
   ? 'production'
   : isStaging
-  ? 'staging'
-  : isDev
-  ? 'development'
-  : undefined
+    ? 'staging'
+    : isDev
+      ? 'development'
+      : undefined
 
 export const envKeyWithFallback = envKey || 'development' // Fallback

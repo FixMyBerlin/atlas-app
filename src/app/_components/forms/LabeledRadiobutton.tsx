@@ -51,8 +51,8 @@ export const LabeledRadiobutton = forwardRef<HTMLInputElement, LabeledRadiobutto
               hasError
                 ? 'border-red-800 text-red-500 shadow-sm shadow-red-200 focus:ring-red-800'
                 : readonly
-                ? 'border-gray-300 bg-gray-50'
-                : 'border-gray-300 text-blue-600 focus:ring-blue-500',
+                  ? 'border-gray-300 bg-gray-50'
+                  : 'border-gray-300 text-blue-600 focus:ring-blue-500',
             )}
             readOnly={readonly}
           />
