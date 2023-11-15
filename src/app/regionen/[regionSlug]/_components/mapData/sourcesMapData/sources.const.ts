@@ -44,6 +44,7 @@ export type SourceExportApiIdentifier =
   | 'roadClassification'
   | 'roads'
   | 'surfaceQuality'
+  | 'trafficSigns'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -474,7 +475,12 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
-    export: { enabled: false }, // TODO
+    export: {
+      enabled: true,
+      apiIdentifier: 'trafficSigns',
+      title: 'Verkehrszeichen',
+      desc: 'Verkehrszeichen und Routen-Beschilderungen',
+    },
   },
   {
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
