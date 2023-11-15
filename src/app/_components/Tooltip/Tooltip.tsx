@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const Tooltip: React.FC<Props> = ({ text, children, className }) => {
+export const Tooltip: React.FC<Props> = ({ text, children, className }) => {
   const [positionTop, setPotitionTop] = useState(0)
   const parentWrapperRef = useRef<HTMLDivElement>(null)
 
@@ -29,5 +29,3 @@ const Tooltip: React.FC<Props> = ({ text, children, className }) => {
     </div>
   )
 }
-
-export default Tooltip
