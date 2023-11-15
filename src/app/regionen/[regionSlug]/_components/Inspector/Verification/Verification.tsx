@@ -88,6 +88,7 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
       <VerificationHistory
         verifications={verifications}
         visible={verificationStatus !== undefined}
+        count={paginatedVerifications?.count}
       />
     </section>
   )
