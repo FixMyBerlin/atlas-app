@@ -33,7 +33,8 @@ const apiConfigs = [
 
 // Folder
 const scriptJsonFolder = 'scripts/MapboxStyles/json'
-const componentFolder = 'src/core/components/MapInterface/mapData/topicsMapData/mapboxStyles'
+const componentFolder =
+  'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyles'
 
 // Helper:
 const log = (title, object: any = '-') => {
