@@ -8,8 +8,12 @@ export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes: React.FC = () => {
   const { mainMap } = useMap()
-  const { inspectorFeatures, mapLoaded, setOsmNotesLoading, setOsmNotesError } =
-    useMapStateInteraction()
+  const {
+    unfilteredInspectorFeatures: inspectorFeatures,
+    mapLoaded,
+    setOsmNotesLoading,
+    setOsmNotesError,
+  } = useMapStateInteraction()
   const { osmNotesParam } = useOsmNotesParam()
 
   const osmNotesFeatureIds = inspectorFeatures

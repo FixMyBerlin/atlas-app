@@ -6,12 +6,12 @@ import {
 
 export const extractHighlightFeatureIds = (
   features:
-    | StoreFeaturesInspector['inspectorFeatures']
+    | StoreFeaturesInspector['unfilteredInspectorFeatures']
     | StoreCalculator['calculatorAreasWithFeatures'][number]['features'],
   key: string | undefined,
 ) => {
   const highlightFeatureIds = features
-    .map((f) => key && f?.properties?.[key])
-    .filter((entry): entry is string => !!entry)
+    .map((f) => key && (f?.properties?.[key] as string | undefined))
+    .filter(Boolean)
   return highlightFeatureIds
 }

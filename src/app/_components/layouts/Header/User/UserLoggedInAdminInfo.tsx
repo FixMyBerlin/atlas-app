@@ -6,7 +6,7 @@ import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
   osmUrlViewport,
-} from 'src/app/regionen/[regionSlug]/_components/Inspector/Tools/osmUrls/osmUrls'
+} from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'

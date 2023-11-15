@@ -9,7 +9,11 @@ type Props = {
 } & LayerProps
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
-  const { inspectorFeatures, calculatorAreasWithFeatures, mapLoaded } = useMapStateInteraction()
+  const {
+    unfilteredInspectorFeatures: inspectorFeatures,
+    calculatorAreasWithFeatures,
+    mapLoaded,
+  } = useMapStateInteraction()
   const { sourceData } = parentLayerProps
 
   if (!mapLoaded) return null
@@ -36,7 +40,7 @@ export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
 
   const props = {
     ...parentLayerProps,
-    id: parentLayerProps.id + '--highlight',
+    id: `${parentLayerProps.id}--highlight`,
     paint: structuredClone(parentLayerProps.paint),
   }
 

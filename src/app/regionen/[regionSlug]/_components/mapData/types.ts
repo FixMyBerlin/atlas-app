@@ -15,7 +15,7 @@ import {
   SourceVerificationApiIdentifier,
   SourcesIds,
 } from './sourcesMapData/sources.const'
-import { LegendIconTypes } from '../MapSidebar/SelectLegend/LegendIcons/types'
+import { LegendIconTypes } from '../SidebarLayerControls/SelectLegend/LegendIcons/types'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
 export type MapDataBackgroundSource<TIds> = {

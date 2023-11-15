@@ -1,51 +1,25 @@
-import React from 'react'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
-import {
-  StoreFeaturesInspector,
-  useMapStateInteraction,
-} from '../mapStateInteraction/useMapStateInteraction'
+import { StoreFeaturesInspector } from '../mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureSource } from './InspectorFeatureSource'
-import { InspectorHeader } from './InspectorHeader'
 
 export type InspectorDataFeature = {
   sourceKey: string
   properties: GeoJSON.GeoJsonProperties
-  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
+  geometry: StoreFeaturesInspector['unfilteredInspectorFeatures'][number]['geometry']
 }
 
 export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 
-export const Inspector: React.FC = () => {
-  const { inspectorFeatures, resetInspector } = useMapStateInteraction()
+type Props = { features: StoreFeaturesInspector['unfilteredInspectorFeatures'] }
 
-  // When we click on the map, MapLibre returns all Features for all layers.
-  // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
-  const uniqueKeys: Record<string, boolean> = {}
-  const uniqueInspectorFeatures = inspectorFeatures.reduce(
-    (result: typeof inspectorFeatures, feature) => {
-      if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
-        uniqueKeys[createInspectorFeatureKey(feature)] = true
-        result.push(feature)
-      }
-      return result
-    },
-    [],
-  )
-
-  if (!uniqueInspectorFeatures.length) return null
-
+export const Inspector = ({ features }: Props) => {
   return (
-    <div className="absolute bottom-0 right-0 top-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
-      <InspectorHeader
-        count={uniqueInspectorFeatures.length}
-        handleClose={() => resetInspector()}
-      />
-
-      {uniqueInspectorFeatures.map((inspectObject) => {
+    <>
+      {features.map((inspectObject) => {
         const sourceKey = String(inspectObject.source) // Format: `theme:lit--source:atlas_lit--topic:lit`
         if (!sourceKey) return null
 
@@ -84,14 +58,6 @@ export const Inspector: React.FC = () => {
           />
         )
       })}
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            .maplibregl-ctrl-top-right { right: 35rem }
-          `,
-        }}
-      />
-    </div>
+    </>
   )
 }

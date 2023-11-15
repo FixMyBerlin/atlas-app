@@ -1,4 +1,4 @@
-import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/Inspector/Verification/verifiedColor.const'
+import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Verification/verifiedColor.const'
 import { MapDataTopic } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'

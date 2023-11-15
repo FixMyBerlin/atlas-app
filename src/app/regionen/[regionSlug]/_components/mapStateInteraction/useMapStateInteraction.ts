@@ -1,6 +1,7 @@
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
+import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
@@ -30,8 +31,9 @@ type StoreOsmNotesState = {
 
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
-  inspectorFeatures: MapGeoJSONFeature[]
-  setInspector: (inspectObject: Store['inspectorFeatures']) => void
+  unfilteredInspectorFeatures: MapGeoJSONFeature[]
+  getUniqueInspectorFeatures: () => MapGeoJSONFeature[]
+  setInspector: (inspectObject: Store['unfilteredInspectorFeatures']) => void
   resetInspector: () => void
 }
 
@@ -64,9 +66,23 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
 
   // Data for <Inspector> AND <LayerHighlight>
-  inspectorFeatures: [],
-  setInspector: (inspectorFeatures) => set({ inspectorFeatures }),
-  resetInspector: () => set({ inspectorFeatures: [] }),
+  // (!) Usually we don't want to use `inspectorFeatures` directly, use `getUniqueInspectorFeatures` instead!
+  unfilteredInspectorFeatures: [],
+  getUniqueInspectorFeatures: () => {
+    // When we click on the map, MapLibre returns all Features for all layers.
+    // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
+    const uniqueKeys: Record<string, boolean> = {}
+    const { unfilteredInspectorFeatures: inspectorFeatures } = get()
+    return inspectorFeatures.reduce((result: typeof inspectorFeatures, feature) => {
+      if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
+        uniqueKeys[createInspectorFeatureKey(feature)] = true
+        result.push(feature)
+      }
+      return result
+    }, [])
+  },
+  setInspector: (inspectorFeatures) => set({ unfilteredInspectorFeatures: inspectorFeatures }),
+  resetInspector: () => set({ unfilteredInspectorFeatures: [] }),
 
   // Data for <Inspector> AND <LayerHighlight>
   calculatorAreasWithFeatures: [],

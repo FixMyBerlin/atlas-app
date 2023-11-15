@@ -8,7 +8,7 @@ import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls/osmUrls
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
-  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
+  geometry: StoreFeaturesInspector['unfilteredInspectorFeatures'][number]['geometry']
   editors?: MapDataSourceInspectorEditor[]
 }
 
