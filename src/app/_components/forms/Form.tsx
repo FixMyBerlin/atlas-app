@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { PropsWithoutRef, ReactNode, useState } from 'react'
 import { FormProvider, useForm, UseFormProps } from 'react-hook-form'
 import { IntlProvider } from 'react-intl'

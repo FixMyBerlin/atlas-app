@@ -1,5 +1,5 @@
 import { Remark } from 'react-remark'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { proseClasses } from './prose'
 import { Link } from '../links/Link'
 

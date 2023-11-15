@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { FormattedMessage } from 'react-intl'
 import { proseClasses } from '../text/prose'
 import { isDev } from '../utils/isEnv'

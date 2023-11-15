@@ -1,7 +1,7 @@
 'use client'
 
 import { HomeIcon } from '@heroicons/react/20/solid'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { Route } from 'next'
 import { usePathname } from 'next/navigation'
 

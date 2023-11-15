@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 
 const colors = {
   gray: 'bg-gray-50 text-gray-600 ring-gray-500/10',

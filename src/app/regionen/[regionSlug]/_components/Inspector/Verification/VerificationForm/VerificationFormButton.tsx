@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'

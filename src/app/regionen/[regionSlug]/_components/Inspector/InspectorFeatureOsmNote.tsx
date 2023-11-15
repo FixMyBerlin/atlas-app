@@ -1,5 +1,5 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'

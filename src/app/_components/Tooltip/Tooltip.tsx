@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Props {

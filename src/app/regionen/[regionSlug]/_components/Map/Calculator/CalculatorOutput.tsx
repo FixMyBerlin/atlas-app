@@ -1,5 +1,5 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/20/solid'
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { MapDataSourceCalculator } from '../../mapData/types'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { DrawArea, DrawControlProps } from './CalculatorControlsDrawControl'

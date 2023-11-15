@@ -1,4 +1,4 @@
-import clsx from 'clsx'
+import { clsx } from 'clsx'
 import { LayerSpecification } from 'maplibre-gl'
 import { useEffect, useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
