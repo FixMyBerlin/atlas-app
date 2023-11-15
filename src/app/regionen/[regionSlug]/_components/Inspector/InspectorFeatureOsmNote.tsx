@@ -11,6 +11,7 @@ import SvgNotesClosed from 'src/app/regionen/[regionSlug]/_components/mapData/to
 import SvgNotesOpen from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyleImages/images/original_svgs/notes_open.svg'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
+import { useSession } from '@blitzjs/auth'
 
 type Comment = {
   date: string
@@ -59,7 +60,7 @@ const OsmUserLink = ({
 type Props = Pick<InspectorOsmNoteFeature, 'properties'>
 
 const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
-  const region = useRegion()
+  const { osmName } = useSession()
 
   if (!properties) return null
 
@@ -76,8 +77,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
           const firstComment = index === 0
           const splitDate = comment.date.split(' ')
           const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
-          // TODO MIGRATION AUTH: Re-Add a check if the given user has permissions on the region. But we need the osm Username for that, which we do not have reliably ATM.
-          const userHasPermssionOnRegion = false
+          const userHasPermssionOnRegion = comment.user === osmName
 
           return (
             <section
