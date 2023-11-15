@@ -10,7 +10,8 @@ const providers: Provider[] = [
     name: 'OpenStreetMap',
     type: 'oauth',
     wellKnown: 'https://www.openstreetmap.org/.well-known/openid-configuration',
-    authorization: { params: { scope: 'openid' } },
+    // Scopes: https://wiki.openstreetmap.org/wiki/OAuth#OAuth_2.0
+    authorization: { params: { scope: 'openid read_prefs write_notes' } },
     idToken: true,
     checks: ['pkce', 'state'],
     profile(profile) {
