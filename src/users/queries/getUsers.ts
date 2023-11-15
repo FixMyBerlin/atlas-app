@@ -24,8 +24,12 @@ export default resolver.pipe(
           orderBy,
           select: {
             id: true,
-            name: true,
+            osmId: true,
+            osmName: true,
+            firstName: true,
+            lastName: true,
             email: true,
+            role: true,
           },
         }),
     })
