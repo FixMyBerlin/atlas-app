@@ -29,8 +29,6 @@ export const MapInterfaceInitialization = ({ children }: { children: React.React
   // This initializes the `map` and `config` and allows us reset the config on demand.
   // When we change stuff in our config, our URL config needs to change.
   // Otherwise things blow up, becaues we look for config entries that where removed.
-  // We use the ErrorBoundary to setResetConfig(true) the following reset gets applied.
-  // We re-use this reset to update the config on the first render.
   const [initializeAndReset, setInitializeAndReset] = useState(true)
 
   if (initializeAndReset === true) {
