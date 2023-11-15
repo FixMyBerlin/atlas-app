@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -64,7 +64,7 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
             {...register(name)}
             id={name}
             {...props}
-            className={clsx(
+            className={twJoin(
               props.readOnly &&
                 'cursor-not-allowed bg-gray-50 text-gray-500 ring-gray-200 sm:text-sm sm:leading-6',
               inlineLeadingAddon && 'pl-12',

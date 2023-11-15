@@ -1,5 +1,5 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { MapDataSourceCalculator } from '../../mapData/types'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { DrawArea, DrawControlProps } from './CalculatorControlsDrawControl'
@@ -31,7 +31,7 @@ export const CalculatorOutput: React.FC<Props> = ({ keys: _unused, drawControlRe
 
   return (
     <section
-      className={clsx(
+      className={twJoin(
         'z-1000 absolute flex items-center rounded-md bg-fuchsia-800/90 px-2 py-0.5 text-xl leading-tight text-white shadow-xl',
         sums.length ? 'items-center' : 'items-start',
       )}
@@ -44,8 +44,8 @@ export const CalculatorOutput: React.FC<Props> = ({ keys: _unused, drawControlRe
       }}
     >
       {sums.length ? (
-        <div className={clsx(sums.length === 0 && 'text-white/60')}>
-          <div className={clsx(sums.length > 0 && 'text-white/50')}>Summe</div>
+        <div className={twJoin(sums.length === 0 && 'text-white/60')}>
+          <div className={twJoin(sums.length > 0 && 'text-white/50')}>Summe</div>
           {sums.map(([key, sum]) => (
             <strong key={key} className="block">
               {sum}

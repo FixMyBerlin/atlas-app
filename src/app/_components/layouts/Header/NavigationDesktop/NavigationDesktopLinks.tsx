@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
@@ -19,7 +19,7 @@ export const NavigationDesktopLinks: React.FC<Props> = ({ menuItems }) => {
           <Link
             key={item.name}
             href={item.href}
-            className={clsx(
+            className={twJoin(
               current
                 ? 'cursor-default bg-gray-900 text-white'
                 : 'text-gray-300 hover:bg-gray-700 hover:text-white',

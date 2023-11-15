@@ -1,7 +1,7 @@
-import { clsx } from 'clsx'
 import type { Route } from 'next'
 import NextLink from 'next/link'
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 import { buttonStyles, linkStyles } from './styles'
 
 export type LinkProps<T extends string> = {
@@ -22,7 +22,7 @@ export function Link<T extends string>({
   children,
   ...props
 }: LinkProps<T>) {
-  const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
+  const classNames = twMerge(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   return (
     <NextLink

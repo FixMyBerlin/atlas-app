@@ -1,6 +1,6 @@
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import produce from 'immer'
 import React from 'react'
 import { Portal } from 'src/app/_components/utils/usePopper/Portal'
@@ -59,7 +59,7 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
                 ref={trigger}
                 disabled={disabled}
                 // `w-*` has to be set fo the `truncate` to work
-                className={clsx(
+                className={twJoin(
                   'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300  px-3 py-1.5 text-sm font-medium shadow-sm',
                   open ? 'shadow-md' : '',
                   disabled
@@ -96,9 +96,9 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
                                 styleId: styleConfig.id,
                               })
                             }
-                            className={clsx(
+                            className={twJoin(
                               styleConfig.active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
-                              { 'bg-yellow-50': active },
+                              active ? 'bg-yellow-50' : '',
                               'block w-full px-4 py-2 text-left text-sm',
                             )}
                           >

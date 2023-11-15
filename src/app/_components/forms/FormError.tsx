@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { proseClasses } from '../text/prose'
 import { isDev } from '../utils/isEnv'
@@ -12,7 +12,7 @@ export const FormError: React.FC<Props> = ({ formError }) => {
   if (!formError) return null
 
   return (
-    <div role="alert" className={clsx(proseClasses, 'rounded bg-red-50 px-2 py-1 text-red-800')}>
+    <div role="alert" className={twJoin(proseClasses, 'rounded bg-red-50 px-2 py-1 text-red-800')}>
       {formError.name === 'ZodError' ? (
         <>
           {(formError?.issues || formError?.message || []).map((error: any) => (

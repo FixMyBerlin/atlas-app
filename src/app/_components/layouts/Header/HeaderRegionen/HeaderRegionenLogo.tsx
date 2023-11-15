@@ -1,5 +1,5 @@
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import Image from 'next/image'
 import React from 'react'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
@@ -15,7 +15,7 @@ export const HeaderRegionenLogo = () => {
     <>
       {customLogo && (
         <div
-          className={clsx(
+          className={twJoin(
             region.logoWhiteBackgroundRequired ? 'rounded-sm bg-white px-1 py-1' : '',
           )}
         >
@@ -37,7 +37,7 @@ export const HeaderRegionenLogo = () => {
         </>
       )}
 
-      <span className={clsx('ml-2', customLogo ? 'text-gray-400' : 'text-yellow-400')}>
+      <span className={twJoin('ml-2', customLogo ? 'text-gray-400' : 'text-yellow-400')}>
         Radverkehrsatlas (beta) <span className="hidden md:inline">{region.fullName}</span>
       </span>
     </>

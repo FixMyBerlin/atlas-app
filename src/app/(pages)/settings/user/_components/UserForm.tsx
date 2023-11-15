@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@blitzjs/rpc'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { useRouter } from 'next/navigation'
 import { FORM_ERROR, Form, FormProps } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
@@ -67,7 +67,7 @@ export const UserForm = () => {
           }
         }}
       />
-      <aside className={clsx(proseClasses, 'prose-sm prose-gray')}>
+      <aside className={twJoin(proseClasses, 'prose-sm prose-gray')}>
         <p>
           <strong>OpenStreetMap Name:</strong> {user.osmName}
           <br />

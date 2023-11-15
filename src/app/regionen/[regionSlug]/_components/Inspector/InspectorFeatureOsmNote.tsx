@@ -1,5 +1,5 @@
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
@@ -82,7 +82,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
           return (
             <section
               key={comment.uid}
-              className={clsx(
+              className={twJoin(
                 'border-b border-b-gray-200 px-3 py-5',
                 userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50',
               )}
@@ -96,7 +96,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
 
               <div
                 dangerouslySetInnerHTML={{ __html: comment.html }}
-                className={clsx(
+                className={twJoin(
                   proseClasses,
                   'prose-sm my-2 border-l-4 border-white pl-3 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700',
                 )}

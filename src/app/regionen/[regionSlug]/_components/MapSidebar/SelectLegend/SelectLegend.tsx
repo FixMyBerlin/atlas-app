@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
 import { MapDataStyle, MapDataStyleLegend } from '../../mapData/types'
@@ -103,9 +103,10 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
             return (
               <label
                 htmlFor={key}
-                className={clsx('group relative flex items-center', {
-                  'cursor-pointer': interactive,
-                })}
+                className={twJoin(
+                  'group relative flex items-center',
+                  interactive ? 'cursor-pointer' : '',
+                )}
                 key={key}
               >
                 <div className="h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>

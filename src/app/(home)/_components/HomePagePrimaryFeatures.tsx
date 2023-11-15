@@ -1,9 +1,9 @@
 'use client'
 
 import { Tab } from '@headlessui/react'
-import { clsx } from 'clsx'
 import Image, { StaticImageData } from 'next/image'
 import { useEffect, useState } from 'react'
+import { twJoin } from 'tailwind-merge'
 import screenshotBikelanes from './assets/HomePagePrimaryFeatures/bikelanes.jpg'
 import screenshotOther from './assets/HomePagePrimaryFeatures/other.jpg'
 import screenshotPoiClassification from './assets/HomePagePrimaryFeatures/poiclassification.jpg'
@@ -110,7 +110,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                   {features.map((feature, featureIndex) => (
                     <div
                       key={featureIndex}
-                      className={clsx(
+                      className={twJoin(
                         'group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6',
                         selectedIndex === featureIndex
                           ? 'bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10'
@@ -119,7 +119,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                     >
                       <h3>
                         <Tab
-                          className={clsx(
+                          className={twJoin(
                             'font-display text-lg [&:not(:focus-visible)]:focus:outline-none',
                             selectedIndex === featureIndex
                               ? 'text-blue-600 lg:text-white'
@@ -131,7 +131,7 @@ export const HomePagePrimaryFeatures: React.FC = () => {
                         </Tab>
                       </h3>
                       <p
-                        className={clsx(
+                        className={twJoin(
                           'mt-2 hidden text-sm lg:block',
                           selectedIndex === featureIndex
                             ? 'text-white'

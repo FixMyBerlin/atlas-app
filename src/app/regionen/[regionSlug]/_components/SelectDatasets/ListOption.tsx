@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { SourcesDatasetsIds } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
 
@@ -15,18 +15,16 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
     <Listbox.Option
       value={value}
       className={({ active, selected }) =>
-        clsx(
+        twJoin(
           'relative cursor-pointer select-none py-2 pl-10 pr-4 leading-tight text-gray-900',
-          {
-            'bg-yellow-50 text-yellow-900': active && !selected,
-          },
-          { 'bg-yellow-400': selected },
+          active && !selected ? 'bg-yellow-50 text-yellow-900' : '',
+          selected ? 'bg-yellow-400' : '',
         )
       }
     >
       {({ active, selected }) => (
         <>
-          <span className={clsx('block', active || selected ? 'font-medium' : 'font-normal')}>
+          <span className={twJoin('block', active || selected ? 'font-medium' : 'font-normal')}>
             {name}
           </span>
           {!!selected && (

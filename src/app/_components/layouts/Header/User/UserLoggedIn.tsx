@@ -1,7 +1,7 @@
 import { useMutation } from '@blitzjs/rpc'
 import { Menu, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
@@ -40,7 +40,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
           />
         ) : (
           <UserIcon
-            className={clsx('h-6 w-6', user.email ? 'text-gray-300' : 'text-amber-400')}
+            className={twJoin('h-6 w-6', user.email ? 'text-gray-300' : 'text-amber-400')}
             aria-hidden="true"
           />
         )}
@@ -93,7 +93,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
                 onClick={async () => {
                   await logoutMutation()
                 }}
-                className={clsx(
+                className={twJoin(
                   active ? 'bg-gray-100' : '',
                   'w-full px-4 py-2 text-left text-sm text-gray-700',
                 )}

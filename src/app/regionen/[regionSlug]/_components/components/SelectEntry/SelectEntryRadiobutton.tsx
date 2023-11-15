@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { EntryProps } from './types'
 
@@ -22,10 +22,9 @@ export const SelectEntryRadiobutton: React.FC<EntryProps> = ({
         id={key}
         name={scope}
         type="radio"
-        className={clsx(
+        className={twJoin(
           'h-4 w-4 cursor-pointer rounded-full border-gray-300',
-          { 'text-indigo-600 focus:ring-indigo-500': !disabled },
-          { 'text-gray-600': disabled },
+          disabled ? 'text-gray-600' : 'text-indigo-600 focus:ring-indigo-500',
         )}
         defaultChecked={active}
         disabled={disabled}

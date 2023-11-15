@@ -1,5 +1,5 @@
 import { useMutation } from '@blitzjs/rpc'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { Suspense } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
@@ -60,9 +60,7 @@ export function VerificationFormWithQuery({
     <Form schema={FormVerificationSchema} initialValues={initialValues} onSubmit={handleSubmit}>
       <fieldset
         disabled={disabled}
-        className={clsx('mb-2 space-y-2', {
-          'flex flex-col': verifiedOnce,
-        })}
+        className={twJoin('mb-2 space-y-2', verifiedOnce ? 'flex flex-col' : '')}
       >
         <h4 className="mb-2 font-semibold text-gray-900">Daten prüfen</h4>
         {disabled && (

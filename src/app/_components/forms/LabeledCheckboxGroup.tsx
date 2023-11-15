@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { LabeledCheckbox, LabeledCheckboxProps } from './LabeledCheckbox'
 
@@ -28,7 +28,7 @@ export const LabeledCheckboxGroup: React.FC<Props> = ({
           {label} {optional && <> (optional)</>}
         </p>
       )}
-      <div className={clsx(classNameItemWrapper, 'flex flex-col gap-3')}>
+      <div className={twJoin(classNameItemWrapper, 'flex flex-col gap-3')}>
         {itemsWithScope.map((item) => {
           return <LabeledCheckbox key={item.value} {...item} />
         })}

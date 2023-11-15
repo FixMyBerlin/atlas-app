@@ -1,6 +1,6 @@
 import { Disclosure } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { User } from '../User/User'
 import { PrimaryNavigationProps } from '../types'
@@ -47,7 +47,7 @@ export const NavigationMobile: React.FC<Props> = ({
                     key={item.name}
                     as="a"
                     href={item.href}
-                    className={clsx(
+                    className={twJoin(
                       current
                         ? 'bg-gray-900 text-white'
                         : 'text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -71,7 +71,7 @@ export const NavigationMobile: React.FC<Props> = ({
                         key={item.name}
                         as="a"
                         href={item.href}
-                        className={clsx(
+                        className={twJoin(
                           current
                             ? 'bg-gray-900 text-white'
                             : 'text-gray-300 hover:bg-gray-700 hover:text-white',

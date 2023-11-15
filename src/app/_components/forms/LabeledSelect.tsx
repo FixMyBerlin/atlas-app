@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -40,7 +40,7 @@ export const LabeledSelect = forwardRef<HTMLInputElement, LabeledSelectProps>(
           {...register(name)}
           id={name}
           {...props}
-          className={clsx(
+          className={twJoin(
             'w-full rounded-md border bg-white px-3 py-2 shadow-sm focus:outline-none sm:text-sm',
             hasError
               ? 'border-red-800 shadow-red-200 focus:border-red-800 focus:ring-red-800'

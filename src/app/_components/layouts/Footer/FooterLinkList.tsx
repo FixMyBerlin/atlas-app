@@ -1,6 +1,6 @@
-import { Link } from 'src/app/_components/links/Link'
-import { clsx } from 'clsx'
 import React from 'react'
+import { Link } from 'src/app/_components/links/Link'
+import { twMerge } from 'tailwind-merge'
 
 import { FooterMenuItem } from './footerLinks.const'
 
@@ -12,7 +12,7 @@ type Props = {
 export const FooterLinkList: React.FC<Props> = ({ linkList, className }) => {
   return (
     <ul
-      className={clsx(
+      className={twMerge(
         'flex flex-col space-y-3 text-center sm:flex-row sm:space-y-0 sm:text-left',
         className,
       )}

@@ -1,7 +1,7 @@
 import { Remark } from 'react-remark'
-import { clsx } from 'clsx'
-import { proseClasses } from './prose'
+import { twMerge } from 'tailwind-merge'
 import { Link } from '../links/Link'
+import { proseClasses } from './prose'
 
 type Props = {
   markdown?: string | null
@@ -54,7 +54,7 @@ export const Markdown: React.FC<Props> = ({ markdown, className }) => {
   if (!markdown) return null
 
   return (
-    <div className={clsx(proseClasses, className)}>
+    <div className={twMerge(proseClasses, className)}>
       <Remark
         remarkToRehypeOptions={{ allowDangerousHtml: true }}
         rehypeReactOptions={{ components }}

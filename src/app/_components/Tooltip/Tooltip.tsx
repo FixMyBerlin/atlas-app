@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React, { useEffect, useRef, useState } from 'react'
 
 interface Props {
@@ -18,7 +18,7 @@ export const Tooltip: React.FC<Props> = ({ text, children, className }) => {
   }, [])
 
   return (
-    <div className={clsx('group/tooltip', className)} ref={parentWrapperRef}>
+    <div className={twJoin('group/tooltip', className)} ref={parentWrapperRef}>
       <div
         className={`absolute hidden select-none whitespace-nowrap rounded bg-gray-900/90 p-2 text-xs text-white shadow-md group-hover/tooltip:z-50 group-hover/tooltip:block`}
         style={{ top: -positionTop }}

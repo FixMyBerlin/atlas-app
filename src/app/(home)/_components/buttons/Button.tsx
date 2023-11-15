@@ -1,6 +1,6 @@
-import { clsx } from 'clsx'
 import { Route } from 'next'
 import { Link } from 'src/app/_components/links/Link'
+import { twMerge } from 'tailwind-merge'
 
 const baseStyles = {
   solid:
@@ -41,7 +41,7 @@ export function Button<T extends string>({
   children,
   ...props
 }: Props<T>) {
-  className = clsx(baseStyles[variant], variantStyles[variant][color], className)
+  className = twMerge(baseStyles[variant], variantStyles[variant][color], className)
 
   return href ? (
     <Link href={href} className={className} {...props}>

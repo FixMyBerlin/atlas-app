@@ -1,13 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { clsx } from 'clsx'
 import { PropsWithoutRef, ReactNode, useState } from 'react'
-import { FormProvider, useForm, UseFormProps } from 'react-hook-form'
+import { FormProvider, UseFormProps, useForm } from 'react-hook-form'
 import { IntlProvider } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
 import { z } from 'zod'
-import { errorMessageTranslations } from './errorMessageTranslations'
-import { FormError } from './FormError'
-import { buttonStyles } from '../links/styles'
 import { SmallSpinner } from '../Spinner/SmallSpinner'
+import { buttonStyles } from '../links/styles'
+import { FormError } from './FormError'
+import { errorMessageTranslations } from './errorMessageTranslations'
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements['form']>, 'onSubmit'> {
@@ -49,7 +49,7 @@ export function Form<S extends z.ZodType<any, any>>({
     <IntlProvider messages={errorMessageTranslations} locale="de" defaultLocale="de">
       <FormProvider {...ctx}>
         <form
-          className={clsx('space-y-6', className)}
+          className={twMerge('space-y-6', className)}
           onSubmit={ctx.handleSubmit(async (values) => {
             const result = (await onSubmit(values)) || {}
             for (const [key, value] of Object.entries(result)) {

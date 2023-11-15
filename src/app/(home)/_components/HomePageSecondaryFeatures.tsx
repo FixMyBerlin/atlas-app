@@ -1,7 +1,7 @@
 import { Tab } from '@headlessui/react'
 import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
 import Image, { StaticImageData } from 'next/image'
+import { twJoin, twMerge } from 'tailwind-merge'
 import {
   default as screenshotCheck,
   default as screenshotImprove,
@@ -56,14 +56,14 @@ function Feature({
   className: string
 }) {
   return (
-    <div className={clsx(className, { 'opacity-75 hover:opacity-100': !isActive })} {...props}>
-      <div className={clsx('w-9 rounded-lg', isActive ? 'bg-blue-600' : 'bg-gray-500')}>
+    <div className={twMerge(className, isActive ? '' : 'opacity-75 hover:opacity-100')} {...props}>
+      <div className={twJoin('w-9 rounded-lg', isActive ? 'bg-blue-600' : 'bg-gray-500')}>
         <svg aria-hidden="true" className="h-9 w-9 p-2" fill="none">
           {feature.icon}
         </svg>
       </div>
       <h3
-        className={clsx('mt-3 text-sm font-medium', isActive ? 'text-blue-600' : 'text-gray-600')}
+        className={twJoin('mt-3 text-sm font-medium', isActive ? 'text-blue-600' : 'text-gray-600')}
       >
         {feature.name}
       </h3>
@@ -128,9 +128,9 @@ const FeaturesDesktop = () => {
                 <Tab.Panel
                   static
                   key={featureIndex}
-                  className={clsx(
+                  className={twJoin(
                     'px-5 transition duration-500 ease-in-out [&:not(:focus-visible)]:focus:outline-none',
-                    { 'opacity-60': featureIndex !== selectedIndex },
+                    featureIndex !== selectedIndex ? 'opacity-60' : '',
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}

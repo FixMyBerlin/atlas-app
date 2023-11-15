@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -41,7 +41,7 @@ export const LabeledTextareaField = forwardRef<HTMLTextAreaElement, LabeledTexta
           {...register(name)}
           id={name}
           {...props}
-          className={clsx(
+          className={twJoin(
             textareaClasName,
             'mt-1 block w-full rounded-md shadow-sm sm:text-sm',
             hasError

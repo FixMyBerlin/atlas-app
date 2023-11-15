@@ -1,7 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { clsx } from 'clsx'
-import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, PropsWithoutRef, forwardRef } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { twJoin, twMerge } from 'tailwind-merge'
 
 export interface LabeledRadiobuttonProps extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   /** Radiobutton scope */
@@ -31,7 +31,7 @@ export const LabeledRadiobutton = forwardRef<HTMLInputElement, LabeledRadiobutto
     return (
       <div
         {...outerProps}
-        className={clsx(
+        className={twMerge(
           outerProps?.className,
           'flex break-inside-avoid items-center justify-start',
         )}
@@ -46,7 +46,7 @@ export const LabeledRadiobutton = forwardRef<HTMLInputElement, LabeledRadiobutto
             }
             id={key}
             {...props}
-            className={clsx(
+            className={twJoin(
               'h-4 w-4',
               hasError
                 ? 'border-red-800 text-red-500 shadow-sm shadow-red-200 focus:ring-red-800'
@@ -60,7 +60,7 @@ export const LabeledRadiobutton = forwardRef<HTMLInputElement, LabeledRadiobutto
         <label
           {...labelProps}
           htmlFor={key}
-          className={clsx(
+          className={twJoin(
             'ml-3 block text-sm font-medium',
             readonly
               ? 'text-gray-400'

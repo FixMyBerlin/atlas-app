@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 
 type Props = {
   page?: boolean
@@ -12,11 +12,11 @@ const sizeClasses = {
 
 export const Spinner: React.FC<Props> = ({ page = false, size = '12' }) => {
   return (
-    <div className={clsx('text-center', page ? 'h-screen' : '')}>
+    <div className={twJoin('text-center', page ? 'h-screen' : '')}>
       <div role="status" className="flex h-full items-center justify-center">
         <svg
           aria-hidden="true"
-          className={clsx(
+          className={twJoin(
             sizeClasses[size],
             page ? 'my-20' : '',
             'inline animate-spin fill-blue-500 text-gray-200 dark:text-gray-600',

@@ -6,7 +6,7 @@ import {
   InformationCircleIcon,
   ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React, { Fragment, useRef } from 'react'
 
 export type ModalDialogProps = {
@@ -77,7 +77,7 @@ export const ModalDialog: React.FC<ModalDialogProps> = ({
                 <CloseButton onClick={() => setOpen(false)} positionClasses="top-6 right-3" />
                 <div className="sm:flex sm:items-start">
                   <div
-                    className={clsx(
+                    className={twJoin(
                       iconComponent[icon].bgClass,
                       'mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full sm:mx-0 sm:h-10 sm:w-10',
                     )}

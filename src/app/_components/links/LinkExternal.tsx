@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import type { Route } from 'next'
 import React from 'react'
 import { Link } from './Link'
@@ -22,7 +22,7 @@ export function LinkExternal<T extends string>({
   children,
   ...props
 }: LinkProps<T>) {
-  const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
+  const classNames = twJoin(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   if (href.startsWith('http')) {
     return (

@@ -1,6 +1,6 @@
 import { Listbox } from '@headlessui/react'
 import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { SourcesRasterIds } from '../mapData/sourcesMapData/sourcesBackgroundsRaster.const'
 
@@ -12,19 +12,17 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
     <Listbox.Option
       value={value}
       className={({ active, selected }) =>
-        clsx(
+        twJoin(
           'relative select-none py-2 pl-10 pr-4 text-gray-900',
-          {
-            'cursor-pointer bg-yellow-50 text-yellow-900': active && !selected,
-          },
-          { 'bg-yellow-400': selected },
+          active && !selected ? 'cursor-pointer bg-yellow-50 text-yellow-900' : '',
+          selected ? 'bg-yellow-400' : '',
         )
       }
     >
       {({ active, selected }) => (
         <>
           <span
-            className={clsx('block truncate', active || selected ? 'font-medium' : 'font-normal')}
+            className={twJoin('block truncate', active || selected ? 'font-medium' : 'font-normal')}
           >
             {name}
           </span>

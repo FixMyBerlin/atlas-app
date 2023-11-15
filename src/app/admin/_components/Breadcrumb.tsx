@@ -1,7 +1,7 @@
 'use client'
 
 import { HomeIcon } from '@heroicons/react/20/solid'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { Route } from 'next'
 import { usePathname } from 'next/navigation'
 
@@ -41,7 +41,7 @@ export const Breadcrumb = ({ pages }: Props) => {
                 <a
                   href={page.href}
                   aria-disabled={current ? 'true' : undefined}
-                  className={clsx(
+                  className={twJoin(
                     current
                       ? 'pointer-events-none font-semibold text-gray-800'
                       : 'text-gray-500 hover:text-gray-700',

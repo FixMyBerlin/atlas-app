@@ -1,7 +1,7 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { clsx } from 'clsx'
-import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, PropsWithoutRef, forwardRef } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { twJoin, twMerge } from 'tailwind-merge'
 
 export interface LabeledCheckboxProps extends PropsWithoutRef<JSX.IntrinsicElements['input']> {
   /** Checkbox scope. */
@@ -30,7 +30,7 @@ export const LabeledCheckbox = forwardRef<HTMLInputElement, LabeledCheckboxProps
     return (
       <div
         {...outerProps}
-        className={clsx(outerProps?.className, 'flex break-inside-avoid items-start')}
+        className={twMerge(outerProps?.className, 'flex break-inside-avoid items-start')}
       >
         <div className="flex h-5 items-center">
           <input
@@ -40,7 +40,7 @@ export const LabeledCheckbox = forwardRef<HTMLInputElement, LabeledCheckboxProps
             {...register(scope)}
             id={key}
             {...props}
-            className={clsx(
+            className={twJoin(
               'h-4 w-4 rounded',
               hasError
                 ? 'border-red-800 text-red-500 shadow-sm shadow-red-200 focus:ring-red-800'
@@ -54,7 +54,7 @@ export const LabeledCheckbox = forwardRef<HTMLInputElement, LabeledCheckboxProps
         <label
           {...labelProps}
           htmlFor={key}
-          className={clsx(
+          className={twJoin(
             'ml-3 block text-sm font-medium',
             readonly
               ? 'text-gray-400'

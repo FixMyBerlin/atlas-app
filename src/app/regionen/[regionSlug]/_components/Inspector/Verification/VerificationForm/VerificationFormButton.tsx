@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
@@ -19,7 +19,7 @@ export const VerificationFormButton = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className={clsx(
+        className={twJoin(
           buttonStyles,
           'bg-white px-3 py-1',
           isSubmitting

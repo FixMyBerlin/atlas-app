@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 const colors = {
   gray: 'bg-gray-50 text-gray-600 ring-gray-500/10',
@@ -22,7 +22,7 @@ export const Pill = ({
 }) => {
   return (
     <span
-      className={clsx(
+      className={twMerge(
         className,
         colors[color],
         'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset',

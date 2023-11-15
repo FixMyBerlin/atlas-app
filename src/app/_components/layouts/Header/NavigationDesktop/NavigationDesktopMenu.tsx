@@ -1,6 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { Fragment } from 'react'
@@ -51,7 +51,7 @@ export const NavigationDesktopMenu: React.FC<Props> = ({ menuItems }) => {
                                 {({ active }) => (
                                   <Link
                                     href={item.href}
-                                    className={clsx(
+                                    className={twJoin(
                                       active ? 'bg-gray-100' : '',
                                       current ? 'bg-gray-200' : '',
                                       'block px-4 py-2 text-sm text-gray-700',

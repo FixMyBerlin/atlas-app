@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 import { buttonStyles, linkStyles } from './styles'
 
 type Props = {
@@ -17,7 +17,7 @@ export const LinkTel: React.FC<Props> = ({
   children,
   ...props
 }) => {
-  const classNames = clsx(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
+  const classNames = twMerge(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
 
   return (
     <a href={`tel:${tel || children}`} className={classNames} {...props}>

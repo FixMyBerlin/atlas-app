@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 
 type Props = {
   active: boolean
@@ -16,7 +16,7 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
     >
       <Switch.Label
         as="div"
-        className={clsx(
+        className={twJoin(
           'ml-2 w-full text-sm leading-[17px]',
           active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
         )}
@@ -35,14 +35,14 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
         />
         <span
           aria-hidden="true"
-          className={clsx(
+          className={twJoin(
             active ? 'bg-yellow-500' : 'bg-gray-200 group-hover:bg-gray-300',
             'pointer-events-none absolute mx-auto h-4 w-9 rounded-full transition-colors duration-200 ease-in-out',
           )}
         />
         <span
           aria-hidden="true"
-          className={clsx(
+          className={twJoin(
             active ? 'translate-x-5' : 'translate-x-0',
             'pointer-events-none absolute left-0 inline-block h-5 w-5 transform rounded-full border border-gray-200 bg-white shadow ring-0 transition-transform duration-200 ease-in-out group-hover:bg-yellow-50',
           )}

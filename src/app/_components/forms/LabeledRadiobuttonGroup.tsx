@@ -1,4 +1,4 @@
-import { clsx } from 'clsx'
+import { twJoin } from 'tailwind-merge'
 import React from 'react'
 import { LabeledRadiobutton, LabeledRadiobuttonProps } from './LabeledRadiobutton'
 
@@ -28,7 +28,7 @@ export const LabeledRadiobuttonGroup: React.FC<Props> = ({
           {label} {optional && <> (optional)</>}
         </p>
       )}
-      <div className={clsx(classNameItemWrapper, 'space-y-3')}>
+      <div className={twJoin(classNameItemWrapper, 'space-y-3')}>
         {itemsWithScope.map((item) => {
           return <LabeledRadiobutton key={item.value} {...item} />
         })}
