@@ -3,7 +3,7 @@ import { envKeyWithFallback } from './isEnv'
 
 const envFrontendUrls = {
   development: 'http://127.0.0.1:5173/',
-  staging: 'https://stating.radverkehrsatlas.de/',
+  staging: 'https://staging.radverkehrsatlas.de/',
   production: 'https://radverkehrsatlas.de/',
 }
 
@@ -14,6 +14,7 @@ export const getEnvUrl = (environment: Environment) => {
 
   const currentEnvUrl = envFrontendUrls[envKeyWithFallback]
   const currentUrl = window.location.href
+  const newEnvUrl = envFrontendUrls[environment]
 
-  return currentUrl.replace(currentEnvUrl, envFrontendUrls[environment])
+  return currentUrl.replace(currentEnvUrl, newEnvUrl)
 }
