@@ -61,23 +61,32 @@ export default function AdminMembershipsPage() {
                   <br />
                   {user.email}
                   <br />
-                  OSM ID: {user.osmId}
+                  OSM: {user.osmName} ({user.osmId})
                 </td>
                 <td className="h-20 py-4 pl-4 pr-3 text-sm sm:pr-6">
-                  {user?.Membership?.length === 0 && <>Bisher keine Rechte</>}
-                  {user?.Membership?.map((membership) => {
-                    return (
-                      <div key={membership.id} className="flex justify-between">
-                        <Link blank href={`/regionen/${membership.region.slug}`}>
-                          {membership.region.slug}
-                        </Link>
-
-                        <button onClick={() => handleDelete(membership)} className={linkStyles}>
-                          Delete
-                        </button>
-                      </div>
-                    )
-                  })}
+                  {user?.Membership?.length === 0 ? (
+                    <>Bisher keine Rechte</>
+                  ) : (
+                    <ul>
+                      {user?.Membership?.map((membership) => {
+                        return (
+                          <li key={membership.id} className="list-item list-disc ">
+                            <div className="flex justify-between">
+                              <Link blank href={`/regionen/${membership.region.slug}`}>
+                                {membership.region.slug}
+                              </Link>
+                              <button
+                                onClick={() => handleDelete(membership)}
+                                className={linkStyles}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  )}
                   <div className="mt-2 border-t pt-2">
                     <Link
                       href={`/admin/memberships/new?${new URLSearchParams({

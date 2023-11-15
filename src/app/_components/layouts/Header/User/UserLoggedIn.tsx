@@ -5,6 +5,8 @@ import { clsx } from 'clsx'
 import Image from 'next/image'
 import { Fragment } from 'react'
 import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { Link } from 'src/app/_components/links/Link'
+import { buttonStyles } from 'src/app/_components/links/styles'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import logout from 'src/auth/mutations/logout'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
@@ -37,10 +39,12 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
             aria-hidden="true"
           />
         ) : (
-          <UserIcon className="h-6 w-6 text-gray-300" aria-hidden="true" />
+          <UserIcon
+            className={clsx('h-6 w-6', user.email ? 'text-gray-300' : 'text-amber-400')}
+            aria-hidden="true"
+          />
         )}
       </Menu.Button>
-
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -53,7 +57,14 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
         <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700">
             <p className="mb-1">
-              <strong>Angemeldet als {user.name}</strong>
+              <strong>Angemeldet als {user.osmName}</strong>
+            </p>
+            <p className="mb-1">
+              Vorname: {user.firstName ?? '–'}
+              <br />
+              Nachname: {user.lastName ?? '–'}
+              <br />
+              eMail: {user.email ?? '–'}
             </p>
             {isRegionsPage && hasPermissions === true && !isAdmin(user) && (
               <div className="flex items-center gap-1 text-xs leading-4">
@@ -61,15 +72,21 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
                 <span>Sie sind Mitarbeiter dieser Region</span>
               </div>
             )}
+            {!user.email && (
+              <div className="my-1 rounded-sm bg-amber-500 p-1">
+                Mit diesem Account ist noch keine E-Mail-Adresse verbunden. Diese wird benötigt um
+                Nachrichten schicken zu können.
+              </div>
+            )}
+            <Link href="/settings/user">Account bearbeiten</Link>
+
             {isRegionsPage && hasPermissions === false && (
               <div className="text-xs leading-4">
                 Sie haben zur Zeit keine Zugriffsrechte in dieser Region.
               </div>
             )}
           </div>
-
           <UserLoggedInAdminInfo user={user} />
-
           <Menu.Item>
             {({ active }) => (
               <button

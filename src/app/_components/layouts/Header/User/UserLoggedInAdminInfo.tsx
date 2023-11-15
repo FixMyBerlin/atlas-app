@@ -1,3 +1,4 @@
+import { Link } from 'src/app/_components/links/Link'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
@@ -28,15 +29,22 @@ export const UserLoggedInAdminInfo = ({ user }: UserLoggedInProp) => {
   if (!isAdmin(user)) return null
 
   return (
-    <>
-      <div className="bg-pink-300 text-xs leading-4">Du bist Admin.</div>
+    <div className="bg-pink-300 px-4 py-2 text-xs leading-5">
+      <p>
+        Du bist <strong>Admin</strong>.
+      </p>
 
-      <ul className="bg-pink-300 px-4 py-2 text-sm">
+      <ul>
         <li>
-          <button type="button" onClick={() => toggleShowDebugInfo()} className={linkStyles}>
-            Toggle <code>mapDebug</code>
-          </button>
+          <Link href="/admin">Admin Bereich</Link>
         </li>
+        {mapParam && (
+          <li>
+            <button type="button" onClick={() => toggleShowDebugInfo()} className={linkStyles}>
+              Toggle <code>mapDebug</code>
+            </button>
+          </li>
+        )}
         <li>
           {devUrl && (
             <LinkExternal blank href={devUrl}>
@@ -80,6 +88,6 @@ export const UserLoggedInAdminInfo = ({ user }: UserLoggedInProp) => {
           </li>
         )}
       </ul>
-    </>
+    </div>
   )
 }

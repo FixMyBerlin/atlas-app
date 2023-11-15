@@ -35,15 +35,16 @@ generator client {
 
 model User {
   id             Int          @id @default(autoincrement())
-  osmId          Int          @unique
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   //
-  email          String?      @unique
+  osmId          Int          @unique
+  osmName        String?
   hashedPassword String?
   role           UserRoleEnum @default(USER)
-  name           String?
-  phone          String?
+  email          String?      @unique
+  firstName      String?
+  lastName       String?
   //
   tokens         Token[]
   sessions       Session[]

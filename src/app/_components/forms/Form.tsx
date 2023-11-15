@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { errorMessageTranslations } from './errorMessageTranslations'
 import { FormError } from './FormError'
 import { buttonStyles } from '../links/styles'
+import { SmallSpinner } from '../Spinner/SmallSpinner'
 
 export interface FormProps<S extends z.ZodType<any, any>>
   extends Omit<PropsWithoutRef<JSX.IntrinsicElements['form']>, 'onSubmit'> {
@@ -77,13 +78,16 @@ export function Form<S extends z.ZodType<any, any>>({
 
           <FormError formError={formError} />
           {submitText && (
-            <button
-              type="submit"
-              disabled={ctx.formState.isSubmitting}
-              className={submitClassName || buttonStyles}
-            >
-              {submitText}
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                type="submit"
+                disabled={ctx.formState.isSubmitting}
+                className={submitClassName || buttonStyles}
+              >
+                {submitText}
+              </button>
+              {ctx.formState.isSubmitting && <SmallSpinner />}
+            </div>
           )}
         </form>
       </FormProvider>

@@ -18,46 +18,51 @@ const seedUsers = async () => {
   const genericUsers: Users = [
     {
       osmId: osmId++,
-      email: 'admin@example.com',
+      osmName: `OsmName${osmId++}`,
       role: 'ADMIN',
-      name: 'Admin',
-      phone: '030 549 086 65 - 90',
+      email: 'admin@example.com',
+      firstName: 'Admin',
+      lastName: undefined,
       hashedPassword,
     },
     {
       osmId: osmId++,
+      osmName: `OsmName${osmId++}`,
+      role: 'USER',
       email: 'all-regions@example.com',
-      role: 'USER',
-      name: 'All-Regions',
-      phone: '030 549 086 65 - 91',
+      firstName: 'All-Regions',
+      lastName: undefined,
       hashedPassword,
     },
     {
       osmId: osmId++,
-      email: 'no-region@example.com',
+      osmName: `OsmName${osmId++}`,
       role: 'USER',
-      name: 'No-Region',
-      phone: '030 549 086 65 - 92',
+      email: 'no-region@example.com',
+      firstName: 'No-Region',
+      lastName: undefined,
       hashedPassword,
     },
   ]
 
   const regionAdmins: Users = allRegions.map(({ id, slug }) => ({
     osmId: osmId++,
-    email: generateUserEmail(slug),
+    osmName: `OsmName${osmId++}`,
     role: 'USER',
-    name: `${capitalize(slug)}-Admin`,
-    phone: `030 549 086 65 - ${id}`,
+    email: generateUserEmail(slug),
+    firstName: `${capitalize(slug)}-Admin`,
+    lastName: undefined,
     hashedPassword,
   }))
 
   const fmcAdmins: Users = [
     {
       osmId: 11881,
-      email: 'tobias@fixmycity.de',
+      osmName: 'tordans',
       role: 'ADMIN',
-      name: `Tobias`,
-      phone: undefined,
+      email: 'tobias@fixmycity.de',
+      firstName: 'Tobias',
+      lastName: 'Jordans',
       hashedPassword,
     },
   ]
