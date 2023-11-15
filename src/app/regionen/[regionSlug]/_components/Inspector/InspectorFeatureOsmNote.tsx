@@ -87,12 +87,12 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
                 userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50',
               )}
             >
-              <p className="text-black">
+              <div className="text-black">
                 <strong>
                   <OsmUserLink user={comment.user} hasPermission={userHasPermssionOnRegion} />
                 </strong>{' '}
                 kommentierte am {date}:
-              </p>
+              </div>
 
               <div
                 dangerouslySetInnerHTML={{ __html: comment.html }}
