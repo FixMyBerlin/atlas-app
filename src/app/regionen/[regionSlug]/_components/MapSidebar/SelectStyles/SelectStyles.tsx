@@ -1,7 +1,7 @@
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { twJoin } from 'tailwind-merge'
-import produce from 'immer'
+import { produce } from 'immer'
 import React from 'react'
 import { Portal } from 'src/app/_components/utils/usePopper/Portal'
 import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'

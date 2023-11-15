@@ -55,7 +55,7 @@
     "@types/mapbox__mapbox-gl-draw": "^1.4.6",
     "blitz": "2.0.0-beta.34",
     "dompurify": "^3.0.6",
-    "immer": "^9.0.21",
+    "immer": "10.0.3",
     "jsurl2": "^2.1.0",
     "maplibre-gl": "^2.4.0",
     "next": "13.5.6",
