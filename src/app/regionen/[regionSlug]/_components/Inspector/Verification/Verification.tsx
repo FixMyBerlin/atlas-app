@@ -19,16 +19,16 @@ type Props = {
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
   const { localUpdates } = useMapStateInteraction()
   const sourceData = getSourceData(sourceId)
+  const hasPermissions = useHasPermissions()
 
   // We fetch the list of verifications here in the parent component so we can refetch it in one place after form sumbission.
   const regionSlug = useRegionSlug()
-  const [{ verifications }, { refetch: refetchVerifications }] = useQuery(
+  const [paginatedVerifications, { refetch: refetchVerifications }] = useQuery(
     getBikelaneVerificationsByOsmId,
-    {
-      osmId: properties.osm_id,
-      regionSlug,
-    },
+    { osmId: properties.osm_id, regionSlug },
+    { enabled: hasPermissions }, // Guard against AuthorizationError
   )
+  const verifications = paginatedVerifications?.verifications || []
 
   const localVerificationStatus = [...localUpdates]
     .reverse()
@@ -38,7 +38,6 @@ export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
     | TVerificationStatus
     | undefined
 
-  const hasPermissions = useHasPermissions()
   if (!sourceData.verification.enabled || !hasPermissions) return null
 
   // TODO: I don't quite get why this is here.

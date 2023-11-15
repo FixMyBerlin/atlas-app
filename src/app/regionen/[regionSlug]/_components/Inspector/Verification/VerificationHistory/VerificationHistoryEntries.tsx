@@ -1,10 +1,10 @@
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 import { Markdown } from 'src/app/_components/text/Markdown'
-import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
+import { TVerification } from 'src/bikelane-verifications/queries/getBikelaneVerification'
 import { userById } from 'src/users/components/utils/usersUtils'
 
 type Props = {
-  history: Awaited<ReturnType<typeof getBikelaneVerifications>>['verifications']
+  history: TVerification[]
 }
 
 export const VerificationHistoryEntries = ({ history }: Props) => {
