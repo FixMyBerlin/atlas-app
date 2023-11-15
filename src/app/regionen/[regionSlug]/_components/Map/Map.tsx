@@ -124,6 +124,8 @@ export const Map: React.FC = () => {
       onLoad={handleLoad}
       doubleClickZoom={true}
       dragRotate={false}
+      // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
+      RTLTextPlugin={null}
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
