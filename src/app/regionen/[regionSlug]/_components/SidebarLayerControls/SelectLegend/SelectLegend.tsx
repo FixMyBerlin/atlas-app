@@ -82,7 +82,7 @@ export const SelectLegend: React.FC<Props> = ({ subcategoryId, styleData }) => {
           </div>
         )
       case 'circle':
-        return <LegendIconCircle color={color} />
+        return <LegendIconCircle color={color} className="h-full w-full" />
       case 'fill':
         return <LegendIconArea color={color} />
       default:
@@ -91,7 +91,7 @@ export const SelectLegend: React.FC<Props> = ({ subcategoryId, styleData }) => {
   }
 
   return (
-    <section className="relative mt-1 pt-0.5">
+    <section className="relative mt-3 pt-0.5">
       <fieldset>
         <legend className="sr-only">Legende</legend>
         <div className="space-y-1">
@@ -116,7 +116,7 @@ export const SelectLegend: React.FC<Props> = ({ subcategoryId, styleData }) => {
                 )}
                 key={key}
               >
-                <div className="h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
+                <div className="h-3 w-5 flex-none">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center">
                   <input
                     id={key}
