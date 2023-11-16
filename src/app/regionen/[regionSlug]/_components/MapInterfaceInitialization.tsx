@@ -25,14 +25,24 @@ export const MapInterfaceInitialization = ({ children }: { children: React.React
 
   const [initialized, setInitialized] = useState(false)
 
+  console.log('## MapInterfaceInitialization rendered', {
+    freshConfig,
+    urlConfigParam: configParam,
+    initialized,
+    mapParam,
+    region,
+  })
+
   if (initialized === false) {
     // The order in which we initially call set*Param is the order we see in the URL.
     void setMapParam(mapParam || region.map)
+    console.log('## MapInterfaceInitialization setConfigParam', mapParam, region.map)
 
     const initializedConfig = initializeMapRegionConfig({
       freshConfig,
       urlConfig: configParam,
     })
+    console.log('## MapInterfaceInitialization setConfigParam', initializedConfig)
     void setConfigParam(initializedConfig)
 
     setInitialized(true)

@@ -13,6 +13,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default function ShowRegionPage() {
+  console.log('## ShowRegionPage rendered')
   return (
     <MapInterfaceInitialization>
       <MapInterface />

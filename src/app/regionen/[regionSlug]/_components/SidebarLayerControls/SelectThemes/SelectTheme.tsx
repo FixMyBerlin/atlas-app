@@ -26,6 +26,8 @@ export const SelectTheme = ({ themeConfig, active }: Props) => {
     resetInspector()
   }
 
+  console.log('## SelectTheme rendered', { themeConfig, active })
+
   return (
     <Disclosure key={themeData.name}>
       {({ open }) => (

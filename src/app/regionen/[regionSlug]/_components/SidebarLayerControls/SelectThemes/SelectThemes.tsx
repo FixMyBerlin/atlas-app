@@ -3,6 +3,7 @@ import { SelectTheme } from './SelectTheme'
 
 export const SelectThemes = () => {
   const { configParam } = useConfigParam()
+  console.log('## SelectThemes rendered', configParam)
 
   if (!configParam) return null
 
