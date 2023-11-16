@@ -2,22 +2,24 @@ import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'shops'
+const subcatId = 'poi'
 const source = 'atlas_poiClassification'
 const sourceLayer = 'public.poiClassification'
-export type SubcatPoiClassificationId_Tarmac = typeof subcatId
-export type SubcatPoiClassificationStyleIds_Tarmac = 'default'
+export type SubcatPoiId_Tarmac = typeof subcatId
+export type SubcatPoiStyleIds_Tarmac = 'default'
 
-export const subcat_poiClassification_tarmac: MapDataSubcat = {
+export const subcat_poi: MapDataSubcat = {
   id: subcatId,
-  name: 'Einkauf u.ä.',
-  desc: null,
+  name: 'Quellen & Ziele',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,
+    // TODO "Details" see https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1005-8419&mode=design&t=sIuuLD4vxJJzKOWr-0
+    // TODO "Nur S/W"
+    // TODO "Bildung und Kitas"
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Einfach',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_poiclassification',

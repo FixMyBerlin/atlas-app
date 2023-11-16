@@ -10,7 +10,6 @@ export type SubcatParkingDebugStyleIds = 'default' | 'presence' | 'debugLengthPe
 export const subcat_parkingDebug: MapDataSubcat = {
   id: subcatId,
   name: 'Parkraum Debug',
-  desc: '',
   sourceId: 'parkraumParkingDebug',
   beforeId: undefined,
   styles: [

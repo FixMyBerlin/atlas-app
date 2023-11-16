@@ -2,16 +2,15 @@ import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'roadClassification_legacy'
+const subcatId = 'roads_legacy'
 const source = 'atlas_roadClassification'
 const sourceLayer = 'public.roadClassification'
-export type SubcatRoadClassificationIdLegacy = typeof subcatId
-export type SubcatRoadClassificationStyleIdsLegacy = 'default' | 'oneway'
+export type SubcatRoadsIdLegacy = typeof subcatId
+export type SubcatRoadsStyleIdsLegacy = 'default' | 'oneway'
 
-export const subcat_roadClassification_legacy: MapDataSubcat = {
+export const subcat_roads_legacy: MapDataSubcat = {
   id: subcatId,
-  name: 'Straßentypen',
-  desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
+  name: 'Straßentypen (OLD)',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

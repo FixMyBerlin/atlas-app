@@ -181,6 +181,7 @@ export type MapDataCategory = {
 type MapDataSubcategory = {
   id: SubcategoryIds
   defaultStyle: 'default' | 'hidden'
+  ui: 'dropdown' | 'checkbox'
   // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
 
@@ -190,7 +191,6 @@ export type TBeforeIds = 'housenumber' | 'boundary_country' | 'landuse' | undefi
 export type MapDataSubcat = {
   id: SubcategoryIds
   name: string
-  desc: string | null
   sourceId: SourcesIds
   beforeId?: TBeforeIds
   styles: MapDataStyle[]

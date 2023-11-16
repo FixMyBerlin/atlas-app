@@ -10,7 +10,6 @@ export type SubcatBarriersStyleIds = 'default'
 export const subcat_barriers: MapDataSubcat = {
   id: subcatId,
   name: 'Barrieren',
-  desc: null,
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

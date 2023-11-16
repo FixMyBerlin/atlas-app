@@ -3,6 +3,7 @@ import { SelectStyles } from '../SelectStyles/SelectStyles'
 import { getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
 import { MapDataCategory } from '../../mapData/types'
 import { CategoryConfig } from '../../mapStateConfig/type'
+import { twJoin } from 'tailwind-merge'
 
 type Props = {
   categoryData: MapDataCategory
@@ -26,12 +27,20 @@ export const SelectSubcategory: React.FC<Props> = ({ categoryData, categoryConfi
             (t) => t.id === subcategoryDataConfig.id,
           )
           if (!subcatData || !subcatConfig) return null
+
+          const showSubheadline = categoryData.subcategories.length > 1
+
           return (
             <div
               key={subcatData.id}
               className="mt-3 border-t border-gray-100 px-3 pt-2 first:mt-0 first:border-t-0"
             >
-              <span className="text-sm font-semibold leading-[17px] text-gray-900">
+              <span
+                className={twJoin(
+                  'text-sm font-semibold leading-[17px] text-gray-900',
+                  showSubheadline ? '' : 'sr-only',
+                )}
+              >
                 {subcatData.name}
               </span>
 
