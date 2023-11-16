@@ -1,8 +1,8 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { isDev } from 'src/app/_components/utils/isEnv'
-import { DatasetIds } from '../../../mapData/sourcesMapData/datasets/types'
-import { SourcesIds } from '../../../mapData/sourcesMapData/sources.const'
+import { DatasetIds } from '../../../mapData/mapDataSources/datasets/types'
+import { SourcesIds } from '../../../mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../mapData/utils/getMapDataUtils'
 import { translations } from './translations.const'
 

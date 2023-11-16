@@ -2,7 +2,7 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
-import { sourcesBackgroundsRaster } from '../../mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+import { sourcesBackgroundsRaster } from '../../mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { layerVisibility } from '../utils/layerVisibility'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {

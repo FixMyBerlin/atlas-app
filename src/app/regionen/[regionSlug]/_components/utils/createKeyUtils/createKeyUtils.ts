@@ -1,28 +1,33 @@
-import { MapboxGeoJSONFeature } from 'react-map-gl'
-import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
-import { TopicStyleKey, TopicStyleLegendKey } from './types'
+import {
+  SubcategoryIds,
+  SubcategoryStyleIds,
+  SubcatStyleLegendIds,
+} from '../../mapData/mapData.const'
 import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
+import { SubcatStyleKey, SubcatStyleLegendKey } from './types'
 
-export const createTopicStyleKey = (topicId: TopicIds, styleId: TopicStyleIds): TopicStyleKey =>
-  `${topicId}-${styleId}`
+export const createSubcatStyleKey = (
+  subcatId: SubcategoryIds,
+  styleId: SubcategoryStyleIds,
+): SubcatStyleKey => `${subcatId}-${styleId}`
 
-export const createTopicStyleLegendKey = (
-  topicId: TopicIds,
-  styleId: TopicStyleIds,
-  legendId: TopicStyleLegendIds,
-): TopicStyleLegendKey => `${topicId}-${styleId}-${legendId}`
+export const createSubcatStyleLegendKey = (
+  subCat: SubcategoryIds,
+  styleId: SubcategoryStyleIds,
+  legendId: SubcatStyleLegendIds,
+): SubcatStyleLegendKey => `${subCat}-${styleId}-${legendId}`
 
-export const createSourceTopicStyleLayerKey = (
+export const createSourceSubcatStyleLayerKey = (
   sourceId: string,
-  topicId: string,
+  subCat: string,
   styleId: string,
   layerId: string,
 ) => {
-  return `${sourceId}--${topicId}--${styleId}--${layerId}`
+  return `${sourceId}--${subCat}--${styleId}--${layerId}`
 }
 
-export const createSourceKey = (themeId: string, sourceId: string, topicId: string) => {
-  return `theme:${themeId}--source:${sourceId}--topic:${topicId}`
+export const createSourceKey = (categoryId: string, sourceId: string, subCat: string) => {
+  return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
 }
 
 export const createDatasetSourceLayerKey = (sourceId: string, layerId: string) => {

@@ -1,13 +1,13 @@
 import { describe, expect, test } from 'vitest'
 import { initializeMapRegionConfig } from './initializeMapRegionConfig'
-import { ThemeConfig } from './type'
+import { CategoryConfig } from './type'
 
 describe('initializeMapReagionConfig()', () => {
   const freshConfig = [
     {
       id: 'lit',
       active: true,
-      topics: [
+      subcategories: [
         {
           id: 'lit',
           styles: [
@@ -33,7 +33,7 @@ describe('initializeMapReagionConfig()', () => {
     {
       id: 'fromTo',
       active: false,
-      topics: [
+      subcategories: [
         {
           id: 'boundaries',
           styles: [
@@ -48,7 +48,7 @@ describe('initializeMapReagionConfig()', () => {
     {
       id: 'bikelanes',
       active: false,
-      topics: [
+      subcategories: [
         {
           id: 'bikelanes',
           styles: [
@@ -60,7 +60,7 @@ describe('initializeMapReagionConfig()', () => {
         },
       ],
     },
-  ] satisfies ThemeConfig[]
+  ] satisfies CategoryConfig[]
 
   test('If nothing changed, nothing is done', () => {
     const result = initializeMapRegionConfig({
@@ -73,8 +73,8 @@ describe('initializeMapReagionConfig()', () => {
 
   test('`active` states are re-applied (if `id` stayed the same)', () => {
     const urlConfig = structuredClone(freshConfig)
-    urlConfig[0]!.topics[0]!.styles[0]!.active = false // topic:lit style-id:default
-    urlConfig[0]!.topics[0]!.styles[1]!.active = true // topic:lit style-id:completenes
+    urlConfig[0]!.subcategories[0]!.styles[0]!.active = false // subcategory:lit style-id:default
+    urlConfig[0]!.subcategories[0]!.styles[1]!.active = true // subcategory:lit style-id:completenes
 
     const result = initializeMapRegionConfig({
       freshConfig,
@@ -89,9 +89,9 @@ describe('initializeMapReagionConfig()', () => {
 
   test('New config entries are added (with default active state); UseCase url config is missing options that where added later', () => {
     const urlConfig = structuredClone(freshConfig)
-    delete urlConfig[0]!.topics[1] // topic:lit topic:landuse style removed
-    delete urlConfig[0]!.topics[2]!.styles[1] // topic:lit topic:landuse style removed
-    delete urlConfig[2] // topic:bikelanes
+    delete urlConfig[0]!.subcategories[1] // subcategory:lit subcategory:landuse style removed
+    delete urlConfig[0]!.subcategories[2]!.styles[1] // subcategory:lit subcategory:landuse style removed
+    delete urlConfig[2] // subcategory:bikelanes
 
     const result = initializeMapRegionConfig({
       freshConfig,
@@ -107,7 +107,7 @@ describe('initializeMapReagionConfig()', () => {
   test('Deleted/old config entries are ignored; UseCase url config holds old entries that where removed now.', () => {
     const urlConfig = structuredClone(freshConfig)
     // @ts-expect-error the object structure is checked manually
-    urlConfig[0].topics[2].styles[0].id = 'now_removed_style' // topic:lit topic:landuse style:id changed
+    urlConfig[0].subcategories[2].styles[0].id = 'now_removed_style' // subcategory:lit subcategory:landuse style:id changed
 
     const result = initializeMapRegionConfig({
       freshConfig,

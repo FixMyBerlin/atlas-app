@@ -19,9 +19,9 @@ export const MapInterfaceInitialization = ({ children }: { children: React.React
   // DEV: Hot reload does not work with this and is out of scope. Reload if things go wrong.
   // Some stale config options are removed, new options are added; state is preserved.
   const freshConfig = useMemo(() => {
-    invariant(region.themes)
-    return createMapRegionConfig(region.themes)
-  }, [region.themes])
+    invariant(region.categories)
+    return createMapRegionConfig(region.categories)
+  }, [region.categories])
 
   const [initialized, setInitialized] = useState(false)
 

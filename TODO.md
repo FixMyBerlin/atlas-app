@@ -1,6 +1,6 @@
 # TODOs
 
-## After the cofig is updated with themes, rename the last "\*DataConfig" files and folders by removing the Config-part
+## After the config is updated with categories, rename the last "\*DataConfig" files and folders by removing the Config-part
 
 I did not want to do this as part of 517eb9f because it would merge unrelated changes.
 

@@ -1,6 +1,6 @@
 import React from 'react'
-import { DatasetIds } from '../../mapData/sourcesMapData/datasets/types'
-import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
+import { DatasetIds } from '../../mapData/mapDataSources/datasets/types'
+import { SourcesIds } from '../../mapData/mapDataSources/sources.const'
 import { NodataFallback } from './compositTableRows/NodataFallback'
 import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
 import { ConditionalFormattedValue } from './translations/ConditionalFormattedValue'

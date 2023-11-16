@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { getSourceData, getTopicData } from '../../mapData/utils/getMapDataUtils'
-import { flattenConfigTopics } from '../../mapStateConfig/utils/flattenConfigTopics'
+import { getSourceData, getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
+import { flattenSubcategories } from '../../mapStateConfig/utils/flattenSubcategories'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
 
@@ -12,13 +12,13 @@ export const Calculator: React.FC = () => {
   // by checking the sourceData.
   const { configParam } = useConfigParam()
   if (!configParam) return null
-  const activeTopicIds = flattenConfigTopics(configParam)
-    // a topic is active, when any style is active that is not "hidden"
+  const activeSubcatIds = flattenSubcategories(configParam)
+    // a subcategory is active, when any style is active that is not "hidden"
     .filter((t) => t.styles.filter((s) => s.id !== 'hidden').some((s) => s.active))
     .map((t) => t.id)
-  const activeTopicsData = activeTopicIds.map((id) => getTopicData(id))
-  const sourceDataOfActiveTopics = activeTopicsData.map((t) => getSourceData(t.sourceId))
-  const calculatorSources = sourceDataOfActiveTopics.filter((s) => s.calculator.enabled)
+  const activeSubcatsData = activeSubcatIds.map((id) => getSubcategoryData(id))
+  const sourceDataOfActiveSubcats = activeSubcatsData.map((t) => getSourceData(t.sourceId))
+  const calculatorSources = sourceDataOfActiveSubcats.filter((s) => s.calculator.enabled)
   const calculatorSource = calculatorSources?.at(0)
   const queryLayers = calculatorSource?.calculator?.queryLayers
   if (calculatorSources.length > 1) {
