@@ -11,7 +11,6 @@ export type SubcatPublicTransportStyleIds = 'default'
 export const subcat_publicTransport: MapDataSubcat = {
   id: tpoicId,
   name: 'ÖPNV',
-  desc: null,
   sourceId: 'atlas_publicTransport',
   styles: [
     ...defaultStyleHidden,

@@ -38,8 +38,7 @@ const defaultLegend: MapDataSubcat['styles'][0]['legends'] = [
 
 export const subcat_lit: MapDataSubcat = {
   id: subcatId,
-  name: 'Beleuchtung (New)',
-  desc: null,
+  name: 'Beleuchtung',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

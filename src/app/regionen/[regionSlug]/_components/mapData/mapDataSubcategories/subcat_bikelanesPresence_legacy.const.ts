@@ -11,8 +11,7 @@ export type SubcatBikelanesPresenceStyleIdsLegacy = 'default'
 
 export const subcat_bikelanesPresence_legacy: MapDataSubcat = {
   id: subcatId,
-  name: 'Vollständigkeit Radinfrastruktur',
-  desc: '',
+  name: 'Vollständigkeit Radinfrastruktur (OLD)',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

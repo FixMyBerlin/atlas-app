@@ -9,7 +9,6 @@ export type SubcatBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
 export const subcat_boundaries: MapDataSubcat = {
   id: topiId,
   name: 'Grenzen',
-  desc: '',
   sourceId: 'atlas_boundaries',
   styles: [
     ...defaultStyleHidden,

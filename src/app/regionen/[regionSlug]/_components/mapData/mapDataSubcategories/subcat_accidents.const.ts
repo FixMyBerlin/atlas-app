@@ -14,7 +14,6 @@ export type SubcatAccidentsStyleIds = 'default'
 export const subcat_accidents: MapDataSubcat = {
   id: subcatId,
   name: 'Unfälle',
-  desc: 'Unfallatlass',
   sourceId: 'accidents_unfallatlas',
   styles: [
     ...defaultStyleHidden,

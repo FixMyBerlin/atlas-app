@@ -75,7 +75,6 @@ export const defaultLegend: NonNullable<MapDataSubcat['styles'][0]['legends']> =
 export const subcat_bikelanes: MapDataSubcat = {
   id: subcatId,
   name: 'Radinfrastruktur',
-  desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
   sourceId: 'atlas_bikelanes',
   styles: [
     ...defaultStyleHidden,

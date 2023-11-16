@@ -1,5 +1,5 @@
-import { sources } from './mapDataSources/sources.const'
 import { categories } from './mapDataCategories/categories.const'
+import { sources } from './mapDataSources/sources.const'
 import {
   SubcatAccidentsId,
   SubcatAccidentsStyleIds,
@@ -30,6 +30,11 @@ import {
   SubcatBikelanesPresenceStyleIdsLegacy,
   subcat_bikelanesPresence_legacy,
 } from './mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
+import {
+  SubcatBikelanesSurfaceId,
+  SubcatBikelanesSurfaceStyleIds,
+  subcat_bikelanesSurface,
+} from './mapDataSubcategories/subcat_bikelanesSurface.const'
 import {
   SubcatBoundariesId,
   SubcatBoundariesStyleIds,
@@ -102,40 +107,40 @@ import {
   subcat_places,
 } from './mapDataSubcategories/subcat_places.const'
 import {
-  SubcatPoiClassificationId_Tarmac,
-  SubcatPoiClassificationStyleIds_Tarmac,
-  subcat_poiClassification_tarmac,
-} from './mapDataSubcategories/subcat_poiClassification.const'
+  SubcatPoiId_Tarmac,
+  SubcatPoiStyleIds_Tarmac,
+  subcat_poi,
+} from './mapDataSubcategories/subcat_poi.const'
 import {
   SubcatPublicTransportId,
   SubcatPublicTransportStyleIds,
   subcat_publicTransport,
 } from './mapDataSubcategories/subcat_publicTransport.const'
 import {
-  SubcatRoadClassificationId,
-  SubcatRoadClassificationStyleIds,
-  subcat_roadClassification,
-} from './mapDataSubcategories/subcat_roadClassification.const'
+  SubcatRoadsId,
+  SubcatRoadsStyleIds,
+  subcat_roads,
+} from './mapDataSubcategories/subcat_roads.const'
 import {
-  SubcatRoadClassificationIdLegacy,
-  SubcatRoadClassificationStyleIdsLegacy,
-  subcat_roadClassification_legacy,
-} from './mapDataSubcategories/subcat_roadClassification_legacy.const'
+  SubcatRoadsSurfaceId,
+  SubcatRoadsSurfaceStyleIds,
+  subcat_roadsSurface,
+} from './mapDataSubcategories/subcat_roadsSurface.const'
 import {
-  SubcatSurfaceQualityId,
-  SubcatSurfaceStyleQualityIds,
-  subcat_surfaceQuality,
-} from './mapDataSubcategories/subcat_surfaceQuality.const'
+  SubcatRoadsSurfaceIdLegacy,
+  SubcatRoadsSurfaceStyleIdsLegacy,
+  subcat_roadsSurface_legacy,
+} from './mapDataSubcategories/subcat_roadsSurface_legacy.const'
 import {
-  SubcatSurfaceQualityIdLegacy,
-  SubcatSurfaceStyleQualityIdsLegacy,
-  subcat_surfaceQuality_legacy,
-} from './mapDataSubcategories/subcat_surfaceQuality_legacy.const'
+  SubcatRoadsIdLegacy,
+  SubcatRoadsStyleIdsLegacy,
+  subcat_roads_legacy,
+} from './mapDataSubcategories/subcat_roads_legacy.const'
 import {
-  SubcatTrafficSignsId,
-  SubcatTrafficSignsStyleIds,
-  subcat_trafficSigns,
-} from './mapDataSubcategories/subcat_trafficSigns'
+  SubcatSignsId,
+  SubcatSignsStyleIds,
+  subcat_signs,
+} from './mapDataSubcategories/subcat_signs.const'
 import { MapData, MapDataCategory } from './types'
 
 export type SubcategoryIds =
@@ -145,6 +150,7 @@ export type SubcategoryIds =
   | SubcatBikelanesId
   | SubcatBikelanesPresenceId
   | SubcatBikelanesPresenceIdLegacy
+  | SubcatBikelanesSurfaceId
   | SubcatBoundariesId
   | SubcatBuildingsId
   | SubcatEducationId
@@ -160,13 +166,13 @@ export type SubcategoryIds =
   | SubcatParkingPointsId
   | SubcatParkingStatsId
   | SubcatPlacesId
-  | SubcatPoiClassificationId_Tarmac
+  | SubcatPoiId_Tarmac
   | SubcatPublicTransportId
-  | SubcatRoadClassificationId
-  | SubcatRoadClassificationIdLegacy
-  | SubcatSurfaceQualityId
-  | SubcatSurfaceQualityIdLegacy
-  | SubcatTrafficSignsId
+  | SubcatRoadsId
+  | SubcatRoadsIdLegacy
+  | SubcatRoadsSurfaceId
+  | SubcatRoadsSurfaceIdLegacy
+  | SubcatSignsId
 
 type SubcatStyleIdDefaults = MapDataCategory['subcategories'][number]['defaultStyle']
 
@@ -177,6 +183,7 @@ export type SubcategoryStyleIds =
   | SubcatBikelanesPresenceStyleIds
   | SubcatBikelanesPresenceStyleIdsLegacy
   | SubcatBikelanesStyleIds
+  | SubcatBikelanesSurfaceStyleIds
   | SubcatBoundariesStyleIds
   | SubcatBuildingsStyleIds
   | SubcatEducationStyleIds
@@ -192,14 +199,14 @@ export type SubcategoryStyleIds =
   | SubcatParkingStatsStyleIds
   | SubcatParkingStyleIds
   | SubcatPlacesStyleIds
-  | SubcatPoiClassificationStyleIds_Tarmac
+  | SubcatPoiStyleIds_Tarmac
   | SubcatPublicTransportStyleIds
-  | SubcatRoadClassificationStyleIds
-  | SubcatRoadClassificationStyleIdsLegacy
+  | SubcatRoadsStyleIds
+  | SubcatRoadsStyleIdsLegacy
+  | SubcatRoadsSurfaceStyleIds
+  | SubcatRoadsSurfaceStyleIdsLegacy
+  | SubcatSignsStyleIds
   | SubcatStyleIdDefaults
-  | SubcatSurfaceStyleQualityIds
-  | SubcatSurfaceStyleQualityIdsLegacy
-  | SubcatTrafficSignsStyleIds
 
 export type SubcatStyleLegendIds = string // TODO: We can make this more precise later
 
@@ -213,6 +220,7 @@ export const mapData: MapData = {
     subcat_bikelanes,
     subcat_bikelanesPresence_legacy,
     subcat_bikelanesPresence,
+    subcat_bikelanesSurface,
     subcat_boundaries,
     subcat_buildings,
     subcat_education,
@@ -228,12 +236,12 @@ export const mapData: MapData = {
     subcat_parkingPoints,
     subcat_parkingStats,
     subcat_places,
-    subcat_poiClassification_tarmac,
+    subcat_poi,
     subcat_publicTransport,
-    subcat_roadClassification_legacy,
-    subcat_roadClassification,
-    subcat_surfaceQuality_legacy,
-    subcat_surfaceQuality,
-    subcat_trafficSigns,
+    subcat_roads_legacy,
+    subcat_roads,
+    subcat_roadsSurface_legacy,
+    subcat_roadsSurface,
+    subcat_signs,
   ],
 }

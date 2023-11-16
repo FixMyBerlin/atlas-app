@@ -2,21 +2,20 @@ import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'surfaceQuality_legacy'
-const source = 'atlas_surfaceQuality'
-const sourceLayer = 'public.surfaceQuality'
-export type SubcatSurfaceQualityIdLegacy = typeof subcatId
-export type SubcatSurfaceStyleQualityIdsLegacy =
+const subcatId = 'bikelanesSurface'
+const source = 'atlas_bikelanes'
+const sourceLayer = 'public.bikelanes'
+export type SubcatBikelanesSurfaceId = typeof subcatId
+export type SubcatBikelanesSurfaceStyleIds =
   | 'default'
   | 'bad'
   | 'debug-smoothness'
   | 'completeness'
   | 'freshness'
 
-export const subcat_surfaceQuality_legacy: MapDataSubcat = {
+export const subcat_bikelanesSurface: MapDataSubcat = {
   id: subcatId,
-  name: 'Oberflächenqualität',
-  desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
+  name: 'Oberflächenqualität RVA',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

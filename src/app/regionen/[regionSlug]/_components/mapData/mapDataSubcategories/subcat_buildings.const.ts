@@ -10,7 +10,6 @@ export type SubcatBuildingsStyleIds = 'default'
 export const subcat_buildings: MapDataSubcat = {
   id: subcatId,
   name: 'Gebäude',
-  desc: null,
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

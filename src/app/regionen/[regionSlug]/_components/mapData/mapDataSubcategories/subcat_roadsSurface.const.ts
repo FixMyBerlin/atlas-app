@@ -2,21 +2,20 @@ import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'surfaceQuality'
+const subcatId = 'roadsSurface'
 const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
-export type SubcatSurfaceQualityId = typeof subcatId
-export type SubcatSurfaceStyleQualityIds =
+export type SubcatRoadsSurfaceId = typeof subcatId
+export type SubcatRoadsSurfaceStyleIds =
   | 'default'
   | 'bad'
   | 'debug-smoothness'
   | 'completeness'
   | 'freshness'
 
-export const subcat_surfaceQuality: MapDataSubcat = {
+export const subcat_roadsSurface: MapDataSubcat = {
   id: subcatId,
-  name: 'Oberflächenqualität (new)',
-  desc: '`smoothness`, `surface` und interpolationen. Für alle Fahrrad-relevanten Wege.',
+  name: 'Oberflächenqualität Fahrbahn',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

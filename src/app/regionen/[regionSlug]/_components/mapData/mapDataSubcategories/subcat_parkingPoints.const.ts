@@ -9,7 +9,6 @@ export type SubcatParkingPointsStyleIds = 'default'
 export const subcat_parkingPoints: MapDataSubcat = {
   id: subcatId,
   name: 'Parkplätze zählen',
-  desc: 'Jeder Punkt ist ein errechneter Stellplatz. Man kann Flächen einzeichnen, für die eine Summe dargestellt wird.',
   sourceId: 'parkraumParkingPoints',
   beforeId: undefined,
   styles: [
