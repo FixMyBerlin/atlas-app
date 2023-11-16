@@ -1,7 +1,7 @@
 import { Link } from 'src/app/_components/links/Link'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
-import { getEnvUrl } from 'src/app/_components/utils/getEnvUrl'
+import { getAdminInfoEnvUrl } from './utils/getAdminInfoEnvUrl'
 import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
@@ -22,9 +22,9 @@ export const UserLoggedInAdminInfo = ({ user }: UserLoggedInProp) => {
   const googleMapsViewportUrl =
     mapParam && googleMapsUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)
 
-  const devUrl = getEnvUrl('development')
-  const stagingUrl = getEnvUrl('staging')
-  const prodUrl = getEnvUrl('production')
+  const devUrl = getAdminInfoEnvUrl('development')
+  const stagingUrl = getAdminInfoEnvUrl('staging')
+  const prodUrl = getAdminInfoEnvUrl('production')
 
   if (!isAdmin(user)) return null
 
