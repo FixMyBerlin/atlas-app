@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
 
     url.searchParams.append('map', serializeMapParam(region.map))
 
-    const freshConfig = createMapRegionConfig(region.themes)
+    const freshConfig = createMapRegionConfig(region.categories)
     url.searchParams.append('config', customStringify(freshConfig))
     return NextResponse.redirect(url.toString())
   }

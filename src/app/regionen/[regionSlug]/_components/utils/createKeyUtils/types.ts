@@ -1,7 +1,11 @@
-import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
+import {
+  SubcategoryIds,
+  SubcategoryStyleIds,
+  SubcatStyleLegendIds,
+} from '../../mapData/mapData.const'
 
-// These Types holds a combination of all Topic>Styles, even those that are not actually there.
-// In other words: The Style part doe not know about the hierarchy of the Topic part.
-export type TopicStyleKey = `${TopicIds}-${TopicStyleIds}`
+// These Types holds a combination of all Subcat>Styles, even those that are not actually there.
+// In other words: The Style part doe not know about the hierarchy of the Subcat part.
+export type SubcatStyleKey = `${SubcategoryIds}-${SubcategoryStyleIds}`
 
-export type TopicStyleLegendKey = `${TopicStyleKey}-${TopicStyleLegendIds}`
+export type SubcatStyleLegendKey = `${SubcatStyleKey}-${SubcatStyleLegendIds}`

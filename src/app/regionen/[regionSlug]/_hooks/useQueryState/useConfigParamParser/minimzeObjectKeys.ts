@@ -1,11 +1,12 @@
 const translateKeys = [
   // Mainly for ?config
+  ['subcategories', 'sc'],
   ['id', 'i'],
   ['active', 'a'],
   ['styles', 's'],
   ['default', 'd'],
   ['options', 'o'],
-  ['filters', 'f'],
+  ['filters', 'f'], // not used anymore
   // Mainly for ?map (GeoJSON)
   ['type', 't'],
   ['properties', 'p'],

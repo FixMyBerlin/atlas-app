@@ -1,8 +1,8 @@
 import jsurl from 'jsurl2'
+import { initializeMapRegionConfig } from '../../../_components/mapStateConfig/initializeMapRegionConfig'
+import { CategoryConfig } from '../../../_components/mapStateConfig/type'
 import { legacyParse } from './legacyParse'
 import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
-import { initializeMapRegionConfig } from '../../../_components/mapStateConfig/initializeMapRegionConfig'
-import { ThemeConfig } from '../../../_components/mapStateConfig/type'
 
 // Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
 // Using https://github.com/wmertens/jsurl2
@@ -20,14 +20,14 @@ export const customParse = (value: string): unknown => {
 }
 
 /** @desc A specific parser that also migrates any URL into the newest schema */
-export const customParseConfig = (value: string, freshConfig: ThemeConfig[]): unknown => {
+export const customParseConfig = (value: string, freshConfig: CategoryConfig[]): unknown => {
   const object = customParse(value)
 
   if (!Array.isArray(object)) return object
 
   const migrated = initializeMapRegionConfig({
     freshConfig,
-    urlConfig: object as ThemeConfig[],
+    urlConfig: object as CategoryConfig[],
   })
 
   return migrated

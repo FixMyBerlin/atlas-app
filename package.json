@@ -25,7 +25,7 @@
     "test:ui": "vitest --ui",
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && npm run test:run",
-    "updateStyles": "bun ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
+    "updateStyles": "bun ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyles/mapbox-layer-styles-by-group.json\" --write && github",
     "updateDatasets": "npm run updateDatasets:createPmtiles && npm run updateDatasets:upload && npm run updateDatasets:typesAndObject && prettier \"./src/core/components/MapInterface/mapData/sourcesMapData/datasets\" --write && github",
     "updateDatasets:createPmtiles": "bun ./datasets/createPmtiles.ts",
     "updateDatasets:upload": "bun ./datasets/upload.ts",
