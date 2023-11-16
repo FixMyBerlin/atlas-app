@@ -11,7 +11,6 @@ export type SubcatParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
 export const subcat_parking: MapDataSubcat = {
   id: subcatId,
   name: 'Parkraum',
-  desc: '(Nur für Berlin da Datenquelle Parkraum)',
   sourceId: 'parkraumParking',
   beforeId: undefined,
   styles: [

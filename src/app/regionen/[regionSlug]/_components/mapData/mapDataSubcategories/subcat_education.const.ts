@@ -11,7 +11,6 @@ export type SubcatEducationStyleIds = 'default'
 export const subcat_education: MapDataSubcat = {
   id: subcatId,
   name: 'Bildungseinrichtungen',
-  desc: null,
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

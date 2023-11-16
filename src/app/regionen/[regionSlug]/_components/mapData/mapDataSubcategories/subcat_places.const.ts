@@ -9,7 +9,6 @@ export type SubcatPlacesStyleIds = 'default' | 'circle'
 export const subcat_places: MapDataSubcat = {
   id: subcatId,
   name: 'Orte',
-  desc: null,
   sourceId: 'atlas_places',
   styles: [
     ...defaultStyleHidden,

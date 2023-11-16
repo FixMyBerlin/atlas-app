@@ -8,7 +8,6 @@ export type SubcatMapillaryCoverageStyleIds = 'default'
 export const subcat_mapillaryCoverage: MapDataSubcat = {
   id: subcatId,
   name: 'Mapillary',
-  desc: null,
   sourceId: 'mapillary_coverage',
   styles: [
     ...defaultStyleHidden,

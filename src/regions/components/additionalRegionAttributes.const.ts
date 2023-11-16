@@ -100,10 +100,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
       'parking',
     ],
     backgroundSources: defaultBackgroundSources,
@@ -122,10 +122,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },
@@ -146,11 +146,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
+      'roads',
+      'surface',
       'parking',
-      'lit',
+      'bicycleParking',
     ],
     backgroundSources: [
       ...defaultBackgroundSources,
@@ -185,10 +186,11 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'lit',
-      'mapillary',
+      'roads',
+      'surface',
+      'bicycleParking',
     ],
     backgroundSources: defaultBackgroundSources,
   },
@@ -229,7 +231,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://trassenscout.de/favicon.svg',
     logoWhiteBackgroundRequired: false,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -244,7 +252,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -260,7 +274,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath:
       'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
     logoWhiteBackgroundRequired: true,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -275,7 +295,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
     logoWhiteBackgroundRequired: true,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -290,7 +316,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://www.landhagen.de/images/logo2.png',
     logoWhiteBackgroundRequired: true,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -305,7 +337,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
     logoWhiteBackgroundRequired: true,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -317,7 +355,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
     externalLogoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -330,7 +374,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
     logoWhiteBackgroundRequired: false,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -343,7 +393,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
     logoWhiteBackgroundRequired: false,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -360,10 +416,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -381,10 +437,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -402,10 +458,10 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -425,6 +481,9 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     categories: [
       // The order here specifies the order in the UI
       'bicycleParking',
+      'poi',
+      'bikelanes',
+      'roads',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -440,7 +499,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    categories: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      'poi',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {

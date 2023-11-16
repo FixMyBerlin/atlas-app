@@ -3,16 +3,15 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'trafficSigns'
+const subcatId = 'signs'
 const source = 'atlas_trafficSigns'
 const sourceLayer = 'public.trafficSigns'
-export type SubcatTrafficSignsId = typeof subcatId
-export type SubcatTrafficSignsStyleIds = 'default'
+export type SubcatSignsId = typeof subcatId
+export type SubcatSignsStyleIds = 'default'
 
-export const subcat_trafficSigns: MapDataSubcat = {
+export const subcat_signs: MapDataSubcat = {
   id: subcatId,
   name: 'Verkehrszeichen',
-  desc: null,
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

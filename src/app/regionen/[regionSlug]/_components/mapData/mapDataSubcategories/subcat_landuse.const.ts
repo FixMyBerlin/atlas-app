@@ -9,7 +9,6 @@ export type SubcatLanduseStyleIds = 'default'
 export const subcat_landuse: MapDataSubcat = {
   id: subcatId,
   name: 'Wohn- und Gewerbegebiete',
-  desc: null,
   sourceId: 'atlas_landuse',
   styles: [
     ...defaultStyleHidden,

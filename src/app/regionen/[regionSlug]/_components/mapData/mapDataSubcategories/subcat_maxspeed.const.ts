@@ -10,8 +10,7 @@ export type SubcatMaxspeedStyleIds = 'default' | 'details' | 'source'
 
 export const subcat_maxspeed: MapDataSubcat = {
   id: subcatId,
-  name: 'Höchstgeschwindigkeit (New)',
-  desc: '', // todo
+  name: 'Höchstgeschwindigkeit',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,

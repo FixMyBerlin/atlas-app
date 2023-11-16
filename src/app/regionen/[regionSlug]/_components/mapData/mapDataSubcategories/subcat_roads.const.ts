@@ -2,19 +2,18 @@ import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'roadClassification'
+const subcatId = 'roads'
 const source = 'atlas_roads'
 const sourceLayer = 'public.roads'
-export type SubcatRoadClassificationId = typeof subcatId
-export type SubcatRoadClassificationStyleIds =
+export type SubcatRoadsId = typeof subcatId
+export type SubcatRoadsStyleIds =
   | 'default'
   | 'oneway'
   | 'road_implicit_shared_lane'
   | 'road_oneway_arrows'
-export const subcat_roadClassification: MapDataSubcat = {
+export const subcat_roads: MapDataSubcat = {
   id: subcatId,
-  name: 'Straßentypen (new)',
-  desc: 'Darstellung der Führungsformen bestehender Radinfrastruktur sowie des umliegenden Straßenlandes.',
+  name: 'Straßentypen',
   sourceId: source,
   styles: [
     ...defaultStyleHidden,
@@ -73,7 +72,7 @@ export const subcat_roadClassification: MapDataSubcat = {
     },
     {
       id: 'oneway',
-      name: 'Einbahnstrahßen',
+      name: 'Einbahnstraßen',
       desc: 'Hervorhebung von Einbahnstraßen.',
       layers: [
         mapboxStyleLayers({
@@ -115,26 +114,6 @@ export const subcat_roadClassification: MapDataSubcat = {
         source,
         sourceLayer,
       }),
-      legends: undefined,
-    },
-    {
-      id: 'road_oneway_arrows',
-      name: 'DEBUG: Einbahnstraßen Pfeile',
-      desc: '',
-      layers: [
-        {
-          id: 'oneway-roads',
-          source: 'atlas_roads',
-          'source-layer': 'public.roads',
-          type: 'line',
-          paint: {
-            'line-width': 15,
-            'line-pattern': 'oneway',
-            'line-color': 'gray',
-          },
-          filter: ['has', 'road_oneway'],
-        },
-      ],
       legends: undefined,
     },
   ],

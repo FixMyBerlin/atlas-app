@@ -34,7 +34,6 @@ const defaultLegend = [
 export const subcat_parkingAreas: MapDataSubcat = {
   id: subcatId,
   name: 'Flächenparkplätze',
-  desc: 'Private und öffentliche Parkplätze.',
   sourceId: 'parkraumParkingAreas',
   beforeId: undefined,
   styles: [

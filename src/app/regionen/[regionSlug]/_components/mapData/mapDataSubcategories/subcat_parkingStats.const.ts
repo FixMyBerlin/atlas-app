@@ -17,7 +17,6 @@ export type SubcatParkingStatsStyleIds =
 export const subcat_parkingStats: MapDataSubcat = {
   id: subcatId,
   name: 'Statistik',
-  desc: 'Auswertung pro adminstrativem Gebiet.',
   sourceId: 'parkraumParkingStats',
   beforeId: undefined,
   styles: [
