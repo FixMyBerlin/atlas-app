@@ -1,8 +1,8 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { sourceDatasetIdUrl } from 'src/app/regionen/[regionSlug]/_components/mapData/sourcesMapData/sourcesDatasets/utils/sourceDatasetIdUrl'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
+import { sourceDatasetIdUrl } from '../../mapData/mapDataSources/sourcesDatasets/utils/sourceDatasetIdUrl'
 
 export const SourcesLayerRegionalMask: React.FC = () => {
   const regionSlug = useRegionSlug()

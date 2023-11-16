@@ -6,21 +6,26 @@ import React from 'react'
 import { Portal } from 'src/app/_components/utils/usePopper/Portal'
 import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { MapDataThemeIds } from '../../mapData/themesMapData/themes.const'
-import { MapDataTopic } from '../../mapData/types'
-import { getStyleData, getTopicData } from '../../mapData/utils/getMapDataUtils'
-import { TopicConfig } from '../../mapStateConfig/type'
-import { createTopicStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
+import { MapDataCategoryIds } from '../../mapData/mapDataCategories/categories.const'
+import { MapDataSubcat } from '../../mapData/types'
+import { getStyleData, getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
+import { SubcategoryConfig } from '../../mapStateConfig/type'
+import { createSubcatStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
 import { SelectLegend } from '../SelectLegend/SelectLegend'
 
 type Props = {
-  themeId: MapDataThemeIds
-  topicData: MapDataTopic
-  topicConfig: TopicConfig
+  categoryId: MapDataCategoryIds
+  subcatData: MapDataSubcat
+  subcatConfig: SubcategoryConfig
   disabled: boolean
 }
 
-export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig, disabled }) => {
+export const SelectStyles: React.FC<Props> = ({
+  categoryId,
+  subcatData,
+  subcatConfig,
+  disabled,
+}) => {
   const { configParam, setConfigParam } = useConfigParam()
 
   const [trigger, container] = usePopper({
@@ -29,25 +34,27 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
     modifiers: [{ name: 'offset', options: { offset: [0, 8] } }],
   })
 
-  type ToggleActiveProps = { topicId: string; styleId: string }
-  const toggleActive = ({ topicId, styleId }: ToggleActiveProps) => {
+  type ToggleActiveProps = { subcatId: string; styleId: string }
+  const toggleActive = ({ subcatId, styleId }: ToggleActiveProps) => {
     const oldConfig = configParam
     const newConfig = produce(oldConfig, (draft) => {
-      const topic = draft?.find((th) => th.id === themeId)?.topics.find((t) => t.id === topicId)
+      const category = draft
+        ?.find((th) => th.id === categoryId)
+        ?.subcategories.find((t) => t.id === subcatId)
 
-      if (topic) {
-        const style = topic.styles.find((s) => s.id === styleId)
-        topic.styles.forEach((s) => (s.active = false))
+      if (category) {
+        const style = category.styles.find((s) => s.id === styleId)
+        category.styles.forEach((s) => (s.active = false))
         style && (style.active = !style.active)
       }
     })
     void setConfigParam(newConfig)
   }
 
-  if (!topicData || !topicConfig) return null
+  if (!subcatData || !subcatConfig) return null
 
-  const activeStyleConfig = topicConfig.styles.find((s) => s.active)
-  const activeStyleData = getStyleData(topicData, activeStyleConfig?.id)
+  const activeStyleConfig = subcatConfig.styles.find((s) => s.active)
+  const activeStyleData = getStyleData(subcatData, activeStyleConfig?.id)
 
   return (
     <section className="mt-1.5">
@@ -80,11 +87,11 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
                 className="absolute left-0 z-50 mt-2 w-56 origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
               >
                 <div className="py-1">
-                  {topicConfig.styles.map((styleConfig) => {
-                    const topicData = getTopicData(topicConfig.id)
-                    const styleData = getStyleData(topicData, styleConfig.id)
+                  {subcatConfig.styles.map((styleConfig) => {
+                    const subcatData = getSubcategoryData(subcatConfig.id)
+                    const styleData = getStyleData(subcatData, styleConfig.id)
                     if (!styleData) return null
-                    const key = createTopicStyleKey(topicConfig.id, styleConfig.id)
+                    const key = createSubcatStyleKey(subcatConfig.id, styleConfig.id)
                     return (
                       <Menu.Item key={key}>
                         {({ active }) => (
@@ -92,7 +99,7 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
                             type="button"
                             onClick={() =>
                               toggleActive({
-                                topicId: topicConfig.id,
+                                subcatId: subcatConfig.id,
                                 styleId: styleConfig.id,
                               })
                             }
@@ -115,7 +122,7 @@ export const SelectStyles: React.FC<Props> = ({ themeId, topicData, topicConfig,
         )}
       </Menu>
 
-      <SelectLegend topicId={topicConfig.id} styleData={activeStyleData} />
+      <SelectLegend subcategoryId={subcatConfig.id} styleData={activeStyleData} />
     </section>
   )
 }

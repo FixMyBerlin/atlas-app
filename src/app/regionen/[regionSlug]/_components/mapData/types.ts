@@ -1,5 +1,5 @@
 import { RegionPath } from 'src/regions/components/additionalRegionAttributes.const'
-import { TopicIds, TopicStyleIds } from './mapData.const'
+import { SubcategoryIds, SubcategoryStyleIds } from './mapData.const'
 import {
   AnyLayer,
   CircleLayer,
@@ -9,12 +9,12 @@ import {
   RasterSource,
   SymbolLayer,
 } from 'react-map-gl'
-import { MapDataThemeIds } from './themesMapData/themes.const'
+import { MapDataCategoryIds } from './mapDataCategories/categories.const'
 import {
   SourceExportApiIdentifier,
   SourceVerificationApiIdentifier,
   SourcesIds,
-} from './sourcesMapData/sources.const'
+} from './mapDataSources/sources.const'
 import { LegendIconTypes } from '../SidebarLayerControls/SelectLegend/LegendIcons/types'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
@@ -89,7 +89,7 @@ type MapDataSourceInspector =
 type MapDataSourceVerifcation<TVerIds> =
   | {
       enabled: true
-      /** @desc Identifier for the verification API URL; verification is configured on the topic (`allowVerify`) */
+      /** @desc Identifier for the verification API URL; verification is configured on the subcategory (`allowVerify`) */
       apiIdentifier: TVerIds
     }
   | {
@@ -170,16 +170,16 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   maxzoom?: mapboxgl.RasterSource['maxzoom']
 }
 
-/** @desc: Top level thematik filter; usually one Theme has one primary Topic; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
-export type MapDataTheme = {
-  id: MapDataThemeIds
+/** @desc: Top level thematik filter; usually one Category has one primary Subcat; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
+export type MapDataCategory = {
+  id: MapDataCategoryIds
   name: string
   desc?: string
-  topics: MapDataThemeTopic[]
+  subcategories: MapDataSubcategory[]
 }
 
-type MapDataThemeTopic = {
-  id: TopicIds
+type MapDataSubcategory = {
+  id: SubcategoryIds
   defaultStyle: 'default' | 'hidden'
   // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
 }
@@ -187,8 +187,8 @@ type MapDataThemeTopic = {
 export type TBeforeIds = 'housenumber' | 'boundary_country' | 'landuse' | undefined
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
-export type MapDataTopic = {
-  id: TopicIds
+export type MapDataSubcat = {
+  id: SubcategoryIds
   name: string
   desc: string | null
   sourceId: SourcesIds
@@ -199,7 +199,7 @@ export type MapDataTopic = {
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
 export type MapDataStyle =
   | {
-      id: TopicStyleIds
+      id: SubcategoryStyleIds
       name: string
       desc: null | string
       layers: MapDataVisLayer[]
@@ -244,6 +244,6 @@ export type MapDataStyleLegend = {
 
 export type MapData = {
   sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier, SourceExportApiIdentifier>[]
-  themes: MapDataTheme[]
-  topics: MapDataTopic[]
+  categories: MapDataCategory[]
+  subcategories: MapDataSubcat[]
 }

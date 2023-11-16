@@ -1,239 +1,239 @@
-import { sources } from './sourcesMapData/sources.const'
-import { themes } from './themesMapData/themes.const'
+import { sources } from './mapDataSources/sources.const'
+import { categories } from './mapDataCategories/categories.const'
 import {
-  TopicAccidentsId,
-  TopicAccidentsStyleIds,
-  topic_accidents,
-} from './topicsMapData/topic_accidents.const'
+  SubcatAccidentsId,
+  SubcatAccidentsStyleIds,
+  subcat_accidents,
+} from './mapDataSubcategories/subcat_accidents.const'
 import {
-  TopicBarriersId,
-  TopicBarriersStyleIds,
-  topic_barriers,
-} from './topicsMapData/topic_barriers.const'
+  SubcatBarriersId,
+  SubcatBarriersStyleIds,
+  subcat_barriers,
+} from './mapDataSubcategories/subcat_barriers.const'
 import {
-  TopicBicycleParkingId,
-  TopicBicycleParkingStyleIds,
-  topic_bicycleParking,
-} from './topicsMapData/topic_bicycleParking'
+  SubcatBicycleParkingId,
+  SubcatBicycleParkingStyleIds,
+  subcat_bicycleParking,
+} from './mapDataSubcategories/subcat_bicycleParking'
 import {
-  TopicBikelanesId,
-  TopicBikelanesStyleIds,
-  topic_bikelanes,
-} from './topicsMapData/topic_bikelanes.const'
+  SubcatBikelanesId,
+  SubcatBikelanesStyleIds,
+  subcat_bikelanes,
+} from './mapDataSubcategories/subcat_bikelanes.const'
 import {
-  TopicBikelanesPresenceId,
-  TopicBikelanesPresenceStyleIds,
-  topic_bikelanesPresence,
-} from './topicsMapData/topic_bikelanesPresence.const'
+  SubcatBikelanesPresenceId,
+  SubcatBikelanesPresenceStyleIds,
+  subcat_bikelanesPresence,
+} from './mapDataSubcategories/subcat_bikelanesPresence.const'
 import {
-  TopicBikelanesPresenceIdLegacy,
-  TopicBikelanesPresenceStyleIdsLegacy,
-  topic_bikelanesPresence_legacy,
-} from './topicsMapData/topic_bikelanesPresence_legacy.const'
+  SubcatBikelanesPresenceIdLegacy,
+  SubcatBikelanesPresenceStyleIdsLegacy,
+  subcat_bikelanesPresence_legacy,
+} from './mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
 import {
-  TopicBoundariesId,
-  TopicBoundariesStyleIds,
-  topic_boundaries,
-} from './topicsMapData/topic_boundaries.const'
+  SubcatBoundariesId,
+  SubcatBoundariesStyleIds,
+  subcat_boundaries,
+} from './mapDataSubcategories/subcat_boundaries.const'
 import {
-  TopicBuildingsId,
-  TopicBuildingsStyleIds,
-  topic_buildings,
-} from './topicsMapData/topic_buildings.const'
+  SubcatBuildingsId,
+  SubcatBuildingsStyleIds,
+  subcat_buildings,
+} from './mapDataSubcategories/subcat_buildings.const'
 import {
-  TopicEducationId,
-  TopicEducationStyleIds,
-  topic_education,
-} from './topicsMapData/topic_education.const'
+  SubcatEducationId,
+  SubcatEducationStyleIds,
+  subcat_education,
+} from './mapDataSubcategories/subcat_education.const'
 import {
-  TopicLanduseId,
-  TopicLanduseStyleIds,
-  topic_landuse,
-} from './topicsMapData/topic_landuse.const'
-import { TopicLitId, TopicLitStyleIds, topic_lit } from './topicsMapData/topic_lit.const'
+  SubcatLanduseId,
+  SubcatLanduseStyleIds,
+  subcat_landuse,
+} from './mapDataSubcategories/subcat_landuse.const'
+import { SubcatLitId, SubcatLitStyleIds, subcat_lit } from './mapDataSubcategories/subcat_lit.const'
 import {
-  TopicLitIdLegacy,
-  TopicLitStyleIdsLegacy,
-  topic_lit_legacy,
-} from './topicsMapData/topic_lit_legacy.const'
+  SubcatLitIdLegacy,
+  SubcatLitStyleIdsLegacy,
+  subcat_lit_legacy,
+} from './mapDataSubcategories/subcat_lit_legacy.const'
 import {
-  TopicMapillaryCoverageId,
-  TopicMapillaryCoverageStyleIds,
-  topic_mapillaryCoverage,
-} from './topicsMapData/topic_mapillaryCoverage.const'
+  SubcatMapillaryCoverageId,
+  SubcatMapillaryCoverageStyleIds,
+  subcat_mapillaryCoverage,
+} from './mapDataSubcategories/subcat_mapillaryCoverage.const'
 import {
-  TopicMaxspeedId,
-  TopicMaxspeedStyleIds,
-  topic_maxspeed,
-} from './topicsMapData/topic_maxspeed.const'
+  SubcatMaxspeedId,
+  SubcatMaxspeedStyleIds,
+  subcat_maxspeed,
+} from './mapDataSubcategories/subcat_maxspeed.const'
 import {
-  TopicMaxspeedIdLegacy,
-  TopicMaxspeedStyleIdsLegacy,
-  topic_maxspeed_legacy,
-} from './topicsMapData/topic_maxspeed_legacy.const'
+  SubcatMaxspeedIdLegacy,
+  SubcatMaxspeedStyleIdsLegacy,
+  subcat_maxspeed_legacy,
+} from './mapDataSubcategories/subcat_maxspeed_legacy.const'
 import {
-  TopicParkingId,
-  TopicParkingStyleIds,
-  topic_parking,
-} from './topicsMapData/topic_parking.const'
+  SubcatParkingId,
+  SubcatParkingStyleIds,
+  subcat_parking,
+} from './mapDataSubcategories/subcat_parking.const'
 import {
-  TopicParkingAreasId,
-  TopicParkingAreasStyleIds,
-  topic_parkingAreas,
-} from './topicsMapData/topic_parkingAreas.const'
+  SubcatParkingAreasId,
+  SubcatParkingAreasStyleIds,
+  subcat_parkingAreas,
+} from './mapDataSubcategories/subcat_parkingAreas.const'
 import {
-  TopicParkingDebugId,
-  TopicParkingDebugStyleIds,
-  topic_parkingDebug,
-} from './topicsMapData/topic_parkingDebug.const'
+  SubcatParkingDebugId,
+  SubcatParkingDebugStyleIds,
+  subcat_parkingDebug,
+} from './mapDataSubcategories/subcat_parkingDebug.const'
 import {
-  TopicParkingPointsId,
-  TopicParkingPointsStyleIds,
-  topic_parkingPoints,
-} from './topicsMapData/topic_parkingPoints.const'
+  SubcatParkingPointsId,
+  SubcatParkingPointsStyleIds,
+  subcat_parkingPoints,
+} from './mapDataSubcategories/subcat_parkingPoints.const'
 import {
-  TopicParkingStatsId,
-  TopicParkingStatsStyleIds,
-  topic_parkingStats,
-} from './topicsMapData/topic_parkingStats.const'
+  SubcatParkingStatsId,
+  SubcatParkingStatsStyleIds,
+  subcat_parkingStats,
+} from './mapDataSubcategories/subcat_parkingStats.const'
 import {
-  TopicPlacesId,
-  TopicPlacesStyleIds,
-  topic_places,
-} from './topicsMapData/topic_places.const'
+  SubcatPlacesId,
+  SubcatPlacesStyleIds,
+  subcat_places,
+} from './mapDataSubcategories/subcat_places.const'
 import {
-  TopicPoiClassificationId_Tarmac,
-  TopicPoiClassificationStyleIds_Tarmac,
-  topic_poiClassification_tarmac,
-} from './topicsMapData/topic_poiClassification.const'
+  SubcatPoiClassificationId_Tarmac,
+  SubcatPoiClassificationStyleIds_Tarmac,
+  subcat_poiClassification_tarmac,
+} from './mapDataSubcategories/subcat_poiClassification.const'
 import {
-  TopicPublicTransportId,
-  TopicPublicTransportStyleIds,
-  topic_publicTransport,
-} from './topicsMapData/topic_publicTransport.const'
+  SubcatPublicTransportId,
+  SubcatPublicTransportStyleIds,
+  subcat_publicTransport,
+} from './mapDataSubcategories/subcat_publicTransport.const'
 import {
-  TopicRoadClassificationId,
-  TopicRoadClassificationStyleIds,
-  topic_roadClassification,
-} from './topicsMapData/topic_roadClassification.const'
+  SubcatRoadClassificationId,
+  SubcatRoadClassificationStyleIds,
+  subcat_roadClassification,
+} from './mapDataSubcategories/subcat_roadClassification.const'
 import {
-  TopicRoadClassificationIdLegacy,
-  TopicRoadClassificationStyleIdsLegacy,
-  topic_roadClassification_legacy,
-} from './topicsMapData/topic_roadClassification_legacy.const'
+  SubcatRoadClassificationIdLegacy,
+  SubcatRoadClassificationStyleIdsLegacy,
+  subcat_roadClassification_legacy,
+} from './mapDataSubcategories/subcat_roadClassification_legacy.const'
 import {
-  TopicSurfaceQualityId,
-  TopicSurfaceStyleQualityIds,
-  topic_surfaceQuality,
-} from './topicsMapData/topic_surfaceQuality.const'
+  SubcatSurfaceQualityId,
+  SubcatSurfaceStyleQualityIds,
+  subcat_surfaceQuality,
+} from './mapDataSubcategories/subcat_surfaceQuality.const'
 import {
-  TopicSurfaceQualityIdLegacy,
-  TopicSurfaceStyleQualityIdsLegacy,
-  topic_surfaceQuality_legacy,
-} from './topicsMapData/topic_surfaceQuality_legacy.const'
+  SubcatSurfaceQualityIdLegacy,
+  SubcatSurfaceStyleQualityIdsLegacy,
+  subcat_surfaceQuality_legacy,
+} from './mapDataSubcategories/subcat_surfaceQuality_legacy.const'
 import {
-  TopicTrafficSignsId,
-  TopicTrafficSignsStyleIds,
-  topic_trafficSigns,
-} from './topicsMapData/topic_trafficSigns'
-import { MapData, MapDataTheme } from './types'
+  SubcatTrafficSignsId,
+  SubcatTrafficSignsStyleIds,
+  subcat_trafficSigns,
+} from './mapDataSubcategories/subcat_trafficSigns'
+import { MapData, MapDataCategory } from './types'
 
-export type TopicIds =
-  | TopicAccidentsId
-  | TopicBarriersId
-  | TopicBicycleParkingId
-  | TopicBikelanesId
-  | TopicBikelanesPresenceId
-  | TopicBikelanesPresenceIdLegacy
-  | TopicBoundariesId
-  | TopicBuildingsId
-  | TopicEducationId
-  | TopicLanduseId
-  | TopicLitId
-  | TopicLitIdLegacy
-  | TopicMapillaryCoverageId
-  | TopicMaxspeedId
-  | TopicMaxspeedIdLegacy
-  | TopicParkingAreasId
-  | TopicParkingDebugId
-  | TopicParkingId
-  | TopicParkingPointsId
-  | TopicParkingStatsId
-  | TopicPlacesId
-  | TopicPoiClassificationId_Tarmac
-  | TopicPublicTransportId
-  | TopicRoadClassificationId
-  | TopicRoadClassificationIdLegacy
-  | TopicSurfaceQualityId
-  | TopicSurfaceQualityIdLegacy
-  | TopicTrafficSignsId
+export type SubcategoryIds =
+  | SubcatAccidentsId
+  | SubcatBarriersId
+  | SubcatBicycleParkingId
+  | SubcatBikelanesId
+  | SubcatBikelanesPresenceId
+  | SubcatBikelanesPresenceIdLegacy
+  | SubcatBoundariesId
+  | SubcatBuildingsId
+  | SubcatEducationId
+  | SubcatLanduseId
+  | SubcatLitId
+  | SubcatLitIdLegacy
+  | SubcatMapillaryCoverageId
+  | SubcatMaxspeedId
+  | SubcatMaxspeedIdLegacy
+  | SubcatParkingAreasId
+  | SubcatParkingDebugId
+  | SubcatParkingId
+  | SubcatParkingPointsId
+  | SubcatParkingStatsId
+  | SubcatPlacesId
+  | SubcatPoiClassificationId_Tarmac
+  | SubcatPublicTransportId
+  | SubcatRoadClassificationId
+  | SubcatRoadClassificationIdLegacy
+  | SubcatSurfaceQualityId
+  | SubcatSurfaceQualityIdLegacy
+  | SubcatTrafficSignsId
 
-type TopicStyleIdDefaults = MapDataTheme['topics'][number]['defaultStyle']
+type SubcatStyleIdDefaults = MapDataCategory['subcategories'][number]['defaultStyle']
 
-export type TopicStyleIds =
-  | TopicAccidentsStyleIds
-  | TopicBarriersStyleIds
-  | TopicBicycleParkingStyleIds
-  | TopicBikelanesPresenceStyleIds
-  | TopicBikelanesPresenceStyleIdsLegacy
-  | TopicBikelanesStyleIds
-  | TopicBoundariesStyleIds
-  | TopicBuildingsStyleIds
-  | TopicEducationStyleIds
-  | TopicLanduseStyleIds
-  | TopicLitStyleIds
-  | TopicLitStyleIdsLegacy
-  | TopicMapillaryCoverageStyleIds
-  | TopicMaxspeedStyleIds
-  | TopicMaxspeedStyleIdsLegacy
-  | TopicParkingAreasStyleIds
-  | TopicParkingDebugStyleIds
-  | TopicParkingPointsStyleIds
-  | TopicParkingStatsStyleIds
-  | TopicParkingStyleIds
-  | TopicPlacesStyleIds
-  | TopicPoiClassificationStyleIds_Tarmac
-  | TopicPublicTransportStyleIds
-  | TopicRoadClassificationStyleIds
-  | TopicRoadClassificationStyleIdsLegacy
-  | TopicStyleIdDefaults
-  | TopicSurfaceStyleQualityIds
-  | TopicSurfaceStyleQualityIdsLegacy
-  | TopicTrafficSignsStyleIds
+export type SubcategoryStyleIds =
+  | SubcatAccidentsStyleIds
+  | SubcatBarriersStyleIds
+  | SubcatBicycleParkingStyleIds
+  | SubcatBikelanesPresenceStyleIds
+  | SubcatBikelanesPresenceStyleIdsLegacy
+  | SubcatBikelanesStyleIds
+  | SubcatBoundariesStyleIds
+  | SubcatBuildingsStyleIds
+  | SubcatEducationStyleIds
+  | SubcatLanduseStyleIds
+  | SubcatLitStyleIds
+  | SubcatLitStyleIdsLegacy
+  | SubcatMapillaryCoverageStyleIds
+  | SubcatMaxspeedStyleIds
+  | SubcatMaxspeedStyleIdsLegacy
+  | SubcatParkingAreasStyleIds
+  | SubcatParkingDebugStyleIds
+  | SubcatParkingPointsStyleIds
+  | SubcatParkingStatsStyleIds
+  | SubcatParkingStyleIds
+  | SubcatPlacesStyleIds
+  | SubcatPoiClassificationStyleIds_Tarmac
+  | SubcatPublicTransportStyleIds
+  | SubcatRoadClassificationStyleIds
+  | SubcatRoadClassificationStyleIdsLegacy
+  | SubcatStyleIdDefaults
+  | SubcatSurfaceStyleQualityIds
+  | SubcatSurfaceStyleQualityIdsLegacy
+  | SubcatTrafficSignsStyleIds
 
-export type TopicStyleLegendIds = string // TODO: We can make this more precise later
+export type SubcatStyleLegendIds = string // TODO: We can make this more precise later
 
 export const mapData: MapData = {
   sources,
-  themes,
-  topics: [
-    topic_accidents,
-    topic_barriers,
-    topic_bicycleParking,
-    topic_bikelanes,
-    topic_bikelanesPresence_legacy,
-    topic_bikelanesPresence,
-    topic_boundaries,
-    topic_buildings,
-    topic_education,
-    topic_landuse,
-    topic_lit_legacy,
-    topic_lit,
-    topic_mapillaryCoverage,
-    topic_maxspeed_legacy,
-    topic_maxspeed,
-    topic_parking,
-    topic_parkingAreas,
-    topic_parkingDebug,
-    topic_parkingPoints,
-    topic_parkingStats,
-    topic_places,
-    topic_poiClassification_tarmac,
-    topic_publicTransport,
-    topic_roadClassification_legacy,
-    topic_roadClassification,
-    topic_surfaceQuality_legacy,
-    topic_surfaceQuality,
-    topic_trafficSigns,
+  categories,
+  subcategories: [
+    subcat_accidents,
+    subcat_barriers,
+    subcat_bicycleParking,
+    subcat_bikelanes,
+    subcat_bikelanesPresence_legacy,
+    subcat_bikelanesPresence,
+    subcat_boundaries,
+    subcat_buildings,
+    subcat_education,
+    subcat_landuse,
+    subcat_lit_legacy,
+    subcat_lit,
+    subcat_mapillaryCoverage,
+    subcat_maxspeed_legacy,
+    subcat_maxspeed,
+    subcat_parking,
+    subcat_parkingAreas,
+    subcat_parkingDebug,
+    subcat_parkingPoints,
+    subcat_parkingStats,
+    subcat_places,
+    subcat_poiClassification_tarmac,
+    subcat_publicTransport,
+    subcat_roadClassification_legacy,
+    subcat_roadClassification,
+    subcat_surfaceQuality_legacy,
+    subcat_surfaceQuality,
+    subcat_trafficSigns,
   ],
 }

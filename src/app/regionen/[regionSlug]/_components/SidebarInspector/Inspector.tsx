@@ -1,5 +1,5 @@
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { sourcesDatasets } from '../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
+import { sourcesDatasets } from '../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 import { StoreFeaturesInspector } from '../mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
@@ -20,7 +20,7 @@ export const Inspector = ({ features }: Props) => {
   return (
     <>
       {features.map((inspectObject) => {
-        const sourceKey = String(inspectObject.source) // Format: `theme:lit--source:atlas_lit--topic:lit`
+        const sourceKey = String(inspectObject.source) // Format: `category:lit--source:atlas_lit--subcategory:lit`
         if (!sourceKey) return null
 
         // Inspector-Block for Notes

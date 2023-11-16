@@ -25,7 +25,7 @@ Create a `.env.local` file with a `VITE_MAPBOX_STYLE_ACCESS_TOKEN` key. See `.en
 - Filter the data to layerGroups that start with `atlas_`
 - Cleanup the layer data to remove 'source', 'source-layer', 'metadata'; we need to add the sources as again as part of our 'mapData' config
 - Generate types for layer Ids indie the same folder.
-  One type with all Ids, one type for each topic of layers ("atlas_lit", "atlas_lit_complete", etc.)
+  One type with all Ids, one type for each subcategory of layers ("atlas_lit", "atlas_lit_complete", etc.)
 - Create a new file `.json` inside our `/src/components/…` folder:
 
 ```json

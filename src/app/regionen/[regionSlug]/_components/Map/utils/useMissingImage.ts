@@ -1,4 +1,4 @@
-import { mapboxStyleImages } from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyleImages/mapboxStyleImages'
+import { mapboxStyleImages } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyleImages/mapboxStyleImages'
 import { type MapStyleImageMissingEvent } from 'maplibre-gl'
 import { useEffect } from 'react'
 import { type MapRef } from 'react-map-gl/maplibre'

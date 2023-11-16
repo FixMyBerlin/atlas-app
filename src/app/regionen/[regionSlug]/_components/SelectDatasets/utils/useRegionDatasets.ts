@@ -1,5 +1,5 @@
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { sourcesDatasets } from '../../mapData/sourcesMapData/sourcesDatasets/sourcesDatasets.const'
+import { sourcesDatasets } from '../../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { useRegionSlug } from '../../regionUtils/useRegionSlug'
 
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()

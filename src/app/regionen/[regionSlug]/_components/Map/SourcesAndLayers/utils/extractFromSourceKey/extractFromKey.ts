@@ -1,14 +1,17 @@
 import invariant from 'tiny-invariant'
-import { TopicIds } from '../../../../mapData/mapData.const'
-import { DatasetIds } from '../../../../mapData/sourcesMapData/datasets/types'
-import { SourcesIds } from '../../../../mapData/sourcesMapData/sources.const'
+import { SubcategoryIds } from '../../../../mapData/mapData.const'
+import { DatasetIds } from '../../../../mapData/mapDataSources/datasets/types'
+import { SourcesIds } from '../../../../mapData/mapDataSources/sources.const'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
 
-export const extractTopicIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
-  const regex = /--topic:(\w+)/
+export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
+  const regex = /--subcat:(\w+)/
   const match = sourceKey.match(regex)
-  invariant(match, `Did not find topic in extractTopicIdFromSourceKey for sourceKey:${sourceKey}`)
-  return match[1] as TopicIds
+  invariant(
+    match,
+    `Did not find subcategory in extractSubcatIdFromSourceKey for sourceKey:${sourceKey}`,
+  )
+  return match[1] as SubcategoryIds
 }
 
 export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
