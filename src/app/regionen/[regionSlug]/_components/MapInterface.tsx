@@ -2,6 +2,8 @@
 
 import React from 'react'
 import { MapProvider } from 'react-map-gl/maplibre'
+import { useConfigParam } from '../_hooks/useQueryState/useConfigParam'
+import { useMapParam } from '../_hooks/useQueryState/useMapParam'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
 import { DownloadModal } from './DownloadModal/DownloadModal'
@@ -14,7 +16,9 @@ import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
 
 export const MapInterface: React.FC = () => {
-  console.log('## MapInterface rendered')
+  const { mapParam } = useMapParam()
+  const { configParam } = useConfigParam()
+  console.log('## MapInterface rendered', mapParam, configParam)
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
