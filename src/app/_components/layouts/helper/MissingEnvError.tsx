@@ -1,4 +1,5 @@
-import { envKey } from '../../utils/isEnv'
+import { getExportApiUrl } from '../../utils/getExportApiUrl'
+import { envKey, isDev, isProd, isStaging } from '../../utils/isEnv'
 
 // This can happen if the build does not know about `NEXT_PUBLIC_APP_ORIGIN`
 export const MissingEnvError = () => {
@@ -11,6 +12,7 @@ export const MissingEnvError = () => {
     >
       Error: <code>envKey</code> is not set.
       <br />
+      <pre>NEXT_PUBLIC_ENV={process.env.NEXT_PUBLIC_ENV}</pre>
       <pre>NEXT_PUBLIC_APP_ORIGIN={process.env.NEXT_PUBLIC_APP_ORIGIN}</pre>
       <pre>NODE_ENV={process.env.NODE_ENV}</pre>
     </div>
