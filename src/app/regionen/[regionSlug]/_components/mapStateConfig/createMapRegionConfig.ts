@@ -12,7 +12,7 @@ export const createMapRegionConfig = (regionThemeIds: MapDataThemeIds[]) => {
   return sortedThemesData.map((theme) => {
     return {
       id: theme.id,
-      active: false, // TODO: We need to select one theme to be active. Maybe rework the regions config to specify which to activate right initially and pass this as activeThemeIds to this helper?
+      active: theme.id === 'bikelanes' ?? false, // TODO: We probably want to extract this into the config, so we can specify the default active category per region.
       topics: theme.topics.map((themeTopic) => {
         const topicData = getTopicData(themeTopic.id)
         return {
