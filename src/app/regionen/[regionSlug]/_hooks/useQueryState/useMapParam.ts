@@ -9,7 +9,7 @@ export const useMapParam = () => {
       return {
         zoom: Number(splitQuery[0] ?? fallback.zoom),
         lat: Number(splitQuery[1] ?? fallback.lat),
-        lng: Number(splitQuery[2] ?? fallback.lat),
+        lng: Number(splitQuery[2] ?? fallback.lng),
       }
     },
     serialize: ({ zoom, lat, lng }: { zoom: number; lat: number; lng: number }) => {
