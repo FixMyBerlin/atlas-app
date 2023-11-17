@@ -5,7 +5,7 @@ services:
     entrypoint: /app/run.sh
     container_name: app
     environment:
-      PGHOST: 
+      PGHOST:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
@@ -49,7 +49,7 @@ services:
     image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
     environment:
-      PGHOST: 
+      PGHOST:
       PGDATABASE:
       PGUSER:
       PGPASSWORD:
@@ -70,6 +70,7 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
+    shm_size: 1gb
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}

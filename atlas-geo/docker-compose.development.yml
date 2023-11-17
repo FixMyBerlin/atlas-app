@@ -8,7 +8,7 @@ services:
     container_name: app
     environment:
       PGHOST:
-      PGDATABASE: 
+      PGDATABASE:
       PGUSER:
       PGPASSWORD:
       OSM_DOWNLOAD_URL:
@@ -45,7 +45,7 @@ services:
     container_name: api
     environment:
       PGHOST:
-      PGDATABASE: 
+      PGDATABASE:
       PGUSER:
       PGPASSWORD:
       API_SECRET:
@@ -56,6 +56,7 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
+    shm_size: 1gb
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}
