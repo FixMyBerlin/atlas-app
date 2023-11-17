@@ -2,18 +2,18 @@ import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
 import { createMapRegionConfig } from '../../_components/mapStateConfig/createMapRegionConfig'
 import { ThemeConfig } from '../../_components/mapStateConfig/type'
-import { customParse, customStringify } from './useConfigParamParser/customParseStringify'
+import { customParseConfig, customStringify } from './useConfigParamParser/customParseStringify'
 
 export const useConfigParam = () => {
-  const initialConfig = createMapRegionConfig(region.themes)
   const region = useStaticRegion()
+  const freshConfig = createMapRegionConfig(region.themes)
 
   const configParamParser = createParser({
-    parse: (query: string) => customParse(query) as ThemeConfig[],
+    parse: (query: string) => customParseConfig(query, freshConfig) as ThemeConfig[],
     serialize: (value: ThemeConfig[]) => customStringify(value),
   })
     .withOptions({ history: 'push' })
-    .withDefault(initialConfig)
+    .withDefault(freshConfig)
 
   // ==========
   // What I would need here is something like…
@@ -57,7 +57,7 @@ export const useConfigParam = () => {
 
   const [configParam, setConfigParam] = useQueryState('config', configParamParser)
 
-  console.log('#### useConfigParam', { initialConfig, configParam })
+  console.log('#### useConfigParam', { initialConfig: freshConfig, configParam })
 
   // We assume that at this point the config is present, because we initialize the page with one
   return { configParam: configParam!, setConfigParam }
