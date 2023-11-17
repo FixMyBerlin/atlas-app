@@ -70,7 +70,9 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
+    container_name: db
     shm_size: 1gb
+    command: ["postgres", "-c", "shared_buffers=3GB", "-c", "work_mem=128MB", "-c", "maintenance_work_mem=1024MB", "-c", "temp_buffers=24MB", "-c", "effective_cache_size=8GB", "-c", "wal_buffers=16MB", "-c", "min_wal_size=1GB", "-c", "max_wal_size=4GB"]
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}
@@ -81,7 +83,6 @@ services:
       - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
-    container_name: db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
       interval: 5s
