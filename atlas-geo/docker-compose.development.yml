@@ -33,6 +33,9 @@ services:
     container_name: tiles
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      DbPoolMaxConns: 5
+      MaxFeaturesPerTile: 50000
+      Debug: true
     ports:
       - 7800:7800
     depends_on:
@@ -82,4 +85,4 @@ volumes:
   osmfiles:
 configs:
   postgres_conf:
-    file: ./postgres/postgres.development.conf
+    file: ./configs/postgres.development.conf

@@ -32,6 +32,9 @@ services:
     restart: always
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      DbPoolMaxConns: 25
+      MaxFeaturesPerTile: 50000
+      Debug: false
     ports:
       - "8010:7800"
     labels:
@@ -42,6 +45,7 @@ services:
       - "traefik.http.routers.tiles.tls=true"
     networks:
       - app_bridge
+    command: ["--config", "/config/pg_tileserv.toml"]
     depends_on:
       db:
         condition: service_healthy
