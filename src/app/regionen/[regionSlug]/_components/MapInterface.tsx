@@ -14,7 +14,6 @@ import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
 
 export const MapInterface: React.FC = () => {
-  console.log('## MapInterface rendered')
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">
