@@ -23,8 +23,10 @@ app = FastAPI(
 
 origins = [
   "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://develop--radverkehrsatlas.netlify.app",
+  "http://127.0.0.1:5173", # atlas-app with `npm run dev`
+  "http://127.0.0.1:3000", # atlas-app with `npm run start`
+  "https://develop--radverkehrsatlas.netlify.app", # Legacy
+  "https://staging.radverkehrsatlas.de",
   "https://radverkehrsatlas.de",
   "https://www.radverkehrsatlas.de",
 ]
