@@ -15,18 +15,28 @@ const providers: Provider[] = [
     idToken: true,
     checks: ['pkce', 'state'],
     profile(profile) {
-      // Example: { sub: '11881', preferred_username: 'tordans' }
-      const { sub, preferred_username, ...rest } = profile
-
+      const { id, display_name, description, img } = profile
       return {
-        id: Number(sub),
-        osmName: preferred_username as string,
-        ...rest,
+        id: Number(id),
+        osmName: display_name as string,
+        description: description as string,
+        avatar: (img?.href || null) as (string | null),
       }
     },
     userinfo: {
       async request({ client, tokens }) {
-        return await client.userinfo(tokens.access_token!)
+        const api = 'https://api.openstreetmap.org/api/0.6/user/details.json'
+        const response = await fetch(api, {
+          credentials: 'include',
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${tokens.access_token}`,
+          },
+        })
+        const { user } = await response.json()
+        return user
       },
     },
     clientId: process.env.OSM_CLIENT_ID,
