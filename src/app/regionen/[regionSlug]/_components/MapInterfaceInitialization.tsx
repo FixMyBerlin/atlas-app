@@ -10,45 +10,46 @@ import { createMapRegionConfig } from './mapStateConfig/createMapRegionConfig'
 import { initializeMapRegionConfig } from './mapStateConfig/initializeMapRegionConfig'
 
 export const MapInterfaceInitialization = ({ children }: { children: React.ReactNode }) => {
-  const region = useRegion()
+  // const region = useRegion()
 
-  const { mapParam, setMapParam } = useMapParam()
-  const { configParam, setConfigParam } = useConfigParam()
+  // const { mapParam, setMapParam } = useMapParam(region.map)
+  // const { configParam, setConfigParam } = useConfigParam(createMapRegionConfig(region.themes))
 
   // Initialize the Map and migrate old/stale config options.
   // DEV: Hot reload does not work with this and is out of scope. Reload if things go wrong.
   // Some stale config options are removed, new options are added; state is preserved.
-  const freshConfig = useMemo(() => {
-    invariant(region.themes)
-    return createMapRegionConfig(region.themes)
-  }, [region.themes])
+  // const freshConfig = useMemo(() => {
+  //   invariant(region.themes)
+  //   return createMapRegionConfig(region.themes)
+  // }, [region.themes])
 
-  const [initialized, setInitialized] = useState(false)
+  // const [initialized, setInitialized] = useState(false)
 
   console.log('## MapInterfaceInitialization rendered', {
-    freshConfig,
-    urlConfigParam: configParam,
-    initialized,
-    mapParam,
-    region,
+    nothing: 'to happening here anymore',
+    // freshConfig,
+    // urlConfigParam: configParam,
+    // // initialized,
+    // mapParam,
+    // region,
   })
 
-  if (initialized === false) {
-    // The order in which we initially call set*Param is the order we see in the URL.
-    void setMapParam(mapParam || region.map)
-    console.log('## MapInterfaceInitialization setConfigParam', mapParam, region.map)
+  // if (initialized === false) {
+  //   // The order in which we initially call set*Param is the order we see in the URL.
+  //   void setMapParam(mapParam || region.map)
+  //   console.log('## MapInterfaceInitialization setConfigParam', mapParam, region.map)
 
-    const initializedConfig = initializeMapRegionConfig({
-      freshConfig,
-      urlConfig: configParam,
-    })
-    console.log('## MapInterfaceInitialization setConfigParam', initializedConfig)
-    void setConfigParam(initializedConfig)
+  //   const initializedConfig = initializeMapRegionConfig({
+  //     freshConfig,
+  //     urlConfig: configParam,
+  //   })
+  //   console.log('## MapInterfaceInitialization setConfigParam', initializedConfig)
+  //   void setConfigParam(initializedConfig)
 
-    setInitialized(true)
+  //   setInitialized(true)
 
-    return <Spinner page />
-  }
+  //   return <Spinner page />
+  // }
 
   return <>{children}</>
 }
