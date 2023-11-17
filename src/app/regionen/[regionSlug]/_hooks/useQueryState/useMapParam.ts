@@ -1,8 +1,8 @@
 import { createParser, useQueryState } from 'next-usequerystate'
-import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
+import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
 
 export const useMapParam = () => {
-  const region = useRegion()
+  const region = useStaticRegion()
   const fallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 
   const mapParamParser = createParser({

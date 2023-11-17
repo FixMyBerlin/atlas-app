@@ -1,12 +1,12 @@
 import { createParser, useQueryState } from 'next-usequerystate'
-import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
+import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
 import { createMapRegionConfig } from '../../_components/mapStateConfig/createMapRegionConfig'
 import { ThemeConfig } from '../../_components/mapStateConfig/type'
 import { customParse, customStringify } from './useConfigParamParser/customParseStringify'
 
 export const useConfigParam = () => {
-  const region = useRegion()
   const initialConfig = createMapRegionConfig(region.themes)
+  const region = useStaticRegion()
 
   const configParamParser = createParser({
     parse: (query: string) => customParse(query) as ThemeConfig[],
