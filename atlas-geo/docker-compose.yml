@@ -45,7 +45,6 @@ services:
       - "traefik.http.routers.tiles.tls=true"
     networks:
       - app_bridge
-    command: ["--config", "/config/pg_tileserv.toml"]
     depends_on:
       db:
         condition: service_healthy
