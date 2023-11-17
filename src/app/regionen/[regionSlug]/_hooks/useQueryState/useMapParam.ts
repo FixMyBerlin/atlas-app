@@ -1,10 +1,9 @@
 import { createParser, useQueryState } from 'next-usequerystate'
-import { TRegion } from 'src/regions/queries/getRegion'
+import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
 
-export const useMapParam = (initialMap?: TRegion['map']) => {
+export const useMapParam = () => {
+  const region = useRegion()
   const fallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
-
-  console.log('useMapParam', { initialMap, fallback })
 
   const mapParamParser = createParser({
     parse: (query: string) => {
@@ -21,12 +20,14 @@ export const useMapParam = (initialMap?: TRegion['map']) => {
   })
     .withOptions({ history: 'push' })
     .withDefault({
-      zoom: Number(initialMap?.zoom ?? fallback.zoom),
-      lat: Number(initialMap?.lat ?? fallback.lat),
-      lng: Number(initialMap?.lng ?? fallback.lng),
+      zoom: Number(region.map?.zoom ?? fallback.zoom),
+      lat: Number(region.map?.lat ?? fallback.lat),
+      lng: Number(region.map?.lng ?? fallback.lng),
     })
 
   const [mapParam, setMapParam] = useQueryState('map', mapParamParser)
+
+  console.log('#### useMapParam', { initialMap: region.map, fallback, mapParam })
 
   return { mapParam, setMapParam }
 }
