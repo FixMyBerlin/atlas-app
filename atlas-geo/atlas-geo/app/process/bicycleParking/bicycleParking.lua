@@ -55,7 +55,7 @@ local function processTags(tags)
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
     "bicycle_parking:count", "bicycle_parking:position", "traffic_sign" }
   local processedTags = capacityNormalization(tags)
-  CopyTags(processedTags, tags, tags_cc, "osm_")
+  CopyTags(tags, processedTags, tags_cc, "osm_")
 
   local checkDateTag = "check_date"
   if tags[checkDateTag] then
