@@ -26,7 +26,7 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 2. Create a `.env.production.local` with settings linke
     ```
     NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
-    NEXT_PUBLIC_ENV='staging' # 'staging', 'production'
+    NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
     ```
 3. Run `npm run build` and `npm run start` to test the production bundle
 

@@ -12,7 +12,7 @@ export const MissingEnvError = () => {
     >
       Error: <code>envKey</code> is not set.
       <br />
-      <pre>NEXT_PUBLIC_ENV={process.env.NEXT_PUBLIC_ENV}</pre>
+      <pre>NEXT_PUBLIC_APP_ENV={process.env.NEXT_PUBLIC_APP_ENV}</pre>
       <pre>NEXT_PUBLIC_APP_ORIGIN={process.env.NEXT_PUBLIC_APP_ORIGIN}</pre>
       <pre>NODE_ENV={process.env.NODE_ENV}</pre>
     </div>
