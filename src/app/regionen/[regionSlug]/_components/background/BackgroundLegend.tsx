@@ -3,14 +3,14 @@ import React from 'react'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { sourcesBackgroundsRaster } from '../mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import { basemapSources } from 'src/regions/data/map/sources/basemapSources.const'
 import { replaceZxy } from '../utils/replaceZxy/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {
   const { backgroundParam } = useBackgroundParam()
   const { mapParam } = useMapParam()
 
-  const selectedBackground = sourcesBackgroundsRaster.find((b) => b.id === backgroundParam)
+  const selectedBackground = basemapSources.find((b) => b.id === backgroundParam)
   if (!selectedBackground?.legendUrl) return null
   if (!mapParam) return null
 

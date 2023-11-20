@@ -1,14 +1,10 @@
-import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
-import imageParking from 'src/app/_components/assets/parking.svg'
-import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
-import imageTrTo from 'src/app/_components/assets/trto-logo.png'
-import {
-  MapDataCategoryIds,
-  categories,
-} from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const'
-import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { StaticImageData } from 'next/image'
-import { adminIds } from 'src/users/components/utils/usersUtils'
+import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
+import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
+import imageParking from 'src/app/_components/assets/parking.svg'
+import imageTrTo from 'src/app/_components/assets/trto-logo.png'
+import { MapDataCategoryIds, categories } from 'src/regions/data/map/categoryData.const'
+import { SourcesRasterIds } from './map/sources/basemapSources.const'
 
 type RegionMap = {
   lat: number
@@ -16,7 +12,7 @@ type RegionMap = {
   zoom: number
 }
 
-export type AdditionalRegionAttributes = {
+export type StaticRegionData = {
   slug: RegionPath
   name: string
   fullName: string
@@ -85,7 +81,7 @@ export type RegionPath =
   | 'woldegk'
 
 // This is our regions "Database" until we have a real one
-export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
+export const staticRegions: StaticRegionData[] = [
   {
     slug: 'bibi',
     name: 'BiBi',

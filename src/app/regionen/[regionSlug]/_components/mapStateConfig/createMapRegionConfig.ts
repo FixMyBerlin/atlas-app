@@ -1,13 +1,13 @@
-import { MapDataCategoryIds } from '../mapData/mapDataCategories/categories.const'
-import { getCategoryData, getSubcategoryData } from '../mapData/utils/getMapDataUtils'
+import { MapDataCategoryIds } from 'src/regions/data/map/categoryData.const'
+import { getCategoryData, getSubcategoryData } from 'src/regions/data/map/utils/getMapDataUtils'
 import { CategoryConfig } from './type'
 
 /**
  * @desc Our main state object per category. It holds the `active`-values. Which are either the `defaultActive`s given by the configs (from files) or the current `active` values specified by the url config (User). Wording Convention: We use this `*Config` (eg `categoryConfig) to reference this config and `*Data` (eg `categoryData`) to reference the mapData object and holds static details like name, description and such.~~
  */
-export const createMapRegionConfig = (regionCategoryIds: MapDataCategoryIds[]) => {
+export const createInitialCategoriesConfig = (categoryIds: MapDataCategoryIds[]) => {
   // We want to preserve the sort order of `regionCategoryIds`.
-  const sortedCategoryData = regionCategoryIds.map((id) => getCategoryData(id))
+  const sortedCategoryData = categoryIds.map((id) => getCategoryData(id))
 
   return sortedCategoryData.map((categoryData) => {
     return {

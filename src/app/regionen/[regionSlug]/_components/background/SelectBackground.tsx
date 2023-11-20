@@ -7,10 +7,7 @@ import {
   defaultBackgroundParam,
   useBackgroundParam,
 } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
-import {
-  SourcesRasterIds,
-  sourcesBackgroundsRaster,
-} from '../mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import { SourcesRasterIds, basemapSources } from 'src/regions/data/map/sources/basemapSources.const'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {
@@ -20,9 +17,7 @@ export const SelectBackground: React.FC = () => {
 
   if (!region?.backgroundSources) return null
 
-  const backgrounds = sourcesBackgroundsRaster.filter(
-    (s) => region?.backgroundSources?.includes(s.id),
-  )
+  const backgrounds = basemapSources.filter((s) => region?.backgroundSources?.includes(s.id))
 
   const onChange = (value: SourcesRasterIds) => {
     void setBackgroundParam(value)

@@ -1,5 +1,3 @@
-import { RegionPath } from 'src/regions/components/additionalRegionAttributes.const'
-import { SubcategoryIds, SubcategoryStyleIds } from './mapData.const'
 import {
   AnyLayer,
   CircleLayer,
@@ -9,16 +7,18 @@ import {
   RasterSource,
   SymbolLayer,
 } from 'react-map-gl'
-import { MapDataCategoryIds } from './mapDataCategories/categories.const'
+import { LegendIconTypes } from 'src/app/regionen/[regionSlug]/_components/SidebarLayerControls/SelectLegend/LegendIcons/types'
+import { RegionPath } from 'src/regions/data/regions.const'
+import { SubcategoryIds, SubcategoryStyleIds } from './subcategories/types'
 import {
   SourceExportApiIdentifier,
   SourceVerificationApiIdentifier,
   SourcesIds,
-} from './mapDataSources/sources.const'
-import { LegendIconTypes } from '../SidebarLayerControls/SelectLegend/LegendIcons/types'
+} from './sources/categorySources.const'
+import { MapDataCategoryIds } from './categoryData.const'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
-export type MapDataBackgroundSource<TIds> = {
+export type MapSourceBasemap<TIds> = {
   id: TIds
   name: string
   /** @desc URL of the vector tiles */
@@ -146,7 +146,7 @@ type MapDataSourceExport<TExpIds> =
     }
 
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
-export type MapDataSource<TIds, TVerIds, TExpIds> = {
+export type MapCategorySource<TIds, TVerIds, TExpIds> = {
   id: TIds
   /** @desc URL of the vector tiles */
   tiles: string
@@ -243,7 +243,10 @@ export type MapDataStyleLegend = {
 }
 
 export type MapData = {
-  sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier, SourceExportApiIdentifier>[]
-  categories: MapDataCategory[]
+  sources: MapCategorySource<
+    SourcesIds,
+    SourceVerificationApiIdentifier,
+    SourceExportApiIdentifier
+  >[]
   subcategories: MapDataSubcat[]
 }

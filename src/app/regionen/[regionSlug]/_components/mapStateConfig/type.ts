@@ -1,5 +1,5 @@
-import { SubcategoryIds, SubcategoryStyleIds } from '../mapData/mapData.const'
-import { MapDataCategoryIds } from '../mapData/mapDataCategories/categories.const'
+import { MapDataCategoryIds } from 'src/regions/data/map/categoryData.const'
+import { SubcategoryIds, SubcategoryStyleIds } from 'src/regions/data/map/subcategories/types'
 
 export type CategoryConfig = {
   id: MapDataCategoryIds

@@ -1,12 +1,12 @@
 import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { sources } from '../mapData/mapDataSources/sources.const'
+import { categorySources } from 'src/regions/data/map/sources/categorySources.const'
 import { exportApiUrlBbox } from './exportApiUrl'
 
 type Props = { visible: boolean }
 
 export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
-  const exportEnabledSources = sources.filter((source) => source.export.enabled)
+  const exportEnabledSources = categorySources.filter((source) => source.export.enabled)
 
   // Get the bbox from our region data
   const { bbox } = useRegion()

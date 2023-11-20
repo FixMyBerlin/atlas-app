@@ -1,9 +1,9 @@
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
-import { DatasetIds } from '../../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../mapData/mapDataSources/sources.const'
-import { getDatasetOrSourceData } from '../../../mapData/utils/getMapDataUtils'
+import { DatasetIds } from 'src/regions/data/map/datasets/datasets/types'
+import { SourcesIds } from 'src/regions/data/map/sources/categorySources.const'
+import { getDatasetOrSourceData } from 'src/regions/data/map/utils/getMapDataUtils'
 import { NodataFallback } from '../compositTableRows/NodataFallback'
 import { translations } from './translations.const'
 

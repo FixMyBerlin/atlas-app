@@ -1,7 +1,7 @@
-import { mapboxStyleImages } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyleImages/mapboxStyleImages'
 import { type MapStyleImageMissingEvent } from 'maplibre-gl'
 import { useEffect } from 'react'
 import { type MapRef } from 'react-map-gl/maplibre'
+import { mapboxStyleImages } from 'src/regions/data/map/subcategories/mapboxStyleImages/mapboxStyleImages'
 
 export const useMissingImage = (map: MapRef | undefined) => {
   useEffect(() => {

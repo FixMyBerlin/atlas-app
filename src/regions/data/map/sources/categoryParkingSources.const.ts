@@ -1,5 +1,5 @@
-import { MapDataSource } from '../types'
-import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './sources.const'
+import { MapCategorySource } from '../types'
+import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './categorySources.const'
 
 export type SourcesParkingIds =
   | 'parkraumParking'
@@ -8,7 +8,7 @@ export type SourcesParkingIds =
   | 'parkraumParkingPoints'
   | 'parkraumParkingStats'
 
-export const sourcesParking: MapDataSource<
+export const categoryParkingSources: MapCategorySource<
   SourcesParkingIds,
   SourceVerificationApiIdentifier,
   SourceExportApiIdentifier

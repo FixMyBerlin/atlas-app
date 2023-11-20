@@ -1,4 +1,4 @@
-import { MapDataBackgroundSource } from 'src/app/regionen/[regionSlug]/_components/mapData/types'
+import { MapSourceBasemap } from '../types'
 
 export type SourcesRasterIds =
   | 'default'
@@ -35,7 +35,7 @@ const tokenMapboxTilesets =
 // Has Domain restrictions
 const tokenMaptilerTilesets = 'wo0y3tqo53envRHnz2Bl'
 
-export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>[] = [
+export const basemapSources: MapSourceBasemap<SourcesRasterIds>[] = [
   {
     id: 'strassenbefahrung',
     name: 'Berlin: Straßenbefahrung 2014',

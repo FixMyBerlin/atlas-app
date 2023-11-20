@@ -2,11 +2,11 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { getCategoryData } from '../../mapData/utils/getMapDataUtils'
+import { getCategoryData } from 'src/regions/data/map/utils/getMapDataUtils'
 import { CategoryConfig } from '../../mapStateConfig/type'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
-import { Toggle } from '../Toggle/Toggle'
 import { SelectSubcategory } from '../SelectSubcategory/SelectSubcategory'
+import { Toggle } from '../Toggle/Toggle'
 
 type Props = { categoryConfig: CategoryConfig; active: boolean }
 

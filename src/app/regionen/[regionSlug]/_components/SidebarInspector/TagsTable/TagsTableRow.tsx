@@ -1,9 +1,9 @@
 import React from 'react'
-import { DatasetIds } from '../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../mapData/mapDataSources/sources.const'
 import { NodataFallback } from './compositTableRows/NodataFallback'
 import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
 import { ConditionalFormattedValue } from './translations/ConditionalFormattedValue'
+import { DatasetIds } from 'src/regions/data/map/datasets/datasets/types'
+import { SourcesIds } from 'src/regions/data/map/sources/categorySources.const'
 
 export type TagsTableRowProps =
   | {

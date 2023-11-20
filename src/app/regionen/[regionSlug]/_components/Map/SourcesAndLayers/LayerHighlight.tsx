@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { MapData } from '../../mapData/types'
+import { MapData } from 'src/regions/data/map/types'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 

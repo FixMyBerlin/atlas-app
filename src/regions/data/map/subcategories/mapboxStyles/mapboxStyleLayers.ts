@@ -1,8 +1,8 @@
-import { flattenFilterArrays } from '../../../Map/SourcesAndLayers/utils/filterUtils/flattenFilterArrays'
-import { wrapFilterWithAll } from '../../../Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
-import { SourcesIds } from '../../mapDataSources/sources.const'
-import { MapboxStylesByLayerGroupIds } from './types'
+import { flattenFilterArrays } from 'src/app/regionen/[regionSlug]/_components/Map/SourcesAndLayers/utils/filterUtils/flattenFilterArrays'
+import { wrapFilterWithAll } from 'src/app/regionen/[regionSlug]/_components/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
+import { SourcesIds } from '../../sources/categorySources.const'
 import rawMapboxStylesByLayerGroup from './mapbox-layer-styles-by-group.json'
+import { MapboxStylesByLayerGroupIds } from './types'
 
 type StylesByLayerGroup = { group: MapboxStylesByLayerGroupIds; layers: any }[]
 export const mapboxStylesByLayerGroup = rawMapboxStylesByLayerGroup as StylesByLayerGroup

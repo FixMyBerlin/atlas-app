@@ -1,9 +1,9 @@
 import React from 'react'
-import { SelectStyles } from '../SelectStyles/SelectStyles'
-import { getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
-import { MapDataCategory } from '../../mapData/types'
-import { CategoryConfig } from '../../mapStateConfig/type'
+import { MapDataCategory } from 'src/regions/data/map/types'
+import { getSubcategoryData } from 'src/regions/data/map/utils/getMapDataUtils'
 import { twJoin } from 'tailwind-merge'
+import { CategoryConfig } from '../../mapStateConfig/type'
+import { SelectStyles } from '../SelectStyles/SelectStyles'
 
 type Props = {
   categoryData: MapDataCategory

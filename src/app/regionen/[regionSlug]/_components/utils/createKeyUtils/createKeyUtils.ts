@@ -2,7 +2,7 @@ import {
   SubcategoryIds,
   SubcategoryStyleIds,
   SubcatStyleLegendIds,
-} from '../../mapData/mapData.const'
+} from 'src/regions/data/map/subcategories/types'
 import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
 import { SubcatStyleKey, SubcatStyleLegendKey } from './types'
 

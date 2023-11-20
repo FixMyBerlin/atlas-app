@@ -1,4 +1,4 @@
-import { MapDataCategory as MapDataCategory } from '../types'
+import { MapDataCategory as MapDataCategory } from './types'
 
 // TODO type MapDataCategoryIds = typeof sources[number]['id']
 export type MapDataCategoryIds =

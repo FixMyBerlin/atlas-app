@@ -6,7 +6,7 @@ import { useMap } from 'react-map-gl/maplibre'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { ListOption } from './ListOption'
 import { useRegionDatasets } from './utils/useRegionDatasets'
-import { SourcesDatasetsIds } from '../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { SourcesDatasetsIds } from 'src/regions/data/map/datasets/sourcesDatasets.const'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()

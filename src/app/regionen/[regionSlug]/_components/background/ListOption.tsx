@@ -1,8 +1,8 @@
 import { Listbox } from '@headlessui/react'
 import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
-import { twJoin } from 'tailwind-merge'
 import React from 'react'
-import { SourcesRasterIds } from '../mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import { SourcesRasterIds } from 'src/regions/data/map/sources/basemapSources.const'
+import { twJoin } from 'tailwind-merge'
 
 type Props = { value: SourcesRasterIds; name: string }
 

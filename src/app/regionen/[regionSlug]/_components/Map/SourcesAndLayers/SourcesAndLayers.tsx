@@ -1,15 +1,15 @@
 import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
+import { debugLayerStyles } from 'src/regions/data/map/subcategories/mapboxStyles/debugLayerStyles'
 import {
   getSourceData,
   getStyleData,
   getSubcategoryData,
-} from '../../mapData/utils/getMapDataUtils'
+} from 'src/regions/data/map/utils/getMapDataUtils'
 import {
   createSourceKey,
   createSourceSubcatStyleLayerKey,

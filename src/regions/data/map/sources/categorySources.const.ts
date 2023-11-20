@@ -1,6 +1,6 @@
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
-import { MapDataSource } from '../types'
-import { sourcesParking, SourcesParkingIds } from './sourcesParking.const'
+import { MapCategorySource } from '../types'
+import { categoryParkingSources, SourcesParkingIds } from './categoryParkingSources.const'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesIds =
@@ -57,12 +57,12 @@ const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
 const tilesUrl = getTilesUrl()
 
-export const sources: MapDataSource<
+export const categorySources: MapCategorySource<
   SourcesIds,
   SourceVerificationApiIdentifier,
   SourceExportApiIdentifier
 >[] = [
-  ...sourcesParking,
+  ...categoryParkingSources,
   {
     id: 'atlas_boundaries',
     tiles: `${tilesUrl}/public.boundaries/{z}/{x}/{y}.pbf`,

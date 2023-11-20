@@ -1,7 +1,6 @@
 import React from 'react'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { buttonStyles } from 'src/app/_components/links/styles'
-import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_components/mapData/types'
+import { MapDataSourceInspectorEditor } from 'src/regions/data/map/types'
 import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
 import { editorUrl } from './osmUrls/editorUrl'
 import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls/osmUrls'

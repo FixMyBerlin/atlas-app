@@ -1,5 +1,5 @@
-import { MapDataDatasetsSource } from '../../types'
-import { DatasetIds } from '../datasets/types'
+import { MapDataDatasetsSource } from '../types'
+import { DatasetIds } from './datasets/types'
 import { sourcesDatasetsBerlin } from './sourcesDatasetsBerlin.const'
 import { sourcesDatasetsBiBi } from './sourcesDatasetsBibi.const'
 import { sourcesDatasetsTrTo } from './sourcesDatasetsTrTo.const'

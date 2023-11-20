@@ -1,9 +1,9 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { isDev } from 'src/app/_components/utils/isEnv'
-import { DatasetIds } from '../../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../mapData/mapDataSources/sources.const'
-import { getDatasetOrSourceData } from '../../../mapData/utils/getMapDataUtils'
+import { DatasetIds } from 'src/regions/data/map/datasets/datasets/types'
+import { SourcesIds } from 'src/regions/data/map/sources/categorySources.const'
+import { getDatasetOrSourceData } from 'src/regions/data/map/utils/getMapDataUtils'
 import { translations } from './translations.const'
 
 type Props = {

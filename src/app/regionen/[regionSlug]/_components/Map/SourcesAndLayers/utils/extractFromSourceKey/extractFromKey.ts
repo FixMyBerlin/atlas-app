@@ -1,7 +1,7 @@
+import { DatasetIds } from 'src/regions/data/map/datasets/datasets/types'
+import { SourcesIds } from 'src/regions/data/map/sources/categorySources.const'
+import { SubcategoryIds } from 'src/regions/data/map/subcategories/types'
 import invariant from 'tiny-invariant'
-import { SubcategoryIds } from '../../../../mapData/mapData.const'
-import { DatasetIds } from '../../../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../../mapData/mapDataSources/sources.const'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
 
 export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {

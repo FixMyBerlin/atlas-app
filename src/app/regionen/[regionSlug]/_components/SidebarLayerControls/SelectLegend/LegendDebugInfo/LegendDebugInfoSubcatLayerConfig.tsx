@@ -1,8 +1,7 @@
-import React from 'react'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
-import { SubcategoryIds } from '../../../mapData/mapData.const'
-import { MapDataVisLayer } from '../../../mapData/types'
+import { SubcategoryIds } from 'src/regions/data/map/subcategories/types'
+import { MapDataVisLayer } from 'src/regions/data/map/types'
 import { LegendDebugInfoLayerStyle } from './LegendDebugInfoLayerStyle'
 
 type Props = {
