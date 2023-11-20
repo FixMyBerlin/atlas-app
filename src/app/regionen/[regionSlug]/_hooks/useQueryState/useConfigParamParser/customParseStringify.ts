@@ -1,19 +1,12 @@
-import jsurl from 'jsurl2'
-import { legacyParse } from './legacyParse'
-import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
 import { initializeMapRegionConfig } from '../../../_components/mapStateConfig/initializeMapRegionConfig'
 import { ThemeConfig } from '../../../_components/mapStateConfig/type'
-
-// Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
-// Using https://github.com/wmertens/jsurl2
+import { isJsurlString, jsurlParse, jurlStringify } from './jurlParseStringify'
+import { legacyParse } from './legacyParse'
+import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
 
 export const customParse = (value: string): unknown => {
-  // "!" is an array in jsurl2, which is the default for our config
-  // "(" is an object in jsurl2, which is the reset-fallback
-  const newEncoding = value.startsWith('!') || value.startsWith('(')
-
-  if (newEncoding) {
-    return expandObjectKeys(jsurl.tryParse(value, { reset: true }))
+  if (isJsurlString(value)) {
+    return expandObjectKeys(jsurlParse(value) as Record<string, any>)
   }
 
   return legacyParse(value)
@@ -34,8 +27,5 @@ export const customParseConfig = (value: string, freshConfig: ThemeConfig[]): un
 }
 
 export const customStringify = (value: Record<string, any>) => {
-  return jsurl.stringify(minimizeObjectKeys(value), {
-    rich: true,
-    short: false,
-  })
+  return jurlStringify(minimizeObjectKeys(value))
 }
