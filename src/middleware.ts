@@ -1,7 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { createMapRegionConfig } from './app/regionen/[regionSlug]/_components/mapStateConfig/createMapRegionConfig'
-import { customStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/customParseStringify'
+import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/configCustomParser'
 import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { additionalRegionAttributes } from './regions/components/additionalRegionAttributes.const'
 
@@ -27,7 +27,7 @@ export function middleware(request: NextRequest) {
   url.searchParams.append('map', serializeMapParam(region.map))
 
   const freshConfig = createMapRegionConfig(region.categories)
-  url.searchParams.append('config', customStringify(freshConfig))
+  url.searchParams.append('config', configCustomStringify(freshConfig))
   return NextResponse.redirect(url.toString())
 }
 
