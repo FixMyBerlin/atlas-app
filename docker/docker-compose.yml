@@ -10,9 +10,6 @@ services:
     environment:
       SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
       DATABASE_URL: ${DATABASE_URL}
-      NEXT_TELEMETRY_DISABLED: 1
-      NEXT_PUBLIC_APP_ORIGIN: ${NEXT_PUBLIC_APP_ORIGIN}
-      NEXT_PUBLIC_APP_ENV: ${NEXT_PUBLIC_APP_ENV}
     network_mode: host
     ports:
       - 3000:3000
