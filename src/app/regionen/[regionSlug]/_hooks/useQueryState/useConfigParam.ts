@@ -2,15 +2,15 @@ import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
 import { createMapRegionConfig } from '../../_components/mapStateConfig/createMapRegionConfig'
 import { CategoryConfig } from '../../_components/mapStateConfig/type'
-import { customParseConfig, customStringify } from './useConfigParamParser/customParseStringify'
+import { configCustomParse, configCustomStringify } from './useConfigParamParser/configCustomParser'
 
 export const useConfigParam = () => {
   const region = useStaticRegion()
   const freshConfig = createMapRegionConfig(region.categories)
 
   const configParamParser = createParser({
-    parse: (query: string) => customParseConfig(query, freshConfig) as CategoryConfig[],
-    serialize: (value: CategoryConfig[]) => customStringify(value),
+    parse: (query: string) => configCustomParse(query, freshConfig) as CategoryConfig[],
+    serialize: (value: CategoryConfig[]) => configCustomStringify(value),
   })
     .withOptions({ history: 'push' })
     .withDefault(freshConfig)
