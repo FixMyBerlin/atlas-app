@@ -32,12 +32,12 @@ local function capacityNormalization(tags)
   local capacities = { capacity = tonumber(tags.capacity) }
   if capacities.capacity == nil then return capacities end
   for key, val in pairs(tags) do
-    if osm2pgsql.has_prefix(key, "capacity") then
+    if osm2pgsql.has_prefix(key, "capacity:") then
       val = tonumber(val)
       if val ~= nil then
         capacities.capacity = capacities.capacity - val
+        capacities[key] = val
       end
-      capacities[key] = val
     end
   end
   for k, v in pairs(capacities) do
