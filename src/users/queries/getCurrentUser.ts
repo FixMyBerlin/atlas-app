@@ -12,6 +12,7 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
       id: true,
       osmId: true,
       osmName: true,
+      osmAvatar: true,
       firstName: true,
       lastName: true,
       email: true,

@@ -18,7 +18,7 @@ export type UserLoggedInProp = {
 }
 
 export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
-  const imgSrc = null
+  const imgSrc = user.osmAvatar
 
   const [logoutMutation] = useMutation(logout)
 
@@ -30,7 +30,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {imgSrc ? (
-          <Image
+          <img
             src={imgSrc}
             width={32}
             height={32}
