@@ -3,7 +3,7 @@ require("CopyTags")
 require("Metadata")
 
 local nodeTable = osm2pgsql.define_table({
-  name = 'bicycleParking-points',
+  name = 'bicycleParking_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -13,7 +13,7 @@ local nodeTable = osm2pgsql.define_table({
 })
 
 local areaTable = osm2pgsql.define_table({
-  name = 'bicycleParking-areas',
+  name = 'bicycleParking_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
