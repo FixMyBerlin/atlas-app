@@ -20,7 +20,7 @@ const providers: Provider[] = [
         id: Number(id),
         osmName: display_name as string,
         description: description as string,
-        avatar: (img?.href || null) as (string | null),
+        avatar: (img?.href || null) as string | null,
       }
     },
     userinfo: {
@@ -54,16 +54,25 @@ export default api(
     providers,
     callback: async (user, account, profile, session) => {
       // TS: Docs are unhelpful on how to easily motify the input https://next-auth.js.org/getting-started/typescript#popular-interfaces-to-augment
-      const inputUser = user as typeof user & { osmName: string }
+      const inputUser = user as typeof user & { osmName: string; avatar: string | null }
 
       let newUser: User
-      try {
-        newUser = await db.user.findFirstOrThrow({ where: { osmId: { equals: Number(user.id) } } })
-      } catch (e) {
+      const osmId = Number(user.id)
+      newUser = await db.user.findFirst({ where: { osmId } })
+      if (newUser) {
+        newUser = await db.user.update({
+          where: { osmId },
+          data: {
+            osmName: inputUser.osmName,
+            osmAvatar: inputUser.avatar,
+          },
+        })
+      } else {
         newUser = await db.user.create({
           data: {
-            osmId: Number(inputUser.id),
+            osmId,
             osmName: inputUser.osmName,
+            osmAvatar: inputUser.avatar,
             role: 'USER',
           },
         })
@@ -74,6 +83,7 @@ export default api(
         userId: newUser.id,
         // osmId: newUser.osmId,
         osmName: newUser.osmName, // needed for quick loockups
+        osmAvatar: newUser.osmAvatar,
         role: newUser.role as Role,
       }
       await session.$create(publicData)
