@@ -33,7 +33,7 @@ export const debugLayerStyles = ({
       layout: {},
     },
     {
-      id: 'debugStyleLayerLine',
+      id: 'debugStyleLayerFill',
       type: 'fill',
       source: source,
       'source-layer': sourceLayer,
