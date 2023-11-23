@@ -14,6 +14,7 @@ const providers: Provider[] = [
     authorization: { params: { scope: 'openid read_prefs write_notes' } },
     idToken: true,
     checks: ['pkce', 'state'],
+    // @ts-ignore
     profile(profile) {
       const { id, display_name, description, img } = profile
       return {
@@ -56,7 +57,7 @@ export default api(
       // TS: Docs are unhelpful on how to easily motify the input https://next-auth.js.org/getting-started/typescript#popular-interfaces-to-augment
       const inputUser = user as typeof user & { osmName: string; avatar: string | null }
 
-      let newUser: User
+      let newUser: User | null
       const osmId = Number(user.id)
       newUser = await db.user.findFirst({ where: { osmId } })
       if (newUser) {
