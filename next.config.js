@@ -19,6 +19,12 @@ module.exports = withBlitz(withNextAuthAdapter({
         port: '',
         pathname: '/avatar/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.openstreetmap.org',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 }))
