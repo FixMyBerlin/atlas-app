@@ -24,7 +24,7 @@ export const topic_parkingStats: MapDataTopic = {
     ...defaultStyleHidden,
     {
       id: 'stats-admin-level-4',
-      name: 'Stadt (Anzahl)',
+      name: 'Stadt: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats',
@@ -35,7 +35,7 @@ export const topic_parkingStats: MapDataTopic = {
     },
     {
       id: 'default', // 'stats-admin-level-9',
-      name: 'Bezirk (Anzahl)',
+      name: 'Bezirk: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats',
@@ -46,7 +46,7 @@ export const topic_parkingStats: MapDataTopic = {
     },
     {
       id: 'stats-admin-level-10',
-      name: 'Stadtteil (Anzahl)',
+      name: 'Stadtteil: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats',
@@ -57,7 +57,7 @@ export const topic_parkingStats: MapDataTopic = {
     },
     {
       id: 'length-admin-level-4',
-      name: 'Stadt (Länge in km)',
+      name: 'Stadt: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats_length',
@@ -68,7 +68,7 @@ export const topic_parkingStats: MapDataTopic = {
     },
     {
       id: 'length-admin-level-9',
-      name: 'Bezirk (Länge in km)',
+      name: 'Bezirk: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats_length',
@@ -79,7 +79,7 @@ export const topic_parkingStats: MapDataTopic = {
     },
     {
       id: 'length-admin-level-10',
-      name: 'Stadtteil (Länge in km)',
+      name: 'Stadtteil: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'parking_stats_length',
