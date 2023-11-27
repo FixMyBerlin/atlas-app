@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation } from '@blitzjs/rpc'
-import { twJoin } from 'tailwind-merge'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { FORM_ERROR, Form, FormProps } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
@@ -10,6 +10,7 @@ import { proseClasses } from 'src/app/_components/text/prose'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
 import updateUser from 'src/users/mutations/updateUser'
 import { UpdateUserSchema } from 'src/users/schema'
+import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 export { FORM_ERROR } from 'src/app/_components/forms/Form'
 
@@ -68,15 +69,39 @@ export const UserForm = () => {
         }}
       />
       <aside className={twJoin(proseClasses, 'prose-sm prose-gray')}>
-        <p>
-          <strong>OpenStreetMap Name:</strong> {user.osmName}
-          <br />
-          <span className="text-xs text-gray-500">
-            <Link blank href="https://www.openstreetmap.org/account/edit">
-              Im OSM Profil bearbeiten
-            </Link>
-            .
-          </span>
+        <h2 className="text-sm">Angaben von OpenStreetMap.org:</h2>
+        <div className="rounded border">
+          <table className="my-0 text-sm">
+            <tbody>
+              <tr>
+                <th className="pl-1 font-normal">Anzeigename</th>
+                <td className="py-1">{user.osmName ? user.osmName : '–'}</td>
+              </tr>
+              <tr>
+                <th className="pl-1 font-normal">Avatar</th>
+                <td className="py-1">
+                  {user.osmAvatar ? (
+                    <Image
+                      src={user.osmAvatar}
+                      width={32}
+                      height={32}
+                      className="my-0 h-8 w-8 rounded-full"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    '–'
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 text-sm text-gray-500">
+          <Link blank href="https://www.openstreetmap.org/account/edit">
+            Im OSM Profil bearbeiten
+          </Link>
+          .
         </p>
       </aside>
     </div>
