@@ -40,7 +40,7 @@ export default function ErrorRegion({ error, reset }: Props) {
               >
                 Erneut probieren
               </button>
-              <Link href={`/regionen/${regionSlug}`}>Region neu laden</Link>
+              <Link href={`/regionen/${regionSlug}`}>Region mit Standard-Einstellungen öffnen</Link>
             </div>
           </div>
         </div>
