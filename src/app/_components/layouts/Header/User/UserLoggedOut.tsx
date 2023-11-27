@@ -1,7 +1,6 @@
-import { Route } from 'next'
-import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie'
 import { UserIcon } from '@heroicons/react/24/outline'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 import { cookieName } from './cookieName'
 
 export const UserLoggedOut = () => {
@@ -9,7 +8,7 @@ export const UserLoggedOut = () => {
 
   const handleLogin = () => {
     Cookies.set(cookieName, `${location.pathname}${location.search}`)
-    void router.push(`/api/auth/osm/login` as Route)
+    void router.push('/api/auth/osm/login')
   }
 
   return (
