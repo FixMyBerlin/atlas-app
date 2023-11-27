@@ -5,8 +5,8 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topic = 'bicycleParking'
 const source = 'atlas_bicycleParking'
-const sourceLayerPoints = 'public.bicycleParking-points'
-const sourceLayerAreas = 'public.bicycleParking-areas'
+const sourceLayerPoints = 'public.bicycleParking_points'
+const sourceLayerAreas = 'public.bicycleParking_areas'
 export type TopicBicycleParkingId = typeof topic
 export type TopicBicycleParkingStyleIds = 'default' | 'witharea'
 

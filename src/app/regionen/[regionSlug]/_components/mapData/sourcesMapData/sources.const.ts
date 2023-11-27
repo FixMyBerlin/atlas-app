@@ -441,10 +441,10 @@ export const sources: MapDataSource<
     export: { enabled: false },
   },
   {
-    // https://tiles.radverkehrsatlas.de/public.bicycleParking-points.json
-    // https://tiles.radverkehrsatlas.de/public.bicycleParking-areas.json
+    // https://tiles.radverkehrsatlas.de/public.bicycleParking_points.json
+    // https://tiles.radverkehrsatlas.de/public.bicycleParking_areas.json
     id: 'atlas_bicycleParking',
-    tiles: `${tilesUrl}/public.bicycleParking-points,public.bicycleParking-areas/{z}/{x}/{y}.pbf`,
+    tiles: `${tilesUrl}/public.bicycleParking_points,public.bicycleParking_areas/{z}/{x}/{y}.pbf`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
