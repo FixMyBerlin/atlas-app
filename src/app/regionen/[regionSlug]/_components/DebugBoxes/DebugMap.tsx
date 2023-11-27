@@ -1,8 +1,8 @@
-import { twJoin } from 'tailwind-merge'
-import { LayerSpecification } from 'maplibre-gl'
-import { useEffect, useState } from 'react'
+import { StyleSpecification } from 'maplibre-gl'
+import { useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
+import { twJoin } from 'tailwind-merge'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
 import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
@@ -13,33 +13,36 @@ export const DebugMap = () => {
     useMapDebugState()
   const { mainMap } = useMap()
   const { mapLoaded } = useMapStateInteraction()
-  const [triggerRerender, setTriggerRerender] = useState(0)
-  const [atlasLayers, setAtlasLayers] = useState<LayerSpecification[]>([])
+  const [_triggerRerender, setTriggerRerender] = useState(0)
 
   const interactiveLayerIds = useInteractiveLayers()
 
   const handleRerender = () => setTriggerRerender((prev) => prev + 1)
-  useEffect(() => {
-    if (!showDebugInfo || !mapLoaded || !mainMap) return
-
-    const allLayers = mainMap.getStyle().layers
-    setAtlasLayers(
-      allLayers
-        .filter((layer) => {
-          return 'source' in layer && layer.source !== 'openmaptiles' && layer.type !== 'raster'
-        })
-        .flat(),
-    )
-  }, [mapLoaded, mainMap, showDebugInfo, triggerRerender])
 
   if (!showDebugInfo || !mapLoaded || !mainMap) return null
 
-  const vectorSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'vector',
-  )
-  const rasterSources = Object.entries(mainMap.getStyle().sources).filter(
-    ([_key, value]) => value.type === 'raster',
-  )
+  // There are situations, when all our guards are not enough and `mainMap.getStyle()` still errors.
+  // One way to force this is: (1) open /regionen/bibi, (2) Goto "Acount bearbeiten", (3) Save the form, (4) Use the browser back to show the map again.
+  let getStyles: StyleSpecification | undefined = undefined
+  try {
+    getStyles = mainMap.getStyle()
+  } catch (error) {
+    console.warn('DebugMap', { error })
+    return null
+  }
+
+  const allSources = getStyles?.sources
+  const allLayers = getStyles?.layers
+  if (!allSources || !allLayers) return null
+
+  const vectorSources = Object.entries(allSources).filter(([_, value]) => value.type === 'vector')
+  const rasterSources = Object.entries(allSources).filter(([_, value]) => value.type === 'raster')
+  const atlasLayers = allLayers
+    .filter((layer) => {
+      return 'source' in layer && layer.source !== 'openmaptiles' && layer.type !== 'raster'
+    })
+    .flat()
+  if (!vectorSources || !rasterSources || !atlasLayers) return null
 
   return (
     <div className="group absolute right-[8.5rem] top-3 z-10 max-h-[95%] max-w-[25rem] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
