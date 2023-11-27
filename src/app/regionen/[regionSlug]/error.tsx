@@ -1,7 +1,7 @@
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Footer } from 'src/app/_components/layouts/Footer/Footer'
 import { Link } from 'src/app/_components/links/Link'
 import { buttonStyles } from 'src/app/_components/links/styles'

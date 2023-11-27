@@ -1,6 +1,6 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
-import { useRegion } from '../../../../(pages)/_components/regionUtils/useRegion'
+import { useRegion } from '../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
 

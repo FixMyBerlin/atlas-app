@@ -1,5 +1,5 @@
 import { createParser, useQueryState } from 'next-usequerystate'
-import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
+import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { createMapRegionConfig } from '../../_components/mapStateConfig/createMapRegionConfig'
 import { ThemeConfig } from '../../_components/mapStateConfig/type'
 import { customParseConfig, customStringify } from './useConfigParamParser/customParseStringify'

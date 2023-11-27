@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'

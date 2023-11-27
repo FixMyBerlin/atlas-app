@@ -1,5 +1,5 @@
 import { useQuery } from '@blitzjs/rpc'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'

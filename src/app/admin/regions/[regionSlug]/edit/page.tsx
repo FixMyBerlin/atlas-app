@@ -3,7 +3,7 @@
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { useRouter } from 'next/navigation'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
 import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'

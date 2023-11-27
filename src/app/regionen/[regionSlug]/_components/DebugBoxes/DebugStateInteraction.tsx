@@ -1,4 +1,4 @@
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { isDev, isProd, isStaging } from 'src/app/_components/utils/isEnv'

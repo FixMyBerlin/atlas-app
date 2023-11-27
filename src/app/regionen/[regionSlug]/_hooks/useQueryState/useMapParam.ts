@@ -1,5 +1,5 @@
 import { createParser, useQueryState } from 'next-usequerystate'
-import { useStaticRegion } from 'src/app/(pages)/_components/regionUtils/useStaticRegion'
+import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 
 const fallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 

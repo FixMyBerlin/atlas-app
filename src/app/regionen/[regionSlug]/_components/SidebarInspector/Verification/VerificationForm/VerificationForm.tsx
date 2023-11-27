@@ -1,7 +1,7 @@
 import { useMutation } from '@blitzjs/rpc'
 import { twJoin } from 'tailwind-merge'
 import { Suspense } from 'react'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
 import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'

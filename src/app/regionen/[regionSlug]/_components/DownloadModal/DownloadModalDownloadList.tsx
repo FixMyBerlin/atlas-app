@@ -1,4 +1,4 @@
-import { useRegion } from 'src/app/(pages)/_components/regionUtils/useRegion'
+import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { sources } from '../mapData/sourcesMapData/sources.const'
 import { exportApiUrlBbox } from './exportApiUrl'

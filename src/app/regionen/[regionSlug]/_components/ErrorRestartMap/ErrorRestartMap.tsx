@@ -1,6 +1,6 @@
 import { Route } from 'next'
 import { useSearchParams } from 'next/navigation'
-import { useRegionSlug } from 'src/app/(pages)/_components/regionUtils/useRegionSlug'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 
 export const ErrorRestartMap = () => {
