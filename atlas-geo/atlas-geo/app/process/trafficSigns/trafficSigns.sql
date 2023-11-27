@@ -41,7 +41,7 @@ SET
         to_jsonb(((tags ->> 'direction') :: numeric + 360) % 360)
     )
 WHERE
-    (tags ->> 'direction') ~ '^\d*\.?\d*$';-- check if it's a valid decimal number 
+    tags?'direction';-- check if it's a valid decimal number 
 
 -- inverse the sign off all traffic signs which have offset=180 to avoid ambiguities
 UPDATE
