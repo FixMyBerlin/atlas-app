@@ -33,9 +33,9 @@ export const useMapParam = () => {
   })
     .withOptions({ history: 'push' })
     .withDefault({
-      zoom: Number(region.map?.zoom ?? fallback.zoom),
-      lat: Number(region.map?.lat ?? fallback.lat),
-      lng: Number(region.map?.lng ?? fallback.lng),
+      zoom: Number(region?.map?.zoom ?? fallback.zoom),
+      lat: Number(region?.map?.lat ?? fallback.lat),
+      lng: Number(region?.map?.lng ?? fallback.lng),
     })
 
   const [mapParam, setMapParam] = useQueryState('map', mapParamParser)

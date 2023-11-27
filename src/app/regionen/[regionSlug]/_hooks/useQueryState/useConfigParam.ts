@@ -6,7 +6,7 @@ import { customParseConfig, customStringify } from './useConfigParamParser/custo
 
 export const useConfigParam = () => {
   const region = useStaticRegion()
-  const freshConfig = createMapRegionConfig(region.themes)
+  const freshConfig = createMapRegionConfig(region?.themes ?? [])
 
   const configParamParser = createParser({
     parse: (query: string) => customParseConfig(query, freshConfig) as ThemeConfig[],
