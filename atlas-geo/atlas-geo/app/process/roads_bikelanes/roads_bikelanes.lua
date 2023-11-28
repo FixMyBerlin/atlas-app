@@ -78,7 +78,7 @@ function osm2pgsql.process_way(object)
   local results = {}
   MergeTable(results, RoadClassification(object))
   MergeTable(results, Lit(object))
-  MergeTable(results, Bikelanes(object))
+  MergeTable(results, Bikelanes(object, results.road))
   MergeTable(results, SurfaceQuality(object))
   if not PathClasses[tags.highway] then
     MergeTable(results, Maxspeed(object))
