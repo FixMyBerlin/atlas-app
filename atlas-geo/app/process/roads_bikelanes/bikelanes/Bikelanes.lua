@@ -70,7 +70,7 @@ local allowed_tags = Set({
 })
 
 local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
-function Bikelanes(object)
+function Bikelanes(object, road)
   -- filter highway classes
   local tags = object.tags
 
@@ -129,6 +129,7 @@ function Bikelanes(object)
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
         cycleway.smoothness, cycleway.smoothness_source, cycleway.smoothness_confidence = DeriveSmoothness(cycleway)
         cycleway.surface, cycleway.surface_source = DeriveSurface(cycleway)
+        cycleway.road = road
 
         bikelanesTable:insert({
           tags = cycleway,
