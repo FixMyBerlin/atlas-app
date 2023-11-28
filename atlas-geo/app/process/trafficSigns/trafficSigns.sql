@@ -41,7 +41,7 @@ SET
         to_jsonb(((tags ->> 'direction') :: numeric + 360) % 360)
     )
 WHERE
-    tags?'direction';-- check if it's a valid decimal number 
+    tags ? 'direction';
 
 -- inverse the sign off all traffic signs which have offset=180 to avoid ambiguities
 UPDATE
@@ -57,5 +57,5 @@ UPDATE
 SET
     tags = tags - 'offset';
 
--- remove direction table 
+-- remove direction table
 DROP TABLE "_trafficSignDirections";
