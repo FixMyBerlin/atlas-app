@@ -183,7 +183,7 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       max: [13.825, 52.4784],
     },
     logoPath: imageNudafa,
-    logoWhiteBackgroundRequired: false,
+    logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
       'poi',
