@@ -13,11 +13,13 @@ RUN npm run postinstall
 
 # see .dockerignore for what is getting copied
 COPY . .
+
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_APP_ORIGIN
 ENV NEXT_PUBLIC_APP_ORIGIN ${NEXT_PUBLIC_APP_ORIGIN}
 ARG NEXT_PUBLIC_APP_ENV
 ENV NEXT_PUBLIC_APP_ENV ${NEXT_PUBLIC_APP_ENV}
+
 RUN npx blitz prisma generate
 RUN npx blitz build
 
