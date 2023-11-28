@@ -95,7 +95,7 @@ function RoadClassification(object)
     "oneway",
     "oneway:bicycle",
   }
-  CopyTags(tags, roadClassification, tags_cc, "osm_")
+  CopyTags(roadClassification, tags, tags_cc, "osm_")
 
   return roadClassification
 end

@@ -118,7 +118,7 @@ function Bikelanes(object, road)
         if sign == CENTER_SIGN then
           -- if we're dealing with the original object (center line) then prefix only keep all the tags from the `tags_cc` list and prefix them
           -- due to that it's important that the precceding operations happen before
-          cycleway = CopyTags(tags, {}, tags_cc, 'osm_')
+          cycleway = CopyTags({}, tags, tags_cc, 'osm_')
         else
           freshTag = "check_date:" .. cycleway.prefix
         end
@@ -191,7 +191,7 @@ function Bikelanes(object, road)
     }
   end
 
-  CopyTags(tags, presence_data, presence_tags_cc, "osm_")
+  CopyTags(presence_data, tags, presence_tags_cc, "osm_")
 
   return presence_data
 end
