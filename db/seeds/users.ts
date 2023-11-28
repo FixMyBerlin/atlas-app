@@ -1,0 +1,76 @@
+import db from '../index'
+import { Prisma } from '@prisma/client'
+
+type Users = Prisma.UserUncheckedCreateInput[]
+
+export const generateUserEmail = (slug: string) => `${slug}@example.com`
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+let osmId = 1000
+
+const seedUsers = async () => {
+  const allRegions = await db.region.findMany()
+  // password: dev-team@fixmycity.de
+  const hashedPassword =
+    'JGFyZ29uMmlkJHY9MTkkbT02NTUzNix0PTIscD0xJDRMWm82dmVrRk91VnVlZTVwcEpiS3ckOHFZcHhyM2RITm0yTGxTeXdqeEcxSWFsZEJCUWhxNVZxdm53eHoxTk4xTQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+
+  const genericUsers: Users = [
+    {
+      osmId: osmId++,
+      osmName: `OsmName${osmId++}`,
+      role: 'ADMIN',
+      email: 'admin@example.com',
+      firstName: 'Admin',
+      lastName: undefined,
+      hashedPassword,
+    },
+    {
+      osmId: osmId++,
+      osmName: `OsmName${osmId++}`,
+      role: 'USER',
+      email: 'all-regions@example.com',
+      firstName: 'All-Regions',
+      lastName: undefined,
+      hashedPassword,
+    },
+    {
+      osmId: osmId++,
+      osmName: `OsmName${osmId++}`,
+      role: 'USER',
+      email: 'no-region@example.com',
+      firstName: 'No-Region',
+      lastName: undefined,
+      hashedPassword,
+    },
+  ]
+
+  const regionAdmins: Users = allRegions.map(({ id, slug }) => ({
+    osmId: osmId++,
+    osmName: `OsmName${osmId++}`,
+    role: 'USER',
+    email: generateUserEmail(slug),
+    firstName: `${capitalize(slug)}-Admin`,
+    lastName: undefined,
+    hashedPassword,
+  }))
+
+  const fmcAdmins: Users = [
+    {
+      osmId: 11881,
+      osmName: 'tordans',
+      role: 'ADMIN',
+      email: 'tobias@fixmycity.de',
+      firstName: 'Tobias',
+      lastName: 'Jordans',
+      hashedPassword,
+    },
+  ]
+
+  const users = [...genericUsers, ...regionAdmins, ...fmcAdmins]
+  for (const user of users) {
+    await db.user.create({ data: user })
+  }
+}
+
+export default seedUsers

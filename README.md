@@ -1,6 +1,6 @@
 <div align="center">
   <!-- <img src="src/images/" height="80" /> -->
-  <h1 align="center"><a href="https://radverkehtsatlas.de">Radverkehrsatlas.de</a></h1>
+  <h1 align="center"><a href="https://radverkehrsatlas.de/">radverkehrsatlas.de</a></h1>
   <h3><strong>(!)</strong> This project ist still in development</h3>
 </div>
 
@@ -12,29 +12,45 @@ The backend, for processing and storing the geographic data, is located at [atla
 
 ## Develop
 
-We use React as a Frontend Framework and [Vite](https://vitejs.dev/) for building and serving. The styling is done via [Tailwind CSS](https://tailwindcss.com/).
+* Framework: [NextJS](https://nextjs.org/) with [BlitzJS](https://blitzjs.com/)
+* ORM: [Prisma](https://blitzjs.com/docs/cli-prisma)
+* Styling: [Tailwind CSS](https://tailwindcss.com/)
 
 For VS Code we [recommended](.vscode/extensions.json) some extensions.
 
-To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and use [update the credentials](/src/components/Layout/Header/User/User.tsx).
+To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and use [update the credentials](/.env.example).
 
-## Update mapbox styles
+### Testing the production bundle
+
+1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
+2. Create a `.env.production.local` with settings linke
+    ```
+    NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
+    NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
+    ```
+3. Run `npm run build` and `npm run start` to test the production bundle
+
+### NextJS tips
+
+- Favicons:
+  `icon.svg` https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons
+  Generator for `favicon.ico` https://realfavicongenerator.net/
+
+## Helper scripts
+
+All helper scripts run with [bun](https://bun.sh/).
+
+### Update mapbox styles
 
 See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
 
-## Getting Started
+### Update regional masks
 
-Install npm packages, then continue.
+See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
 
-```sh
-# Start the development server
-npm start
-```
+### Update datasets
 
-```sh
-# For building to `dist/`
-npm run build
-```
+See [/datasets/README.md](./datasets/README.md) on how to process and update external datasets.
 
 ## Contribute
 
@@ -47,6 +63,13 @@ It contains dependencies which have different Licenses, see [`package.json`](./p
 
 ## Thanks
 
+For the current version:
+
+- Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
+- Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
+- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
+
+For the alpha version:
+
 - Thank you [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
 - Thank you [React Location](https://github.com/TanStack/router)
-- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)

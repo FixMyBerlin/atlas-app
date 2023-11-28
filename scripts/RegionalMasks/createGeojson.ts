@@ -1,3 +1,4 @@
+// We use bun.sh to run this file
 import {
   bbox,
   buffer,
@@ -10,11 +11,12 @@ import {
   simplify,
 } from '@turf/turf'
 import chalk from 'chalk'
-import fs from 'fs'
-import path from 'path'
+import path from 'node:path'
 import { z } from 'zod'
-import { apiBaseUrl } from '../../src/components/utils/getApiUrl'
-import { regions } from '../../src/fakeServer/regions.const'
+import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
+
+console.log(chalk.inverse.bold('START'), __filename)
 
 const geojsonPolygon = z.object({
   type: z.literal('Polygon'),
@@ -42,16 +44,16 @@ const handleError = (error: (string | Record<string, string | number>)[]) => {
   console.error(chalk.bgYellow.black(...error))
 }
 
-const saveErrors = () => {
+const saveErrors = async () => {
   const fileName = 'error.log'
   const filePath = path.resolve(__dirname, fileName)
-  fs.writeFileSync(filePath, JSON.stringify(errorLog, undefined, 2))
+  await Bun.write(filePath, JSON.stringify(errorLog, undefined, 2))
 }
 
 const downloadGeoJson = async (idsString: string) => {
   // We always use the production DB since that holds all relevant releations
   // TODO: Change this to production once the api is deployed there
-  const url = new URL(`${apiBaseUrl.staging}/boundaries/`)
+  const url = new URL(`${exportApiBaseUrl.staging}/boundaries/`)
   idsString
     .split(',')
     .map(Number)
@@ -60,13 +62,12 @@ const downloadGeoJson = async (idsString: string) => {
       url.searchParams.append('ids', String(id))
     })
 
-  console.info('\n\n', 'INFO: downloading', url.href)
+  console.info(chalk.inverse.bold('DOWNLOAD'), url.href)
   const response = await fetch(url.href)
 
   try {
     const data = await response.json()
     const geoJson = geojsonInputSchema.parse(data)
-    console.info('\n\n', 'INFO: download succeeded for', url.href)
     return geoJson
   } catch (error) {
     handleError([
@@ -95,7 +96,7 @@ const createBufferFeature = (boundaryPoly, ids: string, region: string) => {
 }
 
 const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeature>) => {
-  const germanyBbox = [5.98865807458, 47.3024876979, 15.0169958839, 54.983104153]
+  const germanyBbox = [5.98865807458, 47.3024876979, 15.0169958839, 54.983104153] as const
   const germanyBboxPolygon = polygon(
     [
       [
@@ -116,8 +117,8 @@ const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeatur
 
 // 1. Collect the boundary and mask per region
 const collectedFeatures: ReturnType<typeof createBufferFeature>[] = []
-for (const region of regions) {
-  const { path: regionName, osmRelationIds } = region
+for (const region of additionalRegionAttributes) {
+  const { slug: regionName, osmRelationIds } = region
   if (!osmRelationIds.length) continue
   console.info(chalk.inverse.bold('INFO: Now working on region', regionName))
 
@@ -133,12 +134,12 @@ for (const region of regions) {
     collectedFeatures.push(mask)
 
     // Store separate files for debugging
-    fs.writeFileSync(
+    await Bun.write(
       path.resolve(__dirname, `./geojson/${regionName}-regional-mask-for-debugging.geojson`),
       JSON.stringify(boundaryFeature),
     )
     // And also store the bbox and centerOfMass for use in regions.const.ts
-    fs.writeFileSync(
+    await Bun.write(
       path.resolve(__dirname, `./geojson/${regionName}-bbox-center-for-reference.geojson`),
       JSON.stringify(
         point(centerOfMass(boundaryFeature).geometry.coordinates, {
@@ -152,7 +153,7 @@ for (const region of regions) {
 // 2. Save them locally to be picked up by createMbtiles
 const collectedFeatureCollection = featureCollection(collectedFeatures)
 const boundariesAndMaskGeojson = path.resolve(__dirname, './geojson/atlas-regional-masks.geojson')
-fs.writeFileSync(boundariesAndMaskGeojson, JSON.stringify(collectedFeatureCollection))
+await Bun.write(boundariesAndMaskGeojson, JSON.stringify(collectedFeatureCollection))
 
-saveErrors()
+await saveErrors()
 console.info(chalk.inverse.bold('FINISHED createGeojson'))
