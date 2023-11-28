@@ -1,6 +1,8 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("CopyTags")
 require("Metadata")
+require("Set")
+require("Sanatize")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
@@ -22,7 +24,7 @@ local areaTable = osm2pgsql.define_table({
   }
 })
 
-function ExitProcessing(object)
+local function exitProcessing(object)
   if object.tags.amenity ~= 'bicycle_parking' then
     return true
   end
@@ -51,10 +53,21 @@ end
 local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
+  local processedTags = capacityNormalization(tags)
+  local binary = Set({ "yes", "no" })
+  processedTags.access = Sanitize(tags.access, Set({ "yes", "private", "permissive", "customers" }))
+  processedTags.covered = Sanitize(tags.covered, binary, "implicit_no")
+  processedTags.fee = Sanitize(tags.fee, binary, "implicit_no")
+  processedTags.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
+  processedTags.bicycle_parking = Sanitize(tags.bicycle_parking,
+    Set({ "stands", "wide_stands", "bollard", "wave", "handlebar_holder", "streetpod", "rack", "wall_loops", "safe_loops",
+      "building", "shed", "two-tier", "lockers", "tree", "ground_slots", "crossbar", "rope", "floor", "informal",
+      "arcadia",
+      "anchors", "lean_and_stick" }))
+
   local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
-    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign" }
-  local processedTags = capacityNormalization(tags)
+    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description" }
   CopyTags(tags, processedTags, tags_cc, "osm_")
 
   local checkDateTag = "check_date"
@@ -65,7 +78,7 @@ local function processTags(tags)
 end
 
 function osm2pgsql.process_node(object)
-  if ExitProcessing(object) then return end
+  if exitProcessing(object) then return end
   local tags = processTags(object.tags)
 
   nodeTable:insert({
@@ -76,7 +89,7 @@ function osm2pgsql.process_node(object)
 end
 
 function osm2pgsql.process_way(object)
-  if ExitProcessing(object) then return end
+  if exitProcessing(object) then return end
   local tags = processTags(object.tags)
   local meta = Metadata(object)
 
