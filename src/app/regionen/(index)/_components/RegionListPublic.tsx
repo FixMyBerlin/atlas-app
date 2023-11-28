@@ -1,4 +1,4 @@
-import { invoke } from '@blitzjs/rpc'
+import { invoke } from 'src/blitz-server'
 import getRegions from 'src/regions/queries/getRegions'
 import { RegionTeaser } from './RegionTeaser'
 
