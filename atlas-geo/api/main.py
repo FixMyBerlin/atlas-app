@@ -5,11 +5,10 @@ from fastapi.responses import FileResponse
 from typing import Union, Annotated
 from psycopg import sql
 from psycopg.rows import dict_row
-from db_configuration import valid_verified_status, export_geojson_function_from_type, verification_tables, verification_table
-from db import conn_string
+from db_configuration import VerificationTable, ExportTable, VerifiedState, verified_table
+from db import conn_string, api_secret
 import psycopg
-import json
-import os
+from pathlib import Path
 
 
 app = FastAPI(
@@ -24,8 +23,10 @@ app = FastAPI(
 
 origins = [
   "http://localhost:5173",
-  "http://127.0.0.1:5173",
-  "https://develop--radverkehrsatlas.netlify.app",
+  "http://127.0.0.1:5173", # atlas-app with `npm run dev`
+  "http://127.0.0.1:3000", # atlas-app with `npm run start`
+  "https://develop--radverkehrsatlas.netlify.app", # Legacy
+  "https://staging.radverkehrsatlas.de",
   "https://radverkehrsatlas.de",
   "https://www.radverkehrsatlas.de",
 ]
@@ -40,47 +41,18 @@ app.add_middleware(
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-# conn = psycopg.AsyncConnection.connect(conn_string)
-
 @app.get("/export/{type_name}")
-async def export_bbox(response: Response, type_name: str, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
-  if type_name not in export_geojson_function_from_type:
-    raise HTTPException(status_code=404, detail="export type unknown")
-
+async def export_bbox(response: Response, type_name: ExportTable, minlon: float= 13.3, minlat : float=52.2, maxlon: float=13.7, maxlat: float=52.3):
   async with await psycopg.AsyncConnection.connect(conn_string) as conn:
     async with conn.cursor() as cur:
       # Download file directly
-      response.headers["Content-Disposition"] = f'attachment; filename="{type_name}.geojson"'
+      response.headers["Content-Disposition"] = f'attachment; filename="{type_name.value}.geojson"'
       response.headers["Content-Type"] = 'application/geo+json'
 
-      statement = sql.SQL("SELECT * FROM {table_name} (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(%s, %s, %s, %s), 4326) ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
+      statement = sql.SQL("SELECT * FROM {table_name} (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(%s, %s, %s, %s), 4326) ));").format(table_name=sql.Identifier(type_name.name))
       await cur.execute(statement, ( minlon, minlat, maxlon, maxlat) )
       result = await cur.fetchone()
       return result[0]
-
-@app.get("/export/{type_name}/{osm_id}")
-async def export_region(response: Response, type_name: str, osm_id: int):
-    if type_name not in export_geojson_function_from_type:
-      raise HTTPException(status_code=404, detail="export type unknown")
-
-    async with await psycopg.AsyncConnection.connect(conn_string) as conn:
-      async with conn.cursor() as cur:
-        statement = sql.SQL("SELECT tags->'name' FROM boundaries WHERE osm_id=%s")
-        await cur.execute(statement, (osm_id, ))
-        results = await cur.fetchone()
-        if results == None:
-          raise HTTPException(status_code=404, detail="osm_id not found")
-        region_name, = results
-
-        # Download file directly
-        response.headers["Content-Disposition"] = f'attachment; filename="{region_name}_{type_name}.geojson"'
-        response.headers["Content-Type"] = 'application/geo+json'
-
-        statement = sql.SQL("SELECT * FROM {table_name} (( SELECT ST_Transform(geom, 4326) FROM boundaries WHERE osm_id=%s ));").format(table_name=sql.Identifier(export_geojson_function_from_type[type_name]))
-        await cur.execute(statement, (osm_id,) )
-        result = await cur.fetchone()
-
-        return result[0]
 
 @app.get("/boundaries/")
 async def export_boundaries(response: Response, ids: Annotated[list[int], Query()]):
@@ -104,19 +76,17 @@ async def export_boundaries(response: Response, ids: Annotated[list[int], Query(
 
 
 @app.get("/verify/{type_name}/{osm_id}")
-async def retrieve_verify_status(response: Response, type_name: str, osm_id: int):
-    if type_name not in verification_tables:
-        raise HTTPException(status_code=404, detail="verification type unknown")
+async def retrieve_verify_status(response: Response, type_name: VerificationTable, osm_id: int):
 
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC LIMIT 1").format(table_name=sql.Identifier(verification_table(type_name)))
+        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC LIMIT 1").format(table_name=sql.Identifier(type_name.name))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchone()
         if results == None:
-          statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name))
+          statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s;").format(table_name=sql.Identifier(type_name.value))
           await cur.execute(statement, (osm_id,))
           results = await cur.fetchone()
           if results == None:
@@ -129,13 +99,11 @@ async def retrieve_verify_status(response: Response, type_name: str, osm_id: int
 
 
 @app.get("/verify/{type_name}/{osm_id}/history")
-async def retrieve_verify_history(response: Response, type_name: str, osm_id: int):
-    if type_name not in verification_tables:
-      raise HTTPException(status_code=404, detail="verification type unknown")
+async def retrieve_verify_history(response: Response, type_name: VerificationTable, osm_id: int):
     async with await psycopg.AsyncConnection.connect(conn_string, row_factory=dict_row) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC").format(table_name=sql.Identifier(verification_table(type_name)))
+        statement = sql.SQL("SELECT * FROM {table_name} WHERE osm_id = %s ORDER BY verified_at DESC").format(table_name=sql.Identifier(type_name.name))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchall()
@@ -145,29 +113,64 @@ async def retrieve_verify_history(response: Response, type_name: str, osm_id: in
         return results
 
 
-# TODO: guard osm_type
+# TODO: guard `osm_type` and `verified_at`
 @app.post("/verify/{type_name}/{osm_id}")
-async def verify_osm_object(response: Response, type_name: str, osm_type: str, osm_id: int, verified_at: str, verified_status: str, verified_by: int=None, comment: str=''):
-    if type_name not in verification_tables:
-      raise HTTPException(status_code=404, detail="verification type unknown")
-
-    if verified_status not in valid_verified_status:
-      raise HTTPException(status_code=400, detail="verified_status property is not valid")
+async def verify_osm_object(response: Response, type_name: VerificationTable, osm_type: str, osm_id: int, verified_at: str, verified_status: VerifiedState, verified_by: int=None, comment: str=''):
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
       async with conn.cursor() as cur:
         # Check if osm_id is available
-        statement = sql.SQL("SELECT osm_id FROM {table_name} l WHERE l.osm_id = %s").format(table_name=sql.Identifier(type_name))
+        statement = sql.SQL("SELECT osm_id FROM {table_name} l WHERE l.osm_id = %s").format(table_name=sql.Identifier(type_name.value))
         await cur.execute(statement, (osm_id,))
 
         results = await cur.fetchone()
         if results == None:
           raise HTTPException(status_code=404, detail="osm_id not found")
 
-        statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified, comment) VALUES (%s, %s, %s, %s, %s, %s)").format(table_name=sql.Identifier(verification_table(type_name)))
-        await cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status, comment))
+        statement = sql.SQL("INSERT INTO {table_name} (osm_type, osm_id, verified_at, verified_by, verified, comment) VALUES (%s, %s, %s, %s, %s, %s)").format(table_name=sql.Identifier(type_name.name))
+        await cur.execute(statement, (osm_type, osm_id, verified_at, verified_by, verified_status.name, comment))
         await conn.commit()
 
         return 'OK'
+
+@app.get("/init")
+async def init_api(response: Response, secret: str):
+  if secret != api_secret:
+    raise HTTPException(status_code=401, detail="the API secret is wrong. Access denied!")
+  async with await psycopg.AsyncConnection.connect(conn_string) as conn:
+    async with conn.cursor() as cur:
+      print("Starting creation of verification tables")
+
+      sql_views_path = Path(__file__).with_name('INIT_VERIFICATION_VIEWS.sql')
+      with open(sql_views_path, "r") as f:
+        sql = f.read()
+      for table in VerificationTable:
+        print('Create verification table and view ', table.value)
+        processed_sql = sql.format(
+          verification_table="BikelaneVerification", # table.name,
+          geometry_table="bikelanes", # table.value,
+          joined_table="bikelanes_verified", # verified_table(table.value),
+        )
+        await cur.execute(processed_sql)
+      await conn.commit()
+
+      print('=' * 80)
+      print("Finished creation of verification tables")
+
+      print("Starting creation of database exports")
+      sql_functions_path = Path(__file__).with_name('INIT_FUNCTIONS.sql')
+      with open(sql_functions_path, "r") as f:
+        sql = f.read()
+      for table in ExportTable:
+        function_name = table.name
+        print('Create function', function_name, ' for table ', table.value)
+        processed_sql = sql.replace('{function_name}', function_name).replace('{table_name}', table.value)
+        await cur.execute(processed_sql)
+      await conn.commit()
+
+      print('=' * 80)
+      print("Finished creation of database exports")
+      print('=' * 80)
+      print("Finished database initialization")
 
 
 @app.get("/health")
@@ -175,10 +178,8 @@ async def retrieve_service_health():
     async with await psycopg.AsyncConnection.connect(conn_string) as conn:
       async with conn.cursor() as cur:
         try:
-          cur.execute(sql.SQL("SELECT 1"))
+          await cur.execute(sql.SQL("SELECT 1"))
         except:
           raise HTTPException(status_code=500, detail="DB Connection is dead")
         else:
           return "OK"
-
-      raise HTTPException(status_code=500, detail="Unkown server error")

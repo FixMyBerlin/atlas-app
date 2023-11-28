@@ -38,8 +38,16 @@ end
 -- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dliving_street
 local function livingStreet(tags)
-  if tags.highway == "living_street" and not tags.bicycle == "no" then
-    return "livingStreet"
+  if tags.highway == "living_street" then
+    -- No vehicle except bicycles
+    if tags.vehicle == "no" and not tags.bicycle == "yes" then
+      return "livingStreet"
+    end
+    -- Nothing about vehicle but bicycle=yes or similar
+    if (tags.vehicle == nil or tags.vehicle == "yes")
+        and not tags.bicycle == "no" then
+      return "livingStreet"
+    end
   end
 end
 
@@ -48,12 +56,20 @@ end
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:244
 local function bicycleRoad(tags)
   if tags.bicycle_road == "yes"
-      or osm2pgsql.has_prefix(tags.traffic_sign, "DE:244") then
+      or osm2pgsql.has_prefix(tags.traffic_sign, 'DE:244') then
     -- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
     -- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
     -- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
     if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
       tags.oneway = 'car_not_bike'
+    end
+
+    -- Subcategory when bicycle road allows vehicle traffic
+    if tags.traffic_sign == 'DE:244.1,1020-30'
+        or tags.traffic_sign == 'DE:244,1020-30'
+        or tags.vehicle == 'destination'
+        or tags.motor_vehicle == 'destination' then
+      return "bicycleRoad_vehicleDestination"
     end
 
     return "bicycleRoad"
@@ -158,15 +174,15 @@ end
 -- Case: Crossing
 --    Examples https://github.com/FixMyBerlin/atlas-app/issues/23
 local function crossing(tags)
-  local result = tags.highway == "cycleway" and tags.cycleway == "crossing"
-  result = result or
-      tags.highway == "path" and tags.path == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-  result = result or
-      tags.highway == "footway" and tags.footway == "crossing"
-      and (tags.bicycle == "yes" or tags.bicycle == "designated")
-
-  if result then
+  if tags.highway == "cycleway" and tags.cycleway == "crossing" then
+    return "crossing"
+  end
+  if tags.highway == "path" and tags.path == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
+    return "crossing"
+  end
+  if tags.highway == "footway" and tags.footway == "crossing"
+      and (tags.bicycle == "yes" or tags.bicycle == "designated") then
     return "crossing"
   end
 end
@@ -226,10 +242,22 @@ local function sharedBusLane(tags)
   end
 end
 
+-- Explicit tagging as "Mischverkehr" without any traffic sign or road marking
+-- In our style, we ignore this tagging and do not assign an explicit category.
+-- The default for highways is, that they are shared unless forbidden.
+-- This is an explicit category so that it is not rendered as "needsClarification"
+-- Example https://www.openstreetmap.org/way/35396829/history
+local function sharedLane(tags)
+  if tags.cycleway == "shared" then
+    return "explicitSharedLaneButNoSignage"
+  end
+end
+
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local function needsClarification(tags)
-  if tags.highway == "cycleway" then
+  if tags.highway == "cycleway"
+      or (tags.highway == "path" and tags.bicycle == "designated") then
     return "needsClarification"
   end
 end
@@ -258,6 +286,7 @@ function CategorizeBikelane(tags)
     livingStreet,
     bicycleRoad,
     sharedBusLane,
+    sharedLane,
     pedestrianAreaBicycleYes,
     sharedMotorVehicleLane,
     -- Detailed tagging cases

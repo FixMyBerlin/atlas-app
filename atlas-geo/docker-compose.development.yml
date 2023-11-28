@@ -1,7 +1,9 @@
 version: "3"
 services:
   app:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
     entrypoint: /app/run.sh
     container_name: app
     environment:
@@ -20,36 +22,29 @@ services:
       SYNOLOGY_ERROR_LOG_TOKEN:
     volumes:
       - osmfiles:/data
-    networks:
-      - app_bridge
     depends_on:
       db:
         condition: service_healthy
+    profiles:
+      - osm_processing
   tiles:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: pramsey/pg_tileserv
     container_name: tiles
-    restart: always
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
-      DbPoolMaxConns: 25
+      DbPoolMaxConns: 5
       MaxFeaturesPerTile: 50000
-      Debug: false
+      Debug: true
     ports:
-      - "8010:7800"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
-      - "traefik.http.routers.tiles.entrypoints=websecure"
-      - "traefik.http.routers.tiles.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tiles.tls=true"
-    networks:
-      - app_bridge
+      - 7800:7800
     depends_on:
       db:
         condition: service_healthy
   api:
-    image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
+    build:
+      context: .
+      dockerfile: ./api.Dockerfile
     container_name: api
     environment:
       PGHOST:
@@ -57,25 +52,14 @@ services:
       PGUSER:
       PGPASSWORD:
       API_SECRET:
-    restart: always
     ports:
-      - "8020:80"
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.api.rule=Host(`${API_URL}`)"
-      - "traefik.http.routers.api.entrypoints=websecure"
-      - "traefik.http.routers.api.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.api.tls=true"
-    networks:
-      - app_bridge
+      - 80:80
     depends_on:
       db:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
-    container_name: db
     shm_size: 1gb
-    command: ["postgres", "-c", "shared_buffers=3GB", "-c", "work_mem=128MB", "-c", "maintenance_work_mem=1024MB", "-c", "temp_buffers=24MB", "-c", "effective_cache_size=8GB", "-c", "wal_buffers=16MB", "-c", "min_wal_size=1GB", "-c", "max_wal_size=4GB"]
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}
@@ -86,15 +70,19 @@ services:
       - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
+    configs:
+      - source: postgres_conf
+        target: /postgresql/postgresql.conf
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
+    container_name: db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - app_bridge
 volumes:
   geodata:
   osmfiles:
-networks:
-  app_bridge:
+configs:
+  postgres_conf:
+    file: ./configs/postgres.development.conf

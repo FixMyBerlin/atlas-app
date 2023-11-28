@@ -72,6 +72,8 @@ local allowed_tags = Set({
   'lane', -- 'cycleway:SIDE:lane'
 })
 
+local SIDES = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
+
 function osm2pgsql.process_way(object)
   -- filter highway classes
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })

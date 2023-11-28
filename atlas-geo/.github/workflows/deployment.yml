@@ -1,28 +1,56 @@
-name: Deployment Production
+name: Deploy to IONOS
 
 on:
-  push:
-    branches:
-      - "main"
+  workflow_call:
+    secrets:
+      SERVICE_NAME:
+        required: true
+      DATABASE_NAME:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      DATABASE_USER:
+        required: true
+      DATABASE_PASSWORD_ENCODED:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      SSH_USERNAME:
+        required: true
+      SSH_PASSWORD:
+        required: true
+      SSH_HOST:
+        required: true
+      SYNOLOGY_LOG_TOKEN:
+        required: true
+      SYNOLOGY_ERROR_LOG_TOKEN:
+        required: true
+    inputs:
+      ENVIRONMENT:
+        type: string
+        required: true
+      URL:
+        type: string
+        required: true
+      TILES_URL:
+        type: string
+        required: true
+      API_URL:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
-      name: production
-      url: https://radverkehrsatlas.de
-
-    env:
-      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
-      TILESERVER_PORT: 9090
-
+      name: ${{ inputs.ENVIRONMENT }}
+      url: ${{ inputs.URL }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         run: |
@@ -70,31 +98,37 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.production.yml,docker-compose.traefik.yml,postgres/postgres.conf"
+          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf"
           target: "/srv/processing/"
           overwrite: true
 
-      - name: Stop & start container on VPS
+      - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Stop containers on VPS"
             cd /srv/processing/
-            docker image prune -fa
-            docker compose --env-file .env.production -f docker-compose.production.yml down
-            echo "Updating '.env.production'"
-            rm .env.production
-            touch .env.production
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env.production
-            echo PGHOST='db' >> .env.production
-            echo PGPORT='${{ vars.DATABASE_PORT }}' >> .env.production
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env.production
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env.production
-            echo PGPASSWORD_ENCODED='${{ secrets.DATABASE_PASSWORD_ENCODED}}' >> .env.production
-            echo GITHUB_SHA='${{ github.sha }}' >> .env.production
+            echo "Updating '.env'"
+            rm .env
+            touch .env
+            echo PGHOST='${{ vars.DATABASE_HOST }}' >> .env
+            echo ENVIRONMENT='${{ inputs.ENVIRONMENT }}' >> .env
+            echo SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}' >> .env
+            echo SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}' >> .env
+            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
+            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
+            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
+            echo OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}' >> .env
+            echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
+            echo API_URL='${{ inputs.API_URL }}' >> .env
+            echo GITHUB_SHA='${{ github.sha }}' >> .env
+            echo API_SECRET=$(echo $RANDOM | md5sum | head -c 20) >> .env
+            echo "Stop containers on VPS"
+            docker compose down
+            docker compose -f docker-compose.traefik.yml down
             echo "Start container on VPS"
-            docker compose --env-file .env.production  -f docker-compose.production.yml pull
-            docker compose --env-file .env.production  -f docker-compose.production.yml up -d
+            docker compose -f docker-compose.traefik.yml up -d
+            docker compose up -d
+            docker image prune -fa

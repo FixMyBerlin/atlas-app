@@ -5,18 +5,21 @@ require("Set")
 require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
-require("IsFresh")
+require("TimeUtils")
 require("categories")
 require("transformations")
 require("IntoExcludeTable")
 require("CopyTags")
 require("RoadWidth")
+require("ToMarkdownList")
+require("DeriveSurface")
+require("DeriveSmoothness")
+require("BikelanesTodos")
 
 local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'category', type = 'text' },
     { column = 'tags',     type = 'jsonb' },
     { column = 'meta',     type = 'jsonb' },
     { column = 'geom',     type = 'linestring' },
@@ -67,14 +70,10 @@ local allowed_tags = Set({
   'lane', -- 'cycleway:SIDE:lane'
 })
 
+local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
 function Bikelanes(object)
   -- filter highway classes
   local tags = object.tags
-
-  -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-  if tags.bicycle_road == 'yes' then
-    tags.oneway = tags.oneway or 'implicit_no'
-  end
 
   -- transformations
   local footwayTransformation = {
@@ -104,22 +103,35 @@ function Bikelanes(object)
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         FilterTags(cycleway, allowed_tags)
+        cycleway.category = category
 
         local freshTag = "check_date"
         if cycleway.prefix then
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        -- Freshness of data (AFTER `FilterTags`!)
-        IsFresh(object, freshTag, cycleway)
+        if tags[freshTag] then
+          cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
+        end
+
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        cycleway.oneway = cycleway.oneway or 'implicit_yes'
+        if cycleway.oneway == nil then
+          if tags.bicycle_road == 'yes' then
+            cycleway.oneway = 'implicit_no'
+          else
+            cycleway.oneway = 'implicit_yes'
+          end
+        end
 
         cycleway.offset = sign * width / 2
 
+
+        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
+        cycleway.smoothness, cycleway.smoothness_source, cycleway.smoothness_confidence = DeriveSmoothness(cycleway)
+        cycleway.surface, cycleway.surface_source = DeriveSurface(cycleway)
+
         bikelanesTable:insert({
-          category = category,
           tags = cycleway,
           meta = Metadata(object),
           geom = object:as_linestring(),
@@ -135,7 +147,7 @@ function Bikelanes(object)
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
     -- set the nil values to 'not_expected', for all minor roads and complete data
-    for _, side in pairs(SIDES) do presence[side] = presence[side] or NOT_EXPECTED end
+    for _, side in pairs(sides) do presence[side] = presence[side] or NOT_EXPECTED end
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     if not MajorRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
@@ -155,21 +167,29 @@ function Bikelanes(object)
   end
 
   -- replace all nil values with 'missing'
-  for _, side in pairs(SIDES) do presence[side] = presence[side] or "missing" end
+  for _, side in pairs(sides) do presence[side] = presence[side] or "missing" end
 
-  local presence_tags_cc = Set({
+  local presence_tags_cc = {
     'name',
     'highway',
     'oneway',
     'dual_carriageway',
-  })
-
-  local presence_data = {
-    bikelane_presence_left = presence[LEFT_SIGN],
-    bikelane_presence_self = presence[CENTER_SIGN],
-    bikelane_presence_right = presence[RIGHT_SIGN]
+    -- https://wiki.openstreetmap.org/wiki/Proposal:Separation
+    'separation:left',
+    'separation:right',
   }
-  CopyTags(tags, presence_data, presence_tags_cc)
+
+  local presence_data = {}
+  -- Only apply presence-tags on roads need them, not "highway=cycleway|path|footway|track"
+  if not PathClasses[tags.highway] then
+    presence_data = {
+      bikelane_left = presence[LEFT_SIGN],
+      bikelane_self = presence[CENTER_SIGN],
+      bikelane_right = presence[RIGHT_SIGN]
+    }
+  end
+
+  CopyTags(tags, presence_data, presence_tags_cc, "osm_")
 
   return presence_data
 end
