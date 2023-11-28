@@ -14,10 +14,8 @@ function SurfaceQuality(object)
 
   local surface_data = {}
 
-  surface_data.surface, surface_data.surface_source = DeriveSurface(tags)
-  --surface_data.surface, surface_data.surface_source, surface_data.surface_confidence = DeriveSurface(tags)-- only needed after we extended the surface normalization
-
-  surface_data.smoothness, surface_data.smoothness_source, surface_data.smoothness_confidence = DeriveSmoothness(tags)
+  MergeTable(surface_data, DeriveSurface(tags))
+  MergeTable(surface_data, DeriveSmoothness(tags))
 
   -- all tags that are shown on the application
   local tags_cc = {
