@@ -1,6 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("CopyTags")
-require("IsFresh")
+require("TimeUtils")
 require("Set")
 
 -- Notes
@@ -23,7 +23,6 @@ require("Set")
 --  We add those ways twice to the data … and post-process the in SQL?
 
 function Lit(object)
-
   local tags = object.tags
 
   local lit_data = {}
@@ -32,12 +31,10 @@ function Lit(object)
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
   if tags.lit ~= nil then
-    lit_data.lit_category = "special"
-    if (tags.lit == "yes") then
-      lit_data.lit_category = "lit"
-    end
-    if (tags.lit == "no") then
-      lit_data.lit_category = "unlit"
+    if (tags.lit == "yes" or tags.lit == "no") then
+      lit_data.lit = tags.lit
+    else
+      lit_data.lit = "special"
     end
   end
 
@@ -45,14 +42,11 @@ function Lit(object)
   -- TODO: Extact into helper
   tags.name = tags.name or tags['is_sidepath:of:name']
 
-  local tags_cc = Set({
+  local tags_cc = {
     "access",
     "area",
-    "category",
-    "check_date:lit",
     "footway",
     "highway",
-    "is_present",
     "is_sidepath",
     "lit",
     "surface",
@@ -62,14 +56,15 @@ function Lit(object)
     "width",          -- experimental
     "sidewalk:width", -- experimental
     "cycleway:width", -- experimental
-  })
+  }
 
-  -- TODO: replace with copy
-  CopyTags(tags, lit_data, tags_cc)
 
-  -- Freshness of data (AFTER `FilterTags`!)
-  if lit_data.lit_category then
-    IsFresh(object, 'check_date:lit', lit_data, 'lit')
+  CopyTags(tags, lit_data, tags_cc, "osm_")
+  
+  -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
+  if tags["check_date:lit"] then
+    lit_data.lit_age= AgeInDays(ParseDate(tags["check_date:lit"]))
   end
+
   return lit_data
 end

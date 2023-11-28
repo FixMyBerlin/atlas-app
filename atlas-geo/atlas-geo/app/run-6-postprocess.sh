@@ -12,6 +12,5 @@ echo -e "\e[1m\e[7m Postprocessing – START \e[27m\e[21m\e[0m"
 # unlock database
 
 psql -q -f "./POSTPROCESS.sql"
-python3 ./api/init_db.py
 
 echo -e "\e[1m\e[7m Postprocessing – END \e[27m\e[21m\e[0m"

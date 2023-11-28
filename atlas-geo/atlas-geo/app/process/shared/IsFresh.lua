@@ -8,7 +8,7 @@ require("CheckDataWithinYears")
 --   `dest` with freshness-tags added to it.
 --   If no parameter was provided a new object gets created.
 --   `isFreshKey` a table of keys to use for FilterTags
-function IsFresh(object, date_tag, dest, suffix)
+function IsFresh(object, date_tag, dest, prefix)
   dest = dest or {}
 
   local date = os.date('!%Y-%m-%d', object.timestamp)
@@ -22,14 +22,20 @@ function IsFresh(object, date_tag, dest, suffix)
   -- Freshness of data, see documentation
   local withinYears = CheckDataWithinYears(date, 2)
 
-  local fresh_key = table.concat({ "fresh", suffix }, "_")
+  local fresh_key = "fresh"
+  if (prefix) then
+    fresh_key = table.concat({ prefix, "fresh" }, "_")
+  end
   if withinYears.result then
     dest[fresh_key] = "fresh_" .. source
   else
     dest[fresh_key] = "outdated_" .. source
   end
 
-  local fresh_age_key = table.concat({ "fresh_age_days", suffix }, "_")
+  local fresh_age_key = "fresh_age_days"
+  if (prefix) then
+    fresh_age_key = table.concat({ prefix, "fresh_age_days" }, "_")
+  end
   dest[fresh_age_key] = withinYears.diffDays
 
   local isFreshKeys = { fresh_key, fresh_age_key }

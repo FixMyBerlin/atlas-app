@@ -1,7 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
 package.path = package.path .. ";/app/process/shared/?.lua"
 package.path = package.path .. ";/app/process/roads_bikelanes/maxspeed/?.lua"
-require("IsFresh")
+require("TimeUtils")
 require("MaxspeedDirect")
 require("MaxspeedFromZone")
 require("CopyTags")
@@ -10,7 +10,7 @@ require("Set")
 function Maxspeed(object)
   local tags = object.tags
 
-  local maxspeed_data = { raw_maxspeed = tags.maxspeed } -- Preserve original value since we use `maxspeed` for our processed data
+  local maxspeed_data = {}
 
   -- Try to find maxspeed information in the following order:
   -- 1. `maxspeed` tag
@@ -36,19 +36,22 @@ function Maxspeed(object)
 
   -- all tags that are shown on the application
   local tags_cc = {
+    "maxspeed",
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
     "maxspeed:type",
     "zone:maxspeed",
     "source:maxspeed",
-    "check_date:maxspeed",
   }
-  -- TODO: replace with copy
-  CopyTags(tags, maxspeed_data, tags_cc)
+
+  CopyTags(tags, maxspeed_data, tags_cc, "osm_")
 
   -- Freshness of data (AFTER `FilterTags`!)
-  IsFresh(object, "check_date:maxspeed", maxspeed_data, 'maxspeed')
+  -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
+  if tags["check_date:maxspeed"] then
+    maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
+  end
 
   maxspeed_data.maxspeed = maxspeed
   maxspeed_data.maxspeed_source = source

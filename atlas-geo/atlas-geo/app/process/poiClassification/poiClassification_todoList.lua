@@ -18,9 +18,10 @@ local table = osm2pgsql.define_table({
   name = 'poiClassification_todoList',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'point' },
+    { column = 'value_to_check', type = 'text' },
+    { column = 'tags',           type = 'jsonb' },
+    { column = 'meta',           type = 'jsonb' },
+    { column = 'geom',           type = 'point' },
   }
 })
 
@@ -133,6 +134,12 @@ local function ExitProcessing(object)
     "watering_place",
     "workshop",
     "yes",
+    "todo",
+    "barrier",
+    "warehouse",
+    "closed",
+    "cooking_school",
+    "seat",
   })
   if skip_list_amenity[object.tags.amenity] then
     return true
@@ -177,6 +184,7 @@ function osm2pgsql.process_node(object)
   processTags(object.tags)
 
   table:insert({
+    value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
     tags = object.tags,
     meta = Metadata(object),
     geom = object:as_point()
@@ -191,6 +199,7 @@ function osm2pgsql.process_way(object)
   processTags(object.tags)
 
   table:insert({
+    value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
     tags = object.tags,
     meta = Metadata(object),
     geom = object:as_polygon():centroid()
@@ -203,6 +212,7 @@ function osm2pgsql.process_relation(object)
 
   processTags(object.tags)
   table:insert({
+    value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
     tags = object.tags,
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()

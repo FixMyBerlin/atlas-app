@@ -2,7 +2,6 @@
 set -e
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
-ID_FILTER="" # See README.md 'Process only a single object'
 
 FILTER_DIR="./filter/"
 

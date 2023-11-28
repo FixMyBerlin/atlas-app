@@ -1,3 +1,6 @@
 {
-  "recommendations": ["sumneko.lua"]
+  "recommendations": [
+    "sumneko.lua",
+    "adpyke.vscode-sql-formatter"
+  ]
 }
