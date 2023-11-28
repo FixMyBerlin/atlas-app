@@ -101,8 +101,8 @@ function Bikelanes(object, road)
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
-        local smoothness, smoothness_source, smoothness_confidence = DeriveSmoothness(cycleway)
-        local surface, surface_source = DeriveSurface(cycleway)
+        local smoothness_data = DeriveSmoothness(cycleway)
+        local surface_data = DeriveSurface(cycleway)
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         local oneway = nil
@@ -126,16 +126,13 @@ function Bikelanes(object, road)
         if tags[freshTag] then
           cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
         end
-        
+
         cycleway.category = category
         cycleway.offset = sign * width / 2
         cycleway.road = road
-        cycleway.smoothness = smoothness
-        cycleway.smoothness_source = smoothness_source
-        cycleway.smoothness_confidence = smoothness_confidence
-        cycleway.surface = surface
-        cycleway.surface_source = surface_source
         cycleway.oneway = oneway
+        MergeTable(cycleway, surface_data)
+        MergeTable(cycleway, smoothness_data)
 
         bikelanesTable:insert({
           tags = cycleway,
