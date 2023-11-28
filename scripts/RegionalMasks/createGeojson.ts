@@ -135,8 +135,12 @@ for (const region of additionalRegionAttributes) {
 
     // Store separate files for debugging
     await Bun.write(
-      path.resolve(__dirname, `./geojson/${regionName}-regional-mask-for-debugging.geojson`),
+      path.resolve(__dirname, `./geojson/${regionName}-boundary-for-debugging.geojson`),
       JSON.stringify(boundaryFeature),
+    )
+    await Bun.write(
+      path.resolve(__dirname, `./geojson/${regionName}-mask-for-debugging.geojson`),
+      JSON.stringify(bufferFeature),
     )
     // And also store the bbox and centerOfMass for use in regions.const.ts
     await Bun.write(
