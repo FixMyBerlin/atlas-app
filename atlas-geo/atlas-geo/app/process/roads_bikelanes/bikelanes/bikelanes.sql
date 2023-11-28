@@ -9,13 +9,7 @@
 UPDATE
   "_bikelanes_temp"
 SET
-  geom = ST_Transform(
-    ST_OffsetCurve(
-      ST_Simplify(ST_Transform(geom, 25833), 0.5),
-      "_offset"
-    ),
-    3857
-  )
+  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "_offset"), 3857)
 WHERE
   ST_IsSimple(geom)
   AND NOT ST_IsClosed(geom)

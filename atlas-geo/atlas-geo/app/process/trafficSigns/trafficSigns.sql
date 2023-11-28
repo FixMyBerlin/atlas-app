@@ -1,11 +1,7 @@
 -- compute the orientation based on adjacent nodes
 CREATE temp TABLE orientations AS
 SELECT
-  avg(
-    degrees(
-      ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx + 1))
-    )
-  ) AS orientation,
+  avg(degrees(ST_Azimuth(st_pointn(geom, idx), st_pointn(geom, idx + 1)))) AS orientation,
   count(DISTINCT osm_id) AS ways_aggregated,
   node_id
 FROM
@@ -17,14 +13,8 @@ GROUP BY
 UPDATE
   "trafficSigns"
 SET
-  tags =(
-    tags || jsonb_build_object(
-      'direction',
-      orientations.orientation + (tags ->> 'offset') :: INTEGER,
-      'direction_source',
-      'way_orientation'
-    )
-  )
+  tags =(tags || jsonb_build_object('direction', orientations.orientation +(tags ->>
+    'offset')::integer, 'direction_source', 'way_orientation'))
 FROM
   orientations
 WHERE
@@ -35,11 +25,7 @@ WHERE
 UPDATE
   "trafficSigns"
 SET
-  tags = jsonb_set(
-    tags,
-    '{direction}',
-    to_jsonb(((tags ->> 'direction') :: numeric + 360) % 360)
-  )
+  tags = jsonb_set(tags, '{direction}', to_jsonb(((tags ->> 'direction')::numeric + 360) % 360))
 WHERE
   tags ? 'direction';
 
