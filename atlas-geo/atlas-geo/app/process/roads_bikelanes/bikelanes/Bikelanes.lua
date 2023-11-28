@@ -23,7 +23,6 @@ local bikelanesTable = osm2pgsql.define_table({
     { column = 'tags',     type = 'jsonb' },
     { column = 'meta',     type = 'jsonb' },
     { column = 'geom',     type = 'linestring' },
-    { column = '_offset',  type = 'real' }
   }
 })
 
@@ -135,7 +134,6 @@ function Bikelanes(object)
           tags = cycleway,
           meta = Metadata(object),
           geom = object:as_linestring(),
-          _offset = cycleway.offset
         })
         presence[sign] = presence[sign] or category
       end
