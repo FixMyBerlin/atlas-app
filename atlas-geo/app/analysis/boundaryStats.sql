@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION atlas_QuantizeLineString(ls Geometry(LineString), res
     )
     AS $$
 DECLARE
-    len numeric := st_length(ls);
+    len numeric := st_length(ST_Transform(ls, 25833));
     n int := greatest(round(len / res), 1)::int;
 BEGIN
     RETURN query
@@ -16,7 +16,6 @@ BEGIN
 END;
 $$
 LANGUAGE plpgsql;
-
 
 -- STEP 1: quantize bikelane data into points
 CREATE temp TABLE _bikelanesQuantized AS
@@ -46,14 +45,14 @@ SELECT
     osm_id,
     geom,
     region,
-    jsonb_object_agg(category, len) AS bikelanes_category
+    jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelanes_category
 FROM (
     SELECT
         boundaries.osm_id AS osm_id,
         boundaries.geom AS geom,
         boundaries.tags ->> 'name' AS region,
         _bikelanesQuantized.tags ->> 'category' AS category,
-        sum(_bikelanesQuantized.len) AS len
+        round(sum(_bikelanesQuantized.len) / 1000, 1) AS len
     FROM
         boundaries
         JOIN _bikelanesQuantized ON ST_Intersects(boundaries.geom, _bikelanesQuantized.geom)
@@ -71,8 +70,6 @@ DROP TABLE _bikelanesQuantized;
 -- this line is only for making pg_tileserve display the table
 SELECT
     UpdateGeometrySRID('boundaryStats', 'geom', 3857);
-
-
 
 -- -- for `jsonb` with numeric values return a normalized object (all values sum to 100) which also includes the total value
 -- CREATE OR REPLACE FUNCTION atlas_NormalizeDistribution(dist jsonb)
