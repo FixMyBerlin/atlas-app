@@ -1,12 +1,10 @@
-import { getBlitzContext } from '@blitzjs/auth'
-import { invoke } from 'src/blitz-server'
+import { invoke } from '@blitzjs/rpc'
 import getRegions from 'src/regions/queries/getRegions'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListNonpublic = async () => {
-  const ctx = await getBlitzContext()
-  const user = await getCurrentUser(null, ctx)
+  const user = await invoke(getCurrentUser, null)
   if (user?.role !== 'ADMIN') return null
 
   // Has to be below the role check.

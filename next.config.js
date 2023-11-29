@@ -1,5 +1,5 @@
 const { withBlitz } = require('@blitzjs/next')
-const { withNextAuthAdapter } = require("@blitzjs/auth/next-auth")
+const { withNextAuthAdapter } = require("@blitzjs/auth")
 
 /**
  * @type {import('@blitzjs/next').BlitzConfig}

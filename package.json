@@ -42,9 +42,9 @@
     "schema": "db/schema.prisma"
   },
   "dependencies": {
-    "@blitzjs/auth": "2.0.0-beta.36",
-    "@blitzjs/next": "2.0.0-beta.36",
-    "@blitzjs/rpc": "2.0.0-beta.36",
+    "@blitzjs/auth": "2.0.0-beta.34",
+    "@blitzjs/next": "2.0.0-beta.34",
+    "@blitzjs/rpc": "2.0.0-beta.34",
     "@headlessui/react": "^1.7.17",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "3.3.2",
@@ -54,7 +54,7 @@
     "@turf/turf": "^6.5.0",
     "@types/js-cookie": "3.0.6",
     "@types/mapbox__mapbox-gl-draw": "^1.4.6",
-    "blitz": "2.0.0-beta.36",
+    "blitz": "2.0.0-beta.34",
     "dompurify": "^3.0.6",
     "immer": "10.0.3",
     "js-cookie": "3.0.5",

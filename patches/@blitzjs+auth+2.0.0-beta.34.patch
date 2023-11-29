@@ -1,8 +1,8 @@
 diff --git a/node_modules/@blitzjs/auth/dist/next-auth.cjs b/node_modules/@blitzjs/auth/dist/next-auth.cjs
-index c13503f..eace2f4 100644
+index f7b02a2..2bcb910 100644
 --- a/node_modules/@blitzjs/auth/dist/next-auth.cjs
 +++ b/node_modules/@blitzjs/auth/dist/next-auth.cjs
-@@ -405,7 +405,10 @@ function NextAuthAdapter(config) {
+@@ -358,7 +358,10 @@ function NextAuthAdapter(config) {
          cookies: internalRequest.cookies,
          isPost: req.method === "POST"
        });
