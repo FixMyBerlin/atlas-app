@@ -10,6 +10,7 @@ jobs:
       ENVIRONMENT: production
       NEXT_PUBLIC_APP_ORIGIN: https://radverkehrsatlas.de
       NEXT_PUBLIC_APP_ENV: production
+      TRAEFIK_HOST: radverkehrsatlas.de
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

@@ -15,8 +15,8 @@ services:
       - 3000:3000
     labels:
       - "traefik.enable=true"
-      - "traefik.http.services.staging.loadbalancer.server.port=3000"
-      - "traefik.http.routers.staging.rule=Host(`staging.radverkehrsatlas.de`)"
-      - "traefik.http.routers.staging.entrypoints=websecure"
-      - "traefik.http.routers.staging.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.staging.tls=true"
+      - "traefik.http.services.container.loadbalancer.server.port=3000"
+      - "traefik.http.routers.container.rule=Host(`${TRAEFIK_HOST}`)"
+      - "traefik.http.routers.container.entrypoints=websecure"
+      - "traefik.http.routers.container.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.container.tls=true"
