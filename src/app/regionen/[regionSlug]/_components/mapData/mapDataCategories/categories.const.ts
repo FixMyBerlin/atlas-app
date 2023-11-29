@@ -8,6 +8,7 @@ export type MapDataCategoryIds =
   | 'poi'
   | 'roads_LEGACY'
   | 'roads'
+  | 'statistics'
   | 'surface_LEGACY'
   | 'surface'
   // Parking Atlas
@@ -125,6 +126,15 @@ export const categories: MapDataCategory[] = [
       { id: 'landuse', defaultStyle: 'hidden', ui: 'dropdown' },
       { id: 'publicTransport', defaultStyle: 'hidden', ui: 'dropdown' }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
       { id: 'barriers', defaultStyle: 'default', ui: 'dropdown' },
+      { id: 'boundaries', defaultStyle: 'default', ui: 'dropdown' },
+    ],
+  },
+  {
+    id: 'statistics',
+    name: 'Statistik',
+    desc: '',
+    subcategories: [
+      { id: 'bikelanesStatistics', defaultStyle: 'default', ui: 'dropdown' },
       { id: 'boundaries', defaultStyle: 'default', ui: 'dropdown' },
     ],
   },

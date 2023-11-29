@@ -31,6 +31,11 @@ import {
   subcat_bikelanesPresence_legacy,
 } from './mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
 import {
+  SubcatBikelanesStatsId,
+  SubcatBikelanesStatsStyleIds,
+  subcat_bikelanesStatistics,
+} from './mapDataSubcategories/subcat_bikelanesStatistics.const'
+import {
   SubcatBikelanesSurfaceId,
   SubcatBikelanesSurfaceStyleIds,
   subcat_bikelanesSurface,
@@ -150,6 +155,7 @@ export type SubcategoryIds =
   | SubcatBikelanesId
   | SubcatBikelanesPresenceId
   | SubcatBikelanesPresenceIdLegacy
+  | SubcatBikelanesStatsId
   | SubcatBikelanesSurfaceId
   | SubcatBoundariesId
   | SubcatBuildingsId
@@ -182,6 +188,7 @@ export type SubcategoryStyleIds =
   | SubcatBicycleParkingStyleIds
   | SubcatBikelanesPresenceStyleIds
   | SubcatBikelanesPresenceStyleIdsLegacy
+  | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds
   | SubcatBikelanesSurfaceStyleIds
   | SubcatBoundariesStyleIds
@@ -220,6 +227,7 @@ export const mapData: MapData = {
     subcat_bikelanes,
     subcat_bikelanesPresence_legacy,
     subcat_bikelanesPresence,
+    subcat_bikelanesStatistics,
     subcat_bikelanesSurface,
     subcat_boundaries,
     subcat_buildings,

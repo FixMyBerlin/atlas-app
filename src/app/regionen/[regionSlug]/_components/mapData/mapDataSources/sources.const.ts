@@ -11,6 +11,7 @@ export type SourcesIds =
   | 'atlas_bikelanes'
   | 'atlas_bikelanesPresence'
   | 'atlas_boundaries'
+  | 'atlas_boundaryStats'
   | 'atlas_buildings'
   | 'atlas_landuse'
   | 'atlas_lit'
@@ -71,6 +72,22 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'area_id',
+      documentedKeys: ['name', 'admin_level'],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
+  {
+    id: 'atlas_boundaryStats',
+    tiles: `${tilesUrl}/public.boundaryStats/{z}/{x}/{y}.pbf`,
+    attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
       documentedKeys: ['name', 'admin_level'],
     },
     // presence: { enabled: false },

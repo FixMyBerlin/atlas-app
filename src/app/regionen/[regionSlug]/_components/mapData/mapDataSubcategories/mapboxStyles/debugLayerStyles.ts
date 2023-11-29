@@ -1,11 +1,14 @@
+import { wrapFilterWithAll } from '../../../Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
 import { MapDataVisLayer } from '../../types'
 
 export const debugLayerStyles = ({
   source,
   sourceLayer,
+  filter,
 }: {
   source: string
   sourceLayer: string
+  filter?: ['match', ['get', string], string[], boolean, boolean]
 }) => {
   return [
     {
@@ -18,6 +21,7 @@ export const debugLayerStyles = ({
         'line-color': '#a21caf',
         'line-opacity': 0.6,
       },
+      filter: wrapFilterWithAll(filter),
       layout: {},
     },
     {
@@ -30,6 +34,7 @@ export const debugLayerStyles = ({
         'circle-opacity': 0.6,
         'circle-color': '#701a75',
       },
+      filter: wrapFilterWithAll(filter),
       layout: {},
     },
     {
@@ -42,6 +47,7 @@ export const debugLayerStyles = ({
         'fill-outline-color': '#701a75',
         'fill-opacity': 0.3,
       },
+      filter: wrapFilterWithAll(filter),
       layout: {},
     },
   ] satisfies MapDataVisLayer[]

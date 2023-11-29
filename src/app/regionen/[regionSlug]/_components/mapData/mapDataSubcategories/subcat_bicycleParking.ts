@@ -1,7 +1,6 @@
 import { MapDataSubcat } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bicycleParking'
 const source = 'atlas_bicycleParking'
