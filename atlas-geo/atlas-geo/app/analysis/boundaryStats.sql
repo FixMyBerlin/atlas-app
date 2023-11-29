@@ -56,7 +56,9 @@ FROM (
     FROM
         boundaries
         JOIN _bikelanesQuantized ON ST_Intersects(boundaries.geom, _bikelanesQuantized.geom)
-    WHERE (boundaries.tags ->> 'admin_level')::int IN (4, 6, 7, 8)
+    WHERE
+        -- Docs https://wiki.openstreetmap.org/wiki/DE:Grenze#Innerstaatliche_Grenzen
+        (boundaries.tags ->> 'admin_level')::int IN (4, 6, 7, 8)
 GROUP BY
     boundaries.osm_id,
     _bikelanesQuantized.tags ->> 'category') AS sq
