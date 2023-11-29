@@ -3,7 +3,6 @@ import { SelectCategory } from './SelectCategory'
 
 export const SelectCategories = () => {
   const { configParam } = useConfigParam()
-  console.log('## SelectCategories rendered', configParam)
 
   if (!configParam) return null
 
