@@ -45,12 +45,14 @@ SELECT
     osm_id,
     geom,
     region,
+    admin_level,
     jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelanes_category
 FROM (
     SELECT
         boundaries.osm_id AS osm_id,
         boundaries.geom AS geom,
         boundaries.tags ->> 'name' AS region,
+        boundaries.tags ->> 'admin_level' AS admin_level,
         _bikelanesQuantized.tags ->> 'category' AS category,
         round(sum(_bikelanesQuantized.len) / 1000, 1) AS len
     FROM
@@ -65,7 +67,8 @@ GROUP BY
 GROUP BY
     osm_id,
     geom,
-    region;
+    region,
+    admin_level;
 
 DROP TABLE _bikelanesQuantized;
 
