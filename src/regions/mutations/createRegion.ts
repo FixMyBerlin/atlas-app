@@ -7,7 +7,10 @@ export default resolver.pipe(
   resolver.authorize('ADMIN'),
   async (input) => {
     const region = await db.region.create({
-      data: { ...input, public: Boolean(input.public) },
+      data: {
+        ...input,
+        public: input.public === 'true' ? true : false,
+      },
     })
 
     return region
