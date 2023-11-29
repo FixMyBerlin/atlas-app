@@ -11,6 +11,9 @@ on:
       NEXT_PUBLIC_APP_ENV:
         required: true
         type: string
+      TRAEFIK_HOST:
+        required: true
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
@@ -99,6 +102,7 @@ jobs:
             echo GITHUB_SHA='${{ github.sha }}' > .env
             echo NEXT_PUBLIC_APP_ORIGIN='${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}' >> .env
             echo NEXT_PUBLIC_APP_ENV='${{ inputs.NEXT_PUBLIC_APP_ENV }}' >> .env
+            echo TRAEFIK_HOST='${{ inputs.TRAEFIK_HOST }}' >> .env
             echo DATABASE_URL='${{ secrets.DATABASE_URL }}' >> .env
             echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
             echo OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}' >> .env
