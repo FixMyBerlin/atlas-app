@@ -72,6 +72,7 @@ services:
     image: postgis/postgis:14-3.3-alpine
     container_name: db
     shm_size: 1gb
+    restart: unless-stopped
     command: ["postgres", "-c", "shared_buffers=3GB", "-c", "work_mem=128MB", "-c", "maintenance_work_mem=1024MB", "-c", "temp_buffers=24MB", "-c", "effective_cache_size=8GB", "-c", "wal_buffers=16MB", "-c", "min_wal_size=1GB", "-c", "max_wal_size=4GB"]
     environment:
       PGUSER:
