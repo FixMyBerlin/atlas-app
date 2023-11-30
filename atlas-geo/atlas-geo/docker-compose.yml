@@ -33,7 +33,7 @@ services:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
     command: ["--auto-bounds=calc"]
     ports:
-      - 3000:3000
+      - 3333:3000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
