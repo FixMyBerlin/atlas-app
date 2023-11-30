@@ -16,7 +16,8 @@ export default function AdminNewMembershipPage() {
   const handleSubmit = async (values: HandleSubmit) => {
     try {
       await createMembershipMutation({ ...values })
-      await router.push('/admin/memberships')
+      router.refresh()
+      router.push('/admin/memberships')
     } catch (error: any) {
       console.error(error)
       return { [FORM_ERROR]: error }

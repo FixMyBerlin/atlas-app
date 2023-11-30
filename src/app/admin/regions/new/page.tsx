@@ -31,6 +31,7 @@ export default function AdminNewRegionPage() {
         onSubmit={async (values) => {
           try {
             await createRegionMutation(values)
+            router.refresh()
             router.push(`/admin/regions`)
           } catch (error: any) {
             console.error(error)
