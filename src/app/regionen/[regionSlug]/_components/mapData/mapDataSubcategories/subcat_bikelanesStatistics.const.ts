@@ -4,7 +4,7 @@ import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
 const subcatId = 'bikelanesStatistics'
 const source = 'atlas_boundaryStats'
-const sourceLayer = 'public.boundaryStats'
+const sourceLayer = 'boundaryStats'
 export type SubcatBikelanesStatsId = typeof subcatId
 export type SubcatBikelanesStatsStyleIds =
   | 'default'

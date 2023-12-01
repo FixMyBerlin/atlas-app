@@ -19,7 +19,7 @@ export const subcat_places: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_places',
         source: 'atlas_places',
-        sourceLayer: 'public.places',
+        sourceLayer: 'places',
       }),
       legends: null,
     },
@@ -30,7 +30,7 @@ export const subcat_places: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_placescircle',
         source: 'atlas_places',
-        sourceLayer: 'public.places',
+        sourceLayer: 'places',
       }),
       legends: null,
     },

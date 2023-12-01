@@ -4,7 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'poi'
 const source = 'atlas_poiClassification'
-const sourceLayer = 'public.poiClassification'
+const sourceLayer = 'poiClassification'
 export type SubcatPoiId_Tarmac = typeof subcatId
 export type SubcatPoiStyleIds_Tarmac = 'default'
 

@@ -4,7 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'roads'
 const source = 'atlas_roads'
-const sourceLayer = 'public.roads'
+const sourceLayer = 'roads'
 export type SubcatRoadsId = typeof subcatId
 export type SubcatRoadsStyleIds =
   | 'default'

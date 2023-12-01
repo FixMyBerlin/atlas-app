@@ -21,12 +21,12 @@ export const subcat_barriers: MapDataSubcat = {
         mapboxStyleLayers({
           group: 'atlas_barriers__area',
           source,
-          sourceLayer: 'public.barrierAreas',
+          sourceLayer: 'barrierAreas',
         }),
         mapboxStyleLayers({
           group: 'atlas_barriers__line',
           source,
-          sourceLayer: 'public.barrierLines',
+          sourceLayer: 'barrierLines',
         }),
       ].flat(),
     },

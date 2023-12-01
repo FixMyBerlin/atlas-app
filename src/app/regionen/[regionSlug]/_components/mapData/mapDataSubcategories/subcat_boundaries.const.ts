@@ -19,7 +19,7 @@ export const subcat_boundaries: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
         source: 'atlas_boundaries',
-        sourceLayer: 'public.boundaries',
+        sourceLayer: 'boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['7'], true, false],
       }),
     },
@@ -30,7 +30,7 @@ export const subcat_boundaries: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
         source: 'atlas_boundaries',
-        sourceLayer: 'public.boundaries',
+        sourceLayer: 'boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['8'], true, false],
       }),
     },
@@ -41,7 +41,7 @@ export const subcat_boundaries: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_boundaries',
         source: 'atlas_boundaries',
-        sourceLayer: 'public.boundaries',
+        sourceLayer: 'boundaries',
         additionalFilter: ['match', ['get', 'admin_level'], ['9', '10'], true, false],
       }),
     },

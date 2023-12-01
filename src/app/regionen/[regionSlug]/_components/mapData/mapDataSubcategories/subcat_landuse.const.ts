@@ -19,7 +19,7 @@ export const subcat_landuse: MapDataSubcat = {
       layers: mapboxStyleLayers({
         group: 'atlas_landuse',
         source: 'atlas_landuse',
-        sourceLayer: 'public.landuse',
+        sourceLayer: 'landuse',
       }),
       legends: [
         {

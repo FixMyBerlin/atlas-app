@@ -4,8 +4,8 @@ import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
 const subcatId = 'bicycleParking'
 const source = 'atlas_bicycleParking'
-const sourceLayerPoints = 'public.bicycleParking_points'
-const sourceLayerAreas = 'public.bicycleParking_areas'
+const sourceLayerPoints = 'bicycleParking_points'
+const sourceLayerAreas = 'bicycleParking_areas'
 export type SubcatBicycleParkingId = typeof subcatId
 export type SubcatBicycleParkingStyleIds = 'default' | 'witharea'
 

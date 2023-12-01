@@ -5,7 +5,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'signs'
 const source = 'atlas_trafficSigns'
-const sourceLayer = 'public.trafficSigns'
+const sourceLayer = 'trafficSigns'
 export type SubcatSignsId = typeof subcatId
 export type SubcatSignsStyleIds = 'default'
 

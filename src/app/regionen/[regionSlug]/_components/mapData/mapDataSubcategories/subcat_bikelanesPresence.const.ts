@@ -5,7 +5,7 @@ import { defaultLegend } from './subcat_bikelanes.const'
 
 const subcatId = 'bikelanesPresence'
 const source = 'atlas_roads'
-const sourceLayer = 'public.roads'
+const sourceLayer = 'roads'
 export type SubcatBikelanesPresenceId = typeof subcatId
 export type SubcatBikelanesPresenceStyleIds = 'default'
 
