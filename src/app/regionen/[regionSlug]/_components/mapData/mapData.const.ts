@@ -46,11 +46,6 @@ import {
   subcat_boundaries,
 } from './mapDataSubcategories/subcat_boundaries.const'
 import {
-  SubcatBuildingsId,
-  SubcatBuildingsStyleIds,
-  subcat_buildings,
-} from './mapDataSubcategories/subcat_buildings.const'
-import {
   SubcatEducationId,
   SubcatEducationStyleIds,
   subcat_education,
@@ -158,7 +153,6 @@ export type SubcategoryIds =
   | SubcatBikelanesStatsId
   | SubcatBikelanesSurfaceId
   | SubcatBoundariesId
-  | SubcatBuildingsId
   | SubcatEducationId
   | SubcatLanduseId
   | SubcatLitId
@@ -192,7 +186,6 @@ export type SubcategoryStyleIds =
   | SubcatBikelanesStyleIds
   | SubcatBikelanesSurfaceStyleIds
   | SubcatBoundariesStyleIds
-  | SubcatBuildingsStyleIds
   | SubcatEducationStyleIds
   | SubcatLanduseStyleIds
   | SubcatLitStyleIds
@@ -230,7 +223,6 @@ export const mapData: MapData = {
     subcat_bikelanesStatistics,
     subcat_bikelanesSurface,
     subcat_boundaries,
-    subcat_buildings,
     subcat_education,
     subcat_landuse,
     subcat_lit_legacy,
