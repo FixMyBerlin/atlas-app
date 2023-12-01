@@ -6,14 +6,14 @@ export const DownloadModalUpdateDate: React.FC = () => {
   const [osmDataDate, setOsmDataDate] = useState<null | any>(null)
   const [isLoading, setLoading] = useState(true)
   const [isError, setError] = useState(false)
-  const apiUrl = `${getTilesUrl()}/public.bikelanes.json`
+  const apiUrl = `${getTilesUrl()}/bikelanes`
 
   useEffect(() => {
     void fetch(apiUrl)
       .then((res) => res.json())
       .then((json) => {
-        if (json?.description) {
-          setOsmDataDate(JSON.parse(json.description))
+        if (json?.osm_data_from) {
+          setOsmDataDate(json.osm_data_from)
         }
         setLoading(false)
       })
@@ -27,7 +27,10 @@ export const DownloadModalUpdateDate: React.FC = () => {
     <p className="flex items-center gap-2 pb-5 text-sm">
       Letzte Aktualisierung:{' '}
       {osmDataDate && (
-        <span>{new Date(Date.parse(osmDataDate?.osm_data_from)).toLocaleDateString('de-DE')}</span>
+        <span>
+          {new Date(osmDataDate).toLocaleDateString('de-DE')}{' '}
+          <span className="text-gray-400">{new Date(osmDataDate).toLocaleTimeString('de-DE')}</span>
+        </span>
       )}
       {isLoading && <SmallSpinner />}
       {isError && <span className="text-orange-500">Fehler beim Laden des Datums</span>}
