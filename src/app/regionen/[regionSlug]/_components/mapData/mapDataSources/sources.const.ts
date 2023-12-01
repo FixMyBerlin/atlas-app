@@ -31,6 +31,7 @@ export type SourceVerificationApiIdentifier = 'bikelanes'
 
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
+  | 'bicycleParking_points'
   | 'bikelanes_verified'
   | 'bikelanes'
   | 'bikelanesPresence'
@@ -474,7 +475,12 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
-    export: { enabled: false }, // TODO
+    export: {
+      enabled: true,
+      apiIdentifier: 'bicycleParking_points',
+      title: 'Fahrradstellplätze',
+      desc: 'Alle Fahrradstellplätze. Flächen werden als Punkt ausgegeben.',
+    },
   },
   {
     // https://tiles.radverkehrsatlas.de/trafficSigns
