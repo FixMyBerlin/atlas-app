@@ -129,12 +129,7 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'roadClassification',
-      title: 'Straßenklassifizierung',
-      desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
-    },
+    export: { enabled: false },
   },
   {
     id: 'atlas_bikelanes',
