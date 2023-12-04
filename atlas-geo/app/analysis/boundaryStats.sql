@@ -45,25 +45,30 @@ SELECT
     osm_id,
     geom,
     region,
+    admin_level,
     jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelanes_category
 FROM (
     SELECT
         boundaries.osm_id AS osm_id,
         boundaries.geom AS geom,
         boundaries.tags ->> 'name' AS region,
+        boundaries.tags ->> 'admin_level' AS admin_level,
         _bikelanesQuantized.tags ->> 'category' AS category,
         round(sum(_bikelanesQuantized.len) / 1000, 1) AS len
     FROM
         boundaries
         JOIN _bikelanesQuantized ON ST_Intersects(boundaries.geom, _bikelanesQuantized.geom)
-    WHERE (boundaries.tags ->> 'admin_level')::int IN (4, 6, 7, 8)
+    WHERE
+        -- Docs https://wiki.openstreetmap.org/wiki/DE:Grenze#Innerstaatliche_Grenzen
+        (boundaries.tags ->> 'admin_level')::int IN (4, 6, 7, 8)
 GROUP BY
     boundaries.osm_id,
     _bikelanesQuantized.tags ->> 'category') AS sq
 GROUP BY
     osm_id,
     geom,
-    region;
+    region,
+    admin_level;
 
 DROP TABLE _bikelanesQuantized;
 
