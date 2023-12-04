@@ -2,7 +2,7 @@ import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
 import { twJoin } from 'tailwind-merge'
 import React from 'react'
-import { SourcesDatasetsIds } from '../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { SourcesDatasetsIds } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 
 type Props = {
   value: SourcesDatasetsIds

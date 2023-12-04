@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { getSourceData, getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
+import { getSourceData, getSubcategoryData } from '../../../_mapData/utils/getMapDataUtils'
 import { flattenSubcategories } from '../../mapStateConfig/utils/flattenSubcategories'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'

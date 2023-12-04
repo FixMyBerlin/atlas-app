@@ -4,8 +4,8 @@ import {
   SubcategoryIds,
   SubcategoryStyleIds,
   SubcatStyleLegendIds,
-} from '../../mapData/mapData.const'
-import { MapDataStyle, MapDataStyleLegend } from '../../mapData/types'
+} from '../../../_mapData/mapData.const'
+import { MapDataStyle, MapDataStyleLegend } from '../../../_mapData/types'
 import {
   createSubcatStyleKey,
   createSubcatStyleLegendKey,

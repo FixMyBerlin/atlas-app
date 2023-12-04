@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { createMapRegionConfig } from './app/regionen/[regionSlug]/_components/mapStateConfig/createMapRegionConfig'
 import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/configCustomParser'
 import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { staticRegion } from './regions/data/regions.const'
+import { staticRegion } from './app/regionen/(index)/_data/regions.const'
 
 // Initialize /regionen/:slug with a `map` + `config` if none was given.
 export function middleware(request: NextRequest) {

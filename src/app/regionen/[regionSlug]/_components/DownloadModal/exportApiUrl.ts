@@ -1,5 +1,5 @@
-import { StaticRegion } from 'src/regions/data/regions.const'
-import { SourceExportApiIdentifier } from '../mapData/mapDataSources/sources.const'
+import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
+import { SourceExportApiIdentifier } from '../../_mapData/mapDataSources/sources.const'
 import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 
 export const exportApiUrlBbox = (

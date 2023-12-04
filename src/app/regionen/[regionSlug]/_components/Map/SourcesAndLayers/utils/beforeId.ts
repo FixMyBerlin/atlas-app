@@ -1,4 +1,8 @@
-import { MapDataSubcat, MapDataVisLayer, TBeforeIds } from '../../../mapData/types'
+import {
+  MapDataSubcat,
+  MapDataVisLayer,
+  TBeforeIds,
+} from 'src/app/regionen/[regionSlug]/_mapData/types'
 
 // We place our layers between given Maptiler Layer IDs:
 // Key: LayerType – we group our data based on layer type.

@@ -1,4 +1,4 @@
-import { wrapFilterWithAll } from '../../../Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
+import { wrapFilterWithAll } from '../../../_components/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
 import { MapDataVisLayer } from '../../types'
 
 export const debugLayerStyles = ({

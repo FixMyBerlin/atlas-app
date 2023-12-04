@@ -6,8 +6,8 @@ import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
   MapDataCategoryIds,
   categories,
-} from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const'
-import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSources/sourcesBackgroundsRaster.const'
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
+import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number

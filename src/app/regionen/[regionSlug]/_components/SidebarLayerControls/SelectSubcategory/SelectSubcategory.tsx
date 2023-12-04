@@ -1,7 +1,7 @@
 import React from 'react'
 import { SelectStyles } from '../SelectStyles/SelectStyles'
-import { getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
-import { MapDataCategory } from '../../mapData/types'
+import { getSubcategoryData } from '../../../_mapData/utils/getMapDataUtils'
+import { MapDataCategory } from '../../../_mapData/types'
 import { CategoryConfig } from '../../mapStateConfig/type'
 import { twJoin } from 'tailwind-merge'
 
@@ -20,7 +20,7 @@ export const SelectSubcategory: React.FC<Props> = ({ categoryData, categoryConfi
       <div>
         {categoryData.subcategories.map((subcategoryDataConfig) => {
           // What we get here as `subcategoryDataConfig` is the `id`+`defaultStyle`
-          // object from src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const.ts
+          // object from src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const.ts
           // Therefore, we need to look up the full data:
           const subcatData = getSubcategoryData(subcategoryDataConfig.id)
           const subcatConfig = categoryConfig.subcategories.find(

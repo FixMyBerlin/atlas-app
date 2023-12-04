@@ -13,7 +13,7 @@ import {
 import chalk from 'chalk'
 import path from 'node:path'
 import { z } from 'zod'
-import { staticRegion } from 'src/regions/data/regions.const'
+import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
 
 console.log(chalk.inverse.bold('START'), __filename)

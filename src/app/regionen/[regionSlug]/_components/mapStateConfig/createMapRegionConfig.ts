@@ -1,5 +1,5 @@
-import { MapDataCategoryIds } from '../mapData/mapDataCategories/categories.const'
-import { getCategoryData, getSubcategoryData } from '../mapData/utils/getMapDataUtils'
+import { MapDataCategoryIds } from '../../_mapData/mapDataCategories/categories.const'
+import { getCategoryData, getSubcategoryData } from '../../_mapData/utils/getMapDataUtils'
 import { CategoryConfig } from './type'
 
 /**
@@ -15,7 +15,7 @@ export const createMapRegionConfig = (regionCategoryIds: MapDataCategoryIds[]) =
       active: categoryData.id === 'bikelanes' ?? false, // TODO: We probably want to extract this into the config, so we can specify the default active category per region.
       subcategories: categoryData.subcategories.map((subcategoryDataConfig) => {
         // What we get here as `subcategoryDataConfig` is the `id`+`defaultStyle`
-        // object from src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const.ts
+        // object from src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const.ts
         // Therefore, we need to look up the full data:
         const subcategoryData = getSubcategoryData(subcategoryDataConfig.id)
         return {

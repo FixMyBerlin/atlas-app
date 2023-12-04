@@ -6,7 +6,7 @@ import {
   getSourceData,
   getStyleData,
   getSubcategoryData,
-} from '../../mapData/utils/getMapDataUtils'
+} from '../../../_mapData/utils/getMapDataUtils'
 import { CategoryConfig } from '../../mapStateConfig/type'
 import {
   createDatasetSourceLayerKey,

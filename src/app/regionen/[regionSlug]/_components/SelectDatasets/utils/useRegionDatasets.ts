@@ -1,4 +1,4 @@
-import { sourcesDatasets } from '../../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { sourcesDatasets } from '../../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
 
 export const useRegionDatasets = () => {

@@ -1,4 +1,4 @@
-import { RegionSlug } from 'src/regions/data/regions.const'
+import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { SubcategoryIds, SubcategoryStyleIds } from './mapData.const'
 import {
   AnyLayer,
@@ -15,7 +15,7 @@ import {
   SourceVerificationApiIdentifier,
   SourcesIds,
 } from './mapDataSources/sources.const'
-import { LegendIconTypes } from '../SidebarLayerControls/SelectLegend/LegendIcons/types'
+import { LegendIconTypes } from '../_components/SidebarLayerControls/SelectLegend/LegendIcons/types'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
 export type MapDataBackgroundSource<TIds> = {

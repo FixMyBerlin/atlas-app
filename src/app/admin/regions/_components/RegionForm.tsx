@@ -3,7 +3,7 @@ import { LabeledRadiobuttonGroup } from 'src/app/_components/forms/LabeledRadiob
 import { LabeledSelect } from 'src/app/_components/forms/LabeledSelect'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
 import { Link } from 'src/app/_components/links/Link'
-import { staticRegion } from 'src/regions/data/regions.const'
+import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 export { FORM_ERROR } from 'src/app/_components/forms/Form'
 

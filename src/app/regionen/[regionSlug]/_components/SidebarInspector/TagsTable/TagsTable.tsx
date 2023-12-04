@@ -1,7 +1,7 @@
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
-import { DatasetIds } from '../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../mapData/mapDataSources/sources.const'
+import { DatasetIds } from '../../../_mapData/mapDataSources/datasets/types'
+import { SourcesIds } from '../../../_mapData/mapDataSources/sources.const'
 import { TagsTableRow } from './TagsTableRow'
 import {
   TagsTableRowCompositHighway,
