@@ -17,6 +17,5 @@ export const useConfigParam = () => {
 
   const [configParam, setConfigParam] = useQueryState('config', configParamParser)
 
-  // We assume that at this point the config is present, because we initialize the page with one
-  return { configParam: configParam!, setConfigParam }
+  return { configParam, setConfigParam }
 }
