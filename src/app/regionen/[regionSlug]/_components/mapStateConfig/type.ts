@@ -1,16 +1,16 @@
-import { TopicIds, TopicStyleIds } from '../mapData/mapData.const'
-import { MapDataThemeIds } from '../mapData/themesMapData/themes.const'
+import { SubcategoryIds, SubcategoryStyleIds } from '../mapData/mapData.const'
+import { MapDataCategoryIds } from '../mapData/mapDataCategories/categories.const'
 
-export type ThemeConfig = {
-  id: MapDataThemeIds
+export type CategoryConfig = {
+  id: MapDataCategoryIds
   active: boolean
-  topics: TopicConfig[]
+  subcategories: SubcategoryConfig[]
 }
 
-export type TopicConfig = {
-  id: TopicIds
+export type SubcategoryConfig = {
+  id: SubcategoryIds
   styles: {
-    id: TopicStyleIds
+    id: SubcategoryStyleIds
     active: boolean
   }[]
 }

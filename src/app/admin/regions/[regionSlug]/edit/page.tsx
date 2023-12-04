@@ -49,6 +49,7 @@ export default function AdminEditRegionPage() {
               ...values,
               slug: region.slug,
             })
+            router.refresh()
             router.push('/admin/regions')
           } catch (error: any) {
             console.error(error)

@@ -1,29 +1,30 @@
 import invariant from 'tiny-invariant'
-import { mapData, TopicIds, TopicStyleIds } from '../mapData.const'
-import { SourcesIds } from '../sourcesMapData/sources.const'
+import { mapData, SubcategoryIds, SubcategoryStyleIds } from '../mapData.const'
+import { SourcesIds } from '../mapDataSources/sources.const'
 import {
   sourcesDatasets,
   SourcesDatasetsIds,
-} from '../sourcesMapData/sourcesDatasets/sourcesDatasets.const'
-import { MapDataThemeIds, themes } from '../themesMapData/themes.const'
-import { MapDataStyle, MapDataTopic } from '../types'
+} from '../mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { MapDataCategoryIds, categories } from '../mapDataCategories/categories.const'
+import { MapDataStyle, MapDataSubcat } from '../types'
 
-export const getThemeData = (themeId: MapDataThemeIds | undefined) => {
-  const themeData = themes.find((the) => the.id === themeId)
-  invariant(themeData, 'getThemeData: themeData required')
-  return themeData
+export const getCategoryData = (categoryId: MapDataCategoryIds | undefined) => {
+  const categoryData = categories.find((the) => the.id === categoryId)
+  invariant(categoryData, `getCategoryData: category data for ${categoryId} missing`)
+  return categoryData
 }
-export const getTopicData = (topicId: TopicIds | undefined) => {
-  const topicData = mapData?.topics.find((t) => t.id === topicId)
-  invariant(topicData, `getTopicData: topicData for ${topicId} missing`)
-  return topicData
+
+export const getSubcategoryData = (subcatId: SubcategoryIds | undefined) => {
+  const subcatData = mapData?.subcategories.find((t) => t.id === subcatId)
+  invariant(subcatData, `getSubcategoryData: subcategory data for ${subcatId} missing`)
+  return subcatData
 }
 
 export const getStyleData = (
-  topicData: MapDataTopic | undefined,
-  styleId: TopicStyleIds | undefined,
+  subcatData: MapDataSubcat | undefined,
+  styleId: SubcategoryStyleIds | undefined,
 ) => {
-  const styleData = topicData?.styles.find((s) => s.id === styleId)
+  const styleData = subcatData?.styles.find((s) => s.id === styleId)
   invariant(styleData, `getStyleData: styleData for ${styleId} missing`)
   return styleData
 }

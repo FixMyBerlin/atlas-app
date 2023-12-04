@@ -3,7 +3,7 @@ import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionU
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
-import { SourcesIds } from '../../mapData/sourcesMapData/sources.const'
+import { SourcesIds } from '../../mapData/mapDataSources/sources.const'
 import { getSourceData } from '../../mapData/utils/getMapDataUtils'
 import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { VerificationForm } from './VerificationForm/VerificationForm'

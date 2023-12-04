@@ -2,41 +2,45 @@ import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_components/Sel
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
-import { getSourceData, getStyleData, getTopicData } from '../../mapData/utils/getMapDataUtils'
-import { ThemeConfig } from '../../mapStateConfig/type'
+import {
+  getSourceData,
+  getStyleData,
+  getSubcategoryData,
+} from '../../mapData/utils/getMapDataUtils'
+import { CategoryConfig } from '../../mapStateConfig/type'
 import {
   createDatasetSourceLayerKey,
-  createSourceTopicStyleLayerKey,
+  createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
-type Props = { themes: ThemeConfig[] | undefined }
+type Props = { categories: CategoryConfig[] | undefined }
 
-const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
+const collectInteractiveLayerIdsFromCategory = ({ categories }: Props) => {
   const interactiveLayerIds: string[] = []
 
-  themes?.forEach((themeConfig) => {
-    if (themeConfig.active === false) return
+  categories?.forEach((categoryConfig) => {
+    if (categoryConfig.active === false) return
 
-    return themeConfig?.topics?.forEach((topicConfig) => {
-      const topicData = getTopicData(topicConfig.id)
+    return categoryConfig?.subcategories?.forEach((subcatConfig) => {
+      const subcatData = getSubcategoryData(subcatConfig.id)
 
-      topicConfig.styles.forEach((styleConfig) => {
-        const styleData = getStyleData(topicData, styleConfig.id)
+      subcatConfig.styles.forEach((styleConfig) => {
+        const styleData = getStyleData(subcatData, styleConfig.id)
         if (styleData.id === 'hidden') return
         if (styleConfig.active === false) return
 
         styleData.layers.forEach((layerConfig) => {
           // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
-          const sourceData = getSourceData(topicData.sourceId)
+          const sourceData = getSourceData(subcatData.sourceId)
           if (!sourceData.inspector.enabled) return
 
           const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
           if (layerData?.interactive === false) return
 
-          const layerKey = createSourceTopicStyleLayerKey(
-            topicData.sourceId,
-            topicConfig.id,
+          const layerKey = createSourceSubcatStyleLayerKey(
+            subcatData.sourceId,
+            subcatConfig.id,
             styleConfig.id,
             layerConfig.id,
           )
@@ -57,15 +61,17 @@ const collectInteractiveLayerIdsFromTheme = ({ themes }: Props) => {
 }
 
 export const useInteractiveLayers = () => {
-  // active layer from theme
+  // active layer from category
   const { configParam } = useConfigParam()
-  const currentThemes = configParam?.filter((th) => th.active === true)
+  const currentCategories = configParam?.filter((th) => th.active === true)
 
-  const themeActiveLayerIds = collectInteractiveLayerIdsFromTheme({ themes: currentThemes })
+  const categoryActiveLayerIds = collectInteractiveLayerIdsFromCategory({
+    categories: currentCategories,
+  })
 
   const { osmNotesParam } = useOsmNotesParam()
   if (osmNotesParam) {
-    themeActiveLayerIds.push(osmNotesLayerId)
+    categoryActiveLayerIds.push(osmNotesLayerId)
   }
 
   // active layer from datasets
@@ -80,5 +86,5 @@ export const useInteractiveLayers = () => {
       )
       .flat() || []
 
-  return [...themeActiveLayerIds, ...datasetsActiveLayerIds]
+  return [...categoryActiveLayerIds, ...datasetsActiveLayerIds]
 }

@@ -1,14 +1,13 @@
+import { StaticImageData } from 'next/image'
 import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
-import imageParking from 'src/app/_components/assets/parking.svg'
 import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
+import imageParking from 'src/app/_components/assets/parking.svg'
 import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
-  MapDataThemeIds,
-  themes,
-} from 'src/app/regionen/[regionSlug]/_components/mapData/themesMapData/themes.const'
-import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/sourcesMapData/sourcesBackgroundsRaster.const'
-import { StaticImageData } from 'next/image'
-import { adminIds } from 'src/users/components/utils/usersUtils'
+  MapDataCategoryIds,
+  categories,
+} from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const'
+import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSources/sourcesBackgroundsRaster.const'
 
 type RegionMap = {
   lat: number
@@ -26,7 +25,7 @@ export type AdditionalRegionAttributes = {
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
   logoWhiteBackgroundRequired: boolean
-  themes: MapDataThemeIds[]
+  categories: MapDataCategoryIds[]
   backgroundSources: SourcesRasterIds[]
 } & (
   | {
@@ -63,6 +62,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionPath =
+  | 'bb' // Land Brandenburg
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -98,12 +98,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: imageBibi,
     logoWhiteBackgroundRequired: false,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
       'parking',
     ],
     backgroundSources: defaultBackgroundSources,
@@ -120,12 +120,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: imageTrTo,
     logoWhiteBackgroundRequired: true,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
   },
@@ -144,13 +144,14 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
+      'roads',
+      'surface',
       'parking',
-      'lit',
+      'bicycleParking',
     ],
     backgroundSources: [
       ...defaultBackgroundSources,
@@ -182,13 +183,14 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       max: [13.825, 52.4784],
     },
     logoPath: imageNudafa,
-    logoWhiteBackgroundRequired: false,
-    themes: [
+    logoWhiteBackgroundRequired: true,
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'lit',
-      'mapillary',
+      'roads',
+      'surface',
+      'bicycleParking',
     ],
     backgroundSources: defaultBackgroundSources,
   },
@@ -201,7 +203,7 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: null,
     logoPath: imageParking,
     logoWhiteBackgroundRequired: false,
-    themes: ['parking'],
+    categories: ['parking'],
     backgroundSources: [
       ...defaultBackgroundSources,
       'strassenbefahrung',
@@ -229,7 +231,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://trassenscout.de/favicon.svg',
     logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -244,7 +252,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://radnetz-mainz.de/favicon.ico',
     logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -260,7 +274,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath:
       'https://www.landkreis-lueneburg.de/_Resources/Static/Packages/Marktplatz.LKLG/Images/Logos/logo.png',
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -275,7 +295,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -290,7 +316,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://www.landhagen.de/images/logo2.png',
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -305,7 +337,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/c/c4/Amt_Woldegk_in_MBS.svg', // There is no better image apparently https://de.wikipedia.org/wiki/Amt_Woldegk
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -317,7 +355,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
     externalLogoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -330,7 +374,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
     logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -343,7 +393,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
     logoWhiteBackgroundRequired: false,
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -358,12 +414,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/1/12/DEU_Langerwehe_COA.jpg',
     logoWhiteBackgroundRequired: false,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -379,12 +435,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/e/ed/Wappen_Herrenberg.svg',
     logoWhiteBackgroundRequired: false,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -400,14 +456,36 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/7/73/Wappen_Magdeburg.svg',
     logoWhiteBackgroundRequired: false,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
-      'fromTo',
+      'poi',
       'bikelanes',
-      'roadClassification',
-      'lit',
+      'roads',
+      'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Brandenburg',
+    fullName: 'Land Brandenburg',
+    slug: 'bb',
+    osmRelationIds: [62504],
+    map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
+    bbox: {
+      min: [11.2662278, 51.359064],
+      max: [14.7658159, 53.5590907],
+    },
+    externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+      'bicycleParking',
+    ],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
     name: 'Fahrradstellplätze',
@@ -422,9 +500,12 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     externalLogoPath:
       'https://raw.githubusercontent.com/rapideditor/temaki/main/icons/bicycle_parked.svg',
     logoWhiteBackgroundRequired: true,
-    themes: [
+    categories: [
       // The order here specifies the order in the UI
       'bicycleParking',
+      'poi',
+      'bikelanes',
+      'roads',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },
@@ -440,8 +521,13 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    // themes: themes.map((t) => t.id).filter((id) => !id.endsWith('_NEW')),
-    themes: ['fromTo', 'bikelanes', 'roadClassification', 'lit'],
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      'poi',
+      'roads',
+      'surface',
+    ],
     backgroundSources: [...defaultBackgroundSources],
   },
   {
@@ -456,7 +542,7 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
     },
     logoPath: null,
     logoWhiteBackgroundRequired: false,
-    themes: themes.map((t) => t.id),
+    categories: categories.map((t) => t.id),
     backgroundSources: [...defaultBackgroundSources],
   },
 ]

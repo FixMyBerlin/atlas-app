@@ -1,14 +1,18 @@
 import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_components/mapData/topicsMapData/mapboxStyles/debugLayerStyles'
+import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { getSourceData, getStyleData, getTopicData } from '../../mapData/utils/getMapDataUtils'
+import {
+  getSourceData,
+  getStyleData,
+  getSubcategoryData,
+} from '../../mapData/utils/getMapDataUtils'
 import {
   createSourceKey,
-  createSourceTopicStyleLayerKey,
+  createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
@@ -16,32 +20,36 @@ import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
-// We add source+layer map-components for all themes and all topics of the given config.
+// We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
 // We also use this visbility to add/remove interactive layers.
 //
 // Performance Note:
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
-// However, we do not want to bloat our DOM, so we only render active themes and topics.
+// However, we do not want to bloat our DOM, so we only render active categories and subcategories.
 export const SourcesAndLayers = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const { configParam } = useConfigParam()
   const { backgroundParam } = useBackgroundParam()
 
-  const activeConfigThemes = configParam?.filter((th) => th.active === true)
-  if (!activeConfigThemes?.length) return null
+  const activeConfigCategories = configParam?.filter((th) => th.active === true)
+  if (!activeConfigCategories?.length) return null
 
   return (
     <>
-      {activeConfigThemes.map((activeConfigTheme) => {
+      {activeConfigCategories.map((activeConfigCategory) => {
         return (
-          <React.Fragment key={activeConfigTheme.id}>
-            {activeConfigTheme.topics.map((topicConfig) => {
-              const curTopicData = getTopicData(topicConfig.id)
-              const sourceData = getSourceData(curTopicData?.sourceId)
+          <React.Fragment key={activeConfigCategory.id}>
+            {activeConfigCategory.subcategories.map((subcategoryConfig) => {
+              const curSubcatData = getSubcategoryData(subcategoryConfig.id)
+              const sourceData = getSourceData(curSubcatData?.sourceId)
 
-              // One source can be used by multipe topics, so we need to make the key source-topic-specific.
-              const sourceId = createSourceKey(activeConfigTheme.id, sourceData.id, topicConfig.id)
+              // One source can be used by multipe subcategories, so we need to make the key source-category-specific.
+              const sourceId = createSourceKey(
+                activeConfigCategory.id,
+                sourceData.id,
+                subcategoryConfig.id,
+              )
 
               return (
                 <Source
@@ -52,13 +60,13 @@ export const SourcesAndLayers = () => {
                   minzoom={sourceData.minzoom || 8}
                   maxzoom={sourceData.maxzoom || 22}
                 >
-                  {topicConfig.styles.map((styleConfig) => {
-                    const styleData = getStyleData(curTopicData, styleConfig.id)
+                  {subcategoryConfig.styles.map((styleConfig) => {
+                    const styleData = getStyleData(curSubcatData, styleConfig.id)
 
                     if (styleConfig.id === 'hidden') {
-                      const layerId = createSourceTopicStyleLayerKey(
+                      const layerId = createSourceSubcatStyleLayerKey(
                         sourceData.id,
-                        topicConfig.id,
+                        subcategoryConfig.id,
                         styleConfig.id,
                         'hidden',
                       )
@@ -73,18 +81,15 @@ export const SourcesAndLayers = () => {
                       )
                     }
 
-                    // A style is visible when
-                    // … the theme is active (handled above) AND
-                    // … the current topic is active AND
-                    //               ^--- TODO This is wrong now, topics are always active but themes get active/hidden
-                    // … the current topic's style is active (which includes 'default' via the config initialization)
-                    const currStyleConfig = topicConfig.styles.find((s) => s.id === styleConfig.id)
+                    const currStyleConfig = subcategoryConfig.styles.find(
+                      (s) => s.id === styleConfig.id,
+                    )
                     const visibility = layerVisibility(currStyleConfig?.active || false)
 
                     return styleData?.layers?.map((layer) => {
-                      const layerId = createSourceTopicStyleLayerKey(
+                      const layerId = createSourceSubcatStyleLayerKey(
                         sourceData.id,
-                        topicConfig.id,
+                        subcategoryConfig.id,
                         styleConfig.id,
                         layer.id,
                       )
@@ -114,7 +119,7 @@ export const SourcesAndLayers = () => {
                         paint: layerPaint,
                         beforeId: beforeId({
                           backgroundId: backgroundParam,
-                          topicData: curTopicData,
+                          subcategoryData: curSubcatData,
                           layerType: layer.type,
                         }),
                       }

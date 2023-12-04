@@ -8,19 +8,27 @@ import { additionalRegionAttributes } from './regions/components/additionalRegio
 // Initialize /regionen/:slug with a `map` + `config` if none was given.
 export function middleware(request: NextRequest) {
   const url = new URL(request.url)
+  const paths = request.nextUrl.pathname.split('/')
+  const regionenSlugs = additionalRegionAttributes.map((r) => r.slug)
 
-  if (!url.searchParams.get('map') || !url.searchParams.get('config')) {
-    // const region = useStaticRegion() // we cannot use this here, so we do it manually:
-    const regionSlug = request.nextUrl.pathname.split('/').at(2)
-    const region = additionalRegionAttributes.find((r) => r.slug === regionSlug)
-    if (!region) return
+  // Guard: Only when params `map` or `config` are missing
+  if (url.searchParams.get('map') && url.searchParams.get('config')) return
+  // Guard: Only on path /regionen/<validSlug>
+  if (paths[1] !== 'regionen') return
+  if (paths[2] && !regionenSlugs.includes(paths[2])) return
+  // Guard: Skip sub pages like /regionen/slug/foo
+  if (paths.length !== 3) return
 
-    url.searchParams.append('map', serializeMapParam(region.map))
+  // const region = useStaticRegion() // we cannot use this here, so we do it manually:
+  const regionSlug = request.nextUrl.pathname.split('/').at(2)
+  const region = additionalRegionAttributes.find((r) => r.slug === regionSlug)
+  if (!region) return
 
-    const freshConfig = createMapRegionConfig(region.themes)
-    url.searchParams.append('config', customStringify(freshConfig))
-    return NextResponse.redirect(url.toString())
-  }
+  url.searchParams.append('map', serializeMapParam(region.map))
+
+  const freshConfig = createMapRegionConfig(region.categories)
+  url.searchParams.append('config', customStringify(freshConfig))
+  return NextResponse.redirect(url.toString())
 }
 
 // 'matcher' specifies on which routes the `middleware` runs

@@ -96,15 +96,15 @@ const createBufferFeature = (boundaryPoly, ids: string, region: string) => {
 }
 
 const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeature>) => {
-  const germanyBbox = [5.98865807458, 47.3024876979, 15.0169958839, 54.983104153] as const
+  const germanyBufferedBbox = [-2.9991468, 42.3057833, 20.8835987, 58.1121625] as const
   const germanyBboxPolygon = polygon(
     [
       [
-        [germanyBbox[0], germanyBbox[1]],
-        [germanyBbox[0], germanyBbox[3]],
-        [germanyBbox[2], germanyBbox[3]],
-        [germanyBbox[2], germanyBbox[1]],
-        [germanyBbox[0], germanyBbox[1]],
+        [germanyBufferedBbox[0], germanyBufferedBbox[1]],
+        [germanyBufferedBbox[0], germanyBufferedBbox[3]],
+        [germanyBufferedBbox[2], germanyBufferedBbox[3]],
+        [germanyBufferedBbox[2], germanyBufferedBbox[1]],
+        [germanyBufferedBbox[0], germanyBufferedBbox[1]],
       ],
     ],
     featureToCutOut.properties, // those will be added to the returning feature
@@ -135,8 +135,12 @@ for (const region of additionalRegionAttributes) {
 
     // Store separate files for debugging
     await Bun.write(
-      path.resolve(__dirname, `./geojson/${regionName}-regional-mask-for-debugging.geojson`),
+      path.resolve(__dirname, `./geojson/${regionName}-boundary-for-debugging.geojson`),
       JSON.stringify(boundaryFeature),
+    )
+    await Bun.write(
+      path.resolve(__dirname, `./geojson/${regionName}-mask-for-debugging.geojson`),
+      JSON.stringify(bufferFeature),
     )
     // And also store the bbox and centerOfMass for use in regions.const.ts
     await Bun.write(

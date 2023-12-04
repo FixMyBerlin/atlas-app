@@ -5,10 +5,8 @@ import { EntryProps } from './types'
 export const SelectEntryCheckbox: React.FC<EntryProps> = ({
   scope,
   id,
-  dataTopicId,
+  dataSubcatId,
   dataStyleId,
-  dataFilterId,
-  dataFilterOptionId,
   label,
   desc,
   active,
@@ -34,10 +32,8 @@ export const SelectEntryCheckbox: React.FC<EntryProps> = ({
           // Radiobuttons need to be triggered on the <form>, Checkboxed on the <input>
           onChange={onChange}
           value={id}
-          data-topicid={dataTopicId}
+          data-subcategoryid={dataSubcatId}
           data-styleid={dataStyleId}
-          data-filterid={dataFilterId}
-          data-filteroptionid={dataFilterOptionId}
         />
       </div>
       <div className="ml-2.5 text-sm">

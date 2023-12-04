@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
-import { extractTopicIdFromSourceKey } from './extractFromKey'
+import { extractSubcatIdFromSourceKey } from './extractFromKey'
 
-describe('extractTopicIdFromSourceKey()', () => {
+describe('extractSubcatIdFromSourceKey()', () => {
   test('work when used with the right input', () => {
-    const input = createSourceKey('fooTheme', 'fooSource', 'fooTopic')
-    const result = extractTopicIdFromSourceKey(input)
-    expect(result).toMatch('fooTopic')
+    const input = createSourceKey('fooCategory', 'fooSource', 'fooSubcategory')
+    const result = extractSubcatIdFromSourceKey(input)
+    expect(result).toMatch('fooSubcategory')
   })
 })

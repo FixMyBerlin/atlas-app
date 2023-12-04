@@ -1,38 +1,45 @@
-import { twJoin } from 'tailwind-merge'
 import React from 'react'
-import { TopicIds, TopicStyleIds, TopicStyleLegendIds } from '../../mapData/mapData.const'
+import { twJoin } from 'tailwind-merge'
+import {
+  SubcategoryIds,
+  SubcategoryStyleIds,
+  SubcatStyleLegendIds,
+} from '../../mapData/mapData.const'
 import { MapDataStyle, MapDataStyleLegend } from '../../mapData/types'
 import {
-  createTopicStyleKey,
-  createTopicStyleLegendKey,
+  createSubcatStyleKey,
+  createSubcatStyleLegendKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { LegendDebugInfoLayerStyle } from './LegendDebugInfo/LegendDebugInfoLayerStyle'
-import { LegendDebugInfoTopicLayerConfig } from './LegendDebugInfo/LegendDebugInfoTopicLayerConfig'
+import { LegendDebugInfoSubcatLayerConfig } from './LegendDebugInfo/LegendDebugInfoSubcatLayerConfig'
 import { LegendIconArea } from './LegendIcons/LegendIconArea'
 import { LegendIconCircle } from './LegendIcons/LegendIconCircle'
 import { LegendIconLine } from './LegendIcons/LegendIconLine'
 import { LegendIconTypes } from './LegendIcons/types'
 import { LegendNameDesc } from './LegendNameDesc'
 
-type Props = { topicId: TopicIds; styleData: MapDataStyle }
+type Props = { subcategoryId: SubcategoryIds; styleData: MapDataStyle }
 
-export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
+export const SelectLegend: React.FC<Props> = ({ subcategoryId, styleData }) => {
   const legends = styleData?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
   if (!styleData || !legends?.length) {
     return (
       <section className="relative">
-        <LegendDebugInfoTopicLayerConfig topicId={topicId} styleDataLayers={styleData?.layers} />
+        <LegendDebugInfoSubcatLayerConfig
+          subcategoryId={subcategoryId}
+          styleDataLayers={styleData?.layers}
+        />
       </section>
     )
   }
 
   const handleClick = (
-    topicId: TopicIds,
-    styleId: TopicStyleIds,
-    legendId: TopicStyleLegendIds,
+    subcategoryId: SubcategoryIds,
+    styleId: SubcategoryStyleIds,
+    legendId: SubcatStyleLegendIds,
   ) => {
-    console.log('not implemented,yet', { topicId, styleId, legendId })
+    console.log('not implemented,yet', { subcategoryId, styleId, legendId })
   }
 
   const iconFromLegend = (legend: MapDataStyleLegend) => {
@@ -75,7 +82,7 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
           </div>
         )
       case 'circle':
-        return <LegendIconCircle color={color} />
+        return <LegendIconCircle color={color} className="h-full w-full" />
       case 'fill':
         return <LegendIconArea color={color} />
       default:
@@ -84,17 +91,17 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
   }
 
   return (
-    <section className="relative mt-1 pt-0.5">
+    <section className="relative mt-3 pt-0.5">
       <fieldset>
         <legend className="sr-only">Legende</legend>
         <div className="space-y-1">
           {legends.map((legendData) => {
             // TODO: TS: This should be specified at the source…
-            const legendDataId = legendData.id as TopicStyleLegendIds
+            const legendDataId = legendData.id as SubcatStyleLegendIds
             if (legendDataId === 'ignore') return null
 
-            const scope = createTopicStyleKey(topicId, styleData.id)
-            const key = createTopicStyleLegendKey(topicId, styleData.id, legendDataId)
+            const scope = createSubcatStyleKey(subcategoryId, styleData.id)
+            const key = createSubcatStyleLegendKey(subcategoryId, styleData.id, legendDataId)
 
             const active = true // TODO
             const disabled = false // TODO
@@ -109,7 +116,7 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
                 )}
                 key={key}
               >
-                <div className="h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
+                <div className="h-3 w-5 flex-none">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center">
                   <input
                     id={key}
@@ -118,7 +125,9 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
                     className="sr-only"
                     defaultChecked={active}
                     disabled={disabled}
-                    onChange={() => interactive && handleClick(topicId, styleData.id, legendDataId)}
+                    onChange={() =>
+                      interactive && handleClick(subcategoryId, styleData.id, legendDataId)
+                    }
                     value={key}
                   />
                 </div>
@@ -127,7 +136,7 @@ export const SelectLegend: React.FC<Props> = ({ topicId, styleData }) => {
             )
           })}
           <LegendDebugInfoLayerStyle
-            title={`Debug info: All layer and their styles for topic "${topicId}" (since topic config does not specify layers (yet or by design))`}
+            title={`Debug info: All layer and their styles for subcategory "${subcategoryId}" (since subcategory config does not specify layers (yet or by design))`}
             layers={styleData.layers}
           />
         </div>

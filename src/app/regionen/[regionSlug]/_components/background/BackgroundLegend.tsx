@@ -3,7 +3,7 @@ import React from 'react'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { sourcesBackgroundsRaster } from '../mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+import { sourcesBackgroundsRaster } from '../mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { replaceZxy } from '../utils/replaceZxy/replaceZxy'
 
 export const BackgroundLegend: React.FC = () => {

@@ -10,7 +10,7 @@ import {
 import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,
-} from '../mapData/sourcesMapData/sourcesBackgroundsRaster.const'
+} from '../mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { ListOption } from './ListOption'
 
 export const SelectBackground: React.FC = () => {

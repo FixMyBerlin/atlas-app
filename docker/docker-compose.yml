@@ -1,12 +1,13 @@
 # this file is copied to the staging or production server to be used there
 
-version: "3"
+version: '3'
 services:
   app:
     env_file:
       - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/blitz:${GITHUB_SHA}
     container_name: blitz
+    restart: unless-stopped
     environment:
       SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
       DATABASE_URL: ${DATABASE_URL}
@@ -14,9 +15,9 @@ services:
     ports:
       - 3000:3000
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.services.container.loadbalancer.server.port=3000"
-      - "traefik.http.routers.container.rule=Host(`${TRAEFIK_HOST}`)"
-      - "traefik.http.routers.container.entrypoints=websecure"
-      - "traefik.http.routers.container.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.container.tls=true"
+      - 'traefik.enable=true'
+      - 'traefik.http.services.container.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.container.rule=Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
+      - 'traefik.http.routers.container.entrypoints=websecure'
+      - 'traefik.http.routers.container.tls.certresolver=letsencrypt'
+      - 'traefik.http.routers.container.tls=true'

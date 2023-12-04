@@ -1,5 +1,5 @@
 import { AdditionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { SourceExportApiIdentifier } from '../mapData/sourcesMapData/sources.const'
+import { SourceExportApiIdentifier } from '../mapData/mapDataSources/sources.const'
 import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 
 export const exportApiUrlBbox = (

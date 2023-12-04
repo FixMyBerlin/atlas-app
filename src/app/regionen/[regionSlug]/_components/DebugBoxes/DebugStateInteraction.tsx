@@ -27,7 +27,7 @@ export const DebugStateInteraction = () => {
   const { showDebugInfo, setShowDebugInfo } = useMapDebugState()
   const { configParam } = useConfigParam()
   const { drawParam } = useDrawParam()
-  // const { config: configThemes, draw: drawAreasStore } = useSearch<LocationGenerics>()
+  // const { config: configCategories, draw: drawAreasStore } = useSearch<LocationGenerics>()
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {

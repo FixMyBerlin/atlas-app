@@ -4,16 +4,17 @@ type Props = {
   size?: number
   // https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray#example
   strokeDasharray?: string
-}
+} & React.SVGProps<SVGSVGElement>
 
 export const LegendIconLine = ({
   color = 'black',
   width = 1,
   size = 24,
   strokeDasharray,
+  ...props
 }: Props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${size} ${size}`}>
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${size} ${size}`}>
       <line
         x1="0%"
         y1="50%"
