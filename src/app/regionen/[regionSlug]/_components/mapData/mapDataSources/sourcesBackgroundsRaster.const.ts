@@ -24,6 +24,7 @@ export type SourcesRasterIds =
   | 'waymarkedtrails-hiking'
   | 'opentopomap'
   | 'trto-radwege'
+  | 'brandenburg-dop20'
 
 // https://account.mapbox.com/access-tokens
 // https://account.mapbox.com/access-tokens/clileup4r0b1r3gmp4hxqhou8/
@@ -322,6 +323,20 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     minzoom: 0,
     maxzoom: 15,
     attributionHtml: 'Amt Treptower Tollensewinkel',
+    legendUrl: undefined,
+  },
+  {
+    // https://github.com/osmlab/editor-layer-index/blob/gh-pages/sources/europe/de/Brandenburg-DOP20c.geojson?short_path=0ac57a0
+    id: 'brandenburg-dop20',
+    name: 'Brandenburg GeoBasis-DE/LGB (latest) / DOP20c',
+    type: 'raster',
+    tiles:
+      'https://isk.geobasis-bb.de/mapproxy/dop20c/service/wms?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=bebb_dop20c&STYLES=&crs=EPSG:3857&WIDTH=512&HEIGHT=512&BBOX={bbox-epsg-3857}',
+    minzoom: 10,
+    maxzoom: 20,
+    tileSize: 512,
+    attributionHtml:
+      'GeoBasis-DE/LGB / BB-BE DOP20c, dl-de/by-2-0; Geoportal Berlin / DOP20, dl-de/by-2-0',
     legendUrl: undefined,
   },
 ]
