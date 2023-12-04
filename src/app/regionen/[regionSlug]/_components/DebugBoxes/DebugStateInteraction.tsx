@@ -1,11 +1,12 @@
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Link } from 'src/app/_components/links/Link'
 import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { isDev, isProd, isStaging } from 'src/app/_components/utils/isEnv'
-import { useConfigParam } from '../../_hooks/useQueryState/useConfigParam'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { simplifyConfigForParams } from '../../_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
+import { useCategoriesConfig } from '../../_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useDrawParam } from '../../_hooks/useQueryState/useDrawParam'
-import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
 
 // A custom formatter to get a more compact output
 // Prefix [ signals an array, { signals an object
@@ -25,18 +26,14 @@ export const DebugStateInteraction = () => {
   const regionSlug = useRegionSlug()
   const zustandValues = useMapStateInteraction()
   const { showDebugInfo, setShowDebugInfo } = useMapDebugState()
-  const { configParam } = useConfigParam()
+  const { categoriesConfig } = useCategoriesConfig()
   const { drawParam } = useDrawParam()
   // const { config: configCategories, draw: drawAreasStore } = useSearch<LocationGenerics>()
 
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
       if (typeof value === 'function') return null
-      return (
-        <div key={key}>
-          <strong>{key}:</strong> {JSON.stringify(value)}
-        </div>
-      )
+      return <div key={key}></div>
     })
   }
 
@@ -57,9 +54,6 @@ export const DebugStateInteraction = () => {
             Reset URL <code>config</code>
           </Link>
         </div>
-        <div className="font-mono">isDev: {JSON.stringify(isDev)}</div>
-        <div className="font-mono">isStaging: {JSON.stringify(isStaging)}</div>
-        <div className="font-mono">isProduction: {JSON.stringify(isProd)}</div>
         <div className="font-mono">getExportApiUrl: {getExportApiUrl()}</div>
         <div className="font-mono">env.*ENV: {process.env.NEXT_PUBLIC_APP_ENV}</div>
         <div className="font-mono">env.*APP_ORIGIN: {process.env.NEXT_PUBLIC_APP_ORIGIN}</div>
@@ -72,16 +66,24 @@ export const DebugStateInteraction = () => {
       </details>
 
       <details>
-        <summary className="cursor-pointer">URL Config</summary>
-        {Boolean(configParam?.length) &&
-          configParam?.map((config: any) => {
+        <summary className="cursor-pointer">?config</summary>
+        {Boolean(categoriesConfig?.length) &&
+          categoriesConfig?.map((config: any) => {
             return (
-              <details key={config.id}>
-                <summary className="cursor-pointer">{config.id}</summary>
-                <pre>
-                  <code>{formatConfig(config)}</code>
-                </pre>
-              </details>
+              <div key={config.id}>
+                <details>
+                  <summary className="cursor-pointer">{config.id} Full config</summary>
+                  <pre>
+                    <code>{JSON.stringify(config, undefined, 2)}</code>
+                  </pre>
+                </details>
+                <details>
+                  <summary className="cursor-pointer">{config.id} URL params</summary>
+                  <pre>
+                    <code>{formatConfig(simplifyConfigForParams([config]))}</code>
+                  </pre>
+                </details>
+              </div>
             )
           })}
       </details>
@@ -91,7 +93,6 @@ export const DebugStateInteraction = () => {
           return (
             <details key={draw.id}>
               <summary className="cursor-pointer">{draw.id}</summary>
-              <pre>{JSON.stringify(draw, undefined, 2)}</pre>
             </details>
           )
         })}

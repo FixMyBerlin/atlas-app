@@ -1,5 +1,5 @@
 import { wrapFilterWithAll } from '../../../_components/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
-import { MapDataVisLayer } from '../../types'
+import { FileMapDataSubcategoryStyleLayer } from '../../types'
 
 export const debugLayerStyles = ({
   source,
@@ -50,5 +50,5 @@ export const debugLayerStyles = ({
       filter: wrapFilterWithAll(filter),
       layout: {},
     },
-  ] satisfies MapDataVisLayer[]
+  ] satisfies FileMapDataSubcategoryStyleLayer[]
 }

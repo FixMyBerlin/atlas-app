@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { createInitialCategoriesConfig } from '../../../_components/mapStateConfig/createInitialCategoriesConfig'
-import { MapDataCategoryIds } from '../../../_mapData/mapDataCategories/categories.const'
-import { configCustomParse } from './configCustomParser'
+import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
+import { MapDataCategoryId } from '../../../../_mapData/mapDataCategories/categories.const'
+import { configCustomParse } from './configCustomParse'
 
 describe('config param parser v1', () => {
   const themes = [
@@ -9,8 +9,8 @@ describe('config param parser v1', () => {
     'poi',
     'bikelanes',
     'roads',
-  ] satisfies MapDataCategoryIds[]
-  const freshConfig = createInitialCategoriesConfig(themes)
+  ] satisfies MapDataCategoryId[]
+  const freshConfig = createFreshCategoriesConfig(themes)
 
   // We removed the v1 logic in commit 7f557e9f
   // So now it is just supposed to fall back to a initial config

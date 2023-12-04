@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
@@ -9,7 +9,7 @@ const sourceLayerAreas = 'bicycleParking_areas'
 export type SubcatBicycleParkingId = typeof subcatId
 export type SubcatBicycleParkingStyleIds = 'default' | 'witharea'
 
-export const subcat_bicycleParking: MapDataSubcat = {
+export const subcat_bicycleParking: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Fahrradstellplätze',
   sourceId: source,

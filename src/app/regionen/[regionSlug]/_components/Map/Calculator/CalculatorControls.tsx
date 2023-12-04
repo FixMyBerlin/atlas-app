@@ -7,7 +7,7 @@ import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   StoreCalculator,
   useMapStateInteraction,
-} from '../../mapStateInteraction/useMapStateInteraction'
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   CalculatorControlsDrawControl,
   DrawArea,

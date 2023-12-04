@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -8,7 +8,7 @@ const sourceLayer = 'publicTransport'
 export type SubcatPublicTransportId = typeof tpoicId
 export type SubcatPublicTransportStyleIds = 'default'
 
-export const subcat_publicTransport: MapDataSubcat = {
+export const subcat_publicTransport: FileMapDataSubcategory = {
   id: tpoicId,
   name: 'ÖPNV',
   sourceId: 'atlas_publicTransport',

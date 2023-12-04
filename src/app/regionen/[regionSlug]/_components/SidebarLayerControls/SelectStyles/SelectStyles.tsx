@@ -1,32 +1,24 @@
 import { Menu } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
-import { twJoin } from 'tailwind-merge'
 import { produce } from 'immer'
 import React from 'react'
 import { Portal } from 'src/app/_components/utils/usePopper/Portal'
 import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'
-import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
-import { MapDataCategoryIds } from '../../../_mapData/mapDataCategories/categories.const'
-import { MapDataSubcat } from '../../../_mapData/types'
-import { getStyleData, getSubcategoryData } from '../../../_mapData/utils/getMapDataUtils'
-import { SubcategoryConfig } from '../../mapStateConfig/type'
+import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
+import { twJoin } from 'tailwind-merge'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
+import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { createSubcatStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
 import { SelectLegend } from '../SelectLegend/SelectLegend'
 
 type Props = {
-  categoryId: MapDataCategoryIds
-  subcatData: MapDataSubcat
-  subcatConfig: SubcategoryConfig
+  categoryId: MapDataCategoryId
+  subcatConfig: MapDataSubcategoryConfig
   disabled: boolean
 }
 
-export const SelectStyles: React.FC<Props> = ({
-  categoryId,
-  subcatData,
-  subcatConfig,
-  disabled,
-}) => {
-  const { configParam, setConfigParam } = useConfigParam()
+export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
+  const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
 
   const [trigger, container] = usePopper({
     placement: 'bottom-start',
@@ -36,7 +28,7 @@ export const SelectStyles: React.FC<Props> = ({
 
   type ToggleActiveProps = { subcatId: string; styleId: string }
   const toggleActive = ({ subcatId, styleId }: ToggleActiveProps) => {
-    const oldConfig = configParam
+    const oldConfig = categoriesConfig
     const newConfig = produce(oldConfig, (draft) => {
       const category = draft
         ?.find((th) => th.id === categoryId)
@@ -48,13 +40,12 @@ export const SelectStyles: React.FC<Props> = ({
         style && (style.active = !style.active)
       }
     })
-    void setConfigParam(newConfig)
+    void setCategoriesConfig(newConfig)
   }
 
-  if (!subcatData || !subcatConfig) return null
+  if (!subcatConfig) return null
 
   const activeStyleConfig = subcatConfig.styles.find((s) => s.active)
-  const activeStyleData = getStyleData(subcatData, activeStyleConfig?.id)
 
   return (
     <section className="mt-1.5">
@@ -75,7 +66,7 @@ export const SelectStyles: React.FC<Props> = ({
                 )}
               >
                 <div className="flex gap-1 truncate">
-                  <span className="truncate">{activeStyleData?.name}</span>
+                  <span className="truncate">{activeStyleConfig?.name}</span>
                 </div>
                 <ChevronDownIcon className="-mr-1 ml-0.5 h-5 w-5" aria-hidden="true" />
               </Menu.Button>
@@ -88,9 +79,7 @@ export const SelectStyles: React.FC<Props> = ({
               >
                 <div className="py-1">
                   {subcatConfig.styles.map((styleConfig) => {
-                    const subcatData = getSubcategoryData(subcatConfig.id)
-                    const styleData = getStyleData(subcatData, styleConfig.id)
-                    if (!styleData) return null
+                    if (!styleConfig) return null
                     const key = createSubcatStyleKey(subcatConfig.id, styleConfig.id)
                     return (
                       <Menu.Item key={key}>
@@ -109,7 +98,7 @@ export const SelectStyles: React.FC<Props> = ({
                               'block w-full px-4 py-2 text-left text-sm',
                             )}
                           >
-                            {styleData.name}
+                            {styleConfig.name}
                           </button>
                         )}
                       </Menu.Item>
@@ -122,7 +111,7 @@ export const SelectStyles: React.FC<Props> = ({
         )}
       </Menu>
 
-      <SelectLegend subcategoryId={subcatConfig.id} styleData={activeStyleData} />
+      <SelectLegend subcategoryId={subcatConfig.id} styleConfig={activeStyleConfig} />
     </section>
   )
 }

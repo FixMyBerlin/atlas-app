@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -14,7 +14,7 @@ export type SubcatParkingStatsStyleIds =
   | 'length-admin-level-9'
   | 'length-admin-level-10'
 
-export const subcat_parkingStats: MapDataSubcat = {
+export const subcat_parkingStats: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Statistik',
   sourceId: 'parkraumParkingStats',

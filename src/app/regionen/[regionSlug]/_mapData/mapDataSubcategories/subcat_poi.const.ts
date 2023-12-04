@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -8,7 +8,7 @@ const sourceLayer = 'poiClassification'
 export type SubcatPoiId_Tarmac = typeof subcatId
 export type SubcatPoiStyleIds_Tarmac = 'default'
 
-export const subcat_poi: MapDataSubcat = {
+export const subcat_poi: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Quellen & Ziele',
   sourceId: source,

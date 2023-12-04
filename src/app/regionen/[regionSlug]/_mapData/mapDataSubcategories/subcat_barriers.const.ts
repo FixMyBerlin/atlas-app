@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -7,7 +7,7 @@ const source = 'atlas_barriers'
 export type SubcatBarriersId = typeof subcatId
 export type SubcatBarriersStyleIds = 'default'
 
-export const subcat_barriers: MapDataSubcat = {
+export const subcat_barriers: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Barrieren',
   sourceId: source,

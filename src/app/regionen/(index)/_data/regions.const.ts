@@ -4,7 +4,7 @@ import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
 import imageParking from 'src/app/_components/assets/parking.svg'
 import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
-  MapDataCategoryIds,
+  MapDataCategoryId,
   categories,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
 import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
@@ -25,7 +25,7 @@ export type StaticRegion = {
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
   logoWhiteBackgroundRequired: boolean
-  categories: MapDataCategoryIds[]
+  categories: MapDataCategoryId[]
   backgroundSources: SourcesRasterIds[]
 } & (
   | {

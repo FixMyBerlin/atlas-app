@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
@@ -13,7 +13,7 @@ export type SubcatBikelanesStatsStyleIds =
   | 'admin-level-8'
 
 // Docs https://wiki.openstreetmap.org/wiki/DE:Grenze#Innerstaatliche_Grenzen
-export const subcat_bikelanesStatistics: MapDataSubcat = {
+export const subcat_bikelanesStatistics: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Statistik',
   sourceId: source,

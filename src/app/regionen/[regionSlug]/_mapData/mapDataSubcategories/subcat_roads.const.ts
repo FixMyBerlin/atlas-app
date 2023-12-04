@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -11,7 +11,7 @@ export type SubcatRoadsStyleIds =
   | 'oneway'
   | 'road_implicit_shared_lane'
   | 'road_oneway_arrows'
-export const subcat_roads: MapDataSubcat = {
+export const subcat_roads: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen',
   sourceId: source,

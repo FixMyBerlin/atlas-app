@@ -1,7 +1,7 @@
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
-import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
+import { createInspectorFeatureKey } from '../../_components/utils/createKeyUtils/createKeyUtils'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 

@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultLegendFresh } from './defaultLegend/defaultLegendFresh'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
@@ -9,7 +9,7 @@ const sourceLayer = 'roads'
 export type SubcatLitId = typeof subcatId
 export type SubcatLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
 
-const defaultLegend: MapDataSubcat['styles'][0]['legends'] = [
+const defaultLegend: FileMapDataSubcategory['styles'][0]['legends'] = [
   {
     id: 'lit',
     name: 'Beleuchtet',
@@ -36,7 +36,7 @@ const defaultLegend: MapDataSubcat['styles'][0]['legends'] = [
   },
 ]
 
-export const subcat_lit: MapDataSubcat = {
+export const subcat_lit: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Beleuchtung',
   sourceId: source,

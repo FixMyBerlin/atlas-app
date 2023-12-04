@@ -1,6 +1,6 @@
-import { MapDataStyleLegend } from '../../types'
+import { FileMapDataSubcategoryStyleLegend } from '../../types'
 
-export const defaultLegendFresh: MapDataStyleLegend[] = [
+export const defaultLegendFresh: FileMapDataSubcategoryStyleLegend[] = [
   {
     id: 'fresh_check_date',
     name: 'Aktuell (explizit)',

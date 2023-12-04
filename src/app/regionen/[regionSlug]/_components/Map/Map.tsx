@@ -13,7 +13,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Calculator } from './Calculator/Calculator'
 import { SourcesAndLayers } from './SourcesAndLayers/SourcesAndLayers'
 import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'

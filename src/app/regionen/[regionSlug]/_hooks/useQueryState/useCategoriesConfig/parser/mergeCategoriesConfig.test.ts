@@ -1,69 +1,86 @@
 import { describe, expect, test } from 'vitest'
-import { initializeMapRegionConfig } from './initializeMapRegionConfig'
-import { CategoryConfig } from './type'
+import { FileMapDataSubcategoryStyleLayer } from '../../../../_mapData/types'
+import { mergeCategoriesConfig } from '../parser/mergeCategoriesConfig'
+import { MapDataCategoryConfig } from '../type'
+import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 
-describe('initializeMapReagionConfig()', () => {
+describe('mergeCategoriesConfig()', () => {
+  const defaultSubcategoryObject = {
+    name: 'Foo',
+    sourceId: 'atlas_bikelanes' as SourcesId,
+    defaultStyle: 'default' as const,
+    ui: 'dropdown' as const,
+  }
+  const defaultStyleObject = {
+    name: 'Name',
+    desc: null,
+    layers: [
+      {
+        type: 'fill',
+        'source-layer': 'sourLayerName',
+      } as FileMapDataSubcategoryStyleLayer,
+    ],
+    legends: null,
+  }
   const freshConfig = [
     {
       id: 'surface',
+      name: 'Foo',
       active: true,
       subcategories: [
         {
           id: 'roadsSurface',
+          ...defaultSubcategoryObject,
           styles: [
-            { id: 'default', active: true }, // change to false
-            { id: 'completeness', active: false }, // change to true
-            { id: 'verification', active: false },
-            { id: 'freshness', active: false },
+            { ...defaultStyleObject, id: 'default', active: true }, // change to false
+            { ...defaultStyleObject, id: 'completeness', active: false }, // change to true
+            { ...defaultStyleObject, id: 'verification', active: false },
+            { ...defaultStyleObject, id: 'freshness', active: false },
           ],
         },
         {
           id: 'places',
+          ...defaultSubcategoryObject,
           styles: [
-            { id: 'default', active: true },
-            { id: 'circle', active: false },
+            { ...defaultStyleObject, id: 'default', active: true },
+            { ...defaultStyleObject, id: 'circle', active: false },
           ],
         },
         {
           id: 'landuse',
-          styles: [{ id: 'default', active: true }], // change id to name_changed
+          ...defaultSubcategoryObject,
+          styles: [{ ...defaultStyleObject, id: 'default', active: true }], // change id to name_changed
         },
       ],
     },
     {
       id: 'poi',
+      name: 'Foo',
       active: false,
       subcategories: [
         {
           id: 'boundaries',
-          styles: [
-            {
-              id: 'default',
-              active: true,
-            },
-          ],
+          ...defaultSubcategoryObject,
+          styles: [{ ...defaultStyleObject, id: 'default', active: true }],
         },
       ],
     },
     {
       id: 'bikelanes',
+      name: 'Foo',
       active: false,
       subcategories: [
         {
           id: 'bikelanes',
-          styles: [
-            {
-              id: 'default',
-              active: true,
-            },
-          ],
+          ...defaultSubcategoryObject,
+          styles: [{ ...defaultStyleObject, id: 'default', active: true }],
         },
       ],
     },
-  ] satisfies CategoryConfig[]
+  ] satisfies MapDataCategoryConfig[]
 
   test('If nothing changed, nothing is done', () => {
-    const result = initializeMapRegionConfig({
+    const result = mergeCategoriesConfig({
       freshConfig,
       urlConfig: freshConfig,
     })
@@ -76,7 +93,7 @@ describe('initializeMapReagionConfig()', () => {
     urlConfig[0]!.subcategories[0]!.styles[0]!.active = false // subcategory:surfaceRoads style-id:default
     urlConfig[0]!.subcategories[0]!.styles[1]!.active = true // subcategory:surfaceRoads style-id:completenes
 
-    const result = initializeMapRegionConfig({
+    const result = mergeCategoriesConfig({
       freshConfig,
       urlConfig,
     })
@@ -93,7 +110,7 @@ describe('initializeMapReagionConfig()', () => {
     delete urlConfig[0]!.subcategories[2]!.styles[1] // subcategory:surfaceRoads subcategory:landuse style removed
     delete urlConfig[2] // subcategory:bikelanes
 
-    const result = initializeMapRegionConfig({
+    const result = mergeCategoriesConfig({
       freshConfig,
       urlConfig,
     })
@@ -109,7 +126,7 @@ describe('initializeMapReagionConfig()', () => {
     // @ts-expect-error the object structure is checked manually
     urlConfig[0].subcategories[2].styles[0].id = 'now_removed_style' // subcategory:surfaceRoads subcategory:landuse style:id changed
 
-    const result = initializeMapRegionConfig({
+    const result = mergeCategoriesConfig({
       freshConfig,
       urlConfig,
     })

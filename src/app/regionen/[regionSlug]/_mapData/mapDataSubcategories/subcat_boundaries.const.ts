@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -6,7 +6,7 @@ const topiId = 'boundaries'
 export type SubcatBoundariesId = typeof topiId
 export type SubcatBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
 
-export const subcat_boundaries: MapDataSubcat = {
+export const subcat_boundaries: FileMapDataSubcategory = {
   id: topiId,
   name: 'Grenzen',
   sourceId: 'atlas_boundaries',

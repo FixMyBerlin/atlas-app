@@ -6,7 +6,7 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { useOsmNotesParam } from '../../_hooks/useQueryState/useOsmNotesParam'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 export const OsmNotes: React.FC = () => {
   const { osmNotesLoading, osmNotesError } = useMapStateInteraction()

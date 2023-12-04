@@ -1,11 +1,11 @@
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { MapData } from '../../../_mapData/types'
-import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
+import { sources } from '../../../_mapData/mapDataSources/sources.const'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 
 type Props = {
-  sourceData: MapData['sources'][number]
+  sourceData: (typeof sources)[number]
 } & LayerProps
 
 export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {

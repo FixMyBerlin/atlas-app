@@ -1,6 +1,6 @@
-import { MapDataStyle } from '../../types'
+import { FileMapDataSubcategoryStyle } from '../../types'
 
-export const defaultStyleHidden: MapDataStyle[] = [
+export const defaultStyleHidden: FileMapDataSubcategoryStyle[] = [
   {
     id: 'hidden',
     name: 'Kein Stil',

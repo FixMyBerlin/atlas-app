@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -13,7 +13,7 @@ export type SubcatRoadsSurfaceStyleIdsLegacy =
   | 'completeness'
   | 'freshness'
 
-export const subcat_roadsSurface_legacy: MapDataSubcat = {
+export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Oberflächenqualität Fahrbahn (OLD)',
   sourceId: source,

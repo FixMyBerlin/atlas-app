@@ -3,9 +3,9 @@ import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionU
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/getBikelaneVerificationsByOsmId'
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
-import { SourcesIds } from '../../../_mapData/mapDataSources/sources.const'
+import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
-import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { VerificationForm } from './VerificationForm/VerificationForm'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'
@@ -13,7 +13,7 @@ import { verifiedBackgroundColor } from './verifiedColor.const'
 
 type Props = {
   properties: { [key: string]: any }
-  sourceId: SourcesIds
+  sourceId: SourcesId
 }
 
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {

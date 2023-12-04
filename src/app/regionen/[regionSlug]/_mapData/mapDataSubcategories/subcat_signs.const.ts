@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
@@ -9,7 +9,7 @@ const sourceLayer = 'trafficSigns'
 export type SubcatSignsId = typeof subcatId
 export type SubcatSignsStyleIds = 'default'
 
-export const subcat_signs: MapDataSubcat = {
+export const subcat_signs: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Verkehrszeichen',
   sourceId: source,

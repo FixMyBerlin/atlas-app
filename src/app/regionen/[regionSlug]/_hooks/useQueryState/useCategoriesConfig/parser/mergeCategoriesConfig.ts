@@ -1,9 +1,9 @@
 import { produce } from 'immer'
-import { CategoryConfig, SubcategoryConfig } from './type'
+import { MapDataCategoryConfig, MapDataCategoryParam } from '../type'
 
 type Props = {
-  freshConfig: CategoryConfig[]
-  urlConfig: CategoryConfig[] | undefined
+  freshConfig: MapDataCategoryConfig[]
+  urlConfig: MapDataCategoryParam[] | undefined
 }
 
 /**
@@ -12,10 +12,11 @@ type Props = {
  * - If something was renamed since the URL was created, the options are ignored
  * - If the options stayed the same, the URL active states are preserved
  */
-export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => {
+export const mergeCategoriesConfig = ({ freshConfig, urlConfig }: Props) => {
   // Case: Initial page render without an `urlConfig`. We set the first category as active.
   if (!urlConfig) {
     return produce(freshConfig, (old) => {
+      // TODO: Lets active bikelanes instead of the first (and have a fallback to first)
       old?.[0] && (old[0].active = true)
     })
   }
@@ -24,30 +25,29 @@ export const initializeMapRegionConfig = ({ freshConfig, urlConfig }: Props) => 
     const urlConfigCategory = urlConfig?.find((t) => t?.id === categoryConfig.id)
 
     return {
-      id: categoryConfig.id,
+      ...categoryConfig,
       active: urlConfigCategory?.active || categoryConfig.active,
-      subcategories: categoryConfig.subcategories.map((subcategoryConfigConfig) => {
-        // What we get here as `subcategoryConfigConfig` is the `id`+`active`
-        // object from src/app/regionen/[regionSlug]/_components/mapStateConfig/type.ts
-
+      subcategories: categoryConfig.subcategories.map((subcategoryConfig) => {
         const urlConfigSubcat = urlConfigCategory?.subcategories?.find(
-          (t) => t?.id === subcategoryConfigConfig.id,
+          (t) => t?.id === subcategoryConfig.id,
         )
 
         return {
-          id: subcategoryConfigConfig.id,
-          styles: subcategoryConfigConfig.styles.map((style) => {
-            const urlConfigSubcatStyle = urlConfigSubcat?.styles?.find((s) => s.id === style.id)
+          ...subcategoryConfig,
+          styles: subcategoryConfig.styles.map((styleConfig) => {
+            const urlConfigSubcatStyle = urlConfigSubcat?.styles?.find(
+              (s) => s.id === styleConfig.id,
+            )
 
             return {
-              id: style.id,
-              active: urlConfigSubcatStyle ? urlConfigSubcatStyle.active : style.active,
+              ...styleConfig,
+              active: urlConfigSubcatStyle ? urlConfigSubcatStyle.active : styleConfig.active,
             }
           }),
         }
       }),
     }
-  }) satisfies CategoryConfig[]
+  })
 
-  return mergedConfig
+  return mergedConfig satisfies MapDataCategoryConfig[]
 }

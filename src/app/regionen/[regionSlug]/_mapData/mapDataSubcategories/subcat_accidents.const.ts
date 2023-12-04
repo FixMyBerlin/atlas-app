@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 
 // Data https://studio.mapbox.com/tilesets/hejco.86v96gzk/#17.29/52.564196/13.327916
@@ -11,7 +11,7 @@ export type SubcatAccidentsId = typeof subcatId
 export type SubcatAccidentsStyleIds = 'default'
 
 // Zu den Daten: https://studio.mapbox.com/tilesets/hejco.5oexnrgf/
-export const subcat_accidents: MapDataSubcat = {
+export const subcat_accidents: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Unfälle',
   sourceId: 'accidents_unfallatlas',

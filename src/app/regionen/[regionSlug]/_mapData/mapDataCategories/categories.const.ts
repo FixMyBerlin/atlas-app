@@ -1,7 +1,32 @@
-import { MapDataCategory as MapDataCategory } from '../types'
+import { subcat_accidents } from '../mapDataSubcategories/subcat_accidents.const'
+import { subcat_barriers } from '../mapDataSubcategories/subcat_barriers.const'
+import { subcat_bicycleParking } from '../mapDataSubcategories/subcat_bicycleParking'
+import { subcat_bikelanes } from '../mapDataSubcategories/subcat_bikelanes.const'
+import { subcat_bikelanesPresence } from '../mapDataSubcategories/subcat_bikelanesPresence.const'
+import { subcat_bikelanesPresence_legacy } from '../mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
+import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
+import { subcat_bikelanesSurface } from '../mapDataSubcategories/subcat_bikelanesSurface.const'
+import { subcat_boundaries } from '../mapDataSubcategories/subcat_boundaries.const'
+import { subcat_landuse } from '../mapDataSubcategories/subcat_landuse.const'
+import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapillaryCoverage.const'
+import { subcat_maxspeed } from '../mapDataSubcategories/subcat_maxspeed.const'
+import { subcat_maxspeed_legacy } from '../mapDataSubcategories/subcat_maxspeed_legacy.const'
+import { subcat_parking } from '../mapDataSubcategories/subcat_parking.const'
+import { subcat_parkingAreas } from '../mapDataSubcategories/subcat_parkingAreas.const'
+import { subcat_parkingDebug } from '../mapDataSubcategories/subcat_parkingDebug.const'
+import { subcat_parkingPoints } from '../mapDataSubcategories/subcat_parkingPoints.const'
+import { subcat_parkingStats } from '../mapDataSubcategories/subcat_parkingStats.const'
+import { subcat_poi } from '../mapDataSubcategories/subcat_poi.const'
+import { subcat_publicTransport } from '../mapDataSubcategories/subcat_publicTransport.const'
+import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
+import { subcat_roadsSurface } from '../mapDataSubcategories/subcat_roadsSurface.const'
+import { subcat_roadsSurface_legacy } from '../mapDataSubcategories/subcat_roadsSurface_legacy.const'
+import { subcat_roads_legacy } from '../mapDataSubcategories/subcat_roads_legacy.const'
+import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
+import { StaticMapDataCategory } from '../types'
 
 // TODO type MapDataCategoryIds = typeof sources[number]['id']
-export type MapDataCategoryIds =
+export type MapDataCategoryId =
   // Radverkehrsatlas
   | 'bikelanes_LEGACY'
   | 'bikelanes'
@@ -19,19 +44,19 @@ export type MapDataCategoryIds =
   | 'mapillary'
   | 'accidents'
 
-export const categories: MapDataCategory[] = [
+export const categories: StaticMapDataCategory[] = [
   {
     // Figma https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1062-9375&mode=design&t=sIuuLD4vxJJzKOWr-0
     id: 'poi',
     name: 'Quellen & Ziele',
     desc: 'Siedlungszentren, Zielorte, Barrieren',
     subcategories: [
-      { id: 'poi', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'boundaries', defaultStyle: 'hidden', ui: 'checkbox' },
-      { id: 'barriers', defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_poi, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_boundaries, defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_barriers, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'routes', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'buildings', defaultStyle: 'hidden', ui: 'checkbox' },
-      { id: 'landuse', defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_landuse, defaultStyle: 'hidden', ui: 'checkbox' },
     ],
   },
   {
@@ -40,8 +65,8 @@ export const categories: MapDataCategory[] = [
     name: 'Straßentypen',
     desc: 'Straßenklassen, Tempolimits',
     subcategories: [
-      { id: 'roads', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'maxspeed', defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_roads, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_maxspeed, defaultStyle: 'hidden', ui: 'dropdown' },
       // { id: 'path', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
       // { id: 'lanes', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
       // { id: 'roadCompletness', defaultStyle: 'hidden', ui: 'checkbox' },
@@ -52,8 +77,8 @@ export const categories: MapDataCategory[] = [
     name: 'Straßentypen OLD',
     desc: 'Straßenklassen, Tempolimits',
     subcategories: [
-      { id: 'roads_legacy', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'maxspeed_legacy', defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_roads_legacy, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_maxspeed_legacy, defaultStyle: 'hidden', ui: 'dropdown' },
     ],
   },
   {
@@ -62,14 +87,14 @@ export const categories: MapDataCategory[] = [
     name: 'Radinfrastruktur',
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
-      { id: 'bikelanes', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_bikelanes, defaultStyle: 'default', ui: 'dropdown' },
       // { id: 'bikelanesWidth', defaultStyle: 'default', ui: 'checkbox' },
       // { id: 'bikelanesSurface', defaultStyle: 'default', ui: 'checkbox' },
       // { id: 'bikelanesOneway', defaultStyle: 'default', ui: 'checkbox' },
-      { id: 'signs', defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_signs, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'bikelanesProtection', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'tram', defaultStyle: 'hidden', ui: 'checkbox' },
-      { id: 'bikelanesPresence', defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_bikelanesPresence, defaultStyle: 'hidden', ui: 'checkbox' },
     ],
   },
   {
@@ -77,8 +102,8 @@ export const categories: MapDataCategory[] = [
     name: 'Radinfrastruktur OLD',
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
-      { id: 'bikelanes', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'bikelanesPresence_legacy', defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_bikelanes, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_bikelanesPresence_legacy, defaultStyle: 'hidden', ui: 'dropdown' },
     ],
   },
   {
@@ -87,8 +112,8 @@ export const categories: MapDataCategory[] = [
     name: 'Oberflächen',
     desc: 'Fahrbahn & Radinfrastruktur',
     subcategories: [
-      { id: 'roadsSurface', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'bikelanesSurface', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_roadsSurface, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_bikelanesSurface, defaultStyle: 'default', ui: 'dropdown' },
       // { id: 'sidewalkSurface', defaultStyle: 'default', ui: 'dropdown' },
     ],
   },
@@ -96,21 +121,21 @@ export const categories: MapDataCategory[] = [
     id: 'surface_LEGACY',
     name: 'Oberflächen OLD',
     desc: 'Fahrbahn & Radinfrastruktur',
-    subcategories: [{ id: 'roadsSurface_legacy', defaultStyle: 'default', ui: 'dropdown' }],
+    subcategories: [{ ...subcat_roadsSurface_legacy, defaultStyle: 'default', ui: 'dropdown' }],
   },
   {
     id: 'parking',
     name: 'Parkraum',
     desc: 'Parken im Straßenraum',
     subcategories: [
-      { id: 'parking', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_parking, defaultStyle: 'default', ui: 'dropdown' },
       // { id: 'parkingLegacy', defaultStyle: "hidden" },
-      { id: 'parkingPoints', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'parkingAreas', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'parkingDebug', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'parkingStats', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'signs', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'landuse', defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_parkingPoints, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_parkingAreas, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_parkingDebug, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_parkingStats, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_signs, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_landuse, defaultStyle: 'hidden', ui: 'dropdown' },
       // { id: 'mapillaryCoverage', defaultStyle: "hidden" },
       // { id: 'accidents', defaultStyle: "hidden" },
     ],
@@ -120,11 +145,11 @@ export const categories: MapDataCategory[] = [
     name: 'Fahrradstellplätze',
     desc: '',
     subcategories: [
-      { id: 'bicycleParking', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'landuse', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'publicTransport', defaultStyle: 'hidden', ui: 'dropdown' }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
-      { id: 'barriers', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'boundaries', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_bicycleParking, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_landuse, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_publicTransport, defaultStyle: 'hidden', ui: 'dropdown' }, // TODO: https://github.com/FixMyBerlin/private-issues/issues/588
+      { ...subcat_barriers, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_boundaries, defaultStyle: 'default', ui: 'dropdown' },
     ],
   },
   {
@@ -132,20 +157,20 @@ export const categories: MapDataCategory[] = [
     name: 'Statistik',
     desc: '',
     subcategories: [
-      { id: 'bikelanesStatistics', defaultStyle: 'default', ui: 'dropdown' },
-      { id: 'boundaries', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_bikelanesStatistics, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_boundaries, defaultStyle: 'default', ui: 'dropdown' },
     ],
   },
   {
     id: 'mapillary',
     name: 'Mapillay',
     desc: '',
-    subcategories: [{ id: 'mapillaryCoverage', defaultStyle: 'default', ui: 'dropdown' }],
+    subcategories: [{ ...subcat_mapillaryCoverage, defaultStyle: 'default', ui: 'dropdown' }],
   },
   {
     id: 'accidents',
     name: 'Unfallatlas',
     desc: '',
-    subcategories: [{ id: 'accidents', defaultStyle: 'default', ui: 'dropdown' }],
+    subcategories: [{ ...subcat_accidents, defaultStyle: 'default', ui: 'dropdown' }],
   },
 ]

@@ -1,20 +1,14 @@
-import {
-  SubcategoryIds,
-  SubcategoryStyleIds,
-  SubcatStyleLegendIds,
-} from '../../../_mapData/mapData.const'
-import { StoreFeaturesInspector } from '../../mapStateInteraction/useMapStateInteraction'
+import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
+import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { SubcatStyleKey, SubcatStyleLegendKey } from './types'
 
-export const createSubcatStyleKey = (
-  subcatId: SubcategoryIds,
-  styleId: SubcategoryStyleIds,
-): SubcatStyleKey => `${subcatId}-${styleId}`
+export const createSubcatStyleKey = (subcatId: SubcategoryId, styleId: StyleId): SubcatStyleKey =>
+  `${subcatId}-${styleId}`
 
 export const createSubcatStyleLegendKey = (
-  subCat: SubcategoryIds,
-  styleId: SubcategoryStyleIds,
-  legendId: SubcatStyleLegendIds,
+  subCat: SubcategoryId,
+  styleId: StyleId,
+  legendId: LegendId,
 ): SubcatStyleLegendKey => `${subCat}-${styleId}-${legendId}`
 
 export const createSourceSubcatStyleLayerKey = (

@@ -2,12 +2,12 @@ import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { DatasetIds } from '../../../../_mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../../_mapData/mapDataSources/sources.const'
+import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
 import { translations } from './translations.const'
 
 type Props = {
-  sourceId: SourcesIds | DatasetIds
+  sourceId: SourcesId | DatasetIds
   tagKey: string
 }
 

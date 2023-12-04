@@ -2,7 +2,7 @@ import { FeatureCollection } from 'geojson'
 import React, { useEffect, useState } from 'react'
 import { Layer, Source, useMap } from 'react-map-gl/maplibre'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
-import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 export const osmNotesLayerId = 'osm-notes'
 

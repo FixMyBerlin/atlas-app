@@ -1,9 +1,9 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { createInitialCategoriesConfig } from './app/regionen/[regionSlug]/_components/mapStateConfig/createInitialCategoriesConfig'
-import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/configCustomParser'
-import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { staticRegion } from './app/regionen/(index)/_data/regions.const'
+import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
+import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
+import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 
 // Initialize /regionen/:slug with a `map` + `config` if none was given.
 export function middleware(request: NextRequest) {
@@ -26,7 +26,7 @@ export function middleware(request: NextRequest) {
 
   url.searchParams.append('map', serializeMapParam(region.map))
 
-  const freshConfig = createInitialCategoriesConfig(region.categories)
+  const freshConfig = createFreshCategoriesConfig(region.categories)
   url.searchParams.append('config', configCustomStringify(freshConfig))
   return NextResponse.redirect(url.toString())
 }

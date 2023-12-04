@@ -1,4 +1,4 @@
-import { MapDataStyleLegend, MapDataSubcat } from '../types'
+import { FileMapDataSubcategoryStyleLegend, FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -29,9 +29,9 @@ const defaultLegend = [
     name: 'Flächenparkplätze',
     style: { type: 'fill', color: 'rgb(48, 159, 219)' },
   },
-] satisfies MapDataStyleLegend[]
+] satisfies FileMapDataSubcategoryStyleLegend[]
 
-export const subcat_parkingAreas: MapDataSubcat = {
+export const subcat_parkingAreas: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Flächenparkplätze',
   sourceId: 'parkraumParkingAreas',

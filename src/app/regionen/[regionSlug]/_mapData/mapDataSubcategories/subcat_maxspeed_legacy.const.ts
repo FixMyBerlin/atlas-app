@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -8,7 +8,7 @@ const sourceLayer = 'maxspeed'
 export type SubcatMaxspeedIdLegacy = typeof subcatId
 export type SubcatMaxspeedStyleIdsLegacy = 'default' | 'details' | 'source'
 
-export const subcat_maxspeed_legacy: MapDataSubcat = {
+export const subcat_maxspeed_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Höchstgeschwindigkeit (OLD)',
   sourceId: source,

@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -7,7 +7,7 @@ const source = 'parkraumParkingDebug'
 export type SubcatParkingDebugId = typeof subcatId
 export type SubcatParkingDebugStyleIds = 'default' | 'presence' | 'debugLengthPerCapacity'
 
-export const subcat_parkingDebug: MapDataSubcat = {
+export const subcat_parkingDebug: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkraum Debug',
   sourceId: 'parkraumParkingDebug',

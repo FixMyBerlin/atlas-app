@@ -1,5 +1,3 @@
-import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
-import { SubcategoryIds, SubcategoryStyleIds } from './mapData.const'
 import {
   AnyLayer,
   CircleLayer,
@@ -9,13 +7,12 @@ import {
   RasterSource,
   SymbolLayer,
 } from 'react-map-gl'
-import { MapDataCategoryIds } from './mapDataCategories/categories.const'
-import {
-  SourceExportApiIdentifier,
-  SourceVerificationApiIdentifier,
-  SourcesIds,
-} from './mapDataSources/sources.const'
+import { Prettify } from 'src/app/_components/types/types'
+import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/SelectLegend/LegendIcons/types'
+import { StyleId, SubcategoryId } from './typeId'
+import { MapDataCategoryId } from './mapDataCategories/categories.const'
+import { SourcesId } from './mapDataSources/sources.const'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
 export type MapDataBackgroundSource<TIds> = {
@@ -170,40 +167,41 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   maxzoom?: mapboxgl.RasterSource['maxzoom']
 }
 
-/** @desc: Top level thematik filter; usually one Category has one primary Subcat; eg. 'Radinfrastruktur, Quellen & Ziele, Straßentypen' */
-export type MapDataCategory = {
-  id: MapDataCategoryIds
+export type StaticMapDataCategory = {
+  id: MapDataCategoryId
   name: string
   desc?: string
-  subcategories: MapDataSubcategory[]
+  subcategories: StaticMapDataSubcategory[]
 }
 
-type MapDataSubcategory = {
-  id: SubcategoryIds
-  defaultStyle: 'default' | 'hidden'
-  ui: 'dropdown' | 'checkbox'
-  // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
-}
+type StaticMapDataSubcategory = Prettify<
+  FileMapDataSubcategory & {
+    id: SubcategoryId
+    defaultStyle: 'default' | 'hidden'
+    ui: 'dropdown' | 'checkbox'
+    // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
+  }
+>
 
 export type TBeforeIds = 'housenumber' | 'boundary_country' | 'landuse' | undefined
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
-export type MapDataSubcat = {
-  id: SubcategoryIds
+export type FileMapDataSubcategory = {
+  id: SubcategoryId
   name: string
-  sourceId: SourcesIds
+  sourceId: SourcesId
   beforeId?: TBeforeIds
-  styles: MapDataStyle[]
+  styles: FileMapDataSubcategoryStyle[]
 }
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type MapDataStyle =
+export type FileMapDataSubcategoryStyle =
   | {
-      id: SubcategoryStyleIds
+      id: StyleId
       name: string
       desc: null | string
-      layers: MapDataVisLayer[]
-      legends?: null | MapDataStyleLegend[]
+      layers: FileMapDataSubcategoryStyleLayer[]
+      legends?: null | FileMapDataSubcategoryStyleLegend[]
     }
   | {
       id: 'hidden'
@@ -213,17 +211,19 @@ export type MapDataStyle =
       legends?: never
     }
 
-/** @desc: The technical glue between sources and styles. name fixed by library */
-export type MapDataVisLayer = (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) &
-  Required<Pick<AnyLayer, 'source-layer'>> & {
-    /**
-     * @default `true`
-     * @desc optional `false` will hide the layer from `interactiveLayerIds` */
-    interactive?: false
-  }
+/** @desc: The technical glue between sources and styles. The name "layers" is defined by the library we use. */
+export type FileMapDataSubcategoryStyleLayer = Prettify<
+  (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) &
+    Required<Pick<AnyLayer, 'source-layer'>> & {
+      /**
+       * @default `true`
+       * @desc optional `false` will hide the layer from `interactiveLayerIds` */
+      interactive?: false
+    }
+>
 
 /** @desc: Optional legend to explain a given layer */
-export type MapDataStyleLegend = {
+export type FileMapDataSubcategoryStyleLegend = {
   id: string
   name: string
   desc?: string[]
@@ -240,10 +240,4 @@ export type MapDataStyleLegend = {
         width?: number
         dasharray?: number[]
       }
-}
-
-export type MapData = {
-  sources: MapDataSource<SourcesIds, SourceVerificationApiIdentifier, SourceExportApiIdentifier>[]
-  categories: MapDataCategory[]
-  subcategories: MapDataSubcat[]
 }

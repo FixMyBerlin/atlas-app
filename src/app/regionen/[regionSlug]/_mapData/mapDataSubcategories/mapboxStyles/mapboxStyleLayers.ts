@@ -1,6 +1,6 @@
 import { flattenFilterArrays } from '../../../_components/Map/SourcesAndLayers/utils/filterUtils/flattenFilterArrays'
 import { wrapFilterWithAll } from '../../../_components/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
-import { SourcesIds } from '../../mapDataSources/sources.const'
+import { SourcesId } from '../../mapDataSources/sources.const'
 import rawMapboxStylesByLayerGroup from './mapbox-layer-styles-by-group.json'
 import { MapboxStylesByLayerGroupIds } from './types'
 
@@ -9,7 +9,7 @@ export const mapboxStylesByLayerGroup = rawMapboxStylesByLayerGroup as StylesByL
 
 export type Props = {
   group: MapboxStylesByLayerGroupIds
-  source: SourcesIds
+  source: SourcesId
   sourceLayer: string
   idPrefix?: string
   additionalFilter?: ['match', ['get', string], string[], boolean, boolean]

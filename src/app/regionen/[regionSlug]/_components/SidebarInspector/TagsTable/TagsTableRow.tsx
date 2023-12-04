@@ -1,19 +1,19 @@
 import React from 'react'
 import { DatasetIds } from '../../../_mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../_mapData/mapDataSources/sources.const'
+import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { NodataFallback } from './compositTableRows/NodataFallback'
 import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
 import { ConditionalFormattedValue } from './translations/ConditionalFormattedValue'
 
 export type TagsTableRowProps =
   | {
-      sourceId: SourcesIds | DatasetIds
+      sourceId: SourcesId | DatasetIds
       tagKey: string
       tagValue: string
       value?: never
     }
   | {
-      sourceId: SourcesIds | DatasetIds
+      sourceId: SourcesId | DatasetIds
       tagKey: string
       tagValue?: never
       value: React.ReactNode

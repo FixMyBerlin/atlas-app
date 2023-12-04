@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -13,7 +13,7 @@ export type SubcatBikelanesSurfaceStyleIds =
   | 'completeness'
   | 'freshness'
 
-export const subcat_bikelanesSurface: MapDataSubcat = {
+export const subcat_bikelanesSurface: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Oberflächenqualität RVA',
   sourceId: source,

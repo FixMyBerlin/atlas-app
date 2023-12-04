@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -13,7 +13,7 @@ export type SubcatRoadsSurfaceStyleIds =
   | 'completeness'
   | 'freshness'
 
-export const subcat_roadsSurface: MapDataSubcat = {
+export const subcat_roadsSurface: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Oberflächenqualität Fahrbahn',
   sourceId: source,

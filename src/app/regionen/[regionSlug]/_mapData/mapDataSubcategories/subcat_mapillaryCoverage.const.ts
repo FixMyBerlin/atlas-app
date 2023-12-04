@@ -1,11 +1,11 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 
 const subcatId = 'mapillaryCoverage'
 export type SubcatMapillaryCoverageId = typeof subcatId
 export type SubcatMapillaryCoverageStyleIds = 'default'
 
-export const subcat_mapillaryCoverage: MapDataSubcat = {
+export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Mapillary',
   sourceId: 'mapillary_coverage',

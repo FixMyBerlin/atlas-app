@@ -1,6 +1,6 @@
 import {
-  MapDataSubcat,
-  MapDataVisLayer,
+  FileMapDataSubcategory,
+  FileMapDataSubcategoryStyleLayer,
   TBeforeIds,
 } from 'src/app/regionen/[regionSlug]/_mapData/types'
 
@@ -20,8 +20,8 @@ const layerOrder: Record<string, TBeforeIds> = {
 
 type Props = {
   backgroundId: string | undefined
-  subcategoryData: MapDataSubcat
-  layerType: MapDataVisLayer['type']
+  subcategoryData: FileMapDataSubcategory
+  layerType: FileMapDataSubcategoryStyleLayer['type']
 }
 
 export const beforeId = ({ backgroundId, subcategoryData, layerType }: Props) => {

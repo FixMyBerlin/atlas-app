@@ -1,5 +1,5 @@
 import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Verification/verifiedColor.const'
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -14,7 +14,7 @@ export type SubcatBikelanesStyleIds =
   | 'freshness'
   | 'bikelane_oneway_arrows'
 
-export const defaultLegend: NonNullable<MapDataSubcat['styles'][0]['legends']> = [
+export const defaultLegend: NonNullable<FileMapDataSubcategory['styles'][0]['legends']> = [
   {
     id: 'separated',
     name: 'Getrennte Fuehrung',
@@ -72,7 +72,7 @@ export const defaultLegend: NonNullable<MapDataSubcat['styles'][0]['legends']> =
   },
 ]
 
-export const subcat_bikelanes: MapDataSubcat = {
+export const subcat_bikelanes: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Radinfrastruktur',
   sourceId: 'atlas_bikelanes',

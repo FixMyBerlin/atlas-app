@@ -2,7 +2,7 @@ import { MapboxGeoJSONFeature } from 'mapbox-gl'
 import {
   StoreCalculator,
   StoreFeaturesInspector,
-} from '../../../mapStateInteraction/useMapStateInteraction'
+} from '../../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 export const extractHighlightFeatureIds = (
   features:

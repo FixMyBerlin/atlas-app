@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -6,7 +6,7 @@ const subcatId = 'landuse'
 export type SubcatLanduseId = typeof subcatId
 export type SubcatLanduseStyleIds = 'default'
 
-export const subcat_landuse: MapDataSubcat = {
+export const subcat_landuse: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Wohn- und Gewerbegebiete',
   sourceId: 'atlas_landuse',

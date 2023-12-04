@@ -1,7 +1,7 @@
 import invariant from 'tiny-invariant'
-import { SubcategoryIds } from '../../../../../_mapData/mapData.const'
 import { DatasetIds } from '../../../../../_mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../../../../_mapData/mapDataSources/sources.const'
+import { SourcesId } from '../../../../../_mapData/mapDataSources/sources.const'
+import { SubcategoryId } from '../../../../../_mapData/typeId'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
 
 export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
@@ -11,7 +11,7 @@ export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof create
     match,
     `Did not find subcategory in extractSubcatIdFromSourceKey for sourceKey:${sourceKey}`,
   )
-  return match[1] as SubcategoryIds
+  return match[1] as SubcategoryId
 }
 
 export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
@@ -21,7 +21,7 @@ export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof crea
     match,
     `Did not find source in extractSourceIdIdFromSourceKey for sourceKey:${sourceKey}`,
   )
-  return match[1] as SourcesIds
+  return match[1] as SourcesId
 }
 
 export const extractDataIdIdFromDataKey = (sourceKey: string) => {

@@ -1,7 +1,7 @@
 import { MapDataSource } from '../types'
 import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './sources.const'
 
-export type SourcesParkingIds =
+export type SourcesParkingId =
   | 'parkraumParking'
   | 'parkraumParkingAreas'
   | 'parkraumParkingDebug'
@@ -9,7 +9,7 @@ export type SourcesParkingIds =
   | 'parkraumParkingStats'
 
 export const sourcesParking: MapDataSource<
-  SourcesParkingIds,
+  SourcesParkingId,
   SourceVerificationApiIdentifier,
   SourceExportApiIdentifier
 >[] = [

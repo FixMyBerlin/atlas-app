@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -8,7 +8,7 @@ const sourceLayer = 'processing.parking_segments'
 export type SubcatParkingId = typeof subcatId
 export type SubcatParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
 
-export const subcat_parking: MapDataSubcat = {
+export const subcat_parking: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkraum',
   sourceId: 'parkraumParking',

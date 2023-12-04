@@ -1,20 +1,16 @@
 import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_components/SelectDatasets/utils/useRegionDatasets'
-import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
+import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
-import {
-  getSourceData,
-  getStyleData,
-  getSubcategoryData,
-} from '../../../_mapData/utils/getMapDataUtils'
-import { CategoryConfig } from '../../mapStateConfig/type'
+import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
+import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import {
   createDatasetSourceLayerKey,
   createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
-type Props = { categories: CategoryConfig[] | undefined }
+type Props = { categories: MapDataCategoryConfig[] | undefined }
 
 const collectInteractiveLayerIdsFromCategory = ({ categories }: Props) => {
   const interactiveLayerIds: string[] = []
@@ -23,23 +19,20 @@ const collectInteractiveLayerIdsFromCategory = ({ categories }: Props) => {
     if (categoryConfig.active === false) return
 
     return categoryConfig?.subcategories?.forEach((subcatConfig) => {
-      const subcatData = getSubcategoryData(subcatConfig.id)
-
       subcatConfig.styles.forEach((styleConfig) => {
-        const styleData = getStyleData(subcatData, styleConfig.id)
-        if (styleData.id === 'hidden') return
+        if (styleConfig.id === 'hidden') return
         if (styleConfig.active === false) return
 
-        styleData.layers.forEach((layerConfig) => {
+        styleConfig.layers.forEach((layerConfig) => {
           // Only if `inspector.enabled` do we want to enable the layer (which enables the Inspector)
-          const sourceData = getSourceData(subcatData.sourceId)
+          const sourceData = getSourceData(subcatConfig.sourceId)
           if (!sourceData.inspector.enabled) return
 
-          const layerData = styleData.layers.find((l) => l.id === layerConfig.id)
+          const layerData = styleConfig.layers.find((l) => l.id === layerConfig.id)
           if (layerData?.interactive === false) return
 
           const layerKey = createSourceSubcatStyleLayerKey(
-            subcatData.sourceId,
+            subcatConfig.sourceId,
             subcatConfig.id,
             styleConfig.id,
             layerConfig.id,
@@ -62,16 +55,16 @@ const collectInteractiveLayerIdsFromCategory = ({ categories }: Props) => {
 
 export const useInteractiveLayers = () => {
   // active layer from category
-  const { configParam } = useConfigParam()
-  const currentCategories = configParam?.filter((th) => th.active === true)
+  const { categoriesConfig } = useCategoriesConfig()
+  const activeCategoriesConfig = categoriesConfig?.filter((th) => th.active === true)
 
-  const categoryActiveLayerIds = collectInteractiveLayerIdsFromCategory({
-    categories: currentCategories,
+  const activeCategoryLayerIds = collectInteractiveLayerIdsFromCategory({
+    categories: activeCategoriesConfig,
   })
 
   const { osmNotesParam } = useOsmNotesParam()
   if (osmNotesParam) {
-    categoryActiveLayerIds.push(osmNotesLayerId)
+    activeCategoryLayerIds.push(osmNotesLayerId)
   }
 
   // active layer from datasets
@@ -86,5 +79,5 @@ export const useInteractiveLayers = () => {
       )
       .flat() || []
 
-  return [...categoryActiveLayerIds, ...datasetsActiveLayerIds]
+  return [...activeCategoryLayerIds, ...datasetsActiveLayerIds]
 }

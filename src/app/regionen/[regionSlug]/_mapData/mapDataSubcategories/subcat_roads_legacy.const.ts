@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -8,7 +8,7 @@ const sourceLayer = 'roadClassification'
 export type SubcatRoadsIdLegacy = typeof subcatId
 export type SubcatRoadsStyleIdsLegacy = 'default' | 'oneway'
 
-export const subcat_roads_legacy: MapDataSubcat = {
+export const subcat_roads_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen (OLD)',
   sourceId: source,

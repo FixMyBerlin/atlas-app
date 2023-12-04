@@ -1,4 +1,4 @@
-import { MapDataSubcat } from '../types'
+import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 import { defaultLegend } from './subcat_bikelanes.const'
@@ -9,7 +9,7 @@ const sourceLayer = 'bikelanesPresence'
 export type SubcatBikelanesPresenceIdLegacy = typeof subcatId
 export type SubcatBikelanesPresenceStyleIdsLegacy = 'default'
 
-export const subcat_bikelanesPresence_legacy: MapDataSubcat = {
+export const subcat_bikelanesPresence_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Vollständigkeit Radinfrastruktur (OLD)',
   sourceId: source,

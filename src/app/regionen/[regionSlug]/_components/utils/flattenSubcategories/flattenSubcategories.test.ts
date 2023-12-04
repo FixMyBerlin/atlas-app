@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'vitest'
-import { createInitialCategoriesConfig } from '../createInitialCategoriesConfig'
-import { flattenSubcategories } from './flattenSubcategories'
+import { createFreshCategoriesConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
+import { flattenSubcategories } from '../flattenSubcategories/flattenSubcategories'
 import { uniqueArray } from 'src/app/_components/utils/uniqueArray'
 
 describe('flattenSubcategories()', () => {
   test('Flatten removes duplicate subcategories', () => {
-    const initialMapConfig = createInitialCategoriesConfig(['bikelanes', 'surface'])
+    const initialMapConfig = createFreshCategoriesConfig(['bikelanes', 'surface'])
 
     // console.log('intialConfig', JSON.stringify(initialMapConfig, undefined, 2))
     const check = uniqueArray(

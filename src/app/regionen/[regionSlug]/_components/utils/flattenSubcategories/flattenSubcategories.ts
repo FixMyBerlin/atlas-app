@@ -1,7 +1,10 @@
-import { CategoryConfig, SubcategoryConfig } from '../type'
+import {
+  MapDataCategoryConfig,
+  MapDataSubcategoryConfig,
+} from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 
-export const flattenSubcategories = (categoryConfigs: CategoryConfig[]) => {
-  const subcategoryConfigConfigs: SubcategoryConfig[] = []
+export const flattenSubcategories = (categoryConfigs: MapDataCategoryConfig[]) => {
+  const subcategoryConfigConfigs: MapDataSubcategoryConfig[] = []
 
   categoryConfigs.forEach((categoryConfig) =>
     categoryConfig.subcategories.map((subcategoryConfigConfig) => {
