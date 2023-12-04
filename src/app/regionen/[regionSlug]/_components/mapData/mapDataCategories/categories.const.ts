@@ -44,7 +44,6 @@ export const categories: MapDataCategory[] = [
       { id: 'maxspeed', defaultStyle: 'hidden', ui: 'dropdown' },
       // { id: 'path', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
       // { id: 'lanes', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
-      { id: 'roadsSurface', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'roadCompletness', defaultStyle: 'hidden', ui: 'checkbox' },
     ],
   },
@@ -55,7 +54,6 @@ export const categories: MapDataCategory[] = [
     subcategories: [
       { id: 'roads_legacy', defaultStyle: 'default', ui: 'dropdown' },
       { id: 'maxspeed_legacy', defaultStyle: 'hidden', ui: 'dropdown' },
-      { id: 'roadsSurface', defaultStyle: 'hidden', ui: 'dropdown' },
     ],
   },
   {
