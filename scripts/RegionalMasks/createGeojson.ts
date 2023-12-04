@@ -13,7 +13,7 @@ import {
 import chalk from 'chalk'
 import path from 'node:path'
 import { z } from 'zod'
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { staticRegion } from 'src/regions/data/regions.const'
 import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
 
 console.log(chalk.inverse.bold('START'), __filename)
@@ -117,7 +117,7 @@ const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeatur
 
 // 1. Collect the boundary and mask per region
 const collectedFeatures: ReturnType<typeof createBufferFeature>[] = []
-for (const region of additionalRegionAttributes) {
+for (const region of staticRegion) {
   const { slug: regionName, osmRelationIds } = region
   if (!osmRelationIds.length) continue
   console.info(chalk.inverse.bold('INFO: Now working on region', regionName))

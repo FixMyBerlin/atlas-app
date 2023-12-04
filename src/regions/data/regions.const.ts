@@ -9,19 +9,19 @@ import {
 } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const'
 import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSources/sourcesBackgroundsRaster.const'
 
-type RegionMap = {
+type StaticRegionInitialMapPositionZoom = {
   lat: number
   lng: number
   zoom: number
 }
 
-export type AdditionalRegionAttributes = {
-  slug: RegionPath
+export type StaticRegion = {
+  slug: RegionSlug
   name: string
   fullName: string
   /** @desc 1-n relation IDs, used for the mask and export bbox — @href use https://hanshack.com/geotools/gimmegeodata/ to get the ids */
   osmRelationIds: number[] | []
-  map: RegionMap
+  map: StaticRegionInitialMapPositionZoom
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
   logoWhiteBackgroundRequired: boolean
@@ -61,7 +61,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'opentopomap',
 ]
 
-export type RegionPath =
+export type RegionSlug =
   | 'bb' // Land Brandenburg
   | 'berlin'
   | 'bibi'
@@ -84,8 +84,7 @@ export type RegionPath =
   | 'trto'
   | 'woldegk'
 
-// This is our regions "Database" until we have a real one
-export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
+export const staticRegion: StaticRegion[] = [
   {
     slug: 'bibi',
     name: 'BiBi',

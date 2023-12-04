@@ -1,4 +1,4 @@
-import { RegionPath } from 'src/regions/components/additionalRegionAttributes.const'
+import { RegionSlug } from 'src/regions/data/regions.const'
 import { SubcategoryIds, SubcategoryStyleIds } from './mapData.const'
 import {
   AnyLayer,
@@ -35,7 +35,7 @@ export type MapDataBackgroundSource<TIds> = {
 /** @desc: The data sources, configured in 'sourcesDatasets.const.ts' */
 export type MapDataDatasetsSource<TIds> = {
   /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
-  regionKey: RegionPath[]
+  regionKey: RegionSlug[]
   id: TIds
   name: string
   description?: string

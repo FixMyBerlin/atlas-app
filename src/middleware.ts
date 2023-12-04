@@ -3,13 +3,13 @@ import { NextResponse } from 'next/server'
 import { createMapRegionConfig } from './app/regionen/[regionSlug]/_components/mapStateConfig/createMapRegionConfig'
 import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParamParser/configCustomParser'
 import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { additionalRegionAttributes } from './regions/components/additionalRegionAttributes.const'
+import { staticRegion } from './regions/data/regions.const'
 
 // Initialize /regionen/:slug with a `map` + `config` if none was given.
 export function middleware(request: NextRequest) {
   const url = new URL(request.url)
   const paths = request.nextUrl.pathname.split('/')
-  const regionenSlugs = additionalRegionAttributes.map((r) => r.slug)
+  const regionenSlugs = staticRegion.map((r) => r.slug)
 
   // Guard: Only when params `map` or `config` are missing
   if (url.searchParams.get('map') && url.searchParams.get('config')) return
@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
 
   // const region = useStaticRegion() // we cannot use this here, so we do it manually:
   const regionSlug = request.nextUrl.pathname.split('/').at(2)
-  const region = additionalRegionAttributes.find((r) => r.slug === regionSlug)
+  const region = staticRegion.find((r) => r.slug === regionSlug)
   if (!region) return
 
   url.searchParams.append('map', serializeMapParam(region.map))
