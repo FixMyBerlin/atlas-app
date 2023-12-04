@@ -1,12 +1,12 @@
 import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
-import { createMapRegionConfig } from '../../_components/mapStateConfig/createMapRegionConfig'
+import { createInitialCategoriesConfig } from '../../_components/mapStateConfig/createInitialCategoriesConfig'
 import { CategoryConfig } from '../../_components/mapStateConfig/type'
 import { configCustomParse, configCustomStringify } from './useConfigParamParser/configCustomParser'
 
 export const useConfigParam = () => {
   const region = useStaticRegion()
-  const freshConfig = createMapRegionConfig(region?.categories ?? [])
+  const freshConfig = createInitialCategoriesConfig(region?.categories ?? [])
 
   const configParamParser = createParser({
     parse: (query: string) => configCustomParse(query, freshConfig) as CategoryConfig[],
