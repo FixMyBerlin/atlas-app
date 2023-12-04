@@ -1,14 +1,13 @@
+import { StaticImageData } from 'next/image'
 import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
-import imageParking from 'src/app/_components/assets/parking.svg'
 import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
+import imageParking from 'src/app/_components/assets/parking.svg'
 import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 import {
   MapDataCategoryIds,
   categories,
 } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const'
 import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_components/mapData/mapDataSources/sourcesBackgroundsRaster.const'
-import { StaticImageData } from 'next/image'
-import { adminIds } from 'src/users/components/utils/usersUtils'
 
 type RegionMap = {
   lat: number
@@ -63,6 +62,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionPath =
+  | 'bb' // Land Brandenburg
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -464,6 +464,28 @@ export const additionalRegionAttributes: AdditionalRegionAttributes[] = [
       'surface',
     ],
     backgroundSources: [...defaultBackgroundSources],
+  },
+  {
+    name: 'Brandenburg',
+    fullName: 'Land Brandenburg',
+    slug: 'bb',
+    osmRelationIds: [62504],
+    map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
+    bbox: {
+      min: [11.2662278, 51.359064],
+      max: [14.7658159, 53.5590907],
+    },
+    externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'poi',
+      'bikelanes',
+      'roads',
+      'surface',
+      'bicycleParking',
+    ],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
     name: 'Fahrradstellplätze',
