@@ -16,6 +16,7 @@ import { subcat_parkingAreas } from '../mapDataSubcategories/subcat_parkingAreas
 import { subcat_parkingDebug } from '../mapDataSubcategories/subcat_parkingDebug.const'
 import { subcat_parkingPoints } from '../mapDataSubcategories/subcat_parkingPoints.const'
 import { subcat_parkingStats } from '../mapDataSubcategories/subcat_parkingStats.const'
+import { subcat_places } from '../mapDataSubcategories/subcat_places.const'
 import { subcat_poi } from '../mapDataSubcategories/subcat_poi.const'
 import { subcat_publicTransport } from '../mapDataSubcategories/subcat_publicTransport.const'
 import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
@@ -57,6 +58,7 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'routes', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'buildings', defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_landuse, defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_places, defaultStyle: 'default', ui: 'dropdown' },
     ],
   },
   {
