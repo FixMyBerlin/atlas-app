@@ -19,7 +19,7 @@ export const subcat_education: FileMapDataSubcategory = {
       name: 'Standard',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_education',
+        group: 'atlas_pois_education',
         source,
         sourceLayer,
       }),
@@ -29,15 +29,23 @@ export const subcat_education: FileMapDataSubcategory = {
           name: 'Kindergarten',
           style: {
             type: 'circle',
-            color: 'rgb(119, 23, 171)',
+            color: '#19a1b3',
           },
         },
         {
-          id: 'older',
-          name: 'Schule bis Uni',
+          id: 'school',
+          name: 'Schule',
           style: {
             type: 'circle',
-            color: 'hsl(209, 76%, 38%)',
+            color: '#1269e2',
+          },
+        },
+        {
+          id: 'uni',
+          name: 'Uni',
+          style: {
+            type: 'circle',
+            color: '#b070ff',
           },
         },
       ],
