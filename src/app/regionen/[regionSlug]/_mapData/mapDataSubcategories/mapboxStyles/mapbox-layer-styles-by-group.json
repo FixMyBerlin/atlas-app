@@ -1822,7 +1822,25 @@
     "group": "atlas_places",
     "layers": [
       {
-        "minzoom": 11,
+        "filter": ["has", "admin_level"],
+        "type": "symbol",
+        "id": "place-names",
+        "paint": {
+          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
+          "text-halo-width": 1,
+          "text-color": "#594f4f",
+          "text-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            ["case", ["match", ["get", "admin_level"], ["10", "9"], false, true], 1, 0],
+            11,
+            ["match", ["get", "admin_level"], ["2", "4", "3", "9", "5", "6", "7", "8"], 1, 0],
+            11.1,
+            ["case", ["has", "admin_level"], 1, 0]
+          ]
+        },
         "layout": {
           "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 22, 13],
           "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
@@ -1848,19 +1866,12 @@
           "text-field": [
             "step",
             ["zoom"],
-            ["to-string", ["concat", ["get", "name"], " \n ", ["get", "population"]]],
-            22,
+            ["to-string", ["get", "name"]],
+            18,
             ["to-string", ["concat", ["get", "name"], " \n ", ["get", "population"]]]
           ],
           "icon-padding": 0,
           "text-max-width": 20
-        },
-        "maxzoom": 14,
-        "type": "symbol",
-        "id": "places-label",
-        "paint": {
-          "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
-          "text-halo-width": 1
         }
       }
     ]
@@ -1869,20 +1880,42 @@
     "group": "atlas_placescircle",
     "layers": [
       {
-        "minzoom": 11,
         "layout": {},
-        "maxzoom": 14,
+        "filter": ["has", "admin_level"],
         "type": "circle",
-        "id": "placescircle-circle",
+        "id": "circle-place-circle",
         "paint": {
-          "circle-stroke-color": "#d8cd03",
-          "circle-opacity": 0.7,
+          "circle-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            ["case", ["match", ["get", "admin_level"], ["10", "9"], false, true], 1, 0],
+            11,
+            ["case", ["match", ["get", "admin_level"], ["10"], false, true], 1, 0],
+            11.1,
+            ["case", ["has", "admin_level"], 1, 0]
+          ],
           "circle-stroke-width": 2,
-          "circle-radius": ["interpolate", ["linear"], ["get", "population"], 100, 5, 91116, 40]
-        }
+          "circle-stroke-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            ["case", ["match", ["get", "admin_level"], ["9", "10"], false, true], 1, 0],
+            11,
+            ["case", ["match", ["get", "admin_level"], ["10"], false, true], 1, 0],
+            11.1,
+            ["case", ["has", "admin_level"], 1, 0]
+          ],
+          "circle-stroke-color": "#7304cd",
+          "circle-color": "rgba(255, 255, 255, 0.09)",
+          "circle-radius": ["step", ["get", "population"], 3, 500000, 5, 1000000, 10]
+        },
+        "slot": ""
       },
       {
-        "minzoom": 11,
+        "minzoom": 10,
         "layout": {
           "text-size": ["interpolate", ["linear"], ["zoom"], 10, 10, 22, 13],
           "text-font": ["Open Sans SemiBold", "Arial Unicode MS Regular"],
@@ -1905,17 +1938,36 @@
             1
           ],
           "text-anchor": "top",
-          "text-field": ["to-string", ["concat", ["get", "name"], " \n ", ["get", "population"]]],
+          "text-field": [
+            "step",
+            ["zoom"],
+            ["to-string", ["get", "name"]],
+            15,
+            ["to-string", ["concat", ["get", "name"], " \n ", ["get", "population"]]]
+          ],
           "icon-padding": 0,
           "text-max-width": 20
         },
-        "maxzoom": 14,
+        "filter": ["has", "admin_level"],
         "type": "symbol",
-        "id": "placescircle-label",
+        "id": "circle-place-names",
         "paint": {
           "text-halo-color": "hsla(0, 6%, 97%, 0.91)",
-          "text-halo-width": 1
-        }
+          "text-halo-width": 1,
+          "text-color": "#594f4f",
+          "text-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            9,
+            ["case", ["match", ["get", "admin_level"], ["10", "9"], false, true], 1, 0],
+            11,
+            ["match", ["get", "admin_level"], ["2", "4", "3", "9", "5", "6", "7", "8"], 1, 0],
+            11.1,
+            ["case", ["has", "admin_level"], 1, 0]
+          ]
+        },
+        "slot": ""
       }
     ]
   },

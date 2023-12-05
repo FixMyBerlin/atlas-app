@@ -14,25 +14,38 @@ export const subcat_places: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Ortsnamen',
+      name: 'Siedlungszentren EW-Zahl',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_places',
         source: 'atlas_places',
         sourceLayer: 'places',
       }),
-      legends: null,
+      legends: [
+        {
+          id: 'place',
+          name: 'Orte (Name)',
+          style: { type: 'text', color: 'black' },
+        },
+      ],
     },
     {
       id: 'circle',
-      name: 'Ortsname & Einwohner',
+      name: 'Siedlungszentren Name',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_placescircle',
         source: 'atlas_places',
         sourceLayer: 'places',
       }),
-      legends: null,
+      legends: [
+        {
+          id: 'place',
+          name: 'Orte (ø prop. EW-Zahl)',
+          // TODO: Introduce circleBorder
+          style: { type: 'circle', color: '#6D28D9' },
+        },
+      ],
     },
   ],
 }
