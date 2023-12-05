@@ -26,17 +26,14 @@ services:
       db:
         condition: service_healthy
   tiles:
-    # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
-    image: pramsey/pg_tileserv
+    image: ghcr.io/maplibre/martin
     container_name: tiles
     restart: always
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
-      DbPoolMaxConns: 25
-      MaxFeaturesPerTile: 50000
-      Debug: false
+    command: ["--auto-bounds=calc"]
     ports:
-      - "8010:7800"
+      - 3333:3000
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
@@ -75,6 +72,7 @@ services:
     image: postgis/postgis:14-3.3-alpine
     container_name: db
     shm_size: 1gb
+    restart: unless-stopped
     command: ["postgres", "-c", "shared_buffers=3GB", "-c", "work_mem=128MB", "-c", "maintenance_work_mem=1024MB", "-c", "temp_buffers=24MB", "-c", "effective_cache_size=8GB", "-c", "wal_buffers=16MB", "-c", "min_wal_size=1GB", "-c", "max_wal_size=4GB"]
     environment:
       PGUSER:
