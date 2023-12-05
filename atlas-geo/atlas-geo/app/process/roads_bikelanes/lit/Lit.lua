@@ -59,7 +59,7 @@ function Lit(object)
   }
 
 
-  CopyTags(tags, lit_data, tags_cc, "osm_")
+  CopyTags(lit_data, tags, tags_cc, "osm_")
   
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
   if tags["check_date:lit"] then

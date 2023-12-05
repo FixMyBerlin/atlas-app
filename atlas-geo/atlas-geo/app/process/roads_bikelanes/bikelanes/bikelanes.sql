@@ -5,31 +5,25 @@
 -- because negative offsets reverse the order and we want the right side to be aligned we reverse the order again
 -- additionally we check wether the geometry is `simple` because otherwise we might get a MLString
 -- for the same reason we simplify the geometries
--- TODO: check parameters `quad_segs` and  `join`
+-- We also need a unique osm_id for our frontend code. As a workaround we use the offset sign.
+-- In turn this brakes updating tables via osm2pgsql
 UPDATE
   "_bikelanes_temp"
 SET
-  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), "_offset"), 3857)
+  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), (tags->>'offset')::numeric), 3857),
+  osm_id = osm_id * SIGN((tags->>'offset')::numeric)
 WHERE
   ST_IsSimple(geom)
   AND NOT ST_IsClosed(geom)
-  AND "_offset" != 0;
+  AND (tags->>'offset')::numeric != 0;
 
 UPDATE
   "_bikelanes_temp"
 SET
   geom = ST_Reverse(geom)
 WHERE
-  "_offset" > 0;
+  (tags->>'offset')::numeric > 0;
 
--- We need a unique osm_id for our frontend code. As a workaround we use the offset sign.
--- In turn this brakes updating tables via osm2pgsql
-UPDATE
-  "_bikelanes_temp"
-SET
-  osm_id = osm_id * SIGN("_offset")
-WHERE
-  "_offset" != 0;
 
 -- ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";
 --IDEA: maybe we can transform closed geometries with some sort of buffer function:
