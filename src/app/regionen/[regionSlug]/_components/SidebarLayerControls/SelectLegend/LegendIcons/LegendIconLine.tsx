@@ -14,7 +14,12 @@ export const LegendIconLine = ({
   ...props
 }: Props) => {
   return (
-    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${size} ${size}`}>
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={`0 0 ${size} ${size}`}
+      aria-hidden={true}
+    >
       <line
         x1="0%"
         y1="50%"
