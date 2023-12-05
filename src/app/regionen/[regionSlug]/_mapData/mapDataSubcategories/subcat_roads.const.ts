@@ -6,11 +6,7 @@ const subcatId = 'roads'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
 export type SubcatRoadsId = typeof subcatId
-export type SubcatRoadsStyleIds =
-  | 'default'
-  | 'oneway'
-  | 'road_implicit_shared_lane'
-  | 'road_oneway_arrows'
+export type SubcatRoadsStyleIds = 'default' | 'sidestreets'
 export const subcat_roads: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen',
@@ -22,99 +18,69 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Standard',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
-        group: 'atlas_roadclassification',
+        group: 'atlas_roadclassification_all',
         source,
         sourceLayer,
       }),
       legends: [
         {
-          id: 'unclassified',
-          name: 'Nebenstraße (…)',
-          style: { type: 'line', color: '#e6d6a2' },
+          id: 'main',
+          name: 'Hauptstraßen',
+          style: { type: 'line', color: '#F6E7AC', width: 8 },
         },
         {
-          id: 'tertiary',
-          name: 'Kreisstraße (…)',
-          style: { type: 'line', color: '#dab07c' },
-        },
-        { id: 'residential', name: 'Wohngebiet', style: { type: 'line', color: '#9a987e' } },
-        {
-          id: 'path-track-bridleway',
-          name: 'Pfad, Wald-, Feldweg (…)',
-          style: { type: 'line', color: '#b4aac0' },
+          id: 'side-high',
+          name: 'Nebenstraßen vorr. hohe Kfz-Dichte',
+          style: { type: 'line', color: '#E4B407', width: 5 },
         },
         {
-          id: 'primary-motorway-secondary-trunk',
-          name: 'Verbindungsstraße (…)',
-          style: { type: 'line', color: '#dab07c' },
+          id: 'side-low',
+          name: 'Nebenstraßen vorr. niedrige Kfz-Dichte',
+          style: { type: 'line', color: '#E4B407', width: 2 },
         },
         {
-          id: 'living_street-pedestrian-bicycle_road',
-          name: 'Verkehrsberuhigt (…)',
-          style: { type: 'line', color: '#80a3ea' },
+          id: 'residential',
+          name: 'Wohnstraßen',
+          style: { type: 'line', color: '#A2C9F6', width: 2 },
         },
         {
-          id: 'footway-cycleway',
-          name: 'Fuß- & Radwege',
-          style: { type: 'line', color: '#b9aac0' },
-        },
-        {
-          id: 'service_road-service_alley',
-          name: 'Zufahrtsweg',
-          style: { type: 'line', color: '#e6d6a2' },
-        },
-        // {
-        //   id: 'service_drive_through-service_parking_aisle',
-        //   name: 'Zufahrtsweg (…)',
-        //   style: { type: 'line', color: 'rgba(251, 40, 40, 0)' },
-        // },
-      ],
-    },
-    {
-      id: 'oneway',
-      name: 'Einbahnstraßen',
-      desc: 'Hervorhebung von Einbahnstraßen.',
-      layers: [
-        mapboxStyleLayers({
-          group: 'atlas_oneway',
-          source,
-          sourceLayer,
-        }),
-        mapboxStyleLayers({
-          group: 'atlas_roadclassification',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [
-        {
-          id: 'car_and_bike',
-          name: 'Einbahnstraße',
-          style: {
-            type: 'line',
-            color: 'rgb(255, 131, 82)',
-          },
-        },
-        {
-          id: 'car_not_bike',
-          name: 'Einbahnstraße, Fahrrad frei',
-          style: {
-            type: 'line',
-            color: 'rgb(211, 238, 88)',
-          },
+          id: 'low-traffic',
+          name: 'Verkehrsberuhigt',
+          style: { type: 'line', color: '#447BE9', width: 2 },
         },
       ],
     },
     {
-      id: 'road_implicit_shared_lane',
-      name: 'Mischverkehr',
-      desc: 'Fahrrad führung im Mischverkehr.',
+      id: 'sidestreets',
+      name: 'Nur Nebenstraßen',
+      desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_mischverkehr',
+        group: 'atlas_roadclassification_sidestreets',
         source,
         sourceLayer,
       }),
-      legends: undefined,
+      legends: [
+        {
+          id: 'side--side-high',
+          name: 'Nebenstraßen vorr. hohe Kfz-Dichte',
+          style: { type: 'line', color: '#E4B407', width: 5 },
+        },
+        {
+          id: 'side--side-low',
+          name: 'Nebenstraßen vorr. niedrige Kfz-Dichte',
+          style: { type: 'line', color: '#E4B407', width: 2 },
+        },
+        {
+          id: 'side--residential',
+          name: 'Wohnstraßen',
+          style: { type: 'line', color: '#A2C9F6', width: 2 },
+        },
+        {
+          id: 'side--low-traffic',
+          name: 'Verkehrsberuhigt',
+          style: { type: 'line', color: '#447BE9', width: 2 },
+        },
+      ],
     },
   ],
 }

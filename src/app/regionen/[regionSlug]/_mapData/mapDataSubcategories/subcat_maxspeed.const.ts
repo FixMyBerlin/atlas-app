@@ -6,7 +6,7 @@ const subcatId = 'maxspeed'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
 export type SubcatMaxspeedId = typeof subcatId
-export type SubcatMaxspeedStyleIds = 'default' | 'details' | 'source'
+export type SubcatMaxspeedStyleIds = 'default' | 'below30' | 'above40'
 
 export const subcat_maxspeed: FileMapDataSubcategory = {
   id: subcatId,
@@ -16,68 +16,82 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Hohe Geschwindigkeiten',
+      name: 'Alle Höchstgeschwindigkeiten',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_maxspeed', source, sourceLayer }),
+      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_all', source, sourceLayer }),
+      legends: [
+        {
+          id: 'tl-100',
+          name: 'TL ≥ 100 km/h',
+          style: { type: 'line', color: '#1E3A8A', width: 2 },
+        },
+        {
+          id: 'tl-80',
+          name: 'TL ≥ 80 km/h',
+          style: { type: 'line', color: '#B80505', width: 2 },
+        },
+        {
+          id: 'tl-60',
+          name: 'TL ≥ 60 km/h',
+          style: { type: 'line', color: '#FC8B40', width: 2 },
+        },
+        {
+          id: 'tl-50',
+          name: 'TL ≥ 50 km/h',
+          style: { type: 'line', color: '#FC8B40', width: 2 },
+        },
+        {
+          id: 'tl-30',
+          name: 'TL ≥ 30 km/h',
+          style: { type: 'line', color: '#2CB587', width: 2 },
+        },
+        {
+          id: 'tl-20',
+          name: 'TL ≥ 20 km/h',
+          style: { type: 'line', color: '#1E3A8A', width: 2 },
+        },
+      ],
     },
     {
-      id: 'details',
-      name: 'Details',
+      id: 'below30',
+      name: 'Nur Höchstgeschwindigkeit ≤30 km/h',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_details', source, sourceLayer }),
+      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_below30', source, sourceLayer }),
+      legends: [
+        {
+          id: 'tl-30',
+          name: 'TL ≥ 30 km/h',
+          style: { type: 'line', color: '#2CB587', width: 2 },
+        },
+        {
+          id: 'tl-20',
+          name: 'TL ≥ 20 km/h',
+          style: { type: 'line', color: '#1E3A8A', width: 2 },
+        },
+      ],
     },
-    // {
-    //   id: 'source',
-    //   name: 'Quelle',
-    //   desc: 'Visualisierung der Datenquellen',
-    //   layers: debugLayerStyles({ source, sourceLayer }),
-    //       //   legends: [
-    //     {
-    //       id: 'maxspeedDirect',
-    //       name: 'Explizit erfasst `max("maxspeed:forward", "maxspeed:backward", "maxspeed")`',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsla(232, 99%, 39%, 0.34)',
-    //         dasharray: [7, 3],
-    //       },
-    //     },
-    //     {
-    //       id: 'maxspeedFromZone',
-    //       name: 'Via Zone (maxspeed_type, zone:maxspeed, source:maxspeed)',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsla(232, 99%, 39%, 0.34)',
-    //         dasharray: [7, 3],
-    //       },
-    //     },
-    //     {
-    //       id: 'inferred-from-highway',
-    //       name: 'Verkehrsberuhigter Bereich',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsla(232, 99%, 39%, 0.34)',
-    //         dasharray: [7, 3],
-    //       },
-    //     },
-    //     {
-    //       id: 'infereed-from-landuse',
-    //       name: 'Via Wohngebiete',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsla(232, 99%, 39%, 0.34)',
-    //         dasharray: [7, 3],
-    //       },
-    //     },
-    //     {
-    //       id: 'nothing-found',
-    //       name: 'Unbekannt',
-    //       style: {
-    //         type: 'line',
-    //         color: 'hsla(232, 99%, 39%, 0.34)',
-    //         dasharray: [7, 3],
-    //       },
-    //     },
-    //   ],
-    // },
+    {
+      id: 'above40',
+      name: 'Nur Höchstgeschwindigkeiten ≥40 km/h',
+      desc: '', // todo
+      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_above40', source, sourceLayer }),
+      legends: [
+        {
+          id: 'tl-80',
+          name: 'TL ≥ 80 km/h',
+          style: { type: 'line', color: '#B80505', width: 2 },
+        },
+        {
+          id: 'tl-60',
+          name: 'TL ≥ 60 km/h',
+          style: { type: 'line', color: '#FC8B40', width: 2 },
+        },
+        {
+          id: 'tl-50',
+          name: 'TL ≥ 50 km/h',
+          style: { type: 'line', color: '#FC8B40', width: 2 },
+        },
+      ],
+    },
   ],
 }

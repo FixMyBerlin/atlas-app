@@ -983,6 +983,596 @@
     ]
   },
   {
+    "group": "atlas_maxspeed_above40",
+    "layers": [
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "maxspeed"],
+        "type": "line",
+        "id": "maxspeed-all",
+        "paint": {
+          "line-opacity": 0.98,
+          "line-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "maxspeed"],
+            20,
+            "#08aec4",
+            30,
+            "#2cb587",
+            40,
+            "#eeb449",
+            50,
+            "#eeaf49",
+            60,
+            "#fc8b40",
+            80,
+            "#b80505"
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.5, 15, 1]
+        },
+        "slot": ""
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "maxspeed"],
+        "type": "line",
+        "id": "hitarea-maxspeed",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "slot": ""
+      }
+    ]
+  },
+  {
+    "group": "atlas_maxspeed_all",
+    "layers": [
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["match", ["get", "maxspeed"], [0, 50, 60, 80, 100], true, false],
+        "type": "line",
+        "id": "maxspeed-50-80",
+        "paint": {
+          "line-opacity": 0.98,
+          "line-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "maxspeed"],
+            30,
+            "#2cb587",
+            40,
+            "#eeb449",
+            50,
+            "#fc8b40",
+            60,
+            "#fc7c40",
+            80,
+            "#b80505"
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.5, 15, 1]
+        },
+        "slot": ""
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "maxspeed"],
+        "type": "line",
+        "id": "hitarea-maxspeed copy 1",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "slot": ""
+      }
+    ]
+  },
+  {
+    "group": "atlas_maxspeed_below30",
+    "layers": [
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["match", ["get", "maxspeed"], [5, 7, 8, 10, 15, 20, 30], true, false],
+        "type": "line",
+        "id": "maxspeed-0-30",
+        "paint": {
+          "line-opacity": 0.98,
+          "line-color": [
+            "interpolate",
+            ["linear"],
+            ["get", "maxspeed"],
+            20,
+            "#08aec4",
+            30,
+            "#2cb587",
+            40,
+            "#eeb449",
+            50,
+            "#eeaf49",
+            60,
+            "#fc8b40",
+            80,
+            "#b80505"
+          ],
+          "line-width": ["interpolate", ["linear"], ["zoom"], 11, 0.5, 15, 1]
+        },
+        "slot": ""
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "maxspeed"],
+        "type": "line",
+        "id": "hitarea-maxspeed copy 2",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "slot": ""
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclassification_all",
+    "layers": [
+      {
+        "filter": [
+          "match",
+          ["get", "road"],
+          [
+            "residential",
+            "residential_priority_road",
+            "service_alley",
+            "service_uncategorized",
+            "unclassified",
+            "unspecified_road",
+            "bicycle_road"
+          ],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "roadclassification-nomainstreet",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            10,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              1,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              0.5,
+              0.8
+            ],
+            13,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              2,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              1,
+              0.8
+            ],
+            16,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              4,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              2,
+              0.8
+            ]
+          ],
+          "line-color": [
+            "match",
+            ["get", "road"],
+            ["residential"],
+            "#a2c9f6",
+            ["living_street", "bicycle_road", "pedestrian"],
+            "#447be9",
+            ["unclassified", "residential_priority_road", "unspecified_road"],
+            "#ffdb70",
+            ["service_uncategorized", "service_alley"],
+            "#96e4b4",
+            "rgba(213, 26, 26, 0.75)"
+          ]
+        },
+        "layout": {}
+      },
+      {
+        "minzoom": 11,
+        "layout": {},
+        "filter": [
+          "match",
+          ["get", "road"],
+          ["primary", "tertiary_link", "secondary_link", "tertiary", "secondary", "primary_link"],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "roadclassification_mainstreets",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            11,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              3,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              2,
+              0.8
+            ],
+            14,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              8,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              7,
+              0.8
+            ],
+            16,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              24,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              16,
+              0.8
+            ]
+          ],
+          "line-color": "#f6e7ac"
+        }
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "road"],
+        "type": "line",
+        "id": "hitarea-roadclassification",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclassification_plus_fusswege",
+    "layers": [
+      {
+        "minzoom": 13,
+        "layout": {},
+        "filter": [
+          "match",
+          ["get", "road"],
+          [
+            "footway",
+            "footway_sidewalk",
+            "pedestrian",
+            "footway_crossing",
+            "path",
+            "cycleway",
+            "footway_steps",
+            "track"
+          ],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "roadclassification-nokfz",
+        "paint": {
+          "line-color": [
+            "case",
+            ["match", ["get", "road"], ["path", "track", "bridleway"], true, false],
+            "#b4aac0",
+            ["match", ["get", "road"], ["footway", "cycleway"], true, false],
+            "#c6aed0",
+            "rgba(192, 191, 191, 0.75)"
+          ],
+          "line-width": 0.7
+        }
+      }
+    ]
+  },
+  {
+    "group": "atlas_roadclassification_sidestreets",
+    "layers": [
+      {
+        "layout": {},
+        "filter": [
+          "match",
+          ["get", "road"],
+          [
+            "residential",
+            "residential_priority_road",
+            "service_alley",
+            "service_uncategorized",
+            "unclassified",
+            "unspecified_road",
+            "bicycle_road"
+          ],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "roadclassification-nomainstreet copy",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            10,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              1,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              0.5,
+              0.8
+            ],
+            13,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              2,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              1,
+              0.8
+            ],
+            16,
+            [
+              "case",
+              [
+                "match",
+                ["get", "road"],
+                ["residential_priority_road", "unclassified", "living_street"],
+                true,
+                false
+              ],
+              4,
+              [
+                "match",
+                ["get", "road"],
+                [
+                  "residential",
+                  "living_street",
+                  "cycleway",
+                  "footway_sidewalk",
+                  "pedestrian",
+                  "bicycle_road",
+                  "service_uncategorized",
+                  "unspecified_road",
+                  "service_alley"
+                ],
+                true,
+                false
+              ],
+              2,
+              0.8
+            ]
+          ],
+          "line-color": [
+            "match",
+            ["get", "road"],
+            ["residential"],
+            "#a2c9f6",
+            ["living_street", "bicycle_road", "pedestrian"],
+            "#447be9",
+            ["unclassified", "residential_priority_road", "unspecified_road"],
+            "#ffdb70",
+            ["service_uncategorized", "service_alley"],
+            "#96e4b4",
+            "rgba(213, 26, 26, 0.75)"
+          ]
+        },
+        "slot": ""
+      },
+      {
+        "minzoom": 11,
+        "layout": {},
+        "filter": [
+          "match",
+          ["get", "road"],
+          ["primary", "tertiary_link", "secondary_link", "tertiary", "secondary", "primary_link"],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "roadclassification_mainstreets copy",
+        "paint": {
+          "line-width": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            11,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              3,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              2,
+              0.8
+            ],
+            14,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              8,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              7,
+              0.8
+            ],
+            16,
+            [
+              "match",
+              ["get", "road"],
+              ["primary", "secondary", "secondary_link", "primary_link"],
+              24,
+              ["tertiary", "residential_priority_road", "tertiary_link"],
+              16,
+              0.8
+            ]
+          ],
+          "line-color": "#f6e7ac"
+        },
+        "slot": ""
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": ["has", "road"],
+        "type": "line",
+        "id": "hitarea-roadclassification copy",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "slot": ""
+      }
+    ]
+  },
+  {
     "group": "atlas_old_roadclass_maxspeed",
     "layers": [
       {
