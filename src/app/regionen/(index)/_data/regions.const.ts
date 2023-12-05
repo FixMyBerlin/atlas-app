@@ -483,6 +483,7 @@ export const staticRegion: StaticRegion[] = [
       'roads',
       'surface',
       'bicycleParking',
+      'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
