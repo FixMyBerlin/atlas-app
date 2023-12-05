@@ -112,7 +112,7 @@ await Promise.all(
     }[] = []
     groupsAndLayers[key]?.forEach((g) => {
       const sourceName = g.group
-      const cleanedName = sourceName.toLowerCase().replace(/[^a-z_]/g, '')
+      const cleanedName = sourceName.toLowerCase().replace(/[^a-z0-9_]/g, '')
       if (sourceName !== cleanedName) {
         g.group = cleanedName
         changedNamesForDebugging.push({ sourceName, cleanedName })
