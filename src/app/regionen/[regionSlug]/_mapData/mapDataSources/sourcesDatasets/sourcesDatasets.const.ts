@@ -1,5 +1,6 @@
 import { MapDataDatasetsSource } from '../../types'
 import { DatasetIds } from '../datasets/types'
+import { sourcesDatasetsBB } from './sourcesDatasetsBB.const'
 import { sourcesDatasetsBerlin } from './sourcesDatasetsBerlin.const'
 import { sourcesDatasetsBiBi } from './sourcesDatasetsBibi.const'
 import { sourcesDatasetsTrTo } from './sourcesDatasetsTrTo.const'
@@ -13,4 +14,5 @@ export const sourcesDatasets: SourceDatasets = [
   ...sourcesDatasetsTrTo,
   ...sourcesDatasetsBerlin,
   ...sourcesDatasetsWoldegk,
+  ...sourcesDatasetsBB,
 ]

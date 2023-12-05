@@ -41,6 +41,10 @@ export const datasets = {
   'bibi-radnetz-alltag':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-barnim.pmtiles
+  'bb-radnetz-barnim':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-barnim.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-rad-punktdaten.pmtiles
   'bibi-rad-punktdaten':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-rad-punktdaten.pmtiles',
