@@ -3,7 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 
 const subcatId = 'mapillaryCoverage'
 export type SubcatMapillaryCoverageId = typeof subcatId
-export type SubcatMapillaryCoverageStyleIds = 'default'
+export type SubcatMapillaryCoverageStyleIds = 'default' | 'pano'
 
 export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
   id: subcatId,
@@ -15,22 +15,45 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
       id: 'default',
       name: 'Standard',
       desc: null,
+      legends: [
+        {
+          id: 'action-cam',
+          name: 'Klassische Fotos',
+          style: {
+            type: 'line',
+            color: 'green',
+          },
+        },
+        {
+          id: 'action-360',
+          name: '360° Fotos',
+          style: {
+            type: 'line',
+            color: 'blue',
+          },
+        },
+      ],
       layers: [
+        {
+          id: 'point-click-target',
+          type: 'circle',
+          source: 'mapillary-source',
+          'source-layer': 'image',
+          paint: {
+            'circle-radius': 10,
+            'circle-color': 'transparent',
+          },
+        },
         {
           id: 'point',
           type: 'circle',
           source: 'mapillary-source',
           'source-layer': 'image',
           paint: {
-            'circle-radius': 2,
+            'circle-radius': 3,
             'circle-blur': 0.5,
-            'circle-color': 'green',
+            'circle-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
           },
-          // No dies why this does not work. This was to debug the interactiveFilters
-          // filter: [
-          //   'all',
-          //   ['match', ['get', 'is_pano'], ['false'], true, false],
-          // ],
         },
         {
           id: 'line',
@@ -38,27 +61,56 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'sequence',
           paint: {
-            'line-color': 'green',
-            'line-opacity': 0.7,
-            'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.5, 14, 1],
+            'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
+            'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
           },
           interactive: false,
         },
       ],
-      // Cannot get this to work. The idea was, to pass an array as string and JSON.parse it in `filterArrayFromMergedDataAndConfig` but first I need to figure out why the manual filter above does not work.
-      // interactiveFilters: [
-      //   {
-      //     id: 'panorama',
-      //     name: 'Panorama',
-      //     filterConfig: { lookupKey: 'is_pano' },
-      //     inputType: 'radiobutton',
-      //     options: [
-      //       { id: 'true', name: 'Ja' },
-      //       { id: 'false', name: 'Nein' },
-      //       { id: '[true,false]', name: 'Egal', defaultActive: true },
-      //     ],
-      //   },
-      // ],
+    },
+    {
+      id: 'pano',
+      name: 'Nur Panorama-Fotos',
+      desc: null,
+      layers: [
+        {
+          id: 'point-click-target',
+          type: 'circle',
+          source: 'mapillary-source',
+          'source-layer': 'image',
+          paint: {
+            'circle-radius': 10,
+            'circle-color': 'transparent',
+          },
+          filter: ['==', ['get', 'is_pano'], true],
+        },
+        {
+          id: 'point',
+          type: 'circle',
+          source: 'mapillary-source',
+          'source-layer': 'image',
+          paint: {
+            'circle-radius': 3,
+            'circle-blur': 0.5,
+            'circle-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
+          },
+          filter: ['==', ['get', 'is_pano'], true],
+        },
+        {
+          id: 'line',
+          type: 'line',
+          source: 'mapillary-source',
+          'source-layer': 'sequence',
+          paint: {
+            'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
+            'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
+          },
+          filter: ['==', ['get', 'is_pano'], true],
+          interactive: false,
+        },
+      ],
     },
   ],
 }
