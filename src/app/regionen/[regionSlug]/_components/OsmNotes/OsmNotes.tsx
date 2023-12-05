@@ -19,7 +19,7 @@ export const OsmNotes: React.FC = () => {
   const centerLocation = mainMap?.getCenter()
 
   return (
-    <div className="ml-2 flex shadow-lg">
+    <div className="relative ml-2 flex shadow-lg">
       <Tooltip
         text={
           osmNotesActive
