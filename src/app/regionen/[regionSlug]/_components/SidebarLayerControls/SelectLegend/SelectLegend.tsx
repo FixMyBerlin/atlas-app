@@ -1,4 +1,3 @@
-import React from 'react'
 import { twJoin } from 'tailwind-merge'
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
 import {
@@ -14,6 +13,7 @@ import { LegendDebugInfoSubcatLayerConfig } from './LegendDebugInfo/LegendDebugI
 import { LegendIconArea } from './LegendIcons/LegendIconArea'
 import { LegendIconCircle } from './LegendIcons/LegendIconCircle'
 import { LegendIconLine } from './LegendIcons/LegendIconLine'
+import { LegendIconText } from './LegendIcons/LegendIconText'
 import { LegendIconTypes } from './LegendIcons/types'
 import { LegendNameDesc } from './LegendNameDesc'
 
@@ -65,6 +65,8 @@ export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
         return (
           <LegendIconLine color={color} width={width || 4} strokeDasharray={dasharray?.join(',')} />
         )
+      // TODO: Rename to lineBorder and introduce circleBorder, maybe fillBorder
+      // TOOD: And maybe rename fill to area or square?
       case 'border':
         return (
           <div className="relative h-full w-full">
@@ -80,6 +82,8 @@ export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
         return <LegendIconCircle color={color} className="h-full w-full" />
       case 'fill':
         return <LegendIconArea color={color} />
+      case 'text':
+        return <LegendIconText color={color} />
       default:
         return <>TODO</>
     }
@@ -111,7 +115,7 @@ export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
                 )}
                 key={key}
               >
-                <div className="h-3 w-5 flex-none">{iconFromLegend(legendData)}</div>
+                <div className="h-5 w-5 flex-none">{iconFromLegend(legendData)}</div>
                 <div className="flex h-5 items-center">
                   <input
                     id={key}
