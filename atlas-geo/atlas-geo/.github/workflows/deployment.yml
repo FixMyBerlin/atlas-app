@@ -76,7 +76,8 @@ jobs:
       - name: Build app image
         uses: docker/build-push-action@v3
         with:
-          context: ./app.Dockerfile
+          context: .
+          file: ./app.Dockerfile
           push: false
           load: true
           cache-from: type=gha
