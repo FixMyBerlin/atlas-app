@@ -24,6 +24,7 @@ import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
 import { subcat_roadsSurface } from '../mapDataSubcategories/subcat_roadsSurface.const'
 import { subcat_roadsSurface_legacy } from '../mapDataSubcategories/subcat_roadsSurface_legacy.const'
 import { subcat_roads_legacy } from '../mapDataSubcategories/subcat_roads_legacy.const'
+import { subcat_roads_plus_footways } from '../mapDataSubcategories/subcat_roads_plus_footways.const'
 import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
 import { StaticMapDataCategory } from '../types'
 
@@ -71,6 +72,7 @@ export const categories: StaticMapDataCategory[] = [
     subcategories: [
       { ...subcat_roads, defaultStyle: 'default', ui: 'dropdown' },
       { ...subcat_maxspeed, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_roads_plus_footways, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'path', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
       // { id: 'lanes', defaultStyle: 'hidden', ui: 'checkbox' }, // TODO NOW
       // { id: 'roadCompletness', defaultStyle: 'hidden', ui: 'checkbox' },

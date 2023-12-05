@@ -95,6 +95,10 @@ import {
   SubcatRoadsIdLegacy,
   SubcatRoadsStyleIdsLegacy,
 } from './mapDataSubcategories/subcat_roads_legacy.const'
+import {
+  SubcatRoadsPlusFootwaysId,
+  SubcatRoadsPlusFootwaysStyleIds,
+} from './mapDataSubcategories/subcat_roads_plus_footways.const'
 import { SubcatSignsId, SubcatSignsStyleIds } from './mapDataSubcategories/subcat_signs.const'
 import { StaticMapDataCategory } from './types'
 
@@ -125,6 +129,7 @@ export type SubcategoryId =
   | SubcatPublicTransportId
   | SubcatRoadsId
   | SubcatRoadsIdLegacy
+  | SubcatRoadsPlusFootwaysId
   | SubcatRoadsSurfaceId
   | SubcatRoadsSurfaceIdLegacy
   | SubcatSignsId
@@ -132,6 +137,7 @@ export type SubcategoryId =
 type StyleIdDefaults = StaticMapDataCategory['subcategories'][number]['defaultStyle']
 
 export type StyleId =
+  | StyleIdDefaults
   | SubcatAccidentsStyleIds
   | SubcatBarriersStyleIds
   | SubcatBicycleParkingStyleIds
@@ -156,11 +162,11 @@ export type StyleId =
   | SubcatPlacesStyleIds
   | SubcatPoiStyleIds_Tarmac
   | SubcatPublicTransportStyleIds
+  | SubcatRoadsPlusFootwaysStyleIds
   | SubcatRoadsStyleIds
   | SubcatRoadsStyleIdsLegacy
   | SubcatRoadsSurfaceStyleIds
   | SubcatRoadsSurfaceStyleIdsLegacy
   | SubcatSignsStyleIds
-  | StyleIdDefaults
 
 export type LegendId = string // TODO: We can make this more precise later
