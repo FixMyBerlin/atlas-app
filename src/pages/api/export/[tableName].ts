@@ -10,6 +10,7 @@ const exportEnabledSources = sources
   .map((source) => source.export.apiIdentifier)
 
 const ExportSchema = z.object({
+  // @ts-ignore
   tableName: z.enum(exportEnabledSources),
   minlon: z.coerce.number().default(13.3),
   minlat: z.coerce.number().default(52.2),
