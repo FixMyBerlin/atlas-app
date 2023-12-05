@@ -9,7 +9,7 @@ type Props = {
 export const LegendIconLine = ({
   color = 'black',
   width = 1,
-  size = 24,
+  size = 14,
   strokeDasharray,
   ...props
 }: Props) => {

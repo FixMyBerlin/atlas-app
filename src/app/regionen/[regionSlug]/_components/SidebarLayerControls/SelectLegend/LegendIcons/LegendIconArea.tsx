@@ -9,7 +9,7 @@ export const LegendIconArea = ({
   color = 'black',
   borderColor = 'white',
   borderWidth = 1,
-  size = 24,
+  size = 14,
   ...props
 }: Props) => {
   return (
