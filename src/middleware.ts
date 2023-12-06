@@ -24,7 +24,19 @@ export function middleware(request: NextRequest) {
   const region = staticRegion.find((r) => r.slug === regionSlug)
   if (!region) return
 
-  url.searchParams.append('map', serializeMapParam(region.map))
+  // Migrate old `lat`/`lng`/`zoom` params to new `map` param
+  // or fall back to the initial `map` param for this region.
+  const oldLat = url.searchParams.get('lat')
+  const oldLng = url.searchParams.get('lng')
+  const oldZoom = url.searchParams.get('zoom')
+  if (oldLat && oldLng && oldZoom) {
+    url.searchParams.append(
+      'map',
+      serializeMapParam({ zoom: Number(oldZoom), lat: Number(oldLat), lng: Number(oldLng) }),
+    )
+  } else {
+    url.searchParams.append('map', serializeMapParam(region.map))
+  }
 
   const freshConfig = createFreshCategoriesConfig(region.categories)
   url.searchParams.append('config', configCustomStringify(freshConfig))
