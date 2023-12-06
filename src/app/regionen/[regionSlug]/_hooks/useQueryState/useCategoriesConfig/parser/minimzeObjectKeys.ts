@@ -14,9 +14,6 @@ const translateKeys = [
   ['coordinates', 'c'],
 ] as const
 
-// type TTransTableKeys = keyof typeof transTable
-// type TTransTableValues = (typeof transTable)[TTransTableKeys]
-
 // Some input at https://stackoverflow.com/a/63116708/729221
 type TObjectInput =
   | Record<string, any>
@@ -77,14 +74,14 @@ export const minimizeObjectKeys = (inputObject: Record<string, any>) => {
 }
 
 export const expandObjectKeys = (inputObject: Record<string, any>) => {
-  let minimizedObject = inputObject
+  let expandedObject = inputObject
   translateKeys.forEach(([toKey, fromKey]) => {
-    minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
-      minimizedObject,
+    expandedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
+      expandedObject,
       fromKey,
       toKey,
     )
   })
 
-  return minimizedObject
+  return expandedObject
 }

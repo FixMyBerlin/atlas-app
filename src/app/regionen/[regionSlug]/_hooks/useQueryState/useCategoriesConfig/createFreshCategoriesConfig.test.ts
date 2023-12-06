@@ -5,7 +5,6 @@ describe('createFreshCategoriesConfig()', () => {
   test('Create an initial config object and take the make the defaultStyle active', () => {
     const result = createFreshCategoriesConfig(['poi'])
 
-    // console.log('result', JSON.stringify(result, undefined, 2))
     expect(result[0]?.id).toBe('poi')
     expect(result[0]?.subcategories?.[0]?.id).toBe('poi')
 
