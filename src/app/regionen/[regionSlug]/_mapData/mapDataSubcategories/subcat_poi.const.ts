@@ -21,30 +21,30 @@ export const subcat_poi: FileMapDataSubcategory = {
       name: 'Einfach',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_poiclassification',
+        group: 'atlas_pois_default',
         source,
         sourceLayer,
       }),
       legends: [
         {
-          id: 'freizeit',
-          name: 'Freizeit',
-          style: { type: 'circle', color: '#960854' },
-        },
-        {
           id: 'bildung',
           name: 'Bildung',
-          style: { type: 'circle', color: '#626060' },
-        },
-        {
-          id: 'besorgungen',
-          name: 'Grundversorgung',
-          style: { type: 'circle', color: '#e709fb' },
+          style: { type: 'circle', color: '#3568de' },
         },
         {
           id: 'einkauf',
           name: 'Einkauf',
-          style: { type: 'circle', color: '#0e3ecd' },
+          style: { type: 'circle', color: '#80e5d1' },
+        },
+        {
+          id: 'freizeit',
+          name: 'Freizeit',
+          style: { type: 'circle', color: '#b1e755' },
+        },
+        {
+          id: 'besorgungen',
+          name: 'Grundversorgung',
+          style: { type: 'circle', color: '#f18241' },
         },
       ],
     },
