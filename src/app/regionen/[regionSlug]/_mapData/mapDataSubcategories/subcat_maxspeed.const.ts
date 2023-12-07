@@ -21,34 +21,34 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
       layers: mapboxStyleLayers({ group: 'atlas_maxspeed_all', source, sourceLayer }),
       legends: [
         {
-          id: 'tl-100',
-          name: 'TL ≥ 100 km/h',
-          style: { type: 'line', color: '#1E3A8A', width: 2 },
-        },
-        {
           id: 'tl-80',
           name: 'TL ≥ 80 km/h',
-          style: { type: 'line', color: '#B80505', width: 2 },
+          style: { type: 'line', color: '#b80505', width: 2 },
         },
         {
           id: 'tl-60',
           name: 'TL ≥ 60 km/h',
-          style: { type: 'line', color: '#FC8B40', width: 2 },
+          style: { type: 'line', color: '#fc7c40', width: 2 },
         },
         {
           id: 'tl-50',
           name: 'TL ≥ 50 km/h',
-          style: { type: 'line', color: '#FC8B40', width: 2 },
+          style: { type: 'line', color: '#fc8b40', width: 2 },
+        },
+        {
+          id: 'tl-40',
+          name: 'TL ≥ 40 km/h',
+          style: { type: 'line', color: '#eeb449', width: 2 },
         },
         {
           id: 'tl-30',
           name: 'TL ≥ 30 km/h',
-          style: { type: 'line', color: '#2CB587', width: 2 },
+          style: { type: 'line', color: '#2cb587', width: 2 },
         },
         {
           id: 'tl-20',
           name: 'TL ≥ 20 km/h',
-          style: { type: 'line', color: '#1E3A8A', width: 2 },
+          style: { type: 'line', color: '#08aec4', width: 2 },
         },
       ],
     },
@@ -61,12 +61,12 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
         {
           id: 'tl-30',
           name: 'TL ≥ 30 km/h',
-          style: { type: 'line', color: '#2CB587', width: 2 },
+          style: { type: 'line', color: '#2cb587', width: 2 },
         },
         {
           id: 'tl-20',
           name: 'TL ≥ 20 km/h',
-          style: { type: 'line', color: '#1E3A8A', width: 2 },
+          style: { type: 'line', color: '#08aec4', width: 2 },
         },
       ],
     },
@@ -79,17 +79,22 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
         {
           id: 'tl-80',
           name: 'TL ≥ 80 km/h',
-          style: { type: 'line', color: '#B80505', width: 2 },
+          style: { type: 'line', color: '#b80505', width: 2 },
         },
         {
           id: 'tl-60',
           name: 'TL ≥ 60 km/h',
-          style: { type: 'line', color: '#FC8B40', width: 2 },
+          style: { type: 'line', color: '#fc8b40', width: 2 },
         },
         {
           id: 'tl-50',
           name: 'TL ≥ 50 km/h',
-          style: { type: 'line', color: '#FC8B40', width: 2 },
+          style: { type: 'line', color: '#eeaf49', width: 2 },
+        },
+        {
+          id: 'tl-40',
+          name: 'TL ≥ 40 km/h',
+          style: { type: 'line', color: '#eeb449', width: 2 },
         },
       ],
     },
