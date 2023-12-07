@@ -60,7 +60,7 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'buildings', defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_landuse, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_places, defaultStyle: 'default', ui: 'dropdown' },
-      { ...subcat_publicTransport, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_publicTransport, defaultStyle: 'hidden', ui: 'dropdown' },
     ],
   },
   {
