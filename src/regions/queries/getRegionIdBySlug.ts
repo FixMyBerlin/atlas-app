@@ -5,7 +5,6 @@ type Input = string | Record<string, any>
 
 export default async function getRegionIdBySlug(input: Input) {
   let regionSlug: null | string = null
-  console.log('regionIdSlug', input)
   if (typeof input === 'string') {
     regionSlug = input
   } else if ('regionSlug' in input) {
