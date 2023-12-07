@@ -14,7 +14,7 @@ export const subcat_places: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Siedlungszentren EW-Zahl',
+      name: 'Siedlungszentren Name',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_places',
@@ -31,7 +31,7 @@ export const subcat_places: FileMapDataSubcategory = {
     },
     {
       id: 'circle',
-      name: 'Siedlungszentren Name',
+      name: 'Siedlungszentren EW-Zahl',
       desc: null,
       layers: mapboxStyleLayers({
         group: 'atlas_placescircle',
