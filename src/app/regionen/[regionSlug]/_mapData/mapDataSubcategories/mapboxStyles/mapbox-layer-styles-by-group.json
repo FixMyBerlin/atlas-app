@@ -1123,17 +1123,20 @@
     "group": "atlas_roadclassification_all",
     "layers": [
       {
+        "layout": {},
         "filter": [
           "match",
           ["get", "road"],
           [
             "residential",
-            "residential_priority_road",
-            "service_alley",
-            "service_uncategorized",
+            "living_street",
+            "bicycle_road",
+            "pedestrian",
             "unclassified",
+            "residential_priority_road",
             "unspecified_road",
-            "bicycle_road"
+            "service_uncategorized",
+            "service_alley"
           ],
           true,
           false
@@ -1253,7 +1256,7 @@
             "rgba(213, 26, 26, 0.75)"
           ]
         },
-        "layout": {}
+        "slot": ""
       },
       {
         "minzoom": 11,
@@ -1304,20 +1307,44 @@
             ]
           ],
           "line-color": "#f6e7ac"
-        }
+        },
+        "slot": ""
       },
       {
         "layout": {
           "line-cap": "round"
         },
-        "filter": ["has", "road"],
+        "filter": [
+          "match",
+          ["get", "road"],
+          [
+            "residential",
+            "living_street",
+            "bicycle_road",
+            "pedestrian",
+            "unclassified",
+            "residential_priority_road",
+            "unspecified_road",
+            "service_uncategorized",
+            "service_alley",
+            "primary",
+            "tertiary_link",
+            "secondary_link",
+            "tertiary",
+            "secondary",
+            "primary_link"
+          ],
+          true,
+          false
+        ],
         "type": "line",
         "id": "hitarea-roadclassification",
         "paint": {
           "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
           "line-opacity": 0,
           "line-color": "rgb(216, 20, 255)"
-        }
+        },
+        "slot": ""
       }
     ]
   },
@@ -1330,16 +1357,7 @@
         "filter": [
           "match",
           ["get", "road"],
-          [
-            "footway",
-            "footway_sidewalk",
-            "pedestrian",
-            "footway_crossing",
-            "path",
-            "cycleway",
-            "footway_steps",
-            "track"
-          ],
+          ["path", "track", "bridleway", "footway", "cycleway"],
           true,
           false
         ],
@@ -1348,14 +1366,34 @@
         "paint": {
           "line-color": [
             "case",
-            ["match", ["get", "road"], ["path", "track", "bridleway"], true, false],
+            ["match", ["get", "road"], ["track", "bridleway"], true, false],
             "#b4aac0",
-            ["match", ["get", "road"], ["footway", "cycleway"], true, false],
+            ["match", ["get", "road"], ["path", "footway", "cycleway"], true, false],
             "#c6aed0",
             "rgba(192, 191, 191, 0.75)"
           ],
           "line-width": 0.7
         }
+      },
+      {
+        "layout": {
+          "line-cap": "round"
+        },
+        "filter": [
+          "match",
+          ["get", "road"],
+          ["path", "track", "bridleway", "footway", "cycleway"],
+          true,
+          false
+        ],
+        "type": "line",
+        "id": "hitarea-roadclassification_plus_fusswege",
+        "paint": {
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14.1, 10, 22, 12],
+          "line-opacity": 0,
+          "line-color": "rgb(216, 20, 255)"
+        },
+        "slot": ""
       }
     ]
   },
@@ -1369,12 +1407,14 @@
           ["get", "road"],
           [
             "residential",
-            "residential_priority_road",
-            "service_alley",
-            "service_uncategorized",
+            "living_street",
+            "bicycle_road",
+            "pedestrian",
             "unclassified",
+            "residential_priority_road",
             "unspecified_road",
-            "bicycle_road"
+            "service_uncategorized",
+            "service_alley"
           ],
           true,
           false
@@ -1497,62 +1537,26 @@
         "slot": ""
       },
       {
-        "minzoom": 11,
-        "layout": {},
-        "filter": [
-          "match",
-          ["get", "road"],
-          ["primary", "tertiary_link", "secondary_link", "tertiary", "secondary", "primary_link"],
-          true,
-          false
-        ],
-        "type": "line",
-        "id": "roadclassification_mainstreets copy",
-        "paint": {
-          "line-width": [
-            "interpolate",
-            ["linear"],
-            ["zoom"],
-            11,
-            [
-              "match",
-              ["get", "road"],
-              ["primary", "secondary", "secondary_link", "primary_link"],
-              3,
-              ["tertiary", "residential_priority_road", "tertiary_link"],
-              2,
-              0.8
-            ],
-            14,
-            [
-              "match",
-              ["get", "road"],
-              ["primary", "secondary", "secondary_link", "primary_link"],
-              8,
-              ["tertiary", "residential_priority_road", "tertiary_link"],
-              7,
-              0.8
-            ],
-            16,
-            [
-              "match",
-              ["get", "road"],
-              ["primary", "secondary", "secondary_link", "primary_link"],
-              24,
-              ["tertiary", "residential_priority_road", "tertiary_link"],
-              16,
-              0.8
-            ]
-          ],
-          "line-color": "#f6e7ac"
-        },
-        "slot": ""
-      },
-      {
         "layout": {
           "line-cap": "round"
         },
-        "filter": ["has", "road"],
+        "filter": [
+          "match",
+          ["get", "road"],
+          [
+            "residential",
+            "living_street",
+            "bicycle_road",
+            "pedestrian",
+            "unclassified",
+            "residential_priority_road",
+            "unspecified_road",
+            "service_uncategorized",
+            "service_alley"
+          ],
+          true,
+          false
+        ],
         "type": "line",
         "id": "hitarea-roadclassification copy",
         "paint": {

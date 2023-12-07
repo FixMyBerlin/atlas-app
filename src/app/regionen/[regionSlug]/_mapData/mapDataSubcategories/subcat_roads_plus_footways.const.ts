@@ -24,9 +24,14 @@ export const subcat_roads_plus_footways: FileMapDataSubcategory = {
       }),
       legends: [
         {
-          id: 'x',
-          name: '',
-          style: { type: 'line', color: '#B4AAC0', width: 2 },
+          id: 'foot-bike',
+          name: 'Fuß- oder Radweg',
+          style: { type: 'line', color: '#c6aed0', width: 2 },
+        },
+        {
+          id: 'track',
+          name: 'Feld- oder Waldweg',
+          style: { type: 'line', color: '#b4aac0', width: 2 },
         },
       ],
     },
