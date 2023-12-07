@@ -34,10 +34,6 @@ import {
   SubcatBoundariesId,
   SubcatBoundariesStyleIds,
 } from './mapDataSubcategories/subcat_boundaries.const'
-import {
-  SubcatEducationId,
-  SubcatEducationStyleIds,
-} from './mapDataSubcategories/subcat_education.const'
 import { SubcatLanduseId, SubcatLanduseStyleIds } from './mapDataSubcategories/subcat_landuse.const'
 import { SubcatLitId, SubcatLitStyleIds } from './mapDataSubcategories/subcat_lit.const'
 import {
@@ -112,7 +108,6 @@ export type SubcategoryId =
   | SubcatBikelanesStatsId
   | SubcatBikelanesSurfaceId
   | SubcatBoundariesId
-  | SubcatEducationId
   | SubcatLanduseId
   | SubcatLitId
   | SubcatLitIdLegacy
@@ -147,7 +142,6 @@ export type StyleId =
   | SubcatBikelanesStyleIds
   | SubcatBikelanesSurfaceStyleIds
   | SubcatBoundariesStyleIds
-  | SubcatEducationStyleIds
   | SubcatLanduseStyleIds
   | SubcatLitStyleIds
   | SubcatLitStyleIdsLegacy

@@ -7,7 +7,6 @@ import { subcat_bikelanesPresence_legacy } from '../mapDataSubcategories/subcat_
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
 import { subcat_bikelanesSurface } from '../mapDataSubcategories/subcat_bikelanesSurface.const'
 import { subcat_boundaries } from '../mapDataSubcategories/subcat_boundaries.const'
-import { subcat_education } from '../mapDataSubcategories/subcat_education.const'
 import { subcat_landuse } from '../mapDataSubcategories/subcat_landuse.const'
 import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapillaryCoverage.const'
 import { subcat_maxspeed } from '../mapDataSubcategories/subcat_maxspeed.const'
@@ -55,7 +54,6 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Siedlungszentren, Zielorte, Barrieren',
     subcategories: [
       { ...subcat_poi, defaultStyle: 'default', ui: 'dropdown' },
-      { ...subcat_education, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_boundaries, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_barriers, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'routes', defaultStyle: 'hidden', ui: 'checkbox' },
