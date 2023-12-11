@@ -1,6 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
 const tpoicId = 'publicTransport'
 const source = 'atlas_publicTransport'
@@ -18,7 +18,7 @@ export const subcat_publicTransport: FileMapDataSubcategory = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: mapboxStyleLayers({
+      layers: legacyMapboxStyleLayers({
         group: 'atlas_publictransport',
         source,
         sourceLayer,

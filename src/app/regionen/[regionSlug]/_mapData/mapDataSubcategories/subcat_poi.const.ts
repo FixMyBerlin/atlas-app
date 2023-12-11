@@ -1,5 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_pois_default } from './mapboxStyles/groups/atlas_pois_default'
+import { mapboxStyleGroupLayers_atlas_pois_education } from './mapboxStyles/groups/atlas_pois_education'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'poi'
@@ -21,7 +23,7 @@ export const subcat_poi: FileMapDataSubcategory = {
       name: 'Einfach',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_pois_default',
+        layers: mapboxStyleGroupLayers_atlas_pois_default,
         source,
         sourceLayer,
       }),
@@ -53,7 +55,7 @@ export const subcat_poi: FileMapDataSubcategory = {
       name: 'Bildung und Kitas',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_pois_education',
+        layers: mapboxStyleGroupLayers_atlas_pois_education,
         source,
         sourceLayer,
       }),

@@ -1,5 +1,9 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_parking_parkinglines } from './mapboxStyles/groups/parking_parkinglines'
+import { mapboxStyleGroupLayers_parking_parkinglines_completeness } from './mapboxStyles/groups/parking_parkinglines_completeness'
+import { mapboxStyleGroupLayers_parking_parkinglines_labels } from './mapboxStyles/groups/parking_parkinglines_labels'
+import { mapboxStyleGroupLayers_parking_parkinglines_surface } from './mapboxStyles/groups/parking_parkinglines_surface'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'parking'
@@ -21,12 +25,12 @@ export const subcat_parking: FileMapDataSubcategory = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_parkinglines',
+          layers: mapboxStyleGroupLayers_parking_parkinglines,
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'parking_parkinglines_labels',
+          layers: mapboxStyleGroupLayers_parking_parkinglines_labels,
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
@@ -38,17 +42,17 @@ export const subcat_parking: FileMapDataSubcategory = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_parkinglines_labels',
+          layers: mapboxStyleGroupLayers_parking_parkinglines_labels,
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
         mapboxStyleLayers({
-          group: 'parking_parkinglines_completeness',
+          layers: mapboxStyleGroupLayers_parking_parkinglines_completeness,
           source,
           sourceLayer,
         }),
         mapboxStyleLayers({
-          group: 'parking_parkinglines',
+          layers: mapboxStyleGroupLayers_parking_parkinglines,
           source,
           sourceLayer,
         }),
@@ -104,12 +108,12 @@ export const subcat_parking: FileMapDataSubcategory = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_parkinglines_labels',
+          layers: mapboxStyleGroupLayers_parking_parkinglines_labels,
           source: 'parkraumParking',
           sourceLayer: 'processing.parking_segments_label',
         }),
         mapboxStyleLayers({
-          group: 'parking_parkinglines_surface',
+          layers: mapboxStyleGroupLayers_parking_parkinglines_surface,
           source,
           sourceLayer,
         }),

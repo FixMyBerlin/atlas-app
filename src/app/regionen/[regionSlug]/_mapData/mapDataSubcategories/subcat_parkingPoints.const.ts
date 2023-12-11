@@ -1,5 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_parking_calculator } from './mapboxStyles/groups/parking_calculator'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'parkingPoints'
@@ -18,7 +19,7 @@ export const subcat_parkingPoints: FileMapDataSubcategory = {
       name: 'Standard',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_calculator',
+        layers: mapboxStyleGroupLayers_parking_calculator,
         source: 'parkraumParkingPoints',
         sourceLayer: 'processing.parking_spaces',
       }),

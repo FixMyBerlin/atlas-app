@@ -1,5 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_roadclassification_all } from './mapboxStyles/groups/atlas_roadclassification_all'
+import { mapboxStyleGroupLayers_atlas_roadclassification_sidestreets } from './mapboxStyles/groups/atlas_roadclassification_sidestreets'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'roads'
@@ -18,7 +20,7 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Standard',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
-        group: 'atlas_roadclassification_all',
+        layers: mapboxStyleGroupLayers_atlas_roadclassification_all,
         source,
         sourceLayer,
       }),
@@ -48,6 +50,11 @@ export const subcat_roads: FileMapDataSubcategory = {
           name: 'Zufahrtswege',
           style: { type: 'line', color: '#96e4b4', width: 2 },
         },
+        {
+          id: 'trunk',
+          name: 'Autobahn',
+          style: { type: 'line', color: '#828282', width: 1 },
+        },
       ],
     },
     {
@@ -55,7 +62,7 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Nur Nebenstraßen',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_roadclassification_sidestreets',
+        layers: mapboxStyleGroupLayers_atlas_roadclassification_sidestreets,
         source,
         sourceLayer,
       }),

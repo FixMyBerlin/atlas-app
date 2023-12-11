@@ -1,5 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_places } from './mapboxStyles/groups/atlas_places'
+import { mapboxStyleGroupLayers_atlas_placescircle } from './mapboxStyles/groups/atlas_placescircle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'places'
@@ -17,7 +19,7 @@ export const subcat_places: FileMapDataSubcategory = {
       name: 'Siedlungszentren Name',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_places',
+        layers: mapboxStyleGroupLayers_atlas_places,
         source: 'atlas_places',
         sourceLayer: 'places',
       }),
@@ -34,7 +36,7 @@ export const subcat_places: FileMapDataSubcategory = {
       name: 'Siedlungszentren EW-Zahl',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'atlas_placescircle',
+        layers: mapboxStyleGroupLayers_atlas_placescircle,
         source: 'atlas_places',
         sourceLayer: 'places',
       }),

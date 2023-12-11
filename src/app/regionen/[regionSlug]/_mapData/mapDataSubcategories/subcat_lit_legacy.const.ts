@@ -1,7 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultLegendFresh } from './defaultLegend/defaultLegendFresh'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
 const subcatId = 'lit_legacy'
 const source = 'atlas_lit'
@@ -46,7 +46,7 @@ export const subcat_lit_legacy: FileMapDataSubcategory = {
       id: 'default',
       name: 'Inhalte',
       desc: null,
-      layers: mapboxStyleLayers({
+      layers: legacyMapboxStyleLayers({
         group: 'atlas_old_lit',
         source,
         sourceLayer,
@@ -58,12 +58,12 @@ export const subcat_lit_legacy: FileMapDataSubcategory = {
       name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: [
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_lit_complete', // only roads
           source,
           sourceLayer,
         }),
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_old_lit',
           source,
           sourceLayer,
@@ -86,12 +86,12 @@ export const subcat_lit_legacy: FileMapDataSubcategory = {
       name: 'Inhalte & Aktualität',
       desc: null,
       layers: [
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_old_lit_fresh',
           source,
           sourceLayer,
         }),
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_old_lit',
           source,
           sourceLayer,

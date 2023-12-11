@@ -1,7 +1,7 @@
 import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Verification/verifiedColor.const'
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
 const subcatId = 'bikelanes'
 const source = 'atlas_bikelanes'
@@ -82,7 +82,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
       id: 'default',
       name: 'Inhalte',
       desc: null,
-      layers: mapboxStyleLayers({
+      layers: legacyMapboxStyleLayers({
         group: 'atlas_bikelanes',
         source,
         sourceLayer,
@@ -94,12 +94,12 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
       name: 'Inhalte & Prüf-Status',
       desc: null,
       layers: [
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_bikelanes_verified',
           source,
           sourceLayer,
         }),
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_bikelanes',
           source,
           sourceLayer,
@@ -138,12 +138,12 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
       name: 'Aufgabe: Führungsform',
       desc: 'Hervorhebung ',
       layers: [
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_bikelanes_unspecified',
           source,
           sourceLayer,
         }),
-        mapboxStyleLayers({
+        legacyMapboxStyleLayers({
           group: 'atlas_bikelanes',
           source,
           sourceLayer,

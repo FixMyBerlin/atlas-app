@@ -1,5 +1,8 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_maxspeed_above40 } from './mapboxStyles/groups/atlas_maxspeed_above40'
+import { mapboxStyleGroupLayers_atlas_maxspeed_all } from './mapboxStyles/groups/atlas_maxspeed_all'
+import { mapboxStyleGroupLayers_atlas_maxspeed_below30 } from './mapboxStyles/groups/atlas_maxspeed_below30'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'maxspeed'
@@ -18,7 +21,11 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
       id: 'default',
       name: 'Alle Höchstgeschwindigkeiten',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_all', source, sourceLayer }),
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_maxspeed_all,
+        source,
+        sourceLayer,
+      }),
       legends: [
         {
           id: 'tl-80',
@@ -28,12 +35,12 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
         {
           id: 'tl-60',
           name: 'TL ≥ 60 km/h',
-          style: { type: 'line', color: '#fc7c40', width: 2 },
+          style: { type: 'line', color: '#e92d07', width: 2 },
         },
         {
           id: 'tl-50',
           name: 'TL ≥ 50 km/h',
-          style: { type: 'line', color: '#fc8b40', width: 2 },
+          style: { type: 'line', color: '#fc7c40', width: 2 },
         },
         {
           id: 'tl-40',
@@ -56,7 +63,11 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
       id: 'below30',
       name: 'Nur Höchstgeschwindigkeit ≤30 km/h',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_below30', source, sourceLayer }),
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_maxspeed_below30,
+        source,
+        sourceLayer,
+      }),
       legends: [
         {
           id: 'tl-30',
@@ -74,7 +85,11 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
       id: 'above40',
       name: 'Nur Höchstgeschwindigkeiten ≥40 km/h',
       desc: '', // todo
-      layers: mapboxStyleLayers({ group: 'atlas_maxspeed_above40', source, sourceLayer }),
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_maxspeed_above40,
+        source,
+        sourceLayer,
+      }),
       legends: [
         {
           id: 'tl-80',
@@ -84,12 +99,12 @@ export const subcat_maxspeed: FileMapDataSubcategory = {
         {
           id: 'tl-60',
           name: 'TL ≥ 60 km/h',
-          style: { type: 'line', color: '#fc8b40', width: 2 },
+          style: { type: 'line', color: '#e92d07', width: 2 },
         },
         {
           id: 'tl-50',
           name: 'TL ≥ 50 km/h',
-          style: { type: 'line', color: '#eeaf49', width: 2 },
+          style: { type: 'line', color: '#fc7c40', width: 2 },
         },
         {
           id: 'tl-40',

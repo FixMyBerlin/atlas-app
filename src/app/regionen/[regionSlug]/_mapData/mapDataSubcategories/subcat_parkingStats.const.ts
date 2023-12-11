@@ -1,5 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_parking_stats } from './mapboxStyles/groups/parking_stats'
+import { mapboxStyleGroupLayers_parking_stats_length } from './mapboxStyles/groups/parking_stats_length'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'parkingStats'
@@ -26,7 +28,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Stadt: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats',
+        layers: mapboxStyleGroupLayers_parking_stats,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
@@ -37,7 +39,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Bezirk: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats',
+        layers: mapboxStyleGroupLayers_parking_stats,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
@@ -48,7 +50,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Stadtteil: % Erfassung',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats',
+        layers: mapboxStyleGroupLayers_parking_stats,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],
@@ -59,7 +61,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Stadt: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats_length',
+        layers: mapboxStyleGroupLayers_parking_stats_length,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['4'], true, false],
@@ -70,7 +72,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Bezirk: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats_length',
+        layers: mapboxStyleGroupLayers_parking_stats_length,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['9'], true, false],
@@ -81,7 +83,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
       name: 'Stadtteil: Länge in km',
       desc: null,
       layers: mapboxStyleLayers({
-        group: 'parking_stats_length',
+        layers: mapboxStyleGroupLayers_parking_stats_length,
         source,
         sourceLayer,
         additionalFilter: ['match', ['get', 'admin_level'], ['10'], true, false],

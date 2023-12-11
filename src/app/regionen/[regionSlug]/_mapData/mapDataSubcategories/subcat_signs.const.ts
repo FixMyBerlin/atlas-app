@@ -1,7 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'signs'
 const source = 'atlas_trafficSigns'

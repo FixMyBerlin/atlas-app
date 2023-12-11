@@ -1,6 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
 const subcatId = 'landuse'
 export type SubcatLanduseId = typeof subcatId
@@ -16,7 +16,7 @@ export const subcat_landuse: FileMapDataSubcategory = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: mapboxStyleLayers({
+      layers: legacyMapboxStyleLayers({
         group: 'atlas_landuse',
         source: 'atlas_landuse',
         sourceLayer: 'landuse',

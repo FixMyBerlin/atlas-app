@@ -1,6 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 import { defaultLegend } from './subcat_bikelanes.const'
 
 const subcatId = 'bikelanesPresence'
@@ -19,7 +19,7 @@ export const subcat_bikelanesPresence: FileMapDataSubcategory = {
       id: 'default',
       name: 'Inhalte & Vollständigkeit',
       desc: null,
-      layers: mapboxStyleLayers({
+      layers: legacyMapboxStyleLayers({
         group: 'atlas_bikelane_presence',
         source,
         sourceLayer,

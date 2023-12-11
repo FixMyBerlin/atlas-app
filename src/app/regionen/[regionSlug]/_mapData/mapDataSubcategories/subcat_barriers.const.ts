@@ -1,5 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_barriers__area } from './mapboxStyles/groups/atlas_barriers__area'
+import { mapboxStyleGroupLayers_atlas_barriers__line } from './mapboxStyles/groups/atlas_barriers__line'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'barriers'
@@ -19,12 +21,12 @@ export const subcat_barriers: FileMapDataSubcategory = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'atlas_barriers__area',
+          layers: mapboxStyleGroupLayers_atlas_barriers__area,
           source,
           sourceLayer: 'barrierAreas',
         }),
         mapboxStyleLayers({
-          group: 'atlas_barriers__line',
+          layers: mapboxStyleGroupLayers_atlas_barriers__line,
           source,
           sourceLayer: 'barrierLines',
         }),

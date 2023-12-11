@@ -1,5 +1,13 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_parking_debug_bus_tram } from './mapboxStyles/groups/parking_debug_bus_tram'
+import { mapboxStyleGroupLayers_parking_debug_crossings } from './mapboxStyles/groups/parking_debug_crossings'
+import { mapboxStyleGroupLayers_parking_debug_driveways } from './mapboxStyles/groups/parking_debug_driveways'
+import { mapboxStyleGroupLayers_parking_debug_kerb } from './mapboxStyles/groups/parking_debug_kerb'
+import { mapboxStyleGroupLayers_parking_debug_parking_points } from './mapboxStyles/groups/parking_debug_parking_points'
+import { mapboxStyleGroupLayers_parking_debug_parking_poly } from './mapboxStyles/groups/parking_debug_parking_poly'
+import { mapboxStyleGroupLayers_parking_debug_ramps } from './mapboxStyles/groups/parking_debug_ramps'
+import { mapboxStyleGroupLayers_parking_obstacles } from './mapboxStyles/groups/parking_obstacles'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'parkingDebug'
@@ -20,49 +28,49 @@ export const subcat_parkingDebug: FileMapDataSubcategory = {
       desc: null,
       layers: [
         mapboxStyleLayers({
-          group: 'parking_debug_parking_points',
+          layers: mapboxStyleGroupLayers_parking_debug_parking_points,
           source,
           sourceLayer: 'processing.buffer_amenity_parking_points', // Separate Auto- und Fahrradflächen
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_parking_poly',
+          layers: mapboxStyleGroupLayers_parking_debug_parking_poly,
           source,
           sourceLayer: 'processing.buffer_amenity_parking_poly', // Separate Auto- und Fahrradflächen
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_driveways',
+          layers: mapboxStyleGroupLayers_parking_debug_driveways,
           source,
           sourceLayer: 'processing.buffer_driveways',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_kerb',
+          layers: mapboxStyleGroupLayers_parking_debug_kerb,
           source,
           sourceLayer: 'processing.buffer_kerb_intersections',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_crossings',
+          layers: mapboxStyleGroupLayers_parking_debug_crossings,
           source,
           sourceLayer: 'processing.buffer_pedestrian_crossings',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_bus_tram',
+          layers: mapboxStyleGroupLayers_parking_debug_bus_tram,
           source,
           sourceLayer: 'processing.buffer_pt_bus',
           idPrefix: 'bus',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_bus_tram',
+          layers: mapboxStyleGroupLayers_parking_debug_bus_tram,
           source,
           sourceLayer: 'processing.buffer_pt_tram',
           idPrefix: 'tram',
         }),
         mapboxStyleLayers({
-          group: 'parking_debug_ramps',
+          layers: mapboxStyleGroupLayers_parking_debug_ramps,
           source,
           sourceLayer: 'processing.buffer_ramps',
         }),
         mapboxStyleLayers({
-          group: 'parking_obstacles',
+          layers: mapboxStyleGroupLayers_parking_obstacles,
           source,
           sourceLayer: 'processing.buffer_obstacle',
         }),

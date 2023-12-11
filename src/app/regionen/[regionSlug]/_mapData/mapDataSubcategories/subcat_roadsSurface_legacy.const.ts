@@ -1,6 +1,6 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
 const subcatId = 'roadsSurface_legacy'
 const source = 'atlas_surfaceQuality'
@@ -23,21 +23,21 @@ export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
       id: 'default',
       name: 'Standard',
       desc: null,
-      layers: mapboxStyleLayers({ group: 'atlas_surface_good', source, sourceLayer }),
+      layers: legacyMapboxStyleLayers({ group: 'atlas_surface_good', source, sourceLayer }),
     },
     {
       id: 'bad',
       name: 'Schlechte Oberflächen',
       desc: 'Hervorhebung von schlechten Oberflächen.',
-      layers: mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
+      layers: legacyMapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
     },
     {
       id: 'completeness',
       name: 'Inhalte & Vollständigkeit',
       desc: null,
       layers: [
-        mapboxStyleLayers({ group: 'atlas_surface_present', source, sourceLayer }),
-        mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
+        legacyMapboxStyleLayers({ group: 'atlas_surface_present', source, sourceLayer }),
+        legacyMapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
       ].flat(),
       legends: [
         {
@@ -55,8 +55,8 @@ export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
       name: 'Inhalte & Aktualität',
       desc: null,
       layers: [
-        mapboxStyleLayers({ group: 'atlas_surface_fresh', source, sourceLayer }),
-        mapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
+        legacyMapboxStyleLayers({ group: 'atlas_surface_fresh', source, sourceLayer }),
+        legacyMapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
       ].flat(),
       legends: [],
     },
