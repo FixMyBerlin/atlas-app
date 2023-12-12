@@ -13,7 +13,7 @@ echo -e "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
 if [ $SKIP_TAG_FILTER == 1 ]; then
   echo "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
-  ln -f ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
+  mv ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
 else
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
   osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_LOCAL_FILE}
