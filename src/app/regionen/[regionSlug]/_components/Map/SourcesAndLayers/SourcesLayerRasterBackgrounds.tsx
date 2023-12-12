@@ -23,10 +23,7 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
 
   return (
     <>
-      {backgrounds.map(({ id, tiles, minzoom, maxzoom, attributionHtml }) => {
-        // TODO B: commented out the two layers that needed those props; had issues with the default props … or something
-        // const optSchemeProp = scheme ? { scheme } : {}
-        // const optTileSizeProp = tileSize ? { tileSize } : {}
+      {backgrounds.map(({ id, tiles, minzoom, maxzoom, tileSize, attributionHtml }) => {
         const backgroundId = `${id}_tiles`
 
         const visible = backgroundParam === id
@@ -48,12 +45,10 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
             key={backgroundId}
             type="raster"
             tiles={[tiles]}
-            minzoom={minzoom}
-            maxzoom={maxzoom}
             attribution={enhancedAttributionHtml}
-            // SEE TODO B: Only for some
-            // {...optSchemeProp}
-            // {...optTileSizeProp}
+            {...(minzoom ? { minzoom } : {})}
+            {...(maxzoom ? { maxzoom } : {})}
+            {...(tileSize ? { tileSize } : {})}
           >
             <Layer
               id={id}
