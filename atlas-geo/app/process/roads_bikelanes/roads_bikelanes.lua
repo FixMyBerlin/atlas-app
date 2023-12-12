@@ -64,22 +64,21 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- TODO: move to ExcludeHighways
-  -- TODO: This is in conflict with what we do in RoadClassification, where we have code that is explicit for sidewalks
-  if tags.footway == 'sidewalk'
-      or tags.steps == 'sidewalk' then
-    return
-  end
   -- Keep in line with categories.lua crossing()
   if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
     return
   end
 
   local results = {}
-  MergeTable(results, RoadClassification(object))
-  MergeTable(results, Lit(object))
+
+  -- Exlude sidewalks for the road data set
+  local is_sidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
+  if not is_sidewalk then
+    MergeTable(results, RoadClassification(object))
+    MergeTable(results, Lit(object))
+    MergeTable(results, SurfaceQuality(object))
+  end
   MergeTable(results, Bikelanes(object, results.road))
-  MergeTable(results, SurfaceQuality(object))
   if not PathClasses[tags.highway] then
     MergeTable(results, Maxspeed(object))
   end
