@@ -1,4 +1,5 @@
 import { proseClasses } from 'src/app/_components/text/prose'
+import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
 import { invoke } from 'src/blitz-server'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 import getRegion from 'src/regions/queries/getRegion'
@@ -16,15 +17,17 @@ export async function generateMetadata({ params }) {
 export default async function ShowRegionStatsPage({ params }) {
   const region = await invoke(getRegion, { slug: params.regionSlug })
   const stats = (await prismaClientForRawQueries.$queryRaw`
-      SELECT osm_id::numeric, admin_level, region, bikelanes_category
+      SELECT osm_id::numeric, tags->'name', tags, meta, bikelane_categories
       FROM public."boundaryStats"
       WHERE osm_id::text IN (${region.osmRelationIds.map(String).join(',') || '62422'})`) as any
 
   return (
     <div className={twJoin(proseClasses, 'mx-auto max-w-prose')}>
       <h1>Stats für {region.fullName}</h1>
+      <ObjectDump data={stats} />
+
       {stats.map((stat) => {
-        const bikelaneStats = stat.bikelanes_category
+        const bikelaneStats = stat.bikelane_categories
         const total = Object.values(bikelaneStats).reduce(
           (acc: number, cur: number) => acc + cur,
           0,
