@@ -31,16 +31,17 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
 
         const visible = backgroundParam === id
 
-        const enhancedAttributionHtml = attributionHtml
         // TODO A: The idea was to be able to use {x}… params in the attribution string
         //    however, that causes React devtool warnings `Unable to update <Source> prop: attribution`.
         //    So for now, this is disabled…
+        const enhancedAttributionHtml = attributionHtml
         // const enhancedAttributionHtml = replaceZxy({
         //   url: attributionHtml,
         //   zoom,
         //   lat,
         //   lng,
         // })
+
         return (
           <Source
             id={backgroundId}

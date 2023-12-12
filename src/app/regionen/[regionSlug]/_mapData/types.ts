@@ -10,17 +10,17 @@ import {
 import { Prettify } from 'src/app/_components/types/types'
 import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/SelectLegend/LegendIcons/types'
-import { StyleId, SubcategoryId } from './typeId'
 import { MapDataCategoryId } from './mapDataCategories/categories.const'
 import { SourcesId } from './mapDataSources/sources.const'
+import { StyleId, SubcategoryId } from './typeId'
 
 /** @desc: The background tiles, configured in 'sourcesBackgroundsRaster.const.ts' */
 export type MapDataBackgroundSource<TIds> = {
   id: TIds
   name: string
-  /** @desc URL of the vector tiles */
+  /** @desc URL of the tiles */
   tiles: string
-  attributionHtml: string // TODO anzeigen in der Karte
+  attributionHtml: string
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
   type?: RasterSource['type']
