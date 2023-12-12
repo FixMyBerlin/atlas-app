@@ -23,7 +23,6 @@ export type MapDataBackgroundSource<TIds> = {
   attributionHtml: string
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
-  type?: RasterSource['type']
   minzoom?: RasterSource['minzoom']
   maxzoom?: RasterSource['maxzoom']
   tileSize?: RasterSource['tileSize']

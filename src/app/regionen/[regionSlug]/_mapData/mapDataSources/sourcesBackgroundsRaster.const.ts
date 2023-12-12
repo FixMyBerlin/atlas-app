@@ -40,7 +40,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'strassenbefahrung',
     name: 'Berlin: Straßenbefahrung 2014',
-    type: 'raster',
     tiles: 'https://mapproxy.codefor.de/tiles/1.0.0/strassenbefahrung/mercator/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -51,7 +50,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'alkis',
     name: 'Berlin: Alkis',
-    type: 'raster',
     tiles: 'https://mapproxy.codefor.de/tiles/1.0.0/alkis_30/mercator/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -62,7 +60,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'mapnik',
     name: 'OpenStreetMap Carto',
-    type: 'raster',
     tiles: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -72,7 +69,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'esri',
     name: 'Luftbild Esri',
-    type: 'raster',
     tiles:
       'https://clarity.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     tileSize: 256,
@@ -89,7 +85,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'maptiler-satellite',
     name: 'Luftbild Maptiler',
-    type: 'raster',
     tiles: `https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=${tokenMaptilerTilesets}`,
     tileSize: 512,
     minzoom: 0,
@@ -103,7 +98,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'mapbox-satellite',
     name: 'Luftbild Mapbox',
-    type: 'raster',
     tiles: `https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.webp?access_token=${tokenMapboxTilesets}`,
     tileSize: 512,
     minzoom: 0,
@@ -114,7 +108,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   // More: https://github.com/osmlab/editor-layer-index/issues/1451#issuecomment-1057938706
   // maxar_tiles: {
   //   name: 'Maxar',
-  //   // type: 'raster',
   //   scheme: 'tms', // `{-y}` in Leaflet https://maplibre.org/maplibre-gl-js-docs/style-spec/sources/#raster-scheme
   //   tiles: [
   //     'https://services.digitalglobe.com/earthservice/tmsaccess/tms/1.0.0/DigitalGlobe:ImageryTileService@EPSG:3857@jpg/{z}/{x}/{y}.jpg?connectId=c2cbd3f2-003a-46ec-9e46-26a3996d6484',
@@ -128,7 +121,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'areal2023',
     name: 'Berlin: Luftbilder 2023',
-    type: 'raster',
     tiles: 'https://tiles.codefor.de/berlin-2023-dop20rgbi/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -139,7 +131,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'areal2022',
     name: 'Berlin: Luftbilder 2022',
-    type: 'raster',
     tiles: 'https://tiles.codefor.de/berlin-2022-dop20rgbi/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -151,7 +142,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'areal2021',
     name: 'Berlin: Luftbilder 2021',
-    type: 'raster',
     tiles: 'https://tiles.codefor.de/berlin-2021-dop20rgbi/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -162,7 +152,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'areal2020',
     name: 'Berlin: Luftbilder 2020',
-    type: 'raster',
     tiles: 'https://tiles.codefor.de/berlin-2020-dop20rgb/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -173,7 +162,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'areal2019',
     name: 'Berlin: Luftbilder 2019',
-    type: 'raster',
     tiles: 'https://tiles.codefor.de/berlin-2019-dop20rgb/{z}/{x}/{y}.png',
     tileSize: 256,
     minzoom: 10,
@@ -185,7 +173,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'parkraumkarte_neukoelln',
     name: 'Berlin: Parkraumkarte Neukoelln',
-    type: 'raster',
     tiles: 'https://tiles.osm-berlin.org/parkraumkarte/{z}/{x}/{y}.jpg',
     tileSize: 256,
     minzoom: 10,
@@ -196,7 +183,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   {
     id: 'cyclosm',
     name: 'CyclOSM',
-    type: 'raster',
     tiles: 'https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
     // 'https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
     // tileSize: 256, // TODO figure out if we need this
@@ -209,7 +195,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://www.thunderforest.com/maps/opencyclemap/
     id: 'thunderforest-opencyclemap',
     name: 'OpenCycleMap',
-    type: 'raster',
     tiles:
       'https://tile.thunderforest.com/cycle/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
     tileSize: 512,
@@ -224,7 +209,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   //   // TODO: Vereinbarung mit https://memomaps.de/ treffen
   //   id: 'memomaps-transport',
   //   name: 'ÖPNV Karte 1',
-  //   type: 'raster',
   //   tiles: 'https://tileserver.memomaps.de/tilegen/14/8796/5286.png',
   //   tileSize: 512,
   //   minzoom: 10,
@@ -236,7 +220,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://www.thunderforest.com/maps/transport/
     id: 'thunderforest-transport',
     name: 'ÖPNV Karte 2',
-    type: 'raster',
     tiles:
       'https://tile.thunderforest.com/transport/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
     // tileSize: 512,
@@ -249,7 +232,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://www.thunderforest.com/maps/landscape/
     id: 'thunderforest-landscape',
     name: 'Höhenlinien',
-    type: 'raster',
     tiles:
       'https://tile.thunderforest.com/landscape/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
     // tileSize: 512,
@@ -262,7 +244,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://www.thunderforest.com/maps/outdoors/
     id: 'thunderforest-outdoors',
     name: 'Wandern',
-    type: 'raster',
     tiles:
       'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}{ratio}.png?apikey=27051673860149148c0c2818a0e10dfb',
     // tileSize: 512,
@@ -276,7 +257,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://cycling.waymarkedtrails.org/
     id: 'waymarkedtrails-cycling',
     name: 'Radrouten',
-    type: 'raster',
     tiles: 'https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
     minzoom: 0,
     maxzoom: 15,
@@ -290,7 +270,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://hiking.waymarkedtrails.org/
     id: 'waymarkedtrails-hiking',
     name: 'Wanderrouten',
-    type: 'raster',
     tiles: 'https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
     minzoom: 0,
     maxzoom: 15,
@@ -304,7 +283,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://hiking.waymarkedtrails.org/
     id: 'opentopomap',
     name: 'OpenTopoMap',
-    type: 'raster',
     tiles: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png',
     minzoom: 0,
     maxzoom: 17,
@@ -317,7 +295,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://maplibre.org/maplibre-gl-js-docs/style-spec/sources/
     id: 'trto-radwege',
     name: 'Amtliche Radwege',
-    type: 'raster',
     tiles:
       'https://dienste.btfietz.de/kommsvz/ttw_radwege/ows?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&BBOX={bbox-epsg-3857}&CRS=EPSG:3857&WIDTH=839&HEIGHT=878&LAYERS=radweg&STYLES=&FORMAT=image/png&DPI=72&MAP_RESOLUTION=72&FORMAT_OPTIONS=dpi:72&TRANSPARENT=TRUE',
     minzoom: 0,
@@ -329,7 +306,6 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     // https://github.com/osmlab/editor-layer-index/blob/gh-pages/sources/europe/de/Brandenburg-DOP20c.geojson?short_path=0ac57a0
     id: 'brandenburg-dop20',
     name: 'Brandenburg GeoBasis-DE/LGB (latest) / DOP20c',
-    type: 'raster',
     tiles:
       'https://isk.geobasis-bb.de/mapproxy/dop20c/service/wms?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=bebb_dop20c&STYLES=&crs=EPSG:3857&WIDTH=512&HEIGHT=512&BBOX={bbox-epsg-3857}',
     minzoom: 10,
