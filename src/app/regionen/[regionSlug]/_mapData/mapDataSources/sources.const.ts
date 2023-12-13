@@ -32,20 +32,21 @@ export type SourceVerificationApiIdentifier = 'bikelanes'
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
 export type SourceExportApiIdentifier =
   | 'bicycleParking_points'
+  | 'bicycleParking_areas' // private for now
   | 'bikelanes_verified'
-  | 'bikelanes'
-  | 'bikelanesPresence'
+  // | 'bikelanes' // We use the bikelanes_verified
+  // | 'bikelanesPresence' // Removed, now roads
   // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
-  | 'buildings'
+  // | 'buildings' // Disabled
   | 'landuse'
-  | 'lit'
-  | 'maxspeed'
+  // | 'lit' // Removed, now roads and bikelanes
+  // | 'maxspeed' // Remove, now roads
   | 'places'
   | 'poiClassification'
   | 'publicTransport'
-  | 'roadClassification'
+  // | 'roadClassification' // Removed, now roads
   | 'roads'
-  | 'surfaceQuality'
+  // | 'surfaceQuality' // Removed, now roads and bikelanes
   | 'trafficSigns'
 
 // https://account.mapbox.com/access-tokens
@@ -292,12 +293,7 @@ export const sources: MapDataSource<
       ],
     },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'lit',
-      title: 'Beleuchtung',
-      desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
-    },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/places
@@ -356,12 +352,7 @@ export const sources: MapDataSource<
       ],
     },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'maxspeed',
-      title: 'Höchstgeschwindigkeit',
-      desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
-    },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/surfaceQuality
@@ -399,12 +390,7 @@ export const sources: MapDataSource<
       ],
     },
     calculator: { enabled: false },
-    export: {
-      enabled: true,
-      apiIdentifier: 'surfaceQuality',
-      title: 'Oberflächenqualität',
-      desc: '(Wird bald entfernt zu Gunsten eines gemeinsamen Datensatzes.)',
-    },
+    export: { enabled: false },
   },
   {
     // https://tiles.radverkehrsatlas.de/barrierAreas
