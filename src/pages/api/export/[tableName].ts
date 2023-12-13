@@ -37,7 +37,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
     )
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
-    res.json(geoJson)
+    // @ts-ignore
+    res.json(geoJson[0][functionName])
   } catch (e) {
     if (!isProd) throw e
     res.status(500).send('Internal Server Error')
