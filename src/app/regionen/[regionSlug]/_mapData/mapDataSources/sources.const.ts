@@ -48,6 +48,9 @@ export type SourceExportApiIdentifier =
   | 'roads'
   // | 'surfaceQuality' // Removed, now roads and bikelanes
   | 'trafficSigns'
+  | 'barrierAreas'
+  | 'barrierLines'
+  | 'boundaries'
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
