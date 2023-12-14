@@ -1,5 +1,5 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-import maplibregl, { MapLibreEvent } from 'maplibre-gl'
+import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
@@ -22,7 +22,6 @@ import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegiona
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -68,7 +67,15 @@ export const Map: React.FC = () => {
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
 
-  useMissingImage(mainMap)
+  // Warn when a sprite image is missing
+  useEffect(() => {
+    if (!mainMap) return
+    mainMap.on('styleimagemissing', (e: MapStyleImageMissingEvent) => {
+      const imageId = e.id
+      if (imageId === 'null') return // Conditional images with Fallback images "Fill pattern: none" result in e.id=NULL
+      console.warn('Missing image', imageId)
+    })
+  }, [mainMap])
 
   useEffect(() => {
     if (!mainMap) return
