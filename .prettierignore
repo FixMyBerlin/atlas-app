@@ -8,7 +8,6 @@ db/migrations
 .yarn
 .pnp.*
 node_modules
-README.md
 
 # atlas
 src/components/MapInterface/Inspector/TagsTable/translations/translations.const.ts
