@@ -105,12 +105,13 @@ model BikelaneVerification {
 }
 
 model Region {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   //
-  slug      String   @unique
-  public    Boolean  @default(false)
+  slug         String   @unique
+  public       Boolean  @default(false)
+  exportPublic Boolean  @default(false)
 
   Membership Membership[]
 }
