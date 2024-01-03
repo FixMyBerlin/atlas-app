@@ -46,7 +46,8 @@ const log = (title, object: any = '-') => {
 }
 
 // Sprites
-const spriteUrls = []
+export type SpriteSource = { url: string; searchParams?: { access_token: string | null } }
+const spriteUrls: SpriteSource[] = []
 
 // ============= Collect data per `apiConfig`
 
@@ -139,11 +140,11 @@ await Promise.all(
       },
     }
 
-    // @ts-ignore
     spriteUrls.push({
-      url:
-        rawData.sprite.replace('mapbox://sprites/', 'https://api.mapbox.com/styles/v1/') +
-        '/sprite',
+      url: `${rawData.sprite.replace(
+        'mapbox://sprites/',
+        'https://api.mapbox.com/styles/v1/',
+      )}/sprite`,
       searchParams: {
         access_token: new URL(apiUrl).searchParams.get('access_token'),
       },
@@ -200,11 +201,11 @@ await Bun.write(
   `${scriptJsonFolder}/metadata_last_process.json`,
   JSON.stringify(metaFileContent, null, 2),
 )
+
 log(`Store metadata on processing`, 'metaFileContent')
 
 const rawData = await fetchStyle('base', baseMapStyle, scriptJsonFolder)
-saveJson('src/pages/api/map/style.json', rawData)
-// @ts-ignore
+await saveJson('src/pages/api/map/style.json', rawData)
 spriteUrls.push({ url: rawData.sprite })
 log(' Merging Sprites... ')
 await mergeSprites(spriteUrls, 1)

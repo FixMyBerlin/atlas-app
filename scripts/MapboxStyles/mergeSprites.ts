@@ -2,24 +2,23 @@ import sharp from 'sharp'
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'os'
+import { SpriteSource } from './process'
 const Spritesmith = require('spritesmith')
 
 import { saveJson } from './util'
 
-type Sprite = { url: string; searchParams: Record<string, string> }
-
-function generateSpriteUrl(sprite: Sprite, pixelRatio: 1 | 2, extension: 'png' | 'json') {
+function generateSpriteUrl(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const completeUrl = `${sprite.url}${pixelRatio === 1 ? '' : '@2x'}.${extension}`
   const url = new URL(completeUrl)
   if (sprite.searchParams) {
-    Object.entries(sprite.searchParams).forEach(([name, value]) =>
-      url.searchParams.append(name, String(value)),
-    )
+    Object.entries(sprite.searchParams).forEach(([name, value]) => {
+      url.searchParams.append(name, String(value))
+    })
   }
   return url.toString()
 }
 
-async function fetchResponse(sprite: Sprite, pixelRatio: 1 | 2, extension: 'png' | 'json') {
+async function fetchResponse(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const url = generateSpriteUrl(sprite, pixelRatio, extension)
   console.log('Fetching', url, '...')
   const response = await fetch(url)
@@ -29,7 +28,7 @@ async function fetchResponse(sprite: Sprite, pixelRatio: 1 | 2, extension: 'png'
   return response
 }
 
-export async function mergeSprites(sprites, pixelRatio: 1 | 2) {
+export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   const iconFiles = {}
   const tmpFolder = path.join(os.tmpdir(), 'icons')
   fs.rmSync(tmpFolder, { recursive: true, force: true })
