@@ -97,6 +97,9 @@ await Promise.all(
         delete layer.slot // Does not exict on maplibre
         delete layer['source-layer']
         delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
+        if (layer?.layout && Object.keys(layer.layout).length === 0) {
+          delete layer.layout
+        }
       }),
     )
 
