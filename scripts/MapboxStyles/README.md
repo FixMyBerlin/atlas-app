@@ -7,34 +7,23 @@ The reason for that is, that styling the data there has the best editor experien
 
 ## Initial Setup
 
-Create a `.env.local` file with a `VITE_MAPBOX_STYLE_ACCESS_TOKEN` key. See `.env.defaults` for more.
+1. Create a `.env.development.local` based on `.env.example`.
+2. Install [Bun](https://bun.sh/docs/installation) which we use to run our scripts.
 
 ## General process
 
-1. Style in Mapbox Studio.
-1. Publish the style in Mapbox Studio (only then the API output is updated).
-1. Run `npm run updateStyles`.
-   - We use [Bun](https://bun.sh/docs/installation) to run this script.
-1. Check the generated files and update the `mapData` if needed.
-   Including the source-attribute (see below).
+1. Use Mapbox Studio to style our custom data.
+   - See [`npm run updateTilesets`](scripts/MapboxTilesets/README.md) on how to update the Data in Mapbox Studio
+2. _Publish_ the style in Mapbox Studio (only then the API output is updated).
+3. Run `npm run updateStyles`.
+4. Check the generated files and update subcategory data as needed
 
-## What does it do…
+## What it does
 
-- Request the current styles from Mapbox studio via the Mapbox styles API
-  (The raw output is in `./tmp` for debugging.)
-- Filter the data to layerGroups that start with `atlas_`
-- Cleanup the layer data to remove 'source', 'source-layer', 'metadata'; we need to add the sources as again as part of our 'mapData' config
-- Generate types for layer Ids indie the same folder.
-  One type with all Ids, one type for each subcategory of layers ("atlas_lit", "atlas_lit_complete", etc.)
-- Create a new file `.json` inside our `/src/components/…` folder:
-
-```json
-[
-  {
-    "group": "atlas_lit",
-    "layers": [
-      /* Cleaned layer objects */
-    ]
-  }
-]
-```
+1. The script generates one style file per Mapbox folder in `src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/groups/`.
+   - Only Mapbox folders that are prefixed with the term given in `mapboxGroupPrefix` (eg. `atlas_`) are processed.
+   - The styles are cleaned up by removing 'source', 'source-layer', 'metadata' which we add back later in our subcategory configuration.
+2. The script generates a merged sprite file in `public/map/`
+3. The script stores the original base style in `src/pages/api/map/style.json`.
+   The `style.json` represents our `baseMapStyle`.
+   The `style.ts` API is where we replace the sprite reference with our own.

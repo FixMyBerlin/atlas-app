@@ -2,22 +2,22 @@
 import chalk from 'chalk'
 import { fetchStyle, saveJson } from './util'
 import { mergeSprites } from './mergeSprites'
+import { log } from './util'
 
 console.log(chalk.inverse.bold('START'), __filename)
 
-// Configuration:
+// Configuration
 const baseMapStyle =
   'https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=ECOoUBmpqklzSCASXxcu'
-
 const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'parking']
 const apiConfigs = [
+  // The order in this array specifies which sprite "wins" when sprite filenames are identical (the last entry "wins")
   {
-    key: 'atlas-style-package-1',
-    // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
-    enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
-    // Only groups with `atlas_` prefix are used
-    mapboxGroupPrefix: 'atlas_',
+    key: 'parking',
+    // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
+    enabled: process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN,
+    apiUrl: `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
+    mapboxGroupPrefix: 'parking_',
   },
   {
     key: 'atlas-style-package-2',
@@ -28,22 +28,18 @@ const apiConfigs = [
     mapboxGroupPrefix: 'atlas_',
   },
   {
-    key: 'parking',
-    // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
-    enabled: process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
-    mapboxGroupPrefix: 'parking_',
+    key: 'atlas-style-package-1',
+    // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
+    enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
+    apiUrl: `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
+    // Only groups with `atlas_` prefix are used
+    mapboxGroupPrefix: 'atlas_',
   },
 ].filter((c) => c.enabled)
 
 // Folder
 const scriptJsonFolder = 'scripts/MapboxStyles/json'
 const componentFolder = 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles'
-
-// Helper:
-const log = (title, object: any = '-') => {
-  console.log(chalk.inverse.bold(` ${title}${object === '-' ? '' : ':'} `), object)
-}
 
 // Sprites
 export type SpriteSource = { url: string; searchParams?: { access_token: string | null } }
@@ -192,19 +188,24 @@ export type MapboxStyleLayer = {${deduplicatedLayerKeys
   })
   .join('')}}`
 
-await Bun.write(`${componentFolder}/types.ts`, typesFileContent)
-log(`Write typesFile`, typesFileContent)
+const typeFileName = `${componentFolder}/types.ts`
+await Bun.write(typeFileName, typesFileContent)
+log(`Write typesFile`, typeFileName)
 
 await Bun.write(
   `${scriptJsonFolder}/metadata_last_process.json`,
   JSON.stringify(metaFileContent, null, 2),
 )
+log(`Store metadata on processing`, metaFileContent)
 
-log(`Store metadata on processing`, 'metaFileContent')
+// ============= Last, we handle sprites and create a new style.json
 
-const rawData = await fetchStyle('base', baseMapStyle, scriptJsonFolder)
-await saveJson('src/pages/api/map/style.json', rawData)
-spriteUrls.push({ url: rawData.sprite })
-log(' Merging Sprites... ')
+const originalBaseMapStyle = await fetchStyle('base', baseMapStyle, scriptJsonFolder)
+// Store the original style. See README for more.
+await saveJson('src/pages/api/map/style.json', originalBaseMapStyle)
+
+// Create a merged sprite for pixelRatio 1 and 2
+spriteUrls.push({ url: originalBaseMapStyle.sprite })
+log('Merge sprites', spriteUrls)
 await mergeSprites(spriteUrls, 1)
 await mergeSprites(spriteUrls, 2)

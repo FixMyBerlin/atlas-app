@@ -4,7 +4,7 @@ import os from 'os'
 import sharp from 'sharp'
 import Spritesmith from 'spritesmith'
 import { SpriteSource } from './process'
-import { saveJson, sortObject } from './util'
+import { log, saveJson, sortObject } from './util'
 
 function generateSpriteUrl(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const completeUrl = `${sprite.url}${pixelRatio === 1 ? '' : '@2x'}.${extension}`
@@ -19,7 +19,7 @@ function generateSpriteUrl(sprite: SpriteSource, pixelRatio: 1 | 2, extension: '
 
 async function fetchResponse(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const url = generateSpriteUrl(sprite, pixelRatio, extension)
-  console.log('Fetching', url, '...')
+  log(`Fetching ${extension}`, url)
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`)
@@ -28,14 +28,21 @@ async function fetchResponse(sprite: SpriteSource, pixelRatio: 1 | 2, extension:
 }
 
 export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
-  const iconFiles = {}
+  const iconFiles: Record<string, string> = {}
+
+  // Setup temp folder to store single sprite images in
   const tmpFolder = path.join(os.tmpdir(), 'icons')
   fs.rmSync(tmpFolder, { recursive: true, force: true })
   fs.mkdirSync(tmpFolder)
 
-  const extractIcons = async (imageBuffer, coordinates) => {
+  type SpriteJson = Record<
+    string,
+    { x: number; y: number; width: number; height: number; pixelRatio: number }
+  >
+
+  // Extract single images from a given sprite and store them in a temporary folder
+  const extractIcons = async (imageBuffer, coordinates: SpriteJson) => {
     for (const [key, position] of Object.entries(coordinates)) {
-      // @ts-ignore
       const { x, y, width, height } = position
       const filename = path.join(os.tmpdir(), `${key}.png`)
       await sharp(imageBuffer).extract({ left: x, top: y, width, height }).toFile(filename)
@@ -43,6 +50,7 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
     }
   }
 
+  // For each SpriteSource: Download the sprite and spriteJson and call `extractIcons`
   for (const sprite of sprites) {
     const imageResponse = await fetchResponse(sprite, pixelRatio, 'png')
     const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
@@ -55,24 +63,30 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
     Object.entries(iconFiles).map(([key, fileName]) => [fileName, key]),
   )
 
+  // Create a single merged sprite
   const filename = `public/map/sprite${pixelRatio === 1 ? '' : '@2x'}`
-  console.log('Creating', filename, '...')
+  log('Create merged sprite', filename)
   const sortedIconFiles = sortObject(iconFiles)
   Spritesmith.run({ src: Object.values(sortedIconFiles) }, async (err, result) => {
     if (err) throw err
+
+    // Create and store the merged sprite PNG
     await sharp(result.image).toFile(`${filename}.png`)
-    const coordinates = Object.fromEntries(
+
+    // Create and store the merged sprite JSON
+    const coordinates: SpriteJson = Object.fromEntries(
       Object.entries(result.coordinates).map(([filename, coords]) => [
         iconFilenameToKey[filename],
         coords,
       ]),
     )
     Object.values(coordinates).forEach((coords) => {
-      // @ts-ignore
       coords.pixelRatio = pixelRatio
     })
     const sortedCoordinates = sortObject(coordinates)
     await saveJson(`${filename}.json`, sortedCoordinates)
+
+    // Cleanup
     fs.rmSync(tmpFolder, { recursive: true, force: true })
   })
 }
