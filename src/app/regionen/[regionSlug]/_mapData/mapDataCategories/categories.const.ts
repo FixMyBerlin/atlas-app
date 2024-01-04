@@ -6,6 +6,7 @@ import { subcat_bikelanesPresence } from '../mapDataSubcategories/subcat_bikelan
 import { subcat_bikelanesPresence_legacy } from '../mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
 import { subcat_bikelanesSurface } from '../mapDataSubcategories/subcat_bikelanesSurface.const'
+import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
 import { subcat_boundaries } from '../mapDataSubcategories/subcat_boundaries.const'
 import { subcat_landuse } from '../mapDataSubcategories/subcat_landuse.const'
 import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapillaryCoverage.const'
@@ -96,6 +97,7 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'bikelanesWidth', defaultStyle: 'default', ui: 'checkbox' },
       // { id: 'bikelanesSurface', defaultStyle: 'default', ui: 'checkbox' },
       // { id: 'bikelanesOneway', defaultStyle: 'default', ui: 'checkbox' },
+      { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_signs, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'bikelanesProtection', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'tram', defaultStyle: 'hidden', ui: 'checkbox' },

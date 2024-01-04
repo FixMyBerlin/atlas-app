@@ -3,7 +3,7 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_bikelanes_plussigns: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer[] = [
   {
     minzoom: 10,
     layout: {
