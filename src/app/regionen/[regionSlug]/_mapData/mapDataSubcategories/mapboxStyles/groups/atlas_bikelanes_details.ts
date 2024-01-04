@@ -206,14 +206,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
   {
     id: 'hitarea-bikelanes copy 1',
     type: 'line',
-    paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
-      'line-opacity': 0,
-      'line-color': 'hsl(290, 100%, 54%)',
-    },
+    paint: {},
     filter: ['has', 'category'],
-    layout: {
-      'line-cap': 'round',
-    },
   },
 ]

@@ -2,12 +2,16 @@ import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/Sidebar
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { mapboxStyleGroupLayers_atlas_bikelanes_details } from './mapboxStyles/groups/atlas_bikelanes_details'
+import { mapboxStyleGroupLayers_atlas_bikelanes_default } from './mapboxStyles/groups/atlas_bikelanes_default'
 
 const subcatId = 'bikelanes'
 const source = 'atlas_bikelanes'
 const sourceLayer = 'bikelanes_verified'
 export type SubcatBikelanesId = typeof subcatId
 export type SubcatBikelanesStyleIds =
+  | 'default_legacy'
   | 'default'
   | 'verification'
   | 'completeness'
@@ -79,8 +83,8 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
   styles: [
     ...defaultStyleHidden,
     {
-      id: 'default',
-      name: 'Inhalte',
+      id: 'default_legacy',
+      name: 'Inhalte (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_bikelanes',
@@ -88,6 +92,28 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         sourceLayer,
       }),
       legends: [...defaultLegend],
+    },
+    {
+      id: 'default',
+      name: 'Inhalte',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_default,
+        source,
+        sourceLayer,
+      }),
+      // legends: [...defaultLegend],
+    },
+    {
+      id: 'details',
+      name: 'Details',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_details,
+        source,
+        sourceLayer,
+      }),
+      // legends: [...defaultLegend],
     },
     {
       id: 'verification',
