@@ -12,9 +12,9 @@ import {
 } from '@turf/turf'
 import chalk from 'chalk'
 import path from 'node:path'
-import { z } from 'zod'
+import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
-import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
+import { z } from 'zod'
 
 console.log(chalk.inverse.bold('START'), __filename)
 
@@ -52,8 +52,9 @@ const saveErrors = async () => {
 
 const downloadGeoJson = async (idsString: string) => {
   // We always use the production DB since that holds all relevant releations
-  // TODO: Change this to production once the api is deployed there
-  const url = new URL(`${exportApiBaseUrl.staging}/boundaries/`)
+  // TODO: Migrate the boundaries API to NextJS
+  // const url = new URL(getExportApiUrl('boundaries', 'production'))
+  const url = new URL('https://api.radverkehrsatlas.de/boundaries/')
   idsString
     .split(',')
     .map(Number)

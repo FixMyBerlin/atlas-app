@@ -1,6 +1,6 @@
 // We use bun.sh to run this file
 import chalk from 'chalk'
-import { exportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
+import { getExportApiBboxUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { SourceExportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 
@@ -70,34 +70,23 @@ const fallbackBbox = {
   max: [13.825, 52.5528],
 } satisfies StaticRegion['bbox']
 
-// TODO: Switch to the new Export API Domain / helper-function once ready
-const exportApiUrlBbox = (
-  apiIdentifier: SourceExportApiIdentifier,
-  bbox: NonNullable<StaticRegion['bbox']>,
-) => {
-  const url = new URL(`${exportApiBaseUrl.staging}/export/${apiIdentifier}`)
-  url.searchParams.append('minlon', String(bbox.min[0]))
-  url.searchParams.append('minlat', String(bbox.min[1]))
-  url.searchParams.append('maxlon', String(bbox.max[0]))
-  url.searchParams.append('maxlat', String(bbox.max[1]))
-
-  return url.href
-}
-
 // Folder
 const folderJson = 'scripts/MapboxTilesets/json'
 const folderMbtiles = 'scripts/MapboxTilesets/mbtiles'
 
 // Fetch, Write, Transform
-for (const [datasetKey, { sourceLayer, uploadUrl }] of Object.entries(datasets)) {
+for (const dataset of Object.entries(datasets)) {
+  const datasetKey = dataset[0] as SourceExportApiIdentifier
+  const { sourceLayer, uploadUrl } = dataset[1]
+
   // Fetch Export API
-  const url = exportApiUrlBbox(datasetKey as SourceExportApiIdentifier, bbox)
+  const url = getExportApiBboxUrl(datasetKey, bbox, 'production')
   console.log('\n', chalk.inverse.bold(chalk.yellow('FETCH')), url)
   let fetchExport: Awaited<ReturnType<typeof fetch>> | undefined = undefined
   try {
     fetchExport = await fetch(url)
   } catch (error) {
-    const url = exportApiUrlBbox(datasetKey as SourceExportApiIdentifier, fallbackBbox)
+    const url = getExportApiBboxUrl(datasetKey, fallbackBbox, 'production')
     console.log(chalk.inverse.bold('ERROR'), error, 'trying the fallback bbox now', url)
     fetchExport = await fetch(url)
   }

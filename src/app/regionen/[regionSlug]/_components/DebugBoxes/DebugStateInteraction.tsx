@@ -1,5 +1,4 @@
 import { Link } from 'src/app/_components/links/Link'
-import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
@@ -53,7 +52,6 @@ export const DebugStateInteraction = () => {
             Reset URL <code>config</code>
           </Link>
         </div>
-        <div className="font-mono">getExportApiUrl: {getExportApiUrl()}</div>
         <div className="font-mono">env.*ENV: {process.env.NEXT_PUBLIC_APP_ENV}</div>
         <div className="font-mono">env.*APP_ORIGIN: {process.env.NEXT_PUBLIC_APP_ORIGIN}</div>
         <div className="font-mono">env.NODE_ENV: {process.env.NODE_ENV}</div>

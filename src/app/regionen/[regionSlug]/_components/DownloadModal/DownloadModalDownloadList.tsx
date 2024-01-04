@@ -1,7 +1,7 @@
 import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
-import { exportApiUrlBbox } from './exportApiUrl'
+import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 
 type Props = { visible: boolean }
 
@@ -50,7 +50,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
             <div className="flex gap-2">
               {bbox && (
                 <LinkExternal
-                  href={exportApiUrlBbox(sourceData.export.apiIdentifier, bbox)}
+                  href={getExportApiBboxUrl(sourceData.export.apiIdentifier, bbox)}
                   classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                   download
                   blank

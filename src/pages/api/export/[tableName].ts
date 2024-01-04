@@ -1,17 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { z } from 'zod'
-import { prismaClientForRawQueries } from 'src/prisma-client'
-
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
-
-const exportEnabledSources = sources
-  .filter((source) => source.export.enabled)
-  .map((source) => source.export.apiIdentifier)
+import { exportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { prismaClientForRawQueries } from 'src/prisma-client'
+import { z } from 'zod'
 
 const ExportSchema = z.object({
-  // @ts-ignore
-  tableName: z.enum(exportEnabledSources),
+  tableName: z.enum(exportApiIdentifier),
   minlon: z.coerce.number().default(13.3),
   minlat: z.coerce.number().default(52.2),
   maxlon: z.coerce.number().default(13.7),

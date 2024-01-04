@@ -30,27 +30,29 @@ export type SourcesId =
 export type SourceVerificationApiIdentifier = 'bikelanes'
 
 // Based on `export_geojson_function_from_type` in `tarmac-geo`
-export type SourceExportApiIdentifier =
-  | 'bicycleParking_points'
-  | 'bicycleParking_areas' // private for now
-  | 'bikelanes_verified'
-  // | 'bikelanes' // We use the bikelanes_verified
-  // | 'bikelanesPresence' // Removed, now roads
-  // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
-  // | 'buildings' // Disabled
-  | 'landuse'
-  // | 'lit' // Removed, now roads and bikelanes
-  // | 'maxspeed' // Remove, now roads
-  | 'places'
-  | 'poiClassification'
-  | 'publicTransport'
-  // | 'roadClassification' // Removed, now roads
-  | 'roads'
-  // | 'surfaceQuality' // Removed, now roads and bikelanes
-  | 'trafficSigns'
-  | 'barrierAreas'
-  | 'barrierLines'
-  | 'boundaries'
+export const exportApiIdentifier = [
+  'bicycleParking_points',
+  'bicycleParking_areas', // private for now
+  'bikelanes_verified',
+  // ,'bikelanes' // We use the bikelanes_verified
+  // ,'bikelanesPresence' // Removed, now roads
+  // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
+  // ,'buildings' // Disabled
+  'landuse',
+  // ,'lit' // Removed, now roads and bikelanes
+  // ,'maxspeed' // Remove, now roads
+  'places',
+  'poiClassification',
+  'publicTransport',
+  // ,'roadClassification' // Removed, now roads
+  'roads',
+  // ,'surfaceQuality' // Removed, now roads and bikelanes
+  'trafficSigns',
+  'barrierAreas',
+  'barrierLines',
+  'boundaries',
+] as const
+export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
