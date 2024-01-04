@@ -44,7 +44,7 @@ export const subcat_lit: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte',
+      name: 'Inhalte (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_lit',
@@ -55,7 +55,7 @@ export const subcat_lit: FileMapDataSubcategory = {
     },
     {
       id: 'completeness',
-      name: 'Inhalte & Vollständigkeit',
+      name: 'Inhalte & Vollständigkeit (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({
@@ -83,7 +83,7 @@ export const subcat_lit: FileMapDataSubcategory = {
     },
     {
       id: 'freshness',
-      name: 'Inhalte & Aktualität',
+      name: 'Inhalte & Aktualität (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({

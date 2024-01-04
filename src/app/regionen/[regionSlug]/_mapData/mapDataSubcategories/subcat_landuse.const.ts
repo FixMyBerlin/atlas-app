@@ -14,7 +14,7 @@ export const subcat_landuse: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Standard (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_landuse',

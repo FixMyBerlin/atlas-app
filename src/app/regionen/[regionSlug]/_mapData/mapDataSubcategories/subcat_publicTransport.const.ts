@@ -15,8 +15,8 @@ export const subcat_publicTransport: FileMapDataSubcategory = {
   styles: [
     ...defaultStyleHidden,
     {
-      id: 'default',
-      name: 'Standard',
+      id: 'default_legacy',
+      name: 'Standard (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_publictransport',

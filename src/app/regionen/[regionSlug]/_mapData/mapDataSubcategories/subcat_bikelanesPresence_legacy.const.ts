@@ -17,7 +17,7 @@ export const subcat_bikelanesPresence_legacy: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte & Vollständigkeit',
+      name: 'Inhalte & Vollständigkeit (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_old_bikelanespresence_complete',

@@ -117,7 +117,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
     },
     {
       id: 'verification',
-      name: 'Inhalte & Prüf-Status',
+      name: 'Inhalte & Prüf-Status (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({
