@@ -3,20 +3,21 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_bikelanes_pluswidths: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_bikelanes_plus_surfaces: MapboxStyleLayer[] = [
   {
-    minzoom: 12,
     layout: {
       'symbol-placement': 'line-center',
       'text-size': ['interpolate', ['linear'], ['zoom'], 12, 8, 22, 18],
       'text-font': ['Open Sans SemiBold', 'Arial Unicode MS Regular'],
       'text-padding': 4,
-      'text-field': ['to-string', ['get', 'width']],
+      'text-field': ['to-string', ['get', 'surface']],
+      'text-offset': [0, 0.5],
     },
     type: 'symbol',
-    id: 'widths',
+    id: 'surfaces',
     paint: {
-      'text-color': ['interpolate', ['linear'], ['zoom'], 12, '#8c8c8c', 16, '#747272'],
+      'text-color': ['interpolate', ['linear'], ['zoom'], 12, '#8c8c8c', 16, '#1051ad'],
+      'text-opacity': ['interpolate', ['linear'], ['zoom'], 12, 0, 13, 1],
     },
   },
 ]

@@ -35,6 +35,18 @@ import {
   SubcatBikelanesPlusSignsStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_signs.const'
 import {
+  SubcatBikelanesPlusSmoothnessId,
+  SubcatBikelanesPlusSmoothnessStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_smoothness'
+import {
+  SubcatBikelanesPlusSurfaceId,
+  SubcatBikelanesPlusSurfaceStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_surface.const'
+import {
+  SubcatBikelanesPlusWidthId,
+  SubcatBikelanesPlusWidthStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_width.const'
+import {
   SubcatBoundariesId,
   SubcatBoundariesStyleIds,
 } from './mapDataSubcategories/subcat_boundaries.const'
@@ -108,6 +120,9 @@ export type SubcategoryId =
   | SubcatBicycleParkingId
   | SubcatBikelanesId
   | SubcatBikelanesPlusSignsId
+  | SubcatBikelanesPlusSmoothnessId
+  | SubcatBikelanesPlusSurfaceId
+  | SubcatBikelanesPlusWidthId
   | SubcatBikelanesPresenceId
   | SubcatBikelanesPresenceIdLegacy
   | SubcatBikelanesStatsId
@@ -142,6 +157,9 @@ export type StyleId =
   | SubcatBarriersStyleIds
   | SubcatBicycleParkingStyleIds
   | SubcatBikelanesPlusSignsStyleIds
+  | SubcatBikelanesPlusSmoothnessStyleIds
+  | SubcatBikelanesPlusSurfaceStyleIds
+  | SubcatBikelanesPlusWidthStyleIds
   | SubcatBikelanesPresenceStyleIds
   | SubcatBikelanesPresenceStyleIdsLegacy
   | SubcatBikelanesStatsStyleIds
