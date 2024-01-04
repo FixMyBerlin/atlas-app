@@ -55,8 +55,7 @@ type GroupsLayer = { folderName: string; layers: mapboxgl.AnyLayer[] }
 const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(keys.map((k) => [k, []]))
 const metaFileContent: Record<string, any> = Object.fromEntries(keys.map((k) => [k, undefined]))
 
-await Promise.all(
-  apiConfigs.map(async ({ key, apiUrl, mapboxGroupPrefix }) => {
+for (const { key, apiUrl, mapboxGroupPrefix } of apiConfigs) {
     const rawData: any = await fetchStyle(key, apiUrl, scriptJsonFolder)
 
     // Script: Remove all non-FMC-groups
@@ -149,8 +148,7 @@ await Promise.all(
         access_token: new URL(apiUrl).searchParams.get('access_token'),
       },
     })
-  }),
-)
+}
 
 // ============= Now, we bring all `apiConfigs` back together
 

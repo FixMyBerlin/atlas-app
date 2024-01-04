@@ -35,27 +35,22 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   fs.mkdirSync(tmpFolder)
 
   const extractIcons = async (imageBuffer, coordinates) => {
-    await Promise.all(
-      Object.entries(coordinates).map(async ([key, position]) => {
+    for (const [key, position] of Object.entries(coordinates)) {
         // @ts-ignore
         const { x, y, width, height } = position
         const filename = path.join(os.tmpdir(), `${key}.png`)
         await sharp(imageBuffer).extract({ left: x, top: y, width, height }).toFile(filename)
         iconFiles[key] = filename
-      }),
-    )
+    }
   }
 
-  await Promise.all(
-    sprites.map(async (sprite) => {
-      let response
-      response = await fetchResponse(sprite, pixelRatio, 'png')
-      const imageBuffer = Buffer.from(await response.arrayBuffer())
-      response = await fetchResponse(sprite, pixelRatio, 'json')
-      const coordinates = await response.json()
+  for (const sprite of sprites) {
+      const imageResponse = await fetchResponse(sprite, pixelRatio, 'png')
+      const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
+      const coordinateResponse = await fetchResponse(sprite, pixelRatio, 'json')
+      const coordinates = await coordinateResponse.json()
       await extractIcons(imageBuffer, coordinates)
-    }),
-  )
+  }
 
   const iconFilenameToKey = Object.fromEntries(
     Object.entries(iconFiles).map(([key, fileName]) => [fileName, key]),
