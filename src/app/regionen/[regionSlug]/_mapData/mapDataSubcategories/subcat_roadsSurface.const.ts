@@ -1,12 +1,15 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
+import { mapboxStyleGroupLayers_atlas_roads_smooth_all } from './mapboxStyles/groups/atlas_roads_smooth_all'
 import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'roadsSurface'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
 export type SubcatRoadsSurfaceId = typeof subcatId
 export type SubcatRoadsSurfaceStyleIds =
+  | 'default_legacy'
   | 'default'
   | 'bad'
   | 'debug-smoothness'
@@ -20,10 +23,20 @@ export const subcat_roadsSurface: FileMapDataSubcategory = {
   styles: [
     ...defaultStyleHidden,
     {
-      id: 'default',
+      id: 'default_legacy',
       name: 'Standard (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({ group: 'atlas_surface_good', source, sourceLayer }),
+    },
+    {
+      id: 'default',
+      name: 'Standard',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_roads_smooth_all,
+        source,
+        sourceLayer,
+      }),
     },
     {
       id: 'bad',
