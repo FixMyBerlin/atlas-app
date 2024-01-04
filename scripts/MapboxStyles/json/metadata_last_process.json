@@ -2,9 +2,9 @@
   "atlas-style-package-1": {
     "key": "atlas-style-package-1",
     "about": "Metadata on the last processing of the atlas-style-package-1 styles api response",
-    "processed_at": "11.12.2023, 14:07:54",
+    "processed_at": "4.1.2024, 14:27:18",
     "style_last_published": {
-      "published_at": "11.12.2023, 10:58:51",
+      "published_at": "4.1.2024, 14:27:10",
       "version": 8
     },
     "style_id": "cl706a84j003v14o23n2r81w7",
@@ -14,28 +14,12 @@
       "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
       "changedNamesForDebugging": [
         {
-          "folderName": "atlas_bikelanes_plus-surfaces",
-          "cleanFolderName": "atlas_bikelanes_plussurfaces"
-        },
-        {
           "folderName": "atlas_OLD_bikelanespresence_complete",
           "cleanFolderName": "atlas_old_bikelanespresence_complete"
         },
         {
           "folderName": "atlas_OLD_roadclassification",
           "cleanFolderName": "atlas_old_roadclassification"
-        },
-        {
-          "folderName": "atlas_bikelanes_plus-widths",
-          "cleanFolderName": "atlas_bikelanes_pluswidths"
-        },
-        {
-          "folderName": "atlas_ziele-plu-barriers",
-          "cleanFolderName": "atlas_zieleplubarriers"
-        },
-        {
-          "folderName": "atlas_bikelanes_plus-signs",
-          "cleanFolderName": "atlas_bikelanes_plussigns"
         }
       ]
     }
@@ -43,9 +27,9 @@
   "atlas-style-package-2": {
     "key": "atlas-style-package-2",
     "about": "Metadata on the last processing of the atlas-style-package-2 styles api response",
-    "processed_at": "11.12.2023, 14:07:54",
+    "processed_at": "4.1.2024, 14:27:18",
     "style_last_published": {
-      "published_at": "5.12.2023, 13:31:11",
+      "published_at": "14.12.2023, 10:16:22",
       "version": 8
     },
     "style_id": "clfs9mdh9007n01t6lw99gyqr",
@@ -59,7 +43,7 @@
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "11.12.2023, 14:07:54",
+    "processed_at": "4.1.2024, 14:27:17",
     "style_last_published": {
       "published_at": "22.7.2023, 10:41:33",
       "version": 8

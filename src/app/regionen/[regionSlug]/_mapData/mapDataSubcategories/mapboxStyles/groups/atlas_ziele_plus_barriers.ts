@@ -3,9 +3,8 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_zieleplubarriers: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_ziele_plus_barriers: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['match', ['get', 'waterway'], ['river', 'canal'], false, true],
     type: 'line',
     id: 'atlas-barrierlines-3ft1bu',
@@ -21,6 +20,5 @@ export const mapboxStyleGroupLayers_atlas_zieleplubarriers: MapboxStyleLayer[] =
       'fill-translate': [0, 0],
       'fill-pattern': 'basics-textures-cross-hatch-fine',
     },
-    layout: {},
   },
 ]
