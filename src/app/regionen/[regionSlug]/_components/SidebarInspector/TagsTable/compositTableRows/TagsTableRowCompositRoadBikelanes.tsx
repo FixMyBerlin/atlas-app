@@ -10,7 +10,7 @@ const CompositRoadBikelanesTableValue = ({
 }: Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
   tagValue: string
 }) => {
-  if (['not_expected', 'data_no'].includes(tagValue)) {
+  if (['not_expected', 'data_no', 'missing'].includes(tagValue)) {
     return <ConditionalFormattedValue sourceId={sourceId} tagKey={tagKey} tagValue={tagValue} />
   }
   // By overwriting the tagKey we access the `ALL-category=*` translations

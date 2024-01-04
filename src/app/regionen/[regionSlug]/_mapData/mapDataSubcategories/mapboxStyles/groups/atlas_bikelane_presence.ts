@@ -42,7 +42,6 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
         'rgba(235, 235, 254, 0.7)',
         'rgba(0, 0, 0, 0.7)',
       ],
-      'line-offset': ['step', ['zoom'], 2, 14, 4],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
   },
