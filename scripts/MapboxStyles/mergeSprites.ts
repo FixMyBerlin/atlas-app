@@ -1,11 +1,10 @@
-import sharp from 'sharp'
 import fs from 'node:fs'
 import path from 'node:path'
 import os from 'os'
-import { SpriteSource } from './process'
-
-import { saveJson } from './util'
+import sharp from 'sharp'
 import Spritesmith from 'spritesmith'
+import { SpriteSource } from './process'
+import { saveJson, sortObject } from './util'
 
 function generateSpriteUrl(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const completeUrl = `${sprite.url}${pixelRatio === 1 ? '' : '@2x'}.${extension}`
@@ -58,7 +57,8 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
 
   const filename = `public/map/sprite${pixelRatio === 1 ? '' : '@2x'}`
   console.log('Creating', filename, '...')
-  Spritesmith.run({ src: Object.values(iconFiles) }, async (err, result) => {
+  const sortedIconFiles = sortObject(iconFiles)
+  Spritesmith.run({ src: Object.values(sortedIconFiles) }, async (err, result) => {
     if (err) throw err
     await sharp(result.image).toFile(`${filename}.png`)
     const coordinates = Object.fromEntries(
@@ -71,7 +71,8 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
       // @ts-ignore
       coords.pixelRatio = pixelRatio
     })
-    await saveJson(`${filename}.json`, coordinates)
+    const sortedCoordinates = sortObject(coordinates)
+    await saveJson(`${filename}.json`, sortedCoordinates)
     fs.rmSync(tmpFolder, { recursive: true, force: true })
   })
 }
