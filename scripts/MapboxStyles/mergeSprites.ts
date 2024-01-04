@@ -28,8 +28,6 @@ async function fetchResponse(sprite: SpriteSource, pixelRatio: 1 | 2, extension:
 }
 
 export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
-  const iconFiles: Record<string, string> = {}
-
   // Setup temp folder to store single sprite images in
   const tmpFolder = path.join(os.tmpdir(), 'icons')
   fs.rmSync(tmpFolder, { recursive: true, force: true })
@@ -41,13 +39,38 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   >
 
   // Extract single images from a given sprite and store them in a temporary folder
+  const iconFiles: Record<string, string> = {}
   const extractIcons = async (imageBuffer, coordinates: SpriteJson) => {
+    // Use the `skipList` to remove alls files from the sprite that start with the given term
+    const skipList = [
+      'us-',
+      'london-',
+      'il-',
+      'jp-',
+      'in-',
+      'kr-',
+      'philadelphia-',
+      'ae-',
+      'al-',
+      'gp-',
+      'kiev-',
+      'mexico-',
+      'milan-',
+    ]
+    let skipCount = 0
     for (const [key, position] of Object.entries(coordinates)) {
+      if (skipList.some((term) => key.startsWith(term))) {
+        skipCount += 1
+        continue
+      }
       const { x, y, width, height } = position
       const filename = path.join(os.tmpdir(), `${key}.png`)
       await sharp(imageBuffer).extract({ left: x, top: y, width, height }).toFile(filename)
       iconFiles[key] = filename
     }
+    console.log(
+      `INFO extractIcons: ${skipCount} icons skipped with skipList ${skipList.join(', ')}`,
+    )
   }
 
   // For each SpriteSource: Download the sprite and spriteJson and call `extractIcons`
