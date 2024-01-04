@@ -1,8 +1,8 @@
-  -- Try to find smoothess information in the following order:
-  -- 1. `smoothess` tag
-  -- 2. `smoothess` extrapolated from `surface` data
-  -- 3. `smoothess` extrapolated from `tracktype` tag, mostly on `highway=track`
-  -- 4. `smoothess` extrapolated from `mtb:scale` tag, mostly on `highway=path`
+-- Try to find smoothess information in the following order:
+-- 1. `smoothess` tag
+-- 2. `smoothess` extrapolated from `surface` data
+-- 3. `smoothess` extrapolated from `tracktype` tag, mostly on `highway=track`
+-- 4. `smoothess` extrapolated from `mtb:scale` tag, mostly on `highway=path`
 package.path = package.path .. ";./app/process/helper/?.lua"
 
 require("Set")
@@ -128,11 +128,11 @@ local function deriveSmoothnessFromSurface(surface)
       source = 'surface_to_smoothness'
       confidence = 'medium'
       todo = "Please review surface=" ..
-        surface .. " which is a non standard value (List surfaceToSmoothnessNonStandardValues)"
+          surface .. " which is a non standard value (List surfaceToSmoothnessNonStandardValues)"
     else
       todo = "Please review surface=" ..
-      surface ..
-      " which is a non standard value. Maybe fix it or add it to our list surfaceToSmoothnessNonStandardValues."
+          surface ..
+          " which is a non standard value. Maybe fix it or add it to our list surfaceToSmoothnessNonStandardValues."
     end
   end
   return smoothness, source, confidence, todo
@@ -142,12 +142,12 @@ end
 -- https://taginfo.openstreetmap.org/keys/mtb%3Ascale#values
 local function deriveSmoothnessFromMTBScale(scale)
   if not scale then
-    return nil, nil, nil, "No MTB scale was given"
+    return nil, nil, nil, "no_mtb:scale_given"
   end
-  if Set({"0", "0+", "0-"})[scale] then
-    return "bad", "MTB scale to smoothness", "medium", nil
+  if Set({ "0", "0+", "0-" })[scale] then
+    return "bad", "mtb:scale_to_smoothness", "medium", nil
   end
-  return "very_bad", "MTB scale to smoothness", "medium", nil
+  return "very_bad", "mtb:scale_to_smoothness", "medium", nil
 end
 
 -- Wiki https://wiki.openstreetmap.org/wiki/Key:tracktype
@@ -156,7 +156,7 @@ end
 -- Mapping of Smoothness<>Surface (Legacy) https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/smoothness
 local function deriveSmoothnessFromTrackType(type)
   if not type then
-    return nil, nil, nil, "No track type was given"
+    return nil, nil, nil, "no_tracktype_given"
   end
   local trackTypeToSmoothness = {
     ["grade1"] = "good",
@@ -167,7 +167,7 @@ local function deriveSmoothnessFromTrackType(type)
   }
   local smoothness = trackTypeToSmoothness[type]
   if smoothness then
-    return smoothness, "track type to smoothness", "medium", nil
+    return smoothness, "tracktype_to_smoothness", "medium", nil
   end
   return nil, nil, nil, nil
 end
@@ -183,5 +183,5 @@ function DeriveSmoothness(tags)
   if smoothness == nil then
     smoothness, smoothness_source, smoothness_confidence = deriveSmoothnessFromMTBScale(tags["mtb:scale"])
   end
-  return smoothness, smoothness_source, smoothness_confidence
+  return { smoothness = smoothness, smoothness_source = smoothness_source, smoothness_confidence = smoothness_confidence }
 end

@@ -26,55 +26,43 @@ SELECT
 FROM
     bikelanes;
 
+-- STEP 2: calculate the distribution of our `category` for each area of the `boundary` data set
 -- create a geospatial index on `_bikelanesQuantized` to speed up the spatial join;
 CREATE INDEX "_bikelanes_stats_geom_idx" ON _bikelanesQuantized USING gist(geom);
 
--- STEP 2: calculate the distribution of our `category` for each area of the `boundary` data set
--- make `osm_id` the primary of the `boundaries` table to allow selecting non-group-by columns
-ALTER TABLE boundaries
+-- make `osm_id` the primary of the `boundaryStats` to speed up group by
+ALTER TABLE "boundaryStats"
     DROP CONSTRAINT IF EXISTS osm_id_key;
 
-ALTER TABLE boundaries
+ALTER TABLE "boundaryStats"
     ADD CONSTRAINT osm_id_key PRIMARY KEY (osm_id);
 
--- spatialy join `_bikelanesQuantized` with `boundaries` then group by category and boundaries.osm_id aggreagate the results in a single json object per area
-DROP TABLE IF EXISTS "boundaryStats";
-
-CREATE TABLE "boundaryStats" AS
-SELECT
-    osm_id,
-    geom,
-    region,
-    admin_level,
-    jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelanes_category
-FROM (
+-- spatialy join `_bikelanesQuantized` with `boundaryStats` then group by category and boundaryStats.osm_id to aggreagate the results in a single json object per area
+WITH stats AS (
     SELECT
-        boundaries.osm_id AS osm_id,
-        boundaries.geom AS geom,
-        boundaries.tags ->> 'name' AS region,
-        boundaries.tags ->> 'admin_level' AS admin_level,
-        _bikelanesQuantized.tags ->> 'category' AS category,
-        round(sum(_bikelanesQuantized.len) / 1000, 1) AS len
-    FROM
-        boundaries
-        JOIN _bikelanesQuantized ON ST_Intersects(boundaries.geom, _bikelanesQuantized.geom)
-    WHERE
-        -- Docs https://wiki.openstreetmap.org/wiki/DE:Grenze#Innerstaatliche_Grenzen
-        (boundaries.tags ->> 'admin_level')::int IN (4, 6, 7, 8)
-GROUP BY
-    boundaries.osm_id,
-    _bikelanesQuantized.tags ->> 'category') AS sq
-GROUP BY
-    osm_id,
-    geom,
-    region,
-    admin_level;
-
-DROP TABLE _bikelanesQuantized;
-
--- this line is only for making pg_tileserve display the table
-SELECT
-    UpdateGeometrySRID('boundaryStats', 'geom', 3857);
+        osm_id,
+        jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelane_categories
+    FROM (
+        SELECT
+            boundary.osm_id AS osm_id,
+            bikelane.tags ->> 'category' AS category,
+            round(sum(bikelane.len) / 1000, 1) AS len
+        FROM
+            "boundaryStats" AS boundary
+            JOIN _bikelanesQuantized AS bikelane ON ST_Intersects(boundary.geom, bikelane.geom)
+        GROUP BY
+            boundary.osm_id,
+            bikelane.tags ->> 'category') AS sq
+    GROUP BY
+        osm_id)
+UPDATE
+    "boundaryStats"
+SET
+    bikelane_categories = stats.bikelane_categories
+FROM
+    stats
+WHERE
+    "boundaryStats".osm_id = stats.osm_id;
 
 -- -- for `jsonb` with numeric values return a normalized object (all values sum to 100) which also includes the total value
 -- CREATE OR REPLACE FUNCTION atlas_NormalizeDistribution(dist jsonb)

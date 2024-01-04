@@ -70,22 +70,35 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Setup buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build app image
-        run: >
-          docker build .
-          --file ./app.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./app.Dockerfile
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Push the app image
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
-      - name: Build API image
-        run: >
-          docker build .
-          --file ./api.Dockerfile
-          --tag public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
+      - name: Build api image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./api.Dockerfile
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
 
       - name: Push API image
         run: |

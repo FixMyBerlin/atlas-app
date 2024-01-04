@@ -33,6 +33,7 @@ local function surfaceDirect(surface)
   return nil, nil, nil
 end
 
-function DeriveSurface(tags) 
-  return surfaceDirect(tags.surface)
+function DeriveSurface(tags)
+  local surface, source, confidence = surfaceDirect(tags.surface)
+  return { surface = surface, surface_source = source, surface_confidence = confidence }
 end

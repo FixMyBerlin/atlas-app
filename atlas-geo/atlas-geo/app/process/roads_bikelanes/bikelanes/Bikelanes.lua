@@ -23,7 +23,6 @@ local bikelanesTable = osm2pgsql.define_table({
     { column = 'tags',     type = 'jsonb' },
     { column = 'meta',     type = 'jsonb' },
     { column = 'geom',     type = 'linestring' },
-    { column = '_offset',  type = 'real' }
   }
 })
 
@@ -39,8 +38,7 @@ local excludeTable = osm2pgsql.define_table({
 })
 
 -- whitelist of tags we want to insert intro the DB
-local allowed_tags = Set({
-  '_parent_highway',
+local tags_cc = {
   'access',
   'bicycle_road',
   'bicycle',
@@ -68,10 +66,10 @@ local allowed_tags = Set({
   'separation:left',
   'separation:right',
   'lane', -- 'cycleway:SIDE:lane'
-})
+}
 
 local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
-function Bikelanes(object)
+function Bikelanes(object, road)
   -- filter highway classes
   local tags = object.tags
 
@@ -102,11 +100,26 @@ function Bikelanes(object)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        FilterTags(cycleway, allowed_tags)
-        cycleway.category = category
+        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
+        local smoothness_data = DeriveSmoothness(cycleway)
+        local surface_data = DeriveSurface(cycleway)
+
+        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
+        local oneway = nil
+        if cycleway.oneway == nil then
+          if tags.bicycle_road == 'yes' then
+            oneway = 'implicit_no'
+          else
+            oneway = 'implicit_yes'
+          end
+        end
 
         local freshTag = "check_date"
-        if cycleway.prefix then
+        if sign == CENTER_SIGN then
+          -- if we're dealing with the original object (center line) then prefix only keep all the tags from the `tags_cc` list and prefix them
+          -- due to that it's important that the precceding operations happen before
+          cycleway = CopyTags({}, tags, tags_cc, 'osm_')
+        else
           freshTag = "check_date:" .. cycleway.prefix
         end
 
@@ -114,28 +127,17 @@ function Bikelanes(object)
           cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
-
-        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        if cycleway.oneway == nil then
-          if tags.bicycle_road == 'yes' then
-            cycleway.oneway = 'implicit_no'
-          else
-            cycleway.oneway = 'implicit_yes'
-          end
-        end
-
+        cycleway.category = category
         cycleway.offset = sign * width / 2
-
-
-        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
-        cycleway.smoothness, cycleway.smoothness_source, cycleway.smoothness_confidence = DeriveSmoothness(cycleway)
-        cycleway.surface, cycleway.surface_source = DeriveSurface(cycleway)
+        cycleway.road = road
+        cycleway.oneway = oneway
+        MergeTable(cycleway, surface_data)
+        MergeTable(cycleway, smoothness_data)
 
         bikelanesTable:insert({
           tags = cycleway,
           meta = Metadata(object),
           geom = object:as_linestring(),
-          _offset = cycleway.offset
         })
         presence[sign] = presence[sign] or category
       end
@@ -189,7 +191,7 @@ function Bikelanes(object)
     }
   end
 
-  CopyTags(tags, presence_data, presence_tags_cc, "osm_")
+  CopyTags(presence_data, tags, presence_tags_cc, "osm_")
 
   return presence_data
 end
