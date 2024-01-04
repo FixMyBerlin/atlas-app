@@ -56,98 +56,98 @@ const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(keys.m
 const metaFileContent: Record<string, any> = Object.fromEntries(keys.map((k) => [k, undefined]))
 
 for (const { key, apiUrl, mapboxGroupPrefix } of apiConfigs) {
-    const rawData: any = await fetchStyle(key, apiUrl, scriptJsonFolder)
+  const rawData: any = await fetchStyle(key, apiUrl, scriptJsonFolder)
 
-    // Script: Remove all non-FMC-groups
-    type MapBoxGroupEntry = { name: string; collapsed: boolean }
+  // Script: Remove all non-FMC-groups
+  type MapBoxGroupEntry = { name: string; collapsed: boolean }
 
-    // Get Groups from Mapbox-metadata, which is the only place where ID and Name are matched
-    const groups = Object.entries(rawData.metadata['mapbox:groups'])
-      .map((entry) => {
-        const key = entry[0] as string
-        const values = entry[1] as MapBoxGroupEntry
-        if (values.name.startsWith(mapboxGroupPrefix)) {
-          return {
-            folderId: key,
-            folderName: values.name,
-          }
+  // Get Groups from Mapbox-metadata, which is the only place where ID and Name are matched
+  const groups = Object.entries(rawData.metadata['mapbox:groups'])
+    .map((entry) => {
+      const key = entry[0] as string
+      const values = entry[1] as MapBoxGroupEntry
+      if (values.name.startsWith(mapboxGroupPrefix)) {
+        return {
+          folderId: key,
+          folderName: values.name,
         }
-        return null
-      })
-      .filter(Boolean)
-
-    log(`${key}: Received ${groups.length} groups`)
-
-    // Script: For each group, collect the layers:
-    // Create our own data
-    groupsAndLayers[key] = groups.map((group) => {
-      return {
-        folderName: group.folderName,
-        layers: rawData.layers.filter((layer) => {
-          return layer.metadata && layer.metadata['mapbox:group'] == group.folderId
-        }),
       }
+      return null
     })
+    .filter(Boolean)
 
-    // Cleanup keys from layers that we don't need or that we need to add ourselved later:
-    groupsAndLayers[key]?.forEach((g) =>
-      g.layers.forEach((layer: any) => {
-        delete layer.metadata
-        delete layer.source
-        delete layer.slot // Does not exict on maplibre
-        delete layer['source-layer']
-        delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
-        if (layer?.layout && Object.keys(layer.layout).length === 0) {
-          delete layer.layout
-        }
+  log(`${key}: Received ${groups.length} groups`)
+
+  // Script: For each group, collect the layers:
+  // Create our own data
+  groupsAndLayers[key] = groups.map((group) => {
+    return {
+      folderName: group.folderName,
+      layers: rawData.layers.filter((layer) => {
+        return layer.metadata && layer.metadata['mapbox:group'] == group.folderId
       }),
-    )
+    }
+  })
 
-    // Cleanup layer names & collect debugging info
-    const changedNamesForDebugging: {
-      folderName: string
-      cleanFolderName: string
-    }[] = []
-    groupsAndLayers[key]?.forEach((g) => {
-      const folderName = g.folderName
-      const cleanFolderName = folderName.toLowerCase().replace(/[^a-z0-9_]/g, '')
-      if (folderName !== cleanFolderName) {
-        g.folderName = cleanFolderName
-        changedNamesForDebugging.push({ folderName, cleanFolderName })
+  // Cleanup keys from layers that we don't need or that we need to add ourselved later:
+  groupsAndLayers[key]?.forEach((g) =>
+    g.layers.forEach((layer: any) => {
+      delete layer.metadata
+      delete layer.source
+      delete layer.slot // Does not exict on maplibre
+      delete layer['source-layer']
+      delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
+      if (layer?.layout && Object.keys(layer.layout).length === 0) {
+        delete layer.layout
       }
-    })
-    if (changedNamesForDebugging.length) {
-      log(`${key}: ${changedNamesForDebugging.length} group names where renamed:`, {
-        changedNamesForDebugging,
-      })
-    }
+    }),
+  )
 
-    metaFileContent[key] = {
-      key,
-      about: `Metadata on the last processing of the ${key} styles api response`,
-      processed_at: new Date().toLocaleString('de-DE'),
-      style_last_published: {
-        published_at: new Date(rawData.modified).toLocaleString('de-DE'),
-        version: rawData.version,
-      },
-      style_id: rawData.id,
-      style_owner: rawData.owner,
-      style_name: rawData.name,
-      debug_changed_names: {
-        about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
-        changedNamesForDebugging,
-      },
+  // Cleanup layer names & collect debugging info
+  const changedNamesForDebugging: {
+    folderName: string
+    cleanFolderName: string
+  }[] = []
+  groupsAndLayers[key]?.forEach((g) => {
+    const folderName = g.folderName
+    const cleanFolderName = folderName.toLowerCase().replace(/[^a-z0-9_]/g, '')
+    if (folderName !== cleanFolderName) {
+      g.folderName = cleanFolderName
+      changedNamesForDebugging.push({ folderName, cleanFolderName })
     }
-
-    spriteUrls.push({
-      url: `${rawData.sprite.replace(
-        'mapbox://sprites/',
-        'https://api.mapbox.com/styles/v1/',
-      )}/sprite`,
-      searchParams: {
-        access_token: new URL(apiUrl).searchParams.get('access_token'),
-      },
+  })
+  if (changedNamesForDebugging.length) {
+    log(`${key}: ${changedNamesForDebugging.length} group names where renamed:`, {
+      changedNamesForDebugging,
     })
+  }
+
+  metaFileContent[key] = {
+    key,
+    about: `Metadata on the last processing of the ${key} styles api response`,
+    processed_at: new Date().toLocaleString('de-DE'),
+    style_last_published: {
+      published_at: new Date(rawData.modified).toLocaleString('de-DE'),
+      version: rawData.version,
+    },
+    style_id: rawData.id,
+    style_owner: rawData.owner,
+    style_name: rawData.name,
+    debug_changed_names: {
+      about: `The folder names in Mapbox need to follow a pattern of \`${mapboxGroupPrefix}[DataIdentifier]_[OptionalStyleIdentifier]\`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.`,
+      changedNamesForDebugging,
+    },
+  }
+
+  spriteUrls.push({
+    url: `${rawData.sprite.replace(
+      'mapbox://sprites/',
+      'https://api.mapbox.com/styles/v1/',
+    )}/sprite`,
+    searchParams: {
+      access_token: new URL(apiUrl).searchParams.get('access_token'),
+    },
+  })
 }
 
 // ============= Now, we bring all `apiConfigs` back together
