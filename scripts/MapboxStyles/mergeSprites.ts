@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-import os from 'os'
 import sharp from 'sharp'
 import Spritesmith from 'spritesmith'
 import { SpriteSource } from './process'
@@ -29,7 +28,7 @@ async function fetchResponse(sprite: SpriteSource, pixelRatio: 1 | 2, extension:
 
 export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   // Setup temp folder to store single sprite images in
-  const tmpFolder = path.join(os.tmpdir(), 'icons')
+  const tmpFolder = path.join(__dirname, 'tmp/icons')
   fs.rmSync(tmpFolder, { recursive: true, force: true })
   fs.mkdirSync(tmpFolder)
 
@@ -64,7 +63,7 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
         continue
       }
       const { x, y, width, height } = position
-      const filename = path.join(os.tmpdir(), `${key}.png`)
+      const filename = path.join(tmpFolder, `${key}.png`)
       await sharp(imageBuffer).extract({ left: x, top: y, width, height }).toFile(filename)
       iconFiles[key] = filename
     }
@@ -91,7 +90,10 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   log('Create merged sprite', filename)
   const sortedIconFiles = sortObject(iconFiles)
   Spritesmith.run({ src: Object.values(sortedIconFiles) }, async (err, result) => {
-    if (err) throw err
+    if (err) {
+      console.error('ERROR in Spritesmith.run', Object.values(sortedIconFiles))
+      throw err
+    }
 
     // Create and store the merged sprite PNG
     await sharp(result.image).toFile(`${filename}.png`)
@@ -108,8 +110,5 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
     })
     const sortedCoordinates = sortObject(coordinates)
     await saveJson(`${filename}.json`, sortedCoordinates)
-
-    // Cleanup
-    fs.rmSync(tmpFolder, { recursive: true, force: true })
   })
 }
