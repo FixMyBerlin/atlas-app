@@ -3,9 +3,9 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'os'
 import { SpriteSource } from './process'
-const Spritesmith = require('spritesmith')
 
 import { saveJson } from './util'
+import Spritesmith from 'spritesmith'
 
 function generateSpriteUrl(sprite: SpriteSource, pixelRatio: 1 | 2, extension: 'png' | 'json') {
   const completeUrl = `${sprite.url}${pixelRatio === 1 ? '' : '@2x'}.${extension}`
