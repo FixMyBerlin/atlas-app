@@ -1,6 +1,5 @@
 import { Link } from 'src/app/_components/links/Link'
 import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
-import { isDev, isProd, isStaging } from 'src/app/_components/utils/isEnv'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'

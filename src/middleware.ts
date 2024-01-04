@@ -16,10 +16,10 @@ export function middleware(request: NextRequest) {
   let performRedirect = false
 
   const url = new URL(request.url)
-  const paths = request.nextUrl.pathname.split('/')
-  const regionenSlugs = staticRegion.map((r) => r.slug)
 
   // Guard: Only on path /regionen/<validSlug>
+  const paths = request.nextUrl.pathname.split('/')
+  const regionenSlugs = staticRegion.map((r) => r.slug)
   if (paths[1] !== 'regionen') return doNothing
   if (paths[2] && !regionenSlugs.includes(paths[2])) return doNothing
   if (paths.length !== 3) return doNothing // Skip sub pages like /regionen/slug/foo
