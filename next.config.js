@@ -28,5 +28,14 @@ module.exports = withBlitz(
         },
       ],
     },
+    redirects: async () => [
+      // https://stackoverflow.com/a/70184067
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.radverkehrsatlas.de' }],
+        destination: 'https://radverkehrsatlas.de/:path*',
+        permanent: true,
+      },
+    ],
   }),
 )
