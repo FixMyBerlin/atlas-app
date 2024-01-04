@@ -68,7 +68,7 @@ local function processTags(tags)
   local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
     "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description" }
-  CopyTags(tags, processedTags, tags_cc, "osm_")
+  CopyTags(processedTags, tags, tags_cc, "osm_")
 
   local checkDateTag = "check_date"
   if tags[checkDateTag] then

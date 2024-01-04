@@ -2,6 +2,7 @@ package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?
 require("Set")
 require("FilterTags")
 require("Metadata")
+require("CopyTags")
 
 local table = osm2pgsql.define_table({
   name = 'boundaries',
@@ -13,14 +14,26 @@ local table = osm2pgsql.define_table({
   }
 })
 
+local statsTable = osm2pgsql.define_table({
+  name = 'boundaryStats',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'bikelane_categories', type = 'jsonb', create_only=true },
+    { column = 'geom', type = 'multipolygon' },
+  }
+})
+
 function osm2pgsql.process_relation(object)
-  if not (object.tags.type == 'boundary' and object.tags.boundary == "administrative") then
+  local tags = object.tags
+  if not (tags.type == 'boundary' and tags.boundary == "administrative") then
     return
   end
 
   local allowed_tags = Set({ "name", "name:prefix", "admin_level", "de:regionalschluessel", "population",
     "population:date", "wikidata", "wikipedia" })
-  FilterTags(object.tags, allowed_tags)
+  FilterTags(tags, allowed_tags)
 
   -- Make sure we only include boundaries with a geometry
   -- https://osm2pgsql.org/doc/manual.html#processing-callbacks
@@ -28,8 +41,18 @@ function osm2pgsql.process_relation(object)
   if object:as_multipolygon():is_null() then return end
 
   table:insert({
-    tags = object.tags,
+    tags = tags,
     meta = Metadata(object),
     geom = object:as_multipolygon()
   })
+  local admin_levels = Set({ "4", "6", "7", "8" })
+  if admin_levels[tags.admin_level] then
+    local tags_cc = { "name", "admin_level", "name:prefix", "de:regionalschluessel" }
+    tags  = CopyTags({}, tags, tags_cc, "osm_")
+    statsTable:insert({
+      tags = tags,
+      meta = Metadata(object),
+      geom = object:as_multipolygon()
+    })
+  end
 end

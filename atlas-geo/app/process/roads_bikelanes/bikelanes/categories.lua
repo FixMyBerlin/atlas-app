@@ -167,7 +167,7 @@ local function cyclewaySeparatedCases(tags)
       -- Eg https://www.openstreetmap.org/way/27701956
       return "cycleway_isolated"
     end
-    return "cycleway_isolatedOrIdjoining"
+    return "cycleway_adjoiningOrIsolated"
   end
 end
 
