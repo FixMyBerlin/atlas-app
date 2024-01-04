@@ -24,7 +24,6 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
       'line-offset': ['step', ['zoom'], 2, 14, 4],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
-    layout: {},
   },
   {
     filter: ['has', 'bikelane_self'],
@@ -46,7 +45,6 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
       'line-offset': ['step', ['zoom'], 2, 14, 4],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
-    layout: {},
   },
   {
     filter: ['has', 'bikelane_left'],
@@ -68,6 +66,5 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
       'line-offset': ['step', ['zoom'], -2, 14, -4],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
-    layout: {},
   },
 ]

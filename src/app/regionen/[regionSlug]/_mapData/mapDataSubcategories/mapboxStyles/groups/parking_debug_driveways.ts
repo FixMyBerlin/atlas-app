@@ -12,7 +12,6 @@ export const mapboxStyleGroupLayers_parking_debug_driveways: MapboxStyleLayer[] 
       'fill-antialias': false,
     },
     minzoom: 15,
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -23,6 +22,5 @@ export const mapboxStyleGroupLayers_parking_debug_driveways: MapboxStyleLayer[] 
       'line-dasharray': [2, 2],
       'line-opacity': 0.7,
     },
-    layout: {},
   },
 ]

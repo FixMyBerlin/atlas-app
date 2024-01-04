@@ -11,7 +11,6 @@ export const mapboxStyleGroupLayers_parking_debug_ramps: MapboxStyleLayer[] = [
       'fill-color': 'rgba(148, 163, 184, 0.7)',
     },
     minzoom: 15,
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -21,6 +20,5 @@ export const mapboxStyleGroupLayers_parking_debug_ramps: MapboxStyleLayer[] = [
       'line-dasharray': [2, 2],
       'line-color': 'rgb(0, 0, 0)',
     },
-    layout: {},
   },
 ]

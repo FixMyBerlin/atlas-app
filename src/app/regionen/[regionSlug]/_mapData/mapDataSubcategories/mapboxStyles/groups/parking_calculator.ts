@@ -14,6 +14,5 @@ export const mapboxStyleGroupLayers_parking_calculator: MapboxStyleLayer[] = [
       'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 16, 0, 20, 2],
       'circle-radius': ['interpolate', ['linear'], ['zoom'], 10, 0, 17, 3],
     },
-    layout: {},
   },
 ]

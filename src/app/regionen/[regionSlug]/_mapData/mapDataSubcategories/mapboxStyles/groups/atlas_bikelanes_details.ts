@@ -24,14 +24,12 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'todo--oneway-no-icon copy 1',
     type: 'line',
     paint: {},
     filter: ['all', ['has', 'category'], ['match', ['get', 'oneway'], ['no'], true, false]],
-    layout: {},
   },
   {
     id: 'shared-kfzlane',
@@ -43,7 +41,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       'line-dasharray': [2, 1],
     },
     filter: ['match', ['get', 'category'], ['sharedMotorVehicleLane'], true, false],
-    layout: {},
   },
   {
     id: 'shared-buslane',
@@ -54,7 +51,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: ['match', ['get', 'category'], ['sharedBusLane'], true, false],
-    layout: {},
   },
   {
     id: 'bikeroad',
@@ -65,7 +61,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: ['match', ['get', 'category'], ['bicycleRoad_vehicleDestination'], true, false],
-    layout: {},
   },
   {
     id: 'footway-bikefree',
@@ -83,7 +78,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'shared--sidepath',
@@ -100,7 +94,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'separated-lane-dashed',
@@ -133,10 +126,8 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
         false,
       ],
     ],
-    layout: {},
   },
   {
-    layout: {},
     filter: [
       'all',
       [
@@ -181,7 +172,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     },
   },
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'category'],
@@ -212,7 +202,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'hitarea-bikelanes copy 1',

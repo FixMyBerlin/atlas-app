@@ -23,7 +23,6 @@ export const mapboxStyleGroupLayers_atlas_old_bikelanespresence_complete: Mapbox
       'line-width': ['step', ['zoom'], 2, 14, 4],
       'line-offset': ['step', ['zoom'], -2, 14, -4],
     },
-    layout: {},
   },
   {
     type: 'line',
@@ -43,7 +42,6 @@ export const mapboxStyleGroupLayers_atlas_old_bikelanespresence_complete: Mapbox
       ],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
-    layout: {},
   },
   {
     type: 'line',
@@ -64,6 +62,5 @@ export const mapboxStyleGroupLayers_atlas_old_bikelanespresence_complete: Mapbox
       'line-offset': ['step', ['zoom'], 2, 14, 4],
       'line-width': ['step', ['zoom'], 2, 14, 4],
     },
-    layout: {},
   },
 ]

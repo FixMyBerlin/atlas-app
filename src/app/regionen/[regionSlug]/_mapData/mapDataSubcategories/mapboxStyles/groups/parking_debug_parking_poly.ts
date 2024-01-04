@@ -11,7 +11,6 @@ export const mapboxStyleGroupLayers_parking_debug_parking_poly: MapboxStyleLayer
     paint: {
       'fill-color': 'rgba(80, 139, 134, 0.7)',
     },
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -21,6 +20,5 @@ export const mapboxStyleGroupLayers_parking_debug_parking_poly: MapboxStyleLayer
       'line-dasharray': [2, 2],
       'line-color': 'rgb(0, 0, 0)',
     },
-    layout: {},
   },
 ]

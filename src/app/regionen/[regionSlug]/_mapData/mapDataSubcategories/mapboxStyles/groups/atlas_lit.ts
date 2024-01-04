@@ -30,7 +30,6 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
       'fill-color': 'rgb(255, 172, 56)',
       'fill-opacity': 0.4,
     },
-    layout: {},
   },
   {
     layout: {
@@ -58,7 +57,6 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
       'fill-color': '#736e59',
       'fill-opacity': 0.4,
     },
-    layout: {},
   },
   {
     layout: {
@@ -86,7 +84,6 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
       'fill-color': '#f8c52a',
       'fill-opacity': 0.4,
     },
-    layout: {},
   },
   {
     layout: {

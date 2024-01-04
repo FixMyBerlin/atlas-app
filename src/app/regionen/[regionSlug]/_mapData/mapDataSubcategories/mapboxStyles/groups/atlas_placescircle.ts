@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_placescircle: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['has', 'admin_level'],
     type: 'circle',
     id: 'circle-place-circle',

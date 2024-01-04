@@ -10,7 +10,6 @@ export const mapboxStyleGroupLayers_atlas_barriers__area: MapboxStyleLayer[] = [
     paint: {
       'fill-opacity': 0.42,
     },
-    layout: {},
   },
   {
     id: 'barriers_water_aerodrome',
@@ -20,6 +19,5 @@ export const mapboxStyleGroupLayers_atlas_barriers__area: MapboxStyleLayer[] = [
       'fill-translate': [0, 0],
       'fill-pattern': 'cross-hatch-barriers',
     },
-    layout: {},
   },
 ]

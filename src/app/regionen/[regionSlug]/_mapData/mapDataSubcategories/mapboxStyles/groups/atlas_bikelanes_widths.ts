@@ -21,7 +21,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_widths: MapboxStyleLayer[] =
       ],
       'line-dasharray': [3, 1],
     },
-    layout: {},
   },
   {
     id: 'widths-lines',
@@ -107,6 +106,5 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_widths: MapboxStyleLayer[] =
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: ['has', 'width'],
-    layout: {},
   },
 ]

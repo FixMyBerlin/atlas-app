@@ -6,7 +6,6 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_bikelanes_unspecified: MapboxStyleLayer[] = [
   {
     minzoom: 7,
-    layout: {},
     filter: [
       'match',
       ['get', 'category'],

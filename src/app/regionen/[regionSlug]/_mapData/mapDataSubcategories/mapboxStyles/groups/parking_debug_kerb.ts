@@ -12,7 +12,6 @@ export const mapboxStyleGroupLayers_parking_debug_kerb: MapboxStyleLayer[] = [
       'fill-antialias': false,
     },
     minzoom: 15,
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -35,6 +34,5 @@ export const mapboxStyleGroupLayers_parking_debug_kerb: MapboxStyleLayer[] = [
       'line-opacity': 0.7,
       'line-dasharray': [2, 2],
     },
-    layout: {},
   },
 ]

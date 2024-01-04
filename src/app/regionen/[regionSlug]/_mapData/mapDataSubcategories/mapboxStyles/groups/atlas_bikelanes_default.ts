@@ -19,14 +19,12 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'todo--oneway-no-icon',
     type: 'line',
     paint: {},
     filter: ['all', ['has', 'category'], ['match', ['get', 'oneway'], ['no'], true, false]],
-    layout: {},
   },
   {
     id: 'shared-fahrbahn',
@@ -44,7 +42,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'shared-seitenraum',
@@ -68,7 +65,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'separated-fahrbahn',
@@ -91,7 +87,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'separated-seitenraum und frei',
@@ -114,7 +109,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       true,
       false,
     ],
-    layout: {},
   },
   {
     id: 'hitarea-bikelanes',

@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_parking_stats: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['has', 'admin_level'],
     type: 'fill',
     id: 'area-0-to-100',
@@ -24,7 +23,6 @@ export const mapboxStyleGroupLayers_parking_stats: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     type: 'line',
     id: 'line',
     paint: {

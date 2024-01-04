@@ -11,7 +11,6 @@ export const mapboxStyleGroupLayers_parking_debug_bus_tram: MapboxStyleLayer[] =
       'fill-color': 'rgba(250, 204, 20, 0.7)',
     },
     minzoom: 15,
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -21,7 +20,6 @@ export const mapboxStyleGroupLayers_parking_debug_bus_tram: MapboxStyleLayer[] =
       'line-dasharray': [2, 2],
       'line-color': 'rgb(0, 0, 0)',
     },
-    layout: {},
   },
   {
     minzoom: 15,

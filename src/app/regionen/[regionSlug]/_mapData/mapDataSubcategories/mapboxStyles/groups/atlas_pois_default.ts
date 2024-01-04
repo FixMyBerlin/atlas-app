@@ -6,7 +6,6 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_pois_default: MapboxStyleLayer[] = [
   {
     minzoom: 12,
-    layout: {},
     filter: ['has', 'category'],
     type: 'circle',
     id: 'pois-classification',
@@ -59,7 +58,6 @@ export const mapboxStyleGroupLayers_atlas_pois_default: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     maxzoom: 12.9,
     filter: ['has', 'category'],
     type: 'heatmap',

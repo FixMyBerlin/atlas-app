@@ -6,7 +6,6 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_roadclassification_plus_fusswege: MapboxStyleLayer[] = [
   {
     minzoom: 13,
-    layout: {},
     filter: [
       'match',
       ['get', 'road'],

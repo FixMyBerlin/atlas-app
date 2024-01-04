@@ -55,7 +55,6 @@ export const mapboxStyleGroupLayers_atlas_old_roadclassification: MapboxStyleLay
         '#cfcfcf',
       ],
     },
-    layout: {},
   },
   {
     id: 'hitarea-roadclass',
@@ -77,7 +76,6 @@ export const mapboxStyleGroupLayers_atlas_old_roadclassification: MapboxStyleLay
     },
   },
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'road'],

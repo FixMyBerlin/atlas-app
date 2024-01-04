@@ -35,7 +35,6 @@ export const mapboxStyleGroupLayers_atlas_pois_education: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     filter: ['has', 'formalEducation'],
     type: 'circle',
     id: 'education-classification copy 2',

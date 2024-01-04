@@ -11,7 +11,6 @@ export const mapboxStyleGroupLayers_parking_obstacles: MapboxStyleLayer[] = [
       'fill-color': 'rgb(219, 39, 119)',
     },
     minzoom: 15,
-    layout: {},
   },
   {
     minzoom: 16.5,
@@ -21,6 +20,5 @@ export const mapboxStyleGroupLayers_parking_obstacles: MapboxStyleLayer[] = [
       'line-dasharray': [2, 2],
       'line-color': 'rgb(0, 0, 0)',
     },
-    layout: {},
   },
 ]

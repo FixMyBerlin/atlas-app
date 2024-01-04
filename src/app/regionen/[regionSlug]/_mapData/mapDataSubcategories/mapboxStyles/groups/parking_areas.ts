@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_parking_areas: MapboxStyleLayer[] = [
   {
-    layout: {},
     type: 'fill',
     id: 'background colour',
     paint: {
@@ -24,7 +23,6 @@ export const mapboxStyleGroupLayers_parking_areas: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     type: 'fill',
     id: 'stripe pattern',
     paint: {
