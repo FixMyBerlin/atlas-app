@@ -21,7 +21,6 @@ export const { gSSP, gSP, api, useAuthenticatedBlitzContext, invoke } = setupBli
         // verbose: true, // enable/disable logging If verbose is true then Blitz RPC will log the input and output of each resolver
       },
       onInvokeError(error) {
-        console.log('aaa', error)
         if (error instanceof NotFoundError) {
           notFound()
         }

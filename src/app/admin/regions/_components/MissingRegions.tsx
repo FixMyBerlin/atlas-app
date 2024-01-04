@@ -1,15 +1,13 @@
 'use client'
 
 import { Link } from 'src/app/_components/links/Link'
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { TRegion } from 'src/regions/queries/getRegion'
 import { ObjectDump } from '../../_components/ObjectDump'
 
 export const MissingRegions = ({ regions }: { regions: TRegion[] }) => {
   const existingRegionSlugs = regions.map((region) => region.slug)
-  const missingRegions = additionalRegionAttributes.filter(
-    (region) => !existingRegionSlugs.includes(region.slug),
-  )
+  const missingRegions = staticRegion.filter((region) => !existingRegionSlugs.includes(region.slug))
 
   return (
     <>

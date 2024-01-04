@@ -4,8 +4,8 @@ import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
-import { useMapDebugState } from '../mapStateInteraction/useMapDebugState'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { DebugMapDownload } from './DebugMapDownload'
 
 export const DebugMap = () => {

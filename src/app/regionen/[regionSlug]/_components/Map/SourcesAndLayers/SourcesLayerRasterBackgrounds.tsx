@@ -2,7 +2,7 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
-import { sourcesBackgroundsRaster } from '../../mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import { sourcesBackgroundsRaster } from '../../../_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { layerVisibility } from '../utils/layerVisibility'
 
 export const SourcesLayerRasterBackgrounds: React.FC = () => {
@@ -23,36 +23,32 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
 
   return (
     <>
-      {backgrounds.map(({ id, tiles, minzoom, maxzoom, attributionHtml }) => {
-        // TODO B: commented out the two layers that needed those props; had issues with the default props … or something
-        // const optSchemeProp = scheme ? { scheme } : {}
-        // const optTileSizeProp = tileSize ? { tileSize } : {}
+      {backgrounds.map(({ id, tiles, minzoom, maxzoom, tileSize, attributionHtml }) => {
         const backgroundId = `${id}_tiles`
 
         const visible = backgroundParam === id
 
-        const enhancedAttributionHtml = attributionHtml
         // TODO A: The idea was to be able to use {x}… params in the attribution string
         //    however, that causes React devtool warnings `Unable to update <Source> prop: attribution`.
         //    So for now, this is disabled…
+        const enhancedAttributionHtml = attributionHtml
         // const enhancedAttributionHtml = replaceZxy({
         //   url: attributionHtml,
         //   zoom,
         //   lat,
         //   lng,
         // })
+
         return (
           <Source
             id={backgroundId}
             key={backgroundId}
             type="raster"
             tiles={[tiles]}
-            minzoom={minzoom}
-            maxzoom={maxzoom}
             attribution={enhancedAttributionHtml}
-            // SEE TODO B: Only for some
-            // {...optSchemeProp}
-            // {...optTileSizeProp}
+            {...(minzoom ? { minzoom } : {})}
+            {...(maxzoom ? { maxzoom } : {})}
+            {...(tileSize ? { tileSize } : {})}
           >
             <Layer
               id={id}

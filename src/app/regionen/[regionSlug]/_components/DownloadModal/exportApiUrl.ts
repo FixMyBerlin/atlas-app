@@ -1,12 +1,11 @@
-import { AdditionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
-import { SourceExportApiIdentifier } from '../mapData/mapDataSources/sources.const'
-import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
+import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
+import { SourceExportApiIdentifier } from '../../_mapData/mapDataSources/sources.const'
 
 export const exportApiUrlBbox = (
   apiIdentifier: SourceExportApiIdentifier,
-  bbox: NonNullable<AdditionalRegionAttributes['bbox']>,
+  bbox: NonNullable<StaticRegion['bbox']>,
 ) => {
-  const url = new URL(`${getExportApiUrl()}/export/${apiIdentifier}`)
+  const url = new URL(`${location.origin}/api/export/${apiIdentifier}`)
   url.searchParams.append('minlon', String(bbox.min[0]))
   url.searchParams.append('minlat', String(bbox.min[1]))
   url.searchParams.append('maxlon', String(bbox.max[0]))

@@ -1,38 +1,28 @@
-import React from 'react'
-import { SelectStyles } from '../SelectStyles/SelectStyles'
-import { getSubcategoryData } from '../../mapData/utils/getMapDataUtils'
-import { MapDataCategory } from '../../mapData/types'
-import { CategoryConfig } from '../../mapStateConfig/type'
 import { twJoin } from 'tailwind-merge'
+import { StaticMapDataCategory } from '../../../_mapData/types'
+import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+import { SelectStyles } from '../SelectStyles/SelectStyles'
 
 type Props = {
-  categoryData: MapDataCategory
-  categoryConfig: CategoryConfig
+  categoryConfig: MapDataCategoryConfig
   disabled: boolean
 }
 
-export const SelectSubcategory: React.FC<Props> = ({ categoryData, categoryConfig, disabled }) => {
-  if (!categoryData.subcategories || !categoryConfig.subcategories) return null
+export const SelectSubcategory = ({ categoryConfig, disabled }: Props) => {
+  if (!categoryConfig.subcategories) return null
 
   return (
     <fieldset>
-      <legend className="sr-only">Daten für das Thema {categoryData.name}</legend>
+      <legend className="sr-only">Daten für das Thema {categoryConfig.name}</legend>
       <div>
-        {categoryData.subcategories.map((subcategoryDataConfig) => {
-          // What we get here as `subcategoryDataConfig` is the `id`+`defaultStyle`
-          // object from src/app/regionen/[regionSlug]/_components/mapData/mapDataCategories/categories.const.ts
-          // Therefore, we need to look up the full data:
-          const subcatData = getSubcategoryData(subcategoryDataConfig.id)
-          const subcatConfig = categoryConfig.subcategories.find(
-            (t) => t.id === subcategoryDataConfig.id,
-          )
-          if (!subcatData || !subcatConfig) return null
+        {categoryConfig.subcategories.map((subcatConfig) => {
+          if (!subcatConfig) return null
 
-          const showSubheadline = categoryData.subcategories.length > 1
+          const showSubheadline = categoryConfig.subcategories.length > 1
 
           return (
             <div
-              key={subcatData.id}
+              key={subcatConfig.id}
               className="mt-3 border-t border-gray-100 px-3 pt-2 first:mt-0 first:border-t-0"
             >
               <span
@@ -41,12 +31,11 @@ export const SelectSubcategory: React.FC<Props> = ({ categoryData, categoryConfi
                   showSubheadline ? '' : 'sr-only',
                 )}
               >
-                {subcatData.name}
+                {subcatConfig.name}
               </span>
 
               <SelectStyles
                 categoryId={categoryConfig.id}
-                subcatData={subcatData}
                 subcatConfig={subcatConfig}
                 disabled={disabled}
               />

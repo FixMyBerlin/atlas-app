@@ -2,7 +2,7 @@ import { featureCollection } from '@turf/helpers'
 import { LayerSpecification } from 'maplibre-gl'
 import React from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
 
 type Props = { layers: LayerSpecification[] }
 

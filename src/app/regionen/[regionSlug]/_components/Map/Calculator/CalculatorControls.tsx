@@ -3,11 +3,11 @@ import booleanIntersects from '@turf/boolean-intersects'
 import React, { useEffect } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
-import { MapDataSourceCalculator } from '../../mapData/types'
+import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   StoreCalculator,
   useMapStateInteraction,
-} from '../../mapStateInteraction/useMapStateInteraction'
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   CalculatorControlsDrawControl,
   DrawArea,

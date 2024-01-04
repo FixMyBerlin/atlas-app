@@ -34,7 +34,7 @@ export type DatasetFiles =
 | ${urlStrings.join('\n  | ')}`
 
 Bun.write(
-  path.resolve('./src/core/components/MapInterface/mapData/sourcesMapData/datasets', './types.ts'),
+  path.resolve('./src/app/regionen/[regionSlug]/_mapData/mapDataSources/datasets', './types.ts'),
   typesContent,
 )
 
@@ -52,7 +52,7 @@ export const datasets = {
 
 Bun.write(
   path.resolve(
-    './src/core/components/MapInterface/mapData/sourcesMapData/datasets',
+    './src/app/regionen/[regionSlug]/_mapData/mapDataSources/datasets',
     './datasets.const.ts',
   ),
   objectContent,

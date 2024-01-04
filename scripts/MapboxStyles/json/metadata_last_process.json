@@ -2,9 +2,9 @@
   "atlas-style-package-1": {
     "key": "atlas-style-package-1",
     "about": "Metadata on the last processing of the atlas-style-package-1 styles api response",
-    "processed_at": "7.9.2023, 07:16:43",
+    "processed_at": "11.12.2023, 14:07:54",
     "style_last_published": {
-      "published_at": "7.9.2023, 07:16:38",
+      "published_at": "11.12.2023, 10:58:51",
       "version": 8
     },
     "style_id": "cl706a84j003v14o23n2r81w7",
@@ -14,32 +14,28 @@
       "about": "The folder names in Mapbox need to follow a pattern of `atlas_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
       "changedNamesForDebugging": [
         {
-          "sourceName": "atlas_OLD_lit",
-          "cleanedName": "atlas_old_lit"
+          "folderName": "atlas_bikelanes_plus-surfaces",
+          "cleanFolderName": "atlas_bikelanes_plussurfaces"
         },
         {
-          "sourceName": "atlas_OLD_bikelanespresence_complete",
-          "cleanedName": "atlas_old_bikelanespresence_complete"
+          "folderName": "atlas_OLD_bikelanespresence_complete",
+          "cleanFolderName": "atlas_old_bikelanespresence_complete"
         },
         {
-          "sourceName": "atlas_OLD_roadclassification",
-          "cleanedName": "atlas_old_roadclassification"
+          "folderName": "atlas_OLD_roadclassification",
+          "cleanFolderName": "atlas_old_roadclassification"
         },
         {
-          "sourceName": "atlas_OLD_roadclass_maxspeed_details",
-          "cleanedName": "atlas_old_roadclass_maxspeed_details"
+          "folderName": "atlas_bikelanes_plus-widths",
+          "cleanFolderName": "atlas_bikelanes_pluswidths"
         },
         {
-          "sourceName": "atlas_OLD_lit_fresh",
-          "cleanedName": "atlas_old_lit_fresh"
+          "folderName": "atlas_ziele-plu-barriers",
+          "cleanFolderName": "atlas_zieleplubarriers"
         },
         {
-          "sourceName": "atlas_OLD_surface_present",
-          "cleanedName": "atlas_old_surface_present"
-        },
-        {
-          "sourceName": "atlas_OLD_roadclass_maxspeed",
-          "cleanedName": "atlas_old_roadclass_maxspeed"
+          "folderName": "atlas_bikelanes_plus-signs",
+          "cleanFolderName": "atlas_bikelanes_plussigns"
         }
       ]
     }
@@ -47,9 +43,9 @@
   "atlas-style-package-2": {
     "key": "atlas-style-package-2",
     "about": "Metadata on the last processing of the atlas-style-package-2 styles api response",
-    "processed_at": "7.9.2023, 07:16:43",
+    "processed_at": "11.12.2023, 14:07:54",
     "style_last_published": {
-      "published_at": "6.9.2023, 09:39:44",
+      "published_at": "5.12.2023, 13:31:11",
       "version": 8
     },
     "style_id": "clfs9mdh9007n01t6lw99gyqr",
@@ -63,7 +59,7 @@
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "7.9.2023, 07:16:43",
+    "processed_at": "11.12.2023, 14:07:54",
     "style_last_published": {
       "published_at": "22.7.2023, 10:41:33",
       "version": 8
@@ -75,12 +71,12 @@
       "about": "The folder names in Mapbox need to follow a pattern of `parking_[DataIdentifier]_[OptionalStyleIdentifier]`, otherwise the script will create unexpected results. During processing, we cleanup the names. If any names show up below, those need to be fixed in Mapbox to prevent errors.",
       "changedNamesForDebugging": [
         {
-          "sourceName": "parking_buffer-kerb-intersections",
-          "cleanedName": "parking_bufferkerbintersections"
+          "folderName": "parking_buffer-kerb-intersections",
+          "cleanFolderName": "parking_bufferkerbintersections"
         },
         {
-          "sourceName": "parking_buffer-driveways",
-          "cleanedName": "parking_bufferdriveways"
+          "folderName": "parking_buffer-driveways",
+          "cleanFolderName": "parking_bufferdriveways"
         }
       ]
     }

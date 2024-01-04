@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { getSourceData } from '../mapData/utils/getMapDataUtils'
+import { getSourceData } from '../../_mapData/utils/getMapDataUtils'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'

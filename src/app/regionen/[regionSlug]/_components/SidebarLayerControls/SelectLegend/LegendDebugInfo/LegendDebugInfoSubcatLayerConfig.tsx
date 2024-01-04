@@ -1,13 +1,12 @@
-import React from 'react'
 import { isDev } from 'src/app/_components/utils/isEnv'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
-import { SubcategoryIds } from '../../../mapData/mapData.const'
-import { MapDataVisLayer } from '../../../mapData/types'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
+import { FileMapDataSubcategoryStyleLayer } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { SubcategoryId } from '../../../../_mapData/typeId'
 import { LegendDebugInfoLayerStyle } from './LegendDebugInfoLayerStyle'
 
 type Props = {
-  subcategoryId: SubcategoryIds
-  styleDataLayers: MapDataVisLayer[] | undefined
+  subcategoryId: SubcategoryId
+  styleDataLayers: FileMapDataSubcategoryStyleLayer[] | undefined
 }
 
 export const LegendDebugInfoSubcatLayerConfig = ({ subcategoryId, styleDataLayers }: Props) => {

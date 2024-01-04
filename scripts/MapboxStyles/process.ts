@@ -1,9 +1,14 @@
 // We use bun.sh to run this file
 import chalk from 'chalk'
+import { fetchStyle, saveJson } from './util'
+import { mergeSprites } from './mergeSprites'
 
 console.log(chalk.inverse.bold('START'), __filename)
 
-// Configruation:
+// Configuration:
+const baseMapStyle =
+  'https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=ECOoUBmpqklzSCASXxcu'
+
 const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'parking']
 const apiConfigs = [
   {
@@ -33,55 +38,43 @@ const apiConfigs = [
 
 // Folder
 const scriptJsonFolder = 'scripts/MapboxStyles/json'
-const componentFolder =
-  'src/app/regionen/[regionSlug]/_components/mapData/mapDataSubcategories/mapboxStyles'
+const componentFolder = 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles'
 
 // Helper:
 const log = (title, object: any = '-') => {
   console.log(chalk.inverse.bold(` ${title}${object === '-' ? '' : ':'} `), object)
 }
 
+// Sprites
+const spriteUrls = []
+
 // ============= Collect data per `apiConfig`
 
-type GroupsLayer = { group: string; layers: mapboxgl.AnyLayer[] }
+type GroupsLayer = { folderName: string; layers: mapboxgl.AnyLayer[] }
 const groupsAndLayers: Record<string, GroupsLayer[]> = Object.fromEntries(keys.map((k) => [k, []]))
 const metaFileContent: Record<string, any> = Object.fromEntries(keys.map((k) => [k, undefined]))
 
 await Promise.all(
   apiConfigs.map(async ({ key, apiUrl, mapboxGroupPrefix }) => {
-    // Script:
-    // Script: Fetch rawData
-    const fetchStyles = await fetch(apiUrl)
-
-    if (!fetchStyles.ok) {
-      console.error('Fetch failed', fetchStyles)
-      process.exit()
-    }
-
-    const rawData: any = await fetchStyles.json()
-
-    // Script: For debugging, write the rawData
-    await Bun.write(
-      `${scriptJsonFolder}/raw-api-response_${key}.json`,
-      JSON.stringify(rawData, undefined, 2),
-    )
-    // log(`${key}: Received raw data`, rawData)
-    log(`${key}: Received raw data`)
+    const rawData: any = await fetchStyle(key, apiUrl, scriptJsonFolder)
 
     // Script: Remove all non-FMC-groups
     type MapBoxGroupEntry = { name: string; collapsed: boolean }
-    type Group = { key: string; name: string }
 
+    // Get Groups from Mapbox-metadata, which is the only place where ID and Name are matched
     const groups = Object.entries(rawData.metadata['mapbox:groups'])
       .map((entry) => {
         const key = entry[0] as string
         const values = entry[1] as MapBoxGroupEntry
         if (values.name.startsWith(mapboxGroupPrefix)) {
-          return { key: key, name: values.name }
+          return {
+            folderId: key,
+            folderName: values.name,
+          }
         }
         return null
       })
-      .filter((e): e is Group => !!e) // Learn more https://www.benmvp.com/blog/filtering-undefined-elements-from-array-typescript/
+      .filter(Boolean)
 
     log(`${key}: Received ${groups.length} groups`)
 
@@ -89,9 +82,9 @@ await Promise.all(
     // Create our own data
     groupsAndLayers[key] = groups.map((group) => {
       return {
-        group: group.name,
+        folderName: group.folderName,
         layers: rawData.layers.filter((layer) => {
-          return layer.metadata && layer.metadata['mapbox:group'] == group.key
+          return layer.metadata && layer.metadata['mapbox:group'] == group.folderId
         }),
       }
     })
@@ -101,6 +94,7 @@ await Promise.all(
       g.layers.forEach((layer: any) => {
         delete layer.metadata
         delete layer.source
+        delete layer.slot // Does not exict on maplibre
         delete layer['source-layer']
         delete layer?.layout?.visibility // The source styles are sometimes set hidden; we need to reset this
       }),
@@ -108,15 +102,15 @@ await Promise.all(
 
     // Cleanup layer names & collect debugging info
     const changedNamesForDebugging: {
-      sourceName: string
-      cleanedName: string
+      folderName: string
+      cleanFolderName: string
     }[] = []
     groupsAndLayers[key]?.forEach((g) => {
-      const sourceName = g.group
-      const cleanedName = sourceName.toLowerCase().replace(/[^a-z_]/g, '')
-      if (sourceName !== cleanedName) {
-        g.group = cleanedName
-        changedNamesForDebugging.push({ sourceName, cleanedName })
+      const folderName = g.folderName
+      const cleanFolderName = folderName.toLowerCase().replace(/[^a-z0-9_]/g, '')
+      if (folderName !== cleanFolderName) {
+        g.folderName = cleanFolderName
+        changedNamesForDebugging.push({ folderName, cleanFolderName })
       }
     })
     if (changedNamesForDebugging.length) {
@@ -141,38 +135,74 @@ await Promise.all(
         changedNamesForDebugging,
       },
     }
+
+    // @ts-ignore
+    spriteUrls.push({
+      url:
+        rawData.sprite.replace('mapbox://sprites/', 'https://api.mapbox.com/styles/v1/') +
+        '/sprite',
+      searchParams: {
+        access_token: new URL(apiUrl).searchParams.get('access_token'),
+      },
+    })
   }),
 )
 
 // ============= Now, we bring all `apiConfigs` back together
 
-const mergedSortedGroupAndLayers = Object.values(groupsAndLayers)
+const mergedGroupAndLayers = Object.values(groupsAndLayers)
   .map((layers) => layers)
   .flat()
-  .sort((a, b) => a.group.localeCompare(b.group))
   .filter((layers) => layers.layers.length > 0) // Delete empty folders, which are hidden Mapbox so they cannot be deleted in the UI
 
-// Write file
-const stylesFile = `${componentFolder}/mapbox-layer-styles-by-group.json`
-await Bun.write(stylesFile, JSON.stringify(mergedSortedGroupAndLayers, undefined, 2))
-log(`Write stylesFile`, stylesFile)
+// Write files
+for (const group of mergedGroupAndLayers) {
+  const groupFile = `// Autogenerated by \`scripts/MapboxStyles/process.ts\`
+  // Do not change this file manually
+
+  import { MapboxStyleLayer } from '../types'
+
+  export const mapboxStyleGroupLayers_${group.folderName}: MapboxStyleLayer[] = ${JSON.stringify(
+    group.layers,
+    null,
+    2,
+  )}
+  `
+  const stylesFile = `${componentFolder}/groups/${group.folderName}.ts`
+  await Bun.write(stylesFile, groupFile)
+  log(`Write stylesFile`, stylesFile)
+}
 
 // Script: Generate types file
-// This is the file that we write.
-// We create one type with all Ids
-// And one Type per Group with only the Ids of that type.
+// A type that represents all keys of the layers we generate
 // (Don't change the new lines and spaces in this template; the generated output does fit Prettier conventions.)
+const _layers = mergedGroupAndLayers.map((g) => g.layers).flat()
+const _layerKeys = _layers.map((l) => Object.keys(l)).flat()
+const deduplicatedLayerKeys = Array.from(new Set(_layerKeys)).sort((a, b) => a.localeCompare(b))
 const typesFileContent = `// Autogenerated by \`scripts/MapboxStyles/process.ts\`
 // Do not change this file manually
 
-export type MapboxStylesByLayerGroupIds =
-${mergedSortedGroupAndLayers.map((g) => `  | '${g.group}'\n`).join('')}`
+// This type is used in \`mapboxStyleLayers\` and gives some visibility into what kind of data we fetch from Mapbox.
+export type MapboxStyleLayer = {${deduplicatedLayerKeys
+  .map((key) => {
+    const optional = key === 'id' ? '' : '?'
+    return `${key}${optional}: any;\n`
+  })
+  .join('')}}`
 
 await Bun.write(`${componentFolder}/types.ts`, typesFileContent)
 log(`Write typesFile`, typesFileContent)
 
 await Bun.write(
   `${scriptJsonFolder}/metadata_last_process.json`,
-  JSON.stringify(metaFileContent, undefined, 2),
+  JSON.stringify(metaFileContent, null, 2),
 )
-log(`Store metadata on processing`, metaFileContent)
+log(`Store metadata on processing`, 'metaFileContent')
+
+const rawData = await fetchStyle('base', baseMapStyle, scriptJsonFolder)
+saveJson('src/pages/api/map/style.json', rawData)
+// @ts-ignore
+spriteUrls.push({ url: rawData.sprite })
+log(' Merging Sprites... ')
+await mergeSprites(spriteUrls, 1)
+await mergeSprites(spriteUrls, 2)

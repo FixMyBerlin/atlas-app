@@ -1,13 +1,13 @@
 /* eslint-disable react/no-unescaped-entities */
 
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_components/mapStateInteraction/useMapDebugState'
 import { CommandLineIcon } from '@heroicons/react/20/solid'
 import React from 'react'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
 import { isDev } from 'src/app/_components/utils/isEnv'
-import { MapDataVisLayer } from '../../../mapData/types'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
+import { FileMapDataSubcategoryStyleLayer } from 'src/app/regionen/[regionSlug]/_mapData/types'
 
-type Props = { title: string; layers: MapDataVisLayer[] | undefined }
+type Props = { title: string; layers: FileMapDataSubcategoryStyleLayer[] | undefined }
 
 export const LegendDebugInfoLayerStyle: React.FC<Props> = ({ title, layers }) => {
   const { showDebugInfo } = useMapDebugState()

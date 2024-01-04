@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 let errorLogged = false
 

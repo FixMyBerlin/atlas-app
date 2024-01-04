@@ -1,7 +1,7 @@
 import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
-import { DatasetIds } from '../../mapData/mapDataSources/datasets/types'
-import { SourcesIds } from '../../mapData/mapDataSources/sources.const'
+import { DatasetIds } from '../../../_mapData/mapDataSources/datasets/types'
+import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { TagsTableRow } from './TagsTableRow'
 import {
   TagsTableRowCompositHighway,
@@ -28,7 +28,7 @@ import {
 type Props = {
   properties: GeoJSONFeature['properties']
   sourceDocumentedKeys: string[] | undefined | false
-  sourceId: SourcesIds | DatasetIds
+  sourceId: SourcesId | DatasetIds
 }
 
 export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {

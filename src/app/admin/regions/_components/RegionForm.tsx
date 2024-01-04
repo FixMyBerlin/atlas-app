@@ -3,14 +3,12 @@ import { LabeledRadiobuttonGroup } from 'src/app/_components/forms/LabeledRadiob
 import { LabeledSelect } from 'src/app/_components/forms/LabeledSelect'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
 import { Link } from 'src/app/_components/links/Link'
-import { additionalRegionAttributes } from 'src/regions/components/additionalRegionAttributes.const'
+import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 export { FORM_ERROR } from 'src/app/_components/forms/Form'
 
 export function RegionForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
-  const slugOptions = additionalRegionAttributes.map(
-    (r) => [r.slug, `${r.slug} (${r.name})`] as [string, string],
-  )
+  const slugOptions = staticRegion.map((r) => [r.slug, `${r.slug} (${r.name})`] as [string, string])
 
   return (
     <Form<S> {...props}>

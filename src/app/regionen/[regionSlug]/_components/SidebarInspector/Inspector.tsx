@@ -1,6 +1,6 @@
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { sourcesDatasets } from '../mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
-import { StoreFeaturesInspector } from '../mapStateInteraction/useMapStateInteraction'
+import { sourcesDatasets } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { StoreFeaturesInspector } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'

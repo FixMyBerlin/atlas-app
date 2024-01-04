@@ -1,5 +1,5 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
-import maplibregl, { MapLibreEvent } from 'maplibre-gl'
+import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import * as pmtiles from 'pmtiles'
 import React, { useEffect, useState } from 'react'
@@ -13,7 +13,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Calculator } from './Calculator/Calculator'
 import { SourcesAndLayers } from './SourcesAndLayers/SourcesAndLayers'
 import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'
@@ -22,7 +22,6 @@ import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegiona
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import { useMissingImage } from './utils/useMissingImage'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -68,7 +67,15 @@ export const Map: React.FC = () => {
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
 
-  useMissingImage(mainMap)
+  // Warn when a sprite image is missing
+  useEffect(() => {
+    if (!mainMap) return
+    mainMap.on('styleimagemissing', (e: MapStyleImageMissingEvent) => {
+      const imageId = e.id
+      if (imageId === 'null') return // Conditional images with Fallback images "Fill pattern: none" result in e.id=NULL
+      console.warn('Missing image', imageId)
+    })
+  }, [mainMap])
 
   useEffect(() => {
     if (!mainMap) return
@@ -109,7 +116,7 @@ export const Map: React.FC = () => {
       }}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
-      mapStyle="https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=ECOoUBmpqklzSCASXxcu"
+      mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
       // mapStyle="mapbox://styles/hejco/cl706a84j003v14o23n2r81w7"
       // mapboxAccessToken="pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q"
       interactiveLayerIds={interactiveLayerIds}

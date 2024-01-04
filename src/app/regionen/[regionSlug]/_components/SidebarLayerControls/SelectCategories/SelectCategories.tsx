@@ -1,18 +1,18 @@
-import { useConfigParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useConfigParam'
+import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { SelectCategory } from './SelectCategory'
 
 export const SelectCategories = () => {
-  const { configParam } = useConfigParam()
+  const { categoriesConfig } = useCategoriesConfig()
 
-  if (!configParam) return null
+  if (!categoriesConfig) return null
 
-  const activeCategoryIds = configParam
+  const activeCategoryIds = categoriesConfig
     .filter((categoryConfig) => categoryConfig.active)
     .map((categoryConfig) => categoryConfig.id)
 
   return (
     <nav className="relative z-0 flex flex-col divide-x divide-gray-200">
-      {configParam.map((categoryConfig) => {
+      {categoriesConfig.map((categoryConfig) => {
         if (!categoryConfig) return null
         const active = activeCategoryIds.includes(categoryConfig.id)
 

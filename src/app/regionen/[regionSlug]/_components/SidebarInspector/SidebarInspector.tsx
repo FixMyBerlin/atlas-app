@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { useMapStateInteraction } from '../mapStateInteraction/useMapStateInteraction'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
 
