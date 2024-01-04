@@ -107,8 +107,7 @@ export const categories: StaticMapDataCategory[] = [
     name: 'Radinfrastruktur OLD',
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
-      { ...subcat_bikelanes, defaultStyle: 'default', ui: 'dropdown' },
-      { ...subcat_bikelanesPresence_legacy, defaultStyle: 'hidden', ui: 'dropdown' },
+      { ...subcat_bikelanesPresence_legacy, defaultStyle: 'default', ui: 'dropdown' },
     ],
   },
   {
