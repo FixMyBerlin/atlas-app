@@ -9,6 +9,7 @@ module.exports = withBlitz(
     experimental: {
       // https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links
       typedRoutes: true,
+      instrumentationHook: true,
     },
     images: {
       // Allowlist of external image sources for next/image <Image />
