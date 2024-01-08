@@ -65,6 +65,10 @@ export const datasets = {
   'atlas-regional-masks':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/atlas-regional-masks.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-zentrale-orte.pmtiles
+  'bb-ramboll-zentrale-orte':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-zentrale-orte.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoRadnetz.pmtiles
   TrtoRadnetz: 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoRadnetz.pmtiles',
 

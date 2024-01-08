@@ -26,4 +26,30 @@ export const sourcesDatasetsBB: SourceDatasets = [
       },
     ],
   },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-zentrale-orte'),
+    name: '(Ramboll) Zentrale Orte',
+    type: 'vector',
+    attributionHtml: '&copy; OpenStreetMap, Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-zentrale-orte',
+        type: 'circle',
+        paint: {
+          'circle-stroke-width': 2,
+          'circle-stroke-opacity': 0.8,
+          'circle-color': '#4d7c0f',
+          'circle-radius': 4,
+          'circle-stroke-color': '#4d7c0f',
+        },
+      },
+    ],
+  },
 ]

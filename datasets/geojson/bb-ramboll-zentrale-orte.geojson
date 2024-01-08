@@ -1,0 +1,2343 @@
+{
+  "type": "FeatureCollection",
+  "name": "a",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n21484051",
+        "osm_id": "21484051",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Königs Wusterhausen",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.6244389, 52.2994511] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n27217772",
+        "osm_id": "27217772",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Bad Liebenwerda",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.39272, 51.5158115] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n29018503",
+        "osm_id": "29018503",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Teltow",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2644532, 52.4016457] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n29562985",
+        "osm_id": "29562985",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Schönefeld",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5048276, 52.388552] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n30086462",
+        "osm_id": "30086462",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Neuruppin",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.8092919, 52.9243859] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n30089720",
+        "osm_id": "30089720",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Kyritz",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3966896, 52.9430648] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n30109925",
+        "osm_id": "30109925",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Perleberg",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [11.8627933, 53.0762716] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n32675771",
+        "osm_id": "32675771",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Oranienburg",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2457591, 52.7529379] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n33148370",
+        "osm_id": "33148370",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Falkensee",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0855621, 52.5678244] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n33555787",
+        "osm_id": "33555787",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Hennigsdorf",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2057511, 52.6375777] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n34042066",
+        "osm_id": "34042066",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Bad Belzig",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.5865873, 52.1405622] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n36424378",
+        "osm_id": "36424378",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Luckenwalde",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1741882, 52.0902045] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n50044918",
+        "osm_id": "50044918",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Ludwigsfelde",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2610163, 52.3016096] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n59644790",
+        "osm_id": "59644790",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Templin",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5005559, 53.1193496] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n64684784",
+        "osm_id": "64684784",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Finsterwalde",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.707358, 51.6315282] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n100363583",
+        "osm_id": "100363583",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Jüterbog",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0801128, 51.9916493] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n108051241",
+        "osm_id": "108051241",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Elsterwerda",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5204883, 51.4614993] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n112272722",
+        "osm_id": "112272722",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Gransee",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1588685, 53.0072783] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n117110648",
+        "osm_id": "117110648",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Schwarzheide",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.8306977, 51.4858276] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1676297307",
+        "osm_id": "1676297307",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Senftenberg",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": null
+      },
+      "geometry": { "type": "Point", "coordinates": [14.0046541, 51.5191742] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n176635890",
+        "osm_id": "176635890",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Strausberg",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.8833952, 52.5814009] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n220547241",
+        "osm_id": "220547241",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Zehdenick",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3348959, 52.9794838] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240032331",
+        "osm_id": "240032331",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Nauen",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.8772599, 52.6061065] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240040250",
+        "osm_id": "240040250",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Wittstock/Dosse",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.4868962, 53.162999] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240069280",
+        "osm_id": "240069280",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Wittenberge",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [11.7507204, 52.9983723] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240079590",
+        "osm_id": "240079590",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Lübben (Spreewald) - Lubin (Błota)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.8963805, 51.9418987] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240091099",
+        "osm_id": "240091099",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Beelitz",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.9700041, 52.2363582] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240095909",
+        "osm_id": "240095909",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Zossen",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4488958, 52.2159073] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240097247",
+        "osm_id": "240097247",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Fürstenwalde/Spree",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.064985, 52.3580209] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240097787",
+        "osm_id": "240097787",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Herzberg (Elster)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2358585, 51.6924078] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240031428",
+        "osm_id": "240031428",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Werder (Havel)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": null
+      },
+      "geometry": { "type": "Point", "coordinates": [12.9329125, 52.3715809] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240106995",
+        "osm_id": "240106995",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Blankenfelde-Mahlow",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4119554, 52.3479238] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240111082",
+        "osm_id": "240111082",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Wildau",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.6348744, 52.3214429] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240118164",
+        "osm_id": "240118164",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Bad Freienwalde (Oder)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.0300689, 52.787521] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240118216",
+        "osm_id": "240118216",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Luckau",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7150055, 51.8524163] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240122932",
+        "osm_id": "240122932",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Prenzlau",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.866575, 53.3167] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n240124689",
+        "osm_id": "240124689",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Schwedt",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.2840858, 53.0586366] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n305332222",
+        "osm_id": "305332222",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Beeskow",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.2471058, 52.1721569] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n568025275",
+        "osm_id": "568025275",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Eisenhüttenstadt",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.6294413, 52.1448863] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n599322452",
+        "osm_id": "599322452",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Guben",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.7153567, 51.9503235] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n601565661",
+        "osm_id": "601565661",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Spremberg - Grodk",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.3804302, 51.5714513] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n695229548",
+        "osm_id": "695229548",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Eberswalde",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7996542, 52.8350807] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1492904330",
+        "osm_id": "1492904330",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Lübbenau/Spreewald - Lubnjow/Błota",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.9689477, 51.8680114] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1649632068",
+        "osm_id": "1649632068",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Forst (Lausitz) - Baršć (Łužyca)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.6455395, 51.7438586] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1666506215",
+        "osm_id": "1666506215",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Großräschen",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.0123136, 51.5883265] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1676563638",
+        "osm_id": "1676563638",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Erkner",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7542811, 52.4259804] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n1692109981",
+        "osm_id": "1692109981",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Seelow",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.380704, 52.5318238] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n2173065830",
+        "osm_id": "2173065830",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Pritzwalk",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.1761903, 53.1492896] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n2587217093",
+        "osm_id": "2587217093",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Angermünde",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.9981503, 53.017276] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n3011735277",
+        "osm_id": "3011735277",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Bernau bei Berlin",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5881114, 52.6787254] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n4546625035",
+        "osm_id": "4546625035",
+        "osm_type": "node",
+        "Mittelzentrum": 1,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Rathenow",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3382259, 52.6063703] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": "n11136070460",
+        "osm_id": "11136070460",
+        "osm_type": "node",
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Lauchhammer",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": 1,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.759107, 51.4831051] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072053",
+        "Stadt_Gemeinde": "Dahme/Mark",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4244742, 51.8692961] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072002",
+        "Stadt_Gemeinde": "Am Mellensee",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4028587, 52.1608664] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072014",
+        "Stadt_Gemeinde": "Baruth/Mark",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5031213, 52.0449626] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072426",
+        "Stadt_Gemeinde": "Trebbin",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.214421, 52.2154658] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072340",
+        "Stadt_Gemeinde": "Rangsdorf",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4298254, 52.2931266] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12072",
+        "Gemeindenr.": "12072120",
+        "Stadt_Gemeinde": "Großbeeren",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3081433, 52.3566394] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069304",
+        "Stadt_Gemeinde": "Kleinmachnow",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2197668, 52.4047081] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069604",
+        "Stadt_Gemeinde": "Stahnsdorf",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2112314, 52.3819163] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069454",
+        "Stadt_Gemeinde": "Nuthetal",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1038528, 52.3513578] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069397",
+        "Stadt_Gemeinde": "Michendorf",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0320413, 52.3161587] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069596",
+        "Stadt_Gemeinde": "Seddiner See",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.9912332, 52.2877189] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069076",
+        "Stadt_Gemeinde": "Brück",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.7573322, 52.1871883] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069632",
+        "Stadt_Gemeinde": "Treuenbrietzen",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.8727498, 52.0982849] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069448",
+        "Stadt_Gemeinde": "Niemegk",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.6890702, 52.0744149] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069665",
+        "Stadt_Gemeinde": "Wiesenburg/Mark",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.4559347, 52.1147873] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069696",
+        "Stadt_Gemeinde": "Ziesar",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.2920355, 52.2663698] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069306",
+        "Stadt_Gemeinde": "Kloster Lehnin",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.7448496, 52.317906] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069249",
+        "Stadt_Gemeinde": "Groß Kreitz",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.7759943, 52.4037727] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069270",
+        "Stadt_Gemeinde": "Havelsee",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.4547614, 52.4946419] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069688",
+        "Stadt_Gemeinde": "Wusterwitz",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3800312, 52.3759925] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12069",
+        "Gemeindenr.": "12069590",
+        "Stadt_Gemeinde": "Schwielowsee",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.9932001, 52.3467066] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063148",
+        "Stadt_Gemeinde": "Ketzin/Havel",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.8438096, 52.4790644] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063357",
+        "Stadt_Gemeinde": "Wustermark",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.9411514, 52.5470772] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063056",
+        "Stadt_Gemeinde": "Dallgow-Döberitz",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0582711, 52.5431771] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063036",
+        "Stadt_Gemeinde": "Brieselang",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.001833, 52.5820897] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063273",
+        "Stadt_Gemeinde": "Schönwalde-Glien",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1377395, 52.6004746] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063088",
+        "Stadt_Gemeinde": "Friesack",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.5793583, 52.7420433] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063260",
+        "Stadt_Gemeinde": "Rhinow",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3422607, 52.7523882] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063212",
+        "Stadt_Gemeinde": "Nennhausen",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.5045514, 52.6030748] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063244",
+        "Stadt_Gemeinde": "Premnitz",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3433991, 52.5289424] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": "12063",
+        "Gemeindenr.": "12063189",
+        "Stadt_Gemeinde": "Milower Land",
+        "Name_Zentrum": null,
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.3106511, 52.519361] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070008",
+        "Stadt_Gemeinde": "Bad Wilsnack",
+        "Name_Zentrum": "Bad Wilsnack",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [11.9459221, 52.9558202] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12068117",
+        "Stadt_Gemeinde": "Fehrbellin",
+        "Name_Zentrum": "Fehrbellin",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.7657958, 52.8132222] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065084",
+        "Stadt_Gemeinde": "Fürstenberg/Havel",
+        "Name_Zentrum": "Fürstenberg/Havel",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1445199, 53.1854705] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070173",
+        "Stadt_Gemeinde": "Karstädt",
+        "Name_Zentrum": "Karstädt",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [11.7441173, 53.1607556] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065165",
+        "Stadt_Gemeinde": "Kremmen",
+        "Name_Zentrum": "Kremmen",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0269656, 52.7618569] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065193",
+        "Stadt_Gemeinde": "Liebenwalde",
+        "Name_Zentrum": "Liebenwalde",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3906999, 52.8714315] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065198",
+        "Stadt_Gemeinde": "Löwenberger Land",
+        "Name_Zentrum": "Löwenberg",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1545232, 52.896061] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070280",
+        "Stadt_Gemeinde": "Meyenburg",
+        "Name_Zentrum": "Meyenburg",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.2419118, 53.3143552] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12068324",
+        "Stadt_Gemeinde": "Neustadt (Dosse)",
+        "Name_Zentrum": "Neustadt (Dosse)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.4500937, 52.8520839] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070325",
+        "Stadt_Gemeinde": "Putlitz",
+        "Name_Zentrum": "Putlitz",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.0402025, 53.2497763] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12068353",
+        "Stadt_Gemeinde": "Rheinsberg",
+        "Name_Zentrum": "Rheinsberg",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.8927519, 53.0996216] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12068477",
+        "Stadt_Gemeinde": "Wusterhausen/Dosse",
+        "Name_Zentrum": "Wusterhausen/Dosse",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.4618827, 52.8907382] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070244",
+        "Stadt_Gemeinde": "Lenzen (Elbe)",
+        "Name_Zentrum": "Lenzen (Elbe)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [11.4734507, 53.0908744] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12070302",
+        "Stadt_Gemeinde": "Plattenburg",
+        "Name_Zentrum": "Glöwen",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.0861799, 52.9125354] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12068280",
+        "Stadt_Gemeinde": "Lindow (Mark)",
+        "Name_Zentrum": "Lindow (Mark)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.985808, 52.9690509] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065251",
+        "Stadt_Gemeinde": "Oberkrämer",
+        "Name_Zentrum": "Vehlefanz",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1002576, 52.719708] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065180",
+        "Stadt_Gemeinde": "Leegebruch",
+        "Name_Zentrum": "Leegebruch",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1922654, 52.7237936] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065332",
+        "Stadt_Gemeinde": "Velten",
+        "Name_Zentrum": "Velten",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.1765711, 52.689804] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065096",
+        "Stadt_Gemeinde": "Glienicke/Nordbahn",
+        "Name_Zentrum": "Glienicke/Nordbahn",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3188549, 52.6329237] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065225",
+        "Stadt_Gemeinde": "Mühlenbecker Land",
+        "Name_Zentrum": "Mühlenbeck",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3786349, 52.6624751] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065144",
+        "Stadt_Gemeinde": "Hohen Neuendorf",
+        "Name_Zentrum": "Hohen Neuendorf",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2770961, 52.6724158] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12065036",
+        "Stadt_Gemeinde": "Birkenwerder",
+        "Name_Zentrum": "Birkenwerder",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.2878173, 52.6881012] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060280",
+        "Stadt_Gemeinde": "Werneuchen",
+        "Name_Zentrum": "Werneuchen (Stadt Werneuchen, amtsfrei)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7349767, 52.6317616] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060269",
+        "Stadt_Gemeinde": "Wandlitz",
+        "Name_Zentrum": "Wandlitz (Gemeinde Wandlitz, amtsfrei)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.4733503, 52.7520198] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060024",
+        "Stadt_Gemeinde": "Biesenthal",
+        "Name_Zentrum": "Biesenthal (Stadt Biesenthal, Amt Biesenthal-Barnim)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.6444006, 52.767248] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060198",
+        "Stadt_Gemeinde": "Schorfheide",
+        "Name_Zentrum": "Groß Schönebeck (Gemeinde Schorfheide, amtsfrei)",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5322765, 52.9026065] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060176",
+        "Stadt_Gemeinde": "Oderberg",
+        "Name_Zentrum": "Oderberg (Stadt Oderberg, Amt Britz-Chorin-Oderberg)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.0475408, 52.8700624] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12060100",
+        "Stadt_Gemeinde": "Joachimsthal",
+        "Name_Zentrum": "Joachimsthal (Stadt Joachimsthal, Amt Joachimsthal Schorfheide)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7493494, 52.9762975] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073384",
+        "Stadt_Gemeinde": "Lychen",
+        "Name_Zentrum": "Lychen (Stadt Lychen,amtsfrei)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.3107173, 53.2098685] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073069",
+        "Stadt_Gemeinde": "Boitzenburger Land",
+        "Name_Zentrum": "Boitzenburg (Gemeinde Boitzenburger Land, amtsfrei)",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.6110914, 53.2650142] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073225",
+        "Stadt_Gemeinde": "Gramzow",
+        "Name_Zentrum": "Gramzow (Gemeinde Gramzow, Amt Gramzow)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.008371, 53.2113359] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073189",
+        "Stadt_Gemeinde": "Gartz (Oder)",
+        "Name_Zentrum": "Gartz (Oder) (Stadt Gartz, Amt Gartz)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.3944883, 53.2087246] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073085",
+        "Stadt_Gemeinde": "Brüssow",
+        "Name_Zentrum": "Brüssow (Gemeinde Brüssow, Amt Brüssow)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.1248648, 53.4012583] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073429",
+        "Stadt_Gemeinde": "Nordwestuckermark",
+        "Name_Zentrum": "Fürstenwerder (Gemeinde Nordwestuckermark, amtsfrei)",
+        "GSP": 1,
+        "name_unclear": 1,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.5821779, 53.3905898] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073201",
+        "Stadt_Gemeinde": "Gerswalde",
+        "Name_Zentrum": "Gerswalde (Gemeinde Gerswalde, Amt Gerswalde)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.7521486, 53.1714904] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": "12073603",
+        "Stadt_Gemeinde": "Passow",
+        "Name_Zentrum": "Passow (Gemeinde Passow, Amt Oder-Welse)",
+        "GSP": 1,
+        "name_unclear": null,
+        "Oberzentrum": null,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.1202354, 53.1433433] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Brandenburg an der Havel",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": 1,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [12.5497933, 52.4108261] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Potsdam",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": 1,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [13.0591397, 52.4009309] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Frankfurt (Oder)",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": 1,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.549452, 52.3412273] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "full_id": null,
+        "osm_id": null,
+        "osm_type": null,
+        "Mittelzentrum": null,
+        "Nr._Landkreis": null,
+        "Gemeindenr.": null,
+        "Stadt_Gemeinde": "Cottbus",
+        "Name_Zentrum": null,
+        "GSP": null,
+        "name_unclear": null,
+        "Oberzentrum": 1,
+        "MZ in Funktionsteilung": null,
+        "keep": 1
+      },
+      "geometry": { "type": "Point", "coordinates": [14.3357307, 51.7567447] }
+    }
+  ]
+}
