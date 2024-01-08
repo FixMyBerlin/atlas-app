@@ -19,7 +19,7 @@ const filter = (filter: any) => {
 
 export const sourcesDatasetsBerlin: SourceDatasets = [
   {
-    regionKey: ['berlin'],
+    regionKey: ['berlin', 'bb'],
     ...sourceDatasetIdUrl('changing-cities-radnetz-monitoring'),
     name: 'Changing Cities Radnetz Monitoring',
     type: 'vector',
