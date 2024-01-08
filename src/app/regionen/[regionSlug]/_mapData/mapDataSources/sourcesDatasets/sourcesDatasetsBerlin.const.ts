@@ -39,7 +39,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
           'line-color': '#000000',
           'line-width': 7,
         },
-        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'RSV']),
+        filter: ['==', ['get', 'CC_Netzkategorie'], 'RSV'],
       },
       {
         id: 'RSV-highlight',
@@ -48,7 +48,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
           'line-color': '#ff6011',
           'line-width': 5,
         },
-        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'RSV']),
+        filter: ['==', ['get', 'CC_Netzkategorie'], 'RSV'],
       },
       {
         id: 'Vorrangnetz',
@@ -57,7 +57,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
           'line-color': '#db1e2a',
           'line-width': 5,
         },
-        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'Vorrangnetz']),
+        filter: ['==', ['get', 'CC_Netzkategorie'], 'Vorrangnetz'],
       },
       {
         id: 'Ergänzungsnetz',
@@ -66,7 +66,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
           'line-color': '#f7801e',
           'line-width': 3,
         },
-        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'Ergänzungsnetz']),
+        filter: ['==', ['get', 'CC_Netzkategorie'], 'Ergänzungsnetz'],
       },
       {
         id: 'HVS',
@@ -75,7 +75,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
           'line-color': '#db2ac3',
           'line-width': 3,
         },
-        filter: filter(['==', ['get', 'CC_Netzkategorie'], 'HVS']),
+        filter: ['==', ['get', 'CC_Netzkategorie'], 'HVS'],
       },
     ],
   },
