@@ -17,22 +17,25 @@ import { prismaClientForRawQueries } from 'src/prisma-client'
       Create the post commit hook, tables and indexes that are required for our verification feature.
 */
 
+// specify license and attribution for data export
+const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
+const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
+
 async function initExportFunctions(tables) {
   return Promise.all(
     tables.map((tableName) => {
-      // TODO: share helper with export endpoint
       const functionName = exportFunctionIdentifier(tableName.toLowerCase())
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public,prisma;`,
+        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(`
         CREATE OR REPLACE FUNCTION public.${functionName}(region geometry)
           RETURNS json
           LANGUAGE sql
           AS $function$
           SELECT
-          json_build_object('type', 'FeatureCollection', 'license', 'ODbL 1.0, https://opendatacommons.org/licenses/odbl/',
-              'attribution', 'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de', 'features', json_agg(features.feature))
+          json_build_object('type', 'FeatureCollection', 'license', ${license},
+              'attribution', ${attribution}, 'features', json_agg(features.feature))
           FROM(
               SELECT
               jsonb_build_object('type', 'Feature', 'geometry',
