@@ -7,7 +7,7 @@
   "scripts": {
     "start": "blitz start --hostname 127.0.0.1 --port 3000",
     "dev": "blitz dev --hostname 127.0.0.1 --port 5173",
-    "predev": "if [[ $(docker inspect -f '{{.State.Running}}' db) = \"true\" ]]; then echo DOCKER: atlas-geo already running; else echo IMPORTANT: Start atlas-geo with npm run dev:up; fi",
+    "predev": "if [ $(docker inspect -f '{{.State.Running}}' db) = \"true\" ]; then echo DOCKER: atlas-geo already running; else echo IMPORTANT: Start atlas-geo with npm run dev:up; fi",
     "build": "blitz build",
     "bleach": "rm -rf node_modules/ && rm -rf .next/ && npm install && npm run dev",
     "studio": "blitz prisma studio",
