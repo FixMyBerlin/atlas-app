@@ -53,6 +53,9 @@ export const datasets = {
   'woldegk-radnetz-vorschlaege':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/woldegk-radnetz-vorschlaege.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-adfc.pmtiles
+  'bb-radnetz-adfc': 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-adfc.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/berlin-parking-zones-fisbroker.pmtiles
   'berlin-parking-zones-fisbroker':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/berlin-parking-zones-fisbroker.pmtiles',
