@@ -27,13 +27,21 @@ export type SourcesId =
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
 
-export type SourceVerificationApiIdentifier = 'bikelanes'
+// Define the verification tables
+export const verificationApiIdentifier = ['bikelanes'] as const
+export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
 
-// Based on `export_geojson_function_from_type` in `tarmac-geo`
+export const verifiedTableIdentifier = (tableName: SourceVerificationApiIdentifier) =>
+  tableName.toLowerCase() + '_verified'
+export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier, string> = {
+  bikelanes: 'BikelaneVerification',
+}
+
+// Define the export tables
 export const exportApiIdentifier = [
   'bicycleParking_points',
   'bicycleParking_areas', // private for now
-  'bikelanes_verified',
+  verifiedTableIdentifier('bikelanes'),
   // ,'bikelanes' // We use the bikelanes_verified
   // ,'bikelanesPresence' // Removed, now roads
   // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
@@ -53,6 +61,8 @@ export const exportApiIdentifier = [
   'boundaries',
 ] as const
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
+export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
+  'atlas_export_geojson_' + tableName.toLowerCase()
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"

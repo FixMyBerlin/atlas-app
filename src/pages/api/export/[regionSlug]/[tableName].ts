@@ -1,11 +1,13 @@
-import db from 'db'
-import { prismaClientForRawQueries } from 'src/prisma-client'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { api } from 'src/blitz-server'
 import { getSession } from '@blitzjs/auth'
-
+import db from 'db'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { exportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import {
+  exportApiIdentifier,
+  exportFunctionIdentifier,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { api } from 'src/blitz-server'
+import { prismaClientForRawQueries } from 'src/prisma-client'
 import { z } from 'zod'
 
 const ExportSchema = z.object({
@@ -91,7 +93,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { tableName, minlon, minlat, maxlon, maxlat } = params
-    const functionName = 'atlas_export_geojson_' + tableName.toLowerCase()
+    const functionName = exportFunctionIdentifier(tableName)
     await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
     const geoJson = await prismaClientForRawQueries.$queryRawUnsafe(
       `SELECT * FROM "${functionName}"
