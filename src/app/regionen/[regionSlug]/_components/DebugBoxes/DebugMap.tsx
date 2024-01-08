@@ -53,17 +53,12 @@ export const DebugMap = () => {
         &times;
       </button>
 
-      <details>
-        <summary className="cursor-pointer hover:font-semibold">Helper</summary>
-        <div className="flex flex-col gap-1">
-          <button
-            onClick={() => setUseDebugLayerStyles(!useDebugLayerStyles)}
-            className="rounded border p-1"
-          >
-            Toggle Debug Style {useDebugLayerStyles ? 'ON' : 'OFF'}
-          </button>
-        </div>
-      </details>
+      <button
+        onClick={() => setUseDebugLayerStyles(!useDebugLayerStyles)}
+        className="rounded border px-1"
+      >
+        Debug Style {useDebugLayerStyles ? 'ON' : 'OFF'}
+      </button>
 
       <details>
         <summary className="cursor-pointer hover:font-semibold">Sources</summary>
