@@ -1,6 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { exportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import {
+  exportApiIdentifier,
+  exportFunctionIdentifier,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 import { z } from 'zod'
 
@@ -24,8 +27,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { tableName, minlon, minlat, maxlon, maxlat } = params
-    const functionName = 'atlas_export_geojson_' + tableName.toLowerCase()
-    await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
+    const functionName = exportFunctionIdentifier(tableName.toLowerCase())
+    await prismaClientForRawQueries.$queryRaw`SET search_path TO public`
     const geoJson = await prismaClientForRawQueries.$queryRawUnsafe(
       `SELECT * FROM "${functionName}"
     (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
