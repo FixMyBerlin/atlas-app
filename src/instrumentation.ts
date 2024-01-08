@@ -7,6 +7,16 @@ import {
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
+/**
+ * File is executed once when the server is started.
+ * Docs: https://nextjs.org/docs/app/building-your-application/optimizing/instrumentation
+ * This file will setup our DB
+ * 1. `await initExportFunctions(exportApiIdentifier)`
+      Create the PostgreSQL functions that are used by the export API in `src/pages/api/export/[tableName].ts`
+ * 1. `await initVerificationViews(verificationApiIdentifier)`
+      Create the post commit hook, tables and indexes that are required for our verification feature.
+*/
+
 async function initExportFunctions(tables) {
   return Promise.all(
     tables.map((tableName) => {
@@ -27,7 +37,7 @@ async function initExportFunctions(tables) {
               SELECT
               jsonb_build_object('type', 'Feature', 'geometry',
               ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb,
-                      -- Reminder: All tables that can be exported are required to have a those columns
+              -- Reminder: All tables that can be exported are required to have those exact columns
               'properties', jsonb_build_object('osm_id', inputs.osm_id) ||
                   jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta ||
                   inputs.tags) AS feature
