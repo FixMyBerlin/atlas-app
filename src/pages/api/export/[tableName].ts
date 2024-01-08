@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { tableName, minlon, minlat, maxlon, maxlat } = params
-    const functionName = exportFunctionIdentifier(tableName.toLowerCase())
+    const functionName = exportFunctionIdentifier(tableName)
     await prismaClientForRawQueries.$queryRaw`SET search_path TO public`
     const geoJson = await prismaClientForRawQueries.$queryRawUnsafe(
       `SELECT * FROM "${functionName}"
