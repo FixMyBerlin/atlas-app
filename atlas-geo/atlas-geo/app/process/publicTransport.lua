@@ -1,6 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
-require("FilterTags")
+require("CopyTags")
 require("MergeArray")
 require("Metadata")
 
@@ -36,61 +36,61 @@ end
 
 local function processTags(tags)
   local isFerryStopPosition = tags.public_transport == "platform" and tags.ferry == "yes"
+  local category
   if (isFerryStopPosition) then
-    tags.category = "ferry_station"
+    category = "ferry_station"
   end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:station%3Dsubway
   if (tags.railway == "subway") then
-    tags.category = "subway_station"
+    category = "subway_station"
   end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dtram_stop
   if (tags.railway == "tram_stop") then
-    tags.category = "tram_station"
+    category = "tram_station"
   end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dstation
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dhalt
   if (tags.railway == "station" or tags.railway == "halt") then
-    tags.category = "railway_station"
+    category = "railway_station"
   end
 
   -- NOTE ON BUS:
   -- We don't handle bus stops ATM because they are not too relevant for our use cases.
   -- We might add them later…
 
-  if (tags.category == nil) then
+  if (category == nil) then
     -- We need to check those and either filter them or fix the categories
-    tags.category = "undefined"
+    category = "undefined"
   end
 
-  -- TODO: Copy the tags below with prefix and add those as normized tags
-  local allowed_tags = Set({
+  -- these tags are getting copied
+  local allowed_tags = {
     "name",     -- Eigenname
     "operator", -- Eigenname
-    "category",
-  })
-  FilterTags(tags, allowed_tags)
-  --
-  local tags_cc = Set({
+  }
+  -- these tags are getting copied and prefixed with `osm_`
+  local tags_cc = {
     "network",
     "network:short",
     "railway",
     "light_rail",
     "bus",
     "ferry",
-  })
-  -- TODO: Copy tags with "osm_"-prefix
+  }
+  local result = {category = category}
+  CopyTags(result, tags, tags_cc, 'osm_')
+  CopyTags(result, tags, allowed_tags)
+  return result
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_point()
   })
@@ -100,10 +100,8 @@ function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
@@ -113,10 +111,8 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })
