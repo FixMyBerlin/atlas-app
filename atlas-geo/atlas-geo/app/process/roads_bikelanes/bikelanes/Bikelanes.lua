@@ -20,9 +20,9 @@ local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags',     type = 'jsonb' },
-    { column = 'meta',     type = 'jsonb' },
-    { column = 'geom',     type = 'linestring' },
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
   }
 })
 
@@ -41,19 +41,16 @@ local excludeTable = osm2pgsql.define_table({
 local tags_cc = {
   'access',
   'bicycle_road',
-  'bicycle',
   'conditional',
   'cycleway',
   'cycleway:lane', -- 'advisory', 'exclusive'
+  'lane',          -- 'cycleway:SIDE:lane'
   'dual_carriageway',
-  'foot',
   'footway',
   'highway',
-  'is_sidepath',
   'name',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   'prefix',
-  'segregated',
   'side',
   'smoothness',
   'surface:colour',
@@ -67,7 +64,6 @@ local tags_cc = {
   'separation',
   'separation:left',
   'separation:right',
-  'lane', -- 'cycleway:SIDE:lane'
   'traffic_mode',
   'traffic_mode:left',
   'traffic_mode:right',
