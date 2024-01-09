@@ -18,7 +18,7 @@ export const NavigationMobile: React.FC<Props> = ({
   const pathname = usePathname()
 
   return (
-    <Disclosure as="div" className="relative flex flex-col sm:hidden">
+    <Disclosure as="div" className="flex flex-col sm:hidden">
       {({ open }) => (
         <>
           <div className="relative flex min-h-[4rem] items-center justify-between sm:h-16">

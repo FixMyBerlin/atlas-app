@@ -75,7 +75,7 @@ export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
             <Portal>
               <Menu.Items
                 ref={container}
-                className="absolute left-0 z-50 mt-2 max-w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
+                className="absolute left-0 z-40 mt-2 max-w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
               >
                 <div className="py-1">
                   {subcatConfig.styles.map((styleConfig) => {
