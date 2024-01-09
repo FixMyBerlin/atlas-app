@@ -80,13 +80,13 @@ for (const dataset of Object.entries(datasets)) {
   const { sourceLayer, uploadUrl } = dataset[1]
 
   // Fetch Export API
-  const url = getExportApiBboxUrl(datasetKey, bbox, 'production')
+  const url = getExportApiBboxUrl('all', datasetKey, bbox, 'production')
   console.log('\n', chalk.inverse.bold(chalk.yellow('FETCH')), url)
   let fetchExport: Awaited<ReturnType<typeof fetch>> | undefined = undefined
   try {
     fetchExport = await fetch(url)
   } catch (error) {
-    const url = getExportApiBboxUrl(datasetKey, fallbackBbox, 'production')
+    const url = getExportApiBboxUrl('all', datasetKey, fallbackBbox, 'production')
     console.log(chalk.inverse.bold('ERROR'), error, 'trying the fallback bbox now', url)
     fetchExport = await fetch(url)
   }
