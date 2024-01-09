@@ -59,6 +59,8 @@ local tags_cc = {
   'surface:colour',
   'surface',
   'traffic_sign',
+  'traffic_sign:forward',
+  'traffic_sign:backward',
   'width',
   'bicycle:lanes',
   'cycleway:lanes',
@@ -66,6 +68,9 @@ local tags_cc = {
   'separation:left',
   'separation:right',
   'lane', -- 'cycleway:SIDE:lane'
+  'traffic_mode',
+  'traffic_mode:left',
+  'traffic_mode:right',
 }
 
 local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
