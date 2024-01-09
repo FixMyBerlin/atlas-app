@@ -104,7 +104,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
                 'notes_open',
                 'notes_open' /* default */,
               ],
-              'icon-size': 0.65,
+              'icon-size': 0.85,
               'icon-allow-overlap': true,
             }}
           />
