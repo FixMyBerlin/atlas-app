@@ -4,7 +4,6 @@ require("CopyTags")
 require("MergeArray")
 require("Metadata")
 
-
 local table = osm2pgsql.define_table({
   name = 'publicTransport',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -16,8 +15,7 @@ local table = osm2pgsql.define_table({
 })
 
 local function ExitProcessing(object)
-  local isFerryStopPosition = object.tags.public_transport == "platform" and object.tags.ferry == "yes"
-  if not (object.tags.railway or isFerryStopPosition) then
+  if not (object.tags.railway or object.tags.amenity == "ferry_terminal") then
     return true
   end
 
@@ -35,29 +33,41 @@ local function ExitProcessing(object)
 end
 
 local function processTags(tags)
-  local isFerryStopPosition = tags.public_transport == "platform" and tags.ferry == "yes"
   local category
-  if (isFerryStopPosition) then
+
+  -- Ferry
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:amenity%3Dferry_terminal
+  -- https://wiki.openstreetmap.org/wiki/DE:Key:ferry
+  if (tags.amenity == "ferry_terminal") then
     category = "ferry_station"
   end
 
+  -- U-Bahn
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:station%3Dsubway
   if (tags.railway == "subway") then
     category = "subway_station"
   end
 
+  -- S-Bahn
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dlight_rail
+  if (tags.railway == "light_rail") then
+    category = "light_rail_station"
+  end
+
+  -- Straßenbahn
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dtram_stop
   if (tags.railway == "tram_stop") then
     category = "tram_station"
   end
 
+  -- Bahn
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dstation
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dhalt
   if (tags.railway == "station" or tags.railway == "halt") then
     category = "railway_station"
   end
 
-  -- NOTE ON BUS:
+  -- Bus:
   -- We don't handle bus stops ATM because they are not too relevant for our use cases.
   -- We might add them later…
 
@@ -66,21 +76,22 @@ local function processTags(tags)
     category = "undefined"
   end
 
-  -- these tags are getting copied
+  -- these tags are copied
   local allowed_tags = {
     "name",     -- Eigenname
     "operator", -- Eigenname
   }
-  -- these tags are getting copied and prefixed with `osm_`
+  -- these tags are copied and prefixed with `osm_`
   local tags_cc = {
     "network",
     "network:short",
     "railway",
+    "station",
     "light_rail",
     "bus",
     "ferry",
   }
-  local result = {category = category}
+  local result = { category = category }
   CopyTags(result, tags, tags_cc, 'osm_')
   CopyTags(result, tags, allowed_tags)
   return result
