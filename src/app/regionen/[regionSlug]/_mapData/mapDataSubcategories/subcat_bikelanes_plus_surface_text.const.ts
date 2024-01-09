@@ -9,7 +9,7 @@ const sourceLayer = 'bikelanes_verified'
 export type SubcatBikelanesPlusSurfaceId = typeof subcatId
 export type SubcatBikelanesPlusSurfaceStyleIds = 'default'
 
-export const subcat_bikelanes_plus_surface: FileMapDataSubcategory = {
+export const subcat_bikelanes_plus_surface_text: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Oberfläche (Text)',
   sourceId: 'atlas_bikelanes',

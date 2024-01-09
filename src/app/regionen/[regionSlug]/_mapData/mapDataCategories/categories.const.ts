@@ -5,10 +5,8 @@ import { subcat_bikelanes } from '../mapDataSubcategories/subcat_bikelanes.const
 import { subcat_bikelanesPresence } from '../mapDataSubcategories/subcat_bikelanesPresence.const'
 import { subcat_bikelanesPresence_legacy } from '../mapDataSubcategories/subcat_bikelanesPresence_legacy.const'
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
-import { subcat_bikelanesSurface } from '../mapDataSubcategories/subcat_bikelanesSurface.const'
 import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
-import { subcat_bikelanes_plus_smoothness } from '../mapDataSubcategories/subcat_bikelanes_plus_smoothness'
-import { subcat_bikelanes_plus_surface } from '../mapDataSubcategories/subcat_bikelanes_plus_surface.const'
+import { subcat_bikelanes_plus_surface_text } from '../mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
 import { subcat_bikelanes_plus_width } from '../mapDataSubcategories/subcat_bikelanes_plus_width.const'
 import { subcat_boundaries } from '../mapDataSubcategories/subcat_boundaries.const'
 import { subcat_landuse } from '../mapDataSubcategories/subcat_landuse.const'
@@ -24,11 +22,12 @@ import { subcat_places } from '../mapDataSubcategories/subcat_places.const'
 import { subcat_poi } from '../mapDataSubcategories/subcat_poi.const'
 import { subcat_publicTransport } from '../mapDataSubcategories/subcat_publicTransport.const'
 import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
-import { subcat_roadsSurface } from '../mapDataSubcategories/subcat_roadsSurface.const'
 import { subcat_roadsSurface_legacy } from '../mapDataSubcategories/subcat_roadsSurface_legacy.const'
 import { subcat_roads_legacy } from '../mapDataSubcategories/subcat_roads_legacy.const'
 import { subcat_roads_plus_footways } from '../mapDataSubcategories/subcat_roads_plus_footways.const'
 import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
+import { subcat_surface_bikelane } from '../mapDataSubcategories/subcat_surface_bikelane'
+import { subcat_surface_roads } from '../mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from '../types'
 
 // TODO type MapDataCategoryIds = typeof sources[number]['id']
@@ -103,8 +102,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_signs, defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_bikelanes_plus_width, defaultStyle: 'hidden', ui: 'checkbox' },
-      { ...subcat_bikelanes_plus_surface, defaultStyle: 'hidden', ui: 'checkbox' },
-      { ...subcat_bikelanes_plus_smoothness, defaultStyle: 'hidden', ui: 'checkbox' },
+      { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'bikelanesProtection', defaultStyle: 'hidden', ui: 'checkbox' },
       // { id: 'tram', defaultStyle: 'hidden', ui: 'checkbox' },
       { ...subcat_bikelanesPresence, defaultStyle: 'hidden', ui: 'checkbox' },
@@ -124,9 +122,8 @@ export const categories: StaticMapDataCategory[] = [
     name: 'Oberflächen',
     desc: 'Fahrbahn & Radinfrastruktur',
     subcategories: [
-      { ...subcat_roadsSurface, defaultStyle: 'default', ui: 'dropdown' },
-      { ...subcat_bikelanesSurface, defaultStyle: 'default', ui: 'dropdown' },
-      // { id: 'sidewalkSurface', defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_surface_roads, defaultStyle: 'default', ui: 'dropdown' },
+      { ...subcat_surface_bikelane, defaultStyle: 'hidden', ui: 'dropdown' },
     ],
   },
   {

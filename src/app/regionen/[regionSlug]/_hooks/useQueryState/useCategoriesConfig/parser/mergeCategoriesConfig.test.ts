@@ -29,7 +29,7 @@ describe('mergeCategoriesConfig()', () => {
       active: true,
       subcategories: [
         {
-          id: 'roadsSurface',
+          id: 'surfaceRoads',
           ...defaultSubcategoryObject,
           styles: [
             { ...defaultStyleObject, id: 'default', active: true }, // change to false
