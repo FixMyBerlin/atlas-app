@@ -20,9 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    // const ids = params.ids.map(String).join(', ')
     const { ids } = params
-    // console.log(ids)
     await prismaClientForRawQueries.$queryRaw`SET search_path TO public`
     const result = await prismaClientForRawQueries.$queryRaw`
       SELECT count(osm_id)::int as "nHits" FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
