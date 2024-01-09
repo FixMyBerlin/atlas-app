@@ -16,46 +16,72 @@ local table = osm2pgsql.define_table({
 })
 
 local function ExitProcessing(object)
-  if not object.tags.public_transport then
+  local isFerryStopPosition = object.tags.public_transport == "platform" and object.tags.ferry == "yes"
+  if not (object.tags.railway or isFerryStopPosition) then
     return true
   end
 
-  local shouldExit = false
-
   -- ["operator"!= "Berliner Parkeisenbahn"] - a smalll train in a park that we cannot propery exclude by other means
   if object.tags.operator == "Berliner Parkeisenbahn" then
-    shouldExit = true
-  end
-
-  -- "station" includes "railway=yes" and "ferry=yes", "stop_position" includes "bus=yes"
-  -- TODO for now we exclude "stop_position". We could include those, but need to clean the data so it's easy to filter by transportation mode (bus, train, ferry) and also for train, only include the station, not the stop_position.
-  local allowed_values = Set({ "station" })
-  if not allowed_values[object.tags.public_transport] then
-    shouldExit = true
+    return true
   end
 
   -- ["disused"!="yes"] - ignore all that are not in use
   if object.tags.disused == "yes" then
-    shouldExit = true
+    return true
   end
 
-  return shouldExit
+  return false
 end
 
 local function processTags(tags)
+  local isFerryStopPosition = tags.public_transport == "platform" and tags.ferry == "yes"
+  if (isFerryStopPosition) then
+    tags.category = "ferry_station"
+  end
+
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:station%3Dsubway
+  if (tags.railway == "subway") then
+    tags.category = "subway_station"
+  end
+
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dtram_stop
+  if (tags.railway == "tram_stop") then
+    tags.category = "tram_station"
+  end
+
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dstation
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dhalt
+  if (tags.railway == "station" or tags.railway == "halt") then
+    tags.category = "railway_station"
+  end
+
+  -- NOTE ON BUS:
+  -- We don't handle bus stops ATM because they are not too relevant for our use cases.
+  -- We might add them later…
+
+  if (tags.category == nil) then
+    -- We need to check those and either filter them or fix the categories
+    tags.category = "undefined"
+  end
+
+  -- TODO: Copy the tags below with prefix and add those as normized tags
   local allowed_tags = Set({
-    "name",
+    "name",     -- Eigenname
+    "operator", -- Eigenname
+    "category",
+  })
+  FilterTags(tags, allowed_tags)
+  --
+  local tags_cc = Set({
     "network",
     "network:short",
-    "operator",
-    "public_transport",
     "railway",
     "light_rail",
     "bus",
     "ferry",
-    "station",
   })
-  FilterTags(tags, allowed_tags)
+  -- TODO: Copy tags with "osm_"-prefix
 end
 
 function osm2pgsql.process_node(object)
