@@ -40,13 +40,11 @@ local excludeTable = osm2pgsql.define_table({
 -- whitelist of tags we want to insert intro the DB
 local tags_cc = {
   'access',
-  'bicycle_road',
   'conditional',
   'cycleway',
   'cycleway:lane', -- 'advisory', 'exclusive'
   'lane',          -- 'cycleway:SIDE:lane'
   'dual_carriageway',
-  'footway',
   'highway',
   'name',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
