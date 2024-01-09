@@ -151,6 +151,8 @@ export const sources: MapDataSource<
         'category',
         'oneway',
         'traffic_sign',
+        'osm_traffic_sign:forward__if_present',
+        'osm_traffic_sign:backward__if_present',
         'width',
         'composit_surface_smoothness',
         'surface:color__if_present',

@@ -83,6 +83,8 @@ export const translations: { [key: string]: string } = {
   'ALL--surface=unhewn_cobblestone': 'Kopfsteinpflaster',
   'ALL--surface=unpaved': 'Unbefestigt (unspezifisch)',
   'ALL--traffic_sign--key': 'Verkehrszeichen',
+  'atlas_bikelanes--osm_traffic_sign:forward--key': 'Verkehrszeichen in Fahrtrichtung',
+  'atlas_bikelanes--osm_traffic_sign:backward--key': 'Verkehrszeichen Gegenrichtung',
   'ALL--traffic_sign=none': 'Unbeschildert',
   'ALL--width--key': 'Breite',
   'atlas_bicycleParking--capacity--key': 'Anzahl Fahrrad-Stellplätze',

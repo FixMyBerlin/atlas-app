@@ -84,28 +84,27 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const tableKeyTrafficSign = 'traffic_sign'
+export const tableKeyTrafficSign = [
+  'traffic_sign',
+  'osm_traffic_sign:forward',
+  'osm_traffic_sign:backward',
+]
 export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,
   properties,
 }) => {
-  const receivedSigns: string[] | undefined = properties['traffic_sign']
+  const receivedSigns: string[] | undefined = properties[tagKey]
     ?.replaceAll('DE:', '')
     ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
 
   if (!receivedSigns?.length) {
     return (
-      <TagsTableRow
-        key={tagKey}
-        sourceId={sourceId}
-        tagKey={tagKey}
-        value={properties['traffic_sign']}
-      />
+      <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey} value={properties[tagKey]} />
     )
   }
 
-  if (properties['traffic_sign'] === 'none') {
+  if (properties[tagKey] === 'none') {
     return (
       <TagsTableRow
         key={tagKey}
@@ -115,7 +114,7 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
           <ConditionalFormattedValue
             sourceId={sourceId}
             tagKey={'traffic_sign'}
-            tagValue={properties['traffic_sign']}
+            tagValue={properties[tagKey]}
           />
         }
       />
