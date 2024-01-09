@@ -27,7 +27,13 @@ export default function AdminNewRegionPage() {
       <RegionForm
         submitText="Region anlegen"
         schema={RegionFormSchema}
-        initialValues={{ slug: searchParamSlug, public: 'false' }}
+        initialValues={{
+          slug: searchParamSlug,
+          // @ts-ignore
+          public: 'false',
+          // @ts-ignore
+          exportPublic: 'false',
+        }}
         onSubmit={async (values) => {
           try {
             await createRegionMutation(values)

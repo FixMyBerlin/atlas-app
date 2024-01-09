@@ -36,6 +36,13 @@ export function RegionForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
           { value: 'false', label: 'Versteckt / Nur über Deeplink erreichbar' },
         ]}
       />
+      <LabeledRadiobuttonGroup
+        scope="exportPublic"
+        items={[
+          { value: 'true', label: 'Jeder kann exportieren' },
+          { value: 'false', label: 'Nur Mitglieder der Region können exportieren' },
+        ]}
+      />
     </Form>
   )
 }

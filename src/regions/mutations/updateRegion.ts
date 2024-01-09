@@ -1,17 +1,14 @@
 import { resolver } from '@blitzjs/rpc'
 import db from 'db'
-import { RegionFormSchema } from '../schemas'
+import { RegionSchema } from '../schemas'
 
 export default resolver.pipe(
-  resolver.zod(RegionFormSchema),
+  resolver.zod(RegionSchema),
   resolver.authorize('ADMIN'),
   async ({ slug, ...input }) => {
     const region = await db.region.update({
       where: { slug },
-      data: {
-        ...input,
-        public: input.public === 'true' ? true : false,
-      },
+      data: input,
     })
 
     return region
