@@ -36,13 +36,6 @@ module.exports = withBlitz(
         destination: 'https://radverkehrsatlas.de/:path*',
         permanent: true,
       },
-      // Just for testing…
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'staging-redirect-test.radverkehrsatlas.de' }],
-        destination: 'https://staging.radverkehrsatlas.de/:path*',
-        permanent: true,
-      },
     ],
   }),
 )
