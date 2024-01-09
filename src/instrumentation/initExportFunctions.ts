@@ -38,7 +38,7 @@ export async function initExportFunctions(tables) {
                   FROM
                     "${tableName}"
                   WHERE
-                      ST_Intersects(ST_Transform(geom, 4326), region)) inputs) features;
+                      ST_Transform(geom, 4326) && region) inputs) features;
 
         $function$;`,
         ),
