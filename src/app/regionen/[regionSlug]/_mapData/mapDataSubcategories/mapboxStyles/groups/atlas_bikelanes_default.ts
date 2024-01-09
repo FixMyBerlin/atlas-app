@@ -12,22 +12,10 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
       'line-color': '#a97bea',
       'line-dasharray': [2.5, 0.5],
     },
-    filter: [
-      'match',
-      ['get', 'category'],
-      ['needsClarification', 'footwayBicycleYes_adjoiningOrIsolated'],
-      true,
-      false,
-    ],
+    filter: ['match', ['get', 'category'], ['needsClarification'], true, false],
   },
   {
-    id: 'todo--oneway-no-icon',
-    type: 'line',
-    paint: {},
-    filter: ['all', ['has', 'category'], ['match', ['get', 'oneway'], ['no'], true, false]],
-  },
-  {
-    id: 'shared-fahrbahn',
+    id: 'Fuehrung mit Kfz-explizit',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 16, 3],
@@ -44,7 +32,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
     ],
   },
   {
-    id: 'shared-seitenraum',
+    id: 'Fuehrung mit Fussverkehr',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 16, 3],
@@ -61,13 +49,16 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
         'footAndCyclewayShared_adjoiningOrIsolated',
         'footwayBicycleYes_isolated',
         'pedestrianAreaBicycleYes',
+        'footwayBicycleYes_adjoining',
+        'footwayBicycleYes_adjoiningOrIsolated',
+        'livingStreet',
       ],
       true,
       false,
     ],
   },
   {
-    id: 'separated-fahrbahn',
+    id: 'Fuehrung eigenstaendig auf Fahrbahn',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 16, 3],
@@ -83,13 +74,14 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
         'cyclewayLink',
         'crossing',
         'cyclewayOnHighway_advisory',
+        'cyclewayOnHighway_advisoryOrExclusive',
       ],
       true,
       false,
     ],
   },
   {
-    id: 'separated-seitenraum und frei',
+    id: 'fuehrung baul. abgesetzt von Kfz',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 16, 3],
@@ -105,6 +97,8 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
         'cycleway_isolated',
         'cycleway_adjoining',
         'bicycleRoad',
+        'footAndCyclewaySegregated_isolated',
+        'cycleway_adjoiningOrIsolated',
       ],
       true,
       false,
