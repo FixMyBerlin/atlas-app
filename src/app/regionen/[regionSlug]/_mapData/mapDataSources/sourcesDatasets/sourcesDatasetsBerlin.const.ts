@@ -1,25 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
 import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
-const filter = (filter: any) => {
-  return [
-    'all',
-    filter,
-    ['!=', ['get', 'CC_Netzkategorie'], null],
-    ['>=', ['get', 'Monitor_JahrLetzteErneuerung'], 2018],
-    [
-      'any',
-      ['in', ['get', 'Monitor_Breite'], ['literal', ['E', 'T', 'U']]],
-      ['in', ['get', 'Monitor_Führungsform'], ['literal', ['E', 'T', 'U']]],
-      ['in', ['get', 'Monitor_Oberfläche'], ['literal', ['E', 'T', 'U']]],
-      ['in', ['get', 'Monitor_KfzStörungVermeiden'], ['literal', ['E', 'T', 'U']]],
-    ],
-  ]
-}
-
 export const sourcesDatasetsBerlin: SourceDatasets = [
   {
-    regionKey: ['berlin', 'bb'],
+    // regionKey: ['berlin', 'bb'],
+    regionKey: ['berlin'],
     ...sourceDatasetIdUrl('changing-cities-radnetz-monitoring'),
     name: 'Changing Cities Radnetz Monitoring',
     type: 'vector',

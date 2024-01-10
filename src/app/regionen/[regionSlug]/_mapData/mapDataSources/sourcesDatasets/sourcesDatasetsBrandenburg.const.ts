@@ -65,7 +65,8 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    // regionKey: ['bb'],
+    regionKey: [],
     ...sourceDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC',
     type: 'vector',
