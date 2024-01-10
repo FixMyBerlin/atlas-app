@@ -25,17 +25,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
   styles: [
     ...defaultStyleHidden,
     {
-      id: 'default_legacy',
-      name: 'Inhalte (Legacy)',
-      desc: null,
-      layers: legacyMapboxStyleLayers({
-        group: 'atlas_bikelanes',
-        source,
-        sourceLayer,
-      }),
-      // legends: [...defaultLegend],
-    },
-    {
       id: 'default',
       name: 'Inhalte',
       desc: null,
