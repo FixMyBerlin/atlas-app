@@ -1,4 +1,3 @@
-import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Verification/verifiedColor.const'
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_default } from './mapboxStyles/groups/atlas_bikelanes_default'
@@ -209,49 +208,49 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         },
       ],
     },
-    {
-      id: 'verification',
-      name: 'Inhalte & Prüf-Status (Legacy)',
-      desc: null,
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes_verified',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [
-        {
-          id: 'verification-approved',
-          name: 'Daten richtig',
-          style: {
-            type: 'line',
-            color: verifiedColor['approved'],
-          },
-        },
-        {
-          id: 'verification-rejected',
-          name: 'Daten überarbeiten',
-          style: {
-            type: 'line',
-            color: verifiedColor['rejected'],
-          },
-        },
-        {
-          id: 'verification-todo',
-          name: 'Überprüfung steht aus',
-          style: {
-            type: 'line',
-            color: verifiedColor['undefined'],
-          },
-        },
-      ],
-    },
+    // {
+    //   id: 'verification',
+    //   name: 'Inhalte & Prüf-Status (Legacy)',
+    //   desc: null,
+    //   layers: [
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes_verified',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //   ].flat(),
+    //   legends: [
+    //     {
+    //       id: 'verification-approved',
+    //       name: 'Daten richtig',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['approved'],
+    //       },
+    //     },
+    //     {
+    //       id: 'verification-rejected',
+    //       name: 'Daten überarbeiten',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['rejected'],
+    //       },
+    //     },
+    //     {
+    //       id: 'verification-todo',
+    //       name: 'Überprüfung steht aus',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['undefined'],
+    //       },
+    //     },
+    //   ],
+    // },
     {
       id: 'completeness',
       name: 'Aufgabe: Führungsform',
