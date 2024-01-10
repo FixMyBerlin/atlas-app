@@ -59,11 +59,10 @@ local function processTags(tags)
   processedTags.covered = Sanitize(tags.covered, binary, "implicit_no")
   processedTags.fee = Sanitize(tags.fee, binary, "implicit_no")
   processedTags.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
-  processedTags.bicycle_parking = Sanitize(tags.bicycle_parking,
-    Set({ "stands", "wide_stands", "bollard", "wave", "handlebar_holder", "streetpod", "rack", "wall_loops", "safe_loops",
-      "building", "shed", "two-tier", "lockers", "tree", "ground_slots", "crossbar", "rope", "floor", "informal",
-      "arcadia",
-      "anchors", "lean_and_stick" }))
+  processedTags.bicycle_parking = Sanitize(
+    tags.bicycle_parking,
+    Set({ "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" })
+  )
 
   local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
