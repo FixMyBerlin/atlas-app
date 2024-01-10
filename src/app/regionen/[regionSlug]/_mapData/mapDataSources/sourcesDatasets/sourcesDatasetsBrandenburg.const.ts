@@ -29,6 +29,52 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-spnv-haltepunkte'),
+    name: '(Ramboll) SPNV Haltepunkte',
+    type: 'vector',
+    attributionHtml: '&copy; OpenStreetMap, Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-spnv-haltepunkte',
+        type: 'circle',
+        paint: {
+          'circle-color': '#92400e',
+          'circle-radius': 9,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-spnv-3000'),
+    name: '(Ramboll) SPNV 3000',
+    type: 'vector',
+    attributionHtml: '&copy; OpenStreetMap, Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-spnv-3000',
+        type: 'circle',
+        paint: {
+          'circle-color': '#7c2d12',
+          'circle-radius': 7,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
     ...sourceDatasetIdUrl('bb-ramboll-zentrale-orte'),
     name: '(Ramboll) Zentrale Orte',
     type: 'vector',
@@ -50,7 +96,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
             '#701a75',
             ['==', ['get', 'Mittelzentrum'], 1],
             '#4c1d95',
-            '#a78bfa',
+            '#4c1d95',
           ],
           'circle-radius': [
             'case',
@@ -60,6 +106,119 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
             5,
             3,
           ],
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-nachbarn'),
+    name: '(Ramboll) Zentrale Orte: Nachbarn',
+    type: 'vector',
+    attributionHtml: '&copy; OpenStreetMap, Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-nachbarn',
+        type: 'circle',
+        paint: {
+          'circle-color': [
+            'case',
+            ['==', ['get', 'place'], 'town'],
+            '#701a75',
+            ['==', ['get', 'place'], 'suburb'],
+            '#4c1d95',
+            '#a78bfa',
+          ],
+          'circle-radius': 5,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-minimal-spanning-tree'),
+    name: '(Ramboll) minimal spanning tree',
+    type: 'vector',
+    attributionHtml: '&copy; Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-minimal-spanning-tree',
+        type: 'line',
+        paint: {
+          'line-color': '#a78bfa',
+          'line-width': 3,
+          'line-opacity': 0.8,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-delauney-triangulation'),
+    name: '(Ramboll) delauny triangulation',
+    type: 'vector',
+    attributionHtml: '&copy; Ramboll',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-delauney-triangulation',
+        type: 'line',
+        paint: {
+          'line-color': '#2e1065',
+          'line-width': 1.5,
+          'line-opacity': 0.8,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb'],
+    ...sourceDatasetIdUrl('bb-ramboll-gemeinden'),
+    name: '(Ramboll) Gemeinden',
+    type: 'vector',
+    attributionHtml: '&copy; LGB',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-ramboll-gemeinden',
+        type: 'fill',
+        paint: {
+          'fill-color': [
+            'match',
+            ['get', 'Anzahl ZO + SPVN3000'],
+            0,
+            '#FED2C2',
+            1,
+            '#FFFFE7',
+            2,
+            '#DDF0C5',
+            3,
+            '#A6D6B5',
+            '#A6D6B5',
+          ],
+          'fill-opacity': 0.8,
         },
       },
     ],

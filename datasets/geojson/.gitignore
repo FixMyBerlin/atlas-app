@@ -4,3 +4,5 @@ berlin-parking-polygons-euvm.geojson
 changing-cities-radnetz-monitoring.geojson
 # https://umap.openstreetmap.de/de/map/radnetz_brandenburg_41106
 bb-radnetz-adfc.geojson
+# Private data
+bb-ramboll*.geojson
