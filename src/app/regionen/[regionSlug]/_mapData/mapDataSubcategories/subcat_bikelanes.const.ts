@@ -25,7 +25,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte',
+      name: 'Führungsform einfach',
       desc: null,
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_bikelanes_default,
@@ -80,7 +80,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
     },
     {
       id: 'details',
-      name: 'Details',
+      name: 'Führungsform details',
       desc: null,
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_bikelanes_details,

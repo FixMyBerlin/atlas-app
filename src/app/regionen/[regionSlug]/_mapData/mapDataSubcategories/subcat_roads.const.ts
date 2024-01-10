@@ -18,7 +18,7 @@ export const subcat_roads: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Alle',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_roadclassification_all,
