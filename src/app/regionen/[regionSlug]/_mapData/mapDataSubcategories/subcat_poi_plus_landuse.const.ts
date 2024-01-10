@@ -2,11 +2,11 @@ import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
 
-const subcatId = 'landuse'
-export type SubcatLanduseId = typeof subcatId
-export type SubcatLanduseStyleIds = 'default'
+const subcatId = 'poiPlusLanduse'
+export type SubcatPoiPlusLanduseId = typeof subcatId
+export type SubcatPoiPlusLanduseStyleIds = 'default'
 
-export const subcat_landuse: FileMapDataSubcategory = {
+export const subcat_poi_plus_landuse: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Wohn- und Gewerbegebiete',
   sourceId: 'atlas_landuse',

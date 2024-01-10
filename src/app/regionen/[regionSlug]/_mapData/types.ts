@@ -177,7 +177,6 @@ type StaticMapDataSubcategory = Prettify<
   FileMapDataSubcategory & {
     id: SubcategoryId
     defaultStyle: 'default' | 'hidden'
-    ui: 'dropdown' | 'checkbox'
     // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
   }
 >

@@ -6,10 +6,10 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const subcatId = 'bikelanes_plus_width'
 const source = 'atlas_bikelanes'
 const sourceLayer = 'bikelanes_verified'
-export type SubcatBikelanesPlusWidthId = typeof subcatId
-export type SubcatBikelanesPlusWidthStyleIds = 'default'
+export type SubcatBikelanesPlusWidthTextId = typeof subcatId
+export type SubcatBikelanesPlusWidthTextStyleIds = 'default'
 
-export const subcat_bikelanes_plus_width: FileMapDataSubcategory = {
+export const subcat_bikelanes_plus_width_text: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Breite',
   sourceId: 'atlas_bikelanes',

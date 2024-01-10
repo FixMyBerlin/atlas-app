@@ -5,10 +5,10 @@ import { mapboxStyleGroupLayers_atlas_placescircle } from './mapboxStyles/groups
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'places'
-export type SubcatPlacesId = typeof subcatId
-export type SubcatPlacesStyleIds = 'default' | 'circle'
+export type SubcatPoiPlacesId = typeof subcatId
+export type SubcatPoiPlacesStyleIds = 'default' | 'circle'
 
-export const subcat_places: FileMapDataSubcategory = {
+export const subcat_poi_places: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Orte',
   sourceId: 'atlas_places',
