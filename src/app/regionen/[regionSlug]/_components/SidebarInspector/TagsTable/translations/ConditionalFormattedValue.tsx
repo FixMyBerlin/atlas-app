@@ -140,7 +140,9 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'smoothness',
     'surface',
     'category',
-    'traffic_sign',
+    'osm_traffic_sign',
+    'osm_traffic_sign:forward',
+    'osm_traffic_sign:backward',
     'confidence', // true key is `maxspeed_confidence`, `surface_confidence`, … but we overwrite that when passing props
     'fresh', // true key is `maxspeed_fresh`, `surface_fresh`, … but we overwrite that when passing props
   ]

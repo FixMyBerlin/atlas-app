@@ -48,7 +48,9 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
     'highway',
     'name',
     'oneway',
-    'traffic_sign',
+    'osm_traffic_sign',
+    'osm_traffic_sign:forward',
+    'osm_traffic_sign:backward',
     'width',
     'maxspeed',
   ]

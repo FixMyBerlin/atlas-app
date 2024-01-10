@@ -115,7 +115,6 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
 
               // We cannot use the `case` here due to the key array
               if (tableKeyTrafficSign.includes(cleanedKey)) {
-                console.log('foo', cleanedKey, key.includes('__if_present'), properties[cleanedKey])
                 return (
                   <TagsTableRowCompositTrafficSign
                     key={cleanedKey}
