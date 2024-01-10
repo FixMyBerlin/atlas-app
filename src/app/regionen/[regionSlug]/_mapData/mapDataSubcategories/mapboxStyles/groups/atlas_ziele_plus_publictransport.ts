@@ -19,7 +19,7 @@ export const mapboxStyleGroupLayers_atlas_ziele_plus_publictransport: MapboxStyl
         'ferry',
         ['railway_station'],
         'gb-national-rail',
-        'border-dot-13',
+        '',
       ],
       'icon-padding': 1,
       'icon-allow-overlap': true,
