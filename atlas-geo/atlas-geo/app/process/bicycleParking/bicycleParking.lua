@@ -64,9 +64,20 @@ local function processTags(tags)
     Set({ "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" })
   )
 
-  local tags_cc = { "area", "operator", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
-    "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "mapillary", "maxstay", "surveillance",
-    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description" }
+  -- these tags are copied (Eigennamen)
+  local allowed_tags = {
+    "name",
+    "operator",
+    "mapillary"
+  }
+  -- these tags are copied and prefixed with `osm_`
+  -- we need to sanatize them at some point
+  local tags_cc = {
+    "area", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
+    "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "maxstay", "surveillance",
+    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description",
+  }
+  CopyTags(processedTags, tags, allowed_tags)
   CopyTags(processedTags, tags, tags_cc, "osm_")
 
   local checkDateTag = "check_date"
