@@ -278,26 +278,26 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         },
       ],
     },
-    {
-      id: 'bikelane_oneway_arrows',
-      name: 'DEBUG: Einbahnstraßen Pfeile',
-      desc: '',
-      layers: [
-        {
-          id: 'oneway-bikelanes',
-          source,
-          'source-layer': sourceLayer,
-          type: 'line',
-          paint: {
-            'line-width': 15,
-            'line-pattern': 'oneway',
-            'line-color': 'gray',
-          },
-          filter: ['has', '_parent_highway'],
-        },
-      ],
-      legends: undefined,
-    },
+    // {
+    //   id: 'bikelane_oneway_arrows',
+    //   name: 'DEBUG: Einbahnstraßen Pfeile',
+    //   desc: '',
+    //   layers: [
+    //     {
+    //       id: 'oneway-bikelanes',
+    //       source,
+    //       'source-layer': sourceLayer,
+    //       type: 'line',
+    //       paint: {
+    //         'line-width': 15,
+    //         'line-pattern': 'oneway',
+    //         'line-color': 'gray',
+    //       },
+    //       filter: ['has', '_parent_highway'],
+    //     },
+    //   ],
+    //   legends: undefined,
+    // },
     // {
     //   id: 'freshness',
     //   name: 'Inhalte & Aktualität',
