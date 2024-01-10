@@ -48,9 +48,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         {
           id: 'separated',
           name: 'Führung baul. abgesetzt von Kfz',
-          // desc: [
-          //   '…',
-          // ],
           style: {
             type: 'line',
             color: '#174ed9',
@@ -59,9 +56,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         {
           id: 'lane',
           name: 'Führung eigenständig auf Fahrbahn',
-          // desc: [
-          //   '…',
-          // ],
           style: {
             type: 'line',
             color: '#0098f0',
@@ -70,9 +64,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         {
           id: 'foot',
           name: 'Führung mit Fußverkehr',
-          // desc: [
-          //   '…',
-          // ],
           style: {
             type: 'line',
             color: '#174ed9',
@@ -82,9 +73,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         {
           id: 'mixed',
           name: 'Führung mit Kfz (explizit)',
-          // desc: [
-          //   '…',
-          // ],
           style: {
             type: 'line',
             color: '#0098f0',
