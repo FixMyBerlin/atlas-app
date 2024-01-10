@@ -2,7 +2,7 @@ package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?
 require("CopyTags")
 require("Metadata")
 require("Set")
-require("Sanatize")
+require("Sanitize")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
