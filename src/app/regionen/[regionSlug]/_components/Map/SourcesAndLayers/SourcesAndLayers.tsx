@@ -112,7 +112,7 @@ export const SourcesAndLayers = () => {
                         paint: layerPaint,
                         beforeId: beforeId({
                           backgroundId: backgroundParam,
-                          subcategoryData: subcategoryConfig,
+                          subcategoryBeforeId: subcategoryConfig.beforeId,
                           layerType: layer.type,
                         }),
                       }

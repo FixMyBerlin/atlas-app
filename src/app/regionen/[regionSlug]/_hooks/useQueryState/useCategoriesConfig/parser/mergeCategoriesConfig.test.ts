@@ -39,7 +39,7 @@ describe('mergeCategoriesConfig()', () => {
           ],
         },
         {
-          id: 'places',
+          id: 'poiPlaces',
           ...defaultSubcategoryObject,
           styles: [
             { ...defaultStyleObject, id: 'default', active: true },
@@ -47,7 +47,7 @@ describe('mergeCategoriesConfig()', () => {
           ],
         },
         {
-          id: 'landuse',
+          id: 'poiPlusLanduse',
           ...defaultSubcategoryObject,
           styles: [{ ...defaultStyleObject, id: 'default', active: true }], // change id to name_changed
         },
@@ -59,7 +59,7 @@ describe('mergeCategoriesConfig()', () => {
       active: false,
       subcategories: [
         {
-          id: 'boundaries',
+          id: 'poiBoundaries',
           ...defaultSubcategoryObject,
           styles: [{ ...defaultStyleObject, id: 'default', active: true }],
         },

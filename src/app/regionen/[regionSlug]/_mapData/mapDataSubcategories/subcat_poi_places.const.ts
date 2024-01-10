@@ -4,7 +4,7 @@ import { mapboxStyleGroupLayers_atlas_places } from './mapboxStyles/groups/atlas
 import { mapboxStyleGroupLayers_atlas_placescircle } from './mapboxStyles/groups/atlas_placescircle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'places'
+const subcatId = 'poiPlaces'
 export type SubcatPoiPlacesId = typeof subcatId
 export type SubcatPoiPlacesStyleIds = 'default' | 'circle'
 

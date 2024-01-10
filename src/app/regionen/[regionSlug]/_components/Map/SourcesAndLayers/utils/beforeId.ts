@@ -20,16 +20,16 @@ const layerOrder: Record<string, TBeforeIds> = {
 
 type Props = {
   backgroundId: string | undefined
-  subcategoryData: FileMapDataSubcategory
+  subcategoryBeforeId: FileMapDataSubcategory['beforeId']
   layerType: FileMapDataSubcategoryStyleLayer['type']
 }
 
-export const beforeId = ({ backgroundId, subcategoryData, layerType }: Props) => {
+export const beforeId = ({ backgroundId, subcategoryBeforeId, layerType }: Props) => {
   // For all custom background (non 'default'), set beforeId=undefined which puts them at the top
   if (backgroundId !== 'default') return undefined
   if (!backgroundId) return undefined
 
   // If a specific subcategory.beforeId is given (which might be `undefined`), take that
   // … otherwise pick the beforeId base on layer.type.
-  return 'beforeId' in subcategoryData ? subcategoryData.beforeId : layerOrder[layerType]
+  return subcategoryBeforeId || layerOrder[layerType]
 }
