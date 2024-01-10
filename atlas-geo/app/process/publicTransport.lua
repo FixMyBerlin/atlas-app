@@ -76,24 +76,21 @@ local function processTags(tags)
     category = "undefined"
   end
 
-  -- these tags are copied
+  -- these tags are copied (Eigennamen)
   local allowed_tags = {
-    "name",     -- Eigenname
-    "operator", -- Eigenname
+    "name",
+    "operator",
   }
   -- these tags are copied and prefixed with `osm_`
+  -- we need to sanatize them at some point
   local tags_cc = {
     "network",
     "network:short",
-    "railway",
-    "station",
-    "light_rail",
-    "bus",
-    "ferry",
   }
   local result = { category = category }
   CopyTags(result, tags, tags_cc, 'osm_')
   CopyTags(result, tags, allowed_tags)
+
   return result
 end
 

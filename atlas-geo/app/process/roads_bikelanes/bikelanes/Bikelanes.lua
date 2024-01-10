@@ -37,28 +37,24 @@ local excludeTable = osm2pgsql.define_table({
   }
 })
 
--- whitelist of tags we want to insert intro the DB
+-- these tags are copied (Eigennamen)
+local allowed_tags = {
+  "name",
+}
+-- these tags are copied and prefixed with `osm_`
 local tags_cc = {
-  'access',
-  'conditional',
   'cycleway',
   'cycleway:lane', -- 'advisory', 'exclusive'
   'lane',          -- 'cycleway:SIDE:lane'
   'dual_carriageway',
   'highway',
-  'name',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   'prefix',
   'side',
-  'smoothness',
   'surface:colour',
-  'surface',
   'traffic_sign',
   'traffic_sign:forward',
   'traffic_sign:backward',
-  'width',
-  'bicycle:lanes',
-  'cycleway:lanes',
   'separation',
   'separation:left',
   'separation:right',
@@ -117,7 +113,10 @@ function Bikelanes(object, road)
         if sign == CENTER_SIGN then
           -- if we're dealing with the original object (center line) then prefix only keep all the tags from the `tags_cc` list and prefix them
           -- due to that it's important that the precceding operations happen before
-          cycleway = CopyTags({}, tags, tags_cc, 'osm_')
+          cycleway = {}
+          cycleway = CopyTags(cycleway, tags, allowed_tags)
+          cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
+          cycleway.width = ParseLength(tags.width)
         else
           freshTag = "check_date:" .. cycleway.prefix
         end
