@@ -1,6 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleGroupLayers_atlas_ziele_plus_landuse } from './mapboxStyles/groups/atlas_ziele_plus_landuse'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'poiPlusLanduse'
 export type SubcatPoiPlusLanduseId = typeof subcatId
@@ -14,10 +15,10 @@ export const subcat_poi_plus_landuse: FileMapDataSubcategory = {
     ...defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard (Legacy)',
+      name: 'Standard',
       desc: null,
-      layers: legacyMapboxStyleLayers({
-        group: 'atlas_landuse',
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_ziele_plus_landuse,
         source: 'atlas_landuse',
         sourceLayer: 'landuse',
       }),
@@ -25,12 +26,12 @@ export const subcat_poi_plus_landuse: FileMapDataSubcategory = {
         {
           id: 'residential',
           name: 'Wohngegend',
-          style: { type: 'fill', color: 'hsl(17, 94%, 81%)' },
+          style: { type: 'fill', color: '#fdd4c4' },
         },
         {
           id: 'non-residential',
           name: 'Gewerbe',
-          style: { type: 'fill', color: 'hsl(215, 88%, 78%)' },
+          style: { type: 'fill', color: '#cec0fb' },
         },
       ],
     },
