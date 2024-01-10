@@ -2,7 +2,7 @@ import { SourceDatasets } from './sourcesDatasets.const'
 import { cleanupMapboxCopySelectedLayerJson } from './utils/cleanupMapboxCopySelectedLayerJson'
 import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
-export const sourcesDatasetsBB: SourceDatasets = [
+export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
     regionKey: ['bb'],
     ...sourceDatasetIdUrl('bb-radnetz-barnim'),
