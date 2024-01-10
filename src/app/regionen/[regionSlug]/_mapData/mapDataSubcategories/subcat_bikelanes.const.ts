@@ -251,33 +251,33 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
     //     },
     //   ],
     // },
-    {
-      id: 'completeness',
-      name: 'Aufgabe: Führungsform',
-      desc: 'Hervorhebung ',
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes_unspecified',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [
-        {
-          id: 'unspecified',
-          name: 'Angabe ob Führungs&shy;form straßen&shy;begleitend oder frei geführt unklar',
-          style: {
-            type: 'line',
-            color: '#fa7fe2',
-          },
-        },
-      ],
-    },
+    // {
+    //   id: 'completeness',
+    //   name: 'Aufgabe: Führungsform',
+    //   desc: 'Hervorhebung ',
+    //   layers: [
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes_unspecified',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //   ].flat(),
+    //   legends: [
+    //     {
+    //       id: 'unspecified',
+    //       name: 'Angabe ob Führungs&shy;form straßen&shy;begleitend oder frei geführt unklar',
+    //       style: {
+    //         type: 'line',
+    //         color: '#fa7fe2',
+    //       },
+    //     },
+    //   ],
+    // },
     // {
     //   id: 'bikelane_oneway_arrows',
     //   name: 'DEBUG: Einbahnstraßen Pfeile',
