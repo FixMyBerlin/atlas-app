@@ -4,6 +4,8 @@
 // - "ALL--" stands for "all sources". Those translations are applied without checking the soureId
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
+  'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
+  'ALL--category--key': 'Führungsform',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
   'ALL--category=bicycleRoad': 'Fahrradstraße',
   'ALL--category=crossing': 'Straßenquerung',
@@ -90,11 +92,10 @@ export const translations: { [key: string]: string } = {
   'atlas_bicycleParking--capacity--key': 'Anzahl Fahrrad-Stellplätze',
   'atlas_bicycleParking--capacity:cargo_bike--key': 'Anzahl Lastenfahrrad-Stellplätze',
   'atlas_bicycleParking--title': 'Fahrradstellplätze',
-  'atlas_bikelanes--category--key': 'Führungsform',
   'atlas_bikelanes--category=pedestrianAreaBicycleYes': 'Fußgängerzone, Fahrrad frei',
   'atlas_bikelanes--category=sharedBusLane': 'Gemeinsamer Fahrstreifen mti Bussen',
   'atlas_bikelanes--category=sharedMotorVehicleLane': 'Gemeinsamer Fahrstreifen mit Kfz',
-  'atlas_bikelanes--composit_highway--key': 'Straßentyp',
+  'atlas_bikelanes--category--key': 'Straßentyp',
   'atlas_bikelanes--oneway=car_not_bike': 'Einbahnstraße für Kfz aber Zweirichtungsradwege',
   'atlas_bikelanes--oneway=implicit_no': 'Zweirichtungsradweg (implizite Angabe)',
   'atlas_bikelanes--oneway=implicit_yes': 'Einrichtungsradweg (implizite Angabe)',
