@@ -12,9 +12,9 @@ export type SubcatBikelanesPlusWidthTextStyleIds = 'default'
 export const subcat_bikelanes_plus_width_text: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Breite',
+  ui: 'checkbox',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Breite (Text)',

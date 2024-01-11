@@ -10,9 +10,9 @@ export type SubcatPoiPlusLanduseStyleIds = 'default'
 export const subcat_poi_plus_landuse: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Wohn- und Gewerbegebiete',
+  ui: 'checkbox',
   sourceId: 'atlas_landuse',
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

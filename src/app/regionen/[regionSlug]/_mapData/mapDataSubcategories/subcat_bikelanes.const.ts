@@ -20,9 +20,10 @@ export type SubcatBikelanesStyleIds =
 export const subcat_bikelanes: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Radinfrastruktur',
+  ui: 'dropdown',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Führungsform einfach',

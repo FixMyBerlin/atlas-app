@@ -10,9 +10,10 @@ export type SubcatPoiBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
 export const subcat_poi_boundaries: FileMapDataSubcategory = {
   id: topiId,
   name: 'Grenzen',
+  ui: 'dropdown',
   sourceId: 'atlas_boundaries',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Gemeindeverbund / Amt',

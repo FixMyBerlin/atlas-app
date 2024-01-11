@@ -1,7 +1,7 @@
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { SelectCategory } from './SelectCategory'
+import { CategoryDisclosure } from './CategoryDisclosure'
 
-export const SelectCategories = () => {
+export const Categories = () => {
   const { categoriesConfig } = useCategoriesConfig()
 
   if (!categoriesConfig) return null
@@ -17,7 +17,11 @@ export const SelectCategories = () => {
         const active = activeCategoryIds.includes(categoryConfig.id)
 
         return (
-          <SelectCategory key={categoryConfig.id} categoryConfig={categoryConfig} active={active} />
+          <CategoryDisclosure
+            key={categoryConfig.id}
+            categoryConfig={categoryConfig}
+            active={active}
+          />
         )
       })}
     </nav>

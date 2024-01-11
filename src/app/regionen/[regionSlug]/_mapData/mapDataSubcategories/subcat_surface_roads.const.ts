@@ -30,9 +30,10 @@ export const legendSurfaceBad = [
 export const subcat_surface_roads: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Fahrbahn',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

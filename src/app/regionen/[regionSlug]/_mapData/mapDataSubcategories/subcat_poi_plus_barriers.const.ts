@@ -12,9 +12,9 @@ export type SubcatPoiPlusBarriersStyleIds = 'default'
 export const subcat_poi_plus_barriers: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Barrieren',
+  ui: 'checkbox',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

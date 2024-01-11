@@ -11,9 +11,10 @@ export type SubcatPoiPlacesStyleIds = 'default' | 'circle'
 export const subcat_poi_places: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Orte',
+  ui: 'dropdown',
   sourceId: 'atlas_places',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Siedlungszentren Name',

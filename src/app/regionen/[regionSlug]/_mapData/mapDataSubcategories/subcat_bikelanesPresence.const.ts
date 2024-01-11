@@ -12,9 +12,10 @@ export type SubcatBikelanesPresenceStyleIds = 'default'
 export const subcat_bikelanesPresence: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Vollständigkeit Radinfrastruktur',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Vollständigkeit',

@@ -9,7 +9,8 @@ import { twJoin } from 'tailwind-merge'
 import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { createSubcatStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
-import { SelectLegend } from '../SelectLegend/SelectLegend'
+import { Legend } from '../Legend/Legend'
+import invariant from 'tiny-invariant'
 
 type Props = {
   categoryId: MapDataCategoryId
@@ -17,7 +18,7 @@ type Props = {
   disabled: boolean
 }
 
-export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
+export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) => {
   const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
 
   const [trigger, container] = usePopper({
@@ -26,18 +27,18 @@ export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
     modifiers: [{ name: 'offset', options: { offset: [0, 8] } }],
   })
 
-  type ToggleActiveProps = { subcatId: string; styleId: string }
-  const toggleActive = ({ subcatId, styleId }: ToggleActiveProps) => {
+  type SelectActiveProps = { subcatId: string; styleId: string }
+  const selectActive = ({ subcatId, styleId }: SelectActiveProps) => {
     const oldConfig = categoriesConfig
     const newConfig = produce(oldConfig, (draft) => {
-      const category = draft
+      const subcat = draft
         ?.find((th) => th.id === categoryId)
         ?.subcategories.find((t) => t.id === subcatId)
 
-      if (category) {
-        const style = category.styles.find((s) => s.id === styleId)
-        category.styles.forEach((s) => (s.active = false))
-        style && (style.active = !style.active)
+      if (subcat) {
+        const style = subcat.styles.find((s) => s.id === styleId)
+        subcat.styles.forEach((s) => (s.active = false))
+        style && (style.active = true)
       }
     })
     void setCategoriesConfig(newConfig)
@@ -47,8 +48,10 @@ export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
 
   const activeStyleConfig = subcatConfig.styles.find((s) => s.active)
 
+  // invariant(activeStyleConfig && activeStyleConfig.ui === 'dropdown')
+
   return (
-    <section className="mt-1.5">
+    <div>
       <Menu as="div" className="relative inline-block w-full text-left">
         {({ open }) => (
           <>
@@ -87,7 +90,7 @@ export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
                           <button
                             type="button"
                             onClick={() =>
-                              toggleActive({
+                              selectActive({
                                 subcatId: subcatConfig.id,
                                 styleId: styleConfig.id,
                               })
@@ -111,7 +114,7 @@ export const SelectStyles = ({ categoryId, subcatConfig, disabled }: Props) => {
         )}
       </Menu>
 
-      <SelectLegend subcategoryId={subcatConfig.id} styleConfig={activeStyleConfig} />
-    </section>
+      <Legend subcategoryId={subcatConfig.id} styleConfig={activeStyleConfig} />
+    </div>
   )
 }

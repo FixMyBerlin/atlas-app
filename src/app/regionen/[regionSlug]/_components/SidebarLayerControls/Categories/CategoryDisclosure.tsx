@@ -2,14 +2,15 @@ import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { SelectSubcategory } from '../SelectSubcategory/SelectSubcategory'
+import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+import { SubcategoriesCheckbox } from '../Subcategories/SubcategoriesCheckbox'
+import { SubcategoriesDropdown } from '../Subcategories/SubcategoriesDropdown'
 import { Toggle } from '../Toggle/Toggle'
 
 type Props = { categoryConfig: MapDataCategoryConfig; active: boolean }
 
-export const SelectCategory = ({ categoryConfig: currCategoryConfig, active }: Props) => {
+export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active }: Props) => {
   const { resetInspector } = useMapStateInteraction()
   const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
 
@@ -23,6 +24,13 @@ export const SelectCategory = ({ categoryConfig: currCategoryConfig, active }: P
     void setCategoriesConfig(newConfig)
     resetInspector()
   }
+
+  const dropdownSubcategories = currCategoryConfig.subcategories?.filter(
+    (subcat) => subcat.ui === 'dropdown',
+  )
+  const checkboxSubcategories = currCategoryConfig.subcategories?.filter(
+    (subcat) => subcat.ui === 'checkbox',
+  )
 
   return (
     <Disclosure key={currCategoryConfig.name}>
@@ -51,8 +59,24 @@ export const SelectCategory = ({ categoryConfig: currCategoryConfig, active }: P
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel static>
-              <SelectSubcategory categoryConfig={currCategoryConfig} disabled={!active} />
+            <Disclosure.Panel static as="nav" className="mb-2 mt-3">
+              {Boolean(dropdownSubcategories.length) && (
+                <SubcategoriesDropdown
+                  categoryId={currCategoryConfig.id}
+                  subcategories={dropdownSubcategories}
+                  disabled={!active}
+                />
+              )}
+              {Boolean(checkboxSubcategories.length) && (
+                <>
+                  {Boolean(dropdownSubcategories.length) && <hr className="mx-1.5 mb-2 mt-3 h-1" />}
+                  <SubcategoriesCheckbox
+                    categoryId={currCategoryConfig.id}
+                    subcategories={checkboxSubcategories}
+                    disabled={!active}
+                  />
+                </>
+              )}
             </Disclosure.Panel>
           </Transition>
         </>

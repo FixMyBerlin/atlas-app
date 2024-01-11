@@ -14,9 +14,10 @@ export type SubcatSurfaceBikelaneStyleIds = 'default' | 'bad'
 export const subcat_surface_bikelane: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Radverkehrsanlagen',
+  ui: 'dropdown',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

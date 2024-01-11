@@ -12,9 +12,9 @@ export type SubcatPoiPlusPublicTransportStyleIds = 'default' | 'default_legacy'
 export const subcat_poi_plus_publicTransport: FileMapDataSubcategory = {
   id: tpoicId,
   name: 'Bahnhöfe',
+  ui: 'checkbox',
   sourceId: 'atlas_publicTransport',
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

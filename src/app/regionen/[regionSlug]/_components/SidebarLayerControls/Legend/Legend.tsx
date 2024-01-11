@@ -1,6 +1,7 @@
 import { twJoin } from 'tailwind-merge'
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
 import {
+  FileMapDataSubcategoryHiddenStyle,
   FileMapDataSubcategoryStyle,
   FileMapDataSubcategoryStyleLegend,
 } from '../../../_mapData/types'
@@ -8,8 +9,6 @@ import {
   createSubcatStyleKey,
   createSubcatStyleLegendKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
-import { LegendDebugInfoLayerStyle } from './LegendDebugInfo/LegendDebugInfoLayerStyle'
-import { LegendDebugInfoSubcatLayerConfig } from './LegendDebugInfo/LegendDebugInfoSubcatLayerConfig'
 import { LegendIconArea } from './LegendIcons/LegendIconArea'
 import { LegendIconCircle } from './LegendIcons/LegendIconCircle'
 import { LegendIconLine } from './LegendIcons/LegendIconLine'
@@ -17,20 +16,16 @@ import { LegendIconText } from './LegendIcons/LegendIconText'
 import { LegendIconTypes } from './LegendIcons/types'
 import { LegendNameDesc } from './LegendNameDesc'
 
-type Props = { subcategoryId: SubcategoryId; styleConfig: FileMapDataSubcategoryStyle | undefined }
+type Props = {
+  subcategoryId: SubcategoryId
+  styleConfig: FileMapDataSubcategoryStyle | FileMapDataSubcategoryHiddenStyle | undefined
+}
 
-export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
+export const Legend = ({ subcategoryId, styleConfig }: Props) => {
   const legends = styleConfig?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
   if (!styleConfig || !legends?.length) {
-    return (
-      <section className="relative">
-        <LegendDebugInfoSubcatLayerConfig
-          subcategoryId={subcategoryId}
-          styleDataLayers={styleConfig?.layers}
-        />
-      </section>
-    )
+    return null
   }
 
   const handleClick = (subcategoryId: SubcategoryId, styleId: StyleId, legendId: LegendId) => {
@@ -90,7 +85,7 @@ export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
   }
 
   return (
-    <section className="relative mt-3 pt-0.5">
+    <section className="relative mt-2">
       <fieldset>
         <legend className="sr-only">Legende</legend>
         <div className="space-y-1">
@@ -134,10 +129,6 @@ export const SelectLegend = ({ subcategoryId, styleConfig }: Props) => {
               </label>
             )
           })}
-          <LegendDebugInfoLayerStyle
-            title={`Debug info: All layer and their styles for subcategory "${subcategoryId}" (since subcategory config does not specify layers (yet or by design))`}
-            layers={styleConfig.layers}
-          />
         </div>
       </fieldset>
     </section>

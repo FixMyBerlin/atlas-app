@@ -19,10 +19,11 @@ export type SubcatParkingStatsStyleIds =
 export const subcat_parkingStats: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Statistik',
+  ui: 'dropdown',
   sourceId: 'parkraumParkingStats',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'stats-admin-level-4',
       name: 'Stadt: % Erfassung',

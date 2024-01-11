@@ -12,9 +12,9 @@ export type SubcatBikelanesPlusSurfaceStyleIds = 'default'
 export const subcat_bikelanes_plus_surface_text: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Oberfläche (Text)',
+  ui: 'checkbox',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Oberfläche (Text)',

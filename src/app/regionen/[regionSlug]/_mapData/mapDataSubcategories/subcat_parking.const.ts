@@ -15,10 +15,11 @@ export type SubcatParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
 export const subcat_parking: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkraum',
+  ui: 'dropdown',
   sourceId: 'parkraumParking',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

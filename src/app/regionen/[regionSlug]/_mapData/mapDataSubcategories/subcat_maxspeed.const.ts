@@ -14,9 +14,10 @@ export type SubcatMaxspeedStyleIds = 'default' | 'below30' | 'above40'
 export const subcat_maxspeed: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Höchstgeschwindigkeit',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Alle Höchstgeschwindigkeiten',

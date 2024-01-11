@@ -78,7 +78,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
                   className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="Vector Tile URL"
                   defaultValue={sourceData.tiles}
-                  onFocus={(event: React.ChangeEvent<HTMLInputElement>) => event.target.select()}
+                  onFocus={(event) => event.target.select()}
                 />
               </div>
             </div>

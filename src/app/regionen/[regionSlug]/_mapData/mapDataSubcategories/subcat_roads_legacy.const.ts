@@ -11,9 +11,10 @@ export type SubcatRoadsStyleIdsLegacy = 'default' | 'oneway'
 export const subcat_roads_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard (Legacy)',

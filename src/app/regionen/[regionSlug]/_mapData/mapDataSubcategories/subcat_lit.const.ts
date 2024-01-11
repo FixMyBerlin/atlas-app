@@ -39,9 +39,10 @@ const defaultLegend: FileMapDataSubcategory['styles'][0]['legends'] = [
 export const subcat_lit: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Beleuchtung',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Inhalte (Legacy)',
