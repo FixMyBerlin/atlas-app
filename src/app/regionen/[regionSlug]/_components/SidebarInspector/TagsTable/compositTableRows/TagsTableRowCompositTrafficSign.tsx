@@ -81,6 +81,16 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
     title: 'Zulässige Höchst­geschwindigkeit 30 km/h',
     signUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Zeichen_274-53.svg',
   },
+  '350.1': {
+    title: 'Radschnellweg',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/a/a1/Zeichen_350.1_-_Radschnellweg%3B_StVO_2020.svg',
+  },
+  '350.2': {
+    title: 'Ende des Radschnellwegs',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/a/a5/Zeichen_350.2_-_Ende_des_Radschnellwegs%3B_StVO_2020.svg',
+  },
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
