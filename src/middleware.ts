@@ -55,9 +55,6 @@ export function middleware(request: NextRequest) {
     }
     for (const [old, updated] of Object.entries(nameMigrations)) {
       newConfig = newConfig.replaceAll(old, updated)
-      if (old.includes('barrier')) {
-        console.log('HIER:', old, updated, newConfig)
-      }
     }
     url.searchParams.set('config', newConfig)
   }
