@@ -33,6 +33,7 @@ services:
     container_name: tiles
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      RUST_LOG: RUST_LOG=actix_web=debug,martin=debug,tokio_postgres=debug
     ports:
       - 3000:3000
     depends_on:
