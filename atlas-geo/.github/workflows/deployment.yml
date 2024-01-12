@@ -111,7 +111,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf"
+          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf,configs/nginx.conf"
           target: "/srv/processing/"
           overwrite: true
 
