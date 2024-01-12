@@ -12,3 +12,7 @@ __pycache__
 .idea
 
 node_modules
+
+# Nginx
+cache/
+logs/
