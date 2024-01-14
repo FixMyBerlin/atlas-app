@@ -11,6 +11,7 @@ import { z } from 'zod'
 const ExportSchema = z.object({
   regionSlug: z.string(),
   tableName: z.enum(exportApiIdentifier),
+  accessToken: z.string().optional(),
   minlon: z.coerce.number().default(13.3),
   minlat: z.coerce.number().default(52.2),
   maxlon: z.coerce.number().default(13.7),
@@ -29,10 +30,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // calling an anonymous function to easily break out of nested ifs
   const status = await (async () => {
-    const { regionSlug } = params
+    const { regionSlug, accessToken } = params
 
-    if (true) {
-      // TODO: check master export key
+    if (accessToken === process.env.EXPORT_ACCESS_TOKEN) {
+      return 200 // <==========
     }
 
     let exportPublic: boolean
