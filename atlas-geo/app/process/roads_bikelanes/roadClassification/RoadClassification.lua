@@ -93,6 +93,8 @@ function RoadClassification(object)
     'traffic_sign',
     'traffic_sign:forward',
     'traffic_sign:backward',
+    "mapillary",
+    "description",
   }
   CopyTags(roadClassification, tags, allowed_tags)
   CopyTags(roadClassification, tags, tags_cc, "osm_")

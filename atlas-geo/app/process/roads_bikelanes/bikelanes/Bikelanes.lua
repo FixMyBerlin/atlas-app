@@ -61,6 +61,8 @@ local tags_cc = {
   'traffic_mode',
   'traffic_mode:left',
   'traffic_mode:right',
+  "mapillary",
+  "description",
 }
 
 local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }

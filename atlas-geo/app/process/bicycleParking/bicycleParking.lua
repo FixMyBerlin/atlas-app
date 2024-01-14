@@ -68,7 +68,6 @@ local function processTags(tags)
   local allowed_tags = {
     "name",
     "operator",
-    "mapillary"
   }
   -- these tags are copied and prefixed with `osm_`
   -- we need to sanatize them at some point
@@ -76,6 +75,8 @@ local function processTags(tags)
     "area", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "maxstay", "surveillance",
     "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description",
+    "mapillary",
+    "description",
   }
   CopyTags(processedTags, tags, allowed_tags)
   CopyTags(processedTags, tags, tags_cc, "osm_")
