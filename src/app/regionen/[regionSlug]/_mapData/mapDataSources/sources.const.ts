@@ -202,6 +202,8 @@ export const sources: MapDataSource<
         'composit_maxspeed',
         'composit_road_bikelanes',
         'osm_traffic_sign',
+        'osm_traffic_sign:forward__if_present',
+        'osm_traffic_sign:backward__if_present',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
