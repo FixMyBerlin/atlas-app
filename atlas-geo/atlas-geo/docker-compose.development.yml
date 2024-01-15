@@ -13,7 +13,6 @@ services:
       PGPASSWORD:
       OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
-      SKIP_TAG_FILTER:
       DEBUG:
       ID_FILTER:
       API_SECRET:
