@@ -48,6 +48,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
     'composit_mapillary',
     'highway',
     'name',
+    'description',
     'oneway',
     'osm_traffic_sign',
     'osm_traffic_sign:forward',
