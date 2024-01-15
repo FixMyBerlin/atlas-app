@@ -1,6 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("CopyTags")
+require("Sanitize")
 
 function RoadClassification(object)
   -- Values that we would allow, but skip here:
@@ -82,20 +83,23 @@ function RoadClassification(object)
     roadClassification['road_oneway:bicycle'] = tags['oneway:bicycle']
   end
 
-  local tags_cc = {
+  -- these tags are copied (Eigennamen)
+  local allowed_tags = {
     "name",
-    "highway",
-    "footway",
-    "access",
-    "service",
-    "is_sidepath",
-    "maxspeed",
-    "surface",
-    "smoothness",
-    "oneway",
-    "oneway:bicycle",
   }
+  -- these tags are copied and prefixed with `osm_`
+  -- we need to sanatize them at some point
+  local tags_cc = {
+    'traffic_sign',
+    'traffic_sign:forward',
+    'traffic_sign:backward',
+    "mapillary",
+    "description",
+  }
+  CopyTags(roadClassification, tags, allowed_tags)
   CopyTags(roadClassification, tags, tags_cc, "osm_")
+  roadClassification.width = ParseLength(tags.width)
+  roadClassification.oneway = Sanitize(tags.oneway, Set({ "yes", "no" }))
 
   return roadClassification
 end

@@ -153,8 +153,11 @@ local function cyclewaySeparatedCases(tags)
   -- traffic_sign=DE:237, "Radweg", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
   -- cycleway=track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dtrack
   -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway%3Dopposite_track
-  if tags.traffic_sign == "DE:237"
-      or (tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath)) then
+  local taggedWithAccessTagging = tags.highway == "cycleway" and
+      (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath)
+  -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:237") and not tags.cycleway == "lane"
+  if taggedWithAccessTagging or taggedWithTrafficsign then
     -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
     if tags.is_sidepath == "yes" or tags._parent_highway then
       -- This could be PBLs "Protected Bike Lanes"

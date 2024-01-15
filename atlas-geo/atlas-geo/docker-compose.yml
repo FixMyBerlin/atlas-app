@@ -28,9 +28,10 @@ services:
   tiles:
     image: ghcr.io/maplibre/martin
     container_name: tiles
-    restart: always
+    restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      RUST_LOG: RUST_LOG=actix_web=info,martin=info,tokio_postgres=info
     command: ["--auto-bounds=calc"]
     ports:
       - 3333:3000
@@ -44,7 +45,7 @@ services:
       - app_bridge
     depends_on:
       db:
-        condition: service_healthy
+       condition: service_healthy
   api:
     image: public.ecr.aws/n0p8j4k5/atlas/api:${GITHUB_SHA}
     container_name: api
@@ -54,7 +55,7 @@ services:
       PGUSER:
       PGPASSWORD:
       API_SECRET:
-    restart: always
+    restart: unless-stopped
     ports:
       - "8020:80"
     labels:
