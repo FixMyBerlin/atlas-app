@@ -45,6 +45,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   const simpleTranslFallbackKeys = [
     '_parent_highway',
     'composit_surface_smoothness',
+    'composit_mapillary',
     'highway',
     'name',
     'oneway',

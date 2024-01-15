@@ -9,6 +9,10 @@ import {
 } from './compositTableRows/TagsTableRowCompositHighway'
 import { TagsTableRowCompositLit, tableKeyLit } from './compositTableRows/TagsTableRowCompositLit'
 import {
+  TagsTableRowCompositMapillary,
+  tableKeyMapillary,
+} from './compositTableRows/TagsTableRowCompositMapillary'
+import {
   TagsTableRowCompositMaxspeed,
   tableKeyMaxspeed,
 } from './compositTableRows/TagsTableRowCompositMaxspeed'
@@ -100,6 +104,16 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case tableKeyLit: {
               return (
                 <TagsTableRowCompositLit
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyMapillary: {
+              return (
+                <TagsTableRowCompositMapillary
                   key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}

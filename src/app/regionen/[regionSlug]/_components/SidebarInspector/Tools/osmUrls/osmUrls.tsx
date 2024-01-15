@@ -23,6 +23,12 @@ export const mapillaryUrl = (geometry: maplibregl.GeoJSONFeature['geometry']) =>
   return `https://www.mapillary.com/app/?lat=${lat}&lng=${lng}&z=15`
 }
 
+export const mapillaryKeyUrl = (key: number) => {
+  if (!key) return undefined
+
+  return `https://www.mapillary.com/app/?pKey=${key}&focus=photo&z=15`
+}
+
 export const osmUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
   if (!zoom || !lat || !lng) return
 

@@ -167,6 +167,7 @@ export const sources: MapDataSource<
         'width',
         'composit_surface_smoothness',
         'osm_surface:color__if_present',
+        'composit_mapillary',
       ],
     },
     // presence: { enabled: true },
@@ -204,6 +205,7 @@ export const sources: MapDataSource<
         'osm_traffic_sign',
         'osm_traffic_sign:forward__if_present',
         'osm_traffic_sign:backward__if_present',
+        'composit_mapillary',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
@@ -469,7 +471,11 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['capacity', 'capacity:cargo_bike__if_present'],
+      documentedKeys: [
+        'capacity',
+        'capacity:cargo_bike__if_present',
+        'composit_mapillary',
+      ],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
