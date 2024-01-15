@@ -9,7 +9,7 @@ import {
 } from 'react-map-gl'
 import { Prettify } from 'src/app/_components/types/types'
 import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
-import { LegendIconTypes } from '../_components/SidebarLayerControls/SelectLegend/LegendIcons/types'
+import { LegendIconTypes } from '../_components/SidebarLayerControls/Legend/LegendIcons/types'
 import { MapDataCategoryId } from './mapDataCategories/categories.const'
 import { SourcesId } from './mapDataSources/sources.const'
 import { StyleId, SubcategoryId } from './typeId'
@@ -177,7 +177,6 @@ type StaticMapDataSubcategory = Prettify<
   FileMapDataSubcategory & {
     id: SubcategoryId
     defaultStyle: 'default' | 'hidden'
-    ui: 'dropdown' | 'checkbox'
     // TODO: We might need to add a "mapOrder" value here to specify that "places" needs to be at the top on the map but at the bottom of the dropdown in the UI
   }
 >
@@ -190,25 +189,33 @@ export type FileMapDataSubcategory = {
   name: string
   sourceId: SourcesId
   beforeId?: TBeforeIds
-  styles: FileMapDataSubcategoryStyle[]
-}
+} & (
+  | {
+      ui: 'dropdown'
+      styles: (FileMapDataSubcategoryStyle | FileMapDataSubcategoryHiddenStyle)[]
+    }
+  | {
+      ui: 'checkbox'
+      styles: FileMapDataSubcategoryStyle[]
+    }
+)
 
 /** @desc: Different visual views of the same thematic data; Can contain static filter, eg. "only lines with todos"); eg. 'Default,  Bad infrastructure (only)', 'Where debugging is needed' */
-export type FileMapDataSubcategoryStyle =
-  | {
-      id: StyleId
-      name: string
-      desc: null | string
-      layers: FileMapDataSubcategoryStyleLayer[]
-      legends?: null | FileMapDataSubcategoryStyleLegend[]
-    }
-  | {
-      id: 'hidden'
-      name: string
-      desc: null | string
-      layers?: never
-      legends?: never
-    }
+export type FileMapDataSubcategoryStyle = {
+  id: StyleId
+  name: string
+  desc: null | string // TODO REMOVE
+  layers: FileMapDataSubcategoryStyleLayer[]
+  legends?: null | FileMapDataSubcategoryStyleLegend[]
+}
+
+export type FileMapDataSubcategoryHiddenStyle = {
+  id: 'hidden'
+  name: string
+  desc: null // TODO REMOVE
+  layers?: never
+  legends?: never
+}
 
 /** @desc: The technical glue between sources and styles. The name "layers" is defined by the library we use. */
 export type FileMapDataSubcategoryStyleLayer = Prettify<

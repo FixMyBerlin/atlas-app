@@ -1,11 +1,9 @@
-import { FileMapDataSubcategoryStyle } from '../../types'
+import { FileMapDataSubcategoryHiddenStyle } from '../../types'
 
-export const defaultStyleHidden: FileMapDataSubcategoryStyle[] = [
-  {
-    id: 'hidden',
-    name: 'Kein Stil',
-    desc: null,
-    layers: undefined,
-    legends: undefined,
-  },
-]
+export const defaultStyleHidden: FileMapDataSubcategoryHiddenStyle = {
+  id: 'hidden',
+  name: 'Kein Stil',
+  desc: null,
+  layers: undefined,
+  legends: undefined,
+}

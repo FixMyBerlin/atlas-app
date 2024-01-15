@@ -2,12 +2,15 @@ import { z } from 'zod'
 
 export const RegionSchema = z.object({
   slug: z.string(),
-  public: z.coerce.boolean(),
+  public: z.boolean(),
+  exportPublic: z.boolean(),
 })
 
-export const RegionFormSchema = RegionSchema.merge(
+const trueOrFalse = z.enum(['true', 'false']).transform((v) => v === 'true')
+export const RegionFormSchema = RegionSchema.omit({ public: true, exportPublic: true }).merge(
   z.object({
-    public: z.string(),
+    public: trueOrFalse,
+    exportPublic: trueOrFalse,
   }),
 )
 

@@ -8,9 +8,10 @@ export type SubcatMapillaryCoverageStyleIds = 'default' | 'pano'
 export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Mapillary',
+  ui: 'dropdown',
   sourceId: 'mapillary_coverage',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

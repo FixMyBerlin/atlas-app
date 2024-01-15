@@ -18,6 +18,7 @@ export const RegionsTable = ({ regions }: { regions: TRegion[] }) => {
         <tr className="bg-white/90">
           <th>Name</th>
           <th>Sichtbarkeit</th>
+          <th>Export</th>
           <th>Atlas</th>
           <th>Details</th>
           <th />
@@ -31,6 +32,7 @@ export const RegionsTable = ({ regions }: { regions: TRegion[] }) => {
               <strong>{region.name}</strong>
             </th>
             <td>{region.public ? 'Öffentlich' : 'Versteckt'}</td>
+            <td>{region.exportPublic ? 'Jeder' : 'Mitglieder'}</td>
             <td>
               <Link href={`/regionen/${region.slug}`}>Öffnen…</Link>
             </td>

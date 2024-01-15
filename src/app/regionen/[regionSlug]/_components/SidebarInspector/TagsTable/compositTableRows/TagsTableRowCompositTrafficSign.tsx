@@ -81,31 +81,40 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
     title: 'Zulässige Höchst­geschwindigkeit 30 km/h',
     signUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Zeichen_274-53.svg',
   },
+  '350.1': {
+    title: 'Radschnellweg',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/a/a1/Zeichen_350.1_-_Radschnellweg%3B_StVO_2020.svg',
+  },
+  '350.2': {
+    title: 'Ende des Radschnellwegs',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/a/a5/Zeichen_350.2_-_Ende_des_Radschnellwegs%3B_StVO_2020.svg',
+  },
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const tableKeyTrafficSign = 'traffic_sign'
+export const tableKeyTrafficSign = [
+  'osm_traffic_sign',
+  'osm_traffic_sign:forward',
+  'osm_traffic_sign:backward',
+]
 export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,
   properties,
 }) => {
-  const receivedSigns: string[] | undefined = properties['traffic_sign']
+  const receivedSigns: string[] | undefined = properties[tagKey]
     ?.replaceAll('DE:', '')
     ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
 
   if (!receivedSigns?.length) {
     return (
-      <TagsTableRow
-        key={tagKey}
-        sourceId={sourceId}
-        tagKey={tagKey}
-        value={properties['traffic_sign']}
-      />
+      <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey} value={properties[tagKey]} />
     )
   }
 
-  if (properties['traffic_sign'] === 'none') {
+  if (properties[tagKey] === 'none') {
     return (
       <TagsTableRow
         key={tagKey}
@@ -114,8 +123,8 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
         value={
           <ConditionalFormattedValue
             sourceId={sourceId}
-            tagKey={'traffic_sign'}
-            tagValue={properties['traffic_sign']}
+            tagKey={tagKey}
+            tagValue={properties[tagKey]}
           />
         }
       />
@@ -128,26 +137,31 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
       sourceId={sourceId}
       tagKey={tagKey}
       value={
-        <div className="flex gap-3">
+        <div className="flex divide-x">
           {receivedSigns.map((sign) => {
             return (
-              <div key={sign}>
-                <div className="mb-1">
-                  {trafficSigns[sign]?.title || (
-                    <code className="rounded-md border border-gray-500 bg-gray-50 p-1.5 text-xs">
-                      {sign}
-                    </code>
-                  )}
-                </div>
-                {trafficSigns[sign]?.signUrl && (
-                  // Why do I need to "!" this when I just guarded it…?
-                  <Image
-                    src={trafficSigns[sign]!.signUrl}
-                    width={48}
-                    height={48}
-                    alt=""
-                    className="h-12 max-w-[3rem]"
-                  />
+              <div
+                key={sign}
+                className="flex flex-col items-start justify-center px-3 first:pl-0 last:pr-0"
+              >
+                {trafficSigns[sign]?.title ? (
+                  <>
+                    <p className="mb-1 leading-tight">{trafficSigns[sign]?.title}</p>
+                    {trafficSigns[sign]?.signUrl && (
+                      // TS: Why do I need to "!" this when I just guarded it…?
+                      <Image
+                        src={trafficSigns[sign]!.signUrl}
+                        width={48}
+                        height={48}
+                        alt=""
+                        className="h-12 max-w-[3rem]"
+                      />
+                    )}
+                  </>
+                ) : (
+                  <code className="block rounded-md border bg-gray-700 p-1.5 text-center text-xs leading-tight text-gray-50">
+                    {sign}
+                  </code>
                 )}
               </div>
             )

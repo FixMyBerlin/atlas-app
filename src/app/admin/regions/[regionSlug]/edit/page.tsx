@@ -42,7 +42,13 @@ export default function AdminEditRegionPage() {
       <RegionForm
         submitText="Update Region"
         schema={RegionFormSchema}
-        initialValues={{ ...region, ...{ public: String(region.public) } }}
+        initialValues={{
+          ...region,
+          // @ts-ignore
+          public: String(!!region.public),
+          // @ts-ignore
+          exportPublic: String(!!region.exportPublic),
+        }}
         onSubmit={async (values) => {
           try {
             await updateRegionMutation({

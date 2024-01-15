@@ -13,12 +13,13 @@ export type SubcatRoadsStyleIds = 'default' | 'sidestreets' | 'mainstreets'
 export const subcat_roads: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Alle',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_roadclassification_all,

@@ -4,17 +4,17 @@ import { mapboxStyleGroupLayers_atlas_barriers__area } from './mapboxStyles/grou
 import { mapboxStyleGroupLayers_atlas_barriers__line } from './mapboxStyles/groups/atlas_barriers__line'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'barriers'
+const subcatId = 'poiPlusBarriers'
 const source = 'atlas_barriers'
-export type SubcatBarriersId = typeof subcatId
-export type SubcatBarriersStyleIds = 'default'
+export type SubcatPoiPlusBarriersId = typeof subcatId
+export type SubcatPoiPlusBarriersStyleIds = 'default'
 
-export const subcat_barriers: FileMapDataSubcategory = {
+export const subcat_poi_plus_barriers: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Barrieren',
+  ui: 'checkbox',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

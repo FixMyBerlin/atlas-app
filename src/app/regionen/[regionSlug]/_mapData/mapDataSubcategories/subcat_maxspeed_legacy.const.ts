@@ -11,9 +11,10 @@ export type SubcatMaxspeedStyleIdsLegacy = 'default' | 'details' | 'source'
 export const subcat_maxspeed_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Höchstgeschwindigkeit (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Hohe Geschwindigkeiten (Legacy)',

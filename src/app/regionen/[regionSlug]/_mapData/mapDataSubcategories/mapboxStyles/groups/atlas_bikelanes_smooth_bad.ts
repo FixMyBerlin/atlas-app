@@ -13,7 +13,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_smooth_bad: MapboxStyleLayer
         'match',
         ['get', 'smoothness'],
         ['bad'],
-        '#f90606',
+        '#d8035c',
         ['very_bad'],
         '#d8035c',
         'rgba(0, 0, 0, 0)',

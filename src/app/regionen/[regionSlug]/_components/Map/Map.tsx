@@ -133,6 +133,7 @@ export const Map: React.FC = () => {
       dragRotate={false}
       // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
       RTLTextPlugin={null}
+      minZoom={3}
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />

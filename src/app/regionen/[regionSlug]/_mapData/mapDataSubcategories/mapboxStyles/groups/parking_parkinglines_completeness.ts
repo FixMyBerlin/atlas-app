@@ -17,9 +17,16 @@ export const mapboxStyleGroupLayers_parking_parkinglines_completeness: MapboxSty
     id: 'capacity_status-segment_too_small',
     type: 'line',
     paint: {
-      'line-color': 'rgb(102, 21, 168)',
+      'line-color': 'rgb(99, 53, 50)',
       'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 10],
       'line-dasharray': [0.5, 0.5],
+      'line-opacity': [
+        'match',
+        ['get', 'highway'],
+        ['secondary', 'construction', 'pedestrian'],
+        0.25,
+        1,
+      ],
     },
     filter: ['match', ['get', 'capacity_status'], ['segment_too_small'], true, false],
   },
@@ -29,17 +36,14 @@ export const mapboxStyleGroupLayers_parking_parkinglines_completeness: MapboxSty
     paint: {
       'line-color': 'rgb(187, 17, 133)',
       'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 10],
+      'line-opacity': [
+        'match',
+        ['get', 'highway'],
+        ['secondary', 'construction', 'pedestrian'],
+        0.25,
+        1,
+      ],
     },
     filter: ['match', ['get', 'capacity_status'], ['data_missing'], true, false],
-  },
-  {
-    id: 'capacity_status-not_processed_yet',
-    type: 'line',
-    paint: {
-      'line-color': 'rgb(187, 17, 133)',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 10],
-      'line-dasharray': [0.5, 0.5],
-    },
-    filter: ['match', ['get', 'capacity_status'], ['not_processed_yet'], true, false],
   },
 ]

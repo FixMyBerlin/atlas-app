@@ -11,9 +11,10 @@ export type SubcatSignsStyleIds = 'default'
 export const subcat_signs: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Verkehrszeichen (Position Schilder)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

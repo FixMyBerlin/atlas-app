@@ -57,16 +57,6 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
 
           // Handle _composit_ table rows and default case
           switch (cleanedKey) {
-            case tableKeyTrafficSign: {
-              return (
-                <TagsTableRowCompositTrafficSign
-                  key={cleanedKey}
-                  sourceId={sourceId}
-                  tagKey={cleanedKey}
-                  properties={properties}
-                />
-              )
-            }
             case tableKeyHighway: {
               return (
                 <TagsTableRowCompositHighway
@@ -121,6 +111,18 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
               // Hide all properties that should only be shown if a value is present.
               if (!properties[cleanedKey] && key.includes('__if_present')) {
                 return null
+              }
+
+              // We cannot use the `case` here due to the key array
+              if (tableKeyTrafficSign.includes(cleanedKey)) {
+                return (
+                  <TagsTableRowCompositTrafficSign
+                    key={cleanedKey}
+                    sourceId={sourceId}
+                    tagKey={cleanedKey}
+                    properties={properties}
+                  />
+                )
               }
 
               return (

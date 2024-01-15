@@ -26,13 +26,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     ],
   },
   {
-    id: 'todo--oneway-no-icon copy 1',
-    type: 'line',
-    paint: {},
-    filter: ['all', ['has', 'category'], ['match', ['get', 'oneway'], ['no'], true, false]],
-  },
-  {
-    id: 'shared-kfzlane',
+    id: 'Gemeinsamer Fahrstreifen mit Kfz Markiert',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
@@ -43,7 +37,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['sharedMotorVehicleLane'], true, false],
   },
   {
-    id: 'shared-buslane',
+    id: 'Gemeinsamer Fahrstreifen mit Bus',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
@@ -53,17 +47,39 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['sharedBusLane'], true, false],
   },
   {
-    id: 'bikeroad',
+    id: 'Fahrradstrasse Mischverkehr',
+    type: 'line',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
+      'line-color': '#fb923c',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-dasharray': [2, 1],
+    },
+    filter: ['match', ['get', 'category'], ['bicycleRoad_vehicleDestination'], true, false],
+  },
+  {
+    id: 'Fahrradstrasse keine Kfz',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
       'line-color': '#fb923c',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
-    filter: ['match', ['get', 'category'], ['bicycleRoad_vehicleDestination'], true, false],
+    filter: ['match', ['get', 'category'], ['bicycleRoad'], true, false],
   },
   {
-    id: 'footway-bikefree',
+    id: 'Verkehrsberuhigter Bereich',
+    type: 'line',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
+      'line-dasharray': [1, 2],
+      'line-color': '#ec4899',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+    },
+    filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
+  },
+  {
+    id: 'Gehweg mit Rad frei',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
@@ -74,13 +90,18 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['pedestrianAreaBicycleYes', 'footwayBicycleYes_isolated'],
+      [
+        'pedestrianAreaBicycleYes',
+        'footwayBicycleYes_isolated',
+        'footwayBicycleYes_adjoiningOrIsolated',
+        'footwayBicycleYes_adjoining',
+      ],
       true,
       false,
     ],
   },
   {
-    id: 'shared--sidepath',
+    id: 'Gemeinsamer Geh u Radweg',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
@@ -90,66 +111,66 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['footAndCyclewayShared_adjoining', 'footAndCyclewayShared_isolated'],
+      [
+        'footAndCyclewayShared_adjoining',
+        'footAndCyclewayShared_isolated',
+        'footAndCyclewayShared_adjoiningOrIsolated',
+      ],
       true,
       false,
     ],
   },
   {
-    id: 'separated-lane-dashed',
+    id: 'Markierung Kreuzungsbereich',
+    type: 'line',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
+      'line-color': '#748b82',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-dasharray': [2, 1],
+    },
+    filter: ['match', ['get', 'category'], ['crossing'], true, false],
+  },
+  {
+    id: 'Schutzstreifen',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
       'line-color': '#2dd4bf',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-dasharray': [2, 1],
     },
     filter: [
-      'all',
+      'match',
+      ['get', 'category'],
       [
-        'match',
-        ['get', 'category'],
-        [
-          'cyclewayLink',
-          'cyclewayOnHighwayBetweenLanes',
-          'cyclewayOnHighway_exclusive',
-          'crossing',
-          'cyclewayOnHighway_advisory',
-        ],
-        true,
-        false,
+        'cyclewayOnHighwayBetweenLanes',
+        'cyclewayOnHighway_advisory',
+        'cyclewayOnHighway_advisoryOrExclusive',
       ],
-      [
-        'match',
-        ['get', 'separation:left'],
-        ['dashed_line', 'dashed_line;kerb', 'dashed_line;parking_lane', 'dashed_lane'],
-        true,
-        false,
-      ],
+      true,
+      false,
     ],
+  },
+  {
+    filter: ['match', ['get', 'category'], ['cyclewayOnHighway_exclusive'], true, false],
+    type: 'line',
+    id: 'Radfahrstreifen',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
+      'line-color': '#2dd4bf',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+    },
   },
   {
     filter: [
       'all',
+      ['match', ['get', 'category'], '', true, false],
       [
         'match',
-        ['get', 'category'],
+        ['get', 'osm_separation:left'],
         [
-          'cyclewayLink',
-          'cyclewayOnHighwayBetweenLanes',
-          'cyclewayOnHighway_exclusive',
-          'crossing',
-          'cyclewayOnHighway_advisory',
-        ],
-        true,
-        false,
-      ],
-      [
-        'match',
-        ['get', 'separation:left'],
-        [
-          'solid_lane',
           'solid_line;parking_lane',
-          'solid_line',
           'bollard;parking_lane',
           'separation_kerb;parking_lane',
           'separation_kerb;vertical_panel',
@@ -158,16 +179,21 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
           'vertical_panel',
           'bollard;kerb',
           'flex_post',
+          'vertical_panel;parking_lane',
+          'parking_lane',
+          'kerb',
+          'bollard',
+          'separation_kerb',
         ],
         true,
         false,
       ],
     ],
     type: 'line',
-    id: 'separated-lane',
+    id: 'Geschuetzter Radfahrstreifen',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-color': '#2dd4bf',
+      'line-color': '#7a0ff5',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
   },
@@ -175,12 +201,12 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['footAndCyclewaySegregated_adjoining', 'footAndCyclewaySegregated_adjoiningOrIsolated'],
+      ['cycleway_isolated', 'cycleway_adjoiningOrIsolated', 'cycleway_adjoining'],
       true,
       false,
     ],
     type: 'line',
-    id: 'separated-sidepath',
+    id: 'Getrennter Radweg',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
       'line-color': '#174ed9',
@@ -188,7 +214,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     },
   },
   {
-    id: 'separated-free',
+    id: 'Getrennter Rad- und Gehweg',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
@@ -198,15 +224,26 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['cycleway_isolated', 'cycleway_adjoining', 'bicycleRoad'],
+      [
+        'footAndCyclewaySegregated_adjoiningOrIsolated',
+        'footAndCyclewaySegregated_adjoining',
+        'footAndCyclewaySegregated_isolated',
+      ],
       true,
       false,
     ],
   },
   {
-    id: 'hitarea-bikelanes copy 1',
+    id: 'hitarea-bikelanes-details',
     type: 'line',
-    paint: {},
+    paint: {
+      'line-color': 'hsl(290, 100%, 54%)',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
+      'line-opacity': 0,
+    },
     filter: ['has', 'category'],
+    layout: {
+      'line-cap': 'round',
+    },
   },
 ]

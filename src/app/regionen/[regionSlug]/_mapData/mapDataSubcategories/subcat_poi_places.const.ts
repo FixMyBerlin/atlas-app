@@ -4,16 +4,17 @@ import { mapboxStyleGroupLayers_atlas_places } from './mapboxStyles/groups/atlas
 import { mapboxStyleGroupLayers_atlas_placescircle } from './mapboxStyles/groups/atlas_placescircle'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'places'
-export type SubcatPlacesId = typeof subcatId
-export type SubcatPlacesStyleIds = 'default' | 'circle'
+const subcatId = 'poiPlaces'
+export type SubcatPoiPlacesId = typeof subcatId
+export type SubcatPoiPlacesStyleIds = 'default' | 'circle'
 
-export const subcat_places: FileMapDataSubcategory = {
+export const subcat_poi_places: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Orte',
+  ui: 'dropdown',
   sourceId: 'atlas_places',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Siedlungszentren Name',

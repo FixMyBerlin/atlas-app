@@ -16,9 +16,10 @@ export type SubcatRoadsSurfaceStyleIdsLegacy =
 export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Oberflächenqualität Fahrbahn (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard (Legacy)',

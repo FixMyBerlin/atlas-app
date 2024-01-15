@@ -3,19 +3,32 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_smooth_bad } from './mapboxStyles/groups/atlas_bikelanes_smooth_bad'
 import { mapboxStyleGroupLayers_atlas_bikelanes_smooth_default } from './mapboxStyles/groups/atlas_bikelanes_smooth_default'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
+import { legendSurfaceBad, legendSurfaceDefault } from './subcat_surface_roads.const'
 
-const subcatId = 'bikelanes_plus_smoothness'
+const subcatId = 'surfaceBikelanes'
 const source = 'atlas_bikelanes'
 const sourceLayer = 'bikelanes_verified'
-export type SubcatBikelanesPlusSmoothnessId = typeof subcatId
-export type SubcatBikelanesPlusSmoothnessStyleIds = 'default' | 'bad'
+export type SubcatSurfaceBikelaneId = typeof subcatId
+export type SubcatSurfaceBikelaneStyleIds = 'default' | 'bad'
 
-export const subcat_bikelanes_plus_smoothness: FileMapDataSubcategory = {
+export const subcat_surface_bikelane: FileMapDataSubcategory = {
   id: subcatId,
-  name: 'RVA Oberflächenqualität',
+  name: 'Radverkehrsanlagen',
+  ui: 'dropdown',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
+    {
+      id: 'default',
+      name: 'Standard',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_smooth_default,
+        source,
+        sourceLayer,
+      }),
+      legends: legendSurfaceDefault,
+    },
     {
       id: 'bad',
       name: 'Schlechte Oberflächenqualität',
@@ -25,18 +38,7 @@ export const subcat_bikelanes_plus_smoothness: FileMapDataSubcategory = {
         source,
         sourceLayer,
       }),
-      // legends: [...defaultLegend],
-    },
-    {
-      id: 'default',
-      name: 'Oberflächenqualität',
-      desc: null,
-      layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_bikelanes_smooth_default,
-        source,
-        sourceLayer,
-      }),
-      // legends: [...defaultLegend],
+      legends: legendSurfaceBad,
     },
   ],
 }

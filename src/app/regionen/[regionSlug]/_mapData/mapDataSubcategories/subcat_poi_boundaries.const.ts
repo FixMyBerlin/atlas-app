@@ -3,16 +3,17 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_boundaries } from './mapboxStyles/groups/atlas_boundaries'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const topiId = 'boundaries'
-export type SubcatBoundariesId = typeof topiId
-export type SubcatBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
+const topiId = 'poiBoundaries'
+export type SubcatPoiBoundariesId = typeof topiId
+export type SubcatPoiBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
 
-export const subcat_boundaries: FileMapDataSubcategory = {
+export const subcat_poi_boundaries: FileMapDataSubcategory = {
   id: topiId,
   name: 'Grenzen',
+  ui: 'dropdown',
   sourceId: 'atlas_boundaries',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Gemeindeverbund / Amt',

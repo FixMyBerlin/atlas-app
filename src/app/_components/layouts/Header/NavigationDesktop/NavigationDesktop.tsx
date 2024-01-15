@@ -14,8 +14,8 @@ export const NavigationDesktop: React.FC<Props> = ({
   logo: Logo,
 }) => {
   return (
-    <div className="relative hidden sm:flex sm:flex-row sm:items-center sm:justify-between">
-      <div className="relative flex min-h-[4rem] items-center justify-between sm:h-16">
+    <div className="relative z-50 hidden sm:flex sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex min-h-[4rem] items-center justify-between sm:h-16">
         <div className="flex flex-1 items-center justify-start sm:items-stretch">
           <div className="flex flex-shrink-0 items-center">{Logo}</div>
         </div>

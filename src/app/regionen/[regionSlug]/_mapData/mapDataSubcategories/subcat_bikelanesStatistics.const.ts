@@ -16,10 +16,11 @@ export type SubcatBikelanesStatsStyleIds =
 export const subcat_bikelanesStatistics: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Statistik',
+  ui: 'dropdown',
   sourceId: source,
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default', // admin-level-4
       name: 'Bundesländer & Stadtstaaten',

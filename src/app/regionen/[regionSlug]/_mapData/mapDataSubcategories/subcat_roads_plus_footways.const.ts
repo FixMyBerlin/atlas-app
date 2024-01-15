@@ -11,9 +11,10 @@ export type SubcatRoadsPlusFootwaysStyleIds = 'default'
 export const subcat_roads_plus_footways: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Fußweg, Pfad, Sonderweg, u.a.',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Fußweg, Pfad, Sonderweg, u.a.',

@@ -12,9 +12,10 @@ export type SubcatBikelanesPresenceStyleIds = 'default'
 export const subcat_bikelanesPresence: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Vollständigkeit Radinfrastruktur',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Vollständigkeit',
@@ -30,15 +31,15 @@ export const subcat_bikelanesPresence: FileMapDataSubcategory = {
           name: 'Daten fehlen',
           style: {
             type: 'line',
-            color: 'rgb(250, 128, 225)',
+            color: '#fa80f4',
           },
         },
         {
-          id: 'no-bikelane',
+          id: 'data_no', // cycleway=no
           name: 'Kein Radweg',
           style: {
             type: 'line',
-            color: 'rgba(248, 216, 216, 0.67)',
+            color: 'rgba(192, 202, 185, 0.67)',
           },
         },
         {
@@ -46,18 +47,18 @@ export const subcat_bikelanesPresence: FileMapDataSubcategory = {
           name: 'RVA vorhanden',
           style: {
             type: 'line',
-            color: 'rgba(235, 235, 254, 0.7)',
+            color: 'rgba(174, 199, 244, 0.7)',
           },
         },
         {
-          id: 'data-not-expected',
+          id: 'not_expected',
           name: 'Keine RVA erwartet',
           desc: [
             'Beispie: Auf der Fahrbahn ist keine RVA erwartet, wenn es bereits links/rechts gesonderte RVA gibt.',
           ],
           style: {
             type: 'line',
-            color: 'rgba(230, 230, 230, 0.68)',
+            color: 'rgba(218, 226, 223, 0.68)',
           },
         },
       ],

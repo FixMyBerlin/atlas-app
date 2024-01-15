@@ -32,14 +32,14 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
                         tagValue={properties['surface']}
                       />
                     </summary>
-                    Quelle:{' '}
+                    <em>Quelle:</em>{' '}
                     <ConditionalFormattedValue
                       sourceId={sourceId}
                       tagKey={'surface_source'}
                       tagValue={properties['surface_source']}
                     />
                     <br />
-                    Genauigkeit der Quelle:{' '}
+                    <em>Genauigkeit der Quelle:</em>{' '}
                     <NodataFallbackWrapper fallback={!Boolean(properties['surface_source'])}>
                       Hoch
                     </NodataFallbackWrapper>

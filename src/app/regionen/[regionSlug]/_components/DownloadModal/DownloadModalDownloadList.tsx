@@ -1,4 +1,5 @@
-import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
+import { useRegion } from '../regionUtils/useRegion'
+import { useRegionSlug } from '../regionUtils/useRegionSlug'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
@@ -7,6 +8,8 @@ type Props = { visible: boolean }
 
 export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
   const exportEnabledSources = sources.filter((source) => source.export.enabled)
+
+  const regionSlug = useRegionSlug()
 
   // Get the bbox from our region data
   const { bbox } = useRegion()
@@ -50,7 +53,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
             <div className="flex gap-2">
               {bbox && (
                 <LinkExternal
-                  href={getExportApiBboxUrl(sourceData.export.apiIdentifier, bbox)}
+                  href={getExportApiBboxUrl(regionSlug!, sourceData.export.apiIdentifier, bbox)}
                   classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
                   download
                   blank
@@ -78,7 +81,7 @@ export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
                   className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm"
                   placeholder="Vector Tile URL"
                   defaultValue={sourceData.tiles}
-                  onFocus={(event: React.ChangeEvent<HTMLInputElement>) => event.target.select()}
+                  onFocus={(event) => event.target.select()}
                 />
               </div>
             </div>

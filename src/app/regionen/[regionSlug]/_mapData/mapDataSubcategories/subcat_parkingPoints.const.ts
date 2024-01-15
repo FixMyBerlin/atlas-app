@@ -10,10 +10,11 @@ export type SubcatParkingPointsStyleIds = 'default'
 export const subcat_parkingPoints: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkplätze zählen',
+  ui: 'dropdown',
   sourceId: 'parkraumParkingPoints',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

@@ -18,10 +18,11 @@ export type SubcatParkingDebugStyleIds = 'default' | 'presence' | 'debugLengthPe
 export const subcat_parkingDebug: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkraum Debug',
+  ui: 'dropdown',
   sourceId: 'parkraumParkingDebug',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

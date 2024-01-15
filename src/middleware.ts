@@ -38,9 +38,18 @@ export function middleware(request: NextRequest) {
     let newConfig = config
     const nameMigrations = {
       // Category names changes:
-      'i~fromTo~a': 'i~poi~a',
-      'i~shops~s': 'i~poi~s',
-      'i~roadClassification~a': 'i~roads~a',
+      // Note: `~a` postfix signals a category, `~s` postfix signals a subcategory, no will match both
+      // (One is an array, one is an object, which corresponds to category and subcategory.)
+      'i~fromTo~': 'i~poi~',
+      'i~shops~': 'i~poi~',
+      'i~roadClassification~': 'i~roads~',
+      // Done in https://github.com/FixMyBerlin/atlas-app/commit/5541a6ac3f03e4276e65fa4334c90f3408a48de5
+      'i~boundaries~s': 'i~poiBoundaries~s',
+      'i~barriers~s': 'i~poiPlusBarriers~s',
+      'i~landuse~s': 'i~poiPlusLanduse~s',
+      'i~publicTransport~s': 'i~poiPlusPublicTransport~s',
+      // Done in https://github.com/FixMyBerlin/atlas-app/commit/7f8f987b1e4927f79fe7c4f7f7f09f2c54d0781e
+      'i~places~s': 'i~poiPlaces~s',
       // Property name changes:
       '~topics~': '~sc~',
     }
