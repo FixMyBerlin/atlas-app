@@ -157,6 +157,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
+        'name',
         'composit_highway',
         'category',
         'oneway',
@@ -165,8 +166,7 @@ export const sources: MapDataSource<
         'osm_traffic_sign:backward__if_present',
         'width',
         'composit_surface_smoothness',
-        'surface:color__if_present',
-        'name',
+        'osm_surface:color__if_present',
       ],
     },
     // presence: { enabled: true },
