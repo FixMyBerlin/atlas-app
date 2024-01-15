@@ -10,8 +10,7 @@ if [ $SKIP_DOWNLOAD == 1 ]; then
     echo "💥 SKIPPED with .env 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
-    echo "Can't skip download, no file was found. Update .env to 'SKIP_DOWNLOAD=0'"
-    exit 1;
+    echo "Can't skip download, no file was found."
   fi
 fi
 
