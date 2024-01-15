@@ -20,9 +20,9 @@ local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags',     type = 'jsonb' },
-    { column = 'meta',     type = 'jsonb' },
-    { column = 'geom',     type = 'linestring' },
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
   }
 })
 
@@ -37,35 +37,32 @@ local excludeTable = osm2pgsql.define_table({
   }
 })
 
--- whitelist of tags we want to insert intro the DB
+-- these tags are copied (Eigennamen)
+local allowed_tags = {
+  "name",
+}
+-- these tags are copied and prefixed with `osm_`
 local tags_cc = {
-  'access',
-  'bicycle_road',
-  'bicycle',
-  'conditional',
   'cycleway',
   'cycleway:lane', -- 'advisory', 'exclusive'
+  'lane',          -- 'cycleway:SIDE:lane'
   'dual_carriageway',
-  'foot',
-  'footway',
   'highway',
-  'is_sidepath',
-  'name',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   'prefix',
-  'segregated',
   'side',
-  'smoothness',
   'surface:colour',
-  'surface',
   'traffic_sign',
-  'width',
-  'bicycle:lanes',
-  'cycleway:lanes',
+  'traffic_sign:forward',
+  'traffic_sign:backward',
   'separation',
   'separation:left',
   'separation:right',
-  'lane', -- 'cycleway:SIDE:lane'
+  'traffic_mode',
+  'traffic_mode:left',
+  'traffic_mode:right',
+  "mapillary",
+  "description",
 }
 
 local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
@@ -118,7 +115,10 @@ function Bikelanes(object, road)
         if sign == CENTER_SIGN then
           -- if we're dealing with the original object (center line) then prefix only keep all the tags from the `tags_cc` list and prefix them
           -- due to that it's important that the precceding operations happen before
-          cycleway = CopyTags({}, tags, tags_cc, 'osm_')
+          cycleway = {}
+          cycleway = CopyTags(cycleway, tags, allowed_tags)
+          cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
+          cycleway.width = ParseLength(tags.width)
         else
           freshTag = "check_date:" .. cycleway.prefix
         end
