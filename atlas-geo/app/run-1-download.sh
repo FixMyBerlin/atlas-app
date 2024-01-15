@@ -10,14 +10,15 @@ if [ $SKIP_DOWNLOAD == 1 ]; then
     echo "💥 SKIPPED with .env 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
-    echo "Can't skip download, no file was found."
+    echo "Can't skip download, no file was found. Update .env to 'SKIP_DOWNLOAD=0'"
+    exit 1;
   fi
 fi
 
 echo "Downloading file: ${OSM_DOWNLOAD_URL}"
 # Note: Showing the progress (locally) is very verbose, unfortunately
 if wget --timestamping --no-verbose ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
-  ln -f ${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
+  mv ${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
 else
   echo "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
 fi

@@ -11,9 +11,14 @@ OSM_INTERMEDIATE_FILE=${FILTER_DIR}intermediate.pbf
 start_time=$(date +%s)
 echo -e "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)\e[0m"
 
-if [ $SKIP_TAG_FILTER == 1 ]; then
-  echo "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
-  mv ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
+if [ $SKIP_DOWNLOAD == 1 ]; then
+ if [ -f "${OSM_FILTERED_FILE}" ]; then
+    echo "💥 SKIPPED tag filter with .env 'SKIP_DOWNLOAD=1'"
+    exit 0;
+  else
+    echo "Can't skip tag filter, no file was found. Update .env to 'SKIP_DOWNLOAD=0'"
+    exit 1;
+  fi
 else
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
   osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_LOCAL_FILE}
