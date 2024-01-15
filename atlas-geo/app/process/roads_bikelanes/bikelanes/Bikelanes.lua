@@ -49,8 +49,6 @@ local tags_cc = {
   'dual_carriageway',
   'highway',
   'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
-  'prefix',
-  'side',
   'surface:colour',
   'traffic_sign',
   'traffic_sign:forward',
@@ -97,6 +95,7 @@ function Bikelanes(object, road)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
+        -- === Processing on the whole dataset ===
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
         local smoothness_data = DeriveSmoothness(cycleway)
         local surface_data = DeriveSurface(cycleway)
@@ -111,14 +110,28 @@ function Bikelanes(object, road)
           end
         end
 
+        -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
         if sign == CENTER_SIGN then
-          -- if we're dealing with the original object (center line) then prefix only keep all the tags from the `tags_cc` list and prefix them
+          -- if we're dealing with the original object (center line) then only keep all the tags from the `tags_cc` list and prefix them
           -- due to that it's important that the precceding operations happen before
+          --
+          -- Restart with a clean `cycleway` object because `cycleway=tags` (un-sanitized) for the centerline case.
+          -- For non-centerline objects the data is already sanitized.
           cycleway = {}
-          cycleway = CopyTags(cycleway, tags, allowed_tags)
-          cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
-          cycleway.width = ParseLength(tags.width)
+
+          local categorySharedInfrastructure = Set({
+            'sharedBusLane',
+            'explicitSharedLaneButNoSignage',
+            'sharedMotorVehicleLane',
+            'cyclewayOnHighwayBetweenLanes',
+            'cyclewayOnHighway_advisory',
+            'cyclewayOnHighway_exclusive',
+            'cyclewayOnHighway_advisoryOrExclusive',
+          })
+          if not categorySharedInfrastructure[category] then
+            cycleway.width = tags.width
+          end
         else
           freshTag = "check_date:" .. cycleway.prefix
         end
@@ -127,12 +140,17 @@ function Bikelanes(object, road)
           cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
+        -- Sanitize tags
+        cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
+        cycleway.width = ParseLength(cycleway.width)
         cycleway.category = category
         cycleway.offset = sign * width / 2
         cycleway.road = road
         cycleway.oneway = oneway
         MergeTable(cycleway, surface_data)
         MergeTable(cycleway, smoothness_data)
+        -- Unsanitized tags
+        cycleway = CopyTags(cycleway, tags, allowed_tags)
 
         bikelanesTable:insert({
           tags = cycleway,
