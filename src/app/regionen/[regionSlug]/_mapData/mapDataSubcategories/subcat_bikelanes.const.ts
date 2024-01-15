@@ -2,7 +2,7 @@ import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_default } from './mapboxStyles/groups/atlas_bikelanes_default'
 import { mapboxStyleGroupLayers_atlas_bikelanes_details } from './mapboxStyles/groups/atlas_bikelanes_details'
-import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleGroupLayers_atlas_bikelanes_widths } from './mapboxStyles/groups/atlas_bikelanes_widths'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes'
@@ -12,6 +12,8 @@ export type SubcatBikelanesId = typeof subcatId
 export type SubcatBikelanesStyleIds =
   | 'default_legacy'
   | 'default'
+  | 'details'
+  | 'width'
   | 'verification'
   | 'completeness'
   | 'freshness'
@@ -205,6 +207,50 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
             type: 'line',
             color: '#b50382',
             dasharray: [2.5, 1],
+          },
+        },
+      ],
+    },
+    {
+      id: 'width',
+      name: 'Breite RVA',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_widths,
+        source,
+        sourceLayer,
+      }),
+      legends: [
+        {
+          id: 'below1m',
+          name: '≤ 1,0 m',
+          style: {
+            type: 'line',
+            color: '#ef9043',
+          },
+        },
+        {
+          id: '1to16m',
+          name: '1,05–1.6 m',
+          style: {
+            type: 'line',
+            color: '#f6de09',
+          },
+        },
+        {
+          id: '165-24m',
+          name: '1,65–2.4 m',
+          style: {
+            type: 'line',
+            color: '#a1e217',
+          },
+        },
+        {
+          id: 'above24',
+          name: '> 2.4 m',
+          style: {
+            type: 'line',
+            color: '#15c65c',
           },
         },
       ],
