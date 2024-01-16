@@ -54,7 +54,7 @@ const downloadGeoJson = async (idsString: string) => {
   // We always use the production DB since that holds all relevant releations
   // TODO: Migrate the boundaries API to NextJS
   // const url = new URL(getExportApiUrl('boundaries', 'production'))
-  const url = new URL('https://api.radverkehrsatlas.de/boundaries/')
+  const url = new URL('https://radverkehrsatlas.de/api/boundary')
   idsString
     .split(',')
     .map(Number)
