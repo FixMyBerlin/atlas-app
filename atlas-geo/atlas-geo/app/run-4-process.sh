@@ -14,16 +14,16 @@ run_psql "roads_bikelanes/bikelanes/bikelanes"
 
 run_lua "bicycleParking/bicycleParking"
 
-run_lua "legacy_bikelanes/bikelanesPresence"
-run_lua "legacy_surfaceQuality/surfaceQuality"
-run_lua "legacy_roadClassification/roadClassification"
-run_lua "legacy_maxspeed/maxspeed"
-run_lua "legacy_lit/lit"
+# run_lua "legacy_bikelanes/bikelanesPresence"
+# run_lua "legacy_surfaceQuality/surfaceQuality"
+# run_lua "legacy_roadClassification/roadClassification"
+# run_lua "legacy_maxspeed/maxspeed"
+# run_lua "legacy_lit/lit"
 
 run_lua "trafficSigns/trafficSigns"
 run_psql "trafficSigns/trafficSigns"
 
-run_lua "legacy_boundaries/boundaries"
+# run_lua "legacy_boundaries/boundaries"
 run_lua "boundaries/boundaries"
 
 run_lua "places/places"
