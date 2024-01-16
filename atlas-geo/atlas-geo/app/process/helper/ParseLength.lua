@@ -1,3 +1,4 @@
+-- Makes sure our sanitized `width` only holds "meter" values and only numbers
 function ParseLength(length)
   local val, unit = osm2pgsql.split_unit(length, '')
   if val then
@@ -6,4 +7,5 @@ function ParseLength(length)
     end
     return val
   end
+  return nil
 end
