@@ -29,9 +29,9 @@ export default function AdminNewRegionPage() {
         schema={RegionFormSchema}
         initialValues={{
           slug: searchParamSlug,
-          // @ts-ignore
+          // @ts-expect-error the Form (and RegionFormSchema) require a string
           public: 'false',
-          // @ts-ignore
+          // @ts-expect-error
           exportPublic: 'false',
         }}
         onSubmit={async (values) => {

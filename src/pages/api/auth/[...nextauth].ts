@@ -14,7 +14,7 @@ const providers: Provider[] = [
     authorization: { params: { scope: 'openid read_prefs write_notes' } },
     idToken: true,
     checks: ['pkce', 'state'],
-    // @ts-ignore
+    // @ts-expect-error
     profile(profile) {
       const { id, display_name, description, img } = profile
       return {

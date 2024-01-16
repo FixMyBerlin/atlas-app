@@ -100,7 +100,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
     )
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
-    // @ts-ignore
+    // @ts-expect-error
     res.json(geoJson[0][functionName])
   } catch (e) {
     if (!isProd) throw e
