@@ -4,7 +4,7 @@ import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useM
 
 let errorLogged = false
 
-export const LayerVerificationStatus: React.FC<LayerProps> = (parentLayerProps) => {
+export const LayerVerificationStatus = (parentLayerProps: LayerProps) => {
   const { localUpdates } = useMapStateInteraction()
 
   const props = {

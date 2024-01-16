@@ -1,3 +1,5 @@
+import chalk from 'chalk'
+
 export const fetchStyle = async (key, url, folder) => {
   const fetchStyle = await fetch(url)
   if (!fetchStyle.ok) {
@@ -11,4 +13,15 @@ export const fetchStyle = async (key, url, folder) => {
 
 export async function saveJson(filename, data) {
   await Bun.write(filename, JSON.stringify(data, null, 2))
+}
+
+// We want our data sorted so we have minimal change in our Git history
+export function sortObject(object: Record<string, any>) {
+  const objectAsArray = Object.entries(object)
+  objectAsArray.sort((a, b) => a[0].localeCompare(b[0]))
+  return Object.fromEntries(objectAsArray)
+}
+
+export const log = (title: string | Object, object: any = '-') => {
+  console.log(chalk.inverse.bold(` ${title}${object === '-' ? '' : ':'} `), object)
 }

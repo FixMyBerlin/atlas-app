@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_roadclassification_sidestreets: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'road'],

@@ -27,30 +27,42 @@ export type SourcesId =
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
 
-export type SourceVerificationApiIdentifier = 'bikelanes'
+// Define the verification tables
+export const verificationApiIdentifier = ['bikelanes'] as const
+export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
 
-// Based on `export_geojson_function_from_type` in `tarmac-geo`
-export type SourceExportApiIdentifier =
-  | 'bicycleParking_points'
-  | 'bicycleParking_areas' // private for now
-  | 'bikelanes_verified'
-  // | 'bikelanes' // We use the bikelanes_verified
-  // | 'bikelanesPresence' // Removed, now roads
-  // | 'boundaries' // Does not work, yet, see 'tarmac-geo'
-  // | 'buildings' // Disabled
-  | 'landuse'
-  // | 'lit' // Removed, now roads and bikelanes
-  // | 'maxspeed' // Remove, now roads
-  | 'places'
-  | 'poiClassification'
-  | 'publicTransport'
-  // | 'roadClassification' // Removed, now roads
-  | 'roads'
-  // | 'surfaceQuality' // Removed, now roads and bikelanes
-  | 'trafficSigns'
-  | 'barrierAreas'
-  | 'barrierLines'
-  | 'boundaries'
+export const verifiedTableIdentifier = (tableName: SourceVerificationApiIdentifier) =>
+  tableName.toLowerCase() + '_verified'
+export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier, string> = {
+  bikelanes: 'BikelaneVerification',
+}
+
+// Define the export tables
+export const exportApiIdentifier = [
+  'bicycleParking_points',
+  'bicycleParking_areas', // private for now
+  verifiedTableIdentifier('bikelanes'),
+  // ,'bikelanes' // We use the bikelanes_verified
+  // ,'bikelanesPresence' // Removed, now roads
+  // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
+  // ,'buildings' // Disabled
+  'landuse',
+  // ,'lit' // Removed, now roads and bikelanes
+  // ,'maxspeed' // Remove, now roads
+  'places',
+  'poiClassification',
+  'publicTransport',
+  // ,'roadClassification' // Removed, now roads
+  'roads',
+  // ,'surfaceQuality' // Removed, now roads and bikelanes
+  'trafficSigns',
+  'barrierAreas',
+  'barrierLines',
+  'boundaries',
+] as const
+export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
+export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
+  'atlas_export_geojson_' + tableName.toLowerCase()
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -145,14 +157,18 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
+        'name',
         'composit_highway',
         'category',
         'oneway',
-        'traffic_sign',
+        'osm_traffic_sign',
+        'osm_traffic_sign:forward__if_present',
+        'osm_traffic_sign:backward__if_present',
         'width',
         'composit_surface_smoothness',
-        'surface:color__if_present',
-        'name',
+        'osm_surface:color__if_present',
+        'composit_mapillary',
+        'description__if_present',
       ],
     },
     // presence: { enabled: true },
@@ -187,7 +203,11 @@ export const sources: MapDataSource<
         'composit_lit',
         'composit_maxspeed',
         'composit_road_bikelanes',
-        'traffic_sign',
+        'osm_traffic_sign',
+        'osm_traffic_sign:forward__if_present',
+        'osm_traffic_sign:backward__if_present',
+        'composit_mapillary',
+        'description__if_present',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
@@ -339,7 +359,7 @@ export const sources: MapDataSource<
         'maxspeed:backward__if_present',
         'maxspeed:forward__if_present',
         'maxspeed:conditional__if_present',
-        'traffic_sign__if_present',
+        'osm_traffic_sign__if_present',
       ],
     },
     // presence: { enabled: true },
@@ -453,7 +473,12 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['capacity', 'capacity:cargo_bike__if_present'],
+      documentedKeys: [
+        'capacity',
+        'capacity:cargo_bike__if_present',
+        'composit_mapillary',
+        'description__if_present',
+      ],
     },
     // presence: { enabled: false },
     verification: { enabled: false },

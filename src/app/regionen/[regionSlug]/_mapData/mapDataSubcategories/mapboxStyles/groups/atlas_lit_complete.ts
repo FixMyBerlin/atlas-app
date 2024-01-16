@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_lit_complete: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['!', ['has', 'lit']],
     type: 'line',
     id: 'lit-missing',

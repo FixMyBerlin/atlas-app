@@ -6,7 +6,6 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_mask_boundary: MapboxStyleLayer[] = [
   {
     minzoom: 2,
-    layout: {},
     type: 'line',
     id: 'region-boundary',
     paint: {
@@ -18,7 +17,6 @@ export const mapboxStyleGroupLayers_atlas_mask_boundary: MapboxStyleLayer[] = [
   },
   {
     minzoom: 7,
-    layout: {},
     type: 'line',
     id: 'region-boundary-bg',
     paint: {

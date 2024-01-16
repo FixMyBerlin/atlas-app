@@ -104,8 +104,9 @@ describe('middleware()', () => {
       expect(defaultParam?.includes('(i~poi~s~!(i~hidden~a~_F)(i~default~a)')).toBe(true)
       expect(migratedParam?.includes('(i~poi~s~!(i~hidden~a)(i~default~a~_F)')).toBe(true)
 
-      expect(defaultParam?.includes('(i~barriers~s~!(i~hidden~a)(i~default~a~_F)')).toBe(true)
-      expect(migratedParam?.includes('(i~barriers~s~!(i~hidden~a~_F)(i~default~a)')).toBe(true)
+      // Note: Subcategory of type ui:checkbox do not have a "hidden" layer
+      expect(defaultParam?.includes('(i~poiPlusBarriers~s~!(i~default~a~_F)')).toBe(true)
+      expect(migratedParam?.includes('(i~poiPlusBarriers~s~!(i~default~a)')).toBe(true)
     })
 
     test('MIGRATION: Make sure params are only present once', () => {

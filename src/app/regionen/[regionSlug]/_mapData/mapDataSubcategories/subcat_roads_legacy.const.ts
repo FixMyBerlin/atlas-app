@@ -11,12 +11,13 @@ export type SubcatRoadsStyleIdsLegacy = 'default' | 'oneway'
 export const subcat_roads_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Standard (Legacy)',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: legacyMapboxStyleLayers({
         group: 'atlas_old_roadclassification',
@@ -74,7 +75,7 @@ export const subcat_roads_legacy: FileMapDataSubcategory = {
     },
     {
       id: 'oneway',
-      name: 'Einbahnstraßen',
+      name: 'Einbahnstraßen (Legacy)',
       desc: 'Hervorhebung von Einbahnstraßen.',
       layers: [
         legacyMapboxStyleLayers({

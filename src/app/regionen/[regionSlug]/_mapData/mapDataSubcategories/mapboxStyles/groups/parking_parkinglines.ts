@@ -13,7 +13,6 @@ export const mapboxStyleGroupLayers_parking_parkinglines: MapboxStyleLayer[] = [
       'line-opacity': ['match', ['get', 'operator_type'], ['private'], 0.33, 1],
     },
     filter: ['has', 'capacity'],
-    layout: {},
   },
   {
     id: 'parallel pattern',
@@ -29,11 +28,9 @@ export const mapboxStyleGroupLayers_parking_parkinglines: MapboxStyleLayer[] = [
       ['match', ['get', 'orientation'], ['parallel'], true, false],
       ['has', 'capacity'],
     ],
-    layout: {},
   },
   {
     minzoom: 16,
-    layout: {},
     filter: [
       'all',
       ['match', ['get', 'orientation'], ['diagonal'], true, false],
@@ -50,7 +47,6 @@ export const mapboxStyleGroupLayers_parking_parkinglines: MapboxStyleLayer[] = [
   },
   {
     minzoom: 16,
-    layout: {},
     filter: [
       'all',
       ['match', ['get', 'orientation'], ['perpendicular'], true, false],

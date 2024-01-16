@@ -15,10 +15,11 @@ export type SubcatParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
 export const subcat_parking: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Parkraum',
+  ui: 'dropdown',
   sourceId: 'parkraumParking',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',
@@ -59,7 +60,7 @@ export const subcat_parking: FileMapDataSubcategory = {
       ].flat(),
       legends: [
         {
-          id: 'capacity_status--data_missing',
+          id: 'capacity_status--present',
           name: 'Parkstände',
           style: {
             type: 'line',
@@ -67,12 +68,28 @@ export const subcat_parking: FileMapDataSubcategory = {
           },
         },
         {
-          id: 'capacity_status--not_processed_yet',
+          id: 'capacity_status--presetn--operator_type-private',
+          name: 'Parkstände an Privatwegen',
+          style: {
+            type: 'line',
+            color: 'rgba(22, 163, 74, 0.33)',
+          },
+        },
+        {
+          id: 'capacity_status--data_missing',
           name: 'Daten fehlen noch',
           style: {
             type: 'line',
             color: 'rgb(187, 17, 133)',
-            dasharray: [5, 4],
+          },
+        },
+        {
+          id: 'capacity_status--data_missing',
+          name: 'Daten nicht erwartet',
+          desc: ['Gilt für Zufahrten und Fußgängerzonen'],
+          style: {
+            type: 'line',
+            color: 'rgba(187, 17, 133, 0.25)',
           },
         },
         {
@@ -88,16 +105,7 @@ export const subcat_parking: FileMapDataSubcategory = {
           name: 'Segment zu klein',
           style: {
             type: 'line',
-            color: 'rgb(102, 21, 168)',
-            dasharray: [5, 4],
-          },
-        },
-        {
-          id: 'capacity_status-operator_type-private',
-          name: 'Privatwege sind halbtransparent',
-          style: {
-            type: 'line',
-            color: 'gray',
+            color: 'rgb(99, 53, 50)',
           },
         },
       ],

@@ -1,186 +1,350 @@
-import { verifiedColor } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Verification/verifiedColor.const'
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleGroupLayers_atlas_bikelanes_default } from './mapboxStyles/groups/atlas_bikelanes_default'
+import { mapboxStyleGroupLayers_atlas_bikelanes_details } from './mapboxStyles/groups/atlas_bikelanes_details'
+import { mapboxStyleGroupLayers_atlas_bikelanes_widths } from './mapboxStyles/groups/atlas_bikelanes_widths'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes'
 const source = 'atlas_bikelanes'
 const sourceLayer = 'bikelanes_verified'
 export type SubcatBikelanesId = typeof subcatId
 export type SubcatBikelanesStyleIds =
+  | 'default_legacy'
   | 'default'
+  | 'details'
+  | 'width'
   | 'verification'
   | 'completeness'
   | 'freshness'
   | 'bikelane_oneway_arrows'
 
-export const defaultLegend: NonNullable<FileMapDataSubcategory['styles'][0]['legends']> = [
-  {
-    id: 'separated',
-    name: 'Getrennte Fuehrung',
-    desc: [
-      'Radweg (frei geführt und Fahrbahnbegleitend)',
-      'Getrennter Geh- und Radweg',
-      'Fahrradstraße',
-      'Straßenquerung',
-      'Verbindungsstücke',
-    ],
-    style: {
-      type: 'line',
-      color: '#031ab5',
-    },
-  },
-  {
-    id: 'shared',
-    name: 'Teilgetrennte Führung',
-    desc: [
-      'Gemeinsamer Geh- und Radwege',
-      'Radfahrstreifen',
-      'Schutzstreifen',
-      'Gemeinsamer Fahrstreifen mit Bus',
-    ],
-    style: {
-      type: 'line',
-      color: 'hsl(232, 97%, 36%)',
-      dasharray: [7, 3],
-    },
-  },
-  {
-    id: 'mixed',
-    name: 'Mischverkehr',
-    desc: [
-      'Fußgängerzone mit Radfreigabe',
-      'Spielstraße',
-      'Fußwege mit Radfreigabe',
-      'Gemeinsamer Fahrstreifen mit Kfz',
-      'Fahrradweichen',
-    ],
-    style: {
-      type: 'line',
-      color: 'hsla(232, 99%, 39%, 0.34)',
-      dasharray: [7, 3],
-    },
-  },
-  {
-    id: 'needsClarification',
-    name: '(Führungsform unklar)',
-    style: {
-      type: 'line',
-      color: 'hsl(317, 97%, 36%)',
-      dasharray: [7, 3],
-    },
-  },
-]
-
 export const subcat_bikelanes: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Radinfrastruktur',
+  ui: 'dropdown',
   sourceId: 'atlas_bikelanes',
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte',
+      name: 'Führungsform einfach',
       desc: null,
-      layers: legacyMapboxStyleLayers({
-        group: 'atlas_bikelanes',
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_default,
         source,
         sourceLayer,
       }),
-      legends: [...defaultLegend],
+      legends: [
+        {
+          id: 'separated',
+          name: 'Führung baul. abgesetzt von Kfz',
+          style: {
+            type: 'line',
+            color: '#174ed9',
+          },
+        },
+        {
+          id: 'lane',
+          name: 'Führung eigenständig auf Fahrbahn',
+          style: {
+            type: 'line',
+            color: '#0098f0',
+          },
+        },
+        {
+          id: 'foot',
+          name: 'Führung mit Fußverkehr',
+          style: {
+            type: 'line',
+            color: '#174ed9',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'mixed',
+          name: 'Führung mit Kfz (explizit)',
+          style: {
+            type: 'line',
+            color: '#0098f0',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'needsClarification',
+          name: 'Führungsform unklar',
+          style: {
+            type: 'line',
+            color: '#a97bea',
+            dasharray: [2.5, 1],
+          },
+        },
+      ],
     },
     {
-      id: 'verification',
-      name: 'Inhalte & Prüf-Status',
+      id: 'details',
+      name: 'Führungsform details',
       desc: null,
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes_verified',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_details,
+        source,
+        sourceLayer,
+      }),
       legends: [
-        ...defaultLegend,
         {
-          id: 'verification-approved',
-          name: 'Daten richtig',
+          id: 'footAndCyclewaySegregated',
+          name: 'Getrennter Rad- und Gehweg ',
           style: {
             type: 'line',
-            color: verifiedColor['approved'],
+            color: '#818cf8',
           },
         },
         {
-          id: 'verification-rejected',
-          name: 'Daten überarbeiten',
+          id: 'cycleway',
+          name: 'Getrennter Radweg',
           style: {
             type: 'line',
-            color: verifiedColor['rejected'],
+            color: '#174ed9',
           },
         },
         {
-          id: 'verification-todo',
-          name: 'Überprüfung steht aus',
+          id: 'bicycleRoad',
+          name: 'Fahrradstraße (keine Kfz)',
           style: {
             type: 'line',
-            color: verifiedColor['undefined'],
+            color: '#fb923c',
+          },
+        },
+        {
+          id: 'cyclewayOnHighway_exclusive',
+          name: 'Radfahrstreifen',
+          style: {
+            type: 'line',
+            color: '#2dd4bf',
+          },
+        },
+        {
+          id: 'crossing',
+          name: 'Markierung Kreuzungsbereich',
+          style: {
+            type: 'line',
+            color: '#748b82',
+          },
+        },
+        {
+          id: 'cyclewayOnHighway',
+          name: 'Schutzstreifen',
+          style: {
+            type: 'line',
+            color: '#2dd4bf',
+          },
+        },
+        // {
+        //   id: 'todo-pbl',
+        //   name: 'Geschuetzter Radfahrstreifen',
+        //   style: {
+        //     type: 'line',
+        //     color: '#2dd4bf',
+        //   },
+        // },
+        {
+          id: 'footAndCyclewayShared',
+          name: 'Gemeinsamer Geh & Radweg',
+          style: {
+            type: 'line',
+            color: '#ec4899',
+          },
+        },
+        {
+          id: 'footwayBicycleYes',
+          name: 'Gehweg mit Rad frei',
+          style: {
+            type: 'line',
+            color: '#ec4899',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'livingStreet',
+          name: 'Verkehrsberuhigter Bereich',
+          style: {
+            type: 'line',
+            color: '#ec4899',
+            dasharray: [1, 2.5],
+          },
+        },
+        {
+          id: 'sharedBusLane',
+          name: 'Gemeinsamer Fahrstreifen mit Bus',
+          style: {
+            type: 'line',
+            color: '#059669',
+            dasharray: [1, 2.5],
+          },
+        },
+        {
+          id: 'sharedMotorVehicleLane',
+          name: 'Gemeinsamer Fahrstreifen mit Kfz (Markiert)',
+          style: {
+            type: 'line',
+            color: '#059669',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'bicycleRoad_vehicleDestination',
+          name: 'Fahrradstraße (Mischverkehr)',
+          style: {
+            type: 'line',
+            color: '#fb923c',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'needsClarification',
+          name: 'Führungsform unklar',
+          style: {
+            type: 'line',
+            color: '#b50382',
+            dasharray: [2.5, 1],
           },
         },
       ],
     },
     {
-      id: 'completeness',
-      name: 'Aufgabe: Führungsform',
-      desc: 'Hervorhebung ',
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes_unspecified',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_bikelanes',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
+      id: 'width',
+      name: 'Breite RVA',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelanes_widths,
+        source,
+        sourceLayer,
+      }),
       legends: [
         {
-          id: 'unspecified',
-          name: 'Angabe ob Führungs&shy;form straßen&shy;begleitend oder frei geführt unklar',
+          id: 'below1m',
+          name: '≤ 1,0 m',
           style: {
             type: 'line',
-            color: '#fa7fe2',
+            color: '#ef9043',
           },
         },
-        ...defaultLegend,
-      ],
-    },
-    {
-      id: 'bikelane_oneway_arrows',
-      name: 'DEBUG: Einbahnstraßen Pfeile',
-      desc: '',
-      layers: [
         {
-          id: 'oneway-bikelanes',
-          source,
-          'source-layer': sourceLayer,
-          type: 'line',
-          paint: {
-            'line-width': 15,
-            'line-pattern': 'oneway',
-            'line-color': 'gray',
+          id: '1to16m',
+          name: '1,05–1.6 m',
+          style: {
+            type: 'line',
+            color: '#f6de09',
           },
-          filter: ['has', '_parent_highway'],
+        },
+        {
+          id: '165-24m',
+          name: '1,65–2.4 m',
+          style: {
+            type: 'line',
+            color: '#a1e217',
+          },
+        },
+        {
+          id: 'above24',
+          name: '> 2.4 m',
+          style: {
+            type: 'line',
+            color: '#15c65c',
+          },
         },
       ],
-      legends: undefined,
     },
+    // {
+    //   id: 'verification',
+    //   name: 'Inhalte & Prüf-Status (Legacy)',
+    //   desc: null,
+    //   layers: [
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes_verified',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //   ].flat(),
+    //   legends: [
+    //     {
+    //       id: 'verification-approved',
+    //       name: 'Daten richtig',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['approved'],
+    //       },
+    //     },
+    //     {
+    //       id: 'verification-rejected',
+    //       name: 'Daten überarbeiten',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['rejected'],
+    //       },
+    //     },
+    //     {
+    //       id: 'verification-todo',
+    //       name: 'Überprüfung steht aus',
+    //       style: {
+    //         type: 'line',
+    //         color: verifiedColor['undefined'],
+    //       },
+    //     },
+    //   ],
+    // },
+    // {
+    //   id: 'completeness',
+    //   name: 'Aufgabe: Führungsform',
+    //   desc: 'Hervorhebung ',
+    //   layers: [
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes_unspecified',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //     legacyMapboxStyleLayers({
+    //       group: 'atlas_bikelanes',
+    //       source,
+    //       sourceLayer,
+    //     }),
+    //   ].flat(),
+    //   legends: [
+    //     {
+    //       id: 'unspecified',
+    //       name: 'Angabe ob Führungs&shy;form straßen&shy;begleitend oder frei geführt unklar',
+    //       style: {
+    //         type: 'line',
+    //         color: '#fa7fe2',
+    //       },
+    //     },
+    //   ],
+    // },
+    // {
+    //   id: 'bikelane_oneway_arrows',
+    //   name: 'DEBUG: Einbahnstraßen Pfeile',
+    //   desc: '',
+    //   layers: [
+    //     {
+    //       id: 'oneway-bikelanes',
+    //       source,
+    //       'source-layer': sourceLayer,
+    //       type: 'line',
+    //       paint: {
+    //         'line-width': 15,
+    //         'line-pattern': 'oneway',
+    //         'line-color': 'gray',
+    //       },
+    //       filter: ['has', '_parent_highway'],
+    //     },
+    //   ],
+    //   legends: undefined,
+    // },
     // {
     //   id: 'freshness',
     //   name: 'Inhalte & Aktualität',

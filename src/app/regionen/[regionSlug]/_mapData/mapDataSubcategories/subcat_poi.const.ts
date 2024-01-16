@@ -13,9 +13,10 @@ export type SubcatPoiStyleIds_Tarmac = 'default' | 'education'
 export const subcat_poi: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Quellen & Ziele',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     // TODO "Details" see https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1005-8419&mode=design&t=sIuuLD4vxJJzKOWr-0
     // TODO "Nur S/W"
     {

@@ -110,3 +110,5 @@ jobs:
             docker compose down
             docker compose up -d
             docker image prune -fa
+            sleep 10
+            curl http://localhost:3000 > /dev/null

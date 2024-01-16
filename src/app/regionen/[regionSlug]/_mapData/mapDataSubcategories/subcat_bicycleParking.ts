@@ -12,9 +12,10 @@ export type SubcatBicycleParkingStyleIds = 'default' | 'witharea'
 export const subcat_bicycleParking: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Fahrradstellplätze',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

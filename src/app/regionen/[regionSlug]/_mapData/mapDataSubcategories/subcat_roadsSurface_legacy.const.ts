@@ -16,18 +16,19 @@ export type SubcatRoadsSurfaceStyleIdsLegacy =
 export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Oberflächenqualität Fahrbahn (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Standard',
+      name: 'Standard (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({ group: 'atlas_surface_good', source, sourceLayer }),
     },
     {
       id: 'bad',
-      name: 'Schlechte Oberflächen',
+      name: 'Schlechte Oberflächen (Legacy)',
       desc: 'Hervorhebung von schlechten Oberflächen.',
       layers: legacyMapboxStyleLayers({ group: 'atlas_surface_bad', source, sourceLayer }),
     },
@@ -52,7 +53,7 @@ export const subcat_roadsSurface_legacy: FileMapDataSubcategory = {
     },
     {
       id: 'freshness',
-      name: 'Inhalte & Aktualität',
+      name: 'Inhalte & Aktualität (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({ group: 'atlas_surface_fresh', source, sourceLayer }),

@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_surface_fresh: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'smoothness_fresh'],
@@ -22,7 +21,6 @@ export const mapboxStyleGroupLayers_atlas_surface_fresh: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'surface_fresh'],
@@ -38,7 +36,6 @@ export const mapboxStyleGroupLayers_atlas_surface_fresh: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'smoothness_fresh'],
@@ -55,7 +52,6 @@ export const mapboxStyleGroupLayers_atlas_surface_fresh: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     filter: [
       'match',
       ['get', 'surface_fresh'],

@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_surface_present: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['has', 'surface'],
     type: 'line',
     id: 'surface-present',
@@ -16,7 +15,6 @@ export const mapboxStyleGroupLayers_atlas_surface_present: MapboxStyleLayer[] = 
     },
   },
   {
-    layout: {},
     filter: ['!', ['has', 'surface']],
     type: 'line',
     id: 'surface-missing',

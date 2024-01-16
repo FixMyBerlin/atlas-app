@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_lit_fresh: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: [
       'all',
       ['match', ['get', 'lit'], ['yes'], true, false],

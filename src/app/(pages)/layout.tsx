@@ -5,7 +5,7 @@ export default function PagesLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-full flex-col">
       <HeaderApp />
-      <main className="prose mx-auto my-10 max-w-prose flex-grow">{children}</main>
+      <main className="prose z-0 mx-auto my-10 max-w-prose flex-grow">{children}</main>
       <Footer />
     </div>
   )

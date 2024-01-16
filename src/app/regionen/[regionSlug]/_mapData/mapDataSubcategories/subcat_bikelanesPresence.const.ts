@@ -1,7 +1,7 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
-import { defaultLegend } from './subcat_bikelanes.const'
+import { mapboxStyleGroupLayers_atlas_bikelane_presence } from './mapboxStyles/groups/atlas_bikelane_presence'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanesPresence'
 const source = 'atlas_roads'
@@ -12,84 +12,53 @@ export type SubcatBikelanesPresenceStyleIds = 'default'
 export const subcat_bikelanesPresence: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Vollständigkeit Radinfrastruktur',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte & Vollständigkeit',
+      name: 'Vollständigkeit',
       desc: null,
-      layers: legacyMapboxStyleLayers({
-        group: 'atlas_bikelane_presence',
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_bikelane_presence,
         source,
         sourceLayer,
       }),
-      // layers: [
-      //   {
-      //     id: 'left',
-      //     type: 'line',
-      //     source: source,
-      //     'source-layer': sourceLayer,
-      //     layout: {},
-      //     paint: {
-      //       'line-color': [
-      //         'case',
-      //         ['match', ['get', 'left'], ['missing'], true, false],
-      //         'hsl(312, 92%, 74%)',
-      //         ['match', ['get', 'left'], ['missing'], false, true],
-      //         'hsl(134, 73%, 20%)',
-      //         'hsla(0, 0%, 0%, 0)',
-      //       ],
-      //       'line-width': ['step', ['zoom'], 2, 14.5, 4],
-      //       'line-offset': ['step', ['zoom'], 2, 14.5, 4],
-      //     },
-      //   },
-      //   {
-      //     id: 'right',
-      //     type: 'line',
-      //     source: source,
-      //     'source-layer': sourceLayer,
-      //     layout: {},
-      //     paint: {
-      //       'line-color': [
-      //         'case',
-      //         ['match', ['get', 'right'], ['missing'], true, false],
-      //         'hsl(312, 92%, 74%)',
-      //         ['match', ['get', 'right'], ['missing'], false, true],
-      //         'hsl(134, 73%, 20%)',
-      //         'hsla(0, 0%, 0%, 0.7)',
-      //       ],
-      //       'line-offset': ['step', ['zoom'], -2, 14.5, -4],
-      //       'line-width': ['step', ['zoom'], 2, 14.5, 4],
-      //     },
-      //   },
-      //   {
-      //     id: 'self',
-      //     type: 'line',
-      //     source: source,
-      //     'source-layer': sourceLayer,
-      //     layout: {},
-      //     paint: {
-      //       'line-color': [
-      //         'case',
-      //         ['match', ['get', 'self'], ['missing'], true, false],
-      //         'hsl(312, 92%, 74%)',
-      //         ['match', ['get', 'self'], ['missing'], false, true],
-      //         'hsl(134, 73%, 20%)',
-      //         'hsla(0, 0%, 0%, 0.7)',
-      //       ],
-      //       'line-width': ['step', ['zoom'], 2, 14.5, 4],
-      //     },
-      //   },
-      // ],
       legends: [
-        ...defaultLegend,
         {
           id: 'missing',
           name: 'Daten fehlen',
           style: {
             type: 'line',
-            color: 'hsl(312, 92%, 74%)',
+            color: '#fa80f4',
+          },
+        },
+        {
+          id: 'data_no', // cycleway=no
+          name: 'Kein Radweg',
+          style: {
+            type: 'line',
+            color: 'rgba(192, 202, 185, 0.67)',
+          },
+        },
+        {
+          id: 'data-present',
+          name: 'RVA vorhanden',
+          style: {
+            type: 'line',
+            color: 'rgba(174, 199, 244, 0.7)',
+          },
+        },
+        {
+          id: 'not_expected',
+          name: 'Keine RVA erwartet',
+          desc: [
+            'Beispie: Auf der Fahrbahn ist keine RVA erwartet, wenn es bereits links/rechts gesonderte RVA gibt.',
+          ],
+          style: {
+            type: 'line',
+            color: 'rgba(218, 226, 223, 0.68)',
           },
         },
       ],

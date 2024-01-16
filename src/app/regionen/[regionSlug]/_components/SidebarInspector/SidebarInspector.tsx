@@ -11,7 +11,7 @@ export const SidebarInspector: React.FC = () => {
   if (!features.length) return null
 
   return (
-    <div className="absolute bottom-0 right-0 top-0 z-10 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
+    <div className="absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
       <Suspense fallback={<Spinner />}>
         <InspectorHeader count={features.length} handleClose={() => resetInspector()} />
 

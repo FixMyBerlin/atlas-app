@@ -11,12 +11,13 @@ export type SubcatMaxspeedStyleIdsLegacy = 'default' | 'details' | 'source'
 export const subcat_maxspeed_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Höchstgeschwindigkeit (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Hohe Geschwindigkeiten',
+      name: 'Hohe Geschwindigkeiten (Legacy)',
       desc: '', // todo
       layers: legacyMapboxStyleLayers({
         group: 'atlas_old_roadclass_maxspeed',
@@ -26,7 +27,7 @@ export const subcat_maxspeed_legacy: FileMapDataSubcategory = {
     },
     {
       id: 'details',
-      name: 'Details',
+      name: 'Details (Legacy)',
       desc: '', // todo
       layers: legacyMapboxStyleLayers({
         group: 'atlas_old_roadclass_maxspeed_details',

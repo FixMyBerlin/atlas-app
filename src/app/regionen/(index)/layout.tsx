@@ -5,7 +5,7 @@ export default function RegionLayout({ children }: { children: React.ReactNode }
   return (
     <div className="flex h-screen flex-col">
       <HeaderApp />
-      <main className="flex-grow">{children}</main>
+      <main className="z-0 flex-grow">{children}</main>
       <Footer />
     </div>
   )

@@ -40,8 +40,8 @@ export function LinkExternal<T extends string>({
 
   return (
     <Link
-      // @ts-expect-error this is fine. The component should only be used for external links. We keep the <Link> as a fallback and expect those to be internal NextJS links.
-      href={href}
+      // TS: The component should only be used for external links. We keep the <Link> as a fallback and expect those to be internal NextJS links.
+      href={href as Route<T>}
       className={className}
       classNameOverwrite={classNameOverwrite}
       blank={blank}

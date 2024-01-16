@@ -39,12 +39,13 @@ const defaultLegend: FileMapDataSubcategory['styles'][0]['legends'] = [
 export const subcat_lit_legacy: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Beleuchtung (OLD)',
+  ui: 'dropdown',
   sourceId: source,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte',
+      name: 'Inhalte (Legacy)',
       desc: null,
       layers: legacyMapboxStyleLayers({
         group: 'atlas_old_lit',
@@ -55,7 +56,7 @@ export const subcat_lit_legacy: FileMapDataSubcategory = {
     },
     {
       id: 'completeness',
-      name: 'Inhalte & Vollständigkeit',
+      name: 'Inhalte & Vollständigkeit (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({
@@ -83,7 +84,7 @@ export const subcat_lit_legacy: FileMapDataSubcategory = {
     },
     {
       id: 'freshness',
-      name: 'Inhalte & Aktualität',
+      name: 'Inhalte & Aktualität (Legacy)',
       desc: null,
       layers: [
         legacyMapboxStyleLayers({

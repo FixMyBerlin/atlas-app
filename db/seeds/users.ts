@@ -65,6 +65,15 @@ const seedUsers = async () => {
       lastName: 'Jordans',
       hashedPassword,
     },
+    {
+      osmId: 20340489,
+      osmName: 'the-sven',
+      role: 'ADMIN',
+      email: 'sven@fixmycity.de',
+      firstName: 'Sven',
+      lastName: 'König',
+      hashedPassword,
+    },
   ]
 
   const users = [...genericUsers, ...regionAdmins, ...fmcAdmins]

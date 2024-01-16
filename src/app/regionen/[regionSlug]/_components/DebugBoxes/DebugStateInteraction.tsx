@@ -1,6 +1,4 @@
 import { Link } from 'src/app/_components/links/Link'
-import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
-import { isDev, isProd, isStaging } from 'src/app/_components/utils/isEnv'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
@@ -33,14 +31,18 @@ export const DebugStateInteraction = () => {
   const keyValue = (object: any) => {
     return Object.entries(object).map(([key, value]) => {
       if (typeof value === 'function') return null
-      return <div key={key}></div>
+      return (
+        <div key={key}>
+          <strong>{key}:</strong> {JSON.stringify(value)}
+        </div>
+      )
     })
   }
 
   if (!showDebugInfo) return null
 
   return (
-    <div className="group absolute right-12 top-3 z-10 max-h-[95%] max-w-[60%] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
+    <div className="group absolute right-12 top-3 z-30 max-h-[95%] max-w-[60%] space-y-0.5 overflow-y-auto rounded bg-pink-300 px-2 py-2 text-[10px] shadow-xl">
       <button
         className="absolute right-0 top-0 z-10 flex h-5 w-5 items-center justify-center rounded-full border bg-purple-500/90 opacity-0 hover:bg-purple-800 hover:text-purple-200 group-hover:opacity-100"
         onClick={() => setShowDebugInfo(false)}
@@ -54,7 +56,6 @@ export const DebugStateInteraction = () => {
             Reset URL <code>config</code>
           </Link>
         </div>
-        <div className="font-mono">getExportApiUrl: {getExportApiUrl()}</div>
         <div className="font-mono">env.*ENV: {process.env.NEXT_PUBLIC_APP_ENV}</div>
         <div className="font-mono">env.*APP_ORIGIN: {process.env.NEXT_PUBLIC_APP_ORIGIN}</div>
         <div className="font-mono">env.NODE_ENV: {process.env.NODE_ENV}</div>

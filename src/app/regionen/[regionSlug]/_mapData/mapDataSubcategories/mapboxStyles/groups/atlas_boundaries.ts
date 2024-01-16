@@ -18,7 +18,6 @@ export const mapboxStyleGroupLayers_atlas_boundaries: MapboxStyleLayer[] = [
       ['has', 'admin_level'],
       ['match', ['get', 'admin_level'], ['8', '9', '10'], true, false],
     ],
-    layout: {},
   },
   {
     type: 'line',
@@ -30,6 +29,5 @@ export const mapboxStyleGroupLayers_atlas_boundaries: MapboxStyleLayer[] = [
       'line-dasharray': [2.5, 1, 1, 1],
     },
     filter: ['all', ['has', 'admin_level'], ['match', ['get', 'admin_level'], ['7'], true, false]],
-    layout: {},
   },
 ]

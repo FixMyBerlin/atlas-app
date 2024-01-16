@@ -14,7 +14,7 @@ export const mapboxStyleGroupLayers_atlas_pois_education: MapboxStyleLayer[] = [
     },
     filter: ['has', 'formalEducation'],
     type: 'symbol',
-    id: 'education-classification copy 1',
+    id: 'education-classification-edu-names',
     paint: {
       'text-halo-color': 'hsla(0, 6%, 97%, 0.91)',
       'text-halo-width': 1,
@@ -35,10 +35,9 @@ export const mapboxStyleGroupLayers_atlas_pois_education: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     filter: ['has', 'formalEducation'],
     type: 'circle',
-    id: 'education-classification copy 2',
+    id: 'education-classification-edu',
     paint: {
       'circle-stroke-color': '#ffffff',
       'circle-opacity': ['interpolate', ['linear'], ['zoom'], 9, 0, 9.2, 1],

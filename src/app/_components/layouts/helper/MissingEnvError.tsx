@@ -1,5 +1,4 @@
-import { getExportApiUrl } from '../../utils/getExportApiUrl'
-import { envKey, isDev, isProd, isStaging } from '../../utils/isEnv'
+import { envKey } from '../../utils/isEnv'
 
 // This can happen if the build does not know about `NEXT_PUBLIC_APP_ORIGIN`
 export const MissingEnvError = () => {

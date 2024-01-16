@@ -17,9 +17,21 @@ export const datasets = {
   'bietigheim-bissingen_parking_areas':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-3000.pmtiles
+  'bb-ramboll-spnv-3000':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-3000.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-gemeinden.pmtiles
+  'bb-ramboll-gemeinden':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-gemeinden.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoWunschlinienLocationPoints.pmtiles
   TrtoWunschlinienLocationPoints:
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoWunschlinienLocationPoints.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-haltepunkte.pmtiles
+  'bb-ramboll-spnv-haltepunkte':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-haltepunkte.pmtiles',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-problemstellen.pmtiles
   'bibi-problemstellen':
@@ -41,6 +53,18 @@ export const datasets = {
   'bibi-radnetz-alltag':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-delauney-triangulation.pmtiles
+  'bb-ramboll-delauney-triangulation':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-delauney-triangulation.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-nachbarn.pmtiles
+  'bb-ramboll-nachbarn':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-nachbarn.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-minimal-spanning-tree.pmtiles
+  'bb-ramboll-minimal-spanning-tree':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-minimal-spanning-tree.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-barnim.pmtiles
   'bb-radnetz-barnim':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-barnim.pmtiles',
@@ -53,6 +77,9 @@ export const datasets = {
   'woldegk-radnetz-vorschlaege':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/woldegk-radnetz-vorschlaege.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-adfc.pmtiles
+  'bb-radnetz-adfc': 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-adfc.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/berlin-parking-zones-fisbroker.pmtiles
   'berlin-parking-zones-fisbroker':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/berlin-parking-zones-fisbroker.pmtiles',
@@ -64,6 +91,10 @@ export const datasets = {
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/atlas-regional-masks.pmtiles
   'atlas-regional-masks':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/atlas-regional-masks.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-zentrale-orte.pmtiles
+  'bb-ramboll-zentrale-orte':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-zentrale-orte.pmtiles',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoRadnetz.pmtiles
   TrtoRadnetz: 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoRadnetz.pmtiles',

@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_parking_stats_length: MapboxStyleLayer[] = [
   {
-    layout: {},
     filter: ['has', 'lane_km'],
     type: 'fill',
     id: 'area-0-to-100 copy',
@@ -24,7 +23,6 @@ export const mapboxStyleGroupLayers_parking_stats_length: MapboxStyleLayer[] = [
     },
   },
   {
-    layout: {},
     type: 'line',
     id: 'line copy',
     paint: {

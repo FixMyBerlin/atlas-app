@@ -35,10 +35,11 @@ const defaultLegend = [
 export const subcat_parkingAreas: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Flächenparkplätze',
+  ui: 'dropdown',
   sourceId: 'parkraumParkingAreas',
   beforeId: undefined,
   styles: [
-    ...defaultStyleHidden,
+    defaultStyleHidden,
     {
       id: 'default',
       name: 'Standard',

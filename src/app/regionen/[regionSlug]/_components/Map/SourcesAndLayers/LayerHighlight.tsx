@@ -8,7 +8,7 @@ type Props = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
-export const LayerHighlight: React.FC<Props> = (parentLayerProps) => {
+export const LayerHighlight = (parentLayerProps: Props) => {
   const {
     unfilteredInspectorFeatures: inspectorFeatures,
     calculatorAreasWithFeatures,

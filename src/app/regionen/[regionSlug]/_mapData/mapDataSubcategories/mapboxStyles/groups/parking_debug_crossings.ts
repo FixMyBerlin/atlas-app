@@ -5,7 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_parking_debug_crossings: MapboxStyleLayer[] = [
   {
-    layout: {},
     type: 'fill',
     id: 'buffer-pedestrian-crossings-area',
     paint: {
@@ -21,6 +20,5 @@ export const mapboxStyleGroupLayers_parking_debug_crossings: MapboxStyleLayer[] 
       'line-dasharray': [2, 2],
       'line-opacity': 0.7,
     },
-    layout: {},
   },
 ]
