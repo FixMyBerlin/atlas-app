@@ -33,6 +33,8 @@ on:
         required: true
       SSH_USERNAME:
         required: true
+      EXPORT_ACCESS_TOKEN:
+        required: true
 
 jobs:
   build-push-deploy-docker-images:
@@ -107,6 +109,7 @@ jobs:
             echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
             echo OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}' >> .env
             echo OSM_CLIENT_SECRET='${{ secrets.OSM_CLIENT_SECRET }}' >> .env
+            echo EXPORT_ACCESS_TOKEN='${{ secrets.EXPORT_ACCESS_TOKEN }}' >> .env
             docker compose down
             docker compose up -d
             docker image prune -fa

@@ -29,10 +29,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return
     }
     const boundary = await prismaClientForRawQueries.$queryRaw<{ geom: object }[]>`
-      SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom 
+      SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom
       FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
     res.setHeader('Content-Disposition', `attachment; filename="boundary.geojson"`)
-    // @ts-ignore
+    // @ts-expect-error
     res.json(boundary[0]['geom'])
   } catch (e) {
     if (!isProd) throw e

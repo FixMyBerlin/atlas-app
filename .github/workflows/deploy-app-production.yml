@@ -21,3 +21,4 @@ jobs:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      EXPORT_ACCESS_TOKEN: ${{ secrets.EXPORT_ACCESS_TOKEN }}

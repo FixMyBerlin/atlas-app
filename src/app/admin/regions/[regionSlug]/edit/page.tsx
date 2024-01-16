@@ -44,9 +44,9 @@ export default function AdminEditRegionPage() {
         schema={RegionFormSchema}
         initialValues={{
           ...region,
-          // @ts-ignore
+          // @ts-expect-error the Form (and RegionFormSchema) require a string
           public: String(!!region.public),
-          // @ts-ignore
+          // @ts-expect-error
           exportPublic: String(!!region.exportPublic),
         }}
         onSubmit={async (values) => {

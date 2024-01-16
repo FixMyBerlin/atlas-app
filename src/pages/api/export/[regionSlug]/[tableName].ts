@@ -34,29 +34,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const status = await (async () => {
     const { regionSlug, accessToken } = params
 
+    // When accessToken valid, we ignore the region check
     if (accessToken === process.env.EXPORT_ACCESS_TOKEN) {
       return 200 // <==========
     }
 
-    let exportPublic: boolean
-    if (regionSlug === 'all') {
-      exportPublic = false
-    } else {
-      const region = await db.region.findFirst({ where: { slug: regionSlug } })
-      if (!region) {
-        return 404 // <==========
-      } else {
-        exportPublic = region.exportPublic
-      }
+    const region = await db.region.findFirst({ where: { slug: regionSlug } })
+    if (!region) {
+      return 404 // <==========
     }
 
-    if (exportPublic) {
+    if (region.exportPublic === true) {
       return 200 // <==========
     }
 
-    // exportPublic === false
-
-    await api(() => null)
+    await api(() => null) // required to get `getSession` working
     const session = await getSession(req, res)
     const { userId, role } = session
 
@@ -68,11 +60,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return 200 // <==========
     }
 
-    if (regionSlug === 'all') {
-      // because role !== "ADMIN"
-      return 403 // <==========
-    }
-
     const membershipExists = !!(await db.membership.count({
       where: { userId: userId!, region: { slug: regionSlug } },
     }))
@@ -80,9 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return 403 // <==========
     }
 
-    if (true) {
-      // TODO: check bounding box
-    }
+    // LATER: Check input bounding box if inside region bbox
 
     return 200 // <==========
   })()
@@ -100,7 +85,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
     )
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
-    // @ts-ignore
+    // @ts-expect-error
     res.json(geoJson[0][functionName])
   } catch (e) {
     if (!isProd) throw e

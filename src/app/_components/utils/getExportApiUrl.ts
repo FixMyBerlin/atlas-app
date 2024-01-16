@@ -2,6 +2,13 @@ import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { SourceExportApiIdentifier } from '../../regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { appBaseUrl } from './appBaseUrl.const'
 
+export const getBoundaryExportApiBaseUrl = (env?: typeof process.env.NEXT_PUBLIC_APP_ENV) => {
+  env = env ?? process.env.NEXT_PUBLIC_APP_ENV
+  const url = new URL(`${appBaseUrl[env]}/api/boundary`)
+
+  return url.toString()
+}
+
 export const getExportApiUrl = (
   regionSlug: string,
   apiIdentifier: SourceExportApiIdentifier,

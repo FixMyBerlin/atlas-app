@@ -12,7 +12,10 @@ import {
 } from '@turf/turf'
 import chalk from 'chalk'
 import path from 'node:path'
-import { getExportApiUrl } from 'src/app/_components/utils/getExportApiUrl'
+import {
+  getBoundaryExportApiBaseUrl,
+  getExportApiUrl,
+} from 'src/app/_components/utils/getExportApiUrl'
 import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 
@@ -52,9 +55,7 @@ const saveErrors = async () => {
 
 const downloadGeoJson = async (idsString: string) => {
   // We always use the production DB since that holds all relevant releations
-  // TODO: Migrate the boundaries API to NextJS
-  // const url = new URL(getExportApiUrl('boundaries', 'production'))
-  const url = new URL('https://api.radverkehrsatlas.de/boundaries/')
+  const url = new URL(getBoundaryExportApiBaseUrl('production'))
   idsString
     .split(',')
     .map(Number)
