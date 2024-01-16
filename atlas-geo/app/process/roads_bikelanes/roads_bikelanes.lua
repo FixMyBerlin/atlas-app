@@ -80,22 +80,11 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- ====== General convertions ======
+  -- ====== General conversions ======
   ConvertCyclewayOppositeSchema(tags)
 
-  -- ====== Handle bikelanes tables ======
-  -- Bikelanes() will return presense data that we require for the roads dataset.
-
-  -- TODO/TBD: How can we restructure how we call files and what those files to?
-  -- Could we make this, so that we have `local bikelaneTags = BikelanesProcessAndWrite(object)`
-  -- This will return the bikelane tags.
-  -- We then use those like `local presenceTags = BikelanePresenceTags(bikelaneTags)`
-  -- And then have RoadsProcessAndWrite(object, presenceTags)
-  -- which includes the code below.
-  -- The main issue seems to be to entagle the presence data from the Bikelanes File, see commen overthere.
 
   -- ====== Handle roads tables ======
-  -- …
 
   local results = {}
 
@@ -107,23 +96,11 @@ function osm2pgsql.process_way(object)
     MergeTable(results, SurfaceQuality(object))
   end
 
-  -- Bikelanes() returns the presense Data for roads
-  -- but it also inserts data in the bikelane Table.
   local cycleways = Bikelanes(object, results.road)
-  MergeTable(results, BikelanesPresence(object, cycleways))
-
-
-  if not PathClasses[tags.highway] then
-    MergeTable(results, Maxspeed(object))
-  end
-
-  roadsTable:insert({
-    tags = results,
-    meta = Metadata(object),
-    geom = object:as_linestring()
-  })
   for _, cycleway in pairs(cycleways) do
     if not cycleway.onlyPresent then
+      -- We don't want to insert negative data into the bikelanes table
+      -- e.g. cycleway=no but we need these for BikelanesPresence
       bikelanesTable:insert({
         tags.cycleway,
         meta = Metadata(object),
@@ -131,4 +108,16 @@ function osm2pgsql.process_way(object)
       })
     end
   end
+
+  if not PathClasses[tags.highway] then
+    MergeTable(results, Maxspeed(object))
+    MergeTable(results, BikelanesPresence(object, cycleways))
+  end
+
+  roadsTable:insert({
+    tags = results,
+    meta = Metadata(object),
+    geom = object:as_linestring()
+  })
+
 end
