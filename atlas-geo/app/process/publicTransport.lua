@@ -15,10 +15,6 @@ local table = osm2pgsql.define_table({
 })
 
 local function ExitProcessing(object)
-  if not (object.tags.railway or object.tags.amenity == "ferry_terminal") then
-    return true
-  end
-
   -- ["operator"!= "Berliner Parkeisenbahn"] - a smalll train in a park that we cannot propery exclude by other means
   if object.tags.operator == "Berliner Parkeisenbahn" then
     return true
@@ -29,7 +25,18 @@ local function ExitProcessing(object)
     return true
   end
 
-  return false
+  local allowed_tags = Set({
+    "subway",
+    "light_rail",
+    "tram_stop",
+    "station",
+    "halt",
+  })
+  if allowed_tags[object.tags.railway] or object.tags.amenity == "ferry_terminal" then
+    return false
+  end
+
+  return true
 end
 
 local function processTags(tags)
