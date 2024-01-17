@@ -81,27 +81,7 @@ export const defaultPointLayerStyles = ({
       type: 'circle',
       paint: {
         'circle-radius': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 5],
-        // TO NOT DO THIS…
-        //   [
-        //   'case',
-        //   ['has', ['get', 'felt:color']],
-        //   ['get', 'felt:color'],
-        //   ['has', ['get', 'stroke']],
-        //   ['get', 'stroke'],
-        //   '#0f766e',
-        // ],
-        // TO THIS INSTEAD:
         'circle-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#0f766e'],
-        // TO NOT DO THIS…
-        // 'circle-opacity': [
-        //   'case',
-        //   ['has', ['get', 'felt:strokeOpacity']],
-        //   ['get', 'felt:strokeOpacity'],
-        //   ['has', ['get', 'stroke-opacity']],
-        //   ['get', 'stroke-opacity'],
-        //   0.1,
-        // ],
-        // TO THIS INSTEAD:
         'circle-opacity': [
           'coalesce',
           ['get', 'felt:strokeOpacity'],
