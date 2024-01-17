@@ -11,6 +11,10 @@ import { FileMapDataSubcategoryStyleLayer } from '../../../types'
 //    - "felt:strokeWidth":6
 // 2. Tries to use the simplestyle specification
 //    - https://www.placemark.io/documentation/simplestyle
+//    - https://github.com/mapbox/simplestyle-spec/tree/master/1.1.0
+// Docs: Color values can be keywords, hex, rgb(a), hsl(a)
+//    - https://github.com/maplibre/maplibre-style-spec/blob/main/src/util/color.ts#L61
+//    - https://github.com/maplibre/maplibre-style-spec/blob/main/src/util/parse_css_color.ts#L32
 
 export const defaultLineLayerStyles = ({
   filter,
