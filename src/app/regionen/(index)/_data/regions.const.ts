@@ -49,6 +49,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'mapnik',
   'esri',
   'maptiler-satellite',
+  'maptiler-satellite-v1',
   'mapbox-satellite',
   'cyclosm',
   'thunderforest-opencyclemap',
