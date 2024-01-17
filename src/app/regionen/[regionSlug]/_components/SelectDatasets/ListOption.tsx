@@ -5,7 +5,7 @@ import React from 'react'
 import { SourcesDatasetsIds } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 
 type Props = {
-  value: SourcesDatasetsIds
+  value: string // was `SourcesDatasetsIds` but is createDatasetKey() now
   name: string | React.ReactNode
 }
 

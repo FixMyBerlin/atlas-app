@@ -1,12 +1,15 @@
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { sourcesDatasets } from '../../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { createDatasetSourceLayerKey } from '../../utils/createKeyUtils/createKeyUtils'
+import {
+  createDatasetKey,
+  createDatasetSourceLayerKey,
+} from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
@@ -16,18 +19,17 @@ export const SourcesLayerDatasets: React.FC = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const regionSlug = useRegionSlug()
 
-  const uniqueRegionDatasets = sourcesDatasets
-    .filter((data) => (data.regionKey as string[]).includes(regionSlug!))
-    // Make the array unique by data.url
-    .filter((dataset, index, self) => index === self.findIndex((d) => d.url === dataset.url))
+  const regionDatasets = sourcesDatasets.filter((data) =>
+    (data.regionKey as string[]).includes(regionSlug!),
+  )
 
-  if (!uniqueRegionDatasets || !selectedDatasetIds || !pmTilesProtocolReady) return null
+  if (!regionDatasets || !selectedDatasetIds || !pmTilesProtocolReady) return null
 
   return (
     <>
-      {uniqueRegionDatasets.map(({ id: sourceId, type, url, attributionHtml, layers }) => {
-        const datasetTileId = `source:${sourceId}`
-        const visible = selectedDatasetIds.includes(sourceId)
+      {regionDatasets.map(({ id: sourceId, subId, type, url, attributionHtml, layers }) => {
+        const datasetTileId = createDatasetKey(sourceId, subId)
+        const visible = selectedDatasetIds.includes(datasetTileId)
         const visibility = layerVisibility(visible)
 
         return (
@@ -42,7 +44,7 @@ export const SourcesLayerDatasets: React.FC = () => {
               const layout =
                 layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
-              const layerId = createDatasetSourceLayerKey(sourceId, layer.id)
+              const layerId = createDatasetSourceLayerKey(sourceId, subId, layer.id)
               // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
               const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
 
@@ -57,7 +59,7 @@ export const SourcesLayerDatasets: React.FC = () => {
               const layerProps = {
                 id: layerId,
                 source: datasetTileId,
-                'source-layer': 'default', // set in `datasets/process.cjs`
+                'source-layer': 'default', // set in `datasets/process.ts`
                 type: layer.type,
                 layout: layout,
                 filter: layerFilter,

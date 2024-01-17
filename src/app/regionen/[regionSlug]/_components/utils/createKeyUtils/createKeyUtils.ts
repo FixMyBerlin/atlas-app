@@ -24,8 +24,16 @@ export const createSourceKey = (categoryId: string, sourceId: string, subCat: st
   return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
 }
 
-export const createDatasetSourceLayerKey = (sourceId: string, layerId: string) => {
-  return `${sourceId}--${layerId}`
+export const createDatasetKey = (sourceId: string, subId: string | undefined) => {
+  return [sourceId, subId].filter(Boolean).join('--')
+}
+
+export const createDatasetSourceLayerKey = (
+  sourceId: string,
+  subId: string | undefined,
+  layerId: string,
+) => {
+  return [sourceId, subId, layerId].filter(Boolean).join('--')
 }
 
 export const createInspectorFeatureKey = (

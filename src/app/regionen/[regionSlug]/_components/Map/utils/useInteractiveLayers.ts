@@ -5,6 +5,7 @@ import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryS
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import {
+  createDatasetKey,
   createDatasetSourceLayerKey,
   createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
@@ -73,10 +74,14 @@ export const useInteractiveLayers = () => {
   const datasetsActiveLayerIds =
     regionDatasets
       .filter((dataset) => dataset.inspector.enabled)
-      .filter((dataset) => selectedDatasetIds?.includes(dataset.id))
-      .map((dataset) =>
-        dataset.layers.map((layer) => createDatasetSourceLayerKey(dataset.id, layer.id)),
-      )
+      .filter((dataset) => {
+        return selectedDatasetIds?.includes(createDatasetKey(dataset.id, dataset.subId))
+      })
+      .map((dataset) => {
+        return dataset.layers.map((layer) => {
+          return createDatasetSourceLayerKey(dataset.id, dataset.subId, layer.id)
+        })
+      })
       .flat() || []
 
   return [...activeCategoryLayerIds, ...datasetsActiveLayerIds]
