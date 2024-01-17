@@ -1,8 +1,9 @@
 import { MapDataDatasetsSource } from '../../types'
 import { DatasetIds } from '../datasets/types'
-import { sourcesDatasetsBrandenburg } from './sourcesDatasetsBrandenburg.const'
 import { sourcesDatasetsBerlin } from './sourcesDatasetsBerlin.const'
 import { sourcesDatasetsBiBi } from './sourcesDatasetsBibi.const'
+import { sourcesDatasetsBrandenburg } from './sourcesDatasetsBrandenburg.const'
+import { sourcesDatasetsNudafa } from './sourcesDatasetsNudafa.const'
 import { sourcesDatasetsTrTo } from './sourcesDatasetsTrTo.const'
 import { sourcesDatasetsWoldegk } from './sourcesDatasetsWoldegk.const'
 
@@ -15,4 +16,5 @@ export const sourcesDatasets: SourceDatasets = [
   ...sourcesDatasetsBerlin,
   ...sourcesDatasetsWoldegk,
   ...sourcesDatasetsBrandenburg,
+  ...sourcesDatasetsNudafa,
 ]

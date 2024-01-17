@@ -33,6 +33,8 @@ export type MapDataDatasetsSource<TIds> = {
   /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
   regionKey: RegionSlug[]
   id: TIds
+  /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
+  subId?: string
   name: string
   description?: string
   attributionHtml: string

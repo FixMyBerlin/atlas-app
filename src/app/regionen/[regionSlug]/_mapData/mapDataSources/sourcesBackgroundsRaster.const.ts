@@ -6,6 +6,7 @@ export type SourcesRasterIds =
   | 'alkis'
   | 'mapnik'
   | 'esri'
+  | 'maptiler-satellite-v1'
   | 'maptiler-satellite'
   | 'mapbox-satellite'
   | 'areal2023'
@@ -83,12 +84,22 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
   // Data https://cloud.maptiler.com/tiles/satellite-v2/
   // Data JSON https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=ECOoUBmpqklzSCASXxcu
   {
-    id: 'maptiler-satellite',
-    name: 'Luftbild Maptiler',
+    id: 'maptiler-satellite-v1',
+    name: 'Luftbild Maptiler v1',
     tiles: `https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=${tokenMaptilerTilesets}`,
     tileSize: 512,
     minzoom: 0,
     maxzoom: 20,
+    attributionHtml:
+      '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>',
+  },
+  {
+    id: 'maptiler-satellite',
+    name: 'Luftbild Maptiler',
+    tiles: `https://api.maptiler.com/tiles/satellite-v2/{z}/{x}/{y}.jpg?key=${tokenMaptilerTilesets}`,
+    tileSize: 512,
+    minzoom: 0,
+    maxzoom: 22,
     attributionHtml:
       '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>',
   },

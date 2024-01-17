@@ -1,18 +1,18 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
-import { twJoin } from 'tailwind-merge'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
+import { twJoin } from 'tailwind-merge'
+import { createDatasetKey } from '../utils/createKeyUtils/createKeyUtils'
 import { ListOption } from './ListOption'
 import { useRegionDatasets } from './utils/useRegionDatasets'
-import { SourcesDatasetsIds } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
   const { dataParam, setDataParam } = useDataParam()
 
-  const onChange = (value: SourcesDatasetsIds[]) => {
+  const onChange = (value: string[]) => {
     void setDataParam(value)
   }
 
@@ -45,11 +45,12 @@ export const SelectDatasets: React.FC = () => {
             '[&_a:hover]:underline',
           )}
         >
-          {regionDatasets.map(({ id, name, description, attributionHtml }) => {
+          {regionDatasets.map(({ id, subId, name, description, attributionHtml }) => {
+            const key = createDatasetKey(id, subId)
             return (
               <ListOption
-                key={id}
-                value={id}
+                key={key}
+                value={key}
                 name={
                   <>
                     {name}

@@ -49,6 +49,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'mapnik',
   'esri',
   'maptiler-satellite',
+  'maptiler-satellite-v1',
   'mapbox-satellite',
   'cyclosm',
   'thunderforest-opencyclemap',
@@ -63,6 +64,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 
 export type RegionSlug =
   | 'bb' // Land Brandenburg
+  | 'bb-adfc' // ADFC Brandenburg
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -499,6 +501,28 @@ export const staticRegion: StaticRegion[] = [
       'roads',
       'surface',
       'bicycleParking',
+      'mapillary',
+    ],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+  },
+  {
+    name: 'ADFC',
+    fullName: 'ADFC Brandenburg',
+    slug: 'bb-adfc',
+    osmRelationIds: [62504],
+    map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
+    bbox: {
+      min: [11.2662278, 51.359064],
+      max: [14.7658159, 53.5590907],
+    },
+    externalLogoPath:
+      'https://brandenburg.adfc.de/typo3conf/ext/adfc_logorender/Resources/Public/Logos/logo_brandenburg_2ddb2d82267087ce442c1a4a3d972c06.png',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      'roads',
+      'surface',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
