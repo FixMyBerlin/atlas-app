@@ -1,0 +1,135 @@
+import { wrapFilterWithAll } from 'src/app/regionen/[regionSlug]/_components/Map/SourcesAndLayers/utils/filterUtils/wrapFilterWithAll'
+import { FileMapDataSubcategoryStyleLayer } from '../../../types'
+
+// Tries to extract styles form the data and falls back to defaults.
+// 1. Tries to use felt.com styles (not documented)
+//    - "felt:color:"#000"
+//    - "felt:fillOpacity":0.72
+//    - "felt:strokeStyle":"dashed"
+//    - "felt:strokeStyle":"dotted"
+//    - "felt:strokeOpacity":0.41
+//    - "felt:strokeWidth":6
+// 2. Tries to use the simplestyle specification
+//    - https://www.placemark.io/documentation/simplestyle
+
+export const defaultLineLayerStyles = ({
+  filter,
+}: {
+  filter?: ['match', ['get', string], string[], boolean, boolean]
+}) => {
+  return [
+    {
+      id: 'datasetsDefaultLayerLine',
+      type: 'line',
+      paint: {
+        'line-width': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 10],
+        'line-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#14b8a6'],
+        'line-opacity': ['coalesce', ['get', 'felt:strokeOpacity'], ['get', 'stroke-opacity'], 0.6],
+        // This does not work, yet. Workaround is below.
+        // https://maplibre.org/maplibre-style-spec/layers/#paint-line-line-dasharray
+        // https://github.com/maplibre/maplibre-gl-js/issues/1235
+        // 'line-dasharray': [
+        //   'case',
+        //   ['all', ['==', ['get', 'felt:strokeStyle'], 'dashed']],
+        //   ['literal', [1, 2]],
+        //   ['all', ['==', ['get', 'felt:strokeStyle'], 'dotted']],
+        //   ['literal', [0.1, 1.5]],
+        //   ['literal', [1, 1]],
+        // ],
+      },
+      filter: wrapFilterWithAll(filter),
+      layout: {},
+    },
+    // Those two layers are a workaround to add the right line-dasharray
+    // Thank to https://github.com/maplibre/maplibre-gl-js/issues/1235#issuecomment-1358000968
+    {
+      id: 'datasetsDefaultLayerLine--felt-dashed',
+      type: 'line',
+      paint: {
+        'line-width': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 10],
+        'line-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#14b8a6'],
+        'line-opacity': ['coalesce', ['get', 'felt:strokeOpacity'], ['get', 'stroke-opacity'], 0.6],
+        'line-dasharray': [1, 2],
+      },
+      // Reminder: `filter` is a `match` expression which is not allowed to be the first item in [`all`].
+      filter: wrapFilterWithAll([['==', 'felt:strokeStyle', 'dashed'], ...([filter] || [])]),
+      layout: {},
+    },
+    {
+      id: 'datasetsDefaultLayerLine--felt-dotted',
+      type: 'line',
+      paint: {
+        'line-width': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 10],
+        'line-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#14b8a6'],
+        'line-opacity': ['coalesce', ['get', 'felt:strokeOpacity'], ['get', 'stroke-opacity'], 0.6],
+        'line-dasharray': [0.1, 1.5],
+      },
+      filter: wrapFilterWithAll([['==', 'felt:strokeStyle', 'dotted'], ...([filter] || [])]),
+      layout: {},
+    },
+  ] satisfies Omit<FileMapDataSubcategoryStyleLayer, 'source' | 'source-layer'>[]
+}
+
+export const defaultPointLayerStyles = ({
+  filter,
+}: {
+  filter?: ['match', ['get', string], string[], boolean, boolean]
+}) => {
+  return [
+    {
+      id: 'datasetsDefaultLayerCircle',
+      type: 'circle',
+      paint: {
+        'circle-radius': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 5],
+        // TO NOT DO THIS…
+        //   [
+        //   'case',
+        //   ['has', ['get', 'felt:color']],
+        //   ['get', 'felt:color'],
+        //   ['has', ['get', 'stroke']],
+        //   ['get', 'stroke'],
+        //   '#0f766e',
+        // ],
+        // TO THIS INSTEAD:
+        'circle-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#0f766e'],
+        // TO NOT DO THIS…
+        // 'circle-opacity': [
+        //   'case',
+        //   ['has', ['get', 'felt:strokeOpacity']],
+        //   ['get', 'felt:strokeOpacity'],
+        //   ['has', ['get', 'stroke-opacity']],
+        //   ['get', 'stroke-opacity'],
+        //   0.1,
+        // ],
+        // TO THIS INSTEAD:
+        'circle-opacity': [
+          'coalesce',
+          ['get', 'felt:strokeOpacity'],
+          ['get', 'stroke-opacity'],
+          0.6,
+        ],
+      },
+      filter: wrapFilterWithAll(filter),
+    },
+  ] satisfies Omit<FileMapDataSubcategoryStyleLayer, 'source' | 'source-layer'>[]
+}
+
+export const defaultAreaLayerStyles = ({
+  filter,
+}: {
+  filter?: ['match', ['get', string], string[], boolean, boolean]
+}) => {
+  return [
+    {
+      id: 'datasetsDefaultLayerFill',
+      type: 'fill',
+      paint: {
+        'fill-color': ['to-color', ['get', 'felt:color'], ['get', 'fill'], '#14b8a6'],
+        'fill-outline-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#0f766e'],
+        'fill-opacity': ['coalesce', ['get', 'felt:fillOpacity'], ['get', 'fill-opacity'], 0.3],
+      },
+      filter: wrapFilterWithAll(filter),
+      layout: {},
+    },
+  ] satisfies Omit<FileMapDataSubcategoryStyleLayer, 'source' | 'source-layer'>[]
+}
