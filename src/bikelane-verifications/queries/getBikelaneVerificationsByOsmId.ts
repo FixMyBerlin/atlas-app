@@ -1,7 +1,7 @@
 import { resolver } from '@blitzjs/rpc'
 import { paginate } from 'blitz'
 import db, { Prisma } from 'db'
-import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { VerificationSchema } from '../schemas'
 
