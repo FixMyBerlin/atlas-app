@@ -124,6 +124,36 @@ export const DebugMap = () => {
           ))}
         </ul>
       </details>
+
+      <details>
+        <summary className="cursor-pointer hover:font-semibold">All layer with order</summary>
+
+        <table>
+          <thead>
+            <tr>
+              <th>index</th>
+              <th>source</th>
+              <th>type</th>
+              <th>id</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(allLayers).map(([index, layer]) => {
+              const source = 'source' in layer ? layer?.source ?? '-' : '-'
+              return (
+                <tr key={`all${layer.id}`}>
+                  <td>{index}</td>
+                  <td className={source == 'openmaptiles' ? 'font-semibold' : ''}>
+                    <div className="w-28 truncate">{source}</div>
+                  </td>
+                  <td>{layer.type}</td>
+                  <td>{layer.id}</td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </details>
     </div>
   )
 }
