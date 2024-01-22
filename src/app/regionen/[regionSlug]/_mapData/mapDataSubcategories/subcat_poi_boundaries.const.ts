@@ -6,64 +6,82 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topiId = 'poiBoundaries'
 export type SubcatPoiBoundariesId = typeof topiId
-export type SubcatPoiBoundariesStyleIds = 'default' | 'level-7' | 'level-8' | 'level-9-10'
+export type SubcatPoiBoundariesStyleIds =
+  | 'default'
+  | 'category_district_label'
+  | 'category_municipality'
+  | 'category_municipality_label'
 
 export const subcat_poi_boundaries: FileMapDataSubcategory = {
   id: topiId,
-  name: 'Grenzen',
+  name: 'Verwaltungsbereiche',
   ui: 'dropdown',
   sourceId: 'atlas_boundaries',
   styles: [
     defaultStyleHidden,
     {
       id: 'default',
-      name: 'Grenzen',
+      name: 'Landkreise & Kreisfreie Städte',
       desc: null,
       layers: [
         ...mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_atlas_boundaries,
           source: 'atlas_boundaries',
           sourceLayer: 'boundaries',
-        }),
-        ...mapboxStyleLayers({
-          layers: mapboxStyleGroupLayers_atlas_boundaries_names,
-          source: 'atlas_boundaries',
-          sourceLayer: 'boundaries',
+          additionalFilter: ['has', 'category_district'],
         }),
       ],
     },
     {
-      id: 'level-7',
-      name: 'Gemeindeverbund / Amt',
+      id: 'category_district_label',
+      name: 'Landkreise & Kreisfreie Städte mit Namen',
       desc: null,
-      layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_boundaries,
-        source: 'atlas_boundaries',
-        sourceLayer: 'boundaries',
-        additionalFilter: ['match', ['get', 'admin_level'], ['7'], true, false],
-      }),
+      layers: [
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundaries',
+          additionalFilter: ['has', 'category_district'],
+        }),
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries_names,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundariesLabel',
+          additionalFilter: ['has', 'category_district'],
+        }),
+      ],
     },
     {
-      id: 'level-8',
-      name: 'Gemeinde / Stadt',
+      id: 'category_municipality',
+      name: 'Gemeinden',
       desc: null,
-      layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_boundaries,
-        source: 'atlas_boundaries',
-        sourceLayer: 'boundaries',
-        additionalFilter: ['match', ['get', 'admin_level'], ['8'], true, false],
-      }),
+      layers: [
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundaries',
+          additionalFilter: ['has', 'category_municipality'],
+        }),
+      ],
     },
     {
-      id: 'level-9-10',
-      name: 'Bezirk, Stadtteil',
+      id: 'category_municipality_label',
+      name: 'Gemeinden mit Namen',
       desc: null,
-      layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_boundaries,
-        source: 'atlas_boundaries',
-        sourceLayer: 'boundaries',
-        additionalFilter: ['match', ['get', 'admin_level'], ['9', '10'], true, false],
-      }),
+      layers: [
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundaries',
+          additionalFilter: ['has', 'category_municipality'],
+        }),
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries_names,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundariesLabel',
+          additionalFilter: ['has', 'category_municipality'],
+        }),
+      ],
     },
   ],
 }

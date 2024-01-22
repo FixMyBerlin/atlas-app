@@ -84,7 +84,7 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'atlas_boundaries',
-    tiles: `${tilesUrl}/boundaries/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/boundaries,boundariesLabel/{z}/{x}/{y}`,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     inspector: {

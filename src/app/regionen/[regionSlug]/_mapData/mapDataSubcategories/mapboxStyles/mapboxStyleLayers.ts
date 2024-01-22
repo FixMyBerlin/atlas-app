@@ -8,7 +8,7 @@ export type Props = {
   source: SourcesId
   sourceLayer: string
   idPrefix?: string
-  additionalFilter?: ['match', ['get', string], string[], boolean, boolean]
+  additionalFilter?: ['match', ['get', string], string[], boolean, boolean] | ['has', string]
 }
 
 /** @desc Takes the layers we extract from Mapbox with `npm run updateStyles` (which are stripped down to just the style information) and adds the source-information that is only present in our app. It also allows to use the same layers with differend `additionalFilter`.  */

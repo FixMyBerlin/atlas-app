@@ -6,38 +6,39 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_boundaries_names: MapboxStyleLayer[] = [
   {
     type: 'symbol',
-    id: 'admin-level-8-9-10 name',
+    id: 'name_category_municipality',
     paint: {
-      'text-halo-color': '#e8e8e8',
+      'text-color': '#e6a3cc',
       'text-halo-width': 1,
-      'text-color': '#6c3d3d',
+      'text-halo-color': '#ffffff',
     },
     layout: {
-      'text-field': ['to-string', ['get', 'name']],
-      'text-size': ['interpolate', ['linear'], ['zoom'], 8, 8, 11, 12],
+      'text-field': [
+        'concat',
+        ['to-string', ['get', 'name:prefix']],
+        ' ',
+        ['to-string', ['get', 'name']],
+      ],
+      'text-size': 14,
     },
-    filter: [
-      'all',
-      ['match', ['get', 'admin_level'], ['10', '9', '8'], true, false],
-      ['match', ['geometry-type'], ['Polygon'], true, false],
-    ],
+    filter: ['has', 'category_municipality'],
   },
   {
     type: 'symbol',
-    id: 'admin-level-7 name',
+    id: 'name_category_district',
     paint: {
-      'text-halo-color': '#e8e8e8',
-      'text-halo-width': 1,
-      'text-color': '#6c3d3d',
+      'text-color': '#f094cd',
+      'text-halo-color': '#ffffff',
+      'text-halo-width': 2,
     },
     layout: {
-      'text-field': ['to-string', ['get', 'name']],
-      'text-size': ['interpolate', ['linear'], ['zoom'], 8, 8, 11, 12],
+      'text-field': [
+        'concat',
+        ['to-string', ['get', 'name:prefix']],
+        ' ',
+        ['to-string', ['get', 'name']],
+      ],
     },
-    filter: [
-      'all',
-      ['match', ['get', 'admin_level'], ['7'], true, false],
-      ['match', ['geometry-type'], ['Polygon'], true, false],
-    ],
+    filter: ['has', 'category_district'],
   },
 ]
