@@ -60,6 +60,8 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'waymarkedtrails-cycling',
   'waymarkedtrails-hiking',
   'opentopomap',
+  'stamen-toner',
+  'stamen-toner-light',
 ]
 
 export type RegionSlug =
