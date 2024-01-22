@@ -503,6 +503,13 @@
     "height": 20,
     "pixelRatio": 1
   },
+  "cliff": {
+    "x": 513,
+    "y": 440,
+    "width": 8,
+    "height": 7,
+    "pixelRatio": 1
+  },
   "clothing-store": {
     "x": 423,
     "y": 80,

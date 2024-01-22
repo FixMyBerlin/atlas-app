@@ -12,18 +12,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       'line-color': '#b50382',
       'line-dasharray': [2.5, 0.5],
     },
-    filter: [
-      'match',
-      ['get', 'category'],
-      [
-        'needsClarification',
-        'footwayBicycleYes_adjoiningOrIsolated',
-        'footAndCyclewayShared_adjoiningOrIsolated',
-        'footAndCyclewaySegregated_adjoiningOrIsolated',
-      ],
-      true,
-      false,
-    ],
+    filter: ['match', ['get', 'category'], ['needsClarification'], true, false],
   },
   {
     id: 'Gemeinsamer Fahrstreifen mit Kfz Markiert',
@@ -47,6 +36,17 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['sharedBusLane'], true, false],
   },
   {
+    id: 'Verkehrsberuhigter Bereich',
+    type: 'line',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
+      'line-dasharray': [2, 2],
+      'line-color': '#fb923c',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+    },
+    filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
+  },
+  {
     id: 'Fahrradstrasse Mischverkehr',
     type: 'line',
     paint: {
@@ -68,22 +68,11 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['bicycleRoad'], true, false],
   },
   {
-    id: 'Verkehrsberuhigter Bereich',
-    type: 'line',
-    paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-dasharray': [1, 2],
-      'line-color': '#ec4899',
-      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-    },
-    filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
-  },
-  {
     id: 'Gehweg mit Rad frei',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-dasharray': [2, 1],
+      'line-dasharray': [2, 2],
       'line-color': '#ec4899',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
