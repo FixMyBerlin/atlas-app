@@ -59,6 +59,7 @@ export const exportApiIdentifier = [
   'barrierAreas',
   'barrierLines',
   'boundaries',
+  'boundariesLabel',
 ] as const
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
