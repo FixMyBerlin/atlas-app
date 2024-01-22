@@ -14,8 +14,7 @@ HighwayClasses = Set({
 MajorRoadClasses = Set({
   "primary", "primary_link",     -- "Bundesstraßen" (B XXX)
   "secondary", "secondary_link", -- "Landesstraße" (L XXX)
-  "tertiary",
-  "tertiary_link",               -- "Kreisstraße", "Gemeindeverbindungsstraße", "Innerstädtische Vorfahrtstraßen mit Durchfahrtscharakter"
+  "tertiary", "tertiary_link",   -- "Kreisstraße", "Gemeindeverbindungsstraße", "Innerstädtische Vorfahrtstraßen mit Durchfahrtscharakter"
 })
 
 MinorRoadClasses = Set({
