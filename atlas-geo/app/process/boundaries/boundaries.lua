@@ -41,34 +41,30 @@ function osm2pgsql.process_relation(object)
     return
   end
 
-  local category_municipality = nil -- Gemeinden
-  local category_district = nil     -- Landkreise
-  if (tags.admin_level == 8) then
-    category_municipality = "Gemeinde"
+  local results_tags = {}
+  results_tags.admin_level = tonumber(tags.admin_level)
+  results_tags.population = tonumber(tags.population)
+  -- Categories:
+  if (results_tags.admin_level == 8) then
+    results_tags.category_municipality = "Gemeinde"
   end
-  if (tags.admin_level == 6) then
-    category_district = "Landkreis"
+  if (results_tags.admin_level == 6) then
+    results_tags.category_district = "Landkreis"
     if (tags.place == "city" or tags["name:prefix"] == "Kreisfreie Stadt") then
-      category_municipality = "Kreisfreie Stadt"
-      category_district = "Kreisfreie Stadt"
+      results_tags.category_municipality = "Kreisfreie Stadt"
+      results_tags.category_district = "Kreisfreie Stadt"
     end
   end
-  if (tags.admin_level == 4 and tags.place == "city") then
-    category_municipality = "Stadtstaat"
-    category_district = "Stadtstaat"
+  if (results_tags.admin_level == 4 and tags.place == "city") then
+    results_tags.category_municipality = "Stadtstaat"
+    results_tags.category_district = "Stadtstaat"
   end
-
-  local results_tags = {}
   -- these tags are copied (Eigennamen)
   local allowed_tags = { "name", "name:prefix" }
   CopyTags(results_tags, tags, allowed_tags)
   -- these tags are copied and prefixed with `osm_`
   local tags_cc = { "de:regionalschluessel", "population:date", "wikidata", "wikipedia" }
   CopyTags(results_tags, tags, tags_cc, "osm_")
-  results_tags.admin_level = tonumber(tags.admin_level)
-  results_tags.population = tonumber(tags.population)
-  results_tags.category_municipality = category_municipality
-  results_tags.category_district = category_district
 
   -- Make sure we only include boundaries with a geometry
   -- https://osm2pgsql.org/doc/manual.html#processing-callbacks
