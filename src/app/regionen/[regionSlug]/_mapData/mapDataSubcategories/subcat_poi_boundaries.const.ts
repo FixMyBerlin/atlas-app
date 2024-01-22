@@ -1,11 +1,12 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_boundaries } from './mapboxStyles/groups/atlas_boundaries'
+import { mapboxStyleGroupLayers_atlas_boundaries_names } from './mapboxStyles/groups/atlas_boundaries_names'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const topiId = 'poiBoundaries'
 export type SubcatPoiBoundariesId = typeof topiId
-export type SubcatPoiBoundariesStyleIds = 'default' | 'level-8' | 'level-9-10'
+export type SubcatPoiBoundariesStyleIds = 'default' | 'level-7' | 'level-8' | 'level-9-10'
 
 export const subcat_poi_boundaries: FileMapDataSubcategory = {
   id: topiId,
@@ -16,6 +17,23 @@ export const subcat_poi_boundaries: FileMapDataSubcategory = {
     defaultStyleHidden,
     {
       id: 'default',
+      name: 'Grenzen',
+      desc: null,
+      layers: [
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundaries',
+        }),
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_boundaries_names,
+          source: 'atlas_boundaries',
+          sourceLayer: 'boundaries',
+        }),
+      ],
+    },
+    {
+      id: 'level-7',
       name: 'Gemeindeverbund / Amt',
       desc: null,
       layers: mapboxStyleLayers({
