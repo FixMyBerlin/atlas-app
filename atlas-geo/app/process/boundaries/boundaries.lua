@@ -43,7 +43,7 @@ function osm2pgsql.process_relation(object)
 
   local category_municipality = nil -- Gemeinden
   local category_district = nil     -- Landkreise
-  if (tags.admin_level == 4) then
+  if (tags.admin_level == 8) then
     category_municipality = "Gemeinde"
   end
   if (tags.admin_level == 6) then
