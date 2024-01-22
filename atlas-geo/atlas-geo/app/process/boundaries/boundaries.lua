@@ -14,14 +14,24 @@ local table = osm2pgsql.define_table({
   }
 })
 
-local statsTable = osm2pgsql.define_table({
-  name = 'boundaryStats',
+local tableLabel = osm2pgsql.define_table({
+  name = 'boundariesLabel',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
-    { column = 'bikelane_categories', type = 'jsonb', create_only=true },
-    { column = 'geom', type = 'multipolygon' },
+    { column = 'geom', type = 'point' },
+  }
+})
+
+local statsTable = osm2pgsql.define_table({
+  name = 'boundaryStats',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags',                type = 'jsonb' },
+    { column = 'meta',                type = 'jsonb' },
+    { column = 'bikelane_categories', type = 'jsonb',       create_only = true },
+    { column = 'geom',                type = 'multipolygon' },
   }
 })
 
@@ -45,10 +55,16 @@ function osm2pgsql.process_relation(object)
     meta = Metadata(object),
     geom = object:as_multipolygon()
   })
+  tableLabel:insert({
+    tags = tags,
+    meta = Metadata(object),
+    geom = object:as_multipolygon():centroid()
+  })
+
   local admin_levels = Set({ "4", "6", "7", "8" })
   if admin_levels[tags.admin_level] then
     local tags_cc = { "name", "admin_level", "name:prefix", "de:regionalschluessel" }
-    tags  = CopyTags({}, tags, tags_cc, "osm_")
+    tags          = CopyTags({}, tags, tags_cc, "osm_")
     statsTable:insert({
       tags = tags,
       meta = Metadata(object),
