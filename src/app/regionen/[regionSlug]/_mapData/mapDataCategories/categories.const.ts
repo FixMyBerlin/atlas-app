@@ -36,6 +36,7 @@ export type MapDataCategoryId =
   | 'bikelanes_LEGACY'
   | 'bikelanes'
   | 'poi'
+  | 'boundaries'
   | 'roads_LEGACY'
   | 'roads'
   | 'statistics'
@@ -65,6 +66,17 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_poi_plus_publicTransport, defaultStyle: 'hidden' },
       // { id: 'subcat_poi_plus_routes', defaultStyle: 'hidden' },
       // { id: 'subcat_poi_plus_buildings', defaultStyle: 'hidden' },
+    ],
+  },
+  {
+    // Only used ONCE for now for the 'bb-adfc'-campaign-region
+    id: 'boundaries',
+    name: 'Grenzen',
+    desc: 'Siedlungszentren und Barrieren',
+    subcategories: [
+      { ...subcat_poi_places, defaultStyle: 'hidden' },
+      { ...subcat_poi_boundaries, defaultStyle: 'default' },
+      { ...subcat_poi_plus_barriers, defaultStyle: 'hidden' },
     ],
   },
   {
