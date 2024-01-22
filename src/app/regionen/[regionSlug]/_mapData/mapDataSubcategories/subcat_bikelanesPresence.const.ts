@@ -14,6 +14,7 @@ export const subcat_bikelanesPresence: FileMapDataSubcategory = {
   name: 'Vollständigkeit Radinfrastruktur',
   ui: 'dropdown',
   sourceId: source,
+  beforeId: 'housenumber',
   styles: [
     defaultStyleHidden,
     {

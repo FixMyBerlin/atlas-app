@@ -109,11 +109,13 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
       { ...subcat_bikelanes, defaultStyle: 'default' },
+      { ...subcat_bikelanesPresence, defaultStyle: 'hidden' },
+      // Plus
       { ...subcat_bikelanes_plus_width_text, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
-      { ...subcat_bikelanesPresence, defaultStyle: 'hidden' },
+      // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
       // { id: 'tram', defaultStyle: 'hidden' },
     ],
