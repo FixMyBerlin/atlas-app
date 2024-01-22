@@ -55,6 +55,7 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=service_driveway': 'Grundstückszufahrt', // roadClassification--category
   'ALL--highway=service_parking_aisle': 'Parkplatzweg', // roadClassification--category
   'ALL--highway=service_road': 'Zufahrtsweg', // roadClassification--category
+  'ALL--highway=service_uncategorized': 'Zufahrtsweg (unbekannte Klassifisierung)',
   'ALL--highway=service': 'Zufahrtsweg',
   'ALL--highway=steps': 'Stufen',
   'ALL--highway=tertiary': 'Kreisstraße/Untergeordnete Durchgangsstraße',
