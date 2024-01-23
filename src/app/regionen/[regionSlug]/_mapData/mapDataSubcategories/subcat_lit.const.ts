@@ -1,40 +1,13 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultLegendFresh } from './defaultLegend/defaultLegendFresh'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { legacyMapboxStyleLayers } from './mapboxStyles/legacyMapboxStyleLayers'
+import { mapboxStyleGroupLayers_atlas_lit } from './mapboxStyles/groups/atlas_lit'
+import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'lit'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
 export type SubcatLitId = typeof subcatId
-export type SubcatLitStyleIds = 'default' | 'completeness' | 'verification' | 'freshness'
-
-const defaultLegend: FileMapDataSubcategory['styles'][0]['legends'] = [
-  {
-    id: 'lit',
-    name: 'Beleuchtet',
-    style: {
-      type: 'line',
-      color: 'hsl(47, 94%, 57%)',
-    },
-  },
-  {
-    id: 'lit-special',
-    name: 'Beleuchtet (Sonderfälle)',
-    style: {
-      type: 'line',
-      color: 'hsl(35, 100%, 61%)',
-    },
-  },
-  {
-    id: 'unlit',
-    name: 'Unbeleuchtet',
-    style: {
-      type: 'line',
-      color: 'hsl(47, 86%, 19%)',
-    },
-  },
-]
+export type SubcatLitStyleIds = 'default' | 'lit'
 
 export const subcat_lit: FileMapDataSubcategory = {
   id: subcatId,
@@ -45,60 +18,68 @@ export const subcat_lit: FileMapDataSubcategory = {
     defaultStyleHidden,
     {
       id: 'default',
-      name: 'Inhalte (Legacy)',
+      name: 'Beleuchtung',
       desc: null,
-      layers: legacyMapboxStyleLayers({
-        group: 'atlas_lit',
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_lit,
         source,
         sourceLayer,
       }),
-      legends: [...defaultLegend],
-    },
-    {
-      id: 'completeness',
-      name: 'Inhalte & Vollständigkeit (Legacy)',
-      desc: null,
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_lit_complete',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_lit',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
       legends: [
-        ...defaultLegend,
         {
-          id: 'missing',
-          name: 'Daten fehlen',
+          id: 'lit',
+          name: 'Beleuchtet',
           style: {
             type: 'line',
-            color: 'hsl(312, 92%, 74%)',
+            color: '#f8c52a',
+          },
+        },
+        {
+          id: 'lit-special',
+          name: 'Beleuchtet (Sonderfälle)',
+          style: {
+            type: 'line',
+            color: '#ffac38',
+          },
+        },
+        {
+          id: 'unlit',
+          name: 'Unbeleuchtet',
+          style: {
+            type: 'line',
+            color: '#736e59',
           },
         },
       ],
     },
     {
-      id: 'freshness',
-      name: 'Inhalte & Aktualität (Legacy)',
+      id: 'lit',
+      name: 'Beleuchtet',
       desc: null,
-      layers: [
-        legacyMapboxStyleLayers({
-          group: 'atlas_lit_fresh',
-          source,
-          sourceLayer,
-        }),
-        legacyMapboxStyleLayers({
-          group: 'atlas_lit',
-          source,
-          sourceLayer,
-        }),
-      ].flat(),
-      legends: [...defaultLegend, ...defaultLegendFresh],
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_lit,
+        source,
+        sourceLayer,
+        additionalFilter: ['match', ['get', 'lit'], ['no'], false, true],
+      }),
+      legends: [
+        {
+          id: 'lit',
+          name: 'Beleuchtet',
+          style: {
+            type: 'line',
+            color: '#f8c52a',
+          },
+        },
+        {
+          id: 'lit-special',
+          name: 'Beleuchtet (Sonderfälle)',
+          style: {
+            type: 'line',
+            color: '#ffac38',
+          },
+        },
+      ],
     },
   ],
 }

@@ -13,22 +13,9 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
     id: 'lit-special-line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 12, 3, 14, 5, 18, 12],
-      'line-color': 'hsl(35, 100%, 61%)',
+      'line-color': '#ffac38',
       'line-opacity': ['interpolate', ['linear'], ['zoom'], 13, 0.8, 18, 0.6],
       'line-blur': 1,
-    },
-  },
-  {
-    filter: [
-      'all',
-      ['match', ['get', 'lit'], ['special'], true, false],
-      ['match', ['get', 'area'], ['yes'], true, false],
-    ],
-    type: 'fill',
-    id: 'lit-special-line copy',
-    paint: {
-      'fill-color': 'rgb(255, 172, 56)',
-      'fill-opacity': 0.4,
     },
   },
   {
@@ -46,19 +33,6 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
     },
   },
   {
-    filter: [
-      'all',
-      ['match', ['get', 'lit'], ['no'], true, false],
-      ['match', ['get', 'area'], ['yes'], true, false],
-    ],
-    type: 'fill',
-    id: 'lit-no-line copy',
-    paint: {
-      'fill-color': '#736e59',
-      'fill-opacity': 0.4,
-    },
-  },
-  {
     layout: {
       'line-cap': 'round',
     },
@@ -73,19 +47,6 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
     },
   },
   {
-    filter: [
-      'all',
-      ['match', ['get', 'lit'], ['yes'], true, false],
-      ['match', ['get', 'area'], ['yes'], true, false],
-    ],
-    type: 'fill',
-    id: 'lit-yes-line copy',
-    paint: {
-      'fill-color': '#f8c52a',
-      'fill-opacity': 0.4,
-    },
-  },
-  {
     layout: {
       'line-cap': 'round',
     },
@@ -93,9 +54,9 @@ export const mapboxStyleGroupLayers_atlas_lit: MapboxStyleLayer[] = [
     type: 'line',
     id: 'hitarea-lit',
     paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 15, 10, 22, 12],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
       'line-opacity': 0,
-      'line-color': 'hsl(290, 100%, 54%)',
+      'line-color': '#d814ff',
     },
   },
 ]

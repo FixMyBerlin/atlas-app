@@ -10,7 +10,7 @@ export const mapboxStyleGroupLayers_atlas_lit_complete: MapboxStyleLayer[] = [
     id: 'lit-missing',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 12, 1, 14, 1.5, 18, 3],
-      'line-color': 'hsl(312, 92%, 74%)',
+      'line-color': '#fa80f4',
       'line-opacity': 0.7,
     },
   },

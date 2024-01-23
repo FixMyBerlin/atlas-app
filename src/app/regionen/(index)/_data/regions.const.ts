@@ -107,6 +107,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'lit',
       'parking',
       'mapillary',
     ],
