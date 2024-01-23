@@ -3,7 +3,7 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_roadclassification_mainstreets: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] = [
   {
     minzoom: 10,
     filter: [
@@ -78,21 +78,16 @@ export const mapboxStyleGroupLayers_atlas_roadclassification_mainstreets: Mapbox
       'match',
       ['get', 'road'],
       [
-        'residential',
-        'living_street',
-        'bicycle_road',
-        'pedestrian',
-        'unclassified',
-        'residential_priority_road',
-        'unspecified_road',
-        'service_uncategorized',
-        'service_alley',
         'primary',
         'tertiary_link',
         'secondary_link',
         'tertiary',
         'secondary',
         'primary_link',
+        'trunk',
+        'motorway_link',
+        'motorway',
+        'trunk_link',
       ],
       true,
       false,

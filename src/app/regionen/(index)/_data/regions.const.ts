@@ -267,6 +267,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'lit',
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
