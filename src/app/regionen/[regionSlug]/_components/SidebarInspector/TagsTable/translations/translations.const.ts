@@ -57,6 +57,7 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=service_road': 'Zufahrtsweg', // roads--category
   'ALL--highway=service_uncategorized': 'Zufahrtsweg (unbekannte Klassifisierung)',
   'ALL--highway=service': 'Zufahrtsweg',
+  'ALL--highway=motorway': 'Autobahn',
   'ALL--highway=steps': 'Stufen',
   'ALL--highway=tertiary': 'Kreisstraße/Untergeordnete Durchgangsstraße',
   'ALL--highway=track': 'Wald- / Feldweg',

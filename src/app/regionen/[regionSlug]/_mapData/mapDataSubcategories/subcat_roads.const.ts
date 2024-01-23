@@ -1,6 +1,5 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleGroupLayers_atlas_roadclassification_all } from './mapboxStyles/groups/atlas_roadclassification_all'
 import { mapboxStyleGroupLayers_atlas_roadclassification_mainstreets } from './mapboxStyles/groups/atlas_roadclassification_mainstreets'
 import { mapboxStyleGroupLayers_atlas_roadclassification_sidestreets } from './mapboxStyles/groups/atlas_roadclassification_sidestreets'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
@@ -21,11 +20,18 @@ export const subcat_roads: FileMapDataSubcategory = {
       id: 'default',
       name: 'Alle',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
-      layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_roadclassification_all,
-        source,
-        sourceLayer,
-      }),
+      layers: [
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_roadclassification_mainstreets,
+          source,
+          sourceLayer,
+        }),
+        ...mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_atlas_roadclassification_sidestreets,
+          source,
+          sourceLayer,
+        }),
+      ],
       legends: [
         {
           id: 'main',
@@ -100,7 +106,18 @@ export const subcat_roads: FileMapDataSubcategory = {
         source,
         sourceLayer,
       }),
-      legends: [],
+      legends: [
+        {
+          id: 'main',
+          name: 'Hauptstraßen',
+          style: { type: 'line', color: '#f6e7ac', width: 8 },
+        },
+        {
+          id: 'trunk',
+          name: 'Autobahn',
+          style: { type: 'line', color: '#828282', width: 1 },
+        },
+      ],
     },
   ],
 }

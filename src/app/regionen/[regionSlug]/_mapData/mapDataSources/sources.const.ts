@@ -196,7 +196,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
-        'osm_name',
+        'name',
         'road',
         'road_oneway',
         'road_oneway:bicycle__if_present',

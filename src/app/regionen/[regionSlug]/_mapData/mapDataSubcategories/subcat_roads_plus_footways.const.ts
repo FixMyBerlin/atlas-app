@@ -1,5 +1,4 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_roadclassification_plus_fusswege } from './mapboxStyles/groups/atlas_roadclassification_plus_fusswege'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -11,10 +10,9 @@ export type SubcatRoadsPlusFootwaysStyleIds = 'default'
 export const subcat_roads_plus_footways: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Fußweg, Pfad, Sonderweg, u.a.',
-  ui: 'dropdown',
+  ui: 'checkbox',
   sourceId: source,
   styles: [
-    defaultStyleHidden,
     {
       id: 'default',
       name: 'Fußweg, Pfad, Sonderweg, u.a.',
