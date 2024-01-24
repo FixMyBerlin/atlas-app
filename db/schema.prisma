@@ -114,7 +114,7 @@ model Region {
   exportPublic Boolean  @default(false)
 
   Membership Membership[]
-  Upload     Upload[]
+  uploads    Upload[]
 }
 
 model Membership {
@@ -136,7 +136,7 @@ model Upload {
   //
   slug        String   @unique
   externalUrl String
+  public      Boolean  @default(false)
   //
-  region      Region   @relation(fields: [regionId], references: [id])
-  regionId    Int
+  regions     Region[]
 }

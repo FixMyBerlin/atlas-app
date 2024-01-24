@@ -5,11 +5,8 @@ import os from 'node:os'
 
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
-import {getSlugs, getRegionsUrl, getUploadsUrl, createUpload} from './api'
+import { getSlugs, getRegionsUrl, getUploadsUrl, createUpload } from './api'
 import { green, yellow, inverse, red } from './log'
-
-const s3BucketName = 'atlas-private'
-const s3Region = 'atlas-private'
 
 const geoJsonFolder = 'private-datasets/geojson'
 const tmpDir = path.join(os.tmpdir(), 'pmtiles')
@@ -61,8 +58,8 @@ const uploadFileToS3 = async (fileToUpload, filename) => {
 }
 
 // create tmp folder
-if (!fs.existsSync(tmpDir)){
-  fs.mkdirSync(tmpDir, { recursive: true });
+if (!fs.existsSync(tmpDir)) {
+  fs.mkdirSync(tmpDir, { recursive: true })
 }
 
 const files = fs.readdirSync(geoJsonFolder).filter((f) => f.endsWith('.geojson'))
@@ -73,10 +70,11 @@ for (const i in files) {
   const uploadSlug = path.parse(file).name
   const regionSlug = uploadSlug.split('-')[0]!
 
-  if (!regionSlugs.includes(regionSlug)) {
-    yellow(`  Region "${regionSlug}" does not exist.`)
-    continue
-  }
+  // if (!regionSlugs.includes(regionSlug)) {
+  //   yellow(`  Region "${regionSlug}" does not exist.`)
+  //   continue
+  // }
+
   if (uploadSlugs.includes(uploadSlug)) {
     yellow(`  Upload "${uploadSlug}" already exists.`)
     continue
@@ -92,7 +90,7 @@ for (const i in files) {
   const uploadUrl = await uploadFileToS3(outputFile, `${uploadSlug}.pmtiles`)
 
   console.log('  Saving upload to DB...')
-  const response = await createUpload(uploadSlug, uploadUrl, regionSlug)
+  const response = await createUpload(uploadSlug, uploadUrl)
   if (response.status !== 201) {
     red(JSON.stringify(await response.json(), null, 2))
     process.exit(1)

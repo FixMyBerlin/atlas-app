@@ -8,7 +8,7 @@ export const getSlugs = async (url: string): Promise<string[]> => {
   return (await (await fetch(url)).json()).map((region) => region.slug)
 }
 
-export const createUpload = async (uploadSlug, externalUrl, regionSlug ) => {
+export const createUpload = async (uploadSlug, externalUrl) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
@@ -17,7 +17,6 @@ export const createUpload = async (uploadSlug, externalUrl, regionSlug ) => {
         apiKey: process.env.EXPORT_ACCESS_TOKEN!,
         uploadSlug,
         externalUrl,
-        regionSlug,
       }),
     }),
   )

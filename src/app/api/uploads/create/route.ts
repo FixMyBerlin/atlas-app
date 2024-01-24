@@ -6,7 +6,6 @@ const Schema = z.object({
   apiKey: z.string().nullish(),
   uploadSlug: z.string(),
   externalUrl: z.string(),
-  regionSlug: z.string(),
 })
 
 const parseData = (body, Schema) => {
@@ -14,7 +13,11 @@ const parseData = (body, Schema) => {
     const data = Schema.parse(body)
     return { ok: true, data, errorResponse: null }
   } catch (e) {
-    return { ok: false, data: null, errorResponse: Response.json({ statusText: 'Bad Request' }, { status: 400 }) }
+    return {
+      ok: false,
+      data: null,
+      errorResponse: Response.json({ statusText: 'Bad Request' }, { status: 400 }),
+    }
   }
 }
 
@@ -28,12 +31,10 @@ export async function POST(request: Request) {
 
   const { uploadSlug, externalUrl, regionSlug } = data
   try {
-    const region = await db.region.findFirstOrThrow({ where: { slug: regionSlug } })
     await db.upload.create({
       data: {
         slug: uploadSlug,
         externalUrl,
-        regionId: region.id,
       },
     })
   } catch (e) {
