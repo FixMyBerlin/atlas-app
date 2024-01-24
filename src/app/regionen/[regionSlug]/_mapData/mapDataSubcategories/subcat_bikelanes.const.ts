@@ -107,20 +107,29 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
             color: '#174ed9',
           },
         },
-        {
-          id: 'bicycleRoad',
-          name: 'Fahrradstraße (keine Kfz)',
-          style: {
-            type: 'line',
-            color: '#fb923c',
-          },
-        },
+        // {
+        //   id: 'todo-pbl',
+        //   name: 'Geschuetzter Radfahrstreifen',
+        //   style: {
+        //     type: 'line',
+        //     color: '#2dd4bf',
+        //   },
+        // },
         {
           id: 'cyclewayOnHighway_exclusive',
           name: 'Radfahrstreifen',
           style: {
             type: 'line',
             color: '#2dd4bf',
+          },
+        },
+        {
+          id: 'cyclewayOnHighway',
+          name: 'Schutzstreifen',
+          style: {
+            type: 'line',
+            color: '#2dd4bf',
+            dasharray: [1, 2.5],
           },
         },
         {
@@ -132,24 +141,8 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           },
         },
         {
-          id: 'cyclewayOnHighway',
-          name: 'Schutzstreifen',
-          style: {
-            type: 'line',
-            color: '#2dd4bf',
-          },
-        },
-        // {
-        //   id: 'todo-pbl',
-        //   name: 'Geschuetzter Radfahrstreifen',
-        //   style: {
-        //     type: 'line',
-        //     color: '#2dd4bf',
-        //   },
-        // },
-        {
           id: 'footAndCyclewayShared',
-          name: 'Gemeinsamer Geh & Radweg',
+          name: 'Gemeinsamer Geh- & Radweg',
           style: {
             type: 'line',
             color: '#ec4899',
@@ -161,6 +154,23 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           style: {
             type: 'line',
             color: '#ec4899',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
+          id: 'bicycleRoad',
+          name: 'Fahrradstraße (keine Kfz)',
+          style: {
+            type: 'line',
+            color: '#fb923c',
+          },
+        },
+        {
+          id: 'bicycleRoad_vehicleDestination',
+          name: 'Fahrradstraße (Mischverkehr)',
+          style: {
+            type: 'line',
+            color: '#fb923c',
             dasharray: [2.5, 1],
           },
         },
@@ -179,7 +189,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           style: {
             type: 'line',
             color: '#059669',
-            dasharray: [1, 2.5],
           },
         },
         {
@@ -188,15 +197,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           style: {
             type: 'line',
             color: '#059669',
-            dasharray: [2.5, 1],
-          },
-        },
-        {
-          id: 'bicycleRoad_vehicleDestination',
-          name: 'Fahrradstraße (Mischverkehr)',
-          style: {
-            type: 'line',
-            color: '#fb923c',
             dasharray: [2.5, 1],
           },
         },

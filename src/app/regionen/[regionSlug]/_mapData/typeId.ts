@@ -115,10 +115,17 @@ import {
   SubcatSurfaceRoadsStyleIds,
 } from './mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from './types'
+import {
+  SubcatLitPlusCompletenessId,
+  SubcatLitPlusCompletenessStyleIds,
+} from './mapDataSubcategories/subcat_lit_plus_completeness.const'
+import {
+  SubcatLitPlusFreshnessId,
+  SubcatLitPlusFreshnessStyleIds,
+} from './mapDataSubcategories/subcat_lit_plus_freshness.const'
 
 export type SubcategoryId =
   | SubcatAccidentsId
-  | SubcatPoiPlusBarriersId
   | SubcatBicycleParkingId
   | SubcatBikelanesId
   | SubcatBikelanesPlusSignsId
@@ -127,10 +134,10 @@ export type SubcategoryId =
   | SubcatBikelanesPresenceId
   | SubcatBikelanesPresenceIdLegacy
   | SubcatBikelanesStatsId
-  | SubcatPoiBoundariesId
-  | SubcatPoiPlusLanduseId
   | SubcatLitId
   | SubcatLitIdLegacy
+  | SubcatLitPlusCompletenessId
+  | SubcatLitPlusFreshnessId
   | SubcatMapillaryCoverageId
   | SubcatMaxspeedId
   | SubcatMaxspeedIdLegacy
@@ -139,8 +146,11 @@ export type SubcategoryId =
   | SubcatParkingId
   | SubcatParkingPointsId
   | SubcatParkingStatsId
-  | SubcatPoiPlacesId
+  | SubcatPoiBoundariesId
   | SubcatPoiId_Tarmac
+  | SubcatPoiPlacesId
+  | SubcatPoiPlusBarriersId
+  | SubcatPoiPlusLanduseId
   | SubcatPoiPlusPublicTransportId
   | SubcatRoadsId
   | SubcatRoadsIdLegacy
@@ -155,7 +165,6 @@ type StyleIdDefaults = StaticMapDataCategory['subcategories'][number]['defaultSt
 export type StyleId =
   | StyleIdDefaults
   | SubcatAccidentsStyleIds
-  | SubcatPoiPlusBarriersStyleIds
   | SubcatBicycleParkingStyleIds
   | SubcatBikelanesPlusSignsStyleIds
   | SubcatBikelanesPlusSurfaceStyleIds
@@ -164,8 +173,8 @@ export type StyleId =
   | SubcatBikelanesPresenceStyleIdsLegacy
   | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds
-  | SubcatPoiBoundariesStyleIds
-  | SubcatPoiPlusLanduseStyleIds
+  | SubcatLitPlusCompletenessStyleIds
+  | SubcatLitPlusFreshnessStyleIds
   | SubcatLitStyleIds
   | SubcatLitStyleIdsLegacy
   | SubcatMapillaryCoverageStyleIds
@@ -176,9 +185,12 @@ export type StyleId =
   | SubcatParkingPointsStyleIds
   | SubcatParkingStatsStyleIds
   | SubcatParkingStyleIds
+  | SubcatPoiBoundariesStyleIds
   | SubcatPoiPlacesStyleIds
-  | SubcatPoiStyleIds_Tarmac
+  | SubcatPoiPlusBarriersStyleIds
+  | SubcatPoiPlusLanduseStyleIds
   | SubcatPoiPlusPublicTransportStyleIds
+  | SubcatPoiStyleIds_Tarmac
   | SubcatRoadsPlusFootwaysStyleIds
   | SubcatRoadsStyleIds
   | SubcatRoadsStyleIdsLegacy

@@ -60,6 +60,8 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
   'waymarkedtrails-cycling',
   'waymarkedtrails-hiking',
   'opentopomap',
+  'stamen-toner',
+  'stamen-toner-light',
 ]
 
 export type RegionSlug =
@@ -105,6 +107,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'lit',
       'parking',
       'mapillary',
     ],
@@ -264,6 +267,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'lit',
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
@@ -523,6 +527,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'boundaries',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],

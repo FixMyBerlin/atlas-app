@@ -1,8 +1,8 @@
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
-import { mapboxStyleGroupLayers_atlas_roadclassification_all } from './mapboxStyles/groups/atlas_roadclassification_all'
-import { mapboxStyleGroupLayers_atlas_roadclassification_mainstreets } from './mapboxStyles/groups/atlas_roadclassification_mainstreets'
-import { mapboxStyleGroupLayers_atlas_roadclassification_sidestreets } from './mapboxStyles/groups/atlas_roadclassification_sidestreets'
+import { mapboxStyleGroupLayers_atlas_roads_all } from './mapboxStyles/groups/atlas_roads_all'
+import { mapboxStyleGroupLayers_atlas_roads_mainstreets } from './mapboxStyles/groups/atlas_roads_mainstreets'
+import { mapboxStyleGroupLayers_atlas_roads_sidestreets } from './mapboxStyles/groups/atlas_roads_sidestreets'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'roads'
@@ -22,10 +22,11 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Alle',
       desc: 'Straßenklassifieriung auf Basis von OpenStreetMap Straßentypen.',
       layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_roadclassification_all,
+        layers: mapboxStyleGroupLayers_atlas_roads_all,
         source,
         sourceLayer,
       }),
+
       legends: [
         {
           id: 'main',
@@ -64,7 +65,7 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Nur Nebenstraßen',
       desc: null,
       layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_roadclassification_sidestreets,
+        layers: mapboxStyleGroupLayers_atlas_roads_sidestreets,
         source,
         sourceLayer,
       }),
@@ -96,11 +97,22 @@ export const subcat_roads: FileMapDataSubcategory = {
       name: 'Nur Hauptstraßen',
       desc: null,
       layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_roadclassification_mainstreets,
+        layers: mapboxStyleGroupLayers_atlas_roads_mainstreets,
         source,
         sourceLayer,
       }),
-      legends: [],
+      legends: [
+        {
+          id: 'main',
+          name: 'Hauptstraßen',
+          style: { type: 'line', color: '#f6e7ac', width: 8 },
+        },
+        {
+          id: 'trunk',
+          name: 'Autobahn',
+          style: { type: 'line', color: '#828282', width: 1 },
+        },
+      ],
     },
   ],
 }

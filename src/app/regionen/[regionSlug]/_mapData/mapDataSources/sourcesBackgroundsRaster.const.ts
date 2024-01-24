@@ -26,6 +26,8 @@ export type SourcesRasterIds =
   | 'opentopomap'
   | 'trto-radwege'
   | 'brandenburg-dop20'
+  | 'stamen-toner'
+  | 'stamen-toner-light'
 
 // https://account.mapbox.com/access-tokens
 // https://account.mapbox.com/access-tokens/clileup4r0b1r3gmp4hxqhou8/
@@ -36,6 +38,10 @@ const tokenMapboxTilesets =
 // API Key https://cloud.maptiler.com/account/keys/db5f268c-c1ea-4cc4-8414-69ba179d11c0/settings
 // Has Domain restrictions
 const tokenMaptilerTilesets = 'wo0y3tqo53envRHnz2Bl'
+
+// API Key https://client.stadiamaps.com/dashboard/#/property/21215/
+// Has Domain restrictions
+const tokenStradiaTilesets = '29786ae9-a59c-49be-8f41-d83500086cc3'
 
 export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>[] = [
   {
@@ -324,6 +330,28 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     tileSize: 512,
     attributionHtml:
       'GeoBasis-DE/LGB / BB-BE DOP20c, dl-de/by-2-0; Geoportal Berlin / DOP20, dl-de/by-2-0',
+    legendUrl: undefined,
+  },
+  {
+    // https://docs.stadiamaps.com/guides/migrating-from-stamen-map-tiles/
+    id: 'stamen-toner',
+    name: 'Stamen Toner',
+    tiles: `https://tiles-eu.stadiamaps.com/tiles/stamen_toner/{z}/{x}/{y}{ratio}.png?api_key=${tokenStradiaTilesets}`,
+    minzoom: 0,
+    maxzoom: 20,
+    attributionHtml:
+      '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
+    legendUrl: undefined,
+  },
+  {
+    // https://docs.stadiamaps.com/guides/migrating-from-stamen-map-tiles/
+    id: 'stamen-toner-light',
+    name: 'Stamen Toner Light',
+    tiles: `https://tiles-eu.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{ratio}.png?api_key=${tokenStradiaTilesets}`,
+    minzoom: 0,
+    maxzoom: 20,
+    attributionHtml:
+      '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     legendUrl: undefined,
   },
 ]

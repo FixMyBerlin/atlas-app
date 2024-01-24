@@ -1,5 +1,4 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_plus_signs } from './mapboxStyles/groups/atlas_bikelanes_plus_signs'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 

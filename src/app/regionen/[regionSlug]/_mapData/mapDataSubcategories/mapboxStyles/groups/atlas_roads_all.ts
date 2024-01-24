@@ -3,7 +3,57 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_roadclassification_sidestreets: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_roads_all: MapboxStyleLayer[] = [
+  {
+    minzoom: 11,
+    filter: [
+      'match',
+      ['get', 'road'],
+      ['primary', 'tertiary_link', 'secondary_link', 'tertiary', 'secondary', 'primary_link'],
+      true,
+      false,
+    ],
+    type: 'line',
+    id: 'roadclassification_mainstreets copy 1',
+    paint: {
+      'line-width': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        11,
+        [
+          'match',
+          ['get', 'road'],
+          ['primary', 'secondary', 'secondary_link', 'primary_link'],
+          3,
+          ['tertiary', 'residential_priority_road', 'tertiary_link'],
+          2,
+          0.8,
+        ],
+        14,
+        [
+          'match',
+          ['get', 'road'],
+          ['primary', 'secondary', 'secondary_link', 'primary_link'],
+          8,
+          ['tertiary', 'residential_priority_road', 'tertiary_link'],
+          7,
+          0.8,
+        ],
+        16,
+        [
+          'match',
+          ['get', 'road'],
+          ['primary', 'secondary', 'secondary_link', 'primary_link'],
+          24,
+          ['tertiary', 'residential_priority_road', 'tertiary_link'],
+          16,
+          0.8,
+        ],
+      ],
+      'line-color': '#f6e7ac',
+    },
+  },
   {
     filter: [
       'match',
@@ -16,7 +66,7 @@ export const mapboxStyleGroupLayers_atlas_roadclassification_sidestreets: Mapbox
         'unclassified',
         'residential_priority_road',
         'unspecified_road',
-        'service_uncategorized',
+        'service_road',
         'service_alley',
       ],
       true,
@@ -132,10 +182,26 @@ export const mapboxStyleGroupLayers_atlas_roadclassification_sidestreets: Mapbox
         '#447be9',
         ['unclassified', 'residential_priority_road', 'unspecified_road'],
         '#ffdb70',
-        ['service_uncategorized', 'service_alley'],
+        ['service_alley', 'service_road'],
         '#96e4b4',
         'rgba(213, 26, 26, 0.75)',
       ],
+    },
+  },
+  {
+    minzoom: 10,
+    filter: [
+      'match',
+      ['get', 'road'],
+      ['trunk', 'motorway_link', 'motorway', 'trunk_link'],
+      true,
+      false,
+    ],
+    type: 'line',
+    id: 'roadclassification_motortrunk copy 1',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 11, 1, 14, 1.5, 16, 2],
+      'line-color': '#828282',
     },
   },
   {
@@ -145,22 +211,12 @@ export const mapboxStyleGroupLayers_atlas_roadclassification_sidestreets: Mapbox
     filter: [
       'match',
       ['get', 'road'],
-      [
-        'residential',
-        'living_street',
-        'bicycle_road',
-        'pedestrian',
-        'unclassified',
-        'residential_priority_road',
-        'unspecified_road',
-        'service_uncategorized',
-        'service_alley',
-      ],
-      true,
+      ['path', 'track', 'bridleway', 'footway', 'cycleway'],
       false,
+      true,
     ],
     type: 'line',
-    id: 'hitarea-roadclassification copy',
+    id: 'hitarea-roadclassification-sidepath copy',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
       'line-opacity': 0,

@@ -29,12 +29,17 @@ import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
 import { subcat_surface_bikelane } from '../mapDataSubcategories/subcat_surface_bikelane'
 import { subcat_surface_roads } from '../mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from '../types'
+import { subcat_lit } from '../mapDataSubcategories/subcat_lit.const'
+import { subcat_lit_plus_completeness } from '../mapDataSubcategories/subcat_lit_plus_completeness.const'
+import { subcat_lit_plus_freshness } from '../mapDataSubcategories/subcat_lit_plus_freshness.const'
 
 // TODO type MapDataCategoryIds = typeof sources[number]['id']
 export type MapDataCategoryId =
   // Radverkehrsatlas
   | 'bikelanes_LEGACY'
   | 'bikelanes'
+  | 'boundaries'
+  | 'lit'
   | 'poi'
   | 'roads_LEGACY'
   | 'roads'
@@ -68,6 +73,17 @@ export const categories: StaticMapDataCategory[] = [
     ],
   },
   {
+    // Only used ONCE for now for the 'bb-adfc'-campaign-region
+    id: 'boundaries',
+    name: 'Grenzen',
+    desc: 'Siedlungszentren und Barrieren',
+    subcategories: [
+      { ...subcat_poi_places, defaultStyle: 'hidden' },
+      { ...subcat_poi_boundaries, defaultStyle: 'default' },
+      { ...subcat_poi_plus_barriers, defaultStyle: 'hidden' },
+    ],
+  },
+  {
     // Figma https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1062-9397&mode=design&t=k2PHofwptElXro3a-0
     id: 'roads',
     name: 'Straßentypen',
@@ -97,11 +113,13 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
       { ...subcat_bikelanes, defaultStyle: 'default' },
+      { ...subcat_bikelanesPresence, defaultStyle: 'hidden' },
+      // Plus
       { ...subcat_bikelanes_plus_width_text, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
-      { ...subcat_bikelanesPresence, defaultStyle: 'hidden' },
+      // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
       // { id: 'tram', defaultStyle: 'hidden' },
     ],
@@ -117,6 +135,18 @@ export const categories: StaticMapDataCategory[] = [
     name: 'Verkehrszeichen (WIP)',
     desc: 'Als Punkt erfasste Verkehrszeichen aus OSM.',
     subcategories: [{ ...subcat_signs, defaultStyle: 'hidden' }],
+  },
+  {
+    id: 'lit',
+    name: 'Beleuchtung',
+    desc: 'Fahrbahn & Radinfrastruktur',
+    subcategories: [
+      { ...subcat_lit, defaultStyle: 'default' },
+      // { ...subcat_surface_bikelane, defaultStyle: 'hidden' },
+      // PLUS:
+      { ...subcat_lit_plus_completeness, defaultStyle: 'hidden' },
+      // { ...subcat_lit_plus_freshness, defaultStyle: 'hidden' },
+    ],
   },
   {
     // Figma https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1062-9408&mode=design&t=k2PHofwptElXro3a-0

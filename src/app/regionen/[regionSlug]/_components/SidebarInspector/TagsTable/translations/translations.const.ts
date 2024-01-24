@@ -41,7 +41,7 @@ export const translations: { [key: string]: string } = {
   'ALL--fresh=outdated_check_at': 'Es wurde ein explizites Prüf-Datum erfasst das aber älter als 2 Jahre ist.',
   'ALL--fresh=outdated_update_at': 'Die Attribute dieser Geometrie wurden länger als 2 Jahre nicht bearbeitet.',
   'ALL--highway--key': 'Straßentyp',
-  'ALL--highway=bicycle_road': 'Fahrradstraße', // roadClassification--category
+  'ALL--highway=bicycle_road': 'Fahrradstraße', // roads--category
   'ALL--highway=construction': 'Straße ist in Bau',
   'ALL--highway=cycleway': 'Radweg',
   'ALL--highway=footway': 'Fußweg',
@@ -51,16 +51,18 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=primary': 'Bundesstraße/Hauptverbindungsstraße',
   'ALL--highway=residential': 'Anwohnerstraße',
   'ALL--highway=secondary': 'Landesstraße/Wichtige Durchgangsstraße',
-  'ALL--highway=service_alley': 'Gasse', // roadClassification--category
-  'ALL--highway=service_driveway': 'Grundstückszufahrt', // roadClassification--category
-  'ALL--highway=service_parking_aisle': 'Parkplatzweg', // roadClassification--category
-  'ALL--highway=service_road': 'Zufahrtsweg', // roadClassification--category
+  'ALL--highway=service_alley': 'Gasse', // roads--category
+  'ALL--highway=service_driveway': 'Grundstückszufahrt', // roads--category
+  'ALL--highway=service_parking_aisle': 'Parkplatzweg', // roads--category
+  'ALL--highway=service_road': 'Zufahrtsweg', // roads--category
+  'ALL--highway=service_uncategorized': 'Zufahrtsweg (unbekannte Klassifisierung)',
   'ALL--highway=service': 'Zufahrtsweg',
+  'ALL--highway=motorway': 'Autobahn',
   'ALL--highway=steps': 'Stufen',
   'ALL--highway=tertiary': 'Kreisstraße/Untergeordnete Durchgangsstraße',
   'ALL--highway=track': 'Wald- / Feldweg',
   'ALL--highway=unclassified': 'Nebenstraße mit Verbindungscharakter',
-  'ALL--highway=unspecified_road_category': 'Unkategorisierte Straße', // roadClassification--category
+  'ALL--highway=unspecified_road_category': 'Unkategorisierte Straße', // roads--category
   'ALL--maxspeed--key': 'Höchstgeschwindigkeit',
   'ALL--name--key': 'Name',
   'ALL--oneway--key': 'Fahrtrichtung',

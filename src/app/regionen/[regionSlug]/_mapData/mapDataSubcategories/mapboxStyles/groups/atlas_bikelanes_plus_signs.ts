@@ -10,7 +10,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer
       'text-size': ['interpolate', ['linear'], ['zoom'], 12, 7, 22, 14],
       'icon-image': [
         'case',
-        ['match', ['get', 'traffic_sign'], ['', 'DE:241-31', 'DE:241'], true, false],
+        ['match', ['get', 'traffic_sign'], ['DE:241-31', 'DE:241'], true, false],
         'Zeichen_241-31_1992',
         [
           'match',

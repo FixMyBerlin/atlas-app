@@ -59,6 +59,7 @@ export const exportApiIdentifier = [
   'barrierAreas',
   'barrierLines',
   'boundaries',
+  'boundariesLabel',
 ] as const
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
@@ -83,7 +84,7 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'atlas_boundaries',
-    tiles: `${tilesUrl}/boundaries/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/boundaries,boundariesLabel/{z}/{x}/{y}`,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     inspector: {
@@ -195,7 +196,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
-        'osm_name',
+        'name',
         'road',
         'road_oneway',
         'road_oneway:bicycle__if_present',
