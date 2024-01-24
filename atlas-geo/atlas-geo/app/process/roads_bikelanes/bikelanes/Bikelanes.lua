@@ -165,11 +165,18 @@ function Bikelanes(object, road)
   -- Below is presence logic
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
+  local presenceNotExpectedRoadClasses = Set({ "residential", "road", "living_street", })
+  local presenceExpectedRoadClasses = Set({
+    "primary", "primary_link",
+    "secondary", "secondary_link",
+    "tertiary", "tertiary_link",
+    -- TODO use Merge helper with `MajorRoadClasses` + "unclassified"
+    "unclassified" })
+  if presenceNotExpectedRoadClasses[tags.highway] or presence[CENTER_SIGN] then
     -- set the nil values to 'not_expected', for all minor roads and complete data
     for _, side in pairs(sides) do presence[side] = presence[side] or NOT_EXPECTED end
   elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
-    if not MajorRoadClasses[tags.highway] then
+    if not presenceExpectedRoadClasses[tags.highway] then
       IntoExcludeTable(excludeTable, object, "no infrastructure expected for highway type: " .. tags.highway)
       return {}
     elseif tags.motorroad or tags.expressway then
