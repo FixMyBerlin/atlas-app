@@ -11,6 +11,7 @@ console.info(chalk.inverse.bold('START'), __filename)
 const geojsonFiles = fs
   .readdirSync(path.resolve(__dirname, 'geojson'))
   .filter((file) => path.extname(file) === '.geojson')
+  .sort((a, b) => a.localeCompare(b))
 
 for (const file of geojsonFiles) {
   const filename = path.basename(file, '.geojson')

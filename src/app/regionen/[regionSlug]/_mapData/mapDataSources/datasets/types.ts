@@ -1,11 +1,15 @@
 // Auto-generated file, do not edit
 
 export type DatasetIds =
+  | 'bb-land-radverkehrsanlagen'
   | 'bibi-empfohlener-radschulweg'
   | 'bietigheim-bissingen_on_street_parking_lines'
   | 'bietigheim-bissingen_on_street_parking_lines_label_nodes'
+  | 'bb-land-querungen'
+  | 'bb-uckermark-schilder'
   | 'bietigheim-bissingen_parking_areas'
   | 'bb-ramboll-spnv-3000'
+  | 'bb-uckermark-radwege-translated'
   | 'bb-ramboll-gemeinden'
   | 'TrtoWunschlinienLocationPoints'
   | 'bb-ramboll-spnv-haltepunkte'
@@ -14,6 +18,7 @@ export type DatasetIds =
   | 'bibi-radschulwegplan-gefahrenstellen'
   | 'TrtoWunschlinienCrossingPoints'
   | 'bibi-radnetz-alltag'
+  | 'bb-land-radverkehrsanlagen-missing-in-osm'
   | 'bb-ramboll-delauney-triangulation'
   | 'bb-ramboll-nachbarn'
   | 'bb-ramboll-minimal-spanning-tree'
@@ -31,11 +36,15 @@ export type DatasetIds =
   | 'bibi-abstellplaetze-merged'
 
 export type DatasetFiles =
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-empfohlener-radschulweg.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines_label_nodes.pmtiles'
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-querungen.pmtiles'
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-schilder.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-3000.pmtiles'
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-radwege-translated.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-gemeinden.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoWunschlinienLocationPoints.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-haltepunkte.pmtiles'
@@ -44,6 +53,7 @@ export type DatasetFiles =
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radschulwegplan-gefahrenstellen.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/TrtoWunschlinienCrossingPoints.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles'
+  | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen-missing-in-osm.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-delauney-triangulation.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-nachbarn.pmtiles'
   | 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-minimal-spanning-tree.pmtiles'

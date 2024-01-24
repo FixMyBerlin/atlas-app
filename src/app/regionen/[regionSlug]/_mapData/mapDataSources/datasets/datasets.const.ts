@@ -1,6 +1,10 @@
 // Auto-generated file, do not edit
 
 export const datasets = {
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen.pmtiles
+  'bb-land-radverkehrsanlagen':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-empfohlener-radschulweg.pmtiles
   'bibi-empfohlener-radschulweg':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-empfohlener-radschulweg.pmtiles',
@@ -13,6 +17,14 @@ export const datasets = {
   'bietigheim-bissingen_on_street_parking_lines_label_nodes':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_on_street_parking_lines_label_nodes.pmtiles',
 
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-querungen.pmtiles
+  'bb-land-querungen':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-querungen.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-schilder.pmtiles
+  'bb-uckermark-schilder':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-schilder.pmtiles',
+
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles
   'bietigheim-bissingen_parking_areas':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bietigheim-bissingen_parking_areas.pmtiles',
@@ -20,6 +32,10 @@ export const datasets = {
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-3000.pmtiles
   'bb-ramboll-spnv-3000':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-spnv-3000.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-radwege-translated.pmtiles
+  'bb-uckermark-radwege-translated':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-uckermark-radwege-translated.pmtiles',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-gemeinden.pmtiles
   'bb-ramboll-gemeinden':
@@ -52,6 +68,10 @@ export const datasets = {
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles
   'bibi-radnetz-alltag':
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-radnetz-alltag.pmtiles',
+
+  // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen-missing-in-osm.pmtiles
+  'bb-land-radverkehrsanlagen-missing-in-osm':
+    'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-land-radverkehrsanlagen-missing-in-osm.pmtiles',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-ramboll-delauney-triangulation.pmtiles
   'bb-ramboll-delauney-triangulation':
