@@ -50,11 +50,11 @@ function RoadClassification(object)
       driveway = 'service_driveway',
       parking_isle = 'service_parking_aisle'
     }
-    -- Fallback:
+    -- Fallbacks:
     roadClassification.road = service_mapping[tags.service] or 'service_uncategorized'
     -- https://taginfo.openstreetmap.org/keys/service#values
     if tags.service == nil then
-      tags.category = "service_road"
+      roadClassification.road = "service_road"
     end
   end
 
