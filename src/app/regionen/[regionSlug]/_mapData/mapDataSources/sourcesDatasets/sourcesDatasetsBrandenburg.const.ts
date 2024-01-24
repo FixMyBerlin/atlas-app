@@ -706,4 +706,226 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
       },
     ],
   },
+  {
+    regionKey: ['bb', 'bb-adfc'],
+    ...sourceDatasetIdUrl('bb-uckermark-radwege-translated'),
+    name: '(Uckermark) Radrouten',
+    type: 'vector',
+    attributionHtml: '&copy; Kreisverwaltung Uckermark (DL-DE-BY-2.0 + OSM)',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-uckermark-radwege-ueber',
+        type: 'line',
+        filter: ['==', ['get', 'isUeberregionaleRadroute'], 'ja'],
+        paint: {
+          'line-color': '#c026d3',
+          'line-width': 5,
+          'line-opacity': 0.8,
+          'line-offset': -2.5,
+        },
+      },
+      {
+        id: 'bb-uckermark-radwege-regional',
+        type: 'line',
+        filter: ['==', ['get', 'isRegionaleRadroute'], 'ja'],
+        paint: {
+          'line-color': '#e11d48',
+          'line-width': 5,
+          'line-opacity': 0.8,
+          'line-offset': 2.5,
+        },
+      },
+      {
+        id: 'bb-uckermark-radwege-local',
+        type: 'line',
+        filter: [
+          'all',
+          ['!=', ['get', 'isUeberregionaleRadroute'], 'ja'],
+          ['!=', ['get', 'isRegionaleRadroute'], 'ja'],
+        ],
+        paint: {
+          'line-color': '#4f46e5',
+          'line-width': 5,
+          'line-opacity': 0.8,
+          'line-offset': 0,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb', 'bb-adfc'],
+    ...sourceDatasetIdUrl('bb-uckermark-schilder'),
+    name: '(Uckermark) Radrouten-Schilder',
+    type: 'vector',
+    attributionHtml: '&copy; Kreisverwaltung Uckermark (DL-DE-BY-2.0 + OSM)',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-uckermark-schilder',
+        type: 'circle',
+        paint: {
+          'circle-color': '#a5b4fc',
+          'circle-radius': 10,
+          'circle-opacity': 0.6,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb', 'bb-adfc'],
+    ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen'),
+    name: '(Land Brandenburg) Radverkehrsanlagen',
+    type: 'vector',
+    attributionHtml: '&copy; GeoBasis-DE/LGB (2023) / Radverkehrsanlagen (DL-DE-BY-2.0 + OSM)',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-land-radverkehrsanlagen',
+        type: 'line',
+        paint: {
+          'line-color': '#92400e',
+          'line-width': 5,
+          'line-opacity': 0.6,
+        },
+      },
+    ],
+  },
+  {
+    regionKey: ['bb', 'bb-adfc'],
+    ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen-missing-in-osm'),
+    name: '(Land Brandenburg) Radverkehrsanlagen die in OSM fehlen',
+    type: 'vector',
+    attributionHtml:
+      '&copy; GeoBasis-DE/LGB (2023) / Radverkehrsanlagen (DL-DE-BY-2.0 + OSM), &copy; OpenStreetMap (ODbL)',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-land-radverkehrsanlagen-missing-in-osm',
+        type: 'line',
+        paint: {
+          'line-color': '#db2777',
+          'line-width': {
+            base: 10,
+            stops: [
+              [10, 10],
+              [12, 5],
+            ],
+          },
+          'line-opacity': {
+            base: 10,
+            stops: [
+              [10, 0.8],
+              [12, 0.5],
+            ],
+          },
+        },
+        filter: ['>', ['zoom'], 10],
+      },
+      {
+        id: 'bb-land-radverkehrsanlagen-missing-in-osm-heatmap',
+        type: 'heatmap',
+        paint: {
+          'heatmap-radius': 20,
+          'heatmap-color': [
+            'interpolate',
+            ['linear'],
+            ['heatmap-density'],
+            0,
+            'rgba(0, 0, 255, 0)',
+            1,
+            '#db2777',
+          ],
+          'heatmap-opacity': 0.9,
+          'heatmap-weight': 0.9,
+          'heatmap-intensity': 0.9,
+        },
+        filter: ['<=', ['zoom'], 10],
+      },
+    ],
+  },
+  {
+    regionKey: ['bb', 'bb-adfc'],
+    ...sourceDatasetIdUrl('bb-land-querungen'),
+    name: '(Land Brandenburg) Querungen',
+    type: 'vector',
+    attributionHtml: '&copy; GeoBasis-DE/LGB (2023) / Querungen (DL-DE-BY-2.0 + OSM)',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'TODO',
+      documentedKeys: false,
+      disableTranslations: true,
+    },
+    layers: [
+      {
+        id: 'bb-land-querungen',
+        type: 'line',
+        paint: {
+          'line-color': '#f59e0b',
+          'line-width': {
+            base: 10,
+            stops: [
+              [10, 10],
+              [12, 5],
+            ],
+          },
+          'line-opacity': {
+            base: 10,
+            stops: [
+              [10, 0.8],
+              [12, 0.5],
+            ],
+          },
+        },
+        layout: {
+          'line-cap': 'round',
+        },
+        filter: ['>', ['zoom'], 10],
+      },
+      {
+        id: 'bb-land-querungen-blur',
+        type: 'line',
+        paint: {
+          'line-blur': 20,
+          'line-width': 15,
+          'line-opacity': 1,
+          'line-color': '#f59e0b',
+        },
+        layout: {
+          'line-cap': 'round',
+        },
+        filter: ['>', ['zoom'], 10],
+      },
+      {
+        id: 'bb-land-querungen-punkt',
+        type: 'circle',
+        paint: {
+          'circle-color': '#f59e0b',
+          'circle-radius': 8,
+          'circle-opacity': 0.6,
+        },
+        filter: ['<=', ['zoom'], 10],
+      },
+    ],
+  },
 ]
