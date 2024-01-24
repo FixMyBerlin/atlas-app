@@ -8,7 +8,11 @@ import { initVerificationViews } from './instrumentation/initVerificationViews'
 // This function gets called on every server startup. For details see /src/instrumentation/README.md
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    await initVerificationViews(verificationApiIdentifier)
-    await initExportFunctions(exportApiIdentifier)
+    try {
+      await initVerificationViews(verificationApiIdentifier)
+      await initExportFunctions(exportApiIdentifier)
+    } catch (e) {
+      console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
+    }
   }
 }
