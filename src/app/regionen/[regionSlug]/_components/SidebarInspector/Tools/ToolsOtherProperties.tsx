@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
 import { Pill } from 'src/app/_components/text/Pill'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { isAdmin } from 'src/users/components/utils/usersUtils'
 
 type Props = {
   properties: { [key: string]: any }

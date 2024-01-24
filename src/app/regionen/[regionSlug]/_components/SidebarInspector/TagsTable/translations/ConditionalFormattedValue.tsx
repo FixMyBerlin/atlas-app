@@ -30,7 +30,11 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'disableTranslations' in sourceData.inspector &&
     sourceData.inspector.disableTranslations === true
   if (showRawValues) {
-    return <code>{String(tagValue) || '–'}</code>
+    return (
+      <code className="break-all">
+        {typeof tagValue === 'boolean' ? JSON.stringify(tagValue) : tagValue || '–'}
+      </code>
+    )
   }
 
   // Some values are translated in the DB in `atlas-geo`, we keep them as is.
