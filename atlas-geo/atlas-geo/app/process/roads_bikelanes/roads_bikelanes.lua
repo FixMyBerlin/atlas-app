@@ -116,10 +116,7 @@ function osm2pgsql.process_way(object)
   end
 
 
-  local allowed_tags = {
-    'name',
-  }
-  CopyTags(results, tags, allowed_tags)
+  results.name = tags.name or tags.ref
 
   roadsTable:insert({
     tags = results,
