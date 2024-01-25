@@ -8,14 +8,9 @@ function BikelanesPresence(object, cycleways)
   local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
   for _, cycleway in pairs(cycleways) do
     local sign = cycleway.sign
-    if not cycleway.onlyPresent then
-      presence[sign] = presence[sign] or cycleway.category
-      -- TODO: I keept the line above to stay consitent with the former implementation but IMO we should give the "real" categories precedence over the "onlyPresent"
-      -- presence[sign] = cycleway.category
-    else
-      presence[sign] = presence[sign] or cycleway.category
-    end
+    presence[sign] = presence[sign] or cycleway.category
   end
+
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
   if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
@@ -42,22 +37,12 @@ function BikelanesPresence(object, cycleways)
   -- replace all nil values with 'missing'
   for _, side in pairs(sides) do presence[side] = presence[side] or "missing" end
 
-  local presence_tags_cc = {
-    'name',
-    'highway',
-    'oneway',
-    'dual_carriageway',
-    -- https://wiki.openstreetmap.org/wiki/Proposal:Separation
-    'separation:left',
-    'separation:right',
-  }
 
   local presence_data = {
     bikelane_left = presence[LEFT_SIGN],
     bikelane_self = presence[CENTER_SIGN],
     bikelane_right = presence[RIGHT_SIGN]
   }
-  CopyTags(presence_data, tags, presence_tags_cc, "osm_")
 
   return presence_data
 end

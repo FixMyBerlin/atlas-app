@@ -58,13 +58,13 @@ function Bikelanes(object, road)
   local bikelanes = {}
   for i, cycleway in pairs(transformedObjects) do
     local sign = cycleway.sign
-    local onlyPresent = OnlyPresent(cycleway) -- these are categories defining the presence of data
+    local onlyPresent = CategorizeOnlyPresent(cycleway)
     if onlyPresent ~= nil then
-      bikelanes[i] = { onlyPresent = true, category = onlyPresent, sign = sign }
+      bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        local results = {}
+        local results = { _infrastructureExists = true }
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
