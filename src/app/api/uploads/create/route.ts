@@ -6,6 +6,7 @@ const Schema = z.object({
   apiKey: z.string().nullish(),
   uploadSlug: z.string(),
   externalUrl: z.string(),
+  regionIds: z.array(z.number())
 })
 
 const parseData = (body, Schema) => {
@@ -29,12 +30,13 @@ export async function POST(request: Request) {
   const check = checkApiKey(data)
   if (!check.ok) return check.errorResponse
 
-  const { uploadSlug, externalUrl, regionSlug } = data
+  const { uploadSlug, externalUrl, regionIds } = data
   try {
     await db.upload.create({
       data: {
         slug: uploadSlug,
         externalUrl,
+        regions: { connect: regionIds.map((id) => ({ id })) }
       },
     })
   } catch (e) {
