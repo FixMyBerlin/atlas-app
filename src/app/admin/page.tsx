@@ -22,6 +22,9 @@ export default async function AdminDashboard() {
         <li>
           <Link href="/admin/memberships">Nutzer & Mitgliedschaften</Link>
         </li>
+        <li>
+          <Link href="/admin/uploads">Uploads</Link>
+        </li>
       </ul>
     </>
   )
