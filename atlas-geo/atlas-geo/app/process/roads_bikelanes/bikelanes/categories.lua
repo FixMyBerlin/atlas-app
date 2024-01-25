@@ -6,7 +6,7 @@ NOT_EXPECTED = 'not_expected'
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
 local function dataNo(tags)
-  local nos = Set({ 'no', 'none'})
+  local nos = Set({ 'no', 'none' })
   if nos[tags.cycleway] then
     return "data_no"
   end

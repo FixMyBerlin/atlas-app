@@ -34,7 +34,7 @@ local tags_cc = {
   "description",
 }
 
-function Bikelanes(object, road)
+function Bikelanes(object)
   local tags = object.tags
 
   -- transformations
@@ -91,7 +91,6 @@ function Bikelanes(object, road)
 
         results.category = category
         results.offset = sign * width / 2
-        results.road = road
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
         CopyTags(results, tags, allowed_tags)
