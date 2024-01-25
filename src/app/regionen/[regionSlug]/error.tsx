@@ -1,10 +1,9 @@
 'use client' // Error components must be Client Components
 
 import { useEffect } from 'react'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Footer } from 'src/app/_components/layouts/Footer/Footer'
 import { Link } from 'src/app/_components/links/Link'
-import { buttonStyles } from 'src/app/_components/links/styles'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 
 type Props = {
   error: Error & { digest?: string }
@@ -30,16 +29,6 @@ export default function ErrorRegion({ error, reset }: Props) {
             </h1>
             <p className="mt-2 text-base text-gray-500">Leider ist ein Fehler aufgetreten.</p>
             <div className="mt-6 space-x-5">
-              <button
-                onClick={
-                  // Attempt to recover by trying to re-render the segment
-                  // https://nextjs.org/docs/app/building-your-application/routing/error-handling#recovering-from-errors
-                  () => reset()
-                }
-                className={buttonStyles}
-              >
-                Erneut probieren
-              </button>
               <Link href={`/regionen/${regionSlug}`}>Region mit Standard-Einstellungen öffnen</Link>
             </div>
           </div>

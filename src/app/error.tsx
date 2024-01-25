@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { Footer } from './_components/layouts/Footer/Footer'
 import { Link } from './_components/links/Link'
-import { buttonStyles } from './_components/links/styles'
 
 type Props = {
   error: Error & { digest?: string }
@@ -27,16 +26,6 @@ export default function ErrorGlobal({ error, reset }: Props) {
             </h1>
             <p className="mt-2 text-base text-gray-500">Leider ist ein Fehler aufgetreten.</p>
             <div className="mt-6 space-x-5">
-              <button
-                onClick={
-                  // Attempt to recover by trying to re-render the segment
-                  // https://nextjs.org/docs/app/building-your-application/routing/error-handling#recovering-from-errors
-                  () => reset()
-                }
-                className={buttonStyles}
-              >
-                Erneut probieren
-              </button>
               <Link href="/">
                 Zur Startseite
                 <span aria-hidden="true"> &rarr;</span>
