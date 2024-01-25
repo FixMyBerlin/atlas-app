@@ -64,48 +64,39 @@ function Bikelanes(object, road)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        -- === Processing on the whole dataset ===
-        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
-        local smoothness_data = DeriveSmoothness(cycleway)
-        local surface_data = DeriveSurface(cycleway)
+        local results = {}
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        local oneway = nil
         if cycleway.oneway == nil then
           if tags.bicycle_road == 'yes' then
-            oneway = 'implicit_no'
+            results.oneway = 'implicit_no'
           else
-            oneway = 'implicit_yes'
+            results.oneway = 'implicit_yes'
           end
         end
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
         if sign == CENTER_SIGN then
-          -- if we're dealing with the original object (center line) then only keep all the tags from the `tags_cc` list and prefix them
-          -- due to that it's important that the precceding operations happen before
-          cycleway = { sign = CENTER_SIGN, width = ParseLength(tags.width) }
-          cycleway = CopyTags(cycleway, tags, allowed_tags)
-          cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
+          results.sign = CENTER_SIGN
+          results.width = ParseLength(tags.width)
         else
+          MergeTable(results, cycleway)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
         if tags[freshTag] then
-          cycleway.age = AgeInDays(ParseDate(tags[freshTag]))
+          results.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
-        -- Sanitize tags
-        cycleway = CopyTags(cycleway, tags, tags_cc, 'osm_')
-        cycleway.width = ParseLength(cycleway.width)
-        cycleway.category = category
-        cycleway.offset = sign * width / 2
-        cycleway.road = road
-        cycleway.oneway = oneway
-        MergeTable(cycleway, surface_data)
-        MergeTable(cycleway, smoothness_data)
-        -- Unsanitized tags
-        cycleway = CopyTags(cycleway, tags, allowed_tags)
+        results.category = category
+        results.offset = sign * width / 2
+        results.road = road
+        MergeTable(results, DeriveSmoothness(cycleway))
+        MergeTable(results, DeriveSurface(cycleway))
+        CopyTags(results, tags, allowed_tags)
+        CopyTags(results, tags, tags_cc, 'osm_')
+        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         bikelanes[i] = cycleway
       end
