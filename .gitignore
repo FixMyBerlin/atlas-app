@@ -54,10 +54,6 @@ lib-cov
 # Serverless directories
 .serverless/
 
-# atlas v1 legacy `/dist`
-dist
-dist-ssr
-
 # Editor
 .vscode-test
 .vscode/*
