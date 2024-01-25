@@ -20,6 +20,7 @@ require("SurfaceQuality")
 require("Bikelanes")
 require("BikelanesPresence")
 require("MergeTable")
+require("CopyTags")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -102,7 +103,7 @@ function osm2pgsql.process_way(object)
       -- We don't want to insert negative data into the bikelanes table
       -- e.g. cycleway=no but we need these for BikelanesPresence
       bikelanesTable:insert({
-        tags.cycleway,
+        tags = tags.cycleway,
         meta = Metadata(object),
         geom = object:as_linestring()
       })
@@ -113,6 +114,12 @@ function osm2pgsql.process_way(object)
     MergeTable(results, Maxspeed(object))
     MergeTable(results, BikelanesPresence(object, cycleways))
   end
+
+
+  local allowed_tags = {
+    'name',
+  }
+  CopyTags(results, tags, allowed_tags)
 
   roadsTable:insert({
     tags = results,
