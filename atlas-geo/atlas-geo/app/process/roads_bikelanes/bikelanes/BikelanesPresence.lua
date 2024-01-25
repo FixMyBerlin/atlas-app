@@ -1,5 +1,7 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
 package.path = package.path .. ";/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
+require("transformations")
 require("HighwayClasses")
 
 function BikelanesPresence(object, cycleways)
