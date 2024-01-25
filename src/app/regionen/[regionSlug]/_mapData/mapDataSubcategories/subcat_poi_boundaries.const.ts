@@ -46,7 +46,7 @@ export const subcat_poi_boundaries: FileMapDataSubcategory = {
         ...mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_atlas_boundaries_names,
           source: 'atlas_boundaries',
-          sourceLayer: 'boundariesLabel',
+          sourceLayer: 'boundaryLabels',
           additionalFilter: ['has', 'category_district'],
         }),
       ],
@@ -78,7 +78,7 @@ export const subcat_poi_boundaries: FileMapDataSubcategory = {
         ...mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_atlas_boundaries_names,
           source: 'atlas_boundaries',
-          sourceLayer: 'boundariesLabel',
+          sourceLayer: 'boundaryLabels',
           additionalFilter: ['has', 'category_municipality'],
         }),
       ],

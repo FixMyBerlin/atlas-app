@@ -77,7 +77,7 @@ const datasets: Record<
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.4u44tl11/#14/52.51622/13.37036',
     bbox: bboxBrandenburg,
   },
-  boundariesLabel: {
+  boundaryLabels: {
     sourceLayer: 'atlas_boundariesLabel-1q1c4n',
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.cuem4dsu/#14/52.51622/13.37036',
     bbox: bboxBrandenburg,
