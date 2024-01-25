@@ -13,21 +13,12 @@ function BikelanesPresence(object, cycleways)
 
   -- Filter ways where we dont expect bicycle infrastructure
   -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-  if (MinorRoadClasses[tags.highway] and tags.highway ~= 'service') or presence[CENTER_SIGN] then
+  local infrastrucuteNotExpected = Set({ "residential", "road", "living_street" })
+  if infrastrucuteNotExpected[tags.highway] or presence[CENTER_SIGN] then
     -- set the nil values to 'not_expected', for all minor roads and complete data
     for _, side in pairs(sides) do presence[side] = presence[side] or NOT_EXPECTED end
-  elseif not (presence[CENTER_SIGN] or presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
-    if not MajorRoadClasses[tags.highway] then
-      -- no infrastructure expected for major highway types
-      return {}
-    elseif tags.motorroad or tags.expressway then
-      -- no infrastructure expected for motorroad and express way
-      return {}
-      -- elseif tags.maxspeed and tags.maxspeed <= 20 then
-      --   no infrastructure expected for max speed <= 20 kmh
-      --   return
-    end
-  elseif (presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
+  end
+  if (presence[RIGHT_SIGN] or presence[LEFT_SIGN]) then
     presence[CENTER_SIGN] = presence[CENTER_SIGN] or NOT_EXPECTED
   end
   if tags.oneway == 'yes' and tags['oneway:bicycle'] ~= 'no' then
