@@ -20,12 +20,6 @@ local allowed_tags = {
 }
 -- these tags are copied and prefixed with `osm_`
 local tags_cc = {
-  'cycleway',
-  'cycleway:lane', -- 'advisory', 'exclusive'
-  'lane',          -- 'cycleway:SIDE:lane'
-  'dual_carriageway',
-  'highway',
-  'oneway', -- we use oneway:bicycle=no (which is transformed to oneway=no) to add a notice in the UI about two way cycleways in one geometry
   'surface:colour',
   'traffic_sign',
   'traffic_sign:forward',

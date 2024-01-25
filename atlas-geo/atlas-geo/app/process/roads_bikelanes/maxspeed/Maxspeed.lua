@@ -36,13 +36,9 @@ function Maxspeed(object)
 
   -- all tags that are shown on the application
   local tags_cc = {
-    "maxspeed",
     "maxspeed:backward",
     "maxspeed:forward",
     "maxspeed:conditional",
-    "maxspeed:type",
-    "zone:maxspeed",
-    "source:maxspeed",
   }
 
   CopyTags(maxspeed_data, tags, tags_cc, "osm_")
