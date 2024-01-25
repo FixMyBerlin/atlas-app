@@ -99,7 +99,7 @@ function osm2pgsql.process_way(object)
 
   local cycleways = Bikelanes(object, results.road)
   for _, cycleway in pairs(cycleways) do
-    if not cycleway.onlyPresent then
+    if cycleway._infrastructureExists then
       -- We don't want to insert negative data into the bikelanes table
       -- e.g. cycleway=no but we need these for BikelanesPresence
       bikelanesTable:insert({
