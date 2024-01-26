@@ -97,9 +97,10 @@ for (const i in files) {
   // maps slug to id
   const regionSlugToId = Object.fromEntries(regions.map((region) => [region.slug, region.id]))
   const regionIds = regionSlugs.map((regionsSlug) => regionSlugToId[regionsSlug])
+  const isPublic = path.parse(file).name.endsWith('-public')
 
   console.log(`  Saving upload to DB${regionsInfo}...`)
-  const response = await createUpload(uploadSlug, uploadUrl, regionIds)
+  const response = await createUpload(uploadSlug, uploadUrl, regionIds, isPublic)
   if (response.status !== 201) {
     red(JSON.stringify(await response.json(), null, 2))
     process.exit(1)

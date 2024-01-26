@@ -19,7 +19,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   }))
 }
 
-export const createUpload = async (uploadSlug, externalUrl, regionIds) => {
+export const createUpload = async (uploadSlug, externalUrl, regionIds, isPublic) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
@@ -29,6 +29,7 @@ export const createUpload = async (uploadSlug, externalUrl, regionIds) => {
         uploadSlug,
         externalUrl,
         regionIds,
+        isPublic,
       }),
     }),
   )
