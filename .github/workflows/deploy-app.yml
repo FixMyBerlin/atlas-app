@@ -35,6 +35,12 @@ on:
         required: true
       EXPORT_ACCESS_TOKEN:
         required: true
+      S3_PMTILES_KEY:
+        required: true
+      S3_PMTILES_SECRET:
+        required: true
+      S3_PMTILES_REGION:
+        required: true
 
 jobs:
   build-push-deploy-docker-images:
