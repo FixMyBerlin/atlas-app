@@ -39,22 +39,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  api:
-    build:
-      context: .
-      dockerfile: ./api.Dockerfile
-    container_name: api
-    environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
-      API_SECRET:
-    ports:
-      - 80:80
-    depends_on:
-      db:
-        condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
     shm_size: 1gb

@@ -14,12 +14,6 @@ run_psql "roads_bikelanes/bikelanes/bikelanes"
 
 run_lua "bicycleParking/bicycleParking"
 
-# run_lua "legacy_bikelanes/bikelanesPresence"
-# run_lua "legacy_surfaceQuality/surfaceQuality"
-# run_lua "legacy_roadClassification/roadClassification"
-# run_lua "legacy_maxspeed/maxspeed"
-# run_lua "legacy_lit/lit"
-
 run_lua "trafficSigns/trafficSigns"
 run_psql "trafficSigns/trafficSigns"
 
@@ -38,6 +32,7 @@ echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ �
 echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date)\e[0m"
 echo "Completed:"
 echo "Development http://localhost:3000/catalog"
-echo "Staging https://staging-tiles.radverkehrsatlas.de/"
-echo "Production https://tiles.radverkehrsatlas.de"
+echo "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
+echo "Production https://tiles.radverkehrsatlas.de/catalog"
+echo "Test-Map https://data.radverkehrsatlas.de/"
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
