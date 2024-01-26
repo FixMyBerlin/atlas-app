@@ -41,7 +41,7 @@ const EditButton = ({ record }) => (
   <Link href={`/admin/uploads/${record.slug}/edit`}>Bearbeiten</Link>
 )
 
-const formatValue = v => {
+const formatValue = (v) => {
   if (typeof v === 'boolean') {
     return v ? '🗹' : '☐'
   } else {
@@ -53,17 +53,20 @@ export const UploadTable = ({ records, fields }: Props) => {
   return (
     <table className="overflow-clip rounded bg-white/50">
       <thead>
-      <tr className="bg-white/90">
-        <th>ID</th>
-        <>
-          {fields.map(({fieldName, label}) => (
-            <th key={fieldName}>{label || fieldName}</th>
-          ))}
-        </>
-        <th/>{/* dump */}
-        <th/>{/* delete */}
-        <th/>{/* edit */}
-      </tr>
+        <tr className="bg-white/90">
+          <th>ID</th>
+          <>
+            {fields.map(({ fieldName, label }) => (
+              <th key={fieldName}>{label || fieldName}</th>
+            ))}
+          </>
+          <th />
+          {/* dump */}
+          <th />
+          {/* delete */}
+          <th />
+          {/* edit */}
+        </tr>
       </thead>
       <tbody>
         {records.map((record) => (

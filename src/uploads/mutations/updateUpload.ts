@@ -14,7 +14,7 @@ export default resolver.pipe(
       where: { id },
       data: {
         ...input,
-        regions: { connect: regions.map((id) => ({ id })) }
+        regions: { connect: regions.map((id) => ({ id })) },
       },
     })
   },

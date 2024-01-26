@@ -7,7 +7,7 @@ const Schema = z.object({
   uploadSlug: z.string(),
   externalUrl: z.string(),
   regionIds: z.array(z.number()),
-  isPublic: z.boolean()
+  isPublic: z.boolean(),
 })
 
 const parseData = (body, Schema) => {
@@ -38,7 +38,7 @@ export async function POST(request: Request) {
         slug: uploadSlug,
         externalUrl,
         regions: { connect: regionIds.map((id) => ({ id })) },
-        public: isPublic
+        public: isPublic,
       },
     })
   } catch (e) {

@@ -2,10 +2,7 @@ import { resolver } from '@blitzjs/rpc'
 import { paginate } from 'blitz'
 import db, { Prisma } from 'db'
 
-type GetUploadInput = Pick<
-  Prisma.UploadFindManyArgs,
-  'where' | 'skip' | 'take'
->
+type GetUploadInput = Pick<Prisma.UploadFindManyArgs, 'where' | 'skip' | 'take'>
 
 export default resolver.pipe(
   resolver.authorize('ADMIN'),

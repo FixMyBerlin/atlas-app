@@ -14,7 +14,7 @@ export default async function AdminRegionsPage() {
   const tableFields = [
     { fieldName: 'slug' },
     { fieldName: 'externalUrl', label: 'url' },
-    { fieldName: 'public' }
+    { fieldName: 'public' },
   ]
 
   return (
