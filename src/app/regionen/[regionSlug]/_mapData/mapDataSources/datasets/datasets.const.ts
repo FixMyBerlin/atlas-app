@@ -90,7 +90,7 @@ export const datasets = {
     'https://atlas-tiles.s3.eu-central-1.amazonaws.com/bb-radnetz-barnim.pmtiles',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/nudafa-combined.pmtiles
-  'nudafa-combined': 'private/nudafa-combined',
+  'nudafa-combined': 'nudafa-combined',
 
   // Preview: https://protomaps.github.io/PMTiles/?url=https://atlas-tiles.s3.eu-central-1.amazonaws.com/bibi-rad-punktdaten.pmtiles
   'bibi-rad-punktdaten':
