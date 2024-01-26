@@ -1,10 +1,14 @@
-const apiRootUrl = 'http://127.0.0.1:5173/api'
+import invariant from 'tiny-invariant'
+
+const apiRootUrl = process.env.API_ROOT_URL
+invariant(apiRootUrl && apiRootUrl.startsWith('http'), 'API_ROOT_URL missing.')
+
 export const getRegionsUrl = `${apiRootUrl}/regions`
 export const getUploadsUrl = `${apiRootUrl}/uploads`
 export const createUploadUrl = `${apiRootUrl}/uploads/create`
 
 const addApiKey = (url) =>
-  (url + '?' + new URLSearchParams({ apiKey: process.env.EXPORT_ACCESS_TOKEN! }).toString())
+  url + '?' + new URLSearchParams({ apiKey: process.env.EXPORT_ACCESS_TOKEN! }).toString()
 
 export const getSlugs = async (url: string): Promise<string[]> => {
   url = addApiKey(url)

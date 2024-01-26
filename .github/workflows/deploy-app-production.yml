@@ -22,3 +22,6 @@ jobs:
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       EXPORT_ACCESS_TOKEN: ${{ secrets.EXPORT_ACCESS_TOKEN }}
+      S3_PMTILES_KEY: ${{ secrets.S3_PMTILES_KEY }}
+      S3_PMTILES_SECRET: ${{ secrets.S3_PMTILES_SECRET }}
+      S3_PMTILES_REGION: ${{ secrets.S3_PMTILES_REGION }}
