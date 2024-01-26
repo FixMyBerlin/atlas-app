@@ -4,6 +4,7 @@ import path from 'node:path'
 import os from 'node:os'
 
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import slugify from 'slugify'
 
 import { getSlugs, getUploadsUrl, createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
@@ -68,7 +69,7 @@ for (const i in files) {
   const file = files[i]!
   inverse(`Processing file "${file}"...`)
 
-  const uploadSlug = path.parse(file).name
+  const uploadSlug = slugify(path.parse(file).name).toLowerCase()
   const regionSlug = uploadSlug.split('-')[0]!
 
   if (existingUploadSlugs.includes(uploadSlug)) {
