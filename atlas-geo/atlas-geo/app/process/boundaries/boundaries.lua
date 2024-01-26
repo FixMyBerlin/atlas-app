@@ -14,8 +14,8 @@ local table = osm2pgsql.define_table({
   }
 })
 
-local tableLabel = osm2pgsql.define_table({
-  name = 'boundariesLabel',
+local labelTable = osm2pgsql.define_table({
+  name = 'boundaryLabels',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -76,7 +76,7 @@ function osm2pgsql.process_relation(object)
     meta = Metadata(object),
     geom = object:as_multipolygon()
   })
-  tableLabel:insert({
+  labelTable:insert({
     tags = results_tags,
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()

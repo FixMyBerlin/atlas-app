@@ -36,19 +36,13 @@ on:
       URL:
         type: string
         required: true
-      TILES_URL:
-        type: string
-        required: true
-      API_URL:
-        type: string
-        required: true
 
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
-      url: ${{ inputs.URL }}
+      url: https://${{ inputs.URL }}
     steps:
       - uses: actions/checkout@v4
 
@@ -89,22 +83,6 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
-      - name: Build api image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./api.Dockerfile
-          push: false
-          load: true
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          tags: public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
-
-      - name: Push API image
-        run: |
-          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/atlas/api:${{ github.sha }}
-
       - name: Copy files to server
         uses: appleboy/scp-action@master
         with:
@@ -134,10 +112,8 @@ jobs:
             echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
             echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
             echo OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}' >> .env
-            echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
-            echo API_URL='${{ inputs.API_URL }}' >> .env
+            echo URL='${{ inputs.URL }}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
-            echo API_SECRET=$(echo $RANDOM | md5sum | head -c 20) >> .env
             echo "Reload containers"
             docker compose -f docker-compose.traefik.yml up -d
             docker compose up -d
