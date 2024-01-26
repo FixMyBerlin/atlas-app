@@ -9,7 +9,7 @@ import slugify from 'slugify'
 import { getSlugs, getUploadsUrl, createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
 
-const geoJsonFolder = 'private-datasets/geojson'
+const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)

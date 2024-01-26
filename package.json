@@ -35,6 +35,7 @@
     "updateMasks:createGeojson": "bun ./scripts/RegionalMasks/createGeojson.ts && prettier \"scripts/RegionalMasks/geojson/\" --write",
     "updateMasks:createPmtiles": "bun ./scripts/RegionalMasks/createPmtiles.ts",
     "updateTilesets": "bun ./scripts/MapboxTilesets/process.ts",
+    "updateStaticDatasets": "bun ./scripts/StaticDatasets/updateStaticDatasets.ts",
     "updatePackages": "npx taze major --write",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "husky install",
