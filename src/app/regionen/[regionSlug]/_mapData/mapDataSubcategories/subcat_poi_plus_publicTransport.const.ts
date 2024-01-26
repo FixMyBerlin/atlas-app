@@ -7,7 +7,7 @@ const tpoicId = 'poiPlusPublicTransport'
 const source = 'atlas_publicTransport'
 const sourceLayer = 'publicTransport'
 export type SubcatPoiPlusPublicTransportId = typeof tpoicId
-export type SubcatPoiPlusPublicTransportStyleIds = 'default' | 'default_legacy'
+export type SubcatPoiPlusPublicTransportStyleIds = 'default'
 
 export const subcat_poi_plus_publicTransport: FileMapDataSubcategory = {
   id: tpoicId,
