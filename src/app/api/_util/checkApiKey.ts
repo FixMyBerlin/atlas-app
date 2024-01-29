@@ -7,12 +7,13 @@ export const checkApiKey = (data: Request | Record<string, any>) => {
   } else {
     apiKey = null
   }
-  if (apiKey !== process.env.EXPORT_ACCESS_TOKEN) {
+
+  if (apiKey === process.env.EXPORT_ACCESS_TOKEN) {
+    return { ok: true, errorResponse: null }
+  } else {
     return {
       ok: false,
       errorResponse: Response.json({ statusText: 'Unauthorized' }, { status: 401 }),
     }
-  } else {
-    return { ok: true, errorResponse: null }
   }
 }

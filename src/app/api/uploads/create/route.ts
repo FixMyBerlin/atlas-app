@@ -1,6 +1,6 @@
 import db from 'db'
 import { z } from 'zod'
-import { checkApiKey } from '../../util'
+import { checkApiKey } from '../../_util/checkApiKey'
 
 const Schema = z.object({
   apiKey: z.string().nullish(),

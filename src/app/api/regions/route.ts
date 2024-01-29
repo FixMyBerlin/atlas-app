@@ -1,5 +1,5 @@
 import db from 'db'
-import { checkApiKey } from '../util'
+import { checkApiKey } from '../_util/checkApiKey'
 
 export async function GET(request: Request) {
   const check = checkApiKey(request)
