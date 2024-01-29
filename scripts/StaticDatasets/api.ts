@@ -1,7 +1,7 @@
 import invariant from 'tiny-invariant'
 
 const apiRootUrl = process.env.API_ROOT_URL
-invariant(apiRootUrl && apiRootUrl.startsWith('http'), 'API_ROOT_URL missing.')
+invariant(apiRootUrl?.startsWith('http'), 'API_ROOT_URL missing.')
 
 export const getRegionsUrl = `${apiRootUrl}/regions`
 export const getUploadsUrl = `${apiRootUrl}/uploads`
