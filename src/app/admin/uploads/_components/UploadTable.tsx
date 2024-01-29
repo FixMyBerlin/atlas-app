@@ -6,6 +6,7 @@ import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import deleteRecord from 'src/uploads/mutations/deleteUpload'
 import { ObjectDump } from '../../_components/ObjectDump'
+import { Pill } from 'src/app/_components/text/Pill'
 
 type Props = {
   records: Record<string, any>[]
@@ -43,7 +44,7 @@ const EditButton = ({ record }) => (
 
 const formatValue = (value: any, key: string) => {
   if (typeof value === 'boolean') {
-    return value ? key : `not ${key}`
+    return <Pill color={value ? 'purple' : 'gray'}>{value ? key : `not ${key}`}</Pill>
   } else {
     return String(value)
   }
