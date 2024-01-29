@@ -4,108 +4,76 @@ import { useMutation } from '@blitzjs/rpc'
 import { useRouter } from 'next/navigation'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
-import deleteRecord from 'src/uploads/mutations/deleteUpload'
-import { ObjectDump } from '../../_components/ObjectDump'
 import { Pill } from 'src/app/_components/text/Pill'
+import deleteUpload from 'src/uploads/mutations/deleteUpload'
+import { TUpload } from 'src/uploads/queries/getUploads'
+import { ObjectDump } from '../../_components/ObjectDump'
 
-type Props = {
-  records: Record<string, any>[]
-  fields: { fieldName: string; label?: string }[]
-}
-
-const DeleteButton = ({ record }) => {
+export const UploadsTable = ({ uploads }: { uploads: TUpload[] }) => {
   const router = useRouter()
-  const [deleteRecordMutation] = useMutation(deleteRecord)
+  const [deleteUploadMutation] = useMutation(deleteUpload)
 
-  return (
-    <button
-      type="button"
-      onClick={async () => {
-        if (window.confirm(`${record.slug} wirklich unwiderruflich löschen?`)) {
-          try {
-            await deleteRecordMutation({ id: record.id })
-            router.refresh()
-          } catch (error: any) {
-            window.alert(error.toString())
-            console.error(error)
-          }
-        }
-      }}
-      className={linkStyles}
-    >
-      Löschen
-    </button>
-  )
-}
-
-const EditButton = ({ record }) => (
-  <Link href={`/admin/uploads/${record.slug}/edit`}>Bearbeiten</Link>
-)
-
-const formatValue = (value: any, key: string) => {
-  if (typeof value === 'boolean') {
-    return [
-      <Pill key={key} color={value ? 'purple' : 'gray'}>
-        {value ? key : `not ${key}`}
-      </Pill>,
-    ]
-  } else if (typeof value === 'object' && Array.isArray(value)) {
-    return value.map((v) => <code key={String(v)}>{JSON.stringify(v, undefined, 2)}</code>)
-  } else if (typeof value === 'object') {
-    return [JSON.stringify(value, undefined, 2)]
-  } else {
-    return [String(value)]
-  }
-}
-
-export const UploadTable = ({ records, fields }: Props) => {
   return (
     <table className="overflow-clip rounded bg-white/50">
       <thead>
         <tr className="bg-white/90">
-          <th>ID</th>
-          <>
-            {fields.map(({ fieldName, label }) => (
-              <th key={fieldName}>{label || fieldName}</th>
-            ))}
-          </>
+          <th>Slug</th>
+          <th>Interne Url</th>
+          <th>Zugriff</th>
+          <th>Regionen</th>
+          <th>Rohdaten</th>
           <th />
-          {/* dump */}
           <th />
-          {/* delete */}
-          <th />
-          {/* edit */}
         </tr>
       </thead>
       <tbody>
-        {records.map((record) => (
-          <tr key={record.id}>
-            <td>{record.id}</td>
-            <>
-              {fields.map(({ fieldName }) => (
-                <td key={fieldName}>
-                  {formatValue(record[fieldName], fieldName).map((formattedValue) => {
-                    return (
-                      <>
-                        {formattedValue}
-                        <br />
-                      </>
-                    )
-                  })}
-                </td>
-              ))}
-            </>
-            <td>
-              <ObjectDump data={record} />
-            </td>
-            <td>
-              <DeleteButton record={record} />
-            </td>
-            <td>
-              <EditButton record={record} />
-            </td>
-          </tr>
-        ))}
+        {uploads.map((upload) => {
+          return (
+            <tr key={upload.id}>
+              <th>{upload.slug}</th>
+              <td className="text-[10px]">{upload.externalUrl}</td>
+              <td>
+                {upload.public ? (
+                  <Pill color="purple">Öffentlich</Pill>
+                ) : (
+                  <Pill color="green">Rechteinhaber:innen</Pill>
+                )}
+              </td>
+              <td>
+                <ul>
+                  {upload.regions.map((region) => (
+                    <li key={region.slug}>{region.slug}</li>
+                  ))}
+                </ul>
+              </td>
+              <td>
+                <ObjectDump data={upload} />
+              </td>
+              <td>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    if (window.confirm(`»${upload.slug}« wirklich unwiderruflich löschen?`)) {
+                      try {
+                        await deleteUploadMutation({ id: upload.id })
+                        router.refresh()
+                      } catch (error: any) {
+                        window.alert(error.toString())
+                        console.error(error)
+                      }
+                    }
+                  }}
+                  className={linkStyles}
+                >
+                  Löschen
+                </button>
+              </td>
+              <td>
+                <Link href={`/admin/uploads/${upload.slug}/edit`}>Bearbeiten</Link>
+              </td>
+            </tr>
+          )
+        })}
       </tbody>
     </table>
   )

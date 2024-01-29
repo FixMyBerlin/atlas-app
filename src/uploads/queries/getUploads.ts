@@ -1,8 +1,11 @@
 import { resolver } from '@blitzjs/rpc'
 import { paginate } from 'blitz'
 import db, { Prisma } from 'db'
+import getUploads from './getUploads'
 
 type GetUploadInput = Pick<Prisma.UploadFindManyArgs, 'where' | 'skip' | 'take'>
+
+export type TUpload = Awaited<ReturnType<typeof getUploads>>['uploads'][number]
 
 export default resolver.pipe(
   resolver.authorize('ADMIN'),
