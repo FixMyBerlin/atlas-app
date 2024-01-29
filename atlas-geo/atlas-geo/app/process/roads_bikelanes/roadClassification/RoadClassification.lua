@@ -83,10 +83,6 @@ function RoadClassification(object)
     roadClassification['road_oneway:bicycle'] = tags['oneway:bicycle']
   end
 
-  -- these tags are copied (Eigennamen)
-  local allowed_tags = {
-    "name",
-  }
   -- these tags are copied and prefixed with `osm_`
   -- we need to sanatize them at some point
   local tags_cc = {
@@ -96,7 +92,6 @@ function RoadClassification(object)
     "mapillary",
     "description",
   }
-  CopyTags(roadClassification, tags, allowed_tags)
   CopyTags(roadClassification, tags, tags_cc, "osm_")
   roadClassification.width = ParseLength(tags.width)
   roadClassification.oneway = Sanitize(tags.oneway, Set({ "yes", "no" }))
