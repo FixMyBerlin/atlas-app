@@ -18,10 +18,22 @@ require("Lit")
 require("RoadClassification")
 require("SurfaceQuality")
 require("Bikelanes")
+require("BikelanesPresence")
 require("MergeTable")
+require("CopyTags")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+  }
+})
+
+local bikelanesTable = osm2pgsql.define_table({
+  name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -45,13 +57,11 @@ local excludedRoadsTable = osm2pgsql.define_table({
 function osm2pgsql.process_way(object)
   local tags = object.tags
 
-  ConvertCyclewayOppositeSchema(tags)
+  -- ====== (A) Filter-Guards ======
   if not tags.highway then return end
 
+  -- Skip stuff like "construction", "proposed", "platform" (Haltestellen), "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
-  -- Values that we would allow, but skip here:
-  -- "construction", "planned", "proposed", "platform" (Haltestellen),
-  -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
   if not allowed_highways[tags.highway] then return end
 
   local exclude, reason = ExcludeHighways(tags)
@@ -64,28 +74,47 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  -- Keep in line with categories.lua crossing()
-  if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
-    return
+  -- TODO: Rething this. We should only exclude crossing which are not bikelane-crossings. See categories#crossing
+  -- if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
+  --   return
+  -- end
+
+  -- ====== (B) General conversions ======
+  ConvertCyclewayOppositeSchema(tags)
+
+  -- ====== (C) Compute results and insert ======
+  local results = {
+    name = tags.name or tags.ref
+  }
+
+  MergeTable(results, RoadClassification(object))
+  MergeTable(results, Lit(object))
+  MergeTable(results, SurfaceQuality(object))
+
+  local cycleways = Bikelanes(object)
+  for _, cycleway in pairs(cycleways) do
+    if cycleway._infrastructureExists then
+      cycleway.road = results.road
+      bikelanesTable:insert({
+        tags = cycleway,
+        meta = Metadata(object),
+        geom = object:as_linestring()
+      })
+    end
   end
 
-  local results = {}
-
-  -- Exlude sidewalks for the road data set
-  local is_sidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
-  if not is_sidewalk then
-    MergeTable(results, RoadClassification(object))
-    MergeTable(results, Lit(object))
-    MergeTable(results, SurfaceQuality(object))
-  end
-  MergeTable(results, Bikelanes(object, results.road))
   if not PathClasses[tags.highway] then
     MergeTable(results, Maxspeed(object))
+    MergeTable(results, BikelanesPresence(object, cycleways))
   end
 
-  roadsTable:insert({
-    tags = results,
-    meta = Metadata(object),
-    geom = object:as_linestring()
-  })
+  -- We need sidewalk for Biklanes()
+  local isSidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
+  if not isSidewalk then
+    roadsTable:insert({
+      tags = results,
+      meta = Metadata(object),
+      geom = object:as_linestring()
+    })
+  end
 end

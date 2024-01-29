@@ -5,6 +5,6 @@
 --
 -- Required for local dev
 -- Those are recreated whenever we recreate the local docker setup
-DROP SCHEMA IF EXISTS "tiger";
+DROP SCHEMA IF EXISTS "tiger" CASCADE;
 
-DROP SCHEMA IF EXISTS "tiger_data";
+DROP SCHEMA IF EXISTS "tiger_data" CASCADE;

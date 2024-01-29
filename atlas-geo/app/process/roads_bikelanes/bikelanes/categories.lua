@@ -6,9 +6,15 @@ NOT_EXPECTED = 'not_expected'
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
 local function dataNo(tags)
-  local nos = Set({ 'no', 'none', 'separate' })
+  local nos = Set({ 'no', 'none' })
   if nos[tags.cycleway] then
     return "data_no"
+  end
+end
+
+local function isSeparate(tags)
+  if tags.cycleway == 'separate' then
+    return 'separate_geometry'
   end
 end
 
@@ -276,8 +282,8 @@ local function defineCategory(tags, categories)
 end
 
 -- Categories for objects where no infrastructure is available but the data is considered complete
-function OnlyPresent(tags)
-  local dataCategories = { dataNo, implicitOneWay }
+function CategorizeOnlyPresent(tags)
+  local dataCategories = { dataNo, isSeparate, implicitOneWay }
   return defineCategory(tags, dataCategories)
 end
 
