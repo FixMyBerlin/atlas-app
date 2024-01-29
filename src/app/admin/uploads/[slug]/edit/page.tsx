@@ -31,11 +31,9 @@ export default function AdminEditUploadPage() {
       </HeaderWrapper>
 
       <h1>{upload.slug}</h1>
-      <div>
-        <a href={upload.externalUrl} className="href">
-          {upload.externalUrl}
-        </a>
-      </div>
+      <p>
+        <code>{upload.externalUrl}</code>
+      </p>
 
       <ObjectDump data={upload!} className="my-10" />
 
