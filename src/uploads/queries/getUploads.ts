@@ -20,6 +20,13 @@ export default resolver.pipe(
         db.upload.findMany({
           ...paginateArgs,
           where,
+          include: {
+            regions: {
+              select: {
+                slug: true,
+              },
+            },
+          },
         }),
     })
 

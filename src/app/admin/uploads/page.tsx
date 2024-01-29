@@ -15,6 +15,7 @@ export default async function AdminRegionsPage() {
     { fieldName: 'slug', label: 'Datei Slug' },
     { fieldName: 'externalUrl', label: 'Private URL' },
     { fieldName: 'public', label: 'Öffentlich/Privat' },
+    { fieldName: 'regions', label: 'Regionen' },
   ]
 
   return (

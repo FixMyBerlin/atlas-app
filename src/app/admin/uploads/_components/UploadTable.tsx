@@ -44,9 +44,17 @@ const EditButton = ({ record }) => (
 
 const formatValue = (value: any, key: string) => {
   if (typeof value === 'boolean') {
-    return <Pill color={value ? 'purple' : 'gray'}>{value ? key : `not ${key}`}</Pill>
+    return [
+      <Pill key={key} color={value ? 'purple' : 'gray'}>
+        {value ? key : `not ${key}`}
+      </Pill>,
+    ]
+  } else if (typeof value === 'object' && Array.isArray(value)) {
+    return value.map((v) => <code key={String(v)}>{JSON.stringify(v, undefined, 2)}</code>)
+  } else if (typeof value === 'object') {
+    return [JSON.stringify(value, undefined, 2)]
   } else {
-    return String(value)
+    return [String(value)]
   }
 }
 
@@ -75,7 +83,16 @@ export const UploadTable = ({ records, fields }: Props) => {
             <td>{record.id}</td>
             <>
               {fields.map(({ fieldName }) => (
-                <td key={fieldName}>{formatValue(record[fieldName], fieldName)}</td>
+                <td key={fieldName}>
+                  {formatValue(record[fieldName], fieldName).map((formattedValue) => {
+                    return (
+                      <>
+                        {formattedValue}
+                        <br />
+                      </>
+                    )
+                  })}
+                </td>
               ))}
             </>
             <td>
