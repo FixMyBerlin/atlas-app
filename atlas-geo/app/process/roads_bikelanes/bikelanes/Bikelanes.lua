@@ -54,7 +54,6 @@ function Bikelanes(object)
 
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local transformedObjects = GetTransformedObjects(tags, transformations)
-  local width = RoadWidth(tags)
   local bikelanes = {}
   for i, cycleway in pairs(transformedObjects) do
     local sign = cycleway.sign
@@ -64,7 +63,7 @@ function Bikelanes(object)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        local results = { _infrastructureExists = true }
+        local results = { _infrastructureExists = true, category = category, offset = sign * RoadWidth(tags) / 2 }
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
@@ -89,15 +88,13 @@ function Bikelanes(object)
           results.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
-        results.category = category
-        results.offset = sign * width / 2
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
         CopyTags(results, tags, allowed_tags)
         CopyTags(results, tags, tags_cc, 'osm_')
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
-        bikelanes[i] = cycleway
+        bikelanes[i] = results
       end
     end
   end
