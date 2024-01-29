@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default async function AdminRegionsPage() {
   const { uploads } = await invoke(getUploads, {})
   const tableFields = [
-    { fieldName: 'slug' },
-    { fieldName: 'externalUrl', label: 'url' },
-    { fieldName: 'public' },
+    { fieldName: 'slug', label: 'Datei Slug' },
+    { fieldName: 'externalUrl', label: 'Private URL' },
+    { fieldName: 'public', label: 'Öffentlich/Privat' },
   ]
 
   return (
