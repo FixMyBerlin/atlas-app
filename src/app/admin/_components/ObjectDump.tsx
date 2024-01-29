@@ -7,7 +7,9 @@ type Props = { data: Object; className?: string }
 export const ObjectDump = ({ data, className }: Props) => {
   return (
     <details className={twJoin(className, 'prose-sm')}>
-      <summary className={twJoin(linkStyles, 'cursor-pointer')}>JSON Dump</summary>
+      <summary className={twJoin(linkStyles, 'cursor-pointer whitespace-nowrap')}>
+        JSON Dump
+      </summary>
       <pre>{JSON.stringify(data, undefined, 2)}</pre>
     </details>
   )
