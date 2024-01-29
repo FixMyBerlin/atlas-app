@@ -49,6 +49,7 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=bicycle_road': 'Fahrradstraße', // roads--category
   'ALL--highway=construction': 'Straße ist in Bau',
   'ALL--highway=cycleway': 'Radweg',
+  'ALL--highway=footway_sidewalk': 'Gehweg',
   'ALL--highway=footway': 'Fußweg',
   'ALL--highway=living_street': 'Verkehrsberuhigter Bereich',
   'ALL--highway=motorway': 'Autobahn',
