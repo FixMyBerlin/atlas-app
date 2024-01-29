@@ -3,8 +3,8 @@ import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBerlin: SourceDatasets = [
   {
-    // regionKey: ['berlin', 'bb', 'bb-adfc'],
-    regionKey: ['berlin', 'bb-adfc'],
+    // regionKey: ['berlin', 'bb'],
+    regionKey: ['berlin'],
     ...sourceDatasetIdUrl('changing-cities-radnetz-monitoring'),
     name: 'Changing Cities Radnetz Monitoring',
     type: 'vector',

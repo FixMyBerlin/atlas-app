@@ -65,7 +65,7 @@ export const categories: StaticMapDataCategory[] = [
     ],
   },
   {
-    // Only used ONCE for now for the 'bb-adfc'-campaign-region
+    // Only used ONCE for now for the 'bb-kampagne'-region
     id: 'boundaries',
     name: 'Grenzen',
     desc: 'Siedlungszentren und Barrieren',

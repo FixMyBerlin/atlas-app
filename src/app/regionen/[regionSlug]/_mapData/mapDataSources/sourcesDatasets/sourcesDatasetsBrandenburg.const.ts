@@ -4,7 +4,7 @@ import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb', 'bb-kampagne'],
     ...sourceDatasetIdUrl('bb-radnetz-barnim'),
     name: 'Radnetz Landkreis Barnim',
     type: 'vector',
@@ -194,8 +194,8 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    // regionKey: ['bb', 'bb-adfc'],
-    regionKey: ['bb-adfc'],
+    // regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-kampagne'],
     ...sourceDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC',
     subId: 'd', // d for 'default'
@@ -470,8 +470,8 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    // regionKey: ['bb', 'bb-adfc'],
-    regionKey: ['bb-adfc'],
+    // regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-kampagne'],
     ...sourceDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC (Datenabgleich)',
     subId: 'complete',
@@ -707,7 +707,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb', 'bb-kampagne'],
     ...sourceDatasetIdUrl('bb-uckermark-radwege-translated'),
     name: '(Uckermark) Radrouten',
     type: 'vector',
@@ -759,7 +759,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb', 'bb-kampagne'],
     ...sourceDatasetIdUrl('bb-uckermark-schilder'),
     name: '(Uckermark) Radrouten-Schilder',
     type: 'vector',
@@ -783,7 +783,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb', 'bb-kampagne'],
     ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen'),
     name: '(Land Brandenburg) Radverkehrsanlagen',
     type: 'vector',
@@ -807,7 +807,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb-kampagne'],
     ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen-missing-in-osm'),
     name: '(Land Brandenburg) Radverkehrsanlagen die in OSM fehlen',
     type: 'vector',
@@ -865,7 +865,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-adfc'],
+    regionKey: ['bb', 'bb-kampagne'],
     ...sourceDatasetIdUrl('bb-land-querungen'),
     name: '(Land Brandenburg) Querungen',
     type: 'vector',

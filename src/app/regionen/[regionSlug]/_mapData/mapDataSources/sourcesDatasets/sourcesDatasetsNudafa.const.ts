@@ -23,7 +23,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   {
     regionKey: ['nudafa'],
     ...sourceDatasetIdUrl('nudafa-combined'),
-    name: 'Wichtige Ziele asu Beteiligung',
+    name: 'Wichtige Ziele aus Beteiligung',
     subId: 'destination',
     type: 'vector',
     attributionHtml: '',
