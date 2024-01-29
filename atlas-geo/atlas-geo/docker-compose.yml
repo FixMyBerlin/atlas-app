@@ -26,7 +26,7 @@ services:
       db:
         condition: service_healthy
   tiles:
-    image: ghcr.io/maplibre/martin
+    image: ghcr.io/maplibre/martin:v0.13.0
     container_name: tiles
     restart: unless-stopped
     environment:
