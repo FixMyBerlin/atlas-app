@@ -30,7 +30,7 @@ export const LabeledSelect = forwardRef<HTMLInputElement, LabeledSelectProps>(
         <label
           {...labelProps}
           htmlFor={name}
-          className="mb-1 block text-sm font-medium text-gray-700"
+          className="mb-1 block text-sm font-semibold text-gray-700"
         >
           {label}
           {optional && <> (optional)</>}

@@ -24,13 +24,19 @@ export const LabeledRadiobuttonGroup: React.FC<Props> = ({
   return (
     <div>
       {label && (
-        <p className={classLabelOverwrite || 'mb-4 block text-sm font-medium text-gray-700'}>
+        <p className={classLabelOverwrite || 'mb-4 block text-sm font-semibold text-gray-700'}>
           {label} {optional && <> (optional)</>}
         </p>
       )}
       <div className={twJoin(classNameItemWrapper, 'space-y-3')}>
         {itemsWithScope.map((item) => {
-          return <LabeledRadiobutton key={item.value} {...item} />
+          return (
+            <LabeledRadiobutton
+              key={item.value}
+              labelProps={{ className: label ? 'font-normal' : undefined }}
+              {...item}
+            />
+          )
         })}
       </div>
     </div>
