@@ -10,43 +10,36 @@ const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Ra
 
 export async function initExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
-    tables.map((tableName) => {
+    tables.map(async (tableName) => {
       const functionName = exportFunctionIdentifier(tableName)
+      const tagKeyQuery: Array<{ key: string }> = await prismaClientForRawQueries.$queryRawUnsafe(`
+        SELECT DISTINCT jsonb_object_keys(tags) AS key
+        FROM public."${tableName}"
+      `)
+      const metaKeyQuery: Array<{ key: string }> = await prismaClientForRawQueries.$queryRawUnsafe(`
+        SELECT DISTINCT jsonb_object_keys(meta) AS key
+        FROM public."${tableName}"
+      `)
+      const tagKeys = tagKeyQuery.map(({ key }) => `tags->>'${key}' as "${key}"`).join(',')
+      const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
+        prismaClientForRawQueries.$executeRaw`SET SCHEMA 'public';`,
         prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE OR REPLACE FUNCTION public.${functionName}(region Geometry(Polygon))
-          RETURNS json
-          LANGUAGE sql
-          AS $function$
-          SELECT
-          json_build_object(
-            'type', 'FeatureCollection',
-            'license', ${license},
-            'attribution', ${attribution},
-            'features', json_agg(features.feature)
-          )
-          FROM(
-            SELECT
-              json_build_object(
-                'type', 'Feature',
-                'geometry', ST_AsGeoJSON(ST_Transform(geom, 4326), 3)::json,
-              -- Reminder: All tables that can be exported are required to have those exact columns
-              'id', inputs.id,
-              'properties', jsonb_build_object('osm_id', inputs.osm_id) ||
-                  jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta ||
-                  inputs.tags) AS feature
-              FROM(
-                SELECT
-                    *
-                FROM
-                  "${tableName}"
-                WHERE
-                    geom && ST_Transform(region, 3857)) inputs
-            ) features;
-
-        $function$;`,
+          `CREATE or REPLACE FUNCTION public.${functionName}(region Geometry(Polygon))
+           RETURNS text
+           LANGUAGE sql
+           AS $function$
+           SELECT encode(ST_AsFlatGeobuf(q, false, 'geom'), 'base64') as fgb FROM (
+             SELECT st_transform(geom, 4326) AS geom,
+             osm_id,
+             osm_type::text,
+             ${tagKeys},
+             ${metaKeys},
+             FROM public."${tableName}"
+             WHERE geom && ST_Transform(region, 3857)
+             ) q;
+          $function$;`,
         ),
       ])
     }),
