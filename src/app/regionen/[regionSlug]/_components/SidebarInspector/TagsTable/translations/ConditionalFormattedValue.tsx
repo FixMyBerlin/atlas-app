@@ -125,7 +125,6 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   // Some tags are translated already for a different key, so lets look there…
   // Keys need to be source specific, otherwise there is interference with the next step.
   const lookThereForKey: Record<string, string> = {
-    'atlas_roadClassification--category': 'highway',
     'atlas_roads--road': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
