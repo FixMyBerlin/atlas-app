@@ -21,9 +21,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { ids } = params
-    await prismaClientForRawQueries.$queryRaw`SET search_path TO public`
+    await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
+
     const nHits = await prismaClientForRawQueries.$executeRaw`
-      SELECT osm_id FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
+      SELECT osm_id
+      FROM boundaries
+      WHERE osm_id IN (${Prisma.join(ids)})
+    `
     if (nHits !== ids.length) {
       res.status(404).send("Couldn't find given ids. At least one id is wrong or dupplicated.")
       return
@@ -31,7 +35,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const boundary = await prismaClientForRawQueries.$queryRaw<Record<'geom', object>[]>`
       SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom
-      FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
+      FROM boundaries
+      WHERE osm_id IN (${Prisma.join(ids)})
+    `
+
     res.setHeader('Content-Disposition', `attachment; filename="boundary.geojson"`)
     res.json(boundary?.at(0)?.geom)
   } catch (e) {

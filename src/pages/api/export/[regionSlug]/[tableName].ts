@@ -81,12 +81,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const functionName = exportFunctionIdentifier(tableName)
 
     await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
-      `SELECT * FROM "${functionName}"
-    (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
     const geoJson = await prismaClientForRawQueries.$queryRawUnsafe<
       Record<typeof functionName, object>[]
     >(
+      `SELECT * FROM "${functionName}"(
+        ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
+      )`,
     )
+
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
     res.json(geoJson?.at(0)?.[functionName])
   } catch (e) {
