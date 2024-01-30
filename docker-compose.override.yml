@@ -1,0 +1,14 @@
+# this file is copied to the staging or production server to be used there
+
+version: '3'
+services:
+  app:
+    image: !reset null
+    labels: !reset []
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./src:/app/src
+  tiles:
+    labels: !reset []
