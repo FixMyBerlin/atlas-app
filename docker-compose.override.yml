@@ -1,5 +1,4 @@
-# this file is copied to the staging or production server to be used there
-
+# this file sets `development` specific parameters. See: https://docs.docker.com/compose/compose-file/13-merge/
 version: '3'
 services:
   app:
