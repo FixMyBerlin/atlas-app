@@ -11,5 +11,6 @@ services:
       dockerfile: ./Dockerfile
     volumes:
       - ./src:/app/src
+      - ./.next:/app/.next
   tiles:
     labels: !reset []
