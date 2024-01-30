@@ -23,7 +23,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   }))
 }
 
-export const createUpload = async (uploadSlug, externalUrl, regionIds, isPublic) => {
+export const createUpload = async (uploadSlug, externalUrl, regionSlugs, isPublic) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
@@ -32,7 +32,7 @@ export const createUpload = async (uploadSlug, externalUrl, regionIds, isPublic)
         apiKey: process.env.EXPORT_ACCESS_TOKEN!,
         uploadSlug,
         externalUrl,
-        regionIds,
+        regionSlugs,
         isPublic,
       }),
     }),

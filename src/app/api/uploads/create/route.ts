@@ -6,7 +6,7 @@ const Schema = z.object({
   apiKey: z.string().nullish(),
   uploadSlug: z.string(),
   externalUrl: z.string(),
-  regionIds: z.array(z.number()),
+  regionSlugs: z.array(z.string()),
   isPublic: z.boolean(),
 })
 
@@ -31,13 +31,16 @@ export async function POST(request: Request) {
   const check = checkApiKey(data)
   if (!check.ok) return check.errorResponse
 
-  const { uploadSlug, externalUrl, regionIds, isPublic } = data
+  const { uploadSlug, externalUrl, regionSlugs, isPublic } = data
+
+  await db.upload.deleteMany({ where: { slug: uploadSlug } })
+
   try {
     await db.upload.create({
       data: {
         slug: uploadSlug,
         externalUrl,
-        regions: { connect: regionIds.map((id) => ({ id })) },
+        regions: { connect: regionSlugs.map((slug) => ({ slug })) },
         public: isPublic,
       },
     })
