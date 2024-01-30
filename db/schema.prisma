@@ -136,6 +136,7 @@ model Upload {
   //
   slug       String   @unique
   pmtilesUrl String
+  layersUrl  String?
   public     Boolean  @default(false)
   //
   regions    Region[]
