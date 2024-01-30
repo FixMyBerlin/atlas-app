@@ -72,21 +72,16 @@ for (const i in files) {
   console.log('  Uploading generated file...')
   const uploadUrl = await uploadFileToS3(outputFile, `${uploadSlug}.pmtiles`)
 
-  let regionsInfo = ''
   const regionSlugs = file
     .split('-')
     .filter((regionSlug) => existingRegionSlugs.includes(regionSlug))
-  if (regionSlugs.length === 1) {
-    regionsInfo = ` (will be assigned to region ${regionSlugs[0]})`
-  } else if (regionSlugs.length > 1) {
-    regionsInfo = ` (will be assigned to regions ${regionSlugs.join(', ')})`
-  }
+
   // maps slug to id
   const regionSlugToId = Object.fromEntries(regions.map((region) => [region.slug, region.id]))
   const regionIds = regionSlugs.map((regionsSlug) => regionSlugToId[regionsSlug])
   const isPublic = path.parse(file).name.endsWith('-public')
 
-  console.log(`  Saving upload to DB${regionsInfo}...`)
+  console.log(`  Saving upload to DB (will be assigned to regions ${regionSlugs.join(', ')})...`)
   const response = await createUpload(uploadSlug, uploadUrl, regionIds, isPublic)
   if (response.status !== 201) {
     red(JSON.stringify(await response.json(), null, 2))
