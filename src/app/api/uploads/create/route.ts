@@ -5,7 +5,7 @@ import { checkApiKey } from '../../_util/checkApiKey'
 const Schema = z.object({
   apiKey: z.string().nullish(),
   uploadSlug: z.string(),
-  externalUrl: z.string(),
+  pmtilesUrl: z.string(),
   regionSlugs: z.array(z.string()),
   isPublic: z.boolean(),
 })
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   const check = checkApiKey(data)
   if (!check.ok) return check.errorResponse
 
-  const { uploadSlug, externalUrl, regionSlugs, isPublic } = data
+  const { uploadSlug, pmtilesUrl, regionSlugs, isPublic } = data
 
   await db.upload.deleteMany({ where: { slug: uploadSlug } })
 
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     await db.upload.create({
       data: {
         slug: uploadSlug,
-        externalUrl,
+        pmtilesUrl,
         regions: { connect: regionSlugs.map((slug) => ({ slug })) },
         public: isPublic,
       },

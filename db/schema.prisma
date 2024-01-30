@@ -130,13 +130,13 @@ model Membership {
 }
 
 model Upload {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
   //
-  slug        String   @unique
-  externalUrl String
-  public      Boolean  @default(false)
+  slug       String   @unique
+  pmtilesUrl String
+  public     Boolean  @default(false)
   //
-  regions     Region[]
+  regions    Region[]
 }

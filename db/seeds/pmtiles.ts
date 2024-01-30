@@ -5,7 +5,7 @@ const seedUploads = async () => {
   const seedUploads: Prisma.UploadUncheckedCreateInput[] = [
     {
       slug: 'nudafa-combined',
-      externalUrl:
+      pmtilesUrl:
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
     },
   ]

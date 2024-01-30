@@ -32,7 +32,7 @@ export default function AdminEditUploadPage() {
 
       <h1>{upload.slug}</h1>
       <p>
-        <code>{upload.externalUrl}</code>
+        <code>{upload.pmtilesUrl}</code>
       </p>
 
       <ObjectDump data={upload!} className="my-10" />

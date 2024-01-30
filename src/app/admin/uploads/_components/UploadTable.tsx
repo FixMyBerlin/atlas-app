@@ -20,7 +20,7 @@ export const UploadsTable = ({ uploads }: { uploads: TUpload[] }) => {
         return (
           <tr key={upload.id}>
             <th>{upload.slug}</th>
-            <td className="text-[10px]">{upload.externalUrl}</td>
+            <td className="text-[10px]">{upload.pmtilesUrl}</td>
             <td>
               {upload.public ? (
                 <Pill color="purple">Öffentlich</Pill>
