@@ -1,5 +1,3 @@
-# this file is copied to the staging or production server to be used there
-
 version: '3'
 services:
   app:
@@ -49,26 +47,10 @@ services:
     container_name: db
     shm_size: 1gb
     restart: unless-stopped
-    command:
-      [
-        'postgres',
-        '-c',
-        'shared_buffers=3GB',
-        '-c',
-        'work_mem=128MB',
-        '-c',
-        'maintenance_work_mem=1024MB',
-        '-c',
-        'temp_buffers=24MB',
-        '-c',
-        'effective_cache_size=8GB',
-        '-c',
-        'wal_buffers=16MB',
-        '-c',
-        'min_wal_size=1GB',
-        '-c',
-        'max_wal_size=4GB',
-      ]
+    configs:
+      - source: postgres
+        target: /postgresql/postgresql.conf
+    command: ['-c', 'config_file=/postgresql/postgresql.conf']
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}
@@ -91,3 +73,6 @@ volumes:
 networks:
   app_bridge:
     name: app_bridge
+configs:
+  postgres:
+    file: ./postgres.conf

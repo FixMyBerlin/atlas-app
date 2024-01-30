@@ -93,7 +93,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: 'docker-compose.yml, docker-compose.traefik.yml'
+          source: 'docker-compose.yml, docker-compose.traefik.yml, postgres.conf'
           target: '/srv/blitz'
           strip_components: 1
           overwrite: true
