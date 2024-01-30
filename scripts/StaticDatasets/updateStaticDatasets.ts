@@ -58,9 +58,9 @@ for (const i in files) {
 
   const uploadSlug = slugify(path.parse(file).name).toLowerCase()
 
-  if (existingUploadSlugs.includes(uploadSlug)) {
-    yellow(`  Upload "${uploadSlug}" already exists.`)
-    continue
+  const isUpdateRun = existingUploadSlugs.includes(uploadSlug)
+  if (isUpdateRun) {
+    yellow(`  Replacing existing "${uploadSlug}" (but skipping DB part)`)
   }
 
   const inputFile = path.join(geoJsonFolder, file)
@@ -72,20 +72,22 @@ for (const i in files) {
   console.log('  Uploading generated file...')
   const uploadUrl = await uploadFileToS3(outputFile, `${uploadSlug}.pmtiles`)
 
-  const regionSlugs = file
-    .split('-')
-    .filter((regionSlug) => existingRegionSlugs.includes(regionSlug))
+  if (!isUpdateRun) {
+    const regionSlugs = file
+      .split('-')
+      .filter((regionSlug) => existingRegionSlugs.includes(regionSlug))
 
-  // maps slug to id
-  const regionSlugToId = Object.fromEntries(regions.map((region) => [region.slug, region.id]))
-  const regionIds = regionSlugs.map((regionsSlug) => regionSlugToId[regionsSlug])
-  const isPublic = path.parse(file).name.endsWith('-public')
+    // maps slug to id
+    const regionSlugToId = Object.fromEntries(regions.map((region) => [region.slug, region.id]))
+    const regionIds = regionSlugs.map((regionsSlug) => regionSlugToId[regionsSlug])
+    const isPublic = path.parse(file).name.endsWith('-public')
 
-  console.log(`  Saving upload to DB (will be assigned to regions ${regionSlugs.join(', ')})...`)
-  const response = await createUpload(uploadSlug, uploadUrl, regionIds, isPublic)
-  if (response.status !== 201) {
-    red(JSON.stringify(await response.json(), null, 2))
-    process.exit(1)
+    console.log(`  Saving upload to DB (will be assigned to regions ${regionSlugs.join(', ')})...`)
+    const response = await createUpload(uploadSlug, uploadUrl, regionIds, isPublic)
+    if (response.status !== 201) {
+      red(JSON.stringify(await response.json(), null, 2))
+      process.exit(1)
+    }
   }
 
   green('  OK')
