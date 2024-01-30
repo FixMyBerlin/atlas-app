@@ -88,6 +88,11 @@ if (!fs.existsSync(tmpDir)) {
   fs.mkdirSync(tmpDir, { recursive: true })
 }
 
+if (!fs.existsSync(geoJsonFolder)) {
+  red(`folder "${geoJsonFolder}" does not exists. Have you forgot to run "npm run link-atlas-static-data"?`)
+  process.exit(1)
+}
+
 const folderNames = fs.readdirSync(geoJsonFolder)
 for (const i in folderNames) {
   const folderName = folderNames[i]!
