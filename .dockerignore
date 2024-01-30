@@ -11,3 +11,5 @@
 !tsconfig.json
 !types.ts
 !scripts
+!.prettierrc
+!.eslintrc.json
