@@ -24,9 +24,9 @@ export type SourcesId =
 // Define the verification tables
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-
-export const verifiedTableIdentifier = (tableName: SourceVerificationApiIdentifier) =>
-  tableName.toLowerCase() + '_verified'
+export const verifiedTableIdentifier = <TId extends SourceVerificationApiIdentifier>(
+  tableName: TId,
+) => `${tableName.toLowerCase()}_verified` as `${Lowercase<TId>}_verified`
 export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier, string> = {
   bikelanes: 'BikelaneVerification',
 }
@@ -50,8 +50,8 @@ export const exportApiIdentifier = [
 ] as const
 
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
-export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
-  'atlas_export_geojson_' + tableName.toLowerCase()
+export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
+  `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
