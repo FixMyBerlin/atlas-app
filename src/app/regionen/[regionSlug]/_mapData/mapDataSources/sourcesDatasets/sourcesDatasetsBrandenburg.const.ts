@@ -1,11 +1,11 @@
 import { SourceDatasets } from './sourcesDatasets.const'
 import { cleanupMapboxCopySelectedLayerJson } from './utils/cleanupMapboxCopySelectedLayerJson'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
     regionKey: ['bb', 'bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-radnetz-barnim'),
+    ...sourceLegacyDatasetIdUrl('bb-radnetz-barnim'),
     name: 'Radnetz Landkreis Barnim',
     type: 'vector',
     attributionHtml: '&copy; TODO',
@@ -29,7 +29,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-gemeinden'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-gemeinden'),
     name: '(Ramboll) Gemeinden',
     type: 'vector',
     attributionHtml: '&copy; LGB',
@@ -64,7 +64,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-spnv-3000'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-spnv-3000'),
     name: '(Ramboll) SPNV 3000',
     type: 'vector',
     attributionHtml: '&copy; OpenStreetMap, Ramboll',
@@ -87,7 +87,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-zentrale-orte'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-zentrale-orte'),
     name: '(Ramboll) Zentrale Orte',
     type: 'vector',
     attributionHtml: '&copy; OpenStreetMap, Ramboll',
@@ -124,7 +124,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-nachbarn'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-nachbarn'),
     name: '(Ramboll) Zentrale Orte: Nachbarn',
     type: 'vector',
     attributionHtml: '&copy; OpenStreetMap, Ramboll',
@@ -147,7 +147,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-minimal-spanning-tree'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-minimal-spanning-tree'),
     name: '(Ramboll) minimal spanning tree',
     type: 'vector',
     attributionHtml: '&copy; Ramboll',
@@ -171,7 +171,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb'],
-    ...sourceDatasetIdUrl('bb-ramboll-delauney-triangulation'),
+    ...sourceLegacyDatasetIdUrl('bb-ramboll-delauney-triangulation'),
     name: '(Ramboll) delauny triangulation',
     type: 'vector',
     attributionHtml: '&copy; Ramboll',
@@ -196,7 +196,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
     // regionKey: ['bb', 'bb-kampagne'],
     regionKey: ['bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-radnetz-adfc'),
+    ...sourceLegacyDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC',
     subId: 'd', // d for 'default'
     type: 'vector',
@@ -472,7 +472,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
     // regionKey: ['bb', 'bb-kampagne'],
     regionKey: ['bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-radnetz-adfc'),
+    ...sourceLegacyDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC (Datenabgleich)',
     subId: 'complete',
     type: 'vector',
@@ -708,7 +708,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb', 'bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-uckermark-radwege-translated'),
+    ...sourceLegacyDatasetIdUrl('bb-uckermark-radwege-translated'),
     name: '(Uckermark) Radrouten',
     type: 'vector',
     attributionHtml: '&copy; Kreisverwaltung Uckermark (DL-DE-BY-2.0 + OSM)',
@@ -760,7 +760,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb', 'bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-uckermark-schilder'),
+    ...sourceLegacyDatasetIdUrl('bb-uckermark-schilder'),
     name: '(Uckermark) Radrouten-Schilder',
     type: 'vector',
     attributionHtml: '&copy; Kreisverwaltung Uckermark (DL-DE-BY-2.0 + OSM)',
@@ -784,7 +784,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb', 'bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen'),
+    ...sourceLegacyDatasetIdUrl('bb-land-radverkehrsanlagen'),
     name: '(Land Brandenburg) Radverkehrsanlagen',
     type: 'vector',
     attributionHtml: '&copy; GeoBasis-DE/LGB (2023) / Radverkehrsanlagen (DL-DE-BY-2.0 + OSM)',
@@ -808,7 +808,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-land-radverkehrsanlagen-missing-in-osm'),
+    ...sourceLegacyDatasetIdUrl('bb-land-radverkehrsanlagen-missing-in-osm'),
     name: '(Land Brandenburg) Radverkehrsanlagen die in OSM fehlen',
     type: 'vector',
     attributionHtml:
@@ -866,7 +866,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
   },
   {
     regionKey: ['bb', 'bb-kampagne'],
-    ...sourceDatasetIdUrl('bb-land-querungen'),
+    ...sourceLegacyDatasetIdUrl('bb-land-querungen'),
     name: '(Land Brandenburg) Querungen',
     type: 'vector',
     attributionHtml: '&copy; GeoBasis-DE/LGB (2023) / Querungen (DL-DE-BY-2.0 + OSM)',

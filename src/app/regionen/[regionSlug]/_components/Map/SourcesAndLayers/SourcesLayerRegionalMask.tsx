@@ -2,12 +2,12 @@ import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { sourceDatasetIdUrl } from '../../../_mapData/mapDataSources/sourcesDatasets/utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from '../../../_mapData/mapDataSources/sourcesDatasets/utils/sourceDatasetIdUrl'
 
 export const SourcesLayerRegionalMask: React.FC = () => {
   const regionSlug = useRegionSlug()
   const { pmTilesProtocolReady } = useMapStateInteraction()
-  const { id, url } = sourceDatasetIdUrl('atlas-regional-masks')
+  const { id, url } = sourceLegacyDatasetIdUrl('atlas-regional-masks')
   const datasetTileId = `source:${id}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
 
   if (!regionSlug || !pmTilesProtocolReady) return null

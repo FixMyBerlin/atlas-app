@@ -1,10 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBiBi: SourceDatasets = [
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-rad-punktdaten'),
+    ...sourceLegacyDatasetIdUrl('bibi-rad-punktdaten'),
     name: 'Radschulwegplan Verschiedene Punktdaten',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -30,7 +30,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-abstellplaetze-merged'),
+    ...sourceLegacyDatasetIdUrl('bibi-abstellplaetze-merged'),
     name: 'Radschulwegplan Radabstellplätze',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -56,7 +56,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-problemstellen'),
+    ...sourceLegacyDatasetIdUrl('bibi-problemstellen'),
     name: 'Radschulwegplan Problemstellen',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -82,7 +82,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-radschulwegplan-gefahrenstellen'),
+    ...sourceLegacyDatasetIdUrl('bibi-radschulwegplan-gefahrenstellen'),
     name: 'Radschulwegplan Gefahrenstellen',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
@@ -108,7 +108,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-empfohlener-radschulweg'),
+    ...sourceLegacyDatasetIdUrl('bibi-empfohlener-radschulweg'),
     name: 'Radschulwegplan Empfohlener Radschulweg',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
@@ -132,7 +132,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-radnetz-alltag'),
+    ...sourceLegacyDatasetIdUrl('bibi-radnetz-alltag'),
     name: 'Alltagsradwegenetz',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2022',
@@ -162,7 +162,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   // PARKRAUM:
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
     name: 'Parkstände',
     type: 'vector',
     attributionHtml:
@@ -269,7 +269,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines_label_nodes'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines_label_nodes'),
     name: 'Parkstände Beschriftungen',
     type: 'vector',
     attributionHtml:
@@ -303,7 +303,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_parking_areas'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_parking_areas'),
     name: 'Parkflächen',
     type: 'vector',
     attributionHtml:

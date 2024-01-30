@@ -32,7 +32,7 @@ export type MapDataBackgroundSource<TIds> = {
 export type MapDataDatasetsSource<TIds> = {
   /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
   regionKey: RegionSlug[]
-  id: TIds
+  id: TIds | string // TODO the "string" part should go away, if we keep this. Or it should all be "string". This was added during the migration of LegacyStaticDatasets
   /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
   subId?: string
   name: string
