@@ -77,6 +77,13 @@ for (const i in files) {
       .split('-')
       .filter((regionSlug) => existingRegionSlugs.includes(regionSlug))
 
+    if (regionSlugs.length === 0) {
+      red(
+        `   No regions found in filename. This will proceed, but you need to edit the record to add regions manually.`,
+        { candidates: file.split('-'), existingRegionSlugs },
+      )
+    }
+
     // maps slug to id
     const regionSlugToId = Object.fromEntries(regions.map((region) => [region.slug, region.id]))
     const regionIds = regionSlugs.map((regionsSlug) => regionSlugToId[regionsSlug])
