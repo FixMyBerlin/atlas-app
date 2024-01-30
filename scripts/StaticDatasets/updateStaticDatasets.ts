@@ -57,7 +57,6 @@ for (const i in files) {
   inverse(`Processing file "${file}"...`)
 
   const uploadSlug = slugify(path.parse(file).name).toLowerCase()
-  const regionSlug = uploadSlug.split('-')[0]!
 
   if (existingUploadSlugs.includes(uploadSlug)) {
     yellow(`  Upload "${uploadSlug}" already exists.`)
