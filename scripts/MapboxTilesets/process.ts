@@ -105,9 +105,9 @@ for (const dataset of Object.entries(datasets)) {
   const { sourceLayer, uploadUrl, bbox } = dataset[1]
 
   // Fetch Export API
-  const accessToken = process.env.EXPORT_ACCESS_TOKEN
-  // The `accessToken` with skip the region check (hence the `noRegion`)
-  const url = getExportApiBboxUrl('noRegion', datasetKey, bbox, 'staging', accessToken)
+  const apiKey = process.env.ATLAS_API_KEY
+  // The `apiKey` with skip the region check (hence the `noRegion`)
+  const url = getExportApiBboxUrl('noRegion', datasetKey, bbox, 'staging', apiKey)
   console.log('\n', chalk.inverse.bold(chalk.yellow('FETCH')), url)
   const fetchExport = await fetch(url)
 

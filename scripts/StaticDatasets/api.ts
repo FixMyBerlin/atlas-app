@@ -8,7 +8,7 @@ export const getUploadsUrl = `${apiRootUrl}/uploads`
 export const createUploadUrl = `${apiRootUrl}/uploads/create`
 
 const addApiKey = (url) =>
-  url + '?' + new URLSearchParams({ apiKey: process.env.EXPORT_ACCESS_TOKEN! }).toString()
+  url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
 
 export const getSlugs = async (url: string): Promise<string[]> => {
   url = addApiKey(url)
@@ -35,7 +35,7 @@ export const createUpload = async ({
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        apiKey: process.env.EXPORT_ACCESS_TOKEN!,
+        apiKey: process.env.ATLAS_API_KEY!,
         uploadSlug,
         pmtilesUrl,
         layersUrl,

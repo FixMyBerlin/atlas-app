@@ -12,7 +12,7 @@ export const checkApiKey = (data: Request | Record<string, any>) => {
     apiKey = null
   }
 
-  if (apiKey === process.env.EXPORT_ACCESS_TOKEN) {
+  if (apiKey === process.env.ATLAS_API_KEY) {
     return { ok: true, errorResponse: null }
   } else {
     return {

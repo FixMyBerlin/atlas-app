@@ -33,7 +33,7 @@ on:
         required: true
       SSH_USERNAME:
         required: true
-      EXPORT_ACCESS_TOKEN:
+      ATLAS_API_KEY:
         required: true
       S3_PMTILES_KEY:
         required: true
@@ -115,7 +115,7 @@ jobs:
             echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
             echo OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}' >> .env
             echo OSM_CLIENT_SECRET='${{ secrets.OSM_CLIENT_SECRET }}' >> .env
-            echo EXPORT_ACCESS_TOKEN='${{ secrets.EXPORT_ACCESS_TOKEN }}' >> .env
+            echo ATLAS_API_KEY='${{ secrets.ATLAS_API_KEY }}' >> .env
             echo S3_PMTILES_KEY='${{ secrets.S3_PMTILES_KEY }}' >> .env
             echo S3_PMTILES_SECRET='${{ secrets.S3_PMTILES_SECRET }}' >> .env
             echo S3_PMTILES_REGION='${{ secrets.S3_PMTILES_REGION }}' >> .env

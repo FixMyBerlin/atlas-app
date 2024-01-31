@@ -25,15 +25,15 @@ export const getExportApiBboxUrl = (
   apiIdentifier: SourceExportApiIdentifier,
   bbox: NonNullable<StaticRegion['bbox']>,
   env?: typeof process.env.NEXT_PUBLIC_APP_ENV,
-  accessToken?: string,
+  apiKey?: string,
 ) => {
   const url = new URL(getExportApiUrl(regionSlug, apiIdentifier, env))
   url.searchParams.append('minlon', String(bbox.min[0]))
   url.searchParams.append('minlat', String(bbox.min[1]))
   url.searchParams.append('maxlon', String(bbox.max[0]))
   url.searchParams.append('maxlat', String(bbox.max[1]))
-  if (accessToken) {
-    url.searchParams.append('accessToken', accessToken)
+  if (apiKey) {
+    url.searchParams.append('apiKey', apiKey)
   }
 
   return url.toString()

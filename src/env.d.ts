@@ -22,7 +22,7 @@ namespace NodeJS {
     readonly OSM_CLIENT_ID: string
     readonly OSM_CLIENT_SECRET: string
     // API
-    readonly EXPORT_ACCESS_TOKEN: string
+    readonly ATLAS_API_KEY: string
     // StaticDatasets
     readonly S3_PMTILES_KEY: string
     readonly S3_PMTILES_SECRET: string
