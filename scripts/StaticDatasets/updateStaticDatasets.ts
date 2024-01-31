@@ -3,10 +3,10 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import slugify from 'slugify'
+import { parseArgs } from 'util'
 
 import { getSlugs, getUploadsUrl, createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
-import { generatePMTilesFile } from './utils/generatePMTilesFile'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
@@ -15,7 +15,48 @@ const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
 const existingUploadSlugs = await getSlugs(getUploadsUrl)
 
+// script can be run with --dry-run to just run all checks
+// without processing geojsons, uploading pmtiles and saving to db
+const { values, positionals } = parseArgs({
+  args: Bun.argv,
+  options: { 'dry-run': { type: 'boolean' } },
+  strict: true,
+  allowPositionals: true,
+})
+
+const dryRun = !!values['dry-run']
+
+const generatePMTilesFile = (inputFile: string, outputFile: string) => {
+  if (dryRun) return '/tmp/does-not-exist.pmtiles'
+  Bun.spawnSync(
+    [
+      'tippecanoe',
+      `--output=${outputFile}`,
+      '--force',
+      '--maximum-zoom=g', // Automatically choose a maxzoom that should be sufficient to clearly distinguish the features and the detail within each feature https://github.com/felt/tippecanoe#zoom-levels
+      '-rg', // If you use -rg, it will guess a drop rate that will keep at most 50,000 features in the densest tile https://github.com/felt/tippecanoe#dropping-a-fixed-fraction-of-features-by-zoom-level
+      '--drop-densest-as-needed', // https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
+      '--extend-zooms-if-still-dropping', // https://github.com/felt/tippecanoe?tab=readme-ov-file#zoom-levels
+      '--layer=default',
+      inputFile,
+    ],
+    {
+      onExit(_proc, exitCode, _signalCode, error) {
+        if (exitCode) {
+          red(`  exitCode: ${exitCode}`)
+          process.exit(1)
+        }
+        if (error) {
+          red(`  error: ${error.message}`)
+          process.exit(1)
+        }
+      },
+    },
+  )
+}
+
 export const uploadFileToS3 = async (fileToUpload: string, filename: string) => {
+  if (dryRun) return 'http://example.com/does-not-exist.pmtiles'
   const accessKeyId = process.env.S3_PMTILES_KEY
   const secretAccessKey = process.env.S3_PMTILES_SECRET
   const region = process.env.S3_PMTILES_REGION
@@ -145,16 +186,18 @@ for (const i in folderNames) {
   console.log(
     `  Saving upload to DB (will be assigned to region(s) ${metaData.regions.join(', ')})...`,
   )
-  const response = await createUpload({
-    uploadSlug,
-    pmtilesUrl,
-    regionSlugs,
-    isPublic: metaData.public,
-    config: metaData.config,
-  })
-  if (response.status !== 201) {
-    red(JSON.stringify(await response.json(), null, 2))
-    process.exit(1)
+  if (!dryRun) {
+    const response = await createUpload({
+      uploadSlug,
+      pmtilesUrl,
+      regionSlugs,
+      isPublic: metaData.public,
+      config: metaData.config,
+    })
+    if (response.status !== 201) {
+      red(JSON.stringify(await response.json(), null, 2))
+      process.exit(1)
+    }
   }
 
   green('  OK')
