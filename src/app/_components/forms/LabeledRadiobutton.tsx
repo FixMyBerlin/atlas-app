@@ -60,11 +60,12 @@ export const LabeledRadiobutton = forwardRef<HTMLInputElement, LabeledRadiobutto
         <label
           {...labelProps}
           htmlFor={key}
-          className={twJoin(
+          className={twMerge(
             'ml-3 block text-sm font-medium',
             readonly
               ? 'text-gray-400'
               : 'cursor-pointer whitespace-nowrap text-gray-700 hover:text-gray-800',
+            labelProps?.className,
           )}
         >
           {label}

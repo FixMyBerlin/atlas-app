@@ -26,9 +26,11 @@ export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
   if (typeof sourceData === 'undefined') return null
   if (!sourceData.inspector.enabled) return null
 
+  const datasetTranslations = { ...translations, ...(sourceData.inspector.translations || {}) }
+
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
-      <IntlProvider messages={translations} locale="de" defaultLocale="de">
+      <IntlProvider messages={datasetTranslations} locale="de" defaultLocale="de">
         <Disclosure
           title={<>Statische Daten {quote(sourceData.name)}</>}
           objectId={properties.osm_id}

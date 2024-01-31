@@ -32,7 +32,7 @@ export default function AdminEditRegionPage() {
           pages={[
             { href: '/admin/regions', name: 'Regionen' },
             // TS: No idea why this "as" is needed. `regionSlug` is a simple string so it should work.
-            { href: `/admin/regions/${regionSlug}/edit` as Route, name: 'Anlegen' },
+            { href: `/admin/regions/${regionSlug}/edit` as Route, name: 'Bearbeiten' },
           ]}
         />
       </HeaderWrapper>

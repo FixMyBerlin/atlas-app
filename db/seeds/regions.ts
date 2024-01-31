@@ -1,7 +1,8 @@
-import db, { Region } from '../index'
+import db from '../index'
+import { Prisma } from '@prisma/client'
 
 const seedRegions = async () => {
-  const seedRegions: Omit<Region, 'id' | 'createdAt' | 'updatedAt'>[] = [
+  const seedRegions: Prisma.RegionUncheckedCreateInput[] = [
     {
       slug: 'bibi',
       public: true,

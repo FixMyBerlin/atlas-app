@@ -21,7 +21,7 @@ const ExportSchema = z.object({
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  let params
+  let params: z.infer<typeof ExportSchema>
   try {
     params = ExportSchema.parse(req.query)
   } catch (e) {
@@ -79,14 +79,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { tableName, minlon, minlat, maxlon, maxlat } = params
     const functionName = exportFunctionIdentifier(tableName)
+
     await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
-    const geoJson = await prismaClientForRawQueries.$queryRawUnsafe(
-      `SELECT * FROM "${functionName}"
-    (( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) ))`,
+    const geoJson = await prismaClientForRawQueries.$queryRawUnsafe<
+      Record<typeof functionName, object>[]
+    >(
+      `SELECT * FROM "${functionName}"(
+        ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
+      )`,
     )
+
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
-    // @ts-expect-error
-    res.json(geoJson[0][functionName])
+    res.json(geoJson?.at(0)?.[functionName])
   } catch (e) {
     if (!isProd) throw e
     res.status(500).send('Internal Server Error')

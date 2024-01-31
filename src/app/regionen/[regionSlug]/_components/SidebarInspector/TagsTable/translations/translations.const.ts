@@ -1,4 +1,3 @@
-import { translationsBiBi } from './translationsBibi.const'
 import { translationsParking } from './translationsParking.const'
 
 /* prettier-ignore */
@@ -8,7 +7,6 @@ import { translationsParking } from './translationsParking.const'
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
   ...translationsParking,
-  ...translationsBiBi,
   'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
   'ALL--category--key': 'Führungsform',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
@@ -49,6 +47,7 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=bicycle_road': 'Fahrradstraße', // roads--category
   'ALL--highway=construction': 'Straße ist in Bau',
   'ALL--highway=cycleway': 'Radweg',
+  'ALL--highway=footway_sidewalk': 'Gehweg',
   'ALL--highway=footway': 'Fußweg',
   'ALL--highway=living_street': 'Verkehrsberuhigter Bereich',
   'ALL--highway=motorway': 'Autobahn',
@@ -118,30 +117,10 @@ export const translations: { [key: string]: string } = {
   'atlas_bikelanes--smoothness_source=tracktype_to_smoothness': 'Abgeleitet von dem OSM Wert `tracktype`',
   'atlas_bikelanes--surface_source=tag': 'OSM-Tag `surface`',
   'atlas_bikelanes--title': 'Daten zur Radinfrastruktur',
-  'atlas_bikelanesPresence--left--key': 'Vollständigkeit Links (Linienrichtung)',
-  'atlas_bikelanesPresence--left=data_no': 'Keine Radinfrastruktur (explizit)',
-  'atlas_bikelanesPresence--left=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--left=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
-  'atlas_bikelanesPresence--oneway=implicit_yes': 'Einrichtungsradweg (implizite Angabe)',
-  'atlas_bikelanesPresence--oneway=no': 'Zweirichtungsradwege',
-  'atlas_bikelanesPresence--oneway=yes': 'Einrichtungsradweg',
-  'atlas_bikelanesPresence--right--key': 'Vollständigkeit Rechts (Linienrichtung)',
-  'atlas_bikelanesPresence--right=data_no': 'Keine Radinfrastruktur (explizit)',
-  'atlas_bikelanesPresence--right=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--right=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
-  'atlas_bikelanesPresence--self--key': 'Vollständigkeit Mittellinie',
-  'atlas_bikelanesPresence--self=data_no': 'Keine Radinfrastruktur (explizit)',
-  'atlas_bikelanesPresence--self=missing': 'Unvollständig (keine Infrastruktur erkannt)',
-  'atlas_bikelanesPresence--self=not_expected': 'Vermutlich vollständig (keine Infrastruktur erwartet)',
   'atlas_boundaries--admin_level--key': 'Grenzen Level',
   'atlas_boundaries--admin_level=7': 'Level 7 — Meistens Verwaltungsgemeinschaft, Amt', // https://wiki.openstreetmap.org/wiki/DE:Grenze
   'atlas_boundaries--admin_level=8': 'Level 8 — Meistens (Kreisangehörige) Gemeinde / Stadt',
   'atlas_boundaries--title': 'Grenzen',
-  'atlas_buildings--building--key': 'Gebäudeart',
-  'atlas_buildings--building=garage': 'Garage (einzeln)',
-  'atlas_buildings--building=garages': 'Mehrere Garagen',
-  'atlas_buildings--building=retail': 'Gebäude des Einzelhandels',
-  'atlas_buildings--title': 'Gebäude',
   'atlas_landuse--landuse--key': 'Landnutzung',
   'atlas_landuse--landuse=allotments': 'Kleingartenanlage',
   'atlas_landuse--landuse=cemetery': 'Friedhofsgelände',

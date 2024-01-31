@@ -1,8 +1,12 @@
-import invariant from 'tiny-invariant'
 import { datasets } from '../../datasets/datasets.const'
 import { DatasetIds } from '../../datasets/types'
 
-export const sourceDatasetIdUrl = (datasetId: DatasetIds) => {
-  invariant(datasets[datasetId], 'Dataset missing')
-  return { id: datasetId, url: `pmtiles://${datasets[datasetId]}` }
+export const sourceLegacyDatasetIdUrl = (datasetId: DatasetIds) => {
+  const url = datasets[datasetId]
+  return { id: datasetId, url: `pmtiles://${url}` }
+}
+
+export const sourceStaticDatasetIdUrl = (staticDatasetSlug: string) => {
+  const url = `${process.env.NEXT_PUBLIC_APP_ORIGIN}/api/uploads/${staticDatasetSlug}`
+  return { id: staticDatasetSlug, url: `pmtiles://${url}` }
 }

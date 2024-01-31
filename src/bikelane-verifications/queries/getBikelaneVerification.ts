@@ -1,7 +1,7 @@
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
 import db from 'db'
-import { authorizeRegionAdmin } from 'src/authorization/authorizeProjectAdmin'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { z } from 'zod'
 import { VerificationSchema } from '../schemas'

@@ -9,19 +9,13 @@ export type SourcesId =
   | 'atlas_barriers'
   | 'atlas_bicycleParking'
   | 'atlas_bikelanes'
-  | 'atlas_bikelanesPresence'
   | 'atlas_boundaries'
   | 'atlas_boundaryStats'
-  | 'atlas_buildings'
   | 'atlas_landuse'
-  | 'atlas_lit'
-  | 'atlas_maxspeed'
   | 'atlas_places'
   | 'atlas_poiClassification'
   | 'atlas_publicTransport'
-  | 'atlas_roadClassification'
   | 'atlas_roads'
-  | 'atlas_surfaceQuality'
   | 'atlas_trafficSigns'
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
@@ -30,9 +24,9 @@ export type SourcesId =
 // Define the verification tables
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-
-export const verifiedTableIdentifier = (tableName: SourceVerificationApiIdentifier) =>
-  tableName.toLowerCase() + '_verified'
+export const verifiedTableIdentifier = <TId extends SourceVerificationApiIdentifier>(
+  tableName: TId,
+) => `${tableName.toLowerCase()}_verified` as `${Lowercase<TId>}_verified`
 export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier, string> = {
   bikelanes: 'BikelaneVerification',
 }
@@ -42,28 +36,22 @@ export const exportApiIdentifier = [
   'bicycleParking_points',
   'bicycleParking_areas', // private for now
   verifiedTableIdentifier('bikelanes'),
-  // ,'bikelanes' // We use the bikelanes_verified
-  // ,'bikelanesPresence' // Removed, now roads
   // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
-  // ,'buildings' // Disabled
   'landuse',
-  // ,'lit' // Removed, now roads and bikelanes
-  // ,'maxspeed' // Remove, now roads
   'places',
   'poiClassification',
   'publicTransport',
-  // ,'roadClassification' // Removed, now roads
   'roads',
-  // ,'surfaceQuality' // Removed, now roads and bikelanes
   'trafficSigns',
   'barrierAreas',
   'barrierLines',
   'boundaries',
   'boundaryLabels',
 ] as const
+
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
-export const exportFunctionIdentifier = (tableName: SourceExportApiIdentifier) =>
-  'atlas_export_geojson_' + tableName.toLowerCase()
+export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
+  `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -123,24 +111,6 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'unfall_id',
-    },
-    // presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
-    // https://tiles.radverkehrsatlas.de/roadClassification
-    id: 'atlas_roadClassification',
-    tiles: `${tilesUrl}/roadClassification/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: ['category', 'name', 'composit_surface_smoothness', 'oneway'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -223,23 +193,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    id: 'atlas_bikelanesPresence',
-    tiles: `${tilesUrl}/bikelanesPresence/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: ['name', 'highway', 'self', 'left', 'right', 'oneway__if_present'],
-    },
-    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
-    verification: { enabled: false },
-    freshness: { enabled: true },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
     tiles: `${tilesUrl}/publicTransport/{z}/{x}/{y}`,
@@ -286,40 +239,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/lit
-    id: 'atlas_lit',
-    tiles: `${tilesUrl}/lit/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      // Keys with underscore are treated special in <TagsTable />
-      documentedKeys: [
-        'category',
-        'lit__if_present',
-        'highway',
-        'name',
-        'composit_surface_smoothness',
-      ],
-    },
-    // presence: { enabled: true },
-    verification: { enabled: false },
-    freshness: {
-      enabled: true,
-      freshConfigs: [
-        {
-          primaryKeyTranslation: 'Beleuchtung',
-          freshKey: 'fresh',
-          dateKey: 'check_date:lit',
-        },
-      ],
-    },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
     // https://tiles.radverkehrsatlas.de/places
     id: 'atlas_places',
     tiles: `${tilesUrl}/places/{z}/{x}/{y}`,
@@ -343,80 +262,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/maxspeed
-    id: 'atlas_maxspeed',
-    tiles: `${tilesUrl}/maxspeed/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: [
-        'name',
-        'highway',
-        'maxspeed',
-        'maxspeed_source',
-        'maxspeed:backward__if_present',
-        'maxspeed:forward__if_present',
-        'maxspeed:conditional__if_present',
-        'osm_traffic_sign__if_present',
-      ],
-    },
-    // presence: { enabled: true },
-    verification: { enabled: false },
-    freshness: {
-      enabled: true,
-      freshConfigs: [
-        {
-          primaryKeyTranslation: 'Höchstgeschwindigkeit',
-          freshKey: 'fresh',
-          dateKey: 'check_date:maxspeed',
-        },
-      ],
-    },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
-    // https://tiles.radverkehrsatlas.de/surfaceQuality
-    id: 'atlas_surfaceQuality',
-    tiles: `${tilesUrl}/surfaceQuality/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: {
-      enabled: true,
-      highlightingKey: 'osm_id',
-      documentedKeys: [
-        'name',
-        'highway',
-        'composit_surface_smoothness',
-        'surface_source__if_present',
-        'smoothness_source__if_present',
-      ],
-    },
-    // presence: { enabled: true },
-    verification: { enabled: false },
-    freshness: {
-      enabled: true,
-      freshConfigs: [
-        {
-          primaryKeyTranslation: 'Belag',
-          freshKey: 'fresh_surface',
-          dateKey: 'check_date:surface',
-        },
-        {
-          primaryKeyTranslation: 'Zustand',
-          freshKey: 'fresh_smoothness',
-          dateKey: 'check_date:smoothness',
-        },
-      ],
-    },
-    calculator: { enabled: false },
-    export: { enabled: false },
-  },
-  {
     // https://tiles.radverkehrsatlas.de/barrierAreas
     // https://tiles.radverkehrsatlas.de/barrierLines
     id: 'atlas_barriers',
@@ -430,20 +275,6 @@ export const sources: MapDataSource<
     freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
-  },
-  {
-    // https://tiles.radverkehrsatlas.de/buildings
-    id: 'atlas_buildings',
-    tiles: `${tilesUrl}/buildings/{z}/{x}/{y}`,
-    attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
-    licence: 'ODbL',
-    inspector: { enabled: false }, // Buidlings have no tags, so nothing to "Inspect"
-    // presence: { enabled: false },
-    verification: { enabled: false },
-    freshness: { enabled: false },
-    calculator: { enabled: false },
-    export: { enabled: false }, // Disabled, since exports only works for datasets with tags
   },
   {
     // https://tiles.radverkehrsatlas.de/landuse

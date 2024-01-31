@@ -9,6 +9,7 @@ import {
 } from 'react-map-gl'
 import { Prettify } from 'src/app/_components/types/types'
 import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
+import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/Legend/LegendIcons/types'
 import { MapDataCategoryId } from './mapDataCategories/categories.const'
 import { SourcesId } from './mapDataSources/sources.const'
@@ -32,21 +33,23 @@ export type MapDataBackgroundSource<TIds> = {
 export type MapDataDatasetsSource<TIds> = {
   /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
   regionKey: RegionSlug[]
-  id: TIds
+  id: TIds | string // TODO the "string" part should go away, if we keep this. Or it should all be "string". This was added during the migration of LegacyStaticDatasets
   /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
   subId?: string
   name: string
   description?: string
   attributionHtml: string
   inspector:
-    | {
+    | ({
         enabled: true
         highlightingKey: 'TODO' // This is not implemented, yet
         /** @desc Array of key strings OR `false` to list all available keys */
         documentedKeys: string[] | false
-        disableTranslations?: boolean
         editors?: MapDataSourceInspectorEditor[]
-      }
+      } & (
+        | { disableTranslations?: false; translations: typeof translations }
+        | { disableTranslations: true; translations?: never }
+      ))
     | {
         enabled: false
       }

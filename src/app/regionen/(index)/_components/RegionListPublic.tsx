@@ -1,5 +1,5 @@
 import { invoke } from '@blitzjs/rpc'
-import getRegions from 'src/regions/queries/getRegions'
+import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListPublic = async () => {

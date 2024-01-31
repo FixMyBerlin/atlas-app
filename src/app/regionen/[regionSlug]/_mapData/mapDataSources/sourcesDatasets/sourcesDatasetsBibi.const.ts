@@ -1,10 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBiBi: SourceDatasets = [
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-rad-punktdaten'),
+    ...sourceLegacyDatasetIdUrl('bibi-rad-punktdaten'),
     name: 'Radschulwegplan Verschiedene Punktdaten',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -30,7 +30,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-abstellplaetze-merged'),
+    ...sourceLegacyDatasetIdUrl('bibi-abstellplaetze-merged'),
     name: 'Radschulwegplan Radabstellplätze',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -56,7 +56,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-problemstellen'),
+    ...sourceLegacyDatasetIdUrl('bibi-problemstellen'),
     name: 'Radschulwegplan Problemstellen',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, 17.10.2019',
@@ -82,7 +82,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-radschulwegplan-gefahrenstellen'),
+    ...sourceLegacyDatasetIdUrl('bibi-radschulwegplan-gefahrenstellen'),
     name: 'Radschulwegplan Gefahrenstellen',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
@@ -108,7 +108,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-empfohlener-radschulweg'),
+    ...sourceLegacyDatasetIdUrl('bibi-empfohlener-radschulweg'),
     name: 'Radschulwegplan Empfohlener Radschulweg',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2020',
@@ -132,7 +132,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bibi-radnetz-alltag'),
+    ...sourceLegacyDatasetIdUrl('bibi-radnetz-alltag'),
     name: 'Alltagsradwegenetz',
     type: 'vector',
     attributionHtml: '&copy; Amt für Stadtentwicklung und Baurecht, Juni 2022',
@@ -162,7 +162,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   // PARKRAUM:
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines'),
     name: 'Parkstände',
     type: 'vector',
     attributionHtml:
@@ -197,6 +197,42 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
           urlTemplate: 'https://tordans.github.io/parking-lanes/#{zoom}/{latitude}/{longitude}',
         },
       ],
+      translations: {
+        'bietigheim-bissingen_on_street_parking_lines--condition_class--key': 'Parkbeschränkungen',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=access_restriction':
+          'Zugangsbeschränkung (z.B. privat, nur für Kunden oder Rettungsfahrzeuge)',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=car_sharing':
+          'Nur für Carsharing-Fahrzeuge',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=charging':
+          'Laden von Elektrofahrzeugen',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=disabled_private':
+          'Behindertenparkplatz mit Parkausweis',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=disabled':
+          'Behindertenparkplatz',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=free':
+          'Keine Parkbeschränkungen',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=loading': 'Ladezone',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=mixed':
+          'Mit Bewohnerparkausweis oder Parkschein',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=no_parking':
+          'Parkverbot / Eingeschränktes Haltverbot',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=no_stopping':
+          'Halteverbot / Absolutes Haltverbot',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=paid': 'Nur mit Parkschein',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=residents':
+          'Nur mit Bewohnerparkausweis',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=taxi': 'Taxenstand',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=time_limited':
+          'zeitliche Beschränkung (Parkscheibe)',
+        'bietigheim-bissingen_on_street_parking_lines--condition_class=vehicle_restriction':
+          'Beschränkung auf/Verbot für ausgewiesene Fahrzeugklassen (spezifiziert durch Attribute „vehicle_designated“ und „vehicle_excluded“)',
+        'bietigheim-bissingen_on_street_parking_lines--highway:name--key': 'Name',
+        'bietigheim-bissingen_on_street_parking_lines--markings--key': 'Straßenmarkierungen',
+        'bietigheim-bissingen_on_street_parking_lines--markings=no':
+          'Keine Straßenmarkierungen im Parkbereich',
+        'bietigheim-bissingen_on_street_parking_lines--markings=yes':
+          'Parkbereich mit Straßenmarkierungen',
+      },
     },
     layers: [
       {
@@ -269,7 +305,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines_label_nodes'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_on_street_parking_lines_label_nodes'),
     name: 'Parkstände Beschriftungen',
     type: 'vector',
     attributionHtml:
@@ -303,7 +339,7 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
   },
   {
     regionKey: ['bibi'],
-    ...sourceDatasetIdUrl('bietigheim-bissingen_parking_areas'),
+    ...sourceLegacyDatasetIdUrl('bietigheim-bissingen_parking_areas'),
     name: 'Parkflächen',
     type: 'vector',
     attributionHtml:
@@ -345,6 +381,17 @@ export const sourcesDatasetsBiBi: SourceDatasets = [
             'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{osm_type}/{osm_id}',
         },
       ],
+      translations: {
+        'bietigheim-bissingen_parking_areas--informal--key': 'Geduldet',
+        'bietigheim-bissingen_parking_areas--informal=yes': 'Ja',
+        'bietigheim-bissingen_parking_areas--markings=no':
+          'Keine Straßenmarkierungen im Parkbereich',
+        'bietigheim-bissingen_parking_areas--markings=yes': 'Parkbereich mit Straßenmarkierungen',
+        'bietigheim-bissingen_parking_areas--maxstay--key': 'Höchstparkdauer',
+        'bietigheim-bissingen_parking_areas--maxstay:conditional--key':
+          'Höchstparkdauer mit Bedingungen',
+        'bietigheim-bissingen_parking_areas--parking:levels--key': 'Stockwerke',
+      },
     },
     layers: [
       {

@@ -3,7 +3,7 @@
 import { useQuery } from '@blitzjs/rpc'
 import Form, { FormProps } from 'src/app/_components/forms/Form'
 import { LabeledSelect } from 'src/app/_components/forms/LabeledSelect'
-import getRegions from 'src/regions/queries/getRegions'
+import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import getUsers from 'src/users/queries/getUsers'
 import { z } from 'zod'
 import { getRegionSelectOptions } from '../../regions/_components/utils/getRegionSelectOptions'

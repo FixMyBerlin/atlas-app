@@ -1,9 +1,0 @@
-# Preview release which is not published officially, yet
-berlin-parking-polygons-euvm.geojson
-# Community data which is too big to share as GeoJSON via Github
-changing-cities-radnetz-monitoring.geojson
-# https://umap.openstreetmap.de/de/map/radnetz_brandenburg_41106
-bb-radnetz-adfc.geojson
-# Storing the GeoJSON in Git is not ideal…
-bb-*.geojson
-!bb-radnetz-barnim.geojson

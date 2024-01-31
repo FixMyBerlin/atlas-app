@@ -1,10 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsWoldegk: SourceDatasets = [
   {
     regionKey: ['woldegk'],
-    ...sourceDatasetIdUrl('woldegk-radnetz-vorschlaege'),
+    ...sourceLegacyDatasetIdUrl('woldegk-radnetz-vorschlaege'),
     name: 'Radnetz Vorschläge August 2023',
     type: 'vector',
     attributionHtml: '',

@@ -1,11 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBerlin: SourceDatasets = [
   {
-    // regionKey: ['berlin', 'bb', 'bb-adfc'],
-    regionKey: ['berlin', 'bb-adfc'],
-    ...sourceDatasetIdUrl('changing-cities-radnetz-monitoring'),
+    regionKey: ['berlin', 'bb-ramboll'],
+    ...sourceLegacyDatasetIdUrl('changing-cities-radnetz-monitoring'),
     name: 'Changing Cities Radnetz Monitoring',
     type: 'vector',
     attributionHtml:
@@ -66,7 +65,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
   },
   {
     regionKey: ['berlin', 'parkraum'],
-    ...sourceDatasetIdUrl('berlin-parking-zones-fisbroker'),
+    ...sourceLegacyDatasetIdUrl('berlin-parking-zones-fisbroker'),
     name: 'Parkzonen',
     type: 'vector',
     // https://fbinter.stadt-berlin.de/fb/index.jsp?loginkey=alphaDataStart&alphaDataId=s_parkraumbewirt@senstadt
@@ -123,7 +122,7 @@ export const sourcesDatasetsBerlin: SourceDatasets = [
   },
   {
     regionKey: ['parkraum'], // TODO after data was published: ['berlin', 'parkraum'],
-    ...sourceDatasetIdUrl('berlin-parking-polygons-euvm'),
+    ...sourceLegacyDatasetIdUrl('berlin-parking-polygons-euvm'),
     name: 'Parkflächen eUVM-Projekt',
     description: '(!) Ungeprüfter Datensatz des Förderprojekts eUVM der SenUMVK', // Note: "(!)" makes the line red
     type: 'vector',

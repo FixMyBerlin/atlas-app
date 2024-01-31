@@ -2,6 +2,7 @@ import seedBikelaneVerification from './seeds/bikelaneVerification'
 import seedRegions from './seeds/regions'
 import seedUsers from './seeds/users'
 import seedMemberships from './seeds/memberships'
+import seedUploads from './seeds/pmtiles'
 
 /*
  * This seed function is executed when you run `blitz db seed`.
@@ -11,6 +12,7 @@ const seed = async () => {
   await seedBikelaneVerification()
   await seedUsers()
   await seedMemberships()
+  await seedUploads()
 }
 
 export default seed

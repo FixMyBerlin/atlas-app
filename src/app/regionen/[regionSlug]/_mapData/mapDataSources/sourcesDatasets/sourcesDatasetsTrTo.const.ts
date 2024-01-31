@@ -1,10 +1,10 @@
 import { SourceDatasets } from './sourcesDatasets.const'
-import { sourceDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsTrTo: SourceDatasets = [
   {
     regionKey: ['trto'],
-    ...sourceDatasetIdUrl('TrtoWunschlinienCrossingPoints'),
+    ...sourceLegacyDatasetIdUrl('TrtoWunschlinienCrossingPoints'),
     name: 'Wunschlinien: Zwangspunkte',
     type: 'vector',
     attributionHtml: 'FixMyCity',
@@ -25,7 +25,7 @@ export const sourcesDatasetsTrTo: SourceDatasets = [
   },
   {
     regionKey: ['trto'],
-    ...sourceDatasetIdUrl('TrtoWunschlinienLocationPoints'),
+    ...sourceLegacyDatasetIdUrl('TrtoWunschlinienLocationPoints'),
     name: 'Wunschlinien: Zielpunkte',
     type: 'vector',
     attributionHtml: 'FixMyCity',
@@ -47,7 +47,7 @@ export const sourcesDatasetsTrTo: SourceDatasets = [
   },
   {
     regionKey: ['trto'],
-    ...sourceDatasetIdUrl('TrtoWunschlinienConnectionLines'),
+    ...sourceLegacyDatasetIdUrl('TrtoWunschlinienConnectionLines'),
     name: 'Wunschlinien',
     type: 'vector',
     attributionHtml: 'FixMyCity',
@@ -66,7 +66,7 @@ export const sourcesDatasetsTrTo: SourceDatasets = [
   },
   {
     regionKey: ['trto'],
-    ...sourceDatasetIdUrl('TrtoRadnetz'),
+    ...sourceLegacyDatasetIdUrl('TrtoRadnetz'),
     name: 'Radnetz',
     type: 'vector',
     attributionHtml: 'Amt Altentreptow',

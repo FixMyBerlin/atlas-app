@@ -56,7 +56,10 @@ export const defaultLineLayerStyles = ({
         'line-dasharray': [1, 2],
       },
       // Reminder: `filter` is a `match` expression which is not allowed to be the first item in [`all`].
-      filter: wrapFilterWithAll([['==', 'felt:strokeStyle', 'dashed'], ...([filter] || [])]),
+      filter: wrapFilterWithAll([
+        ['==', ['get', 'felt:strokeStyle'], 'dashed'],
+        ...(filter ? [filter] : []),
+      ]),
       layout: {},
     },
     {
@@ -68,7 +71,10 @@ export const defaultLineLayerStyles = ({
         'line-opacity': ['coalesce', ['get', 'felt:strokeOpacity'], ['get', 'stroke-opacity'], 0.6],
         'line-dasharray': [0.1, 1.5],
       },
-      filter: wrapFilterWithAll([['==', 'felt:strokeStyle', 'dotted'], ...([filter] || [])]),
+      filter: wrapFilterWithAll([
+        ['==', ['get', 'felt:strokeStyle'], 'dotted'],
+        ...(filter ? [filter] : []),
+      ]),
       layout: {},
     },
   ] satisfies Omit<FileMapDataSubcategoryStyleLayer, 'source' | 'source-layer'>[]

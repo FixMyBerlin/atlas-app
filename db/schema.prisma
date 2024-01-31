@@ -114,6 +114,7 @@ model Region {
   exportPublic Boolean  @default(false)
 
   Membership Membership[]
+  uploads    Upload[]
 }
 
 model Membership {
@@ -126,4 +127,17 @@ model Membership {
   regionId Int
 
   @@unique([regionId, userId])
+}
+
+model Upload {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  //
+  slug       String   @unique
+  pmtilesUrl String
+  layersUrl  String?
+  public     Boolean  @default(false)
+  //
+  regions    Region[]
 }

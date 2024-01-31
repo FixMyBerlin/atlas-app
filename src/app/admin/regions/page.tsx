@@ -1,7 +1,7 @@
 import { invoke } from '@blitzjs/rpc'
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
-import getRegions from 'src/regions/queries/getRegions'
+import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import { Breadcrumb } from '../_components/Breadcrumb'
 import { HeaderWrapper } from '../_components/HeaderWrapper'
 import { MissingRegions } from './_components/MissingRegions'
