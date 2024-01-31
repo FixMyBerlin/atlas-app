@@ -150,6 +150,7 @@ for (const i in folderNames) {
     pmtilesUrl,
     regionSlugs,
     isPublic: metaData.public,
+    config: metaData.config,
   })
   if (response.status !== 201) {
     red(JSON.stringify(await response.json(), null, 2))

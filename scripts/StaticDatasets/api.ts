@@ -23,17 +23,21 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   }))
 }
 
-export const createUpload = async ({ uploadSlug, pmtilesUrl, regionSlugs, isPublic }) => {
+type UploadData = {
+  uploadSlug: string
+  pmtilesUrl: string
+  regionSlugs: string[]
+  isPublic: boolean
+  config: Record<string, any>
+}
+export const createUpload = async (data: UploadData) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         apiKey: process.env.ATLAS_API_KEY!,
-        uploadSlug,
-        pmtilesUrl,
-        regionSlugs,
-        isPublic,
+        ...data,
       }),
     }),
   )

@@ -8,6 +8,7 @@ const Schema = z.object({
   pmtilesUrl: z.string(),
   regionSlugs: z.array(z.string()),
   isPublic: z.boolean(),
+  config: z.record(z.string(), z.any()),
 })
 
 const parseData = (body, Schema) => {
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
   const check = checkApiKey(data)
   if (!check.ok) return check.errorResponse
 
-  const { uploadSlug, pmtilesUrl, regionSlugs, isPublic } = data
+  const { uploadSlug, pmtilesUrl, regionSlugs, isPublic, config } = data
 
   await db.upload.deleteMany({ where: { slug: uploadSlug } })
 
@@ -42,6 +43,7 @@ export async function POST(request: Request) {
         pmtilesUrl,
         regions: { connect: regionSlugs.map((slug) => ({ slug })) },
         public: isPublic,
+        config,
       },
     })
   } catch (e) {
