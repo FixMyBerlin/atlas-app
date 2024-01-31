@@ -3,7 +3,7 @@ import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
-    regionKey: ['bb-ramboll', 'bb-kampagne'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-radnetz-barnim'),
     name: 'Radnetz Landkreis Barnim',
     type: 'vector',
