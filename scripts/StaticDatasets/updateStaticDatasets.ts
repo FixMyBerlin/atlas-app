@@ -89,7 +89,9 @@ if (!fs.existsSync(tmpDir)) {
 }
 
 if (!fs.existsSync(geoJsonFolder)) {
-  red(`folder "${geoJsonFolder}" does not exists. Have you forgot to run "npm run link-atlas-static-data"?`)
+  red(
+    `folder "${geoJsonFolder}" does not exists. Have you forgot to run "npm run link-atlas-static-data"?`,
+  )
   process.exit(1)
 }
 
@@ -105,8 +107,11 @@ for (const i in folderNames) {
 
   inverse(`Processing folder "${folderName}"...`)
 
-  if (folderName !== slugify(folderName)) {
-    yellow(`  Folder name "${folderName}" is not a valid slug.`)
+  const uploadSlug = slugify(folderName.replaceAll('_', '-'))
+  if (folderName !== uploadSlug) {
+    yellow(
+      `  Folder name "${folderName}" is not a valid slug. A valid slug could be "${uploadSlug}"`,
+    )
     continue
   }
 
@@ -118,7 +123,6 @@ for (const i in folderNames) {
   const geojsonFilename = findGeojson(folderName)
   if (!geojsonFilename) continue
 
-  const uploadSlug = folderName
   const inputFile = path.join(folderPath, geojsonFilename)
   const outputFile = path.join(tmpDir, 'output.pmtiles')
 
@@ -139,7 +143,7 @@ for (const i in folderNames) {
     }
   })
 
-  let layersUrl : null | string = null
+  let layersUrl: null | string = null
   if ('layers' in metaData) {
     console.log('  Uploading layers.json...')
     const data = JSON.stringify(metaData.layers, null, 2)
@@ -147,7 +151,9 @@ for (const i in folderNames) {
     layersUrl = await uploadDataToS3(data, s3filename)
   }
 
-  console.log(`  Saving upload to DB (will be assigned to region(s) ${metaData.regions.join(', ')})...`)
+  console.log(
+    `  Saving upload to DB (will be assigned to region(s) ${metaData.regions.join(', ')})...`,
+  )
   const response = await createUpload({
     uploadSlug,
     pmtilesUrl,
