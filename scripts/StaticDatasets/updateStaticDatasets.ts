@@ -15,7 +15,7 @@ const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
 const existingUploadSlugs = await getSlugs(getUploadsUrl)
 
-export const uploadDataToS3 = async (data: string | Buffer, filename: string) => {
+export const uploadFileToS3 = async (fileToUpload: string, filename: string) => {
   const accessKeyId = process.env.S3_PMTILES_KEY
   const secretAccessKey = process.env.S3_PMTILES_SECRET
   const region = process.env.S3_PMTILES_REGION
@@ -33,7 +33,7 @@ export const uploadDataToS3 = async (data: string | Buffer, filename: string) =>
       new PutObjectCommand({
         Bucket: bucket,
         Key: fileKey,
-        Body: data,
+        Body: fs.readFileSync(fileToUpload),
       }),
     )
   } catch (e) {
@@ -131,8 +131,7 @@ for (const i in folderNames) {
 
   console.log('  Uploading generated pmtiles file...')
   const s3filename = `${uploadSlug}/${geojsonFilename.split('.')[0]!}.pmtiles`
-  const buffer = fs.readFileSync(outputFile)
-  const pmtilesUrl = await uploadDataToS3(buffer, s3filename)
+  const pmtilesUrl = await uploadFileToS3(outputFile, s3filename)
 
   const regionSlugs: string[] = []
   metaData.regions.forEach((regionSlug) => {
@@ -143,21 +142,12 @@ for (const i in folderNames) {
     }
   })
 
-  let layersUrl: null | string = null
-  if ('layers' in metaData) {
-    console.log('  Uploading layers.json...')
-    const data = JSON.stringify(metaData.layers, null, 2)
-    const s3filename = `${uploadSlug}/layers.json`
-    layersUrl = await uploadDataToS3(data, s3filename)
-  }
-
   console.log(
     `  Saving upload to DB (will be assigned to region(s) ${metaData.regions.join(', ')})...`,
   )
   const response = await createUpload({
     uploadSlug,
     pmtilesUrl,
-    layersUrl,
     regionSlugs,
     isPublic: metaData.public,
   })

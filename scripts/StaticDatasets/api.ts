@@ -23,13 +23,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   }))
 }
 
-export const createUpload = async ({
-  uploadSlug,
-  pmtilesUrl,
-  layersUrl,
-  regionSlugs,
-  isPublic,
-}) => {
+export const createUpload = async ({ uploadSlug, pmtilesUrl, regionSlugs, isPublic }) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
@@ -38,7 +32,6 @@ export const createUpload = async ({
         apiKey: process.env.ATLAS_API_KEY!,
         uploadSlug,
         pmtilesUrl,
-        layersUrl,
         regionSlugs,
         isPublic,
       }),
