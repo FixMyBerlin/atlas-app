@@ -1,4 +1,3 @@
-import { translationsBiBi } from './translationsBibi.const'
 import { translationsParking } from './translationsParking.const'
 
 /* prettier-ignore */
@@ -8,7 +7,6 @@ import { translationsParking } from './translationsParking.const'
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 export const translations: { [key: string]: string } = {
   ...translationsParking,
-  ...translationsBiBi,
   'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
   'ALL--category--key': 'Führungsform',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
