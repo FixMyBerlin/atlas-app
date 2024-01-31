@@ -65,6 +65,7 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 export type RegionSlug =
   | 'bb' // Land Brandenburg
   | 'bb-kampagne' // Kampagne mit Land Brandenburg
+  | 'bb-ramboll' // Version nur für Ramboll
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -524,6 +525,28 @@ export const staticRegion: StaticRegion[] = [
     name: 'Brandenburg Kampagne',
     fullName: 'Kampagne Radinfrastruktur Brandenburg',
     slug: 'bb-kampagne',
+    osmRelationIds: [62504],
+    map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
+    bbox: {
+      min: [11.2662278, 51.359064],
+      max: [14.7658159, 53.5590907],
+    },
+    externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      'roads',
+      'surface',
+      'boundaries',
+      'mapillary',
+    ],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+  },
+  {
+    name: 'Brandenburg Ramboll',
+    fullName: 'Radnetzplanung Brandenburg – Version für Ramboll',
+    slug: 'bb-ramboll',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {

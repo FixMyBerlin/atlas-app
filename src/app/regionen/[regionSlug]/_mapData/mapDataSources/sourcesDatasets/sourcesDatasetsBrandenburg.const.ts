@@ -3,7 +3,7 @@ import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsBrandenburg: SourceDatasets = [
   {
-    regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-radnetz-barnim'),
     name: 'Radnetz Landkreis Barnim',
     type: 'vector',
@@ -27,7 +27,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-gemeinden'),
     name: '(Ramboll) Gemeinden',
     type: 'vector',
@@ -62,7 +62,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-spnv-3000'),
     name: '(Ramboll) SPNV 3000',
     type: 'vector',
@@ -85,7 +85,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-zentrale-orte'),
     name: '(Ramboll) Zentrale Orte',
     type: 'vector',
@@ -122,7 +122,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-nachbarn'),
     name: '(Ramboll) Zentrale Orte: Nachbarn',
     type: 'vector',
@@ -145,7 +145,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-minimal-spanning-tree'),
     name: '(Ramboll) minimal spanning tree',
     type: 'vector',
@@ -169,7 +169,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb'],
+    regionKey: ['bb-ramboll'],
     ...sourceLegacyDatasetIdUrl('bb-ramboll-delauney-triangulation'),
     name: '(Ramboll) delauny triangulation',
     type: 'vector',
@@ -193,8 +193,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    // regionKey: ['bb', 'bb-kampagne'],
-    regionKey: ['bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC',
     subId: 'd', // d for 'default'
@@ -453,8 +452,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    // regionKey: ['bb', 'bb-kampagne'],
-    regionKey: ['bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-radnetz-adfc'),
     name: 'Radnetz ADFC (Datenabgleich)',
     subId: 'complete',
@@ -690,7 +688,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-uckermark-radwege-translated'),
     name: '(Uckermark) Radrouten',
     type: 'vector',
@@ -742,7 +740,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-uckermark-schilder'),
     name: '(Uckermark) Radrouten-Schilder',
     type: 'vector',
@@ -766,7 +764,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-land-radverkehrsanlagen'),
     name: '(Land Brandenburg) Radverkehrsanlagen',
     type: 'vector',
@@ -790,7 +788,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-land-radverkehrsanlagen-missing-in-osm'),
     name: '(Land Brandenburg) Radverkehrsanlagen die in OSM fehlen',
     type: 'vector',
@@ -848,7 +846,7 @@ export const sourcesDatasetsBrandenburg: SourceDatasets = [
     ],
   },
   {
-    regionKey: ['bb', 'bb-kampagne'],
+    regionKey: ['bb-ramboll', 'bb-kampagne'],
     ...sourceLegacyDatasetIdUrl('bb-land-querungen'),
     name: '(Land Brandenburg) Querungen',
     type: 'vector',
