@@ -1,0 +1,3 @@
+TRUNCATE "Upload" CASCADE;
+ALTER TABLE "Upload" DROP COLUMN "layersUrl",
+ADD COLUMN     "config" JSONB NOT NULL;
