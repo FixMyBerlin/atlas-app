@@ -111,6 +111,9 @@ for (const i in folderNames) {
   }
 
   const metaData = loadMetaData(folderName)
+  if (metaData === null) {
+    continue
+  }
 
   const geojsonFilename = findGeojson(folderName)
   if (!geojsonFilename) continue
