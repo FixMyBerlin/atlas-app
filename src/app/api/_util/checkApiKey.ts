@@ -1,4 +1,8 @@
 export const checkApiKey = (data: Request | Record<string, any>) => {
+  if (process.env.NODE_ENV === 'development') {
+    return { ok: true, errorResponse: null }
+  }
+
   let apiKey: string | null
   if (data instanceof Request) {
     apiKey = new URL(data.url).searchParams.get('apiKey')
