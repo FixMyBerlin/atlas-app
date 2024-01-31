@@ -161,6 +161,10 @@ for (const i in folderNames) {
     continue
   }
 
+  if (JSON.stringify(metaData.regions) !== JSON.stringify(metaData.config.regionKey)) {
+    yellow('  metaData.regions !== metaData.config.regionKey')
+  }
+
   const geojsonFilename = findGeojson(folderName)
   if (!geojsonFilename) continue
 
