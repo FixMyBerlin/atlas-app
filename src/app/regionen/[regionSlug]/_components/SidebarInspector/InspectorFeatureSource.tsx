@@ -1,7 +1,13 @@
+import { LineString } from '@turf/turf'
 import React from 'react'
 import { FormattedMessage, IntlProvider } from 'react-intl'
-import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
+import { Markdown } from 'src/app/_components/text/Markdown'
+import {
+  categoryToMaprouletteProjectKey,
+  taskDescriptionMarkdown,
+} from 'src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
 import { getSourceData } from '../../_mapData/utils/getMapDataUtils'
+import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
@@ -28,6 +34,8 @@ export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
   if (!sourceData.inspector.enabled) return null
   if (!sourceTranslationKey) return null
 
+  const maprouletteProjectKey = categoryToMaprouletteProjectKey(properties.category)
+
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
@@ -37,7 +45,9 @@ export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
         >
           {properties.prefix && (
             <details className="prose prose-sm bg-purple-100 p-1 px-4 py-1.5">
-              <summary>Hinweis: Transformierte Geometrie</summary>
+              <summary className="cursor-pointer hover:font-semibold">
+                Hinweis: Transformierte Geometrie
+              </summary>
               <p className="my-0 ml-3">
                 Diese Geometrie wurde im Rahmen der Datenaufbereitung künstlich erstellt. In
                 OpenStreetMap sind die Daten an der Straßen-Geometrie erfasst. Durch die
@@ -45,6 +55,25 @@ export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
                 Sie sorgt aber auch dafür, dass Verbindungspunkte kleine Kanten und Lücken aufweisen
                 können.
               </p>
+            </details>
+          )}
+          {maprouletteProjectKey && (
+            <details className="prose prose-sm border-t border-white bg-purple-100 p-1 px-4 py-1.5">
+              <summary className="cursor-pointer hover:font-semibold">
+                Kampagne zur Datenverbesserung
+              </summary>
+              <div className="my-0 ml-3 py-3">
+                <Markdown
+                  markdown={taskDescriptionMarkdown({
+                    projectKey: maprouletteProjectKey,
+                    id: properties.osm_id,
+                    type: properties.osm_type,
+                    category: properties.category,
+                    geometry: geometry as LineString,
+                  })}
+                  className="prose-sm marker:text-purple-700"
+                />
+              </div>
             </details>
           )}
 
