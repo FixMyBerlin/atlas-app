@@ -1,10 +1,8 @@
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { sourcesDatasets } from '../../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
   createDatasetKey,
@@ -12,16 +10,14 @@ import {
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
+import { useRegionDatasets } from '../../SelectDatasets/utils/useRegionDatasets'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
   const { pmTilesProtocolReady } = useMapStateInteraction()
   const { useDebugLayerStyles } = useMapDebugState()
-  const regionSlug = useRegionSlug()
 
-  const regionDatasets = sourcesDatasets.filter((data) =>
-    (data.regionKey as string[]).includes(regionSlug!),
-  )
+  const regionDatasets = useRegionDatasets()
 
   if (!regionDatasets || !selectedDatasetIds || !pmTilesProtocolReady) return null
 
