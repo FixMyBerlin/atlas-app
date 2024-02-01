@@ -16,7 +16,7 @@ const existingRegionSlugs = regions.map((region) => region.slug)
 const existingUploadSlugs = await getSlugs(getUploadsUrl)
 
 // script can be run with --dry-run to just run all checks
-// without processing geojsons, uploading pmtiles and saving to db
+// without transforming and processing geojsons, uploading pmtiles and saving to db
 const { values, positionals } = parseArgs({
   args: Bun.argv,
   options: { 'dry-run': { type: 'boolean' } },
@@ -109,19 +109,54 @@ const findGeojson = (folderName) => {
   return filename
 }
 
-const loadMetaData = (folderName) => {
-  const filePath = path.join(geoJsonFolder, folderName, 'meta.ts')
+const loadModule = (folderName, moduleName) => {
+  const filePath = path.join(geoJsonFolder, folderName, `${moduleName}.ts`)
   if (!fs.existsSync(filePath)) {
+    return null
+  } else {
+    return require(`./geojson/${folderName}/${moduleName}`)
+  }
+}
+
+const loadMetaData = (folderName) => {
+  const meta = loadModule(folderName, 'meta')
+  if (meta === null) {
     yellow(`  File meta.ts is missing in folder ${folderName}`)
     return null
   } else {
-    const meta = require(`./geojson/${folderName}/meta`)
     if (!('data' in meta)) {
       yellow(`  meta.ts does not export data.`)
       return null
     }
     return meta.data
   }
+}
+
+const transformFile = async (folderName, inputFile) => {
+  const transformModule = loadModule(folderName, 'transform')
+  if (transformModule === null) {
+    return inputFile
+  } else {
+    if (!('transform' in transformModule)) {
+      yellow(`  transform.ts does not export transform.`)
+      return inputFile
+    }
+    if (typeof transformModule.transform !== 'function') {
+      yellow(`  transform.transform is not a function.`)
+      return inputFile
+    }
+  }
+
+  console.log(`  Transforming file...`)
+  const outputFile = path.join(tmpDir, 'transformed.geojson')
+  if (dryRun) {
+    return outputFile
+  }
+  const data = await Bun.file(inputFile).json()
+  const transformedData = transformModule.transform(data)
+  Bun.write(outputFile, JSON.stringify(transformedData, null, 2))
+
+  return outputFile
 }
 
 // create tmp folder
@@ -168,7 +203,7 @@ for (const i in folderNames) {
   const geojsonFilename = findGeojson(folderName)
   if (!geojsonFilename) continue
 
-  const inputFile = path.join(folderPath, geojsonFilename)
+  const inputFile = await transformFile(folderName, path.join(folderPath, geojsonFilename))
   const outputFile = path.join(tmpDir, 'output.pmtiles')
 
   console.log(`  Generating pmtiles file...`)
