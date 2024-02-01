@@ -1,11 +1,11 @@
 import { SourceDatasets } from './sourcesDatasets.const'
 import { defaultLineLayerStyles, defaultPointLayerStyles } from './utils/defaultLayerStyles'
-import { sourceStaticDatasetIdUrl } from './utils/sourceDatasetIdUrl'
+import { sourceLegacyDatasetIdUrl } from './utils/sourceDatasetIdUrl'
 
 export const sourcesDatasetsNudafa: SourceDatasets = [
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Zielnetz Stand 22.11.2023',
     subId: 'zielnetz',
     type: 'vector',
@@ -22,7 +22,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   },
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Wichtige Ziele aus Beteiligung',
     subId: 'destination',
     type: 'vector',
@@ -39,7 +39,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   },
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Luftlinien',
     subId: 'wundschlinie',
     type: 'vector',
@@ -56,7 +56,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   },
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Maßnahmen',
     subId: 'project',
     type: 'vector',
@@ -78,7 +78,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   },
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Ergänzungsvorschlag Route',
     subId: 'addroutes',
     type: 'vector',
@@ -95,7 +95,7 @@ export const sourcesDatasetsNudafa: SourceDatasets = [
   },
   {
     regionKey: ['nudafa'],
-    ...sourceStaticDatasetIdUrl('nudafa-combined'),
+    ...sourceLegacyDatasetIdUrl('nudafa-combined'),
     name: 'Problem Strecke',
     subId: 'issues',
     type: 'vector',
