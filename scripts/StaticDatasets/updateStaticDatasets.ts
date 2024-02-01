@@ -109,42 +109,28 @@ const findGeojson = (folderName) => {
   return filename
 }
 
-const loadModule = (folderName, moduleName) => {
-  const filePath = path.join(geoJsonFolder, folderName, `${moduleName}.ts`)
-  if (!fs.existsSync(filePath)) {
+const import_ = async (folderName, moduleName, valueName, warnIfModuleDoesNotExist?) => {
+  const moduleFileName = `${moduleName}.ts`
+  const moduleFilePath = path.join(geoJsonFolder, folderName, moduleFileName)
+  if (!fs.existsSync(moduleFilePath)) {
+    if (warnIfModuleDoesNotExist) {
+      yellow(`  ${moduleFileName} is missing in folder ${folderName}`)
+    }
     return null
   } else {
-    return require(`./geojson/${folderName}/${moduleName}`)
-  }
-}
-
-const loadMetaData = (folderName) => {
-  const meta = loadModule(folderName, 'meta')
-  if (meta === null) {
-    yellow(`  File meta.ts is missing in folder ${folderName}`)
-    return null
-  } else {
-    if (!('data' in meta)) {
-      yellow(`  meta.ts does not export data.`)
+    const module_ = await import(`./geojson/${folderName}/${moduleName}`)
+    if (!(valueName in module_)) {
+      yellow(`  ${moduleFileName} does not export value "${valueName}".`)
       return null
     }
-    return meta.data
+    return module_[valueName]
   }
 }
 
 const transformFile = async (folderName, inputFile) => {
-  const transformModule = loadModule(folderName, 'transform')
-  if (transformModule === null) {
+  const transform = await import_(folderName, 'transform', 'transform')
+  if (transform === null) {
     return inputFile
-  } else {
-    if (!('transform' in transformModule)) {
-      yellow(`  transform.ts does not export transform.`)
-      return inputFile
-    }
-    if (typeof transformModule.transform !== 'function') {
-      yellow(`  transform.transform is not a function.`)
-      return inputFile
-    }
   }
 
   console.log(`  Transforming file...`)
@@ -153,7 +139,7 @@ const transformFile = async (folderName, inputFile) => {
     return outputFile
   }
   const data = await Bun.file(inputFile).json()
-  const transformedData = transformModule.transform(data)
+  const transformedData = transform(data)
   Bun.write(outputFile, JSON.stringify(transformedData, null, 2))
 
   return outputFile
@@ -191,7 +177,7 @@ for (const i in folderNames) {
     continue
   }
 
-  const metaData = loadMetaData(folderName)
+  const metaData = await import_(folderName, 'meta', 'data', true)
   if (metaData === null) {
     continue
   }
