@@ -1,4 +1,4 @@
-# this file sets `development` specific parameters. See: https://docs.docker.com/compose/compose-file/13-merge/
+# This file sets `development` specific parameters. See: https://docs.docker.com/compose/compose-file/13-merge/
 version: '3'
 services:
   app:

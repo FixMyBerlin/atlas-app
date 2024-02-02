@@ -1,3 +1,5 @@
+# This file defines the production parameters.
+# Development specific parameters are defined in `docker-compose.override.yml`, see: https://docs.docker.com/compose/compose-file/13-merge/
 version: '3'
 services:
   app:
