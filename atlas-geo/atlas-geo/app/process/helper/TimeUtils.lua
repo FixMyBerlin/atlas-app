@@ -12,16 +12,12 @@ end
 
 -- given a date in YYYY-MM-DD return the respective unix timestamp
 function ParseDate(date)
-  local format = "(%d+)-(%d+)-(%d+)"
+  local format = "(%d%d%d%d)-(%d%d)-(%d%d)"
   local year, month, day = date:match(format)
 
-  local success, result = pcall(function()
-    return os.time({ year = year, month = month, day = day })
-  end)
-
-  if success then
-    return result
-  else
+  if (year == nil or month == nil or day == nil) then
     return nil
   end
+
+  return os.time({ year = year, month = month, day = day })
 end
