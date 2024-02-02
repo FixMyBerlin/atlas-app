@@ -12,12 +12,12 @@ services:
     networks:
       - app_bridge
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.services.container.loadbalancer.server.port=3000'
-      - 'traefik.http.routers.container.rule=Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
-      - 'traefik.http.routers.container.entrypoints=websecure'
-      - 'traefik.http.routers.container.tls.certresolver=letsencrypt'
-      - 'traefik.http.routers.container.tls=true'
+      traefik.enable: 'true'
+      traefik.http.services.container.loadbalancer.server.port: '3000'
+      traefik.http.routers.container.rule: 'Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
+      traefik.http.routers.container.entrypoints: 'websecure'
+      traefik.http.routers.container.tls.certresolver: 'letsencrypt'
+      traefik.http.routers.container.tls: 'true'
     ports:
       - 3000:3000
     depends_on:
@@ -36,11 +36,11 @@ services:
     networks:
       - app_bridge
     labels:
-      - 'traefik.enable=true'
-      - 'traefik.http.routers.tiles.rule=Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
-      - 'traefik.http.routers.tiles.entrypoints=websecure'
-      - 'traefik.http.routers.tiles.tls.certresolver=letsencrypt'
-      - 'traefik.http.routers.tiles.tls=true'
+      traefik.enable: 'true'
+      traefik.http.routers.tiles.rule: 'Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
+      traefik.http.routers.tiles.entrypoints: 'websecure'
+      traefik.http.routers.tiles.tls.certresolver: 'letsencrypt'
+      traefik.http.routers.tiles.tls: 'true'
     depends_on:
       db:
         condition: service_healthy
