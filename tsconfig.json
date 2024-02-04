@@ -32,6 +32,6 @@
       }
     ]
   },
-  "exclude": ["node_modules", "**/*.e2e.ts", "cypress"],
+  "exclude": ["node_modules", "**/*.e2e.ts", "cypress", ".next"],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types", ".next/types/**/*.ts"]
 }
