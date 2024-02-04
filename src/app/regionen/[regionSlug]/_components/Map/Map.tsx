@@ -1,7 +1,7 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import * as pmtiles from 'pmtiles'
+import { Protocol } from 'pmtiles'
 import React, { useEffect, useState } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl'
 import {
@@ -48,7 +48,7 @@ export const Map: React.FC = () => {
 
     // Add PMTiles Protocol to be use by "Datasets"
     // Docs https://maplibre.org/maplibre-gl-js-docs/api/properties/#addprotocol
-    const protocol = new pmtiles.Protocol()
+    const protocol = new Protocol()
     maplibregl.addProtocol('pmtiles', protocol.tile)
     setPmTilesProtocolReady(true)
 
