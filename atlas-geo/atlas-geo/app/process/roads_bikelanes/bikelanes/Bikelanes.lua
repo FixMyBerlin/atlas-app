@@ -34,6 +34,10 @@ local tags_cc = {
   "description",
 }
 
+local onewayAssumedNo = Set({ 'bicycleRoad', 'pedestrianAreaBicycleYes' })
+local onewayImplicitYes = Set({ 'cyclewayOnHighway_exclusive', 'cyclewayOnHighway_advisory',
+  'cyclewayOnHighway_advisoryOrExclusive', 'sharedMotorVehicleLane' , 'cyclewayOnHighwayBetweenLanes', 'sharedBusLane'})
+
 function Bikelanes(object)
   local tags = object.tags
 
@@ -67,9 +71,10 @@ function Bikelanes(object)
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
-          if tags.bicycle_road == 'yes' then
-            results.oneway = 'implicit_no'
-          else
+          if onewayAssumedNo[category] then
+            results.oneway = 'assumed_no'
+          end
+          if onewayImplicitYes[category] then
             results.oneway = 'implicit_yes'
           end
         end
