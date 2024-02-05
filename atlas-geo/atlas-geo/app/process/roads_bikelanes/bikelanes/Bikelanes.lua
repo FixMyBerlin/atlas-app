@@ -77,6 +77,8 @@ function Bikelanes(object)
           if onewayImplicitYes[category] then
             results.oneway = 'implicit_yes'
           end
+        else
+          results.oneway = cycleway.oneway
         end
 
         -- === Processing on the transformed dataset ===
