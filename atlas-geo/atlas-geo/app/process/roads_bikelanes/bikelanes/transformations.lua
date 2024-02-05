@@ -41,9 +41,9 @@ local sideDirectionMap = {
 -- these tags get transformed from the forward backward schema
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 function GetTransformedObjects(tags, transformations)
-  local center = {}
-  for k, v in pairs(tags) do center[k] = v end
+  local center =  MergeTable({}, tags)
   center.sign = CENTER_SIGN -- Overwrite any OSM tag 'sign'
+  center.oneway = tags['oneway:bicycle'] or tags.oneway -- give `bicycle:oneway` precedence
 
   local results = { center }
   -- don't transform paths
