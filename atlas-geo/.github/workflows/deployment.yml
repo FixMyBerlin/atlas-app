@@ -114,6 +114,8 @@ jobs:
             echo OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}' >> .env
             echo URL='${{ inputs.URL }}' >> .env
             echo GITHUB_SHA='${{ github.sha }}' >> .env
+            echo "Pull new traefik"
+            docker compose -f docker-compose.traefik.yml pull
             echo "Reload containers"
             docker compose -f docker-compose.traefik.yml up -d
             docker compose up -d
