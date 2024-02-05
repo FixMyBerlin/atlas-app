@@ -13,13 +13,13 @@ services:
       - app_bridge
     labels:
       traefik.enable: 'true'
-      traefik.http.services.container.loadbalancer.server.port: '3000'
+      traefik.http.services.container.loadbalancer.server.port: '4000'
       traefik.http.routers.container.rule: 'Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
       traefik.http.routers.container.entrypoints: 'websecure'
       traefik.http.routers.container.tls.certresolver: 'letsencrypt'
       traefik.http.routers.container.tls: 'true'
     ports:
-      - 3000:3000
+      - 4000:4000
     depends_on:
       db:
         condition: service_healthy
@@ -32,7 +32,7 @@ services:
       RUST_LOG: RUST_LOG=actix_web=info,martin=info,tokio_postgres=info
     command: ['--auto-bounds=calc']
     ports:
-      - 3333:3000
+      - 3000:3000
     networks:
       - app_bridge
     labels:

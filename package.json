@@ -5,7 +5,7 @@
   "license": "AGPL-3.0",
   "private": true,
   "scripts": {
-    "start": "blitz start --hostname 127.0.0.1 --port 3000",
+    "start": "blitz start --hostname 127.0.0.1 --port 4000",
     "dev": "blitz dev --hostname 127.0.0.1 --port 5173",
     "predev": "node scripts/npm-run-predev/checkMigrations.js",
     "build": "blitz build",
