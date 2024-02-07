@@ -16,11 +16,25 @@ export const historyUrl = (type: OsmShortType, id: number | string) => {
   return `https://osmlab.github.io/osm-deep-history/#/${longOsmType[type]}/${id}`
 }
 
-export const mapillaryUrl = (geometry: maplibregl.GeoJSONFeature['geometry']) => {
+export const mapillaryUrl = (
+  geometry: maplibregl.GeoJSONFeature['geometry'],
+  yearsAgo?: number,
+) => {
   const [lng, lat] = pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 
-  return `https://www.mapillary.com/app/?lat=${lat}&lng=${lng}&z=15`
+  const url = new URL('https://www.mapillary.com/app/')
+  url.searchParams.set('lat', lat.toString())
+  url.searchParams.set('lng', lng.toString())
+  url.searchParams.set('z', '15')
+  if (yearsAgo) {
+    url.searchParams.set(
+      'dateFrom',
+      new Date(new Date().setFullYear(new Date().getFullYear() - 2)).toISOString().slice(0, 10),
+    )
+  }
+
+  return url.toString()
 }
 
 export const mapillaryKeyUrl = (key: number) => {

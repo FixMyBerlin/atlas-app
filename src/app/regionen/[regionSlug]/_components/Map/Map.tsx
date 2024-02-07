@@ -1,7 +1,7 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import * as pmtiles from 'pmtiles'
+import { Protocol } from 'pmtiles'
 import React, { useEffect, useState } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl'
 import {
@@ -11,7 +11,6 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
-import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Calculator } from './Calculator/Calculator'
@@ -48,19 +47,9 @@ export const Map: React.FC = () => {
 
     // Add PMTiles Protocol to be use by "Datasets"
     // Docs https://maplibre.org/maplibre-gl-js-docs/api/properties/#addprotocol
-    const protocol = new pmtiles.Protocol()
+    const protocol = new Protocol()
     maplibregl.addProtocol('pmtiles', protocol.tile)
     setPmTilesProtocolReady(true)
-
-    if (isDev) {
-      // About: Whenever we change the base style, the "beforeId" in 'Map/backgrounds/beforeId.const.ts'
-      //  needs to be updated. The following code shows a list of all "external" layers.
-      // const style = _event.target.getStyle()
-      // const allLayer = style.layers
-      // // @ts-ignore: 'AnyLayer' not relevant here
-      // const basemapLayer = allLayer.filter((l) => l.source === 'openmaptiles')
-      // console.log({ findBeforeIds: basemapLayer, allLayer })
-    }
   }
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
@@ -117,8 +106,6 @@ export const Map: React.FC = () => {
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
       mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
-      // mapStyle="mapbox://styles/hejco/cl706a84j003v14o23n2r81w7"
-      // mapboxAccessToken="pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q"
       interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}
@@ -126,7 +113,7 @@ export const Map: React.FC = () => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onMoveEnd={handleMoveEnd}
-      // onZoomEnd={handleZoomEnd} // zooming is always also moving
+      // onZoomEnd={} // zooming is always also moving
       onClick={handleClick}
       onLoad={handleLoad}
       doubleClickZoom={true}

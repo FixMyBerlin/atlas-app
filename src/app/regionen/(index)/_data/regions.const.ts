@@ -557,10 +557,11 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
+      'poi',
       'bikelanes',
       'roads',
       'surface',
-      'boundaries',
+      'bicycleParking',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
