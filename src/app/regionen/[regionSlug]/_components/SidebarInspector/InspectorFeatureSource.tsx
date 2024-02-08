@@ -34,7 +34,7 @@ export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
   if (!sourceData.inspector.enabled) return null
   if (!sourceTranslationKey) return null
 
-  const maprouletteProjectKey = categoryToMaprouletteProjectKey(properties.category)
+  const maprouletteProjectKey = categoryToMaprouletteProjectKey(properties.category || '')
 
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
