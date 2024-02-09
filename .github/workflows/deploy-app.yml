@@ -119,7 +119,6 @@ jobs:
             echo S3_PMTILES_KEY='${{ secrets.S3_PMTILES_KEY }}' >> .env
             echo S3_PMTILES_SECRET='${{ secrets.S3_PMTILES_SECRET }}' >> .env
             echo S3_PMTILES_REGION='${{ secrets.S3_PMTILES_REGION }}' >> .env
-            docker compose down
             docker compose up -d
             docker image prune -fa
             sleep 10
