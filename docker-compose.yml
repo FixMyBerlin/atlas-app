@@ -1,17 +1,80 @@
-version: "3"
+# This file defines the production parameters.
+# Development specific parameters are defined in `docker-compose.override.yml`, see: https://docs.docker.com/compose/compose-file/13-merge/
+version: '3'
 services:
-  db:
-    image: postgres
+  app:
+    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${GITHUB_SHA}
+    container_name: blitz
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: mysecretpassword
+      SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}:5432/${PGDATABASE}
+    networks:
+      - app_bridge
+    labels:
+      traefik.enable: 'true'
+      traefik.http.services.container.loadbalancer.server.port: '4000'
+      traefik.http.routers.container.rule: 'Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
+      traefik.http.routers.container.entrypoints: 'websecure'
+      traefik.http.routers.container.tls.certresolver: 'letsencrypt'
+      traefik.http.routers.container.tls: 'true'
+    ports:
+      - 4000:4000
+    depends_on:
+      db:
+        condition: service_healthy
+  tiles:
+    image: ghcr.io/maplibre/martin:v0.13.0
+    container_name: tiles
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      RUST_LOG: RUST_LOG=actix_web=info,martin=info,tokio_postgres=info
+    command: ['--auto-bounds=calc']
+    ports:
+      - 3000:3000
+    networks:
+      - app_bridge
+    labels:
+      traefik.enable: 'true'
+      traefik.http.routers.tiles.rule: 'Host(`${TRAEFIK_HOST}`, `www.${TRAEFIK_HOST}`)'
+      traefik.http.routers.tiles.entrypoints: 'websecure'
+      traefik.http.routers.tiles.tls.certresolver: 'letsencrypt'
+      traefik.http.routers.tiles.tls: 'true'
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: postgis/postgis:14-3.3-alpine
+    container_name: db
+    shm_size: 1gb
+    restart: unless-stopped
+    configs:
+      - source: postgres
+        target: /postgresql/postgresql.conf
+    command: ['-c', 'config_file=/postgresql/postgresql.conf']
+    environment:
+      PGUSER:
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
-      - atlas-data:/var/lib/postgresql/data
-    container_name: atlas-db
+      - geodata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -h ${PGHOST} -d ${PGDATABASE}']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_bridge
 volumes:
-  atlas-data:
+  geodata:
+networks:
+  app_bridge:
+    name: app_bridge
+configs:
+  postgres:
+    file: ./postgres.conf

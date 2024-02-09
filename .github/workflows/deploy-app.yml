@@ -71,7 +71,7 @@ jobs:
       - name: Build app image
         uses: docker/build-push-action@v3
         with:
-          file: ./docker/Dockerfile
+          file: ./Dockerfile
           push: false
           load: true
           cache-from: type=gha
@@ -93,7 +93,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: 'docker/docker-compose.yml'
+          source: 'docker-compose.yml, docker-compose.traefik.yml, postgres.conf'
           target: '/srv/blitz'
           strip_components: 1
           overwrite: true
@@ -119,6 +119,7 @@ jobs:
             echo S3_PMTILES_KEY='${{ secrets.S3_PMTILES_KEY }}' >> .env
             echo S3_PMTILES_SECRET='${{ secrets.S3_PMTILES_SECRET }}' >> .env
             echo S3_PMTILES_REGION='${{ secrets.S3_PMTILES_REGION }}' >> .env
+            docker compose -f docker-compose.traefik.yml up -d
             docker compose down
             docker compose up -d
             docker image prune -fa

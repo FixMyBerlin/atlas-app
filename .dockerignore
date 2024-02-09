@@ -10,3 +10,6 @@
 !next.config.js
 !tsconfig.json
 !types.ts
+!scripts
+!.prettierrc
+!.eslintrc.json
