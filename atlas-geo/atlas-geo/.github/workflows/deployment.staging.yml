@@ -10,7 +10,7 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     with:
       ENVIRONMENT: staging
-      URL: staging-tiles.radverkehrsatlas.de
+      TILES_URL: staging-tiles.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
