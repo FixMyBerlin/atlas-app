@@ -30,7 +30,7 @@ run_lua "barriers/barriers"
 
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date)\e[0m"
-echo "Completed."
+echo "Completed:"
 echo "Development http://localhost:3000/catalog"
 echo "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
 echo "Production https://tiles.radverkehrsatlas.de/catalog"
