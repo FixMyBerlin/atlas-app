@@ -46,18 +46,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 6
 
-      - name: Check for changes
-        id: git_changes
+      - name: Get last run commit SHA
+        id: last_run
         run: |
-          if git diff --quiet HEAD^ HEAD -- app/ configs/ helpers/ app.Dockerfile docker-compose.yml; then
-            echo "No changes detected."
-            echo "changes=false" >> $GITHUB_OUTPUT
+          LAST_RUN_SHA=$(curl --request GET \
+          --url https://api.github.com/repos/${{ github.repository }}/actions/runs \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          | jq -r '.workflow_runs[0].head_sha')
+          echo "::set-output name=sha::$LAST_RUN_SHA"
+        shell: bash
+
+      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
+        id: check_commits
+        run: |
+          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
+          if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
+            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- app/ configs/ helpers/ app.Dockerfile docker-compose.yml; then
+              echo "::set-output name=changes::false"
+            else
+              echo "::set-output name=changes::true"
+            fi
           else
-            echo "Changes detected."
-            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=changes::true"
           fi
+        shell: bash
+
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
