@@ -45,6 +45,8 @@ jobs:
       url: https://${{ inputs.TILES_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Check for changes
         id: git_changes
