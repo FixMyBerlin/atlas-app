@@ -53,10 +53,10 @@ jobs:
         run: |
           if git diff --quiet HEAD^ HEAD -- app/ configs/ helpers/ app.Dockerfile docker-compose.yml; then
             echo "No changes detected."
-            echo "::set-output name=changes::false"
+            echo "name=changes::false" >> $GITHUB_OUTPUT
           else
             echo "Changes detected."
-            echo "::set-output name=changes::true"
+            echo "name=changes::true" >> $GITHUB_OUTPUT
           fi
 
       - name: Upgrade AWS CLI version and setup lightsailctl
