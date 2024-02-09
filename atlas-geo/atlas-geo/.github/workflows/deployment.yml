@@ -59,7 +59,7 @@ jobs:
         shell: bash
 
       - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
-        id: check_commits
+        id: git_changes
         run: |
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
           if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
