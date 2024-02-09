@@ -53,10 +53,10 @@ jobs:
         run: |
           if git diff --quiet HEAD^ HEAD -- app/ configs/ helpers/ app.Dockerfile docker-compose.yml; then
             echo "No changes detected."
-            echo "name=changes::false" >> $GITHUB_OUTPUT
+            echo "changes=false" >> $GITHUB_OUTPUT
           else
             echo "Changes detected."
-            echo "name=changes::true" >> $GITHUB_OUTPUT
+            echo "changes=true" >> $GITHUB_OUTPUT
           fi
 
       - name: Upgrade AWS CLI version and setup lightsailctl
@@ -111,6 +111,17 @@ jobs:
           target: "/srv/processing/"
           overwrite: true
 
+      - name: Update GITHUB_SHA
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/processing/
+            sed -i "s|^GITHUB_SHA=.*$|GITHUB_SHA='${{ github.sha }}'|" .env
+
       - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
@@ -119,19 +130,17 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv/processing/
-            echo "Updating '.env'"
-            rm .env
-            touch .env
-            echo PGHOST='${{ vars.DATABASE_HOST }}' >> .env
-            echo ENVIRONMENT='${{ inputs.ENVIRONMENT }}' >> .env
-            echo SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}' >> .env
-            echo SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}' >> .env
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
-            echo OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}' >> .env
-            echo TILES_URL='${{ inputs.TILES_URL }}' >> .env
-            echo GITHUB_SHA='${{ github.sha }}' >> .env
+            sed -i \
+              -e "s|^PGHOST=.*$|PGHOST='${{ vars.DATABASE_HOST }}'|" \
+              -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
+              -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
+              -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
+              -e "s|^PGUSER=.*$|PGUSER='${{ secrets.DATABASE_USER }}'|" \
+              -e "s|^PGPASSWORD=.*$|PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
+              -e "s|^PGDATABASE=.*$|PGDATABASE='${{ secrets.DATABASE_NAME }}'|" \
+              -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
+              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \
+              .env
             echo "Reload containers"
             docker compose pull
             docker compose up -d
