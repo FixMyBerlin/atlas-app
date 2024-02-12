@@ -40,30 +40,30 @@ function osm2pgsql.process_relation(object)
     return
   end
 
-  local results_tags = {}
-  results_tags.admin_level = tonumber(tags.admin_level)
-  results_tags.population = tonumber(tags.population)
+  local results = {}
+  results.admin_level = tonumber(tags.admin_level)
+  results.population = tonumber(tags.population)
   -- Categories:
-  if (results_tags.admin_level == 8) then
-    results_tags.category_municipality = "Gemeinde"
+  if (results.admin_level == 8) then
+    results.category_municipality = "Gemeinde"
   end
-  if (results_tags.admin_level == 6) then
-    results_tags.category_district = "Landkreis"
+  if (results.admin_level == 6) then
+    results.category_district = "Landkreis"
     if (tags.place == "city" or tags["name:prefix"] == "Kreisfreie Stadt") then
-      results_tags.category_municipality = "Kreisfreie Stadt"
-      results_tags.category_district = "Kreisfreie Stadt"
+      results.category_municipality = "Kreisfreie Stadt"
+      results.category_district = "Kreisfreie Stadt"
     end
   end
-  if (results_tags.admin_level == 4 and tags.place == "city") then
-    results_tags.category_municipality = "Stadtstaat"
-    results_tags.category_district = "Stadtstaat"
+  if (results.admin_level == 4 and tags.place == "city") then
+    results.category_municipality = "Stadtstaat"
+    results.category_district = "Stadtstaat"
   end
   -- these tags are copied (Eigennamen)
   local allowed_tags = { "name", "name:prefix" }
-  CopyTags(results_tags, tags, allowed_tags)
+  CopyTags(results, tags, allowed_tags)
   -- these tags are copied and prefixed with `osm_`
   local tags_cc = { "de:regionalschluessel", "population:date", "wikidata", "wikipedia" }
-  CopyTags(results_tags, tags, tags_cc, "osm_")
+  CopyTags(results, tags, tags_cc, "osm_")
 
   -- Make sure we only include boundaries with a geometry
   -- https://osm2pgsql.org/doc/manual.html#processing-callbacks
@@ -71,12 +71,12 @@ function osm2pgsql.process_relation(object)
   if object:as_multipolygon():is_null() then return end
 
   table:insert({
-    tags = results_tags,
+    tags = results,
     meta = Metadata(object),
     geom = object:as_multipolygon()
   })
   labelTable:insert({
-    tags = results_tags,
+    tags = results,
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })
@@ -84,7 +84,7 @@ function osm2pgsql.process_relation(object)
   local admin_levels = Set({ "4", "6", "7", "8" })
   if admin_levels[tags.admin_level] then
     statsTable:insert({
-      tags = results_tags,
+      tags = results,
       meta = Metadata(object),
       geom = object:as_multipolygon()
     })

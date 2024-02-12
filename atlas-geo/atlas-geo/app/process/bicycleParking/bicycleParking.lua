@@ -53,13 +53,13 @@ end
 local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
-  local processedTags = capacityNormalization(tags)
+  local results = capacityNormalization(tags)
   local binary = Set({ "yes", "no" })
-  processedTags.access = Sanitize(tags.access, Set({ "yes", "private", "permissive", "customers" }))
-  processedTags.covered = Sanitize(tags.covered, binary, "implicit_no")
-  processedTags.fee = Sanitize(tags.fee, binary, "implicit_no")
-  processedTags.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
-  processedTags.bicycle_parking = Sanitize(
+  results.access = Sanitize(tags.access, Set({ "yes", "private", "permissive", "customers" }))
+  results.covered = Sanitize(tags.covered, binary, "implicit_no")
+  results.fee = Sanitize(tags.fee, binary, "implicit_no")
+  results.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
+  results.bicycle_parking = Sanitize(
     tags.bicycle_parking,
     Set({ "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" })
   )
@@ -78,14 +78,14 @@ local function processTags(tags)
     "mapillary",
     "description",
   }
-  CopyTags(processedTags, tags, allowed_tags)
-  CopyTags(processedTags, tags, tags_cc, "osm_")
+  CopyTags(results, tags, allowed_tags)
+  CopyTags(results, tags, tags_cc, "osm_")
 
   local checkDateTag = "check_date"
   if tags[checkDateTag] then
-    processedTags.age = AgeInDays(ParseDate(tags[checkDateTag]))
+    results.age = AgeInDays(ParseDate(tags[checkDateTag]))
   end
-  return processedTags
+  return results
 end
 
 function osm2pgsql.process_node(object)
