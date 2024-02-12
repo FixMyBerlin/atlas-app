@@ -2,7 +2,6 @@ package.path = package.path .. ";./app/process/helper/?.lua;./app/process/shared
 require("CompareTables")
 require("ConvertCyclewayOppositeSchema")
 require("osm2pgsql")
-require("PrintTable")
 require("DeepCopy")
 
 print('=== Test ConvertCyclewayOppositeSchema: do nothing ===')
@@ -15,9 +14,7 @@ print('=== Test ConvertCyclewayOppositeSchema: handle opposite ===')
 local originalTags = { ["cycleway"] = "opposite",["oneway"] = "yes" }
 local tags = DeepCopy(originalTags)
 local expectedResult = { ["cycleway"] = "no",["oneway:bicycle"] = "no",["oneway"] = "yes" }
--- PrintTableWithHeadline(tags, 'original tags')
 ConvertCyclewayOppositeSchema(tags)
--- PrintTableWithHeadline(tags, 'modified tags')
 assert(CompareTables(tags, expectedResult))
 
 print('=== Test ConvertCyclewayOppositeSchema: handle opposite_lane ===')
@@ -29,9 +26,7 @@ local expectedResult = {
   ["oneway:bicycle"] = "no",
   ["oneway"] = "yes",
 }
--- PrintTableWithHeadline(tags, 'original tags')
 ConvertCyclewayOppositeSchema(tags)
--- PrintTableWithHeadline(tags, 'modified tags')
 assert(CompareTables(tags, expectedResult))
 
 print('=== Test ConvertCyclewayOppositeSchema: handle opposite_track ===')
@@ -43,7 +38,5 @@ local expectedResult = {
   ["oneway:bicycle"] = "no",
   ["oneway"] = "yes",
 }
--- PrintTableWithHeadline(tags, 'original tags')
 ConvertCyclewayOppositeSchema(tags)
--- PrintTableWithHeadline(tags, 'modified tags')
 assert(CompareTables(tags, expectedResult))
