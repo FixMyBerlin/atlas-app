@@ -43,7 +43,6 @@ function Maxspeed(object)
 
   CopyTags(maxspeed_data, tags, tags_cc, "osm_")
 
-  -- Freshness of data (AFTER `FilterTags`!)
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
   if tags["check_date:maxspeed"] then
     maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
