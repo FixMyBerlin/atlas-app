@@ -3,7 +3,6 @@ package.path = package.path ..
 require("Set")
 require("ExtractKeys")
 require("InferAddress")
-require("MergeArray")
 require("Metadata")
 require("ShoppingAllowedListWithCategories")
 
