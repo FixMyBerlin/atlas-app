@@ -35,7 +35,7 @@ local tags_cc = {
   "description",
 }
 
-function Bikelanes(object)
+function Bikelanes(object, routes)
   local tags = object.tags
 
   -- transformations
@@ -89,15 +89,12 @@ function Bikelanes(object)
           results.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
+        results.routes = routes
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
         CopyTags(results, tags, allowed_tags)
         CopyTags(results, tags, tags_cc, 'osm_')
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
-
-        if osm2pgsql.stage == 2 then
-          MergeTable(results, RelationInformation[object.id])
-        end
 
         bikelanes[i] = results
       end
@@ -105,39 +102,4 @@ function Bikelanes(object)
   end
 
   return bikelanes
-end
-
-
-local function networkInformation(tags)
-  local networkTypes =  Set({'lcn', 'rcn', 'ncn', 'icn'})
-  local network_tags_cc = {'name', 'ref', 'operator', 'cycle_network'}
-  local results = {}
-  results.network = Sanitize(tags.network, networkTypes)
-  CopyTags(results, tags, network_tags_cc, 'network_')
-  return results
-end
-
-local function isBikeNetwok(tags)
-  return tags.type == 'route' and tags.route == 'bicycle'
-end
-
-RelationInformation = {}
-
-function osm2pgsql.process_relation(object)
-  if isBikeNetwok(object.tags) then
-    local networkInf = networkInformation(object.tags)
-
-    for _, id in pairs(osm2pgsql.way_member_ids(object)) do
-      if RelationInformation[id] then
-        -- TODO: aggregate information smh.
-      end
-      RelationInformation[id] = networkInf
-    end
-  end
-end
-
-function osm2pgsql.select_relation_members(object)
-  if isBikeNetwok(object.tags) then
-      return { ways = osm2pgsql.way_member_ids(object) }
-  end
 end
