@@ -2,10 +2,10 @@ package.path = package.path ..
     ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/poiClassification/?.lua"
 require("Set")
 require("ExtractKeys")
-require("FilterTags")
 require("InferAddress")
 require("MergeArray")
 require("Metadata")
+require("Sanitize")
 
 -- Shared:
 require("ShoppingAllowedListWithCategories")
@@ -59,21 +59,22 @@ end
 local function processTags(tags)
   -- Set our custom `category` value with one of our 4 values.
   -- We also introduce `type` as a unified way to speicify the shop-or-amenity type.
+  local results = InferAddress(tags)
   if tags.shop then
-    tags.category = 'Einkauf'
-    tags.type = "shop-" .. tags.shop
+    results.category = 'Einkauf'
+    results.type = "shop-" .. tags.shop
   end
   if tags.amenity then
-    tags.category = ShoppingAllowedListWithCategories[tags.amenity]
-    tags.type = "amenity-" .. tags.amenity
+    results.category = ShoppingAllowedListWithCategories[tags.amenity]
+    results.type = "amenity-" .. tags.amenity
   end
   if tags.tourism then
-    tags.category = ShoppingAllowedListWithCategories[tags.tourism]
-    tags.type = "tourism-" .. tags.tourism
+    results.category = ShoppingAllowedListWithCategories[tags.tourism]
+    results.type = "tourism-" .. tags.tourism
   end
   if tags.leisure then
-    tags.category = ShoppingAllowedListWithCategories[tags.leisure]
-    tags.type = "leisure-" .. tags.leisure
+    results.category = ShoppingAllowedListWithCategories[tags.leisure]
+    results.type = "leisure-" .. tags.leisure
   end
 
   -- This part was previously a separate dataset "education"
@@ -85,22 +86,18 @@ local function processTags(tags)
     "school",
     "university"
   })
-  if formalEducation[tags.amenity] then
-    tags.formalEducation = tags.amenity
-  end
+  results.formalEducation = Sanitize(tags.amenity, formalEducation)
 
-  InferAddress(tags, tags)
-  local allowed_tags = MergeArray({ "name", "category", "type", "formalEducation" }, AddressKeys)
-  FilterTags(tags, Set(allowed_tags))
+  local tags_cc = { "name" }
+  CopyTags(results, tags, tags_cc)
+  return results
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_point()
   })
@@ -110,10 +107,8 @@ function osm2pgsql.process_way(object)
   if ExitProcessing(object) then return end
   if not object.is_closed then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
@@ -123,10 +118,8 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })

@@ -1,6 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
-require("FilterTags")
 require("MergeArray")
 require("Metadata")
 
@@ -49,19 +48,17 @@ local function ContinueProcess(object)
 end
 
 local function processTags(tags)
-  local allowed_tags = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
+  local tags_cc = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
-  FilterTags(tags, allowed_tags)
+    return CopyTags({}, tags, tags_cc)
   -- tags.population = tonumber(tags.population)
 end
 
 function osm2pgsql.process_node(object)
   if not ContinueProcess(object) then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_point()
   })
@@ -71,10 +68,8 @@ function osm2pgsql.process_way(object)
   if not ContinueProcess(object) then return end
   if not object.is_closed then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
@@ -84,10 +79,8 @@ function osm2pgsql.process_relation(object)
   if not ContinueProcess(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })

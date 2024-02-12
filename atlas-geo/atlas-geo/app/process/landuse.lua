@@ -1,6 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
-require("FilterTags")
 require("MergeArray")
 require("Metadata")
 
@@ -48,8 +47,8 @@ end
 local function processTags(tags)
   -- For simplicy, we move the amenity values to the landuse key
   tags.landuse = tags.landuse or tags.amenity
-  local allowed_tags = Set({ "name", "landuse", "access", "operator" })
-  FilterTags(tags, allowed_tags)
+  local tags_cc = { "name", "landuse", "access", "operator" }
+  return CopyTags({}, tags, tags_cc)
 end
 
 function osm2pgsql.process_way(object)
@@ -57,10 +56,8 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  processTags(object.tags)
-
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon()
   })
@@ -71,10 +68,10 @@ function osm2pgsql.process_relation(object)
     return
   end
 
-  processTags(object.tags)
+
 
   table:insert({
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon()
   })
