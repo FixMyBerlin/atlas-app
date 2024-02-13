@@ -3,7 +3,7 @@ local onewayImplicitYes = Set({ 'cyclewayOnHighway_exclusive', 'cyclewayOnHighwa
   'cyclewayOnHighway_advisoryOrExclusive', 'sharedMotorVehicleLane' , 'cyclewayOnHighwayBetweenLanes', 'sharedBusLane'})
 
 function InferOneway(category)
-  if onewayAssumedNo[cycleway.category] then
+  if onewayAssumedNo[category] then
     return 'assumed_no'
   end
   if onewayImplicitYes[category] then
