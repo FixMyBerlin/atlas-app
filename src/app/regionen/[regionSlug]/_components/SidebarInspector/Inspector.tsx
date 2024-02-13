@@ -1,5 +1,5 @@
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { sourcesDatasets } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { useRegionDatasets } from '../SelectDatasets/utils/useRegionDatasets'
 import { StoreFeaturesInspector } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
@@ -17,6 +17,8 @@ export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 type Props = { features: StoreFeaturesInspector['unfilteredInspectorFeatures'] }
 
 export const Inspector = ({ features }: Props) => {
+  const regionDatasets = useRegionDatasets()
+
   return (
     <>
       {features.map((inspectObject) => {
@@ -34,9 +36,7 @@ export const Inspector = ({ features }: Props) => {
         }
 
         // Inspector-Block for Datasets
-        const isDataset = sourcesDatasets.some(
-          (d) => d.id === extractDataIdIdFromDataKey(sourceKey),
-        )
+        const isDataset = regionDatasets.some((d) => d.id === extractDataIdIdFromDataKey(sourceKey))
         if (isDataset) {
           return (
             <InspectorFeatureDataset
