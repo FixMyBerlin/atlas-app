@@ -7,6 +7,10 @@ print('=== Test TimeUtils ParseDate ===')
 local result = ParseDate("2023-12-01")
 assert(result == os.time({year = "2023", month = "12", day = "01"}))
 
+-- Call with `nil`
+local result = ParseDate(nil)
+assert(result == nil)
+
 -- Invalid format
 local result = ParseDate("23-12-01")
 assert(result == nil)
