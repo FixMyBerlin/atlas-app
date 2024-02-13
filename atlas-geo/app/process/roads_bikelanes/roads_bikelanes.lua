@@ -65,7 +65,7 @@ local excludedRoadsTable = osm2pgsql.define_table({
   }
 })
 
-local wayRouteMapping = {}
+-- local wayRouteMapping = {}
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
@@ -110,9 +110,9 @@ function osm2pgsql.process_way(object)
     if cycleway._infrastructureExists then
       cycleway.road = results.road
 
-      if osm2pgsql.stage == 2 then
-        cycleway.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
-      end
+      -- if osm2pgsql.stage == 2 then
+      --   cycleway.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      -- end
 
       bikelanesTable:insert({
         tags = cycleway,
@@ -140,7 +140,7 @@ end
 
 function osm2pgsql.process_relation(object)
   if IsBicycleRoute(object.tags) then
-    UpdateWayRouteMapping(wayRouteMapping, object.id, osm2pgsql.way_member_ids(object))
+    -- UpdateWayRouteMapping(wayRouteMapping, object.id, osm2pgsql.way_member_ids(object))
 
     bikeroutesTable:insert({
       tags = Bikeroutes(object.tags),
@@ -150,8 +150,8 @@ function osm2pgsql.process_relation(object)
   end
 end
 
-function osm2pgsql.select_relation_members(object)
-  if IsBicycleRoute(object.tags) then
-    return { ways = osm2pgsql.way_member_ids(object) }
-  end
-end
+-- function osm2pgsql.select_relation_members(object)
+--   if IsBicycleRoute(object.tags) then
+--     return { ways = osm2pgsql.way_member_ids(object) }
+--   end
+-- end
