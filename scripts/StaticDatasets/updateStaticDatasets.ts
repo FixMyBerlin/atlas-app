@@ -157,7 +157,7 @@ if (!fs.existsSync(geoJsonFolder)) {
   process.exit(1)
 }
 
-const folderNames = fs.readdirSync(geoJsonFolder)
+const folderNames = fs.readdirSync(geoJsonFolder).sort()
 for (const i in folderNames) {
   const folderName = folderNames[i]!
   const folderPath = path.join(geoJsonFolder, folderName)
