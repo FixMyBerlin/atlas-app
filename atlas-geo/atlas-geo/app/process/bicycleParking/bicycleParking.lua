@@ -81,7 +81,7 @@ local function processTags(tags)
   CopyTags(processedTags, tags, allowed_tags)
   CopyTags(processedTags, tags, tags_cc, "osm_")
 
-  processedTags.age = AgeInDays(ParseDate(tags["check_date"]))
+  processedTags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
 
   return processedTags
 end
