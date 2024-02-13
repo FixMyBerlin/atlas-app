@@ -22,16 +22,16 @@ namespace NodeJS {
     readonly OSM_CLIENT_ID: string
     readonly OSM_CLIENT_SECRET: string
     // API
-    readonly EXPORT_ACCESS_TOKEN: string
+    readonly ATLAS_API_KEY: string
     // StaticDatasets
-    readonly S3_PMTILES_KEY: string
-    readonly S3_PMTILES_SECRET: string
-    readonly S3_PMTILES_REGION: 'eu-central-1'
+    readonly S3_KEY: string
+    readonly S3_SECRET: string
+    readonly S3_REGION: 'eu-central-1'
     readonly API_ROOT_URL:
       | 'http://127.0.0.1:5173/api'
       | 'https://staging.radverkehrsatlas.de/api'
       | 'https://radverkehrsatlas.de/api'
-    readonly S3_PMTILES_BUCKET: string
-    readonly S3_PMTILES_FOLDER: production | staging | localdev
+    readonly S3_BUCKET: string
+    readonly S3_UPLOAD_FOLDER: production | staging | localdev
   }
 }

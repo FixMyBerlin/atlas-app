@@ -8,7 +8,7 @@
 
 ## Update and add data
 
-1. `S3_PMTILES_FOLDER` and `API_ROOT_URL`
+1. `S3_UPLOAD_FOLDER` and `API_ROOT_URL`
    in [`.env.development.local`](/.env.development.local)
    to be set to the right environment
 2. Add file to `./geojson`

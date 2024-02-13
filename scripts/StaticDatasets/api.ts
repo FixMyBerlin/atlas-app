@@ -6,9 +6,10 @@ invariant(apiRootUrl?.startsWith('http'), 'API_ROOT_URL missing.')
 export const getRegionsUrl = `${apiRootUrl}/regions`
 export const getUploadsUrl = `${apiRootUrl}/uploads`
 export const createUploadUrl = `${apiRootUrl}/uploads/create`
+export const deleteAllUploadsUrl = `${apiRootUrl}/uploads/delete-all`
 
 const addApiKey = (url) =>
-  url + '?' + new URLSearchParams({ apiKey: process.env.EXPORT_ACCESS_TOKEN! }).toString()
+  url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
 
 export const getSlugs = async (url: string): Promise<string[]> => {
   url = addApiKey(url)
@@ -23,24 +24,33 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   }))
 }
 
-export const createUpload = async ({
-  uploadSlug,
-  pmtilesUrl,
-  layersUrl,
-  regionSlugs,
-  isPublic,
-}) => {
+type UploadData = {
+  uploadSlug: string
+  pmtilesUrl: string
+  regionSlugs: string[]
+  isPublic: boolean
+  config: Record<string, any>
+}
+export const createUpload = async (data: UploadData) => {
   return await fetch(
     new Request(createUploadUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        apiKey: process.env.EXPORT_ACCESS_TOKEN!,
-        uploadSlug,
-        pmtilesUrl,
-        layersUrl,
-        regionSlugs,
-        isPublic,
+        apiKey: process.env.ATLAS_API_KEY!,
+        ...data,
+      }),
+    }),
+  )
+}
+
+export const deleteAllUploads = async () => {
+  return await fetch(
+    new Request(deleteAllUploadsUrl, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        apiKey: process.env.ATLAS_API_KEY!,
       }),
     }),
   )

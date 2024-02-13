@@ -1,5 +1,6 @@
 import db from '../index'
 import { Prisma } from '@prisma/client'
+import { defaultLineLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesDatasets/utils/defaultLayerStyles'
 
 const seedUploads = async () => {
   const seedUploads: Prisma.UploadUncheckedCreateInput[] = [
@@ -7,6 +8,22 @@ const seedUploads = async () => {
       slug: 'nudafa-combined',
       pmtilesUrl:
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
+      config: {
+        regionKey: ['nudafa'],
+        name: 'Zielnetz Stand 22.11.2023',
+        subId: 'zielnetz',
+        type: 'vector',
+        attributionHtml: '',
+        inspector: {
+          enabled: true,
+          highlightingKey: 'TODO',
+          documentedKeys: false,
+          disableTranslations: true,
+        },
+        layers: defaultLineLayerStyles({
+          filter: ['match', ['get', 'Typ'], ['Zielnetz'], true, false],
+        }),
+      },
     },
   ]
 

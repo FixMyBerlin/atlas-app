@@ -5,6 +5,7 @@ import { DatasetIds } from '../../../../_mapData/mapDataSources/datasets/types'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
 import { translations } from './translations.const'
+import { useRegionDatasets } from '../../../SelectDatasets/utils/useRegionDatasets'
 
 type Props = {
   sourceId: SourcesId | DatasetIds
@@ -15,7 +16,8 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   let key = `${sourceId}--${tagKey}--key`
 
   // Some data should not be "translated"; we want to show the raw string.
-  const sourceData = getDatasetOrSourceData(sourceId)
+  const regionDatasets = useRegionDatasets()
+  const sourceData = getDatasetOrSourceData(sourceId, regionDatasets)
   const showRawValues =
     sourceData &&
     'disableTranslations' in sourceData.inspector &&

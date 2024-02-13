@@ -1,10 +1,7 @@
 import invariant from 'tiny-invariant'
 import { MapDataCategoryId, categories } from '../mapDataCategories/categories.const'
 import { SourcesId, sources } from '../mapDataSources/sources.const'
-import {
-  SourcesDatasetsIds,
-  sourcesDatasets,
-} from '../mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { SourcesDatasetsIds } from '../mapDataSources/sourcesDatasets/sourcesDatasets.const'
 
 export const getCategoryData = (categoryId: MapDataCategoryId | undefined) => {
   const categoryData = categories.find((the) => the.id === categoryId)
@@ -18,8 +15,11 @@ export const getSourceData = (sourceId: SourcesId) => {
   return sourceData
 }
 
-export const getDatasetOrSourceData = (sourceId: SourcesDatasetsIds | SourcesId) => {
+export const getDatasetOrSourceData = (
+  sourceId: SourcesDatasetsIds | SourcesId,
+  sourcesDatasets: Record<string, any>[],
+) => {
   const sourceData = sources?.find((s) => s.id === sourceId)
-  const datasetData = sourcesDatasets?.find((s) => s.id === sourceId)
+  const datasetData = sourcesDatasets.find((s) => s.id === sourceId)
   return sourceData || datasetData
 }
