@@ -46,7 +46,7 @@ function Maxspeed(object)
   -- Freshness of data (AFTER `FilterTags`!)
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
 
-  maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
+  maxspeed_data.maxspeed_age = AgeInDays(ParseCheckDate(tags["check_date:maxspeed"]))
 
   maxspeed_data.maxspeed = maxspeed
   maxspeed_data.maxspeed_source = source

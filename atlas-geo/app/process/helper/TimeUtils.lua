@@ -11,10 +11,11 @@ function AgeInDays(timestamp)
   return math.floor(diff / (3600 * 24))
 end
 
+-- TODO: allow parsing of YYYY-MM => asume day=1
 ---@param date? string
 ---@return integer?
 -- given a date in YYYY-MM-DD return the respective unix timestamp
-function ParseDate(date)
+function ParseCheckDate(date)
   if date == nil then
     return nil
   end
