@@ -10,10 +10,14 @@ end
 -- given an osm relation
 function Bikeroutes(tags)
   local networkTypes = Set({ 'lcn', 'rcn', 'ncn', 'icn' })
-  local network_tags_cc = { 'name', 'ref', 'operator', 'cycle_network' }
+  local network_tags_cc = { 'name', 'ref', 'operator', 'cycle_network', 'colour', 'description', 'osmc:symbol',
+    'roundtrip', 'website', 'symbol', 'network:type' }
   local results = {}
   results.network = Sanitize(tags.network, networkTypes)
-  CopyTags(results, tags, network_tags_cc, 'network_')
+  results.distance = tonumber(tags.distance)
+  -- we only want cycle_highway = yes. `nil` means no
+  results.cycle_highway = Sanitize(tags.network, Set({ 'yes' }))
+  CopyTags(results, tags, network_tags_cc)
   return results
 end
 
