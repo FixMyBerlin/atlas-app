@@ -57,11 +57,11 @@ const generatePMTilesFile = (inputFile: string, outputFile: string) => {
 
 export const uploadFileToS3 = async (fileToUpload: string, filename: string) => {
   if (dryRun) return 'http://example.com/does-not-exist.pmtiles'
-  const accessKeyId = process.env.S3_PMTILES_KEY
-  const secretAccessKey = process.env.S3_PMTILES_SECRET
-  const region = process.env.S3_PMTILES_REGION
-  const bucket = process.env.S3_PMTILES_BUCKET
-  const folder = process.env.S3_PMTILES_FOLDER
+  const accessKeyId = process.env.S3_KEY
+  const secretAccessKey = process.env.S3_SECRET
+  const region = process.env.S3_REGION
+  const bucket = process.env.S3_BUCKET
+  const folder = process.env.S3_UPLOAD_FOLDER
 
   const s3Client = new S3Client({
     credentials: { accessKeyId, secretAccessKey },

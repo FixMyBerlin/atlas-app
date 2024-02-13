@@ -22,6 +22,6 @@ jobs:
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
-      S3_PMTILES_KEY: ${{ secrets.S3_PMTILES_KEY }}
-      S3_PMTILES_SECRET: ${{ secrets.S3_PMTILES_SECRET }}
-      S3_PMTILES_REGION: ${{ secrets.S3_PMTILES_REGION }}
+      S3_KEY: ${{ secrets.S3_KEY }}
+      S3_SECRET: ${{ secrets.S3_SECRET }}
+      S3_REGION: ${{ secrets.S3_REGION }}

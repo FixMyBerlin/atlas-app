@@ -33,9 +33,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
   }
 
   const { hostname, pathname } = new URL(upload!.pmtilesUrl)
-  const accessKeyId = process.env.S3_PMTILES_KEY!
-  const secretAccessKey = process.env.S3_PMTILES_SECRET!
-  const region = process.env.S3_PMTILES_REGION!
+  const accessKeyId = process.env.S3_KEY!
+  const secretAccessKey = process.env.S3_SECRET!
+  const region = process.env.S3_REGION!
 
   const s3Client = new S3Client({
     credentials: { accessKeyId, secretAccessKey },
