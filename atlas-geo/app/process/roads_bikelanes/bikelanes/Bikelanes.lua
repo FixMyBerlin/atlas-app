@@ -84,9 +84,7 @@ function Bikelanes(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        if tags[freshTag] then
-          results.age = AgeInDays(ParseDate(tags[freshTag]))
-        end
+        results.age = AgeInDays(ParseDate(tags[freshTag]))
 
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))

@@ -43,9 +43,7 @@ function Lit(object)
   tags.name = tags.name or tags['is_sidepath:of:name']
 
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit
-  if tags["check_date:lit"] then
-    lit_data.lit_age= AgeInDays(ParseDate(tags["check_date:lit"]))
-  end
+  lit_data.lit_age= AgeInDays(ParseDate(tags["check_date:lit"]))
 
   return lit_data
 end

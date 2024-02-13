@@ -15,6 +15,9 @@ end
 ---@return integer?
 -- given a date in YYYY-MM-DD return the respective unix timestamp
 function ParseDate(date)
+  if date == nil then
+    return nil
+  end
   local format = "(%d%d%d%d)-(%d%d)-(%d%d)"
   local year, month, day = date:match(format)
 
