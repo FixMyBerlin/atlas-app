@@ -35,7 +35,7 @@ local tags_cc = {
   "description",
 }
 
-function Bikelanes(object, routes)
+function Bikelanes(object)
   local tags = object.tags
 
   -- transformations
@@ -89,7 +89,6 @@ function Bikelanes(object, routes)
           results.age = AgeInDays(ParseDate(tags[freshTag]))
         end
 
-        results.routes = routes
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
         CopyTags(results, tags, allowed_tags)
