@@ -1,5 +1,6 @@
--- return the number of days that passed since a given timestamp in unix format
--- currently everything >730 is considered outdated
+---@param timestamp? integer
+---@return integer?
+-- Given a unix timestamp in unix return the age in days that have passed since (>730 is outdated)
 function AgeInDays(timestamp)
   -- Return nil for all that is not a number
   if type(timestamp) ~= "number" or tonumber(timestamp) == nil then
@@ -10,6 +11,8 @@ function AgeInDays(timestamp)
   return math.floor(diff / (3600 * 24))
 end
 
+---@param date? string
+---@return integer?
 -- given a date in YYYY-MM-DD return the respective unix timestamp
 function ParseDate(date)
   local format = "(%d%d%d%d)-(%d%d)-(%d%d)"
