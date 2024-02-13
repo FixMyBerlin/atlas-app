@@ -65,7 +65,7 @@ local excludedRoadsTable = osm2pgsql.define_table({
   }
 })
 
-Way2RoutesMapping = {}
+local wayRouteMapping = {}
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
@@ -106,7 +106,7 @@ function osm2pgsql.process_way(object)
 
   local routes
   if osm2pgsql.stage == 2 then
-    routes = Way2RoutesMapping[object.id]
+    routes = wayRouteMapping[object.id]
   end
 
   local cycleways = Bikelanes(object, routes)
@@ -138,10 +138,11 @@ function osm2pgsql.process_way(object)
 end
 
 function osm2pgsql.process_relation(object)
-  local results = Bikeroutes(object)
-  if results then
+  if IsBicycleRoute(object.tags) then
+    UpdateWayRouteMapping(wayRouteMapping, object.id, osm2pgsql.way_member_ids(object))
+
     bikeroutesTable:insert({
-      tags = results,
+      tags = Bikeroutes(object.tags),
       meta = Metadata(object),
       geom = object:as_multilinestring(),
     })
@@ -150,6 +151,6 @@ end
 
 function osm2pgsql.select_relation_members(object)
   if IsBicycleRoute(object.tags) then
-      return { ways = osm2pgsql.way_member_ids(object) }
+    return { ways = osm2pgsql.way_member_ids(object) }
   end
 end
