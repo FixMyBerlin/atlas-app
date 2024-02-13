@@ -6,6 +6,7 @@ invariant(apiRootUrl?.startsWith('http'), 'API_ROOT_URL missing.')
 export const getRegionsUrl = `${apiRootUrl}/regions`
 export const getUploadsUrl = `${apiRootUrl}/uploads`
 export const createUploadUrl = `${apiRootUrl}/uploads/create`
+export const deleteAllUploadsUrl = `${apiRootUrl}/uploads/delete-all`
 
 const addApiKey = (url) =>
   url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
@@ -38,6 +39,18 @@ export const createUpload = async (data: UploadData) => {
       body: JSON.stringify({
         apiKey: process.env.ATLAS_API_KEY!,
         ...data,
+      }),
+    }),
+  )
+}
+
+export const deleteAllUploads = async () => {
+  return await fetch(
+    new Request(deleteAllUploadsUrl, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        apiKey: process.env.ATLAS_API_KEY!,
       }),
     }),
   )

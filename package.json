@@ -29,6 +29,7 @@
     "updateStyles": "bun ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles\" --write && github",
     "updateStaticDatasets": "bun ./scripts/StaticDatasets/updateStaticDatasets.ts",
     "updateStaticDatasets:dryRun": "bun ./scripts/StaticDatasets/updateStaticDatasets.ts --dry-run",
+    "deleteAllStaticDatasets": "bun ./scripts/StaticDatasets/deleteAllStaticDatasets.ts",
     "updateStaticDatasetsLegacy": "npm run updateStaticDatasetsLegacy:createPmtiles && npm run updateStaticDatasetsLegacy:upload && npm run updateStaticDatasetsLegacy:typesAndObject && prettier \"src/app/regionen/[regionSlug]/_mapData/mapDataSources/datasets/\" --write && github",
     "updateStaticDatasetsLegacy:createPmtiles": "bun ./scripts/StaticDatasetsLegacy/createPmtiles.ts",
     "updateStaticDatasetsLegacy:upload": "bun ./scripts/StaticDatasetsLegacy/upload.ts",

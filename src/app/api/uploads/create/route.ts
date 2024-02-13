@@ -1,6 +1,6 @@
 import db from 'db'
 import { z } from 'zod'
-import { checkApiKey } from '../../_util/checkApiKey'
+import { parseData, checkApiKey } from '../../_util/checkApiKey'
 
 const Schema = z.object({
   apiKey: z.string().nullish(),
@@ -10,19 +10,6 @@ const Schema = z.object({
   isPublic: z.boolean(),
   config: z.record(z.string(), z.any()),
 })
-
-const parseData = (body, Schema) => {
-  try {
-    const data = Schema.parse(body)
-    return { ok: true, data, errorResponse: null }
-  } catch (e) {
-    return {
-      ok: false,
-      data: null,
-      errorResponse: Response.json({ statusText: 'Bad Request' }, { status: 400 }),
-    }
-  }
-}
 
 export async function POST(request: Request) {
   const parsed = parseData(await request.json(), Schema)
