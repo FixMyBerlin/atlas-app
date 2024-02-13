@@ -5,7 +5,7 @@ import os from 'node:os'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
 
-import { getSlugs, getUploadsUrl, createUpload, getRegions } from './api'
+import { createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
@@ -13,7 +13,6 @@ const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
-const existingUploadSlugs = await getSlugs(getUploadsUrl)
 
 // script can be run with --dry-run to just run all checks
 // without transforming and processing geojsons, uploading pmtiles and saving to db

@@ -11,11 +11,6 @@ export const deleteAllUploadsUrl = `${apiRootUrl}/uploads/delete-all`
 const addApiKey = (url) =>
   url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
 
-export const getSlugs = async (url: string): Promise<string[]> => {
-  url = addApiKey(url)
-  return (await (await fetch(url)).json()).map((region) => region.slug)
-}
-
 export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   const url = addApiKey(getRegionsUrl)
   return (await (await fetch(url)).json()).map((region) => ({
