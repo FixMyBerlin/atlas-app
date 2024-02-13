@@ -104,15 +104,16 @@ function osm2pgsql.process_way(object)
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
-  local routes
-  if osm2pgsql.stage == 2 then
-    routes = wayRouteMapping[object.id]
-  end
 
-  local cycleways = Bikelanes(object, routes)
+  local cycleways = Bikelanes(object)
   for _, cycleway in pairs(cycleways) do
     if cycleway._infrastructureExists then
       cycleway.road = results.road
+
+      if osm2pgsql.stage == 2 then
+        cycleway.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      end
+
       bikelanesTable:insert({
         tags = cycleway,
         meta = Metadata(object),
