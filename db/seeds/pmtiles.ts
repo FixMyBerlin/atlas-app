@@ -10,7 +10,6 @@ const seedUploads = async () => {
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
       configs: [
         {
-          regionKey: ['nudafa'],
           name: 'Zielnetz Stand 22.11.2023',
           subId: 'zielnetz',
           type: 'vector',

@@ -4,8 +4,6 @@ import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarI
 
 // a modified version of MapDataDatasetsSource from '../../src/app/regionen/[regionSlug]/_mapData/types'
 type MapDataDatasetsSource = {
-  /** @desc Associate the dataset with a region. This is the only place where we connect object to region, not region to object. But it makes more sence this way. */
-  regionKey: RegionSlug[]
   /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
   subId?: string
   name: string
