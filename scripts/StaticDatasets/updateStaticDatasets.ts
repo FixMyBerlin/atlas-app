@@ -213,17 +213,13 @@ for (const i in folderNames) {
   else info = `will be assigned to regions ${regionSlugs.join(', ')}`
   console.log(`  Saving upload to DB (${info})...`)
   if (!dryRun) {
-    const response = await createUpload({
+    await createUpload({
       uploadSlug,
       pmtilesUrl,
       regionSlugs,
       isPublic: metaData.public,
       config: metaData.config,
     })
-    if (response.status !== 201) {
-      red(JSON.stringify(await response.json(), null, 2))
-      process.exit(1)
-    }
   }
 
   green('  OK')
