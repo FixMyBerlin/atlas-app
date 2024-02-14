@@ -6,6 +6,7 @@ import { sourceStaticDatasetIdUrl } from './sourceDatasetIdUrl'
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()
   const [uploads] = useQuery(getUploadsForRegion, { regionSlug: regionSlug! })
+
   const regionDatasets: any[] = []
   uploads.forEach((upload) => {
     const url = sourceStaticDatasetIdUrl(upload.slug).url
@@ -20,5 +21,5 @@ export const useRegionDatasets = () => {
     })
   })
 
-  return regionDatasets
+  return regionDatasets.sort((a, b) => b.name.localeCompare(a.name))
 }
