@@ -2,7 +2,6 @@ import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { quote } from 'src/app/_components/text/Quotes'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { DatasetIds } from '../../_mapData/mapDataSources/datasets/types'
 import { useRegionDatasets } from '../SelectDatasets/utils/useRegionDatasets'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
@@ -21,7 +20,7 @@ export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
   if (!sourceKey || !properties) return null
 
   // The documentedKeys info is placed on the source object
-  const sourceId = extractDataIdIdFromDataKey(sourceKey) as DatasetIds
+  const sourceId = extractDataIdIdFromDataKey(sourceKey)
   const sourceData = regionDatasets.find((dataset) => dataset.id == sourceId)
 
   if (typeof sourceData === 'undefined') return null

@@ -1,7 +1,7 @@
-import { useRegionSlug } from '../../regionUtils/useRegionSlug'
 import { useQuery } from '@blitzjs/rpc'
 import getUploadsForRegion from 'src/uploads/queries/getUploadsForRegion'
-import { sourceStaticDatasetIdUrl } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesDatasets/utils/sourceDatasetIdUrl'
+import { useRegionSlug } from '../../regionUtils/useRegionSlug'
+import { sourceStaticDatasetIdUrl } from './sourceDatasetIdUrl'
 
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()

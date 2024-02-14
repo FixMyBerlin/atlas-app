@@ -1,6 +1,6 @@
-import db from '../index'
 import { Prisma } from '@prisma/client'
-import { defaultLineLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesDatasets/utils/defaultLayerStyles'
+import { defaultLineLayerStyles } from 'scripts/StaticDatasets/utils/defaultLayerStyles'
+import db from '../index'
 
 const seedUploads = async () => {
   const seedUploads: Prisma.UploadUncheckedCreateInput[] = [

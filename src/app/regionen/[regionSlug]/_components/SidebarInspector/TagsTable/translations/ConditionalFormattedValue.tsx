@@ -1,7 +1,6 @@
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
-import { DatasetIds } from '../../../../_mapData/mapDataSources/datasets/types'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
 import { NodataFallback } from '../compositTableRows/NodataFallback'
@@ -9,7 +8,7 @@ import { translations } from './translations.const'
 import { useRegionDatasets } from '../../../SelectDatasets/utils/useRegionDatasets'
 
 type Props = {
-  sourceId: SourcesId | DatasetIds
+  sourceId: SourcesId | string // string = StaticDatasetsIds
   tagKey: string
   tagValue: string
 }
