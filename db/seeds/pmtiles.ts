@@ -8,22 +8,24 @@ const seedUploads = async () => {
       slug: 'nudafa-combined',
       pmtilesUrl:
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
-      config: {
-        regionKey: ['nudafa'],
-        name: 'Zielnetz Stand 22.11.2023',
-        subId: 'zielnetz',
-        type: 'vector',
-        attributionHtml: '',
-        inspector: {
-          enabled: true,
-          highlightingKey: 'TODO',
-          documentedKeys: false,
-          disableTranslations: true,
+      configs: [
+        {
+          regionKey: ['nudafa'],
+          name: 'Zielnetz Stand 22.11.2023',
+          subId: 'zielnetz',
+          type: 'vector',
+          attributionHtml: '',
+          inspector: {
+            enabled: true,
+            highlightingKey: 'TODO',
+            documentedKeys: false,
+            disableTranslations: true,
+          },
+          layers: defaultLineLayerStyles({
+            filter: ['match', ['get', 'Typ'], ['Zielnetz'], true, false],
+          }),
         },
-        layers: defaultLineLayerStyles({
-          filter: ['match', ['get', 'Typ'], ['Zielnetz'], true, false],
-        }),
-      },
+      ],
     },
   ]
 

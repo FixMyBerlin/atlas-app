@@ -6,14 +6,18 @@ import { sourceStaticDatasetIdUrl } from 'src/app/regionen/[regionSlug]/_mapData
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()
   const [uploads] = useQuery(getUploadsForRegion, { regionSlug: regionSlug! })
-  const regionDatasets = uploads.map((upload) => {
-    return {
-      // @ts-ignore TS2698: Spread types may only be created from object types.
-      ...upload.config,
-      id: upload.slug,
-      // regionKey: upload.regions.map((r) => r.slug),
-      url: sourceStaticDatasetIdUrl(upload.slug).url,
-    }
+  const regionDatasets: any[] = []
+  uploads.forEach((upload) => {
+    const url = sourceStaticDatasetIdUrl(upload.slug).url
+    // @ts-expect-error
+    upload.configs.forEach((config) => {
+      regionDatasets.push({
+        ...config,
+        id: upload.slug,
+        // regionKey: upload.regions.map((r) => r.slug),
+        url,
+      })
+    })
   })
 
   return regionDatasets

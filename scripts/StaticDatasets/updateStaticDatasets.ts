@@ -218,7 +218,7 @@ for (const i in folderNames) {
       pmtilesUrl,
       regionSlugs,
       isPublic: metaData.public,
-      config: metaData.config,
+      configs: metaData.configs,
     })
   }
 

@@ -39,5 +39,5 @@ type MapDataDatasetsSource = {
 export type MetaData = {
   regions: string[]
   public: boolean
-  config: MapDataDatasetsSource
+  configs: MapDataDatasetsSource[]
 }

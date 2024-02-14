@@ -35,8 +35,9 @@ type UploadData = {
   pmtilesUrl: string
   regionSlugs: string[]
   isPublic: boolean
-  config: Record<string, any>
+  configs: Record<string, any>[]
 }
+
 export const createUpload = async (data: UploadData) => {
   const request = new Request(createUploadUrl, {
     method: 'POST',

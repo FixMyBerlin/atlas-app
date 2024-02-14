@@ -136,7 +136,7 @@ model Upload {
   //
   slug       String   @unique
   pmtilesUrl String
-  config     Json
+  configs    Json
   public     Boolean  @default(false)
   //
   regions    Region[]
