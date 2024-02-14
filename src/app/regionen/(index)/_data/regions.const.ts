@@ -523,7 +523,7 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
-    name: 'Brandenburg',
+    name: 'Brandenburg AG',
     fullName: 'Land Brandenburg Arbeitsgruppe',
     slug: 'bb-ag',
     osmRelationIds: [62504],
