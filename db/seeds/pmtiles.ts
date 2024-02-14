@@ -1,6 +1,16 @@
 import { Prisma } from '@prisma/client'
-import { defaultLineLayerStyles } from 'scripts/StaticDatasets/geojson/_utils/defaultLayerStyles'
 import db from '../index'
+
+const lineLayer = {
+  id: 'nudafa-combined-line',
+  type: 'line',
+  paint: {
+    'line-width': ['coalesce', ['get', 'felt:strokeWidth'], ['get', 'stroke-width'], 10],
+    'line-color': ['to-color', ['get', 'felt:color'], ['get', 'stroke'], '#14b8a6'],
+    'line-opacity': ['coalesce', ['get', 'felt:strokeOpacity'], ['get', 'stroke-opacity'], 0.6],
+  },
+  filter: ['match', ['get', 'Typ'], ['Zielnetz'], true, false],
+}
 
 const seedUploads = async () => {
   const seedUploadsNudafa: Prisma.UploadUncheckedCreateInput[] = [
@@ -20,9 +30,7 @@ const seedUploads = async () => {
             documentedKeys: false,
             disableTranslations: true,
           },
-          layers: defaultLineLayerStyles({
-            filter: ['match', ['get', 'Typ'], ['Zielnetz'], true, false],
-          }),
+          layers: [lineLayer],
         },
       ],
     },
@@ -45,7 +53,7 @@ const seedUploads = async () => {
             documentedKeys: false,
             disableTranslations: true,
           },
-          layers: defaultLineLayerStyles({}),
+          layers: [lineLayer],
         },
         {
           name: 'two configs, config 2',
@@ -58,7 +66,7 @@ const seedUploads = async () => {
             documentedKeys: false,
             disableTranslations: true,
           },
-          layers: defaultLineLayerStyles({}),
+          layers: [lineLayer],
         },
       ],
     },
