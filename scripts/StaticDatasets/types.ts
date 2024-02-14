@@ -1,12 +1,13 @@
-import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
+import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
 
 // a modified version of MapDataDatasetsSource from '../../src/app/regionen/[regionSlug]/_mapData/types'
 type MapDataDatasetsSource = {
   /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
   subId?: string
   name: string
+  /** @desc A quick-n-dirty way to get type savety for categories. The prefix is just to make type savety per region (or cluster of regions) possible. */
+  category: 'bb/Datenabgleich' | 'bb/Radnetz' | 'bb/Netzkonzeption' | null
   description?: string
   attributionHtml: string
   inspector:
