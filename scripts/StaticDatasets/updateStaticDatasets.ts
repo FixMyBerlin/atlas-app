@@ -16,14 +16,19 @@ const existingRegionSlugs = regions.map((region) => region.slug)
 
 // script can be run with --dry-run to just run all checks
 // without transforming and processing geojsons, uploading pmtiles and saving to db
+// use --keep-tmp to keep temporary generated files
 const { values, positionals } = parseArgs({
   args: Bun.argv,
-  options: { 'dry-run': { type: 'boolean' } },
+  options: {
+    'dry-run': { type: 'boolean' },
+    'keep-tmp': { type: 'boolean' },
+  },
   strict: true,
   allowPositionals: true,
 })
 
 const dryRun = !!values['dry-run']
+const keepTemporaryFiles = !!values['keep-tmp']
 
 const generatePMTilesFile = (inputFile: string, outputFile: string) => {
   if (dryRun) return '/tmp/does-not-exist.pmtiles'
@@ -185,13 +190,14 @@ for (const i in folderNames) {
   if (!geojsonFilename) continue
 
   const inputFile = await transformFile(folderName, path.join(folderPath, geojsonFilename))
-  const outputFile = path.join(tmpDir, 'output.pmtiles')
+  const outputFilename = `${geojsonFilename.split('.')[0]!}.pmtiles`
+  const outputFile = path.join(tmpDir, outputFilename)
 
-  console.log(`  Generating pmtiles file...`)
+  console.log(`  Generating pmtiles file "${outputFile}"...`)
   await generatePMTilesFile(inputFile, outputFile)
 
   console.log('  Uploading generated pmtiles file...')
-  const s3filename = `${uploadSlug}/${geojsonFilename.split('.')[0]!}.pmtiles`
+  const s3filename = `${uploadSlug}/${outputFilename}`
   const pmtilesUrl = await uploadFileToS3(outputFile, s3filename)
 
   const regionSlugs: string[] = []
@@ -221,5 +227,7 @@ for (const i in folderNames) {
   green('  OK')
 }
 
-// clean up
-fs.rmSync(tmpDir, { recursive: true, force: true })
+if (!keepTemporaryFiles) {
+  // clean up
+  fs.rmSync(tmpDir, { recursive: true, force: true })
+}
