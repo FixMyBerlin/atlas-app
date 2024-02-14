@@ -10,7 +10,7 @@ try {
 if (output.includes('Following migration have not yet been applied')) {
   console.error(
     '\x1b[31m%s\x1b[0m',
-    'There are pending migrations. Please run them before starting the server.',
+    'There are pending migrations. Please run them with `npm run migrate` before starting the server.',
     '(This message is send to you by scripts/npm-run-predev/checkMigrations.js)',
   )
 
