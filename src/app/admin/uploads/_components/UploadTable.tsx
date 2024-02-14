@@ -15,12 +15,11 @@ export const UploadsTable = ({ uploads }: { uploads: TUpload[] }) => {
   const [deleteUploadMutation] = useMutation(deleteUpload)
 
   return (
-    <AdminTable header={['Slug', 'Interne Url', 'Zugriff', 'Regionen', 'Rohdaten', '', '']}>
+    <AdminTable header={['Slug', 'Zugriff', 'Regionen', 'Rohdaten', '', '']}>
       {uploads.map((upload) => {
         return (
           <tr key={upload.id}>
             <th>{upload.slug}</th>
-            <td className="text-[10px]">{upload.pmtilesUrl}</td>
             <td>
               {upload.public ? (
                 <Pill color="purple">Öffentlich</Pill>
@@ -29,7 +28,7 @@ export const UploadsTable = ({ uploads }: { uploads: TUpload[] }) => {
               )}
             </td>
             <td>
-              <ul>
+              <ul className="marker:text-gray-800">
                 {upload.regions.map((region) => (
                   <li key={region.slug}>{region.slug}</li>
                 ))}
