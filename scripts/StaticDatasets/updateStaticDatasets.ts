@@ -209,10 +209,10 @@ for (const i in folderNames) {
     }
   })
 
-  let info: string
-  if (regionSlugs.length === 0) info = 'will not be assigned to any region'
-  else if (regionSlugs.length === 1) info = `will be assigned to region ${regionSlugs[0]}`
-  else info = `will be assigned to regions ${regionSlugs.join(', ')}`
+  const info =
+    regionSlugs.length === 0
+      ? 'will not be assigned to any region'
+      : `will be assigned to regions ${regionSlugs.join(', ')}`
   console.log(`  Saving upload to DB (${info})...`)
   if (!dryRun) {
     await createUpload({
