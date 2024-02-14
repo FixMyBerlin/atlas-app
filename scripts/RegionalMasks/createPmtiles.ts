@@ -6,7 +6,7 @@ console.log(chalk.inverse.bold('START'), __filename)
 
 // Take the file from 'createGeojson' and create a pmtiles for it in `/datasets/pmtiles`
 const inputFile = path.resolve(__dirname, './geojson/atlas-regional-masks.geojson')
-const outputFile = path.resolve(__dirname, '../../datasets/pmtiles', 'atlas-regional-masks.pmtiles')
+const outputFile = path.resolve(__dirname, './pmtiles/atlas-regional-masks.pmtiles')
 
 console.log('Tippecanoe for', inputFile)
 
