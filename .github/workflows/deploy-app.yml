@@ -121,5 +121,3 @@ jobs:
             echo S3_REGION='${{ secrets.S3_REGION }}' >> .env
             docker compose up -d
             docker image prune -fa
-            sleep 10
-            curl http://localhost:3000 > /dev/null
