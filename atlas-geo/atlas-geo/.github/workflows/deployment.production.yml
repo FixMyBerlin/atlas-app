@@ -10,7 +10,7 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     with:
       ENVIRONMENT: production
-      TILES_URL: tiles.radverkehrsatlas.de
+      URL: tiles.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
