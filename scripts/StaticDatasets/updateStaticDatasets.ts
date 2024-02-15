@@ -8,7 +8,9 @@ import { parseArgs } from 'util'
 import { createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import pluralize from 'pluralize'
 
+const pp = path.parse
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
@@ -91,9 +93,7 @@ export const uploadFileToS3 = async (fileToUpload: string, filename: string) => 
 
 const findGeojson = (folderName) => {
   const folderPath = path.join(geoJsonFolder, folderName)
-  const filenames = fs
-    .readdirSync(folderPath)
-    .filter((filename) => path.parse(filename).ext === '.geojson')
+  const filenames = fs.readdirSync(folderPath).filter((filename) => pp(filename).ext === '.geojson')
   if (filenames.length === 0) {
     yellow(`  Folder "${folderName}" does not contain a geojson.`)
     return null
@@ -111,6 +111,21 @@ const findGeojson = (folderName) => {
   }
 
   return filename
+}
+
+const checkFilename = (filename) => {
+  const m = filename.match(/[^\-.0-9a-zA-Z_]/g)
+  if (m !== null) {
+    const chars = JSON.stringify(m).slice(1, -1)
+    yellow(
+      `  Filename "${filename}" contains potentially problematic ${pluralize(
+        'character',
+        m.length,
+      )} ${chars}.`,
+    )
+    return false
+  }
+  return true
 }
 
 const import_ = async (folderName, moduleName, valueName, warnIfModuleDoesNotExist?) => {
@@ -131,22 +146,24 @@ const import_ = async (folderName, moduleName, valueName, warnIfModuleDoesNotExi
   }
 }
 
-const transformFile = async (folderName, inputFile) => {
+const transformFile = async (folderName, inputFilepath) => {
   const transform = await import_(folderName, 'transform', 'transform')
   if (transform === null) {
-    return inputFile
+    return inputFilepath
   }
 
-  console.log(`  Transforming file...`)
-  const outputFile = path.join(tmpDir, 'transformed.geojson')
+  const outputFilepath = path.join(tmpDir, `${pp(inputFilepath).name}.transformed.geojson`)
+  keepTemporaryFiles
+    ? console.log(`  Transforming geojson file to "${outputFilepath}"...`)
+    : console.log(`  Transforming geojson file...`)
   if (dryRun) {
-    return outputFile
+    return outputFilepath
   }
-  const data = await Bun.file(inputFile).json()
+  const data = await Bun.file(inputFilepath).json()
   const transformedData = transform(data)
-  Bun.write(outputFile, JSON.stringify(transformedData, null, 2))
+  Bun.write(outputFilepath, JSON.stringify(transformedData, null, 2))
 
-  return outputFile
+  return outputFilepath
 }
 
 // create tmp folder
@@ -186,19 +203,26 @@ for (const i in folderNames) {
     continue
   }
 
-  const geojsonFilename = findGeojson(folderName)
-  if (!geojsonFilename) continue
+  const geojsonFullFilename = findGeojson(folderName)
+  if (!geojsonFullFilename) continue
 
-  const inputFile = await transformFile(folderName, path.join(folderPath, geojsonFilename))
-  const outputFilename = `${geojsonFilename.split('.')[0]!}.pmtiles`
-  const outputFile = path.join(tmpDir, outputFilename)
+  if (!checkFilename(geojsonFullFilename)) {
+    // logs info is filename is not ok
+    continue
+  }
 
-  console.log(`  Generating pmtiles file "${outputFile}"...`)
-  await generatePMTilesFile(inputFile, outputFile)
+  const inputFilepath = await transformFile(folderName, path.join(folderPath, geojsonFullFilename))
+  const outputFilename = pp(inputFilepath).name
+  const outputFilepath = path.join(tmpDir, `${outputFilename}.pmtiles`)
+
+  keepTemporaryFiles
+    ? console.log(`  Generating pmtiles file "${outputFilepath}"...`)
+    : console.log(`  Generating pmtiles file...`)
+  await generatePMTilesFile(inputFilepath, outputFilepath)
 
   console.log('  Uploading generated pmtiles file...')
-  const s3filename = `${uploadSlug}/${outputFilename}`
-  const pmtilesUrl = await uploadFileToS3(outputFile, s3filename)
+  const s3filename = `${uploadSlug}/${pp(outputFilepath).base}`
+  const pmtilesUrl = await uploadFileToS3(outputFilepath, s3filename)
 
   const regionSlugs: string[] = []
   metaData.regions.forEach((regionSlug) => {
@@ -212,7 +236,7 @@ for (const i in folderNames) {
   const info =
     regionSlugs.length === 0
       ? 'will not be assigned to any region'
-      : `will be assigned to regions ${regionSlugs.join(', ')}`
+      : `will be assigned to ${pluralize('region', regionSlugs.length)} ${regionSlugs.join(', ')}`
   console.log(`  Saving upload to DB (${info})...`)
   if (!dryRun) {
     await createUpload({
