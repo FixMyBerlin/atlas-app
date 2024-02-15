@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-full bg-pink-300">
       <div className="prose mx-auto w-full max-w-4xl py-10">
-        <h1>Trassenscout ADMIN</h1>
+        <h1>Radverkehrsatlas ADMIN</h1>
         {children}
       </div>
     </div>
