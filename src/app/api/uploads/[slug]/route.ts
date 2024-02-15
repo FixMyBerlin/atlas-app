@@ -1,5 +1,5 @@
 import db from 'db'
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { GetObjectCommand, GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
 import { GetObjectCommandInput } from '@aws-sdk/client-s3/dist-types/commands/GetObjectCommand'
 import { getBlitzContext } from '@blitzjs/auth'
 
@@ -49,8 +49,13 @@ export async function GET(request: Request, { params }: { params: { slug: string
   const range = request.headers.get('range')
   if (range !== null) sendParams.Range = range!
 
-  // TODO: add error handling
-  const response = await s3Client.send(new GetObjectCommand(sendParams))
+  let response: GetObjectCommandOutput
+  try {
+    response = await s3Client.send(new GetObjectCommand(sendParams))
+  } catch (e) {
+    const { $metadata, message } = e
+    return Response.json({ source: 'S3', statusText: message }, { status: $metadata.httpStatusCode })
+  }
 
   return new Response(response.Body!, {
     // @ts-expect-error this exists
