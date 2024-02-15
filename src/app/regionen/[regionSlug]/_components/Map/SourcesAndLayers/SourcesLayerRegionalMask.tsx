@@ -9,7 +9,7 @@ export const SourcesLayerRegionalMask: React.FC = () => {
   // TODO: Migrate regional masks to new pmtiles system
   const { id, url } = {
     id: 'atlas-regional-masks',
-    url: 'https://atlas-tiles.s3.eu-central-1.amazonaws.com/atlas-regional-masks.pmtiles',
+    url: 'pmtiles://https://atlas-tiles.s3.eu-central-1.amazonaws.com/atlas-regional-masks.pmtiles',
   }
   const datasetTileId = `source:${id}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
 
