@@ -103,11 +103,11 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
       'lit',
+      'poi',
       'parking',
       'mapillary',
     ],
@@ -127,11 +127,11 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
       'lit',
+      'poi',
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
@@ -153,11 +153,11 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
       'parking',
+      'poi',
       'bicycleParking',
       'mapillary',
     ],
@@ -194,11 +194,11 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
       'lit',
+      'poi',
       'bicycleParking',
       'mapillary',
     ],
@@ -513,10 +513,10 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
+      'poi',
       'bicycleParking',
       'mapillary',
     ],
@@ -536,10 +536,10 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
+      'poi',
       'bicycleParking',
       'mapillary',
     ],
