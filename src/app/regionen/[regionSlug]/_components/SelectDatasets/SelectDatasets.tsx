@@ -4,9 +4,9 @@ import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { twJoin } from 'tailwind-merge'
+import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { createDatasetKey } from '../utils/createKeyUtils/createKeyUtils'
 import { ListOption } from './ListOption'
-import { useRegionDatasets } from './utils/useRegionDatasets'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()

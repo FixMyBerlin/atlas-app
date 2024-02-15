@@ -1,11 +1,11 @@
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
-import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
-import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
+import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
+import { SourcesId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { getDatasetOrSourceData } from 'src/app/regionen/[regionSlug]/_mapData/utils/getMapDataUtils'
 import { NodataFallback } from '../compositTableRows/NodataFallback'
 import { translations } from './translations.const'
-import { useRegionDatasets } from '../../../SelectDatasets/utils/useRegionDatasets'
 
 type Props = {
   sourceId: SourcesId | string // string = StaticDatasetsIds

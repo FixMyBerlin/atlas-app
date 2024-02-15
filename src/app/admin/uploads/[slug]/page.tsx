@@ -4,20 +4,19 @@ import { useQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { MetaData } from 'scripts/StaticDatasets/types'
 import { Link } from 'src/app/_components/links/Link'
+import { getStaticDatasetUrl } from 'src/app/_components/utils/getStaticDatasetUrl'
 import { useSlug } from 'src/app/_hooks/useSlug'
 import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
 import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { staticDatasetUrl } from 'src/app/regionen/[regionSlug]/_components/SelectDatasets/utils/sourceDatasetUrl'
 import { createDatasetKey } from 'src/app/regionen/[regionSlug]/_components/utils/createKeyUtils/createKeyUtils'
-import getRegions from 'src/regions/queries/getRegions'
 import getUploadWithRegions from 'src/uploads/queries/getUploadWithRegions'
 
 export default function AdminUploadPage() {
   const slug = useSlug()
   const [upload] = useQuery(getUploadWithRegions, { slug: slug! }, { staleTime: Infinity })!
 
-  const publicUrlForPreview = new URL(staticDatasetUrl(upload.slug))
+  const publicUrlForPreview = new URL(getStaticDatasetUrl(upload.slug))
   publicUrlForPreview.searchParams.set('apiKey', '_API_KEY_')
   const previewUrl = new URL('https://protomaps.github.io/PMTiles/')
   previewUrl.searchParams.set('url', publicUrlForPreview.toString())
@@ -63,7 +62,7 @@ export default function AdminUploadPage() {
         <textarea value={previewUrl.toString()} className="w-full text-sm" />
       </p>
       <p>
-        Öffentliche URL <code>{staticDatasetUrl(upload.slug)}</code>
+        Öffentliche URL <code>{getStaticDatasetUrl(upload.slug)}</code>
       </p>
       <p>
         Interne URL auf S3 <code>{upload.pmtilesUrl}</code>

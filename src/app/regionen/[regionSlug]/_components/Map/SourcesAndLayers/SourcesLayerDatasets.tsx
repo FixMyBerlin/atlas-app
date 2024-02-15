@@ -1,8 +1,8 @@
-import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
   createDatasetKey,
@@ -10,7 +10,7 @@ import {
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { useRegionDatasets } from '../../SelectDatasets/utils/useRegionDatasets'
+import { pmtilesUrl } from './utils/pmtilesUrl'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
@@ -33,7 +33,7 @@ export const SourcesLayerDatasets: React.FC = () => {
             id={datasetTileId}
             key={datasetTileId}
             type={type}
-            url={url}
+            url={pmtilesUrl(url)}
             attribution={attributionHtml}
           >
             {layers.map((layer) => {
