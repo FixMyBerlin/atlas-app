@@ -15,7 +15,6 @@ type Props = {
 }
 
 export const NoticeMaproulette = ({ identifier, osmId, osmType, category, geometry }: Props) => {
-  console.log('NoticeMaproulette', identifier, osmId, osmType, category, geometry)
   const maprouletteProjectKey = categoryToMaprouletteProjectKey(identifier)
   if (
     !maprouletteProjectKey ||
