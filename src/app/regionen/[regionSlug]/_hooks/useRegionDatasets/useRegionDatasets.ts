@@ -19,5 +19,5 @@ export const useRegionDatasets = () => {
     })
   })
 
-  return regionDatasets.sort((a, b) => b.name.localeCompare(a.name))
+  return regionDatasets.sort((a, b) => a.name.localeCompare(b.name))
 }
