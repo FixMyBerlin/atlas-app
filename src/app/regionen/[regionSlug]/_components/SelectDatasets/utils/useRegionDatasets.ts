@@ -15,7 +15,6 @@ export const useRegionDatasets = () => {
       regionDatasets.push({
         ...config,
         id: upload.slug,
-        // regionKey: upload.regions.map((r) => r.slug),
         url,
       })
     })
