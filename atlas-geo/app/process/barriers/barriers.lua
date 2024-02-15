@@ -14,6 +14,16 @@ local lineBarriers = osm2pgsql.define_table({
   }
 })
 
+-- local excludedLineBarriers = osm2pgsql.define_table({
+--   name = 'barrierLines_excluded',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags', type = 'jsonb' },
+--     { column = 'meta', type = 'jsonb' },
+--     { column = 'geom', type = 'linestring' },
+--   }
+-- })
+
 local areaBarriers = osm2pgsql.define_table({
   name = 'barrierAreas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -23,6 +33,17 @@ local areaBarriers = osm2pgsql.define_table({
     { column = 'geom', type = 'multipolygon' },
   }
 })
+
+-- local excludedAreaBarriers = osm2pgsql.define_table({
+--   name = 'barrierAreas_excluded',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags', type = 'jsonb' },
+--     { column = 'meta', type = 'jsonb' },
+--     { column = 'geom', type = 'multipolygon' },
+--   }
+-- })
+
 
 local allowedTags = Set({
   'tunnel',
@@ -70,33 +91,44 @@ function osm2pgsql.process_way(object)
       FilterTags(object.tags, allowedTags)
       areaBarriers:insert({
         tags = object.tags,
-        meta = Metadata(object),
-        geom = object:as_multipolygon()
+        meta=Metadata(object),
+        geom=object:as_multipolygon()
       })
       return
     end
+    -- excludedAreaBarriers:insert({
+    --   tags=object.tags,
+    --   meta=Metadata(object),
+    --   geom=object:as_multipolygon()
+    -- })
   else --process as linestring
     local tags = object.tags
+    -- if tags.tunnel =='yes' then return end -- we don't consider tunnels as barriers
+
     local isBarrier = HighwayClasses[tags.highway]
 
-    -- waterways as lines are used for low zoom levels
-    local waterBarriers = Set({ "river", "canal" })
+    -- only need for low zoom levels
+    local waterBarriers = Set({"river", "canal"})
     isBarrier = isBarrier or waterBarriers[tags.waterway]
 
-    local trainBarriers = Set({ "main", "branch" })
+    local trainBarriers = Set({"main", "branch"})
     if (tags.railway == 'rail' or tags.railway == 'light_rail') then
       isBarrier = isBarrier or trainBarriers[tags.usage]
     end
-
     if isBarrier then
       FilterTags(object.tags, allowedTags)
       lineBarriers:insert({
         tags = object.tags,
-        meta = Metadata(object),
-        geom = object:as_linestring(),
+        meta=Metadata(object),
+        geom=object:as_linestring(),
       })
       return
     end
+    -- excludedLineBarriers:insert({
+    --   tags=object.tags,
+    --   meta=Metadata(object),
+    --   geom=object:as_linestring()
+    -- })
   end
 end
 
@@ -105,9 +137,14 @@ function osm2pgsql.process_relation(object)
     FilterTags(object.tags, allowedTags)
     areaBarriers:insert({
       tags = object.tags,
-      meta = Metadata(object),
-      geom = object:as_multipolygon()
+      meta=Metadata(object),
+      geom=object:as_multipolygon()
     })
     return
   end
+  -- excludedAreaBarriers:insert({
+  --   tags=object.tags,
+  --   meta=Metadata(object),
+  --   geom=object:as_multipolygon()
+  -- })
 end
