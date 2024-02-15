@@ -16,11 +16,11 @@ type Props = {
   geometry: LineString
 }
 
-export const categoryToMaprouletteProjectKey = (category: string) => {
-  if (category.includes('adjoiningOrIsolated')) {
+export const categoryToMaprouletteProjectKey = (category: string | undefined | null) => {
+  if (category?.includes('adjoiningOrIsolated')) {
     return 'adjoiningOrIsolated' as MapRouletteProjectKey
   }
-  if (category.includes('advisoryOrExclusive')) {
+  if (category?.includes('advisoryOrExclusive')) {
     return 'advisoryOrExclusive' as MapRouletteProjectKey
   }
   if (category === 'needsClarification') {
