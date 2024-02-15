@@ -178,7 +178,10 @@ if (!fs.existsSync(geoJsonFolder)) {
   process.exit(1)
 }
 
-const folderNames = fs.readdirSync(geoJsonFolder).sort()
+const folderNames = fs
+  .readdirSync(geoJsonFolder)
+  .filter((folder) => !folder.startsWith('_')) // We skip `_utils` and by convention prefix unpublished datasets with underscore
+  .sort()
 for (const i in folderNames) {
   const folderName = folderNames[i]!
   const folderPath = path.join(geoJsonFolder, folderName)
