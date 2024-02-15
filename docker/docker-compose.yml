@@ -11,6 +11,7 @@ services:
     environment:
       SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
       DATABASE_URL: ${DATABASE_URL}
+    network_mode: host
     ports:
       - 3000:3000
     labels:
@@ -20,9 +21,3 @@ services:
       - 'traefik.http.routers.container.entrypoints=websecure'
       - 'traefik.http.routers.container.tls.certresolver=letsencrypt'
       - 'traefik.http.routers.container.tls=true'
-    networks:
-      - processing_app_bridge
-
-networks:
-  processing_app_bridge:
-    external: true
