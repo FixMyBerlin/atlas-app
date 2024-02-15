@@ -13,7 +13,7 @@ import { z } from 'zod'
 const ExportSchema = z.object({
   regionSlug: z.string(),
   tableName: z.enum(exportApiIdentifier),
-  accessToken: z.string().optional(),
+  apiKey: z.string().optional(),
   minlon: z.coerce.number().default(13.3),
   minlat: z.coerce.number().default(52.2),
   maxlon: z.coerce.number().default(13.7),
@@ -32,10 +32,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   // calling an anonymous function to easily break out of nested ifs
   const status = await (async () => {
-    const { regionSlug, accessToken } = params
+    const { regionSlug, apiKey } = params
 
-    // When accessToken valid, we ignore the region check
-    if (accessToken === process.env.EXPORT_ACCESS_TOKEN) {
+    // When apiKey valid, we ignore the region check
+    if (apiKey === process.env.ATLAS_API_KEY) {
       return 200 // <==========
     }
 

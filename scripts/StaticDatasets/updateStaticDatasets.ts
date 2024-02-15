@@ -3,24 +3,69 @@ import fs from 'node:fs'
 import path from 'node:path'
 import os from 'node:os'
 import slugify from 'slugify'
+import { parseArgs } from 'util'
 
-import { getSlugs, getUploadsUrl, createUpload, getRegions } from './api'
+import { createUpload, getRegions } from './api'
 import { green, yellow, inverse, red } from './log'
-import { generatePMTilesFile } from './utils/generatePMTilesFile'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
-const existingUploadSlugs = await getSlugs(getUploadsUrl)
 
-export const uploadDataToS3 = async (data: string | Buffer, filename: string) => {
-  const accessKeyId = process.env.S3_PMTILES_KEY
-  const secretAccessKey = process.env.S3_PMTILES_SECRET
-  const region = process.env.S3_PMTILES_REGION
-  const bucket = process.env.S3_PMTILES_BUCKET
-  const folder = process.env.S3_PMTILES_FOLDER
+// script can be run with --dry-run to just run all checks
+// without transforming and processing geojsons, uploading pmtiles and saving to db
+// use --keep-tmp to keep temporary generated files
+const { values, positionals } = parseArgs({
+  args: Bun.argv,
+  options: {
+    'dry-run': { type: 'boolean' },
+    'keep-tmp': { type: 'boolean' },
+  },
+  strict: true,
+  allowPositionals: true,
+})
+
+const dryRun = !!values['dry-run']
+const keepTemporaryFiles = !!values['keep-tmp']
+
+const generatePMTilesFile = (inputFile: string, outputFile: string) => {
+  if (dryRun) return '/tmp/does-not-exist.pmtiles'
+  Bun.spawnSync(
+    [
+      'tippecanoe',
+      `--output=${outputFile}`,
+      '--force',
+      '--maximum-zoom=g', // Automatically choose a maxzoom that should be sufficient to clearly distinguish the features and the detail within each feature https://github.com/felt/tippecanoe#zoom-levels
+      '-rg', // If you use -rg, it will guess a drop rate that will keep at most 50,000 features in the densest tile https://github.com/felt/tippecanoe#dropping-a-fixed-fraction-of-features-by-zoom-level
+      '--drop-densest-as-needed', // https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
+      '--extend-zooms-if-still-dropping', // https://github.com/felt/tippecanoe?tab=readme-ov-file#zoom-levels
+      '--layer=default',
+      inputFile,
+    ],
+    {
+      onExit(_proc, exitCode, _signalCode, error) {
+        if (exitCode) {
+          red(`  exitCode: ${exitCode}`)
+          process.exit(1)
+        }
+        if (error) {
+          red(`  error: ${error.message}`)
+          process.exit(1)
+        }
+      },
+    },
+  )
+}
+
+export const uploadFileToS3 = async (fileToUpload: string, filename: string) => {
+  if (dryRun) return 'http://example.com/does-not-exist.pmtiles'
+  const accessKeyId = process.env.S3_KEY
+  const secretAccessKey = process.env.S3_SECRET
+  const region = process.env.S3_REGION
+  const bucket = process.env.S3_BUCKET
+  const folder = process.env.S3_UPLOAD_FOLDER
 
   const s3Client = new S3Client({
     credentials: { accessKeyId, secretAccessKey },
@@ -33,7 +78,7 @@ export const uploadDataToS3 = async (data: string | Buffer, filename: string) =>
       new PutObjectCommand({
         Bucket: bucket,
         Key: fileKey,
-        Body: data,
+        Body: fs.readFileSync(fileToUpload),
       }),
     )
   } catch (e) {
@@ -68,19 +113,40 @@ const findGeojson = (folderName) => {
   return filename
 }
 
-const loadMetaData = (folderName) => {
-  const filePath = path.join(geoJsonFolder, folderName, 'meta.ts')
-  if (!fs.existsSync(filePath)) {
-    yellow(`  File meta.ts is missing in folder ${folderName}`)
+const import_ = async (folderName, moduleName, valueName, warnIfModuleDoesNotExist?) => {
+  const moduleFileName = `${moduleName}.ts`
+  const moduleFilePath = path.join(geoJsonFolder, folderName, moduleFileName)
+  if (!fs.existsSync(moduleFilePath)) {
+    if (warnIfModuleDoesNotExist) {
+      yellow(`  ${moduleFileName} is missing in folder ${folderName}`)
+    }
     return null
   } else {
-    const meta = require(`./geojson/${folderName}/meta`)
-    if (!('data' in meta)) {
-      yellow(`  meta.ts does not export data.`)
+    const module_ = await import(`./geojson/${folderName}/${moduleName}`)
+    if (!(valueName in module_)) {
+      yellow(`  ${moduleFileName} does not export value "${valueName}".`)
       return null
     }
-    return meta.data
+    return module_[valueName]
   }
+}
+
+const transformFile = async (folderName, inputFile) => {
+  const transform = await import_(folderName, 'transform', 'transform')
+  if (transform === null) {
+    return inputFile
+  }
+
+  console.log(`  Transforming file...`)
+  const outputFile = path.join(tmpDir, 'transformed.geojson')
+  if (dryRun) {
+    return outputFile
+  }
+  const data = await Bun.file(inputFile).json()
+  const transformedData = transform(data)
+  Bun.write(outputFile, JSON.stringify(transformedData, null, 2))
+
+  return outputFile
 }
 
 // create tmp folder
@@ -89,11 +155,13 @@ if (!fs.existsSync(tmpDir)) {
 }
 
 if (!fs.existsSync(geoJsonFolder)) {
-  red(`folder "${geoJsonFolder}" does not exists. Have you forgot to run "npm run link-atlas-static-data"?`)
+  red(
+    `folder "${geoJsonFolder}" does not exists. Have you forgot to run "npm run link-atlas-static-data"?`,
+  )
   process.exit(1)
 }
 
-const folderNames = fs.readdirSync(geoJsonFolder)
+const folderNames = fs.readdirSync(geoJsonFolder).sort()
 for (const i in folderNames) {
   const folderName = folderNames[i]!
   const folderPath = path.join(geoJsonFolder, folderName)
@@ -105,27 +173,32 @@ for (const i in folderNames) {
 
   inverse(`Processing folder "${folderName}"...`)
 
-  if (folderName !== slugify(folderName)) {
-    yellow(`  Folder name "${folderName}" is not a valid slug.`)
+  const uploadSlug = slugify(folderName.replaceAll('_', '-'))
+  if (folderName !== uploadSlug) {
+    yellow(
+      `  Folder name "${folderName}" is not a valid slug. A valid slug could be "${uploadSlug}"`,
+    )
     continue
   }
 
-  const metaData = loadMetaData(folderName)
+  const metaData = await import_(folderName, 'meta', 'data', true)
+  if (metaData === null) {
+    continue
+  }
 
   const geojsonFilename = findGeojson(folderName)
   if (!geojsonFilename) continue
 
-  const uploadSlug = folderName
-  const inputFile = path.join(folderPath, geojsonFilename)
-  const outputFile = path.join(tmpDir, 'output.pmtiles')
+  const inputFile = await transformFile(folderName, path.join(folderPath, geojsonFilename))
+  const outputFilename = `${geojsonFilename.split('.')[0]!}.pmtiles`
+  const outputFile = path.join(tmpDir, outputFilename)
 
-  console.log(`  Generating pmtiles file...`)
+  console.log(`  Generating pmtiles file "${outputFile}"...`)
   await generatePMTilesFile(inputFile, outputFile)
 
   console.log('  Uploading generated pmtiles file...')
-  const s3filename = `${uploadSlug}/${geojsonFilename.split('.')[0]!}.pmtiles`
-  const buffer = fs.readFileSync(outputFile)
-  const pmtilesUrl = await uploadDataToS3(buffer, s3filename)
+  const s3filename = `${uploadSlug}/${outputFilename}`
+  const pmtilesUrl = await uploadFileToS3(outputFile, s3filename)
 
   const regionSlugs: string[] = []
   metaData.regions.forEach((regionSlug) => {
@@ -136,29 +209,25 @@ for (const i in folderNames) {
     }
   })
 
-  let layersUrl : null | string = null
-  if ('layers' in metaData) {
-    console.log('  Uploading layers.json...')
-    const data = JSON.stringify(metaData.layers, null, 2)
-    const s3filename = `${uploadSlug}/layers.json`
-    layersUrl = await uploadDataToS3(data, s3filename)
-  }
-
-  console.log(`  Saving upload to DB (will be assigned to region(s) ${metaData.regions.join(', ')})...`)
-  const response = await createUpload({
-    uploadSlug,
-    pmtilesUrl,
-    layersUrl,
-    regionSlugs,
-    isPublic: metaData.public,
-  })
-  if (response.status !== 201) {
-    red(JSON.stringify(await response.json(), null, 2))
-    process.exit(1)
+  const info =
+    regionSlugs.length === 0
+      ? 'will not be assigned to any region'
+      : `will be assigned to regions ${regionSlugs.join(', ')}`
+  console.log(`  Saving upload to DB (${info})...`)
+  if (!dryRun) {
+    await createUpload({
+      uploadSlug,
+      pmtilesUrl,
+      regionSlugs,
+      isPublic: metaData.public,
+      configs: metaData.configs,
+    })
   }
 
   green('  OK')
 }
 
-// clean up
-fs.rmSync(tmpDir, { recursive: true, force: true })
+if (!keepTemporaryFiles) {
+  // clean up
+  fs.rmSync(tmpDir, { recursive: true, force: true })
+}

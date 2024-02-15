@@ -2,8 +2,7 @@ import React from 'react'
 import { IntlProvider } from 'react-intl'
 import { quote } from 'src/app/_components/text/Quotes'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
-import { DatasetIds } from '../../_mapData/mapDataSources/datasets/types'
-import { sourcesDatasets } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { useRegionDatasets } from '../SelectDatasets/utils/useRegionDatasets'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
 import { TagsTable } from './TagsTable/TagsTable'
@@ -17,11 +16,12 @@ export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
   properties,
   geometry,
 }) => {
+  const regionDatasets = useRegionDatasets()
   if (!sourceKey || !properties) return null
 
   // The documentedKeys info is placed on the source object
-  const sourceId = extractDataIdIdFromDataKey(sourceKey) as DatasetIds
-  const sourceData = sourcesDatasets.find((dataset) => dataset.id == sourceId)
+  const sourceId = extractDataIdIdFromDataKey(sourceKey)
+  const sourceData = regionDatasets.find((dataset) => dataset.id == sourceId)
 
   if (typeof sourceData === 'undefined') return null
   if (!sourceData.inspector.enabled) return null

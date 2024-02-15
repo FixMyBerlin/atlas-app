@@ -11,9 +11,9 @@ import {
   SubcatBikelanesStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes.const'
 import {
-  SubcatBikelanesPresenceId,
-  SubcatBikelanesPresenceStyleIds,
-} from './mapDataSubcategories/subcat_bikelanesPresence.const'
+  SubcatBikelanesPlusPresenceId,
+  SubcatBikelanesPlusPresenceStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import {
   SubcatBikelanesStatsId,
   SubcatBikelanesStatsStyleIds,
@@ -108,10 +108,10 @@ export type SubcategoryId =
   | SubcatAccidentsId
   | SubcatBicycleParkingId
   | SubcatBikelanesId
+  | SubcatBikelanesPlusPresenceId
   | SubcatBikelanesPlusSignsId
   | SubcatBikelanesPlusSurfaceId
   | SubcatBikelanesPlusWidthTextId
-  | SubcatBikelanesPresenceId
   | SubcatBikelanesStatsId
   | SubcatLitId
   | SubcatLitPlusCompletenessId
@@ -141,10 +141,10 @@ export type StyleId =
   | StyleIdDefaults
   | SubcatAccidentsStyleIds
   | SubcatBicycleParkingStyleIds
+  | SubcatBikelanesPlusPresenceStyleIds
   | SubcatBikelanesPlusSignsStyleIds
   | SubcatBikelanesPlusSurfaceStyleIds
   | SubcatBikelanesPlusWidthTextStyleIds
-  | SubcatBikelanesPresenceStyleIds
   | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds
   | SubcatLitPlusCompletenessStyleIds

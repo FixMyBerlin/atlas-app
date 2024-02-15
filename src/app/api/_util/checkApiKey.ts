@@ -1,4 +1,21 @@
+export const parseData = (body, Schema) => {
+  try {
+    const data = Schema.parse(body)
+    return { ok: true, data, errorResponse: null }
+  } catch (e) {
+    return {
+      ok: false,
+      data: null,
+      errorResponse: Response.json({ statusText: 'Bad Request' }, { status: 400 }),
+    }
+  }
+}
+
 export const checkApiKey = (data: Request | Record<string, any>) => {
+  if (process.env.NODE_ENV === 'development') {
+    return { ok: true, errorResponse: null }
+  }
+
   let apiKey: string | null
   if (data instanceof Request) {
     apiKey = new URL(data.url).searchParams.get('apiKey')
@@ -8,7 +25,7 @@ export const checkApiKey = (data: Request | Record<string, any>) => {
     apiKey = null
   }
 
-  if (apiKey === process.env.EXPORT_ACCESS_TOKEN) {
+  if (apiKey === process.env.ATLAS_API_KEY) {
     return { ok: true, errorResponse: null }
   } else {
     return {

@@ -1,9 +1,25 @@
-import { sourcesDatasets } from '../../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { useQuery } from '@blitzjs/rpc'
+import getUploadsForRegion from 'src/uploads/queries/getUploadsForRegion'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
+import { sourceStaticDatasetIdUrl } from './sourceDatasetIdUrl'
 
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()
-  const regionDatasets = sourcesDatasets.filter((d) => d.regionKey.includes(regionSlug as any))
+  const [uploads] = useQuery(getUploadsForRegion, { regionSlug: regionSlug! })
 
-  return regionDatasets
+  const regionDatasets: any[] = []
+  uploads.forEach((upload) => {
+    const url = sourceStaticDatasetIdUrl(upload.slug).url
+    // @ts-expect-error
+    upload.configs.forEach((config) => {
+      regionDatasets.push({
+        ...config,
+        id: upload.slug,
+        // regionKey: upload.regions.map((r) => r.slug),
+        url,
+      })
+    })
+  })
+
+  return regionDatasets.sort((a, b) => b.name.localeCompare(a.name))
 }

@@ -12,10 +12,7 @@ import {
 } from '@turf/turf'
 import chalk from 'chalk'
 import path from 'node:path'
-import {
-  getBoundaryExportApiBaseUrl,
-  getExportApiUrl,
-} from 'src/app/_components/utils/getExportApiUrl'
+import { getBoundaryExportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 

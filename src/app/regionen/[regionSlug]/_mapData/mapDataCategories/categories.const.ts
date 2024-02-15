@@ -1,7 +1,7 @@
 import { subcat_accidents } from '../mapDataSubcategories/subcat_accidents.const'
 import { subcat_bicycleParking } from '../mapDataSubcategories/subcat_bicycleParking'
 import { subcat_bikelanes } from '../mapDataSubcategories/subcat_bikelanes.const'
-import { subcat_bikelanesPresence } from '../mapDataSubcategories/subcat_bikelanesPresence.const'
+import { subcat_bikelanes_plus_presence } from '../mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
 import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
 import { subcat_bikelanes_plus_surface_text } from '../mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
@@ -96,7 +96,7 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Führungsform, Breite, RVA-Oberfläche',
     subcategories: [
       { ...subcat_bikelanes, defaultStyle: 'default' },
-      { ...subcat_bikelanesPresence, defaultStyle: 'hidden' },
+      { ...subcat_bikelanes_plus_presence, defaultStyle: 'hidden' },
       // Plus
       { ...subcat_bikelanes_plus_width_text, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },

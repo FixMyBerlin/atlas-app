@@ -1,47 +1,64 @@
 import invariant from 'tiny-invariant'
+import { red } from './log'
 
 const apiRootUrl = process.env.API_ROOT_URL
 invariant(apiRootUrl?.startsWith('http'), 'API_ROOT_URL missing.')
 
 export const getRegionsUrl = `${apiRootUrl}/regions`
-export const getUploadsUrl = `${apiRootUrl}/uploads`
 export const createUploadUrl = `${apiRootUrl}/uploads/create`
+export const deleteAllUploadsUrl = `${apiRootUrl}/uploads/delete-all`
 
 const addApiKey = (url) =>
-  url + '?' + new URLSearchParams({ apiKey: process.env.EXPORT_ACCESS_TOKEN! }).toString()
+  url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
 
-export const getSlugs = async (url: string): Promise<string[]> => {
-  url = addApiKey(url)
-  return (await (await fetch(url)).json()).map((region) => region.slug)
+function checkResponse(request: Request, response: Response) {
+  if (!response.ok) {
+    const { status, statusText } = response
+    red(`  ERROR: ${request.url} - ${status} - ${statusText}`)
+    process.exit(1)
+  }
 }
 
 export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   const url = addApiKey(getRegionsUrl)
-  return (await (await fetch(url)).json()).map((region) => ({
+  const request = new Request(url)
+  const response = await fetch(request)
+  checkResponse(request, response)
+  return (await response.json()).map((region) => ({
     id: region.id,
     slug: region.slug,
   }))
 }
 
-export const createUpload = async ({
-  uploadSlug,
-  pmtilesUrl,
-  layersUrl,
-  regionSlugs,
-  isPublic,
-}) => {
-  return await fetch(
-    new Request(createUploadUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        apiKey: process.env.EXPORT_ACCESS_TOKEN!,
-        uploadSlug,
-        pmtilesUrl,
-        layersUrl,
-        regionSlugs,
-        isPublic,
-      }),
+type UploadData = {
+  uploadSlug: string
+  pmtilesUrl: string
+  regionSlugs: string[]
+  isPublic: boolean
+  configs: Record<string, any>[]
+}
+
+export const createUpload = async (data: UploadData) => {
+  const request = new Request(createUploadUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      apiKey: process.env.ATLAS_API_KEY!,
+      ...data,
     }),
-  )
+  })
+  const response = await fetch(request)
+  checkResponse(request, response)
+}
+
+export const deleteAllUploads = async () => {
+  const request = new Request(deleteAllUploadsUrl, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      apiKey: process.env.ATLAS_API_KEY!,
+    }),
+  })
+  const response = await fetch(request)
+  checkResponse(request, response)
 }

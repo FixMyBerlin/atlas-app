@@ -1,5 +1,4 @@
 import invariant from 'tiny-invariant'
-import { DatasetIds } from '../../../../../_mapData/mapDataSources/datasets/types'
 import { SourcesId } from '../../../../../_mapData/mapDataSources/sources.const'
 import { SubcategoryId } from '../../../../../_mapData/typeId'
 import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
@@ -26,5 +25,5 @@ export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof crea
 
 export const extractDataIdIdFromDataKey = (sourceKey: string) => {
   // `source:${sourceId}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
-  return sourceKey.split('--')[0]!.replace('source:', '') as DatasetIds
+  return sourceKey.split('--')[0]!.replace('source:', '')
 }

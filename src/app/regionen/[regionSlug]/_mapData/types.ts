@@ -187,7 +187,12 @@ type StaticMapDataSubcategory = Prettify<
   }
 >
 
-export type TBeforeIds = 'housenumber' | 'boundary_country' | 'landuse' | undefined
+export type TBeforeIds =
+  | 'housenumber'
+  | 'boundary_country_outline'
+  | 'boundary_country'
+  | 'landuse'
+  | undefined
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */
 export type FileMapDataSubcategory = {

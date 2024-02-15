@@ -1,22 +1,20 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelane_presence } from './mapboxStyles/groups/atlas_bikelane_presence'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'bikelanesPresence'
+const subcatId = 'bikelanes_plus_presence'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
-export type SubcatBikelanesPresenceId = typeof subcatId
-export type SubcatBikelanesPresenceStyleIds = 'default'
+export type SubcatBikelanesPlusPresenceId = typeof subcatId
+export type SubcatBikelanesPlusPresenceStyleIds = 'default'
 
-export const subcat_bikelanesPresence: FileMapDataSubcategory = {
+export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
   id: subcatId,
-  name: 'Vollständigkeit Radinfrastruktur',
-  ui: 'dropdown',
+  name: 'RVA Vollständigkeit',
+  ui: 'checkbox',
   sourceId: source,
-  beforeId: 'housenumber',
+  beforeId: 'boundary_country_outline',
   styles: [
-    defaultStyleHidden,
     {
       id: 'default',
       name: 'Vollständigkeit',
@@ -55,7 +53,8 @@ export const subcat_bikelanesPresence: FileMapDataSubcategory = {
           id: 'not_expected',
           name: 'Keine RVA erwartet',
           desc: [
-            'Beispie: Auf der Fahrbahn ist keine RVA erwartet, wenn es bereits links/rechts gesonderte RVA gibt.',
+            'Beispiel: Auf der Fahrbahn ist keine RVA erwartet, wenn es bereits links/rechts gesonderte RVA gibt.',
+            'Beispiel: Bei Wohnstraßen wiederum ist keine RVA links/rechts erwartet.',
           ],
           style: {
             type: 'line',

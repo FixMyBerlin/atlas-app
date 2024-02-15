@@ -1,5 +1,4 @@
 import React from 'react'
-import { DatasetIds } from '../../../_mapData/mapDataSources/datasets/types'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { NodataFallback } from './compositTableRows/NodataFallback'
 import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
@@ -7,13 +6,13 @@ import { ConditionalFormattedValue } from './translations/ConditionalFormattedVa
 
 export type TagsTableRowProps =
   | {
-      sourceId: SourcesId | DatasetIds
+      sourceId: SourcesId | string // string = StaticDatasetsIds
       tagKey: string
       tagValue: string
       value?: never
     }
   | {
-      sourceId: SourcesId | DatasetIds
+      sourceId: SourcesId | string // string = StaticDatasetsIds
       tagKey: string
       tagValue?: never
       value: React.ReactNode

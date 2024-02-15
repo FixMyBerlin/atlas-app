@@ -1,14 +1,14 @@
 import React from 'react'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
 import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
-import { DatasetIds } from '../../../../_mapData/mapDataSources/datasets/types'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
 import { NodataFallback } from '../compositTableRows/NodataFallback'
 import { translations } from './translations.const'
+import { useRegionDatasets } from '../../../SelectDatasets/utils/useRegionDatasets'
 
 type Props = {
-  sourceId: SourcesId | DatasetIds
+  sourceId: SourcesId | string // string = StaticDatasetsIds
   tagKey: string
   tagValue: string
 }
@@ -19,12 +19,14 @@ const prefixWithOsm = (tagKey: string) => {
 }
 
 export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
+  const regionDatasets = useRegionDatasets()
+
   if (typeof tagValue === 'undefined') {
     return <NodataFallback />
   }
 
   // Some data should not be "translated"; we want to show the raw string.
-  const sourceData = getDatasetOrSourceData(sourceId)
+  const sourceData = getDatasetOrSourceData(sourceId, regionDatasets)
   const showRawValues =
     sourceData &&
     'disableTranslations' in sourceData.inspector &&

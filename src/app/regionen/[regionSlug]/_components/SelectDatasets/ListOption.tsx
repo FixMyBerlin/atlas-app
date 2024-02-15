@@ -1,11 +1,10 @@
 import { Listbox } from '@headlessui/react'
 import { CheckIcon } from '@heroicons/react/20/solid'
-import { twJoin } from 'tailwind-merge'
 import React from 'react'
-import { SourcesDatasetsIds } from '../../_mapData/mapDataSources/sourcesDatasets/sourcesDatasets.const'
+import { twJoin } from 'tailwind-merge'
 
 type Props = {
-  value: string // was `SourcesDatasetsIds` but is createDatasetKey() now
+  value: string // string = StaticDatasetsIds
   name: string | React.ReactNode
 }
 
