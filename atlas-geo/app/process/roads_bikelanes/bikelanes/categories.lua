@@ -90,7 +90,7 @@ local function footAndCyclewaySharedCases(tags)
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
       return "footAndCyclewayShared_adjoining"
     end
     -- Eg https://www.openstreetmap.org/way/440072364 highway=service
@@ -110,7 +110,7 @@ local function footAndCyclewaySegregatedCases(tags)
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
       return "footAndCyclewaySegregated_adjoining"
     end
     if tags.is_sidepath == "no" then
@@ -132,7 +132,7 @@ local function footwayBicycleYesCases(tags)
   if tags.highway == "footway" or tags.highway == "path" then
     if tags.bicycle == "yes" or IsTermInString("1022-10", tags.traffic_sign) then
       -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-      if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+      if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
         return "footwayBicycleYes_adjoining"
       end
       -- https://www.openstreetmap.org/way/946438663
