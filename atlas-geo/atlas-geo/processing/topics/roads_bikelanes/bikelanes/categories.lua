@@ -223,15 +223,30 @@ end
 --   - https://trafficsigns.osm-verkehrswende.org/?signs=DE%3A245%7CDE%3A1022-10%7CDE%3A1026-30
 -- "Fahrrad & Mofa frei" traffic_sign=DE:245,1022-14
 -- (History: Until 2023-03-2: cyclewayAlone)
-local function sharedBusLane(tags)
+local function sharedBusLaneBusWithBike(tags)
   local taggedWithAccessTagging = tags.highway == "cycleway" and
       (tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway")
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:245") and
       (IsTermInString("1022-10", tags.traffic_sign) or IsTermInString("1022-14", tags.traffic_sign))
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    return "sharedBusLane"
+    return "sharedBusLane" -- NOTE: rename to "sharedBusLaneBusWithBike"
   end
 end
+
+-- Radfahrstreifen mit Freigabe Busverkehr
+-- Traffic sign traffic_sign=DE:237,1024-14
+--   - https://trafficsigns.osm-verkehrswende.org/?signs=DE%3A237%7CDE%3A1024-14
+-- OSM Verkehrswende Recommended Tagging is too complex for now, we mainly look at the traffic_sign
+-- and the few uses of `cycleway:right:lane=share_busway`.
+--   - 81 in DE https://taginfo.geofabrik.de/europe:germany/tags/cycleway%3Aright%3Alane=share_busway#overview
+--   - 87 overall https://taginfo.openstreetmap.org/tags/cycleway%3Aright%3Alane=share_busway#overview
+--   - 1 overall for left https://taginfo.openstreetmap.org/tags/cycleway%3Aleft%3Alane=share_busway#overview
+local function sharedBusLaneBikeWithBus(tags)
+  local taggedWithAccessTagging = tags.highway == "cycleway" and tags.lane == "share_busway"
+  local taggedWithTrafficsign =
+      osm2pgsql.has_prefix(tags.traffic_sign, "DE:237") and IsTermInString("1024-14", tags.traffic_sign)
+  if taggedWithAccessTagging or taggedWithTrafficsign then
+    return "sharedBusLaneBikeWithBus"
   end
 end
 
@@ -282,7 +297,8 @@ function CategorizeBikelane(tags)
     crossing,
     livingStreet,
     bicycleRoad,
-    sharedBusLane,
+    sharedBusLaneBikeWithBus,
+    sharedBusLaneBusWithBike,
     sharedLane,
     pedestrianAreaBicycleYes,
     sharedMotorVehicleLane,
