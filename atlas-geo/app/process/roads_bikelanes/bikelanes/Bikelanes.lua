@@ -12,6 +12,7 @@ require("ToMarkdownList")
 require("DeriveSurface")
 require("DeriveSmoothness")
 require("BikelanesTodos")
+require("InferOneway")
 
 local tags_copied = {
   "mapillary",
@@ -65,14 +66,8 @@ function Bikelanes(object)
           offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
         }
 
-        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        if cycleway.oneway == nil then
-          if tags.bicycle_road == 'yes' then
-            results.oneway = 'implicit_no'
-          else
-            results.oneway = 'implicit_yes'
-          end
-        end
+        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        results.oneway = Sanitize(cycleway.oneway, Set({'yes', 'no'})) or InferOneway(category)
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
