@@ -29,7 +29,7 @@ function RoadClassification(object)
 
   -- Sidewalks
   if (tags.highway == 'footway' and tags.footway == 'sidewalk')
-      or (tags.highway == 'path' and tags.is_sidepath == 'yes') then
+      or (tags.highway == 'path' and (tags.is_sidepath == 'yes' or tags.path == 'sidewalk')) then
     roadClassification.road = "footway_sidewalk"
   end
 
