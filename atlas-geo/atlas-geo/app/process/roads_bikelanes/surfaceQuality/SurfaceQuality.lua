@@ -7,9 +7,10 @@ require("DeriveSmoothness")
 require("Set")
 require("CopyTags")
 
-function SurfaceQuality(object)
-  -- Same as roadClassification, except for `HighwayClasses`
+local tags_copied = {}
+local tags_prefixed = {}
 
+function SurfaceQuality(object)
   local tags = object.tags
 
   local surface_data = {}
@@ -27,6 +28,8 @@ function SurfaceQuality(object)
     surface_data.smoothness_age = AgeInDays(ParseDate(tags["check_date:smoothness"]))
   end
 
+  CopyTags(surface_data, tags, tags_copied)
+  CopyTags(surface_data, tags, tags_prefixed, "osm_")
 
   return surface_data
 end

@@ -13,13 +13,12 @@ require("DeriveSurface")
 require("DeriveSmoothness")
 require("BikelanesTodos")
 
-
--- these tags are copied (Eigennamen)
-local allowed_tags = {
+local tags_copied = {
   "name",
+  "mapillary",
+  "description",
 }
--- these tags are copied and prefixed with `osm_`
-local tags_cc = {
+local tags_prefixed = {
   'surface:colour',
   'traffic_sign',
   'traffic_sign:forward',
@@ -30,8 +29,6 @@ local tags_cc = {
   'traffic_mode',
   'traffic_mode:left',
   'traffic_mode:right',
-  "mapillary",
-  "description",
 }
 
 function Bikelanes(object)
@@ -90,8 +87,8 @@ function Bikelanes(object)
 
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
-        CopyTags(results, tags, allowed_tags)
-        CopyTags(results, tags, tags_cc, 'osm_')
+        CopyTags(results, tags, tags_copied)
+        CopyTags(results, tags, tags_prefixed, 'osm_')
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         bikelanes[i] = results
