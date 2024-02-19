@@ -2,9 +2,7 @@ package.path = package.path ..
     ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/poiClassification/?.lua"
 require("Set")
 require("ExtractKeys")
-require("FilterTags")
 require("InferAddress")
-require("MergeArray")
 require("Metadata")
 require("ShoppingAllowedListWithCategories")
 
@@ -166,26 +164,25 @@ end
 
 -- Tag processing extracted to be used inside projcess_*
 local function processTags(tags)
-  InferAddress(tags, tags)
-  local allowed_tags = MergeArray({ "name", "amenity", "tourism" }, AddressKeys)
-  FilterTags(tags, Set(allowed_tags))
+  local results = InferAddress(tags)
+  local tags_cc = { "name", "amenity", "tourism" }
+  CopyTags(results, tags, tags_cc)
 
   if (tags.amenity) then
-    tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
+    results.taginfo_url = "https://taginfo.openstreetmap.org/tags/amenity=" .. tags.amenity
   end
   if (tags.tourism) then
-    tags.taginfo_url = "https://taginfo.openstreetmap.org/tags/tourism=" .. tags.tourism
+    results.taginfo_url = "https://taginfo.openstreetmap.org/tags/tourism=" .. tags.tourism
   end
+  return results
 end
 
 function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
-  processTags(object.tags)
-
   table:insert({
     value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_point()
   })
@@ -196,11 +193,9 @@ function osm2pgsql.process_way(object)
     return
   end
 
-  processTags(object.tags)
-
   table:insert({
     value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon():centroid()
   })
@@ -210,10 +205,9 @@ function osm2pgsql.process_relation(object)
   if ExitProcessing(object) then return end
   if not object.tags.type == 'multipolygon' then return end
 
-  processTags(object.tags)
   table:insert({
     value_to_check = object.tags.amenity or object.tags.shop or object.tags.tourism,
-    tags = object.tags,
+    tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid()
   })

@@ -13,14 +13,13 @@ require("DeriveSurface")
 require("DeriveSmoothness")
 require("BikelanesTodos")
 require("Sanitize")
+require("InferOneway")
 
-
--- these tags are copied (Eigennamen)
-local allowed_tags = {
-  "name",
+local tags_copied = {
+  "mapillary",
+  "description",
 }
--- these tags are copied and prefixed with `osm_`
-local tags_cc = {
+local tags_prefixed = {
   'surface:colour',
   'traffic_sign',
   'traffic_sign:forward',
@@ -31,8 +30,6 @@ local tags_cc = {
   'traffic_mode',
   'traffic_mode:left',
   'traffic_mode:right',
-  "mapillary",
-  "description",
 }
 
 function Bikelanes(object)
@@ -64,16 +61,14 @@ function Bikelanes(object)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        local results = { _infrastructureExists = true, category = category, offset = sign * RoadWidth(tags) / 2 }
+        local results = {
+          _infrastructureExists = true,
+          category = category,
+          offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
+        }
 
-        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        if cycleway.oneway == nil then
-          if tags.bicycle_road == 'yes' then
-            results.oneway = 'implicit_no'
-          else
-            results.oneway = 'implicit_yes'
-          end
-        end
+        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        results.oneway = Sanitize(cycleway.oneway, Set({'yes', 'no'})) or InferOneway(category)
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
@@ -85,14 +80,12 @@ function Bikelanes(object)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        if tags[freshTag] then
-          results.age = AgeInDays(ParseDate(tags[freshTag]))
-        end
+        results.age = AgeInDays(ParseCheckDate(tags[freshTag]))
 
         MergeTable(results, DeriveSmoothness(cycleway))
         MergeTable(results, DeriveSurface(cycleway))
-        CopyTags(results, tags, allowed_tags)
-        CopyTags(results, tags, tags_cc, 'osm_')
+        CopyTags(results, tags, tags_copied)
+        CopyTags(results, tags, tags_prefixed, 'osm_')
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         bikelanes[i] = results
