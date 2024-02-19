@@ -1,8 +1,5 @@
 require("IsTermInString")
 
-NOT_EXPECTED = 'not_expected'
--- PREDICATES FOR EACH CATEGORY:
-
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
 local function dataNo(tags)
@@ -26,7 +23,7 @@ local function implicitOneWay(tags)
       tags.parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN                   -- is the left side object
   if result then
-    return NOT_EXPECTED
+    return 'not_expected'
   end
 end
 
