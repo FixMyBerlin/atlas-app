@@ -43,6 +43,13 @@ function RoadClassification(object)
     roadClassification.road = "cycleway_crossing"
   end
 
+  -- Foot- and Bicycle Crossing
+  -- This is a strong simplification because we do not look at the access tags here.
+  -- However, that should bring us pretty close without the added complexity.
+  if tags.highway == 'path' and tags.path == 'crossing' then
+    roadClassification.road = "footway_cycleway_crossing"
+  end
+
   -- Vorfahrtsstraße, Zubringerstraße
   -- https://wiki.openstreetmap.org/wiki/DE:Key:priority_road
   if tags.highway == 'residential' and
