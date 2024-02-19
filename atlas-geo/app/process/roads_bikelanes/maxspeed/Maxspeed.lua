@@ -40,6 +40,7 @@ function Maxspeed(object)
     end
   end
 
+
   -- Freshness of data
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
   if tags["check_date:maxspeed"] then
