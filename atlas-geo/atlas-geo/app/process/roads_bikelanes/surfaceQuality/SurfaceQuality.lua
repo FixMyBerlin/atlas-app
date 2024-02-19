@@ -12,12 +12,10 @@ local tags_prefixed = {}
 
 function SurfaceQuality(object)
   local tags = object.tags
-
   local surface_data = {}
 
   MergeTable(surface_data, DeriveSurface(tags))
   MergeTable(surface_data, DeriveSmoothness(tags))
-
 
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
   if tags["check_date:surface"] then

@@ -59,7 +59,11 @@ function Bikelanes(object)
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        local results = { _infrastructureExists = true, category = category, offset = sign * RoadWidth(tags) / 2 }
+        local results = {
+          _infrastructureExists = true,
+          category = category,
+          offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
+        }
 
         -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
         if cycleway.oneway == nil then
