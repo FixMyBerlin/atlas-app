@@ -125,8 +125,8 @@ function osm2pgsql.process_way(object)
 
   if not PathClasses[tags.highway] then
     MergeTable(results, Maxspeed(object))
-    MergeTable(results, BikelanesPresence(object, cycleways))
   end
+  MergeTable(results, BikelanesPresence(object, cycleways))
 
   -- We need sidewalk for Biklanes(), but not for `roads`
   local isSidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
