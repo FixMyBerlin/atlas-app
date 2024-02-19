@@ -27,7 +27,10 @@ local onewayImplicitYes = Set({
   'footwayBicycleYes_isolated', -- "shared lane"-like, still assuming "oneway=yes" because too little space or it would be "footAndCyclewayShared_isolated"
   'footwayBicycleYes_adjoiningOrIsolated' -- unclear, fall back to "shared lane"-like
 })
-
+---comment
+---@param category string
+---@return 'assumed_no' | 'implicit_yes' | 'unknown'
+--- Infer oneway information based on the given category
 function InferOneway(category)
   if onewayAssumedNo[category] then
     return 'assumed_no'
@@ -35,4 +38,5 @@ function InferOneway(category)
   if onewayImplicitYes[category] then
     return 'implicit_yes'
   end
+  return 'unknown'
 end
