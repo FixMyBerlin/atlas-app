@@ -18,13 +18,9 @@ function SurfaceQuality(object)
   MergeTable(result_tags, DeriveSmoothness(tags))
 
   -- 77,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asurface
-  if tags["check_date:surface"] then
-    result_tags.surface_age = AgeInDays(ParseDate(tags["check_date:surface"]))
-  end
+  result_tags.surface_age = AgeInDays(ParseDate(tags["check_date:surface"]))
   -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Asmoothness
-  if tags["check_date:smoothness"] then
-    result_tags.smoothness_age = AgeInDays(ParseDate(tags["check_date:smoothness"]))
-  end
+  result_tags.smoothness_age = AgeInDays(ParseDate(tags["check_date:smoothness"]))
 
   CopyTags(result_tags, tags, tags_copied)
   CopyTags(result_tags, tags, tags_prefixed, "osm_")

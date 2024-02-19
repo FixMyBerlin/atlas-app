@@ -9,10 +9,9 @@ assert(result == nil)
 
 -- Valid Date = Time
 -- Format: https://www.lua.org/pil/22.1.html
-local today = os.date("*t")
-local yesterday = os.date("%Y-%m-%d", os.time({ year = today.year, month = today.month, day = tonumber(today.day) - 1 }))
-local input = ParseDate(yesterday)
-local result = AgeInDays(input)
+local today = os.time()
+local yesterday = today - 3600 * 24 * 1
+local result = AgeInDays(yesterday)
 assert(result == 1)
 
 -- Invalid = Nil
