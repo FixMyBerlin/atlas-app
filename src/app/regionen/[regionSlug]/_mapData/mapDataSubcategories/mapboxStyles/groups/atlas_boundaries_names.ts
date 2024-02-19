@@ -8,7 +8,7 @@ export const mapboxStyleGroupLayers_atlas_boundaries_names: MapboxStyleLayer[] =
     type: 'symbol',
     id: 'name_category_municipality',
     paint: {
-      'text-color': '#e6a3cc',
+      'text-color': '#cb4397',
       'text-halo-width': 1,
       'text-halo-color': '#ffffff',
     },
@@ -27,7 +27,7 @@ export const mapboxStyleGroupLayers_atlas_boundaries_names: MapboxStyleLayer[] =
     type: 'symbol',
     id: 'name_category_district',
     paint: {
-      'text-color': '#f094cd',
+      'text-color': '#c03089',
       'text-halo-color': '#ffffff',
       'text-halo-width': 2,
     },
