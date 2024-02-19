@@ -21,7 +21,7 @@ local tags_prefixed = {
 -- 4. TODO: intersecting landuse via SQL, see https://github.com/FixMyBerlin/atlas-geo/pull/28
 function Maxspeed(object)
   local tags = object.tags
-  local maxspeed_data = {}
+  local result_tags = {}
 
   local maxspeed, source, confidence = MaxspeedDirect(tags)
 
@@ -43,14 +43,14 @@ function Maxspeed(object)
   -- Freshness of data
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
   if tags["check_date:maxspeed"] then
-    maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
+    result_tags.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
   end
 
-  CopyTags(maxspeed_data, tags, tags_copied)
-  CopyTags(maxspeed_data, tags, tags_prefixed, "osm_")
-  maxspeed_data.maxspeed = maxspeed
-  maxspeed_data.maxspeed_source = source
-  maxspeed_data.maxspeed_confidence = confidence
+  CopyTags(result_tags, tags, tags_copied)
+  CopyTags(result_tags, tags, tags_prefixed, "osm_")
+  result_tags.maxspeed = maxspeed
+  result_tags.maxspeed_source = source
+  result_tags.maxspeed_confidence = confidence
 
-  return maxspeed_data
+  return result_tags
 end
