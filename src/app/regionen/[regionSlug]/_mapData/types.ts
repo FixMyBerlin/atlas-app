@@ -199,6 +199,7 @@ export type FileMapDataSubcategory = {
   id: SubcategoryId
   name: string
   sourceId: SourcesId
+  /** @desc Insert layer before / above the given layer ID. The beforeId layer will come after. */
   beforeId?: TBeforeIds
 } & (
   | {

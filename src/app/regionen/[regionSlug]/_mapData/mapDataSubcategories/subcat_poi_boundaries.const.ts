@@ -17,6 +17,7 @@ export const subcat_poi_boundaries: FileMapDataSubcategory = {
   name: 'Verwaltungsbereiche',
   ui: 'dropdown',
   sourceId: 'atlas_boundaries',
+  beforeId: 'boundary_country',
   styles: [
     defaultStyleHidden,
     {
