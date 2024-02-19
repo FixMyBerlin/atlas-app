@@ -39,7 +39,7 @@ export const mapboxStyleGroupLayers_atlas_roads_sidestreets: MapboxStyleLayer[] 
             true,
             false,
           ],
-          1,
+          2.5,
           [
             'match',
             ['get', 'road'],
@@ -57,7 +57,7 @@ export const mapboxStyleGroupLayers_atlas_roads_sidestreets: MapboxStyleLayer[] 
             true,
             false,
           ],
-          0.5,
+          1.5,
           0.8,
         ],
         13,

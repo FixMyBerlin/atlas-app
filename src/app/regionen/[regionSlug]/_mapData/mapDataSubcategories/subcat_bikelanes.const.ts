@@ -61,6 +61,15 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           },
         },
         {
+          id: 'sidewalk',
+          name: 'Fußverkehr mit Rad frei',
+          style: {
+            type: 'line',
+            color: '#9fb9f9',
+            dasharray: [2.5, 1],
+          },
+        },
+        {
           id: 'mixed',
           name: 'Führung mit Kfz (explizit)',
           style: {
@@ -144,7 +153,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           name: 'Gemeinsamer Geh- & Radweg',
           style: {
             type: 'line',
-            color: '#ec4899',
+            color: '#e949ac',
           },
         },
         {
@@ -152,7 +161,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           name: 'Gehweg mit Rad frei',
           style: {
             type: 'line',
-            color: '#ec4899',
+            color: '#f08ed5',
             dasharray: [2.5, 1],
           },
         },

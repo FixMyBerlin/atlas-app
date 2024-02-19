@@ -68,12 +68,12 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['bicycleRoad'], true, false],
   },
   {
-    id: 'Gehweg mit Rad frei',
+    id: 'Gehweg Rad frei -details',
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
       'line-dasharray': [2, 2],
-      'line-color': '#ec4899',
+      'line-color': '#f08ed5',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: [
@@ -94,7 +94,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-color': '#ec4899',
+      'line-color': '#e949ac',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: [

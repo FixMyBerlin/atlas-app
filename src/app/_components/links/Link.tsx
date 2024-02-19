@@ -22,7 +22,7 @@ export function Link<T extends string>({
   children,
   ...props
 }: LinkProps<T>) {
-  const classNames = twMerge(className, classNameOverwrite || (button ? buttonStyles : linkStyles))
+  const classNames = twMerge(classNameOverwrite || (button ? buttonStyles : linkStyles), className)
 
   return (
     <NextLink

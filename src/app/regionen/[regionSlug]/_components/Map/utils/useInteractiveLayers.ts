@@ -1,4 +1,4 @@
-import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_components/SelectDatasets/utils/useRegionDatasets'
+import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'

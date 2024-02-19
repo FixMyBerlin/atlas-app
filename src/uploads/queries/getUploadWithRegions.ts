@@ -8,7 +8,7 @@ export default resolver.pipe(
   async ({ slug }) => {
     return await db.upload.findFirstOrThrow({
       where: { slug },
-      include: { regions: { select: { id: true } } },
+      include: { regions: { select: { id: true, slug: true } } },
     })
   },
 )
