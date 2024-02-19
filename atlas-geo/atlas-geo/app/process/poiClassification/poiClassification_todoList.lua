@@ -5,6 +5,7 @@ require("ExtractKeys")
 require("InferAddress")
 require("Metadata")
 require("ShoppingAllowedListWithCategories")
+require("CopyTags")
 
 -- The goal of this TodoList is to make sure we do not miss out on any amenitys.
 -- The amenity key is used for all kind of stuff.
