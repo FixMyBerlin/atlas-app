@@ -66,11 +66,8 @@ function Bikelanes(object)
       if category ~= nil then
         local results = { _infrastructureExists = true, category = category, offset = sign * RoadWidth(tags) / 2 }
 
-        results.oneway = cycleway.oneway
-        -- Our atlas-app inspector should be explicit about tagging that OSM considers default/implicit
-        if results.oneway == nil then
-          results.oneway = InferOneway(category)
-        end
+        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        results.oneway = Sanitize(cycleway.oneway, Set({'yes', 'no'})) or InferOneway(category)
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
