@@ -1,4 +1,7 @@
--- Copy all key value pairs from src to dst
+---@param dst table
+---@param src table
+---@return table
+-- Copy all key value pairs from `src` to `dst`
 function MergeTable(dst, src)
   for k, v in pairs(src) do
     dst[k] = v

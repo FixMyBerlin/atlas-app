@@ -45,13 +45,13 @@ local function splitDirections(tags)
     local directedTag = "traffic_sing:" .. direction
     local both = "traffic_sing:both"
     if tags[directedTag] or tags[both] then
-      traffic_signs[direction] = { ["traffic_sign"] = tags[directedTag] or tags[both], ["offset"] = offset, direction=tags.direction }
+      traffic_signs[direction] = { ["traffic_sign"] = tags[directedTag] or tags[both], ["offset"] = offset }
     elseif tags.direction == direction or tags.direction=="both" then
       traffic_signs[direction] = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = offset }
     end
   end
   if traffic_signs.forward == nil and traffic_signs.backward == nil then
-    traffic_signs.forward = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = 0, direction=tags.direction }
+    traffic_signs.forward = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = 0 }
   end
   return { traffic_signs.forward, traffic_signs.backward }
 end
@@ -99,25 +99,24 @@ function osm2pgsql.process_node(object)
   if ExitProcessing(object) then return end
 
   tags.direction = tags.direction or tags['traffic_sign:direction'] -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
+  local direction
   local direction_source = nil
   if tags.direction ~= nil then
     -- orinetation is given in degree
-    local direction = tonumber(tags.direction)
+    direction = tonumber(tags.direction)
     direction_source = 'tag_degrees'
     if direction == nil then
       -- orientation is given by a cardinal direction e.g. NW
       direction = cardinalDirection2Degree(tags.direction)
       direction_source = 'tag_cardinal'
     end
-    if direction ~= nil then -- one of the previous cases worked and we have a direction in degrees
-      tags.direction = direction
-    else -- we don't have a direction in degrees and now try to orient the traffic sign by the way it is part of
+    if direction == nil then -- we don't have a direction in degrees and now try to orient the traffic sign by the way it is part of
       to_orient[object.id] = true
     end
   end
   for _, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
+    traffic_sign.direction = tonumber(direction)
     traffic_sign.direction_source = direction_source
-    traffic_sign.direction = tonumber(traffic_sign.direction)
     for k,v in pairs(tags) do traffic_sign['osm_' .. k] = v end
     table:insert({
       tags = traffic_sign,

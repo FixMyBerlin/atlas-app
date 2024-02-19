@@ -84,7 +84,7 @@ function osm2pgsql.process_way(object)
 
   -- ====== (C) Compute results and insert ======
   local results = {
-    name = tags.name or tags.ref
+    name = tags.name or tags.ref or tags['is_sidepath:of:name']
   }
 
   MergeTable(results, RoadClassification(object))
@@ -94,6 +94,7 @@ function osm2pgsql.process_way(object)
   local cycleways = Bikelanes(object)
   for _, cycleway in pairs(cycleways) do
     if cycleway._infrastructureExists then
+      cycleway.name = results.name
       cycleway.road = results.road
       bikelanesTable:insert({
         tags = cycleway,
@@ -108,7 +109,7 @@ function osm2pgsql.process_way(object)
     MergeTable(results, BikelanesPresence(object, cycleways))
   end
 
-  -- We need sidewalk for Biklanes()
+  -- We need sidewalk for Biklanes(), but not for `roads`
   local isSidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
   if not isSidewalk then
     roadsTable:insert({
