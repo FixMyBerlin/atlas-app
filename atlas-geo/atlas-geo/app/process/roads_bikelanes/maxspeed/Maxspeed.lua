@@ -7,16 +7,22 @@ require("MaxspeedFromZone")
 require("CopyTags")
 require("Set")
 
+local tags_copied = {}
+local tags_prefixed = {
+  "maxspeed:backward",
+  "maxspeed:forward",
+  "maxspeed:conditional",
+}
+
+-- Try to find maxspeed information in the following order:
+-- 1. `maxspeed` tag (also looking at `maxspeed:forward` and `maxspeed:backward`)
+-- 2. maxspeed zones tags
+-- 3. highway type
+-- 4. TODO: intersecting landuse via SQL, see https://github.com/FixMyBerlin/atlas-geo/pull/28
 function Maxspeed(object)
   local tags = object.tags
+  local result_tags = {}
 
-  local maxspeed_data = {}
-
-  -- Try to find maxspeed information in the following order:
-  -- 1. `maxspeed` tag
-  -- 2. maxspeed zones tags
-  -- 3. highway type
-  -- 4. SQL: intersecting landuse
   local maxspeed, source, confidence = MaxspeedDirect(tags)
 
   if maxspeed == nil then
@@ -34,27 +40,17 @@ function Maxspeed(object)
     end
   end
 
-  -- all tags that are shown on the application
-  local tags_cc = {
-    "maxspeed:backward",
-    "maxspeed:forward",
-    "maxspeed:conditional",
-  }
 
-  CopyTags(maxspeed_data, tags, tags_cc, "osm_")
-
-  -- Freshness of data (AFTER `FilterTags`!)
+  -- Freshness of data
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
-  if tags["check_date:maxspeed"] then
-    maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
-  end
 
-  maxspeed_data.maxspeed = maxspeed
-  maxspeed_data.maxspeed_source = source
-  maxspeed_data.maxspeed_confidence = confidence
+  result_tags.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
 
-  if maxspeed ~= nil then
-    return maxspeed_data
-  end
-  return {}
+  CopyTags(result_tags, tags, tags_copied)
+  CopyTags(result_tags, tags, tags_prefixed, "osm_")
+  result_tags.maxspeed = maxspeed
+  result_tags.maxspeed_source = source
+  result_tags.maxspeed_confidence = confidence
+
+  return result_tags
 end

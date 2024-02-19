@@ -63,13 +63,6 @@ end
 local function bicycleRoad(tags)
   if tags.bicycle_road == "yes"
       or osm2pgsql.has_prefix(tags.traffic_sign, 'DE:244') then
-    -- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
-    -- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
-    -- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
-    if tags.oneway == 'yes' and tags['oneway:bicycle'] == 'no' then
-      tags.oneway = 'car_not_bike'
-    end
-
     -- Subcategory when bicycle road allows vehicle traffic
     if tags.traffic_sign == 'DE:244.1,1020-30'
         or tags.traffic_sign == 'DE:244,1020-30'
@@ -90,7 +83,7 @@ local function footAndCyclewaySharedCases(tags)
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
       return "footAndCyclewayShared_adjoining"
     end
     -- Eg https://www.openstreetmap.org/way/440072364 highway=service
@@ -110,7 +103,7 @@ local function footAndCyclewaySegregatedCases(tags)
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
       return "footAndCyclewaySegregated_adjoining"
     end
     if tags.is_sidepath == "no" then
@@ -132,7 +125,7 @@ local function footwayBicycleYesCases(tags)
   if tags.highway == "footway" or tags.highway == "path" then
     if tags.bicycle == "yes" or IsTermInString("1022-10", tags.traffic_sign) then
       -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-      if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" then
+      if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
         return "footwayBicycleYes_adjoining"
       end
       -- https://www.openstreetmap.org/way/946438663
@@ -286,8 +279,12 @@ end
 
 -- Categories for objects where no infrastructure is available but the data is considered complete
 function CategorizeOnlyPresent(tags)
-  local dataCategories = { dataNo, isSeparate, implicitOneWay }
-  return defineCategory(tags, dataCategories)
+  local categories = {
+    dataNo,
+    isSeparate,
+    implicitOneWay,
+  }
+  return defineCategory(tags, categories)
 end
 
 function CategorizeBikelane(tags)

@@ -1,6 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
-require("FilterTags")
 require("Metadata")
 require("HighwayClasses")
 
@@ -24,7 +23,7 @@ local areaBarriers = osm2pgsql.define_table({
   }
 })
 
-local allowedTags = Set({
+local tags_cc = {
   'tunnel',
   'waterway',
   'aerodrome',
@@ -36,7 +35,7 @@ local allowedTags = Set({
   'area',
   'highway',
   'bridge',
-})
+}
 
 local function isAreaBarrier(object)
   local tags = object.tags
@@ -67,9 +66,8 @@ end
 function osm2pgsql.process_way(object)
   if object.is_closed then -- process as polygon
     if isAreaBarrier(object) then
-      FilterTags(object.tags, allowedTags)
       areaBarriers:insert({
-        tags = object.tags,
+        tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
         geom = object:as_multipolygon()
       })
@@ -89,9 +87,8 @@ function osm2pgsql.process_way(object)
     end
 
     if isBarrier then
-      FilterTags(object.tags, allowedTags)
       lineBarriers:insert({
-        tags = object.tags,
+        tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
         geom = object:as_linestring(),
       })
@@ -102,9 +99,8 @@ end
 
 function osm2pgsql.process_relation(object)
   if isAreaBarrier(object) then
-    FilterTags(object.tags, allowedTags)
     areaBarriers:insert({
-      tags = object.tags,
+      tags = CopyTags({}, object.tags, tags_cc),
       meta = Metadata(object),
       geom = object:as_multipolygon()
     })
