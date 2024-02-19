@@ -89,7 +89,7 @@ local function footAndCyclewaySharedCases(tags)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
       return "footAndCyclewayShared_adjoining"
     end
     -- Eg https://www.openstreetmap.org/way/440072364 highway=service
@@ -108,7 +108,7 @@ local function footAndCyclewaySegregatedCases(tags)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+    if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
       return "footAndCyclewaySegregated_adjoining"
     end
     if tags.is_sidepath == "no" then
@@ -130,9 +130,7 @@ local function footwayBicycleYesCases(tags)
   if tags.highway == "footway" or tags.highway == "path" then
     if tags.bicycle == "yes" or IsTermInString("1022-10", tags.traffic_sign) then
       -- https://www.openstreetmap.org/way/946438663
-      -- path=sidewalk is an uncommon alternative to is_sidepath=yes or footway=sidewalk
-      --   see https://taginfo.geofabrik.de/europe:germany/tags/path=sidewalk#overview
-      if tags.is_sidepath == "yes" or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+      if tags.is_sidepath == "yes" or tags.footway == "sidewalk" then
         return "footwayBicycleYes_isolated"
       end
       if tags.is_sidepath == "no" then
