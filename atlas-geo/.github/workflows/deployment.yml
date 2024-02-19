@@ -33,7 +33,7 @@ on:
       ENVIRONMENT:
         type: string
         required: true
-      URL:
+      TILES_URL:
         type: string
         required: true
 
@@ -42,11 +42,40 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
-      url: https://${{ inputs.URL }}
+      url: https://${{ inputs.TILES_URL }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 6
+
+      - name: Get last run commit SHA
+        id: last_run
+        run: |
+          LAST_RUN_SHA=$(curl --request GET \
+          --url https://api.github.com/repos/${{ github.repository }}/actions/runs \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          | jq -r '.workflow_runs[1].head_sha')
+          echo "::set-output name=sha::$LAST_RUN_SHA"
+        shell: bash
+
+      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
+        id: git_changes
+        run: |
+          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
+          if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
+            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- app/ helpers/ app.Dockerfile docker-compose.yml; then
+              echo "::set-output name=changes::false"
+            else
+              echo "::set-output name=changes::true"
+            fi
+          else
+            echo "::set-output name=changes::true"
+          fi
+        shell: bash
+
 
       - name: Upgrade AWS CLI version and setup lightsailctl
+        if: steps.git_changes.outputs.changes == 'true'
         run: |
           aws --version
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -58,6 +87,7 @@ jobs:
           sudo chmod +x /usr/local/bin/lightsailctl
 
       - name: Configure AWS credentials
+        if: steps.git_changes.outputs.changes == 'true'
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -65,9 +95,11 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Setup buildx
+        if: steps.git_changes.outputs.changes == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Build app image
+        if: steps.git_changes.outputs.changes == 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -79,6 +111,7 @@ jobs:
           tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Push the app image
+        if: steps.git_changes.outputs.changes == 'true'
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
@@ -93,6 +126,17 @@ jobs:
           target: "/srv/processing/"
           overwrite: true
 
+      - name: Update GITHUB_SHA
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/processing/
+            sed -i "s|^GITHUB_SHA=.*$|GITHUB_SHA='${{ github.sha }}'|" .env
+
       - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
@@ -101,20 +145,18 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv/processing/
-            echo "Updating '.env'"
-            rm .env
-            touch .env
-            echo PGHOST='${{ vars.DATABASE_HOST }}' >> .env
-            echo ENVIRONMENT='${{ inputs.ENVIRONMENT }}' >> .env
-            echo SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}' >> .env
-            echo SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}' >> .env
-            echo PGUSER='${{ secrets.DATABASE_USER }}' >> .env
-            echo PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
-            echo PGDATABASE='${{ secrets.DATABASE_NAME }}' >> .env
-            echo OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}' >> .env
-            echo URL='${{ inputs.URL }}' >> .env
-            echo GITHUB_SHA='${{ github.sha }}' >> .env
+            sed -i \
+              -e "s|^PGHOST=.*$|PGHOST='${{ vars.DATABASE_HOST }}'|" \
+              -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
+              -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
+              -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
+              -e "s|^PGUSER=.*$|PGUSER='${{ secrets.DATABASE_USER }}'|" \
+              -e "s|^PGPASSWORD=.*$|PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
+              -e "s|^PGDATABASE=.*$|PGDATABASE='${{ secrets.DATABASE_NAME }}'|" \
+              -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
+              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \
+              .env
             echo "Reload containers"
-            docker compose -f docker-compose.traefik.yml up -d
+            docker compose pull
             docker compose up -d
             docker image prune -fa
