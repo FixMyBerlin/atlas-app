@@ -36,7 +36,6 @@ end
 local function processTags(tags)
   local tags_cc = Set({ "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
     "population:date", "admin_level" })
-  -- TODO: I don't think that we need the line bellow, osm2pgsql should convert this automatically
   tags.population = tonumber(tags.population)
   return CopyTags({}, tags, tags_cc)
 end
