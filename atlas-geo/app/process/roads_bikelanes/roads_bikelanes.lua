@@ -94,6 +94,7 @@ function osm2pgsql.process_way(object)
   local cycleways = Bikelanes(object)
   for _, cycleway in pairs(cycleways) do
     if cycleway._infrastructureExists then
+      cycleway.name = results.name
       cycleway.road = results.road
       bikelanesTable:insert({
         tags = cycleway,

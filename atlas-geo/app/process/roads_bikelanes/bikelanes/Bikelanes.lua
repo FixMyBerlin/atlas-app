@@ -14,7 +14,6 @@ require("DeriveSmoothness")
 require("BikelanesTodos")
 
 local tags_copied = {
-  "name",
   "mapillary",
   "description",
 }
