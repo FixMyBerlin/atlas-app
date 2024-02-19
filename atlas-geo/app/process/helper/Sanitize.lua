@@ -1,7 +1,11 @@
+---@param value any
+---@param allowed table
+---@param fallback? any
+---@return any
 -- makes sure that `value` is in the set `allowed`. Returns `default` if value is nil
-function Sanitize(value, allowed, default)
+function Sanitize(value, allowed, fallback)
   if value == nil then
-    return default
+    return fallback
   end
   if allowed[value] then
     return value
