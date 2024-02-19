@@ -5,7 +5,38 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_roads_smooth_bad: MapboxStyleLayer[] = [
   {
-    filter: ['match', ['get', 'smoothness'], ['bad', 'very_bad'], true, false],
+    filter: [
+      'all',
+      ['match', ['get', 'smoothness'], ['bad', 'very_bad'], true, false],
+      [
+        'match',
+        ['get', 'road'],
+        [
+          'bicycle_road',
+          'residential_priority_road',
+          'primary',
+          'residential',
+          'trunk_link',
+          'secondary_link',
+          'tertiary_link',
+          'service_uncategorized',
+          'unspecified_road',
+          'service_road',
+          'service_alley',
+          'unclassified',
+          'tertiary',
+          'secondary',
+          'trunk',
+          'primary_link',
+          'cycleway_crossing',
+          'living_street',
+          'footway_crossing',
+          'footway_sidewalk',
+        ],
+        true,
+        false,
+      ],
+    ],
     type: 'line',
     id: 'smoothness-roads-bad',
     paint: {
@@ -24,7 +55,7 @@ export const mapboxStyleGroupLayers_atlas_roads_smooth_bad: MapboxStyleLayer[] =
         '#37f644',
         '#000000',
       ],
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 2, 14, 3, 16, 5],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1, 14, 2, 16, 3],
       'line-opacity': ['interpolate', ['linear'], ['zoom'], 9.9, 0, 10, 0.1, 10.3, 0.9],
       'line-dasharray': [1, 1],
     },
