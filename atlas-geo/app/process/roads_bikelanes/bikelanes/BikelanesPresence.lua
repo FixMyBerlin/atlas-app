@@ -30,12 +30,11 @@ function BikelanesPresence(object, cycleways)
   -- replace all nil values with 'missing'
   for _, side in pairs(sides) do presence[side] = presence[side] or "missing" end
 
-
-  local presence_data = {
+  local result_tags = {
     bikelane_left = presence[LEFT_SIGN],
     bikelane_self = presence[CENTER_SIGN],
     bikelane_right = presence[RIGHT_SIGN]
   }
 
-  return presence_data
+  return result_tags
 end
