@@ -54,7 +54,10 @@ export async function GET(request: Request, { params }: { params: { slug: string
     response = await s3Client.send(new GetObjectCommand(sendParams))
   } catch (e) {
     const { $metadata, message } = e
-    return Response.json({ source: 'S3', statusText: message }, { status: $metadata.httpStatusCode })
+    return Response.json(
+      { source: 'S3', statusText: message },
+      { status: $metadata.httpStatusCode },
+    )
   }
 
   return new Response(response.Body!, {
