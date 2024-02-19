@@ -12,6 +12,7 @@ require("ToMarkdownList")
 require("DeriveSurface")
 require("DeriveSmoothness")
 require("BikelanesTodos")
+require("Sanitize")
 require("InferOneway")
 
 local tags_copied = {

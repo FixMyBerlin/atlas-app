@@ -5,6 +5,7 @@ package.path = package.path .. dir .. "maxspeed/?.lua"
 package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
+package.path = package.path .. dir .. "bikeroutes/?.lua"
 
 require("Set")
 require("JoinSets")
@@ -18,6 +19,7 @@ require("Lit")
 require("RoadClassification")
 require("SurfaceQuality")
 require("Bikelanes")
+require("Bikeroutes")
 require("BikelanesPresence")
 require("MergeTable")
 require("CopyTags")
@@ -42,6 +44,16 @@ local bikelanesTable = osm2pgsql.define_table({
   }
 })
 
+local bikeroutesTable = osm2pgsql.define_table({
+  name = 'bikeroutes',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'multilinestring' },
+  }
+})
+
 local excludedRoadsTable = osm2pgsql.define_table({
   name = 'roads_excluded',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -53,6 +65,7 @@ local excludedRoadsTable = osm2pgsql.define_table({
   }
 })
 
+-- local wayRouteMapping = {}
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
@@ -91,11 +104,17 @@ function osm2pgsql.process_way(object)
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
+
   local cycleways = Bikelanes(object)
   for _, cycleway in pairs(cycleways) do
     if cycleway._infrastructureExists then
       cycleway.name = results.name
       cycleway.road = results.road
+
+      -- if osm2pgsql.stage == 2 then
+      --   cycleway.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      -- end
+
       bikelanesTable:insert({
         tags = cycleway,
         meta = Metadata(object),
@@ -119,3 +138,21 @@ function osm2pgsql.process_way(object)
     })
   end
 end
+
+function osm2pgsql.process_relation(object)
+  if IsBicycleRoute(object.tags) then
+    -- UpdateWayRouteMapping(wayRouteMapping, object.id, osm2pgsql.way_member_ids(object))
+
+    bikeroutesTable:insert({
+      tags = Bikeroutes(object.tags),
+      meta = Metadata(object),
+      geom = object:as_multilinestring(),
+    })
+  end
+end
+
+-- function osm2pgsql.select_relation_members(object)
+--   if IsBicycleRoute(object.tags) then
+--     return { ways = osm2pgsql.way_member_ids(object) }
+--   end
+-- end

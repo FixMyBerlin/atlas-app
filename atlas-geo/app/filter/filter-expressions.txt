@@ -32,3 +32,6 @@ nw/tourism
 
 # Topic: Traffic signs
 n/traffic_sign*
+
+#Topic: Bicycle routes
+r/route
