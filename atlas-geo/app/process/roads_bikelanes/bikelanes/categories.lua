@@ -286,8 +286,12 @@ end
 
 -- Categories for objects where no infrastructure is available but the data is considered complete
 function CategorizeOnlyPresent(tags)
-  local dataCategories = { dataNo, isSeparate, implicitOneWay }
-  return defineCategory(tags, dataCategories)
+  local categories = {
+    dataNo,
+    isSeparate,
+    implicitOneWay,
+  }
+  return defineCategory(tags, categories)
 end
 
 function CategorizeBikelane(tags)

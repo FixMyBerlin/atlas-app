@@ -20,7 +20,7 @@ function RoadClassification(object)
   local roadClassification = {}
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
-  -- We use the OSM highway value as category, but have a few special cases below.
+  -- In general, we use the OSM highway value as category, but have a few special cases below.
   local highway_mapping = {
     road = "unspecified_road",
     steps = "footway_steps",
@@ -82,6 +82,7 @@ function RoadClassification(object)
 
   if tags.oneway == 'yes' then
     -- Note: We do not pass 'oneway=no' to the 'road_oneway' key
+    -- because it is the default which we do not want to show in the UI.
     roadClassification.road_oneway = tags.oneway
     if tags.dual_carriageway == "yes" then
       roadClassification.road_oneway = tags.oneway .. '_dual_carriageway'
