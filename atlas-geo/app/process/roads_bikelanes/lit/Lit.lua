@@ -21,6 +21,8 @@ require("Set")
 --  We need to improve this, to copy the ways for sidewalks and cycleways that are not yet mapped separately. And apply the data on those ways as well.
 --  Could we do this, by adding a _processing_instructions="move left".
 --  We add those ways twice to the data … and post-process the in SQL?
+local tags_copied = {}
+local tags_prefixed = {}
 
 function Lit(object)
   local tags = object.tags
@@ -42,6 +44,9 @@ function Lit(object)
   if tags["check_date:lit"] then
     lit_data.lit_age= AgeInDays(ParseDate(tags["check_date:lit"]))
   end
+
+  CopyTags(lit_data, tags, tags_copied)
+  CopyTags(lit_data, tags, tags_prefixed, "osm_")
 
   return lit_data
 end

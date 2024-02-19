@@ -3,13 +3,21 @@ require("Set")
 require("CopyTags")
 require("Sanitize")
 
-function RoadClassification(object)
-  -- Values that we would allow, but skip here:
-  -- "construction", "planned", "proposed", "platform" (Haltestellen),
-  -- "rest_area" (https://wiki.openstreetmap.org/wiki/DE:Tag:highway=rest%20area)
+local tags_copied = {
+  "mapillary",
+  "description",
+}
+local tags_prefixed = {
+  'traffic_sign',
+  'traffic_sign:forward',
+  'traffic_sign:backward',
+  "mapillary",
+  "description",
+}
 
-  local roadClassification = {}
+function RoadClassification(object)
   local tags = object.tags
+  local roadClassification = {}
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- We use the OSM highway value as category, but have a few special cases below.
@@ -83,16 +91,8 @@ function RoadClassification(object)
     roadClassification['road_oneway:bicycle'] = tags['oneway:bicycle']
   end
 
-  -- these tags are copied and prefixed with `osm_`
-  -- we need to sanatize them at some point
-  local tags_cc = {
-    'traffic_sign',
-    'traffic_sign:forward',
-    'traffic_sign:backward',
-    "mapillary",
-    "description",
-  }
-  CopyTags(roadClassification, tags, tags_cc, "osm_")
+  CopyTags(roadClassification, tags, tags_copied)
+  CopyTags(roadClassification, tags, tags_prefixed, "osm_")
   roadClassification.width = ParseLength(tags.width)
   roadClassification.oneway = Sanitize(tags.oneway, Set({ "yes", "no" }))
 

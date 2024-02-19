@@ -7,6 +7,13 @@ require("MaxspeedFromZone")
 require("CopyTags")
 require("Set")
 
+local tags_copied = {}
+local tags_prefixed = {
+  "maxspeed:backward",
+  "maxspeed:forward",
+  "maxspeed:conditional",
+}
+
 function Maxspeed(object)
   local tags = object.tags
 
@@ -34,21 +41,14 @@ function Maxspeed(object)
     end
   end
 
-  -- all tags that are shown on the application
-  local tags_cc = {
-    "maxspeed:backward",
-    "maxspeed:forward",
-    "maxspeed:conditional",
-  }
-
-  CopyTags(maxspeed_data, tags, tags_cc, "osm_")
-
   -- Freshness of data (AFTER `FilterTags`!)
   -- 700+ https://taginfo.openstreetmap.org/keys/check_date%3Amaxspeed
   if tags["check_date:maxspeed"] then
     maxspeed_data.maxspeed_age = AgeInDays(ParseDate(tags["check_date:maxspeed"]))
   end
 
+  CopyTags(maxspeed_data, tags, tags_copied)
+  CopyTags(maxspeed_data, tags, tags_prefixed, "osm_")
   maxspeed_data.maxspeed = maxspeed
   maxspeed_data.maxspeed_source = source
   maxspeed_data.maxspeed_confidence = confidence
