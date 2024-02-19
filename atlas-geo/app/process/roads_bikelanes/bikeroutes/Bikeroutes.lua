@@ -1,3 +1,5 @@
+require("CopyTags")
+
 ---@param tags table
 ---@return boolean
 -- Predicate wether a relation is a bicycle route
