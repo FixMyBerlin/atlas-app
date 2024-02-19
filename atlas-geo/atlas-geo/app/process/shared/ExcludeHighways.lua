@@ -1,7 +1,8 @@
 require("Set")
 
--- * @desc If and why a highway object should be excluded based on its tags.
--- * @returns { boolean (shouldFilter), string (reason) }
+---@return boolean, string
+-- If and why a highway object should be excluded based on its tags.
+-- @return true/false, reason
 function ExcludeHighways(tags)
   -- Skip all non standard access values
   local forbidden_accesses = Set({ "private", "no", "destination", "delivery", "permit" })
@@ -28,7 +29,6 @@ function ExcludeHighways(tags)
   if tags.informal == 'yes' then
     return true, "Excluded by `informal=yes`"
   end
-
 
   -- Skip all unwanted `highway=service + service=<value>` values
   -- The key can have random values, we mainly want to skip

@@ -1,6 +1,6 @@
--- @desc Transform a list of string into a Markdown list
--- @param array string[]
--- @return string|nil
+---@param array string[]
+---@return string|nil
+-- Transform a list of string into a Markdown list
 function ToMarkdownList(array)
   if not array or #array == 0 then
     return nil
