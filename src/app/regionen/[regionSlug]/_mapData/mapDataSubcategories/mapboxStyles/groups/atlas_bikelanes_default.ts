@@ -15,6 +15,28 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
     filter: ['match', ['get', 'category'], ['needsClarification'], true, false],
   },
   {
+    id: 'Gehweg Rad frei',
+    type: 'line',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 16, 3],
+      'line-dasharray': [2, 2],
+      'line-color': '#9fb9f9',
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+    },
+    filter: [
+      'match',
+      ['get', 'category'],
+      [
+        'footwayBicycleYes_isolated',
+        'pedestrianAreaBicycleYes',
+        'footwayBicycleYes_adjoining',
+        'footwayBicycleYes_adjoiningOrIsolated',
+      ],
+      true,
+      false,
+    ],
+  },
+  {
     id: 'Fuehrung mit Kfz-explizit',
     type: 'line',
     paint: {
@@ -47,10 +69,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
         'footAndCyclewayShared_isolated',
         'footAndCyclewayShared_adjoining',
         'footAndCyclewayShared_adjoiningOrIsolated',
-        'footwayBicycleYes_isolated',
-        'pedestrianAreaBicycleYes',
-        'footwayBicycleYes_adjoining',
-        'footwayBicycleYes_adjoiningOrIsolated',
         'livingStreet',
       ],
       true,
