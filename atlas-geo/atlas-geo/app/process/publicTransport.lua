@@ -1,7 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("Set")
 require("CopyTags")
-require("MergeArray")
 require("Metadata")
 
 local table = osm2pgsql.define_table({
