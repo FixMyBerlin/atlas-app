@@ -27,16 +27,22 @@ local onewayImplicitYes = Set({
   'footwayBicycleYes_isolated', -- "shared lane"-like, still assuming "oneway=yes" because too little space or it would be "footAndCyclewayShared_isolated"
   'footwayBicycleYes_adjoiningOrIsolated' -- unclear, fall back to "shared lane"-like
 })
----comment
+
 ---@param category string
 ---@return 'assumed_no' | 'implicit_yes' | 'unknown'
 --- Infer oneway information based on the given category
 function InferOneway(category)
+-- TODO:
+-- We want to make sure that "Fahrradstraßen" which allow bidirectional bicycle traffic
+-- but only unidirectional motor_vehicle traffic can express this fact in our atlas Inspector.
+-- Which is why we invent a new value `car_not_bike` for the `oneway` tag.
+
   if onewayAssumedNo[category] then
     return 'assumed_no'
   end
   if onewayImplicitYes[category] then
     return 'implicit_yes'
   end
+  -- This should never happen / maybe in some kind of TODO-list
   return 'unknown'
 end
