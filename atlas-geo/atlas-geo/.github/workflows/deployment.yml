@@ -52,9 +52,9 @@ jobs:
         id: last_run
         run: |
           LAST_RUN_SHA=$(curl --request GET \
-          --url https://api.github.com/repos/${{ github.repository }}/actions/runs \
+          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          | jq -r '.workflow_runs[1].head_sha')
+          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
           echo "::set-output name=sha::$LAST_RUN_SHA"
         shell: bash
 
@@ -72,7 +72,6 @@ jobs:
             echo "::set-output name=changes::true"
           fi
         shell: bash
-
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
