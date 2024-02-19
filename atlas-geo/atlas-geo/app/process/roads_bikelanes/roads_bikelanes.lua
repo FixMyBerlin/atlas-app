@@ -84,7 +84,7 @@ function osm2pgsql.process_way(object)
 
   -- ====== (C) Compute results and insert ======
   local results = {
-    name = tags.name or tags.ref
+    name = tags.name or tags.ref or tags['is_sidepath:of:name']
   }
 
   MergeTable(results, RoadClassification(object))
