@@ -19,10 +19,7 @@ function Lit(object)
     end
   end
 
-  -- 4,000+ https://taginfo.openstreetmap.org/keys/check_date%3Alit, https://overpass-turbo.eu/s/1lZW
-  if tags["check_date:lit"] then
-    result_tags.lit_age = AgeInDays(ParseDate(tags["check_date:lit"]))
-  end
+  result_tags.lit_age = AgeInDays(ParseDate(tags["check_date:lit"]))
 
   CopyTags(result_tags, tags, tags_copied)
   CopyTags(result_tags, tags, tags_prefixed, "osm_")
