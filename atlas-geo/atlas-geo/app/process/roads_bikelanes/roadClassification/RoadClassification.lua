@@ -45,8 +45,8 @@ function RoadClassification(object)
 
   -- Vorfahrtsstraße, Zubringerstraße
   -- https://wiki.openstreetmap.org/wiki/DE:Key:priority_road
-  if (tags.highway == 'residential' and tags.priority_road == 'designated')
-      or (tags.highway == 'residential' and tags.priority_road == 'yes_unposted') then
+  if tags.highway == 'residential' and
+      (tags.priority_road == 'designated' or tags.priority_road == 'yes_unposted') then
     roadClassification.road = "residential_priority_road"
   end
 
