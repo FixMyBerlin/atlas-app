@@ -19,7 +19,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
       legends: [
         {
           id: 'action-cam',
-          name: 'Klassische Fotos',
+          name: 'Aktuelle, klassische Fotos',
           style: {
             type: 'line',
             color: 'green',
@@ -27,7 +27,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
         },
         {
           id: 'action-360',
-          name: '360° Fotos',
+          name: 'Aktuelle 360° Fotos',
           style: {
             type: 'line',
             color: 'blue',
@@ -173,6 +173,32 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
       id: 'age',
       name: 'Alter',
       desc: null,
+      legends: [
+        {
+          id: 'current',
+          name: '2 Jahre und aktueller',
+          style: {
+            type: 'fill',
+            color: '#05CB63',
+          },
+        },
+        {
+          id: '2y',
+          name: '2 Jahre+',
+          style: {
+            type: 'fill',
+            color: '#FFC01B',
+          },
+        },
+        {
+          id: '4y',
+          name: '4 Jahre+',
+          style: {
+            type: 'fill',
+            color: '#F77E5E',
+          },
+        },
+      ],
       layers: [
         {
           id: 'point-click-target',
@@ -209,23 +235,30 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'sequence',
           paint: {
-            // For zoom 0-14 we color by age, after by type (blue/green)
             'line-color': [
               'step',
-              ['zoom'],
-              [
-                'step',
-                ['get', 'captured_at'],
-                '#F77E5E',
-                new Date().setFullYear(new Date().getFullYear() - 4),
-                '#FFC01B',
-                new Date().setFullYear(new Date().getFullYear() - 2),
-                '#05CB63',
-              ],
-              14,
-              ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
+              ['get', 'captured_at'],
+              '#F77E5E',
+              new Date().setFullYear(new Date().getFullYear() - 4),
+              '#FFC01B',
+              new Date().setFullYear(new Date().getFullYear() - 2),
+              '#05CB63',
             ],
-            'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
+            'line-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              10,
+              0.7,
+              14,
+              // Make newer pics stand out with a more solid line
+              [
+                'case',
+                ['>', ['get', 'captured_at'], new Date().setFullYear(new Date().getFullYear() - 2)],
+                0.9,
+                0.4,
+              ],
+            ],
             'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           interactive: false,
@@ -236,6 +269,32 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
       id: 'pano',
       name: 'Panorama-Fotos',
       desc: null,
+      legends: [
+        {
+          id: 'current',
+          name: '2 Jahre und aktueller',
+          style: {
+            type: 'fill',
+            color: '#05CB63',
+          },
+        },
+        {
+          id: '2y',
+          name: '2 Jahre+',
+          style: {
+            type: 'fill',
+            color: '#FFC01B',
+          },
+        },
+        {
+          id: '4y',
+          name: '4 Jahre+',
+          style: {
+            type: 'fill',
+            color: '#F77E5E',
+          },
+        },
+      ],
       layers: [
         {
           id: 'point-click-target',
@@ -283,7 +342,21 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
               new Date().setFullYear(new Date().getFullYear() - 2),
               '#05CB63',
             ],
-            'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
+            'line-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              10,
+              0.7,
+              14,
+              // Make newer pics stand out with a more solid line
+              [
+                'case',
+                ['>', ['get', 'captured_at'], new Date().setFullYear(new Date().getFullYear() - 2)],
+                0.9,
+                0.4,
+              ],
+            ],
             'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           filter: ['==', ['get', 'is_pano'], true],
