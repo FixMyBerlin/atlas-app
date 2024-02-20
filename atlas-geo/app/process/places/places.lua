@@ -35,8 +35,8 @@ local function ExitProcessing(object)
 end
 
 local function processTags(tags)
-  local tags_cc = Set({ "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
-    "population:date", "admin_level" })
+  local tags_cc = { "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
+    "population:date", "admin_level" }
   tags.population = tonumber(tags.population)
   return CopyTags({}, tags, tags_cc)
 end
