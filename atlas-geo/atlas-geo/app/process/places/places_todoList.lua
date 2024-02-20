@@ -47,8 +47,8 @@ local function ContinueProcess(object)
 end
 
 local function processTags(tags)
-  local tags_cc = Set({ "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
-    "population:date", "admin_level" })
+  local tags_cc = { "_todos", "name", "place", "capital", "website", "wikidata", "wikipedia", "population",
+    "population:date", "admin_level" }
     return CopyTags({}, tags, tags_cc)
   -- tags.population = tonumber(tags.population)
 end
