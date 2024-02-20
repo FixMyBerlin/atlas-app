@@ -1,3 +1,5 @@
+'use client'
+
 import { invoke } from '@blitzjs/rpc'
 import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import { RegionTeaser } from './RegionTeaser'
