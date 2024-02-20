@@ -2,6 +2,7 @@ package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?
 require("Set")
 require("Metadata")
 require("HighwayClasses")
+require("CopyTags")
 
 local lineBarriers = osm2pgsql.define_table({
   name = 'barrierLines',
