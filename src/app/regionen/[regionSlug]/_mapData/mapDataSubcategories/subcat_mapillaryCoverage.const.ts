@@ -52,6 +52,29 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           ],
         },
         {
+          id: 'direction',
+          type: 'symbol',
+          source: 'mapillary-source',
+          'source-layer': 'image',
+          paint: {
+            'icon-opacity': ['interpolate', ['linear'], ['zoom'], 14, 0, 16, 0, 17, 0.95],
+          },
+          layout: {
+            'icon-image': 'chevron-double-right',
+            'icon-rotate': ['get', 'compass_angle'],
+            'icon-size': ['interpolate', ['linear'], ['zoom'], 16, 0.4, 17, 0.75, 19, 0.9],
+            'icon-offset': [13, 0],
+            // 'icon-allow-overlap': true,
+            // 'icon-padding': 0.5,
+          },
+          filter: [
+            'case',
+            ['<', ['get', 'captured_at'], new Date().setFullYear(new Date().getFullYear() - 2)],
+            false,
+            true,
+          ],
+        },
+        {
           id: 'point',
           type: 'circle',
           source: 'mapillary-source',
