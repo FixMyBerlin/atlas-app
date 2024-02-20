@@ -1,13 +1,3 @@
-# Dataset `places_todoList`
-
-`_todos` (string) — Includes TODOs like
-
-> TODO add `population`-Tag.
-
-and
-
-> TODO add `population:date`-Tag.
-
 # Dataset `places`
 
 **OSM:**
