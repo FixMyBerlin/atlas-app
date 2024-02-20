@@ -47,7 +47,7 @@ export const subcat_surface_roads: FileMapDataSubcategory = {
     },
     {
       id: 'bad',
-      name: 'Schlechte Oberflächenqualität',
+      name: 'Schlechte Oberflächen auf Nebenstraßen',
       desc: null,
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_roads_smooth_bad,
