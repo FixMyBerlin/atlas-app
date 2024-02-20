@@ -5,6 +5,7 @@ require("ExtractKeys")
 require("InferAddress")
 require("Metadata")
 require("Sanitize")
+require("CopyTags")
 
 -- Shared:
 require("ShoppingAllowedListWithCategories")
