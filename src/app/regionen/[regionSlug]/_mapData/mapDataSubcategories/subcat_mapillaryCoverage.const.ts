@@ -57,7 +57,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'image',
           paint: {
-            'circle-radius': 3,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
             'circle-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
           },
@@ -76,7 +76,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           paint: {
             'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
-            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           filter: [
             'case',
@@ -127,7 +127,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'image',
           paint: {
-            'circle-radius': 3,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
             'circle-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
           },
@@ -140,7 +140,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           paint: {
             'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
-            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           interactive: false,
         },
@@ -167,7 +167,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'image',
           paint: {
-            'circle-radius': 3,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
             'circle-color': [
               'step',
@@ -203,7 +203,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
               ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
             ],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
-            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           interactive: false,
         },
@@ -231,7 +231,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           source: 'mapillary-source',
           'source-layer': 'image',
           paint: {
-            'circle-radius': 3,
+            'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
             'circle-color': [
               'step',
@@ -261,7 +261,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
               '#05CB63',
             ],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
-            'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.2, 12, 0.5, 14, 1],
+            'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1.5, 10, 1.5, 14, 2, 14.6, 1.3],
           },
           filter: ['==', ['get', 'is_pano'], true],
           interactive: false,
