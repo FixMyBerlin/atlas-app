@@ -3,6 +3,11 @@ import React from 'react'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { TagsTableRow } from './TagsTableRow'
 import {
+  TagsTableRowColor,
+  tableKeyColor,
+  tableKeyColors,
+} from './compositTableRows/TagsTableRowColor'
+import {
   TagsTableRowCompositHighway,
   tableKeyHighway,
 } from './compositTableRows/TagsTableRowCompositHighway'
@@ -27,7 +32,9 @@ import {
   TagsTableRowCompositTrafficSign,
   tableKeyTrafficSign,
 } from './compositTableRows/TagsTableRowCompositTrafficSign'
+import { TagsTableRowWebsite, tableKeyWebsite } from './compositTableRows/TagsTableRowWebsite'
 import { cleanKey } from './utils/cleanKey'
+import { TagsTableRowWikipedia, tableKeyWikipedia } from './compositTableRows/TagsTableRowWikipedia'
 
 type Props = {
   properties: GeoJSONFeature['properties']
@@ -115,6 +122,46 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
                   key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyWebsite: {
+              return (
+                <TagsTableRowWebsite
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={cleanedKey}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyColor: {
+              return (
+                <TagsTableRowColor
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={key}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyColors: {
+              return (
+                <TagsTableRowColor
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={key}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyWikipedia: {
+              return (
+                <TagsTableRowWikipedia
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={key}
                   properties={properties}
                 />
               )

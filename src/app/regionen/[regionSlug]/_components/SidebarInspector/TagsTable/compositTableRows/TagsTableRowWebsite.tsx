@@ -4,8 +4,8 @@ import { mapillaryKeyUrl } from '../../Tools/osmUrls/osmUrls'
 import { TagsTableRow } from '../TagsTableRow'
 import { CompositTableRow } from './types'
 
-export const tableKeyMapillary = 'composit_mapillary'
-export const TagsTableRowCompositMapillary: React.FC<CompositTableRow> = ({
+export const tableKeyWebsite = 'website'
+export const TagsTableRowWebsite: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,
   properties,
@@ -20,7 +20,7 @@ export const TagsTableRowCompositMapillary: React.FC<CompositTableRow> = ({
       tagKey={tagKey}
       value={
         <LinkExternal blank href={url}>
-          In OSM hinterlegtes Straßenfoto anzeigen…
+          {url.replace('https://', '').replace('http://', '')}
         </LinkExternal>
       }
     />
