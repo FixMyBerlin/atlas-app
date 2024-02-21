@@ -11,6 +11,7 @@ import SvgNotesOpen from './icons/notes_open.svg'
 import { twJoin } from 'tailwind-merge'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
+import dompurify from 'dompurify'
 
 type Comment = {
   date: string
@@ -94,7 +95,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
               </div>
 
               <div
-                dangerouslySetInnerHTML={{ __html: comment.html }}
+                dangerouslySetInnerHTML={{ __html: dompurify.sanitize(comment.html) }}
                 className={twJoin(
                   proseClasses,
                   'prose-sm my-2 border-l-4 border-white pl-3 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700',
