@@ -43,7 +43,7 @@ export const SourcesAndLayers = () => {
               const sourceId = createSourceKey(
                 activeCategoryConfig.id,
                 sourceData.id,
-                subcategoryConfig.id
+                subcategoryConfig.id,
               )
 
               return (
@@ -75,7 +75,7 @@ export const SourcesAndLayers = () => {
                     }
 
                     const currStyleConfig = subcategoryConfig.styles.find(
-                      (s) => s.id === styleConfig.id
+                      (s) => s.id === styleConfig.id,
                     )
                     const visibility = layerVisibility(currStyleConfig?.active || false)
 
@@ -84,7 +84,7 @@ export const SourcesAndLayers = () => {
                         sourceData.id,
                         subcategoryConfig.id,
                         styleConfig.id,
-                        layer.id
+                        layer.id,
                       )
                       const layout =
                         layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
