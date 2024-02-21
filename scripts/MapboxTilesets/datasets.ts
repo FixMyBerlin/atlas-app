@@ -85,7 +85,7 @@ export const tilesetConfigs: Record<
   },
   bikeroutes: {
     sourceLayer: 'bikeroutes',
-    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.0f7p6nhx/#14/52.51622/13.37036',
+    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.7h5266ql/#14/52.51622/13.37036',
     bbox: bboxBrandenburg,
   },
 }

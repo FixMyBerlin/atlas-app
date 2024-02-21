@@ -160,14 +160,30 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikeroutes',
-    tiles: `${tilesUrl}/bikeroutes`, // TileJSON
+    tiles: `${tilesUrl}/bikeroutes/{z}/{x}/{y}`,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['name'],
+      documentedKeys: [
+        'name',
+        'ref',
+        'cycle_highway__if_present',
+        'operator',
+        'network',
+        'network_type__if_present',
+        'roundtrip__if_present',
+        'cycle_network_key__if_present',
+        'distance__if_present',
+        'symbol_description__if_present',
+        'colours__if_present',
+        // 'osmc:symbol__if_present', // We need a decoder https://hiking.waymarkedtrails.org/osmc_symbols.html, https://wiki.openstreetmap.org/wiki/DE:Key:osmc:symbol#G%C3%BCltige_Werte_f%C3%BCr_die_jeweiligen_Komponenten
+        'wikipedia__if_present',
+        'website__if_present',
+        'route_description__if_present',
+      ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },

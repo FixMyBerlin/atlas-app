@@ -51,8 +51,15 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     'highway_name',
     'highway:name', // bietigheim-bissingen_parking_areas
     'maxstay:conditional', // bietigheim-bissingen_parking_areas
-    'operator', // bietigheim-bissingen_parking_areas
+    'operator',
     'description',
+    'website',
+    'cycle_network_key', // bikeroutes
+    'route_description', // bikeroutes
+    'symbol_description', // bikeroutes
+    'colours', // bikeroutes
+    'colour',
+    'ref', // bikeroutes
   ]
   if (keepAsIs.includes(tagKey) || keepAsIs.map((v) => prefixWithOsm(v)).includes(tagKey)) {
     return <>{tagValue}</>
@@ -79,6 +86,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
     { key: 'admin_level', suffix: undefined },
     { key: 'maxstay', suffix: 'Minuten' }, // bietigheim-bissingen_parking_areas
     { key: 'parking:levels', suffix: 'Stockwerke' }, // bietigheim-bissingen_parking_areas
+    { key: 'distance', suffix: 'km' }, // bikeroutes
   ]
   const numberConfig = numberConfigs.find(
     (c) => c.key === tagKey || prefixWithOsm(c.key) === tagKey,
