@@ -80,21 +80,6 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
     },
   },
   {
-    type: 'symbol',
-    id: 'left-right-indication-arrow',
-    paint: {
-      'icon-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0, 13, 0, 14, 1, 22, 1],
-    },
-    layout: {
-      'symbol-placement': 'line',
-      'icon-image': 'chevron-double-right',
-      'symbol-spacing': 100,
-      'symbol-avoid-edges': true,
-      'icon-padding': 0,
-      'icon-allow-overlap': true,
-    },
-  },
-  {
     filter: ['has', 'bikelane_left'],
     type: 'line',
     id: 'bikelane_left',
