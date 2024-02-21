@@ -115,6 +115,8 @@ export const SourcesAndLayers = () => {
                           subcategoryBeforeId: subcategoryConfig.beforeId,
                           layerType: layer.type,
                         }),
+                        ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
+                        ...(layer.maxzoom ? { maxzoom: layer.maxzoom } : {}),
                       }
 
                       // The verification style layer in Mapbox Studio has to include this string
@@ -128,7 +130,7 @@ export const SourcesAndLayers = () => {
                               {...layerProps}
                             />
                           ) : (
-                            <Layer key={layerId} {...(layerProps as LayerProps)} />
+                            <Layer key={layerId} {...layerProps} />
                           )}
                           <LayerHighlight
                             key={`${layerId}_highlight`}
