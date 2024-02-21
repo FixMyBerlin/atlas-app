@@ -6,6 +6,7 @@ import { createInspectorFeatureKey } from '../../_components/utils/createKeyUtil
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
 type Store = StoreMapLoadedState &
+  StoreMapDataLoadingState &
   StorePmTilesProtocolState &
   StoreFeaturesInspector &
   StoreCalculator &
@@ -15,6 +16,11 @@ type Store = StoreMapLoadedState &
 type StoreMapLoadedState = {
   mapLoaded: boolean
   setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
+}
+
+type StoreMapDataLoadingState = {
+  mapDataLoading: boolean
+  setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
 }
 
 type StorePmTilesProtocolState = {
@@ -58,6 +64,9 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
 
   pmTilesProtocolReady: false,
   setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),
+
+  mapDataLoading: false,
+  setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
 
   // We store this globally to separate the fetching from the UI logic
   osmNotesLoading: false,

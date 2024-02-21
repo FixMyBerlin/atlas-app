@@ -19,7 +19,7 @@ export const OsmNotes: React.FC = () => {
   const centerLocation = mainMap?.getCenter()
 
   return (
-    <div className="relative ml-2 flex shadow-lg">
+    <div className="relative flex shadow-lg">
       <Tooltip
         text={
           osmNotesActive
@@ -30,7 +30,7 @@ export const OsmNotes: React.FC = () => {
         <button
           onClick={() => onChange(!osmNotesActive)}
           className={twJoin(
-            'z-0 inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium shadow-md focus:relative focus:z-10 focus:outline-none  focus:ring-2 focus:ring-yellow-500',
+            'z-0 inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium shadow-md focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500',
             osmNotesActive ? 'rounded-l-md' : 'rounded-md',
             osmNotesActive ? 'text-gray-700' : 'text-gray-500 hover:text-gray-700',
             osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50',

@@ -26,7 +26,8 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setInspector, setMapLoaded, setPmTilesProtocolReady } = useMapStateInteraction()
+  const { setInspector, setMapLoaded, setPmTilesProtocolReady, setMapDataLoading } =
+    useMapStateInteraction()
   const region = useStaticRegion()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
@@ -141,6 +142,8 @@ export const Map: React.FC = () => {
       // onZoomEnd={} // zooming is always also moving
       onClick={handleClick}
       onLoad={handleLoad}
+      onData={() => setMapDataLoading(true)}
+      onIdle={() => setMapDataLoading(false)}
       doubleClickZoom={true}
       dragRotate={false}
       // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310

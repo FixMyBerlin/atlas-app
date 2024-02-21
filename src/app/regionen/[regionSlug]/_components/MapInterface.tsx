@@ -5,6 +5,7 @@ import { MapProvider } from 'react-map-gl/maplibre'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
 import { DownloadModal } from './DownloadModal/DownloadModal'
+import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Map } from './Map/Map'
 import { OsmNotes } from './OsmNotes/OsmNotes'
 import { SelectDatasets } from './SelectDatasets/SelectDatasets'
@@ -26,6 +27,7 @@ export const MapInterface: React.FC = () => {
           // The pointer-events classes make sure we can click though the empty div on the map but still use the buttons/dropdown
           className="pointer-events-none fixed bottom-4 right-2.5 top-16 z-10 mt-2.5 flex items-end justify-end gap-1.5 [&>*]:pointer-events-auto"
         >
+          <LoadingIndicator />
           <OsmNotes />
           <DownloadModal />
           <SelectDatasets />
