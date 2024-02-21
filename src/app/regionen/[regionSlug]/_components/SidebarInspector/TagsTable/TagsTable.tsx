@@ -27,6 +27,7 @@ import {
   TagsTableRowCompositTrafficSign,
   tableKeyTrafficSign,
 } from './compositTableRows/TagsTableRowCompositTrafficSign'
+import { cleanKey } from './utils/cleanKey'
 
 type Props = {
   properties: GeoJSONFeature['properties']
@@ -35,8 +36,6 @@ type Props = {
 }
 
 export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {
-  const cleanKey = (key: string) => key.replace('__if_present', '')
-
   const keys = sourceDocumentedKeys === false ? Object.keys(properties) : sourceDocumentedKeys
 
   return (
