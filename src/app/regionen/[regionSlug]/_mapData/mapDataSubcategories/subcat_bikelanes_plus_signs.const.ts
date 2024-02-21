@@ -12,7 +12,7 @@ export const subcat_bikelanes_plus_signs: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Verkehrszeichen',
   ui: 'checkbox',
-  sourceId: 'atlas_bikelanes',
+  sourceId: source,
   styles: [
     {
       id: 'default',
