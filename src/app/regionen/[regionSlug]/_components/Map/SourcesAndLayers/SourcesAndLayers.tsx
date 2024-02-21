@@ -43,7 +43,7 @@ export const SourcesAndLayers = () => {
               const sourceId = createSourceKey(
                 activeCategoryConfig.id,
                 sourceData.id,
-                subcategoryConfig.id,
+                subcategoryConfig.id
               )
 
               return (
@@ -52,8 +52,8 @@ export const SourcesAndLayers = () => {
                   id={sourceId}
                   type="vector"
                   tiles={[sourceData.tiles]}
-                  minzoom={sourceData.minzoom || 3}
-                  maxzoom={sourceData.maxzoom || 22}
+                  minzoom={sourceData.minzoom || 4}
+                  maxzoom={sourceData.maxzoom || 12}
                 >
                   {subcategoryConfig.styles.map((styleConfig) => {
                     if (styleConfig.id === 'hidden') {
@@ -61,7 +61,7 @@ export const SourcesAndLayers = () => {
                         sourceData.id,
                         subcategoryConfig.id,
                         styleConfig.id,
-                        'hidden',
+                        'hidden'
                       )
                       return (
                         <Layer
@@ -75,7 +75,7 @@ export const SourcesAndLayers = () => {
                     }
 
                     const currStyleConfig = subcategoryConfig.styles.find(
-                      (s) => s.id === styleConfig.id,
+                      (s) => s.id === styleConfig.id
                     )
                     const visibility = layerVisibility(currStyleConfig?.active || false)
 
@@ -84,7 +84,7 @@ export const SourcesAndLayers = () => {
                         sourceData.id,
                         subcategoryConfig.id,
                         styleConfig.id,
-                        layer.id,
+                        layer.id
                       )
                       const layout =
                         layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
