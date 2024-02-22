@@ -9,6 +9,7 @@ export type SourcesId =
   | 'atlas_barriers'
   | 'atlas_bicycleParking'
   | 'atlas_bikelanes'
+  | 'atlas_bikeroutes'
   | 'atlas_boundaries'
   | 'atlas_boundaryStats'
   | 'atlas_landuse'
@@ -36,6 +37,7 @@ export const exportApiIdentifier = [
   'bicycleParking_points',
   'bicycleParking_areas', // private for now
   verifiedTableIdentifier('bikelanes'),
+  'bikeroutes',
   // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
   'landuse',
   'places',
@@ -155,6 +157,23 @@ export const sources: MapDataSource<
       title: 'Fahrradinfrastruktur',
       desc: 'Prozessierte Infrastrukturdaten (ohne Mischverkehr)',
     },
+  },
+  {
+    id: 'atlas_bikeroutes',
+    tiles: `${tilesUrl}/bikeroutes`, // TileJSON
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: ['name'],
+    },
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
   },
   {
     id: 'atlas_roads',

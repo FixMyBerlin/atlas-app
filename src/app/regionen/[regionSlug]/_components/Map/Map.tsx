@@ -1,4 +1,5 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
+import * as turf from '@turf/turf'
 import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { Protocol } from 'pmtiles'
@@ -13,6 +14,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
 import { SourcesAndLayers } from './SourcesAndLayers/SourcesAndLayers'
 import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'
@@ -24,11 +26,11 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
+  const { setInspector, setMapLoaded, setPmTilesProtocolReady, setMapDataLoading } =
+    useMapStateInteraction()
+  const region = useStaticRegion()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
-
-  const { setInspector, setMapLoaded, setPmTilesProtocolReady } = useMapStateInteraction()
-
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
     setCursorStyle('pointer')
   }
@@ -95,6 +97,28 @@ export const Map: React.FC = () => {
     return null
   }
 
+  let mapMaxBoundsSettings: ReturnType<typeof turf.bbox> | {} = {}
+  if (region?.bbox) {
+    const maxBounds = [
+      region.bbox.min[0],
+      region.bbox.min[1],
+      region.bbox.max[0],
+      region.bbox.max[1],
+    ] satisfies ReturnType<typeof turf.bbox>
+    mapMaxBoundsSettings = {
+      // Buffer is in km to add the mask buffer and some more
+      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 40, { units: 'kilometers' })),
+      // Padding is in pixel to make sure the map controls are visible
+      padding: {
+        // TODO: We might need different padding on mobile…
+        top: 0,
+        bottom: 0,
+        left: 250,
+        right: 0,
+      },
+    }
+  }
+
   return (
     <MapGl
       id="mainMap"
@@ -103,6 +127,8 @@ export const Map: React.FC = () => {
         latitude: mapParam.lat,
         zoom: mapParam.zoom,
       }}
+      // We prevent users from zooming out too far which puts too much load on our vector tiles db
+      {...mapMaxBoundsSettings}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
       mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
@@ -116,6 +142,8 @@ export const Map: React.FC = () => {
       // onZoomEnd={} // zooming is always also moving
       onClick={handleClick}
       onLoad={handleLoad}
+      onData={() => setMapDataLoading(true)}
+      onIdle={() => setMapDataLoading(false)}
       doubleClickZoom={true}
       dragRotate={false}
       // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
