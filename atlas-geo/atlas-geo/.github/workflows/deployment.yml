@@ -63,7 +63,7 @@ jobs:
         run: |
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
           if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
-            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- app/ helpers/ app.Dockerfile docker-compose.yml; then
+            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- app/ helpers/ configs/ app.Dockerfile docker-compose.yml; then
               echo "changes=false" >> $GITHUB_OUTPUT
             else
               echo "changes=true" >> $GITHUB_OUTPUT
