@@ -1,6 +1,6 @@
 // We use bun.sh to run this file
 import { deleteAllUploads } from './api'
-import { green, inverse, yellow } from './log'
+import { inverse, yellow } from './log'
 
 export const deleteUploadFolderOnS3 = async () => {
   yellow('  Not implemented.')
@@ -14,4 +14,4 @@ deleteUploadFolderOnS3()
 console.log(`  Deleting DB entries...`)
 await deleteAllUploads()
 
-green('OK')
+inverse('DONE')
