@@ -1,10 +1,10 @@
 import { useMutation } from '@blitzjs/rpc'
-import { twJoin } from 'tailwind-merge'
 import { Suspense } from 'react'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { useMap } from 'react-map-gl/maplibre'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { subcatBikelanesPlusVerificationSource } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes_plus_verification.const'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
   FormVerificationSchema,
@@ -13,6 +13,7 @@ import {
   verificationStatusOptions,
 } from 'src/bikelane-verifications/schemas'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
+import { twJoin } from 'tailwind-merge'
 import invariant from 'tiny-invariant'
 import { VerificationFormButton } from './VerificationFormButton'
 import { VerificationFormComment } from './VerificationFormComment'
@@ -26,13 +27,13 @@ export function VerificationFormWithQuery({
 }: {
   initialValues: Record<string, any>
 } & Pick<Props, 'disabled' | 'verificationStatus' | 'refetchVerifications'>) {
+  const { mainMap } = useMap()
   const user = useCurrentUser()
   const regionSlug = useRegionSlug()
   const [createBikelaneVerificationMutation] = useMutation(createBikelaneVerification)
 
   // Reminder: We cannot use useForm() here. Instead we need to use useFormContext() from a child component of <Form>
 
-  const { addLocalUpdate } = useMapStateInteraction()
   const handleSubmit = async (values) => {
     try {
       invariant(user)
@@ -44,7 +45,17 @@ export function VerificationFormWithQuery({
         comment: values.comment?.trim(),
       }
       await createBikelaneVerificationMutation({ regionSlug: regionSlug!, ...newVerificationItem })
-      addLocalUpdate(newVerificationItem)
+
+      mainMap?.getMap().setFeatureState(
+        {
+          source: 'cat:bikelanes--source:atlas_bikelanes--subcat:bikelanes_plus_verification',
+          sourceLayer: 'bikelanes_verified',
+          // id: values.osm_id,
+        },
+        // { source: subcatBikelanesPlusVerificationSource, id: values.osm_id },
+        { hover: false },
+      )
+
       refetchVerifications()
     } catch (error: any) {
       console.error(error)
