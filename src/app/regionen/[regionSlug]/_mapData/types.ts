@@ -192,6 +192,7 @@ export type TBeforeIds =
   | 'boundary_country_outline'
   | 'boundary_country'
   | 'landuse'
+  | 'building'
   | undefined
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */

@@ -103,6 +103,10 @@ import {
   SubcatSurfaceRoadsStyleIds,
 } from './mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from './types'
+import {
+  SubcatBikelanesPlusVerificationId,
+  SubcatBikelanesPlusVerificationStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_verification.const'
 
 export type SubcategoryId =
   | SubcatAccidentsId
@@ -111,6 +115,7 @@ export type SubcategoryId =
   | SubcatBikelanesPlusPresenceId
   | SubcatBikelanesPlusSignsId
   | SubcatBikelanesPlusSurfaceId
+  | SubcatBikelanesPlusVerificationId
   | SubcatBikelanesPlusWidthTextId
   | SubcatBikelanesStatsId
   | SubcatLitId
@@ -144,6 +149,7 @@ export type StyleId =
   | SubcatBikelanesPlusPresenceStyleIds
   | SubcatBikelanesPlusSignsStyleIds
   | SubcatBikelanesPlusSurfaceStyleIds
+  | SubcatBikelanesPlusVerificationStyleIds
   | SubcatBikelanesPlusWidthTextStyleIds
   | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds

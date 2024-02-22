@@ -5,7 +5,7 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] = [
   {
-    minzoom: 10,
+    minzoom: 7.7,
     filter: [
       'match',
       ['get', 'road'],
@@ -21,7 +21,7 @@ export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] 
     },
   },
   {
-    minzoom: 11,
+    minzoom: 7.7,
     filter: [
       'match',
       ['get', 'road'],

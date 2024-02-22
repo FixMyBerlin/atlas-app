@@ -3,7 +3,7 @@
 
 import { MapboxStyleLayer } from '../types'
 
-export const mapboxStyleGroupLayers_atlas_bikelanes_verified: MapboxStyleLayer[] = [
+export const mapboxStyleGroupLayers_atlas_bikelanes_plus_verification: MapboxStyleLayer[] = [
   {
     minzoom: 7,
     filter: ['has', 'category'],
