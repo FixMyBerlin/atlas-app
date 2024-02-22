@@ -22,26 +22,26 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 //
 // Performance Note:
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
-// However, we do not want to bloat our DOM, so we only render active categories and subcategories.
+// But, it will create them again, when the source was unmounted.
+// TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
 export const SourcesAndLayers = () => {
   const { useDebugLayerStyles } = useMapDebugState()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
 
-  const activeCategoriesConfig = categoriesConfig?.filter((th) => th.active === true)
-  if (!activeCategoriesConfig?.length) return null
+  if (!categoriesConfig?.length) return null
 
   return (
     <>
-      {activeCategoriesConfig.map((activeCategoryConfig) => {
+      {categoriesConfig.map((categoryConfig) => {
         return (
-          <React.Fragment key={activeCategoryConfig.id}>
-            {activeCategoryConfig.subcategories.map((subcategoryConfig) => {
+          <React.Fragment key={categoryConfig.id}>
+            {categoryConfig.subcategories.map((subcategoryConfig) => {
               const sourceData = getSourceData(subcategoryConfig?.sourceId)
 
               // One source can be used by multipe subcategories, so we need to make the key source-category-specific.
               const sourceId = createSourceKey(
-                activeCategoryConfig.id,
+                categoryConfig.id,
                 sourceData.id,
                 subcategoryConfig.id,
               )
@@ -56,28 +56,12 @@ export const SourcesAndLayers = () => {
                   maxzoom={sourceData.maxzoom || 12}
                 >
                   {subcategoryConfig.styles.map((styleConfig) => {
-                    if (styleConfig.id === 'hidden') {
-                      const layerId = createSourceSubcatStyleLayerKey(
-                        sourceData.id,
-                        subcategoryConfig.id,
-                        styleConfig.id,
-                        'hidden'
-                      )
-                      return (
-                        <Layer
-                          key={layerId}
-                          id={layerId}
-                          source-layer={sourceId}
-                          type="line"
-                          layout={{ visibility: 'none' }}
-                        />
-                      )
-                    }
-
                     const currStyleConfig = subcategoryConfig.styles.find(
                       (s) => s.id === styleConfig.id,
                     )
-                    const visibility = layerVisibility(currStyleConfig?.active || false)
+                    const visibility = layerVisibility(
+                      (categoryConfig.active && currStyleConfig?.active) || false,
+                    )
 
                     return styleConfig?.layers?.map((layer) => {
                       const layerId = createSourceSubcatStyleLayerKey(

@@ -21,6 +21,58 @@ type Props = {
   styleConfig: FileMapDataSubcategoryStyle | FileMapDataSubcategoryHiddenStyle | undefined
 }
 
+export const iconFromLegend = (legend: FileMapDataSubcategoryStyleLegend) => {
+  if (!legend?.style?.type && !legend?.style?.color) {
+    console.warn('pickIconFromLegend: missing data', {
+      type: legend?.style?.type,
+      style: legend?.style?.color,
+    })
+    return null
+  }
+  const { type, color, width, dasharray } = legend.style
+  return iconByStyle({ type, color, width, dasharray })
+}
+
+const iconByStyle = ({
+  type,
+  color,
+  width,
+  dasharray,
+}: {
+  type: LegendIconTypes
+  color: FileMapDataSubcategoryStyleLegend['style']['color']
+  width?: FileMapDataSubcategoryStyleLegend['style']['width']
+  dasharray?: FileMapDataSubcategoryStyleLegend['style']['dasharray']
+}) => {
+  switch (type) {
+    case 'line':
+      return (
+        <LegendIconLine color={color} width={width || 4} strokeDasharray={dasharray?.join(',')} />
+      )
+    // TODO: Rename to lineBorder and introduce circleBorder, maybe fillBorder
+    // TOOD: And maybe rename fill to area or square?
+    case 'border':
+      return (
+        <div className="relative h-full w-full">
+          <div className="absolute inset-0.5 z-10">
+            <LegendIconLine color="white" width={4} strokeDasharray={dasharray?.join(',')} />
+          </div>
+          <div className="absolute inset-0 z-0">
+            <LegendIconLine color={color} width={7} strokeDasharray={dasharray?.join(',')} />
+          </div>
+        </div>
+      )
+    case 'circle':
+      return <LegendIconCircle color={color} className="h-full w-full" />
+    case 'fill':
+      return <LegendIconArea color={color} />
+    case 'text':
+      return <LegendIconText color={color} />
+    default:
+      return <>TODO</>
+  }
+}
+
 export const Legend = ({ subcategoryId, styleConfig }: Props) => {
   const legends = styleConfig?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
   // Guard: Hide UI when no legends present for active style
@@ -30,58 +82,6 @@ export const Legend = ({ subcategoryId, styleConfig }: Props) => {
 
   const handleClick = (subcategoryId: SubcategoryId, styleId: StyleId, legendId: LegendId) => {
     console.log('not implemented,yet', { subcategoryId, styleId, legendId })
-  }
-
-  const iconFromLegend = (legend: FileMapDataSubcategoryStyleLegend) => {
-    if (!legend?.style?.type && !legend?.style?.color) {
-      console.warn('pickIconFromLegend: missing data', {
-        type: legend?.style?.type,
-        style: legend?.style?.color,
-      })
-      return null
-    }
-    const { type, color, width, dasharray } = legend.style
-    return iconByStyle({ type, color, width, dasharray })
-  }
-
-  const iconByStyle = ({
-    type,
-    color,
-    width,
-    dasharray,
-  }: {
-    type: LegendIconTypes
-    color: FileMapDataSubcategoryStyleLegend['style']['color']
-    width?: FileMapDataSubcategoryStyleLegend['style']['width']
-    dasharray?: FileMapDataSubcategoryStyleLegend['style']['dasharray']
-  }) => {
-    switch (type) {
-      case 'line':
-        return (
-          <LegendIconLine color={color} width={width || 4} strokeDasharray={dasharray?.join(',')} />
-        )
-      // TODO: Rename to lineBorder and introduce circleBorder, maybe fillBorder
-      // TOOD: And maybe rename fill to area or square?
-      case 'border':
-        return (
-          <div className="relative h-full w-full">
-            <div className="absolute inset-0.5 z-10">
-              <LegendIconLine color="white" width={4} strokeDasharray={dasharray?.join(',')} />
-            </div>
-            <div className="absolute inset-0 z-0">
-              <LegendIconLine color={color} width={7} strokeDasharray={dasharray?.join(',')} />
-            </div>
-          </div>
-        )
-      case 'circle':
-        return <LegendIconCircle color={color} className="h-full w-full" />
-      case 'fill':
-        return <LegendIconArea color={color} />
-      case 'text':
-        return <LegendIconText color={color} />
-      default:
-        return <>TODO</>
-    }
   }
 
   return (

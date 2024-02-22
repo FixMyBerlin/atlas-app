@@ -7,6 +7,8 @@ import { twJoin } from 'tailwind-merge'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { createDatasetKey } from '../utils/createKeyUtils/createKeyUtils'
 import { ListOption } from './ListOption'
+import { iconFromLegend } from '../SidebarLayerControls/Legend/Legend'
+import { LegendNameDesc } from '../SidebarLayerControls/Legend/LegendNameDesc'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
@@ -45,7 +47,7 @@ export const SelectDatasets: React.FC = () => {
             '[&_a:hover]:underline',
           )}
         >
-          {regionDatasets.map(({ id, subId, name, description, attributionHtml }) => {
+          {regionDatasets.map(({ id, subId, name, description, attributionHtml, legends }) => {
             const key = createDatasetKey(id, subId)
             return (
               <ListOption
@@ -69,6 +71,18 @@ export const SelectDatasets: React.FC = () => {
                         className="block text-xs leading-4 text-gray-400"
                         dangerouslySetInnerHTML={{ __html: attributionHtml }}
                       />
+                    )}
+                    {Boolean(legends?.length) && (
+                      <ul>
+                        {legends.map((legend) => {
+                          return (
+                            <li className="group relative flex items-center" key={legend.id}>
+                              <div className="h-5 w-5 flex-none">{iconFromLegend(legend)}</div>
+                              <LegendNameDesc name={legend.name} desc={legend.desc} />
+                            </li>
+                          )
+                        })}
+                      </ul>
                     )}
                   </>
                 }

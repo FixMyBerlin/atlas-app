@@ -32,6 +32,17 @@ const { values, positionals } = parseArgs({
 const dryRun = !!values['dry-run']
 const keepTemporaryFiles = !!values['keep-tmp']
 
+inverse('Starting update with settings', [
+  {
+    API_ROOT_URL: process.env.API_ROOT_URL,
+    S3_UPLOAD_FOLDER: process.env.S3_UPLOAD_FOLDER,
+    ...(keepTemporaryFiles ? { tmpDir } : {}),
+  },
+])
+if (keepTemporaryFiles) {
+  Bun.spawnSync(['open', tmpDir])
+}
+
 const generatePMTilesFile = (inputFile: string, outputFile: string) => {
   if (dryRun) return '/tmp/does-not-exist.pmtiles'
   Bun.spawnSync(
@@ -117,9 +128,9 @@ const checkFilename = (filename) => {
   const m = filename.match(/[^\-.0-9a-zA-Z_]/g)
   if (m !== null) {
     const chars = JSON.stringify(m).slice(1, -1)
-    yellow(
+    red(
       `  Filename "${filename}" contains potentially problematic ${pluralize(
-        'character',
+        'character. This file is skipped. Please rename the file and run again.',
         m.length,
       )} ${chars}.`,
     )
@@ -258,3 +269,5 @@ if (!keepTemporaryFiles) {
   // clean up
   fs.rmSync(tmpDir, { recursive: true, force: true })
 }
+
+inverse('DONE')
