@@ -23,6 +23,7 @@ import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegiona
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
+import { isDev } from 'src/app/_components/utils/isEnv'
 
 export const Map: React.FC = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -61,6 +62,7 @@ export const Map: React.FC = () => {
   // Warn when a sprite image is missing
   useEffect(() => {
     if (!mainMap) return
+    if (!isDev) return
     mainMap.on('styleimagemissing', (e: MapStyleImageMissingEvent) => {
       const imageId = e.id
       if (imageId === 'null') return // Conditional images with Fallback images "Fill pattern: none" result in e.id=NULL
