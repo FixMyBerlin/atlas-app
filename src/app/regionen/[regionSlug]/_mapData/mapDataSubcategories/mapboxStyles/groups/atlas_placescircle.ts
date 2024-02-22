@@ -17,15 +17,15 @@ export const mapboxStyleGroupLayers_atlas_placescircle: MapboxStyleLayer[] = [
         'interpolate',
         ['linear'],
         ['zoom'],
-        9.3,
+        9.8,
         ['match', ['get', 'place'], ['city', 'town'], 1, 0],
-        9.5,
+        10,
         ['match', ['get', 'place'], ['city', 'town', 'village'], 1, 0],
       ],
     },
   },
   {
-    minzoom: 10,
+    minzoom: 9,
     layout: {
       'text-size': ['interpolate', ['linear'], ['zoom'], 10, 9, 22, 13],
       'text-font': ['Open Sans SemiBold', 'Arial Unicode MS Regular'],

@@ -5,7 +5,7 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_places: MapboxStyleLayer[] = [
   {
-    minzoom: 10,
+    minzoom: 9,
     layout: {
       'text-size': ['interpolate', ['linear'], ['zoom'], 10, 10, 22, 13],
       'text-font': ['Open Sans SemiBold', 'Arial Unicode MS Regular'],

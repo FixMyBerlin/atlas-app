@@ -5,7 +5,7 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_roads_plus_fusswege: MapboxStyleLayer[] = [
   {
-    minzoom: 13,
+    minzoom: 8.5,
     filter: [
       'match',
       ['get', 'road'],
@@ -21,7 +21,7 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_fusswege: MapboxStyleLayer[
         ['match', ['get', 'road'], ['track', 'bridleway'], true, false],
         '#b4aac0',
         ['match', ['get', 'road'], ['path', 'footway', 'cycleway'], true, false],
-        '#c6aed0',
+        '#c8aad5',
         'rgba(192, 191, 191, 0.75)',
       ],
       'line-width': 0.7,
@@ -43,7 +43,14 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_fusswege: MapboxStyleLayer[
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
       'line-opacity': 0,
-      'line-color': 'rgb(216, 20, 255)',
+      'line-color': [
+        'case',
+        ['match', ['get', 'road'], ['track', 'bridleway'], true, false],
+        '#b4aac0',
+        ['match', ['get', 'road'], ['path', 'footway', 'cycleway'], true, false],
+        '#c8aad5',
+        'rgba(192, 191, 191, 0.75)',
+      ],
     },
   },
 ]
