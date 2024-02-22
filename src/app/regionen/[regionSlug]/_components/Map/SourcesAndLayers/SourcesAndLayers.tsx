@@ -1,6 +1,6 @@
 import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
-import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
+import { Layer, Source } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -12,7 +12,6 @@ import {
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
-import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
@@ -103,19 +102,9 @@ export const SourcesAndLayers = () => {
                         ...(layer.maxzoom ? { maxzoom: layer.maxzoom } : {}),
                       }
 
-                      // The verification style layer in Mapbox Studio has to include this string
-                      const isVerificationStatusLayer = layer.id.search('verification-status') != -1
-
                       return (
                         <React.Fragment key={layerId}>
-                          {isVerificationStatusLayer ? (
-                            <LayerVerificationStatus
-                              key={`${layerId}_verification`}
-                              {...layerProps}
-                            />
-                          ) : (
-                            <Layer key={layerId} {...layerProps} />
-                          )}
+                          <Layer key={layerId} {...layerProps} />
                           <LayerHighlight
                             key={`${layerId}_highlight`}
                             {...layerProps}

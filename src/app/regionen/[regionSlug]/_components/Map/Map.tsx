@@ -135,6 +135,7 @@ export const Map: React.FC = () => {
       style={{ width: '100%', height: '100%' }}
       mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
       interactiveLayerIds={interactiveLayerIds}
+      // reuseMaps={true}
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}

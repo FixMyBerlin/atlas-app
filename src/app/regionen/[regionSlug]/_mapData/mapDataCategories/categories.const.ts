@@ -5,6 +5,7 @@ import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikel
 import { subcat_bikelanes_plus_presence } from '../mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
 import { subcat_bikelanes_plus_surface_text } from '../mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
+import { subcat_bikelanes_plus_verification } from '../mapDataSubcategories/subcat_bikelanes_plus_verification.const'
 import { subcat_bikelanes_plus_width_text } from '../mapDataSubcategories/subcat_bikelanes_plus_width_text.const'
 import { subcat_lit } from '../mapDataSubcategories/subcat_lit.const'
 import { subcat_lit_plus_completeness } from '../mapDataSubcategories/subcat_lit_plus_completeness.const'
@@ -102,7 +103,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
-      // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
+      { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
       // { id: 'tram', defaultStyle: 'hidden' },
