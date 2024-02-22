@@ -1,0 +1,35 @@
+import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
+import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
+
+
+const regionSlug = 'bb'
+const cacheWarmingConfigPath = 'cacheWarmingConfig.json'
+
+const zoomOutLevels = 0
+const zoomInLevels = 0
+
+const region = staticRegion.find((region) => region.slug === regionSlug)
+
+const tilesUrl = getTilesUrl()
+const urls = sources
+  .map((source) => {
+    return source.tiles
+  })
+  .filter((url) => url.startsWith(tilesUrl) && url.endsWith('{z}/{x}/{y}'))
+  .map((url) => {
+    return url.replace(tilesUrl, '')
+  })
+
+const data = {
+  bbox: region!.bbox,
+  minZoom: region!.map.zoom - zoomOutLevels,
+  maxZoom: region!.map.zoom + zoomInLevels,
+  urls,
+}
+
+const config = JSON.stringify(data, null, 2)
+Bun.write(cacheWarmingConfigPath, config)
+
+console.log(`${cacheWarmingConfigPath} saved.`)
+console.log(config)
