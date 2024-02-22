@@ -23,13 +23,11 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
     >
       {({ active, selected }) => (
         <>
-          <span className={twJoin('block', active || selected ? 'font-medium' : 'font-normal')}>
-            {name}
-          </span>
+          <div className={twJoin(active || selected ? 'font-medium' : 'font-normal')}>{name}</div>
           {!!selected && (
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-white">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 text-white">
               <CheckIcon className="h-5 w-5" aria-hidden="true" />
-            </span>
+            </div>
           )}
         </>
       )}
