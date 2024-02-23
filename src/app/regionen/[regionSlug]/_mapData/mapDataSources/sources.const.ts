@@ -21,6 +21,7 @@ export type SourcesId =
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
+  | 'tile_preview'
 
 // Define the verification tables
 export const verificationApiIdentifier = ['bikelanes'] as const
@@ -72,6 +73,22 @@ export const sources: MapDataSource<
   SourceExportApiIdentifier
 >[] = [
   ...sourcesParking,
+  {
+    id: 'tile_preview',
+    tiles: `${tilesUrl}/bikelanes_verified/{z}/{x}/{y}`, // UPDATE HERE AND src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_preview.const.ts
+    attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false },
+    export: { enabled: false },
+  },
   {
     id: 'atlas_boundaries',
     tiles: `${tilesUrl}/boundaries,boundaryLabels/{z}/{x}/{y}`,

@@ -3,7 +3,6 @@ import { subcat_bicycleParking } from '../mapDataSubcategories/subcat_bicyclePar
 import { subcat_bikelanes } from '../mapDataSubcategories/subcat_bikelanes.const'
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
 import { subcat_bikelanes_plus_presence } from '../mapDataSubcategories/subcat_bikelanes_plus_presence.const'
-import { subcat_bikelanes_plus_routes } from '../mapDataSubcategories/subcat_bikelanes_plus_routes.const'
 import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
 import { subcat_bikelanes_plus_surface_text } from '../mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
 import { subcat_bikelanes_plus_width_text } from '../mapDataSubcategories/subcat_bikelanes_plus_width_text.const'
@@ -22,6 +21,7 @@ import { subcat_poi_places } from '../mapDataSubcategories/subcat_poi_places.con
 import { subcat_poi_plus_barriers } from '../mapDataSubcategories/subcat_poi_plus_barriers.const'
 import { subcat_poi_plus_landuse } from '../mapDataSubcategories/subcat_poi_plus_landuse.const'
 import { subcat_poi_plus_publicTransport } from '../mapDataSubcategories/subcat_poi_plus_publicTransport.const'
+import { subcat_preview } from '../mapDataSubcategories/subcat_preview.const'
 import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
 import { subcat_roads_plus_footways } from '../mapDataSubcategories/subcat_roads_plus_footways.const'
 import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
@@ -47,6 +47,7 @@ export type MapDataCategoryId =
   | 'mapillary'
   | 'accidents'
   | 'trafficSigns'
+  | 'tile_preview'
 
 export const categories: StaticMapDataCategory[] = [
   {
@@ -179,5 +180,11 @@ export const categories: StaticMapDataCategory[] = [
     name: 'Unfallatlas',
     desc: 'Unfalldaten',
     subcategories: [{ ...subcat_accidents, defaultStyle: 'default' }],
+  },
+  {
+    id: 'tile_preview',
+    name: 'PREIVIEW',
+    desc: undefined,
+    subcategories: [{ ...subcat_preview, defaultStyle: 'default' }],
   },
 ]

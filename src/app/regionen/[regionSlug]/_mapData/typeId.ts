@@ -111,6 +111,7 @@ import {
   SubcatBikelanesPlusVerificationId,
   SubcatBikelanesPlusVerificationStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_verification.const'
+import { SubcatPreviewId, SubcatPreviewStyleIds } from './mapDataSubcategories/subcat_preview.const'
 
 export type SubcategoryId =
   | SubcatAccidentsId
@@ -144,6 +145,7 @@ export type SubcategoryId =
   | SubcatSignsId
   | SubcatSurfaceBikelaneId
   | SubcatSurfaceRoadsId
+  | SubcatPreviewId
 
 type StyleIdDefaults = StaticMapDataCategory['subcategories'][number]['defaultStyle']
 
@@ -180,5 +182,6 @@ export type StyleId =
   | SubcatSignsStyleIds
   | SubcatSurfaceBikelaneStyleIds
   | SubcatSurfaceRoadsStyleIds
+  | SubcatPreviewStyleIds
 
 export type LegendId = string // TODO: We can make this more precise later
