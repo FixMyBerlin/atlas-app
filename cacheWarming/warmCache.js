@@ -22,7 +22,7 @@ const fetchTiles = async () => {
   for (let i in config.urls) {
     const urlTemplate = config.urls[i]
     for (let z = zoomFrom; z <= zoomTo; z++) {
-      console.log(chalk.inverse(urlTemplate.replace('{z}', z)))
+      console.log(chalk.inverse('⚑ ' + urlTemplate.replace('{z}', z)))
       const centerLat = lat2tile(lat, z)
       const centerLng = lng2tile(lng, z)
       const minX = centerLng - Math.floor((numTilesX - 1) / 2)
@@ -40,17 +40,18 @@ const fetchTiles = async () => {
           const start = new Date()
           const response = await fetch(url)
           let duration = formatDuration(new Date() - start)
+          const statusFormatted = `${response.status} - ${response.statusText}`
           if (response.status === 200) {
-            const cacheStatus = response.headers.get('x-cache-status') || 'NULL'
+            const cacheStatus = response.headers.get('x-cache-status') || 'NO-CACHE'
             const contentLength = formatBytes(response.headers.get('content-length'))
             console.log(
               chalk.green('✓'),
-              `${response.status} - ${cacheStatus} - ${duration} - ${contentLength}`,
+              `${cacheStatus} - ${duration} - ${contentLength}`,
             )
           } else if (response.status < 300) {
-            console.log(chalk.yellow(`${response.status} - ${response.statusText}`))
+            console.log(chalk.yellow(`⚠ ${statusFormatted}`))
           } else {
-            console.log(chalk.red(`${response.status} - ${response.statusText}`))
+            console.log(chalk.red(`⚠ ${statusFormatted}`))
           }
         }
       }
