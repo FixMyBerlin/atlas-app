@@ -6,6 +6,11 @@ import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 const regionSlug = 'bb'
 const cacheWarmingConfigPath = 'cacheWarmingConfig.json'
 
+const viewport = {
+  width: 800,
+  height: 600,
+}
+
 const zoomOutLevels = 0
 const zoomInLevels = 0
 
@@ -22,9 +27,13 @@ const urls = sources
   })
 
 const data = {
-  bbox: region!.bbox,
-  minZoom: region!.map.zoom - zoomOutLevels,
-  maxZoom: region!.map.zoom + zoomInLevels,
+  viewport,
+  map: {
+    lat: region!.map.lat,
+    lng: region!.map.lng,
+    zoomFrom: region!.map.zoom - zoomOutLevels,
+    zoomTo: region!.map.zoom + zoomInLevels
+  },
   urls,
 }
 

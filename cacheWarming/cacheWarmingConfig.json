@@ -1,16 +1,14 @@
 {
-  "bbox": {
-    "min": [
-      11.2662278,
-      51.359064
-    ],
-    "max": [
-      14.7658159,
-      53.5590907
-    ]
+  "viewport": {
+    "width": 800,
+    "height": 600
   },
-  "minZoom": 11,
-  "maxZoom": 11,
+  "map": {
+    "lat": 52.3968,
+    "lng": 13.0342,
+    "zoomFrom": 8,
+    "zoomTo": 11
+  },
   "urls": [
     "/boundaries,boundaryLabels/{z}/{x}/{y}",
     "/boundaryStats/{z}/{x}/{y}",
