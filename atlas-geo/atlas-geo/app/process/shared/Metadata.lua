@@ -9,8 +9,9 @@ function Metadata(object)
     ["update_at"] = os.date('!%Y-%m-%dT%H:%M:%SZ', object.timestamp),
     ["updated_by"] = object.user, -- 'user' not present in regular osm file
     ["updated_age"] = AgeInDays(object.timestamp),
-    ["version"] = object.version,
-    ["osm_url"] = "https://osm.org/" .. object.type .. "/" .. object.id
+    -- Disabled to reduce space:
+    -- ["version"] = object.version,
+    -- ["osm_url"] = "https://osm.org/" .. object.type .. "/" .. object.id
   }
   return meta
 end
