@@ -40,13 +40,15 @@ const fetchTiles = async () => {
           const start = new Date()
           const response = await fetch(url)
           let duration = formatDuration(new Date() - start)
-          if (response.ok) {
-            const cacheStatus = response.headers.get('x-cache-status')
+          if (response.status === 200) {
+            const cacheStatus = response.headers.get('x-cache-status') || 'NULL'
             const contentLength = formatBytes(response.headers.get('content-length'))
             console.log(
               chalk.green('✓'),
               `${response.status} - ${cacheStatus} - ${duration} - ${contentLength}`,
             )
+          } else if (response.status < 300) {
+            console.log(chalk.yellow(`${response.status} - ${response.statusText}`))
           } else {
             console.log(chalk.red(`${response.status} - ${response.statusText}`))
           }

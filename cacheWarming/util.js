@@ -35,11 +35,27 @@ export function formatDuration(ms) {
 
 // https://stackoverflow.com/a/39906526
 const units = ['B', 'K', 'M', 'G']
-export function formatBytes(x) {
+export function formatBytes(b) {
   let l = 0,
-    n = parseInt(x, 10) || 0
+    n = parseInt(b, 10) || 0
   while (n >= 1024 && ++l) {
     n = n / 1024
   }
-  return n.toFixed(n < 10 && l > 0 ? 1 : 0) + units[l]
+  let formatted = n.toFixed(n < 10 && l > 0 ? 1 : 0) + units[l]
+  const bytesToColor = [
+    [2500000, [255, 0, 0]],
+    [1250000, [255, 128, 0]],
+    [500000, [255, 192, 0]],
+    [250000, [255, 255, 0]],
+  ]
+  bytesToColor.forEach(([bytes, color]) => {
+    if (b >= bytes) {
+      formatted = chalk.rgb(...color)(formatted)
+      return false
+    }
+  })
+  if (b === 0) {
+    formatted = chalk.red(formatted)
+  }
+  return formatted
 }
