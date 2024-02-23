@@ -178,6 +178,8 @@ export const sources: MapDataSource<
   {
     id: 'atlas_roads',
     tiles: `${tilesUrl}/roads/{z}/{x}/{y}`,
+    minzoom: 8,
+    maxzoom: 23,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
