@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
 
 const tilesBaseUrl = 'https://staging-tiles.radverkehrsatlas.de'
-const cacheWarmingConfigPath = 'cacheWarmingConfig.json'
+const cacheWarmingConfigPath = 'config.json'
 
 console.log(`Loading config ${cacheWarmingConfigPath}...`)
 const config = JSON.parse(fs.readFileSync(cacheWarmingConfigPath, 'utf8'))

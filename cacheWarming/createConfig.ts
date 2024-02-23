@@ -4,7 +4,7 @@ import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 
 
 const regionSlug = 'bb'
-const cacheWarmingConfigPath = 'cacheWarmingConfig.json'
+const cacheWarmingConfigPath = 'config.json'
 
 const viewport = {
   width: 800,
