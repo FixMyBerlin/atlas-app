@@ -25,7 +25,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
               <td className="w-full py-1">
                 <NodataFallbackWrapper fallback={!Boolean(properties['surface'])}>
                   <details>
-                    <summary>
+                    <summary className="cursor-pointer hover:font-semibold">
                       <ConditionalFormattedValue
                         sourceId={sourceId}
                         tagKey={'surface'}
@@ -52,7 +52,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
               <td className="w-full py-1">
                 <NodataFallbackWrapper fallback={!Boolean(properties['smoothness'])}>
                   <details>
-                    <summary>
+                    <summary className="cursor-pointer hover:font-semibold">
                       <ConditionalFormattedValue
                         sourceId={sourceId}
                         tagKey={'smoothness'}
