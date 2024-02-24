@@ -57,15 +57,6 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
                     tagKey={'bikelane_self'}
                     tagValue={properties['bikelane_self']}
                   />
-                  {properties['road_implicit_shared_lane'] && (
-                    <div className="mt-2">
-                      <ConditionalFormattedValue
-                        sourceId={sourceId}
-                        tagKey={'road_implicit_shared_lane'}
-                        tagValue={properties['road_implicit_shared_lane']}
-                      />
-                    </div>
-                  )}
                 </td>
               </tr>
               <tr className="border-t">

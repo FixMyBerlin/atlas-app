@@ -220,7 +220,6 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--osm_name--key': 'Name',
   'atlas_roads--osm_source:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
   'atlas_roads--osm_zone:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
-  'atlas_roads--road_implicit_shared_lane=true': 'Führung im Mischverkehr',
   'atlas_roads--road_oneway--key': 'Fahrtrichtung',
   'atlas_roads--road_oneway:bicycle--key': 'Fahrtrichtung Fahrrad',
   'atlas_roads--road_oneway:bicycle=no': 'Freigabe für Radverkehr in beide Richtungen',
