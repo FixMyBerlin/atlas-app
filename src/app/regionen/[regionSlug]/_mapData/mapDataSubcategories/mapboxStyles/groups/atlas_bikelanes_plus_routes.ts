@@ -12,7 +12,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_routes: MapboxStyleLaye
     type: 'line',
     id: 'route',
     paint: {
-      'line-color': '#3dc8ff',
+      'line-color': ['match', ['get', 'cycle_highway'], ['yes'], '#3d67ff', '#3dc8ff'],
       'line-width': ['interpolate', ['linear'], ['zoom'], 5, 2, 15, 15],
       'line-opacity': 0.4,
       'line-blur': ['interpolate', ['linear'], ['zoom'], 5, 0, 15, 8],
