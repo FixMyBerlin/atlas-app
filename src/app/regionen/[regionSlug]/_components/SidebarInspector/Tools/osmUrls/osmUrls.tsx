@@ -10,6 +10,18 @@ export const osmUrl = (type: OsmShortType, id: number | string) => {
   return `https://www.openstreetmap.org/${longOsmType[type]}/${id}`
 }
 
+export const osmEditIdUrl = (type: OsmShortType, id: number | string) => {
+  if (!type || (type && !longOsmType[type])) return undefined
+
+  return `https://www.openstreetmap.org/edit?${longOsmType[type]}=${id}`
+}
+
+export const osmEditRapidUrl = (type: OsmShortType, id: number | string) => {
+  if (!type || (type && !longOsmType[type])) return undefined
+
+  return `https://rapideditor.org/edit#id=${type.toLocaleLowerCase()}${id}`
+}
+
 export const historyUrl = (type: OsmShortType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
