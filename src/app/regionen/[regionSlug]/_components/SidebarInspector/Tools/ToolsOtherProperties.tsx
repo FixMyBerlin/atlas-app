@@ -56,8 +56,9 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                       blank
                       href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
                       title="OpenStreetMap Wiki"
+                      className="scale-75"
                     >
-                      W
+                      Wiki
                     </Link>{' '}
                     {/* {!isProd && (
                       <Pill color="pink" className="scale-75">
