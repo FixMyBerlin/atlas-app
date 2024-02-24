@@ -1,7 +1,9 @@
 import React from 'react'
+import { bikelanesPresenceColors } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
-import { CompositTableRow } from './types'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
+import { translations } from '../translations/translations.const'
+import { CompositTableRow } from './types'
 
 const CompositRoadBikelanesTableValue = ({
   sourceId, // always atlas_roads
@@ -10,11 +12,71 @@ const CompositRoadBikelanesTableValue = ({
 }: Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
   tagValue: string
 }) => {
-  if (['not_expected', 'data_no', 'missing'].includes(tagValue)) {
-    return <ConditionalFormattedValue sourceId={sourceId} tagKey={tagKey} tagValue={tagValue} />
-  }
-  // By overwriting the tagKey we access the `ALL-category=*` translations
-  return <ConditionalFormattedValue sourceId={sourceId} tagKey={'category'} tagValue={tagValue} />
+  // All other values (that are not in the array above) are the bikelane-category values
+  // which are translated in `ALL-category=*`. To access them, we overwrite the `tagKey`.
+  const hasPresenceValue = ['not_expected', 'data_no', 'missing', 'assumed_no'].includes(tagValue)
+  const hasSpecificInfrastructureValue = !hasPresenceValue
+  const tagKeyWithoutSide = tagKey.replace(/_left|_self|_right/, '_ALL')
+  const hasTooltip = Boolean(translations[`${sourceId}--${tagKeyWithoutSide}=${tagValue}--tooltip`])
+
+  return (
+    <div className="flex items-center justify-between gap-2">
+      {hasTooltip || hasSpecificInfrastructureValue ? (
+        <details>
+          <summary className="cursor-pointer hover:font-semibold">
+            {hasSpecificInfrastructureValue ? (
+              <ConditionalFormattedValue
+                sourceId={sourceId}
+                tagKey={tagKeyWithoutSide}
+                tagValue={'data_present'}
+              />
+            ) : (
+              <ConditionalFormattedValue
+                sourceId={sourceId}
+                tagKey={tagKeyWithoutSide}
+                tagValue={tagValue}
+              />
+            )}
+          </summary>
+          <p className="text-xs text-gray-400">
+            {hasTooltip && (
+              <>
+                <ConditionalFormattedValue
+                  sourceId={sourceId}
+                  tagKey={tagKeyWithoutSide}
+                  tagValue={`${tagValue}--tooltip`}
+                />
+              </>
+            )}
+            {hasSpecificInfrastructureValue && (
+              <ConditionalFormattedValue
+                sourceId={sourceId}
+                tagKey={'category'}
+                tagValue={tagValue}
+              />
+            )}
+          </p>
+        </details>
+      ) : (
+        <div>
+          {/* Fallback for `hasPresenceValue` without `hasTooltip` */}
+          <ConditionalFormattedValue
+            sourceId={sourceId}
+            tagKey={tagKeyWithoutSide}
+            tagValue={tagValue}
+          />
+        </div>
+      )}
+      <div
+        className="h-4 w-4 flex-none rounded-full"
+        style={{
+          backgroundColor: hasSpecificInfrastructureValue
+            ? bikelanesPresenceColors.data_present
+            : bikelanesPresenceColors[tagValue],
+        }}
+      />
+    </div>
+  )
 }
 
 export const tableKeyRoadBikelanes = 'composit_road_bikelanes'
@@ -71,7 +133,9 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
               </tr>
             </tbody>
           </table>
-          <p className="mt-1 text-xs text-gray-400">Angaben in Linienrichtung (OSM).</p>
+          <p className="mt-1 text-xs text-gray-400">
+            Angaben in OSM-Linienrichtung. Siehe Doppelpfeil ab Zoom 13.
+          </p>
         </>
       }
     />

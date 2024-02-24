@@ -5,6 +5,19 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] = [
   {
+    layout: {
+      'line-cap': 'round',
+    },
+    type: 'line',
+    id: 'hitarea-bikelane-presence',
+    paint: {
+      'line-width': ['interpolate', ['linear'], ['zoom'], 8, 1, 16, 14],
+      'line-opacity': 0,
+      'line-color': '#d814ff',
+    },
+    filter: ['any', ['has', 'bikelane_left'], ['has', 'bikelane_right'], ['has', 'bikelane_self']],
+  },
+  {
     filter: ['has', 'bikelane_right'],
     type: 'line',
     id: 'bikelane_right',
@@ -14,6 +27,8 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
         ['match', ['get', 'bikelane_right'], ['missing'], true, false],
         '#fa80f4',
         ['match', ['get', 'bikelane_right'], ['not_expected'], true, false],
+        'rgba(234, 200, 210, 0.68)',
+        ['match', ['get', 'bikelane_right'], ['assumed_no'], true, false],
         'rgba(234, 200, 210, 0.68)',
         ['match', ['get', 'bikelane_right'], ['data_no'], true, false],
         'rgba(108, 124, 147, 0.67)',
@@ -53,6 +68,8 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
         '#fa80f4',
         ['match', ['get', 'bikelane_self'], ['not_expected'], true, false],
         'rgba(234, 200, 210, 0.68)',
+        ['match', ['get', 'bikelane_self'], ['assumed_no'], true, false],
+        'rgba(234, 200, 210, 0.68)',
         ['match', ['get', 'bikelane_self'], ['data_no'], true, false],
         'rgba(108, 124, 147, 0.67)',
         ['has', 'bikelane_self'],
@@ -90,6 +107,8 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
         '#fa80f4',
         ['match', ['get', 'bikelane_left'], ['not_expected'], true, false],
         'rgba(234, 200, 210, 0.68)',
+        ['match', ['get', 'bikelane_left'], ['assumed_no'], true, false],
+        'rgba(234, 200, 210, 0.68)',
         ['match', ['get', 'bikelane_left'], ['data_no'], true, false],
         'rgba(108, 124, 147, 0.67)',
         ['has', 'bikelane_left'],
@@ -121,7 +140,28 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
     type: 'symbol',
     id: 'left-right-indication-arrow',
     paint: {
-      'icon-opacity': ['interpolate', ['linear'], ['zoom'], 0, 0, 13, 0, 14, 1, 22, 1],
+      'icon-opacity': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        0,
+        0,
+        13,
+        0,
+        14,
+        [
+          'case',
+          ['match', ['get', 'bikelane_self'], ['missing'], true, false],
+          1,
+          [
+            'any',
+            ['match', ['get', 'bikelane_left'], ['missing'], true, false],
+            ['match', ['get', 'bikelane_right'], ['missing'], true, false],
+          ],
+          1,
+          0.4,
+        ],
+      ],
     },
     layout: {
       'symbol-placement': 'line',
@@ -130,6 +170,19 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
       'symbol-avoid-edges': true,
       'icon-padding': 0,
       'icon-allow-overlap': true,
+      'icon-size': [
+        'case',
+        ['match', ['get', 'bikelane_self'], ['missing'], true, false],
+        0.8,
+        [
+          'any',
+          ['match', ['get', 'bikelane_left'], ['missing'], true, false],
+          ['match', ['get', 'bikelane_right'], ['missing'], true, false],
+        ],
+        0.8,
+        0.5,
+      ],
     },
+    filter: ['has', 'bikelane_self'],
   },
 ]

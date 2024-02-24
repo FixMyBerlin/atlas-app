@@ -8,6 +8,14 @@ const sourceLayer = 'roads'
 export type SubcatBikelanesPlusPresenceId = typeof subcatId
 export type SubcatBikelanesPlusPresenceStyleIds = 'default'
 
+export const bikelanesPresenceColors = {
+  missing: '#fa80f4',
+  data_no: 'rgba(192, 202, 185, 0.67)',
+  data_present: 'rgba(174, 199, 244, 0.7)',
+  not_expected: 'rgba(218, 226, 223, 0.68)',
+  assumed_no: 'rgba(218, 226, 223, 0.68)',
+}
+
 export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Vollständigkeit',
@@ -30,7 +38,7 @@ export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
           name: 'Daten fehlen',
           style: {
             type: 'line',
-            color: '#fa80f4',
+            color: bikelanesPresenceColors.missing,
           },
         },
         {
@@ -38,7 +46,7 @@ export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
           name: 'Kein Radweg',
           style: {
             type: 'line',
-            color: 'rgba(192, 202, 185, 0.67)',
+            color: bikelanesPresenceColors.data_no,
           },
         },
         {
@@ -46,11 +54,11 @@ export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
           name: 'RVA vorhanden',
           style: {
             type: 'line',
-            color: 'rgba(174, 199, 244, 0.7)',
+            color: bikelanesPresenceColors.data_present,
           },
         },
         {
-          id: 'not_expected',
+          id: 'not_expected_assumed_no',
           name: 'Keine RVA erwartet',
           desc: [
             'Beispiel: Auf der Fahrbahn ist keine RVA erwartet, wenn es bereits links/rechts gesonderte RVA gibt.',
@@ -58,7 +66,7 @@ export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
           ],
           style: {
             type: 'line',
-            color: 'rgba(218, 226, 223, 0.68)',
+            color: bikelanesPresenceColors.not_expected,
           },
         },
       ],
