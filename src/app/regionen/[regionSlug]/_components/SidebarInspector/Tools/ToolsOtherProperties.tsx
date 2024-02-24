@@ -59,11 +59,11 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                     >
                       W
                     </Link>{' '}
-                    {!isProd && (
+                    {/* {!isProd && (
                       <Pill color="pink" className="scale-75">
                         {typeof value}
                       </Pill>
-                    )}
+                    )} */}
                   </code>
                 </p>
               )
@@ -80,11 +80,11 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
                   <code>
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
-                    {!isProd && (
+                    {/* {!isProd && (
                       <Pill color="pink" className="scale-75">
                         {typeof value}
                       </Pill>
-                    )}
+                    )} */}
                   </code>
                 </p>
               )
