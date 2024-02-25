@@ -10,10 +10,10 @@ export type SubcatBikelanesPlusPresenceStyleIds = 'default'
 
 export const bikelanesPresenceColors = {
   missing: '#fa80f4',
-  data_no: 'rgba(192, 202, 185, 0.67)',
-  data_present: 'rgba(174, 199, 244, 0.7)',
-  not_expected: 'rgba(218, 226, 223, 0.68)',
-  assumed_no: 'rgba(218, 226, 223, 0.68)',
+  data_no: 'rgba(108, 124, 147, 0.67)',
+  data_present: 'rgba(142, 177, 240, 0.7)',
+  not_expected: 'rgba(234, 200, 210, 0.68)',
+  assumed_no: 'rgba(234, 200, 210, 0.68)',
 }
 
 export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
