@@ -106,19 +106,31 @@ function osm2pgsql.process_way(object)
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
-
   local cycleways = Bikelanes(object)
   for _, cycleway in pairs(cycleways) do
     if cycleway._infrastructureExists then
-      cycleway.name = results.name
-      cycleway.road = results.road
+      local result = {}
+      for k, v in pairs(cycleway) do
+        result[k] = v
+      end
+      result.name = results.name
+      result.road = results.road
 
       -- if osm2pgsql.stage == 2 then
-      --   cycleway.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
       -- end
 
+      -- Hacky cleanup tags we don't need to make the file smaller
+      result._infrastructureExists = nil -- not used in atlas-app
+      result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
+      result.sign = nil                  -- not used in atlas-app
+      result.side = nil                  -- not used in atlas-app
+      result.offset = nil                -- not used in atlas-app
+      -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
+      -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
+
       bikelanesTable:insert({
-        tags = cycleway,
+        tags = result,
         meta = Metadata(object),
         geom = object:as_linestring()
       })
