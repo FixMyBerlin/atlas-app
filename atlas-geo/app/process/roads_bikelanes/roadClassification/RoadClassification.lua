@@ -11,8 +11,6 @@ local tags_prefixed = {
   'traffic_sign',
   'traffic_sign:forward',
   'traffic_sign:backward',
-  "mapillary",
-  "description",
 }
 
 function RoadClassification(object)
