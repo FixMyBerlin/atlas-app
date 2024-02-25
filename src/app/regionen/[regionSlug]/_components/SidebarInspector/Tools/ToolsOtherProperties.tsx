@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
-import { Pill } from 'src/app/_components/text/Pill'
-import { isProd } from 'src/app/_components/utils/isEnv'
 
 type Props = {
   properties: { [key: string]: any }
@@ -21,12 +19,14 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     'osm_type',
     'osm_url',
     'update_at',
+    'updated_age',
     'verified_at',
     'verified',
     'version',
     'offset',
     'side',
     'sign',
+    'prefix',
   ]
   const otherOsmProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
