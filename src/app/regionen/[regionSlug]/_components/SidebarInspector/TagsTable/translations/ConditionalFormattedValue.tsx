@@ -123,6 +123,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   const lookAtFirstSources: Record<string, string> = {
     'bietigheim-bissingen_on_street_parking_lines': 'parkraumParking',
     'bietigheim-bissingen_parking_areas': 'parkraumParkingAreas',
+    atlas_roadsPathClasses: 'atlas_roads',
   }
   const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)
   if (lookAtThisSourceFirst) {
@@ -136,6 +137,7 @@ export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, t
   // Keys need to be source specific, otherwise there is interference with the next step.
   const lookThereForKey: Record<string, string> = {
     'atlas_roads--road': 'highway',
+    'atlas_roadsPathClasses--road': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
     (k) => k === `${sourceId}--${tagKey}`,

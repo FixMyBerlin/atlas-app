@@ -231,6 +231,7 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--smoothness_source=tracktype_to_smoothness': 'Abgeleitet von dem OSM Wert `tracktype`',
   'atlas_roads--surface_source=tag': 'OSM-Tag `surface`',
   'atlas_roads--title': 'Daten zur Straße',
+  'atlas_roadsPathClasses--title': 'Daten zu Wegen',
   'atlas_trafficSigns--title': 'Verkehrszeichen',
   'mapillary_coverage--title': 'Mapillary Foto',
 }

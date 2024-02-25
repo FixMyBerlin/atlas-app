@@ -24,8 +24,8 @@ export type MapDataBackgroundSource<TIds> = {
   attributionHtml: string
   /** @desc Show link to the external legend of that map layer. Will replace {z}/{x}/{y} if present  */
   legendUrl?: string
-  minzoom?: RasterSource['minzoom']
   maxzoom?: RasterSource['maxzoom']
+  minzoom?: RasterSource['minzoom']
   tileSize?: RasterSource['tileSize']
 }
 
@@ -169,8 +169,11 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   calculator: MapDataSourceCalculator
   /** @desc Export: Enable and configure data export */
   export: MapDataSourceExport<TExpIds>
-  minzoom?: mapboxgl.VectorSource['minzoom']
+  /** @desc maxzoom:12 (default) means visible from 12 and down/further away (12+ is overzoomed)
+   * @desc `0---4=minzoom->----<-maxzoom=12----22` */
   maxzoom?: mapboxgl.VectorSource['maxzoom']
+  /** @desc minzoom:4 (default) means visible from 4 and up/closer */
+  minzoom?: mapboxgl.VectorSource['minzoom']
 }
 
 export type StaticMapDataCategory = {

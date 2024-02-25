@@ -52,8 +52,8 @@ export const SourcesAndLayers = () => {
                   id={sourceId}
                   type="vector"
                   tiles={[sourceData.tiles]}
-                  minzoom={sourceData.minzoom || 4}
                   maxzoom={sourceData.maxzoom || 12}
+                  minzoom={sourceData.minzoom || 4}
                 >
                   {subcategoryConfig.styles.map((styleConfig) => {
                     const currStyleConfig = subcategoryConfig.styles.find(
@@ -99,8 +99,8 @@ export const SourcesAndLayers = () => {
                           subcategoryBeforeId: subcategoryConfig.beforeId,
                           layerType: layer.type,
                         }),
-                        ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
                         ...(layer.maxzoom ? { maxzoom: layer.maxzoom } : {}),
+                        ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
                       }
 
                       // The verification style layer in Mapbox Studio has to include this string
