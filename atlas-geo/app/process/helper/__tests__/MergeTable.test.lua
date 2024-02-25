@@ -1,7 +1,7 @@
 package.path = package.path .. ";app/process/helper/?.lua"
 require("MergeTable")
 
-print('=== Test MergeTable ParseCheckDate ===')
+print('=== Test MergeTable ===')
 
 local base = { ["base"] = "base" }
 
