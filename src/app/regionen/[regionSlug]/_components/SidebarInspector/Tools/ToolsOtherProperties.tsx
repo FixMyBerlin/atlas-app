@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
-import { Pill } from 'src/app/_components/text/Pill'
-import { isProd } from 'src/app/_components/utils/isEnv'
 
 type Props = {
   properties: { [key: string]: any }
@@ -21,12 +19,14 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     'osm_type',
     'osm_url',
     'update_at',
+    'updated_age',
     'verified_at',
     'verified',
     'version',
     'offset',
     'side',
     'sign',
+    'prefix',
   ]
   const otherOsmProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
@@ -56,14 +56,15 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                       blank
                       href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
                       title="OpenStreetMap Wiki"
+                      className="scale-75"
                     >
-                      W
+                      Wiki
                     </Link>{' '}
-                    {!isProd && (
+                    {/* {!isProd && (
                       <Pill color="pink" className="scale-75">
                         {typeof value}
                       </Pill>
-                    )}
+                    )} */}
                   </code>
                 </p>
               )
@@ -80,11 +81,11 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
                   <code>
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
-                    {!isProd && (
+                    {/* {!isProd && (
                       <Pill color="pink" className="scale-75">
                         {typeof value}
                       </Pill>
-                    )}
+                    )} */}
                   </code>
                 </p>
               )

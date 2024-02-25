@@ -19,7 +19,7 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
       value={
         <>
           <details>
-            <summary>
+            <summary className="cursor-pointer hover:font-semibold">
               <ConditionalFormattedValue
                 sourceId={sourceId}
                 tagKey={'maxspeed'}
@@ -56,7 +56,9 @@ export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
             properties['maxspeed:forward'] ||
             properties['maxspeed:conditional']) && (
             <details>
-              <summary>Weitere Angaben aus OpenStreetMap</summary>
+              <summary className="cursor-pointer hover:font-semibold">
+                Weitere Angaben aus OpenStreetMap
+              </summary>
 
               {properties['maxspeed:backward'] && (
                 <p className="mt-1 leading-tight">

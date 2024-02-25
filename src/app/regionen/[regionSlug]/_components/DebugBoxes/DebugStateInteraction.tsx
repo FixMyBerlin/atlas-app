@@ -33,7 +33,7 @@ export const DebugStateInteraction = () => {
       if (typeof value === 'function') return null
       return (
         <div key={key}>
-          <strong>{key}:</strong> {JSON.stringify(value)}
+          <strong>{key}:</strong> <pre>{JSON.stringify(value, null, 2)}</pre>
         </div>
       )
     })

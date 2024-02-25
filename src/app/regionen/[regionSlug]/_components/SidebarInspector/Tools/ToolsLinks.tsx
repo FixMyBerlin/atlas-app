@@ -1,10 +1,17 @@
 import React from 'react'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { buttonStyles } from 'src/app/_components/links/styles'
+import { isProd } from 'src/app/_components/utils/isEnv'
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
 import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { editorUrl } from './osmUrls/editorUrl'
-import { historyUrl, longOsmType, mapillaryUrl, osmUrl } from './osmUrls/osmUrls'
+import {
+  historyUrl,
+  longOsmType,
+  mapillaryUrl,
+  osmEditIdUrl,
+  osmEditRapidUrl,
+  osmUrl,
+} from './osmUrls/osmUrls'
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
@@ -27,10 +34,16 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
           : undefined
 
   const osmUrlHref = osmUrl(osmType, osmId)
+  const osmEditIdUrlHref = osmEditIdUrl(osmType, osmId)
+  const osmEditRapidUrlHref = osmEditRapidUrl(osmType, osmId)
   const historyUrlHref = historyUrl(osmType, osmId)
   const mapillaryUrlHref = mapillaryUrl(geometry)
 
-  if (!osmUrlHref && !historyUrlHref && !editors) return null
+  // Type Guard
+  if (!osmUrlHref && !osmEditRapidUrlHref && !osmEditRapidUrlHref && !historyUrlHref && !editors) {
+    return null
+  }
+
   return (
     <section className="flex flex-wrap gap-3 pb-1 text-xs">
       {editors?.map(({ urlTemplate, name, idKey }) => {
@@ -52,6 +65,19 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
       {osmUrlHref && (
         <LinkExternal blank button href={osmUrlHref}>
           OpenStreetMap
+        </LinkExternal>
+      )}
+
+      {osmEditIdUrlHref && (
+        <LinkExternal blank button href={osmEditIdUrlHref}>
+          Bearbeiten (iD)
+        </LinkExternal>
+      )}
+
+      {/* Just for testing for now… */}
+      {!isProd && osmEditRapidUrlHref && (
+        <LinkExternal blank button href={osmEditRapidUrlHref}>
+          Bearbeiten (Rapid) (Staging only)
         </LinkExternal>
       )}
 

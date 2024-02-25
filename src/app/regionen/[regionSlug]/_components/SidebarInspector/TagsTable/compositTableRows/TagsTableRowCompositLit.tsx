@@ -18,7 +18,7 @@ export const TagsTableRowCompositLit: React.FC<CompositTableRow> = ({
       tagKey={tagKey}
       value={
         <details>
-          <summary>
+          <summary className="cursor-pointer hover:font-semibold">
             <ConditionalFormattedValue
               sourceId={sourceId}
               tagKey={'lit'}

@@ -74,7 +74,7 @@ const iconByStyle = ({
 }
 
 export const Legend = ({ subcategoryId, styleConfig }: Props) => {
-  const legends = styleConfig?.legends?.filter((l) => l.id !== 'ignore' && l.name !== null)
+  const legends = styleConfig?.legends
   // Guard: Hide UI when no legends present for active style
   if (!styleConfig || !legends?.length) {
     return null
@@ -92,7 +92,6 @@ export const Legend = ({ subcategoryId, styleConfig }: Props) => {
           {legends.map((legendData) => {
             // TODO: TS: This should be specified at the source…
             const legendDataId = legendData.id as LegendId
-            if (legendDataId === 'ignore') return null
 
             const scope = createSubcatStyleKey(subcategoryId, styleConfig.id)
             const key = createSubcatStyleLegendKey(subcategoryId, styleConfig.id, legendDataId)

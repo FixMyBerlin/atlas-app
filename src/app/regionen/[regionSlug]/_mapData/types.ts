@@ -154,6 +154,7 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   tiles: string
   attributionHtml: string // TODO anzeigen in der Karte
   licence: 'ODbL' | undefined
+  promoteId: mapboxgl.VectorSource['promoteId']
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
@@ -168,8 +169,8 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   calculator: MapDataSourceCalculator
   /** @desc Export: Enable and configure data export */
   export: MapDataSourceExport<TExpIds>
-  minzoom?: mapboxgl.RasterSource['minzoom']
-  maxzoom?: mapboxgl.RasterSource['maxzoom']
+  minzoom?: mapboxgl.VectorSource['minzoom']
+  maxzoom?: mapboxgl.VectorSource['maxzoom']
 }
 
 export type StaticMapDataCategory = {

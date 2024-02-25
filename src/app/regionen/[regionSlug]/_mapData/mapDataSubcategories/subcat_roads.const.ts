@@ -26,7 +26,6 @@ export const subcat_roads: FileMapDataSubcategory = {
         source,
         sourceLayer,
       }),
-
       legends: [
         {
           id: 'main',

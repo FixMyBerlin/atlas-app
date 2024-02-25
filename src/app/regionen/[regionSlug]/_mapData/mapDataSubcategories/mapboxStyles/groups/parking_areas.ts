@@ -21,6 +21,7 @@ export const mapboxStyleGroupLayers_parking_areas: MapboxStyleLayer[] = [
         'rgb(48, 159, 219)',
       ],
     },
+    filter: ['match', ['get', 'amenity'], ['bicycle_parking'], false, true],
   },
   {
     type: 'fill',
@@ -30,6 +31,7 @@ export const mapboxStyleGroupLayers_parking_areas: MapboxStyleLayer[] = [
       'fill-pattern': ['match', ['get', 'access'], ['customers', 'private'], 'stripe_texture', ''],
       'fill-opacity': 0.5,
     },
+    filter: ['match', ['get', 'amenity'], ['bicycle_parking'], false, true],
   },
   {
     layout: {
@@ -44,5 +46,6 @@ export const mapboxStyleGroupLayers_parking_areas: MapboxStyleLayer[] = [
       'text-halo-width': 0.5,
       'text-halo-color': 'rgba(0, 0, 0, 0.33)',
     },
+    filter: ['match', ['get', 'amenity'], ['bicycle_parking'], false, true],
   },
 ]

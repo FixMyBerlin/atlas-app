@@ -5,21 +5,48 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_maxspeed_presence: MapboxStyleLayer[] = [
   {
-    layout: {
-      'line-cap': 'round',
-    },
+    filter: [
+      'match',
+      ['get', 'road'],
+      ['footway', 'path', 'cycleway', 'footway_steps', 'track', 'bridleway', 'pedestrian'],
+      false,
+      true,
+    ],
     type: 'line',
     id: 'maxspeed_presence',
     paint: {
-      'line-opacity': 0.98,
-      'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.5, 15, 1],
-      'line-color': ['case', ['has', 'maxspeed'], '#000000', '#ca1212'],
+      'line-color': ['case', ['has', 'maxspeed'], '#8eb1f0', '#fa80f4'],
+      'line-width': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        8,
+        1,
+        16,
+        ['case', ['has', 'maxspeed'], 4, 6],
+      ],
+      'line-opacity': [
+        'interpolate',
+        ['linear'],
+        ['zoom'],
+        11,
+        ['case', ['has', 'maxspeed'], 0, 0.7],
+        12,
+        ['case', ['has', 'maxspeed'], 0.7, 0.5],
+      ],
     },
   },
   {
     layout: {
       'line-cap': 'round',
     },
+    filter: [
+      'match',
+      ['get', 'road'],
+      ['footway', 'footway_crossing', 'path', 'cycleway', 'bridleway', 'track', 'pedestrian'],
+      false,
+      true,
+    ],
     type: 'line',
     id: 'hitarea-maxspeed-presence',
     paint: {

@@ -1,5 +1,4 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_plus_surfaces } from './mapboxStyles/groups/atlas_bikelanes_plus_surfaces'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -13,7 +12,7 @@ export const subcat_bikelanes_plus_surface_text: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Oberfläche (Text)',
   ui: 'checkbox',
-  sourceId: 'atlas_bikelanes',
+  sourceId: source,
   styles: [
     {
       id: 'default',
