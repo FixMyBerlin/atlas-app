@@ -34,6 +34,7 @@ local tags_prefixed = {
 
 function Bikelanes(object)
   local tags = object.tags
+  local result_bikelanes = {}
 
   -- transformations
   local footwayTransformation = {
@@ -48,50 +49,50 @@ function Bikelanes(object)
     highway = "cycleway",
     prefix = "cycleway",
   }
-  local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
+  local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
-  local bikelanes = {}
+
   for i, cycleway in pairs(transformedObjects) do
     local sign = cycleway.sign
     local onlyPresent = CategorizeOnlyPresent(cycleway)
     if onlyPresent ~= nil then
-      bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
+      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
     else
       local category = CategorizeBikelane(cycleway)
       if category ~= nil then
-        local results = {
+        local result_tags = {
           _infrastructureExists = true,
           category = category,
           offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
         }
 
         -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        results.oneway = Sanitize(cycleway.oneway, Set({'yes', 'no'})) or InferOneway(category)
+        result_tags.oneway = Sanitize(cycleway.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
         if sign == CENTER_SIGN then
-          results.sign = CENTER_SIGN
-          results.width = ParseLength(tags.width)
+          result_tags.sign = CENTER_SIGN
+          result_tags.width = ParseLength(tags.width)
         else
-          MergeTable(results, cycleway)
+          MergeTable(result_tags, cycleway)
           freshTag = "check_date:" .. cycleway.prefix
         end
 
-        results.age = AgeInDays(ParseCheckDate(tags[freshTag]))
+        result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
 
-        MergeTable(results, DeriveSmoothness(cycleway))
-        MergeTable(results, DeriveSurface(cycleway))
-        CopyTags(results, tags, tags_copied)
-        CopyTags(results, tags, tags_prefixed, 'osm_')
+        MergeTable(result_tags, DeriveSmoothness(cycleway))
+        MergeTable(result_tags, DeriveSurface(cycleway))
+        CopyTags(result_tags, tags, tags_copied)
+        CopyTags(result_tags, tags, tags_prefixed, 'osm_')
         -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
-        bikelanes[i] = results
+        result_bikelanes[i] = result_tags
       end
     end
   end
 
-  return bikelanes
+  return result_bikelanes
 end
