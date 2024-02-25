@@ -1,7 +1,6 @@
+package.path = package.path .. ";app/process/roads_bikelanes/bikelanes/categories/?.lua"
 require("IsTermInString")
-
-NOT_EXPECTED = 'not_expected'
--- PREDICATES FOR EACH CATEGORY:
+require("IsSidepath")
 
 -- this category is for the explicit absence of bike infrastrucute
 -- TODO: split into `no` or `separate`
@@ -26,7 +25,7 @@ local function implicitOneWay(tags)
       tags.parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
   result = result and tags.sign == LEFT_SIGN                   -- is the left side object
   if result then
-    return NOT_EXPECTED
+    return 'not_expected'
   end
 end
 
@@ -82,8 +81,7 @@ local function footAndCyclewaySharedCases(tags)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+    if IsSidepath(tags) then
       return "footAndCyclewayShared_adjoining"
     end
     -- Eg https://www.openstreetmap.org/way/440072364 highway=service
@@ -102,8 +100,7 @@ local function footAndCyclewaySegregatedCases(tags)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+    if IsSidepath(tags) then
       return "footAndCyclewaySegregated_adjoining"
     end
     if tags.is_sidepath == "no" then
@@ -124,8 +121,7 @@ local function footwayBicycleYesCases(tags)
 
   if tags.highway == "footway" or tags.highway == "path" then
     if tags.bicycle == "yes" or IsTermInString("1022-10", tags.traffic_sign) then
-      -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-      if tags.is_sidepath == "yes" or tags._parent_highway or tags.footway == "sidewalk" or tags.path == "sidewalk" then
+      if IsSidepath(tags) then
         return "footwayBicycleYes_adjoining"
       end
       -- https://www.openstreetmap.org/way/946438663
@@ -160,8 +156,7 @@ local function cyclewaySeparatedCases(tags)
   -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:237") and not tags.cycleway == "lane"
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    -- `_parent_highway` indicates that this way was split of the centerline; in this case, we consider it a sidepath.
-    if tags.is_sidepath == "yes" or tags._parent_highway then
+    if IsSidepath(tags) then
       -- This could be PBLs "Protected Bike Lanes"
       -- Eg https://www.openstreetmap.org/way/964476026
       -- Eg https://www.openstreetmap.org/way/278057274
