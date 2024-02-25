@@ -46,6 +46,16 @@ local roadsPathClassesTable = osm2pgsql.define_table({
   }
 })
 
+local roadsBikelanesPresenceTable = osm2pgsql.define_table({
+  name = 'roadsBikelanesPresence',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'linestring' },
+  }
+})
+
 local bikelanesTable = osm2pgsql.define_table({
   name = '_bikelanes_temp',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -150,8 +160,11 @@ function osm2pgsql.process_way(object)
   if not (PathClasses[tags.highway] or tags.highway == 'pedestrian') then
     MergeTable(results, Maxspeed(object))
   end
-  MergeTable(results, BikelanesPresence(object, cycleways))
+  local bikelanesPresence = BikelanesPresence(object, cycleways)
+  MergeTable(results, bikelanesPresence)
 
+
+  -- Write data in different buckets to same data per table
   -- We need sidewalk for Biklanes(), but not for `roads`
   if not IsSidepath(tags) then
     if PathClasses[tags.highway] then
@@ -162,6 +175,13 @@ function osm2pgsql.process_way(object)
       })
     else
       roadsTable:insert({
+        tags = results,
+        meta = Metadata(object),
+        geom = object:as_linestring()
+      })
+    end
+    if bikelanesPresence ~= nil then
+      roadsBikelanesPresenceTable:insert({
         tags = results,
         meta = Metadata(object),
         geom = object:as_linestring()
