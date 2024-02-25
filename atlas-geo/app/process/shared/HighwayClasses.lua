@@ -22,15 +22,15 @@ MinorRoadClasses = Set({
   "residential",   -- "Straße an und in Wohngebieten"
   "road",          -- Ohne Klassifizierung
   "living_street", -- "Verkehrsberuhigter Bereich", "Spielstraße" traffic_sign=325.1 (Beginn), 326 (Ende)
+  "pedestrian",    -- "Fußgängerzone"
   "service",       -- "Zufahrtswege", aber auch "Grundstückszufahrt", Wege auf Parkplätzen, "Drive trough", "Gassen", "Feuerwehzufahrt"
 })
 
 PathClasses = Set({
-  "pedestrian", -- "Fußgängerzone"
-  "track",      -- "Wirtschaftswege", "Wald- und Feldwege"
+  "track",     -- "Wirtschaftswege", "Wald- und Feldwege"
+  "bridleway", -- Reitweg
   "path",
   "footway",
   "cycleway",
-  "bridleway", -- Reitweg
   "steps",
 })

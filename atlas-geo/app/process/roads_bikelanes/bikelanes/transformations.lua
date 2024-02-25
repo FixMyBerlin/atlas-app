@@ -48,7 +48,7 @@ function GetTransformedObjects(tags, transformations)
   local results = { center }
 
   -- don't transform paths
-  if PathClasses[tags.highway] then
+  if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     return results
   end
 
