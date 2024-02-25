@@ -17,6 +17,7 @@ export type SourcesId =
   | 'atlas_poiClassification'
   | 'atlas_publicTransport'
   | 'atlas_roads'
+  | 'atlas_roadsPathClasses'
   | 'atlas_trafficSigns'
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
@@ -44,6 +45,7 @@ export const exportApiIdentifier = [
   'poiClassification',
   'publicTransport',
   'roads',
+  'roadsPathClasses',
   'trafficSigns',
   'barrierAreas',
   'barrierLines',
@@ -203,6 +205,7 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'osm_id',
       documentedKeys: [
+        // Same as 'roadsPathClasses'
         'name',
         'road',
         'road_oneway',
@@ -225,6 +228,44 @@ export const sources: MapDataSource<
     export: {
       enabled: true,
       apiIdentifier: 'roads',
+      title: 'Straßennetz',
+      desc: 'Straßentyp, Beleuchtung, Oberfläche, Höchstgeschwindigkeit',
+    },
+  },
+  {
+    id: 'atlas_roadsPathClasses',
+    tiles: `${tilesUrl}/roadsPathClasses/{z}/{x}/{y}`,
+    minzoom: 8.5, // See groups/atlas_roads_plus_fusswege.ts
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    inspector: {
+      enabled: true,
+      highlightingKey: 'osm_id',
+      documentedKeys: [
+        // Same as 'roads'
+        'name',
+        'road',
+        'road_oneway',
+        'road_oneway:bicycle__if_present',
+        'composit_surface_smoothness',
+        'composit_lit',
+        'composit_maxspeed',
+        'composit_road_bikelanes',
+        'osm_traffic_sign',
+        'osm_traffic_sign:forward__if_present',
+        'osm_traffic_sign:backward__if_present',
+        'composit_mapillary',
+        'description__if_present',
+      ],
+    },
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'roadsPathClasses',
       title: 'Straßennetz',
       desc: 'Straßentyp, Beleuchtung, Oberfläche, Höchstgeschwindigkeit',
     },
