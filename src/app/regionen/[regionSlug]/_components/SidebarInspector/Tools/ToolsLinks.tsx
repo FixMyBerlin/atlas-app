@@ -70,7 +70,7 @@ export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) =
 
       {osmEditIdUrlHref && (
         <LinkExternal blank button href={osmEditIdUrlHref}>
-          Bearbeiten (ID)
+          Bearbeiten (iD)
         </LinkExternal>
       )}
 

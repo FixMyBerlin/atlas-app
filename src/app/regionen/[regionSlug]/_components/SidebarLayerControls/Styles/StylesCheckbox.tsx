@@ -70,7 +70,7 @@ export const StylesCheckbox = ({ categoryId, subcatConfig, disabled }: Props) =>
               />
             </div>
 
-            <p className="ml-2 mt-0.5 text-sm leading-4">
+            <div className="ml-2 mt-0.5 text-sm leading-4">
               <label
                 htmlFor={subcatConfig.id}
                 className={twJoin('font-medium', disabled ? 'text-gray-400' : 'text-gray-700')}
@@ -81,7 +81,7 @@ export const StylesCheckbox = ({ categoryId, subcatConfig, disabled }: Props) =>
               {styleConfig.active && (
                 <Legend subcategoryId={subcatConfig.id} styleConfig={styleConfig} />
               )}
-            </p>
+            </div>
           </div>
         )
       })}
