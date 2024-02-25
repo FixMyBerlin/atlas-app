@@ -200,7 +200,7 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--bikelane_title': 'Daten zu Radfinfrastruktur Vollständigkeit der Führungsform',
   'atlas_roads--composit_lit--key': 'Beleuchtung',
   'atlas_roads--composit_maxspeed--key': 'Höchstgeschwindigkeit',
-  'atlas_roads--composit_road_bikelanes--key': 'Radfinfrastruktur',
+  'atlas_roads--composit_road_bikelanes--key': 'Vollständigkeit RVA',
   'atlas_roads--lit--key': 'Beleuchtung Details',
   'atlas_roads--lit=no': 'Nicht beleuchtet',
   'atlas_roads--lit=special': 'Spezielle Angaben',
