@@ -12,6 +12,11 @@ const bboxBerlinPlus = {
   min: [13.2809, 52.2095],
   max: [13.825, 52.5528],
 } satisfies StaticRegion['bbox']
+// BBox: Whole Germany
+const bboxPartOfNorthGermany = {
+  min: [6.635773437502678, 50.666899472786724],
+  max: [13.842804687502621, 53.422653072698324],
+} satisfies StaticRegion['bbox']
 
 // Datasets:
 export const tilesetConfigs: Record<
@@ -86,6 +91,6 @@ export const tilesetConfigs: Record<
   bikeroutes: {
     sourceLayer: 'bikeroutes',
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.7h5266ql/#14/52.51622/13.37036',
-    bbox: bboxBrandenburg,
+    bbox: bboxPartOfNorthGermany,
   },
 }
