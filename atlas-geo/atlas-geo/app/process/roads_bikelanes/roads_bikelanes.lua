@@ -5,6 +5,7 @@ package.path = package.path .. dir .. "maxspeed/?.lua"
 package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
+package.path = package.path .. dir .. "bikelanes/categories/?.lua"
 package.path = package.path .. dir .. "bikeroutes/?.lua"
 
 require("Set")
@@ -23,6 +24,7 @@ require("Bikeroutes")
 require("BikelanesPresence")
 require("MergeTable")
 require("CopyTags")
+require("IsSidepath")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -129,8 +131,7 @@ function osm2pgsql.process_way(object)
   MergeTable(results, BikelanesPresence(object, cycleways))
 
   -- We need sidewalk for Biklanes(), but not for `roads`
-  local isSidewalk = tags.footway == 'sidewalk' or tags.steps == 'sidewalk'
-  if not isSidewalk then
+  if not IsSidepath(tags) then
     roadsTable:insert({
       tags = results,
       meta = Metadata(object),
