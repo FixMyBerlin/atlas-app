@@ -41,11 +41,12 @@ local sideDirectionMap = {
 -- these tags get transformed from the forward backward schema
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 function GetTransformedObjects(tags, transformations)
-  local center =  MergeTable({}, tags)
-  center.sign = CENTER_SIGN -- Overwrite any OSM tag 'sign'
+  local center = MergeTable({}, tags)
+  center.sign = CENTER_SIGN                             -- Overwrite any OSM tag 'sign'
   center.oneway = tags['oneway:bicycle'] or tags.oneway -- give `bicycle:oneway` precedence
 
   local results = { center }
+
   -- don't transform paths
   if PathClasses[tags.highway] then
     return results
@@ -58,9 +59,9 @@ function GetTransformedObjects(tags, transformations)
         local newObj = {
           _parent_highway = tags.highway,
           highway = transformation.highway,
-          name = tags.name,
-          prefix = prefix,
-          sign = sign
+          name = tags.name, -- todo proably not needed in this place
+          prefix = prefix,  -- todo rename to _prefix
+          sign = sign       -- todo rename to _sign
         }
 
         -- we look for tags with the following hirachy: `prefix` < `prefix:both` < `prefix:side`
