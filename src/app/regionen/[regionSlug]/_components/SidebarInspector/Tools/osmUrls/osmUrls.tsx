@@ -14,13 +14,13 @@ export const osmEditIdUrl = (type: OsmShortType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
   // return `https://www.openstreetmap.org/edit?${longOsmType[type]}=${id}`
-  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#background=Brandenburg-DOP20c&disable_features=boundaries&id=${type.toLocaleLowerCase()}${id}&locale=de`
+  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${type.toLocaleLowerCase()}${id}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
 export const osmEditRapidUrl = (type: OsmShortType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
-  return `https://rapideditor.org/edit#id=${type.toLocaleLowerCase()}${id}`
+  return `https://rapideditor.org/edit#id=${type.toLocaleLowerCase()}${id}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
 export const historyUrl = (type: OsmShortType, id: number | string) => {
