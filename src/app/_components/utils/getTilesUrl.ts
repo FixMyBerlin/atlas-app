@@ -1,7 +1,7 @@
 import { envKeyWithFallback } from './isEnv'
 
 const tilesBaseUrl = {
-  development: 'http://localhost:3000',
+  development: 'https://staging-tiles.radverkehrsatlas.de',
   staging: 'https://staging-tiles.radverkehrsatlas.de',
   production: 'https://tiles.radverkehrsatlas.de',
 }

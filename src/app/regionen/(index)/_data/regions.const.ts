@@ -160,6 +160,7 @@ export const staticRegion: StaticRegion[] = [
       'parking',
       'bicycleParking',
       'mapillary',
+      'tile_preview',
     ],
     backgroundSources: [
       ...defaultBackgroundSources,
@@ -633,6 +634,7 @@ export const staticRegion: StaticRegion[] = [
       'surface',
       'lit',
       'mapillary',
+      'tile_preview',
     ],
     backgroundSources: [...defaultBackgroundSources],
   },

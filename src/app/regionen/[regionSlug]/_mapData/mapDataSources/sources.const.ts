@@ -75,7 +75,7 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'tile_preview',
-    tiles: `${tilesUrl}/bikelanes_verified/{z}/{x}/{y}`, // UPDATE HERE AND src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_preview.const.ts
+    tiles: `${tilesUrl}/function_zxy_query/{z}/{x}/{y}`, // UPDATE HERE AND src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_preview.const.ts
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     inspector: {

@@ -4,7 +4,7 @@ import { debugLayerStyles } from './mapboxStyles/debugLayerStyles'
 
 const subcatId = 'tile_preview'
 const source = 'tile_preview'
-const sourceLayer = 'bikelanes_verified' // UPDATE HERE BASED ON TILEJSON
+const sourceLayer = 'roads' // UPDATE HERE BASED ON TILEJSON
 export type SubcatPreviewId = typeof subcatId
 export type SubcatPreviewStyleIds = 'default' | 'bad'
 
