@@ -8,23 +8,25 @@ describe('wrapFilterWithAll()', () => {
     expect(result).toMatchObject(['all'])
   })
 
-  test('input with all returns the same input', () => {
-    const filterArray = ['all', ['==', 'id', 'none'], ['==', 'is_pano', !0]]
+  test('input with all returns the same input (including null guard)', () => {
+    const filter1 = ['==', 'id', 'none']
+    const filter2 = ['==', 'is_pano', !0]
+    const filterArray = ['all', filter1, filter2, null, undefined]
     const result = wrapFilterWithAll(filterArray)
-    expect(result).toMatchObject(filterArray)
+    expect(result).toMatchObject(['all', filter1, filter2])
+  })
+
+  test('multiple filter get wrapped with all (including null guard)', () => {
+    const filter1 = ['==', 'id', 'none']
+    const filter2 = ['==', 'is_pano', !0]
+    const filterArray = [filter1, filter2, null, undefined]
+    const result = wrapFilterWithAll(filterArray)
+    expect(result).toMatchObject(['all', filter1, filter2])
   })
 
   test('one filter get wrapped with all', () => {
     const filter = ['==', 'id', 'none']
     const result = wrapFilterWithAll(filter)
     expect(result).toMatchObject(['all', filter])
-  })
-
-  test('multiple filter get wrapped with all', () => {
-    const filter1 = ['==', 'id', 'none']
-    const filter2 = ['==', 'is_pano', !0]
-    const filterArray = [filter1, filter2]
-    const result = wrapFilterWithAll(filterArray)
-    expect(result).toMatchObject(['all', filter1, filter2])
   })
 })
