@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
+=======
+import { sources } from './src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { staticRegion } from './src/app/regionen/(index)/_data/regions.const'
+import { getTilesUrl } from './src/app/_components/utils/getTilesUrl'
+>>>>>>> 6b73829 (fix import)
 
 
 const regionSlug = 'bb'
