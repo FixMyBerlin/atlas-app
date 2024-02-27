@@ -61,7 +61,6 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_poi_plus_barriers, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_landuse, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_publicTransport, defaultStyle: 'hidden' },
-      // { id: 'subcat_poi_plus_routes', defaultStyle: 'hidden' },
       // { id: 'subcat_poi_plus_buildings', defaultStyle: 'hidden' },
     ],
   },
@@ -103,7 +102,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
-      // { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
+      { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
       // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
