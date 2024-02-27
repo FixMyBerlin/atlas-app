@@ -1,8 +1,11 @@
 import fs from 'node:fs'
 import chalk from 'chalk'
 import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
+import dotenv from 'dotenv'
 
-const tilesBaseUrl = 'https://staging-tiles.radverkehrsatlas.de'
+dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
+const tilesBaseUrl = `https://${process.env.TILES_URL}`
 const cacheWarmingConfigPath = 'config.json'
 
 console.log(`Loading config ${cacheWarmingConfigPath}...`)
