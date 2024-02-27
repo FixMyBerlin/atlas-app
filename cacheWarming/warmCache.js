@@ -22,13 +22,21 @@ const fetchTiles = async () => {
   for (let i in config.urls) {
     const urlTemplate = config.urls[i]
     for (let z = zoomFrom; z <= zoomTo; z++) {
-      console.log(chalk.inverse('⚑ ' + urlTemplate.replace('{z}', z)))
       const centerLat = lat2tile(lat, z)
       const centerLng = lng2tile(lng, z)
       const minX = centerLng - Math.floor((numTilesX - 1) / 2)
       const maxX = minX + numTilesX + 1
       const minY = centerLat - Math.floor((numTilesX - 1) / 2)
       const maxY = minY + numTilesY + 1
+      console.log(
+        chalk.inverse(
+          '⚑ ' +
+          urlTemplate
+            .replace('{z}', z)
+            .replace('{x}', `${minX}-${maxX}`)
+            .replace('{y}', `${minY}-${maxY}`),
+        ),
+      )
       for (let x = minX; x <= maxX; x++) {
         for (let y = minY; y <= maxY; y++) {
           const zf = Math.floor(z)
@@ -44,10 +52,7 @@ const fetchTiles = async () => {
           if (response.status === 200) {
             const cacheStatus = response.headers.get('x-cache-status') || 'NO-CACHE'
             const contentLength = formatBytes(response.headers.get('content-length'))
-            console.log(
-              chalk.green('✓'),
-              `${cacheStatus} - ${duration} - ${contentLength}`,
-            )
+            console.log(chalk.green('✓'), `${cacheStatus} - ${duration} - ${contentLength}`)
           } else if (response.status < 300) {
             console.log(chalk.yellow(`⚠ ${statusFormatted}`))
           } else {
