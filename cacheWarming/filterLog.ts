@@ -2,6 +2,7 @@
 
 import { parseArgs } from 'node:util'
 import fs from 'node:fs'
+import chalk from "chalk";
 
 function error(message) {
   console.error(message)
@@ -12,12 +13,12 @@ let parsed: any
 try {
   parsed = parseArgs({
     options: {
-      'no-errors': { type: 'boolean' },
       'min-size': { type: 'string' },
       'min-time': { type: 'string' },
-      'grep': { type: 'string' },
-      hit: { type: 'boolean', short: 'h' },
-      miss: { type: 'boolean', short: 'm' },
+      grep: { type: 'string' },
+      'skip-errors': { type: 'boolean', default: false },
+      hit: { type: 'boolean', default: false },
+      miss: { type: 'boolean', default: false },
     },
     strict: true,
     allowPositionals: true,
@@ -28,12 +29,20 @@ try {
 
 const { values, positionals } = parsed
 
+const args = {
+  skipErrors: values['skip-errors'],
+  minSize: 'min-size' in values ? parseSize(values['min-size']) : null,
+  minTime: 'min-time' in values ? parseTime(values['min-time']) : null,
+  grep: values.grep || null,
+  hit: values.hit,
+  miss: values.miss,
+}
+
 if (positionals.length === 0) error('Logfile argument is missing.')
 if (positionals.length > 1) error('Too many arguments.')
 const filename = positionals[0]
 if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
-if ('hit' in values && 'miss' in values) error('Supply only one of "hit" or "miss"')
-if ('and' in values && 'or' in values) error('Supply one of "and" or "or"')
+if (args.hit && args.miss) error('Supply only one of "hit" or "miss"')
 
 function parseNumber(valueName) {
   if (!(valueName in values)) return null
@@ -41,9 +50,6 @@ function parseNumber(valueName) {
   if (isNaN(v)) error(`Argument "${valueName}" is not a number.`)
   return v
 }
-
-const minSize = 'min-size' in values ? parseSize(values['min-size']) : null
-const minTime = 'min-time' in values ? parseTime(values['min-time']) : null
 
 function parseTime(time) {
   const num = Number(time)
@@ -79,26 +85,36 @@ while (i < logData.length) {
     i++
     continue
   }
-  const request = line
-  if (('grep' in values)) {
-    if (request.search(values.grep) === -1) {
+  let request = line
+  if (args.grep) {
+    const f0 = request.search(args.grep)
+    if (f0 === -1) {
       i += 2
       continue
+    } else {
+      const f1 = f0 + args.grep.length
+      request = request.slice(0, f0) + chalk.red(request.slice(f0, f1)) + request.slice(f1)
     }
   }
   const response = logData[i + 1]!
   if (!response) break
+
+  let [cacheStatus, timeFormatted, sizeFormatted] = response.slice(2).split(' - ')
   if (response.startsWith('⚠')) {
-    if (!('no-errors' in values)) {
+    if (!args.skipErrors) {
       console.log(request)
       console.log(response)
     }
-  } else if (minSize === null && minTime === null) {
+  } else if (args.hit && cacheStatus !== 'HIT') {
+    // don't log
+  } else if (args.miss && cacheStatus !== 'MISS') {
+    // don't log
+  } else if (args.minSize === null && args.minTime === null) {
     // don't log if neither min-size nor min-time is given
   } else {
     let [cacheStatus, timeFormatted, sizeFormatted] = response.slice(2).split(' - ')
-    const logSize = minSize === null ? false : parseSize(sizeFormatted) >= minSize
-    const logTime = minTime === null ? false : parseTime(timeFormatted) >= minTime
+    const logSize = args.minSize === null ? false : parseSize(sizeFormatted) >= args.minSize
+    const logTime = args.minTime === null ? false : parseTime(timeFormatted) >= args.minTime
     if (logSize || logTime) {
       console.log(request)
       console.log(response)
