@@ -2,7 +2,8 @@
 
 import { parseArgs } from 'node:util'
 import fs from 'node:fs'
-import chalk from "chalk";
+import chalk from 'chalk'
+import { displayHelp } from './util'
 
 function error(message) {
   console.error(message)
@@ -13,12 +14,13 @@ let parsed: any
 try {
   parsed = parseArgs({
     options: {
-      'min-size': { type: 'string' },
-      'min-time': { type: 'string' },
-      grep: { type: 'string' },
-      'skip-errors': { type: 'boolean', default: false },
-      hit: { type: 'boolean', default: false },
-      miss: { type: 'boolean', default: false },
+      help: { type: 'boolean', default: false },
+      'min-size': { type: 'string', short: 's' },
+      'min-time': { type: 'string', short: 't' },
+      grep: { type: 'string', short: 'g' },
+      'skip-errors': { type: 'boolean', short: 'e', default: false },
+      hit: { type: 'boolean', short: 'h', default: false },
+      miss: { type: 'boolean', short: 'm', default: false },
     },
     strict: true,
     allowPositionals: true,
@@ -30,12 +32,18 @@ try {
 const { values, positionals } = parsed
 
 const args = {
+  help: values.help,
   skipErrors: values['skip-errors'],
   minSize: 'min-size' in values ? parseSize(values['min-size']) : null,
   minTime: 'min-time' in values ? parseTime(values['min-time']) : null,
   grep: values.grep || null,
   hit: values.hit,
   miss: values.miss,
+}
+
+if (values.help) {
+  displayHelp()
+  process.exit(0)
 }
 
 if (positionals.length === 0) error('Logfile argument is missing.')

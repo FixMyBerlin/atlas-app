@@ -55,3 +55,20 @@ export function formatBytes(bytes) {
     [250000, [255, 255, 0]],
   ])
 }
+
+export function displayHelp() {
+  console.log(`
+Usage: node filterLog.js [OPTION]... [LOGFILE]...
+Filter Logfile.
+Example: node filterLog.js --grep=/roads/9 --miss --min-size=500K --min-time=2
+
+Filter options:
+  -e, --skip-errors do not display warnings and errors
+  -h, --hit         display only cache hits
+  -m, --miss        display only cache misses
+  -s, --size        display results where the tilesize is at least given size
+  -t, --time        display results where the response time is at least given time
+  -g, --grep        display results where the request line contains given string
+`.trim()
+  )
+}
