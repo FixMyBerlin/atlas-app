@@ -56,6 +56,31 @@ export function formatBytes(bytes) {
   ])
 }
 
+export function parseTime(time) {
+  const num = Number(time)
+  if (!isNaN(num)) return time
+  const m = time.trim().match(/^([0-9]+\.[0-9]{3})s$/)
+  if (!m) error(`Could not parse time "${time}".`)
+  return Number(m[1])
+}
+
+export function parseSize(size) {
+  const num = Number(size)
+  if (!isNaN(num)) return num
+  const m = size.trim().match(/^([0-9.]+)([BKMG])$/)
+  if (!m) error(`Could not parse size "${size}".`)
+  let [_, bytes, unit] = m
+  return Math.round(
+    bytes *
+    {
+      B: 1,
+      K: 1024,
+      M: 1024 ** 2,
+      G: 1024 ** 3,
+    }[unit],
+  )
+}
+
 export function displayHelp() {
   console.log(`
 Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
