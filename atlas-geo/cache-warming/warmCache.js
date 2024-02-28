@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import fs from 'node:fs'
 import chalk from 'chalk'
 import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'

@@ -1,3 +1,5 @@
+#!/usr/bin/env bun
+
 import { sources } from '../../atlas-app/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { staticRegion } from '../../atlas-app/src/app/regionen/(index)/_data/regions.const'
 import { getTilesUrl } from '../../atlas-app/src/app/_components/utils/getTilesUrl'
