@@ -58,9 +58,9 @@ export function formatBytes(bytes) {
 
 export function displayHelp() {
   console.log(`
-Usage: bun filterLog.ts [OPTION]... [LOGFILE]...
+Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
 Filter Logfile.
-Example: bun filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
+Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
 
 Filter options:
   -e, --skip-errors do not display warnings and errors
