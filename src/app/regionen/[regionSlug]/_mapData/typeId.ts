@@ -31,6 +31,10 @@ import {
   SubcatBikelanesPlusSurfaceStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
 import {
+  SubcatBikelanesPlusVerificationId,
+  SubcatBikelanesPlusVerificationStyleIds,
+} from './mapDataSubcategories/subcat_bikelanes_plus_verification.const'
+import {
   SubcatBikelanesPlusWidthTextId,
   SubcatBikelanesPlusWidthTextStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_width_text.const'
@@ -51,6 +55,10 @@ import {
   SubcatMaxspeedId,
   SubcatMaxspeedStyleIds,
 } from './mapDataSubcategories/subcat_maxspeed.const'
+import {
+  SubcatMaxspeedPlusPresenceId,
+  SubcatMaxspeedPlusPresenceStyleIds,
+} from './mapDataSubcategories/subcat_maxspeed_plus_presence'
 import { SubcatParkingId, SubcatParkingStyleIds } from './mapDataSubcategories/subcat_parking.const'
 import {
   SubcatParkingAreasId,
@@ -107,10 +115,6 @@ import {
   SubcatSurfaceRoadsStyleIds,
 } from './mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from './types'
-import {
-  SubcatBikelanesPlusVerificationId,
-  SubcatBikelanesPlusVerificationStyleIds,
-} from './mapDataSubcategories/subcat_bikelanes_plus_verification.const'
 
 export type SubcategoryId =
   | SubcatAccidentsId
@@ -128,6 +132,7 @@ export type SubcategoryId =
   | SubcatLitPlusFreshnessId
   | SubcatMapillaryCoverageId
   | SubcatMaxspeedId
+  | SubcatMaxspeedPlusPresenceId
   | SubcatParkingAreasId
   | SubcatParkingDebugId
   | SubcatParkingId
@@ -164,6 +169,7 @@ export type StyleId =
   | SubcatLitStyleIds
   | SubcatMapillaryCoverageStyleIds
   | SubcatMaxspeedStyleIds
+  | SubcatMaxspeedPlusPresenceStyleIds
   | SubcatParkingAreasStyleIds
   | SubcatParkingDebugStyleIds
   | SubcatParkingPointsStyleIds

@@ -11,6 +11,7 @@ import { subcat_lit } from '../mapDataSubcategories/subcat_lit.const'
 import { subcat_lit_plus_completeness } from '../mapDataSubcategories/subcat_lit_plus_completeness.const'
 import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapillaryCoverage.const'
 import { subcat_maxspeed } from '../mapDataSubcategories/subcat_maxspeed.const'
+import { subcat_maxspeed_plus_presence } from '../mapDataSubcategories/subcat_maxspeed_plus_presence'
 import { subcat_parking } from '../mapDataSubcategories/subcat_parking.const'
 import { subcat_parkingAreas } from '../mapDataSubcategories/subcat_parkingAreas.const'
 import { subcat_parkingDebug } from '../mapDataSubcategories/subcat_parkingDebug.const'
@@ -86,7 +87,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_roads_plus_footways, defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_lanes_text', defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_surface_text', defaultStyle: 'hidden' },
-      // { id: 'subcat_roads_plus_completness', defaultStyle: 'hidden' },
+      { ...subcat_maxspeed_plus_presence, defaultStyle: 'hidden' },
     ],
   },
   {
