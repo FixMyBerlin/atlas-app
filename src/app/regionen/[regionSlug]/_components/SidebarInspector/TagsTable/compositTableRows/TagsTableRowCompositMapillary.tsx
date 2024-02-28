@@ -14,15 +14,10 @@ export const TagsTableRowCompositMapillary: React.FC<CompositTableRow> = ({
   if (!url) return null
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <LinkExternal blank href={url}>
-          In OSM hinterlegtes Straßenfoto anzeigen…
-        </LinkExternal>
-      }
-    />
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <LinkExternal blank href={url}>
+        In OSM hinterlegtes Straßenfoto anzeigen…
+      </LinkExternal>
+    </TagsTableRow>
   )
 }

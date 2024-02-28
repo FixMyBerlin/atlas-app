@@ -12,15 +12,10 @@ export const TagsTableRowWebsite: React.FC<CompositTableRow> = ({
   if (!properties[tagKey]) return null
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <LinkExternal blank href={properties[tagKey]}>
-          {properties[tagKey].replace('https://', '').replace('http://', '')}
-        </LinkExternal>
-      }
-    />
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <LinkExternal blank href={properties[tagKey]}>
+        {properties[tagKey].replace('https://', '').replace('http://', '')}
+      </LinkExternal>
+    </TagsTableRow>
   )
 }

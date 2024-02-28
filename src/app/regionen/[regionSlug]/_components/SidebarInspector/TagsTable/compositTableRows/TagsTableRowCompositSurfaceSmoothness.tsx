@@ -3,6 +3,7 @@ import { TagsTableRow } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { NodataFallbackWrapper } from './NodataFallbackWrapper'
 import { CompositTableRow } from './types'
+import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 
 export const tableKeySurfaceSmoothness = 'composit_surface_smoothness'
 export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> = ({
@@ -13,53 +14,55 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
   if (!(properties['smoothness'] || properties['surface'])) return null
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <table className="w-full leading-4">
-          <tbody>
-            <tr>
-              <th className="py-1 pr-2 text-left font-medium">Belag</th>
-              <td className="w-full py-1">
-                <NodataFallbackWrapper fallback={!Boolean(properties['surface'])}>
-                  <details>
-                    <summary className="cursor-pointer hover:font-semibold">
-                      <ConditionalFormattedValue
-                        sourceId={sourceId}
-                        tagKey={'surface'}
-                        tagValue={properties['surface']}
-                      />
-                    </summary>
-                    <em>Quelle:</em>{' '}
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <table className="w-full leading-4">
+        <tbody>
+          <tr>
+            <th className="py-1 pr-2 text-left font-medium">Belag</th>
+            <td className="w-full py-1">
+              <NodataFallbackWrapper fallback={!Boolean(properties['surface'])}>
+                <ValueDisclosure>
+                  <ValueDisclosureButton>
                     <ConditionalFormattedValue
                       sourceId={sourceId}
-                      tagKey={'surface_source'}
-                      tagValue={properties['surface_source']}
+                      tagKey={'surface'}
+                      tagValue={properties['surface']}
                     />
-                    <br />
-                    <em>Genauigkeit der Quelle:</em>{' '}
-                    <NodataFallbackWrapper fallback={!Boolean(properties['surface_source'])}>
-                      Hoch
-                    </NodataFallbackWrapper>
-                  </details>
-                </NodataFallbackWrapper>
-              </td>
-            </tr>
-            <tr className="border-t">
-              <th className="py-1 pr-2 text-left font-medium">Zustand</th>
-              <td className="w-full py-1">
-                <NodataFallbackWrapper fallback={!Boolean(properties['smoothness'])}>
-                  <details>
-                    <summary className="cursor-pointer hover:font-semibold">
+                  </ValueDisclosureButton>
+                  <ValueDisclosurePanel>
+                    <p>
+                      <em>Quelle:</em>{' '}
                       <ConditionalFormattedValue
                         sourceId={sourceId}
-                        tagKey={'smoothness'}
-                        tagValue={properties['smoothness']}
+                        tagKey={'surface_source'}
+                        tagValue={properties['surface_source']}
                       />
-                    </summary>
-                    <p className="mt-1 leading-tight">
+                    </p>
+                    <p>
+                      <em>Genauigkeit der Quelle:</em>{' '}
+                      <NodataFallbackWrapper fallback={!Boolean(properties['surface_source'])}>
+                        Hoch
+                      </NodataFallbackWrapper>
+                    </p>
+                  </ValueDisclosurePanel>
+                </ValueDisclosure>
+              </NodataFallbackWrapper>
+            </td>
+          </tr>
+          <tr className="border-t">
+            <th className="py-1 pr-2 text-left font-medium">Zustand</th>
+            <td className="w-full py-1">
+              <NodataFallbackWrapper fallback={!Boolean(properties['smoothness'])}>
+                <ValueDisclosure>
+                  <ValueDisclosureButton>
+                    <ConditionalFormattedValue
+                      sourceId={sourceId}
+                      tagKey={'smoothness'}
+                      tagValue={properties['smoothness']}
+                    />
+                  </ValueDisclosureButton>
+                  <ValueDisclosurePanel>
+                    <p>
                       <em>Quelle:</em>{' '}
                       <ConditionalFormattedValue
                         sourceId={sourceId}
@@ -67,7 +70,7 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
                         tagValue={properties['smoothness_source']}
                       />
                     </p>
-                    <p className="mt-1 leading-tight">
+                    <p>
                       <em>Genauigkeit der Quelle:</em>{' '}
                       <ConditionalFormattedValue
                         sourceId={sourceId}
@@ -75,13 +78,13 @@ export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> =
                         tagValue={properties['smoothness_confidence']}
                       />
                     </p>
-                  </details>
-                </NodataFallbackWrapper>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      }
-    />
+                  </ValueDisclosurePanel>
+                </ValueDisclosure>
+              </NodataFallbackWrapper>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </TagsTableRow>
   )
 }

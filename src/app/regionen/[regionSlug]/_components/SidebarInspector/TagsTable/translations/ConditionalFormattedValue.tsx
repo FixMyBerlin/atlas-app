@@ -18,7 +18,7 @@ const prefixWithOsm = (tagKey: string) => {
   return `osm_${tagKey}`
 }
 
-export const ConditionalFormattedValue: React.FC<Props> = ({ sourceId, tagKey, tagValue }) => {
+export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props) => {
   const regionDatasets = useRegionDatasets()
 
   if (typeof tagValue === 'undefined') {
