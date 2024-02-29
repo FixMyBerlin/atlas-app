@@ -78,6 +78,7 @@ function Bikelanes(object)
         else
           MergeTable(result_tags, cycleway)
           freshTag = "check_date:" .. cycleway.prefix
+          result_tags.width = ParseLength(cycleway.width)
         end
 
         result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
