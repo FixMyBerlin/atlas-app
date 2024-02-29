@@ -110,7 +110,12 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
 
   if (!receivedSigns?.length) {
     return (
-      <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey} tagValue={properties[tagKey]} />
+      <TagsTableRow
+        key={tagKey}
+        sourceId={sourceId}
+        tagKey={tagKey}
+        tagValue={properties[tagKey]}
+      />
     )
   }
 
