@@ -1,3 +1,8 @@
+package.path = package.path .. ";/app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
+require('MergeTable')
+require('HighwayClasses')
+
 -- unnest all tags from ["prefix .. side:subtag"]=val -> ["subtag"]=val
 local function unnestTags(tags, prefix, side, dest)
   dest = dest or {}
