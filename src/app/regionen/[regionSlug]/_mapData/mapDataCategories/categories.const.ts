@@ -87,7 +87,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_roads_plus_footways, defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_lanes_text', defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_surface_text', defaultStyle: 'hidden' },
-      { ...subcat_maxspeed_plus_presence, defaultStyle: 'hidden' },
+      // { ...subcat_maxspeed_plus_presence, defaultStyle: 'hidden' }, // TEMP deactivated, see https://github.com/FixMyBerlin/private-issues/issues/594#issuecomment-1969083526
     ],
   },
   {
