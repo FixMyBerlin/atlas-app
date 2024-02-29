@@ -29,6 +29,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     'side',
     'sign',
     'prefix',
+    'id',
   ]
   const otherOsmProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
@@ -54,14 +55,16 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
                   <code title={`${key}=${value}: ${value} is a ${typeof value}`}>
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
-                    <Link
-                      blank
-                      href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
-                      title="OpenStreetMap Wiki"
-                      className="scale-75"
-                    >
-                      Wiki
-                    </Link>
+                    {key.startsWith('osm_') && (
+                      <Link
+                        blank
+                        href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
+                        title="OpenStreetMap Wiki"
+                        className="scale-75"
+                      >
+                        Wiki
+                      </Link>
+                    )}
                   </code>
                 </p>
               )
