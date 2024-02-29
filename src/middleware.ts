@@ -4,7 +4,10 @@ import { staticRegion } from './app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
 import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
-import { serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import {
+  mapParamFallback,
+  serializeMapParam,
+} from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
@@ -60,11 +63,19 @@ export function middleware(request: NextRequest) {
   }
 
   // MIGRATION: Update `lat`/`lng`/`zoom` params to new `map` param
-  const lat = Number(url.searchParams.get('lat'))
-  const lng = Number(url.searchParams.get('lng'))
-  const zoom = Number(url.searchParams.get('zoom'))
-  if (lat && lng && zoom) {
-    url.searchParams.append('map', serializeMapParam({ zoom, lat, lng }))
+  // We either have all three or only lat/lng as input params
+  const lat = url.searchParams.get('lat')
+  const lng = url.searchParams.get('lng')
+  const zoom = url.searchParams.get('zoom')
+  if ((lat && lng && zoom) || (lat && lng)) {
+    url.searchParams.append(
+      'map',
+      serializeMapParam({
+        zoom: zoom ? Number(zoom) : mapParamFallback.zoom,
+        lat: lat ? Number(lat) : mapParamFallback.lat,
+        lng: lng ? Number(lng) : mapParamFallback.lng,
+      }),
+    )
     url.searchParams.delete('lat')
     url.searchParams.delete('lng')
     url.searchParams.delete('zoom')

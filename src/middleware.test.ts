@@ -75,6 +75,30 @@ describe('middleware()', () => {
       expect(url.searchParams.get('zoom')).toBe(null)
     })
 
+    test('MIGRATION: Migrate `lat`, `lng` to `map` param', () => {
+      const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/berlin?lat=1&lng=2')
+      const response = middleware(mockRequest)
+      const url = getUrl(response)
+
+      expect(url.searchParams.get('map')).toBe('12.1/1/2') // using mapParamFallback.zoom
+      expect(url.searchParams.get('lat')).toBe(null)
+      expect(url.searchParams.get('lng')).toBe(null)
+      expect(url.searchParams.get('zoom')).toBe(null)
+    })
+
+    test('MIGRATION: Migrate `lat`, `lng` to `map` param but not if map is present', () => {
+      const mockRequest = new NextRequest(
+        'http://127.0.0.1:5173/regionen/berlin?lat=1&lng=2&map=1/2/3',
+      )
+      const response = middleware(mockRequest)
+      const url = getUrl(response)
+
+      expect(url.searchParams.get('map')).toBe('1/2/3')
+      expect(url.searchParams.get('lat')).toBe(null)
+      expect(url.searchParams.get('lng')).toBe(null)
+      expect(url.searchParams.get('zoom')).toBe(null)
+    })
+
     const sharedMockMigrationRequest = new NextRequest(
       'http://127.0.0.1:5173/regionen/berlin?config=!(i~fromTo~a~~topics~!(i~shops~s~!(i~hidden~a)(i~default~a~_F))(i~education~s~!(i~hidden~a)(i~default~a~_F))(i~places~s~!(i~hidden~a~_F)(i~default~a)(i~circle~a~_F))(i~buildings~s~!(i~hidden~a)(i~default~a~_F))(i~landuse~s~!(i~hidden~a~_F)(i~default~a))(i~barriers~s~!(i~hidden~a~_F)(i~default~a))(i~boundaries~s~!(i~hidden~a)(i~default~a~_F)(i~level-8~a~_F)(i~level-9-10~a~_F)))(i~bikelanes~a~~topics~!(i~bikelanes~s~!(i~hidden~a~_F)(i~default~a)(i~verification~a~_F)(i~completeness~a~_F)(i~bikelane*_oneway*_arrows~a~_F))(i~bikelanesPresence*_legacy~s~!(i~hidden~a)(i~default~a~_F))(i~places~s~!(i~hidden~a~_F)(i~default~a)(i~circle~a~_F))(i~landuse~s~!(i~hidden~a)(i~default~a~_F)))(i~roadClassification~a~_F~topics~!(i~roadClassification*_legacy~s~!(i~hidden~a~_F)(i~default~a)(i~oneway~a~_F))(i~bikelanes~s~!(i~hidden~a)(i~default~a~_F)(i~verification~a~_F)(i~completeness~a~_F)(i~bikelane*_oneway*_arrows~a~_F))(i~maxspeed*_legacy~s~!(i~hidden~a)(i~default~a~_F)(i~details~a~_F))(i~surfaceQuality*_legacy~s~!(i~hidden~a)(i~default~a~_F)(i~bad~a~_F)(i~completeness~a~_F)(i~freshness~a~_F))(i~places~s~!(i~hidden~a~_F)(i~default~a)(i~circle~a~_F))(i~landuse~s~!(i~hidden~a)(i~default~a~_F)))(i~lit~a~_F~topics~!(i~lit*_legacy~s~!(i~hidden~a~_F)(i~default~a)(i~completeness~a~_F)(i~freshness~a~_F))(i~places~s~!(i~hidden~a)(i~default~a~_F)(i~circle~a~_F))(i~landuse~s~!(i~hidden~a)(i~default~a~_F)))(i~parking~a~_F~topics~!(i~parking~s~!(i~hidden~a~_F)(i~default~a)(i~presence~a~_F)(i~surface~a~_F))(i~parkingPoints~s~!(i~hidden~a)(i~default~a~_F))(i~parkingAreas~s~!(i~hidden~a~_F)(i~default~a)(i~street*_side~a~_F))(i~parkingDebug~s~!(i~hidden~a)(i~default~a~_F))(i~parkingStats~s~!(i~hidden~a)(i~stats-admin-level-4~a~_F)(i~default~a~_F)(i~stats-admin-level-10~a~_F)(i~length-admin-level-4~a~_F)(i~length-admin-level-9~a~_F)(i~length-admin-level-10~a~_F))(i~landuse~s~!(i~hidden~a)(i~default~a~_F)))~',
     )

@@ -1,14 +1,14 @@
 import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 
-const fallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
+export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 
 const parseMapParam = (query: string) => {
   const splitQuery = query.split('/')
   return {
-    zoom: Number(splitQuery[0] ?? fallback.zoom),
-    lat: Number(splitQuery[1] ?? fallback.lat),
-    lng: Number(splitQuery[2] ?? fallback.lng),
+    zoom: Number(splitQuery[0] ?? mapParamFallback.zoom),
+    lat: Number(splitQuery[1] ?? mapParamFallback.lat),
+    lng: Number(splitQuery[2] ?? mapParamFallback.lng),
   }
 }
 
@@ -33,9 +33,9 @@ export const useMapParam = () => {
   })
     .withOptions({ history: 'push' })
     .withDefault({
-      zoom: Number(region?.map?.zoom ?? fallback.zoom),
-      lat: Number(region?.map?.lat ?? fallback.lat),
-      lng: Number(region?.map?.lng ?? fallback.lng),
+      zoom: Number(region?.map?.zoom ?? mapParamFallback.zoom),
+      lat: Number(region?.map?.lat ?? mapParamFallback.lat),
+      lng: Number(region?.map?.lng ?? mapParamFallback.lng),
     })
 
   const [mapParam, setMapParam] = useQueryState('map', mapParamParser)
