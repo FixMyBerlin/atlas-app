@@ -22,6 +22,7 @@ export const sourcesParking: MapDataSource<
     licence: 'ODbL',
     promoteId: undefined,
     maxzoom: 20,
+    minzoom: 4,
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -72,6 +73,7 @@ export const sourcesParking: MapDataSource<
     licence: 'ODbL',
     promoteId: undefined,
     maxzoom: 22,
+    minzoom: 4,
     inspector: { enabled: false }, // Those layers have no properties anyways
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -87,6 +89,7 @@ export const sourcesParking: MapDataSource<
     licence: 'ODbL',
     promoteId: undefined,
     maxzoom: 20,
+    minzoom: 4,
     inspector: {
       enabled: false,
     },
@@ -109,6 +112,7 @@ export const sourcesParking: MapDataSource<
     licence: 'ODbL',
     promoteId: undefined,
     maxzoom: 22,
+    minzoom: 4,
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -144,6 +148,8 @@ export const sourcesParking: MapDataSource<
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     licence: 'ODbL',
+    maxzoom: 22,
+    minzoom: 4,
     promoteId: undefined,
     inspector: {
       enabled: true,

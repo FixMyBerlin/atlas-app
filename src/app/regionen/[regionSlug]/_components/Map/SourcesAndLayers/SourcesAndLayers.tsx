@@ -52,8 +52,8 @@ export const SourcesAndLayers = () => {
                   id={sourceId}
                   type="vector"
                   tiles={[sourceData.tiles]}
-                  maxzoom={sourceData.maxzoom || 12}
-                  minzoom={sourceData.minzoom || 4}
+                  maxzoom={sourceData.maxzoom}
+                  minzoom={sourceData.minzoom}
                 >
                   {subcategoryConfig.styles.map((styleConfig) => {
                     const currStyleConfig = subcategoryConfig.styles.find(
