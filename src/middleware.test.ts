@@ -70,6 +70,7 @@ describe('middleware()', () => {
       const url = getUrl(response)
 
       expect(url.searchParams.get('map')).toBe('3/1/2')
+      expect(url.searchParams.getAll('map').length).toBe(1)
       expect(url.searchParams.get('lat')).toBe(null)
       expect(url.searchParams.get('lng')).toBe(null)
       expect(url.searchParams.get('zoom')).toBe(null)
@@ -81,6 +82,7 @@ describe('middleware()', () => {
       const url = getUrl(response)
 
       expect(url.searchParams.get('map')).toBe('12.1/1/2') // using mapParamFallback.zoom
+      expect(url.searchParams.getAll('map').length).toBe(1)
       expect(url.searchParams.get('lat')).toBe(null)
       expect(url.searchParams.get('lng')).toBe(null)
       expect(url.searchParams.get('zoom')).toBe(null)
@@ -88,12 +90,13 @@ describe('middleware()', () => {
 
     test('MIGRATION: Migrate `lat`, `lng` to `map` param but not if map is present', () => {
       const mockRequest = new NextRequest(
-        'http://127.0.0.1:5173/regionen/berlin?lat=1&lng=2&map=1/2/3',
+        'http://127.0.0.1:5173/regionen/berlin?lat=1&lng=2&map=5/6/7',
       )
       const response = middleware(mockRequest)
       const url = getUrl(response)
 
-      expect(url.searchParams.get('map')).toBe('1/2/3')
+      expect(url.searchParams.get('map')).toBe('5/6/7')
+      expect(url.searchParams.getAll('map').length).toBe(1)
       expect(url.searchParams.get('lat')).toBe(null)
       expect(url.searchParams.get('lng')).toBe(null)
       expect(url.searchParams.get('zoom')).toBe(null)

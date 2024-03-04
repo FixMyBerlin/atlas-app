@@ -68,14 +68,17 @@ export function middleware(request: NextRequest) {
   const lng = url.searchParams.get('lng')
   const zoom = url.searchParams.get('zoom')
   if ((lat && lng && zoom) || (lat && lng)) {
-    url.searchParams.append(
-      'map',
-      serializeMapParam({
-        zoom: zoom ? Number(zoom) : mapParamFallback.zoom,
-        lat: lat ? Number(lat) : mapParamFallback.lat,
-        lng: lng ? Number(lng) : mapParamFallback.lng,
-      }),
-    )
+    // Sometimes, we have a ?map but also ?lng, ?lat in which case we just delete the old stuff
+    if (!url.searchParams.get('map')) {
+      url.searchParams.append(
+        'map',
+        serializeMapParam({
+          zoom: zoom ? Number(zoom) : mapParamFallback.zoom,
+          lat: lat ? Number(lat) : mapParamFallback.lat,
+          lng: lng ? Number(lng) : mapParamFallback.lng,
+        }),
+      )
+    }
     url.searchParams.delete('lat')
     url.searchParams.delete('lng')
     url.searchParams.delete('zoom')
