@@ -8,9 +8,9 @@ export const LoadingIndicator = () => {
   if (mapDataLoading === false) return null
 
   return (
-    <div className="relative rounded-md border border-gray-300 bg-white shadow-md">
+    <div className="relative rounded-md bg-teal-700">
       <Tooltip text="Kartendaten werden geladen…" className="cursor-help p-2">
-        <Spinner size="5" />
+        <Spinner size="5" color="teal" />
       </Tooltip>
     </div>
   )

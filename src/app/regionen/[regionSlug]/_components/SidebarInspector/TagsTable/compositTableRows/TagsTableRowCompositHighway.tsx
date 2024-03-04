@@ -11,33 +11,17 @@ export const TagsTableRowCompositHighway: React.FC<CompositTableRow> = ({
 }) => {
   if (properties['_parent_highway']) {
     return (
-      <TagsTableRow
-        sourceId={sourceId}
-        tagKey={'_parent_highway'}
-        value={
-          <ConditionalFormattedValue
-            sourceId={sourceId}
-            tagKey={'highway'}
-            tagValue={properties['_parent_highway']}
-          />
-        }
-      />
+      <TagsTableRow sourceId={sourceId} tagKey={'_parent_highway'}>
+        <ConditionalFormattedValue
+          sourceId={sourceId}
+          tagKey={'highway'}
+          tagValue={properties['_parent_highway']}
+        />
+      </TagsTableRow>
     )
   }
   if (properties['highway']) {
-    return (
-      <TagsTableRow
-        sourceId={sourceId}
-        tagKey={'highway'}
-        value={
-          <ConditionalFormattedValue
-            sourceId={sourceId}
-            tagKey={'highway'}
-            tagValue={properties['highway']}
-          />
-        }
-      />
-    )
+    return <TagsTableRow sourceId={sourceId} tagKey={'highway'} tagValue={properties['highway']} />
   }
   return null
 }

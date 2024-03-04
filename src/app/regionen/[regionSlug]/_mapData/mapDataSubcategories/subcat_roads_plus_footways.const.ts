@@ -3,8 +3,8 @@ import { mapboxStyleGroupLayers_atlas_roads_plus_fusswege } from './mapboxStyles
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'roads_plus_footways'
-const source = 'atlas_roads'
-const sourceLayer = 'roads'
+const source = 'atlas_roadsPathClasses'
+const sourceLayer = 'roadsPathClasses'
 export type SubcatRoadsPlusFootwaysId = typeof subcatId
 export type SubcatRoadsPlusFootwaysStyleIds = 'default'
 export const subcat_roads_plus_footways: FileMapDataSubcategory = {

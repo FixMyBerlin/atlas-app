@@ -4,6 +4,7 @@ import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { translations } from '../translations/translations.const'
 import { CompositTableRow } from './types'
+import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 
 const CompositRoadBikelanesTableValue = ({
   sourceId, // always atlas_roads
@@ -20,62 +21,46 @@ const CompositRoadBikelanesTableValue = ({
   const hasTooltip = Boolean(translations[`${sourceId}--${tagKeyWithoutSide}=${tagValue}--tooltip`])
 
   return (
-    <div className="flex items-center justify-between gap-2">
-      {hasTooltip || hasSpecificInfrastructureValue ? (
-        <details>
-          <summary className="cursor-pointer hover:font-semibold">
-            {hasSpecificInfrastructureValue ? (
-              <ConditionalFormattedValue
-                sourceId={sourceId}
-                tagKey={tagKeyWithoutSide}
-                tagValue={'data_present'}
-              />
-            ) : (
-              <ConditionalFormattedValue
-                sourceId={sourceId}
-                tagKey={tagKeyWithoutSide}
-                tagValue={tagValue}
-              />
-            )}
-          </summary>
-          <p className="text-xs text-gray-400">
-            {hasTooltip && (
-              <>
-                <ConditionalFormattedValue
-                  sourceId={sourceId}
-                  tagKey={tagKeyWithoutSide}
-                  tagValue={`${tagValue}--tooltip`}
-                />
-              </>
-            )}
-            {hasSpecificInfrastructureValue && (
-              <ConditionalFormattedValue
-                sourceId={sourceId}
-                tagKey={'category'}
-                tagValue={tagValue}
-              />
-            )}
-          </p>
-        </details>
-      ) : (
-        <div>
-          {/* Fallback for `hasPresenceValue` without `hasTooltip` */}
+    <ValueDisclosure>
+      <ValueDisclosureButton>
+        <div className="flex items-center justify-between gap-2">
+          {hasSpecificInfrastructureValue ? (
+            <ConditionalFormattedValue
+              sourceId={sourceId}
+              tagKey={tagKeyWithoutSide}
+              tagValue={'data_present'}
+            />
+          ) : (
+            <ConditionalFormattedValue
+              sourceId={sourceId}
+              tagKey={tagKeyWithoutSide}
+              tagValue={tagValue}
+            />
+          )}
+
+          <div
+            className="h-4 w-4 flex-none rounded-full"
+            style={{
+              backgroundColor: hasSpecificInfrastructureValue
+                ? bikelanesPresenceColors.data_present
+                : bikelanesPresenceColors[tagValue],
+            }}
+          />
+        </div>
+      </ValueDisclosureButton>
+      <ValueDisclosurePanel>
+        {hasTooltip && (
           <ConditionalFormattedValue
             sourceId={sourceId}
             tagKey={tagKeyWithoutSide}
-            tagValue={tagValue}
+            tagValue={`${tagValue}--tooltip`}
           />
-        </div>
-      )}
-      <div
-        className="h-4 w-4 flex-none rounded-full"
-        style={{
-          backgroundColor: hasSpecificInfrastructureValue
-            ? bikelanesPresenceColors.data_present
-            : bikelanesPresenceColors[tagValue],
-        }}
-      />
-    </div>
+        )}
+        {hasSpecificInfrastructureValue && (
+          <ConditionalFormattedValue sourceId={sourceId} tagKey={'category'} tagValue={tagValue} />
+        )}
+      </ValueDisclosurePanel>
+    </ValueDisclosure>
   )
 }
 
@@ -93,51 +78,44 @@ export const TagsTableRowCompositRoadBikelanes: React.FC<CompositTableRow> = ({
   }
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <>
-          <table className="w-full leading-4">
-            <tbody>
-              <tr>
-                <th className="py-1 pr-2 text-left font-medium">Links</th>
-                <td className="w-full py-1">
-                  <CompositRoadBikelanesTableValue
-                    sourceId={sourceId}
-                    tagKey={'bikelane_left'}
-                    tagValue={properties['bikelane_left']}
-                  />
-                </td>
-              </tr>
-              <tr className="border-t">
-                <th className="py-1 pr-2 text-left font-medium">Fahrbahn</th>
-                <td className="w-full py-1">
-                  <CompositRoadBikelanesTableValue
-                    sourceId={sourceId}
-                    tagKey={'bikelane_self'}
-                    tagValue={properties['bikelane_self']}
-                  />
-                </td>
-              </tr>
-              <tr className="border-t">
-                <th className="py-1 pr-2 text-left font-medium">Rechts</th>
-                <td className="w-full py-1">
-                  <CompositRoadBikelanesTableValue
-                    sourceId={sourceId}
-                    tagKey={'bikelane_right'}
-                    tagValue={properties['bikelane_right']}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <p className="mt-1 text-xs text-gray-400">
-            Angaben in OSM-Linienrichtung. Siehe Doppelpfeil ab Zoom 13.
-          </p>
-        </>
-      }
-    />
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <table className="w-full leading-4">
+        <tbody>
+          <tr>
+            <th className="py-1 pr-2 text-left font-medium">Links</th>
+            <td className="w-full py-1">
+              <CompositRoadBikelanesTableValue
+                sourceId={sourceId}
+                tagKey={'bikelane_left'}
+                tagValue={properties['bikelane_left']}
+              />
+            </td>
+          </tr>
+          <tr className="border-t">
+            <th className="py-1 pr-2 text-left font-medium">Fahrbahn</th>
+            <td className="w-full py-1">
+              <CompositRoadBikelanesTableValue
+                sourceId={sourceId}
+                tagKey={'bikelane_self'}
+                tagValue={properties['bikelane_self']}
+              />
+            </td>
+          </tr>
+          <tr className="border-t">
+            <th className="py-1 pr-2 text-left font-medium">Rechts</th>
+            <td className="w-full py-1">
+              <CompositRoadBikelanesTableValue
+                sourceId={sourceId}
+                tagKey={'bikelane_right'}
+                tagValue={properties['bikelane_right']}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p className="mt-1 text-xs text-gray-400">
+        Angaben in OSM-Linienrichtung. Siehe Doppelpfeil ab Zoom 13.
+      </p>
+    </TagsTableRow>
   )
 }

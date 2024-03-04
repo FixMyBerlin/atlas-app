@@ -15,28 +15,17 @@ export const TagsTableRowColor: React.FC<CompositTableRow> = ({
   const values = dompurify.sanitize(properties[tagKey]).split(';').filter(Boolean)
   if (values.length === 0) {
     if (uncleanKey.includes(KEY_IF_PRESENCE)) return null
-    return <TagsTableRow sourceId={sourceId} tagKey={tagKey} value={null} />
+    return <TagsTableRow sourceId={sourceId} tagKey={tagKey} tagValue={null} />
   }
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <>
-          <div className="flex items-center gap-2">
-            {values.map((color) => (
-              <div
-                key={color}
-                style={{ backgroundColor: color }}
-                className="h-5 w-5 rounded-full"
-              />
-            ))}
-            {values.join(', ')}
-          </div>
-        </>
-      }
-    />
+    <TagsTableRow sourceId={sourceId} tagKey={tagKey}>
+      <div className="flex items-center gap-2">
+        {values.map((color) => (
+          <div key={color} style={{ backgroundColor: color }} className="h-5 w-5 rounded-full" />
+        ))}
+        {values.join(', ')}
+      </div>
+    </TagsTableRow>
   )
 }

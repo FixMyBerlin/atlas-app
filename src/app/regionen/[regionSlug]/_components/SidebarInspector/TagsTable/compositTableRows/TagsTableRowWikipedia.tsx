@@ -12,15 +12,10 @@ export const TagsTableRowWikipedia: React.FC<CompositTableRow> = ({
   if (!properties['wikipeida']) return null
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <LinkExternal blank href={`https://de.wikipedia.org/wiki/${properties['wikipeida']}`}>
-          {properties['wikipeida']}
-        </LinkExternal>
-      }
-    />
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <LinkExternal blank href={`https://de.wikipedia.org/wiki/${properties['wikipeida']}`}>
+        {properties['wikipeida']}
+      </LinkExternal>
+    </TagsTableRow>
   )
 }

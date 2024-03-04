@@ -110,64 +110,59 @@ export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
 
   if (!receivedSigns?.length) {
     return (
-      <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey} value={properties[tagKey]} />
+      <TagsTableRow
+        key={tagKey}
+        sourceId={sourceId}
+        tagKey={tagKey}
+        tagValue={properties[tagKey]}
+      />
     )
   }
 
   if (properties[tagKey] === 'none') {
     return (
-      <TagsTableRow
-        key={tagKey}
-        sourceId={sourceId}
-        tagKey={tagKey}
-        value={
-          <ConditionalFormattedValue
-            sourceId={sourceId}
-            tagKey={tagKey}
-            tagValue={properties[tagKey]}
-          />
-        }
-      />
+      <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+        <ConditionalFormattedValue
+          sourceId={sourceId}
+          tagKey={tagKey}
+          tagValue={properties[tagKey]}
+        />
+      </TagsTableRow>
     )
   }
 
   return (
-    <TagsTableRow
-      key={tagKey}
-      sourceId={sourceId}
-      tagKey={tagKey}
-      value={
-        <div className="flex divide-x">
-          {receivedSigns.map((sign) => {
-            return (
-              <div
-                key={sign}
-                className="flex flex-col items-start justify-center px-3 first:pl-0 last:pr-0"
-              >
-                {trafficSigns[sign]?.title ? (
-                  <>
-                    <p className="mb-1 leading-tight">{trafficSigns[sign]?.title}</p>
-                    {trafficSigns[sign]?.signUrl && (
-                      // TS: Why do I need to "!" this when I just guarded it…?
-                      <Image
-                        src={trafficSigns[sign]!.signUrl}
-                        width={48}
-                        height={48}
-                        alt=""
-                        className="h-12 max-w-[3rem]"
-                      />
-                    )}
-                  </>
-                ) : (
-                  <code className="block rounded-md border bg-gray-700 p-1.5 text-center text-xs leading-tight text-gray-50">
-                    {sign}
-                  </code>
-                )}
-              </div>
-            )
-          })}
-        </div>
-      }
-    />
+    <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
+      <div className="flex divide-x">
+        {receivedSigns.map((sign) => {
+          return (
+            <div
+              key={sign}
+              className="flex flex-col items-start justify-center px-3 first:pl-0 last:pr-0"
+            >
+              {trafficSigns[sign]?.title ? (
+                <>
+                  <p className="mb-1 leading-tight">{trafficSigns[sign]?.title}</p>
+                  {trafficSigns[sign]?.signUrl && (
+                    // TS: Why do I need to "!" this when I just guarded it…?
+                    <Image
+                      src={trafficSigns[sign]!.signUrl}
+                      width={48}
+                      height={48}
+                      alt=""
+                      className="h-12 max-w-[3rem]"
+                    />
+                  )}
+                </>
+              ) : (
+                <code className="block rounded-md border bg-gray-700 p-1.5 text-center text-xs leading-tight text-gray-50">
+                  {sign}
+                </code>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </TagsTableRow>
   )
 }

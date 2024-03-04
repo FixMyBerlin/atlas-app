@@ -11,6 +11,7 @@ import { subcat_lit } from '../mapDataSubcategories/subcat_lit.const'
 import { subcat_lit_plus_completeness } from '../mapDataSubcategories/subcat_lit_plus_completeness.const'
 import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapillaryCoverage.const'
 import { subcat_maxspeed } from '../mapDataSubcategories/subcat_maxspeed.const'
+import { subcat_maxspeed_plus_presence } from '../mapDataSubcategories/subcat_maxspeed_plus_presence'
 import { subcat_parking } from '../mapDataSubcategories/subcat_parking.const'
 import { subcat_parkingAreas } from '../mapDataSubcategories/subcat_parkingAreas.const'
 import { subcat_parkingDebug } from '../mapDataSubcategories/subcat_parkingDebug.const'
@@ -61,7 +62,6 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_poi_plus_barriers, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_landuse, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_publicTransport, defaultStyle: 'hidden' },
-      // { id: 'subcat_poi_plus_routes', defaultStyle: 'hidden' },
       // { id: 'subcat_poi_plus_buildings', defaultStyle: 'hidden' },
     ],
   },
@@ -87,7 +87,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_roads_plus_footways, defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_lanes_text', defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_surface_text', defaultStyle: 'hidden' },
-      // { id: 'subcat_roads_plus_completness', defaultStyle: 'hidden' },
+      // { ...subcat_maxspeed_plus_presence, defaultStyle: 'hidden' }, // TEMP deactivated, see https://github.com/FixMyBerlin/private-issues/issues/594#issuecomment-1969083526
     ],
   },
   {
@@ -103,7 +103,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_bikelanes_plus_surface_text, defaultStyle: 'hidden' },
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
-      // { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
+      { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
       // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },

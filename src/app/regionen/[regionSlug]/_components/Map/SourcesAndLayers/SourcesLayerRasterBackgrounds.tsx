@@ -46,8 +46,8 @@ export const SourcesLayerRasterBackgrounds: React.FC = () => {
             type="raster"
             tiles={[tiles]}
             attribution={enhancedAttributionHtml}
-            {...(minzoom ? { minzoom } : {})}
             {...(maxzoom ? { maxzoom } : {})}
+            {...(minzoom ? { minzoom } : {})}
             {...(tileSize ? { tileSize } : {})}
           >
             <Layer

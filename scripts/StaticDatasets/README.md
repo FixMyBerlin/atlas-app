@@ -1,10 +1,17 @@
-# About
+# Static Datasets
+
+These scripts manage geodata files, which are made public or semi-public in radverkehrsatlas.de as static datasets.
 
 ## Setup
 
 - Setup `.env.development.local` based on [`.env.example`](/.env.example)
-- [Install Bun](https://bun.sh/docs/installation) `brew tap oven-sh/bun && brew install bun`
-- [Install tippecanoe](https://formulae.brew.sh/formula/tippecanoe) `brew install tippecanoe`
+- [Install Bun](https://bun.sh/docs/installation)
+  - macOS `brew tap oven-sh/bun && brew install bun`
+  - Archlinux `yay -S bun-bin`
+- [Install felt/tippecanoe](https://github.com/felt/tippecanoe/blob/main/README.md#installation)
+  - macOS `brew install tippecanoe`
+  - Archlinux `yay -S tippecanoe`
+- Setup [`atlas-static-data`](https://github.com/FixMyBerlin/atlas-static-data), see README.
 
 ## Update and add data
 
@@ -17,6 +24,6 @@
 
 ## How it works
 
-- The script will run tippecanoe and create a temporary pmtiles file
+- The script will run tippecanoe for every GeoJSIONM and create a temporary PMTiles file
 - It will then upload this file to a protected folder on S3
 - And create the database relation to connect this file to the region(s)

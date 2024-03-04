@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
+import { Pill } from 'src/app/_components/text/Pill'
+import { isProd } from 'src/app/_components/utils/isEnv'
 
 type Props = {
   properties: { [key: string]: any }
@@ -27,6 +29,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     'side',
     'sign',
     'prefix',
+    'id',
   ]
   const otherOsmProperties = Object.entries(properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
@@ -50,21 +53,18 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
             otherOsmProperties.map(([key, value]) => {
               return (
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
-                  <code>
+                  <code title={`${key}=${value}: ${value} is a ${typeof value}`}>
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
-                    <Link
-                      blank
-                      href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
-                      title="OpenStreetMap Wiki"
-                      className="scale-75"
-                    >
-                      Wiki
-                    </Link>{' '}
-                    {/* {!isProd && (
-                      <Pill color="pink" className="scale-75">
-                        {typeof value}
-                      </Pill>
-                    )} */}
+                    {key.startsWith('osm_') && (
+                      <Link
+                        blank
+                        href={`https://wiki.openstreetmap.org/wiki/Tag:${key}=${value}`}
+                        title="OpenStreetMap Wiki"
+                        className="scale-75"
+                      >
+                        Wiki
+                      </Link>
+                    )}
                   </code>
                 </p>
               )
@@ -79,13 +79,8 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
             systemProperties.map(([key, value]) => {
               return (
                 <p key={key} className="mb-0.5 border-b border-gray-200 pb-0.5">
-                  <code>
+                  <code title={`${value} is a ${typeof value}`}>
                     {key}: {typeof value === 'boolean' ? JSON.stringify(value) : value}{' '}
-                    {/* {!isProd && (
-                      <Pill color="pink" className="scale-75">
-                        {typeof value}
-                      </Pill>
-                    )} */}
                   </code>
                 </p>
               )

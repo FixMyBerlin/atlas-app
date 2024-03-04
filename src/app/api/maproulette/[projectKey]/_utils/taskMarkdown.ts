@@ -68,8 +68,14 @@ Für diese Infrastruktur fehlen uns Angaben, um sie als Schutzstreifen oder Radf
 ## Aufgabe
 
 Bitte präzisiere das Tagging.
-* Für Schutzstreifen, füge \`cycleway:lane=advisory\` hinzu.
-* Für Radfahrstreifen, füge \`cycleway:lane=exclusive\` hinzu.
+* Für Schutzstreifen, füge \`advisory\` hinzu, also
+   \`cycleway:both:lane=advisory\` (beide Seiten) oder
+   \`cycleway:left:lane=advisory\` (linke Seite) oder
+   \`cycleway:right:lane=advisory\` (rechte Seite)
+* Für Radfahrstreifen, füge \`exclusive\` hinzu., also
+   \`cycleway:both:lane=exclusive\` (beide Seiten) oder
+   \`cycleway:left:lane=exclusive\` (linke Seite) oder
+   \`cycleway:right:lane=exclusive\` (rechte Seite)
 * [Mehr im OSM Wiki…](https://wiki.openstreetmap.org/wiki/Key:cycleway:lane)
 
 ## Hilfsmittel
