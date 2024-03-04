@@ -3,7 +3,23 @@ import { InformationCircleIcon as InformationCircleIconOutline } from '@heroicon
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 
 export const ValueDisclosure = ({ children }: { children: React.ReactNode }) => {
-  return <Disclosure>{children}</Disclosure>
+  return (
+    <Disclosure>
+      {({ open }) => (
+        <div
+          className={
+            // We could just use the plugin from https://headlessui.com/react/disclosure#using-data-attributes
+            // But I didn't want to add another dependency just for this one time…
+            open
+              ? '[&_[data-active-icon=closed]]:hidden [&_[data-active-icon=open]]:block'
+              : '[&_[data-active-icon=closed]]:block [&_[data-active-icon=open]]:hidden'
+          }
+        >
+          {children}
+        </div>
+      )}
+    </Disclosure>
+  )
 }
 
 export const ValueDisclosureButton = ({ children }: { children: React.ReactNode }) => {
@@ -12,11 +28,13 @@ export const ValueDisclosureButton = ({ children }: { children: React.ReactNode 
       <div className="w-full">{children}</div>
       <div className="rounded border border-transparent bg-gray-50 p-1 text-left text-sm font-medium focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75 group-hover/button:border-gray-500 group-hover/button:bg-yellow-100">
         <InformationCircleIcon
-          className="hidden h-5 w-5 data-[headlessui-state=open]:block"
+          data-active-icon="open" // see ValueDisclosure
+          className="hidden h-5 w-5"
           title="Hinweise anzeigen…"
         />
         <InformationCircleIconOutline
-          className="block h-5 w-5 data-[headlessui-state=open]:hidden"
+          data-active-icon="closed" // see ValueDisclosure
+          className="hidden h-5 w-5"
           title="Hinweise anzeigen…"
         />
       </div>
