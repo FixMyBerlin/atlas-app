@@ -2,7 +2,6 @@ package.path = package.path .. ";/app/process/helper/?.lua"
 package.path = package.path .. ";/app/process/shared/?.lua"
 package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
 require("Set")
-require("HighwayClasses")
 require("TimeUtils")
 require("categories")
 require("transformations")

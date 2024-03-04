@@ -14,7 +14,7 @@ function BikelanesPresence(object, cycleways)
   end
 
   -- Guard
-  if PathClasses[tags.highway] then
+  if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     return nil
   end
   if HighwayClasses[tags.highway] then
