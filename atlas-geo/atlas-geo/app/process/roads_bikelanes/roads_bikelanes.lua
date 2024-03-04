@@ -136,6 +136,7 @@ function osm2pgsql.process_way(object)
       result.sign = nil                  -- not used in atlas-app
       result.side = nil                  -- not used in atlas-app
       result.offset = nil                -- not used in atlas-app
+      result.parent = nil                -- not used in atlas-app
       -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
 
