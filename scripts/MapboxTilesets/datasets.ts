@@ -90,7 +90,7 @@ export const tilesetConfigs: Record<
   },
   roadsPathClasses: {
     sourceLayer: 'roadsPathClasses',
-    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.TODO/#14/52.51622/13.37036',
+    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.ajf6t9k7/#14/52.51622/13.37036',
     bbox: bboxBerlinPlus,
   },
   bikeroutes: {
