@@ -10,12 +10,13 @@
     "zoomTo": 11
   },
   "urls": [
+    "/roads/{z}/{x}/{y}",
+    "/roadsPathClasses/{z}/{x}/{y}",
+    "/bikelanes_verified/{z}/{x}/{y}",
+    "/poiClassification/{z}/{x}/{y}",
     "/boundaries,boundaryLabels/{z}/{x}/{y}",
     "/boundaryStats/{z}/{x}/{y}",
-    "/bikelanes_verified/{z}/{x}/{y}",
-    "/roads/{z}/{x}/{y}",
     "/publicTransport/{z}/{x}/{y}",
-    "/poiClassification/{z}/{x}/{y}",
     "/places/{z}/{x}/{y}",
     "/barrierAreas,barrierLines/{z}/{x}/{y}",
     "/landuse/{z}/{x}/{y}",
