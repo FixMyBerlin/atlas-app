@@ -72,8 +72,6 @@ services:
       - "traefik.http.routers.tiles.tls=true"
     ports:
       - 3333:3000
-    labels:
-      - "traefik.enable=false"
     networks:
       - app_bridge
     depends_on:
