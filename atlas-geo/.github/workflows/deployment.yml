@@ -36,6 +36,9 @@ on:
       TILES_URL:
         type: string
         required: true
+      CACHELESS_URL:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
