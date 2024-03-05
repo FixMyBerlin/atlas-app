@@ -1,5 +1,6 @@
 /* prettier-ignore */
 
+// See also https://github.com/osmberlin/parkraum.osm-verkehrswende.org/tree/main/public/project-prototype-neukoelln/data
 export const translationsParking = {
   'parkraumParking--capacity_status--key': 'Vollständigkeit',
   'parkraumParking--capacity_status=data_missing': 'Daten fehlen – bisher wurden noch keine Daten in OSM hinterlegt',
@@ -8,9 +9,14 @@ export const translationsParking = {
   'parkraumParking--capacity_status=other': 'Daten erfasst',
   'parkraumParking--capacity_status=segment_too_small': 'Daten erfasst und prozessiert aber Segment zu klein für einen Parkstand',
   'parkraumParking--capacity--key': 'Stellplatzanzahl',
+  'parkraumParking--condition_class--key': 'Parkbeschränkungen',
   'parkraumParking--highway_name--key': 'Straßenname',
   'parkraumParking--highway_width_proc_effective--key': 'Nutzbare Fahrbahnbreite',
+  'parkraumParking--highway:name--key': 'Straßenname',
   'parkraumParking--length--key': 'Länge',
+  'parkraumParking--markings--key': 'Markierung',
+  'parkraumParking--markings=no': 'Keine Straßenmarkierungen des Parkbereichs',
+  'parkraumParking--markings=yes': 'Parkbereich mit Straßenmarkierungen versehen',
   'parkraumParking--operator_type--key': 'Rechtliche Zuordnung',
   'parkraumParking--operator_type=private': 'Privat',
   'parkraumParking--operator_type=public': 'Öffentlich',
