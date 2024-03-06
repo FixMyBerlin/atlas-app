@@ -1,17 +1,24 @@
 #!/usr/bin/env node
 
-import fs from 'node:fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import fs from 'fs'
 import chalk from 'chalk'
 import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
 import dotenv from 'dotenv'
+import fetch from 'node-fetch'
 
-dotenv.config();
-dotenv.config({ path: `.env.local`, override: true });
+dotenv.config()
+dotenv.config({ path: `.env.local`, override: true })
 const tilesBaseUrl = `https://${process.env.TILES_URL}`
 const cacheWarmingConfigPath = 'config.json'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+console.log(path.join(__dirname, cacheWarmingConfigPath))
+
 console.log(`Loading config ${cacheWarmingConfigPath}...`)
-const config = JSON.parse(fs.readFileSync(cacheWarmingConfigPath, 'utf8'))
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, cacheWarmingConfigPath), 'utf8'))
 
 const { viewport, map } = config
 const numTilesX = Math.ceil(viewport.width / 256)
