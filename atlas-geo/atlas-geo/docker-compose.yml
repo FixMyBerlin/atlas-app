@@ -83,10 +83,10 @@ services:
     container_name: tiles_proxy
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.tiles.rule=Host(`${TILES_URL}`)"
-      - "traefik.http.routers.tiles.entrypoints=websecure"
-      - "traefik.http.routers.tiles.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tiles.tls=true"
+      - "traefik.http.routers.proxy.rule=Host(`${TILES_URL}`)"
+      - "traefik.http.routers.proxy.entrypoints=websecure"
+      - "traefik.http.routers.proxy.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.proxy.tls=true"
     networks:
       - app_bridge
     ports:
