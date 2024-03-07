@@ -523,9 +523,9 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
-    name: 'Brandenburg AG',
-    fullName: 'Land Brandenburg Arbeitsgruppe',
     slug: 'bb-ag',
+    name: 'Brandenburg Projektgruppe',
+    fullName: 'Land Brandenburg Projektgruppe',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
@@ -568,9 +568,9 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
-    name: 'Brandenburg Ramboll',
-    fullName: 'Radnetzplanung Brandenburg – Version für Ramboll',
     slug: 'bb-ramboll',
+    name: 'Brandenburg Steuerungsgruppe',
+    fullName: 'Radnetzplanung Brandenburg – Version für Steuerungsgruppe',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
