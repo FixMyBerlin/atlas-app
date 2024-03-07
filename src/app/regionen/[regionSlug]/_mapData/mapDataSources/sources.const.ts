@@ -160,8 +160,8 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: true },
     verification: {
-      enabled: true,
-      apiIdentifier: 'bikelanes',
+      enabled: false,
+      // apiIdentifier: 'bikelanes',
     },
     freshness: { enabled: true },
     calculator: { enabled: false },
