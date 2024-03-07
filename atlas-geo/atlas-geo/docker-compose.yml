@@ -50,6 +50,7 @@ services:
       SYNOLOGY_ERROR_LOG_TOKEN:
     volumes:
       - osmfiles:/data
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - app_bridge
     depends_on:
