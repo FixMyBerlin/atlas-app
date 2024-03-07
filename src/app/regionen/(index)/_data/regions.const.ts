@@ -64,9 +64,9 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 
 export type RegionSlug =
   | 'bb' // Öffentlich, Land Brandenburg
-  | 'bb-ag' // Arbeitsgruppe, Land Brandenburg
+  | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-kampagne' // Kampagne mit Land Brandenburg
-  | 'bb-ramboll' // Version nur für Ramboll
+  | 'bb-sg' // Land Brandenburg Steuerungsgruppe
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -523,7 +523,7 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
-    slug: 'bb-ag',
+    slug: 'bb-pg',
     name: 'Brandenburg Projektgruppe',
     fullName: 'Land Brandenburg – Version für Projektgruppe',
     osmRelationIds: [62504],
@@ -568,7 +568,7 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
-    slug: 'bb-ramboll',
+    slug: 'bb-sg',
     name: 'Brandenburg Steuerungsgruppe',
     fullName: 'Land Brandenburg – Version für Steuerungsgruppe',
     osmRelationIds: [62504],

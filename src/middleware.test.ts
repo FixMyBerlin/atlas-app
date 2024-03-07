@@ -42,6 +42,29 @@ describe('middleware()', () => {
     })
   })
 
+  describe('Make we migrate and redirect renamed regions', () => {
+    test('Redirect when matching a renamed region and apply map params', () => {
+      const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/bb-ag?theme=foobar')
+      const response = middleware(mockRequest)
+      const url = getUrl(response)
+
+      // Migrated region
+      expect(url.pathname).toBe('/regionen/bb-pg')
+      // But still handling the map params
+      expect(typeof url.searchParams.get('map')).toBe('string')
+      expect(typeof url.searchParams.get('config')).toBe('string')
+      expect(url.searchParams.get('theme')).toBe(null)
+    })
+
+    test('Redirect subpage when matching a renamed region', () => {
+      const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/bb-ag/foobar')
+      const response = middleware(mockRequest)
+      const url = getUrl(response)
+
+      expect(url.pathname).toBe('/regionen/bb-pg/foobar')
+    })
+  })
+
   describe('Make sure the redirects work for /regionen/:slug', () => {
     test('INIT: Add missing map, config params', () => {
       const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/berlin')
