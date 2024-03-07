@@ -525,7 +525,7 @@ export const staticRegion: StaticRegion[] = [
   {
     slug: 'bb-ag',
     name: 'Brandenburg Projektgruppe',
-    fullName: 'Land Brandenburg Projektgruppe',
+    fullName: 'Land Brandenburg – Version für Projektgruppe',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
@@ -570,7 +570,7 @@ export const staticRegion: StaticRegion[] = [
   {
     slug: 'bb-ramboll',
     name: 'Brandenburg Steuerungsgruppe',
-    fullName: 'Radnetzplanung Brandenburg – Version für Steuerungsgruppe',
+    fullName: 'Land Brandenburg – Version für Steuerungsgruppe',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
