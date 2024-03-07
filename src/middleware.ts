@@ -28,6 +28,7 @@ export function middleware(request: NextRequest) {
   // MIGRATION: Migrate renamed region names
   const renamedRegions = new Map<string, RegionSlug>([
     // [oldName, newName]
+    // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
     ['bb-ag', 'bb-pg'],
     ['bb-ramboll', 'bb-sg'],
   ])
