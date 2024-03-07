@@ -5,3 +5,5 @@
 *.md
 
 __pycache__
+
+cache
