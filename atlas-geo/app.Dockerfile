@@ -4,6 +4,12 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
 
+# Install the docker-cli inside the app container to be able to restart the martin container
+# The setting below in docker-compose.yml is required for this to work
+# volumes:
+#   - /var/run/docker.sock:/var/run/docker.sock
+COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
+
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && \
   apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev curl && \
