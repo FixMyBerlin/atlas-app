@@ -5,9 +5,9 @@ import { mapboxStyleGroupLayers_atlas_roads_mainstreets } from './mapboxStyles/g
 import { mapboxStyleGroupLayers_atlas_roads_sidestreets } from './mapboxStyles/groups/atlas_roads_sidestreets'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
-const subcatId = 'roads'
+const subcatId = 'roads_generalized'
 const source = 'atlas_roads'
-const sourceLayer = 'roads'
+const sourceLayer = 'function_zxy_query'
 export type SubcatRoadsId = typeof subcatId
 export type SubcatRoadsStyleIds = 'default' | 'sidestreets' | 'mainstreets'
 export const subcat_roads: FileMapDataSubcategory = {
