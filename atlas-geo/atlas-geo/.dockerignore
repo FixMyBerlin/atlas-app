@@ -7,3 +7,8 @@
 __pycache__
 
 cache
+
+cache-warming
+!/cache-warming/package*.json
+!/cache-warming/warmCache.js
+!/cache-warming/util.js

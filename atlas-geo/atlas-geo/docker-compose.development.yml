@@ -20,10 +20,12 @@ services:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
+      TILES_URL:
     volumes:
       - osmfiles:/data
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
+      - ./configs/warm-cache.json:/app/cache-warming/config.json:ro
     depends_on:
       db:
         condition: service_healthy

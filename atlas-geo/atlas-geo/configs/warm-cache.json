@@ -1,0 +1,15 @@
+{
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "map": {
+    "lat": 52.3968,
+    "lng": 13.0342,
+    "zoomFrom": 11,
+    "zoomTo": 11
+  },
+  "urls": [
+    "/roads/{z}/{x}/{y}"
+  ]
+}
