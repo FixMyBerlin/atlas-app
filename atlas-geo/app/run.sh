@@ -56,3 +56,7 @@ fi
 if ! ./run-7-metadata.sh; then
     alert '*ERROR*: #run-7-metadata exited with non-zero status code'
 fi
+
+if ! ./run-8-warm-cache.sh; then
+    alert '*ERROR*: #run-8-warm-cache exited with non-zero status code'
+fi

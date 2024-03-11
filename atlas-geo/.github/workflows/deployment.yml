@@ -126,7 +126,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml,postgres/postgres.conf,configs/nginx.conf,configs/martin.yaml"
+          source: "docker-compose.yml,postgres/postgres.conf,configs/nginx.conf,configs/martin.yaml,configs/warm-cache.json"
           target: "/srv/processing/"
           overwrite: true
 

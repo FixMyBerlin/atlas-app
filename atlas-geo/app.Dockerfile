@@ -24,6 +24,15 @@ RUN apt update && \
 # - "date" https://luarocks.org/modules/tieske/date, https://github.com/Tieske/date
 # RUN luarocks install date
 
+# install node
+RUN apt-get install -y nodejs npm
+
+WORKDIR /app/cache-warming
+COPY cache-warming/package*.json .
+RUN cd /app/cache-warming && npm install
+COPY cache-warming/util.js .
+COPY cache-warming/warmCache.js .
+
 WORKDIR /app
 # 'data' folder is root
 RUN mkdir /data
