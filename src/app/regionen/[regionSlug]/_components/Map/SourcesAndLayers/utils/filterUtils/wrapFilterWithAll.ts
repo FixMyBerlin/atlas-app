@@ -1,16 +1,24 @@
 export const wrapFilterWithAll = (filterArray: any[] | undefined) => {
+  let workingArray: typeof filterArray = []
+  // Cleanup input: `[null]` becomes `[]`
+  workingArray = filterArray?.filter(Boolean)
+  // Cleanup input: `[]` becomes `undefined`
+  if (workingArray?.length === 0) {
+    workingArray = undefined // `[]` becomes `undefined`
+  }
+
   // Case: Input empty/undefined
-  if (!filterArray) {
+  if (!workingArray) {
     return ['all']
   }
-  // Case: Input already wrapped in 'all'
-  if (filterArray[0] === 'all') {
-    return filterArray.filter(Boolean)
-  }
+
+  // Cleanup input: 'all's are removed
+  workingArray = workingArray.filter((item) => !(typeof item === 'string' && item === 'all'))
+
   // Case: Input is multi dimensional array of filters
-  if (typeof filterArray[0] === 'object') {
-    return ['all', filterArray].flat().filter(Boolean)
+  if (Array.isArray(workingArray[0])) {
+    return ['all', workingArray].flat().filter(Boolean)
   }
   // Case: Input is only one filter
-  return ['all', filterArray]
+  return ['all', workingArray].filter(Boolean)
 }
