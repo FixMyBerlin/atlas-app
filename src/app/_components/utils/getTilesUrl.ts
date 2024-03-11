@@ -1,4 +1,4 @@
-import { envKeyWithFallback } from './isEnv'
+import { envKeyWithFallback, isDev } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:3000',
@@ -22,4 +22,4 @@ export const makeTileUrlCacheless = ({ url, cacheless }: { url: string; cacheles
 export const isDevTilesUrl =
   'NEXT_PUBLIC_TILES_ENV' in process.env
     ? process.env.NEXT_PUBLIC_TILES_ENV === 'development'
-    : false
+    : isDev
