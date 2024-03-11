@@ -29,4 +29,30 @@ describe('wrapFilterWithAll()', () => {
     const result = wrapFilterWithAll(filter)
     expect(result).toMatchObject(['all', filter])
   })
+
+  test('input starts with null', () => {
+    const filter = ['==', 'id', 'none']
+    const result = wrapFilterWithAll([null, filter])
+    expect(result).toMatchObject(['all', filter])
+  })
+
+  test('input empty array', () => {
+    const filter = []
+    const result = wrapFilterWithAll(filter)
+    expect(result).toMatchObject(['all'])
+  })
+
+  test('allow nested alls', () => {
+    const expression = ['==', 'id', 1]
+    const filter = ['all', expression]
+    const result = wrapFilterWithAll([expression, filter])
+    expect(result).toMatchObject(['all', expression, filter])
+  })
+
+  test('cleanup multipe "all"s', () => {
+    const expression = ['==', 'id', 1]
+    const filter = ['all', expression]
+    const result = wrapFilterWithAll([expression, 'all', expression])
+    expect(result).toMatchObject(['all', expression, expression])
+  })
 })
