@@ -2,7 +2,8 @@
 version: '3'
 services:
   app:
-    command: 'npm run dev'
+    entrypoint: 'npm run'
+    command: 'dev'
     image: !reset null
     labels: !reset []
     build:
