@@ -4,14 +4,14 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import fs from 'fs'
 import chalk from 'chalk'
-// import dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 
-import { lat2tile, lng2tile, formatBytes, formatDuration, log } from './util.js'
+import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
 
-// dotenv.config()
-// dotenv.config({ path: `.env.local`, override: true })
-const tilesBaseUrl = 'https://tiles.radverkehrsatlas.de'
+dotenv.config()
+dotenv.config({ path: `.env.local`, override: true })
+const tilesBaseUrl = `https://${process.env.TILES_URL}`
 const cacheWarmingConfigPath = 'config.json'
 
 const __filename = fileURLToPath(import.meta.url)
