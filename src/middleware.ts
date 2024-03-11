@@ -1,6 +1,6 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { staticRegion } from './app/regionen/(index)/_data/regions.const'
+import { RegionSlug, staticRegion } from './app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
 import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
@@ -20,11 +20,35 @@ export function middleware(request: NextRequest) {
 
   const url = new URL(request.url)
 
-  // Guard: Only on path /regionen/<validSlug>
-  const paths = request.nextUrl.pathname.split('/')
-  const regionenSlugs = staticRegion.map((r) => r.slug)
+  // Guard: Only on path /regionen/*
+  const paths = url.pathname.split('/')
+  let possiblyRegionSlug = paths[2]
   if (paths[1] !== 'regionen') return doNothing
-  if (paths[2] && !regionenSlugs.includes(paths[2])) return doNothing
+
+  // MIGRATION: Migrate renamed region names
+  const renamedRegions = new Map<string, RegionSlug>([
+    // [oldName, newName]
+    // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
+    ['bb-ag', 'bb-pg'],
+    ['bb-ramboll', 'bb-sg'],
+  ])
+  const redirectSlug = renamedRegions.get(possiblyRegionSlug || '')
+  if (possiblyRegionSlug && redirectSlug) {
+    url.pathname = url.pathname.replace(possiblyRegionSlug, redirectSlug)
+    // Case 1: We are on `regions/oldSlug/subPage` in which case we want to redirect
+    // but not apply all the map stuff below, so we exit early
+    if (paths.length !== 3) {
+      return NextResponse.redirect(url.toString(), 301)
+    }
+    // Case 1: We are on `regions/oldSlug` in which case we want to redirect
+    // and also continue to apply all the map stuff below
+    possiblyRegionSlug = redirectSlug
+    performRedirect = true
+  }
+
+  // Guard: Only on path /regionen/<validSlug>
+  const regionenSlugs = staticRegion.map((r) => r.slug)
+  if (possiblyRegionSlug && !regionenSlugs.includes(possiblyRegionSlug)) return doNothing
   if (paths.length !== 3) return doNothing // Skip sub pages like /regionen/slug/foo
 
   // MIGRATION: Remove legacy `theme` param
@@ -86,8 +110,8 @@ export function middleware(request: NextRequest) {
   }
 
   // INITIALIZATION: Make sure every map has a `map` and `config` param
-  const regionSlug = request.nextUrl.pathname.split('/').at(2) // We cannot use `useStaticRegion` here, so we do it manually
-  const region = staticRegion.find((r) => r.slug === regionSlug)
+  // We cannot use `useStaticRegion` here, so we do it manually
+  const region = staticRegion.find((r) => r.slug === possiblyRegionSlug)
   if (!region) return doNothing
 
   if (!url.searchParams.get('map')) {

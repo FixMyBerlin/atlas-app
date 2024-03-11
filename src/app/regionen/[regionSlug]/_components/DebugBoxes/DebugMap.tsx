@@ -1,16 +1,22 @@
 import { StyleSpecification } from 'maplibre-gl'
 import { useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
+import { getTilesUrl, isDevTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
-import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { useMapDebugState } from '../../_hooks/mapStateInteraction/useMapDebugState'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { DebugMapDownload } from './DebugMapDownload'
 
 export const DebugMap = () => {
-  const { showDebugInfo, setShowDebugInfo, useDebugLayerStyles, setUseDebugLayerStyles } =
-    useMapDebugState()
+  const {
+    showDebugInfo,
+    setShowDebugInfo,
+    useDebugLayerStyles,
+    setUseDebugLayerStyles,
+    useDebugCachelessTiles,
+    setUseDebugCachelessTiles,
+  } = useMapDebugState()
   const { mainMap } = useMap()
   const { mapLoaded } = useMapStateInteraction()
   const [_triggerRerender, setTriggerRerender] = useState(0)
@@ -53,12 +59,21 @@ export const DebugMap = () => {
         &times;
       </button>
 
-      <button
-        onClick={() => setUseDebugLayerStyles(!useDebugLayerStyles)}
-        className="rounded border px-1"
-      >
-        Debug Style {useDebugLayerStyles ? 'ON' : 'OFF'}
-      </button>
+      <div className="flex flex-col gap-1">
+        <button
+          onClick={() => setUseDebugLayerStyles(!useDebugLayerStyles)}
+          className="rounded border px-1"
+        >
+          Debug Style {useDebugLayerStyles ? 'ON' : 'OFF'}
+        </button>
+        <button
+          onClick={() => setUseDebugCachelessTiles(!useDebugCachelessTiles)}
+          className={twJoin('rounded border px-1', isDevTilesUrl ? 'line-through' : '')}
+          disabled={isDevTilesUrl}
+        >
+          Cachless tiles {useDebugCachelessTiles ? 'ON' : 'OFF'}
+        </button>
+      </div>
 
       <details>
         <summary className="cursor-pointer hover:font-semibold">Sources</summary>
