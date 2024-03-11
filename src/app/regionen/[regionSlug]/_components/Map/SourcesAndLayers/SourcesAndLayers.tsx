@@ -15,6 +15,7 @@ import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
+import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
 
 // We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -25,7 +26,7 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 // But, it will create them again, when the source was unmounted.
 // TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
 export const SourcesAndLayers = () => {
-  const { useDebugLayerStyles } = useMapDebugState()
+  const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
 
@@ -46,12 +47,17 @@ export const SourcesAndLayers = () => {
                 subcategoryConfig.id,
               )
 
+              const tileUrl = makeTileUrlCacheless({
+                url: sourceData.tiles,
+                cacheless: useDebugCachelessTiles,
+              })
+
               return (
                 <Source
                   key={sourceId}
                   id={sourceId}
                   type="vector"
-                  tiles={[sourceData.tiles]}
+                  tiles={[tileUrl]}
                   maxzoom={sourceData.maxzoom}
                   minzoom={sourceData.minzoom}
                 >
