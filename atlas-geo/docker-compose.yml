@@ -58,6 +58,7 @@ services:
   tiles:
     image: ghcr.io/maplibre/martin:v0.13.0
     container_name: tiles
+    command: "--config /config.yaml"
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
@@ -74,6 +75,8 @@ services:
       - 3333:3000
     networks:
       - app_bridge
+    volumes:
+      - ./configs/martin.yaml:/config.yaml:ro
     depends_on:
       db:
        condition: service_healthy
