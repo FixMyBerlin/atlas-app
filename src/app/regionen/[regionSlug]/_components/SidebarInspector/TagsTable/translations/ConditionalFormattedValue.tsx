@@ -148,7 +148,7 @@ export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props)
   }
 
   // Lastly…
-  // Some TagKeys are not specific per source; we only translate those once
+  // Some TagKeys are not specific per source; we only translate those once. UNLESS they have a source specific translation.
   const nonCategorizedTagKeys = [
     '_parent_highway',
     'highway',
@@ -161,7 +161,7 @@ export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props)
     'confidence', // true key is `maxspeed_confidence`, `surface_confidence`, … but we overwrite that when passing props
     'fresh', // true key is `maxspeed_fresh`, `surface_fresh`, … but we overwrite that when passing props
   ]
-  if (nonCategorizedTagKeys.includes(tagKey)) {
+  if (!translations[translationKey] && nonCategorizedTagKeys.includes(tagKey)) {
     translationKey = `ALL--${tagKey}=${tagValue}`
   }
 

@@ -42,7 +42,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   }
 
   // For some key, we don't want to add translations for each source.
-  // For those, we use a simple fallback. UNLESS they have a source specif translation.
+  // For those, we use a simple fallback. UNLESS they have a source specific translation.
   // (Unfortunatelly react-intl. does not support nested FormattedMessage components to handle the fallbacks.)
   const simpleTranslFallbackKeys = [
     '_parent_highway',
