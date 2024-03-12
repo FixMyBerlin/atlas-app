@@ -1,6 +1,6 @@
-import { FilterSpecification } from 'maplibre-gl'
+import { type FilterSpecification, type LayerSpecification } from 'maplibre-gl'
 import React from 'react'
-import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
+import { Layer, Source, useMap } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -10,7 +10,6 @@ import {
   createSourceKey,
   createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
-import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
@@ -20,16 +19,13 @@ import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
 // We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
 // We also use this visbility to add/remove interactive layers.
-//
-// Performance Note:
-// Maplibre GL JS will only create network request for sources that are used by a visible layer.
-// But, it will create them again, when the source was unmounted.
-// TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
 export const SourcesAndLayers = () => {
   const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
+  const map = useMap()?.current?.getMap()
 
+  if (!map) return null
   if (!categoriesConfig?.length) return null
 
   return (
@@ -65,9 +61,6 @@ export const SourcesAndLayers = () => {
                     const currStyleConfig = subcategoryConfig.styles.find(
                       (s) => s.id === styleConfig.id,
                     )
-                    const visibility = layerVisibility(
-                      (categoryConfig.active && currStyleConfig?.active) || false,
-                    )
 
                     return styleConfig?.layers?.map((layer) => {
                       const layerId = createSourceSubcatStyleLayerKey(
@@ -76,8 +69,19 @@ export const SourcesAndLayers = () => {
                         styleConfig.id,
                         layer.id,
                       )
-                      const layout =
-                        layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
+
+                      // Manually toggle layer visiblity
+                      // This is a performance optimization because toggling layout.visibility causes a redownload of the tiles.
+                      // We work around this by using setLayoutProperty manually.
+                      // However, for some render passes the layer is not present, yet, which causes a crash, so we guard by checking if the layer exists.
+                      const visibility = (categoryConfig.active && currStyleConfig?.active) || false
+                      if (map.getLayer(layerId)) {
+                        map.setLayoutProperty(
+                          layerId,
+                          'visibility',
+                          visibility ? 'visible' : 'none',
+                        )
+                      }
 
                       // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                       const layerFilter = useDebugLayerStyles
@@ -97,7 +101,9 @@ export const SourcesAndLayers = () => {
                         source: sourceId,
                         type: layer.type,
                         'source-layer': layer['source-layer'],
-                        layout: layout,
+                        ...(layer.layout
+                          ? ({ layout: layer.layout } as Pick<LayerSpecification, 'layout'>)
+                          : {}),
                         filter: layerFilter as FilterSpecification | undefined,
                         paint: layerPaint,
                         beforeId: beforeId({
