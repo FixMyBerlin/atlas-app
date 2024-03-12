@@ -87,23 +87,25 @@ export const SourcesAndLayers = () => {
                       const layerFilter = useDebugLayerStyles
                         ? ['all']
                         : wrapFilterWithAll(layer.filter)
-
-                      // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
                       const layerPaint = useDebugLayerStyles
                         ? debugLayerStyles({
                             source: sourceId,
                             sourceLayer: layer['source-layer'],
                           }).find((l) => l.type === layer.type)?.paint
                         : (layer.paint as any)
+                      const layerLayout = useDebugLayerStyles
+                        ? debugLayerStyles({
+                            source: sourceId,
+                            sourceLayer: layer['source-layer'],
+                          }).find((l) => l.type === layer.type)?.layout
+                        : (layer.layout as Pick<LayerSpecification, 'layout'>)
 
                       const layerProps = {
                         id: layerId,
                         source: sourceId,
                         type: layer.type,
                         'source-layer': layer['source-layer'],
-                        ...(layer.layout
-                          ? ({ layout: layer.layout } as Pick<LayerSpecification, 'layout'>)
-                          : {}),
+                        ...(layerLayout ? { layout: layerLayout } : {}),
                         filter: layerFilter as FilterSpecification | undefined,
                         paint: layerPaint,
                         beforeId: beforeId({

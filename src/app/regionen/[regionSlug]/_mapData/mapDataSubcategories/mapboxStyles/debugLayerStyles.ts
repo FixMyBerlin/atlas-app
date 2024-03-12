@@ -10,7 +10,7 @@ export const debugLayerStyles = ({
   sourceLayer: string
   filter?: ['match', ['get', string], string[], boolean, boolean]
 }) => {
-  return [
+  const layers = [
     {
       id: 'debugStyleLayerLine',
       type: 'line',
@@ -21,8 +21,8 @@ export const debugLayerStyles = ({
         'line-color': '#a21caf',
         'line-opacity': 0.6,
       },
-      filter: wrapFilterWithAll(filter),
       layout: {},
+      filter: wrapFilterWithAll(filter),
     },
     {
       id: 'debugStyleLayerCircle',
@@ -34,8 +34,8 @@ export const debugLayerStyles = ({
         'circle-opacity': 0.6,
         'circle-color': '#701a75',
       },
-      filter: wrapFilterWithAll(filter),
       layout: {},
+      filter: wrapFilterWithAll(filter),
     },
     {
       id: 'debugStyleLayerFill',
@@ -47,8 +47,24 @@ export const debugLayerStyles = ({
         'fill-outline-color': '#701a75',
         'fill-opacity': 0.3,
       },
-      filter: wrapFilterWithAll(filter),
       layout: {},
+      filter: wrapFilterWithAll(filter),
+    },
+    {
+      id: 'debugStyleLayerSymbol',
+      type: 'symbol',
+      source: source,
+      'source-layer': sourceLayer,
+      paint: {},
+      layout: {
+        'icon-image': 'rectangle-red-2',
+        'icon-allow-overlap': true,
+        'icon-size': 1,
+      },
+      filter: wrapFilterWithAll(filter),
     },
   ] satisfies FileMapDataSubcategoryStyleLayer[]
+  // The `satisfies` will raise issues with the object inline which `as` would not.
+  // However, the `as` is needed to make TS happy when using this layer in the context of a subcat
+  return layers as FileMapDataSubcategoryStyleLayer[]
 }
