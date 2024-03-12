@@ -25,8 +25,6 @@ local function ExitProcessing(object)
   end
 
   local allowed_tags = Set({
-    "subway",
-    "light_rail",
     "tram_stop",
     "station",
     "halt",
@@ -41,6 +39,14 @@ end
 local function processTags(tags)
   local category
 
+  -- Bahn
+  -- Precedence: Has to come first so others can overwrite with more precise values.
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dstation
+  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dhalt
+  if (tags.railway == "station" or tags.railway == "halt") then
+    category = "railway_station"
+  end
+
   -- Ferry
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:amenity%3Dferry_terminal
   -- https://wiki.openstreetmap.org/wiki/DE:Key:ferry
@@ -50,13 +56,13 @@ local function processTags(tags)
 
   -- U-Bahn
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:station%3Dsubway
-  if (tags.railway == "subway") then
+  if (tags.station == "subway") then
     category = "subway_station"
   end
 
   -- S-Bahn
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dlight_rail
-  if (tags.railway == "light_rail") then
+  if (tags.station == "light_rail") then
     category = "light_rail_station"
   end
 
@@ -64,13 +70,6 @@ local function processTags(tags)
   -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dtram_stop
   if (tags.railway == "tram_stop") then
     category = "tram_station"
-  end
-
-  -- Bahn
-  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dstation
-  -- https://wiki.openstreetmap.org/wiki/DE:Tag:railway%3Dhalt
-  if (tags.railway == "station" or tags.railway == "halt") then
-    category = "railway_station"
   end
 
   -- Bus:
