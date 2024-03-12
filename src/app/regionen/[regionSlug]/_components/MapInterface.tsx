@@ -1,6 +1,7 @@
 'use client'
 
-import React from 'react'
+import maplibregl from 'maplibre-gl'
+import { Protocol } from 'pmtiles'
 import { MapProvider } from 'react-map-gl/maplibre'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
@@ -13,8 +14,19 @@ import { SidebarInspector } from './SidebarInspector/SidebarInspector'
 import { SidebarLayerControls } from './SidebarLayerControls/SidebarLayerControls'
 import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
+import { useEffect } from 'react'
 
-export const MapInterface: React.FC = () => {
+export const MapInterface = () => {
+  // Add PMTiles Protocol to be use by "Datasets"
+  // Docs https://docs.protomaps.com/pmtiles/maplibre#react
+  useEffect(() => {
+    const protocol = new Protocol()
+    maplibregl.addProtocol('pmtiles', protocol.tile)
+    return () => {
+      maplibregl.removeProtocol('pmtiles')
+    }
+  }, [])
+
   return (
     <MapProvider>
       <div className="relative flex h-full w-full flex-row gap-4">

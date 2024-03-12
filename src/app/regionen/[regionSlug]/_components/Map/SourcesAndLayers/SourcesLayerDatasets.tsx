@@ -1,7 +1,6 @@
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
@@ -14,12 +13,11 @@ import { pmtilesUrl } from './utils/pmtilesUrl'
 
 export const SourcesLayerDatasets: React.FC = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
-  const { pmTilesProtocolReady } = useMapStateInteraction()
   const { useDebugLayerStyles } = useMapDebugState()
 
   const regionDatasets = useRegionDatasets()
 
-  if (!regionDatasets || !selectedDatasetIds || !pmTilesProtocolReady) return null
+  if (!regionDatasets || !selectedDatasetIds) return null
 
   return (
     <>
