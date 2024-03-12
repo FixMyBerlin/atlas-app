@@ -57,6 +57,10 @@ export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
   `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
+export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
+  tableName: TId,
+) => `atlas_generalization_${tableName.toLowerCase()}` as `atlas_generalization_${Lowercase<TId>}`
+
 // https://account.mapbox.com/access-tokens
 // "Default public token"
 const apiKeyMapbox =

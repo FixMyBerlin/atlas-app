@@ -8,7 +8,7 @@ const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Ra
 export async function initExportFunctions(tables) {
   return Promise.all(
     tables.map((tableName) => {
-      const functionName = exportFunctionIdentifier(tableName.toLowerCase())
+      const functionName = exportFunctionIdentifier(tableName)
 
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
@@ -19,9 +19,9 @@ export async function initExportFunctions(tables) {
           AS $function$
           SELECT
           json_build_object(
-            'type', 'FeatureCollection', 
+            'type', 'FeatureCollection',
             'license', ${license},
-            'attribution', ${attribution}, 
+            'attribution', ${attribution},
             'features', json_agg(features.feature)
           )
           FROM(
