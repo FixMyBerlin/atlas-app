@@ -11,6 +11,7 @@ jobs:
     with:
       ENVIRONMENT: production
       TILES_URL: tiles.radverkehrsatlas.de
+      CACHELESS_URL: cacheless.radverkehrsatlas.de
     secrets:
       SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
       DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
