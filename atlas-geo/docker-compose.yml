@@ -42,6 +42,7 @@ services:
       OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
+      SKIP_WARM_CACHE:
       DEBUG:
       ID_FILTER:
       API_SECRET:
