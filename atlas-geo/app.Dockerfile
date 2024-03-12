@@ -27,11 +27,11 @@ RUN apt update && \
 # install node
 RUN apt-get install -y nodejs npm
 
-WORKDIR /app/cache-warming
-COPY cache-warming/package*.json .
-RUN cd /app/cache-warming && npm install
-COPY cache-warming/util.js .
-COPY cache-warming/warmCache.js .
+WORKDIR /app/warm-cache
+COPY warm-cache/package*.json .
+RUN cd /app/warm-cache && npm install
+COPY warm-cache/util.js .
+COPY warm-cache/warmCache.js .
 
 WORKDIR /app
 # 'data' folder is root
