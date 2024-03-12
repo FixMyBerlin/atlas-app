@@ -48,8 +48,8 @@ export async function initGeneralizationFunctions(tables) {
                     4096, 64, true) AS g
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
-                and (not tags?'_minZoom' or z >= (tags->'_minZoom')::integer)
-                and (not tags?'_maxZoom' or z < (tags->'_maxZoom')::integer)
+                and (not tags?'_minzoom' or z >= (tags->'_minzoom')::integer)
+                and (not tags?'_maxzoom' or z < (tags->'_maxzoom')::integer)
             ) AS tile WHERE geom IS NOT NULL;
             RETURN mvt;
           END
