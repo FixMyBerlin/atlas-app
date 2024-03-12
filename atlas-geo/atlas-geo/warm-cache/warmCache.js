@@ -7,7 +7,7 @@ import chalk from 'chalk'
 import dotenv from 'dotenv'
 import fetch from 'node-fetch'
 
-import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
+import { lat2tile, lng2tile, formatBytes, formatDuration, log } from './util.js'
 
 dotenv.config()
 dotenv.config({ path: `.env.local`, override: true })
