@@ -1,6 +1,6 @@
 import { type FilterSpecification, type LayerSpecification } from 'maplibre-gl'
 import React from 'react'
-import { Layer, Source, useMap } from 'react-map-gl/maplibre'
+import { Layer, LayerProps, Source, useMap } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -92,13 +92,13 @@ export const SourcesAndLayers = () => {
                             source: sourceId,
                             sourceLayer: layer['source-layer'],
                           }).find((l) => l.type === layer.type)?.paint
-                        : (layer.paint as any)
+                        : layer.paint
                       const layerLayout = useDebugLayerStyles
                         ? debugLayerStyles({
                             source: sourceId,
                             sourceLayer: layer['source-layer'],
                           }).find((l) => l.type === layer.type)?.layout
-                        : (layer.layout as Pick<LayerSpecification, 'layout'>)
+                        : layer.layout
 
                       const layerProps = {
                         id: layerId,
@@ -106,8 +106,8 @@ export const SourcesAndLayers = () => {
                         type: layer.type,
                         'source-layer': layer['source-layer'],
                         ...(layerLayout ? { layout: layerLayout } : {}),
-                        filter: layerFilter as FilterSpecification | undefined,
-                        paint: layerPaint,
+                        filter: layerFilter as FilterSpecification,
+                        paint: layerPaint as any, // Too complex to apply all the different layer-type paint-types
                         beforeId: beforeId({
                           backgroundId: backgroundParam,
                           subcategoryBeforeId: subcategoryConfig.beforeId,
@@ -115,7 +115,7 @@ export const SourcesAndLayers = () => {
                         }),
                         ...(layer.maxzoom ? { maxzoom: layer.maxzoom } : {}),
                         ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
-                      }
+                      } satisfies LayerProps
 
                       // The verification style layer in Mapbox Studio has to include this string
                       const isVerificationStatusLayer = layer.id.search('verification-status') != -1
