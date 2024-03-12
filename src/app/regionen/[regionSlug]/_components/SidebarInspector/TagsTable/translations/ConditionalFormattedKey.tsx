@@ -57,6 +57,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
     'osm_traffic_sign:backward',
     'width',
     'maxspeed',
+    'length',
   ]
   if (!translations[key] && simpleTranslFallbackKeys.includes(tagKey)) {
     key = `ALL--${tagKey}--key`

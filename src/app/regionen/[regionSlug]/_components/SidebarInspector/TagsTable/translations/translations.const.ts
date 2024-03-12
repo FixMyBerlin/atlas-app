@@ -68,6 +68,8 @@ export const translations: { [key: string]: string } = {
   'ALL--highway=track': 'Wald- / Feldweg',
   'ALL--highway=unclassified': 'Nebenstraße mit Verbindungscharakter',
   'ALL--highway=unspecified_road_category': 'Unkategorisierte Straße', // roads--category
+  'ALL--length--key': 'Länge',
+  'ALL--length--tooltip': 'Ein berechneter Wert für as OpenStreetMap-Straßensegment. Die Berechnung nutzt die Projektion EPSG:25833 / ETRS89 / UTM zone 33N und hat somit eine gute Genaugikeit für Deutschland.',
   'ALL--maxspeed--key': 'Höchstgeschwindigkeit',
   'ALL--name--key': 'Name',
   'ALL--oneway--key': 'Fahrtrichtung',
