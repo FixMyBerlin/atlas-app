@@ -301,7 +301,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['name'],
+      documentedKeys: ['name', 'category'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -310,7 +310,7 @@ export const sources: MapDataSource<
     export: {
       enabled: true,
       apiIdentifier: 'publicTransport',
-      title: 'ÖPNV',
+      title: 'ÖPNV-Haltepunkte und Fähranleger',
       desc: 'Punktdaten von Haltestellen',
     },
   },
