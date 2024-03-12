@@ -106,10 +106,15 @@ function osm2pgsql.process_way(object)
 
   -- ====== (B) General conversions ======
   ConvertCyclewayOppositeSchema(tags)
+  -- Calculate and format length, see also https://github.com/osm2pgsql-dev/osm2pgsql/discussions/1756#discussioncomment-3614364
+  -- Use https://epsg.io/25833 (same as `boundaryStats.sql`); update `atlas_roads--length--tooltip` if changed.
+  local lengthInMercatorMeters = object:as_linestring():transform(25833):length()
+  local formattedMeratorLengthMeters = tonumber(string.format("%.2f", lengthInMercatorMeters))
 
   -- ====== (C) Compute results and insert ======
   local results = {
-    name = tags.name or tags.ref or tags['is_sidepath:of:name']
+    name = tags.name or tags.ref or tags['is_sidepath:of:name'],
+    length = formattedMeratorLengthMeters,
   }
 
   MergeTable(results, RoadClassification(object))
@@ -124,6 +129,7 @@ function osm2pgsql.process_way(object)
         result[k] = v
       end
       result.name = results.name
+      result.length = formattedMeratorLengthMeters
       result.road = results.road
 
       -- if osm2pgsql.stage == 2 then
