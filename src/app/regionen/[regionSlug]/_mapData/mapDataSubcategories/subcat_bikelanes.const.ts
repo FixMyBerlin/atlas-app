@@ -266,7 +266,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           name: 'Breite fehlt',
           style: {
             type: 'line',
-            color: '#fd9be1',
+            color: '#fda5e4',
             dasharray: [3, 1],
             width: 1,
           },
