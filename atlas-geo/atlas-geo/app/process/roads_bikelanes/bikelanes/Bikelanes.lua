@@ -75,10 +75,14 @@ function Bikelanes(object)
         if sign == CENTER_SIGN then
           result_tags.sign = CENTER_SIGN
           result_tags.width = ParseLength(tags.width)
+          result_tags.bridge = Sanitize(tags.bridge, Set({ "yes" }))
+          result_tags.tunnel = Sanitize(tags.tunnel, Set({ "yes" }))
         else
           MergeTable(result_tags, cycleway)
           freshTag = "check_date:" .. cycleway.prefix
           result_tags.width = ParseLength(cycleway.width)
+          result_tags.bridge = Sanitize(cycleway.bridge, Set({ "yes" }))
+          result_tags.tunnel = Sanitize(cycleway.tunnel, Set({ "yes" }))
         end
 
         result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
