@@ -44,20 +44,18 @@ const fetchTiles = async () => {
       log(
         chalk.inverse(
           '⚑ ' +
-          urlTemplate
-            .replace('{z}', z)
-            .replace('{x}', `${minX}-${maxX}`)
-            .replace('{y}', `${minY}-${maxY}`),
-        ),
+            urlTemplate
+              .replace('{z}', z)
+              .replace('{x}', `${minX}-${maxX}`)
+              .replace('{y}', `${minY}-${maxY}`)
+        )
       )
       for (let x = minX; x <= maxX; x++) {
         for (let y = minY; y <= maxY; y++) {
           const zf = Math.floor(z)
           const url =
             tilesBaseUrl + urlTemplate.replace('{z}', zf).replace('{x}', x).replace('{y}', y)
-          log(
-            `🡇 ${padLeft(tile++)}/${totalNumTiles} - ${Math.floor(zf)}/${x}/${y} - ${url}`,
-          )
+          log(`🡇 ${padLeft(tile++)}/${totalNumTiles} - ${Math.floor(zf)}/${x}/${y} - ${url}`)
           const start = new Date()
           const response = await fetch(url)
           let duration = formatDuration(new Date() - start)
