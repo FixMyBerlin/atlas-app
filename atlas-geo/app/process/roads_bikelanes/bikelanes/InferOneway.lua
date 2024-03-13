@@ -1,10 +1,11 @@
 local onewayAssumedNo = Set({
-  'bicycleRoad', -- road shared, both lanes
   'livingStreet', -- road shared, both lanes
   'pedestrianAreaBicycleYes', -- road shared, both lanes
   'sharedMotorVehicleLane', -- (both) road shared, both lanes, (left|right would be `implicit_yes`)
   'explicitSharedLaneButNoSignage', -- (both) road shared, both lanes, (left|right would be `implicit_yes`)
   'footAndCyclewayShared_isolated', -- "track"-like
+  'bicycleRoad',                        -- road shared, both lanes
+  'bicycleRoad_vehicleDestination',     -- road shared, both lanes
   'footAndCyclewaySegregated_isolated', -- "track"-like
   'cycleway_adjoining', -- "track"-like and `oneway=yes` (common in cities) is usually explicit
   'cycleway_isolated', -- road for bikes `oneway=yes` unexpected or usually explicit
