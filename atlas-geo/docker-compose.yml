@@ -43,6 +43,7 @@ services:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
       SKIP_WARM_CACHE:
+      TILES_URL:
       DEBUG:
       ID_FILTER:
       API_SECRET:
