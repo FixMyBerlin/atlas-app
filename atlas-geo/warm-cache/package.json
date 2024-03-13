@@ -12,6 +12,7 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
+    "@types/bun": "^1.0.8",
     "prettier": "^3.2.5"
   }
 }
