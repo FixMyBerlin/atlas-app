@@ -1,8 +1,10 @@
 #!/bin/bash
 set -e
 
-echo -e "\e[1m\e[7m Analysis – START \e[27m\e[21m\e[0m"
+source ./process-helpers.sh
+log_start "Analysis"
+start_time=$(seconds)
 
 psql -q -f "./analysis/boundaryStats.sql"
 
-echo -e "\e[1m\e[7m Analysis – END \e[27m\e[21m\e[0m"
+log_end "Analysis" $start_time
