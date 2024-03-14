@@ -67,6 +67,16 @@ export const SelectDatasets: React.FC = () => {
                             title="Datensatz nur für angemeldete Nutzer:innen mit Rechten für die Region sichtbar."
                           />
                         )}
+                        {!isProd && (
+                          <LinkExternal
+                            blank
+                            href={`https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${id}`}
+                            className="text-pink-500 hover:text-pink-800"
+                            title='Öffne den Datensatz im "atlas-static-data" Repository auf GitHub; Link nur in Dev und Staging sichtbar.'
+                          >
+                            <LinkIcon className="h-4 w-4" />
+                          </LinkExternal>
+                        )}
                       </div>
                       {description && (
                         <span
