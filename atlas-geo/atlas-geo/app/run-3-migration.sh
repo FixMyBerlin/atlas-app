@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 
-echo -e "\e[1m\e[7m DB Cleanup & Migrations START \e[27m\e[21m\e[0m"
+source ./process-helpers.sh
+log_start "DB Cleanup & Migrations"
+start_time=$(seconds)
 
 psql -q -f "./migration/cleanup.sql"
 psql -q -f "./migration/migration.sql"
 
-echo -e "\e[1m\e[7m DB Cleanup & Migrations – END \e[27m\e[21m\e[0m"
+log_end "DB Cleanup & Migrations" $start_time

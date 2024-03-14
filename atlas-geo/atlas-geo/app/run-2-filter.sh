@@ -8,11 +8,12 @@ FILTER_DIR="./filter/"
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 OSM_INTERMEDIATE_FILE=${FILTER_DIR}intermediate.pbf
 
-start_time=$(date +%s)
-echo -e "\e[1m\e[7m FILTER – START \e[27m\e[21m – Start Time: $(date)\e[0m"
+source ./process-helpers.sh
+log_start "FILTER"
+start_time=$(seconds)
 
 if [ $SKIP_TAG_FILTER == 1 ]; then
-  echo "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
+  log "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
   mv ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
 else
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
@@ -20,11 +21,9 @@ else
 fi
 
 if [ "$ID_FILTER" != "" ]; then
-  echo -e "\e[1m\e[7m FILTER BY osm-id ${ID_FILTER}\e[27m\e[21m\e[0m"
+  log -e "\e[1m\e[7m FILTER BY osm-id ${ID_FILTER}\e[27m\e[21m\e[0m"
   osmium getid --overwrite --output=${OSM_INTERMEDIATE_FILE} --verbose-ids ${OSM_FILTERED_FILE} ${ID_FILTER}
   mv ${OSM_INTERMEDIATE_FILE} ${OSM_FILTERED_FILE}
 fi
 
-end_time=$(date +%s)
-diff=$((end_time - start_time))
-echo -e "\e[1m\e[7m FILTER – END \e[27m\e[21m – End Time: $(date), took $diff seconds\e[0m"
+log_end "FILTER" $start_time

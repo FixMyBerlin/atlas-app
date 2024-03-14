@@ -3,8 +3,46 @@
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 PROCESS_DIR="./process/"
 
+format_left_right() {
+#format_lr(left, right, fill) {
+  node -e "a='${1}';b='${2}';c='${3}' || '-';console.log(a+c.repeat(80-a.length-b.length)+b)"
+}
+
+format_now() {
+#  echo `date +"%Y-%m-%dT%H:%M:%S%z"` # with timezone
+  echo `date +"%Y-%m-%dT%H:%M:%S"`
+}
+
+log_start() {
+  left="$(format_now) $1 - START "
+  formatted=$(format_left_right "$left" "" ">")
+  echo -e "\e[1m\e[7m${formatted}\e[27m\e[21m\e[0m"
+}
+
+log_end() {
+  local start_time
+  local end_time
+  local duration
+  local duration_formatted
+  start_time=$2
+  end_time=$(seconds)
+  duration=$((end_time - start_time))
+  left="$(format_now) $1 - END "
+  right=" $(date -d@$duration -u +%H:%M:%S)"
+  formatted=$(format_left_right "$left" "$right" "<")
+  echo -e "\e[1m\e[7m${formatted}\e[27m\e[21m\e[0m"
+}
+
+log() {
+  echo "$(format_now) $1"
+}
+
+seconds() {
+  echo $(date +%s)
+}
+
 notify() {
-  if [ -z $SYNOLOGY_LOG_TOKEN ]; then 
+  if [ -z $SYNOLOGY_LOG_TOKEN ]; then
     return 0;
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
