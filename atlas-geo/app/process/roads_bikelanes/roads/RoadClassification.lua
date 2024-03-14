@@ -13,6 +13,7 @@ local tags_prefixed = {
   'traffic_sign:backward',
 }
 
+
 function RoadClassification(object)
   local tags = object.tags
   local result_tags = {}
