@@ -13,6 +13,7 @@ export const useRegionDatasets = () => {
     upload.configs.forEach((config) => {
       regionDatasets.push({
         ...config,
+        isPublic: upload.public,
         id: upload.slug,
         url: getStaticDatasetUrl(upload.slug),
       })

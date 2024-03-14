@@ -9,6 +9,9 @@ import { createDatasetKey } from '../utils/createKeyUtils/createKeyUtils'
 import { ListOption } from './ListOption'
 import { iconFromLegend } from '../SidebarLayerControls/Legend/Legend'
 import { LegendNameDesc } from '../SidebarLayerControls/Legend/LegendNameDesc'
+import { LinkIcon, LockClosedIcon } from '@heroicons/react/20/solid'
+import { isProd } from 'src/app/_components/utils/isEnv'
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 
 export const SelectDatasets: React.FC = () => {
   const { mainMap } = useMap()
@@ -47,48 +50,58 @@ export const SelectDatasets: React.FC = () => {
             '[&_a:hover]:underline',
           )}
         >
-          {regionDatasets.map(({ id, subId, name, description, attributionHtml, legends }) => {
-            const key = createDatasetKey(id, subId)
-            return (
-              <ListOption
-                key={key}
-                value={key}
-                name={
-                  <>
-                    {name}
-                    {description && (
-                      <span
-                        className={twJoin(
-                          description?.includes('(!)') ? 'text-red-400' : 'text-gray-400',
-                          'block w-full overflow-visible',
+          {regionDatasets.map(
+            ({ id, subId, name, description, attributionHtml, legends, isPublic }) => {
+              const key = createDatasetKey(id, subId)
+              return (
+                <ListOption
+                  key={key}
+                  value={key}
+                  name={
+                    <>
+                      <div className="flex justify-between gap-1">
+                        {name}
+                        {!isPublic && (
+                          <LockClosedIcon
+                            className="h-4 w-4 text-gray-400"
+                            title="Datensatz nur für angemeldete Nutzer:innen mit Rechten für die Region sichtbar."
+                          />
                         )}
-                      >
-                        {description}
-                      </span>
-                    )}
-                    {attributionHtml && (
-                      <span
-                        className="block text-xs leading-4 text-gray-400"
-                        dangerouslySetInnerHTML={{ __html: attributionHtml }}
-                      />
-                    )}
-                    {Boolean(legends?.length) && (
-                      <ul>
-                        {legends.map((legend) => {
-                          return (
-                            <li className="group relative flex items-center" key={legend.id}>
-                              <div className="h-5 w-5 flex-none">{iconFromLegend(legend)}</div>
-                              <LegendNameDesc name={legend.name} desc={legend.desc} />
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    )}
-                  </>
-                }
-              />
-            )
-          })}
+                      </div>
+                      {description && (
+                        <span
+                          className={twJoin(
+                            description?.includes('(!)') ? 'text-red-400' : 'text-gray-400',
+                            'block w-full overflow-visible',
+                          )}
+                        >
+                          {description}
+                        </span>
+                      )}
+                      {attributionHtml && (
+                        <span
+                          className="block text-xs leading-4 text-gray-400"
+                          dangerouslySetInnerHTML={{ __html: attributionHtml }}
+                        />
+                      )}
+                      {Boolean(legends?.length) && (
+                        <ul>
+                          {legends.map((legend) => {
+                            return (
+                              <li className="group relative flex items-center" key={legend.id}>
+                                <div className="h-5 w-5 flex-none">{iconFromLegend(legend)}</div>
+                                <LegendNameDesc name={legend.name} desc={legend.desc} />
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      )}
+                    </>
+                  }
+                />
+              )
+            },
+          )}
         </Listbox.Options>
       </Transition>
     </Listbox>
