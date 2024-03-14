@@ -39,7 +39,7 @@ const fetchTiles = async () => {
       const centerLng = lng2tile(lng, z)
       const minX = centerLng - Math.floor((numTilesX - 1) / 2)
       const maxX = minX + numTilesX + 1
-      const minY = centerLat - Math.floor((numTilesX - 1) / 2)
+      const minY = centerLat - Math.floor((numTilesY - 1) / 2)
       const maxY = minY + numTilesY + 1
       log(
         chalk.inverse(
