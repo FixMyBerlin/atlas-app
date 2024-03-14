@@ -49,14 +49,14 @@ if ! ./run-5-postprocess.sh; then
     alert '*ERROR*: #run-5-postprocess exited with non-zero status code'
 fi
 
-if ! ./run-6-analysis.sh; then
-    alert '*ERROR*: #run-6-analysis exited with non-zero status code'
-fi
-
 if ! ./run-7-metadata.sh; then
     alert '*ERROR*: #run-7-metadata exited with non-zero status code'
 fi
 
 if ! ./run-8-warm-cache.sh; then
     alert '*ERROR*: #run-8-warm-cache exited with non-zero status code'
+fi
+
+if ! ./run-6-analysis.sh; then
+    alert '*ERROR*: #run-6-analysis exited with non-zero status code'
 fi
