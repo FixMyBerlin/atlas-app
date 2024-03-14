@@ -3,7 +3,7 @@ name: Regenerate production tiles
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 4 * * 1-5"
+    - cron: '0 4 * * 1-7'
 
 jobs:
   trigger_generation:
@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Restart tarmac production
+      - name: Restart tile generation
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Restart tarmac container"
+            echo "Restart app container"
             cd /srv/processing/
             docker compose restart -t 30 app

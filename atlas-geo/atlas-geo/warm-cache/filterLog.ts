@@ -56,12 +56,13 @@ const logData = (await Bun.file(filename).text()).split('\n')
 let i = 0
 while (i < logData.length) {
   const line = logData[i]!
-  if (!'🡇✓⚠'.split('').includes(line[0]!)) {
-    console.log(line)
+  const txt = line.substring(line.indexOf(' ') + 1)
+  if (!'🡇✓⚠'.split('').includes(txt[0]!)) {
+    console.log(txt)
     i++
     continue
   }
-  let request = line
+  let request = txt
   if (args.grep) {
     const f0 = request.search(args.grep)
     if (f0 === -1) {

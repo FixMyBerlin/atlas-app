@@ -1,17 +1,25 @@
 #!/usr/bin/env node
 
-import fs from 'node:fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import fs from 'fs'
 import chalk from 'chalk'
-import { lat2tile, lng2tile, formatBytes, formatDuration } from './util.js'
 import dotenv from 'dotenv'
+import fetch from 'node-fetch'
 
-dotenv.config();
-dotenv.config({ path: `.env.local`, override: true });
+import { lat2tile, lng2tile, formatBytes, formatDuration, log } from './util.js'
+
+dotenv.config()
+dotenv.config({ path: `.env.local`, override: true })
 const tilesBaseUrl = `https://${process.env.TILES_URL}`
 const cacheWarmingConfigPath = 'config.json'
 
-console.log(`Loading config ${cacheWarmingConfigPath}...`)
-const config = JSON.parse(fs.readFileSync(cacheWarmingConfigPath, 'utf8'))
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+log(path.join(__dirname, cacheWarmingConfigPath))
+
+log(`Loading config ${cacheWarmingConfigPath}...`)
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, cacheWarmingConfigPath), 'utf8'))
 
 const { viewport, map } = config
 const numTilesX = Math.ceil(viewport.width / 256)
@@ -31,9 +39,9 @@ const fetchTiles = async () => {
       const centerLng = lng2tile(lng, z)
       const minX = centerLng - Math.floor((numTilesX - 1) / 2)
       const maxX = minX + numTilesX + 1
-      const minY = centerLat - Math.floor((numTilesX - 1) / 2)
+      const minY = centerLat - Math.floor((numTilesY - 1) / 2)
       const maxY = minY + numTilesY + 1
-      console.log(
+      log(
         chalk.inverse(
           '⚑ ' +
           urlTemplate
@@ -47,7 +55,7 @@ const fetchTiles = async () => {
           const zf = Math.floor(z)
           const url =
             tilesBaseUrl + urlTemplate.replace('{z}', zf).replace('{x}', x).replace('{y}', y)
-          console.log(
+          log(
             `🡇 ${padLeft(tile++)}/${totalNumTiles} - ${Math.floor(zf)}/${x}/${y} - ${url}`,
           )
           const start = new Date()
@@ -57,11 +65,11 @@ const fetchTiles = async () => {
           if (response.status === 200) {
             const cacheStatus = response.headers.get('x-cache-status') || 'NO-CACHE'
             const contentLength = formatBytes(response.headers.get('content-length'))
-            console.log(chalk.green('✓'), `${cacheStatus} - ${duration} - ${contentLength}`)
+            log(chalk.green('✓'), `${cacheStatus} - ${duration} - ${contentLength}`)
           } else if (response.status < 300) {
-            console.log(chalk.yellow(`⚠ ${statusFormatted}`))
+            log(chalk.yellow(`⚠ ${statusFormatted}`))
           } else {
-            console.log(chalk.red(`⚠ ${statusFormatted}`))
+            log(chalk.red(`⚠ ${statusFormatted}`))
           }
         }
       }

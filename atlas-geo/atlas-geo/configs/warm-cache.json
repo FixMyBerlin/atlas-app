@@ -1,7 +1,7 @@
 {
   "viewport": {
-    "width": 800,
-    "height": 600
+    "width": 1920,
+    "height": 1080
   },
   "map": {
     "lat": 52.3968,
@@ -11,16 +11,13 @@
   },
   "urls": [
     "/roads/{z}/{x}/{y}",
-    "/roadsPathClasses/{z}/{x}/{y}",
     "/bikelanes_verified/{z}/{x}/{y}",
     "/poiClassification/{z}/{x}/{y}",
+    "/roadsPathClasses/{z}/{x}/{y}",
     "/boundaries,boundaryLabels/{z}/{x}/{y}",
-    "/boundaryStats/{z}/{x}/{y}",
-    "/publicTransport/{z}/{x}/{y}",
     "/places/{z}/{x}/{y}",
+    "/publicTransport/{z}/{x}/{y}",
     "/barrierAreas,barrierLines/{z}/{x}/{y}",
-    "/landuse/{z}/{x}/{y}",
-    "/bicycleParking_points,bicycleParking_areas/{z}/{x}/{y}",
-    "/trafficSigns/{z}/{x}/{y}"
+    "/landuse/{z}/{x}/{y}"
   ]
 }
