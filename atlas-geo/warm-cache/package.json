@@ -4,7 +4,7 @@
   "main": "warmCache.js",
   "type": "module",
   "scripts": {
-    "format": "prettier --ignore-path .gitignore \"(src|mailers)/**/*.+(ts|js|tsx|md)\" --write"
+    "format": "prettier . --write"
   },
   "dependencies": {
     "chalk": "^5.3.0",

@@ -20,12 +20,7 @@
     "tsBuildInfoFile": ".tsbuildinfo",
     "noErrorTruncation": true, // https://stackoverflow.com/a/53131824
     "types": [
-      "bun-types", // We use bun.sh for our scripts
-    ],
-    "plugins": [
-      {
-        "name": "next"
-      }
+      "bun-types" // We use bun.sh for our scripts
     ]
   },
   "exclude": ["node_modules"],
