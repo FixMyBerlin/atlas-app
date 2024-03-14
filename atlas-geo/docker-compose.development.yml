@@ -14,14 +14,19 @@ services:
       OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
+      SKIP_WARM_CACHE:
       DEBUG:
       ID_FILTER:
       API_SECRET:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
+      TILES_URL:
     volumes:
       - osmfiles:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./cache:/var/cache/nginx
+      - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
     depends_on:
       db:
         condition: service_healthy
@@ -31,6 +36,7 @@ services:
     # There is no Apple M1 ARM 64 build, see https://github.com/CrunchyData/pg_tileserv/issues/127
     image: ghcr.io/maplibre/martin
     container_name: tiles
+    command: "--config /config.yaml"
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
       # https://maplibre.org/martin/troubleshooting.html?highlight=log#troubleshooting
@@ -38,6 +44,8 @@ services:
       RUST_LOG: actix_web=info,martin=info,tokio_postgres=info
     ports:
       - 3000:3000
+    volumes:
+      - ./configs/martin.yaml:/config.yaml:ro
     depends_on:
       db:
         condition: service_healthy

@@ -36,6 +36,9 @@ on:
       TILES_URL:
         type: string
         required: true
+      CACHELESS_URL:
+        type: string
+        required: true
 
 jobs:
   build_and_deploy:
@@ -123,7 +126,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml,docker-compose.traefik.yml,postgres/postgres.conf,configs/nginx.conf"
+          source: "docker-compose.yml,postgres/postgres.conf,configs/nginx.conf,configs/martin.yaml,configs/warm-cache.json"
           target: "/srv/processing/"
           overwrite: true
 
@@ -155,7 +158,8 @@ jobs:
               -e "s|^PGPASSWORD=.*$|PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
               -e "s|^PGDATABASE=.*$|PGDATABASE='${{ secrets.DATABASE_NAME }}'|" \
               -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
-              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \
+              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \#
+              -e "s|^CACHELESS_URL=.*$|TILES_URL='${{ inputs.CACHELESS_URL }}'|" \
               .env
             echo "Reload containers"
             docker compose pull

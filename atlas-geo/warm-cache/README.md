@@ -8,6 +8,6 @@
 2. Run…
 
     ```
-    cd ./cache-warming
+    cd ./warm-cache
     time node ./warmCache.js
     ```

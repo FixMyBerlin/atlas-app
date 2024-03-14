@@ -5,3 +5,10 @@
 *.md
 
 __pycache__
+
+cache
+
+warm-cache
+!/warm-cache/package*.json
+!/warm-cache/warmCache.js
+!/warm-cache/util.js

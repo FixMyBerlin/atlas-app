@@ -28,6 +28,8 @@ run_lua "poiClassification/poiClassification"
 run_lua_if_debug "poiClassification/poiClassification_todoList"
 run_lua "barriers/barriers"
 
+notify "Processing finished."
+
 echo "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 echo -e "\e[1m\e[7m PROCESS – END \e[27m\e[21m – End Time: $(date)\e[0m"
 echo "Completed:"
