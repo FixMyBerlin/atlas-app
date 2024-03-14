@@ -1,11 +1,14 @@
-import { exportFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import {
+  exportApiIdentifier,
+  exportFunctionIdentifier,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
 // specify license and attribution for data export
 const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
 const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
 
-export async function initExportFunctions(tables) {
+export async function initExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
     tables.map((tableName) => {
       const functionName = exportFunctionIdentifier(tableName)
