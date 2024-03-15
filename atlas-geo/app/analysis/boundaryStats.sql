@@ -81,3 +81,48 @@ WHERE
 -- END;
 -- $$
 -- LANGUAGE plpgsql;
+
+-- Completnes stats:
+CREATE temp TABLE _roadsQuantized AS
+SELECT
+    osm_id,
+    tags,
+(atlas_QuantizeLineString(geom, 100)).* AS geom
+FROM
+    roads
+   where tags?'bikelane_self';
+
+CREATE INDEX "_roads_stats_geom_idx" ON _roadsQuantized USING gist(geom);
+
+-- make `osm_id` the primary of the `boundaryStats` to speed up group by
+ALTER TABLE "boundaryStats"
+    DROP CONSTRAINT IF EXISTS osm_id_key;
+
+ALTER TABLE "boundaryStats"
+    ADD CONSTRAINT osm_id_key PRIMARY KEY (osm_id);
+
+WITH stats AS (
+    SELECT
+        osm_id,
+        jsonb_object_agg(CONCAT(category, '_km'), len) AS completeness_categories
+    FROM (
+        SELECT
+            boundary.osm_id AS osm_id,
+            roads.tags ->> unnest(Array['bikelane_left', 'bikelane_right', 'bikelane_self']) AS category,
+            round(sum(roads.len) / 1000, 1) AS len
+        FROM
+            "boundaryStats" AS boundary
+            JOIN _roadsQuantized AS roads ON ST_Intersects(boundary.geom, roads.geom)
+        GROUP BY
+            boundary.osm_id,
+            roads.tags ->> unnest(Array['bikelane_left', 'bikelane_right', 'bikelane_self'])) AS sq
+    GROUP BY
+        osm_id)
+UPDATE
+    "boundaryStats"
+SET
+    completeness_categories = stats.completeness_categories
+FROM
+    stats
+WHERE
+    "boundaryStats".osm_id = stats.osm_id;
