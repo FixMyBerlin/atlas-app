@@ -4,7 +4,6 @@ import { sources } from '../../atlas-app/src/app/regionen/[regionSlug]/_mapData/
 import { staticRegion } from '../../atlas-app/src/app/regionen/(index)/_data/regions.const'
 import { getTilesUrl } from '../../atlas-app/src/app/_components/utils/getTilesUrl'
 
-
 const regionSlug = 'bb'
 const cacheWarmingConfigPath = 'config.json'
 
@@ -34,7 +33,7 @@ const data = {
     lat: region!.map.lat,
     lng: region!.map.lng,
     zoomFrom: region!.map.zoom - zoomOutLevels,
-    zoomTo: region!.map.zoom + zoomInLevels
+    zoomTo: region!.map.zoom + zoomInLevels,
   },
   urls,
 }

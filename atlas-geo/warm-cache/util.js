@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 export function log(...args) {
-  const t = (new Date()).toISOString()
+  const t = new Date().toISOString()
   console.log(t, ...args)
 }
 
@@ -15,7 +15,7 @@ export function lat2tile(lat, zoom) {
     ((1 -
       Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) /
       2) *
-      Math.pow(2, zoom),
+      Math.pow(2, zoom)
   )
 }
 
@@ -77,17 +77,18 @@ export function parseSize(size) {
   let [_, bytes, unit] = m
   return Math.round(
     bytes *
-    {
-      B: 1,
-      K: 1024,
-      M: 1024 ** 2,
-      G: 1024 ** 3,
-    }[unit],
+      {
+        B: 1,
+        K: 1024,
+        M: 1024 ** 2,
+        G: 1024 ** 3,
+      }[unit]
   )
 }
 
 export function displayHelp() {
-  console.log(`
+  console.log(
+    `
 Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
 Filter Logfile.
 Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log

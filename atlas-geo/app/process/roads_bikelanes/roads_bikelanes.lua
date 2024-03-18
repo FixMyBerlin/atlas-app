@@ -1,6 +1,6 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 local dir = ";/app/process/roads_bikelanes/"
-package.path = package.path .. dir .. "roadClassification/?.lua"
+package.path = package.path .. dir .. "roads/?.lua"
 package.path = package.path .. dir .. "maxspeed/?.lua"
 package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
@@ -18,6 +18,7 @@ require("ConvertCyclewayOppositeSchema")
 require("Maxspeed")
 require("Lit")
 require("RoadClassification")
+require("RoadGeneralisation")
 require("SurfaceQuality")
 require("Bikelanes")
 require("Bikeroutes")
@@ -168,6 +169,8 @@ function osm2pgsql.process_way(object)
         geom = object:as_linestring()
       })
     else
+      MergeTable(results, RoadGeneralisation(tags, results))
+
       roadsTable:insert({
         tags = results,
         meta = Metadata(object),

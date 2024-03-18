@@ -15,8 +15,8 @@ try {
   parsed = parseArgs({
     options: {
       help: { type: 'boolean', default: false },
-      'size': { type: 'string', short: 's' },
-      'time': { type: 'string', short: 't' },
+      size: { type: 'string', short: 's' },
+      time: { type: 'string', short: 't' },
       grep: { type: 'string', short: 'g' },
       'skip-errors': { type: 'boolean', short: 'e', default: false },
       hit: { type: 'boolean', short: 'h', default: false },
