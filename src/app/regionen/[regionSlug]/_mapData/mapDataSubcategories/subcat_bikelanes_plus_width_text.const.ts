@@ -1,17 +1,16 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_bikelanes_plus_widths } from './mapboxStyles/groups/atlas_bikelanes_plus_widths'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes_plus_width'
 const source = 'atlas_bikelanes'
-const sourceLayer = 'bikelanes_verified'
+const sourceLayer = 'bikelanes'
 export type SubcatBikelanesPlusWidthTextId = typeof subcatId
 export type SubcatBikelanesPlusWidthTextStyleIds = 'default'
 
 export const subcat_bikelanes_plus_width_text: FileMapDataSubcategory = {
   id: subcatId,
-  name: 'RVA Breite',
+  name: 'RVA Breite (Text)',
   ui: 'checkbox',
   sourceId: source,
   styles: [

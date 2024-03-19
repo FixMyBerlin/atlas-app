@@ -1,14 +1,17 @@
-import { exportFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import {
+  exportApiIdentifier,
+  exportFunctionIdentifier,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
 // specify license and attribution for data export
 const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
 const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
 
-export async function initExportFunctions(tables) {
+export async function initExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
     tables.map((tableName) => {
-      const functionName = exportFunctionIdentifier(tableName.toLowerCase())
+      const functionName = exportFunctionIdentifier(tableName)
 
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
@@ -19,9 +22,9 @@ export async function initExportFunctions(tables) {
           AS $function$
           SELECT
           json_build_object(
-            'type', 'FeatureCollection', 
+            'type', 'FeatureCollection',
             'license', ${license},
-            'attribution', ${attribution}, 
+            'attribution', ${attribution},
             'features', json_agg(features.feature)
           )
           FROM(

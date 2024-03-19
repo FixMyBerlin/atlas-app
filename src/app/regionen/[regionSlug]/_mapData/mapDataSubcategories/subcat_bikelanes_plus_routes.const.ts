@@ -23,7 +23,40 @@ export const subcat_bikelanes_plus_routes: FileMapDataSubcategory = {
         source,
         sourceLayer,
       }),
-      // legends: [...defaultLegend],
+      legends: [
+        {
+          id: 'ncn-icn',
+          name: 'Nationale / Internationale Routen',
+          style: {
+            type: 'line',
+            color: 'rgba(51, 240, 92, 0.85)',
+          },
+        },
+        {
+          id: 'rcn',
+          name: 'Regionale Routen',
+          style: {
+            type: 'line',
+            color: 'rgba(51, 117, 240, 0.54)',
+          },
+        },
+        {
+          id: 'lcn',
+          name: 'Lokale Routen',
+          style: {
+            type: 'line',
+            color: 'rgba(51, 186, 240, 0.54)',
+          },
+        },
+        {
+          id: 'rsv',
+          name: 'Radschnellverbindung',
+          style: {
+            type: 'line',
+            color: '#fabd05',
+          },
+        },
+      ],
     },
   ],
 }

@@ -1,9 +1,8 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import * as turf from '@turf/turf'
-import maplibregl, { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
+import { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { Protocol } from 'pmtiles'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl'
 import {
   Map as MapGl,
@@ -12,6 +11,7 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
+import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
@@ -23,12 +23,10 @@ import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegiona
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import { isDev } from 'src/app/_components/utils/isEnv'
 
-export const Map: React.FC = () => {
+export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setInspector, setMapLoaded, setPmTilesProtocolReady, setMapDataLoading } =
-    useMapStateInteraction()
+  const { setInspector, setMapLoaded, setMapDataLoading } = useMapStateInteraction()
   const region = useStaticRegion()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
@@ -47,12 +45,6 @@ export const Map: React.FC = () => {
   const handleLoad = (_event: MapLibreEvent<undefined>) => {
     // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
     setMapLoaded(true)
-
-    // Add PMTiles Protocol to be use by "Datasets"
-    // Docs https://maplibre.org/maplibre-gl-js-docs/api/properties/#addprotocol
-    const protocol = new Protocol()
-    maplibregl.addProtocol('pmtiles', protocol.tile)
-    setPmTilesProtocolReady(true)
   }
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)

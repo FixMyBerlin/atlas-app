@@ -45,7 +45,7 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
       'us-',
       'london-',
       'il-',
-      'jp-',
+      // 'jp-', // needed for 'jp-expressway-2'
       'in-',
       'kr-',
       'philadelphia-',

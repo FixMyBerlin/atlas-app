@@ -49,6 +49,14 @@ export const subcat_poi: FileMapDataSubcategory = {
           name: 'Grundversorgung',
           style: { type: 'circle', color: '#f18241' },
         },
+        {
+          id: 'heatmap',
+          name: 'Heatmap',
+          style: {
+            type: 'heatmap',
+            color: '#952a09',
+          },
+        },
       ],
     },
     {
@@ -83,6 +91,14 @@ export const subcat_poi: FileMapDataSubcategory = {
           style: {
             type: 'circle',
             color: '#b070ff',
+          },
+        },
+        {
+          id: 'heatmap',
+          name: 'Heatmap',
+          style: {
+            type: 'heatmap',
+            color: '#1269e2',
           },
         },
       ],

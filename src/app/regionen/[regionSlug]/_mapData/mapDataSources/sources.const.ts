@@ -37,7 +37,7 @@ export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier
 export const exportApiIdentifier = [
   'bicycleParking_points',
   'bicycleParking_areas', // private for now
-  verifiedTableIdentifier('bikelanes'),
+  'bikelanes',
   'bikeroutes',
   // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
   'landuse',
@@ -56,6 +56,10 @@ export const exportApiIdentifier = [
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
   `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
+
+export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
+  tableName: TId,
+) => `atlas_generalization_${tableName.toLowerCase()}` as `atlas_generalization_${Lowercase<TId>}`
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -133,7 +137,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/bikelanes_verified/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/bikelanes/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -156,6 +160,7 @@ export const sources: MapDataSource<
         'osm_surface:color__if_present',
         'composit_mapillary',
         'description__if_present',
+        'length',
       ],
     },
     // presence: { enabled: true },
@@ -167,7 +172,7 @@ export const sources: MapDataSource<
     calculator: { enabled: false },
     export: {
       enabled: true,
-      apiIdentifier: 'bikelanes_verified',
+      apiIdentifier: 'bikelanes',
       title: 'Fahrradinfrastruktur',
       desc: 'Prozessierte Infrastrukturdaten (ohne Mischverkehr)',
     },
@@ -235,6 +240,7 @@ export const sources: MapDataSource<
         'osm_traffic_sign:backward__if_present',
         'composit_mapillary',
         'description__if_present',
+        'length',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
@@ -275,6 +281,7 @@ export const sources: MapDataSource<
         'osm_traffic_sign:backward__if_present',
         'composit_mapillary',
         'description__if_present',
+        'length',
       ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
@@ -301,7 +308,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'osm_id',
-      documentedKeys: ['name'],
+      documentedKeys: ['name', 'category'],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -310,7 +317,7 @@ export const sources: MapDataSource<
     export: {
       enabled: true,
       apiIdentifier: 'publicTransport',
-      title: 'ÖPNV',
+      title: 'ÖPNV-Haltepunkte und Fähranleger',
       desc: 'Punktdaten von Haltestellen',
     },
   },

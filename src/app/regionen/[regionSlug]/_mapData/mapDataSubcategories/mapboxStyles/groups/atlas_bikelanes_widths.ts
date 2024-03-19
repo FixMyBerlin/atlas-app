@@ -9,8 +9,8 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_widths: MapboxStyleLayer[] =
     type: 'line',
     paint: {
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-      'line-color': '#fd9be1',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 12, 0.7, 22, 3],
+      'line-color': '#fda5e4',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 12, 1, 22, 4],
       'line-dasharray': [3, 1],
     },
     filter: ['!', ['has', 'width']],

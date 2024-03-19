@@ -24,6 +24,6 @@ export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof crea
 }
 
 export const extractDataIdIdFromDataKey = (sourceKey: string) => {
-  // `source:${sourceId}--tiles--pmTiles-are-ready-${pmTilesProtocolReady}`
-  return sourceKey.split('--')[0]!.replace('source:', '')
+  // `source:${sourceId}
+  return sourceKey.replace('source:', '')
 }

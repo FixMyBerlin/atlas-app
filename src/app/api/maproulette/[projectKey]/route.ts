@@ -61,7 +61,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         bikelanes.osm_id as id,
         bikelanes.tags->'category' AS category,
         ST_AsGeoJSON(ST_Transform(bikelanes.geom, 4326))::jsonb AS geometry
-      FROM public.bikelanes_verified as bikelanes,
+      FROM public.bikelanes as bikelanes,
         (
           SELECT ST_Union(boundaries.geom) as union_geom
           FROM public.boundaries as boundaries

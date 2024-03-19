@@ -7,7 +7,6 @@ import { createInspectorFeatureKey } from '../../_components/utils/createKeyUtil
 
 type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
-  StorePmTilesProtocolState &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates &
@@ -21,11 +20,6 @@ type StoreMapLoadedState = {
 type StoreMapDataLoadingState = {
   mapDataLoading: boolean
   setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
-}
-
-type StorePmTilesProtocolState = {
-  pmTilesProtocolReady: boolean
-  setPmTilesProtocolReady: (pmTilesProtocolReady: Store['pmTilesProtocolReady']) => void
 }
 
 type StoreOsmNotesState = {
@@ -61,9 +55,6 @@ type StoreLocalUpdates = {
 export const useMapStateInteraction = create<Store>((set, get) => ({
   mapLoaded: false,
   setMapLoaded: (mapLoaded) => set({ mapLoaded }),
-
-  pmTilesProtocolReady: false,
-  setPmTilesProtocolReady: (pmTilesProtocolReady) => set({ pmTilesProtocolReady }),
 
   mapDataLoading: false,
   setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),

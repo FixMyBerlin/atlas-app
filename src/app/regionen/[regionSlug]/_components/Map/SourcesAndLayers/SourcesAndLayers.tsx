@@ -1,6 +1,7 @@
 import { FilterSpecification } from 'maplibre-gl'
 import React from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
+import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -15,7 +16,6 @@ import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
 
 // We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -76,38 +76,43 @@ export const SourcesAndLayers = () => {
                         styleConfig.id,
                         layer.id,
                       )
-                      const layout =
-                        layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
+
+                      let layerFilter = layer.filter as FilterSpecification
+                      let layerPaint = layer.paint
+                      let layerLayout = { ...visibility, ...(layer.layout || {}) }
 
                       // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                      const layerFilter = useDebugLayerStyles
-                        ? ['all']
-                        : wrapFilterWithAll(layer.filter)
-
-                      // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-                      const layerPaint = useDebugLayerStyles
-                        ? debugLayerStyles({
+                      if (useDebugLayerStyles) {
+                        layerFilter = ['all'] as FilterSpecification
+                        layerPaint = debugLayerStyles({
+                          source: sourceId,
+                          sourceLayer: layer['source-layer'],
+                        }).find((l) => l.type === layer.type)?.paint
+                        layerLayout = {
+                          ...debugLayerStyles({
                             source: sourceId,
                             sourceLayer: layer['source-layer'],
-                          }).find((l) => l.type === layer.type)?.paint
-                        : (layer.paint as any)
+                          }).find((l) => l.type === layer.type)?.layout,
+                          ...visibility,
+                        }
+                      }
 
                       const layerProps = {
                         id: layerId,
                         source: sourceId,
                         type: layer.type,
                         'source-layer': layer['source-layer'],
-                        layout: layout,
-                        filter: layerFilter as FilterSpecification | undefined,
-                        paint: layerPaint,
+                        layout: layerLayout,
+                        paint: layerPaint as any, // Too complex to apply all the different layer-type paint-types
                         beforeId: beforeId({
                           backgroundId: backgroundParam,
                           subcategoryBeforeId: subcategoryConfig.beforeId,
                           layerType: layer.type,
                         }),
+                        ...(layerFilter ? { filter: layerFilter } : {}),
                         ...(layer.maxzoom ? { maxzoom: layer.maxzoom } : {}),
                         ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
-                      }
+                      } satisfies LayerProps
 
                       // The verification style layer in Mapbox Studio has to include this string
                       const isVerificationStatusLayer = layer.id.search('verification-status') != -1

@@ -15,6 +15,7 @@ import { LegendIconLine } from './LegendIcons/LegendIconLine'
 import { LegendIconText } from './LegendIcons/LegendIconText'
 import { LegendIconTypes } from './LegendIcons/types'
 import { LegendNameDesc } from './LegendNameDesc'
+import { LegendIconHeatmap } from './LegendIcons/LegendIconHeatmap'
 
 type Props = {
   subcategoryId: SubcategoryId
@@ -68,6 +69,8 @@ const iconByStyle = ({
       return <LegendIconArea color={color} />
     case 'text':
       return <LegendIconText color={color} />
+    case 'heatmap':
+      return <LegendIconHeatmap color={color} />
     default:
       return <>TODO</>
   }
