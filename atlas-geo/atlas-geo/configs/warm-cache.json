@@ -12,6 +12,7 @@
   "urls": [
     "/roads/{z}/{x}/{y}",
     "/bikelanes_verified/{z}/{x}/{y}",
+    "/bikelanes/{z}/{x}/{y}",
     "/poiClassification/{z}/{x}/{y}",
     "/roadsPathClasses/{z}/{x}/{y}",
     "/boundaries,boundaryLabels/{z}/{x}/{y}",
