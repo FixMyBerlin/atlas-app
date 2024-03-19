@@ -31,6 +31,7 @@ log_end() {
   right=" $(date -d@$duration -u +%H:%M:%S)"
   formatted=$(format_left_right "$left" "$right" "<")
   echo -e "\e[1m\e[7m${formatted}\e[27m\e[21m\e[0m"
+  echo
 }
 
 log() {

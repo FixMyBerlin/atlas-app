@@ -26,6 +26,10 @@ alert() {
   curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
 }
 
+if ! ./run-0-wait-for-new-osm-data.sh; then
+    alert '*ERROR*: #run-0-wait-for-new-osm-data exited with non-zero status code'
+fi
+
 if ! ./run-1-download.sh; then
     alert '*ERROR*: #run-1-download exited with non-zero status code'
 fi
