@@ -13,6 +13,7 @@
     "/roads/{z}/{x}/{y}",
     "/roadsPathClasses/{z}/{x}/{y}",
     "/bikelanes_verified/{z}/{x}/{y}",
+    "/bikelanes/{z}/{x}/{y}",
     "/poiClassification/{z}/{x}/{y}",
     "/boundaries,boundaryLabels/{z}/{x}/{y}",
     "/boundaryStats/{z}/{x}/{y}",
