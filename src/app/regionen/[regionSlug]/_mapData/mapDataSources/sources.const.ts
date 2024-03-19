@@ -37,7 +37,7 @@ export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier
 export const exportApiIdentifier = [
   'bicycleParking_points',
   'bicycleParking_areas', // private for now
-  verifiedTableIdentifier('bikelanes'),
+  'bikelanes',
   'bikeroutes',
   // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
   'landuse',
@@ -137,7 +137,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/bikelanes_verified/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/bikelanes/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -172,7 +172,7 @@ export const sources: MapDataSource<
     calculator: { enabled: false },
     export: {
       enabled: true,
-      apiIdentifier: 'bikelanes_verified',
+      apiIdentifier: 'bikelanes',
       title: 'Fahrradinfrastruktur',
       desc: 'Prozessierte Infrastrukturdaten (ohne Mischverkehr)',
     },

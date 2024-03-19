@@ -33,8 +33,8 @@ export const tilesetConfigs: Record<
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.0p8hdib5/#14/52.51622/13.37036',
     bbox: bboxBrandenburg,
   },
-  bikelanes_verified: {
-    sourceLayer: 'bikelanes_verified',
+  bikelanes: {
+    sourceLayer: 'bikelanes_verified', // Note: Fixed name
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.3i25sspf/#14/52.51622/13.37036',
     bbox: bboxBrandenburg,
   },

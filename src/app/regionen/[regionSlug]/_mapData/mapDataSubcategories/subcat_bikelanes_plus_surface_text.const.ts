@@ -4,7 +4,7 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes_plus_surface_smoothness'
 const source = 'atlas_bikelanes'
-const sourceLayer = 'bikelanes_verified'
+const sourceLayer = 'bikelanes'
 export type SubcatBikelanesPlusSurfaceId = typeof subcatId
 export type SubcatBikelanesPlusSurfaceStyleIds = 'default'
 

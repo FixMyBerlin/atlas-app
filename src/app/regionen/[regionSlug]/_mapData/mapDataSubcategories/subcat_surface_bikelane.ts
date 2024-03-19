@@ -7,7 +7,7 @@ import { legendSurfaceBad, legendSurfaceDefault } from './subcat_surface_roads.c
 
 const subcatId = 'surfaceBikelanes'
 const source = 'atlas_bikelanes'
-const sourceLayer = 'bikelanes_verified'
+const sourceLayer = 'bikelanes'
 export type SubcatSurfaceBikelaneId = typeof subcatId
 export type SubcatSurfaceBikelaneStyleIds = 'default' | 'bad'
 
