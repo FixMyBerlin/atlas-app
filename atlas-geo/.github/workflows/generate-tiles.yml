@@ -22,4 +22,5 @@ jobs:
           script: |
             echo "Restart app container"
             cd /srv/processing/
+            touch arguments/wait-for-new-osm-data
             docker compose restart -t 30 app
