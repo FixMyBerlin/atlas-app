@@ -97,6 +97,7 @@ Es ist ein \`highway=cycleway\` oder ein \`highway=path+bicycle=designated\` ohn
 Bitte präzisiere das Tagging.
 * Ist es ein Übergang an einer Straße? Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
 * Ist es ein Verbindungsstück das nur für das Routing relevant ist? Füge \`cycleway=link\` hinzu.
+* Ist es ein gemeinsamer oder getrennter Geh- und Radweg? Fürge \`segregated=yes\` oder  \`segregated=no\` hinzu.
 * Wenn möglich, ergänze bitte auch \`is_sidepath=yes|no\` um anzuzeigen, ob die Infrastruktur straßenbegleitend (\`yes\`) oder selbständig geführt (\`no\`) ist (bzw. bei Gehwegen stattdessen \`footway=sidepath\`).
 * Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)).
 * Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
