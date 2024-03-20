@@ -3,7 +3,7 @@ name: Regenerate production tiles
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '0 2 * * *'
 
 jobs:
   trigger_generation:
