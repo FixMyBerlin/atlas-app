@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-echo -e "\e[1m\e[7m Postprocessing – START \e[27m\e[21m\e[0m"
+source ./process-helpers.sh
+log_start "$0"
 
 # WHAT WE DO:
 # start transaction
@@ -13,4 +14,4 @@ echo -e "\e[1m\e[7m Postprocessing – START \e[27m\e[21m\e[0m"
 
 psql -q -f "./POSTPROCESS.sql"
 
-echo -e "\e[1m\e[7m Postprocessing – END \e[27m\e[21m\e[0m"
+log_end "$0"

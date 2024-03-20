@@ -55,6 +55,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
       - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
+      - ./arguments:/app/arguments
     networks:
       - app_bridge
     depends_on:

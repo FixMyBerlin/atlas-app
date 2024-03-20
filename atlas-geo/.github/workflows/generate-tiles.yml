@@ -3,7 +3,7 @@ name: Regenerate production tiles
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '0 2 * * *'
 
 jobs:
   trigger_generation:
@@ -22,4 +22,5 @@ jobs:
           script: |
             echo "Restart app container"
             cd /srv/processing/
+            touch arguments/wait-for-fresh-data
             docker compose restart -t 30 app

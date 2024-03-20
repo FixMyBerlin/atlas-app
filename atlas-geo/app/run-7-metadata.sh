@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-echo -e "\e[1m\e[7m Metadata – START \e[27m\e[21m\e[0m"
+source ./process-helpers.sh
+log_start "$0"
 
 # Provide meta data for the frontend application.
 # We missuse a feature of pg_tileserve for this. Inspired by Lars parking_segements code <3.
@@ -21,9 +22,8 @@ OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 RUN_TIME=`date -d@$PROCESS_RUN_TIME_DIFF -u +%H:%M`
 
-echo "Processing took $RUN_TIME h"
-echo "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} and runtime to metadata table 'bikelanes'"
+log "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} and runtime to metadata table 'bikelanes'"
 
 psql -q -c "COMMENT ON TABLE bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
 
-echo -e "\e[1m\e[7m Metadata – END \e[27m\e[21m\e[0m"
+log_end "$0"
