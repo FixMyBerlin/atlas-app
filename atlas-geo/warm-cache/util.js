@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 export function log(...args) {
-  const t = new Date().toISOString()
+  const t = (new Date(new Date().toUTCString())).toISOString().split('.')[0]
   console.log(t, ...args)
 }
 

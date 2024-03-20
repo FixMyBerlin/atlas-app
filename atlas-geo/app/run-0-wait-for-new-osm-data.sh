@@ -2,8 +2,7 @@
 set -e
 
 source ./process-helpers.sh
-log_start "WAIT FOR NEW OSM DATA"
-start_time=$(seconds)
+log_start "$0"
 
 # use a file as a flag because it's not possible to pass arguments to docker restart
 FILE="/app/arguments/wait-for-new-osm-data"
@@ -17,4 +16,4 @@ if test -f $FILE;
     log "💥 SKIPPED because file $FILE does not exist."
 fi
 
-log_end "WAIT FOR NEW OSM DATA" $start_time
+log_end "$0"

@@ -1,13 +1,12 @@
 #!/bin/bash
 set -e
-source ./process-helpers.sh
 
 # LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
 # One line/file per topic.
 # Order of topics is important b/c they might rely on their data
 
-log_start "PROCESS"
-start_time=$(seconds)
+source ./process-helpers.sh
+log_start "$0"
 
 log "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
 run_lua "roads_bikelanes/roads_bikelanes"
@@ -39,4 +38,4 @@ log "Production https://tiles.radverkehrsatlas.de/catalog"
 log "Test-Map https://data.radverkehrsatlas.de/"
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 
-log_end "PROCESS" $start_time
+log_end "$0"

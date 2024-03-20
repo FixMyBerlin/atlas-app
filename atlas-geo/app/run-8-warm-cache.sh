@@ -2,8 +2,7 @@
 set -e
 
 source ./process-helpers.sh
-log_start "Warm Cache"
-start_time=$(seconds)
+log_start "$0"
 
 if [ "${SKIP_WARM_CACHE:-0}" == 1 ]; then
   log "💥 SKIPPED Warm Cache with .env 'SKIP_WARM_CACHE=1'"
@@ -17,4 +16,4 @@ else
   node /app/warm-cache/warmCache.js
 fi
 
-log_end "Warm Cache" $start_time
+log_end "$0"

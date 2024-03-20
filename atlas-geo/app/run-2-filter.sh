@@ -1,16 +1,15 @@
 #!/bin/bash
 set -e
 
+source ./process-helpers.sh
+log_start "$0"
+
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 
 FILTER_DIR="./filter/"
 
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 OSM_INTERMEDIATE_FILE=${FILTER_DIR}intermediate.pbf
-
-source ./process-helpers.sh
-log_start "FILTER"
-start_time=$(seconds)
 
 if [ $SKIP_TAG_FILTER == 1 ]; then
   log "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
@@ -26,4 +25,4 @@ if [ "$ID_FILTER" != "" ]; then
   mv ${OSM_INTERMEDIATE_FILE} ${OSM_FILTERED_FILE}
 fi
 
-log_end "FILTER" $start_time
+log_end "$0"
