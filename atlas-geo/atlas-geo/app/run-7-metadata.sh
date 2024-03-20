@@ -2,9 +2,7 @@
 set -e
 
 source ./process-helpers.sh
-log_start "Metadata"
-start_time=$(seconds)
-
+log_start "$0"
 
 # Provide meta data for the frontend application.
 # We missuse a feature of pg_tileserve for this. Inspired by Lars parking_segements code <3.
@@ -28,4 +26,4 @@ log "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} and runtime to met
 
 psql -q -c "COMMENT ON TABLE bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
 
-log_end "Metadata" $start_time
+log_end "$0"

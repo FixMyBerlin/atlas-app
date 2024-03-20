@@ -2,8 +2,7 @@
 set -e
 
 source ./process-helpers.sh
-log_start "Postprocessing"
-start_time=$(seconds)
+log_start "$0"
 
 # WHAT WE DO:
 # start transaction
@@ -15,4 +14,4 @@ start_time=$(seconds)
 
 psql -q -f "./POSTPROCESS.sql"
 
-log_end "Postprocessing" $start_time
+log_end "$0"

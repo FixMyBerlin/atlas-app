@@ -2,8 +2,7 @@
 set -e
 
 source ./process-helpers.sh
-log_start "DOWNLOAD"
-start_time=$(seconds)
+log_start "$0"
 
 OSM_DOWNLOAD_FILE="${OSM_DATADIR}$(basename $OSM_DOWNLOAD_URL)"
 if [ $SKIP_DOWNLOAD == 1 ]; then
@@ -23,4 +22,4 @@ else
   log "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
 fi
 
-log_end "DOWNLOAD" $start_time
+log_end "$0"

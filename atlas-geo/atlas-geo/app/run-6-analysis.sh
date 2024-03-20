@@ -2,9 +2,8 @@
 set -e
 
 source ./process-helpers.sh
-log_start "Analysis"
-start_time=$(seconds)
+log_start "$0"
 
 psql -q -f "./analysis/boundaryStats.sql"
 
-log_end "Analysis" $start_time
+log_end "$0"
