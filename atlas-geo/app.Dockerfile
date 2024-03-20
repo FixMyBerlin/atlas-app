@@ -37,6 +37,6 @@ WORKDIR /app
 # 'data' folder is root
 RUN mkdir /data
 COPY app /app/
-RUN npm install # for app/run-0-wait-for-new-osm-data.js
+RUN npm install # for app/run-1-wait-for-fresh-data.js
 RUN chmod +x /app/*.sh
 CMD /app/run.sh

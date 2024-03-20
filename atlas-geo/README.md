@@ -117,7 +117,7 @@ You can also run the script locally:
 ### Process only a single object
 
 For the development process it's often usefull to run the processing on a single object.
-For that you can specify an id (list) as `ID_FILTER` in the [`app/run-2-filter.sh`](/app/run-2-filter.sh).
+For that you can specify an id (list) as `ID_FILTER` in the [`app/run-3-filter.sh`](/app/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 ### Build & Run only one container
