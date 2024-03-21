@@ -35,6 +35,8 @@ export async function GET(
     return
   }
 
+  const tagFixChallengeOperations: Record<string, any>[] = []
+
   try {
     // PREPARE
     const { ids } = parsedParams
@@ -87,8 +89,9 @@ TODO
 
     // ADD MAPROULETTE TASK DATA
     const features = sqlWays.map(({ type, id, geometry }) => {
+      const idString = `${longOsmType[type]}/${id}`
       const properties = {
-        id: `${longOsmType[type]}/${id}`,
+        id: idString,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
         task_markdown: markdown({
           id,
@@ -96,6 +99,56 @@ TODO
           geometry,
         }).replaceAll('\n', ' \n'),
       }
+
+      tagFixChallengeOperations.push({
+        operationType: 'modifyElement',
+        data: {
+          id: idString,
+          operations: [
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:both': 'no',
+              },
+            },
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:left': 'separate',
+                'cycleway:right': 'separate',
+              },
+            },
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:left': 'no',
+                'cycleway:right': 'separate',
+              },
+            },
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:left': 'separate',
+                'cycleway:right': 'no',
+              },
+            },
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:left': 'track',
+                'cycleway:right': 'no',
+              },
+            },
+            {
+              operation: 'setTags',
+              data: {
+                'cycleway:left': 'no',
+                'cycleway:right': 'track',
+              },
+            },
+          ],
+        },
+      })
       // Create feature and also shorten lat/lng values to 8 digits
       return turf.truncate(turf.feature(geometry, properties), { precision: 8 })
     })
@@ -108,49 +161,7 @@ TODO
           version: 2, // must be format version `2`
           type: 1, // `1` for tag fix type
         },
-        operations: [
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:both': 'no',
-            },
-          },
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:left': 'separate',
-              'cycleway:right': 'separate',
-            },
-          },
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:left': 'no',
-              'cycleway:right': 'separate',
-            },
-          },
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:left': 'separate',
-              'cycleway:right': 'no',
-            },
-          },
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:left': 'track',
-              'cycleway:right': 'no',
-            },
-          },
-          {
-            operation: 'setTags',
-            data: {
-              'cycleway:left': 'no',
-              'cycleway:right': 'track',
-            },
-          },
-        ],
+        operations: tagFixChallengeOperations,
       },
     }
     featureCollection['cooperativeWork'] = tagFixChallenge.cooperativeWork
