@@ -86,12 +86,12 @@ function Bikelanes(object)
         end
 
         result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
+        result_tags.todos = ToMarkdownList(BikelanesTodos(cycleway, result_tags))
 
         MergeTable(result_tags, DeriveSmoothness(cycleway))
         MergeTable(result_tags, DeriveSurface(cycleway))
         CopyTags(result_tags, tags, tags_copied)
         CopyTags(result_tags, tags, tags_prefixed, 'osm_')
-        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         result_bikelanes[i] = result_tags
       end
