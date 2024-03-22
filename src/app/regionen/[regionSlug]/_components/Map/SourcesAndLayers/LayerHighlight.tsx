@@ -36,7 +36,7 @@ export const LayerHighlight = (parentLayerProps: Props) => {
     )
   }
 
-  if (!highlightingKey || !featureIds) return null
+  if (!highlightingKey || !featureIds || featureIds.length === 0) return null
 
   const props = {
     ...parentLayerProps,
