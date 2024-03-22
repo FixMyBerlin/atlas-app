@@ -86,6 +86,27 @@ export function parseSize(size) {
   )
 }
 
+export function removeTimeStamp(line) {
+  return line.substring(line.indexOf(' ') + 1)
+}
+
+export function isRequest(line) {
+  return removeTimeStamp(line).startsWith('🡇')
+}
+
+export function isError(line) {
+  return removeTimeStamp(line).startsWith('⚠')
+}
+
+export function parseResponse(line) {
+  let [cacheStatus, timeFormatted, sizeFormatted] = line.slice(2).split(' - ')
+  return {
+    cacheStatus,
+    size: parseSize(sizeFormatted),
+    time: parseTime(timeFormatted),
+  }
+}
+
 export function displayFilterLogHelp() {
   console.log(
     `
