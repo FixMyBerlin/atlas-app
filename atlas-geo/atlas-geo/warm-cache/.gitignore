@@ -1,3 +1,4 @@
-src
+tiles
 *.log
 .env.local
+*.mvt

@@ -43,7 +43,7 @@ export function formatDuration(ms) {
 
 // https://stackoverflow.com/a/39906526
 const units = ['B', 'K', 'M', 'G']
-export function formatBytes(bytes) {
+export function formatBytes(bytes, colorOutput) {
   let l = 0
   let n = parseInt(bytes, 10) || 0
   while (n >= 1024 && ++l) {
@@ -53,12 +53,16 @@ export function formatBytes(bytes) {
   if (bytes === 0) {
     return chalk.red(formatted)
   }
-  return colorString(bytes, formatted, [
-    [2500000, [255, 0, 0]],
-    [1250000, [255, 128, 0]],
-    [500000, [255, 192, 0]],
-    [250000, [255, 255, 0]],
-  ])
+  if (colorOutput === undefined) colorOutput = true
+  if (colorOutput) {
+    formatted = colorString(bytes, formatted, [
+      [2500000, [255, 0, 0]],
+      [1250000, [255, 128, 0]],
+      [500000, [255, 192, 0]],
+      [250000, [255, 255, 0]],
+    ])
+  }
+  return formatted
 }
 
 export function parseTime(time) {
@@ -131,6 +135,16 @@ export function displaySortLogHelp() {
 Usage: ./sortLog.ts [OPTION]... [LOGFILE]...
 Sort logfile by Tile size.
 Example: ./sortLog.ts warm-cache.log
+`.trim(),
+  )
+}
+
+export function displayAnalyzeTileLogHelp() {
+  console.log(
+    `
+Usage: ./analyzeTile.ts [VECTORTILE]...
+Analyze a vector tile (.pbf)
+Example: ./analyzeTile.ts tile.pbf
 `.trim(),
   )
 }
