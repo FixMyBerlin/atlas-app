@@ -3,7 +3,7 @@
 import { parseArgs } from 'node:util'
 import fs from 'node:fs'
 import chalk from 'chalk'
-import { parseSize, parseTime, displayFilterLogHelp } from './util'
+import { parseSize, parseTime, displayFilterLogHelp, isError, isRequest } from './util'
 
 function error(message) {
   console.error(message)
@@ -56,13 +56,13 @@ const logData = (await Bun.file(filename).text()).split('\n')
 let i = 0
 while (i < logData.length) {
   const line = logData[i]!
-  const txt = line.substring(line.indexOf(' ') + 1)
-  if (!'🡇✓⚠'.split('').includes(txt[0]!)) {
-    console.log(txt)
+  if (!isRequest(line)) {
+    console.log(line)
     i++
     continue
   }
-  let request = txt
+
+  let request = line
   if (args.grep) {
     const f0 = request.search(args.grep)
     if (f0 === -1) {
@@ -77,7 +77,7 @@ while (i < logData.length) {
   if (!response) break
 
   let [cacheStatus, timeFormatted, sizeFormatted] = response.slice(2).split(' - ')
-  if (response.startsWith('⚠')) {
+  if (isError(response)) {
     if (!args.skipErrors) {
       console.log(request)
       console.log(response)
