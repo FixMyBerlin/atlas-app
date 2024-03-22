@@ -30,14 +30,14 @@ FROM
 -- create a geospatial index on `_bikelanesQuantized` to speed up the spatial join;
 CREATE INDEX "_bikelanes_stats_geom_idx" ON _bikelanesQuantized USING gist(geom);
 
--- make `osm_id` the primary of the `boundaryStats` to speed up group by
-ALTER TABLE "boundaryStats"
-    DROP CONSTRAINT IF EXISTS osm_id_key;
+-- make `osm_id` the primary of the `categoryStats` to speed up group by
+ALTER TABLE "categoryStats"
+    DROP CONSTRAINT IF EXISTS category_stats_key;
 
-ALTER TABLE "boundaryStats"
-    ADD CONSTRAINT osm_id_key PRIMARY KEY (osm_id);
+ALTER TABLE "categoryStats"
+    ADD CONSTRAINT category_stats_key PRIMARY KEY (osm_id);
 
--- spatialy join `_bikelanesQuantized` with `boundaryStats` then group by category and boundaryStats.osm_id to aggreagate the results in a single json object per area
+-- spatialy join `_bikelanesQuantized` with `categoryStats` then group by category and categoryStats.osm_id to aggreagate the results in a single json object per area
 WITH stats AS (
     SELECT
         osm_id,
@@ -48,7 +48,7 @@ WITH stats AS (
             bikelane.tags ->> 'category' AS category,
             round(sum(bikelane.len) / 1000, 1) AS len
         FROM
-            "boundaryStats" AS boundary
+            "categoryStats" AS boundary
             JOIN _bikelanesQuantized AS bikelane ON ST_Intersects(boundary.geom, bikelane.geom)
         GROUP BY
             boundary.osm_id,
@@ -56,13 +56,13 @@ WITH stats AS (
     GROUP BY
         osm_id)
 UPDATE
-    "boundaryStats"
+    "categoryStats"
 SET
     bikelane_categories = stats.bikelane_categories
 FROM
     stats
 WHERE
-    "boundaryStats".osm_id = stats.osm_id;
+    "categoryStats".osm_id = stats.osm_id;
 
 -- -- for `jsonb` with numeric values return a normalized object (all values sum to 100) which also includes the total value
 -- CREATE OR REPLACE FUNCTION atlas_NormalizeDistribution(dist jsonb)
@@ -82,7 +82,7 @@ WHERE
 -- $$
 -- LANGUAGE plpgsql;
 
--- Completnes stats:
+-- presence stats:
 CREATE temp TABLE _roadsQuantized AS
 SELECT
     osm_id,
@@ -94,24 +94,24 @@ FROM
 
 CREATE INDEX "_roads_stats_geom_idx" ON _roadsQuantized USING gist(geom);
 
--- make `osm_id` the primary of the `boundaryStats` to speed up group by
-ALTER TABLE "boundaryStats"
-    DROP CONSTRAINT IF EXISTS osm_id_key;
+-- make `osm_id` the primary of the `presenceStats` to speed up group by
+ALTER TABLE "presenceStats"
+    DROP CONSTRAINT IF EXISTS presence_stats_key;
 
-ALTER TABLE "boundaryStats"
-    ADD CONSTRAINT osm_id_key PRIMARY KEY (osm_id);
+ALTER TABLE "presenceStats"
+    ADD CONSTRAINT presence_stats_key PRIMARY KEY (osm_id);
 
 WITH stats AS (
     SELECT
         osm_id,
-        jsonb_object_agg(CONCAT(category, '_km'), len) AS completeness_categories
+        jsonb_object_agg(CONCAT(category, '_km'), len) AS presence_categories
     FROM (
         SELECT
             boundary.osm_id AS osm_id,
             roads.tags ->> unnest(Array['bikelane_left', 'bikelane_right', 'bikelane_self']) AS category,
             round(sum(roads.len) / 1000, 1) AS len
         FROM
-            "boundaryStats" AS boundary
+            "presenceStats" AS boundary
             JOIN _roadsQuantized AS roads ON ST_Intersects(boundary.geom, roads.geom)
         GROUP BY
             boundary.osm_id,
@@ -119,10 +119,10 @@ WITH stats AS (
     GROUP BY
         osm_id)
 UPDATE
-    "boundaryStats"
+    "presenceStats"
 SET
-    completeness_categories = stats.completeness_categories
+    presence_categories = stats.presence_categories
 FROM
     stats
 WHERE
-    "boundaryStats".osm_id = stats.osm_id;
+    "presenceStats".osm_id = stats.osm_id;
