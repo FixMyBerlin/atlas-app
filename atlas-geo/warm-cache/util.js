@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 export function log(...args) {
-  const t = (new Date(new Date().toUTCString())).toISOString().split('.')[0]
+  const t = new Date(new Date().toUTCString()).toISOString().split('.')[0]
   console.log(t, ...args)
 }
 
@@ -15,7 +15,7 @@ export function lat2tile(lat, zoom) {
     ((1 -
       Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) /
       2) *
-      Math.pow(2, zoom)
+      Math.pow(2, zoom),
   )
 }
 
@@ -82,11 +82,11 @@ export function parseSize(size) {
         K: 1024,
         M: 1024 ** 2,
         G: 1024 ** 3,
-      }[unit]
+      }[unit],
   )
 }
 
-export function displayHelp() {
+export function displayFilterLogHelp() {
   console.log(
     `
 Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
@@ -100,6 +100,16 @@ Filter options:
   -s, --size        display results where the tilesize is at least given size
   -t, --time        display results where the response time is at least given time
   -g, --grep        display results where the request line contains given string
-`.trim()
+`.trim(),
+  )
+}
+
+export function displaySortLogHelp() {
+  console.log(
+    `
+Usage: ./sortLog.ts [OPTION]... [LOGFILE]...
+Sort logfile by Tile size.
+Example: ./sortLog.ts warm-cache.log
+`.trim(),
   )
 }
