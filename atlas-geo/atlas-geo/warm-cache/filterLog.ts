@@ -3,7 +3,7 @@
 import { parseArgs } from 'node:util'
 import fs from 'node:fs'
 import chalk from 'chalk'
-import { parseSize, parseTime, displayHelp } from './util'
+import { parseSize, parseTime, displayFilterLogHelp } from './util'
 
 function error(message) {
   console.error(message)
@@ -42,7 +42,7 @@ const args = {
 }
 
 if (values.help) {
-  displayHelp()
+  displayFilterLogHelp()
   process.exit(0)
 }
 
