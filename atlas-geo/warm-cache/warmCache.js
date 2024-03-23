@@ -16,9 +16,8 @@ const cacheWarmingConfigPath = 'config.json'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
-log(path.join(__dirname, cacheWarmingConfigPath))
+log('ℹ Using', path.join(__dirname, cacheWarmingConfigPath))
 
-log(`Loading config ${cacheWarmingConfigPath}...`)
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, cacheWarmingConfigPath), 'utf8'))
 
 const { viewport, map } = config
