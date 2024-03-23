@@ -35,8 +35,6 @@ export async function GET(
     return
   }
 
-  const tagFixChallengeOperations: Record<string, any>[] = []
-
   try {
     // PREPARE
     const { ids } = parsedParams
@@ -88,7 +86,7 @@ TODO
     }
 
     // ADD MAPROULETTE TASK DATA
-    const features = sqlWays.map(({ type, id, geometry }) => {
+    const featureCollections = sqlWays.map(({ type, id, geometry }) => {
       const idString = `${longOsmType[type]}/${id}`
       const properties = {
         id: idString,
@@ -100,40 +98,43 @@ TODO
         }).replaceAll('\n', ' \n'),
       }
 
-      tagFixChallengeOperations.push({
-        operationType: 'modifyElement',
-        data: {
-          id: idString,
-          operations: [
-            {
-              operation: 'setTags',
-              data: {
-                'cycleway:both': 'no',
-              },
-            },
-          ],
-        },
-      })
       // Create feature and also shorten lat/lng values to 8 digits
-      return turf.truncate(turf.feature(geometry, properties), { precision: 8 })
-    })
+      const feature = turf.truncate(turf.feature(geometry, properties), { precision: 8 })
 
-    // RESPONSE
-    const featureCollection = turf.featureCollection(features)
-    const tagFixChallenge = {
-      cooperativeWork: {
+      const maprouletteCooperativeWork = {
         meta: {
           version: 2, // must be format version `2`
           type: 1, // `1` for tag fix type
         },
-        operations: tagFixChallengeOperations,
-      },
-    }
-    featureCollection['cooperativeWork'] = tagFixChallenge.cooperativeWork
+        operations: [
+          {
+            operationType: 'modifyElement',
+            data: {
+              id: idString,
+              operations: [
+                {
+                  operation: 'setTags',
+                  data: {
+                    'cycleway:both': 'no',
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }
+      const featureCollection = turf.featureCollection([feature], { id: idString })
+      featureCollection['cooperativeWork'] = maprouletteCooperativeWork
+      return featureCollection
+    })
 
-    return Response.json(featureCollection, {
+    // RESPONSE
+    const geoJsonLineStringTerminated = featureCollections
+      .map((i) => JSON.stringify(i, undefined, 0))
+      .join('\n')
+    return new Response(geoJsonLineStringTerminated, {
       headers: {
-        'Content-Disposition': `attachment; filename="maproulette.geojson"`,
+        'Content-Disposition': `attachment; filename="maproulette.geojsonl"`,
       },
     })
   } catch (e) {
