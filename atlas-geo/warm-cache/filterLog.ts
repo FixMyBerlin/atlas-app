@@ -22,6 +22,7 @@ try {
       size: { type: 'string', short: 's', default: '0' },
       time: { type: 'string', short: 't', default: '0' },
       grep: { type: 'string', short: 'g' },
+      'invert-match': { type: 'boolean', short: 'v', default: false },
       'skip-errors': { type: 'boolean', short: 'e', default: false },
       'skip-info': { type: 'boolean', short: 'i', default: false },
       hit: { type: 'boolean', short: 'h', default: false },
@@ -43,6 +44,7 @@ const args = {
   minSize: parseSize(values.size),
   minTime: parseTime(values.time),
   grep: values.grep || null,
+  invertMatch: values['invert-match'],
   hit: values.hit,
   miss: values.miss,
 }
@@ -70,13 +72,20 @@ while (i < logData.length) {
 
   let request = line
   if (args.grep) {
-    const f0 = request.search(args.grep)
-    if (f0 === -1) {
+    const colorString = (s, toColor) => {
+      const start = s.search(toColor)
+      const end = start + toColor.length
+      return s.slice(0, start) + chalk.red(toColor) + s.slice(end)
+    }
+    let [a, b, url] = request.split(' - ')
+    const matches = Array.from(url!.matchAll(new RegExp(args.grep, 'g')))
+    matches.forEach((match) => (url = colorString(url, match[0])))
+    request = [a, b, url].join(' - ')
+    let found = matches.length > 0
+    if (args.invertMatch) found = !found
+    if (!found) {
       i += 2
       continue
-    } else {
-      const f1 = f0 + args.grep.length
-      request = request.slice(0, f0) + chalk.red(request.slice(f0, f1)) + request.slice(f1)
     }
   }
   const response = logData[i + 1]!
