@@ -142,13 +142,14 @@ Filter Logfile.
 Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
 
 Options:
-  -e, --skip-errors do not display warnings and errors
-  -i, --skip-info   do not display additional information
-  -h, --hit         display only cache hits
-  -m, --miss        display only cache misses
-  -s, --size        display results where the tilesize is at least given size
-  -t, --time        display results where the response time is at least given time
-  -g, --grep        display results where the request line contains given string
+  -e, --skip-errors  do not display warnings and errors
+  -i, --skip-info    do not display additional information
+  -h, --hit          display only cache hits
+  -m, --miss         display only cache misses
+  -s, --size         display results where the tilesize is at least given size
+  -t, --time         display results where the response time is at least given time
+  -g, --grep         display results where the url of the request line contains given string
+  -v, --invert-match display non-matching results
 `.trim(),
   )
 }
