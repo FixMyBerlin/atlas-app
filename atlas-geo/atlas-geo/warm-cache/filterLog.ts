@@ -19,6 +19,7 @@ try {
       time: { type: 'string', short: 't' },
       grep: { type: 'string', short: 'g' },
       'skip-errors': { type: 'boolean', short: 'e', default: false },
+      'skip-info': { type: 'boolean', short: 'i', default: false },
       hit: { type: 'boolean', short: 'h', default: false },
       miss: { type: 'boolean', short: 'm', default: false },
     },
@@ -34,6 +35,7 @@ const { values, positionals } = parsed
 const args = {
   help: values.help,
   skipErrors: values['skip-errors'],
+  skipInfo: values['skip-info'],
   minSize: 'size' in values ? parseSize(values.size) : null,
   minTime: 'time' in values ? parseTime(values.time) : null,
   grep: values.grep || null,
@@ -57,7 +59,9 @@ let i = 0
 while (i < logData.length) {
   const line = logData[i]!
   if (!isRequest(line)) {
-    console.log(line)
+    if (!args.skipInfo) {
+      console.log(line)
+    }
     i++
     continue
   }
