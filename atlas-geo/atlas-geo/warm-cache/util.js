@@ -66,18 +66,20 @@ export function formatBytes(bytes, colorOutput) {
 }
 
 export function parseTime(time) {
+  if (time === undefined) return null
   const num = Number(time)
-  if (!isNaN(num)) return time
+  if (!isNaN(num)) return num
   const m = time.trim().match(/^([0-9]+\.[0-9]{3})s$/)
-  if (!m) error(`Could not parse time "${time}".`)
+  if (!m) return null
   return Number(m[1])
 }
 
 export function parseSize(size) {
+  if (size === undefined) return null
   const num = Number(size)
   if (!isNaN(num)) return num
   const m = size.trim().match(/^([0-9.]+)([BKMG])$/)
-  if (!m) error(`Could not parse size "${size}".`)
+  if (!m) return null
   let [_, bytes, unit] = m
   return Math.round(
     bytes *
@@ -118,7 +120,7 @@ Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
 Filter Logfile.
 Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
 
-Filter options:
+Options:
   -e, --skip-errors do not display warnings and errors
   -i, --skip-info   do not display additional information
   -h, --hit         display only cache hits
