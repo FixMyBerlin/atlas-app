@@ -1,45 +1,31 @@
 #!/usr/bin/env bun
 
-import fs from 'node:fs'
-import { parseArgs } from 'node:util'
+import { program, Argument } from 'commander'
 import { flattenDeep, sumBy, max, uniq } from 'lodash'
 import { bbox, point, distance } from 'turf'
 // @ts-ignore
 import { consoleTable } from 'js-awe'
 
-import { displaySortLogHelp, formatBytes, error } from './util'
+import { checkFile, formatBytes } from './util'
 
-let parsed: any
-try {
-  parsed = parseArgs({
-    options: {
-      help: { type: 'boolean', default: false },
-    },
-    strict: true,
-    allowPositionals: true,
-  })
-} catch (e) {
-  error(e.message)
+// prettier-ignore
+{
+  program
+    .name('analyzeTile')
+    .description('Analyze a geojson and display sizes grouped by property values')
+  program.addArgument(new Argument('<logfile>').argParser(checkFile))
+  program.addArgument(new Argument('<property>'))
+  program.showHelpAfterError('(add --help for additional information)');
 }
+program.parse(process.argv)
+const opts = program.opts()
 
-const { values, positionals } = parsed
+// ================================================================================
 
-if (values.help) {
-  displaySortLogHelp()
-  process.exit(0)
-}
+const [filename, property] = program.args as [string, string]
 
-if (positionals.length === 0) error('Geojson argument is missing.')
-if (positionals.length === 1) error('Property argument is missing.')
-if (positionals.length > 2) error('Too many arguments.')
-
-const filename = positionals[0]
-if (!filename.endsWith('.geojson')) error('File is not a .geojson')
-if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
-
-const file = Bun.file(filename)
+const file = Bun.file(filename!)
 const layers = await file.json()
-const property = positionals[1]
 
 const breakdownByValue = {}
 
