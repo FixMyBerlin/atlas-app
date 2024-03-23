@@ -2,15 +2,12 @@
 
 import fs from 'node:fs'
 import { parseArgs } from 'node:util'
-import { VectorTile } from '@mapbox/vector-tile'
-import Protobuf from 'pbf'
 import { flattenDeep, sumBy, max, uniq } from 'lodash'
 import { bbox, point, distance } from 'turf'
 // @ts-ignore
 import { consoleTable } from 'js-awe'
 
 import { displaySortLogHelp, formatBytes, error } from './util'
-import path from 'path'
 
 let parsed: any
 try {
@@ -32,47 +29,17 @@ if (values.help) {
   process.exit(0)
 }
 
-if (positionals.length === 0) error('Vector tile argument is missing.')
+if (positionals.length === 0) error('Geojson argument is missing.')
 if (positionals.length === 1) error('Property argument is missing.')
 if (positionals.length > 2) error('Too many arguments.')
 
 const filename = positionals[0]
-if (!filename.endsWith('.mvt')) error('File is not a .mvt')
+if (!filename.endsWith('.geojson')) error('File is not a .geojson')
 if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
 
-const [tileZ, tileX, tileY] = path
-  .parse(filename)
-  .name.split('-')
-  .slice(-3)
-  .map((s) => Number(s))
-
-const property = positionals[1]
-
 const file = Bun.file(filename)
-
-const arrBuffer = await file.arrayBuffer()
-const byteArray = new Uint8Array(arrBuffer)
-
-const tile = new VectorTile(new Protobuf(byteArray))
-
-// convert to geojson
-const layers = Object.keys(tile.layers).map((layerName) => {
-  const layer = tile.layers[layerName]
-  const features: Record<string, any>[] = []
-  for (let i = 0; i < layer.length; i++) {
-    const feature = layer.feature(i).toGeoJSON(tileX, tileY, tileZ)
-    features.push(feature)
-  }
-  return {
-    name: layerName,
-    type: 'FeatureCollection',
-    features: features,
-  }
-})
-
-const outputFile = filename.split('.')[0] + '.geojson'
-fs.writeFileSync(outputFile, JSON.stringify(layers, null, 2))
-console.log(`geojson was saved to ${outputFile}`)
+const layers = await file.json()
+const property = positionals[1]
 
 const breakdownByValue = {}
 
