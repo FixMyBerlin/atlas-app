@@ -138,6 +138,9 @@ export function displaySortLogHelp() {
 Usage: ./sortLog.ts [OPTION]... [LOGFILE]...
 Sort logfile by Tile size.
 Example: ./sortLog.ts warm-cache.log
+
+Options:
+  -d, --desc sort in descending order (from high to low)
 `.trim(),
   )
 }

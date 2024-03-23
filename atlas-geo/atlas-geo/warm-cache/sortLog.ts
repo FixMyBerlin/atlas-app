@@ -21,6 +21,7 @@ try {
   parsed = parseArgs({
     options: {
       help: { type: 'boolean', default: false },
+      desc: { type: 'boolean', short: 'd', default: false },
     },
     strict: true,
     allowPositionals: true,
@@ -79,6 +80,10 @@ toSort.sort((a, b) => {
   }
   return 0
 })
+
+if (values.desc) {
+  toSort.reverse()
+}
 
 toSort.forEach(([size, request, response]) => {
   console.log(request)
