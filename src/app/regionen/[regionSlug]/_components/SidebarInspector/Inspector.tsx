@@ -2,7 +2,7 @@ import { StoreFeaturesInspector } from '../../_hooks/mapStateInteraction/useMapS
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
-import { InspectorFeatureDataset } from './InspectorFeatureDataset'
+import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
 
@@ -39,7 +39,7 @@ export const Inspector = ({ features }: Props) => {
         const isDataset = regionDatasets.some((d) => d.id === extractDataIdIdFromDataKey(sourceKey))
         if (isDataset) {
           return (
-            <InspectorFeatureDataset
+            <InspectorFeatureStaticDataset
               key={createInspectorFeatureKey(inspectObject)}
               sourceKey={sourceKey}
               properties={inspectObject.properties}

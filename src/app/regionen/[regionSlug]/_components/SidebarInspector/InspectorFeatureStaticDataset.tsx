@@ -11,7 +11,7 @@ import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { TagsTable } from './TagsTable/TagsTable'
 
-export const InspectorFeatureDataset: React.FC<InspectorDataFeature> = ({
+export const InspectorFeatureStaticDataset: React.FC<InspectorDataFeature> = ({
   sourceKey,
   properties,
   geometry,
