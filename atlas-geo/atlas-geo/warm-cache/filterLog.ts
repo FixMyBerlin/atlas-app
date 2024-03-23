@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 
 import { parseArgs } from 'node:util'
-import fs from 'node:fs'
 import chalk from 'chalk'
+
 import {
   parseSize,
   parseTime,
@@ -10,12 +10,9 @@ import {
   isError,
   isRequest,
   parseResponse,
+  getLogData,
+  error,
 } from './util'
-
-function error(message) {
-  console.error(message)
-  process.exit()
-}
 
 let parsed: any
 try {
@@ -50,10 +47,6 @@ const args = {
   miss: values.miss,
 }
 
-if (positionals.length === 0) error('Logfile argument is missing.')
-if (positionals.length > 1) error('Too many arguments.')
-const filename = positionals[0]
-if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
 if (args.minSize === null) error(`Could not parse size "${values.size}".`)
 if (args.minTime === null) error(`Could not parse time "${values.time}".`)
 if (args.hit && args.miss) error('Supply only one of "hit" or "miss"')
@@ -62,7 +55,8 @@ if (values.help) {
   process.exit(0)
 }
 
-const logData = (await Bun.file(filename).text()).split('\n')
+const logData = await getLogData(positionals)
+
 let i = 0
 while (i < logData.length) {
   const line = logData[i]!

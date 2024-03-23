@@ -1,20 +1,8 @@
 #!/usr/bin/env bun
 
 import { parseArgs } from 'node:util'
-import fs from 'node:fs'
-import getStdin from 'get-stdin'
 
-import {
-  displaySortLogHelp,
-  isError,
-  parseResponse,
-  isRequest,
-} from './util'
-
-function error(message) {
-  console.error(message)
-  process.exit()
-}
+import { displaySortLogHelp, isError, parseResponse, isRequest, getLogData, error } from './util'
 
 let parsed: any
 try {
@@ -37,17 +25,7 @@ if (values.help) {
   process.exit(0)
 }
 
-let logData: string[] = []
-if (process.stdin.isTTY === undefined) {
-  const data = await getStdin()
-  logData = data.trim().split('\n')
-} else {
-  if (positionals.length === 0) error('Logfile argument is missing.')
-  if (positionals.length > 1) error('Too many arguments.')
-  const filename = positionals[0]
-  if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
-  logData = (await Bun.file(filename).text()).split('\n')
-}
+const logData = await getLogData(positionals)
 
 const toSort: [number, string, string][] = []
 let i = 0

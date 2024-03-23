@@ -9,13 +9,8 @@ import { bbox, point, distance } from 'turf'
 // @ts-ignore
 import { consoleTable } from 'js-awe'
 
-import { displaySortLogHelp, formatBytes } from './util'
+import { displaySortLogHelp, formatBytes, error } from './util'
 import path from 'path'
-
-function error(message) {
-  console.error(message)
-  process.exit()
-}
 
 let parsed: any
 try {

@@ -1,8 +1,15 @@
+import fs from 'node:fs'
 import chalk from 'chalk'
+import getStdin from 'get-stdin'
 
 export function log(...args) {
   const t = new Date(new Date().toUTCString()).toISOString().split('.')[0]
   console.log(t, ...args)
+}
+
+export function error(message) {
+  console.error(message)
+  process.exit()
 }
 
 // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
@@ -63,6 +70,20 @@ export function formatBytes(bytes, colorOutput) {
     ])
   }
   return formatted
+}
+
+export async function getLogData(positionals) {
+  let input
+  if (process.stdin.isTTY === undefined) {
+    input = await getStdin()
+  } else {
+    if (positionals.length === 0) error('Logfile argument is missing.')
+    if (positionals.length > 1) error('Too many arguments.')
+    const filename = positionals[0]
+    if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
+    input = await Bun.file(filename).text()
+  }
+  return input.trim().split('\n')
 }
 
 export function parseTime(time) {
