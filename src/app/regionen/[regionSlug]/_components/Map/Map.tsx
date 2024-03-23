@@ -17,7 +17,7 @@ import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapS
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
-import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'
+import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
@@ -148,7 +148,7 @@ export const Map = () => {
       <SourcesLayerRasterBackgrounds />
       <SourcesLayerRegionalMask />
       <SourcesLayersAtlasGeo />
-      <SourcesLayerDatasets />
+      <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
 
       <NavigationControl showCompass={false} />

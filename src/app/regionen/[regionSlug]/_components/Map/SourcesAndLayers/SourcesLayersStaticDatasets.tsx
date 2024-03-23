@@ -11,7 +11,7 @@ import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 import { pmtilesUrl } from './utils/pmtilesUrl'
 
-export const SourcesLayerDatasets: React.FC = () => {
+export const SourcesLayersStaticDatasets: React.FC = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
   const { useDebugLayerStyles } = useMapDebugState()
 
