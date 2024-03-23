@@ -6,7 +6,7 @@ import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxS
 import {
   createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
-} from '../../utils/sourceKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 import { pmtilesUrl } from './utils/pmtilesUrl'

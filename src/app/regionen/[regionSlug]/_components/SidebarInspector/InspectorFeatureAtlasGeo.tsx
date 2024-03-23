@@ -1,6 +1,6 @@
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { getSourceData } from '../../_mapData/utils/getMapDataUtils'
-import { extractSourceIdIdFromAtlasGeoSourceKey } from '../utils/sourceKeyUtils/extractFromKey'
+import { extractSourceIdIdFromAtlasGeoSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
 import { NoticeMaproulette } from './InspectorFeatureSource/NoticeMaproulette'

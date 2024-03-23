@@ -4,11 +4,11 @@ import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+import { createSourceSubcatStyleLayerKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import {
   createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
-  createSourceSubcatStyleLayerKey,
-} from '../../utils/sourceKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { categories: MapDataCategoryConfig[] | undefined }

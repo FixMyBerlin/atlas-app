@@ -10,7 +10,7 @@ import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
   createSourceKeyAtlasGeo,
   createSourceSubcatStyleLayerKey,
-} from '../../utils/sourceKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'

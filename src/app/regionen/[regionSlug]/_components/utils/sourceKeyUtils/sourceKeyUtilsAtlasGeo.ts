@@ -1,5 +1,6 @@
+import invariant from 'tiny-invariant'
+import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
-import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 type SubcatStyleKey = `${SubcategoryId}-${StyleId}`
 export const createSubcatStyleKey = (subcatId: SubcategoryId, styleId: StyleId): SubcatStyleKey =>
@@ -25,24 +26,26 @@ export const createSourceKeyAtlasGeo = (categoryId: string, sourceId: string, su
   return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
 }
 
-export const createSourceKeyStaticDatasets = (sourceId: string, subId: string | undefined) => {
-  return [sourceId, subId].filter(Boolean).join('--')
+export const extractSourceIdIdFromAtlasGeoSourceKey = (
+  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
+) => {
+  const regex = /--source:(\w+)/
+  const match = sourceKey.match(regex)
+  invariant(
+    match,
+    `Did not find source in extractSourceIdIdFromSourceKey for sourceKey:${sourceKey}`,
+  )
+  return match[1] as SourcesId
 }
 
-export const createDatasetSourceLayerKey = (
-  sourceId: string,
-  subId: string | undefined,
-  layerId: string,
+export const extractSubcatIdFromAtlasGeoSourceKey = (
+  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
 ) => {
-  return [sourceId, subId, layerId].filter(Boolean).join('--')
-}
-
-export const createInspectorFeatureKey = (
-  feature: StoreFeaturesInspector['unfilteredInspectorFeatures'][number],
-) => {
-  // TODO, this has a static set of IDs which are defined on `sourceData.inspector.highlightingKey`
-  // Ideally we would pick the value form sourceData, but that does not work for sourceDatasets
-  return `${feature.source}-${
-    feature?.properties?.id || feature?.properties?.area_id || feature?.properties?.osm_id
-  }`
+  const regex = /--subcat:(\w+)/
+  const match = sourceKey.match(regex)
+  invariant(
+    match,
+    `Did not find subcategory in extractSubcatIdFromSourceKey for sourceKey:${sourceKey}`,
+  )
+  return match[1] as SubcategoryId
 }
