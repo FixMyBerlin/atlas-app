@@ -16,7 +16,7 @@ import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
-import { SourcesAndLayers } from './SourcesAndLayers/SourcesAndLayers'
+import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
@@ -147,7 +147,7 @@ export const Map = () => {
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
       <SourcesLayerRegionalMask />
-      <SourcesAndLayers />
+      <SourcesLayersAtlasGeo />
       <SourcesLayerDatasets />
       <SourcesLayersOsmNotes />
 

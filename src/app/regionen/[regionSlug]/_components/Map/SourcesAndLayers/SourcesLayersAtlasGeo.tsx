@@ -25,7 +25,7 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
 // But, it will create them again, when the source was unmounted.
 // TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
-export const SourcesAndLayers = () => {
+export const SourcesLayersAtlasGeo = () => {
   const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
