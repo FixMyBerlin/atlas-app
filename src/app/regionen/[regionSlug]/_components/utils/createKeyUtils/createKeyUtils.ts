@@ -20,11 +20,11 @@ export const createSourceSubcatStyleLayerKey = (
   return `${sourceId}--${subCat}--${styleId}--${layerId}`
 }
 
-export const createSourceKey = (categoryId: string, sourceId: string, subCat: string) => {
+export const createSourceKeyAtlasGeo = (categoryId: string, sourceId: string, subCat: string) => {
   return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
 }
 
-export const createDatasetKey = (sourceId: string, subId: string | undefined) => {
+export const createSourceKeyStaticDatasets = (sourceId: string, subId: string | undefined) => {
   return [sourceId, subId].filter(Boolean).join('--')
 }
 

@@ -1,9 +1,11 @@
 import invariant from 'tiny-invariant'
 import { SourcesId } from '../../../../../_mapData/mapDataSources/sources.const'
 import { SubcategoryId } from '../../../../../_mapData/typeId'
-import { createSourceKey } from '../../../../utils/createKeyUtils/createKeyUtils'
+import { createSourceKeyAtlasGeo } from '../../../../utils/createKeyUtils/createKeyUtils'
 
-export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
+export const extractSubcatIdFromSourceKey = (
+  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
+) => {
   const regex = /--subcat:(\w+)/
   const match = sourceKey.match(regex)
   invariant(
@@ -13,7 +15,9 @@ export const extractSubcatIdFromSourceKey = (sourceKey: ReturnType<typeof create
   return match[1] as SubcategoryId
 }
 
-export const extractSourceIdIdFromSourceKey = (sourceKey: ReturnType<typeof createSourceKey>) => {
+export const extractSourceIdIdFromSourceKey = (
+  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
+) => {
   const regex = /--source:(\w+)/
   const match = sourceKey.match(regex)
   invariant(

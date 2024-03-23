@@ -8,7 +8,7 @@ import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQue
 import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
-  createSourceKey,
+  createSourceKeyAtlasGeo,
   createSourceSubcatStyleLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
@@ -41,7 +41,7 @@ export const SourcesLayersAtlasGeo = () => {
               const sourceData = getSourceData(subcategoryConfig?.sourceId)
 
               // One source can be used by multipe subcategories, so we need to make the key source-category-specific.
-              const sourceId = createSourceKey(
+              const sourceId = createSourceKeyAtlasGeo(
                 categoryConfig.id,
                 sourceData.id,
                 subcategoryConfig.id,

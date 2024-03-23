@@ -4,7 +4,7 @@ import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
-  createDatasetKey,
+  createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
 } from '../../utils/createKeyUtils/createKeyUtils'
 import { layerVisibility } from '../utils/layerVisibility'
@@ -22,14 +22,14 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
   return (
     <>
       {regionDatasets.map(({ id: sourceId, subId, type, url, attributionHtml, layers }) => {
-        const datasetTileId = createDatasetKey(sourceId, subId)
-        const visible = selectedDatasetIds.includes(datasetTileId)
+        const datasetSourceId = createSourceKeyStaticDatasets(sourceId, subId)
+        const visible = selectedDatasetIds.includes(datasetSourceId)
         const visibility = layerVisibility(visible)
 
         return (
           <Source
-            id={datasetTileId}
-            key={datasetTileId}
+            id={datasetSourceId}
+            key={datasetSourceId}
             type={type}
             url={pmtilesUrl(url)}
             attribution={attributionHtml}
@@ -52,7 +52,7 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
 
               const layerProps = {
                 id: layerId,
-                source: datasetTileId,
+                source: datasetSourceId,
                 'source-layer': 'default', // set in `datasets/process.ts`
                 type: layer.type,
                 layout: layout,
