@@ -3,7 +3,7 @@ import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { pmtilesUrl } from './utils/pmtilesUrl'
 
-export const SourcesLayerRegionalMask: React.FC = () => {
+export const SourcesLayersRegionMask: React.FC = () => {
   const regionSlug = useRegionSlug()
   // TODO: Migrate regional masks to new pmtiles system
   const { id, url } = {
