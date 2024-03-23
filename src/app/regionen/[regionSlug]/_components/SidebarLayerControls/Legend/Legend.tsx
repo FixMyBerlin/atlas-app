@@ -8,7 +8,7 @@ import {
 import {
   createSubcatStyleKey,
   createSubcatStyleLegendKey,
-} from '../../utils/createKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/createKeyUtils'
 import { LegendIconArea } from './LegendIcons/LegendIconArea'
 import { LegendIconCircle } from './LegendIcons/LegendIconCircle'
 import { LegendIconLine } from './LegendIcons/LegendIconLine'

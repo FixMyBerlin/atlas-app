@@ -1,7 +1,7 @@
 import {
   MapDataCategoryConfig,
   MapDataSubcategoryConfig,
-} from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+} from '../../../../_hooks/useQueryState/useCategoriesConfig/type'
 
 export const flattenSubcategories = (categoryConfigs: MapDataCategoryConfig[]) => {
   const subcategoryConfigConfigs: MapDataSubcategoryConfig[] = []

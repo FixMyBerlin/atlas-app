@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
-import { flattenSubcategories } from '../../utils/flattenSubcategories/flattenSubcategories'
+import { flattenSubcategories } from './utils/flattenSubcategories'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
 

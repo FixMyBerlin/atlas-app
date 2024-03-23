@@ -8,7 +8,7 @@ import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQue
 import { twJoin } from 'tailwind-merge'
 import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
-import { createSubcatStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
+import { createSubcatStyleKey } from '../../utils/sourceKeyUtils/createKeyUtils'
 import { Legend } from '../Legend/Legend'
 import invariant from 'tiny-invariant'
 

@@ -1,6 +1,6 @@
 import { FormattedMessage, IntlProvider } from 'react-intl'
 import { getSourceData } from '../../_mapData/utils/getMapDataUtils'
-import { extractSourceIdIdFromSourceKey } from '../Map/SourcesAndLayers/utils/extractFromSourceKey/extractFromKey'
+import { extractSourceIdIdFromAtlasGeoSourceKey } from '../utils/sourceKeyUtils/extractFromKey'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
 import { NoticeMaproulette } from './InspectorFeatureSource/NoticeMaproulette'
@@ -22,9 +22,9 @@ export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   if (!sourceKey || !properties) return null
 
   // The documentedKeys info is placed on the source object
-  const sourceId = extractSourceIdIdFromSourceKey(sourceKey)
+  const sourceId = extractSourceIdIdFromAtlasGeoSourceKey(sourceKey)
   const sourceData = getSourceData(sourceId)
-  const sourceTranslationKey = extractSourceIdIdFromSourceKey(sourceKey)
+  const sourceTranslationKey = extractSourceIdIdFromAtlasGeoSourceKey(sourceKey)
 
   if (!sourceData.inspector.enabled) return null
   if (!sourceTranslationKey) return null

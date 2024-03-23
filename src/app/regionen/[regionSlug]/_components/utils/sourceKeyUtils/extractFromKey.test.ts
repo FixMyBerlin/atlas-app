@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { createSourceKeyAtlasGeo } from '../../../../utils/createKeyUtils/createKeyUtils'
+import { createSourceKeyAtlasGeo } from './createKeyUtils'
 import { extractSubcatIdFromSourceKey } from './extractFromKey'
 
 describe('extractSubcatIdFromSourceKey()', () => {

@@ -9,7 +9,7 @@ import { useSlug } from 'src/app/_hooks/useSlug'
 import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
 import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { createSourceKeyStaticDatasets } from 'src/app/regionen/[regionSlug]/_components/utils/createKeyUtils/createKeyUtils'
+import { createSourceKeyStaticDatasets } from 'src/app/regionen/[regionSlug]/_components/utils/sourceKeyUtils/createKeyUtils'
 import getUploadWithRegions from 'src/uploads/queries/getUploadWithRegions'
 
 export default function AdminUploadPage() {

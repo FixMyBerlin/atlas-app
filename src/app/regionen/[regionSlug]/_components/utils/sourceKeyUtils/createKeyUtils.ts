@@ -1,10 +1,11 @@
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
 import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { SubcatStyleKey, SubcatStyleLegendKey } from './types'
 
+type SubcatStyleKey = `${SubcategoryId}-${StyleId}`
 export const createSubcatStyleKey = (subcatId: SubcategoryId, styleId: StyleId): SubcatStyleKey =>
   `${subcatId}-${styleId}`
 
+type SubcatStyleLegendKey = `${SubcatStyleKey}-${LegendId}`
 export const createSubcatStyleLegendKey = (
   subCat: SubcategoryId,
   styleId: StyleId,

@@ -8,7 +8,7 @@ import {
   createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
   createSourceSubcatStyleLayerKey,
-} from '../../utils/createKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/createKeyUtils'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { categories: MapDataCategoryConfig[] | undefined }
