@@ -1,31 +1,26 @@
 #!/usr/bin/env bun
 
-import { parseArgs } from 'node:util'
+import { program, Option, Argument } from 'commander'
 
-import { displaySortLogHelp, isError, parseResponse, isRequest, getLogData, error } from './util'
+import { getLogData, isError, isRequest, parseResponse, checkFile} from './util'
 
-let parsed: any
-try {
-  parsed = parseArgs({
-    options: {
-      help: { type: 'boolean', default: false },
-      desc: { type: 'boolean', short: 'd', default: false },
-    },
-    strict: true,
-    allowPositionals: true,
-  })
-} catch (e) {
-  error(e.message)
+// prettier-ignore
+{
+  program
+    .name('filterLog')
+    .description('Sort logfile created by warmCache')
+    .addOption(new Option('-d, --desc', 'sort in descending order (from high to low)').default(false))
+  if (process.stdin.isTTY !== undefined) {
+    program.addArgument(new Argument('<logfile>').argParser(checkFile))
+  }
+  program.showHelpAfterError('(add --help for additional information)');
 }
+program.parse(process.argv)
+const opts = program.opts()
 
-const { values, positionals } = parsed
+// ================================================================================
 
-if (values.help) {
-  displaySortLogHelp()
-  process.exit(0)
-}
-
-const logData = await getLogData(positionals)
+const logData = await getLogData(program.args[0])
 
 const toSort: [number, string, string][] = []
 let i = 0
@@ -59,7 +54,7 @@ toSort.sort((a, b) => {
   return 0
 })
 
-if (values.desc) {
+if (opts.desc) {
   toSort.reverse()
 }
 

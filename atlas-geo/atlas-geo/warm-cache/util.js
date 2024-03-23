@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import { InvalidArgumentError, InvalidOptionArgumentError } from 'commander'
 import chalk from 'chalk'
 import getStdin from 'get-stdin'
 
@@ -72,15 +73,11 @@ export function formatBytes(bytes, colorOutput) {
   return formatted
 }
 
-export async function getLogData(positionals) {
+export async function getLogData(filename) {
   let input
   if (process.stdin.isTTY === undefined) {
     input = await getStdin()
   } else {
-    if (positionals.length === 0) error('Logfile argument is missing.')
-    if (positionals.length > 1) error('Too many arguments.')
-    const filename = positionals[0]
-    if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
     input = await Bun.file(filename).text()
   }
   return input.trim().split('\n')
@@ -93,6 +90,12 @@ export function parseTime(time) {
   const m = time.trim().match(/^([0-9]+\.[0-9]{3})s$/)
   if (!m) return null
   return Number(m[1])
+}
+
+export function parseTimeOption(time) {
+  const parsed = parseTime(time)
+  if (parsed === null) throw new InvalidOptionArgumentError(`Could not parse "${time}".`)
+  return parsed
 }
 
 export function parseSize(size) {
@@ -111,6 +114,12 @@ export function parseSize(size) {
         G: 1024 ** 3,
       }[unit],
   )
+}
+
+export function parseSizeOption(size) {
+  const parsed = parseSize(size)
+  if (parsed === null) throw new InvalidOptionArgumentError(`Could not parse "${size}".`)
+  return parsed
 }
 
 export function removeTimeStamp(line) {
@@ -134,45 +143,11 @@ export function parseResponse(line) {
   }
 }
 
-export function displayFilterLogHelp() {
-  console.log(
-    `
-Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
-Filter Logfile.
-Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
-
-Options:
-  -e, --skip-errors  do not display warnings and errors
-  -i, --skip-info    do not display additional information
-  -h, --hit          display only cache hits
-  -m, --miss         display only cache misses
-  -s, --size         display results where the tilesize is at least given size
-  -t, --time         display results where the response time is at least given time
-  -g, --grep         display results where the url of the request line contains given string
-  -v, --invert-match display non-matching results
-`.trim(),
-  )
-}
-
-export function displaySortLogHelp() {
-  console.log(
-    `
-Usage: ./sortLog.ts [OPTION]... [LOGFILE]...
-Sort logfile by Tile size.
-Example: ./sortLog.ts warm-cache.log
-
-Options:
-  -d, --desc sort in descending order (from high to low)
-`.trim(),
-  )
-}
-
-export function displayAnalyzeTileLogHelp() {
-  console.log(
-    `
-Usage: ./analyzeTile.ts [VECTORTILE]...
-Analyze a vector tile (.pbf)
-Example: ./analyzeTile.ts tile.pbf
-`.trim(),
-  )
+export function checkFile(filename) {
+  const err = (msg) => {
+    throw new InvalidArgumentError(msg)
+  }
+  if (!fs.existsSync(filename)) err(`'${filename}' does not exist.`)
+  if (fs.lstatSync(filename).isDirectory()) err(`'${filename}' is a directory.`)
+  return filename
 }
