@@ -4,7 +4,7 @@ import { extractDataIdIdFromDataKey } from '../Map/SourcesAndLayers/utils/extrac
 import { createInspectorFeatureKey } from '../utils/createKeyUtils/createKeyUtils'
 import { InspectorFeatureDataset } from './InspectorFeatureDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
-import { InspectorFeatureSource } from './InspectorFeatureSource'
+import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
 
 export type InspectorDataFeature = {
   sourceKey: string
@@ -50,7 +50,7 @@ export const Inspector = ({ features }: Props) => {
 
         // Inspector-Block for Features
         return (
-          <InspectorFeatureSource
+          <InspectorFeatureAtlasGeo
             key={createInspectorFeatureKey(inspectObject)}
             sourceKey={sourceKey}
             properties={inspectObject.properties}

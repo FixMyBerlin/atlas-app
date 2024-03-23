@@ -14,7 +14,7 @@ import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { Verification } from './Verification/Verification'
 
-export const InspectorFeatureSource: React.FC<InspectorDataFeature> = ({
+export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   sourceKey,
   properties,
   geometry,
