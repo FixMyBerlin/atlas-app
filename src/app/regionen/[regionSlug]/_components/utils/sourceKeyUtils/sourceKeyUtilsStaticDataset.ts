@@ -11,6 +11,5 @@ export const createDatasetSourceLayerKey = (
 }
 
 export const extractSourceIdFromStaticDatasetSourceKey = (sourceKey: string) => {
-  // `source:${sourceId}
-  return sourceKey.replace('source:', '')
+  return sourceKey.split('--')[0]!
 }
