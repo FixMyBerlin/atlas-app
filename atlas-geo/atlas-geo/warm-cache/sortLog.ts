@@ -2,13 +2,13 @@
 
 import { parseArgs } from 'node:util'
 import fs from 'node:fs'
+import getStdin from 'get-stdin'
+
 import {
-  parseSize,
-  parseTime,
   displaySortLogHelp,
-  removeTimeStamp,
   isError,
-  parseResponse, isRequest,
+  parseResponse,
+  isRequest,
 } from './util'
 
 function error(message) {
@@ -36,13 +36,19 @@ if (values.help) {
   process.exit(0)
 }
 
-if (positionals.length === 0) error('Logfile argument is missing.')
-if (positionals.length > 1) error('Too many arguments.')
-const filename = positionals[0]
-if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
+let logData: string[] = []
+if (process.stdin.isTTY === undefined) {
+  const data = await getStdin()
+  logData = data.trim().split('\n')
+} else {
+  if (positionals.length === 0) error('Logfile argument is missing.')
+  if (positionals.length > 1) error('Too many arguments.')
+  const filename = positionals[0]
+  if (!fs.existsSync(filename)) error(`File "${filename}" not found.`)
+  logData = (await Bun.file(filename).text()).split('\n')
+}
 
 const toSort: [number, string, string][] = []
-const logData = (await Bun.file(filename).text()).split('\n')
 let i = 0
 while (i < logData.length) {
   const line = logData[i]!
@@ -60,7 +66,7 @@ while (i < logData.length) {
   }
 
   const { size } = parseResponse(response)
-  toSort.push([size, request, response])
+  toSort.push([size!, request, response])
 
   i += 2
 }
