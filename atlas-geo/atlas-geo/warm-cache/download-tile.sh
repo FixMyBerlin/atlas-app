@@ -19,4 +19,8 @@ else
   rm $folder/$name.mvt.br
   >&2 echo "Tile was saved to $folder/$name.mvt"
 fi
-echo $folder/$name.mvt
+
+output=$(./convertTileToGeojson.ts $folder/$name.mvt)
+>&2 echo "Geojson was saved to $output"
+
+echo $output
