@@ -5,15 +5,15 @@ import path from 'path'
 import { VectorTile } from '@mapbox/vector-tile'
 import Protobuf from 'pbf'
 
-const filename = process.argv[2]
+const [inputFile, outputFile] = process.argv.slice(2)
 
 const [tileZ, tileX, tileY] = path
-  .parse(filename!)
+  .parse(inputFile!)
   .name.split('-')
   .slice(-3)
   .map((s) => Number(s))
 
-const file = Bun.file(filename!)
+const file = Bun.file(inputFile!)
 const arrBuffer = await file.arrayBuffer()
 const byteArray = new Uint8Array(arrBuffer)
 const tile = new VectorTile(new Protobuf(byteArray))
@@ -32,7 +32,4 @@ const layers = Object.keys(tile.layers).map((layerName) => {
   }
 })
 
-const outputFile = filename!.split('.')[0] + '.geojson'
-fs.writeFileSync(outputFile, JSON.stringify(layers, null, 2))
-
-console.log(outputFile)
+fs.writeFileSync(outputFile!, JSON.stringify(layers, null, 2))

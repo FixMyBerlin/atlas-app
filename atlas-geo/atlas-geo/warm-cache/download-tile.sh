@@ -10,17 +10,22 @@ fi
 
 folder=tiles
 mkdir -p tiles
-name=$(node -e "console.log(new URL('$1').pathname.slice(1).replaceAll('/', '-'))")
-if test -f "$folder/$name.mvt"; then
-  >&2 echo "File $folder/$name.mvt exists."
+
+filename=$(node -e "console.log(new URL('$1').pathname.slice(1).replaceAll('/', '-'))")
+filepath=$folder/$filename
+br=$filepath.mvt.br
+mvt=$filepath.mvt
+geojson=$filepath.geojson
+
+if test -f "$geojson"; then
+  >&2 echo "$geojson exists."
 else
-  curl $1 --output $folder/$name.mvt.br
-  brotli -d $folder/$name.mvt.br
-  rm $folder/$name.mvt.br
-  >&2 echo "Tile was saved to $folder/$name.mvt"
+  curl $1 --output $br
+  >&2 echo "$1 was downloaded to $br"
+  brotli -dj $br
+  >&2 echo "$br was decompressed to $mvt"
+  ./convertTileToGeojson.ts $mvt $geojson
+  >&2 echo "$mvt was converted to $geojson"
 fi
 
-output=$(./convertTileToGeojson.ts $folder/$name.mvt)
->&2 echo "Geojson was saved to $output"
-
-echo $output
+echo $geojson
