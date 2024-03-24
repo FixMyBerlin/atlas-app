@@ -122,6 +122,17 @@ export function parseSizeOption(size) {
   return parsed
 }
 
+export function createParseIntOption(min, max) {
+  return function parseIntOption(s) {
+    const parsed = parseInt(s)
+    const err = (msg) => { throw new InvalidOptionArgumentError(msg) }
+    if (isNaN(parsed)) err(`Could not parse "${s}".`)
+    if (min !== undefined && parsed < min) err(`Too small - minimum is ${min}.`)
+    if (max !== undefined && parsed > max) err(`Too big - maximum is ${max}.`)
+    return parsed
+  }
+}
+
 export function removeTimeStamp(line) {
   return line.substring(line.indexOf(' ') + 1)
 }

@@ -9,7 +9,7 @@ import { getLogData, isError, isRequest, parseResponse, checkFile} from './util'
   program
     .name('filterLog')
     .description('Sort logfile created by warmCache')
-    .addOption(new Option('-d, --desc', 'sort in descending order (from high to low)').default(false))
+    .addOption(new Option('-d, --desc', 'sort by from high to low').default(false))
   if (process.stdin.isTTY !== undefined) {
     program.addArgument(new Argument('<logfile>').argParser(checkFile))
   }
