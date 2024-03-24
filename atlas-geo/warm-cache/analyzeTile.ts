@@ -1,20 +1,24 @@
 #!/usr/bin/env bun
 
 import { program, Option, Argument } from 'commander'
-import { flattenDeep, sumBy, max, uniq } from 'lodash'
+import { flattenDeep, sumBy, min, max, uniq } from 'lodash'
 import { bbox, point, distance } from 'turf'
 // @ts-ignore
 import { consoleTable } from 'js-awe'
 
 import { checkFile, createParseIntOption, error, formatBytes } from './util'
 
+const argProp = ['-p, --prop <prop>', 'group by property <prop>']
+const argGroup = ['-g, --grouper <name>', 'specify grouping method']
 // prettier-ignore
 {
   program
     .name('analyzeTile')
     .description('Analyze a geojson and display sizes grouped by property values')
-    .addOption(new Option('-p, --prop <prop>', 'group by property <prop>'))
-    .addOption(new Option('-g, --grouper <name>', 'specify grouping method').choices(['diagonals']))
+    // @ts-ignore
+    .addOption(new Option(...argProp))
+    // @ts-ignore
+    .addOption(new Option(...argGroup).choices(['diagonals']))
     .addOption(new Option('-a, --sort-asc [column]', 'sort by size or group from low to high').conflicts('sortDesc').choices(['size', 'group']))
     .addOption(new Option('-d, --sort-desc [column]', 'sort by size or group from high to low').conflicts('sortAsc').choices(['size', 'group']))
     .addOption(new Option('-n, --num-groups <count>', 'number of groups for numeric properties').default(10).argParser(createParseIntOption(2 , 100)))
@@ -33,6 +37,84 @@ console.log(`Analyzing ${filename}...`)
 
 const file = Bun.file(filename!)
 const layers = await file.json()
+
+function getValueTypes(layer, prop) {
+  return uniq(
+    getValues(layer, prop)
+      .map((v) => typeof v)
+      .sort(),
+  )
+}
+
+function getProps(layer) {
+  return uniq(flattenDeep(layer.features.map((feature) => Object.keys(feature.properties))))
+}
+
+function getValues(layer, prop) {
+  return layer.features.map((f) => f.properties[prop])
+}
+
+let listProps = false
+if (opts.prop) {
+  const props = uniq(flattenDeep(layers.map((layer) => getProps(layer))))
+  if (!props.includes(opts.prop)) {
+    console.log(`Property '${opts.prop}' does not exist.`)
+    listProps = true
+  }
+}
+
+if (listProps || (!opts.prop && !opts.grouper)) {
+  layers.forEach((layer) => {
+    const props = getProps(layer)
+    const tableData = props.map((prop) => {
+      const values = uniq(getValues(layer, prop))
+      const valueTypes = getValueTypes(layer, prop)
+      let info: any = 'info'
+      if (valueTypes.includes('string')) {
+        const charLimit = 10
+        let strings = values
+          .sort()
+          .filter((v) => v !== undefined)
+          .map((s) => {
+            if (s.length > charLimit) s = s.slice(0, charLimit) + '…'
+            return s
+          })
+
+        const arrayLimit = 5
+        const length = strings.length
+        let more = ''
+        if (length > arrayLimit) {
+          strings = strings.slice(0, arrayLimit)
+          more = ` (${length - arrayLimit} more...)`
+        }
+
+        if (valueTypes.includes('undefined')) {
+          strings.push('*undefined*')
+        }
+
+        info = strings.join(', ')
+        info += more
+      } else if (valueTypes.includes('number')) {
+        const numbers = layer.features
+          .filter((f) => f.properties[prop] !== undefined)
+          .map((f) => f.properties[prop])
+        info = [`${min(numbers)} - ${max(numbers)}`]
+        if (valueTypes.includes('undefined')) {
+          info.push('*undefined*')
+        }
+        info = info.join(', ')
+      }
+      return { layer: layer.name, property: prop, values: info }
+    })
+    consoleTable(tableData)
+  })
+  const [argPropDef, argPropHelp] = argProp
+  const [argGroupDef, argGroupHelp] = argGroup
+  console.log(
+    `Provide options '${argPropDef}' to ${argPropHelp} or\n                '${argGroupDef}' to ${argGroupHelp}`,
+  )
+  process.exit()
+}
 
 const breakdownByGroup = {}
 
@@ -59,7 +141,8 @@ const groupers = {
   }),
   string: () => ({
     getGroup: (feature) => {
-      const key = feature.properties[opts.prop]
+      let key = feature.properties[opts.prop]
+      if (key === undefined) key = '*undefined*'
       return { key, label: key }
     },
   }),
@@ -91,7 +174,7 @@ const groupers = {
 
 layers.forEach((layer) => {
   let grouper
-  const valueTypes = uniq(layer.features.map((f) => typeof f.properties[opts.prop]))
+  const valueTypes = getValueTypes(layer, opts.prop)
   if (opts.grouper) {
     grouper = groupers[opts.grouper]()
   } else if (valueTypes.length === 1 && valueTypes[0] === 'undefined') {
@@ -123,7 +206,7 @@ const { sortAsc, sortDesc } = opts
 const sortOrder = sortDesc ? 'desc' : 'asc'
 let sortProp = sortDesc || sortAsc
 if (typeof sortProp !== 'string') sortProp = 'ints'
-const getSortKey = (sortProp === 'ints') ? (row) => row.ints : (v) => v.group.key
+const getSortKey = sortProp === 'ints' ? (row) => row.ints : (v) => v.group.key
 
 const sortingFn = (a: any, b: any) => {
   a = getSortKey(a)
