@@ -74,11 +74,9 @@ function Bikelanes(object)
           workingTags = tagsCenterline
         end
 
-        -- === Processing on the transformed dataset ===
-        local freshTag = "check_date"
+        -- Handle `tagsCycleway`
         if not (sign == CENTER_SIGN) then
           MergeTable(result_tags, tagsCycleway)
-          freshTag = "check_date:" .. tagsCycleway.prefix
         end
 
         -- Handle `workingTags`
@@ -91,7 +89,12 @@ function Bikelanes(object)
         MergeTable(result_tags, DeriveSurface(workingTags))
 
         -- Handle `tagsCenterline`
-        result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline[freshTag]))
+        if sign == CENTER_SIGN then
+          result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline["check_date"]))
+        else
+          local freshKey = "check_date:" .. tagsCycleway.prefix
+          result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline[freshKey]))
+        end
         CopyTags(result_tags, tagsCenterline, tags_copied)
         CopyTags(result_tags, tagsCenterline, tags_prefixed, 'osm_')
 
