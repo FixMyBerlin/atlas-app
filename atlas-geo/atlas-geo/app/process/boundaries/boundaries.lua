@@ -23,8 +23,8 @@ local labelTable = osm2pgsql.define_table({
   }
 })
 
-local categoryStats = osm2pgsql.define_table({
-  name = 'categoryStats',
+local bikelaneCategoryStats = osm2pgsql.define_table({
+  name = 'bikelaneCategoryStats',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags',                type = 'jsonb' },
@@ -94,7 +94,7 @@ function osm2pgsql.process_relation(object)
 
   local admin_levels = Set({ "4", "6", "7", "8" })
   if admin_levels[tags.admin_level] then
-    categoryStats:insert({
+    bikelaneCategoryStats:insert({
       tags = results,
       meta = Metadata(object),
       geom = object:as_multipolygon()
