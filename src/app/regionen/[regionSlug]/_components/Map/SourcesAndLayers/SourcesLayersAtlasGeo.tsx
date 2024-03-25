@@ -8,9 +8,9 @@ import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQue
 import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
-  createSourceKey,
+  createSourceKeyAtlasGeo,
   createSourceSubcatStyleLayerKey,
-} from '../../utils/createKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
@@ -25,7 +25,7 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
 // But, it will create them again, when the source was unmounted.
 // TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
-export const SourcesAndLayers = () => {
+export const SourcesLayersAtlasGeo = () => {
   const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
@@ -41,7 +41,7 @@ export const SourcesAndLayers = () => {
               const sourceData = getSourceData(subcategoryConfig?.sourceId)
 
               // One source can be used by multipe subcategories, so we need to make the key source-category-specific.
-              const sourceId = createSourceKey(
+              const sourceId = createSourceKeyAtlasGeo(
                 categoryConfig.id,
                 sourceData.id,
                 subcategoryConfig.id,

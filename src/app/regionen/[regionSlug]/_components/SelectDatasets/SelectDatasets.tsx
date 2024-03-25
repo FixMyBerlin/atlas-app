@@ -5,7 +5,7 @@ import { useMap } from 'react-map-gl/maplibre'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { twJoin } from 'tailwind-merge'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
-import { createDatasetKey } from '../utils/createKeyUtils/createKeyUtils'
+import { createSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { ListOption } from './ListOption'
 import { iconFromLegend } from '../SidebarLayerControls/Legend/Legend'
 import { LegendNameDesc } from '../SidebarLayerControls/Legend/LegendNameDesc'
@@ -52,7 +52,7 @@ export const SelectDatasets: React.FC = () => {
         >
           {regionDatasets.map(
             ({ id, subId, name, description, attributionHtml, legends, isPublic }) => {
-              const key = createDatasetKey(id, subId)
+              const key = createSourceKeyStaticDatasets(id, subId)
               return (
                 <ListOption
                   key={key}

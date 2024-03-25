@@ -9,7 +9,7 @@ import { useSlug } from 'src/app/_hooks/useSlug'
 import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
 import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { createDatasetKey } from 'src/app/regionen/[regionSlug]/_components/utils/createKeyUtils/createKeyUtils'
+import { createSourceKeyStaticDatasets } from 'src/app/regionen/[regionSlug]/_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import getUploadWithRegions from 'src/uploads/queries/getUploadWithRegions'
 
 export default function AdminUploadPage() {
@@ -41,7 +41,7 @@ export default function AdminUploadPage() {
         {upload.regions.map((region) => {
           return configs.map((config) => {
             if (!config) return null
-            const key = createDatasetKey(upload.slug, config?.subId)
+            const key = createSourceKeyStaticDatasets(upload.slug, config?.subId)
             return (
               <Link
                 blank

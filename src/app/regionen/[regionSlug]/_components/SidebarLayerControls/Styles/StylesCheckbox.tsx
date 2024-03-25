@@ -4,7 +4,7 @@ import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQue
 import { twJoin } from 'tailwind-merge'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
-import { createSubcatStyleKey } from '../../utils/createKeyUtils/createKeyUtils'
+import { createSubcatStyleKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Legend } from '../Legend/Legend'
 
 type Props = {

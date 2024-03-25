@@ -4,11 +4,11 @@ import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+import { createSourceSubcatStyleLayerKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import {
-  createDatasetKey,
+  createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
-  createSourceSubcatStyleLayerKey,
-} from '../../utils/createKeyUtils/createKeyUtils'
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { categories: MapDataCategoryConfig[] | undefined }
@@ -75,7 +75,9 @@ export const useInteractiveLayers = () => {
     regionDatasets
       .filter((dataset) => dataset.inspector.enabled)
       .filter((dataset) => {
-        return selectedDatasetIds?.includes(createDatasetKey(dataset.id, dataset.subId))
+        return selectedDatasetIds?.includes(
+          createSourceKeyStaticDatasets(dataset.id, dataset.subId),
+        )
       })
       .map((dataset) => {
         return dataset.layers.map((layer) => {

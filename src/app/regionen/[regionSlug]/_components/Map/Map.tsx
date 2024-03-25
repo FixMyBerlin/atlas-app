@@ -16,10 +16,10 @@ import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
-import { SourcesAndLayers } from './SourcesAndLayers/SourcesAndLayers'
-import { SourcesLayerDatasets } from './SourcesAndLayers/SourcesLayerDatasets'
+import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
+import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
-import { SourcesLayerRegionalMask } from './SourcesAndLayers/SourcesLayerRegionalMask'
+import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
@@ -146,9 +146,9 @@ export const Map = () => {
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
-      <SourcesLayerRegionalMask />
-      <SourcesAndLayers />
-      <SourcesLayerDatasets />
+      <SourcesLayersRegionMask />
+      <SourcesLayersAtlasGeo />
+      <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
 
       <NavigationControl showCompass={false} />

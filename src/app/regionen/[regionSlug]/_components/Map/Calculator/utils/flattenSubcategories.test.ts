@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { createFreshCategoriesConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
-import { flattenSubcategories } from '../flattenSubcategories/flattenSubcategories'
+import { createFreshCategoriesConfig } from '../../../../_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
+import { flattenSubcategories } from './flattenSubcategories'
 import { uniqueArray } from 'src/app/_components/utils/uniqueArray'
 
 describe('flattenSubcategories()', () => {
