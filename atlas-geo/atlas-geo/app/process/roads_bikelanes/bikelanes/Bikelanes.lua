@@ -73,9 +73,6 @@ function Bikelanes(object)
           workingTags = tagsCenterline
         end
 
-        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        result_tags.oneway = Sanitize(tagsCycleway.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
-
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
         if sign == CENTER_SIGN then
@@ -89,6 +86,8 @@ function Bikelanes(object)
         result_tags.width = ParseLength(workingTags.width)
         result_tags.bridge = Sanitize(workingTags.bridge, Set({ "yes" }))
         result_tags.tunnel = Sanitize(workingTags.tunnel, Set({ "yes" }))
+        -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        result_tags.oneway = Sanitize(workingTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
         MergeTable(result_tags, DeriveSmoothness(workingTags))
         MergeTable(result_tags, DeriveSurface(workingTags))
 
