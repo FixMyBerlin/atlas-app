@@ -5,7 +5,7 @@ source ./process-helpers.sh
 log_start "$0"
 
 MAX_TRIES=12
-TIMEOUT_M=0
+TIMEOUT_M=10
 TIMEOUT_S=$(($TIMEOUT_M * 60))
 DATE_FORMAT="+%F"
 
@@ -13,7 +13,7 @@ file_date=""
 todays_date=$(date $DATE_FORMAT)
 remaining_tries=$MAX_TRIES
 
-while true ; do
+while [ $WAIT_FOR_FRESH_DATA == 1 ] ; do
    remaining_tries=$(($remaining_tries - 1))
   # get the file's date from the header
   file_date=$(curl -sI "$OSM_DOWNLOAD_URL" | grep -i "Last-Modified" | cut -d' ' -f2-)
@@ -25,11 +25,11 @@ while true ; do
   fi
 
   if [ "$remaining_tries" -lt "1" ]; then
-    log "File is from yesterday. We'll continue because we exceeded MAX_TRIES=$MAX_TRIES."
+    log "File is from $file_date. We'll continue because we exceeded MAX_TRIES=$MAX_TRIES."
     break
   fi
 
-  log "File is from yesterday. We'll retry in $TIMEOUT_M min. $remaining_tries tries remaining."
+  log "File is from $file_date. We'll retry in $TIMEOUT_M min. $remaining_tries tries remaining."
   sleep $TIMEOUT_S
 done
 
