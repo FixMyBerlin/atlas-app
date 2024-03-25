@@ -65,6 +65,7 @@ function Bikelanes(object)
           _infrastructureExists = true,
           category = category,
           offset = sign * RoadWidth(tagsCenterline) / 2, -- TODO: Should be `_offset`
+          sign = sign,
         }
 
         -- All our tag processing is done on either the transformed tags or the centerline tags
@@ -75,9 +76,7 @@ function Bikelanes(object)
 
         -- === Processing on the transformed dataset ===
         local freshTag = "check_date"
-        if sign == CENTER_SIGN then
-          result_tags.sign = CENTER_SIGN
-        else
+        if not (sign == CENTER_SIGN) then
           MergeTable(result_tags, tagsCycleway)
           freshTag = "check_date:" .. tagsCycleway.prefix
         end
