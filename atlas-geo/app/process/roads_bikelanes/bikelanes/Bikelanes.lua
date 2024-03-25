@@ -53,13 +53,13 @@ function Bikelanes(object)
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tagsCenterline, transformations)
 
-  for i, tagsCycleway in pairs(transformedObjects) do
-    local sign = tagsCycleway.sign
-    local onlyPresent = CategorizeOnlyPresent(tagsCycleway)
+  for i, cyclewayTags in pairs(transformedObjects) do
+    local sign = cyclewayTags.sign
+    local onlyPresent = CategorizeOnlyPresent(cyclewayTags)
     if onlyPresent ~= nil then
       result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
     else
-      local category = CategorizeBikelane(tagsCycleway)
+      local category = CategorizeBikelane(cyclewayTags)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
@@ -69,14 +69,14 @@ function Bikelanes(object)
         }
 
         -- All our tag processing is done on either the transformed tags or the centerline tags
-        local workingTags = tagsCycleway
+        local workingTags = cyclewayTags
         if sign == CENTER_SIGN then
           workingTags = tagsCenterline
         end
 
-        -- Handle `tagsCycleway`
+        -- Handle `cyclewayTags`
         if not (sign == CENTER_SIGN) then
-          MergeTable(result_tags, tagsCycleway)
+          MergeTable(result_tags, cyclewayTags)
         end
 
         -- Handle `workingTags`
@@ -93,7 +93,7 @@ function Bikelanes(object)
         if sign == CENTER_SIGN then
           result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline["check_date"]))
         else
-          local freshKey = "check_date:" .. tagsCycleway.prefix
+          local freshKey = "check_date:" .. cyclewayTags.prefix
           result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline[freshKey]))
         end
         CopyTags(result_tags, tagsCenterline, tags_copied)
