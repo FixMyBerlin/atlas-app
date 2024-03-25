@@ -14,10 +14,12 @@ download() {
 
 analyze() {
   if [ -z "${geojson+1}" ]; then
-    echo Please download a tile first or set \$geojson manually.
-  else
-    ./analyzeTile.ts $geojson "$@"
+    case $1 in -h|--help) ;; *)
+      echo Please download a tile first or set \$geojson manually.
+      return 0
+    ;; esac
   fi
+  ./analyzeTile.ts $geojson "$@"
 }
 
 echo Added commands warm, filter, sort, download and analyze. Use -h for help.
