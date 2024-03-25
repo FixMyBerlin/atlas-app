@@ -67,18 +67,21 @@ if (listProps || (!opts.prop && !opts.grouper)) {
   layers.forEach((layer) => {
     const props = getProps(layer)
     const tableData = props.map((prop) => {
-      const values = uniq(getValues(layer, prop))
+      let values = getValues(layer, prop)
+      const numUndefineds = values.filter((v) => v === undefined).length
+      const numValues = values.filter((v) => v !== undefined).length
       const valueTypes = getValueTypes(layer, prop)
+      const uniqValues = uniq(values).filter((v) => v !== undefined)
       let info: any = 'info'
+      let types: any = []
+
       if (valueTypes.includes('string')) {
-        const charLimit = 10
-        let strings = values
-          .sort()
-          .filter((v) => v !== undefined)
-          .map((s) => {
-            if (s.length > charLimit) s = s.slice(0, charLimit) + '…'
-            return s
-          })
+        const charLimit = 16
+        let strings = uniqValues.sort().map((s) => {
+          if (s.length > charLimit) s = s.slice(0, charLimit) + '…'
+          return s
+        })
+        types.push(`${numValues}/${uniqValues.length} str`)
 
         const arrayLimit = 5
         const length = strings.length
@@ -87,24 +90,23 @@ if (listProps || (!opts.prop && !opts.grouper)) {
           strings = strings.slice(0, arrayLimit)
           more = ` (${length - arrayLimit} more...)`
         }
-
-        if (valueTypes.includes('undefined')) {
-          strings.push('*undefined*')
-        }
-
         info = strings.join(', ')
         info += more
       } else if (valueTypes.includes('number')) {
-        const numbers = layer.features
-          .filter((f) => f.properties[prop] !== undefined)
-          .map((f) => f.properties[prop])
+        const numbers = uniqValues
         info = [`${min(numbers)} - ${max(numbers)}`]
-        if (valueTypes.includes('undefined')) {
-          info.push('*undefined*')
-        }
         info = info.join(', ')
+        types.push(`${numValues}/${uniqValues.length} num`)
       }
-      return { layer: layer.name, property: prop, values: info }
+
+      if (numUndefineds) types.push(`${numUndefineds} undef`)
+
+      return {
+        layer: layer.name,
+        property: prop,
+        types: types.join(', '),
+        values: info,
+      }
     })
     consoleTable(tableData)
   })
