@@ -32,7 +32,7 @@ local tags_prefixed = {
 }
 
 function Bikelanes(object)
-  local tagsCenterline = object.tags
+  local centerlineTags = object.tags
   local result_bikelanes = {}
 
   -- transformations
@@ -51,7 +51,7 @@ function Bikelanes(object)
 
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
-  local transformedObjects = GetTransformedObjects(tagsCenterline, transformations)
+  local transformedObjects = GetTransformedObjects(centerlineTags, transformations)
 
   for i, cyclewayTags in pairs(transformedObjects) do
     local sign = cyclewayTags.sign
@@ -64,14 +64,14 @@ function Bikelanes(object)
         local result_tags = {
           _infrastructureExists = true,
           category = category,
-          offset = sign * RoadWidth(tagsCenterline) / 2, -- TODO: Should be `_offset`
+          offset = sign * RoadWidth(centerlineTags) / 2, -- TODO: Should be `_offset`
           sign = sign,
         }
 
         -- All our tag processing is done on either the transformed tags or the centerline tags
         local workingTags = cyclewayTags
         if sign == CENTER_SIGN then -- center line case
-          workingTags = tagsCenterline
+          workingTags = centerlineTags
         else                        -- left/right case
           MergeTable(result_tags, cyclewayTags)
         end
@@ -86,15 +86,15 @@ function Bikelanes(object)
         MergeTable(result_tags, DeriveSmoothness(workingTags))
         MergeTable(result_tags, DeriveSurface(workingTags))
 
-        -- Handle `tagsCenterline`
+        -- Handle `centerlineTags`
         if sign == CENTER_SIGN then
-          result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline["check_date"]))
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags["check_date"]))
         else
           local freshKey = "check_date:" .. cyclewayTags.prefix
-          result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline[freshKey]))
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags[freshKey]))
         end
-        CopyTags(result_tags, tagsCenterline, tags_copied)
-        CopyTags(result_tags, tagsCenterline, tags_prefixed, 'osm_')
+        CopyTags(result_tags, centerlineTags, tags_copied)
+        CopyTags(result_tags, centerlineTags, tags_prefixed, 'osm_')
 
         result_bikelanes[i] = result_tags
       end
