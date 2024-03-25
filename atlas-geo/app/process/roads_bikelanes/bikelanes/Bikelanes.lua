@@ -85,6 +85,7 @@ function Bikelanes(object)
         result_tags.tunnel = Sanitize(workingTags.tunnel, Set({ "yes" }))
         -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
         result_tags.oneway = Sanitize(workingTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
+        result_tags.todos = ToMarkdownList(BikelanesTodos(workingTags, result_tags))
         MergeTable(result_tags, DeriveSmoothness(workingTags))
         MergeTable(result_tags, DeriveSurface(workingTags))
 
@@ -97,8 +98,6 @@ function Bikelanes(object)
         end
         CopyTags(result_tags, tagsCenterline, tags_copied)
         CopyTags(result_tags, tagsCenterline, tags_prefixed, 'osm_')
-
-        result_tags.todos = ToMarkdownList(BikelanesTodos(tagsCycleway, result_tags))
 
         result_bikelanes[i] = result_tags
       end
