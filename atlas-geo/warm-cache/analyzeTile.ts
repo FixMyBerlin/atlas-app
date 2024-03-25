@@ -2,11 +2,12 @@
 
 import { program, Option, Argument } from 'commander'
 import { flattenDeep, sumBy, min, max, uniq } from 'lodash'
-import { bbox, point, distance } from 'turf'
+import { bbox, point, distance, simplify } from '@turf/turf'
+// simplify does not work properly: https://github.com/Turfjs/turf/issues/2354
 // @ts-ignore
 import { consoleTable } from 'js-awe'
 
-import { checkFile, createParseIntOption, error, formatBytes } from './util'
+import { checkFile, createParseNumberOption, error, formatBytes } from './util'
 
 const argProp = ['-p, --prop <prop>', 'group by property <prop>']
 const argGroup = ['-g, --grouper <name>', 'specify grouping method']
@@ -21,7 +22,8 @@ const argGroup = ['-g, --grouper <name>', 'specify grouping method']
     .addOption(new Option(...argGroup).choices(['diagonals']))
     .addOption(new Option('-a, --sort-asc [column]', 'sort by size or group from low to high').conflicts('sortDesc').choices(['size', 'group']))
     .addOption(new Option('-d, --sort-desc [column]', 'sort by size or group from high to low').conflicts('sortAsc').choices(['size', 'group']))
-    .addOption(new Option('-n, --num-groups <count>', 'number of groups for numeric properties').default(10).argParser(createParseIntOption(2 , 100)))
+    .addOption(new Option('-n, --num-groups <count>', 'number of groups for numeric properties').default(10).argParser(createParseNumberOption(parseInt, 2 , 100)))
+    .addOption(new Option('-s, --simplify <tolerance>', 'simplify geometry using ramer-douglas-peucker').argParser(createParseNumberOption(parseFloat, 0.01 , 100)))
   program.addArgument(new Argument('<logfile>').argParser(checkFile))
   program.addArgument(new Argument('[property]'))
   program.showHelpAfterError('(add --help for additional information)');
@@ -63,7 +65,7 @@ if (opts.prop) {
   }
 }
 
-if (listProps || (!opts.prop && !opts.grouper)) {
+if (listProps || (!opts.prop && !opts.grouper && !opts.simplify)) {
   layers.forEach((layer) => {
     const props = getProps(layer)
     const tableData = props.map((prop) => {
@@ -191,14 +193,23 @@ layers.forEach((layer) => {
 
   grouper.prepare && grouper.prepare(layer)
 
+  // nc -> number of coordinates
+  // ncs -> number of coordinates simplified
   layer.features.forEach((feature) => {
     const group = grouper.getGroup(feature)
-    // console.log('X', group);
     if (!(group.key in breakdownByGroup)) {
-      breakdownByGroup[group.key] = { layer, group, ints: 0 }
+      breakdownByGroup[group.key] = { layer, group, nc: 0, ncs: 0 }
     }
-    const ints = flattenDeep(feature.geometry.coordinates).length
-    breakdownByGroup[group.key].ints += ints
+    const nc = flattenDeep(feature.geometry.coordinates).length
+    if (opts.simplify) {
+      const simplifiedFeature = simplify(feature, {
+        tolerance: opts.simplify,
+        highQuality: true,
+      })
+      const ncs = flattenDeep(simplifiedFeature.geometry.coordinates).length
+      breakdownByGroup[group.key].ncs += ncs / 2
+    }
+    breakdownByGroup[group.key].nc += nc / 2
   })
 })
 
@@ -207,8 +218,8 @@ const breakdown = Object.values(breakdownByGroup)
 const { sortAsc, sortDesc } = opts
 const sortOrder = sortDesc ? 'desc' : 'asc'
 let sortProp = sortDesc || sortAsc
-if (typeof sortProp !== 'string') sortProp = 'ints'
-const getSortKey = sortProp === 'ints' ? (row) => row.ints : (v) => v.group.key
+if (typeof sortProp !== 'string') sortProp = 'nc'
+const getSortKey = sortProp === 'nc' ? (row) => row.nc : (v) => v.group.key
 
 const sortingFn = (a: any, b: any) => {
   a = getSortKey(a)
@@ -223,20 +234,45 @@ if (sortOrder === 'desc') {
   breakdown.reverse()
 }
 
-const sumInts = sumBy(breakdown, ({ ints }) => ints)
+// we're doing serious stuff here so let's use some snake case
+// sum_c -> sum of all coords = total number of coords in tile
+// cum_c_fn -> cumulative summing function for coords
+// cum_cs_fn -> cumulative summing function for simplified coords
+// cum_c => cumulative sum of coords of group
+// cum_cs => cumulative sum of simplified coords of group
+const sum_c = sumBy(breakdown, ({ nc }) => nc)
 // prettier-ignore
-const cumulativeSum = ((sum) => (v) => (sum += v))(0)
+const cum_c_fn = ((sum) => (v) => (sum += v))(0)
+// prettier-ignore
+const cum_cs_fn = ((sum) => (v) => (sum += v))(0)
 consoleTable(
-  breakdown.map(({ layer, group, ints }) => {
-    const cumInts = cumulativeSum(ints)
-    return {
+  breakdown.map(({ layer, group, nc, ncs }) => {
+    const cum_c = cum_c_fn(nc)
+    const cum_cs = cum_cs_fn(ncs)
+    const formatSize = (nc) => formatBytes(nc * 8, false)
+    const formatPercent = (nc) => ((nc / sum_c) * 100).toFixed(1)
+    let row: any = {
       layer: layer.name,
       [opts.prop || opts.grouper]: group.label,
-      int32: ints,
-      size: formatBytes(ints * 4, false),
-      'size %': ((ints / sumInts) * 100).toFixed(1),
-      cum: formatBytes(cumInts * 4, false),
-      'cum %': ((cumInts / sumInts) * 100).toFixed(1),
+      coords: nc,
+      ' ': ncs,
+      size: formatSize(nc),
+      '    ': formatSize(ncs),
+      'size %': formatPercent(nc),
+      '      ': formatPercent(ncs),
+      cum: formatSize(cum_c),
+      '  ': formatSize(cum_cs),
+      'cum %': formatPercent(cum_c),
+      '   ': formatPercent(cum_cs),
     }
+    if (!opts.simplify) {
+      // remove all keys that start with a space
+      row = Object.fromEntries(
+        Object.entries(row).filter(([k, v]) => {
+          return !k.startsWith(' ')
+        }),
+      )
+    }
+    return row
   }),
 )

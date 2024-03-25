@@ -122,9 +122,9 @@ export function parseSizeOption(size) {
   return parsed
 }
 
-export function createParseIntOption(min, max) {
-  return function parseIntOption(s) {
-    const parsed = parseInt(s)
+export function createParseNumberOption(parse, min, max) {
+  return function (s) {
+    const parsed = parse(s)
     const err = (msg) => { throw new InvalidOptionArgumentError(msg) }
     if (isNaN(parsed)) err(`Could not parse "${s}".`)
     if (min !== undefined && parsed < min) err(`Too small - minimum is ${min}.`)
