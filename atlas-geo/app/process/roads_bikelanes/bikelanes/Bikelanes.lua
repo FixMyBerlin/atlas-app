@@ -70,12 +70,9 @@ function Bikelanes(object)
 
         -- All our tag processing is done on either the transformed tags or the centerline tags
         local workingTags = cyclewayTags
-        if sign == CENTER_SIGN then
+        if sign == CENTER_SIGN then -- center line case
           workingTags = tagsCenterline
-        end
-
-        -- Handle `cyclewayTags`
-        if not (sign == CENTER_SIGN) then
+        else                        -- left/right case
           MergeTable(result_tags, cyclewayTags)
         end
 
