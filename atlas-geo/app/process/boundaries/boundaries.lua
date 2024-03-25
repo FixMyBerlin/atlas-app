@@ -23,13 +23,24 @@ local labelTable = osm2pgsql.define_table({
   }
 })
 
-local statsTable = osm2pgsql.define_table({
-  name = 'boundaryStats',
+-- local bikelaneCategoryStats = osm2pgsql.define_table({
+--   name = 'bikelaneCategoryStats',
+--   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+--   columns = {
+--     { column = 'tags',                type = 'jsonb' },
+--     { column = 'meta',                type = 'jsonb' },
+--     { column = 'bikelane_categories', type = 'jsonb',       create_only = true },
+--     { column = 'geom',                type = 'multipolygon' },
+--   }
+-- })
+
+local presenceStats = osm2pgsql.define_table({
+  name = 'presenceStats',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags',                type = 'jsonb' },
     { column = 'meta',                type = 'jsonb' },
-    { column = 'bikelane_categories', type = 'jsonb',       create_only = true },
+    { column = 'presence_categories', type = 'jsonb',       create_only = true },
     { column = 'geom',                type = 'multipolygon' },
   }
 })
@@ -81,9 +92,16 @@ function osm2pgsql.process_relation(object)
     geom = object:as_multipolygon():centroid()
   })
 
-  local admin_levels = Set({ "4", "6", "7", "8" })
-  if admin_levels[tags.admin_level] then
-    statsTable:insert({
+  -- local admin_levels = Set({ "4", "6", "7", "8" })
+  -- if admin_levels[tags.admin_level] then
+  --   bikelaneCategoryStats:insert({
+  --     tags = results,
+  --     meta = Metadata(object),
+  --     geom = object:as_multipolygon()
+  --   })
+  -- end
+  if results.category_district or results.category_municipality then
+    presenceStats:insert({
       tags = results,
       meta = Metadata(object),
       geom = object:as_multipolygon()
