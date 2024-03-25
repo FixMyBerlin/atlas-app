@@ -20,7 +20,8 @@ import {
     .description('Filter logfile created by warmCache')
     .addOption(new Option('-e, --skip-errors', 'exclude warnings and errors').default(false))
     .addOption(new Option('-i, --skip-info', 'exclude additional information').default(false))
-    .addOption(new Option('-h, --hit', 'include only cache hits').conflicts('miss').default(false))
+    // -x to not mask --help
+    .addOption(new Option('-x, --hit', 'include only cache hits').conflicts('miss').default(false))
     .addOption(new Option('-m, --miss', 'include only cache misses').conflicts('hit').default(false))
     .addOption(new Option('-s, --size <bytes>', 'include if the tilesize is at least <bytes>').argParser(parseSizeOption).default(0))
     .addOption(new Option('-t, --time <seconds>', 'include if the response time is at least <seconds>').argParser(parseTimeOption).default(0))
