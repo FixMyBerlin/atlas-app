@@ -48,7 +48,7 @@ local roadsPathClassesTable = osm2pgsql.define_table({
 })
 
 local bikelanesTable = osm2pgsql.define_table({
-  name = '_bikelanes_temp',
+  name = 'bikelanes',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
