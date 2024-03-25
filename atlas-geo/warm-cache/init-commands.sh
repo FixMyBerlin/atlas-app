@@ -1,14 +1,15 @@
 #!/usr/bin/env zsh
 
-log=/tmp/warm.log
+log_file=/tmp/warm.log
+tiles_folder=tiles
 
-echo "\$log = \"$log\""
-alias warm='./warmCache.js | tee "$log"'
-alias filter='./filterLog.ts --skip-info --skip-errors "$log"'
-alias sort='./sortLog.ts "$log"'
+alias warm='./warmCache.js | tee "$log_file"'
+alias filter='./filterLog.ts --skip-info --skip-errors "$log_file"'
+alias sort='./sortLog.ts "$log_file"'
 
 download() {
-  geojson=$(./download-tile.sh $1)
+  mkdir -p tiles_folder
+  geojson=$(./downloadTile.js $1 $tiles_folder)
   echo "\$geojson = \"$geojson\""
 }
 
@@ -22,4 +23,6 @@ analyze() {
   ./analyzeTile.ts $geojson "$@"
 }
 
+echo \$log_file="'$log_file'"
+echo \tiles_folder="'tiles_folder'"
 echo Added commands warm, filter, sort, download and analyze. Use -h for help.

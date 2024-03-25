@@ -162,3 +162,19 @@ export function checkFile(filename) {
   if (fs.lstatSync(filename).isDirectory()) err(`'${filename}' is a directory.`)
   return filename
 }
+
+export function fileExists(path) {
+  try {
+    return fs.existsSync(path) && fs.lstatSync(path).isFile()
+  } catch (err) {
+    return false
+  }
+}
+
+export function folderExists(folderPath) {
+  try {
+    return fs.existsSync(folderPath) && fs.lstatSync(folderPath).isDirectory()
+  } catch (err) {
+    return false
+  }
+}
