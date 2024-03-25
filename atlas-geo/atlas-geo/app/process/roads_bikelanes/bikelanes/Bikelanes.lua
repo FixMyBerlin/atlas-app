@@ -67,6 +67,12 @@ function Bikelanes(object)
           offset = sign * RoadWidth(tagsCenterline) / 2, -- TODO: Should be `_offset`
         }
 
+        -- All our tag processing is done on either the transformed tags or the centerline tags
+        local workingTags = tagsCycleway
+        if sign == CENTER_SIGN then
+          workingTags = tagsCenterline
+        end
+
         -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
         result_tags.oneway = Sanitize(tagsCycleway.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
 
@@ -74,20 +80,20 @@ function Bikelanes(object)
         local freshTag = "check_date"
         if sign == CENTER_SIGN then
           result_tags.sign = CENTER_SIGN
-          tagsCycleway = tagsCenterline
         else
           MergeTable(result_tags, tagsCycleway)
           freshTag = "check_date:" .. tagsCycleway.prefix
         end
 
-        result_tags.width = ParseLength(tagsCycleway.width)
-        result_tags.bridge = Sanitize(tagsCycleway.bridge, Set({ "yes" }))
-        result_tags.tunnel = Sanitize(tagsCycleway.tunnel, Set({ "yes" }))
+        -- Handle `workingTags`
+        result_tags.width = ParseLength(workingTags.width)
+        result_tags.bridge = Sanitize(workingTags.bridge, Set({ "yes" }))
+        result_tags.tunnel = Sanitize(workingTags.tunnel, Set({ "yes" }))
+        MergeTable(result_tags, DeriveSmoothness(workingTags))
+        MergeTable(result_tags, DeriveSurface(workingTags))
 
+        -- Handle `tagsCenterline`
         result_tags.age = AgeInDays(ParseCheckDate(tagsCenterline[freshTag]))
-
-        MergeTable(result_tags, DeriveSmoothness(tagsCycleway))
-        MergeTable(result_tags, DeriveSurface(tagsCycleway))
         CopyTags(result_tags, tagsCenterline, tags_copied)
         CopyTags(result_tags, tagsCenterline, tags_prefixed, 'osm_')
 
