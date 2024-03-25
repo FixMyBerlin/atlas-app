@@ -72,8 +72,11 @@ function Bikelanes(object)
         local workingTags = cyclewayTags
         if sign == CENTER_SIGN then -- center line case
           workingTags = centerlineTags
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags["check_date"]))
         else                        -- left/right case
           MergeTable(result_tags, cyclewayTags)
+          local freshKey = "check_date:" .. cyclewayTags.prefix
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags[freshKey]))
         end
 
         -- Handle `workingTags`
@@ -86,13 +89,7 @@ function Bikelanes(object)
         MergeTable(result_tags, DeriveSmoothness(workingTags))
         MergeTable(result_tags, DeriveSurface(workingTags))
 
-        -- Handle `centerlineTags`
-        if sign == CENTER_SIGN then
-          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags["check_date"]))
-        else
-          local freshKey = "check_date:" .. cyclewayTags.prefix
-          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags[freshKey]))
-        end
+        -- copy original tags
         CopyTags(result_tags, centerlineTags, tags_copied)
         CopyTags(result_tags, centerlineTags, tags_prefixed, 'osm_')
 
