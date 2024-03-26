@@ -206,7 +206,12 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'bikeroutes',
+      title: 'Fahrradrouten',
+      desc: 'Ausgeschilderte Fahrradrouten aus OpenStreetMap',
+    },
   },
   {
     id: 'atlas_roads',
