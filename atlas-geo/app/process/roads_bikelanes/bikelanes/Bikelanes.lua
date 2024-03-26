@@ -32,7 +32,7 @@ local tags_prefixed = {
 }
 
 function Bikelanes(object)
-  local tags = object.tags
+  local centerlineTags = object.tags
   local result_bikelanes = {}
 
   -- transformations
@@ -51,47 +51,47 @@ function Bikelanes(object)
 
   -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
-  local transformedObjects = GetTransformedObjects(tags, transformations)
+  local transformedObjects = GetTransformedObjects(centerlineTags, transformations)
 
-  for i, cycleway in pairs(transformedObjects) do
-    local sign = cycleway.sign
-    local onlyPresent = CategorizeOnlyPresent(cycleway)
+  for i, cyclewayTags in pairs(transformedObjects) do
+    local sign = cyclewayTags.sign
+    local onlyPresent = CategorizeOnlyPresent(cyclewayTags)
     if onlyPresent ~= nil then
       result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
     else
-      local category = CategorizeBikelane(cycleway)
+      local category = CategorizeBikelane(cyclewayTags)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
           category = category,
-          offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
+          offset = sign * RoadWidth(centerlineTags) / 2, -- TODO: Should be `_offset`
+          sign = sign,
         }
 
-        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        result_tags.oneway = Sanitize(cycleway.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
-
-        -- === Processing on the transformed dataset ===
-        local freshTag = "check_date"
-        if sign == CENTER_SIGN then
-          result_tags.sign = CENTER_SIGN
-          result_tags.width = ParseLength(tags.width)
-          result_tags.bridge = Sanitize(tags.bridge, Set({ "yes" }))
-          result_tags.tunnel = Sanitize(tags.tunnel, Set({ "yes" }))
-        else
-          MergeTable(result_tags, cycleway)
-          freshTag = "check_date:" .. cycleway.prefix
-          result_tags.width = ParseLength(cycleway.width)
-          result_tags.bridge = Sanitize(cycleway.bridge, Set({ "yes" }))
-          result_tags.tunnel = Sanitize(cycleway.tunnel, Set({ "yes" }))
+        -- All our tag processing is done on either the transformed tags or the centerline tags
+        local workingTags = cyclewayTags
+        if sign == CENTER_SIGN then -- center line case
+          workingTags = centerlineTags
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags["check_date"]))
+        else                        -- left/right case
+          MergeTable(result_tags, cyclewayTags)
+          local freshKey = "check_date:" .. cyclewayTags.prefix
+          result_tags.age = AgeInDays(ParseCheckDate(centerlineTags[freshKey]))
         end
 
-        result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
-        result_tags.todos = ToMarkdownList(BikelanesTodos(cycleway, result_tags))
+        -- Handle `workingTags`
+        result_tags.width = ParseLength(workingTags.width)
+        result_tags.bridge = Sanitize(workingTags.bridge, Set({ "yes" }))
+        result_tags.tunnel = Sanitize(workingTags.tunnel, Set({ "yes" }))
+        -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        result_tags.oneway = Sanitize(workingTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
+        result_tags.todos = ToMarkdownList(BikelanesTodos(workingTags, result_tags))
+        MergeTable(result_tags, DeriveSmoothness(workingTags))
+        MergeTable(result_tags, DeriveSurface(workingTags))
 
-        MergeTable(result_tags, DeriveSmoothness(cycleway))
-        MergeTable(result_tags, DeriveSurface(cycleway))
-        CopyTags(result_tags, tags, tags_copied)
-        CopyTags(result_tags, tags, tags_prefixed, 'osm_')
+        -- copy original tags
+        CopyTags(result_tags, centerlineTags, tags_copied)
+        CopyTags(result_tags, centerlineTags, tags_prefixed, 'osm_')
 
         result_bikelanes[i] = result_tags
       end
