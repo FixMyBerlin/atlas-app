@@ -54,6 +54,9 @@ restore-log() {
 write-log() {
   case $1 in -h|--help)
     echo "Writes to logfile \"$logfile\"."
+    echo "Example call:"
+    echo "  filter --grep='\/roads\/(10|9)\/' | sort -d | write-log"
+    echo "  filter"
     return
   ;; esac
   local tmp=$logfile~
