@@ -10,7 +10,7 @@ type MapDataDatasetsSource = {
   subId?: string
   name: string
   /** @desc A quick-n-dirty way to get type savety for categories. The prefix is just to make type savety per region (or cluster of regions) possible. */
-  category: 'bb/Datenabgleich' | 'bb/Radnetz' | 'bb/Netzkonzeption' | null
+  category: 'bb/Bestandsdaten' | 'bb/Radnetze' | 'bb/Netzkonzeption' | 'bb/Landesdaten' | null
   description?: string
   attributionHtml: string
   inspector:
