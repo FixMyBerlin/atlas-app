@@ -13,11 +13,6 @@
 
 - `<NAME>_excluded` holds objects that where filtered during processing. This table is useful (only) for debugging.
 
-**Processing helper tables**
-
-- `_<NAME>_<POSTFIX>` are helper tables that are used during processing. They are irrelevant for the final result.
-- `_<NAME>_temp` are helper tables that make sure our `<NAME>_verified` setup does work. More at [`app/run-6-postprocess.sh`](/app/run-6-postprocess.sh)
-- `<NAME>_verification` – see above
 
 ## osm2pgsql lua files
 
