@@ -8,7 +8,6 @@ set -e
 source ./process-helpers.sh
 log_start "$0"
 
-log "Reminder: The 'bikelanes' table is available only after Postprocessing finished"
 run_lua "roads_bikelanes/roads_bikelanes"
 run_psql "roads_bikelanes/bikelanes/bikelanes"
 

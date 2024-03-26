@@ -8,7 +8,7 @@
 -- We also need a unique osm_id for our frontend code. As a workaround we use the offset sign.
 -- In turn this brakes updating tables via osm2pgsql
 UPDATE
-  "_bikelanes_temp"
+  "bikelanes"
 SET
   geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), (tags->>'offset')::numeric), 3857),
   osm_id = osm_id * SIGN((tags->>'offset')::numeric)
@@ -18,16 +18,16 @@ WHERE
   AND (tags->>'offset')::numeric != 0;
 
 UPDATE
-  "_bikelanes_temp"
+  "bikelanes"
 SET
   geom = ST_Reverse(geom)
 WHERE
   (tags->>'offset')::numeric > 0;
 
 
--- ALTER TABLE "_bikelanes_temp" DROP COLUMN "_offset";
+-- ALTER TABLE "bikelanes" DROP COLUMN "_offset";
 --IDEA: maybe we can transform closed geometries with some sort of buffer function:
 -- at least for the cases where we buffer "outside"(side=right) this should always yield a LineString
 -- IDEA 2: scale around center of geom (would require to estimate the scaling factor)
 -- Query below shows the geometries that would result in MultiLineString
--- SELECT * from "_bikelanes_temp" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
+-- SELECT * from "bikelanes" WHERE not ST_IsSimple(geom) or ST_IsClosed(geom);
