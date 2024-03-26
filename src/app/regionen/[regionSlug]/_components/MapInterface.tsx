@@ -9,7 +9,7 @@ import { DownloadModal } from './DownloadModal/DownloadModal'
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Map } from './Map/Map'
 import { OsmNotes } from './OsmNotes/OsmNotes'
-import { SelectDatasets } from './SelectDatasets/SelectDatasets'
+import { SelectDatasets } from './SidebarLayerControls/StaticDatasets/SelectDatasets'
 import { SidebarInspector } from './SidebarInspector/SidebarInspector'
 import { SidebarLayerControls } from './SidebarLayerControls/SidebarLayerControls'
 import { BackgroundLegend } from './background/BackgroundLegend'
@@ -42,7 +42,6 @@ export const MapInterface = () => {
           <LoadingIndicator />
           <OsmNotes />
           <DownloadModal />
-          <SelectDatasets />
           <SelectBackground />
           <BackgroundLegend />
         </div>
