@@ -41,7 +41,7 @@ export const SelectDatasets = ({
           <div className="mt-2 flex justify-between border-t border-t-gray-200 pt-2">
             <div
               className={twJoin(
-                'ml-2 flex w-full items-center text-sm leading-[17px]',
+                'ml-2 flex w-full flex-col items-start justify-center text-sm leading-[17px]',
                 active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
               )}
             >
