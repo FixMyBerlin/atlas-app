@@ -5,8 +5,6 @@ This file will setup our DB
 
 1. `initExportFunctions(exportApiIdentifier)`
    Create the PostgreSQL functions that are used by the export API in `src/pages/api/export/[tableName].ts`
-2. `initVerificationViews(verificationApiIdentifier)`
-   Create the post commit hook, tables and indexes that are required for our verification feature.
 
 Note: here exists a cross dependency between the front- and backend.
-This requires that the backend allways completes the processing before we start the frontend, otherwise we might miss some tables that we require in the view or function creation.
+This requires that the backend allways completes the processing before we start the frontend, otherwise we might miss some tables that we require in the function creation.
