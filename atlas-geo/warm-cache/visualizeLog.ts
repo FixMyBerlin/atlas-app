@@ -27,7 +27,7 @@ const fragment = 'ℹ Config = '
 const configLine = logData.find((line) => line.search(fragment) !== -1)
 let config: any = null
 if (!configLine) {
-  console.warn('logfile does not contain config.')
+  console.warn('logfile does not contain a config.')
 } else {
   // @ts-ignore
   config = JSON.parse(configLine.split(fragment)[1])
