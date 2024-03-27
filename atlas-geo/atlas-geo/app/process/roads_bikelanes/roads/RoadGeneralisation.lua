@@ -13,15 +13,11 @@ local minzoom11RoadClasses = Set({
 
 ---@param object_tags table
 ---@param result_tags table
----@return { minzoom: boolean|nil, maxzooom: boolean|nil}
+---@return integer
 --- Return the minzoom and maxzoom for roads
 function RoadGeneralisation(object_tags, result_tags)
-  local minzoom = nil
-  local maxzoom = nil
-
   if minzoom11RoadClasses[result_tags.road] then
-    minzoom = 11
+    return 11
   end
-
-  return { _minzoom = minzoom, _maxzoom = maxzoom }
+  return 30
 end
