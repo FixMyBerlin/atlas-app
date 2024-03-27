@@ -45,10 +45,10 @@ export const SelectDatasets = ({
     <Disclosure key={category}>
       {({ open }) => (
         <>
-          <div className="flex min-h-[3rem] justify-between border-t border-t-gray-200 ">
+          <Disclosure.Button className="group flex justify-between border-t border-t-gray-200 text-left hover:bg-yellow-50">
             <div
               className={twJoin(
-                'ml-2 mt-2 flex w-full flex-col items-start justify-start text-sm leading-[17px]',
+                'ml-2 flex min-h-[3rem] w-full flex-col items-start justify-start pt-2 text-sm leading-[17px]',
                 active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
               )}
             >
@@ -58,19 +58,19 @@ export const SelectDatasets = ({
                   'mt-0.5 pr-1.5 text-xs leading-3 text-gray-400',
                   open ? '' : 'w-44 min-w-full overflow-hidden overflow-ellipsis whitespace-nowrap',
                 )}
-                title={categorySubtitle}
+                title={open ? undefined : categorySubtitle}
               >
                 {categorySubtitle}
               </p>
             </div>
-            <Disclosure.Button className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
+            <div className="flex min-h-[3rem] flex-none items-center justify-center px-1 text-yellow-500">
               {open ? (
                 <ChevronDownIcon className="h-7 w-7" />
               ) : (
                 <ChevronLeftIcon className="h-7 w-7" />
               )}
-            </Disclosure.Button>
-          </div>
+            </div>
+          </Disclosure.Button>
 
           <Transition
             show={open}
