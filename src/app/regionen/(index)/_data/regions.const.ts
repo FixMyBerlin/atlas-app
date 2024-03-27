@@ -72,18 +72,14 @@ export type RegionSlug =
   | 'deutschland'
   | 'fahrradstellplaetze'
   | 'herrenberg'
-  | 'landhagen'
   | 'langerwehe'
   | 'lueneburg'
   | 'magdeburg'
   | 'mainz'
-  | 'nagold'
-  | 'neukloster-warin'
   | 'nudafa'
   | 'ostalbkreis'
   | 'parkraum'
   | 'rs8'
-  | 'sigmaringen'
   | 'testing'
   | 'trto'
   | 'woldegk'
@@ -300,52 +296,6 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: [...defaultBackgroundSources],
   },
   {
-    slug: 'neukloster-warin',
-    name: 'Neukloster Warin',
-    fullName: 'Amt Neukloster Warin',
-    osmRelationIds: [1515757],
-    map: { lat: 53.8662395, lng: 11.6846975, zoom: 11.5 },
-    bbox: {
-      min: [11.534335975016448, 53.75009742157375],
-      max: [11.82534463839858, 53.98345643670576],
-    },
-    externalLogoPath: 'https://layout.verwaltungsportal.de/8383/img/logo.png',
-    logoWhiteBackgroundRequired: true,
-    categories: [
-      // The order here specifies the order in the UI
-      'poi',
-      'bikelanes',
-      'roads',
-      'surface',
-      'lit',
-      'mapillary',
-    ],
-    backgroundSources: [...defaultBackgroundSources],
-  },
-  {
-    slug: 'landhagen',
-    name: 'Landhagen',
-    fullName: 'Amt Landhagen',
-    osmRelationIds: [1432580],
-    map: { lat: 54.102491, lng: 13.3433805, zoom: 11.5 },
-    bbox: {
-      min: [13.201584130847364, 53.95655346659909],
-      max: [13.553934829974303, 54.20224786738606],
-    },
-    externalLogoPath: 'https://www.landhagen.de/images/logo2.png',
-    logoWhiteBackgroundRequired: true,
-    categories: [
-      // The order here specifies the order in the UI
-      'poi',
-      'bikelanes',
-      'roads',
-      'surface',
-      'lit',
-      'mapillary',
-    ],
-    backgroundSources: [...defaultBackgroundSources],
-  },
-  {
     slug: 'woldegk',
     name: 'Woldegk',
     fullName: 'Amt Woldegk',
@@ -377,48 +327,6 @@ export const staticRegion: StaticRegion[] = [
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
     externalLogoPath: 'https://www.ostalbkreis.de/sixcms/media.php/18/OAK-Logo.svg',
     logoWhiteBackgroundRequired: true,
-    categories: [
-      // The order here specifies the order in the UI
-      'poi',
-      'bikelanes',
-      'roads',
-      'surface',
-      'lit',
-      'mapillary',
-    ],
-    backgroundSources: [...defaultBackgroundSources],
-  },
-  {
-    slug: 'sigmaringen',
-    name: 'Sigmaringen',
-    fullName: 'Stadt Sigmaringen',
-    osmRelationIds: [2806390],
-    map: { lat: 48.0856128, lng: 9.2175234, zoom: 10 },
-    // BBox für https://www.openstreetmap.org/relation/2806390
-    bbox: bboxToMinMax([8.9341838, 47.817339, 9.6053306, 48.288844]),
-    externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Wappen_Sigmaringen.svg',
-    logoWhiteBackgroundRequired: false,
-    categories: [
-      // The order here specifies the order in the UI
-      'poi',
-      'bikelanes',
-      'roads',
-      'surface',
-      'lit',
-      'mapillary',
-    ],
-    backgroundSources: [...defaultBackgroundSources],
-  },
-  {
-    slug: 'nagold',
-    name: 'Nagold',
-    fullName: 'Stadt Nagold',
-    osmRelationIds: [2946978],
-    map: { lat: 52.1364, lng: 11.6369, zoom: 13 },
-    // BBox für https://www.openstreetmap.org/relation/2946978
-    bbox: bboxToMinMax([8.5980675, 48.483931, 8.7732994, 48.6419759]),
-    externalLogoPath: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/DEU_Nagold_COA.svg',
-    logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
       'poi',
