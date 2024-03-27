@@ -34,6 +34,7 @@ local roadsTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -169,12 +170,12 @@ function osm2pgsql.process_way(object)
         geom = object:as_linestring()
       })
     else
-      MergeTable(results, RoadGeneralisation(tags, results))
 
       roadsTable:insert({
         tags = results,
         meta = Metadata(object),
-        geom = object:as_linestring()
+        geom = object:as_linestring(),
+        minzoom = RoadGeneralisation(tags, results)
       })
     end
   end
