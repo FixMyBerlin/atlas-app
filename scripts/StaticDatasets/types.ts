@@ -1,4 +1,5 @@
 import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
+import { StaticDatasetCategoryKey } from 'src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import {
   FileMapDataSubcategoryStyleLegend,
   MapDataSourceInspectorEditor,
@@ -10,7 +11,7 @@ type MapDataDatasetsSource = {
   subId?: string
   name: string
   /** @desc A quick-n-dirty way to get type savety for categories. The prefix is just to make type savety per region (or cluster of regions) possible. */
-  category: 'bb/Bestandsdaten' | 'bb/Radnetze' | 'bb/Netzkonzeption' | 'bb/Landesdaten' | null
+  category: StaticDatasetCategoryKey | null
   description?: string
   attributionHtml: string
   inspector:

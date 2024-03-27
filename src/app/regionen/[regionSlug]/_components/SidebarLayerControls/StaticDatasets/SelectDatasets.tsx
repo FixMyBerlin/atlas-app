@@ -1,11 +1,12 @@
 import { Disclosure, Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
+import { useState } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { useDataParam } from '../../../_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
+import { staticDatasetCategories } from '../../../_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import { createSourceKeyStaticDatasets } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { SelectDataset } from './SelectDataset'
-import { useState } from 'react'
 
 export const SelectDatasets = ({
   category,
@@ -36,7 +37,8 @@ export const SelectDatasets = ({
     setAllActive(false)
   }
 
-  const categoryName = category.split('/').at(-1)
+  const categoryTitle = staticDatasetCategories[category].title
+  const categorySubtitle = staticDatasetCategories[category].subtitle
   const active = dataParam.some((param) => allDatasetKeysForThisCategory.includes(param))
 
   return (
@@ -46,16 +48,19 @@ export const SelectDatasets = ({
           <div className="flex min-h-[3rem] justify-between border-t border-t-gray-200 ">
             <div
               className={twJoin(
-                'ml-2 flex w-full flex-col items-start justify-center text-sm leading-[17px]',
+                'ml-2 mt-2 flex w-full flex-col items-start justify-start text-sm leading-[17px]',
                 active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
               )}
             >
-              <h2 className="font-semibold">{categoryName}</h2>
+              <h2 className="font-semibold">{categoryTitle}</h2>
               <p
-                className="mt-0.5 w-44 min-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-xs leading-3 text-gray-400"
-                title={categoryName !== 'Statische Daten' ? categoryName : undefined}
+                className={twJoin(
+                  'mt-0.5 pr-1.5 text-xs leading-3 text-gray-400',
+                  open ? '' : 'w-44 min-w-full overflow-hidden overflow-ellipsis whitespace-nowrap',
+                )}
+                title={categorySubtitle}
               >
-                {categoryName !== 'Statische Daten' && 'Statische Daten'}
+                {categorySubtitle}
               </p>
             </div>
             <Disclosure.Button className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
