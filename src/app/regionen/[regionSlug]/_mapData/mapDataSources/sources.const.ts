@@ -24,14 +24,9 @@ export type SourcesId =
   | 'mapillary_trafficSigns'
 
 // Define the verification tables
+// TODO: this is redundant, as we also define this property with the attribute `verification.enabled`
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-export const verifiedTableIdentifier = <TId extends SourceVerificationApiIdentifier>(
-  tableName: TId,
-) => `${tableName.toLowerCase()}_verified` as `${Lowercase<TId>}_verified`
-export const verificationTableIdentifier: Record<SourceVerificationApiIdentifier, string> = {
-  bikelanes: 'BikelaneVerification',
-}
 
 // Define the export tables
 export const exportApiIdentifier = [
@@ -211,7 +206,12 @@ export const sources: MapDataSource<
     verification: { enabled: false },
     freshness: { enabled: false },
     calculator: { enabled: false },
-    export: { enabled: false },
+    export: {
+      enabled: true,
+      apiIdentifier: 'bikeroutes',
+      title: 'Fahrradrouten',
+      desc: 'Ausgeschilderte Fahrradrouten aus OpenStreetMap',
+    },
   },
   {
     id: 'atlas_roads',

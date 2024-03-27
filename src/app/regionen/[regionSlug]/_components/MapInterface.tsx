@@ -2,6 +2,7 @@
 
 import maplibregl from 'maplibre-gl'
 import { Protocol } from 'pmtiles'
+import { useEffect } from 'react'
 import { MapProvider } from 'react-map-gl/maplibre'
 import { DebugMap } from './DebugBoxes/DebugMap'
 import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
@@ -9,12 +10,10 @@ import { DownloadModal } from './DownloadModal/DownloadModal'
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Map } from './Map/Map'
 import { OsmNotes } from './OsmNotes/OsmNotes'
-import { SelectDatasets } from './SelectDatasets/SelectDatasets'
 import { SidebarInspector } from './SidebarInspector/SidebarInspector'
 import { SidebarLayerControls } from './SidebarLayerControls/SidebarLayerControls'
 import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
-import { useEffect } from 'react'
 
 export const MapInterface = () => {
   // Add PMTiles Protocol to be use by "Datasets"
@@ -42,7 +41,6 @@ export const MapInterface = () => {
           <LoadingIndicator />
           <OsmNotes />
           <DownloadModal />
-          <SelectDatasets />
           <SelectBackground />
           <BackgroundLegend />
         </div>

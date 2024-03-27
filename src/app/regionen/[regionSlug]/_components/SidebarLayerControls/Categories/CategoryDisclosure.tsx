@@ -6,7 +6,7 @@ import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useM
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { SubcategoriesCheckbox } from '../Subcategories/SubcategoriesCheckbox'
 import { SubcategoriesDropdown } from '../Subcategories/SubcategoriesDropdown'
-import { Toggle } from '../Toggle/Toggle'
+import { CategoryHeadlineToggle } from './CategoryHeadlineToggle'
 
 type Props = { categoryConfig: MapDataCategoryConfig; active: boolean }
 
@@ -36,11 +36,19 @@ export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active 
     <Disclosure key={currCategoryConfig.name}>
       {({ open }) => (
         <>
-          <div className="mt-2 flex justify-between border-t border-t-gray-200 pt-2 first:mt-0 first:border-t-transparent">
-            <Toggle active={active} handleChange={() => selectCategory(currCategoryConfig.id)}>
+          <div className="flex justify-between border-t border-t-gray-200 first:border-t-transparent">
+            <CategoryHeadlineToggle
+              active={active}
+              handleChange={() => selectCategory(currCategoryConfig.id)}
+            >
               <h2 className="font-semibold">{currCategoryConfig.name}</h2>
-              <p className="mt-1 text-xs leading-3 text-gray-400">{currCategoryConfig.desc}</p>
-            </Toggle>
+              <p
+                className="mt-0.5 w-44 min-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-xs leading-3 text-gray-400"
+                title={currCategoryConfig.desc}
+              >
+                {currCategoryConfig.desc}
+              </p>
+            </CategoryHeadlineToggle>
             <Disclosure.Button className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
               {open ? (
                 <ChevronDownIcon className="h-7 w-7" />

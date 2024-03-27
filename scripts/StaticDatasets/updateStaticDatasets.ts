@@ -1,14 +1,14 @@
 // We use bun.sh to run this file
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import fs from 'node:fs'
-import path from 'node:path'
 import os from 'node:os'
+import path from 'node:path'
+import pluralize from 'pluralize'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
-
 import { createUpload, getRegions } from './api'
-import { green, yellow, inverse, red } from './log'
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import pluralize from 'pluralize'
+import { green, inverse, red, yellow } from './log'
+import { MetaData } from './types'
 
 const pp = path.parse
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
@@ -212,7 +212,7 @@ for (const i in folderNames) {
     continue
   }
 
-  const metaData = await import_(folderName, 'meta', 'data', true)
+  const metaData = (await import_(folderName, 'meta', 'data', true)) as MetaData
   if (metaData === null) {
     continue
   }
