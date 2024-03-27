@@ -30,6 +30,7 @@ while [ $WAIT_FOR_FRESH_DATA == 1 ] ; do
 
   if [ "$remaining_tries" -lt "1" ]; then
     log "File is from $file_date. We'll continue because we exceeded MAX_TRIES=$MAX_TRIES."
+    alert "Data is not fresh. File is from $file_date."
     break
   fi
 
