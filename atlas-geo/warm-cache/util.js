@@ -1,8 +1,16 @@
+import fs from 'node:fs'
+import { InvalidArgumentError, InvalidOptionArgumentError } from 'commander'
 import chalk from 'chalk'
+import getStdin from 'get-stdin'
 
 export function log(...args) {
-  const t = (new Date(new Date().toUTCString())).toISOString().split('.')[0]
+  const t = new Date(new Date().toUTCString()).toISOString().split('.')[0]
   console.log(t, ...args)
+}
+
+export function error(message) {
+  console.error(message)
+  process.exit()
 }
 
 // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#ECMAScript_.28JavaScript.2FActionScript.2C_etc..29
@@ -15,7 +23,7 @@ export function lat2tile(lat, zoom) {
     ((1 -
       Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) /
       2) *
-      Math.pow(2, zoom)
+      Math.pow(2, zoom),
   )
 }
 
@@ -43,7 +51,7 @@ export function formatDuration(ms) {
 
 // https://stackoverflow.com/a/39906526
 const units = ['B', 'K', 'M', 'G']
-export function formatBytes(bytes) {
+export function formatBytes(bytes, colorOutput) {
   let l = 0
   let n = parseInt(bytes, 10) || 0
   while (n >= 1024 && ++l) {
@@ -53,27 +61,49 @@ export function formatBytes(bytes) {
   if (bytes === 0) {
     return chalk.red(formatted)
   }
-  return colorString(bytes, formatted, [
-    [2500000, [255, 0, 0]],
-    [1250000, [255, 128, 0]],
-    [500000, [255, 192, 0]],
-    [250000, [255, 255, 0]],
-  ])
+  if (colorOutput === undefined) colorOutput = true
+  if (colorOutput) {
+    formatted = colorString(bytes, formatted, [
+      [2500000, [255, 0, 0]],
+      [1250000, [255, 128, 0]],
+      [500000, [255, 192, 0]],
+      [250000, [255, 255, 0]],
+    ])
+  }
+  return formatted
+}
+
+export async function getLogData(filename) {
+  let input
+  if (process.stdin.isTTY === undefined) {
+    input = await getStdin()
+  } else {
+    input = await Bun.file(filename).text()
+  }
+  return input.trim().split('\n')
 }
 
 export function parseTime(time) {
+  if (time === undefined) return null
   const num = Number(time)
-  if (!isNaN(num)) return time
+  if (!isNaN(num)) return num
   const m = time.trim().match(/^([0-9]+\.[0-9]{3})s$/)
-  if (!m) error(`Could not parse time "${time}".`)
+  if (!m) return null
   return Number(m[1])
 }
 
+export function parseTimeOption(time) {
+  const parsed = parseTime(time)
+  if (parsed === null) throw new InvalidOptionArgumentError(`Could not parse "${time}".`)
+  return parsed
+}
+
 export function parseSize(size) {
+  if (size === undefined) return null
   const num = Number(size)
   if (!isNaN(num)) return num
   const m = size.trim().match(/^([0-9.]+)([BKMG])$/)
-  if (!m) error(`Could not parse size "${size}".`)
+  if (!m) return null
   let [_, bytes, unit] = m
   return Math.round(
     bytes *
@@ -82,24 +112,69 @@ export function parseSize(size) {
         K: 1024,
         M: 1024 ** 2,
         G: 1024 ** 3,
-      }[unit]
+      }[unit],
   )
 }
 
-export function displayHelp() {
-  console.log(
-    `
-Usage: ./filterLog.ts [OPTION]... [LOGFILE]...
-Filter Logfile.
-Example: ./filterLog.ts --grep=/roads/8 --hit --size=500K --time=1 warm-cache.log
+export function parseSizeOption(size) {
+  const parsed = parseSize(size)
+  if (parsed === null) throw new InvalidOptionArgumentError(`Could not parse "${size}".`)
+  return parsed
+}
 
-Filter options:
-  -e, --skip-errors do not display warnings and errors
-  -h, --hit         display only cache hits
-  -m, --miss        display only cache misses
-  -s, --size        display results where the tilesize is at least given size
-  -t, --time        display results where the response time is at least given time
-  -g, --grep        display results where the request line contains given string
-`.trim()
-  )
+export function createParseNumberOption(parse, min, max) {
+  return function (s) {
+    const parsed = parse(s)
+    const err = (msg) => { throw new InvalidOptionArgumentError(msg) }
+    if (isNaN(parsed)) err(`Could not parse "${s}".`)
+    if (min !== undefined && parsed < min) err(`Too small - minimum is ${min}.`)
+    if (max !== undefined && parsed > max) err(`Too big - maximum is ${max}.`)
+    return parsed
+  }
+}
+
+export function removeTimeStamp(line) {
+  return line.substring(line.indexOf(' ') + 1)
+}
+
+export function isRequest(line) {
+  return removeTimeStamp(line).startsWith('🡇')
+}
+
+export function isError(line) {
+  return removeTimeStamp(line).startsWith('⚠')
+}
+
+export function parseResponse(line) {
+  let [cacheStatus, timeFormatted, sizeFormatted] = line.slice(2).split(' - ')
+  return {
+    cacheStatus,
+    size: parseSize(sizeFormatted),
+    time: parseTime(timeFormatted),
+  }
+}
+
+export function checkFile(filename) {
+  const err = (msg) => {
+    throw new InvalidArgumentError(msg)
+  }
+  if (!fs.existsSync(filename)) err(`'${filename}' does not exist.`)
+  if (fs.lstatSync(filename).isDirectory()) err(`'${filename}' is a directory.`)
+  return filename
+}
+
+export function fileExists(path) {
+  try {
+    return fs.existsSync(path) && fs.lstatSync(path).isFile()
+  } catch (err) {
+    return false
+  }
+}
+
+export function folderExists(folderPath) {
+  try {
+    return fs.existsSync(folderPath) && fs.lstatSync(folderPath).isDirectory()
+  } catch (err) {
+    return false
+  }
 }

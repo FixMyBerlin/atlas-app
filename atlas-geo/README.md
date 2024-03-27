@@ -9,33 +9,25 @@
 This project handles the processing of geo data for [`atlas-app`](https://github.com/FixMyBerlin/atlas-app).
 The data is selected and optimize to make planning of bicycle infrastructure easier.
 
-`atlas-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with `pg_tileserve`. In addition, we support verifying OSM objects in a separate database.
+`atlas-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with [`martin`](https://github.com/maplibre/martin).
 
 ## Issues
 
 Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to create issues for this repository.
-
-## Production
 
 ### Server
 
 **Production:**
 
 - Tiles https://tiles.radverkehrsatlas.de/
-- API Docs https://api.radverkehrsatlas.de/docs/
-- API https://api.radverkehrsatlas.de/export/… (Links available via radverkehrsatlas.de)
 
 **Staging:**
 
 - Tiles https://staging-tiles.radverkehrsatlas.de/
-- API Docs https://staging-api.radverkehrsatlas.de/docs/
-- API https://staging-api.radverkehrsatlas.de/export/…
 
 **Development:**
 
 - Tiles http://localhost:7800/
-- API Docs http://localhost/docs/
-- API http://localhost/export/…
 
 ### Data update
 
@@ -46,8 +38,8 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 ### Deployment
 
 1. First https://github.com/FixMyBerlin/atlas-geo/actions runs.
-2. Then our Server IONOS builds the data. This take about 30 Min ATM.
-3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ has new data.
+2. Then our Server IONOS builds the data. This take about one hour ATM.
+3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ serve the new data.
 
 #### Skip CI Actions
 

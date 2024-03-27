@@ -49,18 +49,14 @@ fi
 process_end_time=$(date +%s)
 export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
 
-if ! ./run-6-postprocess.sh; then
-    alert '*ERROR*: #run-6-postprocess exited with non-zero status code'
+if ! ./run-6-metadata.sh; then
+    alert '*ERROR*: #run-6-metadata exited with non-zero status code'
 fi
 
-if ! ./run-7-metadata.sh; then
-    alert '*ERROR*: #run-7-metadata exited with non-zero status code'
+if ! ./run-7-warm-cache.sh; then
+    alert '*ERROR*: #run-7-warm-cache exited with non-zero status code'
 fi
 
-if ! ./run-8-warm-cache.sh; then
-    alert '*ERROR*: #run-8-warm-cache exited with non-zero status code'
-fi
-
-if ! ./run-9-analysis.sh; then
-    alert '*ERROR*: #run-9-analysis exited with non-zero status code'
+if ! ./run-8-analysis.sh; then
+    alert '*ERROR*: #run-8-analysis exited with non-zero status code'
 fi

@@ -53,45 +53,48 @@ function Bikelanes(object)
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
-  for i, cycleway in pairs(transformedObjects) do
-    local sign = cycleway.sign
-    local onlyPresent = CategorizeOnlyPresent(cycleway)
+  for i, transformedTags in pairs(transformedObjects) do
+    local sign = transformedTags.sign
+    local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
       result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
     else
-      local category = CategorizeBikelane(cycleway)
+      local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
           category = category,
           offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
+          sign = sign,
+          oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
+          bridge = Sanitize(tags.bridge, Set({ "yes" })),
+          tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
         }
 
-        -- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        result_tags.oneway = Sanitize(cycleway.oneway, Set({ 'yes', 'no' })) or InferOneway(category)
 
-        -- === Processing on the transformed dataset ===
-        local freshTag = "check_date"
-        if sign == CENTER_SIGN then
-          result_tags.sign = CENTER_SIGN
-          result_tags.width = ParseLength(tags.width)
-          result_tags.bridge = Sanitize(tags.bridge, Set({ "yes" }))
-          result_tags.tunnel = Sanitize(tags.tunnel, Set({ "yes" }))
-        else
-          MergeTable(result_tags, cycleway)
-          freshTag = "check_date:" .. cycleway.prefix
-          result_tags.width = ParseLength(cycleway.width)
-          result_tags.bridge = Sanitize(cycleway.bridge, Set({ "yes" }))
-          result_tags.tunnel = Sanitize(cycleway.tunnel, Set({ "yes" }))
+        -- NOTE: from here on we have three tag tables:
+        -- `tags` - the original tags from OSM
+        -- 'transformedTags' - the transformed tags
+        -- `workingTags` - is `transformedTags` for `left`|`right` and `tags` fro `self`
+        local workingTags = transformedTags
+        if sign == CENTER_SIGN then -- center line case
+          workingTags = tags
+          result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
+        else                        -- left/right case
+          MergeTable(result_tags, transformedTags)
+          local freshKey = "check_date:" .. transformedTags.prefix
+          result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
+        -- Handle `workingTags`
+        result_tags.width = ParseLength(workingTags.width)
+        -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
+        result_tags.todos = ToMarkdownList(BikelanesTodos(workingTags, result_tags))
+        MergeTable(result_tags, DeriveSmoothness(workingTags))
+        MergeTable(result_tags, DeriveSurface(workingTags))
 
-        result_tags.age = AgeInDays(ParseCheckDate(tags[freshTag]))
-
-        MergeTable(result_tags, DeriveSmoothness(cycleway))
-        MergeTable(result_tags, DeriveSurface(cycleway))
+        -- copy original tags
         CopyTags(result_tags, tags, tags_copied)
         CopyTags(result_tags, tags, tags_prefixed, 'osm_')
-        -- cycleway._todos = ToMarkdownList(BikelanesTodos(cycleway))
 
         result_bikelanes[i] = result_tags
       end
