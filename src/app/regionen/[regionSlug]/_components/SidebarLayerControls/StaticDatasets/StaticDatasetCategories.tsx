@@ -1,4 +1,5 @@
 import { useMap } from 'react-map-gl/maplibre'
+import { useDataParam } from '../../../_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { SelectDatasets } from './SelectDatasets'
 
@@ -6,6 +7,11 @@ export const StaticDatasetCategories = () => {
   const { mainMap } = useMap()
 
   const regionDatasets = useRegionDatasets()
+  const { dataParam, setDataParam } = useDataParam()
+
+  const toggleAll = (value: string[]) => {
+    void setDataParam(value)
+  }
 
   if (!mainMap) return null
   if (!regionDatasets?.length) return null
