@@ -1,20 +1,11 @@
 import { Disclosure, Listbox, Transition } from '@headlessui/react'
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  LinkIcon,
-  LockClosedIcon,
-} from '@heroicons/react/20/solid'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { isProd } from 'src/app/_components/utils/isEnv'
+import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { twJoin } from 'tailwind-merge'
 import { useDataParam } from '../../../_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { createSourceKeyStaticDatasets } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import { iconFromLegend } from '../Legend/Legend'
-import { LegendNameDesc } from '../Legend/LegendNameDesc'
 import { SelectDataset } from './SelectDataset'
+import { useState } from 'react'
 
 export const SelectDatasets = ({
   category,
@@ -24,15 +15,29 @@ export const SelectDatasets = ({
   datasets: ReturnType<typeof useRegionDatasets>
 }) => {
   const { dataParam, setDataParam } = useDataParam()
+  const [allActive, setAllActive] = useState(false)
 
   const onChange = (value: string[]) => {
     void setDataParam(value)
   }
+  const allDatasetKeysForThisCategory = datasets.map((d) =>
+    createSourceKeyStaticDatasets(d.id, d.subId),
+  )
+
+  const activateAll = () => {
+    const newDataParam = [...dataParam, ...allDatasetKeysForThisCategory]
+    setDataParam(newDataParam)
+    setAllActive(true)
+  }
+
+  const deactivateAll = () => {
+    const newDataParam = dataParam.filter((param) => !allDatasetKeysForThisCategory.includes(param))
+    setDataParam(newDataParam)
+    setAllActive(false)
+  }
 
   const categoryName = category.split('/').at(-1)
-  const active = dataParam.some((param) =>
-    datasets.map((d) => createSourceKeyStaticDatasets(d.id, d.subId)).includes(param),
-  )
+  const active = dataParam.some((param) => allDatasetKeysForThisCategory.includes(param))
 
   return (
     <Disclosure key={category}>
@@ -68,7 +73,24 @@ export const SelectDatasets = ({
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel static as="nav" className="mb-2 mt-3">
+            <Disclosure.Panel static as="nav" className="mb-2 mt-1">
+              <div className="mt-1 text-right">
+                {allActive ? (
+                  <button
+                    onClick={deactivateAll}
+                    className="rounded-md border border-gray-300 bg-gray-50 px-1 py-0.5 text-xs leading-none shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
+                  >
+                    Alle deaktivieren
+                  </button>
+                ) : (
+                  <button
+                    onClick={activateAll}
+                    className="rounded-md border border-gray-300 bg-gray-50 px-1 py-0.5 text-xs leading-none shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
+                  >
+                    Alle aktivieren
+                  </button>
+                )}
+              </div>
               <Listbox
                 key={category}
                 multiple
@@ -82,7 +104,7 @@ export const SelectDatasets = ({
                     <Listbox.Options
                       static
                       className={twJoin(
-                        'py-1 text-sm ring-1 ring-black ring-opacity-5 focus:outline-none',
+                        'py-1 text-sm focus:outline-none',
                         // Style all the hover state of all a-tags inside this element; Helps understand the click target when `attributionHtml` has embedded external links.
                         '[&_a:hover]:underline',
                       )}
