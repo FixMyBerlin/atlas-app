@@ -5,6 +5,7 @@ import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useState } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl'
 import {
+  AttributionControl,
   Map as MapGl,
   MapLayerMouseEvent,
   NavigationControl,
@@ -16,11 +17,11 @@ import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
-import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
-import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
-import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
+import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
+import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
+import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
@@ -143,6 +144,7 @@ export const Map = () => {
       // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
       RTLTextPlugin={null}
       minZoom={3}
+      attributionControl={false}
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
@@ -150,6 +152,7 @@ export const Map = () => {
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
+      <AttributionControl compact={true} position="bottom-left" />
 
       <NavigationControl showCompass={false} />
       <Calculator />
