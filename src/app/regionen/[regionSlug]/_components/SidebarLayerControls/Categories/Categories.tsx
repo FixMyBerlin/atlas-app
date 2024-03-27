@@ -11,7 +11,7 @@ export const Categories = () => {
     .map((categoryConfig) => categoryConfig.id)
 
   return (
-    <nav className="relative z-0 flex flex-col divide-x divide-gray-200">
+    <nav className="relative z-0 flex flex-col">
       {categoriesConfig.map((categoryConfig) => {
         if (!categoryConfig) return null
         const active = activeCategoryIds.includes(categoryConfig.id)

@@ -3,16 +3,21 @@ import { twJoin } from 'tailwind-merge'
 
 type Props = {
   active: boolean
-  desc?: string | null
+  titleAttribute?: string | null
   handleChange: () => void
   children: React.ReactNode
 }
 
-export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }) => {
+export const CategoryHeadlineToggle = ({
+  active,
+  titleAttribute,
+  handleChange,
+  children,
+}: Props) => {
   return (
     <Switch.Group
       as="div"
-      className="group flex min-h-[1.3rem] w-full cursor-pointer items-center justify-between"
+      className="group flex min-h-[3rem] w-full cursor-pointer items-center justify-between"
     >
       <Switch.Label
         as="div"
@@ -20,7 +25,7 @@ export const Toggle: React.FC<Props> = ({ active, desc, handleChange, children }
           'ml-2 w-full text-sm leading-[17px]',
           active ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-900',
         )}
-        title={desc ? desc : undefined}
+        title={titleAttribute ? titleAttribute : undefined}
       >
         {children}
       </Switch.Label>

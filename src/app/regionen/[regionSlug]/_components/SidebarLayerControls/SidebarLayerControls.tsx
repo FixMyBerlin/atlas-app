@@ -5,9 +5,11 @@ import { StaticDatasetCategories } from './StaticDatasets/StaticDatasetCategorie
 
 export const SidebarLayerControls = () => {
   return (
-    <section className="absolute left-0 top-0 max-h-full w-72 overflow-y-auto overflow-x-visible  bg-white pb-3 pt-1 shadow-md">
+    <section className="absolute left-0 top-0 max-h-full w-72 overflow-y-auto overflow-x-visible bg-white py-px shadow-md">
       <Suspense fallback={<SmallSpinner />}>
         <Categories />
+      </Suspense>
+      <Suspense fallback={<SmallSpinner />}>
         <StaticDatasetCategories />
       </Suspense>
     </section>

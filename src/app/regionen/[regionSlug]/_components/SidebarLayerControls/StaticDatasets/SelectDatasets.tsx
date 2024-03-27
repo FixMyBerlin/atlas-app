@@ -43,7 +43,7 @@ export const SelectDatasets = ({
     <Disclosure key={category}>
       {({ open }) => (
         <>
-          <div className="mt-2 flex justify-between border-t border-t-gray-200 pt-2">
+          <div className="flex min-h-[3rem] justify-between border-t border-t-gray-200 ">
             <div
               className={twJoin(
                 'ml-2 flex w-full flex-col items-start justify-center text-sm leading-[17px]',
@@ -51,7 +51,10 @@ export const SelectDatasets = ({
               )}
             >
               <h2 className="font-semibold">{categoryName}</h2>
-              <p className="mt-1 text-xs leading-3 text-gray-400">
+              <p
+                className="mt-0.5 w-44 min-w-full overflow-hidden overflow-ellipsis whitespace-nowrap text-xs leading-3 text-gray-400"
+                title={categoryName !== 'Statische Daten' ? categoryName : undefined}
+              >
                 {categoryName !== 'Statische Daten' && 'Statische Daten'}
               </p>
             </div>
