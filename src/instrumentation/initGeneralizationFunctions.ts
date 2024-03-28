@@ -33,6 +33,12 @@ export async function initGeneralizationFunctions(tables) {
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
+          `DROP INDEX IF EXISTS"${tableName}_geom_zoom_idx";`,
+        ),
+        prismaClientForRawQueries.$executeRawUnsafe(
+          `CREATE INDEX "${tableName}_geom_zoom_idx" ON roads USING gist(geom, minzoom);`,
+        ),
+        prismaClientForRawQueries.$executeRawUnsafe(
           `CREATE OR REPLACE
           FUNCTION public.${functionName}(z integer, x integer, y integer)
           RETURNS bytea AS $$
@@ -47,16 +53,16 @@ export async function initGeneralizationFunctions(tables) {
             END IF;
             SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'geom') FROM (
               select
-              *,
                 ST_AsMVTGeom(
-                    ST_Simplify(geom, tolerance, true),
+                    ST_CurveToLine(
+                      ST_Simplify(geom, tolerance, true)
+                    ),
                     ST_TileEnvelope(z, x, y),
                     4096, 64, true) AS geom,
                   ${columnNames}
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
-                and (not tags?'_minzoom' or z >= (tags->'_minzoom')::integer)
-                and (not tags?'_maxzoom' or z < (tags->'_maxzoom')::integer)
+                and  z >= minzoom
             ) AS tile WHERE geom IS NOT NULL;
             RETURN mvt;
           END
@@ -69,3 +75,57 @@ export async function initGeneralizationFunctions(tables) {
     }),
   )
 }
+
+// original adapted
+
+// CREATE OR REPLACE
+//           FUNCTION public.${functionName}(z integer, x integer, y integer)
+//           RETURNS bytea AS $$
+//           BEGIN
+//           SELECT ST_AsMVT(tile, "${functionName}", 4096, 'geom')
+//           FROM (
+//             SELECT
+//               ST_AsMVTGeom(
+//                   ST_Transform(ST_CurveToLine("geom"), 3857),
+//                   ST_TileEnvelope(z, x, y),
+//                   4096, 64, true
+//               ) AS geom
+//               , "meta", "minzoom", "osm_id", "osm_type", "tags"
+//             FROM
+//               "public".${tableName}
+//             WHERE
+//               "geom" && ST_Transform(ST_TileEnvelope(z, x, y, margin => 0.015625), 3857)
+
+//           ) AS tile;
+//           END
+//           $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;
+
+// with simplify
+//  `CREATE OR REPLACE
+//  FUNCTION public.${functionName}(z integer, x integer, y integer)
+//  RETURNS bytea AS $$
+//  DECLARE
+//    mvt bytea;
+//    tolerance float;
+//  BEGIN
+//    IF z BETWEEN 6 AND 14 THEN
+//      tolerance = 0;
+//    ELSE
+//      tolerance = 0;
+//    END IF;
+//    SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'g') FROM (
+//      select
+//      *,
+//        ST_AsMVTGeom(
+//            ST_CurveToLine(
+//              ST_Simplify(geom, tolerance, true)
+//            ),
+//            ST_TileEnvelope(z, x, y),
+//            4096, 64, true) AS g
+//      FROM "${tableName}"
+//      WHERE (geom && ST_TileEnvelope(z, x, y))
+//        and  z >= minzoom
+//    ) AS tile WHERE geom IS NOT NULL;
+//    RETURN mvt;
+//  END
+//  $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
