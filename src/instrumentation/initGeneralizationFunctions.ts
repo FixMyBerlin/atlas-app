@@ -14,8 +14,8 @@ export async function initGeneralizationFunctions(tables) {
         SELECT jsonb_object_agg(column_name, udt_name) - 'geom' AS fields
           FROM information_schema.columns
           WHERE table_schema = 'public' AND table_name = '${tableName}';`)
-      const { fields } = columnInformation && columnInformation[0]
-
+      const { fields } = columnInformation && columnInformation[0] // this object has the form {columnName: columnType}
+      const columnNames = Object.keys(fields).join(', ')
       // Get the geometric extent
       const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
         `SELECT Array[ST_XMIN(bbox),ST_YMIN(bbox),ST_XMAX(bbox),ST_YMAX(bbox)] as bounds
@@ -39,13 +39,14 @@ export async function initGeneralizationFunctions(tables) {
           DECLARE
             mvt bytea;
           BEGIN
-            SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'g') FROM (
+            SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'geom') FROM (
               select
               *,
                 ST_AsMVTGeom(
                     geom,
                     ST_TileEnvelope(z, x, y),
-                    4096, 64, true) AS g
+                    4096, 64, true) AS geom,
+                  ${columnNames}
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
                 and (not tags?'_minzoom' or z >= (tags->'_minzoom')::integer)
