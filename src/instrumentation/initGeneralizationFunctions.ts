@@ -18,17 +18,17 @@ export async function initGeneralizationFunctions(tables) {
 
       // Get the geometric extent
       const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
-        `SELECT ST_XMIN(bbox) AS xmin, ST_YMIN(bbox) AS ymin, ST_XMAX(bbox) AS xmax, ST_YMAX(bbox) AS ymax
+        `SELECT Array[ST_XMIN(bbox),ST_YMIN(bbox),ST_XMAX(bbox),ST_YMAX(bbox)] as bounds
           from (
             SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
               from ${tableName}
             ) extent;`,
       )
-      const { xmin, ymin, xmax, ymax } = bbox && bbox[0]
+      const { bounds } = bbox && bbox[0]
       // format as vector tile specifaction
       const tileSpecification = {
         vector_layers: [{ id: functionName, fields }],
-        bounds: [xmin, ymin, xmax, ymax],
+        bounds,
       }
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
