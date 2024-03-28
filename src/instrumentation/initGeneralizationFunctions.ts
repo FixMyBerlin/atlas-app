@@ -18,7 +18,7 @@ export async function initGeneralizationFunctions(tables) {
       const columnNames = Object.keys(fields).join(', ')
       // Get the geometric extent
       const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
-        `SELECT Array[ST_XMIN(bbox),ST_YMIN(bbox),ST_XMAX(bbox),ST_YMAX(bbox)] as bounds
+        `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
           from (
             SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
               from ${tableName}
