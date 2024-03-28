@@ -63,7 +63,7 @@ export async function initGeneralizationFunctions(tables) {
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
                 and  z >= minzoom
-            ) AS tile WHERE geom IS NOT NULL;
+            ) AS tile;
             RETURN mvt;
           END
           $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
