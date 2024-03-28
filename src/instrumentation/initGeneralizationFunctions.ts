@@ -38,12 +38,18 @@ export async function initGeneralizationFunctions(tables) {
           RETURNS bytea AS $$
           DECLARE
             mvt bytea;
+            tolerance float;
           BEGIN
+            IF z BETWEEN 6 AND 14 THEN
+              tolerance = POWER(2, 14-z);
+            ELSE
+              tolerance = 0;
+            END IF;
             SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'geom') FROM (
               select
               *,
                 ST_AsMVTGeom(
-                    geom,
+                    ST_Simplify(geom, tolerance, true),
                     ST_TileEnvelope(z, x, y),
                     4096, 64, true) AS geom,
                   ${columnNames}
