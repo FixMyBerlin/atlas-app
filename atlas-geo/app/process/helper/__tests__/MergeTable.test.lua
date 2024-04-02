@@ -1,4 +1,4 @@
-package.path = package.path .. ";app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
 require("MergeTable")
 
 print('=== Test MergeTable ===')
