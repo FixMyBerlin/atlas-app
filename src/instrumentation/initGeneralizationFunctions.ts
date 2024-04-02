@@ -15,7 +15,7 @@ export async function initGeneralizationFunctions(tables) {
           FROM information_schema.columns
           WHERE table_schema = 'public' AND table_name = '${tableName}';`)
       const { fields } = columnInformation && columnInformation[0] // this object has the form {columnName: columnType}
-      const columnNames = Object.keys(fields).join(', ')
+      const columnNames = Object.keys(fields)
       // Get the geometric extent
       const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
         `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
@@ -59,7 +59,9 @@ export async function initGeneralizationFunctions(tables) {
                     ),
                     ST_TileEnvelope(z, x, y),
                     4096, 64, true) AS geom,
-                  ${columnNames}
+                    ${columnNames.map(
+                      (column) => `CASE WHEN z > 0 THEN ${column} ELSE NULL END as ${column}`,
+                    )}
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
                 and  z >= minzoom
