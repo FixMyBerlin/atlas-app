@@ -1,4 +1,4 @@
-package.path = package.path .. ";app/process/roads_bikelanes/bikelanes/categories/?.lua"
+package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/categories/?.lua"
 require("IsTermInString")
 require("IsSidepath")
 

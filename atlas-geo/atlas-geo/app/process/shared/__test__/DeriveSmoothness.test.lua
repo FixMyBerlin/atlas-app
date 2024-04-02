@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
 require('DeriveSmoothness')
 
 print('=== Test DeriveSmoothness: surface "nil" returns "nil" ===')
