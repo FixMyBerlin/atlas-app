@@ -4,7 +4,6 @@ services:
     build:
       context: .
       dockerfile: ./app.Dockerfile
-    entrypoint: /app/run.sh
     container_name: app
     environment:
       PGHOST:

@@ -12,7 +12,7 @@ COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
 
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && \
-  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev curl && \
+  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev curl lua5.3 && \
   apt upgrade -y
 # LUA Libaries:
 # - "dkjson" used by parking.lua to write JSON for debugging
@@ -39,4 +39,4 @@ RUN mkdir /data
 COPY app /app/
 RUN npm install # for app/run-1-wait-for-fresh-data.js
 RUN chmod +x /app/*.sh
-CMD /app/run.sh
+ENTRYPOINT /app/run.sh
