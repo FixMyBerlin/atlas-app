@@ -130,7 +130,6 @@ function osm2pgsql.process_way(object)
       result.parent = nil                -- not used in atlas-app
       -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
-
       bikelanesTable:insert({
         tags = result,
         meta = Metadata(object),
