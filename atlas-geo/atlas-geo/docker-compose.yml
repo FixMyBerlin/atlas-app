@@ -32,7 +32,6 @@ services:
       - app_bridge
   app:
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
-    entrypoint: /app/run.sh
     container_name: app
     environment:
       PGHOST:
