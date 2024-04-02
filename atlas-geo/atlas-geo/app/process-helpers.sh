@@ -75,8 +75,49 @@ run_lua_if_debug() {
   fi
 }
 
+check_if_changed() {
+  hash_file=/hashsums/$(basename $1)
+  old_hash=""
+  if [ -f "${hash_file}" ]; then
+    old_hash=$(cat $hash_file)
+    echo -n > $hash_file
+  else
+    touch $hash_file
+  fi
+  find "$1" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
+  new_hash=$(cat $hash_file)
+  if [ "$old_hash" == "$new_hash" ]; then
+    echo "0"
+  else
+    echo "1"
+  fi
+}
+
 run_lua() {
-  log_start "$1.lua"
+  lua_file="${PROCESS_DIR}$1.lua"
+  log_start "$lua_file"
+
+  has_changed=$(check_if_changed $lua_file)
+  if [ $SKIP_DOWNLOAD == "1" ] && [ "$has_changed" == "0" ]; then
+    log "💥 SKIPPED $lua_file. The code hasn't changed."
+  else
+    table_info=$TABLE_LISTS$(basename -s .lua $lua_file)
+    touch $table_info
+    if [ "$has_changed" == "1" ] && [ "$COMPUTE_DIFFS" == "1" ]; then
+      tables_to_diff=$(cat $table_info) # get tables from last run
+      for table in $tables_to_diff; do backup_table $table; done
+    fi
+    ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$lua_file ${OSM_FILTERED_FILE}
+    lua $lua_file > $table_info # update available tables
+
+    # create diffs for all tables that where already available
+    if [ "$tables_to_diff" != "" ]; then
+      for table in $tables_to_diff; do
+      log "Creating diff for $table."
+      /app/compute_diff.sh $table
+      done
+    fi
+  fi
 
   start_time=$(seconds)
   # notify "PROCESS START – Topic: #$1 LUA"
@@ -86,7 +127,6 @@ run_lua() {
   # `--verbose` (for --log-level=debug)
   # `--log-sql`
   # maybe even `--log-sql-data` // "This will write out a huge amount of data! "
-  ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=${PROCESS_DIR}$1.lua ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
@@ -95,7 +135,7 @@ run_lua() {
 
   notify "#$1 #LUA finished in: *$run_time*"
 
-  log_end "$1.lua"
+  log_end "$1"
 }
 
 run_psql() {
