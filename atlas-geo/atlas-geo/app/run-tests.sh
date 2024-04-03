@@ -1,7 +1,8 @@
 #!/bin/bash
+# Run all test inside docker.
+# This file is used by `./run-tests.sh`
 
-# Find all files that end with .test.lua recursively in the current directory
-# and store their paths in the array "test_files"
+# Find all files that end with .test.lua recursively in the current directory and store their paths in the array "test_files"
 test_files=($(find . -name "*.test.lua"))
 
 # Loop through the array "test_files" and run each file with the "lua" command
