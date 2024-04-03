@@ -22,6 +22,7 @@ services:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
       TILES_URL:
+      COMPUTE_DIFFS:
     volumes:
       - osmfiles:/data
       - hashsums:/hashsums

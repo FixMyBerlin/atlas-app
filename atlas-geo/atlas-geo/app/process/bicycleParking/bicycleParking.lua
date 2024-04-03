@@ -1,4 +1,5 @@
 package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+require("DiffTables")
 require("CopyTags")
 require("Metadata")
 require("Set")

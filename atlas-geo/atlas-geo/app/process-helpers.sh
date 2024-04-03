@@ -82,6 +82,7 @@ check_if_changed() {
     old_hash=$(cat $hash_file)
     echo -n > $hash_file
   else
+    export COMPUTE_DIFFS=0
     touch $hash_file
   fi
   find "$1" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
@@ -93,8 +94,15 @@ check_if_changed() {
   fi
 }
 
+backup_table() {
+  psql -q -c "ALTER TABLE \"$1\" RENAME TO \"$1_backup\";"
+}
+
+
 run_lua() {
   lua_file="${PROCESS_DIR}$1.lua"
+  table_info=/hashsums/$(basename -s .lua $lua_file).table
+  touch $table_info
   log_start "$lua_file"
 
   has_changed=$(check_if_changed $lua_file)
@@ -135,7 +143,7 @@ run_lua() {
 
   notify "#$1 #LUA finished in: *$run_time*"
 
-  log_end "$1"
+  log_end "$lua_file"
 }
 
 run_psql() {
