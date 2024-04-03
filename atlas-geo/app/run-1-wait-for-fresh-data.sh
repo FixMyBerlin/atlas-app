@@ -4,16 +4,38 @@ set -e
 source ./process-helpers.sh
 log_start "$0"
 
-# use a file as a flag because it's not possible to pass arguments to docker restart
-FILE="/app/arguments/wait-for-fresh-data"
+MAX_TRIES=12
+TIMEOUT_M=10
+TIMEOUT_S=$(($TIMEOUT_M * 60))
+DATE_FORMAT="+%F"
 
-if test -f $FILE;
-  then
-    log "✓ Waiting for fresh data because $FILE exists."
-    rm $FILE
-    node ./run-1-wait-for-fresh-data.js $OSM_DOWNLOAD_URL
-  else
-    log "💥 SKIPPED because file $FILE does not exist."
+file_date=""
+todays_date=$(date $DATE_FORMAT)
+remaining_tries=$MAX_TRIES
+
+if [ $WAIT_FOR_FRESH_DATA != 1 ]; then
+  log "We are not waiting for fresh data."
 fi
+
+while [ $WAIT_FOR_FRESH_DATA == 1 ] ; do
+   remaining_tries=$(($remaining_tries - 1))
+  # get the file's date from the header
+  file_date=$(curl -sI "$OSM_DOWNLOAD_URL" | grep -i "Last-Modified" | cut -d' ' -f2-)
+  file_date=$(date -d "$file_date" "$DATE_FORMAT")
+  # if the file is from today break the loop
+  if [ "$todays_date" == "$file_date" ]; then
+    log "File is from today. Continuing"
+    break
+  fi
+
+  if [ "$remaining_tries" -lt "1" ]; then
+    log "File is from $file_date. We'll continue because we exceeded MAX_TRIES=$MAX_TRIES."
+    alert "Data is not fresh. File is from $file_date."
+    break
+  fi
+
+  log "File is from $file_date. We'll retry in $TIMEOUT_M min. $remaining_tries tries remaining."
+  sleep $TIMEOUT_S
+done
 
 log_end "$0"

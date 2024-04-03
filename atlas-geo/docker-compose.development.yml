@@ -15,6 +15,7 @@ services:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
       SKIP_WARM_CACHE:
+      WAIT_FOR_FRESH_DATA:
       DEBUG:
       ID_FILTER:
       API_SECRET:
