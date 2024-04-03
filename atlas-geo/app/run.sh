@@ -14,6 +14,7 @@ export ID_FILTER=${ID_FILTER:-''}
 export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token='
 
 source ./process-helpers.sh
+psql  -q -f ./JSONDiff.sql
 
 # Post messages to Synology Chat Channel
 # The alert `text` uses Markdown and #Hash tags to highlight the message in Synology Chat

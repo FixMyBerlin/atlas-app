@@ -6,7 +6,8 @@ package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
 package.path = package.path .. dir .. "bikelanes/categories/?.lua"
-
+package.path = package.path .. dir .. "bikeroutes/?.lua"
+require("DiffTables")
 require("Set")
 require("JoinSets")
 require("Metadata")
@@ -46,7 +47,7 @@ local roadsPathClassesTable = osm2pgsql.define_table({
 })
 
 local bikelanesTable = osm2pgsql.define_table({
-  name = 'bikelanes',
+  name = "bikelanes",
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'tags', type = 'jsonb' },
@@ -106,6 +107,7 @@ function osm2pgsql.process_way(object)
     length = formattedMeratorLengthMeters,
   }
 
+
   MergeTable(results, RoadClassification(object))
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
@@ -118,6 +120,8 @@ function osm2pgsql.process_way(object)
         result[k] = v
       end
       result.name = results.name
+
+
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
