@@ -148,4 +148,4 @@ cd /srv/processing && docker compose logs app --tail 500
 
 ## 💛 Thanks to
 
-This repo is highly inspired by and is containing code from [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing/tree/wip)
+The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
