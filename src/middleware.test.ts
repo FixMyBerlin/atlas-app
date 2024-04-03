@@ -29,13 +29,19 @@ describe('middleware()', () => {
       expect(getStatus(response)).toBe(200)
     })
 
+    test('Do nothing on /regionen', () => {
+      const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen')
+      const response = middleware(mockRequest)
+      expect(getStatus(response)).toBe(200)
+    })
+
     test('Do nothing on subpages of the map /regionen/:slug/foo', () => {
       const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/berlin/foo')
       const response = middleware(mockRequest)
       expect(getStatus(response)).toBe(200)
     })
 
-    test('Do nothing when region is unkown', () => {
+    test('Do nothing when region is unknown', () => {
       const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/unkownRegion')
       const response = middleware(mockRequest)
       expect(getStatus(response)).toBe(200)
@@ -53,7 +59,6 @@ describe('middleware()', () => {
       // But still handling the map params
       expect(typeof url.searchParams.get('map')).toBe('string')
       expect(typeof url.searchParams.get('config')).toBe('string')
-      expect(url.searchParams.get('theme')).toBe(null)
     })
 
     test('Redirect subpage when matching a renamed region', () => {
@@ -73,16 +78,6 @@ describe('middleware()', () => {
 
       expect(typeof url.searchParams.get('map')).toBe('string')
       expect(typeof url.searchParams.get('config')).toBe('string')
-    })
-
-    test('MIGRATION: Cleanup `theme` param', () => {
-      const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen/berlin?theme=foobar')
-      const response = middleware(mockRequest)
-      const url = getUrl(response)
-
-      expect(typeof url.searchParams.get('map')).toBe('string')
-      expect(typeof url.searchParams.get('config')).toBe('string')
-      expect(url.searchParams.get('theme')).toBe(null)
     })
 
     test('MIGRATION: Migrate `lat`, `lng`, `zoom` params to `map` param', () => {
@@ -166,6 +161,20 @@ describe('middleware()', () => {
       expect(urlMigrated.toString().match(/config=/g)?.length).toBe(1)
       expect(urlMigrated.toString().match(/map=/g)?.length).toBe(1)
       expect(urlMigrated.toString().match(/topics=/g)?.length).toBe(undefined)
+    })
+
+    test('CLEANUP: Remove unused params', () => {
+      const mockRequest = new NextRequest(
+        'http://127.0.0.1:5173/regionen/berlin?theme=theme&config=config&foo=foo&bar=bar&map=map',
+      )
+      const response = middleware(mockRequest)
+      const url = getUrl(response)
+
+      expect(url.searchParams.get('theme')).toBe(null)
+      expect(url.searchParams.get('foo')).toBe(null)
+      expect(url.searchParams.get('bar')).toBe(null)
+      expect(typeof url.searchParams.get('map')).toBe('string')
+      expect(typeof url.searchParams.get('config')).toBe('string')
     })
   })
 })
