@@ -10,7 +10,7 @@
     "dev:up": "docker compose -f docker-compose.development.yml --profile osm_processing up",
     "postdev": "docker compose stop",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
-    "test": "chmod +x ./run_tests.sh && ./run_tests.sh",
+    "test": "chmod +x ./run-tests.sh && ./run-tests.sh",
     "cleanup": "docker system prune --force && docker system prune --force --volumes"
   },
   "devDependencies": {
