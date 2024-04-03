@@ -76,6 +76,7 @@ run_lua_if_debug() {
 }
 
 check_if_changed() {
+  directory=$(dirname $1)
   hash_file=/hashsums/$(basename $1)
   old_hash=""
   if [ -f "${hash_file}" ]; then
@@ -85,7 +86,7 @@ check_if_changed() {
     export COMPUTE_DIFFS=0
     touch $hash_file
   fi
-  find "$1" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
+  find "$directory" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
   new_hash=$(cat $hash_file)
   if [ "$old_hash" == "$new_hash" ]; then
     echo "0"

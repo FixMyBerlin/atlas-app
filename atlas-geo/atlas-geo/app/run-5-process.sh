@@ -8,6 +8,12 @@ set -e
 source ./process-helpers.sh
 log_start "$0"
 
+helpers_changed=$(check_if_changed /app/process/helper/helper)
+if [ "$helpers_changed" == "1" ]; then
+  log "Helpers have changed. Deleting all hashsums!"
+  rm -f /hashsums/*.lua
+fi
+
 run_lua "roads_bikelanes/roads_bikelanes"
 run_psql "roads_bikelanes/bikelanes/bikelanes"
 
