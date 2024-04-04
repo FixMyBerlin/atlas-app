@@ -114,17 +114,19 @@ run_lua() {
     table_info=$TABLE_LISTS$(basename -s .lua $lua_file)
     touch $table_info
     if [ "$has_changed" == "1" ] && [ "$COMPUTE_DIFFS" == "1" ]; then
-      tables_to_diff=$(cat $table_info) # get tables from last run
-      for table in $tables_to_diff; do backup_table $table; done
+    tables_to_diff=$(cat $table_info)
+      for table in $tables_to_diff; do # iterate over tables from last run
+        psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
+      done
+      echo -n > $table_info # clear file in case processing craches
     fi
     ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$lua_file ${OSM_FILTERED_FILE}
     lua $lua_file > $table_info # update available tables
-
     # create diffs for all tables that where already available
     if [ "$tables_to_diff" != "" ]; then
       for table in $tables_to_diff; do
-      log "Creating diff for $table."
-      /app/compute_diff.sh $table
+        log "Creating diff for $table."
+        /app/compute_diff.sh $table
       done
     fi
   fi
