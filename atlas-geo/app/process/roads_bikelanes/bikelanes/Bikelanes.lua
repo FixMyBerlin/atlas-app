@@ -47,35 +47,33 @@ function Bikelanes(object)
     prefix = "cycleway",
   }
 
-  -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
+  -- generate cycleways from center line tagging, also includes the original object with `side = self`
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
   for i, transformedTags in pairs(transformedObjects) do
-    local sign = transformedTags.sign
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
-      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
+      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, _side = transformedTags._side }
     else
       local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
           category = category,
-          offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
-          sign = sign,
+          _offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
+          _side = transformedTags._side,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
         }
 
-
-        if sign == CENTER_SIGN then -- center line case
+        if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
           result_tags.prefix = ''
         else                        -- left/right case
           MergeTable(result_tags, transformedTags)
-          local freshKey = "check_date:" .. transformedTags.prefix
+          local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
         -- Handle `transformedTags`
