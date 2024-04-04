@@ -27,7 +27,7 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setInspector, setMapLoaded, setMapDataLoading } = useMapStateInteraction()
+  const { setInspectorFeatures, setMapLoaded, setMapDataLoading } = useMapStateInteraction()
   const region = useStaticRegion()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
@@ -40,7 +40,7 @@ export const Map = () => {
 
   const handleClick = (event: MapLayerMouseEvent) => {
     // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
-    event.features && setInspector(event.features as MapGeoJSONFeature[])
+    event.features && setInspectorFeatures(event.features as MapGeoJSONFeature[])
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {

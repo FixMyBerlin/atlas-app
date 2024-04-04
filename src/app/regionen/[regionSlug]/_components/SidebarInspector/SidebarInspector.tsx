@@ -5,7 +5,7 @@ import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
 
 export const SidebarInspector: React.FC = () => {
-  const { getUniqueInspectorFeatures, resetInspector } = useMapStateInteraction()
+  const { getUniqueInspectorFeatures, resetInspectorFeatures } = useMapStateInteraction()
   const features = getUniqueInspectorFeatures()
 
   if (!features.length) return null
@@ -13,7 +13,7 @@ export const SidebarInspector: React.FC = () => {
   return (
     <div className="absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md">
       <Suspense fallback={<Spinner />}>
-        <InspectorHeader count={features.length} handleClose={() => resetInspector()} />
+        <InspectorHeader count={features.length} handleClose={() => resetInspectorFeatures()} />
 
         <Inspector features={features} />
       </Suspense>

@@ -33,8 +33,8 @@ export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
   unfilteredInspectorFeatures: MapGeoJSONFeature[]
   getUniqueInspectorFeatures: () => MapGeoJSONFeature[]
-  setInspector: (inspectObject: Store['unfilteredInspectorFeatures']) => void
-  resetInspector: () => void
+  setInspectorFeatures: (inspectObject: Store['unfilteredInspectorFeatures']) => void
+  resetInspectorFeatures: () => void
 }
 
 export type StoreCalculator = {
@@ -81,8 +81,9 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
       return result
     }, [])
   },
-  setInspector: (inspectorFeatures) => set({ unfilteredInspectorFeatures: inspectorFeatures }),
-  resetInspector: () => set({ unfilteredInspectorFeatures: [] }),
+  setInspectorFeatures: (inspectorFeatures) =>
+    set({ unfilteredInspectorFeatures: inspectorFeatures }),
+  resetInspectorFeatures: () => set({ unfilteredInspectorFeatures: [] }),
 
   // Data for <Inspector> AND <LayerHighlight>
   calculatorAreasWithFeatures: [],
