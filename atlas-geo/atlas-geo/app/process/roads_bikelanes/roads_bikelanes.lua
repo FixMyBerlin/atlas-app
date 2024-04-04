@@ -105,12 +105,7 @@ function osm2pgsql.process_way(object)
       result.road = results.road
 
       -- Hacky cleanup tags we don't need to make the file smaller
-      result._infrastructureExists = nil -- not used in atlas-app
       result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
-      result.sign = nil                  -- not used in atlas-app
-      result.side = nil                  -- not used in atlas-app
-      -- result.offset = nil                -- not used in atlas-app -- DANGER: This one is used in bikelanes.sql
-      result.parent = nil                -- not used in atlas-app
       -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
 
