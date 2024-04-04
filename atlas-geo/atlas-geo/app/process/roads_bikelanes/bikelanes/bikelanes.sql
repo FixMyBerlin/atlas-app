@@ -10,8 +10,7 @@
 UPDATE
   "bikelanes"
 SET
-  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), (tags->>'offset')::numeric), 3857),
-  osm_id = osm_id * SIGN((tags->>'offset')::numeric)
+  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), (tags->>'offset')::numeric), 3857)
 WHERE
   ST_IsSimple(geom)
   AND NOT ST_IsClosed(geom)

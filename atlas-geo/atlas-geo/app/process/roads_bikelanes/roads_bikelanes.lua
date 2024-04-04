@@ -47,13 +47,16 @@ local roadsPathClassesTable = osm2pgsql.define_table({
 })
 
 local bikelanesTable = osm2pgsql.define_table({
-  name = "bikelanes",
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  name = 'bikelanes',
+  -- Note: We populate a custom `osm_id` (with unique ID values) below.
+  ids = { type = 'any', id_column = 'internal_id', type_column = 'osm_type' },
   columns = {
+    { column = 'osm_id', type = 'text', not_null = true},
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
-  }
+  },
+  indexes = {{column = 'osm_id', method = 'gist'}}
 })
 
 
@@ -125,6 +128,14 @@ function osm2pgsql.process_way(object)
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
+      -- if osm2pgsql.stage == 2 then
+      --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      -- end
+
+      local signSideMapping = {[LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth'}
+
+      local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
+
       -- Hacky cleanup tags we don't need to make the file smaller
       result._infrastructureExists = nil -- not used in atlas-app
       result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
@@ -134,7 +145,9 @@ function osm2pgsql.process_way(object)
       result.parent = nil                -- not used in atlas-app
       -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
+
       bikelanesTable:insert({
+        osm_id = id,
         tags = result,
         meta = Metadata(object),
         geom = object:as_linestring()
