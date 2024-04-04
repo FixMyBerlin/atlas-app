@@ -66,10 +66,6 @@ const migration: UrlMigration = function (initialUrl) {
   const region = staticRegion.find((r) => r.slug === regionSlug)
   if (!region) return initialUrl
 
-  if (!url.searchParams.get('map')) {
-    url.searchParams.append('map', serializeMapParam(region.map))
-  }
-
   const freshConfig = createFreshCategoriesConfig(region.categories)
   const migratedConfig = configCustomStringify(
     configCustomParse(url.searchParams.get('config'), freshConfig),

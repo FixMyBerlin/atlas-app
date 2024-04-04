@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { describe, expect, test } from 'vitest'
 import { middleware } from './middleware'
+import { parseMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 
 function getStatus(response: ReturnType<typeof middleware>) {
   // @ts-expect-error response is not type correctly
@@ -167,6 +168,19 @@ describe('middleware()', () => {
       expect(urlMigrated.toString().match(/config=/g)?.length).toBe(1)
       expect(urlMigrated.toString().match(/map=/g)?.length).toBe(1)
       expect(urlMigrated.toString().match(/topics=/g)?.length).toBe(undefined)
+    })
+
+    test('TEST: Invalid map param is handled properly', () => {
+      // see also useMapParam.test.ts
+      let response = middleware(
+        new NextRequest('http://127.0.0.1:5173/regionen/bibi?map=11/48.9/9.9'),
+      )
+      let map = getUrl(response).searchParams.get('map')!
+      expect(parseMapParam(map)).toStrictEqual({ zoom: 11, lat: 48.9, lng: 9.9 })
+
+      response = middleware(new NextRequest('http://127.0.0.1:5173/regionen/bibi?map=11/48A9/9.9'))
+      map = getUrl(response).searchParams.get('map')!
+      expect(parseMapParam(map)).toHaveProperty('zoom')
     })
 
     test('CLEANUP: Remove unused params', () => {

@@ -3,13 +3,17 @@ import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regio
 
 export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 
-const parseMapParam = (query: string) => {
-  const splitQuery = query.split('/')
-  return {
-    zoom: Number(splitQuery[0] ?? mapParamFallback.zoom),
-    lat: Number(splitQuery[1] ?? mapParamFallback.lat),
-    lng: Number(splitQuery[2] ?? mapParamFallback.lng),
-  }
+export const parseMapParam = (query: string) => {
+  const [zoom, lat, lng] = query.split('/').map((s) => {
+    const n = Number(s)
+    return isNaN(n) ? null : n
+  })
+  if ([zoom, lat, lng].includes(null)) return null
+  // https://docs.mapbox.com/help/glossary/zoom-level/
+  if (zoom! < 0 || zoom! > 22) return null
+  if (lat! < -90 || lat! > 90) return null
+  if (lng! < -180 || lng! > 180) return null
+  return { zoom, lat, lng }
 }
 
 export const serializeMapParam = ({

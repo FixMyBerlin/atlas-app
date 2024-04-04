@@ -2,6 +2,7 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
 import { staticRegion } from './app/regionen/(index)/_data/regions.const'
+import { parseMapParam, serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
@@ -67,10 +68,12 @@ export function middleware(request: NextRequest) {
     !usedParams.includes(key) && u.searchParams.delete(key)
   })
 
-  // TODO: Make sure param "map" is valid
-  // if (mapParamIsNotValid) {
-  //   url.searchParams.set('map', validMapParam)
-  // }
+  // Make sure param 'map' is valid
+  const map = u.searchParams.get('map')
+  if (!map || !parseMapParam(map)) {
+    const region = staticRegion.find((r) => r.slug === slug)
+    u.searchParams.set('map', serializeMapParam(region!.map))
+  }
 
   // TODO: Make sure param "config" is valid
   // if (configParamIsNotValid) {
