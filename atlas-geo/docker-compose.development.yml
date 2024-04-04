@@ -68,6 +68,8 @@ services:
     configs:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
+      - source: postgres_init
+        target: /docker-entrypoint-initdb.d/11-postgres.sql
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
     container_name: db
     healthcheck:
@@ -82,3 +84,5 @@ volumes:
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
+  postgres_init:
+    file: ./configs/postgres-init.sql
