@@ -1,8 +1,14 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
-import { staticRegion } from './app/regionen/(index)/_data/regions.const'
-import { parseMapParam, serializeMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
+import {
+  parseMapParam,
+  serializeMapParam,
+} from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
+import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
+import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
@@ -68,17 +74,21 @@ export function middleware(request: NextRequest) {
     !usedParams.includes(key) && u.searchParams.delete(key)
   })
 
+  const region = staticRegion.find((r) => r.slug === slug) as StaticRegion
+
   // Make sure param 'map' is valid
   const map = u.searchParams.get('map')
   if (!map || !parseMapParam(map)) {
-    const region = staticRegion.find((r) => r.slug === slug)
-    u.searchParams.set('map', serializeMapParam(region!.map))
+    u.searchParams.set('map', serializeMapParam(region.map))
   }
 
-  // TODO: Make sure param "config" is valid
-  // if (configParamIsNotValid) {
-  //   url.searchParams.set('config', validConfigParam)
-  // }
+  // Make sure param 'config' is valid
+  const freshConfig = createFreshCategoriesConfig(region.categories)
+  const migratedConfig = configCustomStringify(
+    configCustomParse(u.searchParams.get('config'), freshConfig),
+  )
+  u.searchParams.delete('config')
+  u.searchParams.append('config', migratedConfig)
 
   migratedUrl = u.toString()
 

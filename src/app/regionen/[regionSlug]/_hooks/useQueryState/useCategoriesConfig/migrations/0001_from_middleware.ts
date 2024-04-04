@@ -61,18 +61,6 @@ const migration: UrlMigration = function (initialUrl) {
     url.searchParams.delete('zoom')
   }
 
-  // INITIALIZATION: Make sure every map has a `map` and `config` param
-  // We cannot use `useStaticRegion` here, so we do it manually
-  const region = staticRegion.find((r) => r.slug === regionSlug)
-  if (!region) return initialUrl
-
-  const freshConfig = createFreshCategoriesConfig(region.categories)
-  const migratedConfig = configCustomStringify(
-    configCustomParse(url.searchParams.get('config'), freshConfig),
-  )
-  url.searchParams.delete('config')
-  url.searchParams.append('config', migratedConfig)
-
   return url.toString()
 }
 
