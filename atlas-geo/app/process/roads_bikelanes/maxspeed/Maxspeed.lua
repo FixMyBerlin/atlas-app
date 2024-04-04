@@ -1,5 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-package.path = package.path .. ";/app/process/shared/?.lua"
 package.path = package.path .. ";/app/process/roads_bikelanes/maxspeed/?.lua"
 require("TimeUtils")
 require("MaxspeedDirect")

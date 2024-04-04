@@ -1,5 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-package.path = package.path .. ";/app/process/shared/?.lua"
 require('MergeTable')
 require('HighwayClasses')
 
