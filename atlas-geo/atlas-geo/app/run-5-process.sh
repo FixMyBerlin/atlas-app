@@ -10,8 +10,8 @@ log_start "$0"
 
 helpers_changed=$(check_if_changed /app/process/helper/helper)
 if [ "$helpers_changed" == "1" ]; then
-  log "Helpers have changed. Deleting all hashsums!"
-  rm -f /hashsums/*.lua
+  log "Helpers have changed. Deleting all checksums!"
+  rm -f $CODE_HASHES*.lua
 fi
 
 run_lua "roads_bikelanes/roads_bikelanes"
