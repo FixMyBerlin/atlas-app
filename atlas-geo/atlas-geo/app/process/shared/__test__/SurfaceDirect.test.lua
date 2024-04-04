@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua"
 require('DeriveSurface')
 
 print('=== Test SurfaceDirect: correct surface_source, surface_confidence for tag ===')
