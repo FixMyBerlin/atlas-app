@@ -1,4 +1,4 @@
-package.path = package.path .. ";./app/process/shared/?.lua;./app/process/helper/?.lua"
+package.path = package.path .. ";/app/process/shared/?.lua;/app/process/helper/?.lua"
 require("DeriveSmoothness")
 
 print('=== Test DeriveSmoothness: normalization works for "good"=>"good" ===')

@@ -132,20 +132,6 @@ Hack into the bash
 docker exec -it mypipeline bash
 ```
 
-## Production
-
-### Inspect Logs locally
-
-For FixMyCity, the command to inspect the current state of the processing on the server is …
-
-```
-ssh atlas-staging
-# OR
-ssh atlas-prd
-# then…
-cd /srv/processing && docker compose logs app --tail 500
-```
-
 ## 💛 Thanks to
 
-This repo is highly inspired by and is containing code from [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing/tree/wip)
+The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
