@@ -21,7 +21,6 @@ export TABLE_LISTS=/data/db/table_lists/
 mkdir -p $TABLE_LISTS
 
 source ./process-helpers.sh
-psql  -q -f ./JSONDiff.sql
 
 # Post messages to Synology Chat Channel
 # The alert `text` uses Markdown and #Hash tags to highlight the message in Synology Chat

@@ -6,6 +6,9 @@ set -e
 # Order of topics is important b/c they might rely on their data
 
 source ./process-helpers.sh
+
+# create functions needed for jsonb diffs
+psql  -q -f ./JSONDiff.sql
 log_start "$0"
 
 helpers_changed=$(check_if_changed /app/process/helper/helper)
