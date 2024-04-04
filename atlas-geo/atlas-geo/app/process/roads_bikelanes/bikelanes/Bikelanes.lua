@@ -70,13 +70,7 @@ function Bikelanes(object)
         }
 
 
-        -- NOTE: from here on we have three tag tables:
-        -- `tags` - the original tags from OSM
-        -- 'transformedTags' - the transformed tags
-        -- `workingTags` - is `transformedTags` for `left`|`right` and `tags` fro `self`
-        local workingTags = transformedTags
         if sign == CENTER_SIGN then -- center line case
-          workingTags = tags
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
           result_tags.prefix = ''
         else                        -- left/right case
@@ -84,12 +78,12 @@ function Bikelanes(object)
           local freshKey = "check_date:" .. transformedTags.prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
-        -- Handle `workingTags`
-        result_tags.width = ParseLength(workingTags.width)
+        -- Handle `transformedTags`
+        result_tags.width = ParseLength(transformedTags.width)
         -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        result_tags.todos = ToMarkdownList(BikelanesTodos(workingTags, result_tags))
-        MergeTable(result_tags, DeriveSmoothness(workingTags))
-        MergeTable(result_tags, DeriveSurface(workingTags))
+        result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
+        MergeTable(result_tags, DeriveSmoothness(transformedTags))
+        MergeTable(result_tags, DeriveSurface(transformedTags))
 
         -- copy original tags
         CopyTags(result_tags, tags, tags_copied)
