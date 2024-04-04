@@ -29,6 +29,12 @@ describe('middleware()', () => {
       expect(getStatus(response)).toBe(200)
     })
 
+    test('Do nothing if path does not start with "/regionen"', () => {
+      const mockRequest = new NextRequest('http://127.0.0.1:5173/somethingelse')
+      const response = middleware(mockRequest)
+      expect(getStatus(response)).toBe(200)
+    })
+
     test('Do nothing on /regionen', () => {
       const mockRequest = new NextRequest('http://127.0.0.1:5173/regionen')
       const response = middleware(mockRequest)

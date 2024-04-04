@@ -8,33 +8,7 @@ import { configCustomParse } from '../parser/configCustomParse'
 const migration: UrlMigration = function (initialUrl) {
   const url = new URL(initialUrl)
 
-  const paths = url.pathname.split('/')
-  let possiblyRegionSlug = paths[2]
-
-  // MIGRATION: Migrate renamed region names
-  const renamedRegions = new Map<string, RegionSlug>([
-    // [oldName, newName]
-    // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
-    ['bb-ag', 'bb-pg'],
-    ['bb-ramboll', 'bb-sg'],
-  ])
-  const redirectSlug = renamedRegions.get(possiblyRegionSlug || '')
-  if (possiblyRegionSlug && redirectSlug) {
-    url.pathname = url.pathname.replace(possiblyRegionSlug, redirectSlug)
-    // Case 1: We are on `regions/oldSlug/subPage` in which case we want to redirect
-    // but not apply all the map stuff below, so we exit early
-    if (paths.length !== 3) {
-      return url.toString()
-    }
-    // Case 1: We are on `regions/oldSlug` in which case we want to redirect
-    // and also continue to apply all the map stuff below
-    possiblyRegionSlug = redirectSlug
-  }
-
-  // Guard: Only on path /regionen/<validSlug>
-  const regionenSlugs = staticRegion.map((r) => r.slug)
-  if (possiblyRegionSlug && !regionenSlugs.includes(possiblyRegionSlug)) return initialUrl
-  if (paths.length !== 3) return initialUrl // Skip sub pages like /regionen/slug/foo
+  const regionSlug = url.pathname.split('/')[2]! as RegionSlug
 
   // MIGRATION: Rename old strings in `config` param
   // We do this migration on string level which makes it a lot easier
@@ -89,7 +63,7 @@ const migration: UrlMigration = function (initialUrl) {
 
   // INITIALIZATION: Make sure every map has a `map` and `config` param
   // We cannot use `useStaticRegion` here, so we do it manually
-  const region = staticRegion.find((r) => r.slug === possiblyRegionSlug)
+  const region = staticRegion.find((r) => r.slug === regionSlug)
   if (!region) return initialUrl
 
   if (!url.searchParams.get('map')) {
