@@ -76,8 +76,8 @@ run_lua_if_debug() {
 }
 
 check_if_changed() {
-  directory=$(dirname $1)
-  hash_file=/hashsums/$(basename $1)
+  # this is where we save the code hashes
+  hash_file=$CODE_HASHES$(basename $1)
   old_hash=""
   if [ -f "${hash_file}" ]; then
     old_hash=$(cat $hash_file)
@@ -86,6 +86,8 @@ check_if_changed() {
     export COMPUTE_DIFFS=0
     touch $hash_file
   fi
+  # this is the directory we hash
+  directory=$(dirname $1)
   find "$directory" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
   new_hash=$(cat $hash_file)
   if [ "$old_hash" == "$new_hash" ]; then
@@ -102,8 +104,7 @@ backup_table() {
 
 run_lua() {
   lua_file="${PROCESS_DIR}$1.lua"
-  table_info=/hashsums/$(basename -s .lua $lua_file).table
-  touch $table_info
+
   log_start "$lua_file"
 
   has_changed=$(check_if_changed $lua_file)

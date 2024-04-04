@@ -13,6 +13,13 @@ export DEBUG=${DEBUG:-0}
 export ID_FILTER=${ID_FILTER:-''}
 export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token='
 
+# this is the path for our code hashes, it lies inside the osmfiles volume to get invalidated on deletion
+export CODE_HASHES=/data/code_hashes/
+mkdir -p $CODE_HASHES
+# this is the path of our table lists, it lies insed the geodata volume to get invalidated on deletion
+export TABLE_LISTS=/data/db/table_lists/
+mkdir -p $TABLE_LISTS
+
 source ./process-helpers.sh
 psql  -q -f ./JSONDiff.sql
 

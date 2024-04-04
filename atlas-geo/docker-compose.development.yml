@@ -25,7 +25,7 @@ services:
       COMPUTE_DIFFS:
     volumes:
       - osmfiles:/data
-      - hashsums:/hashsums
+      - geodata:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
       - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
@@ -80,7 +80,6 @@ services:
 volumes:
   geodata:
   osmfiles:
-  hashsums:
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
