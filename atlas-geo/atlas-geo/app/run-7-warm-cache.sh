@@ -13,7 +13,8 @@ else
   log "Flush Cache"
   rm -rf /var/cache/nginx/*
   log "Warm Cache"
-  node /app/warm-cache/warmCache.js
+  node /app/warm-cache/warmCache.js --config=/app/warm-cache/config.json
 fi
 
 log_end "$0"
+
