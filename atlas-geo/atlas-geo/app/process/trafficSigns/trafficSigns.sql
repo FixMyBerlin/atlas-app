@@ -42,3 +42,6 @@ UPDATE
   "trafficSigns"
 SET
   tags = tags - 'offset';
+
+-- remove direction table
+DROP TABLE "_trafficSignDirections";
