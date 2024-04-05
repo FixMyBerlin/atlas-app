@@ -94,18 +94,16 @@ check_hash() {
     hash=$(hash_dir $directory $suffix)
     previous_hash=$(cat $file)
     if [ "$previous_hash" == "$hash" ]; then
-      echo 0
-      return
+      return 0
     fi
   fi
-  echo 1
+  return 1
 }
 
 update_hash() {
   directory=$1
   suffix=$2
   file=$(hash_file $directory $suffix)
-  touch $file
   hash_dir $directory $suffix > $file
 }
 
@@ -227,12 +225,10 @@ run_dir() {
   sql_file="${directory}$name.sql"
 
   # in this file we store the table names after a successful run
-  processed_tables="${CODE_HASHES}$1.tables"
-  backuped_tables="${CODE_HASHES}$1.backups"
+  processed_tables="${CODE_HASHES}$name.tables"
+  backuped_tables="${CODE_HASHES}$name.backups"
 
-  lua_changed=$(check_hash $directory ".lua")
-  sql_changed=$(check_hash $directory ".sql")
-  if [ "$sql_changed" == 0 ] && [ "$lua_changed" == 0 ] && [ "$SKIP_DOWNLOAD" == 1 ]; then
+  if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
     log "💥 SKIPPED $1. The code hasn't changed."
   else
     # backup tables for diffs
@@ -251,7 +247,6 @@ run_dir() {
     run_psql $sql_file
 
     # The code ran without errors. Updating available tables and hashes
-    touch $processed_tables
     lua $lua_file > $processed_tables
     update_hash $directory ".lua"
     update_hash $directory ".sql"
