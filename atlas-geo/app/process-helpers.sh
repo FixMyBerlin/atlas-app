@@ -230,6 +230,10 @@ run_dir() {
 
   if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
     log "💥 SKIPPED $1. The code hasn't changed."
+    for table in $(lua $lua_file); do
+      # remove old diffs
+      psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
+    done
   else
     # backup tables for diffs
     if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
