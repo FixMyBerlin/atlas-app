@@ -3,7 +3,7 @@ backup_table=$1_backup
 table=$1
 diff_table=$1_diff
 
-psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";"
+psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";" > /dev/null
 
 query="
 SELECT diff, osm_id, meta, geom INTO \"$diff_table\"
@@ -36,12 +36,8 @@ ON \"$backup_table\".osm_id = \"$table\".osm_id
 WHERE \"$table\".osm_id IS NULL;"
 echo $query | psql -q
 
-psql -q -c "DROP TABLE \"$backup_table\";"
-
-
 n_changes=$(psql -t -A -c "SELECT count(*) FROM \"$diff_table\";")
 if [ "$n_changes" == 0 ]; then
   psql -q -c "DROP TABLE \"$diff_table\";"
-else
-  echo "$n_changes changes in $table!"
 fi
+echo "$n_changes changes in $table!"
