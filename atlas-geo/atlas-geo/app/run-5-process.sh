@@ -12,8 +12,7 @@ export PROCESS_DIR=/app/process/
 psql  -q -f ./JSONDiff.sql
 log_start "$0"
 
-helpers_changed=$(check_hash "${PROCESS_DIR}helper" ".lua")
-if [ "$helpers_changed" == "1" ]; then
+if ! check_hash "${PROCESS_DIR}helper" ".lua"; then
   log "Helpers have changed. Deleting all checksums!"
   rm -f $CODE_HASHES*.lua.sha
   update_hash "${PROCESS_DIR}helper" ".lua"
