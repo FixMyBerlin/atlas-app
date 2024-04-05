@@ -1,7 +1,6 @@
 #!/bin/bash
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
-PROCESS_DIR="./process/"
 
 format_left_right() {
   #format_lr(left, right, fill) {
@@ -117,38 +116,13 @@ backup_table() {
 
 
 run_lua() {
-  lua_file="${PROCESS_DIR}$1.lua"
-  directory=$(dirname $lua_file)
-  table_info=$CODE_HASHES$(basename -s .lua $lua_file)
-  touch $table_info
-  log_start "$lua_file"
-
-  has_changed=$(check_hash $directory ".lua")
-  if [ $SKIP_DOWNLOAD == "0" ] || [ "$has_changed" == "1" ]; then
-    if [ "$COMPUTE_DIFFS" == "1" ] && [ "$SKIP_DOWNLOAD" == "1" ]; then
-      tables_to_diff=$(cat $table_info)
-      for table in $tables_to_diff; do # iterate over tables from last run
-        psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
-      done
-    fi
-
-    echo -n > $table_info # clear file in case processing craches
-    ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$lua_file ${OSM_FILTERED_FILE}
-
-    # The code ran without errors. Updating available tables and hash
-    lua $lua_file > $table_info
-    update_hash $directory ".lua"
-
-    # create diffs for all tables that where already available
-    if [ "$tables_to_diff" != "" ]; then
-      for table in $tables_to_diff; do
-        log "Creating diff for $table."
-        /app/compute_diff.sh $table
-      done
-    fi
-  else
-    log "💥 SKIPPED $lua_file. The code hasn't changed."
+  file=$1
+  if [ ! -f "$file" ]; then
+    return
   fi
+
+  name=$(basename -s .lua $file)
+  log_start "$name.lua"
 
   start_time=$(seconds)
   # notify "PROCESS START – Topic: #$1 LUA"
@@ -159,30 +133,89 @@ run_lua() {
   # `--log-sql`
   # maybe even `--log-sql-data` // "This will write out a huge amount of data! "
 
+  ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$file ${OSM_FILTERED_FILE}
+
   end_time=$(date +%s)
   diff=$((end_time - start_time))
   # run_time=`date -d@$diff -u +%H:%M:%S`
   run_time=$(date -d@$diff -u +%M\m\ %S\s)
 
-  notify "#$1 #LUA finished in: *$run_time*"
+  notify "#$name #LUA finished in: *$run_time*"
 
-  log_end "$lua_file"
+  log_end "$name.lua"
 }
 
 run_psql() {
-  log_start "$1.sql"
+  file=$1
+  if [ ! -f "$file" ]; then
+    return
+  fi
+
+  name=$(basename -s .sql $file)
+  log_start "$name.sql"
 
   start_time=$(seconds)
   # notify "PROCESS START – Topic: #$1 SQL"
 
-  psql -q -f "${PROCESS_DIR}$1.sql"
+  psql -q -f $file
 
   end_time=$(date +%s)
   diff=$((end_time - start_time))
   # run_time=`date -d@$diff -u +%H:%M:%S`
   run_time=$(date -d@$diff -u +%M\m\ %S\s)
 
-  notify "#$1 #SQL finished in: *$run_time*"
+  notify "#$name #SQL finished in: *$run_time*"
 
-  log_end "$1.sql"
+  log_end "$name.sql"
+}
+
+run_dir() {
+  name=$1
+  directory="${PROCESS_DIR}${name}/"
+  log_start $name
+
+  lua_file="${directory}$name.lua"
+  sql_file="${directory}$name.sql"
+
+  # in this file we store the table names after a successful run
+  processed_tables="${CODE_HASHES}$1.tables"
+  backuped_tables="${CODE_HASHES}$1.backups"
+
+  lua_changed=$(check_hash $directory ".lua")
+  sql_changed=$(check_hash $directory ".sql")
+  if [ "$sql_changed" == 0 ] && [ "$lua_changed" == 0 ] && [ "$SKIP_DOWNLOAD" == 1 ]; then
+    log "💥 SKIPPED $1. The code hasn't changed."
+  else
+    # backup tables for diffs
+    if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
+      if [ -f "$processed_tables" ]; then
+        for table in $(cat $processed_tables); do # iterate over tables from last run
+          psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
+        done
+        cp $processed_tables $backuped_tables
+      fi
+    fi
+
+    rm -f $processed_tables # remove file in case processing craches
+
+    run_lua $lua_file
+    run_psql $sql_file
+
+    # The code ran without errors. Updating available tables and hashes
+    touch $processed_tables
+    lua $lua_file > $processed_tables
+    update_hash $directory ".lua"
+    update_hash $directory ".sql"
+
+    # create diffs for all tables that where already available
+    if [ -f $backuped_tables ]; then
+      for table in $(cat $backuped_tables); do
+        log "Creating diff for $table."
+        /app/compute_diff.sh $table
+        psql -q -c "DROP TABLE \"${table}_backup\";"
+      done
+      rm $backuped_tables
+    fi
+  fi
+  log_end $name
 }
