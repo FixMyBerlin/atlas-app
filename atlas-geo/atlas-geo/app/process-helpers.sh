@@ -75,27 +75,41 @@ run_lua_if_debug() {
   fi
 }
 
-check_if_changed() {
-  # this is where we save the code hashes
-  hash_file=$CODE_HASHES$(basename $1)
-  old_hash=""
-  if [ -f "${hash_file}" ]; then
-    old_hash=$(cat $hash_file)
-    echo -n > $hash_file
-  else
-    export COMPUTE_DIFFS=0
-    touch $hash_file
-  fi
-  # this is the directory we hash
-  directory=$(dirname $1)
-  find "$directory" -type f -name "*.lua" | sort | xargs shasum > "$hash_file"
-  new_hash=$(cat $hash_file)
-  if [ "$old_hash" == "$new_hash" ]; then
-    echo "0"
-  else
-    echo "1"
-  fi
+hash_dir() {
+  directory=$1
+  suffix=$2
+  echo $(find "$1" -type f -name "*$suffix" | sort | xargs shasum)
 }
+
+hash_file() {
+  directory=$1
+  suffix=$2
+  echo $CODE_HASHES$(basename $directory)$suffix.sha
+}
+
+check_hash() {
+  directory=$1
+  suffix=$2
+  file=$(hash_file $directory $suffix)
+  if [ -f "${file}" ]; then
+    hash=$(hash_dir $directory $suffix)
+    previous_hash=$(cat $file)
+    if [ "$previous_hash" == "$hash" ]; then
+      echo 0
+      return
+    fi
+  fi
+  echo 1
+}
+
+update_hash() {
+  directory=$1
+  suffix=$2
+  file=$(hash_file $directory $suffix)
+  touch $file
+  hash_dir $directory $suffix > $file
+}
+
 
 backup_table() {
   psql -q -c "ALTER TABLE \"$1\" RENAME TO \"$1_backup\";"
@@ -104,24 +118,27 @@ backup_table() {
 
 run_lua() {
   lua_file="${PROCESS_DIR}$1.lua"
-
+  directory=$(dirname $lua_file)
+  table_info=$CODE_HASHES$(basename -s .lua $lua_file)
+  touch $table_info
   log_start "$lua_file"
 
-  has_changed=$(check_if_changed $lua_file)
-  if [ $SKIP_DOWNLOAD == "1" ] && [ "$has_changed" == "0" ]; then
-    log "💥 SKIPPED $lua_file. The code hasn't changed."
-  else
-    table_info=$TABLE_LISTS$(basename -s .lua $lua_file)
-    touch $table_info
-    if [ "$has_changed" == "1" ] && [ "$COMPUTE_DIFFS" == "1" ]; then
-    tables_to_diff=$(cat $table_info)
+  has_changed=$(check_hash $directory ".lua")
+  if [ $SKIP_DOWNLOAD == "0" ] || [ "$has_changed" == "1" ]; then
+    if [ "$COMPUTE_DIFFS" == "1" ] && [ "$SKIP_DOWNLOAD" == "1" ]; then
+      tables_to_diff=$(cat $table_info)
       for table in $tables_to_diff; do # iterate over tables from last run
         psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
       done
-      echo -n > $table_info # clear file in case processing craches
     fi
+
+    echo -n > $table_info # clear file in case processing craches
     ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$lua_file ${OSM_FILTERED_FILE}
-    lua $lua_file > $table_info # update available tables
+
+    # The code ran without errors. Updating available tables and hash
+    lua $lua_file > $table_info
+    update_hash $directory ".lua"
+
     # create diffs for all tables that where already available
     if [ "$tables_to_diff" != "" ]; then
       for table in $tables_to_diff; do
@@ -129,6 +146,8 @@ run_lua() {
         /app/compute_diff.sh $table
       done
     fi
+  else
+    log "💥 SKIPPED $lua_file. The code hasn't changed."
   fi
 
   start_time=$(seconds)
