@@ -19,14 +19,9 @@ if [ "$helpers_changed" == "1" ]; then
   update_hash "${PROCESS_DIR}helper" ".lua"
 fi
 
-for path in "${PROCESS_DIR}"*/; do
-  folder=$(basename "$path")
-
-  if [ "$folder" == "helper" ]; then
-    continue
-  fi
-
-  run_dir $folder
+topics=("roads_bikelanes" "bikeroutes" "bicycleParking" "trafficSigns" "boundaries" "places" "landuse" "publicTransport" "poiClassification" "barriers")
+for name in ${topics[@]}; do
+  run_dir $name
 done
 
 notify "Processing finished."
