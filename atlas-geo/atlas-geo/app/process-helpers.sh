@@ -260,7 +260,11 @@ run_dir() {
     if [ -f $backuped_tables ]; then
       log "Computing diffs for: $(tr '\n' ' ' < $backuped_tables)"
       for table in $(cat $backuped_tables); do
-        compute_diff $table
+        if grep -q -E "^${table}\$" $processed_tables; then
+          compute_diff $table
+        else
+          log "$table got deleted."
+        fi
         psql -q -c "DROP TABLE \"${table}_backup\";"
       done
       rm $backuped_tables
