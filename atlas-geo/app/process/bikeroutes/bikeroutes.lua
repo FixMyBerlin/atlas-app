@@ -1,16 +1,21 @@
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
 require("CopyTags")
+require("Set")
+require("Sanitize")
+require("Metadata")
 
----@param tags table
----@return boolean
--- Predicate wether a relation is a bicycle route
-function IsBicycleRoute(tags)
-  return tags.type == 'route' and tags.route == 'bicycle'
-end
+local bikeroutesTable = osm2pgsql.define_table({
+  name = 'bikeroutes',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'tags', type = 'jsonb' },
+    { column = 'meta', type = 'jsonb' },
+    { column = 'geom', type = 'multilinestring' },
+  }
+})
 
----@param tags table
----@return table
--- given an osm relation
-function Bikeroutes(tags)
+function osm2pgsql.process_relation(object)
+  local tags = object.tags
   local result_tags = {}
 
   -- Supposed to be 'km', always. TODO: Ideally modify ParseLength to handle different default units.
@@ -50,19 +55,11 @@ function Bikeroutes(tags)
   }
   CopyTags(result_tags, tags, tags_copied)
 
-  return result_tags
-end
-
----@param wayRouteMapping table
----@param relation_id integer
----@param ways table
--- Update the `wayRouteMapping` by adding the `relation_id` to every element of `ways`
-function UpdateWayRouteMapping(wayRouteMapping, relation_id, ways)
-  for _, id in pairs(ways) do
-    if wayRouteMapping[id] == nil then
-      wayRouteMapping[id] = { relation_id }
-    else
-      table.insert(wayRouteMapping[id], relation_id)
-    end
+  if tags.type == 'route' and tags.route == 'bicycle' then
+    bikeroutesTable:insert({
+      tags = result_tags,
+      meta = Metadata(object),
+      geom = object:as_multilinestring(),
+    })
   end
 end

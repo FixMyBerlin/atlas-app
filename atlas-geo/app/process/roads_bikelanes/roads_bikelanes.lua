@@ -6,7 +6,6 @@ package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
 package.path = package.path .. dir .. "bikelanes/categories/?.lua"
-package.path = package.path .. dir .. "bikeroutes/?.lua"
 
 require("Set")
 require("JoinSets")
@@ -21,7 +20,6 @@ require("RoadClassification")
 require("RoadGeneralisation")
 require("SurfaceQuality")
 require("Bikelanes")
-require("Bikeroutes")
 require("BikelanesPresence")
 require("MergeTable")
 require("CopyTags")
@@ -57,15 +55,6 @@ local bikelanesTable = osm2pgsql.define_table({
   }
 })
 
-local bikeroutesTable = osm2pgsql.define_table({
-  name = 'bikeroutes',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'multilinestring' },
-  }
-})
 
 local excludedRoadsTable = osm2pgsql.define_table({
   name = 'roads_excluded',
@@ -78,7 +67,6 @@ local excludedRoadsTable = osm2pgsql.define_table({
   }
 })
 
--- local wayRouteMapping = {}
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
@@ -133,10 +121,6 @@ function osm2pgsql.process_way(object)
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
-      -- if osm2pgsql.stage == 2 then
-      --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
-      -- end
-
       -- Hacky cleanup tags we don't need to make the file smaller
       result._infrastructureExists = nil -- not used in atlas-app
       result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
@@ -179,21 +163,3 @@ function osm2pgsql.process_way(object)
     end
   end
 end
-
-function osm2pgsql.process_relation(object)
-  if IsBicycleRoute(object.tags) then
-    -- UpdateWayRouteMapping(wayRouteMapping, object.id, osm2pgsql.way_member_ids(object))
-
-    bikeroutesTable:insert({
-      tags = Bikeroutes(object.tags),
-      meta = Metadata(object),
-      geom = object:as_multilinestring(),
-    })
-  end
-end
-
--- function osm2pgsql.select_relation_members(object)
---   if IsBicycleRoute(object.tags) then
---     return { ways = osm2pgsql.way_member_ids(object) }
---   end
--- end

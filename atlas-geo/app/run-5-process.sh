@@ -19,6 +19,7 @@ run_psql "trafficSigns/trafficSigns"
 # run_lua "legacy_boundaries/boundaries"
 run_lua "boundaries/boundaries"
 
+run_lua "bikeroutes/bikeroutes"
 run_lua "places/places"
 run_lua_if_debug "places/places_todoList"
 run_lua "landuse"
