@@ -159,7 +159,7 @@ compute_diff() {
   if [ "$n_changes" == 0 ]; then
     psql -q -c "DROP TABLE \"$diff_table\";"
   fi
-  log "$n_changes changes in $table!"
+  log "$n_changes changes in $table."
 }
 
 
@@ -258,8 +258,8 @@ run_dir() {
 
     # create diffs for all tables that where already available
     if [ -f $backuped_tables ]; then
+      log "Computing diffs for: $(tr '\n' ' ' < $backuped_tables)"
       for table in $(cat $backuped_tables); do
-        log "Creating diff for $table."
         compute_diff $table
         psql -q -c "DROP TABLE \"${table}_backup\";"
       done
