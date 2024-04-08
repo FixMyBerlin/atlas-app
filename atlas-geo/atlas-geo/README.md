@@ -15,53 +15,42 @@ The data is selected and optimize to make planning of bicycle infrastructure eas
 
 Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to create issues for this repository.
 
-### Server
+## Server
 
 - Production Tiles https://tiles.radverkehrsatlas.de/
 - Staging Tiles https://staging-tiles.radverkehrsatlas.de/
 - Development Tiles http://localhost:7800/
 
-### Data update
+## Data
 
-- Data is updated every weekday at 4:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
-- Data is updated on every deploy
-- Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
+### Freshness of source data
+
+We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) `<3` which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
+
+### Freshness of processed data
+
+- Data is processed every day ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is processed on every deploy/release
+- Data can be processed manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
 1. First https://github.com/FixMyBerlin/atlas-geo/actions runs.
-2. Then our Server IONOS builds the data. This take about one hour ATM.
-3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ serve the new data.
+2. Server (IONOS) runs the processing one table at a time.
+   The whole processing takes about 1.5 h. See [`run.sh`](app/run.sh) for details.
 
-#### Skip CI Actions
+**Skip CI Actions:**
 
 ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the commit message. This is a [default behaviour](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs) of Github Actions.
 
-## 1️⃣ Setup
-
-First create a `.env` file. You can use the `.env.example` file as a template.
-
-```sh
-docker compose -f docker-compose.development.yml up
-# or
-docker compose -f docker-compose.development.yml up -d
-
-# With osm processing, which runs the "app" docker image with `ruh.sh`
-docker compose -f docker-compose.development.yml --profile osm_processing up -d
-```
-
-This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
-
-> **Warning**
-> You need to create the Postgis extension before first run of `app\`:
-> `CREATE EXTENSION postgis;`
-
-> **Note**
-> We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
-
 ## Development
 
-### You can only rebuild and regenerate the whole system
+### Initial setup
+
+1. First create a `.env` file. You can use the `.env.example` file as a template.
+2. Follow "Run the whole system"
+
+### Run the whole system
 
 The workflow is…
 
