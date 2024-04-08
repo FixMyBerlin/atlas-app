@@ -45,6 +45,7 @@ local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"                             -- Overwrite any OSM tag 'sign'
+  center._prefix = ""
   center.oneway = tags['oneway:bicycle'] or tags.oneway -- give `bicycle:oneway` precedence
 
   local results = { center }
@@ -60,7 +61,7 @@ function GetTransformedObjects(tags, transformations)
         local prefix = transformation.prefix
         local newObj = {
           _parent_highway = tags.highway,
-          _prefix = prefix,  -- todo rename to _prefix
+          _prefix = prefix,
           _side = side,
           highway = transformation.highway
 
