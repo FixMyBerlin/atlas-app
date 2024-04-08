@@ -51,7 +51,7 @@ if ! ./run-5-process.sh; then
     alert '*ERROR*: #run-5-process exited with non-zero status code'
 fi
 process_end_time=$(date +%s)
-export PROCESS_RUN_TIME_DIFF=$((process_end_time - process_start_time)) # used by metadata.sh
+export PROCESSING_DURATION=$((process_end_time - process_start_time)) # used by metadata.sh
 
 if ! ./run-6-metadata.sh; then
     alert '*ERROR*: #run-6-metadata exited with non-zero status code'

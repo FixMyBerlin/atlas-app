@@ -183,12 +183,10 @@ run_lua() {
   ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$file ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)
-  diff=$((end_time - start_time))
-  # run_time=`date -d@$diff -u +%H:%M:%S`
-  run_time=$(date -d@$diff -u +%M\m\ %S\s)
+  duration=$((end_time - start_time))
+  duration_formatted=$(date -d@$duration -u +%M\m\ %S\s)
 
-  notify "#$name #LUA finished in: *$run_time*"
-
+  notify "#$name #LUA finished in: *$duration_formatted*"
   log_end "$name.lua"
 }
 
@@ -207,12 +205,10 @@ run_psql() {
   psql -q -f $file
 
   end_time=$(date +%s)
-  diff=$((end_time - start_time))
-  # run_time=`date -d@$diff -u +%H:%M:%S`
-  run_time=$(date -d@$diff -u +%M\m\ %S\s)
+  duration=$((end_time - start_time))
+  duration_formatted=$(date -d@$duration -u +%M\m\ %S\s)
 
-  notify "#$name #SQL finished in: *$run_time*"
-
+  notify "#$name #SQL finished in: *$duration_formatted*"
   log_end "$name.sql"
 }
 
