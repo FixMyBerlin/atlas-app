@@ -66,10 +66,28 @@ The workflow is…
    docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
    ```
 
-3. Inspect the new results
+3. Inspect the new results, see "Inspect changes"
 
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
+
+### Processing: Run changes only
+
+Whenever `SKIP_DOWNLOAD=1` is active we store a hash of all `.lua` and `.sql` per folder.
+During [`run-5-process.sh`](app/run-5-process.sh) we only run code if the hash has changed.
+If any helper in (`process/helper`)[app/process/helper] changed, we rerun everything.
+
+Whenever we talk about `hash`es in this code, this feature is referenced.
+
+### Processing: Inspect changes
+
+Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<tablename>_diff` tables that contain only changed entries.
+
+It will compare the `tags` column to the previous run.
+
+The settings are the default for development but disabled on staging, production by default.
+
+Whenever we talk about `diff`s in this code, this feature is referenced.
 
 ### Process only a single object
 
