@@ -12,10 +12,6 @@ export SKIP_TAG_FILTER=${SKIP_TAG_FILTER:-0}
 export ID_FILTER=${ID_FILTER:-''}
 export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token='
 
-# this is the path for our code hashes, it lies inside the database volume to get invalidated on deletion
-export CODE_HASHES=/data/db/code_hashes/
-mkdir -p $CODE_HASHES
-
 source ./process-helpers.sh
 
 # Post messages to Synology Chat Channel
