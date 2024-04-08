@@ -1,5 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-require("DiffTables")
 require("Set")
 require("Metadata")
 require("HighwayClasses")

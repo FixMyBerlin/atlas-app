@@ -7,7 +7,6 @@ package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
 package.path = package.path .. dir .. "bikelanes/categories/?.lua"
 package.path = package.path .. dir .. "bikeroutes/?.lua"
-require("DiffTables")
 require("Set")
 require("JoinSets")
 require("Metadata")

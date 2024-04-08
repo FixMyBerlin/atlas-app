@@ -215,10 +215,12 @@ run_dir() {
 
   if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
     log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
-    for table in $(lua $lua_file); do
-      # Remove old diffs
-      psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
-    done
+    if [ -f "$processed_tables" ]; then
+      for table in $(cat $processed_tables); do
+        # Remove old diffs
+        psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
+      done
+    fi
   else
     # Backup tables for diffs
     if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
@@ -236,7 +238,7 @@ run_dir() {
     run_psql $sql_file
 
     # The code ran without errors. Updating available tables and hashes
-    lua $lua_file > $processed_tables
+    lua /app/Diffing/TableNames.lua $name > $processed_tables
     update_hash $directory ".lua"
     update_hash $directory ".sql"
 
