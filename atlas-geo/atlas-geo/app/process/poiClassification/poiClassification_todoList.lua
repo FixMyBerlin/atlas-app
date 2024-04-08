@@ -1,5 +1,4 @@
-package.path = package.path ..
-    ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/poiClassification/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
 require("Set")
 require("ExtractKeys")
 require("InferAddress")

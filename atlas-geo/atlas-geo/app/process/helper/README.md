@@ -1,7 +1,6 @@
 # About
 
-- `helper` are utility functions that extend LUA.
-- Shared functions that work on/with our data belong into `shared`.
+- `helper` are utility functions that extend LUA or help us while processing our data.
 
 # How to use
 
