@@ -17,17 +17,9 @@ Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to cre
 
 ### Server
 
-**Production:**
-
-- Tiles https://tiles.radverkehrsatlas.de/
-
-**Staging:**
-
-- Tiles https://staging-tiles.radverkehrsatlas.de/
-
-**Development:**
-
-- Tiles http://localhost:7800/
+- Production Tiles https://tiles.radverkehrsatlas.de/
+- Staging Tiles https://staging-tiles.radverkehrsatlas.de/
+- Development Tiles http://localhost:7800/
 
 ### Data update
 
