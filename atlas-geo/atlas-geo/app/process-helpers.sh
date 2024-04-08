@@ -21,13 +21,6 @@ start_time_varname() {
   echo start_time_$task_safe
 }
 
-file_to_task() {
-  # takes a filename and returns basename without extensions
-  local base=$(basename $1)
-  local task="${base%.*}"
-  echo $task
-}
-
 log_start() {
 #  local task=$(file_to_task $1)
   local task="$1"
