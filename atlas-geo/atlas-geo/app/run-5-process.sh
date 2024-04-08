@@ -7,7 +7,7 @@ export PROCESS_DIR=/app/process/
 export CODE_HASHES=/data/db/code_hashes/
 mkdir -p $CODE_HASHES
 # Create functions needed for jsonb diffs
-psql -q -f ./JSONDiff.sql
+psql -q -f ./Diffing/JSONDiff.sql
 
 log_start "$0"
 
