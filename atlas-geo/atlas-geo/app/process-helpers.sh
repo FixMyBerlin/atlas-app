@@ -155,7 +155,7 @@ run_lua() {
   file=$1
   name=$(basename -s .lua $file)
 
-  log_start "$name.lua"
+  log_start "Run lua"
   start_time=$(seconds)
   # notify "PROCESS START – Topic: #$1 LUA"
 
@@ -172,7 +172,7 @@ run_lua() {
   duration_formatted=$(date -d@$duration -u +%M\m\ %S\s)
 
   notify "#$name #LUA finished in: *$duration_formatted*"
-  log_end "$name.lua"
+  log_end "Run lua"
 }
 
 # (private function used by run_dir)
@@ -185,7 +185,7 @@ run_psql() {
 
   name=$(basename -s .sql $file)
 
-  log_start "$name.sql"
+  log_start "Run SQL"
   start_time=$(seconds)
 
   psql -q -f $file
@@ -195,7 +195,7 @@ run_psql() {
   duration_formatted=$(date -d@$duration -u +%M\m\ %S\s)
 
   notify "#$name #SQL finished in: *$duration_formatted*"
-  log_end "$name.sql"
+  log_end "Run SQL"
 }
 
 # Main helper to run LUA _and_ SQL files.
@@ -244,6 +244,7 @@ run_dir() {
 
     # Create diffs for all backedup tables that where already available
     if [ -f $backedup_tables ]; then
+      log_start "Compute Diffs"
       log "Computing diffs (.env 'COMPUTE_DIFFS=1') for: $(tr '\n' ' ' < $backedup_tables)"
       for table in $(cat $backedup_tables); do
         if grep -q -E "^${table}\$" $processed_tables; then
@@ -254,6 +255,7 @@ run_dir() {
         psql -q -c "DROP TABLE \"${table}_backup\";"
       done
       rm $backedup_tables
+      log_end "Compute Diffs"
     fi
   fi
 
