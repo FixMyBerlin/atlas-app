@@ -3,12 +3,11 @@
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 
 format_left_right() {
-  #format_lr(left, right, fill) {
   node -e "a='${1}';b='${2}';c='${3}' || '-';console.log(a+c.repeat(Math.max(0, 80-a.length-b.length))+b)"
 }
 
 format_now() {
-  #  echo `date +"%Y-%m-%dT%H:%M:%S%z"` # with timezone
+  # echo `date +"%Y-%m-%dT%H:%M:%S%z"` # with timezone
   echo $(TZ=UTC0 date +"%Y-%m-%dT%H:%M:%S")
 }
 
@@ -22,23 +21,21 @@ start_time_varname() {
 }
 
 log_start() {
-#  local task=$(file_to_task $1)
-  local task="$1"
-  local varname=$(start_time_varname $task)
+  local topic="$1"
+  local varname=$(start_time_varname $topic)
   declare -g $varname=$(seconds)
-  local left="$(format_now) $task "
+  local left="$(format_now) $topic "
   local formatted=$(format_left_right "$left" "" ">")
   echo -e "\e[1m\e[7m${formatted}\e[27m\e[21m\e[0m"
 }
 
 log_end() {
-#  local task=$(file_to_task $1)
-  local task="$1"
-  local varname=$(start_time_varname $task)
+  local topic="$1"
+  local varname=$(start_time_varname $topic)
   local start_time="${!varname}"
   local end_time=$(seconds)
   local duration=$((end_time - start_time))
-  local left="$(format_now) $task "
+  local left="$(format_now) $topic "
   local right=" $(date -d@$duration -u +%H:%M:%S)"
   local formatted=$(format_left_right "$left" "$right" "<")
   echo -e "\e[1m\e[7m${formatted}\e[27m\e[21m\e[0m"
@@ -58,12 +55,14 @@ notify() {
   curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
 }
 
+# (private function used by check_hash and update_hash)
 hash_dir() {
   directory=$1
   suffix=$2
   echo $(find "$1" -type f -name "*$suffix" | sort | xargs shasum)
 }
 
+# (private function used by check_hash and update_hash)
 hash_file() {
   directory=$1
   suffix=$2
@@ -91,7 +90,7 @@ update_hash() {
   hash_dir $directory $suffix > $file
 }
 
-
+# (private function used by run_dir)
 compute_diff() {
   backup_table=$1_backup
   table=$1
@@ -99,62 +98,64 @@ compute_diff() {
 
   psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";" &> /dev/null
 
+  # Compute diff of `tags` column using `jsonb_diff` from `JSONDiff.sql`
   query="
-    SELECT diff, osm_id, meta, geom INTO \"$diff_table\"
+    SELECT diff, osm_id, meta, geom
+    INTO \"$diff_table\"
     FROM (
-    SELECT jsonb_diff(\"$backup_table\".tags, \"$table\".tags) AS diff, \"$table\".osm_id, \"$table\".meta, \"$table\".geom
-    FROM \"$table\"
-    JOIN \"$backup_table\"
-    ON \"$table\".osm_id = \"$backup_table\".osm_id
+      SELECT
+        jsonb_diff(\"$backup_table\".tags, \"$table\".tags) AS diff,
+        \"$table\".osm_id, \"$table\".meta, \"$table\".geom
+      FROM \"$table\"
+      JOIN \"$backup_table\"
+        ON \"$table\".osm_id = \"$backup_table\".osm_id
     ) sq
     WHERE diff != '{}'::jsonb;"
   echo $query | psql -q
 
-  # create diffs for added rows
-  query="
-    INSERT INTO \"$diff_table\"
-    SELECT jsonb_prefix_values(\"$table\".tags, '(+)') as diff,
-    \"$table\".osm_id,
-    \"$table\".meta,
-    \"$table\".geom
-    FROM \"$table\"
-    FULL OUTER JOIN \"$backup_table\"
-    ON \"$table\".osm_id = \"$backup_table\".osm_id
-    WHERE \"$backup_table\".osm_id IS NULL;"
-  echo $query | psql -q
-
-  # create diffs for deleted rows
+  # Add new rows to diff table
   query="
     INSERT INTO \"$diff_table\"
     SELECT
-    jsonb_prefix_values(\"$backup_table\".tags, '(-)') as diff,
-    \"$backup_table\".osm_id,
-    \"$backup_table\".meta,
-    \"$backup_table\".geom
+      jsonb_prefix_values(\"$table\".tags, '(+)') as diff,
+      \"$table\".osm_id,
+      \"$table\".meta,
+      \"$table\".geom
+    FROM \"$table\"
+    FULL OUTER JOIN \"$backup_table\"
+      ON \"$table\".osm_id = \"$backup_table\".osm_id
+    WHERE \"$backup_table\".osm_id IS NULL;"
+  echo $query | psql -q
+
+  # Add delted rows to diff table
+  query="
+    INSERT INTO \"$diff_table\"
+      SELECT
+      jsonb_prefix_values(\"$backup_table\".tags, '(-)') as diff,
+      \"$backup_table\".osm_id,
+      \"$backup_table\".meta,
+      \"$backup_table\".geom
     FROM \"$backup_table\"
     FULL OUTER JOIN \"$table\"
-    ON \"$backup_table\".osm_id = \"$table\".osm_id
+      ON \"$backup_table\".osm_id = \"$table\".osm_id
     WHERE \"$table\".osm_id IS NULL;"
   echo $query | psql -q
 
+  # TODO: Split into added, deleted, changed records; write as table _comment_.
   n_changes=$(psql -t -A -c "SELECT count(*) FROM \"$diff_table\";")
   if [ "$n_changes" == 0 ]; then
+    # Cleanup
     psql -q -c "DROP TABLE \"$diff_table\";"
   fi
   log "$n_changes changes in $table."
 }
 
-
-
+# (private function used by run_dir)
 run_lua() {
   file=$1
-  if [ ! -f "$file" ]; then
-    return
-  fi
-
   name=$(basename -s .lua $file)
-  log_start "$name.lua"
 
+  log_start "$name.lua"
   start_time=$(seconds)
   # notify "PROCESS START – Topic: #$1 LUA"
 
@@ -174,17 +175,18 @@ run_lua() {
   log_end "$name.lua"
 }
 
+# (private function used by run_dir)
 run_psql() {
   file=$1
+  # .sql files are optional, so we exit silently
   if [ ! -f "$file" ]; then
     return
   fi
 
   name=$(basename -s .sql $file)
-  log_start "$name.sql"
 
+  log_start "$name.sql"
   start_time=$(seconds)
-  # notify "PROCESS START – Topic: #$1 SQL"
 
   psql -q -f $file
 
@@ -196,32 +198,35 @@ run_psql() {
   log_end "$name.sql"
 }
 
+# Main helper to run LUA _and_ SQL files.
+# One one .lua and one optional .sql per topic.
+# See [process/README.md](./process/README.md) for more
 run_dir() {
-  name=$1
-  directory="${PROCESS_DIR}${name}/"
-  log_start $name
+  topic=$1
+  directory="${PROCESS_DIR}${topic}/"
+  log_start $topic
 
-  lua_file="${directory}$name.lua"
-  sql_file="${directory}$name.sql"
+  lua_file="${directory}$topic.lua"
+  sql_file="${directory}$topic.sql"
 
-  # in this file we store the table names after a successful run
-  processed_tables="${CODE_HASHES}$name.tables"
-  backuped_tables="${CODE_HASHES}$name.backups"
+  # In this file we store the table topics after a successful run
+  processed_tables="${CODE_HASHES}$topic.tables"
+  backedup_tables="${CODE_HASHES}$topic.backups"
 
   if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
-    log "💥 SKIPPED $1. The code hasn't changed."
+    log "💥 SKIPPED $topic. The code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
     for table in $(lua $lua_file); do
-      # remove old diffs
+      # Remove old diffs
       psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
     done
   else
-    # backup tables for diffs
+    # Backup tables for diffs
     if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
           psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
         done
-        cp $processed_tables $backuped_tables
+        cp $processed_tables $backedup_tables
       fi
     fi
 
@@ -235,10 +240,10 @@ run_dir() {
     update_hash $directory ".lua"
     update_hash $directory ".sql"
 
-    # create diffs for all tables that where already available
-    if [ -f $backuped_tables ]; then
-      log "Computing diffs for: $(tr '\n' ' ' < $backuped_tables)"
-      for table in $(cat $backuped_tables); do
+    # Create diffs for all backedup tables that where already available
+    if [ -f $backedup_tables ]; then
+      log "Computing diffs (.env 'COMPUTE_DIFFS=1') for: $(tr '\n' ' ' < $backedup_tables)"
+      for table in $(cat $backedup_tables); do
         if grep -q -E "^${table}\$" $processed_tables; then
           compute_diff $table
         else
@@ -246,8 +251,9 @@ run_dir() {
         fi
         psql -q -c "DROP TABLE \"${table}_backup\";"
       done
-      rm $backuped_tables
+      rm $backedup_tables
     fi
   fi
-  log_end $name
+
+  log_end $topic
 }
