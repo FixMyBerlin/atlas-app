@@ -104,26 +104,6 @@ For the development process it's often usefull to run the processing on a single
 For that you can specify an id (list) as `ID_FILTER` in the [`app/run-3-filter.sh`](/app/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
-### Build & Run only one container
-
-Build docker
-
-```sh
-docker build -f app.Dockerfile -t atlas:latest .
-```
-
-Run it
-
-```sh
-docker run --name mypipeline -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d atlas
-```
-
-Hack into the bash
-
-```sh
-docker exec -it mypipeline bash
-```
-
 ## 💛 Thanks to
 
 The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
