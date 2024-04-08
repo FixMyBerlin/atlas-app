@@ -61,6 +61,7 @@ function Bikelanes(object)
         local result_tags = {
           _infrastructureExists = true,
           category = category,
+          _prefix = transformedTags._prefix,
           _offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
           _side = transformedTags._side,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
@@ -70,7 +71,6 @@ function Bikelanes(object)
 
         if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
-          result_tags.prefix = ''
         else                        -- left/right case
           MergeTable(result_tags, transformedTags)
           local freshKey = "check_date:" .. transformedTags._prefix
