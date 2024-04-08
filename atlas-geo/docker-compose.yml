@@ -44,9 +44,7 @@ services:
       WAIT_FOR_FRESH_DATA:
       SKIP_WARM_CACHE:
       TILES_URL:
-      DEBUG:
       ID_FILTER:
-      API_SECRET:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:

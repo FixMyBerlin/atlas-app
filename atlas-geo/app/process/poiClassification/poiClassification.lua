@@ -1,13 +1,10 @@
-package.path = package.path ..
-    ";/app/process/helper/?.lua;/app/process/shared/?.lua;/app/process/poiClassification/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua;/app/process/poiClassification/?.lua"
 require("Set")
 require("ExtractKeys")
 require("InferAddress")
 require("Metadata")
 require("Sanitize")
 require("CopyTags")
-
--- Shared:
 require("ShoppingAllowedListWithCategories")
 
 -- We look at shop=* and amenity=<allowed_values>. We also `category`ze each into one of 4 categories for filtering.

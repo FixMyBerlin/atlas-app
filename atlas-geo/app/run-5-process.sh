@@ -1,32 +1,29 @@
 #!/bin/bash
 set -e
-
-# LUA Docs https://osm2pgsql.org/doc/manual.html#running-osm2pgsql
-# One line/file per topic.
-# Order of topics is important b/c they might rely on their data
-
 source ./process-helpers.sh
+
+export PROCESS_DIR=/app/process/
+# The folder for our code hashes, it lies inside the database volume to get invalidated on deletion
+export CODE_HASHES=/data/db/code_hashes/
+mkdir -p $CODE_HASHES
+# Create functions needed for jsonb diffs
+psql -q -f ./Diffing/JSONDiff.sql
+
 log_start "$0"
 
-run_lua "roads_bikelanes/roads_bikelanes"
-run_psql "roads_bikelanes/bikelanes/bikelanes"
+if ! check_hash "${PROCESS_DIR}helper" ".lua"; then
+  log "Helpers have changed. Deleting all checksums!"
+  rm -f $CODE_HASHES*.lua.sha
+  update_hash "${PROCESS_DIR}helper" ".lua"
+fi
 
-run_lua "bicycleParking/bicycleParking"
-
-run_lua "trafficSigns/trafficSigns"
-run_psql "trafficSigns/trafficSigns"
-
-# run_lua "legacy_boundaries/boundaries"
-run_lua "boundaries/boundaries"
-
-run_lua "bikeroutes/bikeroutes"
-run_lua "places/places"
-run_lua_if_debug "places/places_todoList"
-run_lua "landuse"
-run_lua "publicTransport"
-run_lua "poiClassification/poiClassification"
-run_lua_if_debug "poiClassification/poiClassification_todoList"
-run_lua "barriers/barriers"
+# One one .lua and one optional .sql per topic.
+# Order of topics is important b/c they might rely on their data
+# See [process/README.md](./process/README.md) for more
+topics=("roads_bikelanes" "bikeroutes" "bicycleParking" "trafficSigns" "boundaries" "places" "landuse" "publicTransport" "poiClassification" "barriers")
+for name in ${topics[@]}; do
+  run_dir $name
+done
 
 notify "Processing finished."
 

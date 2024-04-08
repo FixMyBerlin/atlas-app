@@ -1,5 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-package.path = package.path .. ";/app/process/shared/?.lua"
 require('MergeTable')
 require('HighwayClasses')
 
@@ -18,7 +17,7 @@ local function unnestTags(tags, prefix, side, dest)
         -- offset of 2 due to 1-indexing and for removing the ':'
         local prefixlessKey = string.sub(key, prefixLen + 2)
         local infix = string.match(prefixlessKey, '[^:]*')
-        -- avoid projecting sided tags in the implicit case
+        -- avoid projecting side explicit tags in the implicit case
         if side ~= '' or not Set({ 'left', 'right', 'both' })[infix] then
           dest[prefixlessKey] = val
           dest.side = side
@@ -57,7 +56,7 @@ function GetTransformedObjects(tags, transformations)
     return results
   end
 
-  for _, transformation in pairs(transformations) do
+  for _, transformation in ipairs(transformations) do
     for side, sign in pairs(sideSignMap) do
       if tags.highway ~= transformation.highway then
         local prefix = transformation.prefix
@@ -69,12 +68,13 @@ function GetTransformedObjects(tags, transformations)
           sign = sign       -- todo rename to _sign
         }
 
-        -- we look for tags with the following hirachy: `prefix` < `prefix:both` < `prefix:side`
+        -- we look for tags with the following hirachy: `prefix:side` > `prefix:both` > `prefix`
         -- thus a more specific tag will always overwrite a more general one
         unnestTags(tags, prefix, '', newObj)
         unnestTags(tags, prefix, ':both', newObj)
         unnestTags(tags, prefix, side, newObj)
 
+        -- this condition checks wether we acutally projected something
         if newObj.side ~= nil then
           if not transformation.filter or transformation.filter(newObj) then
             table.insert(results, newObj)

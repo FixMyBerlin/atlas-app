@@ -1,5 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-package.path = package.path .. ";/app/process/shared/?.lua"
 package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
 require("transformations")
 require("HighwayClasses")
@@ -8,7 +7,7 @@ function BikelanesPresence(object, cycleways)
   local tags = object.tags
   local presence = {}
   local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
-  for _, cycleway in pairs(cycleways) do
+  for _, cycleway in ipairs(cycleways) do
     local sign = cycleway.sign
     presence[sign] = presence[sign] or cycleway.category
   end

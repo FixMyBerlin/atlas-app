@@ -1,6 +1,4 @@
 package.path = package.path .. ";/app/process/helper/?.lua"
-package.path = package.path .. ";/app/process/shared/?.lua"
-package.path = package.path .. ";/app/process/roads_bikelanes/bikelanes/?.lua"
 require("Set")
 require("TimeUtils")
 require("categories")
@@ -80,6 +78,7 @@ function Bikelanes(object)
         if sign == CENTER_SIGN then -- center line case
           workingTags = tags
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
+          result_tags.prefix = ''
         else                        -- left/right case
           MergeTable(result_tags, transformedTags)
           local freshKey = "check_date:" .. transformedTags.prefix

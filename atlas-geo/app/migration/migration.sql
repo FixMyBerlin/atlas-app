@@ -10,3 +10,6 @@
 --   ADD IF NOT EXISTS comment text
 --   NULL
 --   DEFAULT NULL;
+--
+-- In the future, this is done during DB initialization; for existing DBs it has to run once
+CREATE EXTENSION btree_gist;

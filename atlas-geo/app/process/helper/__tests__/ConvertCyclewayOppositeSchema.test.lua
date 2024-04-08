@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
 require("CompareTables")
 require("ConvertCyclewayOppositeSchema")
 require("osm2pgsql")

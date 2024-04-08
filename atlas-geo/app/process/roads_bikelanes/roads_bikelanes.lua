@@ -1,4 +1,4 @@
-package.path = package.path .. ";/app/process/helper/?.lua;/app/process/shared/?.lua"
+package.path = package.path .. ";/app/process/helper/?.lua"
 local dir = ";/app/process/roads_bikelanes/"
 package.path = package.path .. dir .. "roads/?.lua"
 package.path = package.path .. dir .. "maxspeed/?.lua"
@@ -6,13 +6,12 @@ package.path = package.path .. dir .. "surfaceQuality/?.lua"
 package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
 package.path = package.path .. dir .. "bikelanes/categories/?.lua"
-
+package.path = package.path .. dir .. "bikeroutes/?.lua"
 require("Set")
 require("JoinSets")
 require("Metadata")
 require("ExcludeHighways")
 require("ExcludeByWidth")
-require("IntoExcludeTable")
 require("ConvertCyclewayOppositeSchema")
 require("Maxspeed")
 require("Lit")
@@ -47,12 +46,15 @@ local roadsPathClassesTable = osm2pgsql.define_table({
 
 local bikelanesTable = osm2pgsql.define_table({
   name = 'bikelanes',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  -- Note: We populate a custom `osm_id` (with unique ID values) below.
+  ids = { type = 'any', id_column = 'internal_id', type_column = 'osm_type' },
   columns = {
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
-  }
+    { column = 'osm_id', type = 'text',      not_null = true },
+    { column = 'tags',   type = 'jsonb' },
+    { column = 'meta',   type = 'jsonb' },
+    { column = 'geom',   type = 'linestring' },
+  },
+  indexes = { { column = 'osm_id', method = 'gist' } }
 })
 
 
@@ -78,15 +80,9 @@ function osm2pgsql.process_way(object)
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   if not allowed_highways[tags.highway] then return end
 
-  local exclude, reason = ExcludeHighways(tags)
-  if exclude then
-    IntoExcludeTable(excludedRoadsTable, object, reason)
-    return
-  end
-  if object.tags.area == 'yes' then
-    IntoExcludeTable(excludedRoadsTable, object, "Exclude `area=yes`")
-    return
-  end
+  local exclude, _ = ExcludeHighways(tags)
+  if exclude then return end
+  if object.tags.area == 'yes' then return end
 
   -- TODO: Rething this. We should only exclude crossing which are not bikelane-crossings. See categories#crossing
   -- if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
@@ -106,20 +102,31 @@ function osm2pgsql.process_way(object)
     length = formattedMeratorLengthMeters,
   }
 
+
   MergeTable(results, RoadClassification(object))
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
   local cycleways = Bikelanes(object)
-  for _, cycleway in pairs(cycleways) do
+  for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
       local result = {}
       for k, v in pairs(cycleway) do
         result[k] = v
       end
       result.name = results.name
+
+
       result.length = formattedMeratorLengthMeters
       result.road = results.road
+
+      -- if osm2pgsql.stage == 2 then
+      --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
+      -- end
+
+      local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
+
+      local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
 
       -- Hacky cleanup tags we don't need to make the file smaller
       result._infrastructureExists = nil -- not used in atlas-app
@@ -132,6 +139,7 @@ function osm2pgsql.process_way(object)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
 
       bikelanesTable:insert({
+        osm_id = id,
         tags = result,
         meta = Metadata(object),
         geom = object:as_linestring()
