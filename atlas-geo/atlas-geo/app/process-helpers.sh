@@ -58,15 +58,6 @@ notify() {
   curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
 }
 
-run_lua_if_debug() {
-  if [ $DEBUG == 1 ]; then
-    echo "Running $1 with .env 'DEBUG=1'"
-    run_lua $1
-  else
-    echo "SKIPPED $1 with .env 'DEBUG=0'"
-  fi
-}
-
 hash_dir() {
   directory=$1
   suffix=$2
