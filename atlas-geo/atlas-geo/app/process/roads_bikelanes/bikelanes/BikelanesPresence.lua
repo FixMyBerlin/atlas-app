@@ -7,7 +7,7 @@ function BikelanesPresence(object, cycleways)
   local tags = object.tags
   local presence = {}
   local sides = { LEFT_SIGN, CENTER_SIGN, RIGHT_SIGN }
-  for _, cycleway in pairs(cycleways) do
+  for _, cycleway in ipairs(cycleways) do
     local sign = cycleway.sign
     presence[sign] = presence[sign] or cycleway.category
   end
