@@ -71,22 +71,6 @@ The workflow is…
 > **Note**
 > Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
 
-**Notes**
-
-Hack into the bash
-
-```sh
-docker compose -f docker-compose.development.yml exec app bash
-```
-
-You can also run the script locally:
-
-1. This requires a new user in postgres which is the same as your current user:
-   ```sh
-   sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
-   ```
-2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
-
 ### Process only a single object
 
 For the development process it's often usefull to run the processing on a single object.
