@@ -108,7 +108,7 @@ function osm2pgsql.process_way(object)
   MergeTable(results, SurfaceQuality(object))
 
   local cycleways = Bikelanes(object)
-  for _, cycleway in pairs(cycleways) do
+  for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
       local result = {}
       for k, v in pairs(cycleway) do

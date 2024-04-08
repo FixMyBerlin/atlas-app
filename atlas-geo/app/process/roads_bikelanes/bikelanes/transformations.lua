@@ -56,7 +56,7 @@ function GetTransformedObjects(tags, transformations)
     return results
   end
 
-  for _, transformation in pairs(transformations) do
+  for _, transformation in ipairs(transformations) do
     for side, sign in pairs(sideSignMap) do
       if tags.highway ~= transformation.highway then
         local prefix = transformation.prefix
