@@ -13,7 +13,6 @@ require("JoinSets")
 require("Metadata")
 require("ExcludeHighways")
 require("ExcludeByWidth")
-require("IntoExcludeTable")
 require("ConvertCyclewayOppositeSchema")
 require("Maxspeed")
 require("Lit")
@@ -51,12 +50,12 @@ local bikelanesTable = osm2pgsql.define_table({
   -- Note: We populate a custom `osm_id` (with unique ID values) below.
   ids = { type = 'any', id_column = 'internal_id', type_column = 'osm_type' },
   columns = {
-    { column = 'osm_id', type = 'text', not_null = true},
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'osm_id', type = 'text',      not_null = true },
+    { column = 'tags',   type = 'jsonb' },
+    { column = 'meta',   type = 'jsonb' },
+    { column = 'geom',   type = 'linestring' },
   },
-  indexes = {{column = 'osm_id', method = 'gist'}}
+  indexes = { { column = 'osm_id', method = 'gist' } }
 })
 
 
@@ -82,15 +81,9 @@ function osm2pgsql.process_way(object)
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   if not allowed_highways[tags.highway] then return end
 
-  local exclude, reason = ExcludeHighways(tags)
-  if exclude then
-    IntoExcludeTable(excludedRoadsTable, object, reason)
-    return
-  end
-  if object.tags.area == 'yes' then
-    IntoExcludeTable(excludedRoadsTable, object, "Exclude `area=yes`")
-    return
-  end
+  local exclude, _ = ExcludeHighways(tags)
+  if exclude then return end
+  if object.tags.area == 'yes' then return end
 
   -- TODO: Rething this. We should only exclude crossing which are not bikelane-crossings. See categories#crossing
   -- if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
@@ -132,7 +125,7 @@ function osm2pgsql.process_way(object)
       --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
       -- end
 
-      local signSideMapping = {[LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth'}
+      local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
 
       local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
 
