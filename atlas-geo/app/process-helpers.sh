@@ -214,7 +214,7 @@ run_dir() {
   backedup_tables="${CODE_HASHES}$topic.backups"
 
   if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
-    log "💥 SKIPPED $topic. The code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
+    log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
     for table in $(lua $lua_file); do
       # Remove old diffs
       psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
