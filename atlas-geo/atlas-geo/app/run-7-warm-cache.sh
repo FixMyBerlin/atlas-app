@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source ./process-helpers.sh
+source /app/utils/logging.sh
 log_start "$0"
 
 if [ "${SKIP_WARM_CACHE:-0}" == 1 ]; then
