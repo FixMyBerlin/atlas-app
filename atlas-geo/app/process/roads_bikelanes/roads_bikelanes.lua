@@ -107,10 +107,6 @@ function osm2pgsql.process_way(object)
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
-      local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
-
-      local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
-
       -- Hacky cleanup tags we don't need to make the file smaller
       result._infrastructureExists = nil -- not used in atlas-app
       result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
@@ -121,6 +117,8 @@ function osm2pgsql.process_way(object)
       -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
       -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
 
+      local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
+      local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
       bikelanesTable:insert({
         osm_id = id,
         tags = result,
