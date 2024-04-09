@@ -7,7 +7,7 @@ log_start "$0"
 OSM_DOWNLOAD_FILE="${OSM_DATADIR}$(basename $OSM_DOWNLOAD_URL)"
 if [ $SKIP_DOWNLOAD == 1 ]; then
   if [ -f "${OSM_DOWNLOAD_FILE}" ]; then
-    log "💥 SKIPPED with .env 'SKIP_DOWNLOAD=1'"
+    log "💥 SKIPPED download with .env 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
     log "Can't skip download, no file was found."
