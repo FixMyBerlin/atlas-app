@@ -124,7 +124,8 @@ export const SelectDatasets = ({
                       )}
                     >
                       {datasets.map((dataset) => {
-                        return <SelectDataset key={dataset.id} dataset={dataset} />
+                        const key = createSourceKeyStaticDatasets(dataset.id, dataset.subId)
+                        return <SelectDataset key={key} dataset={dataset} />
                       })}
                     </Listbox.Options>
                   )

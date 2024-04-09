@@ -97,7 +97,7 @@ model BikelaneVerification {
   id          Int      @id @default(autoincrement())
   //
   osm_type    String   @db.VarChar
-  osm_id      BigInt
+  osm_id      String
   verified_at DateTime @default(now())
   verified_by BigInt?
   verified    String

@@ -3,8 +3,7 @@ import { z } from 'zod'
 export const VerificationSchema = z.object({
   id: z.number(),
   osm_type: z.literal('W'),
-  // BigInt in db but number in the frontend
-  osm_id: z.coerce.number(),
+  osm_id: z.string(),
   // BigInt in db but number in the frontend
   // OSM User ID, _not_ OSM Username
   // Note, this is optional in DB but not in UI.

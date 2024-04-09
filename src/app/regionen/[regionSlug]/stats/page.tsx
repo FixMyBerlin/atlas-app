@@ -17,8 +17,8 @@ export async function generateMetadata({ params }) {
 export default async function ShowRegionStatsPage({ params }) {
   const region = await invoke(getRegion, { slug: params.regionSlug })
   const stats = (await prismaClientForRawQueries.$queryRaw`
-      SELECT osm_id::numeric, tags->'name', tags, meta, bikelane_categories
-      FROM public."boundaryStats"
+      SELECT osm_id::numeric, tags->'name', tags, meta, presence_categories
+      FROM public."presenceStats"
       WHERE osm_id::text IN (${region.osmRelationIds.map(String).join(',') || '62422'})`) as any
 
   return (
@@ -27,8 +27,8 @@ export default async function ShowRegionStatsPage({ params }) {
       <ObjectDump data={stats} />
 
       {stats.map((stat) => {
-        const bikelaneStats = stat.bikelane_categories
-        const total = Object.values(bikelaneStats).reduce(
+        const presenceStats = stat.presence_categories
+        const total = Object.values(presenceStats).reduce(
           (acc: number, cur: number) => acc + cur,
           0,
         ) as number
@@ -37,7 +37,7 @@ export default async function ShowRegionStatsPage({ params }) {
             <h2>{stat.region}</h2>
             <table>
               <tbody>
-                {Object.entries(bikelaneStats).map(([key, value]) => {
+                {Object.entries(presenceStats).map(([key, value]) => {
                   const km = Number(value)
                   return (
                     <tr key={key}>

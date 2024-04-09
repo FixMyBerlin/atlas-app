@@ -55,7 +55,7 @@ export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
             sourceId={sourceId}
           />
 
-          <Verification properties={properties} sourceId={sourceId} />
+          {/* <Verification properties={properties} sourceId={sourceId} /> */}
 
           <ToolsWrapper>
             <ToolsLinks

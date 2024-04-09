@@ -19,11 +19,13 @@ const existingRegionSlugs = regions.map((region) => region.slug)
 // script can be run with --dry-run to just run all checks
 // without transforming and processing geojsons, uploading pmtiles and saving to db
 // use --keep-tmp to keep temporary generated files
+// use --folder-filter to run only this folders that include this filter string
 const { values, positionals } = parseArgs({
   args: Bun.argv,
   options: {
     'dry-run': { type: 'boolean' },
     'keep-tmp': { type: 'boolean' },
+    'folder-filter': { type: 'string' },
   },
   strict: true,
   allowPositionals: true,
@@ -31,17 +33,16 @@ const { values, positionals } = parseArgs({
 
 const dryRun = !!values['dry-run']
 const keepTemporaryFiles = !!values['keep-tmp']
+const folderFilterTerm = values['folder-filter']
 
 inverse('Starting update with settings', [
   {
     API_ROOT_URL: process.env.API_ROOT_URL,
     S3_UPLOAD_FOLDER: process.env.S3_UPLOAD_FOLDER,
     ...(keepTemporaryFiles ? { tmpDir } : {}),
+    ...(folderFilterTerm ? { folderFilterTerm } : {}),
   },
 ])
-if (keepTemporaryFiles) {
-  Bun.spawnSync(['open', tmpDir])
-}
 
 const generatePMTilesFile = (inputFile: string, outputFile: string) => {
   if (dryRun) return '/tmp/does-not-exist.pmtiles'
@@ -191,8 +192,12 @@ if (!fs.existsSync(geoJsonFolder)) {
 
 const folderNames = fs
   .readdirSync(geoJsonFolder)
-  .filter((folder) => !folder.startsWith('_')) // We skip `_utils` and by convention prefix unpublished datasets with underscore
+  // We skip `_utils` and by convention prefix unpublished datasets with underscore
+  .filter((folder) => !folder.startsWith('_'))
+  // If a `folder-filter` is given, we only look at folder that include this term
+  .filter((folder) => (folderFilterTerm ? folder.includes(folderFilterTerm) : true))
   .sort()
+
 for (const i in folderNames) {
   const folderName = folderNames[i]!
   const folderPath = path.join(geoJsonFolder, folderName)
@@ -265,8 +270,21 @@ for (const i in folderNames) {
   green('  OK')
 }
 
+// List processed temp geojson files when --keep-tmp present for easy access to check the file
+if (keepTemporaryFiles) {
+  inverse('Processed temporary files')
+  const tempGeojsonFiles = fs
+    .readdirSync(tmpDir)
+    .filter((file) => file.endsWith('.geojson'))
+    .filter((file) => (folderFilterTerm ? file.includes(folderFilterTerm) : true))
+    .sort()
+  tempGeojsonFiles.map((file) => {
+    console.log(`  ${path.join(tmpDir, file)}`)
+  })
+}
+
+// Clean up
 if (!keepTemporaryFiles) {
-  // clean up
   fs.rmSync(tmpDir, { recursive: true, force: true })
 }
 

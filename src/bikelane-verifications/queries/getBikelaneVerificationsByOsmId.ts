@@ -8,7 +8,7 @@ import { VerificationSchema } from '../schemas'
 type GetBikelaneVerificationsInput = Pick<
   Prisma.BikelaneVerificationFindManyArgs,
   'skip' | 'take'
-> & { osmId: number; regionSlug: string }
+> & { osmId: string; regionSlug: string }
 
 export default resolver.pipe(
   authorizeRegionAdmin(getRegionIdBySlug),
