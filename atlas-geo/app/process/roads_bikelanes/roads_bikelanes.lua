@@ -96,23 +96,21 @@ function osm2pgsql.process_way(object)
   local cycleways = Bikelanes(object)
   for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
-      local result = {}
-      for k, v in pairs(cycleway) do
-        result[k] = v
-      end
-      result.name = results.name
-      result.length = formattedMeratorLengthMeters
-      result.road = results.road
+      cycleway.name = results.name
+
+
+      cycleway.length = formattedMeratorLengthMeters
+      cycleway.road = results.road
 
       -- if osm2pgsql.stage == 2 then
       --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
       -- end
       local id = results.id
-      results.id = nil
-      result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
+      cycleway.id = nil
+      cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
         osm_id = id,
-        tags = result,
+        tags = cycleway,
         meta = Metadata(object),
         geom = object:as_linestring()
       })
