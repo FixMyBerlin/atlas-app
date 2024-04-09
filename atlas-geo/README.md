@@ -79,6 +79,8 @@ If any helper in (`process/helper`)[app/process/helper] changed, we rerun everyt
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
+**Force rerun:** Whenever you need to force a rerun, open [any lua helper](./app/process/helper/Set.lua) and add a temporary code comment, save and restart the processing.
+
 ### Processing: Inspect changes
 
 Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<tablename>_diff` tables that contain only changed entries.
