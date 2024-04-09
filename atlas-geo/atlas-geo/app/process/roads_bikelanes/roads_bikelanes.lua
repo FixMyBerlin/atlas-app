@@ -24,6 +24,7 @@ require("MergeTable")
 require("CopyTags")
 require("IsSidepath")
 require("ExtractPublicTags")
+require("Round")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -81,13 +82,11 @@ function osm2pgsql.process_way(object)
   ConvertCyclewayOppositeSchema(tags)
   -- Calculate and format length, see also https://github.com/osm2pgsql-dev/osm2pgsql/discussions/1756#discussioncomment-3614364
   -- Use https://epsg.io/25833 (same as `boundaryStats.sql`); update `atlas_roads--length--tooltip` if changed.
-  local lengthInMercatorMeters = object:as_linestring():transform(25833):length()
-  local formattedMeratorLengthMeters = tonumber(string.format("%.2f", lengthInMercatorMeters))
-
+  local length = Round(object:as_linestring():transform(25833):length(), 2)
   -- ====== (C) Compute results and insert ======
   local results = {
     name = tags.name or tags.ref or tags['is_sidepath:of:name'],
-    length = formattedMeratorLengthMeters,
+    length = length,
   }
 
   MergeTable(results, RoadClassification(object))
@@ -99,7 +98,7 @@ function osm2pgsql.process_way(object)
     if cycleway._infrastructureExists then
       local publicTags = ExtractPublicTags(cycleway)
       publicTags.name = results.name
-      publicTags.length = formattedMeratorLengthMeters
+      publicTags.length = length
       publicTags.road = results.road
       publicTags.prefix = cycleway._prefix
       publicTags._parent_highway = cycleway._parent_highway
