@@ -109,10 +109,7 @@ function osm2pgsql.process_way(object)
       -- end
       local id = results.id
       results.id = nil
-      -- Hacky cleanup tags we don't need to make the file smaller
       result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
-      -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
-      -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
       bikelanesTable:insert({
         osm_id = id,
         tags = result,
