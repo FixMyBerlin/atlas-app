@@ -57,19 +57,6 @@ local bikelanesTable = osm2pgsql.define_table({
   indexes = { { column = 'osm_id', method = 'gist' } }
 })
 
-
-local excludedRoadsTable = osm2pgsql.define_table({
-  name = 'roads_excluded',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'tags',   type = 'jsonb' },
-    { column = 'meta',   type = 'jsonb' },
-    { column = 'reason', type = 'text' },
-    { column = 'geom',   type = 'linestring' },
-  }
-})
-
-
 function osm2pgsql.process_way(object)
   local tags = object.tags
 

@@ -1,9 +1,3 @@
-# Dataset `bikelanes_excluded`
-
-Holds all the road segments that where filtered during processing of the `bikelanes` dataset. Can be used for debugging.
-
-The `_excludeNotes` give a hint to why a road segment was filtered.
-
 # Dataset `bikelanes`
 
 ## `TODO`: document centerline processing
