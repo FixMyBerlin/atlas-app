@@ -54,7 +54,7 @@ run_psql() {
 
 # Main helper to run LUA _and_ SQL files.
 # One one .lua and one optional .sql per topic.
-# See [process/README.md](./process/README.md) for more
+# See [topics/README.md](./topics/README.md) for more
 run_dir() {
   topic=$1
   directory="${PROCESS_DIR}${topic}/"
