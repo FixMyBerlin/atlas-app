@@ -107,10 +107,6 @@ function osm2pgsql.process_way(object)
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
-      -- if osm2pgsql.stage == 2 then
-      --   result.routes = '[' .. table.concat(wayRouteMapping[object.id], ',') .. ']'
-      -- end
-
       local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
 
       local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
