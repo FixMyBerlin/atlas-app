@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
 
-# Install the docker-cli inside the app container to be able to restart the martin container
+# Install the docker-cli inside the processing container to be able to restart the martin container
 # The setting below in docker-compose.yml is required for this to work
 # volumes:
 #   - /var/run/docker.sock:/var/run/docker.sock

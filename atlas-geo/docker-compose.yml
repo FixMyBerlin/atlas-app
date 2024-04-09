@@ -30,9 +30,9 @@ services:
       - "./letsencrypt:/letsencrypt"
     networks:
       - app_bridge
-  app:
+  processing:
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
-    container_name: app
+    container_name: processing
     environment:
       PGHOST:
       PGDATABASE:
