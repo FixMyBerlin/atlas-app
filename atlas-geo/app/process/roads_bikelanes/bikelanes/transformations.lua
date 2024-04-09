@@ -72,6 +72,7 @@ function GetTransformedObjects(tags, transformations)
           end
         end
 
+        -- TODO: How does the following section get merged into the results table? It looks like it does nothing?
         local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
         -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
         local sideDirectionMap = {
