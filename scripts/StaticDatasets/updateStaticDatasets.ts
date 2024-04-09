@@ -43,9 +43,6 @@ inverse('Starting update with settings', [
     ...(folderFilterTerm ? { folderFilterTerm } : {}),
   },
 ])
-if (keepTemporaryFiles) {
-  Bun.spawnSync(['open', tmpDir])
-}
 
 const generatePMTilesFile = (inputFile: string, outputFile: string) => {
   if (dryRun) return '/tmp/does-not-exist.pmtiles'
@@ -273,8 +270,21 @@ for (const i in folderNames) {
   green('  OK')
 }
 
+// List processed temp geojson files when --keep-tmp present for easy access to check the file
+if (keepTemporaryFiles) {
+  inverse('Processed temporary files')
+  const tempGeojsonFiles = fs
+    .readdirSync(tmpDir)
+    .filter((file) => file.endsWith('.geojson'))
+    .filter((file) => (folderFilterTerm ? file.includes(folderFilterTerm) : true))
+    .sort()
+  tempGeojsonFiles.map((file) => {
+    console.log(`  ${path.join(tmpDir, file)}`)
+  })
+}
+
+// Clean up
 if (!keepTemporaryFiles) {
-  // clean up
   fs.rmSync(tmpDir, { recursive: true, force: true })
 }
 
