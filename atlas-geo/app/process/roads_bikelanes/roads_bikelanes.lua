@@ -89,7 +89,6 @@ function osm2pgsql.process_way(object)
     length = formattedMeratorLengthMeters,
   }
 
-
   MergeTable(results, RoadClassification(object))
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
@@ -102,8 +101,6 @@ function osm2pgsql.process_way(object)
         result[k] = v
       end
       result.name = results.name
-
-
       result.length = formattedMeratorLengthMeters
       result.road = results.road
 
