@@ -33,15 +33,8 @@ SideSignMap = {
   ["right"] = -1,
   ["self"] = 0
 }
--- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
-local sideDirectionMap = {
-  ["left"] = 'backward',
-  ["right"] = 'forward',
-}
-
 
 -- these tags get transformed from the forward backward schema
-local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"                             -- Overwrite any OSM tag 'sign'
@@ -79,6 +72,13 @@ function GetTransformedObjects(tags, transformations)
             table.insert(results, newObj)
           end
         end
+
+        local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
+        -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
+        local sideDirectionMap = {
+          ["left"] = 'backward',
+          ["right"] = 'forward',
+        }
         for _, key in pairs(directedTags) do
           local directedKey = key .. ':' .. sideDirectionMap[side]
           newObj[key] = newObj[key] or tags[key] or tags[directedKey]
