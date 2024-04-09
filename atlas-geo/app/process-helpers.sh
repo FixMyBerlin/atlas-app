@@ -226,6 +226,7 @@ run_dir() {
     if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
+          psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
           psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
         done
         cp $processed_tables $backedup_tables
