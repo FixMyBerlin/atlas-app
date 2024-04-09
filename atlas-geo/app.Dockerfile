@@ -27,15 +27,15 @@ RUN apt update && \
 # install node
 RUN apt-get install -y nodejs npm
 
-WORKDIR /app/warm-cache
+WORKDIR /processing/warm-cache
 COPY warm-cache/package*.json .
-RUN cd /app/warm-cache && npm install
+RUN cd /processing/warm-cache && npm install
 COPY warm-cache/util.js .
 COPY warm-cache/warmCache.js .
 
-WORKDIR /app
+WORKDIR /processing
 # 'data' folder is root
 RUN mkdir /data
-COPY app /app/
-RUN chmod +x /app/*.sh
-ENTRYPOINT /app/run.sh
+COPY processing /processing/
+RUN chmod +x /processing/*.sh
+ENTRYPOINT /processing/run.sh
