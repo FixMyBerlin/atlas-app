@@ -14,5 +14,5 @@ osm2pgsql = {
 
 
 local topic = arg[1]
-package.path = package.path .. ";/app/process/" .. topic .. "/?.lua"
+package.path = package.path .. ";/app/topics/" .. topic .. "/?.lua"
 require(topic)

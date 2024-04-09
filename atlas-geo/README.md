@@ -69,13 +69,13 @@ The workflow is…
 3. Inspect the new results, see "Inspect changes"
 
 > **Note**
-> Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
+> Learn more about the file/folder-structure and coding patterns in [`app/topics/README.md`](/app/topics/README.md)
 
 ### Processing: Run changes only
 
 Whenever `SKIP_DOWNLOAD=1` is active we store a hash of all `.lua` and `.sql` per folder.
 During [`run-5-process.sh`](app/run-5-process.sh) we only run code if the hash has changed.
-If any helper in (`process/helper`)[app/process/helper] changed, we rerun everything.
+If any helper in (`topics/helper`)[app/topics/helper] changed, we rerun everything.
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
