@@ -157,7 +157,6 @@ run_lua() {
 
   log_start "Run lua"
   start_time=$(seconds)
-  # notify "PROCESS START – Topic: #$1 LUA"
 
   # optional log output:
   # https://osm2pgsql.org/doc/manual.html#logging
