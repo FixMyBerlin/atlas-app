@@ -62,6 +62,7 @@ function Bikelanes(object)
           _infrastructureExists = true,
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
+          id = transformedTags._prefix .. ':' .. transformedTags._side .. '/' .. object.id,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
