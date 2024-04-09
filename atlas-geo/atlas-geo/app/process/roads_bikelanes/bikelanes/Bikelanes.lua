@@ -71,6 +71,7 @@ function Bikelanes(object)
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
         else                        -- left/right case
           MergeTable(result_tags, transformedTags)
+          result_tags._parent_highway = tags.highway
           local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end

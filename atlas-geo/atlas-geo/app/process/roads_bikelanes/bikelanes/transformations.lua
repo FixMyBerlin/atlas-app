@@ -60,7 +60,6 @@ function GetTransformedObjects(tags, transformations)
       if tags.highway ~= transformation.highway then
         local prefix = transformation.prefix
         local newObj = {
-          _parent_highway = tags.highway,
           _prefix = prefix,
           _side = side,
           highway = transformation.highway
