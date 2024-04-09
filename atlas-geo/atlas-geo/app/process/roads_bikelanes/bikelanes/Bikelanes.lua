@@ -47,49 +47,41 @@ function Bikelanes(object)
     prefix = "cycleway",
   }
 
-  -- generate cycleways from center line tagging, also includes the original object with `sign = 0`
+  -- generate cycleways from center line tagging, also includes the original object with `side = self`
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
   for i, transformedTags in pairs(transformedObjects) do
-    local sign = transformedTags.sign
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
-      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, sign = sign }
+      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, _side = transformedTags._side }
     else
       local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
+          _id = transformedTags._prefix .. ':' .. transformedTags._side .. '/' .. object.id,
+          _side = transformedTags._side,
           category = category,
-          offset = sign * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
-          sign = sign,
+          offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
         }
 
-
-        -- NOTE: from here on we have three tag tables:
-        -- `tags` - the original tags from OSM
-        -- 'transformedTags' - the transformed tags
-        -- `workingTags` - is `transformedTags` for `left`|`right` and `tags` fro `self`
-        local workingTags = transformedTags
-        if sign == CENTER_SIGN then -- center line case
-          workingTags = tags
+        if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
-          result_tags.prefix = ''
-        else                        -- left/right case
+        else                                    -- left/right case
           MergeTable(result_tags, transformedTags)
-          local freshKey = "check_date:" .. transformedTags.prefix
+          local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
-        -- Handle `workingTags`
-        result_tags.width = ParseLength(workingTags.width)
+
+        result_tags.width = ParseLength(transformedTags.width)
         -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
-        result_tags.todos = ToMarkdownList(BikelanesTodos(workingTags, result_tags))
-        MergeTable(result_tags, DeriveSmoothness(workingTags))
-        MergeTable(result_tags, DeriveSurface(workingTags))
+        result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
+        MergeTable(result_tags, DeriveSmoothness(transformedTags))
+        MergeTable(result_tags, DeriveSurface(transformedTags))
 
         -- copy original tags
         CopyTags(result_tags, tags, tags_copied)

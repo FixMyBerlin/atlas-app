@@ -23,6 +23,7 @@ require("BikelanesPresence")
 require("MergeTable")
 require("CopyTags")
 require("IsSidepath")
+require("ExtractPublicTags")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -96,29 +97,17 @@ function osm2pgsql.process_way(object)
   local cycleways = Bikelanes(object)
   for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
-      local result = {}
-      for k, v in pairs(cycleway) do
-        result[k] = v
-      end
-      result.name = results.name
-      result.length = formattedMeratorLengthMeters
-      result.road = results.road
+      local publicTags = ExtractPublicTags(cycleway)
+      publicTags.name = results.name
+      publicTags.length = formattedMeratorLengthMeters
+      publicTags.road = results.road
+      publicTags.prefix = cycleway._prefix
+      publicTags._parent_highway = cycleway._parent_highway
 
-      -- Hacky cleanup tags we don't need to make the file smaller
-      result._infrastructureExists = nil -- not used in atlas-app
-      result.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
-      result.sign = nil                  -- not used in atlas-app
-      result.side = nil                  -- not used in atlas-app
-      -- result.offset = nil                -- not used in atlas-app -- DANGER: This one is used in bikelanes.sql
-      result.parent = nil                -- not used in atlas-app
-      -- Note: `_parent_highway` is used in atlas-app (but should be migrated to something documented)
-      -- Note: `prefix` is used in atlas-app (but should be migrated to something documented)
-
-      local signSideMapping = { [LEFT_SIGN] = 'left', [CENTER_SIGN] = 'self', [RIGHT_SIGN] = 'rigth' }
-      local id = result.prefix .. ':' .. signSideMapping[result.sign] .. '/' .. object.id
+      cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
-        osm_id = id,
-        tags = result,
+        osm_id = cycleway._id,
+        tags = publicTags,
         meta = Metadata(object),
         geom = object:as_linestring()
       })
