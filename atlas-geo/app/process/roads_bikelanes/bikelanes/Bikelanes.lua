@@ -51,7 +51,7 @@ function Bikelanes(object)
   local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
-  for i, transformedTags in pairs(transformedObjects) do
+  for i, transformedTags in ipairs(transformedObjects) do
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
       result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, _side = transformedTags._side }
