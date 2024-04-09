@@ -113,6 +113,7 @@ compute_diff() {
         ON \"$table\".osm_id = \"$backup_table\".osm_id
     ) sq
     WHERE tags != '{}'::jsonb;
+    UPDATE  \"$diff_table\" SET tags = tags || '{\"CHANGE\": \"modified\"}'::jsonb;
     SELECT count(osm_id) FROM \"$diff_table\";"
   n_modified=$(echo $query | psql -q -t -A)
 
@@ -128,6 +129,7 @@ compute_diff() {
       FULL OUTER JOIN \"$backup_table\"
         ON \"$table\".osm_id = \"$backup_table\".osm_id
       WHERE \"$backup_table\".osm_id IS NULL;
+    UPDATE  added_rows SET tags = tags || '{\"CHANGE\": \"added\"}'::jsonb;
     SELECT count(*) FROM added_rows;
     INSERT INTO \"$diff_table\" SELECT $columns FROM added_rows;"
   n_added=$(echo $query | psql -q -t -A)
@@ -136,7 +138,7 @@ compute_diff() {
   query="
     CREATE TEMP TABLE deleted_rows AS
       SELECT
-        jsonb_prefix_values(\"$backup_table\".tags, '(-)') as tags,
+        jsonb_prefix_values(\"$backup_table\".tags, '(-)') || jsonb_build_object('CHANGE', 'deleted') as tags,
         \"$backup_table\".osm_id,
         \"$backup_table\".meta,
         \"$backup_table\".geom
@@ -144,6 +146,7 @@ compute_diff() {
       FULL OUTER JOIN \"$table\"
         ON \"$backup_table\".osm_id = \"$table\".osm_id
       WHERE \"$table\".osm_id IS NULL;
+    UPDATE  deleted_rows SET tags = tags || '{\"CHANGE\": \"deleted\"}'::jsonb;
     SELECT count(*) FROM deleted_rows;
     INSERT INTO \"$diff_table\" SELECT $columns FROM deleted_rows;"
   n_deleted=$(echo $query | psql -q -t -A)
