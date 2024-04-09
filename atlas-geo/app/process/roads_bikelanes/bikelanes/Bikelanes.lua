@@ -11,6 +11,7 @@ require("DeriveSmoothness")
 require("BikelanesTodos")
 require("Sanitize")
 require("InferOneway")
+require("DropInternalTags")
 
 local tags_copied = {
   "mapillary",
@@ -70,13 +71,15 @@ function Bikelanes(object)
 
         if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
-        else                        -- left/right case
+        else                                    -- left/right case
+          local internalTags = DropInternalTags(transformedTags)
           MergeTable(result_tags, transformedTags)
           result_tags._parent_highway = tags.highway
-          local freshKey = "check_date:" .. transformedTags._prefix
+          result_tags.prefix = internalTags._prefix
+          local freshKey = "check_date:" .. internalTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
-        -- Handle `transformedTags`
+
         result_tags.width = ParseLength(transformedTags.width)
         -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
         result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
