@@ -54,7 +54,11 @@ function Bikelanes(object)
   for i, transformedTags in ipairs(transformedObjects) do
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
-      result_bikelanes[i] = { _infrastructureExists = false, category = onlyPresent, _side = transformedTags._side }
+      result_bikelanes[i] = {
+        _infrastructureExists = false,
+        category = onlyPresent,
+        _side = transformedTags._side,
+      }
     else
       local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
