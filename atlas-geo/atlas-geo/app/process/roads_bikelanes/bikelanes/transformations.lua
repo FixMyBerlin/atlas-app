@@ -62,6 +62,7 @@ function GetTransformedObjects(tags, transformations)
         local newObj = {
           _prefix = prefix,
           _side = side,
+          _parent_highway = tags.highway,
           highway = transformation.highway
 
         }

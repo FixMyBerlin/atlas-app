@@ -23,6 +23,7 @@ require("BikelanesPresence")
 require("MergeTable")
 require("CopyTags")
 require("IsSidepath")
+require("ExtractPublicTags")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -96,18 +97,17 @@ function osm2pgsql.process_way(object)
   local cycleways = Bikelanes(object)
   for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
-      cycleway.name = results.name
+      local publicTags = ExtractPublicTags(cycleway)
+      publicTags.name = results.name
+      publicTags.length = formattedMeratorLengthMeters
+      publicTags.road = results.road
+      publicTags.prefix = cycleway._prefix
+      publicTags._parent_highway = cycleway._parent_highway
 
-
-      cycleway.length = formattedMeratorLengthMeters
-      cycleway.road = results.road
-
-      local id = results.id
-      cycleway.id = nil
       cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
-        osm_id = id,
-        tags = cycleway,
+        osm_id = cycleway._id,
+        tags = publicTags,
         meta = Metadata(object),
         geom = object:as_linestring()
       })

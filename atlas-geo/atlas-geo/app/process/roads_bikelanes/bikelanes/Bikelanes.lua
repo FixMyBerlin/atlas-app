@@ -11,7 +11,6 @@ require("DeriveSmoothness")
 require("BikelanesTodos")
 require("Sanitize")
 require("InferOneway")
-require("DropInternalTags")
 
 local tags_copied = {
   "mapillary",
@@ -61,9 +60,10 @@ function Bikelanes(object)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
+          _id = transformedTags._prefix .. ':' .. transformedTags._side .. '/' .. object.id,
+          _side = transformedTags._side,
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
-          id = transformedTags._prefix .. ':' .. transformedTags._side .. '/' .. object.id,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
@@ -72,11 +72,8 @@ function Bikelanes(object)
         if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
         else                                    -- left/right case
-          local internalTags = DropInternalTags(transformedTags)
           MergeTable(result_tags, transformedTags)
-          result_tags._parent_highway = tags.highway
-          result_tags.prefix = internalTags._prefix
-          local freshKey = "check_date:" .. internalTags._prefix
+          local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
         end
 
