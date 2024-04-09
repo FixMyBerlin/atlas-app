@@ -1,9 +1,3 @@
-# Dataset `bikelanes_excluded`
-
-Holds all the road segments that where filtered during processing of the `bikelanes` dataset. Can be used for debugging.
-
-The `_excludeNotes` give a hint to why a road segment was filtered.
-
 # Dataset `bikelanes`
 
 ## `TODO`: document centerline processing
@@ -12,8 +6,10 @@ The `_excludeNotes` give a hint to why a road segment was filtered.
 
 ## Main values
 
-- `category` (string)
+> [!NOTICE]
+> This file is not up to date!
 
+- `category` (string)
   - `bicycleRoad` – Fahrradstraße based on tag OR traffic_sign
   - `cyclewayAlone` – "Frei geführte Radwege"; dedicated cycleways that are not next to a road; eg. https://www.openstreetmap.org/way/27701956
   - `cyclewaySeparated` – "Baulich abgesetzte Radwege" ("Protected Bike Lane"); Relies on `is_sidepath` tagging; eg. https://www.openstreetmap.org/way/278057274

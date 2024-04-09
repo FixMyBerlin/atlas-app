@@ -13,11 +13,11 @@ file_date=""
 todays_date=$(date $DATE_FORMAT)
 remaining_tries=$MAX_TRIES
 
-if [ $WAIT_FOR_FRESH_DATA != 1 ]; then
+if [ "$WAIT_FOR_FRESH_DATA" != 1 ]; then
   log "We are not waiting for fresh data."
 fi
 
-while [ $WAIT_FOR_FRESH_DATA == 1 ] ; do
+while [ "$WAIT_FOR_FRESH_DATA" == 1 ] ; do
    remaining_tries=$(($remaining_tries - 1))
   # get the file's date from the header
   file_date=$(curl -sI "$OSM_DOWNLOAD_URL" | grep -i "Last-Modified" | cut -d' ' -f2-)

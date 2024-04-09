@@ -18,12 +18,12 @@ log_start "$0"
 #    Which means, we do not actually know the age of the data,
 #    which would be the DateTime when Geofabrik pulled the data from the OSM server.
 
-OSM_TIMESTAMP=`osmium fileinfo ${OSM_LOCAL_FILE} -g header.option.timestamp`
+OSM_TIMESTAMP=`osmium fileinfo ${OSM_FILTERED_FILE} -g header.option.timestamp`
 PROCESSED_AT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
-RUN_TIME=`date -d@$PROCESS_RUN_TIME_DIFF -u +%H:%M`
+PROCESSING_DURATION=`date -d@$PROCESSING_DURATION -u +%H:%M`
 
-log "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_LOCAL_FILE} and runtime to metadata table 'bikelanes'"
+log "Add timestamp ${OSM_TIMESTAMP} of file ${OSM_FILTERED_FILE} and runtime to metadata table 'bikelanes'"
 
-psql -q -c "COMMENT ON TABLE bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"run_time\": \"${RUN_TIME} h\"}';"
+psql -q -c "COMMENT ON TABLE bikelanes IS '{\"osm_data_from\":\"${OSM_TIMESTAMP}\", \"processed_at\": \"${PROCESSED_AT}\", \"processing_duration\": \"${PROCESSING_DURATION} h\"}';"
 
 log_end "$0"

@@ -1,11 +1,11 @@
 # Coding conventions for `/process`
 
-## osm2pgsql lua files
+- Each folder specified in the `topics` list in [`run-5-process.sh`](../run-5-process.sh) is a run task
+- Each folder must have one `/app/process/<topic>/<topic>.lua` file
+- Each folder may have one `/app/process/<topic>/<topic>.sql` file
 
-## helper
+See also ["Processing: Run changes only"](../../README.md#processing-run-changes-only)
 
-General helper functions that add functionality to lua. See [`./helper`](`./helper`) for more.
+## TODO
 
-## shared
-
-Shared helper functions are related to our data processing. See [`./shared`](`./shared`) for more.
+Rename `/app` to `/processing` and `/app/process` to `/processing/topics`

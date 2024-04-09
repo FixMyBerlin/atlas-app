@@ -20,10 +20,10 @@ end
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
-  local result = tags.prefix == 'cycleway' and tags.side == '' -- object is created from implicit case
-  result = result and tags.parent.oneway == 'yes' and
-      tags.parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
-  result = result and tags.sign == LEFT_SIGN                   -- is the left side object
+  local result = tags._prefix == 'cycleway' and tags._infix == '' -- object is created from implicit case
+  result = result and tags._parent.oneway == 'yes' and
+      tags._parent['oneway:bicycle'] ~= 'no'                    -- is oneway w/o bike exception
+  result = result and tags._side == "left"                   -- is the left side object
   if result then
     return 'not_expected'
   end
@@ -227,7 +227,7 @@ end
 -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
 -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
 local function cyclewayOnHighwayBetweenLanes(tags)
-  if tags['_parent_highway'] == nil or tags.prefix == 'sidewalk' then return end
+  if tags['_parent_highway'] == nil or tags._prefix == 'sidewalk' then return end
 
   if IsTermInString("|lane|", tags['cycleway:lanes']) or IsTermInString("|designated|", tags['bicycle:lanes']) then
     return "cyclewayOnHighwayBetweenLanes"
