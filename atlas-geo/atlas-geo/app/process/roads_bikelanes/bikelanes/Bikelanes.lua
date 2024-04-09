@@ -61,9 +61,7 @@ function Bikelanes(object)
         local result_tags = {
           _infrastructureExists = true,
           category = category,
-          _prefix = transformedTags._prefix,
-          _offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2, -- TODO: Should be `_offset`
-          _side = transformedTags._side,
+          offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
