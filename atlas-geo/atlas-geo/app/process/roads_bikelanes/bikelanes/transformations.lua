@@ -37,7 +37,7 @@ SideSignMap = {
 -- these tags get transformed from the forward backward schema
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
-  center._side = "self"                                 -- Overwrite any OSM tag 'sign'
+  center._side = "self"
   center._prefix = ""
   center.oneway = tags['oneway:bicycle'] or tags.oneway -- give `bicycle:oneway` precedence
 
