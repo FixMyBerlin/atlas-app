@@ -12,7 +12,7 @@ COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
 
 # - "luarocks" – Lua package manager – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && \
-  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev curl lua5.3 && \
+  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget libpq-dev curl lua5.3 liblua5.3-dev luarocks && \
   apt upgrade -y
 # LUA Libaries:
 # - "dkjson" used by parking.lua to write JSON for debugging
@@ -22,7 +22,9 @@ RUN apt update && \
 #   (recommended in https://github.com/openstreetmap/osm2pgsql/blob/master/flex-config/README.md#dependencies)
 # RUN luarocks install inspect
 # - "date" https://luarocks.org/modules/tieske/date, https://github.com/Tieske/date
+
 # RUN luarocks install date
+RUN luarocks install busted
 
 # install node
 RUN apt-get install -y nodejs npm
