@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source ./process-helpers.sh
+source /app/utils/logging.sh
 log_start "$0"
 
 MAX_TRIES=12

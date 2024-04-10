@@ -20,9 +20,6 @@ function BikelanesPresence(object, cycleways)
     return nil
   end
 
-  -- Filter ways where we dont expect bicycle infrastructure
-  -- TODO: filter on surface and traffic zone and maxspeed (maybe wait for maxspeed PR)
-
   -- Set sides to "not_expeced" based on road class OR when infra is present on the center
   local noInfrastructureOnSidesExpected = Set({
     "residential",
