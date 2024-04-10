@@ -30,9 +30,9 @@ services:
       - "./letsencrypt:/letsencrypt"
     networks:
       - app_bridge
-  app:
+  processing:
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
-    container_name: app
+    container_name: processing
     environment:
       PGHOST:
       PGDATABASE:
@@ -52,8 +52,8 @@ services:
       - osmfiles:/data
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-      - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
-      - ./arguments:/app/arguments
+      - ./configs/warm-cache.json:/processing/warm-cache/config.json:ro
+      - ./arguments:/processing/arguments
     networks:
       - app_bridge
     depends_on:
