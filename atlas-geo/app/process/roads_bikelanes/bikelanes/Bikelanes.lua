@@ -54,11 +54,12 @@ function Bikelanes(object)
   for i, transformedTags in ipairs(transformedObjects) do
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
-      result_bikelanes[i] = {
+      local result_tag = {
         _infrastructureExists = false,
-        category = onlyPresent,
         _side = transformedTags._side,
+        category = onlyPresent,
       }
+      table.insert(result_bikelanes, result_tag)
     else
       local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
@@ -91,7 +92,7 @@ function Bikelanes(object)
         CopyTags(result_tags, tags, tags_copied)
         CopyTags(result_tags, tags, tags_prefixed, 'osm_')
 
-        result_bikelanes[i] = result_tags
+        table.insert(result_bikelanes, result_tags)
       end
     end
   end
