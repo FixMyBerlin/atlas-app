@@ -107,7 +107,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./app.Dockerfile
+          file: ./processing.Dockerfile
           push: false
           load: true
           cache-from: type=gha
