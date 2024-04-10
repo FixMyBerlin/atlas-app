@@ -10,7 +10,8 @@ if [ $SKIP_DOWNLOAD == 1 ]; then
     log "💥 SKIPPED download with .env 'SKIP_DOWNLOAD=1'"
     exit 0;
   else
-    log "Can't skip download, no file was found."
+    log "Can't skip download, no file was found. Deleting all hashes."
+    rm -r -f $CODE_HASHES
   fi
 fi
 
