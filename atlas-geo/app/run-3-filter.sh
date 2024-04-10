@@ -13,7 +13,7 @@ OSM_INTERMEDIATE_FILE=${FILTER_DIR}intermediate.pbf
 
 if [ $SKIP_TAG_FILTER == 1 ]; then
   log "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
-  mv ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
+  ln -f ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
 else
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
   osmium tags-filter --overwrite --expressions ${OSM_FILTER_EXPRESSIONS} --output=${OSM_FILTERED_FILE} ${OSM_LOCAL_FILE}
