@@ -1,1 +1,2 @@
 cache_size_mb: 0
+preferred_encoding: gzip
