@@ -33,6 +33,12 @@ SideSignMap = {
   ["right"] = -1,
   ["self"] = 0
 }
+local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
+-- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
+local sideDirectionMap = {
+  ["left"] = 'backward',
+  ["right"] = 'forward',
+}
 
 -- these tags get transformed from the forward backward schema
 function GetTransformedObjects(tags, transformations)
@@ -47,7 +53,6 @@ function GetTransformedObjects(tags, transformations)
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     return results
   end
-
   for _, transformation in ipairs(transformations) do
     for _, side in ipairs({ "left", "right" }) do
       if tags.highway ~= transformation.highway then
@@ -67,21 +72,13 @@ function GetTransformedObjects(tags, transformations)
 
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
+          for _, key in pairs(directedTags) do
+            local directedKey = key .. ':' .. sideDirectionMap[side]
+            newObj[key] = newObj[key] or tags[key] or tags[directedKey]
+          end
           if not transformation.filter or transformation.filter(newObj) then
             table.insert(results, newObj)
           end
-        end
-
-        -- TODO: How does the following section get merged into the results table? It looks like it does nothing?
-        local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
-        -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
-        local sideDirectionMap = {
-          ["left"] = 'backward',
-          ["right"] = 'forward',
-        }
-        for _, key in pairs(directedTags) do
-          local directedKey = key .. ':' .. sideDirectionMap[side]
-          newObj[key] = newObj[key] or tags[key] or tags[directedKey]
         end
       end
     end
