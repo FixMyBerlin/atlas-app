@@ -48,7 +48,7 @@ export const SelectDataset = ({
               {!isProd && (
                 <LinkExternal
                   blank
-                  href={`https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${id}`}
+                  href={`https://github.com/search?q=repo%3AFixMyBerlin%2Fatlas-static-data+path%3A${id}&type=code`}
                   className="absolute bottom-1 right-1 text-pink-500 hover:text-pink-800"
                   title='Öffne den Datensatz im "atlas-static-data" Repository auf GitHub; Link nur in Dev und Staging sichtbar.'
                 >
