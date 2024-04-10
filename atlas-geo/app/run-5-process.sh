@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
+source /app/utils/logging.sh
+source /app/utils/hashing.sh
 source ./process-helpers.sh
 
 export PROCESS_DIR=/app/process/
-# The folder for our code hashes, it lies inside the database volume to get invalidated on deletion
+# The folder for our code hashes, it is inside the database volume to get invalidated on deletion
 export CODE_HASHES=/data/db/code_hashes/
 mkdir -p $CODE_HASHES
-# Create functions needed for jsonb diffs
-psql -q -f ./Diffing/JSONDiff.sql
 
 log_start "$0"
 
