@@ -11,3 +11,4 @@ do
     printf "\033[1m\033[7m Running lua %s \033[0m\n" "$file"
     lua "$file"
 done
+busted /processing/topics/helper/__tests__/busted_demo.lua
