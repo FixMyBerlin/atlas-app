@@ -1,5 +1,4 @@
 // We use bun.sh to run this file
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
@@ -7,11 +6,15 @@ import pluralize from 'pluralize'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
 import { createUpload, getRegions } from './api'
-import { green, inverse, red, yellow } from './log'
 import { MetaData } from './types'
+import { findGeojson } from './updateStaticDatasets/findGeojson'
+import { generatePMTilesFile } from './updateStaticDatasets/generatePMTilesFile'
+import { transformFile } from './updateStaticDatasets/transformFile'
+import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
+import { green, inverse, red, yellow } from './utils/log'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
-const tmpDir = path.join(os.tmpdir(), 'pmtiles')
+export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
 
@@ -43,101 +46,8 @@ inverse('Starting update with settings', [
   },
 ])
 
-/** @returns pmtiles outputFullFile */
-const generatePMTilesFile = async (inputFullFile: string) => {
-  const outputFilename = path.parse(inputFullFile).name
-  const outputFullFile = path.join(tmpDir, `${outputFilename}.pmtiles`)
-
-  console.log(`  Generating pmtiles file "${outputFullFile}"...`)
-
-  Bun.spawnSync(
-    [
-      'tippecanoe',
-      `--output=${outputFullFile}`,
-      '--force',
-      '--smallest-maximum-zoom-guess=8', // Smallest maxzoom which is acceptable for our precision requirements, is higher, if tippecanoe guesses a higher maxzoom, it will be used ttps://github.com/felt/tippecanoe#zoom-levels / Automatic --maximum-zoom didn't have the required precision
-      '-rg', // If you use -rg, it will guess a drop rate that will keep at most 50,000 features in the densest tile https://github.com/felt/tippecanoe#dropping-a-fixed-fraction-of-features-by-zoom-level
-      '--drop-densest-as-needed', // https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
-      '--extend-zooms-if-still-dropping', // https://github.com/felt/tippecanoe?tab=readme-ov-file#zoom-levels
-      '--layer=default',
-      inputFullFile,
-    ],
-    {
-      onExit(_proc, exitCode, _signalCode, error) {
-        if (exitCode) {
-          red(`  exitCode: ${exitCode}`)
-          process.exit(1)
-        }
-        if (error) {
-          red(`  error: ${error.message}`)
-          process.exit(1)
-        }
-      },
-    },
-  )
-
-  return outputFullFile
-}
-
-/** @returns URL of pmtile on S3 */
-export const uploadFileToS3 = async (uploadFullFilename: string, datasetFolder: string) => {
-  console.log('  Uploading generated pmtiles file to S3...')
-
-  const accessKeyId = process.env.S3_KEY
-  const secretAccessKey = process.env.S3_SECRET
-  const region = process.env.S3_REGION
-  const bucket = process.env.S3_BUCKET
-  const folder = process.env.S3_UPLOAD_FOLDER
-
-  const s3Client = new S3Client({
-    credentials: { accessKeyId, secretAccessKey },
-    region,
-  })
-
-  const remoteFilename = `${datasetFolder}/${path.parse(uploadFullFilename).base}`
-  const fileKey = `uploads/${folder}/${remoteFilename}`
-  try {
-    await s3Client.send(
-      new PutObjectCommand({
-        Bucket: bucket,
-        Key: fileKey,
-        Body: fs.readFileSync(uploadFullFilename),
-      }),
-    )
-  } catch (e) {
-    red(`  ${e.message}`)
-    process.exit(1)
-  }
-
-  return `https://${bucket}.s3.${region}.amazonaws.com/${fileKey}`
-}
-
-/** @returns geojson fullFilename | null */
-const findGeojson = (datasetFolderPath: string) => {
-  const filenames = fs
-    .readdirSync(datasetFolderPath)
-    .filter((filename) => path.parse(filename).ext === '.geojson')
-
-  if (filenames.length === 0) {
-    yellow(`  Folder "${datasetFolderPath}" does not contain a geojson.`)
-    return null
-  }
-  if (filenames.length > 1) {
-    yellow(`  Folder "${datasetFolderPath}" contains multiple geojsons.`)
-    return null
-  }
-
-  const fullFilename = path.join(datasetFolderPath, filenames[0]!)
-  if (!fs.lstatSync(fullFilename).isFile()) {
-    yellow(`  Path "${fullFilename}" is not a file.`)
-    return null
-  }
-
-  return fullFilename
-}
-
 /** @returns Object or Function | null */
-const import_ = async <ReturnModule extends Function | Object>(
+export const import_ = async <ReturnModule extends Function | Object>(
   folderName: string,
   moduleName: string,
   valueName: string,
@@ -156,26 +66,6 @@ const import_ = async <ReturnModule extends Function | Object>(
     return null
   }
   return module_[valueName] as ReturnModule
-}
-
-/** @returns geojson outputFullFilename which is either the initial geojson or the transformed geojson  */
-const transformFile = async (datasetFolderPath: string, geojsonFullFilename: string) => {
-  type TransformFunc = (data: any) => string
-  const transform = await import_<TransformFunc>(datasetFolderPath, 'transform', 'transform')
-
-  if (transform === null) {
-    return geojsonFullFilename
-  }
-
-  const datasetFolderName = datasetFolderPath.split('/').at(-1)
-  const outputFullFilename = path.join(tmpDir, `${datasetFolderName}.transformed.geojson`)
-  console.log(`  Transforming geojson file...`, outputFullFilename)
-
-  const data = await Bun.file(geojsonFullFilename).json()
-  const transformedData = transform(data)
-  Bun.write(outputFullFilename, JSON.stringify(transformedData, null, 2))
-
-  return outputFullFilename
 }
 
 // create tmp folder
@@ -242,12 +132,12 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   }
 
   // Create the transformed data
-  const inputFullFilepath = await transformFile(datasetFolderPath, geojsonFullFilename)
+  const inputFullFilepath = await transformFile(datasetFolderPath, geojsonFullFilename, tmpDir)
 
   // Create the pmtiles
   const outputFullFilepath = dryRun
     ? '/tmp/does-not-exist.pmtiles'
-    : await generatePMTilesFile(inputFullFilepath)
+    : await generatePMTilesFile(inputFullFilepath, tmpDir)
   if (dryRun) console.log(`  DRY RUN: SKIPPING Generating pmtiles file...`)
 
   // Upload pmtiles to S3
