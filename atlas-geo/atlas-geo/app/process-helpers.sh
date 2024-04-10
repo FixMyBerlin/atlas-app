@@ -67,7 +67,7 @@ run_dir() {
   processed_tables="${CODE_HASHES}$topic.tables"
   backedup_tables="${CODE_HASHES}$topic.backups"
 
-  if check_hash $directory ".lua" && check_hash $directory ".sql" && [ "$SKIP_DOWNLOAD" == 1 ]; then
+  if check_hash $directory ".lua" && check_hash $directory ".sql"; then
     log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
     if [ -f "$processed_tables" ]; then
       for table in $(cat $processed_tables); do
@@ -77,7 +77,7 @@ run_dir() {
     fi
   else
     # Backup tables for diffs
-    if [ "$SKIP_DOWNLOAD" == 1 ] && [ "$COMPUTE_DIFFS" == 1 ]; then
+    if [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
           psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null

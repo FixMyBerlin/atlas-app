@@ -12,8 +12,7 @@ if [ $SKIP_DOWNLOAD == 1 ]; then
     log_end "$0"
     exit 0;
   else
-    log "Can't skip download, no file was found. Deleting all hashes."
-    rm -r -f $CODE_HASHES
+    log "Can't skip download, no file was found."
   fi
 fi
 
