@@ -12,8 +12,16 @@ type MapDataDatasetsSource = {
   name: string
   /** @desc A quick-n-dirty way to get type savety for categories. The prefix is just to make type savety per region (or cluster of regions) possible. */
   category: StaticDatasetCategoryKey | null
+  updatedAt?: string
   description?: string
+  /** @desc A link to the source or a description of how the data was created */
+  dataSourceMarkdown?: string
+  /** @desc Entity that has to be named as creator (c) of the data on the map an at the dataset */
   attributionHtml: string
+  /** @desc Licence Shortcode */
+  licence?: undefined | 'ODbL' | 'CC-Zero' | 'CC-BY-2.0' | 'CC-BY-4.0' | 'DD-DE/BY-2.0'
+  /** @desc Are the data OSM compatible due to the licence itself or a explicit waiver */
+  licenceOsmCompatible?: undefined | 'licence' | 'waiver' | 'no'
   inspector:
     | ({
         enabled: true

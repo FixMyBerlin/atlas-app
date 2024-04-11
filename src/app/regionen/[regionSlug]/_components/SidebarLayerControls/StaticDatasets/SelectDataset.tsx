@@ -7,13 +7,27 @@ import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDa
 import { createSourceKeyStaticDatasets } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { iconFromLegend } from '../Legend/Legend'
 import { LegendNameDesc } from '../Legend/LegendNameDesc'
+import { Markdown } from 'src/app/_components/text/Markdown'
 
 export const SelectDataset = ({
   dataset,
 }: {
   dataset: ReturnType<typeof useRegionDatasets>[number]
 }) => {
-  const { id, subId, name, description, attributionHtml, legends, isPublic } = dataset
+  const {
+    id,
+    subId,
+    name,
+    updatedAt,
+    description,
+    dataSourceMarkdown,
+    attributionHtml,
+    licence,
+    licenceOsmCompatible,
+    legends,
+    isPublic,
+    githubUrl,
+  } = dataset
   const key = createSourceKeyStaticDatasets(id, subId)
 
   return (
@@ -38,17 +52,20 @@ export const SelectDataset = ({
               aria-hidden="true"
             />
             <div className="flex grow justify-between gap-1 font-medium">
-              {name}
+              <span>
+                {name}
+                {selected && updatedAt && <span className="text-gray-500"> {updatedAt}</span>}
+              </span>
               {!isPublic && (
                 <LockClosedIcon
                   className="h-4 w-4 text-gray-400"
                   title="Datensatz nur für angemeldete Nutzer:innen mit Rechten für die Region sichtbar."
                 />
               )}
-              {!isProd && (
+              {!isProd && githubUrl && (
                 <LinkExternal
                   blank
-                  href={`https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${id}`}
+                  href={githubUrl}
                   className="absolute bottom-1 right-1 text-pink-500 hover:text-pink-800"
                   title='Öffne den Datensatz im "atlas-static-data" Repository auf GitHub; Link nur in Dev und Staging sichtbar.'
                 >
@@ -62,11 +79,25 @@ export const SelectDataset = ({
               {description}
             </p>
           )}
+          {selected && dataSourceMarkdown && (
+            // <Markdown markdown={dataSourceMarkdown} />
+            <p className="text-xs leading-4">{dataSourceMarkdown}</p>
+          )}
           {selected && attributionHtml && (
-            <p
-              className="mt-1 text-xs leading-4"
-              dangerouslySetInnerHTML={{ __html: attributionHtml }}
-            />
+            <>
+              <p
+                className="mt-1 text-xs leading-4"
+                dangerouslySetInnerHTML={{ __html: attributionHtml }}
+              />
+              {licence && (
+                <p className="text-xs leading-4">
+                  Lizenz: {licence}
+                  {licenceOsmCompatible === 'licence' && ' (OSM-kompatibel)'}
+                  {licenceOsmCompatible === 'waiver' && ' (OSM kompatible Zusatzvereinbarung)'}
+                  {licenceOsmCompatible === 'no' && ' (nicht OSM kompatibel)'}
+                </p>
+              )}
+            </>
           )}
           {selected && legends && Boolean(legends?.length) && (
             <ul>

@@ -14,6 +14,7 @@ export const useRegionDatasets = () => {
       isPublic: boolean
       id: string
       url: string
+      githubUrl: string // an addition to MetaData['configs'] in updateStaticDatasets.ts
     }
   >
   const regionDatasets: RegionDataset[] = []

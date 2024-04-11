@@ -63,10 +63,10 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionSlug =
-  | 'bb' // Öffentlich, Land Brandenburg
-  | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-kampagne' // Kampagne mit Land Brandenburg
+  | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-sg' // Land Brandenburg Steuerungsgruppe
+  | 'bb' // Öffentlich, Land Brandenburg
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -76,6 +76,7 @@ export type RegionSlug =
   | 'lueneburg'
   | 'magdeburg'
   | 'mainz'
+  | 'muenchen'
   | 'nudafa'
   | 'ostalbkreis'
   | 'parkraum'
@@ -493,10 +494,24 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
-      'boundaries',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+  },
+  {
+    slug: 'muenchen',
+    name: 'München',
+    fullName: 'München',
+    osmRelationIds: [62428],
+    map: { lat: 48.1566, lng: 11.5492, zoom: 12 },
+    bbox: {
+      min: [11.360777, 48.0616244],
+      max: [11.7229099, 48.2481162],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    categories: ['bikelanes', 'lit', 'poi', 'roads', 'surface', 'bicycleParking', 'mapillary'],
+    backgroundSources: defaultBackgroundSources,
   },
   {
     name: 'Fahrradstellplätze',

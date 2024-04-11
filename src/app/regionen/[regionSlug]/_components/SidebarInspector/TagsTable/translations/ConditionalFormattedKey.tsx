@@ -29,6 +29,8 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
   const lookAtFirstSources: Record<string, string> = {
     'bibi-on-street-parking-lines': 'parkraumParking',
     'bibi-parking-areas': 'parkraumParkingAreas',
+    'bibi-on-street-parking-ortskerne-2023-onstreet': 'parkraumParking',
+    'bibi-on-street-parking-ortskerne-2023-offstreet': 'parkraumParkingAreas',
     atlas_roadsPathClasses: 'atlas_roads',
   }
   const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)

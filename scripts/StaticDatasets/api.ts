@@ -1,5 +1,5 @@
 import invariant from 'tiny-invariant'
-import { red } from './log'
+import { red } from './utils/log'
 
 const apiRootUrl = process.env.API_ROOT_URL
 invariant(apiRootUrl?.startsWith('http'), 'API_ROOT_URL missing.')
