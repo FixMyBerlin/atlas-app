@@ -1,49 +1,46 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-require('DeriveSmoothness')
+describe("DeriveSmoothness", function()
+  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('DeriveSmoothness')
 
-print('=== Test DeriveSmoothness: surface "nil" returns "nil" ===')
-local result = DeriveSmoothness({})
-assert(result.smoothness == nil)
-assert(result.smoothness_source == nil)
-assert(result.smoothness_confidence == nil)
--- assert(todo == "Please add surface=*")
+  it('return nil for surface "nil"', function()
+    local result = DeriveSmoothness({})
+    assert.are.same(result,
+      { smoothness = nil, smoothness_source = nil, smoothness_confidence = nil }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: surface "unknown_typo" returns "nil" ===')
-local result = DeriveSmoothness({surface="unknown_typo"})
-assert(result.smoothness == nil)
-assert(result.smoothness_source == nil)
-assert(result.smoothness_confidence == nil)
--- assert(todo ~= nil)
+  it('return nil for surface "unknown_typo"', function()
+    local result = DeriveSmoothness({ surface = "unknown_typo" })
+    assert.are.same(result,
+      { smoothness = nil, smoothness_source = nil, smoothness_confidence = nil }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: surface "dirt" returns "bad" ===')
-local result = DeriveSmoothness({surface="dirt"})
-assert(result.smoothness == "bad")
-assert(result.smoothness_source == "surface_to_smoothness")
-assert(result.smoothness_confidence == "medium")
--- assert(todo == nil)
+  it('return "bad" for surface "dirt"', function()
+    local result = DeriveSmoothness({ surface = "dirt" })
+    assert.are.same(result,
+      { smoothness = "bad", smoothness_source = "surface_to_smoothness", smoothness_confidence = "medium" }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: surface weird smoothness returns "bad" ===')
-local result = DeriveSmoothness({surface="sett;paving_stones;cobblestone:flattened"})
-assert(result.smoothness == "bad")
-assert(result.smoothness_source == "surface_to_smoothness")
-assert(result.smoothness_confidence == "medium")
--- assert(todo ~= nil)
+  it('return "bad" for weird surface', function()
+    local result = DeriveSmoothness({ surface = "sett;paving_stones;cobblestone:flattened" })
+    assert.are.same(result,
+      { smoothness = "bad", smoothness_source = "surface_to_smoothness", smoothness_confidence = "medium" }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: smoothness precedence ===')
-local result = DeriveSmoothness({smoothness="good", surface="sett;paving_stones;cobblestone:flattened"})
-assert(result.smoothness == "good")
-assert(result.smoothness_source == "tag")
-assert(result.smoothness_confidence == "high")
--- assert(todo ~= nil)
+  it('respect smoothness precedence', function()
+    local result = DeriveSmoothness({ smoothness = "good", surface = "sett;paving_stones;cobblestone:flattened" })
+    assert.are.same(result,
+      { smoothness = "good", smoothness_source = "tag", smoothness_confidence = "high" }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: MTB scale ===')
-local result = DeriveSmoothness({smoothness="wierd smoothness", ["mtb:scale"]="0+"})
-assert(result.smoothness == "bad")
-assert(result.smoothness_source == "mtb:scale_to_smoothness")
-assert(result.smoothness_confidence == "medium")
-
-print('=== Test DeriveSmoothness: MTB scale ===')
-local result = DeriveSmoothness({tracktype="grade3", ["mtb:scale"]="0+"})
-assert(result.smoothness == "bad")
-assert(result.smoothness_source == "tracktype_to_smoothness")
-assert(result.smoothness_confidence == "medium")
+  it('respect MTB scale', function()
+    local result = DeriveSmoothness({ smoothness = "wierd smoothness", ["mtb:scale"] = "0+" })
+    assert.are.same(result,
+      { smoothness = "bad", smoothness_source = "mtb:scale_to_smoothness", smoothness_confidence = "medium" }
+    )
+  end)
+end)

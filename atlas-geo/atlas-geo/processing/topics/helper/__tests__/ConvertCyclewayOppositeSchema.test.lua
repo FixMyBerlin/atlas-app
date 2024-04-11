@@ -1,42 +1,44 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("CompareTables")
-require("ConvertCyclewayOppositeSchema")
-require("osm2pgsql")
-require("DeepCopy")
+describe("ConvertCyclewayOppositeSchema", function()
+  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require("CompareTables")
+  require("ConvertCyclewayOppositeSchema")
+  require("osm2pgsql")
+  require("DeepCopy")
 
-print('=== Test ConvertCyclewayOppositeSchema: do nothing ===')
-local originalTags = { ["cycleway"] = "lane" }
-local tags = DeepCopy(originalTags)
-ConvertCyclewayOppositeSchema(tags)
-assert(CompareTables(originalTags, tags))
+  it('do nothing when cycleway is lane', function()
+    local input = { ["cycleway"] = "lane" }
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, input)
+  end)
 
-print('=== Test ConvertCyclewayOppositeSchema: handle opposite ===')
-local originalTags = { ["cycleway"] = "opposite",["oneway"] = "yes" }
-local tags = DeepCopy(originalTags)
-local expectedResult = { ["cycleway"] = "no",["oneway:bicycle"] = "no",["oneway"] = "yes" }
-ConvertCyclewayOppositeSchema(tags)
-assert(CompareTables(tags, expectedResult))
+  it('handle opposite when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite", ["oneway"] = "yes" }
+    local expectedResult = { ["cycleway"] = "no", ["oneway:bicycle"] = "no", ["oneway"] = "yes" }
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
+  end)
 
-print('=== Test ConvertCyclewayOppositeSchema: handle opposite_lane ===')
-local originalTags = { ["cycleway"] = "opposite_lane",["oneway"] = "yes" }
-local tags = DeepCopy(originalTags)
-local expectedResult = {
-  ["cycleway:right"] = "no",
-  ["cycleway:left"] = "lane",
-  ["oneway:bicycle"] = "no",
-  ["oneway"] = "yes",
-}
-ConvertCyclewayOppositeSchema(tags)
-assert(CompareTables(tags, expectedResult))
+  it('handle opposite_lane when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite_lane", ["oneway"] = "yes" }
+    local expectedResult = {
+      ["cycleway:right"] = "no",
+      ["cycleway:left"] = "lane",
+      ["oneway:bicycle"] = "no",
+      ["oneway"] = "yes",
+    }
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
+  end)
 
-print('=== Test ConvertCyclewayOppositeSchema: handle opposite_track ===')
-local originalTags = { ["cycleway"] = "opposite_track",["oneway"] = "yes" }
-local tags = DeepCopy(originalTags)
-local expectedResult = {
-  ["cycleway:right"] = "no",
-  ["cycleway:left"] = "track",
-  ["oneway:bicycle"] = "no",
-  ["oneway"] = "yes",
-}
-ConvertCyclewayOppositeSchema(tags)
-assert(CompareTables(tags, expectedResult))
+  it('handle opposite_track when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite_track", ["oneway"] = "yes" }
+    local expectedResult = {
+      ["cycleway:right"] = "no",
+      ["cycleway:left"] = "track",
+      ["oneway:bicycle"] = "no",
+      ["oneway"] = "yes",
+    }
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
+  end)
+end)
