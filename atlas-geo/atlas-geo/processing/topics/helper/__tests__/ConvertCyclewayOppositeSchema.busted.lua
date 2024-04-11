@@ -4,25 +4,25 @@ describe("ConvertCyclewayOppositeSchema", function()
   require("ConvertCyclewayOppositeSchema")
   require("osm2pgsql")
   require("DeepCopy")
-  describe('=== Do nothing ===', function()
+  it('=== Do nothing ===', function()
     local originalTags = { ["cycleway"] = "lane" }
     local tags = DeepCopy(originalTags)
     ConvertCyclewayOppositeSchema(tags)
     assert.are.same(tags, originalTags)
   end)
-  describe('=== Do nothing ===', function()
+  it('=== Do nothing ===', function()
     local originalTags = { ["cycleway"] = "lane" }
     local tags = DeepCopy(originalTags)
     ConvertCyclewayOppositeSchema(tags)
     assert.are.same(tags, originalTags)
   end)
-  describe('=== Handle opposite ===', function()
+  it('=== Handle opposite ===', function()
     local tags = { ["cycleway"] = "opposite",["oneway"] = "yes" }
     local expectedResult = { ["cycleway"] = "no",["oneway:bicycle"] = "no",["oneway"] = "yes" }
     ConvertCyclewayOppositeSchema(tags)
     assert.are.same(tags, expectedResult)
   end)
-  describe('=== Handle opposite_lane ===', function()
+  it('=== Handle opposite_lane ===', function()
     local tags = { ["cycleway"] = "opposite_lane",["oneway"] = "yes" }
     local expectedResult = {
       ["cycleway:right"] = "no",
@@ -33,7 +33,7 @@ describe("ConvertCyclewayOppositeSchema", function()
     ConvertCyclewayOppositeSchema(tags)
     assert.are.same(tags, expectedResult)
   end)
-  describe('=== Handle opposite_track ===', function()
+  it('=== Handle opposite_track ===', function()
     local tags = { ["cycleway"] = "opposite_track",["oneway"] = "yes" }
     local expectedResult = {
       ["cycleway:right"] = "no",
