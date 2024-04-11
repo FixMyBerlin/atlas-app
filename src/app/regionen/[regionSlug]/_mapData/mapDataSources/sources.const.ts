@@ -61,6 +61,10 @@ export type InteracitvityConfiguartion = Partial<
 >
 export const interacitvityConfiguartion: InteracitvityConfiguartion = {
   roads: { stylingKeys: ['road'], minzoom: 9 },
+  bikelanes: {
+    stylingKeys: ['category', 'osm_separation:left', 'surface', 'width', 'smoothness'],
+    minzoom: 9,
+  },
 }
 
 // https://account.mapbox.com/access-tokens
