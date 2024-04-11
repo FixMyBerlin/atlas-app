@@ -36,7 +36,7 @@ export async function initGeneralizationFunctions(
       // @ts-ignore
       const functionName = generalizationFunctionIdentifier(tableName)
       // Gather meta information for the tile specification
-      const tileSpecification = createTileSpecification(tableName)
+      const tileSpecification = await createTileSpecification(tableName)
       const { minzoom } = interactivity
       const stylingKeys = `Array[${interactivity.stylingKeys.map((tag) => `'${tag}'`)}]`
       return prismaClientForRawQueries.$transaction([
