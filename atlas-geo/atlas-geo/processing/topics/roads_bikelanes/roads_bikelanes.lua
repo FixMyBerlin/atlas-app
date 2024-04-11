@@ -56,6 +56,7 @@ local bikelanesTable = osm2pgsql.define_table({
     { column = 'tags',   type = 'jsonb' },
     { column = 'meta',   type = 'jsonb' },
     { column = 'geom',   type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
   },
   indexes = { { column = 'osm_id', method = 'gist' } }
 })
@@ -109,7 +110,8 @@ function osm2pgsql.process_way(object)
         osm_id = cycleway._id,
         tags = publicTags,
         meta = Metadata(object),
-        geom = object:as_linestring()
+        geom = object:as_linestring(),
+        minzoom = 0
       })
     end
   end
