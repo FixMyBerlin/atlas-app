@@ -5,48 +5,40 @@ describe("ConvertCyclewayOppositeSchema", function()
   require("osm2pgsql")
   require("DeepCopy")
 
-  it('=== Do nothing ===', function()
-    local originalTags = { ["cycleway"] = "lane" }
-    local tags = DeepCopy(originalTags)
-    ConvertCyclewayOppositeSchema(tags)
-    assert.are.same(tags, originalTags)
+  it('should do nothing when cycleway is lane', function()
+    local input = { ["cycleway"] = "lane" }
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, input)
   end)
 
-  it('=== Do nothing ===', function()
-    local originalTags = { ["cycleway"] = "lane" }
-    local tags = DeepCopy(originalTags)
-    ConvertCyclewayOppositeSchema(tags)
-    assert.are.same(tags, originalTags)
-  end)
-
-  it('=== Handle opposite ===', function()
-    local tags = { ["cycleway"] = "opposite", ["oneway"] = "yes" }
+  it('should handle opposite when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite", ["oneway"] = "yes" }
     local expectedResult = { ["cycleway"] = "no", ["oneway:bicycle"] = "no", ["oneway"] = "yes" }
-    ConvertCyclewayOppositeSchema(tags)
-    assert.are.same(tags, expectedResult)
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
   end)
 
-  it('=== Handle opposite_lane ===', function()
-    local tags = { ["cycleway"] = "opposite_lane", ["oneway"] = "yes" }
+  it('should handle opposite_lane when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite_lane", ["oneway"] = "yes" }
     local expectedResult = {
       ["cycleway:right"] = "no",
       ["cycleway:left"] = "lane",
       ["oneway:bicycle"] = "no",
       ["oneway"] = "yes",
     }
-    ConvertCyclewayOppositeSchema(tags)
-    assert.are.same(tags, expectedResult)
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
   end)
 
-  it('=== Handle opposite_track ===', function()
-    local tags = { ["cycleway"] = "opposite_track", ["oneway"] = "yes" }
+  it('should handle opposite_track when oneway is yes', function()
+    local input = { ["cycleway"] = "opposite_track", ["oneway"] = "yes" }
     local expectedResult = {
       ["cycleway:right"] = "no",
       ["cycleway:left"] = "track",
       ["oneway:bicycle"] = "no",
       ["oneway"] = "yes",
     }
-    ConvertCyclewayOppositeSchema(tags)
-    assert.are.same(tags, expectedResult)
+    ConvertCyclewayOppositeSchema(input)
+    assert.are.same(input, expectedResult)
   end)
 end)
