@@ -22,5 +22,6 @@ jobs:
           script: |
             echo "Restart app container"
             cd /srv/processing/
-            touch arguments/wait-for-fresh-data
-            docker compose restart -t 30 app
+            echo "WAIT_FOR_FRESH_DATA=1" >> .env
+            docker compose down app
+            docker compose up -d app

@@ -15,61 +15,42 @@ The data is selected and optimize to make planning of bicycle infrastructure eas
 
 Please use [`atlas-app`](https://github.com/FixMyBerlin/atlas-app/issues) to create issues for this repository.
 
-### Server
+## Server
 
-**Production:**
+- Production Tiles https://tiles.radverkehrsatlas.de/
+- Staging Tiles https://staging-tiles.radverkehrsatlas.de/
+- Development Tiles http://localhost:7800/
 
-- Tiles https://tiles.radverkehrsatlas.de/
+## Data
 
-**Staging:**
+### Freshness of source data
 
-- Tiles https://staging-tiles.radverkehrsatlas.de/
+We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) `<3` which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
 
-**Development:**
+### Freshness of processed data
 
-- Tiles http://localhost:7800/
-
-### Data update
-
-- Data is updated every weekday at 4:0 am ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
-- Data is updated on every deploy
-- Data can be updated manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
+- Data is processed every day ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
+- Data is processed on every deploy/release
+- Data can be processed manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
 ### Deployment
 
 1. First https://github.com/FixMyBerlin/atlas-geo/actions runs.
-2. Then our Server IONOS builds the data. This take about one hour ATM.
-3. Then https://tiles.radverkehrsatlas.de/ / https://staging-tiles.radverkehrsatlas.de/ serve the new data.
+2. Server (IONOS) runs the processing one table at a time.
+   The whole processing takes about 1.5 h. See [`run.sh`](processing/run.sh) for details.
 
-#### Skip CI Actions
+**Skip CI Actions:**
 
 ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the commit message. This is a [default behaviour](https://docs.github.com/en/actions/managing-workflow-runs/skipping-workflow-runs) of Github Actions.
 
-## 1️⃣ Setup
-
-First create a `.env` file. You can use the `.env.example` file as a template.
-
-```sh
-docker compose -f docker-compose.development.yml up
-# or
-docker compose -f docker-compose.development.yml up -d
-
-# With osm processing, which runs the "app" docker image with `ruh.sh`
-docker compose -f docker-compose.development.yml --profile osm_processing up -d
-```
-
-This will create the docker container and run all scripts. One this is finished, you can use the pg_tileserve-vector-tile-preview at http://localhost:7800/ to look at the data.
-
-> **Warning**
-> You need to create the Postgis extension before first run of `app\`:
-> `CREATE EXTENSION postgis;`
-
-> **Note**
-> We use a custom build for `postgis` in [db.Dockerfile] to support Apple ARM64
-
 ## Development
 
-### You can only rebuild and regenerate the whole system
+### Initial setup
+
+1. First create a `.env` file. You can use the `.env.example` file as a template.
+2. Follow "Run the whole system"
+
+### Run the whole system
 
 The workflow is…
 
@@ -85,67 +66,37 @@ The workflow is…
    docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
    ```
 
-3. Inspect the new results
+3. Inspect the new results, see "Inspect changes"
 
 > **Note**
-> Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
+> Learn more about the file/folder-structure and coding patterns in [`processing/topics/README.md`](/processing/topics/README.md)
 
-**Notes**
+### Processing: Run changes only
 
-Hack into the bash
+Whenever `SKIP_DOWNLOAD=1` is active we store a hash of all `.lua` and `.sql` per folder.
+During [`run-5-process.sh`](processing/run-5-process.sh) we only run code if the hash has changed.
+If any helper in (`topics/helper`)[processing/topics/helper] changed, we rerun everything.
 
-```sh
-docker compose -f docker-compose.development.yml exec app bash
-```
+Whenever we talk about `hash`es in this code, this feature is referenced.
 
-You can also run the script locally:
+**Force rerun:** Whenever you need to force a rerun, open [any lua helper](./app/process/helper/Set.lua) and add a temporary code comment, save and restart the processing.
 
-1. This requires a new user in postgres which is the same as your current user:
-   ```sh
-   sudo -u postgres createuser --superuser $USER; sudo -u postgres createdb $USER
-   ```
-2. Then copy the [configuration file](https://www.postgresql.org/docs/current/libpq-pgservice.html) `./config/pg_service.conf` to `~/.pg_service.conf` and adapt your username and remove the password.
+### Processing: Inspect changes
+
+Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<tablename>_diff` tables that contain only changed entries.
+
+It will compare the `tags` column to the previous run.
+
+The settings are the default for development but disabled on staging, production by default.
+
+Whenever we talk about `diff`s in this code, this feature is referenced.
 
 ### Process only a single object
 
 For the development process it's often usefull to run the processing on a single object.
-For that you can specify an id (list) as `ID_FILTER` in the [`app/run-3-filter.sh`](/app/run-3-filter.sh).
+For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
-
-### Build & Run only one container
-
-Build docker
-
-```sh
-docker build -f app.Dockerfile -t atlas:latest .
-```
-
-Run it
-
-```sh
-docker run --name mypipeline -e POSTGRES_PASSWORD=yourpassword -p 5432:5432 -d atlas
-```
-
-Hack into the bash
-
-```sh
-docker exec -it mypipeline bash
-```
-
-## Production
-
-### Inspect Logs locally
-
-For FixMyCity, the command to inspect the current state of the processing on the server is …
-
-```
-ssh atlas-staging
-# OR
-ssh atlas-prd
-# then…
-cd /srv/processing && docker compose logs app --tail 500
-```
 
 ## 💛 Thanks to
 
-This repo is highly inspired by and is containing code from [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing/tree/wip)
+The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)

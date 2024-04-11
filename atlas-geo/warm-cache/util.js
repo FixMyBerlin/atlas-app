@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import { InvalidArgumentError, InvalidOptionArgumentError } from 'commander'
 import chalk from 'chalk'
 import getStdin from 'get-stdin'
+import { WebMercatorViewport } from 'viewport-mercator-project'
 
 export function log(...args) {
   const t = new Date(new Date().toUTCString()).toISOString().split('.')[0]
@@ -27,6 +28,60 @@ export function lat2tile(lat, zoom) {
   )
 }
 
+export function unproject(screen, center, zoom, points) {
+  const { width, height } = screen
+  const { lat, lng } = center
+  const viewport = new WebMercatorViewport({
+    width,
+    height,
+    latitude: lat,
+    longitude: lng,
+    zoom,
+  })
+  return points.map((p) => viewport.unproject(p))
+}
+
+export function getTilesBounds(screen, center, zoom) {
+  const { width, height } = screen
+  const [[sx0, sy0], [sx1, sy1]] = unproject(screen, center, zoom, [
+    [0, 0],
+    [width, height],
+  ])
+  return {
+    x0: lng2tile(sx0, zoom),
+    y0: lat2tile(sy0, zoom),
+    x1: lng2tile(sx1, zoom),
+    y1: lat2tile(sy1, zoom),
+  }
+}
+
+/**
+ * @param {number} x
+ * @param {number} y
+ * @param {number} z
+ * @returns {Array} The bounding box [lonMin, latMin, lonMax, latMax]
+ */
+export function tile2bbox(x, y, z) {
+  const lonMin = (x / Math.pow(2, z)) * 360 - 180
+  const lonMax = ((x + 1) / Math.pow(2, z)) * 360 - 180
+  const n = Math.PI - (2 * Math.PI * y) / Math.pow(2, z)
+  const latMin = (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)))
+  const latMax =
+    (180 / Math.PI) *
+    Math.atan(
+      0.5 *
+        (Math.exp(n - (2 * Math.PI) / Math.pow(2, z)) -
+          Math.exp(-(n - (2 * Math.PI) / Math.pow(2, z)))),
+    )
+
+  return [lonMin, latMin, lonMax, latMax]
+}
+
+export function createBox(x0, y0, x1, y1) {
+  // prettier-ignore
+  return [[[x0, y0], [x1, y0], [x1, y1], [x0, y1], [x0, y0]]]
+}
+
 function colorString(v, s, colorTable) {
   for (let i in colorTable) {
     const [treshold, [r, g, b]] = colorTable[i]
@@ -37,16 +92,20 @@ function colorString(v, s, colorTable) {
   return s
 }
 
-export function formatDuration(ms) {
+export function formatDuration(ms, colorOutput) {
   const seconds = ms / 1000
-  const formatted = `${seconds.toFixed(3)}s`
-  return colorString(seconds, formatted, [
-    [120, [255, 0, 0]],
-    [60, [255, 64, 0]],
-    [30, [255, 128, 0]],
-    [10, [255, 192, 0]],
-    [5, [255, 255, 0]],
-  ])
+  let formatted = `${seconds.toFixed(3)}s`
+  if (colorOutput === undefined) colorOutput = true
+  if (colorOutput) {
+    formatted = colorString(seconds, formatted, [
+      [120, [255, 0, 0]],
+      [60, [255, 64, 0]],
+      [30, [255, 128, 0]],
+      [10, [255, 192, 0]],
+      [5, [255, 255, 0]],
+    ])
+  }
+  return formatted
 }
 
 // https://stackoverflow.com/a/39906526
@@ -125,7 +184,9 @@ export function parseSizeOption(size) {
 export function createParseNumberOption(parse, min, max) {
   return function (s) {
     const parsed = parse(s)
-    const err = (msg) => { throw new InvalidOptionArgumentError(msg) }
+    const err = (msg) => {
+      throw new InvalidOptionArgumentError(msg)
+    }
     if (isNaN(parsed)) err(`Could not parse "${s}".`)
     if (min !== undefined && parsed < min) err(`Too small - minimum is ${min}.`)
     if (max !== undefined && parsed > max) err(`Too big - maximum is ${max}.`)
@@ -145,7 +206,27 @@ export function isError(line) {
   return removeTimeStamp(line).startsWith('⚠')
 }
 
+export function parseSourceAndZoom(line) {
+  line = removeTimeStamp(line)
+  if (line.startsWith('⚑')) {
+    const zoom = Number(line.split('/').slice(-3)[0])
+    // TODO - add source
+    return { zoom }
+  } else {
+    return null
+  }
+}
+
+export function parseRequest(request) {
+  request = removeTimeStamp(request)
+  const url = request.split(' - ').reverse()[0]
+  // prettier-ignore
+  const [z, x, y] = url.split('/').slice(-3).map((s) => Number(s))
+  return { x, y, z }
+}
+
 export function parseResponse(line) {
+  line = removeTimeStamp(line)
   let [cacheStatus, timeFormatted, sizeFormatted] = line.slice(2).split(' - ')
   return {
     cacheStatus,
@@ -177,4 +258,50 @@ export function folderExists(folderPath) {
   } catch (err) {
     return false
   }
+}
+
+export function readJson(filename, log) {
+  const data = JSON.parse(fs.readFileSync(filename, 'utf8'))
+  if (log) {
+    console.log(`Read data from ${filename}.`)
+  }
+  return data
+}
+
+export function writeJson(data, filename, log) {
+  fs.writeFileSync(filename, JSON.stringify(data, null, 2))
+  log = log === undefined || log
+  if (log) {
+    console.log(`Saved data to ${filename}.`)
+  }
+}
+
+export function writeGeojson(tiles, filename) {
+  const geoJson = {
+    type: 'FeatureCollection',
+    features: tiles.map(({ coords: [x, y, z], ...properties }) => {
+      const bbox = tile2bbox(x, y, z)
+      return {
+        type: 'Feature',
+        properties,
+        geometry: {
+          type: 'Polygon',
+          coordinates: [
+            [
+              [bbox[0], bbox[1]],
+              [bbox[2], bbox[1]],
+              [bbox[2], bbox[3]],
+              [bbox[0], bbox[3]],
+              [bbox[0], bbox[1]],
+            ],
+          ],
+        },
+      }
+    }),
+  }
+  writeJson(geoJson, filename)
+}
+
+export function createTileUrl(origin, pathnameTemplate, x, y, z) {
+  return (origin || '') + pathnameTemplate.replace('{z}', z).replace('{x}', x).replace('{y}', y)
 }

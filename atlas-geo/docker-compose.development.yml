@@ -1,11 +1,10 @@
 version: "3"
 services:
-  app:
+  processing:
     build:
       context: .
-      dockerfile: ./app.Dockerfile
-    entrypoint: /app/run.sh
-    container_name: app
+      dockerfile: ./processing.Dockerfile
+    container_name: processing
     environment:
       PGHOST:
       PGDATABASE:
@@ -15,19 +14,19 @@ services:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
       SKIP_WARM_CACHE:
-      DEBUG:
+      WAIT_FOR_FRESH_DATA:
       ID_FILTER:
-      API_SECRET:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
       TILES_URL:
+      COMPUTE_DIFFS:
     volumes:
       - osmfiles:/data
+      - geodata:/data/db
+      - ./processing:/processing
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-      - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
-      - ./arguments:/app/arguments
     depends_on:
       db:
         condition: service_healthy
@@ -66,6 +65,8 @@ services:
     configs:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
+      - source: postgres_init
+        target: /docker-entrypoint-initdb.d/11-postgres.sql
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
     container_name: db
     healthcheck:
@@ -79,3 +80,5 @@ volumes:
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
+  postgres_init:
+    file: ./configs/postgres-init.sql
