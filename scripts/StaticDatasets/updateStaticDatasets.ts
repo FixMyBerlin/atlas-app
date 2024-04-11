@@ -163,12 +163,18 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   if (dryRun) console.log(`  DRY RUN: SKIPPING Saving upload to DB (${info})...`)
   if (!dryRun) {
     console.log(`  Saving upload to DB (${info})...`)
+    const mergedConfigs = metaData.configs.map((config) => {
+      return {
+        githubUrl: `https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${regionAndDatasetFolder}`,
+        ...config,
+      }
+    })
     await createUpload({
       uploadSlug,
       pmtilesUrl,
       regionSlugs,
       isPublic: metaData.public,
-      configs: metaData.configs,
+      configs: mergedConfigs,
     })
   }
 
