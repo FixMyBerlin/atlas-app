@@ -34,7 +34,7 @@ import { StaticMapDataCategory } from '../types'
 export type MapDataCategoryId =
   // Radverkehrsatlas
   | 'bikelanes'
-  | 'boundaries'
+  | 'boundaries' // Only used ONCE for now for the 'bb-kampagne'-region
   | 'lit'
   | 'poi'
   | 'roads'
