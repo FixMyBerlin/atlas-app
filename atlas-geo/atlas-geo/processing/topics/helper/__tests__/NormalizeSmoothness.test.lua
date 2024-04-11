@@ -1,26 +1,32 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("DeriveSmoothness")
+describe("DeriveSmoothness", function()
+  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require("DeriveSmoothness")
 
-print('=== Test DeriveSmoothness: normalization works for "good"=>"good" ===')
-local result = DeriveSmoothness({smoothness="good"})
-assert(result.smoothness == "good")
-assert(result.smoothness_source == "tag")
-assert(result.smoothness_confidence == "high")
+  it('normalize "good" to "good"', function()
+    local result = DeriveSmoothness({ smoothness = "good" })
+    assert.are.same(result,
+      { smoothness = "good", smoothness_source = "tag", smoothness_confidence = "high" }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: normalization works for "very_good"=>"excellent" ===')
-local result = DeriveSmoothness({smoothness="very_good"})
-assert(result.smoothness == "excellent")
-assert(result.smoothness_source == "tag_normalized")
-assert(result.smoothness_confidence == "high")
+  it('normalize "very_good" to "excellent"', function()
+    local result = DeriveSmoothness({ smoothness = "very_good" })
+    assert.are.same(result,
+      { smoothness = "excellent", smoothness_source = "tag_normalized", smoothness_confidence = "high" }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: nil returns nil ===')
-local result = DeriveSmoothness({})
-assert(result.smoothness == nil)
-assert(result.smoothness_source == nil)
-assert(result.smoothness_confidence == nil)
+  it('return nil for nil input', function()
+    local result = DeriveSmoothness({})
+    assert.are.same(result,
+      { smoothness = nil, smoothness_source = nil, smoothness_confidence = nil }
+    )
+  end)
 
-print('=== Test DeriveSmoothness: typos return nil ===')
-local result = DeriveSmoothness({smoothness="typo"})
-assert(result.smoothness == nil)
-assert(result.smoothness_source == nil)
-assert(result.smoothness_confidence == nil)
+  it('return nil for typos', function()
+    local result = DeriveSmoothness({ smoothness = "typo" })
+    assert.are.same(result,
+      { smoothness = nil, smoothness_source = nil, smoothness_confidence = nil }
+    )
+  end)
+end)
