@@ -1,35 +1,44 @@
-import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import {
+  generalizationFunctionIdentifier,
+  InteracitvityConfiguartion,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
-import { Prisma } from '@prisma/client'
 
-// specify license and attribution for data export
-export async function initGeneralizationFunctions(tables) {
+async function createTileSpecification(tableName) {
+  // Get column names and types
+  const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
+  SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
+    FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = '${tableName}';`)
+  const { fields } = columnInformation && columnInformation[0] // this object has the form {columnName: columnType}
+  // Get the geometric extent
+  const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
+    `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
+    from (
+      SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
+        from ${tableName}
+      ) extent;`,
+  )
+  const { bounds } = bbox && bbox[0]
+  // format as vector tile specifaction
+  const tileSpecification = {
+    vector_layers: [{ id: generalizationFunctionIdentifier(tableName), fields }],
+    bounds,
+  }
+  return tileSpecification
+}
+
+export async function initGeneralizationFunctions(
+  interacitvityConfiguartion: InteracitvityConfiguartion,
+) {
   return Promise.all(
-    tables.map(async (tableName) => {
+    Object.entries(interacitvityConfiguartion).map(async ([tableName, interactivity]) => {
+      // @ts-ignore
       const functionName = generalizationFunctionIdentifier(tableName)
       // Gather meta information for the tile specification
-
-      // Get column names and types
-      const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
-        SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
-          FROM information_schema.columns
-          WHERE table_schema = 'public' AND table_name = '${tableName}';`)
-      const { fields } = columnInformation && columnInformation[0] // this object has the form {columnName: columnType}
-      const columnNames = Object.keys(fields)
-      // Get the geometric extent
-      const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
-        `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
-          from (
-            SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
-              from ${tableName}
-            ) extent;`,
-      )
-      const { bounds } = bbox && bbox[0]
-      // format as vector tile specifaction
-      const tileSpecification = {
-        vector_layers: [{ id: functionName, fields }],
-        bounds,
-      }
+      const tileSpecification = createTileSpecification(tableName)
+      const { minzoom } = interactivity
+      const stylingKeys = `Array[${interactivity.stylingKeys.map((tag) => `'${tag}'`)}]`
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
@@ -52,19 +61,17 @@ export async function initGeneralizationFunctions(tables) {
               tolerance = 0;
             END IF;
             SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'geom') FROM (
-              select
+              SELECT
                 ST_AsMVTGeom(
                     ST_CurveToLine(
                       ST_Simplify(geom, tolerance, true)
                     ),
-                    ST_TileEnvelope(z, x, y),
-                    4096, 64, true) AS geom,
-                    ${columnNames.map(
-                      (column) => `CASE WHEN z > 0 THEN ${column} ELSE NULL END as ${column}`,
-                    )}
+                    ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${stylingKeys}) END as tags,
+                    CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
-                and  z >= minzoom
+              AND z >= minzoom
             ) AS tile;
             RETURN mvt;
           END

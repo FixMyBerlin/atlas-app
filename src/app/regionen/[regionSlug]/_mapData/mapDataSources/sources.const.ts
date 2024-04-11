@@ -54,7 +54,14 @@ export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
 
 export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
   tableName: TId,
-) => `atlas_generalization_${tableName.toLowerCase()}` as `atlas_generalization_${Lowercase<TId>}`
+) => `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TId>}`
+
+export type InteracitvityConfiguartion = Partial<
+  Record<SourceExportApiIdentifier, { minzoom: number; stylingKeys: string[] }>
+>
+export const interacitvityConfiguartion: InteracitvityConfiguartion = {
+  roads: { stylingKeys: ['road'], minzoom: 9 },
+}
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
