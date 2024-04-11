@@ -22,4 +22,14 @@ export const staticDatasetCategories = {
     title: 'Weitere Daten',
     subtitle: 'Weitere statische Daten',
   },
+  'bibi/Radverkehr': {
+    order: 1,
+    title: 'Radverkehr',
+    subtitle: 'Statische Daten zum Radverkehr',
+  },
+  'bibi/Parkraum': {
+    order: 2,
+    title: 'Parkraum',
+    subtitle: 'Statische Daten zum Parkraum',
+  },
 } as const
