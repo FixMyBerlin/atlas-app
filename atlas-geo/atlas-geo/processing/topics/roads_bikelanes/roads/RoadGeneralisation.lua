@@ -19,5 +19,5 @@ function RoadGeneralisation(object_tags, result_tags)
   if minzoom11RoadClasses[result_tags.road] then
     return 11
   end
-  return 30
+  return 0
 end
