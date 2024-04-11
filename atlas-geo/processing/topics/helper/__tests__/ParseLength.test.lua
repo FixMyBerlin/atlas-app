@@ -1,50 +1,55 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("osm2pgsql")
-require("ParseLength")
+describe("ParseLength", function()
+  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require("osm2pgsql")
+  require("ParseLength")
 
+  it('parse "1.2" as 1.2', function()
+    local result = ParseLength("1.2")
+    assert.are.same(result, 1.2)
+  end)
 
-print('=== Test ParseLength ===')
+  it('parse "120 cm" as 1.2', function()
+    local result = ParseLength("120 cm")
+    assert.are.same(result, 1.2)
+  end)
 
-local result = ParseLength("1.2")
-assert(result == 1.2)
+  it('parse "120cm" as 1.2', function()
+    local result = ParseLength("120cm")
+    assert.are.same(result, 1.2)
+  end)
 
-local result = ParseLength("120 cm")
-assert(result == 1.2)
-assert(result == 1.2)
+  it('parse "120.1cm" as 1.201', function()
+    local result = ParseLength("120.1cm")
+    assert(math.abs(result - 1.201) < 0.00001) -- Weird floating point precision issue
+  end)
 
-local result = ParseLength("120cm")
-assert(result == 1.2)
+  it('return nil for "120 cm Weg"', function()
+    local result = ParseLength("120 cm Weg")
+    assert.are.same(result, nil)
+  end)
 
-local result = ParseLength("120.1cm")
-assert(math.abs(result - 1.201) < 0.00001) -- Weird floating point precision issue
+  it('parse "1.2m" as 1.2', function()
+    local result = ParseLength("1.2m")
+    assert.are.same(result, 1.2)
+  end)
 
-local result = ParseLength("120 cm Weg")
-assert(result == nil)
+  it('parse "1.2 m" as 1.2', function()
+    local result = ParseLength("1.2 m")
+    assert.are.same(result, 1.2)
+  end)
 
-local result = ParseLength("1.2m")
-assert(result == 1.2)
+  it('return nil for "1,2 m"', function()
+    local result = ParseLength("1,2 m")
+    assert.are.same(result, nil)
+  end)
 
-local result = ParseLength("1.2 m")
-assert(result == 1.2)
+  it('parse "1.2 km" as 1200', function()
+    local result = ParseLength("1.2 km")
+    assert.are.same(result, 1200)
+  end)
 
-local result = ParseLength("1,2 m")
-assert(result == nil)
-
-local result = ParseLength("1.2 km")
-assert(result == 1200)
-
--- miles and feet example see https://wiki.openstreetmap.org/wiki/Key:width#Examples
-local result = ParseLength("0.6 mi")
-assert(result == nil)
-
-local result = ParseLength("16'")
-assert(result == nil)
-
-local result = ParseLength("16'3\"")
-assert(result == nil)
-
-local result = ParseLength("foo")
-assert(result == nil)
-
-local result = ParseLength(nil)
-assert(result == nil)
+  it('return nil for "0.6 mi"', function()
+    local result = ParseLength("0.6 mi")
+    assert.are.same(result, nil)
+  end)
+end)

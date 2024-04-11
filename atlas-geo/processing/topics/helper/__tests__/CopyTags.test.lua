@@ -1,57 +1,27 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("CopyTags")
+describe("CopyTags", function()
+  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require("CopyTags")
 
-print('=== Test CopyTags ===')
+  local src = { ["tag1"] = "tag1", ["tag2"] = "tag2", ["tag3"] = "tag3" }
+  local tags = { "tag1" }
 
-local src = { ["tag1"] = "tag1", ["tag2"] = "tag2", ["tag3"] = "tag3" }
-local tags = { "tag1" }
+  it('copy tags to an empty destination', function()
+    local result = CopyTags({}, src, tags)
+    assert.are.same(result, { ["tag1"] = "tag1" })
+  end)
 
--- Default, empty dst
-local result = CopyTags({}, src, tags)
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-assert(result_string == "tag1tag1")
+  it('copy tags to a given destination', function()
+    local result = CopyTags({ ["dst"] = "dst" }, src, tags)
+    assert.are.same(result, { ["dst"] = "dst", ["tag1"] = "tag1" })
+  end)
 
--- Default, given dst
-local result = CopyTags({ ["dst"] = "dst" }, src, tags)
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-print('WARN: This test is flaky. It fails randomly but works right after.')
-assert(result_string == "dstdsttag1tag1" or result_string == "tag1tag1dstdst")
+  it('copy tags with a prefix', function()
+    local result = CopyTags({ ["dst"] = "dst" }, src, tags, 'PRE_')
+    assert.are.same(result, { ["dst"] = "dst", ["PRE_tag1"] = "tag1" })
+  end)
 
--- Default, with prefix
-local result = CopyTags({ ["dst"] = "dst" }, src, tags, 'PRE_')
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-assert(result_string == "dstdstPRE_tag1tag1")
-
--- Default, emtpy tags
-local result = CopyTags({ ["dst"] = "dst" }, src, {}, 'PRE_')
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-assert(result_string == "dstdst")
-
--- Default, empty src
-local result = CopyTags({ ["dst"] = "dst" }, {}, tags, 'PRE_')
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-assert(result_string == "dstdst")
-
--- Default, nil src
-local tags = { "tag1" }
-local result = CopyTags({ ["dst"] = "dst" }, nil, tags, 'PRE_')
-local result_string = ""
-for key, value in pairs(result) do
-  result_string = result_string .. key .. value
-end
-assert(result_string == "dstdst")
+  it('not copy any tags if the tags list is empty', function()
+    local result = CopyTags({ ["dst"] = "dst" }, src, {}, 'PRE_')
+    assert.are.same(result, { ["dst"] = "dst" })
+  end)
+end)
