@@ -30,10 +30,9 @@ services:
       - "./letsencrypt:/letsencrypt"
     networks:
       - app_bridge
-  app:
+  processing:
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
-    entrypoint: /app/run.sh
-    container_name: app
+    container_name: processing
     environment:
       PGHOST:
       PGDATABASE:
@@ -42,11 +41,10 @@ services:
       OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
+      WAIT_FOR_FRESH_DATA:
       SKIP_WARM_CACHE:
       TILES_URL:
-      DEBUG:
       ID_FILTER:
-      API_SECRET:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
@@ -54,8 +52,7 @@ services:
       - osmfiles:/data
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-      - ./configs/warm-cache.json:/app/warm-cache/config.json:ro
-      - ./arguments:/app/arguments
+      - ./configs/warm-cache.json:/processing/warm-cache/config.json:ro
     networks:
       - app_bridge
     depends_on:

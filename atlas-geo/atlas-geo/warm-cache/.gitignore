@@ -2,3 +2,4 @@ tiles
 *.log
 .env.local
 *.mvt
+*.geojson

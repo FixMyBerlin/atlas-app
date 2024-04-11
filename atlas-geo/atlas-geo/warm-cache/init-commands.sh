@@ -3,9 +3,17 @@
 logfile=/tmp/warm.log
 tiles_folder=tiles
 
-alias warm='./warmCache.js | tee "$logfile" && backup-log'
+warm() {
+  case $1 in -h|--help)
+    ./warmCache.js -h
+    return
+  ;; esac
+  ./warmCache.js | tee "$logfile" && backup-log
+}
+
 alias filter='./filterLog.ts --skip-info --skip-errors "$logfile"'
 alias sort='./sortLog.ts "$logfile"'
+alias visualize='./visualizeLog.ts "$logfile" "geojson/warm.geojson"'
 
 download() {
   mkdir -p $tiles_folder
@@ -83,6 +91,7 @@ Added commands
   * sort
   * download
   * analyze
+  * visualize
 
 Use -h, --help for additional information for each command.
 END
