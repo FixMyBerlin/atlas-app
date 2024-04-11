@@ -3,7 +3,6 @@ describe("ConvertCyclewayOppositeSchema", function()
   require("CompareTables")
   require("ConvertCyclewayOppositeSchema")
   require("osm2pgsql")
-  require("DeepCopy")
 
   it('do nothing when cycleway is lane', function()
     local input = { ["cycleway"] = "lane" }
