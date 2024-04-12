@@ -44,12 +44,6 @@ export async function initGeneralizationFunctions(
         return prismaClientForRawQueries.$transaction([
           prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
           prismaClientForRawQueries.$executeRawUnsafe(
-            `DROP INDEX IF EXISTS"${tableName}_geom_zoom_idx";`,
-          ),
-          prismaClientForRawQueries.$executeRawUnsafe(
-            `CREATE INDEX "${tableName}_geom_zoom_idx" ON roads USING gist(geom, minzoom);`,
-          ),
-          prismaClientForRawQueries.$executeRawUnsafe(
             `CREATE OR REPLACE
           FUNCTION public.${functionName}(z integer, x integer, y integer)
           RETURNS bytea AS $$
