@@ -67,7 +67,7 @@ jobs:
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
           if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
             if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "changes=true" >> $GITHUB_OUTPUT
+              echo "changes=false" >> $GITHUB_OUTPUT
             else
               echo "changes=true" >> $GITHUB_OUTPUT
             fi
@@ -76,7 +76,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: app/ helpers/ app.Dockerfile docker-compose.yml
+          CHECK_DIFF_LOCATIONS: processing/ processing.Dockerfile docker-compose.yml
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
