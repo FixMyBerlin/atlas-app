@@ -91,7 +91,7 @@ export default api(
         userId: newUser.id,
         // osmId: newUser.osmId,
         osmName: newUser.osmName, // needed for quick loockups
-        osmAvatar: newUser.osmAvatar,
+        // osmAvatar: newUser.osmAvatar,
         osmToken: account?.access_token!,
         role: newUser.role as Role,
       }
