@@ -27,28 +27,30 @@ async function createTileSpecification(tableName) {
   }
   return tileSpecification
 }
+function toSqlArray(arr: string[]) {
+  return `Array[${arr.map((tag) => `'${tag}'`)}]`
+}
 
 export async function initGeneralizationFunctions(
   interacitvityConfiguartion: InteracitvityConfiguartion,
 ) {
   return Promise.all(
-    Object.entries(interacitvityConfiguartion).map(async ([tableName, interactivity]) => {
-      // @ts-ignore
-      const functionName = generalizationFunctionIdentifier(tableName)
-      // Gather meta information for the tile specification
-      const tileSpecification = await createTileSpecification(tableName)
-      const { minzoom } = interactivity
-      const stylingKeys = `Array[${interactivity.stylingKeys.map((tag) => `'${tag}'`)}]`
-      return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `DROP INDEX IF EXISTS"${tableName}_geom_zoom_idx";`,
-        ),
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE INDEX "${tableName}_geom_zoom_idx" ON roads USING gist(geom, minzoom);`,
-        ),
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE OR REPLACE
+    Object.entries(interacitvityConfiguartion).map(
+      async ([tableName, { minzoom, stylingKeys }]) => {
+        // @ts-expect-errors
+        const functionName = generalizationFunctionIdentifier(tableName)
+        // Gather meta information for the tile specification
+        const tileSpecification = await createTileSpecification(tableName)
+        return prismaClientForRawQueries.$transaction([
+          prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `DROP INDEX IF EXISTS"${tableName}_geom_zoom_idx";`,
+          ),
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `CREATE INDEX "${tableName}_geom_zoom_idx" ON roads USING gist(geom, minzoom);`,
+          ),
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `CREATE OR REPLACE
           FUNCTION public.${functionName}(z integer, x integer, y integer)
           RETURNS bytea AS $$
           DECLARE
@@ -67,7 +69,9 @@ export async function initGeneralizationFunctions(
                       ST_Simplify(geom, tolerance, true)
                     ),
                     ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${stylingKeys}) END as tags,
+                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                      stylingKeys,
+                    )}) END as tags,
                     CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
@@ -76,11 +80,12 @@ export async function initGeneralizationFunctions(
             RETURN mvt;
           END
           $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
-        ),
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
-        ),
-      ])
-    }),
+          ),
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
+          ),
+        ])
+      },
+    ),
   )
 }
