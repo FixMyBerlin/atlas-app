@@ -1,4 +1,5 @@
 import { isDev } from './app/_components/utils/isEnv'
+import { memoize } from 'lodash'
 
 export function warnDev(...args) {
   if (isDev) {
@@ -34,3 +35,5 @@ export function createLogger(prefix: string) {
   // for debugging only
   return (...values) => console.log(`${prefix}:`, ...values)
 }
+
+export const logMemo = memoize(console.log, (...args) => JSON.stringify(args))
