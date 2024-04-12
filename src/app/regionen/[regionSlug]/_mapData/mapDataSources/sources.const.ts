@@ -2,6 +2,26 @@ import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 
+// this type includes all tables we generate in atlas-geo
+// TODO: automatically generate this in atlas-geo
+export type TableId =
+  | 'barrierLines'
+  | 'barrierAreas'
+  | 'bicycleParking_points'
+  | 'bicycleParking_areas'
+  | 'bikeroutes'
+  | 'boundaries'
+  | 'boundaryLabels'
+  | 'presenceStats'
+  | 'landuse'
+  | 'places'
+  | 'poiClassification'
+  | 'publicTransport'
+  | 'roads'
+  | 'roadsPathClasses'
+  | 'bikelanes'
+  | 'trafficSigns'
+
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesId =
   | SourcesParkingId
@@ -52,9 +72,19 @@ export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
   `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
-export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
-  tableName: TId,
-) => `atlas_generalization_${tableName.toLowerCase()}` as `atlas_generalization_${Lowercase<TId>}`
+export const generalizationFunctionIdentifier = (tableName: TableId) =>
+  `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TableId>}`
+
+export type InteracitvityConfiguartion = Partial<
+  Record<TableId, { minzoom: number; stylingKeys: string[] }>
+>
+export const interacitvityConfiguartion: InteracitvityConfiguartion = {
+  roads: { stylingKeys: ['road'], minzoom: 9 },
+  bikelanes: {
+    stylingKeys: ['category', 'surface', 'width', 'smoothness'],
+    minzoom: 9,
+  },
+}
 
 // https://account.mapbox.com/access-tokens
 // "Default public token"
@@ -132,7 +162,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/bikelanes/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_bikelanes/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -215,7 +245,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roads',
-    tiles: `${tilesUrl}/roads/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_roads/{z}/{x}/{y}`,
     maxzoom: 14,
     minzoom: 8,
     attributionHtml:
