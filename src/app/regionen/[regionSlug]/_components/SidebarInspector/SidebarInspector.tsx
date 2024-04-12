@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useEffect, useRef } from 'react'
+import React, { memo, Suspense } from 'react'
 import { Feature } from '@turf/turf'
 import { useMap } from 'react-map-gl/maplibre'
 import useResizeObserver from 'use-resize-observer'

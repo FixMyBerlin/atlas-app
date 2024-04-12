@@ -2,7 +2,7 @@ import { pick, zip } from 'lodash'
 import { createParser, useQueryState } from 'next-usequerystate'
 import { numericSourceIds } from 'src/app/url'
 import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
-import { UrlFeature, SourceInfo, ParsedFeatureSource } from './types'
+import { UrlFeature, SourceInfo, ParsedFeatureSource, OsmType } from './types'
 import { MapGeoJSONFeature } from 'react-map-gl'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
@@ -39,8 +39,10 @@ export function parseFeatureSource(source: string): ParsedFeatureSource {
 
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source } = feature
+  const sourceId = parseFeatureSource(source).sourceId
+  const { type, internal } = parseSourceId(sourceId as SourcesId)
   return {
-    properties: pick(properties, ['id', 'osm_id', 'osm_type']),
+    properties: pick(properties, type === 'osm' ? ['osm_id', 'osm_type'] : ['id']),
     sourceId: parseFeatureSource(source).sourceId,
   }
 }
@@ -53,7 +55,9 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
         properties: { id, osm_id, osm_type },
       } = f
       const numericSourceId = stringSourceIds[sourceId]
-      return [numericSourceId, id || '', osm_id || '', osm_type || ''].join('.')
+      const type = parseSourceId(sourceId as SourcesId).type
+      const idString = type === 'osm' ? osm_type! + osm_id! : String(id)
+      return [numericSourceId, idString].join('.')
     })
     .join(',')
 }
@@ -62,18 +66,22 @@ export const parseFeaturesParam = (query: string) => {
   return query
     .split(',')
     .map((s) => {
-      let [numericSourceIdString, idString, osmIdString, osm_type] = s.split('.')
+      const m = s.match(/^([0-9]+)\.([WNR]?[0-9]+)$/)
+      if (!m) return null
+      const [_, numericSourceIdString, idString] = m as [string, string, string]
       const numericSourceId = Number(numericSourceIdString)
-      const osm_id = Number(osmIdString)
-      if (
-        !(numericSourceId! in numericSourceIds) ||
-        !['', 'N', 'W', 'R'].includes(osm_type!) ||
-        isNaN(osm_id)
-      )
-        return null
-      const sourceId = numericSourceIds[Number(numericSourceId)]!
-      const idNumber = Number(idString)
-      const id = isNaN(idNumber) ? idString : idNumber
+      if (!(numericSourceId! in numericSourceIds)) return null
+      const sourceId = numericSourceIds[Number(numericSourceId)]
+      const { type, internal } = parseSourceId(sourceId as SourcesId)
+      let id: any = null
+      let osm_type: any = null
+      let osm_id: any = null
+      if (type === 'osm') {
+        osm_type = idString.slice(0, 1) as OsmType
+        osm_id = Number(idString.slice(1))
+      } else {
+        id = Number(idString)
+      }
       const properties = Object.fromEntries(
         Object.entries({
           id,

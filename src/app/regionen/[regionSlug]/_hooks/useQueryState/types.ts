@@ -2,13 +2,11 @@ import { MapDataCategoryId } from '../../_mapData/mapDataCategories/categories.c
 import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
 import { SubcategoryId } from '../../_mapData/typeId'
 
+export type OsmType = 'N' | 'W' | 'R'
+
 export type UrlFeature = {
   sourceId: string
-  properties: {
-    id?: string | number
-    osm_type?: 'N' | 'W' | 'R'
-    osm_id?: number
-  }
+  properties: { id: number } | { osm_id: number; osm_type: string }
 }
 
 export type ParsedFeatureSource = {
