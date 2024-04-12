@@ -48,6 +48,7 @@ export type SourcesId =
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
 
+// TODO: this is also redundant, it gets defined again in `sources` with `export.enabled`
 // Define the export tables
 export const exportApiIdentifier = [
   'bicycleParking_points',
