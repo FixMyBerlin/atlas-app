@@ -11,6 +11,7 @@ local nodeTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -21,6 +22,7 @@ local areaTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'polygon' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -92,7 +94,8 @@ function osm2pgsql.process_node(object)
   nodeTable:insert({
     tags = tags,
     meta = Metadata(object),
-    geom = object:as_point()
+    geom = object:as_point(),
+    minzoom = 0
   })
 end
 
@@ -106,6 +109,7 @@ function osm2pgsql.process_way(object)
     tags = tags,
     meta = meta,
     geom = object:as_polygon():centroid(),
+    minzoom = 0
   })
 
   if not object.is_closed then return end
@@ -113,5 +117,6 @@ function osm2pgsql.process_way(object)
     tags = tags,
     meta = meta,
     geom = object:as_polygon(),
+    minzoom = 0
   })
 end

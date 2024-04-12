@@ -10,6 +10,7 @@ local table = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -105,7 +106,8 @@ function osm2pgsql.process_node(object)
   table:insert({
     tags = processTags(object.tags),
     meta = Metadata(object),
-    geom = object:as_point()
+    geom = object:as_point(),
+    minzoom = 0
   })
 end
 
@@ -116,7 +118,8 @@ function osm2pgsql.process_way(object)
   table:insert({
     tags = processTags(object.tags),
     meta = Metadata(object),
-    geom = object:as_polygon():centroid()
+    geom = object:as_polygon():centroid(),
+    minzoom = 0
   })
 end
 
@@ -127,6 +130,7 @@ function osm2pgsql.process_relation(object)
   table:insert({
     tags = processTags(object.tags),
     meta = Metadata(object),
-    geom = object:as_multipolygon():centroid()
+    geom = object:as_multipolygon():centroid(),
+    minzoom = 0
   })
 end
