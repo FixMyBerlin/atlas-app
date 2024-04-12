@@ -2,18 +2,21 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("Metadata")
 require("CopyTags")
+require("DefaultId")
 
 local table = osm2pgsql.define_table({
   name = 'boundaries',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -21,13 +24,15 @@ local labelTable = osm2pgsql.define_table({
   name = 'boundaryLabels',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -46,11 +51,13 @@ local presenceStats = osm2pgsql.define_table({
   name = 'presenceStats',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',                  type = 'text', not_null = true },
     { column = 'tags',                type = 'jsonb' },
     { column = 'meta',                type = 'jsonb' },
     { column = 'presence_categories', type = 'jsonb',       create_only = true },
     { column = 'geom',                type = 'multipolygon' },
-  }
+  },
+  indexes = { { column = 'id', method = 'gist' } }
 })
 
 function osm2pgsql.process_relation(object)
@@ -93,13 +100,15 @@ function osm2pgsql.process_relation(object)
     tags = results,
     meta = Metadata(object),
     geom = object:as_multipolygon(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
   labelTable:insert({
     tags = results,
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 
   -- local admin_levels = Set({ "4", "6", "7", "8" })
@@ -114,7 +123,8 @@ function osm2pgsql.process_relation(object)
     presenceStats:insert({
       tags = results,
       meta = Metadata(object),
-      geom = object:as_multipolygon()
+      geom = object:as_multipolygon(),
+      id = DefaultId(object)
     })
   end
 end
