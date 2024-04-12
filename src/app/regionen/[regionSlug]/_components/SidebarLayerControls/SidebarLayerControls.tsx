@@ -33,7 +33,6 @@ export const SidebarLayerControls = () => {
     mediaQuery.addEventListener('change', onMediaQueryChange)
     return () => mediaQuery.removeEventListener('change', onMediaQueryChange)
   }, [])
-  console.log('isSmBreakpoitOrAbove', isSmBreakpoitOrAbove)
 
   return (
     <section className="absolute left-0 top-0 z-10 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md">
