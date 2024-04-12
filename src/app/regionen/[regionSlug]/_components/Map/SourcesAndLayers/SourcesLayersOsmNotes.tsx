@@ -32,7 +32,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
       if (!mainMap) return
       setOsmNotesLoading(true)
 
-      const apiUrl = `https://api.openstreetmap.org/api/0.6/notes?bbox=${mainMap
+      const apiUrl = `${process.env.NEXT_PUBLIC_OSM_API_URL}/notes?bbox=${mainMap
         .getBounds()
         .toArray()
         .join(',')}`

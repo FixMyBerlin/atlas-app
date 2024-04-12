@@ -26,7 +26,7 @@ const providers: Provider[] = [
     },
     userinfo: {
       async request({ client, tokens }) {
-        const api = 'https://api.openstreetmap.org/api/0.6/user/details.json'
+        const api = `${process.env.NEXT_PUBLIC_OSM_API_URL}/user/details.json`
         const response = await fetch(api, {
           credentials: 'include',
           method: 'GET',
