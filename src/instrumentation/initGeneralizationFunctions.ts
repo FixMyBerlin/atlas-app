@@ -1,10 +1,11 @@
 import {
   generalizationFunctionIdentifier,
   InteracitvityConfiguartion,
+  TableId,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
-async function createTileSpecification(tableName) {
+async function createTileSpecification(tableName: TableId) {
   // Get column names and types
   const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
   SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
@@ -40,6 +41,7 @@ export async function initGeneralizationFunctions(
         // @ts-expect-errors
         const functionName = generalizationFunctionIdentifier(tableName)
         // Gather meta information for the tile specification
+        // @ts-expect-errors
         const tileSpecification = await createTileSpecification(tableName)
         return prismaClientForRawQueries.$transaction([
           prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
