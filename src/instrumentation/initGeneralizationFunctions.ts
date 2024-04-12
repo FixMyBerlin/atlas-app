@@ -22,7 +22,7 @@ async function createTileSpecification(tableName) {
   const { bounds } = bbox && bbox[0]
   // format as vector tile specifaction
   const tileSpecification = {
-    vector_layers: [{ id: generalizationFunctionIdentifier(tableName), fields }],
+    vector_layers: [{ id: tableName, fields }],
     bounds,
   }
   return tileSpecification
@@ -60,7 +60,7 @@ export async function initGeneralizationFunctions(
             ELSE
               tolerance = 0;
             END IF;
-            SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'geom') FROM (
+            SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
               SELECT
                 ST_AsMVTGeom(
                     ST_CurveToLine(
