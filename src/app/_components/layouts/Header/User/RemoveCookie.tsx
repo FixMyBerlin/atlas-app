@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { cookieName } from './cookieName'
+import { cookieName } from 'src/users/hooks/cookieName'
 
 export const RemoveCookie = () => {
   useEffect(() => {
