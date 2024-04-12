@@ -163,7 +163,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/bikelanes/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_bikelanes/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -246,7 +246,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roads',
-    tiles: `${tilesUrl}/roads/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_roads/{z}/{x}/{y}`,
     maxzoom: 14,
     minzoom: 8,
     attributionHtml:
