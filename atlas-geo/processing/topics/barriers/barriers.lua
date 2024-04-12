@@ -12,6 +12,9 @@ local lineBarriers = osm2pgsql.define_table({
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = {'minzoom', 'geom'}, method = 'gist' }
   }
 })
 
@@ -23,6 +26,9 @@ local areaBarriers = osm2pgsql.define_table({
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
     { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = {'minzoom', 'geom'}, method = 'gist' }
   }
 })
 
