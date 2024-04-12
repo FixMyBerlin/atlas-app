@@ -2,6 +2,26 @@ import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 
+// this type includes all tables we generate in atlas-geo
+// TODO: automatically generate this in atlas-geo
+export type TableId =
+  | 'barrierLines'
+  | 'barrierAreas'
+  | 'bicycleParking_points'
+  | 'bicycleParking_areas'
+  | 'bikeroutes'
+  | 'boundaries'
+  | 'boundaryLabels'
+  | 'presenceStats'
+  | 'landuse'
+  | 'places'
+  | 'poiClassification'
+  | 'publicTransport'
+  | 'roads'
+  | 'roadsPathClasses'
+  | 'bikelanes'
+  | 'trafficSigns'
+
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesId =
   | SourcesParkingId
@@ -52,12 +72,11 @@ export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
   `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
-export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
-  tableName: TId,
-) => `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TId>}`
+export const generalizationFunctionIdentifier = (tableName: TableId) =>
+  `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TableId>}`
 
 export type InteracitvityConfiguartion = Partial<
-  Record<SourceExportApiIdentifier, { minzoom: number; stylingKeys: string[] }>
+  Record<TableId, { minzoom: number; stylingKeys: string[] }>
 >
 export const interacitvityConfiguartion: InteracitvityConfiguartion = {
   roads: { stylingKeys: ['road'], minzoom: 9 },
