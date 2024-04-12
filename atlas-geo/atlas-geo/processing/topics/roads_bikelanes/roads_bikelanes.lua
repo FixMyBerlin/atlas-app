@@ -44,6 +44,7 @@ local roadsPathClassesTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -125,7 +126,8 @@ function osm2pgsql.process_way(object)
       roadsPathClassesTable:insert({
         tags = results,
         meta = Metadata(object),
-        geom = object:as_linestring()
+        geom = object:as_linestring(),
+        minzoom = 0
       })
     else
 

@@ -11,6 +11,7 @@ local lineBarriers = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -21,6 +22,7 @@ local areaBarriers = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -70,7 +72,8 @@ function osm2pgsql.process_way(object)
       areaBarriers:insert({
         tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
-        geom = object:as_multipolygon()
+        geom = object:as_multipolygon(),
+        minzoom = 0
       })
       return
     end
@@ -92,6 +95,7 @@ function osm2pgsql.process_way(object)
         tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
         geom = object:as_linestring(),
+        minzoom = 0
       })
       return
     end
@@ -103,7 +107,8 @@ function osm2pgsql.process_relation(object)
     areaBarriers:insert({
       tags = CopyTags({}, object.tags, tags_cc),
       meta = Metadata(object),
-      geom = object:as_multipolygon()
+      geom = object:as_multipolygon(),
+      minzoom = 0
     })
     return
   end

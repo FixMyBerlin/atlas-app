@@ -10,6 +10,7 @@ local table = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -20,6 +21,7 @@ local labelTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -84,12 +86,14 @@ function osm2pgsql.process_relation(object)
   table:insert({
     tags = results,
     meta = Metadata(object),
-    geom = object:as_multipolygon()
+    geom = object:as_multipolygon(),
+    minzoom = 0
   })
   labelTable:insert({
     tags = results,
     meta = Metadata(object),
-    geom = object:as_multipolygon():centroid()
+    geom = object:as_multipolygon():centroid(),
+    minzoom = 0
   })
 
   -- local admin_levels = Set({ "4", "6", "7", "8" })
