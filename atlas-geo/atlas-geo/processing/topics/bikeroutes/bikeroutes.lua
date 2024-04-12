@@ -11,6 +11,7 @@ local bikeroutesTable = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multilinestring' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -60,6 +61,7 @@ function osm2pgsql.process_relation(object)
       tags = result_tags,
       meta = Metadata(object),
       geom = object:as_multilinestring(),
+      minzoom = 0
     })
   end
 end

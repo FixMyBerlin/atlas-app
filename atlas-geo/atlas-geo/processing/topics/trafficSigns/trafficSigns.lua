@@ -9,6 +9,7 @@ local table = osm2pgsql.define_table({
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
+    { column = 'minzoom', type = 'integer' },
   }
 })
 
@@ -121,7 +122,8 @@ function osm2pgsql.process_node(object)
     table:insert({
       tags = traffic_sign,
       meta = Metadata(object),
-      geom = object:as_point()
+      geom = object:as_point(),
+      minzoom = 0
     })
   end
 end
