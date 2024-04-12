@@ -11,6 +11,9 @@ local table = osm2pgsql.define_table({
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
     { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = {'minzoom', 'geom'}, method = 'gist' }
   }
 })
 

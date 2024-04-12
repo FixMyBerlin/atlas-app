@@ -34,6 +34,9 @@ local roadsTable = osm2pgsql.define_table({
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = {'minzoom', 'geom'}, method = 'gist' }
   }
 })
 
@@ -45,6 +48,9 @@ local roadsPathClassesTable = osm2pgsql.define_table({
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = {'minzoom', 'geom'}, method = 'gist' }
   }
 })
 
@@ -59,7 +65,10 @@ local bikelanesTable = osm2pgsql.define_table({
     { column = 'geom',   type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
-  indexes = { { column = 'osm_id', method = 'gist' } }
+  indexes = {
+    { column = 'osm_id', method = 'gist' },
+    { column = {'minzoom', 'geom'}, method = 'gist' }
+  }
 })
 
 function osm2pgsql.process_way(object)
