@@ -22,13 +22,23 @@ import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
+import { SourcesDebug } from './SourcesAndLayers/SourcesDebug'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
+import { convertToUrlFeature, useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
+import { uniqBy } from 'lodash'
+import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setInspectorFeatures, setMapLoaded, setMapDataLoading } = useMapStateInteraction()
+  const { setFeaturesParam } = useFeaturesParam()
+  const { setInspectorFeatures, setMapLoaded, setMapDataLoading, setMapBounds } =
+    useMapStateInteraction()
   const region = useStaticRegion()
+
+  // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
+  const { mainMap } = useMap()
+  mainMap?.getMap().touchZoomRotate.disableRotation()
 
   const [cursorStyle, setCursorStyle] = useState('grab')
   const handleMouseEnter = (_event: MapLayerMouseEvent) => {
@@ -39,18 +49,24 @@ export const Map = () => {
   }
 
   const handleClick = (event: MapLayerMouseEvent) => {
-    // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
-    event.features && setInspectorFeatures(event.features as MapGeoJSONFeature[])
+    if (event.features) {
+      // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
+      setInspectorFeatures(event.features as MapGeoJSONFeature[])
+      const filteredFeatures = event.features.filter((f) => f.properties?.osm_type !== 'R')
+      const uniqueFeatures = uniqBy(filteredFeatures, (f: MapGeoJSONFeature) =>
+        createInspectorFeatureKey(f),
+      )
+      setFeaturesParam(
+        uniqueFeatures.map((feature: MapGeoJSONFeature) => convertToUrlFeature(feature)),
+      )
+    }
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {
     // Only when `loaded` all `Map` feature are actually usable (https://github.com/visgl/react-map-gl/issues/2123)
     setMapLoaded(true)
+    setMapBounds(mainMap?.getBounds() || null)
   }
-
-  // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
-  const { mainMap } = useMap()
-  mainMap?.getMap().touchZoomRotate.disableRotation()
 
   // Warn when a sprite image is missing
   useEffect(() => {
@@ -65,17 +81,13 @@ export const Map = () => {
 
   useEffect(() => {
     if (!mainMap) return
-
     const mapCenter = mainMap.getCenter()
     const mapZoom = mainMap.getZoom()
-
     const [lat_, lng_, zoom_] = roundPositionForURL(mapCenter.lat, mapCenter.lng, mapZoom)
-
-    if (mapParam?.lat == lat_ && mapParam?.lng == lng_ && mapParam?.zoom == zoom_) return
-
+    if (mapParam?.lat === lat_ && mapParam?.lng === lng_ && mapParam?.zoom === zoom_) return
     mainMap.flyTo({
       center: [mapParam?.lng || 0, mapParam?.lat || 0],
-      zoom: mapParam?.zoom,
+      zoom: mapParam?.zoom || undefined,
     })
   }, [mainMap, mapParam])
 
@@ -84,6 +96,7 @@ export const Map = () => {
     const { latitude, longitude, zoom } = event.viewState
     const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
     void setMapParam({ zoom: zoom_ ?? 2, lat: lat_ ?? 2, lng: lng_ ?? 2 }, { history: 'replace' })
+    setMapBounds(mainMap?.getBounds() || null)
   }
 
   const interactiveLayerIds = useInteractiveLayers()
@@ -152,6 +165,7 @@ export const Map = () => {
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
+      {isDev ? <SourcesDebug /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 
       <NavigationControl showCompass={false} />

@@ -1,7 +1,9 @@
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
+import { LngLatBounds } from 'maplibre-gl'
 import { createInspectorFeatureKey } from '../../_components/utils/sourceKeyUtils/createInspectorFeatureKey'
+import { isEqual } from 'lodash'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
@@ -10,7 +12,8 @@ type Store = StoreMapLoadedState &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates &
-  StoreOsmNotesState
+  StoreOsmNotesState &
+  StoreSizes
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
@@ -20,6 +23,15 @@ type StoreMapLoadedState = {
 type StoreMapDataLoadingState = {
   mapDataLoading: boolean
   setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
+}
+
+type StoreSizes = {
+  mapBounds: LngLatBounds | null
+  setMapBounds: (mapBounds: Store['mapBounds']) => void
+  inspectorSize: { width: number; height: number } | null
+  setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
+  sidebarLayerControlsSize: { width: number; height: number } | null
+  setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
 }
 
 type StoreOsmNotesState = {
@@ -50,6 +62,11 @@ export type StoreCalculator = {
 type StoreLocalUpdates = {
   localUpdates: Omit<TCreateVerificationSchema, 'id'>[]
   addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
+}
+
+function setIfChanged(get, set, name, value) {
+  if (isEqual(get()[name], value)) return
+  set({ [name]: value })
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
@@ -97,5 +114,14 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
     set({
       localUpdates: [...localUpdates, update],
     })
+  },
+
+  mapBounds: null,
+  setMapBounds: (bounds) => set({ mapBounds: bounds }),
+  inspectorSize: null,
+  setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+  sidebarLayerControlsSize: null,
+  setSidebarLayerControlsSize: (size) => {
+    setIfChanged(get, set, 'sidebarLayerControlsSize', size)
   },
 }))
