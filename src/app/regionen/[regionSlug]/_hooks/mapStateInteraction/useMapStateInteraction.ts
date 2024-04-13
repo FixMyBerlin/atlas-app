@@ -7,7 +7,7 @@ import { isEqual } from 'lodash'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreMapLoadedState &
+export type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
   StoreFeaturesInspector &
   StoreCalculator &
@@ -28,9 +28,9 @@ type StoreMapDataLoadingState = {
 type StoreSizes = {
   mapBounds: LngLatBounds | null
   setMapBounds: (mapBounds: Store['mapBounds']) => void
-  inspectorSize: { width: number; height: number } | null
+  inspectorSize: { width: number; height: number }
   setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
-  sidebarLayerControlsSize: { width: number; height: number } | null
+  sidebarLayerControlsSize: { width: number; height: number }
   setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
 }
 
@@ -118,9 +118,9 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
 
   mapBounds: null,
   setMapBounds: (bounds) => set({ mapBounds: bounds }),
-  inspectorSize: null,
+  inspectorSize: { width: 0, height: 0 },
   setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
-  sidebarLayerControlsSize: null,
+  sidebarLayerControlsSize: { width: 0, height: 0 },
   setSidebarLayerControlsSize: (size) => {
     setIfChanged(get, set, 'sidebarLayerControlsSize', size)
   },

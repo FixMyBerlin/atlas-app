@@ -1,17 +1,24 @@
-import React, { memo, Suspense } from 'react'
-import { Feature } from '@turf/turf'
+import React, { memo, Suspense, useEffect } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import useResizeObserver from 'use-resize-observer'
 
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  Store,
+  useMapStateInteraction,
+} from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
-import { createBoundingPolygon } from './util'
+import { allUrlFeaturesInBounds, createBoundingPolygon } from './util'
 import { useSelectedFeatures } from 'src/app/_hooks/useSelectedFeatures'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
 
-const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoized(props: any) {
+type Props = Pick<
+  Store,
+  'mapBounds' | 'setInspectorSize' | 'inspectorSize' | 'sidebarLayerControlsSize'
+>
+
+const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoized(props: Props) {
   const {
     mapBounds, // needed to trigger rerendering
     setInspectorSize,
@@ -28,14 +35,25 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
   const selectedFeatures = useSelectedFeatures()
   const features = selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
-  if (!features.length) {
-    setInspectorSize(null)
-    return null
-  }
+  const boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
 
-  let boundingPolygon: Feature | null = null
-  if (map && inspectorSize && sidebarLayerControlsSize) {
-    boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
+  useEffect(() => {
+    if (
+      !allUrlFeaturesInBounds(
+        selectedFeatures.map((f) => f.urlFeature),
+        boundingPolygon,
+      )
+    ) {
+      console.log('!!! zoom to make all features visible')
+    } else {
+      console.log('all features visible')
+    }
+    /* eslint-disable-next-line */
+  }, [])
+
+  if (!features.length) {
+    setInspectorSize({ width: 0, height: 0 })
+    return null
   }
 
   return (
@@ -60,10 +78,14 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
 })
 
 export const SidebarInspector: React.FC = () => {
-  const { mapBounds, setInspectorSize, inspectorSize, sidebarLayerControlsSize } =
+  const { mapLoaded, mapBounds, setInspectorSize, inspectorSize, sidebarLayerControlsSize } =
     useMapStateInteraction()
 
-  const props = {
+  if (!mapLoaded) {
+    return null
+  }
+
+  const props: Props = {
     mapBounds,
     setInspectorSize,
     inspectorSize,
