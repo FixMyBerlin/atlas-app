@@ -1,6 +1,7 @@
 import React, { memo, Suspense, useEffect } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import useResizeObserver from 'use-resize-observer'
+import { clsx } from 'clsx'
 
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import {
@@ -28,7 +29,11 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',
-    onResize: setInspectorSize,
+    onResize: ({ width, height }) => {
+      if (width !== undefined && height !== undefined) {
+        setInspectorSize({ width, height })
+      }
+    },
   })
   const { mainMap: map } = useMap()
   const { resetFeaturesParam } = useFeaturesParam()
@@ -51,28 +56,28 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     /* eslint-disable-next-line */
   }, [])
 
-  if (!features.length) {
-    setInspectorSize({ width: 0, height: 0 })
-    return null
-  }
+  const renderFeatures = !!features.length
+
+  const className = clsx(
+    'absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md',
+    !renderFeatures && 'opacity-0 pointer-events-none',
+  )
 
   return (
-    <div
-      ref={ref}
-      className="absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md"
-    >
+    <div ref={ref} className={className}>
       <Suspense fallback={<Spinner />}>
-        <InspectorHeader count={features.length} handleClose={() => resetFeaturesParam()} />
-        <Inspector features={features} boundingPolygon={boundingPolygon} />
+        {renderFeatures ? (
+          <>
+            <InspectorHeader count={features.length} handleClose={() => resetFeaturesParam()} />
+            <Inspector features={features} boundingPolygon={boundingPolygon} />
+            <style
+              dangerouslySetInnerHTML={{
+                __html: '.maplibregl-ctrl-top-right { right: 35rem }',
+              }}
+            />
+          </>
+        ) : null}
       </Suspense>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-            .maplibregl-ctrl-top-right { right: 35rem }
-          `,
-        }}
-      />
     </div>
   )
 })
