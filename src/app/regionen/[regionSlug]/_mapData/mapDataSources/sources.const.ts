@@ -408,7 +408,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/poiClassification
     id: 'atlas_poiClassification',
-    tiles: `${tilesUrl}/atlas_generalized_poiClassification/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_poiclassification/{z}/{x}/{y}`,
     maxzoom: 14,
     minzoom: 4,
     attributionHtml:
