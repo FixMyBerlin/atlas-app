@@ -54,7 +54,7 @@ export const Map = () => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
     const interactiveFeatures = extractInteractivFeatures(features)
-    setCursorStyle(Boolean(interactiveFeatures?.length) ? 'pointer' : 'help')
+    setCursorStyle(Boolean(interactiveFeatures?.length) ? 'pointer' : 'not-allowed')
   }
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
     setCursorStyle('grab')
