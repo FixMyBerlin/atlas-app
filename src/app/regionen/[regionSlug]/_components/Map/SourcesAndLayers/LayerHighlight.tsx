@@ -3,6 +3,7 @@ import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
+import { useSelectedFeatures } from '../../../../../_hooks/useSelectedFeatures'
 
 type Props = {
   sourceData: (typeof sources)[number]
@@ -10,11 +11,15 @@ type Props = {
 
 export const LayerHighlight = (parentLayerProps: Props) => {
   const {
-    unfilteredInspectorFeatures: inspectorFeatures,
+    // unfilteredInspectorFeatures: inspectorFeatures,
     calculatorAreasWithFeatures,
     mapLoaded,
   } = useMapStateInteraction()
+
+  const selectedFeatures = useSelectedFeatures()
   const { sourceData } = parentLayerProps
+
+  const inspectorFeatures = selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   if (!mapLoaded) return null
 

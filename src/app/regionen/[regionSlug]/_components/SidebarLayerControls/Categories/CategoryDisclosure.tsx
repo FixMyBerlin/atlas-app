@@ -11,7 +11,7 @@ import { CategoryHeadlineToggle } from './CategoryHeadlineToggle'
 type Props = { categoryConfig: MapDataCategoryConfig; active: boolean }
 
 export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active }: Props) => {
-  const { resetInspector } = useMapStateInteraction()
+  const { resetInspectorFeatures } = useMapStateInteraction()
   const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
 
   const selectCategory = (categoryId: string) => {
@@ -22,7 +22,7 @@ export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active 
       }
     })
     void setCategoriesConfig(newConfig)
-    resetInspector()
+    resetInspectorFeatures()
   }
 
   const dropdownSubcategories = currCategoryConfig.subcategories?.filter(

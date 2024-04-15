@@ -1,10 +1,12 @@
 import { Disclosure, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, Suspense, useEffect, useState } from 'react'
+import useResizeObserver from 'use-resize-observer'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { twJoin } from 'tailwind-merge'
 import { Categories } from './Categories/Categories'
 import { StaticDatasetCategories } from './StaticDatasets/StaticDatasetCategories'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 const SidebarLayerControlsChildren = () => {
   return (
@@ -21,6 +23,12 @@ const SidebarLayerControlsChildren = () => {
 
 export const SidebarLayerControls = () => {
   const [isSmBreakpoitOrAbove, setIsSmBreakpoitOrAbove] = useState(true)
+  const { setSidebarLayerControlsSize } = useMapStateInteraction()
+
+  const { ref } = useResizeObserver<HTMLDivElement>({
+    box: 'border-box',
+    onResize: setSidebarLayerControlsSize,
+  })
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(min-width: 640px)')
@@ -35,7 +43,10 @@ export const SidebarLayerControls = () => {
   }, [])
 
   return (
-    <section className="absolute left-0 top-0 z-10 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md">
+    <section
+      ref={ref}
+      className="absolute left-0 top-0 z-10 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md"
+    >
       {isSmBreakpoitOrAbove ? (
         <SidebarLayerControlsChildren />
       ) : (

@@ -1,8 +1,11 @@
 import { FilterSpecification } from 'maplibre-gl'
-import React from 'react'
+import React, { memo } from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
+import {
+  Store,
+  useMapDebugState,
+} from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
@@ -15,7 +18,6 @@ import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
-import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
 // We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -25,11 +27,16 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 // Maplibre GL JS will only create network request for sources that are used by a visible layer.
 // But, it will create them again, when the source was unmounted.
 // TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
-export const SourcesLayersAtlasGeo = () => {
-  const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
-  const { categoriesConfig } = useCategoriesConfig()
-  const { backgroundParam } = useBackgroundParam()
 
+type Props =
+  | Pick<Store, 'useDebugLayerStyles' | 'useDebugCachelessTiles'>
+  & {
+      categoriesConfig: any // inferred from useQueryState('config')
+      backgroundParam: any // inferred from useQueryState('bg')
+    }
+
+const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoized(props: Props) {
+  const { useDebugLayerStyles, useDebugCachelessTiles, categoriesConfig, backgroundParam } = props
   if (!categoriesConfig?.length) return null
 
   return (
@@ -144,4 +151,20 @@ export const SourcesLayersAtlasGeo = () => {
       })}
     </>
   )
+})
+
+export const SourcesLayersAtlasGeo = () => {
+  const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
+  const { categoriesConfig } = useCategoriesConfig()
+  const { backgroundParam } = useBackgroundParam()
+
+  const props: Props = {
+    useDebugLayerStyles,
+    categoriesConfig,
+    backgroundParam,
+    useDebugCachelessTiles,
+  }
+  if (!categoriesConfig?.length) return null
+
+  return <SourcesLayersAtlasGeoMemoized {...props} />
 }

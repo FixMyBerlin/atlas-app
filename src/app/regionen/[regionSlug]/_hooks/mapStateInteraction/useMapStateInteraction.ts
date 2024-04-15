@@ -1,16 +1,19 @@
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
+import { LngLatBounds } from 'maplibre-gl'
 import { createInspectorFeatureKey } from '../../_components/utils/sourceKeyUtils/createInspectorFeatureKey'
+import { isEqual } from 'lodash'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreMapLoadedState &
+export type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates &
-  StoreOsmNotesState
+  StoreOsmNotesState &
+  StoreSizes
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
@@ -20,6 +23,15 @@ type StoreMapLoadedState = {
 type StoreMapDataLoadingState = {
   mapDataLoading: boolean
   setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
+}
+
+type StoreSizes = {
+  mapBounds: LngLatBounds | null
+  setMapBounds: (mapBounds: Store['mapBounds']) => void
+  inspectorSize: { width: number; height: number }
+  setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
+  sidebarLayerControlsSize: { width: number; height: number }
+  setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
 }
 
 type StoreOsmNotesState = {
@@ -33,8 +45,8 @@ export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
   unfilteredInspectorFeatures: MapGeoJSONFeature[]
   getUniqueInspectorFeatures: () => MapGeoJSONFeature[]
-  setInspector: (inspectObject: Store['unfilteredInspectorFeatures']) => void
-  resetInspector: () => void
+  setInspectorFeatures: (inspectObject: Store['unfilteredInspectorFeatures']) => void
+  resetInspectorFeatures: () => void
 }
 
 export type StoreCalculator = {
@@ -50,6 +62,11 @@ export type StoreCalculator = {
 type StoreLocalUpdates = {
   localUpdates: Omit<TCreateVerificationSchema, 'id'>[]
   addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
+}
+
+function setIfChanged(get, set, name, value) {
+  if (isEqual(get()[name], value)) return
+  set({ [name]: value })
 }
 
 export const useMapStateInteraction = create<Store>((set, get) => ({
@@ -81,8 +98,9 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
       return result
     }, [])
   },
-  setInspector: (inspectorFeatures) => set({ unfilteredInspectorFeatures: inspectorFeatures }),
-  resetInspector: () => set({ unfilteredInspectorFeatures: [] }),
+  setInspectorFeatures: (inspectorFeatures) =>
+    set({ unfilteredInspectorFeatures: inspectorFeatures }),
+  resetInspectorFeatures: () => set({ unfilteredInspectorFeatures: [] }),
 
   // Data for <Inspector> AND <LayerHighlight>
   calculatorAreasWithFeatures: [],
@@ -96,5 +114,14 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
     set({
       localUpdates: [...localUpdates, update],
     })
+  },
+
+  mapBounds: null,
+  setMapBounds: (bounds) => set({ mapBounds: bounds }),
+  inspectorSize: { width: 0, height: 0 },
+  setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+  sidebarLayerControlsSize: { width: 0, height: 0 },
+  setSidebarLayerControlsSize: (size) => {
+    setIfChanged(get, set, 'sidebarLayerControlsSize', size)
   },
 }))

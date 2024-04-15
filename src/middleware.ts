@@ -1,137 +1,96 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { RegionSlug, staticRegion } from './app/regionen/(index)/_data/regions.const'
-import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
-import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
-import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
+import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
+import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
 import {
-  mapParamFallback,
+  parseMapParam,
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
+import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
+import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
   matcher: ['/regionen/:path*'],
 }
 
-export function middleware(request: NextRequest) {
-  const doNothing = NextResponse.next()
-  let performRedirect = false
+function splitPathname(url) {
+  return new URL(url).pathname.slice(1).split('/')
+}
 
-  const url = new URL(request.url)
+function redirectIfChanged(oldUrl, newUrl) {
+  if (oldUrl === newUrl) {
+    return NextResponse.next()
+  } else {
+    return NextResponse.redirect(newUrl, 301)
+  }
+}
 
-  // Guard: Only on path /regionen/*
-  const paths = url.pathname.split('/')
-  let possiblyRegionSlug = paths[2]
-  if (paths[1] !== 'regionen') return doNothing
-
-  // MIGRATION: Migrate renamed region names
-  const renamedRegions = new Map<string, RegionSlug>([
+function renameRegionIfNecessary(url: string) {
+  const slug = splitPathname(url)[1]!
+  const renamedRegions = {
     // [oldName, newName]
     // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
-    ['bb-ag', 'bb-pg'],
-    ['bb-ramboll', 'bb-sg'],
-  ])
-  const redirectSlug = renamedRegions.get(possiblyRegionSlug || '')
-  if (possiblyRegionSlug && redirectSlug) {
-    url.pathname = url.pathname.replace(possiblyRegionSlug, redirectSlug)
-    // Case 1: We are on `regions/oldSlug/subPage` in which case we want to redirect
-    // but not apply all the map stuff below, so we exit early
-    if (paths.length !== 3) {
-      return NextResponse.redirect(url.toString(), 301)
-    }
-    // Case 1: We are on `regions/oldSlug` in which case we want to redirect
-    // and also continue to apply all the map stuff below
-    possiblyRegionSlug = redirectSlug
-    performRedirect = true
+    'bb-ag': 'bb-pg',
+    'bb-ramboll': 'bb-sg',
+  }
+  const newSlug = renamedRegions[slug]
+  if (newSlug) {
+    const u = new URL(url)
+    u.pathname = u.pathname.replace(slug, newSlug)
+    return u.toString()
+  } else {
+    return url
+  }
+}
+
+export function middleware(request: NextRequest) {
+  const initialUrl = request.url.toString()
+
+  let [page, slug, subpage] = splitPathname(initialUrl)
+  if (page !== 'regionen') return NextResponse.next()
+  if (page === 'regionen' && !slug) return NextResponse.next()
+  // from here path must be '/regionen/[slug]...'
+
+  let migratedUrl = renameRegionIfNecessary(initialUrl)
+  // from here slugs were renamed
+
+  const existingSlugs = staticRegion.map((r) => r.slug)
+  slug = splitPathname(migratedUrl)[1]
+  if (!existingSlugs.includes(slug!)) return NextResponse.next()
+  // from here we're sure that the region exists
+
+  if (subpage) return redirectIfChanged(initialUrl, migratedUrl)
+  // from here we know that it's not a subpage and therefor should have search params
+
+  // Migrate URL
+  migratedUrl = migrateUrl(migratedUrl)
+
+  // Remove unused params
+  const usedParams = ['map', 'config', 'f', 'v']
+  const u = new URL(migratedUrl)
+  Array.from(u.searchParams.keys()).forEach((key) => {
+    !usedParams.includes(key) && u.searchParams.delete(key)
+  })
+
+  const region = staticRegion.find((r) => r.slug === slug) as StaticRegion
+
+  // Make sure param 'map' is valid
+  const map = u.searchParams.get('map')
+  if (!map || !parseMapParam(map)) {
+    u.searchParams.set('map', serializeMapParam(region.map))
   }
 
-  // Guard: Only on path /regionen/<validSlug>
-  const regionenSlugs = staticRegion.map((r) => r.slug)
-  if (possiblyRegionSlug && !regionenSlugs.includes(possiblyRegionSlug)) return doNothing
-  if (paths.length !== 3) return doNothing // Skip sub pages like /regionen/slug/foo
-
-  // MIGRATION: Remove legacy `theme` param
-  if (url.searchParams.get('theme')) {
-    url.searchParams.delete('theme')
-    performRedirect = true
-  }
-
-  // MIGRATION: Rename old strings in `config` param
-  // We do this migration on string level which makes it a lot easier
-  // OLD => NEW
-  const config = url.searchParams.get('config')
-  if (config) {
-    let newConfig = config
-    const nameMigrations = {
-      // Category names changes:
-      // Note: `~a` postfix signals a category, `~s` postfix signals a subcategory, no will match both
-      // (One is an array, one is an object, which corresponds to category and subcategory.)
-      'i~fromTo~': 'i~poi~',
-      'i~shops~': 'i~poi~',
-      'i~roadClassification~': 'i~roads~',
-      // Done in https://github.com/FixMyBerlin/atlas-app/commit/5541a6ac3f03e4276e65fa4334c90f3408a48de5
-      'i~boundaries~s': 'i~poiBoundaries~s',
-      'i~barriers~s': 'i~poiPlusBarriers~s',
-      'i~landuse~s': 'i~poiPlusLanduse~s',
-      'i~publicTransport~s': 'i~poiPlusPublicTransport~s',
-      // Done in https://github.com/FixMyBerlin/atlas-app/commit/7f8f987b1e4927f79fe7c4f7f7f09f2c54d0781e
-      'i~places~s': 'i~poiPlaces~s',
-      // Property name changes:
-      '~topics~': '~sc~',
-    }
-    for (const [old, updated] of Object.entries(nameMigrations)) {
-      newConfig = newConfig.replaceAll(old, updated)
-    }
-    url.searchParams.set('config', newConfig)
-  }
-
-  // MIGRATION: Update `lat`/`lng`/`zoom` params to new `map` param
-  // We either have all three or only lat/lng as input params
-  const lat = url.searchParams.get('lat')
-  const lng = url.searchParams.get('lng')
-  const zoom = url.searchParams.get('zoom')
-  if ((lat && lng && zoom) || (lat && lng)) {
-    // Sometimes, we have a ?map but also ?lng, ?lat in which case we just delete the old stuff
-    if (!url.searchParams.get('map')) {
-      url.searchParams.append(
-        'map',
-        serializeMapParam({
-          zoom: zoom ? Number(zoom) : mapParamFallback.zoom,
-          lat: lat ? Number(lat) : mapParamFallback.lat,
-          lng: lng ? Number(lng) : mapParamFallback.lng,
-        }),
-      )
-    }
-    url.searchParams.delete('lat')
-    url.searchParams.delete('lng')
-    url.searchParams.delete('zoom')
-    performRedirect = true
-  }
-
-  // INITIALIZATION: Make sure every map has a `map` and `config` param
-  // We cannot use `useStaticRegion` here, so we do it manually
-  const region = staticRegion.find((r) => r.slug === possiblyRegionSlug)
-  if (!region) return doNothing
-
-  if (!url.searchParams.get('map')) {
-    url.searchParams.append('map', serializeMapParam(region.map))
-    performRedirect = true
-  }
-
+  // Make sure param 'config' is valid
   const freshConfig = createFreshCategoriesConfig(region.categories)
   const migratedConfig = configCustomStringify(
-    configCustomParse(url.searchParams.get('config'), freshConfig),
+    configCustomParse(u.searchParams.get('config'), freshConfig),
   )
-  url.searchParams.delete('config')
-  url.searchParams.append('config', migratedConfig)
-  if (url.searchParams.get('config') !== migratedConfig) {
-    performRedirect = true
-  }
+  u.searchParams.delete('config')
+  u.searchParams.append('config', migratedConfig)
 
-  if (performRedirect) {
-    return NextResponse.redirect(url.toString(), 301)
-  }
+  migratedUrl = u.toString()
 
-  return doNothing
+  return redirectIfChanged(initialUrl, migratedUrl)
 }
