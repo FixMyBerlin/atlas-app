@@ -43,7 +43,7 @@ export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source, geometry } = feature
   const sourceId = parseFeatureSource(source).sourceId
   const { type, internal } = parseSourceId(sourceId as SourcesId)
-  const data = {
+  const data: any = {
     properties: pick(properties, type === 'osm' ? ['osm_id', 'osm_type'] : ['id']),
     sourceId: parseFeatureSource(source).sourceId,
   }
@@ -57,6 +57,7 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
     .map((f) => {
       const {
         sourceId,
+        // @ts-expect-error
         properties: { id, osm_id, osm_type },
       } = f
       const numericSourceId = stringSourceIds[sourceId]
