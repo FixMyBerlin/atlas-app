@@ -11,6 +11,7 @@ require("DeriveSmoothness")
 require("BikelanesTodos")
 require("Sanitize")
 require("InferOneway")
+require("DefaultId")
 
 local tags_copied = {
   "mapillary",
@@ -65,7 +66,6 @@ function Bikelanes(object)
       if category ~= nil then
         local result_tags = {
           _infrastructureExists = true,
-          _id = transformedTags._prefix .. ':' .. transformedTags._side .. '/' .. object.id,
           _side = transformedTags._side,
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
@@ -76,10 +76,12 @@ function Bikelanes(object)
 
         if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
+          result_tags._id = DefaultId(object)
         else                                    -- left/right case
           MergeTable(result_tags, transformedTags)
           local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
+          result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
         end
 
         result_tags.width = ParseLength(transformedTags.width)

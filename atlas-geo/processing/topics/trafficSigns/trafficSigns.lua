@@ -1,18 +1,21 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("Metadata")
+require("DefaultId")
 
 local table = osm2pgsql.define_table({
   name = 'trafficSigns',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -37,7 +40,7 @@ local directionTable = osm2pgsql.define_table({
     { column = 'node_id', type = 'bigint' },
     { column = 'idx', type = 'int' },
     { column = 'geom', type = 'linestring' },
-  }
+  },
 })
 
 -- this function is for splitting traffic signs which are tagged with the :forward :backward sign e.g. nodes containing information about two traffic signs
@@ -126,7 +129,8 @@ function osm2pgsql.process_node(object)
       tags = traffic_sign,
       meta = Metadata(object),
       geom = object:as_point(),
-      minzoom = 0
+      minzoom = 0,
+      id = DefaultId(object)
     })
   end
 end
