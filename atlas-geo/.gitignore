@@ -4,13 +4,12 @@
 .env
 *.DS_Store
 
-# Python
-__pycache__
-
 # IDE
 .idea
 
-node_modules
 
 # Nginx
 logs/
+
+# warm-cache
+processing/warm-cache
