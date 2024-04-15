@@ -28,12 +28,10 @@ import { beforeId } from './utils/beforeId'
 // But, it will create them again, when the source was unmounted.
 // TODO / BUG: But, we still see network requests when we toggle the visibility like we do here. Which is fine for now, due to browser caching.
 
-type Props =
-  | Pick<Store, 'useDebugLayerStyles' | 'useDebugCachelessTiles'>
-  & {
-      categoriesConfig: any // inferred from useQueryState('config')
-      backgroundParam: any // inferred from useQueryState('bg')
-    }
+type Props = Pick<Store, 'useDebugLayerStyles' | 'useDebugCachelessTiles'> & {
+  categoriesConfig: any // inferred from useQueryState('config')
+  backgroundParam: any // inferred from useQueryState('bg')
+}
 
 const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoized(props: Props) {
   const { useDebugLayerStyles, useDebugCachelessTiles, categoriesConfig, backgroundParam } = props

@@ -124,7 +124,7 @@ export const parseFeaturesParam = (query: string) => {
       return {
         sourceId,
         properties,
-        [geomType === 'P' ? 'point' : 'bbox']: coords
+        [geomType === 'P' ? 'point' : 'bbox']: coords,
       }
     })
     .filter((p) => p !== null) as unknown as UrlFeature[]

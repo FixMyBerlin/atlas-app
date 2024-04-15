@@ -4,13 +4,15 @@ import { SubcategoryId } from '../../_mapData/typeId'
 
 export type OsmType = 'N' | 'W' | 'R'
 
-type PointOrBbox = {
-  point: [number, number]
-  bbox?: never
-} | {
-  point?: never
-  bbox: [number, number,number, number]
-}
+type PointOrBbox =
+  | {
+      point: [number, number]
+      bbox?: never
+    }
+  | {
+      point?: never
+      bbox: [number, number, number, number]
+    }
 
 export type UrlFeature = {
   sourceId: string

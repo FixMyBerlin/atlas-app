@@ -83,7 +83,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
         {renderFeatures ? (
           <>
             <InspectorHeader count={features.length} handleClose={() => resetFeaturesParam()} />
-            <Inspector features={features} boundingPolygon={boundingPolygon} />
+            <Inspector features={features} />
             <style
               dangerouslySetInnerHTML={{
                 __html: '.maplibregl-ctrl-top-right { right: 35rem }',
