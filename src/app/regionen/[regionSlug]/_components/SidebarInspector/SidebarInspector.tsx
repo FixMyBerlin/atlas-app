@@ -1,5 +1,5 @@
-import React, { memo, Suspense, useEffect } from 'react'
-import { useMap } from 'react-map-gl/maplibre'
+import React, { memo, Suspense, useRef } from 'react'
+import { useMap, MapRef } from 'react-map-gl/maplibre'
 import useResizeObserver from 'use-resize-observer'
 import { clsx } from 'clsx'
 
@@ -10,17 +10,27 @@ import {
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
-import { allUrlFeaturesInBounds, createBoundingPolygon } from './util'
+import {
+  allUrlFeaturesInBounds,
+  boundsToPoints,
+  createBoundingPolygon,
+  getUrlFeaturesBbox,
+} from './util'
 import { useSelectedFeatures } from 'src/app/_hooks/useSelectedFeatures'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
 
 type Props = Pick<
   Store,
   'mapBounds' | 'setInspectorSize' | 'inspectorSize' | 'sidebarLayerControlsSize'
->
+> & {
+  map: MapRef
+}
 
 const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoized(props: Props) {
+  const boundsChecked = useRef(false)
+
   const {
+    map,
     mapBounds, // needed to trigger rerendering
     setInspectorSize,
     inspectorSize,
@@ -35,26 +45,30 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
       }
     },
   })
-  const { mainMap: map } = useMap()
+
   const { resetFeaturesParam } = useFeaturesParam()
   const selectedFeatures = useSelectedFeatures()
   const features = selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   const boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
 
-  useEffect(() => {
-    if (
-      !allUrlFeaturesInBounds(
-        selectedFeatures.map((f) => f.urlFeature),
-        boundingPolygon,
-      )
-    ) {
-      console.log('!!! zoom to make all features visible')
-    } else {
-      console.log('all features visible')
+  if (!boundsChecked.current && inspectorSize.width !== 0) {
+    const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
+    if (!allUrlFeaturesInBounds(urlFeatures, boundingPolygon)) {
+      const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
+      const bounds = getUrlFeaturesBbox(urlFeatures)
+      const pad = 50
+      map.fitBounds(boundsToPoints(bounds), {
+        padding: {
+          top: pad,
+          bottom: pad,
+          left: sidebarLayerControlsSize.width + pad,
+          right: inspectorSize.width + pad,
+        },
+      })
     }
-    /* eslint-disable-next-line */
-  }, [])
+    boundsChecked.current = true
+  }
 
   const renderFeatures = !!features.length
 
@@ -83,14 +97,16 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
 })
 
 export const SidebarInspector: React.FC = () => {
+  const { mainMap: map } = useMap()
   const { mapLoaded, mapBounds, setInspectorSize, inspectorSize, sidebarLayerControlsSize } =
     useMapStateInteraction()
 
-  if (!mapLoaded) {
+  if (!map || !mapLoaded) {
     return null
   }
 
   const props: Props = {
+    map,
     mapBounds,
     setInspectorSize,
     inspectorSize,

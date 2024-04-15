@@ -1,28 +1,62 @@
 import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader'
 import OverlayOp from 'jsts/org/locationtech/jts/operation/overlay/OverlayOp'
-import { coordEach, point, polygon, difference } from '@turf/turf'
+import {
+  coordEach,
+  point,
+  polygon,
+  featureCollection,
+  difference,
+  bbox,
+  FeatureCollection,
+} from '@turf/turf'
 import { pick, isEqual } from 'lodash'
+import { UrlFeature } from '../../_hooks/useQueryState/types'
 
-function createBox(p0, p1) {
+type Bounds = [number, number, number, number]
+type Points = [[number, number], [number, number]]
+
+export function boundsToPoints(bounds: Bounds): Points {
+  const [x0, y0, x1, y1] = bounds
+  return [
+    [x0, y0],
+    [x1, y1],
+  ]
+}
+
+export function createBox(points: Points) {
+  const [[x0, y0], [x1, y1]] = points
   return polygon([
     [
-      [p0[0], p0[1]],
-      [p1[0], p0[1]],
-      [p1[0], p1[1]],
-      [p0[0], p1[1]],
-      [p0[0], p0[1]],
+      [x0, y0],
+      [x1, y0],
+      [x1, y1],
+      [x0, y1],
+      [x0, y0],
     ],
   ])
 }
 
-export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, inspectorSize) {
+export function getMapSize(mapInstance: any) {
   const canvas = mapInstance.getCanvas() as HTMLElement
-  const map = { width: canvas.offsetWidth, height: canvas.offsetHeight }
+  return { width: canvas.offsetWidth, height: canvas.offsetHeight }
+}
+
+export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, inspectorSize) {
+  const map = getMapSize(mapInstance)
   const lay = sidebarLayerControlsSize
   const ins = inspectorSize
-  const mapb = createBox([0, 0], [map.width, map.height])
-  const layb = createBox([0, 0], [lay.width, lay.height])
-  const insb = createBox([map.width - ins.width, 0], [map.width, map.height])
+  const mapb = createBox([
+    [0, 0],
+    [map.width, map.height],
+  ])
+  const layb = createBox([
+    [0, 0],
+    [lay.width, lay.height],
+  ])
+  const insb = createBox([
+    [map.width - ins.width, 0],
+    [map.width, map.height],
+  ])
   // @ts-ignore
   const poly = difference(difference(mapb, layb), insb)!
   coordEach(poly, (point) => {
@@ -71,16 +105,26 @@ export function findFeature(features, props) {
   })
 }
 
+export function createFeatureCollection(urlFeatures: UrlFeature[]) {
+  return featureCollection(
+    // @ts-expect-error - probably a bug
+    urlFeatures.map((f) => (f.point ? point(f.point) : createBox(boundsToPoints(f.bbox)))),
+  ) as FeatureCollection
+}
+
 export function allUrlFeaturesInBounds(urlFeatures, boundingPolygon) {
-  const results : Visibility[] = urlFeatures.map((f) => {
-    let feature;
+  const results: Visibility[] = urlFeatures.map((f) => {
+    let feature
     if (f.point) {
-      feature = point(f.point);
+      feature = point(f.point)
     } else {
-      const [lng0, lat0, lng1, lat1] = f.bbox;
-      feature = createBox([lng0, lat0], [lng1, lat1]);
+      feature = createBox(boundsToPoints(f.bbox))
     }
-    return compareFeatures(boundingPolygon, feature);
-  });
-  return results.every(r => r === '>')
+    return compareFeatures(boundingPolygon, feature)
+  })
+  return results.every((r) => r === '>')
+}
+
+export function getUrlFeaturesBbox(urlFeatures: UrlFeature[]): Bounds {
+  return bbox(createFeatureCollection(urlFeatures)) as Bounds
 }

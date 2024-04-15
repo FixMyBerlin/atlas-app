@@ -4,10 +4,18 @@ import { SubcategoryId } from '../../_mapData/typeId'
 
 export type OsmType = 'N' | 'W' | 'R'
 
+type PointOrBbox = {
+  point: [number, number]
+  bbox?: never
+} | {
+  point?: never
+  bbox: [number, number,number, number]
+}
+
 export type UrlFeature = {
   sourceId: string
   properties: { id: number } | { osm_id: number; osm_type: string }
-}
+} & PointOrBbox
 
 export type ParsedFeatureSource = {
   categoryId: MapDataCategoryId

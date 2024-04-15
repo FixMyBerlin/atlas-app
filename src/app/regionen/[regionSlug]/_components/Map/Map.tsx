@@ -121,7 +121,8 @@ export const Map = () => {
         // TODO: We might need different padding on mobile…
         top: 0,
         bottom: 0,
-        left: 250,
+        // left: 250, breaks fitBounds()
+        left: 0,
         right: 0,
       },
     }
