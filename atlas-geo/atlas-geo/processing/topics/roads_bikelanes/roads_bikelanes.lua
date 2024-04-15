@@ -25,18 +25,21 @@ require("CopyTags")
 require("IsSidepath")
 require("ExtractPublicTags")
 require("Round")
+require("DefaultId")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -44,30 +47,32 @@ local roadsPathClassesTable = osm2pgsql.define_table({
   name = 'roadsPathClasses',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id', type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
 local bikelanesTable = osm2pgsql.define_table({
   name = 'bikelanes',
   -- Note: We populate a custom `osm_id` (with unique ID values) below.
-  ids = { type = 'any', id_column = 'internal_id', type_column = 'osm_type' },
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'osm_id', type = 'text',      not_null = true },
+    { column = 'id', type = 'text', not_null = true },
     { column = 'tags',   type = 'jsonb' },
     { column = 'meta',   type = 'jsonb' },
     { column = 'geom',   type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = 'osm_id', method = 'gist' },
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -117,7 +122,7 @@ function osm2pgsql.process_way(object)
 
       cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
-        osm_id = cycleway._id,
+        id = cycleway._id,
         tags = publicTags,
         meta = Metadata(object),
         geom = object:as_linestring(),
@@ -138,7 +143,8 @@ function osm2pgsql.process_way(object)
         tags = results,
         meta = Metadata(object),
         geom = object:as_linestring(),
-        minzoom = 0
+        minzoom = 0,
+        id = DefaultId(object)
       })
     else
 
@@ -146,7 +152,8 @@ function osm2pgsql.process_way(object)
         tags = results,
         meta = Metadata(object),
         geom = object:as_linestring(),
-        minzoom = RoadGeneralisation(tags, results)
+        minzoom = RoadGeneralisation(tags, results),
+        id = DefaultId(object)
       })
     end
   end

@@ -3,18 +3,21 @@ require("CopyTags")
 require("Metadata")
 require("Set")
 require("Sanitize")
+require("DefaultId")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -22,13 +25,15 @@ local areaTable = osm2pgsql.define_table({
   name = 'bicycleParking_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'polygon' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -101,7 +106,8 @@ function osm2pgsql.process_node(object)
     tags = tags,
     meta = Metadata(object),
     geom = object:as_point(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 end
 
@@ -115,7 +121,8 @@ function osm2pgsql.process_way(object)
     tags = tags,
     meta = meta,
     geom = object:as_polygon():centroid(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 
   if not object.is_closed then return end
@@ -123,6 +130,7 @@ function osm2pgsql.process_way(object)
     tags = tags,
     meta = meta,
     geom = object:as_polygon(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 end

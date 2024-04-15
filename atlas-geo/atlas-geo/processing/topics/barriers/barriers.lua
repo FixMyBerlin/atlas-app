@@ -3,18 +3,21 @@ require("Set")
 require("Metadata")
 require("HighwayClasses")
 require("CopyTags")
+require("DefaultId")
 
 local lineBarriers = osm2pgsql.define_table({
   name = 'barrierLines',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -22,13 +25,15 @@ local areaBarriers = osm2pgsql.define_table({
   name = 'barrierAreas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multipolygon' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -79,7 +84,8 @@ function osm2pgsql.process_way(object)
         tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
         geom = object:as_multipolygon(),
-        minzoom = 0
+        minzoom = 0,
+        id = DefaultId(object)
       })
       return
     end
@@ -101,7 +107,8 @@ function osm2pgsql.process_way(object)
         tags = CopyTags({}, object.tags, tags_cc),
         meta = Metadata(object),
         geom = object:as_linestring(),
-        minzoom = 0
+        minzoom = 0,
+        id = DefaultId(object)
       })
       return
     end
@@ -114,7 +121,8 @@ function osm2pgsql.process_relation(object)
       tags = CopyTags({}, object.tags, tags_cc),
       meta = Metadata(object),
       geom = object:as_multipolygon(),
-      minzoom = 0
+      minzoom = 0,
+      id = DefaultId(object)
     })
     return
   end

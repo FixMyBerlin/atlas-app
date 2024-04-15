@@ -2,18 +2,21 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("Metadata")
 require("CopyTags")
+require("DefaultId")
 
 local table = osm2pgsql.define_table({
   name = 'places',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -52,7 +55,8 @@ function osm2pgsql.process_node(object)
     tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_point(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 end
 
@@ -64,7 +68,8 @@ function osm2pgsql.process_way(object)
     tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_polygon():centroid(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 end
 
@@ -76,6 +81,7 @@ function osm2pgsql.process_relation(object)
     tags = processTags(object.tags),
     meta = Metadata(object),
     geom = object:as_multipolygon():centroid(),
-    minzoom = 0
+    minzoom = 0,
+    id = DefaultId(object)
   })
 end

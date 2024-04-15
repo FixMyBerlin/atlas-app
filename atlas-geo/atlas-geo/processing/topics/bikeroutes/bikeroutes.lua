@@ -3,18 +3,21 @@ require("CopyTags")
 require("Set")
 require("Sanitize")
 require("Metadata")
+require("DefaultId")
 
 local bikeroutesTable = osm2pgsql.define_table({
   name = 'bikeroutes',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
     { column = 'geom', type = 'multilinestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' }
+    { column = {'minzoom', 'geom'}, method = 'gist' },
+    { column = 'id', method = 'gist' }
   }
 })
 
@@ -64,7 +67,8 @@ function osm2pgsql.process_relation(object)
       tags = result_tags,
       meta = Metadata(object),
       geom = object:as_multilinestring(),
-      minzoom = 0
+      minzoom = 0,
+      id = DefaultId(object)
     })
   end
 end

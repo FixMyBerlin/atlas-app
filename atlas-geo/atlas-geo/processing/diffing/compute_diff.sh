@@ -13,7 +13,7 @@ compute_diff() {
 
   psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";" &> /dev/null
 
-  columns="tags, osm_id, meta, geom"
+  columns="tags, id, meta, geom"
 
   # Compute diff of `tags` column using `jsonb_diff` from `JSONDiff.sql`
   query="
@@ -22,14 +22,14 @@ compute_diff() {
     FROM (
       SELECT
         jsonb_diff(\"$backup_table\".tags, \"$table\".tags) AS tags,
-        \"$table\".osm_id, \"$table\".meta, \"$table\".geom
+        \"$table\".id, \"$table\".meta, \"$table\".geom
       FROM \"$table\"
       JOIN \"$backup_table\"
-        ON \"$table\".osm_id = \"$backup_table\".osm_id
+        ON \"$table\".id = \"$backup_table\".id
     ) sq
     WHERE tags != '{}'::jsonb;
     UPDATE  \"$diff_table\" SET tags = tags || '{\"CHANGE\": \"modified\"}'::jsonb;
-    SELECT count(osm_id) FROM \"$diff_table\";"
+    SELECT count(id) FROM \"$diff_table\";"
   n_modified=$(echo $query | psql -q -t -A)
 
   # Add new rows to diff table
@@ -37,13 +37,13 @@ compute_diff() {
     CREATE TEMP TABLE added_rows AS
       SELECT
         jsonb_prefix_values(\"$table\".tags, '(+)') as tags,
-        \"$table\".osm_id,
+        \"$table\".id,
         \"$table\".meta,
         \"$table\".geom
       FROM \"$table\"
       FULL OUTER JOIN \"$backup_table\"
-        ON \"$table\".osm_id = \"$backup_table\".osm_id
-      WHERE \"$backup_table\".osm_id IS NULL;
+        ON \"$table\".id = \"$backup_table\".id
+      WHERE \"$backup_table\".id IS NULL;
     UPDATE  added_rows SET tags = tags || '{\"CHANGE\": \"added\"}'::jsonb;
     SELECT count(*) FROM added_rows;
     INSERT INTO \"$diff_table\" SELECT $columns FROM added_rows;"
@@ -54,13 +54,13 @@ compute_diff() {
     CREATE TEMP TABLE deleted_rows AS
       SELECT
         jsonb_prefix_values(\"$backup_table\".tags, '(-)') || jsonb_build_object('CHANGE', 'deleted') as tags,
-        \"$backup_table\".osm_id,
+        \"$backup_table\".id,
         \"$backup_table\".meta,
         \"$backup_table\".geom
       FROM \"$backup_table\"
       FULL OUTER JOIN \"$table\"
-        ON \"$backup_table\".osm_id = \"$table\".osm_id
-      WHERE \"$table\".osm_id IS NULL;
+        ON \"$backup_table\".id = \"$table\".id
+      WHERE \"$table\".id IS NULL;
     UPDATE  deleted_rows SET tags = tags || '{\"CHANGE\": \"deleted\"}'::jsonb;
     SELECT count(*) FROM deleted_rows;
     INSERT INTO \"$diff_table\" SELECT $columns FROM deleted_rows;"
