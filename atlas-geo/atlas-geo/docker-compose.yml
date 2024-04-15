@@ -17,8 +17,10 @@ services:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
+      COMPUTE_DIFFS:
     volumes:
       - osmfiles:/data
+      - geodata:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
     configs:
@@ -46,16 +48,15 @@ services:
       traefik.http.routers.tiles.tls.certresolver: letsencrypt
       traefik.http.routers.tiles.tls: true
     ports:
-      - 3333:3000
+      - 3000:3000
     networks:
       - app_bridge
     configs:
       - source: martin_conf
         target: /config.yaml
-    restart: unless-stopped
     depends_on:
       db:
-       condition: service_healthy
+        condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
     container_name: db
@@ -77,7 +78,6 @@ services:
       - source: postgres_init
         target: /docker-entrypoint-initdb.d/11-postgres.sql
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
-    restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
       interval: 5s
