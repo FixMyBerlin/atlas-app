@@ -13,17 +13,11 @@ import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { Verification } from './Verification/Verification'
-import { Visibility } from './util'
 
-type Props = InspectorDataFeature & {
-  visible: Visibility
-}
-
-export const InspectorFeatureAtlasGeo: React.FC<Props> = ({
+export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   sourceKey,
   properties,
   geometry,
-  visible,
 }) => {
   if (!sourceKey || !properties) return null
 
@@ -35,16 +29,6 @@ export const InspectorFeatureAtlasGeo: React.FC<Props> = ({
   if (!sourceData.inspector.enabled) return null
   if (!sourceTranslationKey) return null
 
-  const visibleStrings: Record<Visibility, string | null> = {
-    '=': 'same as bounding poly (will never happen)',
-    '!=': 'not visible on map',
-    '>': 'completely visible on map',
-    '<': 'bigger than bounding poly (very unlikely)',
-    '~': 'partly visible',
-  }
-
-  const visibleString = visibleStrings[visible]
-
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
@@ -52,7 +36,6 @@ export const InspectorFeatureAtlasGeo: React.FC<Props> = ({
           title={<FormattedMessage id={`${sourceTranslationKey}--title`} />}
           objectId={properties.osm_id}
         >
-          <code className="bg-blue-400 p-1">{visibleString}</code>
           <NoticeTransformedGeometry visible={properties?.prefix} />
           <NoticeMaproulette
             identifier={properties?.category}

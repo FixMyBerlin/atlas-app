@@ -15,6 +15,7 @@ const SourcesDebugMemoized = memo(function SourcesDebugToMemoize({
     boundingPolygon = createBoundingPolygon(mainMap, sidebarLayerControlsSize, inspectorSize)
   }
 
+
   if (!boundingPolygon) return null
 
   const data = featureCollection([boundingPolygon])

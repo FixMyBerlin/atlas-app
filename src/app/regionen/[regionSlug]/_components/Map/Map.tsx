@@ -22,7 +22,6 @@ import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
-import { SourcesDebug } from './SourcesAndLayers/SourcesDebug'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { convertToUrlFeature, useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
@@ -166,7 +165,6 @@ export const Map = () => {
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
-      {isDev ? <SourcesDebug /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 
       <NavigationControl showCompass={false} />

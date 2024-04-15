@@ -1,6 +1,3 @@
-import React from 'react'
-import { Feature } from '@turf/turf'
-
 import { StoreFeaturesInspector } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { extractSourceIdFromStaticDatasetSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
@@ -8,7 +5,6 @@ import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspect
 import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
-import { compareFeatures, Visibility } from './util'
 
 export type InspectorDataFeature = {
   sourceKey: string
@@ -18,58 +14,52 @@ export type InspectorDataFeature = {
 
 export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 
-type Props = {
-  features: StoreFeaturesInspector['unfilteredInspectorFeatures']
-  boundingPolygon: Feature | null
-}
+type Props = { features: StoreFeaturesInspector['unfilteredInspectorFeatures'] }
 
-export const Inspector = ({ features, boundingPolygon }: Props) => {
+export const Inspector = ({ features }: Props) => {
   const regionDatasets = useRegionDatasets()
 
-  const visibles: Visibility[] = []
+  return (
+    <>
+      {features.map((inspectObject) => {
+        const sourceKey = String(inspectObject.source) // Format: `category:lit--source:atlas_lit--subcategory:lit`
+        if (!sourceKey) return null
 
-  const elements = features.map((feature) => {
-    const sourceKey = String(feature.source) // Format: `category:lit--source:atlas_lit--subcategory:lit`
-    if (!sourceKey) return null
+        // Inspector-Block for Notes
+        if (inspectObject.source === 'osm-notes') {
+          return (
+            <InspectorFeatureOsmNote
+              key={`osm-note-${inspectObject?.properties?.id}`}
+              properties={inspectObject.properties}
+            />
+          )
+        }
 
-    // Inspector-Block for Notes
-    if (feature.source === 'osm-notes') {
-      return (
-        <InspectorFeatureOsmNote
-          key={`osm-note-${feature?.properties?.id}`}
-          properties={feature.properties}
-        />
-      )
-    }
+        // Inspector-Block for Datasets
+        const isDataset = regionDatasets.some(
+          (d) => d.id === extractSourceIdFromStaticDatasetSourceKey(sourceKey),
+        )
+        if (isDataset) {
+          return (
+            <InspectorFeatureStaticDataset
+              key={createInspectorFeatureKey(inspectObject)}
+              sourceKey={sourceKey}
+              properties={inspectObject.properties}
+              geometry={inspectObject.geometry}
+            />
+          )
+        }
 
-    // Inspector-Block for Datasets
-    const isDataset = regionDatasets.some(
-      (d) => d.id === extractSourceIdFromStaticDatasetSourceKey(sourceKey),
-    )
-    if (isDataset) {
-      return (
-        <InspectorFeatureStaticDataset
-          key={createInspectorFeatureKey(feature)}
-          sourceKey={sourceKey}
-          properties={feature.properties}
-          geometry={feature.geometry}
-        />
-      )
-    }
-
-    // Inspector-Block for Features
-    const visible: Visibility = boundingPolygon ? compareFeatures(boundingPolygon, feature) : '>'
-    visibles.push(visible)
-    return (
-      <InspectorFeatureAtlasGeo
-        key={createInspectorFeatureKey(feature)}
-        sourceKey={sourceKey}
-        properties={feature.properties}
-        geometry={feature.geometry}
-        visible={visible}
-      />
-    )
-  })
-
-  return <>{elements}</>
+        // Inspector-Block for Features
+        return (
+          <InspectorFeatureAtlasGeo
+            key={createInspectorFeatureKey(inspectObject)}
+            sourceKey={sourceKey}
+            properties={inspectObject.properties}
+            geometry={inspectObject.geometry}
+          />
+        )
+      })}
+    </>
+  )
 }
