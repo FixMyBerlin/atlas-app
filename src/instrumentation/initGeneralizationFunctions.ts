@@ -62,14 +62,14 @@ export async function initGeneralizationFunctions(
               SELECT
                 id,
                 ST_AsMVTGeom(
-                    ST_CurveToLine(
-                      ST_Simplify(geom, tolerance, true)
-                    ),
-                    ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
-                      stylingKeys,
-                    )}) END as tags,
-                    CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
+                  ST_CurveToLine(
+                    ST_Simplify(geom, tolerance, true)
+                  ),
+                  ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                  stylingKeys,
+                )}) END as tags,
+                CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
               AND z >= minzoom
