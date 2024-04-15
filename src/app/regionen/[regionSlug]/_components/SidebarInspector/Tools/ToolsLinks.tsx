@@ -1,10 +1,10 @@
-import React from 'react'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
 import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { editorUrl } from './osmUrls/editorUrl'
 import {
+  type OsmShortOrLongType,
   historyUrl,
   longOsmType,
   mapillaryUrl,
@@ -19,19 +19,23 @@ type Props = {
   editors?: MapDataSourceInspectorEditor[]
 }
 
-export const ToolsLinks: React.FC<Props> = ({ properties, geometry, editors }) => {
+export const ToolsLinks = ({ properties, geometry, editors }: Props) => {
   // Normalize id + type for Parking data
   // "atlas-geo" sometimes prefixes `-{id}`
-  const osmId = Math.abs(properties.osm_id || properties.way_id || properties.area_id)
-  const osmType: 'W' | 'N' | 'R' | undefined =
-    'way_id' in properties
+  const osmIdFromId = properties?.id?.split('/')?.[1]
+  const osmTypeFromId = properties?.id?.split('/')?.[0]
+  const osmId =
+    osmIdFromId || Math.abs(properties.osm_id || properties.way_id || properties.area_id)
+  const osmType: OsmShortOrLongType =
+    osmTypeFromId ||
+    ('way_id' in properties
       ? 'W'
       : 'osm_type' in properties
         ? properties.osm_type
-        : // `area_id` is what   boundaries return, they don't have osm_type field (yet)
+        : // `area_id` is what boundaries return, they don't have osm_type field (yet)
           'area_id' in properties
           ? 'R'
-          : undefined
+          : undefined)
 
   const osmUrlHref = osmUrl(osmType, osmId)
   const osmEditIdUrlHref = osmEditIdUrl(osmType, osmId)

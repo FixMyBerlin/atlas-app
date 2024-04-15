@@ -2,28 +2,38 @@ import { editorUrl } from './editorUrl'
 import { pointFromGeometry } from './pointFromGeometry'
 
 export type OsmShortType = 'W' | 'N' | 'R' | undefined
-export const longOsmType = { W: 'way', N: 'node', R: 'relation' }
+export type OsmLongType = 'way' | 'node' | 'relation' | undefined
+export type OsmShortOrLongType = OsmShortType | OsmLongType
+export const longOsmType = {
+  W: 'way',
+  N: 'node',
+  R: 'relation',
+  // Just so we can use this for both format
+  way: 'way',
+  node: 'node',
+  relation: 'relation',
+}
 
-export const osmUrl = (type: OsmShortType, id: number | string) => {
+export const osmUrl = (type: OsmShortOrLongType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
   return `https://www.openstreetmap.org/${longOsmType[type]}/${id}`
 }
 
-export const osmEditIdUrl = (type: OsmShortType, id: number | string) => {
+export const osmEditIdUrl = (type: OsmShortOrLongType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
   // return `https://www.openstreetmap.org/edit?${longOsmType[type]}=${id}`
   return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${type.toLocaleLowerCase()}${id}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
-export const osmEditRapidUrl = (type: OsmShortType, id: number | string) => {
+export const osmEditRapidUrl = (type: OsmShortOrLongType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
   return `https://rapideditor.org/edit#id=${type.toLocaleLowerCase()}${id}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
-export const historyUrl = (type: OsmShortType, id: number | string) => {
+export const historyUrl = (type: OsmShortOrLongType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
 
   return `https://osmlab.github.io/osm-deep-history/#/${longOsmType[type]}/${id}`
