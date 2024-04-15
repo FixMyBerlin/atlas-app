@@ -108,7 +108,7 @@ export const interacitvityConfiguartion: InteracitvityConfiguartion = {
   },
   poiClassification: {
     stylingKeys: ['category', 'name'],
-    minzoom: 9,
+    minzoom: 13,
   },
   barrierAreas: {
     stylingKeys: [],
@@ -132,11 +132,11 @@ export const interacitvityConfiguartion: InteracitvityConfiguartion = {
   },
   boundaries: {
     stylingKeys: ['category_municipality', 'category_district', 'name', 'name:prefix'],
-    minzoom: 9,
+    minzoom: 0,
   },
   landuse: {
     stylingKeys: ['landuse'],
-    minzoom: 9,
+    minzoom: 11,
   },
 }
 
