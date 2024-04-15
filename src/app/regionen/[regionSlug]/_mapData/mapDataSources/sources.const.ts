@@ -79,17 +79,23 @@ export type InteracitvityConfiguartion = Partial<
   Record<TableId, { minzoom: number; stylingKeys: string[] }>
 >
 export const interacitvityConfiguartion: InteracitvityConfiguartion = {
-  roads: { stylingKeys: ['road', 'smoothness_age', 'lit', 'lit_age', 'maxspeed'], minzoom: 9 },
-  bikelanes: {
+  roads: {
     stylingKeys: [
-      'category',
-      'surface',
-      'width',
+      'road',
+      'road_oneway',
+      'road_oneway:bicycle',
+      'lit',
+      'lit_age',
+      'maxspeed',
       'smoothness',
       'surface',
-      'surface_fresh',
-      'smothness_fresh',
+      'smothness_age',
+      'smoothness_age',
     ],
+    minzoom: 9,
+  },
+  bikelanes: {
+    stylingKeys: ['category', 'surface', 'smothness', 'width'],
     minzoom: 9,
   },
   places: {
@@ -122,6 +128,10 @@ export const interacitvityConfiguartion: InteracitvityConfiguartion = {
   },
   boundaries: {
     stylingKeys: ['category_municipality', 'category_district', 'name', 'name:prefix'],
+    minzoom: 9,
+  },
+  landuse: {
+    stylingKeys: ['landuse'],
     minzoom: 9,
   },
 }
