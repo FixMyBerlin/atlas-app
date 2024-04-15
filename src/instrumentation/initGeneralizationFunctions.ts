@@ -60,6 +60,7 @@ export async function initGeneralizationFunctions(
             END IF;
             SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
               SELECT
+                id,
                 ST_AsMVTGeom(
                     ST_CurveToLine(
                       ST_Simplify(geom, tolerance, true)
