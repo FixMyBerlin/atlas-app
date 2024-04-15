@@ -1,6 +1,6 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import * as turf from '@turf/turf'
-import { MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
+import { Feature, MapLibreEvent, MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useState } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl'
@@ -27,6 +27,7 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { convertToUrlFeature, useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
 import { uniqBy } from 'lodash'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
+import { interacitvityConfiguartion } from '../../_mapData/mapDataSources/sources.const'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -39,19 +40,27 @@ export const Map = () => {
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
 
+  const interactivFeatures = (features) =>
+    features.filter((x) => mapParam.zoom >= interacitvityConfiguartion[x.sourceLayer].minzoom)
   const [cursorStyle, setCursorStyle] = useState('grab')
-  const handleMouseEnter = (_event: MapLayerMouseEvent) => {
-    setCursorStyle('pointer')
+  const handleMouseEnter = (event: MapLayerMouseEvent) => {
+    const features = interactivFeatures(event.features)
+    if (features.length > 0) {
+      setCursorStyle('pointer')
+    } else {
+      setCursorStyle('help')
+    }
   }
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
     setCursorStyle('grab')
   }
 
   const handleClick = (event: MapLayerMouseEvent) => {
-    if (event.features) {
+    const features = interactivFeatures(event.features)
+    if (features) {
       // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
-      setInspectorFeatures(event.features as MapGeoJSONFeature[])
-      const filteredFeatures = event.features.filter((f) => f.properties?.osm_type !== 'R')
+      setInspectorFeatures(features as MapGeoJSONFeature[])
+      const filteredFeatures = features.filter((f) => f.properties?.id.split('/')[0] !== 'relation')
       const uniqueFeatures = uniqBy(filteredFeatures, (f: MapGeoJSONFeature) =>
         createInspectorFeatureKey(f),
       )
@@ -59,6 +68,7 @@ export const Map = () => {
         uniqueFeatures.map((feature: MapGeoJSONFeature) => convertToUrlFeature(feature)),
       )
     }
+    // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {
