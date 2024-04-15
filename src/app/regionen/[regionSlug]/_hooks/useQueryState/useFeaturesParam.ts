@@ -6,6 +6,7 @@ import { createParser, useQueryState } from 'next-usequerystate'
 import { numericSourceIds } from 'src/app/url'
 import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
 import { UrlFeature, SourceInfo, ParsedFeatureSource, OsmType } from './types'
+import { chars, equals, lng, lat, number, parseArray } from './util'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
@@ -70,13 +71,6 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
     .join(',')
 }
 
-const number = z.coerce.number
-const range = (min, max) => number().gte(min).lte(max)
-const lng = range(-180, 180)
-const lat = range(-90, 90)
-const equals = (v) => range(v, v)
-const chars = (s) => z.enum(s.split(''))
-
 const MappilarySchema = z.tuple([
   equals(1), // 'mapillary_coverage'
   number(),
@@ -96,20 +90,12 @@ const OsmSchema = z.tuple([
   lat,
 ])
 
-function parse(schema, query) {
-  try {
-    return schema.parse(query.split('|'))
-  } catch (e) {
-    return null
-  }
-}
-
 export const parseFeaturesParam = (query: string) => {
   return query
     .split(',')
     .map((s) => {
-      const osm = parse(OsmSchema, s)
-      const mappilary = parse(MappilarySchema, s)
+      const osm = parseArray(OsmSchema, s.split('|'))
+      const mappilary = parseArray(MappilarySchema, s.split('|'))
       if (!(osm || mappilary)) return null
       let properties
       if (osm) {

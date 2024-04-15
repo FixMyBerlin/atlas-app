@@ -1,30 +1,26 @@
 import { createParser, useQueryState } from 'next-usequerystate'
+import { z } from 'zod'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
+import { parseArray, range } from './util'
 
 export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 
-export const parseMapParam = (query: string) => {
-  const [zoom, lat, lng] = query.split('/').map((s) => {
-    const n = Number(s)
-    return isNaN(n) ? null : n
-  })
-  if ([zoom, lat, lng].includes(null)) return null
-  // https://docs.mapbox.com/help/glossary/zoom-level/
-  if (zoom! < 0 || zoom! > 22) return null
-  if (lat! < -90 || lat! > 90) return null
-  if (lng! < -180 || lng! > 180) return null
-  return { zoom, lat, lng }
-}
-
-export const serializeMapParam = ({
-  zoom,
-  lat,
-  lng,
-}: {
+export type MapParam = {
   zoom: number
   lat: number
   lng: number
-}) => {
+}
+
+const MapParamSchema = z.tuple([range(0, 22), range(-90, 90), range(-180, 180)])
+
+export const parseMapParam = (query: string): MapParam | null => {
+  const parsed = parseArray(MapParamSchema, query.split('/'))
+  if (!parsed) return null
+  const [zoom, lat, lng] = parsed
+  return { zoom, lat, lng }
+}
+
+export const serializeMapParam = ({ zoom, lat, lng }: MapParam): string => {
   return `${zoom}/${lat}/${lng}`
 }
 
