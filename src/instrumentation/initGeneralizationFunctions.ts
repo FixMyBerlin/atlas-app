@@ -17,7 +17,7 @@ async function createTileSpecification(tableName: TableId) {
     `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
     from (
       SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
-        from ${tableName}
+        from "${tableName}"
       ) extent;`,
   )
   const { bounds } = bbox && bbox[0]
