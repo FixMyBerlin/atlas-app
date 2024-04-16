@@ -7,17 +7,20 @@ source ./process-helpers.sh
 export PROCESS_DIR=/processing/topics/
 # The folder for our code hashes, it is inside the database volume to get invalidated on deletion
 export CODE_HASHES=/data/db/code_hashes/
+export TABLE_INFO=/data/db/table_info/
 mkdir -p $CODE_HASHES
+mkdir -p $TABLE_INFO
 
 log_start "$0"
 
 if ! check_hash $OSM_DATADIR "osm.pbf" || [ "$SKIP_DOWNLOAD" == 0 ]; then
-  log "OSM files have changed. Deleting all checksums!"
+  log "OSM files have changed. Deleting all checksums and table info!"
   rm -f $CODE_HASHES/*
+  rm -f $TABLE_INFO/*
 else
   if ! check_hash "${PROCESS_DIR}helper" ".lua"; then
     log "Helpers have changed. Deleting all checksums!"
-    rm -f $CODE_HASHES*.sha
+    rm -f $CODE_HASHES/*
   fi
 fi
 
