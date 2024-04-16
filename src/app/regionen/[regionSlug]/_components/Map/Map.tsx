@@ -45,7 +45,9 @@ export const Map = () => {
   // which is why the layers stay in `interactiveLayerIds`
   const extractInteractivFeatures = (features: MapGeoJSONFeature[] | undefined) => {
     return features?.filter(
-      (f) => mapParam.zoom >= interacitvityConfiguartion[f.sourceLayer].minzoom,
+      (f) =>
+        interacitvityConfiguartion[f.sourceLayer] == undefined ||
+        mapParam.zoom >= interacitvityConfiguartion[f.sourceLayer].minzoom,
     )
   }
 
