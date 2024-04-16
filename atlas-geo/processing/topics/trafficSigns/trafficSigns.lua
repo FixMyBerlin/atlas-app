@@ -121,7 +121,7 @@ function osm2pgsql.process_node(object)
       to_orient[object.id] = true
     end
   end
-  for _, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
+  for i, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
     traffic_sign.direction = tonumber(direction)
     traffic_sign.direction_source = direction_source
     for k,v in pairs(tags) do traffic_sign['osm_' .. k] = v end
@@ -130,7 +130,7 @@ function osm2pgsql.process_node(object)
       meta = Metadata(object),
       geom = object:as_point(),
       minzoom = 0,
-      id = DefaultId(object)
+      id = DefaultId(object) .. i
     })
   end
 end
