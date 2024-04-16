@@ -7,6 +7,7 @@ package.path = package.path .. dir .. "lit/?.lua"
 package.path = package.path .. dir .. "bikelanes/?.lua"
 package.path = package.path .. dir .. "bikelanes/categories/?.lua"
 package.path = package.path .. dir .. "bikeroutes/?.lua"
+package.path = package.path .. dir .. "paths/?.lua"
 require("Set")
 require("JoinSets")
 require("Metadata")
@@ -16,7 +17,7 @@ require("ConvertCyclewayOppositeSchema")
 require("Maxspeed")
 require("Lit")
 require("RoadClassification")
-require("RoadGeneralisation")
+require("RoadGeneralization")
 require("SurfaceQuality")
 require("Bikelanes")
 require("BikelanesPresence")
@@ -26,6 +27,7 @@ require("IsSidepath")
 require("ExtractPublicTags")
 require("Round")
 require("DefaultId")
+require("PathsGeneralization")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -143,7 +145,7 @@ function osm2pgsql.process_way(object)
         tags = results,
         meta = Metadata(object),
         geom = object:as_linestring(),
-        minzoom = 0,
+        minzoom = PathsGeneralization(tags, results),
         id = DefaultId(object)
       })
     else
@@ -152,7 +154,7 @@ function osm2pgsql.process_way(object)
         tags = results,
         meta = Metadata(object),
         geom = object:as_linestring(),
-        minzoom = RoadGeneralisation(tags, results),
+        minzoom = RoadGeneralization(tags, results),
         id = DefaultId(object)
       })
     end

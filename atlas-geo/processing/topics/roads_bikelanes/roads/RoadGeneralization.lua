@@ -11,11 +11,11 @@ local minzoom11RoadClasses = Set({
   'service_alley',
 })
 
----@param object_tags table
+---@param original_tags table
 ---@param result_tags table
 ---@return integer
 --- Return the minzoom and maxzoom for roads
-function RoadGeneralisation(object_tags, result_tags)
+function RoadGeneralisation(original_tags, result_tags)
   if minzoom11RoadClasses[result_tags.road] then
     return 11
   end
