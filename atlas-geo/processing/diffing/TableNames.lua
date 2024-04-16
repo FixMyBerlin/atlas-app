@@ -9,7 +9,8 @@ osm2pgsql = {
   define_table = function(options) define_x_table(options.name) end,
   define_node_table = define_x_table,
   define_way_table = define_x_table,
-  define_relation_table = define_x_table
+  define_relation_table = define_x_table,
+  define_area_table = define_x_table
 }
 
 
