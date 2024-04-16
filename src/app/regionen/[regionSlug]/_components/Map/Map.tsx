@@ -70,7 +70,7 @@ export const Map = () => {
       // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
       setInspectorFeatures(interactiveFeatures as MapGeoJSONFeature[])
       const filteredFeatures = interactiveFeatures.filter(
-        (f) => f.properties?.id.split('/')[0] !== 'relation',
+        (f) => !(f.source.includes('atlas') && f.properties?.id.startsWith('relation')),
       )
       const uniqueFeatures = uniqBy(filteredFeatures, (f: MapGeoJSONFeature) =>
         createInspectorFeatureKey(f),
