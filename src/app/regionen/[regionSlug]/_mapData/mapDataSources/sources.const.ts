@@ -189,7 +189,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'admin_level'],
     },
     // presence: { enabled: false },
@@ -228,7 +228,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'name',
         'composit_highway',
@@ -270,7 +270,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'name',
         'ref',
@@ -311,7 +311,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         // Same as 'roadsPathClasses'
         'name',
@@ -352,7 +352,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         // Same as 'roads'
         'name',
@@ -394,7 +394,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'category'],
     },
     // presence: { enabled: false },
@@ -420,7 +420,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'category', 'type'],
     },
     // presence: { enabled: false },
@@ -446,7 +446,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'place', 'population', 'population:date'],
     },
     // presence: { enabled: false },
@@ -490,7 +490,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['landuse'],
     },
     // presence: { enabled: false },
@@ -512,7 +512,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'capacity',
         'capacity:cargo_bike__if_present',
@@ -543,7 +543,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['traffic_sign'],
     },
     // presence: { enabled: false },
