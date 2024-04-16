@@ -23,6 +23,6 @@ ENV NEXT_PUBLIC_APP_ENV ${NEXT_PUBLIC_APP_ENV}
 RUN npx blitz prisma generate
 RUN npx blitz build
 
-EXPOSE 3000
+EXPOSE 4000
 
-CMD npx blitz prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 3000
+CMD npx blitz prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 4000
