@@ -131,7 +131,7 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     continue
   }
 
-  // Create the transformed data
+  // Create the transformed data (or duplicate existing geojson)
   const inputFullFilepath = await transformFile(datasetFolderPath, geojsonFullFilename, tmpDir)
 
   // Create the pmtiles

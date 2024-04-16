@@ -7,19 +7,22 @@ export const transformFile = async (
   geojsonFullFilename: string,
   outputFolder: string,
 ) => {
+  const data = await Bun.file(geojsonFullFilename).json()
+
   type TransformFunc = (data: any) => string
   const transform = await import_<TransformFunc>(datasetFolderPath, 'transform', 'transform')
 
-  if (transform === null) {
-    return geojsonFullFilename
-  }
-
   const datasetFolderName = datasetFolderPath.split('/').at(-1)
-  const outputFullFilename = path.join(outputFolder, `${datasetFolderName}.transformed.geojson`)
-  console.log(`  Transforming geojson file...`, outputFullFilename)
-
-  const data = await Bun.file(geojsonFullFilename).json()
-  const transformedData = transform(data)
+  let outputFullFilename: string
+  let transformedData: string
+  if (transform === null) {
+    outputFullFilename = path.join(outputFolder, `${datasetFolderName}.geojson`)
+    transformedData = data
+  } else {
+    outputFullFilename = path.join(outputFolder, `${datasetFolderName}.transformed.geojson`)
+    console.log(`  Transforming geojson file...`, outputFullFilename)
+    transformedData = transform(data)
+  }
   Bun.write(outputFullFilename, JSON.stringify(transformedData, null, 2))
 
   return outputFullFilename
