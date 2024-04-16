@@ -22,7 +22,7 @@ LANGUAGE plpgsql;
 -- STEP 1: Quantize linestrings into points corresponding to 100m segments
 CREATE temp TABLE _roadsQuantized AS
 SELECT
-    osm_id,
+    id,
     tags,
 (atlas_QuantizeLineString(geom, 100)).* AS geom
 FROM
@@ -30,35 +30,35 @@ FROM
    where tags?'bikelane_self';
 
 
--- STEP 2: prepare the data for a spatial join e.g. create a geomtric index and make `osm_id` the primary key
+-- STEP 2: prepare the data for a spatial join e.g. create a geomtric index and make `id` the primary key
 -- create a geospatial index on `_roadsQuantized` to speed up the spatial join;
 CREATE INDEX "_roads_stats_geom_idx" ON _roadsQuantized USING gist(geom);
 
--- make `osm_id` the primary of the `presenceStats` to speed up group by
+-- make `id` the primary of the `presenceStats` to speed up group by
 ALTER TABLE "presenceStats"
     DROP CONSTRAINT IF EXISTS presence_stats_key;
 
 ALTER TABLE "presenceStats"
-    ADD CONSTRAINT presence_stats_key PRIMARY KEY (osm_id);
+    ADD CONSTRAINT presence_stats_key PRIMARY KEY (id);
 
 -- STEP 3: calculate the distribution of our `presence` data for each area of the `boundary` data set
 WITH stats AS (
     SELECT
-        osm_id,
+        id,
         jsonb_object_agg(CONCAT(category, '_km'), len) AS presence_categories
     FROM (
         SELECT
-            boundary.osm_id AS osm_id,
+            boundary.id AS id,
             roads.tags ->> unnest(Array['bikelane_left', 'bikelane_right', 'bikelane_self']) AS category,
             round(sum(roads.len) / 1000, 1) AS len
         FROM
             "presenceStats" AS boundary
             JOIN _roadsQuantized AS roads ON ST_Intersects(boundary.geom, roads.geom)
         GROUP BY
-            boundary.osm_id,
+            boundary.id,
             roads.tags ->> unnest(Array['bikelane_left', 'bikelane_right', 'bikelane_self'])) AS sq
     GROUP BY
-        osm_id)
+        id)
 UPDATE
     "presenceStats"
 SET
@@ -66,14 +66,14 @@ SET
 FROM
     stats
 WHERE
-    "presenceStats".osm_id = stats.osm_id;
+    "presenceStats".id = stats.id;
 
 
 -- -- bikelane category stats:
 -- -- STEP 1: quantize bikelane data into points
 -- CREATE temp TABLE _bikelanesQuantized AS
 -- SELECT
---     osm_id,
+--     id,
 --     tags,
 -- (atlas_QuantizeLineString(geom, 100)).* AS geom
 -- FROM
@@ -83,31 +83,31 @@ WHERE
 -- -- create a geospatial index on `_bikelanesQuantized` to speed up the spatial join;
 -- CREATE INDEX "_bikelanes_stats_geom_idx" ON _bikelanesQuantized USING gist(geom);
 
--- -- make `osm_id` the primary of the `bikelaneCategoryStats` to speed up group by
+-- -- make `id` the primary of the `bikelaneCategoryStats` to speed up group by
 -- ALTER TABLE "bikelaneCategoryStats"
 --     DROP CONSTRAINT IF EXISTS category_stats_key;
 
 -- ALTER TABLE "bikelaneCategoryStats"
---     ADD CONSTRAINT category_stats_key PRIMARY KEY (osm_id);
+--     ADD CONSTRAINT category_stats_key PRIMARY KEY (id);
 
--- -- spatialy join `_bikelanesQuantized` with `bikelaneCategoryStats` then group by category and bikelaneCategoryStats.osm_id to aggreagate the results in a single json object per area
+-- -- spatialy join `_bikelanesQuantized` with `bikelaneCategoryStats` then group by category and bikelaneCategoryStats.id to aggreagate the results in a single json object per area
 -- WITH stats AS (
 --     SELECT
---         osm_id,
+--         id,
 --         jsonb_object_agg(CONCAT(category, '_km'), len) AS bikelane_categories
 --     FROM (
 --         SELECT
---             boundary.osm_id AS osm_id,
+--             boundary.id AS id,
 --             bikelane.tags ->> 'category' AS category,
 --             round(sum(bikelane.len) / 1000, 1) AS len
 --         FROM
 --             "bikelaneCategoryStats" AS boundary
 --             JOIN _bikelanesQuantized AS bikelane ON ST_Intersects(boundary.geom, bikelane.geom)
 --         GROUP BY
---             boundary.osm_id,
+--             boundary.id,
 --             bikelane.tags ->> 'category') AS sq
 --     GROUP BY
---         osm_id)
+--         id)
 -- UPDATE
 --     "bikelaneCategoryStats"
 -- SET
@@ -115,7 +115,7 @@ WHERE
 -- FROM
 --     stats
 -- WHERE
---     "bikelaneCategoryStats".osm_id = stats.osm_id;
+--     "bikelaneCategoryStats".id = stats.id;
 
 -- -- for `jsonb` with numeric values return a normalized object (all values sum to 100) which also includes the total value
 -- CREATE OR REPLACE FUNCTION atlas_NormalizeDistribution(dist jsonb)
