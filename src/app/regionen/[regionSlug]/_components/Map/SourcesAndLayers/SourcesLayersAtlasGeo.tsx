@@ -12,7 +12,7 @@ import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapData
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
   createSourceKeyAtlasGeo,
-  createSourceSubcatStyleLayerKey,
+  createLayerKeyAtlasGeo,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
@@ -39,14 +39,16 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
 
   return (
     <>
+      {/* ========== categories ========== */}
       {categoriesConfig.map((categoryConfig) => {
         return (
           <React.Fragment key={categoryConfig.id}>
+            {/* ========== subcategories ========== */}
             {categoryConfig.subcategories.map((subcategoryConfig) => {
               const sourceData = getSourceData(subcategoryConfig?.sourceId)
 
               // One source can be used by multipe subcategories, so we need to make the key source-category-specific.
-              const sourceId = createSourceKeyAtlasGeo(
+              const sourceKey = createSourceKeyAtlasGeo(
                 categoryConfig.id,
                 sourceData.id,
                 subcategoryConfig.id,
@@ -59,13 +61,14 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
 
               return (
                 <Source
-                  key={sourceId}
-                  id={sourceId}
+                  key={sourceKey}
+                  id={sourceKey}
                   type="vector"
                   tiles={[tileUrl]}
                   maxzoom={sourceData.maxzoom}
                   minzoom={sourceData.minzoom}
                 >
+                  {/* ========== styles ========== */}
                   {subcategoryConfig.styles.map((styleConfig) => {
                     const currStyleConfig = subcategoryConfig.styles.find(
                       (s) => s.id === styleConfig.id,
@@ -73,9 +76,9 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                     const visibility = layerVisibility(
                       (categoryConfig.active && currStyleConfig?.active) || false,
                     )
-
+                    {/* ========== layers ========== */}
                     return styleConfig?.layers?.map((layer) => {
-                      const layerId = createSourceSubcatStyleLayerKey(
+                      const layerId = createLayerKeyAtlasGeo(
                         sourceData.id,
                         subcategoryConfig.id,
                         styleConfig.id,
@@ -90,12 +93,12 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                       if (useDebugLayerStyles) {
                         layerFilter = ['all'] as FilterSpecification
                         layerPaint = debugLayerStyles({
-                          source: sourceId,
+                          source: sourceKey,
                           sourceLayer: layer['source-layer'],
                         }).find((l) => l.type === layer.type)?.paint
                         layerLayout = {
                           ...debugLayerStyles({
-                            source: sourceId,
+                            source: sourceKey,
                             sourceLayer: layer['source-layer'],
                           }).find((l) => l.type === layer.type)?.layout,
                           ...visibility,
@@ -104,7 +107,7 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
 
                       const layerProps = {
                         id: layerId,
-                        source: sourceId,
+                        source: sourceKey,
                         type: layer.type,
                         'source-layer': layer['source-layer'],
                         layout: layerLayout,

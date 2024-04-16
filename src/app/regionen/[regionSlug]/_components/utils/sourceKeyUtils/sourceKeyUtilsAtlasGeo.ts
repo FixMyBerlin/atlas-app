@@ -13,41 +13,55 @@ export const createSubcatStyleLegendKey = (
   legendId: LegendId,
 ): SubcatStyleLegendKey => `${subCat}-${styleId}-${legendId}`
 
-export const createSourceSubcatStyleLayerKey = (
-  sourceId: string,
-  subCat: string,
+function createKey(obj: Record<string, string>) {
+  return Object.entries(obj)
+    .map(([shortKey, value]) => `${shortKey}:${value}`)
+    .join('--')
+}
+
+function parseKey(key: string, shortToLong: Record<string, string>): Record<string, string> {
+  return Object.fromEntries(
+    key
+      .split('--')
+      .map((s) => s.split(':'))
+      .map(([shortKey, value]) => [shortToLong[shortKey!], value]),
+  )
+}
+
+export const createLayerKeyAtlasGeo = (
+  sourceId: SourcesId,
+  subCat: SubcategoryId,
   styleId: string,
   layerId: string,
-) => {
-  return `${sourceId}--${subCat}--${styleId}--${layerId}`
-}
+) =>
+  createKey({
+    source: sourceId,
+    subcat: subCat,
+    style: styleId,
+    layer: layerId,
+  })
 
 export const createSourceKeyAtlasGeo = (
   categoryId: MapDataCategoryId,
   sourceId: SourcesId,
   subCat: SubcategoryId,
-): string => {
-  return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
-}
+): string =>
+  createKey({
+    cat: categoryId,
+    source: sourceId,
+    subcat: subCat,
+  })
 
-export function parseSourceKeyAtlasGeo(source: string): {
-  categoryId: MapDataCategoryId
-  sourceId: SourcesId
-  subCat: SubcategoryId
-} {
+export function parseSourceKeyAtlasGeo(sourceKey: string) {
   // source: "cat:mapillary--source:mapillary_coverage--subcat:mapillaryCoverage"
   // returns: { categoryId: 'mapillary', sourceId: 'mapillary_coverage', subcategoryId: 'mapillaryCoverage' }
-  return Object.fromEntries(
-    source
-      .split('--')
-      .map((s) => s.split(':'))
-      .map(([k, v]) => [
-        {
-          cat: 'categoryId',
-          source: 'sourceId',
-          subcat: 'subcategoryId',
-        }[k!],
-        v,
-      ]),
-  )
+  return parseKey(sourceKey, {
+    cat: 'categoryId',
+    source: 'sourceId',
+    subcat: 'subcategoryId',
+  }) as {
+    categoryId: MapDataCategoryId
+    sourceId: SourcesId
+    subcategoryId: SubcategoryId
+  }
 }
