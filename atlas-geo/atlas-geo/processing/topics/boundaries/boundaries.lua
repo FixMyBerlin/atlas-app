@@ -16,7 +16,7 @@ local table = osm2pgsql.define_table({
   },
   indexes = {
     { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'gist' }
+    { column = 'id', method = 'btree', unique = true  }
   }
 })
 
@@ -32,7 +32,7 @@ local labelTable = osm2pgsql.define_table({
   },
   indexes = {
     { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'gist' }
+    { column = 'id', method = 'btree', unique = true  }
   }
 })
 
@@ -57,7 +57,7 @@ local presenceStats = osm2pgsql.define_table({
     { column = 'presence_categories', type = 'jsonb',       create_only = true },
     { column = 'geom',                type = 'multipolygon' },
   },
-  indexes = { { column = 'id', method = 'gist' } }
+  indexes = { { column = 'id', method = 'btree', unique = true  } }
 })
 
 function osm2pgsql.process_relation(object)
