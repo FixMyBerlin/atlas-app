@@ -17,7 +17,7 @@ local bikeroutesTable = osm2pgsql.define_table({
   },
   indexes = {
     { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'gist' }
+    { column = 'id', method = 'btree', unique = true  }
   }
 })
 
