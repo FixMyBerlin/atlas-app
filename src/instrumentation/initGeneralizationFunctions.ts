@@ -17,7 +17,7 @@ async function createTileSpecification(tableName: TableId) {
     `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
     from (
       SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
-        from ${tableName}
+        from "${tableName}"
       ) extent;`,
   )
   const { bounds } = bbox && bbox[0]
@@ -60,15 +60,16 @@ export async function initGeneralizationFunctions(
             END IF;
             SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
               SELECT
+                id,
                 ST_AsMVTGeom(
-                    ST_CurveToLine(
-                      ST_Simplify(geom, tolerance, true)
-                    ),
-                    ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
-                      stylingKeys,
-                    )}) END as tags,
-                    CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
+                  ST_CurveToLine(
+                    ST_Simplify(geom, tolerance, true)
+                  ),
+                  ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                  stylingKeys,
+                )}) END as tags,
+                CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
               AND z >= minzoom
