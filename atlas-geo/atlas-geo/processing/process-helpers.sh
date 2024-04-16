@@ -64,8 +64,8 @@ run_dir() {
   sql_file="${directory}$topic.sql"
 
   # In this file we store the table topics after a successful run
-  processed_tables="${CODE_HASHES}$topic.tables"
-  backedup_tables="${CODE_HASHES}$topic.backups"
+  processed_tables="${TABLE_INFO}$topic.processed"
+  backedup_tables="${TABLE_INFO}$topic.backedup"
 
   if check_hash $directory ".lua" && check_hash $directory ".sql"; then
     log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
