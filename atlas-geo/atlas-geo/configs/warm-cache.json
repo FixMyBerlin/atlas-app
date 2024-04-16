@@ -10,15 +10,15 @@
     "zoomTo": 11
   },
   "urls": [
-    "/roads/{z}/{x}/{y}",
-    "/bikelanes_verified/{z}/{x}/{y}",
-    "/bikelanes/{z}/{x}/{y}",
-    "/poiClassification/{z}/{x}/{y}",
-    "/roadsPathClasses/{z}/{x}/{y}",
-    "/boundaries,boundaryLabels/{z}/{x}/{y}",
-    "/places/{z}/{x}/{y}",
-    "/publicTransport/{z}/{x}/{y}",
-    "/barrierAreas,barrierLines/{z}/{x}/{y}",
-    "/landuse/{z}/{x}/{y}"
+    "/atlas_generalized_roads/{z}/{x}/{y}",
+    "/atlas_generalized_bikelanes_verified/{z}/{x}/{y}",
+    "/atlas_generalized_bikelanes/{z}/{x}/{y}",
+    "/atlas_generalized_poiClassification/{z}/{x}/{y}",
+    "/atlas_generalized_roadsPathClasses/{z}/{x}/{y}",
+    "/atlas_generalized_boundaries,boundaryLabels/{z}/{x}/{y}",
+    "/atlas_generalized_places/{z}/{x}/{y}",
+    "/atlas_generalized_publicTransport/{z}/{x}/{y}",
+    "/atlas_generalized_barrierAreas,barrierLines/{z}/{x}/{y}",
+    "/atlas_generalized_landuse/{z}/{x}/{y}"
   ]
 }
