@@ -63,21 +63,16 @@ export const Map = () => {
   }
 
   const handleClick = (event: MapLayerMouseEvent) => {
+    // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
     const interactiveFeatures = extractInteractivFeatures(features)
     if (interactiveFeatures) {
-      // TODO TS: Remove `as` once https://github.com/visgl/react-map-gl/issues/2299 is solved
-      // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
-      setInspectorFeatures(interactiveFeatures as MapGeoJSONFeature[])
+      setInspectorFeatures(interactiveFeatures)
       const filteredFeatures = interactiveFeatures.filter(
         (f) => !(f.source.includes('atlas') && f.properties?.id.startsWith('relation')),
       )
-      const uniqueFeatures = uniqBy(filteredFeatures, (f: MapGeoJSONFeature) =>
-        createInspectorFeatureKey(f),
-      )
-      setFeaturesParam(
-        uniqueFeatures.map((feature: MapGeoJSONFeature) => convertToUrlFeature(feature)),
-      )
+      const uniqueFeatures = uniqBy(filteredFeatures, (f) => createInspectorFeatureKey(f))
+      setFeaturesParam(uniqueFeatures.map((feature) => convertToUrlFeature(feature)))
     }
   }
 
