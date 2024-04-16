@@ -1,35 +1,4 @@
-version: "3"
 services:
-  traefik:
-    image: traefik:v2.11
-    container_name: traefik
-    # Networking: See https://techoverflow.net/2021/06/11/how-to-fix-traefik-gateway-timeout-for-docker-services/ for network_mode
-    restart: unless-stopped
-    command:
-      - "--log.level=WARN"
-      - "--api.insecure=false"
-      - "--api.dashboard=false"
-      - "--providers.docker=true"
-      # Do not expose containers unless explicitly told so
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
-      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
-      - "--certificatesresolvers.letsencrypt.acme.email=dev-team@fixmycity.de"
-      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
-      - "--serversTransport.forwardingTimeouts.dialTimeout=100s"
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - "./letsencrypt:/letsencrypt"
-    networks:
-      - app_bridge
   processing:
     image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
     container_name: processing
@@ -48,11 +17,15 @@ services:
       ENVIRONMENT:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
+      COMPUTE_DIFFS:
     volumes:
       - osmfiles:/data
+      - geodata:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-      - ./configs/warm-cache.json:/processing/warm-cache/config.json:ro
+    configs:
+    - source: warm_chache_conf
+      target: /processing/warm-cache/config.json
     networks:
       - app_bridge
     depends_on:
@@ -65,52 +38,30 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
-      RUST_LOG: RUST_LOG=actix_web=info,martin=info,tokio_postgres=info
-    # bounds are optional in TileJSON spec
-    # command: ["--auto-bounds=calc"]
+      # https://maplibre.org/martin/troubleshooting.html?highlight=log#troubleshooting
+      # RUST_LOG: actix_web=info,martin=debug,tokio_postgres=debug
+      RUST_LOG: actix_web=info,martin=info,tokio_postgres=info
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.tiles.rule=Host(`${CACHELESS_URL}`)"
-      - "traefik.http.routers.tiles.entrypoints=websecure"
-      - "traefik.http.routers.tiles.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.tiles.tls=true"
+      traefik.enable: true
+      traefik.http.routers.tiles.rule: Host(`${CACHELESS_URL}`)
+      traefik.http.routers.tiles.entrypoints: websecure
+      traefik.http.routers.tiles.tls.certresolver: letsencrypt
+      traefik.http.routers.tiles.tls: true
     ports:
-      - 3333:3000
+      - 3000:3000
     networks:
       - app_bridge
-    volumes:
-      - ./configs/martin.yaml:/config.yaml:ro
+    configs:
+      - source: martin_conf
+        target: /config.yaml
     depends_on:
       db:
-       condition: service_healthy
-  proxy:
-    image: nginx:alpine
-    restart: unless-stopped
-    container_name: tiles_proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.proxy.rule=Host(`${TILES_URL}`)"
-      - "traefik.http.routers.proxy.entrypoints=websecure"
-      - "traefik.http.routers.proxy.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.proxy.tls=true"
-    networks:
-      - app_bridge
-    ports:
-      - "4444:80"
-    volumes:
-      - ./cache:/var/cache/nginx
-      - ./logs:/var/log/nginx
-      - ./configs/nginx.conf:/etc/nginx/nginx.conf:ro
-    # Needs healty check for tiles server
-    # depends_on:
-    #   tiles:
-    #     condition: service_healthy
+        condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
     container_name: db
     shm_size: 1gb
     restart: unless-stopped
-    command: ["postgres", "-c", "shared_buffers=3GB", "-c", "work_mem=128MB", "-c", "maintenance_work_mem=1024MB", "-c", "temp_buffers=24MB", "-c", "effective_cache_size=8GB", "-c", "wal_buffers=16MB", "-c", "min_wal_size=1GB", "-c", "max_wal_size=4GB"]
     environment:
       PGUSER:
       POSTGRES_DB: ${PGDATABASE}
@@ -121,6 +72,12 @@ services:
       - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
+    configs:
+      - source: postgres_conf
+        target: /postgresql/postgresql.conf
+      - source: postgres_init
+        target: /docker-entrypoint-initdb.d/11-postgres.sql
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
       interval: 5s
@@ -131,5 +88,14 @@ services:
 volumes:
   geodata:
   osmfiles:
+configs:
+  martin_conf:
+    file: ./configs/martin.yaml
+  postgres_init:
+    file: ./configs/postgres-init.sql
+  postgres_conf:
+    file: ./configs/postgres.conf
+  warm_chache_conf:
+    file: ./configs/warm-cache.json
 networks:
   app_bridge:

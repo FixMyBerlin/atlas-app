@@ -1,5 +1,5 @@
 # Unit tests
-
+ We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as our testing framework
 ## Conventions
 
 - Create one test file per helper
@@ -8,6 +8,4 @@
 
 ## Run
 
-From the root of this file repo, run `npm run test` to run all `*.test.lua` files inside the Docker container.
-
-See the code comments in the two `run-tests.sh` files to learn more about what they do.
+From the root of this file repo, run `run-tests.sh` to run all `*.test.lua` files inside the Docker container.
