@@ -57,13 +57,8 @@ The workflow is…
 1. Edit the files locally
 
 2. Rebuild and restart everything
-
-   ```npm run dev````
-
-   _OR_
-
    ```sh
-   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
+   docker compose build && docker compose up -d
    ```
 
 3. Inspect the new results, see "Inspect changes"

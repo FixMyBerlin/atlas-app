@@ -76,7 +76,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: processing/ processing.Dockerfile docker-compose.yml
+          CHECK_DIFF_LOCATIONS: processing/ processing.Dockerfile docker-compose.yml, docker-compose.network.yml
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
@@ -126,7 +126,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml,postgres/postgres.conf,configs/nginx.conf,configs/martin.yaml,configs/warm-cache.json,arguments"
+          source: "docker-compose.yml, docker-compose.network.yml, configs/"
           target: "/srv/processing/"
           overwrite: true
 
@@ -163,5 +163,5 @@ jobs:
               .env
             echo "Reload containers"
             docker compose pull
-            docker compose up -d
+            docker compose -f docker-compose.yml -f docker-compose.network.yml up -d
             docker image prune -fa
