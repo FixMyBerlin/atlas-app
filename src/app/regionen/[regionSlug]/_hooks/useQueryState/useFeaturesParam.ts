@@ -5,8 +5,9 @@ import { z } from 'zod'
 import { createParser, useQueryState } from 'next-usequerystate'
 import { numericSourceIds } from 'src/app/url'
 import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
-import { UrlFeature, SourceInfo, ParsedFeatureSource, OsmType } from './types'
+import { UrlFeature, SourceInfo } from './types'
 import { chars, equals, lng, lat, number, parseArray } from './util'
+import { parseSourceKeyAtlasGeo } from '../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
@@ -22,31 +23,13 @@ export function parseSourceId(sourceId: SourcesId): SourceInfo {
   }
 }
 
-export function parseFeatureSource(source: string): ParsedFeatureSource {
-  // source: "cat:mapillary--source:mapillary_coverage--subcat:mapillaryCoverage"
-  // returns: { categoryId: 'mapillary', sourceId: 'mapillary_coverage', subcategoryId: 'mapillaryCoverage' }
-  return Object.fromEntries(
-    source
-      .split('--')
-      .map((s) => s.split(':'))
-      .map(([k, v]) => [
-        {
-          cat: 'categoryId',
-          source: 'sourceId',
-          subcat: 'subcategoryId',
-        }[k!],
-        v,
-      ]),
-  )
-}
-
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source, geometry } = feature
-  const sourceId = parseFeatureSource(source).sourceId
+  const { sourceId } = parseSourceKeyAtlasGeo(source)
   const { type, internal } = parseSourceId(sourceId as SourcesId)
   const data: any = {
     properties: pick(properties, type === 'osm' ? ['osm_id', 'osm_type'] : ['id']),
-    sourceId: parseFeatureSource(source).sourceId,
+    sourceId,
   }
   if (geometry.type === 'Point') data.point = geometry.coordinates
   else data.bbox = bbox(feature.geometry).map((v) => Number(v.toFixed(6)))
