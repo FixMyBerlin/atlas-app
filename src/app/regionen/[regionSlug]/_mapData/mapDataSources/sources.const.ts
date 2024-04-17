@@ -169,7 +169,7 @@ export const sources: MapDataSource<
     promoteId: 'id',
     inspector: {
       enabled: true,
-      highlightingKey: 'area_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'admin_level'],
     },
     // presence: { enabled: false },
