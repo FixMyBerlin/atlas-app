@@ -78,10 +78,11 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
           const splitDate = comment.date.split(' ')
           const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
           const userHasPermssionOnRegion = comment.user === osmName
+          const key = [comment.uid, comment.date].join('-')
 
           return (
             <section
-              key={comment.uid}
+              key={key}
               className={twJoin(
                 'border-b border-b-gray-200 px-3 py-5',
                 userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50',
