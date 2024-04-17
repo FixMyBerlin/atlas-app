@@ -10,12 +10,7 @@ import {
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
-import {
-  allUrlFeaturesInBounds,
-  boundsToPoints,
-  createBoundingPolygon,
-  getUrlFeaturesBbox,
-} from './util'
+import { createBoundingPolygon, allUrlFeaturesInBounds, fitBounds } from './util'
 import { useSelectedFeatures } from 'src/app/_hooks/useSelectedFeatures'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
 
@@ -55,17 +50,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
   if (!boundsChecked.current && inspectorSize.width !== 0) {
     const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
     if (!allUrlFeaturesInBounds(urlFeatures, boundingPolygon)) {
-      const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
-      const bounds = getUrlFeaturesBbox(urlFeatures)
-      const pad = 50
-      map.fitBounds(boundsToPoints(bounds), {
-        padding: {
-          top: pad,
-          bottom: pad,
-          left: sidebarLayerControlsSize.width + pad,
-          right: inspectorSize.width + pad,
-        },
-      })
+      fitBounds(map, urlFeatures, sidebarLayerControlsSize, inspectorSize)
     }
     boundsChecked.current = true
   }

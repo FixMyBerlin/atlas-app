@@ -119,9 +119,41 @@ export function createFeatureCollection(urlFeatures: UrlFeature[]) {
 export function allUrlFeaturesInBounds(urlFeatures, boundingPolygon) {
   return urlFeatures
     .map(({ coordinates }) => compareFeatures(boundingPolygon, geojsonFromCoordinates(coordinates)))
-    .every((r) => r === '>')
+    .every((r) => ['~', '>'].includes(r))
 }
 
 export function getUrlFeaturesBbox(urlFeatures: UrlFeature[]): Bounds {
   return bbox(createFeatureCollection(urlFeatures)) as Bounds
+}
+
+export function fitBounds(mapInstance, urlFeatures, sidebarLayerControlsSize, inspectorSize) {
+  const map = getMapSize(mapInstance)
+  const [lay, ins] = [sidebarLayerControlsSize, inspectorSize]
+
+  const pad = Math.floor(Math.min(map.width - ins.width - lay.width, map.height) / 10)
+
+  const nwp = [lay.width + pad, pad]
+  const sep = {
+    x: map.width - ins.width - pad,
+    y: map.height - pad,
+  }
+  const [nwc, sec] = [nwp, sep].map((p) => mapInstance.unproject(p))
+
+  const fc = createFeatureCollection(urlFeatures)
+  fc.features = [
+    ...fc.features,
+    createBox([
+      [nwc.lng, nwc.lat],
+      [sec.lng, sec.lat],
+    ]),
+  ]
+
+  mapInstance.fitBounds(boundsToPoints(bbox(fc) as Bounds), {
+    padding: {
+      top: nwp[1],
+      left: nwp[0],
+      bottom: pad,
+      right: ins.width + pad,
+    },
+  })
 }
