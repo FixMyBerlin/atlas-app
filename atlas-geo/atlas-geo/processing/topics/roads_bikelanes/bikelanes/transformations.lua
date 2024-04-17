@@ -45,7 +45,6 @@ function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"
   center._prefix = ""
-  center.oneway = tags['oneway:bicycle'] or tags.oneway -- give `bicycle:oneway` precedence
 
   local results = { center }
 
