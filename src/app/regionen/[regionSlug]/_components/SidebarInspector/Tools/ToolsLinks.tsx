@@ -22,6 +22,8 @@ type Props = {
 export const ToolsLinks = ({ properties, geometry, editors }: Props) => {
   // Normalize id + type for Parking data
   // "atlas-geo" sometimes prefixes `-{id}`
+  const { id } = properties
+  if (typeof id !== 'string') return null
   const osmIdFromId = properties?.id?.split('/')?.[1]
   const osmTypeFromId = properties?.id?.split('/')?.[0]
   const osmId =
