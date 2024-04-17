@@ -76,7 +76,9 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                     const visibility = layerVisibility(
                       (categoryConfig.active && currStyleConfig?.active) || false,
                     )
-                    {/* ========== layers ========== */}
+                    {
+                      /* ========== layers ========== */
+                    }
                     return styleConfig?.layers?.map((layer) => {
                       const layerId = createLayerKeyAtlasGeo(
                         sourceData.id,

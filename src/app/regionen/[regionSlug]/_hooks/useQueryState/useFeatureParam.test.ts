@@ -3,13 +3,11 @@ import { pick } from 'lodash'
 import { serializeFeaturesParam, parseFeaturesParam, convertToUrlFeature } from './useFeaturesParam'
 
 const allTestData = [
-  // internal osm
+  // feature with string id and LineString geometry
   {
     map: {
       properties: {
-        id: 'not-used',
-        osm_type: 'W',
-        osm_id: 1010110070,
+        id: 'way/1010110070',
       },
       source: 'cat:bikelanes--source:atlas_bikelanes--subcat:bikelanes',
       geometry: {
@@ -28,21 +26,18 @@ const allTestData = [
     url: {
       sourceId: 'atlas_bikelanes',
       properties: {
-        osm_id: 1010110070,
-        osm_type: 'W',
+        id: 'way/1010110070',
       },
-      bbox: [13.645427, 52.37763, 13.646221, 52.378219],
+      coordinates: [13.645427, 52.37763, 13.646221, 52.378219],
     },
-    query: '43|W|1010110070|B|13.645427|52.377630|13.646221|52.378219',
+    query: '43|way/1010110070|13.645427|52.37763|13.646221|52.378219',
   },
-  // external osm
+  // feature with numeric id and LineString geometry
   {
     map: {
       source: 'cat:parking--source:parkraumParkingAreas--subcat:parkingAreas',
       properties: {
-        id: 'not-used',
-        osm_type: 'W',
-        osm_id: 412340597,
+        id: 9718,
       },
       geometry: {
         type: 'Polygon',
@@ -61,21 +56,18 @@ const allTestData = [
     url: {
       sourceId: 'parkraumParkingAreas',
       properties: {
-        osm_id: 412340597,
-        osm_type: 'W',
+        id: 9718,
       },
-      bbox: [9.118744, 48.948085, 9.119004, 48.948291],
+      coordinates: [9.118744, 48.948085, 9.119004, 48.948291],
     },
-    query: '24|W|412340597|B|9.118744|48.948085|9.119004|48.948291',
+    query: '24|9718|9.118744|48.948085|9.119004|48.948291',
   },
-  // mapillary
+  // feature with numeric id and Point geometry
   {
     map: {
       source: 'cat:mapillary--source:mapillary_coverage--subcat:mapillaryCoverage',
       properties: {
         id: 776457396685869,
-        osm_type: 'undefined',
-        osm_id: 'undefined',
       },
       geometry: {
         type: 'Point',
@@ -87,9 +79,9 @@ const allTestData = [
         id: 776457396685869,
       },
       sourceId: 'mapillary_coverage',
-      point: [13.64569, 52.378193],
+      coordinates: [13.64569, 52.378193],
     },
-    query: '1|776457396685869|P|13.645690|52.378193',
+    query: '1|776457396685869|13.64569|52.378193',
   },
 ]
 

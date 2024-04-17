@@ -1,16 +1,14 @@
 type PointOrBbox =
   | {
-      point: [number, number]
-      bbox?: never
+      coordinates: [number, number]
     }
   | {
-      point?: never
-      bbox: [number, number, number, number]
+      coordinates: [number, number, number, number]
     }
 
 export type UrlFeature = {
   sourceId: string
-  properties: { id: number } | { osm_id: number; osm_type: string }
+  properties: { id: number }
 } & PointOrBbox
 
 export type SourceInfo = {

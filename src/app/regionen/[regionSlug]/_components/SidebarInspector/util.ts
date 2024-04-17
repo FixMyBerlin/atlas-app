@@ -105,24 +105,21 @@ export function findFeature(features, props) {
   })
 }
 
+function geojsonFromCoordinates(coordinates: [number, number] | [number, number, number, number]) {
+  return coordinates.length === 2 ? point(coordinates) : createBox(boundsToPoints(coordinates))
+}
+
 export function createFeatureCollection(urlFeatures: UrlFeature[]) {
   return featureCollection(
     // @ts-expect-error - probably a bug
-    urlFeatures.map((f) => (f.point ? point(f.point) : createBox(boundsToPoints(f.bbox)))),
+    urlFeatures.map(({ coordinates }) => geojsonFromCoordinates(coordinates)),
   ) as FeatureCollection
 }
 
 export function allUrlFeaturesInBounds(urlFeatures, boundingPolygon) {
-  const results: Visibility[] = urlFeatures.map((f) => {
-    let feature
-    if (f.point) {
-      feature = point(f.point)
-    } else {
-      feature = createBox(boundsToPoints(f.bbox))
-    }
-    return compareFeatures(boundingPolygon, feature)
-  })
-  return results.every((r) => r === '>')
+  return urlFeatures
+    .map(({ coordinates }) => compareFeatures(boundingPolygon, geojsonFromCoordinates(coordinates)))
+    .every((r) => r === '>')
 }
 
 export function getUrlFeaturesBbox(urlFeatures: UrlFeature[]): Bounds {

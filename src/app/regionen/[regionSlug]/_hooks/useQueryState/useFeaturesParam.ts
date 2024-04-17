@@ -6,7 +6,7 @@ import { createParser, useQueryState } from 'next-usequerystate'
 import { numericSourceIds } from 'src/app/url'
 import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
 import { UrlFeature, SourceInfo } from './types'
-import { chars, equals, lng, lat, number, parseArray } from './util'
+import { chars, longitude, latitude, parseObject, number } from './util'
 import { parseSourceKeyAtlasGeo } from '../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
@@ -26,13 +26,13 @@ export function parseSourceId(sourceId: SourcesId): SourceInfo {
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source, geometry } = feature
   const { sourceId } = parseSourceKeyAtlasGeo(source)
-  const { type, internal } = parseSourceId(sourceId as SourcesId)
   const data: any = {
-    properties: pick(properties, type === 'osm' ? ['osm_id', 'osm_type'] : ['id']),
+    properties: { id: properties!.id },
     sourceId,
+    coordinates: (geometry.type === 'Point' ? geometry.coordinates : bbox(geometry)).map((v) =>
+      Number(v.toFixed(6)),
+    ),
   }
-  if (geometry.type === 'Point') data.point = geometry.coordinates
-  else data.bbox = bbox(feature.geometry).map((v) => Number(v.toFixed(6)))
   return data
 }
 
@@ -41,60 +41,33 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
     .map((f) => {
       const {
         sourceId,
-        // @ts-expect-error
-        properties: { id, osm_id, osm_type },
+        properties: { id },
+        coordinates,
       } = f
       const numericSourceId = stringSourceIds[sourceId]
-      const type = parseSourceId(sourceId as SourcesId).type
-      const idString = type === 'osm' ? osm_type! + '|' + osm_id! : String(id)
-      const geomType = 'point' in f ? 'P' : 'B'
-      const geomCoords = (f.point || f.bbox).map((v) => v.toFixed(6))
-      return [numericSourceId, idString, geomType, ...geomCoords].join('|')
+      return [numericSourceId, id, ...coordinates].join('|')
     })
     .join(',')
 }
 
-const MappilarySchema = z.tuple([
-  equals(1), // 'mapillary_coverage'
-  number(),
-  chars('P'),
-  lng,
-  lat,
-])
-
-const OsmSchema = z.tuple([
-  number().gte(20),
-  chars('WNR'),
-  number(),
-  chars('B'),
-  lng,
-  lat,
-  lng,
-  lat,
-])
+const Ids = [number(), z.union([number(), z.string()])]
+const Point = [longitude, latitude]
+// @ts-ignore - this work
+const QuerySchema = z.union([z.tuple([...Ids, ...Point]), z.tuple([...Ids, ...Point, ...Point])])
 
 export const parseFeaturesParam = (query: string) => {
   return query
     .split(',')
     .map((s) => {
-      const osm = parseArray(OsmSchema, s.split('|'))
-      const mappilary = parseArray(MappilarySchema, s.split('|'))
-      if (!(osm || mappilary)) return null
-      let properties
-      if (osm) {
-        var [numericSourceId, osm_type, osm_id, geomType, ...coords] = osm
-        properties = { osm_type, osm_id }
-      } else {
-        var [numericSourceId, id, geomType, ...coords] = mappilary
-        properties = { id }
-      }
+      const parsed = parseObject(QuerySchema, s.split('|'))
+      if (!parsed) return null
+      const [numericSourceId, id, ...coordinates] = parsed
       const sourceId = numericSourceIds[numericSourceId]
       if (!sourceId) return null
-
       return {
         sourceId,
-        properties,
-        [geomType === 'P' ? 'point' : 'bbox']: coords,
+        properties: { id },
+        coordinates,
       }
     })
     .filter((p) => p !== null) as unknown as UrlFeature[]
