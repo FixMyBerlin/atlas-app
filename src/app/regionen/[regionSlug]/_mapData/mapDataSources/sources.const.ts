@@ -89,7 +89,6 @@ export const interacitvityConfiguartion: InteracitvityConfiguartion = {
       'maxspeed',
       'smoothness',
       'surface',
-      'smothness_age',
       'smoothness_age',
       'bikelane_left',
       'bikelane_right',
@@ -102,7 +101,7 @@ export const interacitvityConfiguartion: InteracitvityConfiguartion = {
     minzoom: 9,
   },
   bikelanes: {
-    stylingKeys: ['category', 'surface', 'smothness', 'width'],
+    stylingKeys: ['category', 'surface', 'smoothness', 'width'],
     minzoom: 9,
   },
   places: {
