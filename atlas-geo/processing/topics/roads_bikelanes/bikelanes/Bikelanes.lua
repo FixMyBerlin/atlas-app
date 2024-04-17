@@ -70,8 +70,8 @@ function Bikelanes(object)
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = DeriveOneway(transformedTags, category),
-          bridge = Sanitize(tags.bridge, Set({ "yes" })),
-          tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
+          bridge = Sanitize(tags.bridge, { "yes" }),
+          tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
 
         if transformedTags._side == "self" then -- center line case

@@ -48,7 +48,7 @@ function DeriveOneway(tags, category)
       return 'no'
     end
   end
-  if Sanitize(tags.oneway, Set({'yes', 'no'})) then
+  if Sanitize(tags.oneway, {'yes', 'no'}) then
     return tags.oneway
   end
 

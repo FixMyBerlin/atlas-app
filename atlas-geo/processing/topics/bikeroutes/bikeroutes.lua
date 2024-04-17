@@ -27,15 +27,15 @@ function osm2pgsql.process_relation(object)
 
   -- Supposed to be 'km', always. TODO: Ideally modify ParseLength to handle different default units.
   result_tags.distance = tonumber(tags.distance)
-  result_tags.network = Sanitize(tags.network, Set({ 'lcn', 'rcn', 'ncn', 'icn' }))
+  result_tags.network = Sanitize(tags.network, { 'lcn', 'rcn', 'ncn', 'icn' })
   -- "Radschnellverbindungen", 15x https://taginfo.geofabrik.de/europe:germany/keys/cycle_highway#values
   -- We only allow `yes`, `nil`+`no` are both `no`
   -- Map: https://overpass-turbo.eu/?w=%22cycle_highway%22%3D%22yes%22+in+Germany&R
-  result_tags.cycle_highway = Sanitize(tags.cycle_highway, Set({ 'yes' }))
+  result_tags.cycle_highway = Sanitize(tags.cycle_highway, { 'yes' })
   -- Only yes/no are relevant https://taginfo.geofabrik.de/europe:germany/keys/roundtrip#values
-  result_tags.roundtrip = Sanitize(tags.routndtrip, Set({ 'yes', 'no' }))
+  result_tags.roundtrip = Sanitize(tags.routndtrip, { 'yes', 'no' })
   -- Only those two are relevant https://taginfo.geofabrik.de/europe:germany/keys/network%3Atype#values
-  result_tags.network_type = Sanitize(tags['network:type'], Set({ 'node_network', 'basic_network' }))
+  result_tags.network_type = Sanitize(tags['network:type'], { 'node_network', 'basic_network' })
 
   -- free form text, mostly with cryptic key https://taginfo.geofabrik.de/europe:germany/keys/cycle_network#values
   result_tags.cycle_network_key = tags.cycle_network

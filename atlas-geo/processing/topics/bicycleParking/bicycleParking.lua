@@ -67,14 +67,14 @@ local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
   local results = capacityNormalization(tags)
-  local binary = Set({ "yes", "no" })
-  results.access = Sanitize(tags.access, Set({ "yes", "private", "permissive", "customers" }))
+  local binary ={ "yes", "no" }
+  results.access = Sanitize(tags.access, { "yes", "private", "permissive", "customers" })
   results.covered = Sanitize(tags.covered, binary, "implicit_no")
   results.fee = Sanitize(tags.fee, binary, "implicit_no")
   results.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
   results.bicycle_parking = Sanitize(
     tags.bicycle_parking,
-    Set({ "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" })
+    { "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" }
   )
 
   -- these tags are copied (Eigennamen)
