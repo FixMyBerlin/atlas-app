@@ -1,27 +1,14 @@
 import { MapGeoJSONFeature } from 'react-map-gl'
-import { pick, zip } from 'lodash'
+import { zip } from 'lodash'
 import { bbox } from '@turf/turf'
 import { z } from 'zod'
 import { createParser, useQueryState } from 'next-usequerystate'
 import { numericSourceIds } from 'src/app/url'
-import { SourcesId } from '../../_mapData/mapDataSources/sources.const'
-import { UrlFeature, SourceInfo } from './types'
-import { chars, longitude, latitude, parseObject, number } from './util'
+import { UrlFeature } from './types'
+import { longitude, latitude, parseObject, number } from './util'
 import { parseSourceKeyAtlasGeo } from '../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
-
-export function parseSourceId(sourceId: SourcesId): SourceInfo {
-  const type = sourceId.startsWith('mapillary_') ? 'mapillary' : 'osm'
-  const table = sourceId.startsWith('atlas_') ? sourceId.split('atlas_')[1]! : null
-  const internal = !!table
-  return {
-    id: sourceId, // the sourceId
-    type, // wether the data is coming from osm or mapillary
-    internal, // internal data - can be queried from database
-    table, // the internal db table the data can be retrieved from
-  }
-}
 
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source, geometry } = feature
