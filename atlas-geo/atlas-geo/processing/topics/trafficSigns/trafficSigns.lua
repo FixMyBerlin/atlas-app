@@ -130,7 +130,7 @@ function osm2pgsql.process_node(object)
       meta = Metadata(object),
       geom = object:as_point(),
       minzoom = 0,
-      id = DefaultId(object) .. i
+      id = DefaultId(object) .. '/' .. i
     })
   end
 end
