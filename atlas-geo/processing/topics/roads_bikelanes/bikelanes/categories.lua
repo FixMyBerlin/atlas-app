@@ -17,7 +17,7 @@ local function isSeparate(tags)
   end
 end
 
--- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the left
+-- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the right
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local function implicitOneWay(tags)
   local result = tags._prefix == 'cycleway' and tags._infix == '' -- object is created from implicit case
