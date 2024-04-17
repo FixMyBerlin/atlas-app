@@ -45,13 +45,13 @@ function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"
   center._prefix = ""
+  -- don't transform paths only unnest tags prefixed with `cycleway`
+  if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
+    unnestTags(tags, 'cycleway', '', center)
+    return { center }
+  end
 
   local results = { center }
-
-  -- don't transform paths
-  if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
-    return results
-  end
   for _, transformation in ipairs(transformations) do
     for _, side in ipairs({ "left", "right" }) do
       if tags.highway ~= transformation.highway then
