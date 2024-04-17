@@ -10,7 +10,7 @@ require("DeriveSurface")
 require("DeriveSmoothness")
 require("BikelanesTodos")
 require("Sanitize")
-require("InferOneway")
+require("DeriveOneway")
 require("DefaultId")
 
 local tags_copied = {
@@ -69,7 +69,7 @@ function Bikelanes(object)
           _side = transformedTags._side,
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
-          oneway = Sanitize(transformedTags.oneway, Set({ 'yes', 'no' })) or InferOneway(category),
+          oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, Set({ "yes" })),
           tunnel = Sanitize(tags.tunnel, Set({ "yes" })),
         }
