@@ -101,9 +101,9 @@ function RoadClassification(object)
   CopyTags(result_tags, tags, tags_copied)
   CopyTags(result_tags, tags, tags_prefixed, "osm_")
   result_tags.width = ParseLength(tags.width)
-  result_tags.oneway = Sanitize(tags.oneway, Set({ "yes", "no" }))
-  result_tags.bridge = Sanitize(tags.bridge, Set({ "yes" }))
-  result_tags.tunnel = Sanitize(tags.tunnel, Set({ "yes" }))
+  result_tags.oneway = Sanitize(tags.oneway, { "yes", "no" })
+  result_tags.bridge = Sanitize(tags.bridge, { "yes" })
+  result_tags.tunnel = Sanitize(tags.tunnel, { "yes" })
 
   return result_tags
 end

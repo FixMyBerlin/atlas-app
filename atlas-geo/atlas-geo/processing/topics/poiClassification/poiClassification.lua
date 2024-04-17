@@ -83,14 +83,14 @@ local function processTags(tags)
   end
 
   -- This part was previously a separate dataset "education"
-  local formalEducation = Set({
+  local formalEducation = {
     "childcare",
     "college",
     "kindergarten",
     "research_institute",
     "school",
     "university"
-  })
+  }
   results.formalEducation = Sanitize(tags.amenity, formalEducation)
 
   local tags_cc = { "name" }
