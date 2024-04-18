@@ -69,10 +69,7 @@ export const Map = () => {
     const interactiveFeatures = extractInteractivFeatures(features)
     if (interactiveFeatures) {
       setInspectorFeatures(interactiveFeatures)
-      const filteredFeatures = interactiveFeatures.filter(
-        (f) => !(f.source.includes('atlas') && f.properties?.id.startsWith('relation')),
-      )
-      const uniqueFeatures = uniqBy(filteredFeatures, (f) => createInspectorFeatureKey(f))
+      const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
       setFeaturesParam(uniqueFeatures.map((feature) => convertToUrlFeature(feature)))
     }
   }
