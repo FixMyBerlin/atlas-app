@@ -111,6 +111,7 @@ run_dir() {
           log "Restoring data. (.env 'COMPUTE_DIFFS = 2')"
           psql -q -c "DROP TABLE \"${table}\";"
           psql -q -c "ALTER TABLE \"${table}_backup\" RENAME TO \"${table}\";"
+          mv -f $backedup_tables $processed_tables
         else
           psql -q -c "DROP TABLE \"${table}_backup\";"
         fi
