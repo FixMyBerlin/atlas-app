@@ -30,7 +30,7 @@ const allTestData = [
       },
       coordinates: [13.645427, 52.37763, 13.646221, 52.378219],
     },
-    query: '43|way/1010110070|13.645427|52.37763|13.646221|52.378219',
+    query: '10|way/1010110070|13.645427|52.37763|13.646221|52.378219',
   },
   // feature with numeric id and LineString geometry
   {
@@ -60,7 +60,7 @@ const allTestData = [
       },
       coordinates: [9.118744, 48.948085, 9.119004, 48.948291],
     },
-    query: '24|9718|9.118744|48.948085|9.119004|48.948291',
+    query: '5|9718|9.118744|48.948085|9.119004|48.948291',
   },
   // feature with numeric id and Point geometry
   {
@@ -81,12 +81,33 @@ const allTestData = [
       sourceId: 'mapillary_coverage',
       coordinates: [13.64569, 52.378193],
     },
-    query: '1|776457396685869|13.64569|52.378193',
+    query: '21|776457396685869|13.64569|52.378193',
+  },
+  // feature from source osm-notes
+  {
+    map: {
+      source: 'osm-notes',
+      properties: {
+        id: 4055430,
+      },
+      geometry: {
+        type: 'Point',
+        coordinates: [13.544389754533768, 52.43742985126775],
+      },
+    },
+    url: {
+      properties: {
+        id: 4055430,
+      },
+      sourceId: 'osm-notes',
+      coordinates: [13.54439, 52.43743],
+    },
+    query: '1|4055430|13.54439|52.43743',
   },
 ]
 
 describe('Test inspector url params', () => {
-  const dataToTest = [0, 1, 2]
+  const dataToTest = [0, 1, 2, 3]
 
   const testData = Object.values(pick(allTestData, dataToTest))
   test('Convert array of map features to url features', () => {

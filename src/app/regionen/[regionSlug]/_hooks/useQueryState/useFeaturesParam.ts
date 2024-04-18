@@ -12,7 +12,7 @@ const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(
 
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
   const { properties, source, geometry } = feature
-  const { sourceId } = parseSourceKeyAtlasGeo(source)
+  const sourceId = source === 'osm-notes' ? 'osm-notes' : parseSourceKeyAtlasGeo(source).sourceId
   const data: any = {
     properties: { id: properties!.id },
     sourceId,
