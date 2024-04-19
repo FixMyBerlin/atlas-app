@@ -68,6 +68,6 @@ export function parseSourceKeyAtlasGeo(sourceKey: string) {
 }
 
 export function isSourceKeyAtlasGeo(key: string) {
-  // TODO: make this stricter
-  return key.search(delimiter) !== -1
+  const { categoryId, sourceId, subcategoryId } = parseSourceKeyAtlasGeo(key)
+  return !!categoryId && !!sourceId && !!subcategoryId
 }
