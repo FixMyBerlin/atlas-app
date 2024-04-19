@@ -12,6 +12,7 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
+import { uniqBy } from 'lodash'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
@@ -27,14 +28,19 @@ import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { convertToUrlFeature, useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
-import { uniqBy } from 'lodash'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
+import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setFeaturesParam } = useFeaturesParam()
-  const { setInspectorFeatures, setMapLoaded, setMapDataLoading, setMapBounds } =
-    useMapStateInteraction()
+  const { setFeaturesParam, resetFeaturesParam } = useFeaturesParam()
+  const {
+    setInspectorFeatures,
+    resetInspectorFeatures,
+    setMapLoaded,
+    setMapDataLoading,
+    setMapBounds,
+  } = useMapStateInteraction()
   const region = useStaticRegion()
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
@@ -70,7 +76,14 @@ export const Map = () => {
     if (interactiveFeatures) {
       setInspectorFeatures(interactiveFeatures)
       const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
-      setFeaturesParam(uniqueFeatures.map((feature) => convertToUrlFeature(feature)))
+      const persistableFeatures = uniqueFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
+      if (persistableFeatures.length) {
+        setFeaturesParam(persistableFeatures.map((feature) => convertToUrlFeature(feature)))
+      } else {
+        resetFeaturesParam()
+      }
+    } else {
+      resetInspectorFeatures()
     }
   }
 

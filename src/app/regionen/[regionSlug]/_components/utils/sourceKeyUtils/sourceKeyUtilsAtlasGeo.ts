@@ -19,10 +19,11 @@ function createKey(obj: Record<string, string>) {
     .join('--')
 }
 
+const delimiter = '--'
 function parseKey(key: string, shortToLong: Record<string, string>): Record<string, string> {
   return Object.fromEntries(
     key
-      .split('--')
+      .split(delimiter)
       .map((s) => s.split(':'))
       .map(([shortKey, value]) => [shortToLong[shortKey!], value]),
   )
@@ -64,4 +65,9 @@ export function parseSourceKeyAtlasGeo(sourceKey: string) {
     sourceId: SourcesId
     subcategoryId: SubcategoryId
   }
+}
+
+export function isSourceKeyAtlasGeo(key: string) {
+  // TODO: make this stricter
+  return key.search(delimiter) !== -1
 }

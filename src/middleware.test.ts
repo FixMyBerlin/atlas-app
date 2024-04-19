@@ -137,10 +137,10 @@ describe('middleware()', () => {
       const configParam = url.searchParams.get('config')
 
       // Check if all `nameMigrations` are done
-      expect(configParam?.includes('fromTo')).toBeFalsy
-      expect(configParam?.includes('shops')).toBeFalsy
-      expect(configParam?.includes('roadClassification')).toBeFalsy
-      expect(configParam?.includes('topics')).toBeFalsy
+      expect(configParam?.includes('fromTo')).toBeFalsy()
+      expect(configParam?.includes('shops')).toBeFalsy()
+      expect(configParam?.includes('roadClassification')).toBeFalsy()
+      expect(configParam?.includes('topics')).toBeFalsy()
     })
 
     test('MIGRATION: Update old `config`s: Check if the migrated config preserved the given active state', () => {
