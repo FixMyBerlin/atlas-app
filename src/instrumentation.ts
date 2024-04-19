@@ -1,6 +1,6 @@
 import {
   exportApiIdentifier,
-  interacitvityConfiguartion,
+  interactivityConfiguration,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { initCustomFunctions } from './instrumentation/initCustomFunctions'
 import { initExportFunctions } from './instrumentation/initExportFunctions'
@@ -12,7 +12,7 @@ export async function register() {
     try {
       await initCustomFunctions()
       await initExportFunctions(exportApiIdentifier)
-      await initGeneralizationFunctions(interacitvityConfiguartion)
+      await initGeneralizationFunctions(interactivityConfiguration)
     } catch (e) {
       console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
     }

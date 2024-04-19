@@ -16,7 +16,7 @@ import { uniqBy } from 'lodash'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { interacitvityConfiguartion } from '../../_mapData/mapDataSources/sources.const'
+import { interactivityConfiguration } from '../../_mapData/mapDataSources/sources.const'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { Calculator } from './Calculator/Calculator'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
@@ -50,11 +50,11 @@ export const Map = () => {
   // We do not show those features in our Inspector, which would show wrong data
   // However, we do want to show an interaction (Tooltip) to inform our users,
   // which is why the layers stay in `interactiveLayerIds`
-  const extractInteractivFeatures = (features: MapGeoJSONFeature[] | undefined) => {
+  const extractInteractiveFeatures = (features: MapGeoJSONFeature[] | undefined) => {
     return features?.filter(
       (f) =>
-        interacitvityConfiguartion[f.sourceLayer] == undefined ||
-        mapParam.zoom >= interacitvityConfiguartion[f.sourceLayer].minzoom,
+        interactivityConfiguration[f.sourceLayer] === undefined ||
+        mapParam.zoom >= interactivityConfiguration[f.sourceLayer].minzoom,
     )
   }
 
@@ -62,7 +62,7 @@ export const Map = () => {
   const handleMouseEnter = (event: MapLayerMouseEvent) => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
-    const interactiveFeatures = extractInteractivFeatures(features)
+    const interactiveFeatures = extractInteractiveFeatures(features)
     setCursorStyle(Boolean(interactiveFeatures?.length) ? 'pointer' : 'not-allowed')
   }
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
@@ -72,7 +72,7 @@ export const Map = () => {
   const handleClick = (event: MapLayerMouseEvent) => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
-    const interactiveFeatures = extractInteractivFeatures(features)
+    const interactiveFeatures = extractInteractiveFeatures(features)
     if (interactiveFeatures) {
       setInspectorFeatures(interactiveFeatures)
       const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))

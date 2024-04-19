@@ -78,7 +78,7 @@ export const generalizationFunctionIdentifier = (tableName: TableId) =>
 export type InteracitvityConfiguartion = Partial<
   Record<TableId, { minzoom: number; stylingKeys: string[] }>
 >
-export const interacitvityConfiguartion: InteracitvityConfiguartion = {
+export const interactivityConfiguration: InteracitvityConfiguartion = {
   roads: {
     stylingKeys: [
       'road',
