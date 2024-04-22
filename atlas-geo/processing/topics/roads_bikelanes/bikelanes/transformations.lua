@@ -5,7 +5,6 @@ require('HighwayClasses')
 -- unnest all tags from ["prefix .. side:subtag"]=val -> ["subtag"]=val
 local function unnestTags(tags, prefix, infix, dest)
   dest = dest or {}
-  dest._parent = tags
   local fullPrefix = prefix .. infix
   local prefixLen = string.len(fullPrefix)
   for key, val in pairs(tags) do
@@ -59,6 +58,7 @@ function GetTransformedObjects(tags, transformations)
         local newObj = {
           _prefix = prefix,
           _side = side,
+          _parent = tags,
           _parent_highway = tags.highway,
           highway = transformation.highway
         }
