@@ -119,7 +119,6 @@ function osm2pgsql.process_way(object)
       publicTags.name = results.name
       publicTags.length = length
       publicTags.road = results.road
-      publicTags.prefix = cycleway._prefix
       publicTags._parent_highway = cycleway._parent_highway
 
       cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
