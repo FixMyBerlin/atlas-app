@@ -57,12 +57,12 @@ function Bikelanes(object)
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
   for _, transformedTags in ipairs(transformedObjects) do
-    local onlyPresent = CategorizeOnlyPresent(transformedTags)
-    if onlyPresent ~= nil then
+    local category = FilterNegativeData(transformedTags)
+    if category ~= nil then
       local result_tag = {
         _infrastructureExists = false,
         _side = transformedTags._side,
-        category = onlyPresent,
+        category = category,
       }
       table.insert(result_bikelanes, result_tag)
     else
