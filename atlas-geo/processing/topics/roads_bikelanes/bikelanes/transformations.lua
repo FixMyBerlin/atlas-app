@@ -44,7 +44,7 @@ local sideDirectionMap = {
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"
-  center._prefix = ""
+  
   -- don't transform paths only unnest tags prefixed with `cycleway`
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     unnestTags(tags, 'cycleway', '', center)

@@ -34,7 +34,7 @@ function Bikelanes(object)
   local tags = object.tags
   local result_bikelanes = {}
 
-  -- transformations
+  -- transformations for nested tags:
   local footwayTransformation = {
     highway = "footway",
     prefix = "sidewalk",
@@ -42,7 +42,6 @@ function Bikelanes(object)
       return not (tags.footway == 'no' or tags.footway == 'separate')
     end
   }
-  -- cycleway transformer:
   local cyclewayTransformation = {
     highway = "cycleway",
     prefix = "cycleway",
@@ -65,8 +64,11 @@ function Bikelanes(object)
       local category = CategorizeBikelane(transformedTags)
       if category ~= nil then
         local result_tags = {
+          _id = DefaultId(object),
           _infrastructureExists = true,
           _side = transformedTags._side,
+          age = AgeInDays(ParseCheckDate(tags["check_date"])),
+          prefix = transformedTags._prefix,
           category = category,
           offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = DeriveOneway(transformedTags, category),
@@ -74,14 +76,11 @@ function Bikelanes(object)
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
 
-        if transformedTags._side == "self" then -- center line case
-          result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
-          result_tags._id = DefaultId(object)
-        else                                    -- left/right case
-          MergeTable(result_tags, transformedTags)
-          local freshKey = "check_date:" .. transformedTags._prefix
-          result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))
+         -- for projected geometries we use a different `id` and `check_date` key
+        if transformedTags._side ~= "self" then
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
+          result_tags._parent_highway = transformedTags._parent_highway
+          result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
         result_tags.width = ParseLength(transformedTags.width)
