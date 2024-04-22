@@ -80,6 +80,12 @@ function Bikelanes(object)
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
+        MergeTable(result_tags, DeriveSmoothness(transformedTags))
+        MergeTable(result_tags, DeriveSurface(transformedTags))
+        CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
+
+        -- copy original tags
+        CopyTags(result_tags, tags, tags_copied)
 
          -- these keys are different for projected geometries
         if transformedTags._side ~= "self" then
@@ -88,13 +94,6 @@ function Bikelanes(object)
           result_tags.offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
-
-        MergeTable(result_tags, DeriveSmoothness(transformedTags))
-        MergeTable(result_tags, DeriveSurface(transformedTags))
-        CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
-
-        -- copy original tags
-        CopyTags(result_tags, tags, tags_copied)
 
         result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
         table.insert(result_bikelanes, result_tags)
