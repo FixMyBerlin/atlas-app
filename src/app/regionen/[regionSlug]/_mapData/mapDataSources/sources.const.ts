@@ -75,9 +75,7 @@ export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
 export const generalizationFunctionIdentifier = (tableName: TableId) =>
   `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TableId>}`
 
-export type InteracitvityConfiguartion = Partial<
-  Record<TableId, { minzoom: number; stylingKeys: string[] }>
->
+export type InteracitvityConfiguartion = Record<TableId, { minzoom: number; stylingKeys: string[] }>
 export const interactivityConfiguration: InteracitvityConfiguartion = {
   roads: {
     stylingKeys: [
@@ -136,9 +134,25 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: ['category_municipality', 'category_district', 'name', 'name:prefix'],
     minzoom: 0,
   },
+  boundaryLabels: {
+    stylingKeys: ['category_municipality', 'name:prefix', 'category_district'],
+    minzoom: 0,
+  },
   landuse: {
     stylingKeys: ['landuse'],
     minzoom: 11,
+  },
+  publicTransport: {
+    stylingKeys: ['category'],
+    minzoom: 11,
+  },
+  trafficSigns: {
+    stylingKeys: [],
+    minzoom: 0,
+  },
+  presenceStats: {
+    stylingKeys: [],
+    minzoom: 0,
   },
 }
 
@@ -384,7 +398,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
-    tiles: `${tilesUrl}/atlas_generalized_publicTransport/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_publictransport/{z}/{x}/{y}`,
     maxzoom: 9,
     minzoom: 4,
     attributionHtml:
