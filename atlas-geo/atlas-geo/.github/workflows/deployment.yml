@@ -76,7 +76,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: processing/ processing.Dockerfile docker-compose.yml, docker-compose.network.yml
+          CHECK_DIFF_LOCATIONS: processing/ processing.Dockerfile
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
