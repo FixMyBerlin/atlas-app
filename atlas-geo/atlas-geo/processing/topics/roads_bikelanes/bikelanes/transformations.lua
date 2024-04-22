@@ -27,11 +27,6 @@ local function unnestTags(tags, prefix, infix, dest)
   return dest
 end
 
-SideSignMap = {
-  ["left"] = 1,
-  ["right"] = -1,
-  ["self"] = 0
-}
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
 local sideDirectionMap = {
