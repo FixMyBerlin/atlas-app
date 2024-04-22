@@ -2,6 +2,7 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("Sanitize")
 
+-- Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
 local onewayAssumedNo = Set({
   'bicycleRoad',                        -- road shared, both lanes
   'bicycleRoad_vehicleDestination',     -- road shared, both lanes

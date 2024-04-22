@@ -85,7 +85,6 @@ function Bikelanes(object)
         end
 
         result_tags.width = ParseLength(transformedTags.width)
-        -- `oneway`: Our data should be explicit about tagging that OSM considers default/implicit as well assumed defaults.
         result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
