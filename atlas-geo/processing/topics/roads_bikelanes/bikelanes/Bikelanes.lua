@@ -29,6 +29,11 @@ local tags_prefixed = {
   'traffic_mode:left',
   'traffic_mode:right',
 }
+local sideSignMap = {
+  ["left"] = 1,
+  ["right"] = -1,
+  ["self"] = 0
+}
 
 function Bikelanes(object)
   local tags = object.tags
@@ -70,7 +75,7 @@ function Bikelanes(object)
           age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           category = category,
-          offset = SideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
+          offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
