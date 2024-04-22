@@ -35,25 +35,26 @@ local sideSignMap = {
   ["self"] = 0
 }
 
+-- transformations for nested tags:
+local footwayTransformation = {
+  highway = "footway",
+  prefix = "sidewalk",
+  filter = function(tags)
+    return not (tags.footway == 'no' or tags.footway == 'separate')
+  end
+}
+local cyclewayTransformation = {
+  highway = "cycleway",
+  prefix = "cycleway",
+}
+
+local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
+
 function Bikelanes(object)
   local tags = object.tags
   local result_bikelanes = {}
 
-  -- transformations for nested tags:
-  local footwayTransformation = {
-    highway = "footway",
-    prefix = "sidewalk",
-    filter = function(tags)
-      return not (tags.footway == 'no' or tags.footway == 'separate')
-    end
-  }
-  local cyclewayTransformation = {
-    highway = "cycleway",
-    prefix = "cycleway",
-  }
-
   -- generate cycleways from center line tagging, also includes the original object with `side = self`
-  local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
   for i, transformedTags in ipairs(transformedObjects) do
