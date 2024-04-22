@@ -29,7 +29,7 @@ async function createTileSpecification(tableName: TableId) {
   return tileSpecification
 }
 function toSqlArray(arr: string[]) {
-  return `Array[${arr.map((tag) => `'${tag}'`)}]`
+  return `Array[${arr.map((tag) => `'${tag}'`)}]::text[]`
 }
 
 export async function initGeneralizationFunctions(
