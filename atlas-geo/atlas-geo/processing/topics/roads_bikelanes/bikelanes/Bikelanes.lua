@@ -57,7 +57,7 @@ function Bikelanes(object)
   -- generate cycleways from center line tagging, also includes the original object with `side = self`
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
-  for i, transformedTags in ipairs(transformedObjects) do
+  for _, transformedTags in ipairs(transformedObjects) do
     local onlyPresent = CategorizeOnlyPresent(transformedTags)
     if onlyPresent ~= nil then
       local result_tag = {
