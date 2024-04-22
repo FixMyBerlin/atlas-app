@@ -175,7 +175,7 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'atlas_boundaries',
-    tiles: `${tilesUrl}/atlas_generalized_boundaries,atlas_generalized_boundaryLabels/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_boundaries,atlas_generalized_boundarylabels/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
@@ -356,7 +356,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roadsPathClasses',
-    tiles: `${tilesUrl}/atlas_generalized_roadsPathClasses/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_roadspathclasses/{z}/{x}/{y}`,
     maxzoom: 14,
     minzoom: 10,
     attributionHtml:
@@ -477,7 +477,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/barrierAreas
     // https://tiles.radverkehrsatlas.de/barrierLines
     id: 'atlas_barriers',
-    tiles: `${tilesUrl}/atlas_generalized_barrierAreas,atlas_generalized_barrierLines/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -516,7 +516,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/bicycleParking_points
     // https://tiles.radverkehrsatlas.de/bicycleParking_areas
     id: 'atlas_bicycleParking',
-    tiles: `${tilesUrl}/atlas_generalized_bicycleParking_points,atlas_generalized_bicycleParking_areas/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -547,7 +547,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/trafficSigns
     id: 'atlas_trafficSigns',
-    tiles: `${tilesUrl}/atlas_generalized_trafficSigns/{z}/{x}/{y}`,
+    tiles: `${tilesUrl}/atlas_generalized_trafficsigns/{z}/{x}/{y}`,
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
