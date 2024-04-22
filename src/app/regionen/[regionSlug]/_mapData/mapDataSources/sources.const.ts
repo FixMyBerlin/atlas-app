@@ -105,11 +105,11 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     minzoom: 9,
   },
   places: {
-    stylingKeys: ['place', 'name', 'population', 'formalEducation', 'amenity'],
+    stylingKeys: ['place', 'name', 'population'],
     minzoom: 8,
   },
   poiClassification: {
-    stylingKeys: ['category', 'name'],
+    stylingKeys: ['category', 'name', 'formalEducation', 'amenity'],
     minzoom: 13,
   },
   barrierAreas: {
