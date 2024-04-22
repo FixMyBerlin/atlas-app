@@ -75,6 +75,7 @@ function Bikelanes(object)
           age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           category = category,
+          width = ParseLength(transformedTags.width),
           oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
@@ -88,7 +89,6 @@ function Bikelanes(object)
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
-        result_tags.width = ParseLength(transformedTags.width)
         result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
