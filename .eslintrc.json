@@ -1,6 +1,7 @@
 // Following https://nextjs.org/docs/app/building-your-application/configuring/eslint
 {
   "rules": {
+    // https://eslint.org/docs/latest/rules/no-unused-expressions
     "no-unused-expressions": [
       "error",
       {
@@ -8,7 +9,28 @@
         "allowTernary": true,
         "allowTaggedTemplates": true
       }
+    ],
+    // https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#33-add-ts-safeqlcheck-sql-rules
+    "@ts-safeql/check-sql": [
+      "error",
+      {
+        "connections": [
+          {
+            // The migrations path:
+            "migrationsDir": "./prisma/migrations",
+            "targets": [
+              // This makes `prisma.$queryRaw` and `prisma.$executeRaw` commands linted
+              { "tag": "prisma.+($queryRaw|$executeRaw)", "transform": "{type}[]" }
+            ]
+          }
+        ]
+      }
     ]
   },
-  "extends": ["next/core-web-vitals", "prettier"]
+  "extends": [
+    "next/core-web-vitals",
+    "prettier",
+    // https://www.prisma.io/docs/orm/prisma-client/queries/raw-database-access/custom-and-type-safe-queries#3-integrate-safeql
+    "plugin:@ts-safeql/eslint-plugin"
+  ]
 }
