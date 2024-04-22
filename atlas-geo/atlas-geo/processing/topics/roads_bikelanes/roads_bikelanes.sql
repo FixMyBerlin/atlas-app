@@ -13,7 +13,7 @@ SET
 WHERE
   ST_IsSimple(geom)
   AND NOT ST_IsClosed(geom)
-  AND (tags->>'offset')::numeric != 0;
+  AND tags ? 'offset';
 
 UPDATE
   "bikelanes"
