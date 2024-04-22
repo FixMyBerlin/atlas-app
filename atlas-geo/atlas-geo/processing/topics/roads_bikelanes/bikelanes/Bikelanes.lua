@@ -93,10 +93,10 @@ function Bikelanes(object)
         result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
+        CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
 
         -- copy original tags
         CopyTags(result_tags, tags, tags_copied)
-        CopyTags(result_tags, tags, tags_prefixed, 'osm_')
 
         table.insert(result_bikelanes, result_tags)
       end
