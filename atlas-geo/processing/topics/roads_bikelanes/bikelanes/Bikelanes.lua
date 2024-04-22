@@ -31,8 +31,7 @@ local tags_prefixed = {
 }
 local sideSignMap = {
   ["left"] = 1,
-  ["right"] = -1,
-  ["self"] = 0
+  ["right"] = -1
 }
 
 -- transformations for nested tags:
@@ -76,16 +75,16 @@ function Bikelanes(object)
           age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           category = category,
-          offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2,
           oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
 
-         -- for projected geometries we use a different `id` and `check_date` key
+         -- these keys are different for projected geometries
         if transformedTags._side ~= "self" then
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
           result_tags._parent_highway = transformedTags._parent_highway
+          result_tags.offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
