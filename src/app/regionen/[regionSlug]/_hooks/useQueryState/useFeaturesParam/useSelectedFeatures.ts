@@ -1,6 +1,6 @@
 import { useMap } from 'react-map-gl/maplibre'
-import { useFeaturesParam } from '../regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam'
-import { findFeature } from '../regionen/[regionSlug]/_components/SidebarInspector/util'
+import { useFeaturesParam } from './useFeaturesParam'
+import { findFeature } from '../../../_components/SidebarInspector/util'
 import { MapGeoJSONFeature } from 'react-map-gl'
 
 const { entries, fromEntries } = Object

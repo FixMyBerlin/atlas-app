@@ -1,4 +1,4 @@
-import { SourcesId } from './regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 
 // initially generated with:
 // const numericSourceIds= {...{1: 'osm-notes'}, ...Object.fromEntries(sources.map((s, i) => [i+2, s.id]))}

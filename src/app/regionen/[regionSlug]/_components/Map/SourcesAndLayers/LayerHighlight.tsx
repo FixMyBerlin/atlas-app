@@ -3,7 +3,7 @@ import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
-import { useSelectedFeatures } from '../../../../../_hooks/useSelectedFeatures'
+import { useSelectedFeatures } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 
 type Props = {
   sourceData: (typeof sources)[number]

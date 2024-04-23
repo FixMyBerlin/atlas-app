@@ -11,8 +11,8 @@ import {
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
 import { createBoundingPolygon, allUrlFeaturesInBounds, fitBounds } from './util'
-import { useSelectedFeatures } from 'src/app/_hooks/useSelectedFeatures'
-import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
+import { useSelectedFeatures } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
+import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 
 type Props = Pick<
   Store,

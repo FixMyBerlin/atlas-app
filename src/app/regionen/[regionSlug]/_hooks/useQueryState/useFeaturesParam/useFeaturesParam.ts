@@ -3,10 +3,10 @@ import { zip } from 'lodash'
 import { bbox } from '@turf/turf'
 import { z } from 'zod'
 import { createParser, useQueryState } from 'next-usequerystate'
-import { numericSourceIds } from 'src/app/url'
-import { UrlFeature } from './types'
-import { longitude, latitude, parseObject, number } from './util'
-import { parseSourceKeyAtlasGeo } from '../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
+import { UrlFeature } from '../types'
+import { longitude, latitude, parseObject, number } from '../util'
+import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 

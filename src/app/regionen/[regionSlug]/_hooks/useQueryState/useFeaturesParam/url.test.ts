@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { sources } from './regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { numericSourceIds } from './url'
 
 describe('Test data required for url decoding', () => {

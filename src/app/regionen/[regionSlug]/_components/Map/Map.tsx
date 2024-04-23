@@ -27,7 +27,10 @@ import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersSta
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import { convertToUrlFeature, useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam'
+import {
+  convertToUrlFeature,
+  useFeaturesParam,
+} from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
