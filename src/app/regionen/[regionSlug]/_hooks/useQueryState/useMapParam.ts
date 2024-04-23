@@ -1,7 +1,7 @@
 import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { z } from 'zod'
-import { range } from './util'
+import { range } from './utils/zodHelper'
 
 export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 

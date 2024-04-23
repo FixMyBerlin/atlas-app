@@ -6,7 +6,7 @@ import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryS
 import { z } from 'zod'
 import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { UrlFeature } from '../types'
-import { latitude, longitude } from '../util'
+import { latitude, longitude } from '../utils/zodHelper'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
