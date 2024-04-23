@@ -10,16 +10,15 @@ type Props = {
 } & LayerProps
 
 export const LayerHighlight = (parentLayerProps: Props) => {
-  const {
-    // unfilteredInspectorFeatures: inspectorFeatures,
-    calculatorAreasWithFeatures,
-    mapLoaded,
-  } = useMapStateInteraction()
+  const { unfilteredInspectorFeatures, calculatorAreasWithFeatures, mapLoaded } =
+    useMapStateInteraction()
 
   const selectedFeatures = useSelectedFeatures()
   const { sourceData } = parentLayerProps
 
-  const inspectorFeatures = selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
+  const features = unfilteredInspectorFeatures.length
+    ? unfilteredInspectorFeatures
+    : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   if (!mapLoaded) return null
 
@@ -29,7 +28,7 @@ export const LayerHighlight = (parentLayerProps: Props) => {
   if (sourceData.inspector.enabled) {
     highlightingKey = sourceData.inspector.highlightingKey
     featureIds = extractHighlightFeatureIds(
-      inspectorFeatures.filter((f) => f.layer.id === parentLayerProps.id),
+      features.filter((f) => f.layer.id === parentLayerProps.id),
       highlightingKey,
     )
   }

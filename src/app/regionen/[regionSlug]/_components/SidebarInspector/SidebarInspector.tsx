@@ -18,13 +18,13 @@ type Props = Pick<
   Store,
   | 'mapLoaded'
   | 'mapBounds'
+  | 'uniqueInspectorFeatures'
   | 'resetInspectorFeatures'
   | 'setInspectorSize'
   | 'inspectorSize'
   | 'sidebarLayerControlsSize'
 > & {
   map: MapRef
-  uniqueInspectorFeatures: ReturnType<Store['getUniqueInspectorFeatures']>
   selectedFeatures: ReturnType<typeof useSelectedFeatures>
 }
 
@@ -36,7 +36,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     mapLoaded,
     mapBounds, // needed to trigger rerendering
     uniqueInspectorFeatures,
-    resetInspectorFeatures,
+    selectedFeatures,
     setInspectorSize,
     inspectorSize,
     sidebarLayerControlsSize,
@@ -51,15 +51,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     },
   })
 
-  const { resetFeaturesParam } = useFeaturesParam()
-  const selectedFeatures = useSelectedFeatures()
-  const features = uniqueInspectorFeatures.length
-    ? uniqueInspectorFeatures
-    : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
-
-  const boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
-
-  if (features.length) {
+  if (uniqueInspectorFeatures.length) {
     checkBounds.current = false
   }
 
@@ -68,12 +60,17 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     checkBounds.current && // run this at most once
     inspectorSize.width !== 0 // size of the inspector needs to be known to check bounding box
   ) {
+    const boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
     const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
     if (!allUrlFeaturesInBounds(urlFeatures, boundingPolygon)) {
       fitBounds(map, urlFeatures, sidebarLayerControlsSize, inspectorSize)
     }
     checkBounds.current = false
   }
+
+  const features = uniqueInspectorFeatures.length
+    ? uniqueInspectorFeatures
+    : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   const renderFeatures = !!features.length
 
@@ -82,18 +79,19 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     !renderFeatures && 'opacity-0 pointer-events-none',
   )
 
+  const { resetFeaturesParam } = useFeaturesParam()
+  const { resetInspectorFeatures } = props
+  const handleClose = () => {
+    resetFeaturesParam()
+    resetInspectorFeatures()
+  }
+
   return (
     <div ref={ref} className={className}>
       <Suspense fallback={<Spinner />}>
         {renderFeatures ? (
           <>
-            <InspectorHeader
-              count={features.length}
-              handleClose={() => {
-                resetFeaturesParam()
-                resetInspectorFeatures()
-              }}
-            />
+            <InspectorHeader count={features.length} handleClose={handleClose} />
             <Inspector features={features} />
             <style
               dangerouslySetInnerHTML={{
@@ -114,14 +112,12 @@ export const SidebarInspector: React.FC = () => {
   const {
     mapLoaded,
     mapBounds,
-    getUniqueInspectorFeatures,
+    uniqueInspectorFeatures,
     resetInspectorFeatures,
     setInspectorSize,
     inspectorSize,
     sidebarLayerControlsSize,
   } = useMapStateInteraction()
-
-  const uniqueInspectorFeatures = getUniqueInspectorFeatures()
 
   if (!map) {
     return null

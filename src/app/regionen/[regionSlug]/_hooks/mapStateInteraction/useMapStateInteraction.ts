@@ -44,7 +44,7 @@ type StoreOsmNotesState = {
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
   unfilteredInspectorFeatures: MapGeoJSONFeature[]
-  getUniqueInspectorFeatures: () => MapGeoJSONFeature[]
+  uniqueInspectorFeatures: MapGeoJSONFeature[]
   setInspectorFeatures: (inspectObject: Store['unfilteredInspectorFeatures']) => void
   resetInspectorFeatures: () => void
 }
@@ -85,22 +85,30 @@ export const useMapStateInteraction = create<Store>((set, get) => ({
   // Data for <Inspector> AND <LayerHighlight>
   // (!) Usually we don't want to use `inspectorFeatures` directly, use `getUniqueInspectorFeatures` instead!
   unfilteredInspectorFeatures: [],
-  getUniqueInspectorFeatures: () => {
+  uniqueInspectorFeatures: [],
+
+  setInspectorFeatures: (unfilteredInspectorFeatures) => {
+    set({ unfilteredInspectorFeatures })
     // When we click on the map, MapLibre returns all Features for all layers.
     // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
     const uniqueKeys: Record<string, boolean> = {}
     const { unfilteredInspectorFeatures: inspectorFeatures } = get()
-    return inspectorFeatures.reduce((result: typeof inspectorFeatures, feature) => {
-      if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
-        uniqueKeys[createInspectorFeatureKey(feature)] = true
-        result.push(feature)
-      }
-      return result
-    }, [])
+    const uniqueInspectorFeatures = inspectorFeatures.reduce(
+      (result: typeof inspectorFeatures, feature) => {
+        if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
+          uniqueKeys[createInspectorFeatureKey(feature)] = true
+          result.push(feature)
+        }
+        return result
+      },
+      [],
+    )
+    set({ uniqueInspectorFeatures })
   },
-  setInspectorFeatures: (inspectorFeatures) =>
-    set({ unfilteredInspectorFeatures: inspectorFeatures }),
-  resetInspectorFeatures: () => set({ unfilteredInspectorFeatures: [] }),
+  resetInspectorFeatures: () => {
+    set({ unfilteredInspectorFeatures: [] })
+    set({ uniqueInspectorFeatures: [] })
+  },
 
   // Data for <Inspector> AND <LayerHighlight>
   calculatorAreasWithFeatures: [],
