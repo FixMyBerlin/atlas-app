@@ -1,12 +1,12 @@
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
-import { zip } from 'lodash'
 import { bbox } from '@turf/turf'
-import { z } from 'zod'
+import { zip } from 'lodash'
 import { createParser, useQueryState } from 'next-usequerystate'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
-import { UrlFeature } from '../types'
-import { longitude, latitude, parseObject, number } from '../util'
+import { z } from 'zod'
 import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { UrlFeature } from '../types'
+import { latitude, longitude } from '../util'
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
@@ -46,9 +46,9 @@ export const parseFeaturesParam = (query: string) => {
   return query
     .split(',')
     .map((s) => {
-      const parsed = parseObject(QuerySchema, s.split('|'))
-      if (!parsed) return null
-      const [numericSourceId, id, ...coordinates] = parsed
+      const parsed = QuerySchema.safeParse(s.split('|'))
+      if (!parsed.success) return null
+      const [numericSourceId, id, ...coordinates] = parsed.data
       const sourceId = numericSourceIds[numericSourceId]
       if (!sourceId) return null
       return {
