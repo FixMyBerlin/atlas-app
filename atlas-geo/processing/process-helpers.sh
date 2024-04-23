@@ -77,7 +77,7 @@ run_dir() {
     fi
   else
     # Backup tables for diffs
-    if [ "$COMPUTE_DIFFS" == 1 ] || [ "$COMPUTE_DIFFS" == 2 ]; then
+    if [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
           psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
@@ -100,15 +100,15 @@ run_dir() {
     # Create diffs for all backedup tables that where already available
     if [ -f $backedup_tables ]; then
       log_start "Compute Diffs"
-      log "Computing diffs (.env 'COMPUTE_DIFFS=1|2') for: $(tr '\n' ' ' < $backedup_tables)"
+      log "Computing diffs (.env 'COMPUTE_DIFFS=1') for: $(tr '\n' ' ' < $backedup_tables)"
       for table in $(cat $backedup_tables); do
         if grep -q -E "^${table}\$" $processed_tables; then
           compute_diff $table
         else
           log "$table got deleted."
         fi
-        if [ "$COMPUTE_DIFFS" == 2 ]; then
-          log "Restoring data. (.env 'COMPUTE_DIFFS = 2')"
+        if [ "$FREEZE_DATA" == 1 ]; then
+          log "Restoring data. (.env 'FREEZE_DATA=1')"
           psql -q -c "DROP TABLE \"${table}\";"
           psql -q -c "ALTER TABLE \"${table}_backup\" RENAME TO \"${table}\";"
           mv -f $backedup_tables $processed_tables

@@ -10,6 +10,7 @@ export OSM_FILTERED_FILE=${OSM_DATADIR}openstreetmap-filtered.osm.pbf
 export SKIP_DOWNLOAD=${SKIP_DOWNLOAD:-0}
 export SKIP_TAG_FILTER=${SKIP_TAG_FILTER:-0}
 export COMPUTE_DIFFS=${COMPUTE_DIFFS:-0}
+export FREEZE_DATA=${FREEZE_DATA:-0}
 export ID_FILTER=${ID_FILTER:-''}
 export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYNO.Chat.External&method=incoming&version=2&token='
 
