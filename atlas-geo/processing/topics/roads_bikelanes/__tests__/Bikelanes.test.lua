@@ -12,7 +12,8 @@ describe("Bikelanes", function()
           width = '5 m',
           bicycle_road = 'yes',
         },
-        id = 1
+        id = 1,
+        type = 'way'
       }
       local result = Bikelanes(input_object)
       assert.are.same(result[1].category, "bicycleRoad")
@@ -27,7 +28,8 @@ describe("Bikelanes", function()
           ['cycleway:left'] = 'track',
           ['cycleway:left:width'] = '5 m',
         },
-        id = 1
+        id = 1,
+        type = 'way'
       }
       local result = Bikelanes(input_object)
       -- Add assertions here
