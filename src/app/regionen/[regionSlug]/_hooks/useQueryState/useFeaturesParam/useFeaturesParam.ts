@@ -39,7 +39,7 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
 
 const Ids = [z.coerce.number(), z.union([z.coerce.number(), z.string()])]
 const Point = [longitude, latitude]
-// @ts-ignore - this work
+// @ts-expect-errors - this work
 const QuerySchema = z.union([z.tuple([...Ids, ...Point]), z.tuple([...Ids, ...Point, ...Point])])
 
 export const parseFeaturesParam = (query: string) => {
