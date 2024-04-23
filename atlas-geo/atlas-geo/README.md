@@ -82,9 +82,9 @@ Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<table
 
 It will compare the `tags` column to the previous run.
 
-The settings are the default for development but disabled on staging, production by default.
-
 Whenever we talk about `diff`s in this code, this feature is referenced.
+
+With `FREEZE_DATA=1` the system will **not** update the tables. This is usefull during development if one only wants to see the changes to a certain version. This flag will be ignored if `COMPUTE_DIFFS=0`.
 
 ### Process only a single object
 
