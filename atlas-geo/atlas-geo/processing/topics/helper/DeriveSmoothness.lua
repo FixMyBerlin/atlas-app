@@ -114,6 +114,7 @@ local function deriveSmoothnessFromSurface(surface)
     ["tiles"] = "bad",
   }
 
+
   if not surface then
     return nil, nil, nil, "Please add surface=*"
   end
