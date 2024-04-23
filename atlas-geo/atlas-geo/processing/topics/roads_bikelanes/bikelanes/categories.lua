@@ -281,7 +281,7 @@ local function defineCategory(tags, categories)
 end
 
 -- Categories for objects where no infrastructure is available but the data is considered complete
-function FilterNegativeData(tags)
+function CategorizeOnlyPresent(tags)
   local categories = {
     dataNo,
     isSeparate,
