@@ -16,4 +16,3 @@ export function parseObject(schema: z.Schema, array: string[]) {
 export const range = (min, max) => z.coerce.number().gte(min).lte(max)
 export const longitude = range(-180, 180)
 export const latitude = range(-90, 90)
-export const chars = (s) => z.enum(s.split(''))
