@@ -18,6 +18,7 @@ services:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
       COMPUTE_DIFFS:
+      FREEZE_DATA:
     volumes:
       - osmfiles:/data
       - geodata:/data/db
