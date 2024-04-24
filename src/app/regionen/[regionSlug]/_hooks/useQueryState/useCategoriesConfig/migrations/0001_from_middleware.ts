@@ -1,14 +1,8 @@
-import { UrlMigration } from './types'
-import { RegionSlug, staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { mapParamFallback, serializeMapParam } from '../../useMapParam'
-import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
-import { configCustomStringify } from '../parser/configCustomStringify'
-import { configCustomParse } from '../parser/configCustomParse'
+import { UrlMigration } from './types'
 
 const migration: UrlMigration = function (initialUrl) {
   const url = new URL(initialUrl)
-
-  const regionSlug = url.pathname.split('/')[2]! as RegionSlug
 
   // MIGRATION: Rename old strings in `config` param
   // We do this migration on string level which makes it a lot easier

@@ -1,5 +1,5 @@
 import { LineString } from '@turf/turf'
-import { MapGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import {
   categoryToMaprouletteProjectKey,

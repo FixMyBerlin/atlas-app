@@ -18,14 +18,14 @@ export type ModalDialogProps = {
   children: React.ReactNode
 }
 
-export const ModalDialog: React.FC<ModalDialogProps> = ({
+export const ModalDialog = ({
   title,
   icon,
   open,
   setOpen,
   buttonCloseName,
   children,
-}) => {
+}: ModalDialogProps) => {
   const cancelButtonRef = useRef(null)
 
   type IconComponent = Record<typeof icon, { bgClass: string; icon: React.ReactNode }>

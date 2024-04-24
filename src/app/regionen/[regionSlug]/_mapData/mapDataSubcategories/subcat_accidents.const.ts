@@ -7,6 +7,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 // TODO: Did use the default public token from https://account.mapbox.com/
 
 const subcatId = 'accidents'
+const source = 'accidents_unfallatlas'
 export type SubcatAccidentsId = typeof subcatId
 export type SubcatAccidentsStyleIds = 'default'
 
@@ -15,7 +16,7 @@ export const subcat_accidents: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Unfälle',
   ui: 'dropdown',
-  sourceId: 'accidents_unfallatlas',
+  sourceId: source,
   styles: [
     defaultStyleHidden,
     {
@@ -26,6 +27,7 @@ export const subcat_accidents: FileMapDataSubcategory = {
         {
           id: 'circle',
           type: 'circle',
+          source,
           'source-layer': 'unfaelle_mit_personschaden-4zh9z7',
           filter: ['all', ['match', ['get', 'Unfallkate'], ['1', '2', '3'], true, false]],
           paint: {
@@ -74,6 +76,7 @@ export const subcat_accidents: FileMapDataSubcategory = {
         {
           id: 'label',
           type: 'symbol',
+          source,
           'source-layer': 'unfaelle_mit_personschaden-4zh9z7',
           filter: ['all', ['match', ['get', 'Unfallkate'], ['1', '2', '3'], true, false]],
           layout: {

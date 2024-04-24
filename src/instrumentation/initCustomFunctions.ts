@@ -1,6 +1,5 @@
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
-// specify license and attribution for data export
 export async function initCustomFunctions() {
   const queries = prismaClientForRawQueries.$transaction([
     prismaClientForRawQueries.$executeRaw`

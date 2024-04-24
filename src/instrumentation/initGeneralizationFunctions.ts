@@ -11,7 +11,8 @@ async function createTileSpecification(tableName: TableId) {
   SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
     FROM information_schema.columns
     WHERE table_schema = 'public' AND table_name = '${tableName}';`)
-  const { fields } = columnInformation && columnInformation[0] // this object has the form {columnName: columnType}
+  const { fields } = columnInformation?.[0] // this object has the form {columnName: columnType}
+
   // Get the geometric extent
   const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
     `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
@@ -28,6 +29,7 @@ async function createTileSpecification(tableName: TableId) {
   }
   return tileSpecification
 }
+
 function toSqlArray(arr: string[]) {
   return `Array[${arr.map((tag) => `'${tag}'`)}]::text[]`
 }
@@ -38,11 +40,10 @@ export async function initGeneralizationFunctions(
   return Promise.all(
     Object.entries(interacitvityConfiguartion).map(
       async ([tableName, { minzoom, stylingKeys }]) => {
-        // @ts-expect-errors
-        const functionName = generalizationFunctionIdentifier(tableName)
+        const functionName = generalizationFunctionIdentifier(tableName as TableId)
         // Gather meta information for the tile specification
-        // @ts-expect-errors
-        const tileSpecification = await createTileSpecification(tableName)
+        const tileSpecification = await createTileSpecification(tableName as TableId)
+
         return prismaClientForRawQueries.$transaction([
           prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
           prismaClientForRawQueries.$executeRawUnsafe(

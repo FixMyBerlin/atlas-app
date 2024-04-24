@@ -5,11 +5,11 @@ import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatas
 import { extractSourceIdFromStaticDatasetSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorDataFeature } from './Inspector'
+import { TagsTable } from './TagsTable/TagsTable'
 import { translations } from './TagsTable/translations/translations.const'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
-import { TagsTable } from './TagsTable/TagsTable'
 
 export const InspectorFeatureStaticDataset: React.FC<InspectorDataFeature> = ({
   sourceKey,

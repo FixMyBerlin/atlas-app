@@ -20,7 +20,6 @@ const existingRegionSlugs = regions.map((region) => region.slug)
 
 // use --dry-run to run all checks and transformation (but no pmtiles created, no upload to S3, no DB modifications)
 // use --keep-tmp to keep temporary generated files
-// use --keep-tmp to keep temporary generated files
 // use --folder-filter to run only folders that include this filter string (check the full path, so `region-bb` (group folder) and `bb-` (dataset folder) will both work)
 const { values, positionals } = parseArgs({
   args: Bun.argv,
