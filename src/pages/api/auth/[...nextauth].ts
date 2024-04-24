@@ -1,17 +1,16 @@
 import { NextAuthAdapter } from '@blitzjs/auth/next-auth'
 import db, { User } from 'db'
 import { Provider } from 'next-auth/providers'
+import { getOsmApiUrl, getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { api } from 'src/blitz-server'
 import { Role } from 'types'
-
-const osmApiHostOrigin = new URL(process.env.NEXT_PUBLIC_OSM_API_URL).origin
 
 const providers: Provider[] = [
   {
     id: 'osm',
     name: 'OpenStreetMap',
     type: 'oauth',
-    wellKnown: `${osmApiHostOrigin}/.well-known/openid-configuration`,
+    wellKnown: getOsmUrl('/.well-known/openid-configuration'),
     // Docs on `scope`s: https://wiki.openstreetmap.org/wiki/OAuth#OAuth_2.0
     // Reminder: Scope changes need to happen in all Oauth-Applications (production and dev server)
     authorization: { params: { scope: 'openid read_prefs write_prefs write_notes' } },
@@ -29,7 +28,7 @@ const providers: Provider[] = [
     },
     userinfo: {
       async request({ client, tokens }) {
-        const apiUrl = `${process.env.NEXT_PUBLIC_OSM_API_URL}/user/details.json`
+        const apiUrl = getOsmApiUrl('/user/details.json')
         const response = await fetch(apiUrl, {
           credentials: 'include',
           method: 'GET',

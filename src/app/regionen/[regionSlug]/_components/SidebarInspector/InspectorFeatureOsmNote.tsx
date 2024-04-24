@@ -32,6 +32,7 @@ type Thread = {
   status: 'open' | 'closed'
   comments: Comment[]
 }
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
 const OsmUserLink = ({
   user,
@@ -133,7 +134,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             )}
           </p>
           <p>
-            <Link button blank href={`https://www.openstreetmap.org/note/${thread.id}`}>
+            <Link button blank href={getOsmUrl(`/note/${thread.id}`)}>
               Auf openstreetmap.org ansehen und kommentieren
             </Link>
           </p>

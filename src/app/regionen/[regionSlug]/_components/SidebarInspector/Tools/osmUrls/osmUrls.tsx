@@ -1,7 +1,8 @@
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { editorUrl } from './editorUrl'
 import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
-import { longOsmType, shortOsmType } from './shortLongOsmType'
 import { pointFromGeometry } from './pointFromGeometry'
+import { longOsmType, shortOsmType } from './shortLongOsmType'
 
 type OsmTypeId = ReturnType<typeof extractOsmTypeIdByConfig>
 
@@ -12,7 +13,7 @@ export const osmTypeIdString = (type: string, id: string | number) => {
 export const osmUrl = ({ osmType, osmId }: OsmTypeId) => {
   if (!osmType || !osmId) return undefined
 
-  return `https://www.openstreetmap.org/${osmType}/${osmId}`
+  return getOsmUrl(`/${osmType}/${osmId}`)
 }
 
 export const osmEditIdUrl = ({ osmType, osmId }: OsmTypeId) => {
@@ -64,7 +65,7 @@ export const mapillaryKeyUrl = (key: number) => {
 export const osmUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
   if (!zoom || !lat || !lng) return
 
-  const urlTemplate = 'https://www.openstreetmap.org/#map={zoom}/{latitude}/{longitude}&layers=N'
+  const urlTemplate = getOsmUrl('/#map={zoom}/{latitude}/{longitude}&layers=N')
   const geometry = {
     type: 'Point',
     coordinates: [lng, lat],
