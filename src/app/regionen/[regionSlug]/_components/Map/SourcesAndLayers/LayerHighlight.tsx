@@ -12,23 +12,19 @@ type ParentLayerProps = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
-type MemoProps = Pick<
-  Store,
-  'mapLoaded' | 'unfilteredInspectorFeatures' | 'calculatorAreasWithFeatures'
-> & {
+type MemoProps = Pick<Store, 'mapLoaded' | 'inspectorFeatures' | 'calculatorAreasWithFeatures'> & {
   selectedFeatures: ReturnType<typeof useSelectedFeatures>
 }
 
 const LayerHighlightMemoized: React.FC = memo(function LayerHighlightMemoized(
   props: ParentLayerProps & MemoProps,
 ) {
-  const { mapLoaded, unfilteredInspectorFeatures, calculatorAreasWithFeatures, selectedFeatures } =
-    props
+  const { mapLoaded, inspectorFeatures, calculatorAreasWithFeatures, selectedFeatures } = props
 
   const { sourceData } = props
 
-  const features = unfilteredInspectorFeatures.length
-    ? unfilteredInspectorFeatures
+  const features = inspectorFeatures.length
+    ? inspectorFeatures
     : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   if (!mapLoaded) return null
@@ -93,15 +89,14 @@ const LayerHighlightMemoized: React.FC = memo(function LayerHighlightMemoized(
 })
 
 export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
-  const { mapLoaded, unfilteredInspectorFeatures, calculatorAreasWithFeatures } =
-    useMapStateInteraction()
+  const { mapLoaded, inspectorFeatures, calculatorAreasWithFeatures } = useMapStateInteraction()
 
   const selectedFeatures = useSelectedFeatures()
 
   const props = {
     ...parentLayerProps,
     mapLoaded,
-    unfilteredInspectorFeatures,
+    inspectorFeatures,
     calculatorAreasWithFeatures,
     selectedFeatures,
   }

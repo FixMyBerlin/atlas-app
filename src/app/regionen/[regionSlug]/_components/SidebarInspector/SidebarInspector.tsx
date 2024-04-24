@@ -18,7 +18,7 @@ type Props = Pick<
   Store,
   | 'mapLoaded'
   | 'mapBounds'
-  | 'uniqueInspectorFeatures'
+  | 'inspectorFeatures'
   | 'resetInspectorFeatures'
   | 'setInspectorSize'
   | 'inspectorSize'
@@ -35,7 +35,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     map,
     mapLoaded,
     mapBounds, // needed to trigger rerendering
-    uniqueInspectorFeatures,
+    inspectorFeatures,
     selectedFeatures,
     setInspectorSize,
     inspectorSize,
@@ -51,7 +51,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     },
   })
 
-  if (uniqueInspectorFeatures.length) {
+  if (inspectorFeatures.length) {
     checkBounds.current = false
   }
 
@@ -68,8 +68,8 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
     checkBounds.current = false
   }
 
-  const features = uniqueInspectorFeatures.length
-    ? uniqueInspectorFeatures
+  const features = inspectorFeatures.length
+    ? inspectorFeatures
     : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   const renderFeatures = !!features.length
@@ -112,7 +112,7 @@ export const SidebarInspector: React.FC = () => {
   const {
     mapLoaded,
     mapBounds,
-    uniqueInspectorFeatures,
+    inspectorFeatures,
     resetInspectorFeatures,
     setInspectorSize,
     inspectorSize,
@@ -127,7 +127,7 @@ export const SidebarInspector: React.FC = () => {
     map,
     mapLoaded,
     mapBounds,
-    uniqueInspectorFeatures,
+    inspectorFeatures,
     resetInspectorFeatures,
     selectedFeatures,
     setInspectorSize,

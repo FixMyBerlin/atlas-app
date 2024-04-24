@@ -15,7 +15,7 @@ import {
 
 type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
-  geometry: StoreFeaturesInspector['unfilteredInspectorFeatures'][number]['geometry']
+  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
   editors?: MapDataSourceInspectorEditor[]
 }
 

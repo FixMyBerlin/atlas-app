@@ -9,12 +9,12 @@ import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
 export type InspectorDataFeature = {
   sourceKey: string
   properties: GeoJSON.GeoJsonProperties
-  geometry: StoreFeaturesInspector['unfilteredInspectorFeatures'][number]['geometry']
+  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
 }
 
 export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
 
-type Props = { features: StoreFeaturesInspector['unfilteredInspectorFeatures'] }
+type Props = { features: StoreFeaturesInspector['inspectorFeatures'] }
 
 export const Inspector = ({ features }: Props) => {
   const regionDatasets = useRegionDatasets()

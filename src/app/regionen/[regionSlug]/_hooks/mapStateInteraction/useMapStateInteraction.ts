@@ -43,9 +43,8 @@ type StoreOsmNotesState = {
 
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
-  unfilteredInspectorFeatures: MapGeoJSONFeature[]
-  uniqueInspectorFeatures: MapGeoJSONFeature[]
-  setInspectorFeatures: (inspectObject: Store['unfilteredInspectorFeatures']) => void
+  inspectorFeatures: MapGeoJSONFeature[]
+  setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
   resetInspectorFeatures: () => void
 }
 
@@ -69,67 +68,62 @@ function setIfChanged(get, set, name, value) {
   set({ [name]: value })
 }
 
-export const useMapStateInteraction = create<Store>((set, get) => ({
-  mapLoaded: false,
-  setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+export const useMapStateInteraction = create<Store>((set, get) => {
+  return {
+    mapLoaded: false,
+    setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
-  mapDataLoading: false,
-  setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
+    mapDataLoading: false,
+    setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
 
-  // We store this globally to separate the fetching from the UI logic
-  osmNotesLoading: false,
-  setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
-  osmNotesError: false,
-  setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
+    // We store this globally to separate the fetching from the UI logic
+    osmNotesLoading: false,
+    setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
+    osmNotesError: false,
+    setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
 
-  // Data for <Inspector> AND <LayerHighlight>
-  // (!) Usually we don't want to use `inspectorFeatures` directly, use `getUniqueInspectorFeatures` instead!
-  unfilteredInspectorFeatures: [],
-  uniqueInspectorFeatures: [],
+    // Data for <Inspector> AND <LayerHighlight>
+    inspectorFeatures: [],
 
-  setInspectorFeatures: (unfilteredInspectorFeatures) => {
-    set({ unfilteredInspectorFeatures })
-    // When we click on the map, MapLibre returns all Features for all layers.
-    // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
-    const uniqueKeys: Record<string, boolean> = {}
-    const { unfilteredInspectorFeatures: inspectorFeatures } = get()
-    const uniqueInspectorFeatures = inspectorFeatures.reduce(
-      (result: typeof inspectorFeatures, feature) => {
-        if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
-          uniqueKeys[createInspectorFeatureKey(feature)] = true
-          result.push(feature)
-        }
-        return result
-      },
-      [],
-    )
-    set({ uniqueInspectorFeatures })
-  },
-  resetInspectorFeatures: () => {
-    set({ unfilteredInspectorFeatures: [] })
-    set({ uniqueInspectorFeatures: [] })
-  },
+    setInspectorFeatures: (unfilteredFeatures) => {
+      // When we click on the map, MapLibre returns all Features for all layers.
+      // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
+      const uniqueKeys: Record<string, boolean> = {}
+      const inspectorFeatures = unfilteredFeatures.reduce(
+        (result: typeof unfilteredFeatures, feature) => {
+          if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
+            uniqueKeys[createInspectorFeatureKey(feature)] = true
+            result.push(feature)
+          }
+          return result
+        },
+        [],
+      )
+      set({ inspectorFeatures })
+    },
+    resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
 
-  // Data for <Inspector> AND <LayerHighlight>
-  calculatorAreasWithFeatures: [],
-  setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
-    set({ calculatorAreasWithFeatures }),
+    // Data for <Inspector> AND <LayerHighlight>
+    calculatorAreasWithFeatures: [],
+    setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
+      set({ calculatorAreasWithFeatures }),
 
-  // Data for optimistic updates; show verification immediately <LayerHightlight>
-  localUpdates: [],
-  addLocalUpdate: (update) => {
-    const { localUpdates } = get()
-    set({
-      localUpdates: [...localUpdates, update],
-    })
-  },
+    // Data for optimistic updates; show verification immediately <LayerHightlight>
+    localUpdates: [],
+    addLocalUpdate: (update) => {
+      const { localUpdates } = get()
+      set({
+        localUpdates: [...localUpdates, update],
+      })
+    },
 
-  mapBounds: null,
-  setMapBounds: (bounds) => set({ mapBounds: bounds }),
-  inspectorSize: { width: 0, height: 0 },
-  setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
-  sidebarLayerControlsSize: { width: 0, height: 0 },
-  setSidebarLayerControlsSize: (size) => {
-    setIfChanged(get, set, 'sidebarLayerControlsSize', size)
-  },
-}))
+    mapBounds: null,
+    setMapBounds: (bounds) => set({ mapBounds: bounds }),
+    inspectorSize: { width: 0, height: 0 },
+    setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+    sidebarLayerControlsSize: { width: 0, height: 0 },
+    setSidebarLayerControlsSize: (size) => {
+      setIfChanged(get, set, 'sidebarLayerControlsSize', size)
+    },
+  }
+})
