@@ -1,9 +1,17 @@
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 
-// initially generated with:
-// const numericSourceIds= {...{1: 'osm-notes'}, ...Object.fromEntries(sources.map((s, i) => [i+2, s.id]))}
-export const numericSourceIds: Record<number, SourcesId> = {
-  // @ts-expect-error because it's not included in source
+// ABOUT:
+// IDs are used by useFeatureParams as short reference of sources.
+// List ist separate from sources.const (for now) to make it easier to add notes.
+// The `url.test.ts` makes sure we always have a full and updated list by checking against sources.const
+//
+// Initially generated with:
+// `const numericSourceIds= {...{1: 'osm-notes'}, ...Object.fromEntries(sources.map((s, i) => [i+2, s.id]))}`
+//
+// useFeatureParams supports sources that are not specified in sources.const which we have to list here
+export const additionalSourceKeys = ['osm-notes'] as const
+type SourceNames = SourcesId | (typeof additionalSourceKeys)[number]
+export const numericSourceIds: Record<number, SourceNames> = {
   1: 'osm-notes',
   2: 'parkraumParking',
   3: 'parkraumParkingDebug',
