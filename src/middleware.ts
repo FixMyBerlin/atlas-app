@@ -68,6 +68,7 @@ export function middleware(request: NextRequest) {
   migratedUrl = migrateUrl(migratedUrl)
 
   // Remove unused params
+  // List had to be in sync with `use*Param`s, see `useQueryState/README.md`
   const usedParams = ['map', 'config', 'f', 'v', 'bg', 'data', 'debugMap', 'draw', 'osmNotes']
   const u = new URL(migratedUrl)
   Array.from(u.searchParams.keys()).forEach((key) => {
