@@ -6,7 +6,7 @@ import {
   LineLayer,
   RasterSource,
   SymbolLayer,
-} from 'react-map-gl'
+} from 'react-map-gl/maplibre'
 import { Prettify } from 'src/app/_components/types/types'
 import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
@@ -237,13 +237,13 @@ export type FileMapDataSubcategoryHiddenStyle = {
 
 /** @desc: The technical glue between sources and styles. The name "layers" is defined by the library we use. */
 export type FileMapDataSubcategoryStyleLayer = Prettify<
-  (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) &
-    Required<Pick<AnyLayer, 'source-layer'>> & {
-      /**
-       * @default `true`
-       * @desc optional `false` will hide the layer from `interactiveLayerIds` */
-      interactive?: false
-    }
+  (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) & {
+    'source-layer': string
+    /**
+     * @default `true`
+     * @desc optional `false` will hide the layer from `interactiveLayerIds` */
+    interactive?: false
+  }
 >
 
 /** @desc: Optional legend to explain a given layer */
