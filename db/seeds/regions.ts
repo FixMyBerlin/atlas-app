@@ -63,6 +63,11 @@ const seedRegions = async () => {
       public: false,
       exportPublic: false,
     },
+    {
+      slug: 'bb-beteiligung',
+      public: false,
+      exportPublic: false,
+    },
   ]
 
   for (const data of seedRegions) {

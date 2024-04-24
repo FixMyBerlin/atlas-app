@@ -34,6 +34,7 @@ import { StaticMapDataCategory } from '../types'
 export type MapDataCategoryId =
   // Radverkehrsatlas
   | 'bikelanes'
+  | 'bikelanes-minimal'
   | 'boundaries' // Only used ONCE for now for the 'bb-kampagne'-region
   | 'lit'
   | 'poi'
@@ -109,6 +110,12 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
       // { id: 'tram', defaultStyle: 'hidden' },
     ],
+  },
+  {
+    id: 'bikelanes-minimal',
+    name: 'Radinfrastruktur',
+    desc: 'Führungsform RVA',
+    subcategories: [{ ...subcat_bikelanes, defaultStyle: 'default' }],
   },
   {
     id: 'trafficSigns',
