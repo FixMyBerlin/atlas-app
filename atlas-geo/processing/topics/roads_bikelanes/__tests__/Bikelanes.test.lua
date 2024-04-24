@@ -42,7 +42,6 @@ describe("Bikelanes", function()
           highway = 'path',
           bicycle = 'yes',
           foot = 'yes',
-          segreagated = 'yes',
           segregated = "yes",
           is_sidepath = "yes",
           ['cycleway:width'] = '5 m',
