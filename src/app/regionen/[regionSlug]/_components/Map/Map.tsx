@@ -72,14 +72,30 @@ export const Map = () => {
     setCursorStyle('grab')
   }
 
+  const { inspectorFeatures } = useMapStateInteraction()
+
   const handleClick = (event: MapLayerMouseEvent) => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
     const interactiveFeatures = extractInteractiveFeatures(features)
-    if (interactiveFeatures) {
-      setInspectorFeatures(interactiveFeatures)
-      const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
-      const persistableFeatures = uniqueFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
+    const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
+
+    if (uniqueFeatures) {
+      let newInspectorFeatures: MapGeoJSONFeature[] = []
+      if (event.originalEvent.ctrlKey) {
+        // ctrl is down - toggle features
+        const featureInArray = (f0, farr) =>
+          !!farr.find((f1) => f0.properties.id === f1.properties.id)
+        const keepFeatures = inspectorFeatures.filter((f) => !featureInArray(f, uniqueFeatures))
+        const addFeatures = uniqueFeatures.filter((f) => !featureInArray(f, inspectorFeatures))
+        newInspectorFeatures = [...keepFeatures, ...addFeatures]
+      } else {
+        // ctrl is not down - just set features
+        newInspectorFeatures = uniqueFeatures
+      }
+      setInspectorFeatures(newInspectorFeatures)
+
+      const persistableFeatures = newInspectorFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
       if (persistableFeatures.length) {
         setFeaturesParam(persistableFeatures.map((feature) => convertToUrlFeature(feature)))
       } else {

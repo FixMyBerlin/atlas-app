@@ -85,22 +85,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     // Data for <Inspector> AND <LayerHighlight>
     inspectorFeatures: [],
 
-    setInspectorFeatures: (unfilteredFeatures) => {
-      // When we click on the map, MapLibre returns all Features for all layers.
-      // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
-      const uniqueKeys: Record<string, boolean> = {}
-      const inspectorFeatures = unfilteredFeatures.reduce(
-        (result: typeof unfilteredFeatures, feature) => {
-          if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
-            uniqueKeys[createInspectorFeatureKey(feature)] = true
-            result.push(feature)
-          }
-          return result
-        },
-        [],
-      )
-      set({ inspectorFeatures })
-    },
+    setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
     resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
 
     // Data for <Inspector> AND <LayerHighlight>
