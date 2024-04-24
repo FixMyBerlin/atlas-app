@@ -13,6 +13,18 @@ export const longOsmType = {
   node: 'node',
   relation: 'relation',
 }
+export const shortOsmType = {
+  way: 'w',
+  node: 'n',
+  relation: 'r',
+  // Just so we can use this for both format
+  w: 'w',
+  n: 'n',
+  r: 'r',
+  W: 'w',
+  N: 'n',
+  R: 'r',
+}
 
 export const osmUrl = (type: OsmShortOrLongType, id: number | string) => {
   if (!type || (type && !longOsmType[type])) return undefined
@@ -21,16 +33,18 @@ export const osmUrl = (type: OsmShortOrLongType, id: number | string) => {
 }
 
 export const osmEditIdUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !longOsmType[type])) return undefined
+  if (!type || (type && !shortOsmType[type] && !longOsmType[type])) return undefined
+  const osmType = shortOsmType[type]
 
   // return `https://www.openstreetmap.org/edit?${longOsmType[type]}=${id}`
-  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${type.toLocaleLowerCase()}${id}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
+  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${osmType}${id}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
 export const osmEditRapidUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !longOsmType[type])) return undefined
+  if (!type || (type && !shortOsmType[type])) return undefined
+  const osmType = shortOsmType[type]
 
-  return `https://rapideditor.org/edit#id=${type.toLocaleLowerCase()}${id}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
+  return `https://rapideditor.org/edit#id=${osmType}${id}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
 export const historyUrl = (type: OsmShortOrLongType, id: number | string) => {
