@@ -6,12 +6,17 @@ import { useRouter } from 'next/navigation'
 import { FORM_ERROR, Form, FormProps } from 'src/app/_components/forms/Form'
 import { LabeledTextField } from 'src/app/_components/forms/LabeledTextField'
 import { Link } from 'src/app/_components/links/Link'
+import { buttonStyles } from 'src/app/_components/links/styles'
 import { proseClasses } from 'src/app/_components/text/prose'
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
+import { isAdmin } from 'src/users/components/utils/usersUtils'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
+import updateOsmDescription from 'src/users/mutations/updateOsmDescription'
 import updateUser from 'src/users/mutations/updateUser'
 import { UpdateUserSchema } from 'src/users/schema'
 import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
+import { UserFormOsmDescriptionMissing } from './UserFormOsmDescriptionMissing'
 export { FORM_ERROR } from 'src/app/_components/forms/Form'
 
 export function UserFormForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
@@ -47,9 +52,10 @@ export const UserForm = () => {
   const router = useRouter()
   const user = useCurrentUser()!
   const [updateUserMutation] = useMutation(updateUser)
+  const [updateUserOsmDescriptionMutation] = useMutation(updateOsmDescription)
 
   return (
-    <div className="flex gap-10">
+    <>
       <UserFormForm
         submitText="Account aktualisieren"
         schema={UpdateUserSchema}
@@ -68,8 +74,20 @@ export const UserForm = () => {
           }
         }}
       />
-      <aside className={twJoin(proseClasses, 'prose-sm prose-gray')}>
-        <h2 className="text-sm">Angaben von OpenStreetMap.org:</h2>
+      <aside
+        className={twJoin(proseClasses, 'prose-sm prose-gray mt-10 border-t border-gray-400 pt-10')}
+      >
+        <h2 className="text-sm">Angaben auf openstreetmap.org:</h2>
+        <p className="mt-3 text-sm text-gray-500">
+          <Link blank href={getOsmUrl('/account/edit')}>
+            Name, Avatar bearbeiten
+          </Link>
+          .{' '}
+          <Link blank href={getOsmUrl('/profile/edit')}>
+            Profilbeschreibung bearbeiten
+          </Link>
+          .
+        </p>
         <div className="rounded border">
           <table className="my-0 text-sm">
             <tbody>
@@ -94,16 +112,37 @@ export const UserForm = () => {
                   )}
                 </td>
               </tr>
+              <tr>
+                <th className="pl-1 font-normal">Profilbeschreibung</th>
+                <td className="break-all py-1 text-sm">{user.osmDescription?.trim() || '–'}</td>
+              </tr>
             </tbody>
           </table>
         </div>
-        <p className="mt-3 text-sm text-gray-500">
-          <Link blank href="https://www.openstreetmap.org/account/edit">
-            Im OSM Profil bearbeiten
-          </Link>
-          .
-        </p>
+        {Boolean(user.osmDescription?.trim()) ? (
+          <>
+            <p className="leading-snug text-gray-500">
+              Hinweis: Diese Angaben werden bei jedem neuen Einloggen aktualisiert. Um die Daten zu
+              aktualisieren, bitte ausloggen und erneut einloggen.
+            </p>
+            {isAdmin(user) && (
+              <div className="bg-pink-300 px-4 py-2 text-xs leading-5">
+                <button
+                  onClick={() => {
+                    updateUserOsmDescriptionMutation({ osmDescription: '' })
+                    window.location.reload()
+                  }}
+                  className={buttonStyles}
+                >
+                  Beschreibung löschen
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
+          <UserFormOsmDescriptionMissing />
+        )}
       </aside>
-    </div>
+    </>
   )
 }
