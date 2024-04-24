@@ -54,7 +54,7 @@ export const categories: StaticMapDataCategory[] = [
   {
     // Figma https://www.figma.com/file/N9LROlksQn4tGHZp0k0KeS/OSM-Atlas?type=design&node-id=1062-9375&mode=design&t=k2PHofwptElXro3a-0
     id: 'poi',
-    name: 'Quellen & Ziele',
+    name: 'Orte, Ziele, Grenzen',
     desc: 'Siedlungszentren, Zielorte, Barrieren',
     subcategories: [
       { ...subcat_poi, defaultStyle: 'default' },
@@ -63,7 +63,6 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_poi_plus_barriers, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_landuse, defaultStyle: 'hidden' },
       { ...subcat_poi_plus_publicTransport, defaultStyle: 'hidden' },
-      // { id: 'subcat_poi_plus_buildings', defaultStyle: 'hidden' },
     ],
   },
   {
