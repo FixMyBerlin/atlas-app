@@ -60,6 +60,7 @@ export default api(
       // TS: Docs are unhelpful on how to easily motify the input https://next-auth.js.org/getting-started/typescript#popular-interfaces-to-augment
       const inputUser = user as typeof user & {
         osmName: string
+        description: string
         avatar: string | null
         token: string
       }
@@ -73,6 +74,7 @@ export default api(
           data: {
             osmName: inputUser.osmName,
             osmAvatar: inputUser.avatar,
+            osmDescription: inputUser.description,
           },
         })
       } else {
@@ -81,6 +83,7 @@ export default api(
             osmId,
             osmName: inputUser.osmName,
             osmAvatar: inputUser.avatar,
+            osmDescription: inputUser.description,
             role: 'USER',
           },
         })
