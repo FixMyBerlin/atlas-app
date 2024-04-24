@@ -447,9 +447,8 @@ export const staticRegion: StaticRegion[] = [
     categories: [
       // The order here specifies the order in the UI
       'bikelanes-minimal',
-      // 'poi',
+      'poi',
       'roads',
-      'boundaries',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
