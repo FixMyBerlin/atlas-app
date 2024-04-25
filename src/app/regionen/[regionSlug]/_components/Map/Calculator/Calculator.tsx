@@ -1,7 +1,5 @@
-import React, { useMemo, useRef } from 'react'
-import { useMap } from 'react-map-gl/maplibre'
+import React, { useRef } from 'react'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
@@ -9,12 +7,6 @@ import { flattenSubcategories } from './utils/flattenSubcategories'
 
 export const Calculator: React.FC = () => {
   const drawControlRef = useRef<MapboxDraw>()
-  const { mapLoaded } = useMapStateInteraction()
-  const { mainMap } = useMap()
-  const mapLayers = useMemo(
-    () => (mapLoaded ? mainMap?.getStyle()?.layers : undefined),
-    [mainMap, mapLoaded],
-  )
 
   // This blob ist just to check if the Calculator should be enabled
   // by checking the sourceData.
@@ -36,18 +28,6 @@ export const Calculator: React.FC = () => {
     )
   }
   if (!queryLayers) return null
-
-  // Guard against errors when using mainMap.*
-  if (!mapLoaded) return null
-
-  const hasQueryLayersInMapLayers = mapLayers?.some((l) => queryLayers.includes(l.id))
-  if (!hasQueryLayersInMapLayers) {
-    console.log(
-      'ERROR: Calculator did not find the given calculator.queryLayers in the map layers.',
-      { queryLayers, mapLayers },
-    )
-    return null
-  }
 
   return (
     <>
