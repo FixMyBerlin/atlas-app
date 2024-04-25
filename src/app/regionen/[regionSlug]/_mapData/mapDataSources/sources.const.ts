@@ -157,8 +157,6 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
   },
 }
 
-const tilesUrl = getTilesUrl()
-
 export const sources: MapDataSource<
   SourcesId,
   SourceVerificationApiIdentifier,
@@ -167,7 +165,9 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'atlas_boundaries',
-    tiles: `${tilesUrl}/atlas_generalized_boundaries,atlas_generalized_boundarylabels/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_boundaries,atlas_generalized_boundarylabels/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
@@ -186,7 +186,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_boundaryStats',
-    tiles: `${tilesUrl}/boundaryStats/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/boundaryStats/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
@@ -224,7 +224,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/atlas_generalized_bikelanes/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_bikelanes/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -266,7 +266,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikeroutes',
-    tiles: `${tilesUrl}/atlas_generalized_bikeroutes/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_bikeroutes/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -307,7 +307,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roads',
-    tiles: `${tilesUrl}/atlas_generalized_roads/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_roads/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 8,
     attributionHtml:
@@ -348,7 +348,7 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roadsPathClasses',
-    tiles: `${tilesUrl}/atlas_generalized_roadspathclasses/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_roadspathclasses/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 10,
     attributionHtml:
@@ -390,7 +390,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
-    tiles: `${tilesUrl}/atlas_generalized_publictransport/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_publictransport/{z}/{x}/{y}'),
     maxzoom: 9,
     minzoom: 4,
     attributionHtml:
@@ -416,7 +416,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/poiClassification
     id: 'atlas_poiClassification',
-    tiles: `${tilesUrl}/atlas_generalized_poiclassification/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_poiclassification/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 4,
     attributionHtml:
@@ -442,7 +442,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/places
     id: 'atlas_places',
-    tiles: `${tilesUrl}/atlas_generalized_places/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_places/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -469,7 +469,9 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/barrierAreas
     // https://tiles.radverkehrsatlas.de/barrierLines
     id: 'atlas_barriers',
-    tiles: `${tilesUrl}/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -486,7 +488,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/landuse
     id: 'atlas_landuse',
-    tiles: `${tilesUrl}/atlas_generalized_landuse/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_landuse/{z}/{x}/{y}'),
     maxzoom: 10,
     minzoom: 4,
     attributionHtml:
@@ -508,7 +510,9 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/bicycleParking_points
     // https://tiles.radverkehrsatlas.de/bicycleParking_areas
     id: 'atlas_bicycleParking',
-    tiles: `${tilesUrl}/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
@@ -539,7 +543,7 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/trafficSigns
     id: 'atlas_trafficSigns',
-    tiles: `${tilesUrl}/atlas_generalized_trafficsigns/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_trafficsigns/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:

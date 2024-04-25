@@ -6,7 +6,7 @@ export const DownloadModalUpdateDate: React.FC = () => {
   const [osmDataDate, setOsmDataDate] = useState<null | any>(null)
   const [isLoading, setLoading] = useState(true)
   const [isError, setError] = useState(false)
-  const apiUrl = `${getTilesUrl()}/bikelanes`
+  const apiUrl = getTilesUrl('/bikelanes')
 
   useEffect(() => {
     void fetch(apiUrl)

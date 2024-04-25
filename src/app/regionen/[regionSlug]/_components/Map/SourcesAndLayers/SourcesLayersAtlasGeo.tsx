@@ -11,8 +11,8 @@ import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQue
 import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
-  createSourceKeyAtlasGeo,
   createLayerKeyAtlasGeo,
+  createSourceKeyAtlasGeo,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
