@@ -2,7 +2,7 @@ import { MapDataCategoryConfig } from '../type'
 import { configStructures } from './configStructures'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { sortKeys, iterate, generateConfigStructureAndChecksum, encodeBits } from './lib'
-import { simplifyConfigForParams } from '../parser/configCustomStringify'
+import { simplifyConfigForParams } from '../v1/configCustomStringify'
 
 export const serialize = (config: MapDataCategoryConfig[]) => {
   const simplified = simplifyConfigForParams(config)

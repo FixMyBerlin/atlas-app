@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { FileMapDataSubcategoryStyleLayer } from '../../../../_mapData/types'
-import { mergeCategoriesConfig } from '../parser/mergeCategoriesConfig'
+import { mergeCategoriesConfig } from './mergeCategoriesConfig'
 import { MapDataCategoryConfig } from '../type'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 
