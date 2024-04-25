@@ -1,6 +1,6 @@
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
 import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
-import { shortOsmType } from './osmUrls'
+import { shortOsmType } from './shortLongOsmType'
 import { pointFromGeometry } from './pointFromGeometry'
 
 type Props = {

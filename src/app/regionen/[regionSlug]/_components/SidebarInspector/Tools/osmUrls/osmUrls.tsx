@@ -1,35 +1,13 @@
 import { editorUrl } from './editorUrl'
 import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
+import { longOsmType, shortOsmType } from './shortLongOsmType'
 import { pointFromGeometry } from './pointFromGeometry'
 
-type OsmShortType = 'W' | 'N' | 'R'
-export type OsmLongType = 'way' | 'node' | 'relation'
-export type OsmShortOrLongType = OsmShortType | OsmLongType | null | undefined
-export const longOsmType = {
-  W: 'way',
-  N: 'node',
-  R: 'relation',
-  w: 'way',
-  n: 'node',
-  r: 'relation',
-  // Just so we can use this for both format
-  way: 'way',
-  node: 'node',
-  relation: 'relation',
-}
-export const shortOsmType = {
-  way: 'w',
-  node: 'n',
-  relation: 'r',
-  // Just so we can use this for both format
-  w: 'w',
-  n: 'n',
-  r: 'r',
-  W: 'w',
-  N: 'n',
-  R: 'r',
-}
 type OsmTypeId = ReturnType<typeof extractOsmTypeIdByConfig>
+
+export const osmTypeIdString = (type: string, id: string | number) => {
+  return `${longOsmType[type]}/${id}`
+}
 
 export const osmUrl = ({ osmType, osmId }: OsmTypeId) => {
   if (!osmType || !osmId) return undefined

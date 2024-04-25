@@ -3,7 +3,7 @@ import * as turf from '@turf/turf'
 import { LineString } from '@turf/turf'
 import { NextRequest } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { longOsmType } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
+import { osmTypeIdString } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 import { z } from 'zod'
 import { maprouletteProjects } from './_utils/maprouletteProjects.const'
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     // ADD MAPROULETTE TASK DATA
     const features = sqlWays.map(({ type, id, category, geometry }) => {
       const properties = {
-        id: `${longOsmType[type]}/${id}`,
+        id: `${osmTypeIdString(type, id)}`,
         category,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
         task_markdown: taskDescriptionMarkdown({

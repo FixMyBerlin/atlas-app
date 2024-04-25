@@ -1,5 +1,5 @@
 import { MapDataOsmIdConfig } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { longOsmType } from './osmUrls'
+import { longOsmType } from './shortLongOsmType'
 
 // This file looks complicated due to all the type guarding.
 // But all it does is take properties and the `osmIdConfig` from a source

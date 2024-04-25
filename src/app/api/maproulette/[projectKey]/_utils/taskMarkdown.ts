@@ -1,8 +1,8 @@
 import { LineString } from '@turf/helpers'
 import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import {
-  longOsmType,
   mapillaryUrl,
+  osmTypeIdString,
 } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
 import { maprouletteProjects } from './maprouletteProjects.const'
@@ -56,7 +56,7 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
-* [OpenStreetMap](https://www.openstreetmap.org/${longOsmType[type]}/${id})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 
 `
       case 'advisoryOrExclusive':
@@ -82,7 +82,7 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
-* [OpenStreetMap](https://www.openstreetmap.org/${longOsmType[type]}/${id})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 
 `
       case 'needsClarification':
@@ -106,7 +106,7 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
-* [OpenStreetMap](https://www.openstreetmap.org/${longOsmType[type]}/${id})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 
 `
     }

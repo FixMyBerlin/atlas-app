@@ -4,8 +4,8 @@ import { LineString } from '@turf/turf'
 import { NextRequest } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import {
-  longOsmType,
   mapillaryUrl,
+  osmTypeIdString,
 } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
 import { prismaClientForRawQueries } from 'src/prisma-client'
@@ -81,13 +81,13 @@ TODO
 
 * [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
-* [OpenStreetMap](https://www.openstreetmap.org/${longOsmType[type]}/${id})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 `
     }
 
     // ADD MAPROULETTE TASK DATA
     const featureCollections = sqlWays.map(({ type, id, geometry }) => {
-      const idString = `${longOsmType[type]}/${id}`
+      const idString = osmTypeIdString(type, id)
       const properties = {
         id: idString,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
