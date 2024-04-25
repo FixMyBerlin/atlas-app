@@ -50,6 +50,7 @@ export const InspectorFeatureStaticDataset: React.FC<InspectorDataFeature> = ({
               properties={properties}
               geometry={geometry}
               editors={sourceData.inspector.editors}
+              osmIdConfig={sourceData.osmIdConfig}
             />
             <ToolsOtherProperties
               properties={properties}

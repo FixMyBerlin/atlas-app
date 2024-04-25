@@ -74,14 +74,14 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
 
     // ADD MAPROULETTE TASK DATA
     const features = sqlWays.map(({ type, id, category, geometry }) => {
+      const osmTypeId = osmTypeIdString(type, id)
       const properties = {
-        id: `${osmTypeIdString(type, id)}`,
+        id: osmTypeId,
         category,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
         task_markdown: taskDescriptionMarkdown({
           projectKey,
-          id,
-          type,
+          osmTypeIdString: osmTypeId,
           category,
           geometry,
         }).replaceAll('\n', ' \n'),

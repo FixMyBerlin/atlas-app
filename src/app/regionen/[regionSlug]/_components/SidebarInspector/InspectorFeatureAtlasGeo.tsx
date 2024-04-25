@@ -12,6 +12,8 @@ import { ToolsFreshness } from './Tools/ToolsFreshness'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
+import { extractOsmTypeIdByConfig } from './Tools/osmUrls/extractOsmTypeIdByConfig'
+import { osmTypeIdString } from './Tools/osmUrls/osmUrls'
 
 export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   sourceKey,
@@ -23,6 +25,8 @@ export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   // The documentedKeys info is placed on the source object
   const { sourceId } = parseSourceKeyAtlasGeo(sourceKey)
   const sourceData = getSourceData(sourceId)
+  const { osmType, osmId } = extractOsmTypeIdByConfig(properties, sourceData.osmIdConfig)
+  const osmTypeId = osmType && osmId ? osmTypeIdString(osmType, osmId) : undefined
 
   if (!sourceData.inspector.enabled) return null
   if (!sourceId) return null
@@ -30,15 +34,11 @@ export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
   return (
     <div className="mt-5 w-full rounded-2xl bg-white">
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
-        <Disclosure
-          title={<FormattedMessage id={`${sourceId}--title`} />}
-          objectId={properties.osm_id}
-        >
+        <Disclosure title={<FormattedMessage id={`${sourceId}--title`} />} objectId={osmTypeId}>
           <NoticeTransformedGeometry visible={properties?.prefix} />
           <NoticeMaproulette
             identifier={properties?.category}
-            osmId={properties?.osm_id}
-            osmType={properties?.osm_type}
+            osmTypeIdString={osmTypeId}
             category={properties?.category}
             geometry={geometry}
           />

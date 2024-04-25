@@ -8,19 +8,17 @@ import {
 
 type Props = {
   identifier: string | null | undefined
-  osmId: string | undefined
-  osmType: 'W' | undefined
+  osmTypeIdString: string | undefined
   category: string | undefined
   geometry: MapGeoJSONFeature['geometry'] | undefined
 }
 
-export const NoticeMaproulette = ({ identifier, osmId, osmType, category, geometry }: Props) => {
+export const NoticeMaproulette = ({ identifier, osmTypeIdString, category, geometry }: Props) => {
   const maprouletteProjectKey = categoryToMaprouletteProjectKey(identifier)
   if (
     !maprouletteProjectKey ||
     !identifier ||
-    !osmId ||
-    !osmType ||
+    !osmTypeIdString ||
     !category ||
     geometry?.type !== 'LineString'
   ) {
@@ -36,8 +34,7 @@ export const NoticeMaproulette = ({ identifier, osmId, osmType, category, geomet
         <Markdown
           markdown={taskDescriptionMarkdown({
             projectKey: maprouletteProjectKey,
-            id: osmId,
-            type: osmType,
+            osmTypeIdString,
             category,
             geometry: geometry as LineString, // Guarded above
           })}

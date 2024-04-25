@@ -1,4 +1,3 @@
-import React from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
 
 type Props = {
@@ -6,7 +5,7 @@ type Props = {
   handleClose: () => void
 }
 
-export const InspectorHeader: React.FC<Props> = ({ count, handleClose }) => {
+export const InspectorHeader = ({ count, handleClose }: Props) => {
   return (
     <>
       <h2 className="text-base font-medium text-gray-900">
