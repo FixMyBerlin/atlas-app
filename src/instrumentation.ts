@@ -1,7 +1,7 @@
 import {
-  exportApiIdentifier,
   interactivityConfiguration,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { exportApiIdentifier } from './app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { initCustomFunctions } from './instrumentation/initCustomFunctions'
 import { initExportFunctions } from './instrumentation/initExportFunctions'
 import { initGeneralizationFunctions } from './instrumentation/initGeneralizationFunctions'

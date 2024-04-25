@@ -1,5 +1,6 @@
 import { MapDataSource } from '../types'
-import { SourceExportApiIdentifier, SourceVerificationApiIdentifier } from './sources.const'
+import { SourceVerificationApiIdentifier } from './sources.const'
+import { SourceExportApiIdentifier } from './export/exportIdentifier'
 
 export type SourcesParkingId =
   | 'parkraumParking'

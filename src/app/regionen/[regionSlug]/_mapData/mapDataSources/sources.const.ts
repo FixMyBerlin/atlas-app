@@ -22,6 +22,7 @@ export type TableId =
   | 'roadsPathClasses'
   | 'bikelanes'
   | 'trafficSigns'
+import { SourceExportApiIdentifier } from './export/exportIdentifier'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesId =
@@ -48,30 +49,6 @@ export type SourcesId =
 // TODO: this is redundant, as we also define this property with the attribute `verification.enabled`
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-
-// Define the export tables
-export const exportApiIdentifier = [
-  'bicycleParking_points',
-  'bicycleParking_areas', // private for now
-  'bikelanes',
-  'bikeroutes',
-  // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
-  'landuse',
-  'places',
-  'poiClassification',
-  'publicTransport',
-  'roads',
-  'roadsPathClasses',
-  'trafficSigns',
-  'barrierAreas',
-  'barrierLines',
-  'boundaries',
-  'boundaryLabels',
-] as const
-
-export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
-export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
-  `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
 
 export const generalizationFunctionIdentifier = (tableName: TableId) =>
   `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TableId>}`

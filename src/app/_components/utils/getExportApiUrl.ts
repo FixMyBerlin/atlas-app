@@ -1,5 +1,5 @@
 import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
-import { SourceExportApiIdentifier } from '../../regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { SourceExportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { appBaseUrl } from './appBaseUrl.const'
 
 export const getBoundaryExportApiBaseUrl = (env?: typeof process.env.NEXT_PUBLIC_APP_ENV) => {
