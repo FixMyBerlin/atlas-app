@@ -1,16 +1,20 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
+import { useMap } from 'react-map-gl/maplibre'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
-import { flattenSubcategories } from './utils/flattenSubcategories'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'
-import { useMap } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { flattenSubcategories } from './utils/flattenSubcategories'
 
 export const Calculator: React.FC = () => {
   const drawControlRef = useRef<MapboxDraw>()
   const { mapLoaded } = useMapStateInteraction()
   const { mainMap } = useMap()
+  const mapLayers = useMemo(
+    () => (mapLoaded ? mainMap?.getStyle()?.layers : undefined),
+    [mainMap, mapLoaded],
+  )
 
   // This blob ist just to check if the Calculator should be enabled
   // by checking the sourceData.
@@ -36,7 +40,6 @@ export const Calculator: React.FC = () => {
   // Guard against errors when using mainMap.*
   if (!mapLoaded) return null
 
-  const mapLayers = mainMap?.getStyle()?.layers
   const hasQueryLayersInMapLayers = mapLayers?.some((l) => queryLayers.includes(l.id))
   if (!hasQueryLayersInMapLayers) {
     console.log(
