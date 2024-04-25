@@ -1,6 +1,7 @@
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
+import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
 
 // this type includes all tables we generate in atlas-geo
 // TODO: automatically generate this in atlas-geo
@@ -155,15 +156,6 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     minzoom: 0,
   },
 }
-
-// https://account.mapbox.com/access-tokens
-// "Default public token"
-const apiKeyMapbox =
-  'pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q'
-
-// https://www.mapillary.com/dashboard/developers
-// "Tarmac OSM Viewer", they call it "Client Token"
-const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
 
 const tilesUrl = getTilesUrl()
 
