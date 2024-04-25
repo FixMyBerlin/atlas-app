@@ -71,6 +71,17 @@ const seedUsers = async () => {
       hashedPassword,
     },
     {
+      // On master.apis.dev.openstreetmap.org
+      osmId: 6501,
+      osmName: 'tordansdev',
+      osmDescription: undefined,
+      role: 'ADMIN',
+      email: 'tobias+osmdev@fixmycity.de',
+      firstName: 'Tobias',
+      lastName: 'Jordans',
+      hashedPassword,
+    },
+    {
       osmId: 20340489,
       osmName: 'the-sven',
       osmDescription: undefined,
