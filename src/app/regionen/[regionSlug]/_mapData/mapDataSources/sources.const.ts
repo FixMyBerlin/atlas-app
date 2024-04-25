@@ -3,6 +3,7 @@ import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
 import { SourceExportApiIdentifier } from './export/exportIdentifier'
+import { SourceVerificationApiIdentifier } from './verification/verificationIdentifier'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesId =
@@ -25,10 +26,6 @@ export type SourcesId =
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
 
-// Define the verification tables
-// TODO: this is redundant, as we also define this property with the attribute `verification.enabled`
-export const verificationApiIdentifier = ['bikelanes'] as const
-export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
 export const sources: MapDataSource<
   SourcesId,
   SourceVerificationApiIdentifier,
