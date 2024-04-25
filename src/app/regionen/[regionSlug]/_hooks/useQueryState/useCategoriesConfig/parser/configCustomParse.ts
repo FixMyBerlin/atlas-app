@@ -11,6 +11,12 @@ export const configCustomParse = (value: string | null, freshConfig: MapDataCate
     ? expandObjectKeys(jsurlParse(value) as Record<string, any>)
     : []
 
+  // jsurlParse will return `{reset=true}` when the parsing fails.
+  // In this case, we want to fall back to the fresh config.
+  if ('reset' in object && object.reset === true) {
+    return mergeCategoriesConfig({ freshConfig, urlConfig: undefined })
+  }
+
   const merged = mergeCategoriesConfig({
     freshConfig,
     urlConfig: object as MapDataCategoryConfig[],
