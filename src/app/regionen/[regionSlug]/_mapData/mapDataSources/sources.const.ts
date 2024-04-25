@@ -2,26 +2,6 @@ import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
-
-// this type includes all tables we generate in atlas-geo
-// TODO: automatically generate this in atlas-geo
-export type TableId =
-  | 'barrierLines'
-  | 'barrierAreas'
-  | 'bicycleParking_points'
-  | 'bicycleParking_areas'
-  | 'bikeroutes'
-  | 'boundaries'
-  | 'boundaryLabels'
-  | 'presenceStats'
-  | 'landuse'
-  | 'places'
-  | 'poiClassification'
-  | 'publicTransport'
-  | 'roads'
-  | 'roadsPathClasses'
-  | 'bikelanes'
-  | 'trafficSigns'
 import { SourceExportApiIdentifier } from './export/exportIdentifier'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
@@ -49,9 +29,6 @@ export type SourcesId =
 // TODO: this is redundant, as we also define this property with the attribute `verification.enabled`
 export const verificationApiIdentifier = ['bikelanes'] as const
 export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-
-export const generalizationFunctionIdentifier = (tableName: TableId) =>
-  `atlas_generalized_${tableName.toLowerCase()}` as `atlas_generalized_${Lowercase<TableId>}`
 
 export type InteracitvityConfiguartion = Record<TableId, { minzoom: number; stylingKeys: string[] }>
 export const interactivityConfiguration: InteracitvityConfiguartion = {
