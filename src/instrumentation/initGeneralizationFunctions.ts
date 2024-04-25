@@ -1,8 +1,8 @@
 import {
-  InteracitvityConfiguartion,
   TableId,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
+import { InteracitvityConfiguartion } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
 async function createTileSpecification(tableName: TableId) {
