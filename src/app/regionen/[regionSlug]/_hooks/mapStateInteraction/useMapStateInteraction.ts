@@ -1,9 +1,8 @@
+import { isEqual } from 'lodash'
+import { LngLatBounds } from 'maplibre-gl'
 import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
-import { LngLatBounds } from 'maplibre-gl'
-import { createInspectorFeatureKey } from '../../_components/utils/sourceKeyUtils/createInspectorFeatureKey'
-import { isEqual } from 'lodash'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
@@ -104,8 +103,10 @@ export const useMapStateInteraction = create<Store>((set, get) => {
 
     mapBounds: null,
     setMapBounds: (bounds) => set({ mapBounds: bounds }),
+
     inspectorSize: { width: 0, height: 0 },
     setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+
     sidebarLayerControlsSize: { width: 0, height: 0 },
     setSidebarLayerControlsSize: (size) => {
       setIfChanged(get, set, 'sidebarLayerControlsSize', size)
