@@ -1,12 +1,15 @@
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import {
+  MapDataOsmIdConfig,
+  MapDataSourceInspectorEditor,
+} from 'src/app/regionen/[regionSlug]/_mapData/types'
 import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { editorUrl } from './osmUrls/editorUrl'
+import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'
 import {
-  type OsmShortOrLongType,
   historyUrl,
-  longOsmType,
+  mapillaryKeyUrl,
   mapillaryUrl,
   osmEditIdUrl,
   osmEditRapidUrl,
@@ -17,48 +20,27 @@ type Props = {
   properties: maplibregl.GeoJSONFeature['properties']
   geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
   editors?: MapDataSourceInspectorEditor[]
+  osmIdConfig?: MapDataOsmIdConfig
 }
 
-export const ToolsLinks = ({ properties, geometry, editors }: Props) => {
-  // Normalize id + type for Parking data
-  // "atlas-geo" sometimes prefixes `-{id}`
-  const { id } = properties
-  if (typeof id !== 'string') return null
-  const osmIdFromId = properties?.id?.split('/')?.[1]
-  const osmTypeFromId = properties?.id?.split('/')?.[0]
-  const osmId =
-    osmIdFromId || Math.abs(properties.osm_id || properties.way_id || properties.area_id)
-  const osmType: OsmShortOrLongType =
-    osmTypeFromId ||
-    ('way_id' in properties
-      ? 'W'
-      : 'osm_type' in properties
-        ? properties.osm_type
-        : // `area_id` is what boundaries return, they don't have osm_type field (yet)
-          'area_id' in properties
-          ? 'R'
-          : undefined)
+export const ToolsLinks = ({ properties, geometry, editors, osmIdConfig }: Props) => {
+  const osmTypeId = extractOsmTypeIdByConfig(properties, osmIdConfig)
 
-  const osmUrlHref = osmUrl(osmType, osmId)
-  const osmEditIdUrlHref = osmEditIdUrl(osmType, osmId)
-  const osmEditRapidUrlHref = osmEditRapidUrl(osmType, osmId)
-  const historyUrlHref = historyUrl(osmType, osmId)
+  const osmUrlHref = osmUrl(osmTypeId)
+  const osmEditIdUrlHref = osmEditIdUrl(osmTypeId)
+  const osmEditRapidUrlHref = osmEditRapidUrl(osmTypeId)
+  const historyUrlHref = historyUrl(osmTypeId)
   const mapillaryUrlHref = mapillaryUrl(geometry)
-
-  // Type Guard
-  if (!osmUrlHref && !osmEditRapidUrlHref && !osmEditRapidUrlHref && !historyUrlHref && !editors) {
-    return null
-  }
+  const mapillaryKeyUrlHref = mapillaryKeyUrl(properties.mapillary)
 
   return (
     <section className="flex flex-wrap gap-3 pb-1 text-xs">
       {editors?.map(({ urlTemplate, name, idKey }) => {
-        const id = (idKey && (properties[idKey] as number)) || osmId
         const url = editorUrl({
           urlTemplate,
           geometry,
-          osmType: osmType && longOsmType[osmType],
-          osmId: id,
+          osmTypeId,
+          editorId: idKey && properties[idKey],
         })
         if (!url) return null
         return (
@@ -96,6 +78,12 @@ export const ToolsLinks = ({ properties, geometry, editors }: Props) => {
       {mapillaryUrlHref && (
         <LinkExternal blank button href={mapillaryUrlHref}>
           Mapillary
+        </LinkExternal>
+      )}
+
+      {mapillaryKeyUrlHref && (
+        <LinkExternal blank button href={mapillaryKeyUrlHref}>
+          Mapillary Foto
         </LinkExternal>
       )}
     </section>

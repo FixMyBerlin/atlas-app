@@ -60,6 +60,7 @@ export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
               properties={properties}
               geometry={geometry}
               editors={sourceData.inspector.editors}
+              osmIdConfig={sourceData.osmIdConfig}
             />
             {sourceData.freshness.enabled &&
               sourceData.freshness.freshConfigs?.map((freshConfig) => {

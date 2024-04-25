@@ -1,13 +1,17 @@
 import { editorUrl } from './editorUrl'
+import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
 
-export type OsmShortType = 'W' | 'N' | 'R' | undefined
-export type OsmLongType = 'way' | 'node' | 'relation' | undefined
-export type OsmShortOrLongType = OsmShortType | OsmLongType
+type OsmShortType = 'W' | 'N' | 'R'
+export type OsmLongType = 'way' | 'node' | 'relation'
+export type OsmShortOrLongType = OsmShortType | OsmLongType | null | undefined
 export const longOsmType = {
   W: 'way',
   N: 'node',
   R: 'relation',
+  w: 'way',
+  n: 'node',
+  r: 'relation',
   // Just so we can use this for both format
   way: 'way',
   node: 'node',
@@ -25,32 +29,31 @@ export const shortOsmType = {
   N: 'n',
   R: 'r',
 }
+type OsmTypeId = ReturnType<typeof extractOsmTypeIdByConfig>
 
-export const osmUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !longOsmType[type])) return undefined
+export const osmUrl = ({ osmType, osmId }: OsmTypeId) => {
+  if (!osmType || !osmId) return undefined
 
-  return `https://www.openstreetmap.org/${longOsmType[type]}/${id}`
+  return `https://www.openstreetmap.org/${osmType}/${osmId}`
 }
 
-export const osmEditIdUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !shortOsmType[type] && !longOsmType[type])) return undefined
-  const osmType = shortOsmType[type]
+export const osmEditIdUrl = ({ osmType, osmId }: OsmTypeId) => {
+  if (!osmType || !osmId) return undefined
 
-  // return `https://www.openstreetmap.org/edit?${longOsmType[type]}=${id}`
-  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${osmType}${id}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
+  // return `https://www.openstreetmap.org/edit?${osmType}=${id}`
+  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${shortOsmType[osmType]}${osmId}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
-export const osmEditRapidUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !shortOsmType[type])) return undefined
-  const osmType = shortOsmType[type]
+export const osmEditRapidUrl = ({ osmType, osmId }: OsmTypeId) => {
+  if (!osmType || !osmId) return undefined
 
-  return `https://rapideditor.org/edit#id=${osmType}${id}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
+  return `https://rapideditor.org/edit#id=${shortOsmType[osmType]}${osmId}&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
-export const historyUrl = (type: OsmShortOrLongType, id: number | string) => {
-  if (!type || (type && !longOsmType[type])) return undefined
+export const historyUrl = ({ osmType, osmId }: OsmTypeId) => {
+  if (!osmType || !osmId) return undefined
 
-  return `https://osmlab.github.io/osm-deep-history/#/${longOsmType[type]}/${id}`
+  return `https://osmlab.github.io/osm-deep-history/#/${osmType}/${osmId}`
 }
 
 export const mapillaryUrl = (

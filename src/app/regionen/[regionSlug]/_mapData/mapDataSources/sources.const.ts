@@ -42,6 +42,7 @@ export const sources: MapDataSource<
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -61,6 +62,7 @@ export const sources: MapDataSource<
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -81,6 +83,7 @@ export const sources: MapDataSource<
     attributionHtml: 'Unfallatlas', // TODO
     licence: undefined, // TODO
     promoteId: undefined,
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'unfall_id',
@@ -100,6 +103,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -142,6 +146,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -183,6 +188,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -224,6 +230,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -266,6 +273,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -292,6 +300,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -318,6 +327,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -347,6 +357,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: { enabled: false },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -364,6 +375,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -388,6 +400,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -419,6 +432,7 @@ export const sources: MapDataSource<
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -444,6 +458,7 @@ export const sources: MapDataSource<
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
     licence: undefined, // TODO
     promoteId: undefined,
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
@@ -451,12 +466,12 @@ export const sources: MapDataSource<
         {
           name: 'Mapillary Image',
           idKey: 'id',
-          urlTemplate: 'https://www.mapillary.com/app/?focus=photo&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?focus=photo&pKey={editor_id}',
         },
         {
           name: 'Mapillary Panorama',
           idKey: 'id',
-          urlTemplate: 'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?panos=true&pKey={editor_id}',
         },
         {
           name: 'Kartaview',

@@ -21,9 +21,10 @@ export const sourcesParking: MapDataSource<
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     licence: 'ODbL',
-    promoteId: undefined,
     maxzoom: 20,
     minzoom: 4,
+    promoteId: 'id',
+    osmIdConfig: { osmType: 'osm_type', osmId: 'osm_id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -72,9 +73,10 @@ export const sourcesParking: MapDataSource<
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     licence: 'ODbL',
-    promoteId: undefined,
     maxzoom: 22,
     minzoom: 4,
+    promoteId: undefined,
+    osmIdConfig: undefined,
     inspector: { enabled: false }, // Those layers have no properties anyways
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -88,12 +90,11 @@ export const sourcesParking: MapDataSource<
     attributionHtml:
       '<a rel="noopener noreferrer" href="https://parkraum.osm-verkehrswende.org/" target="_blank">OSM-Parkraumanalyse</a>, © <a rel="noopener noreferrer" href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
     licence: 'ODbL',
-    promoteId: undefined,
     maxzoom: 20,
     minzoom: 4,
-    inspector: {
-      enabled: false,
-    },
+    promoteId: undefined,
+    osmIdConfig: undefined,
+    inspector: { enabled: false },
     // presence: { enabled: false },
     verification: { enabled: false },
     freshness: { enabled: false },
@@ -116,6 +117,7 @@ export const sourcesParking: MapDataSource<
     promoteId: undefined,
     maxzoom: 22,
     minzoom: 4,
+    osmIdConfig: { osmType: 'osm_type', osmId: 'osm_id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id',
@@ -135,7 +137,7 @@ export const sourcesParking: MapDataSource<
         {
           name: 'Parkplätze Editor',
           urlTemplate:
-            'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{osm_type}/{osm_id}',
+            'https://mapcomplete.osm.be/parkings.html?z={zoom}&lat={latitude}&lon={longitude}&language=de#{long_osm_type}/{osm_id}',
         },
       ],
     },
@@ -153,7 +155,8 @@ export const sourcesParking: MapDataSource<
     licence: 'ODbL',
     maxzoom: 22,
     minzoom: 4,
-    promoteId: undefined,
+    promoteId: 'id',
+    osmIdConfig: undefined,
     inspector: {
       enabled: true,
       highlightingKey: 'id',

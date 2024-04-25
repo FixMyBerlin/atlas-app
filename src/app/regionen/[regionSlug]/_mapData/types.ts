@@ -68,7 +68,9 @@ export type MapDataDatasetsSource<TIds> = {
 
 export type MapDataSourceInspectorEditor = {
   name: string
+  /** @desc `properties[idKey]` will replace `{editor_id_key}` in the URL */
   idKey?: string
+  /** @desc Allowed replacements are `{zoom}`, `{latitude}`, `{longitude}`, `{short_osm_type}`, `{long_osm_type}`, `{editor_id}`, `{osm_id}` */
   urlTemplate: `https://${string}`
 }
 
@@ -147,6 +149,11 @@ type MapDataSourceExport<TExpIds> =
       desc?: undefined
     }
 
+export type MapDataOsmIdConfig =
+  | undefined
+  | { osmType: string; osmId: string }
+  | { osmTypeId: string }
+
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
@@ -161,6 +168,7 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   attributionHtml: string
   licence: 'ODbL' | undefined
   promoteId: mapboxgl.VectorSource['promoteId']
+  osmIdConfig: MapDataOsmIdConfig
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
