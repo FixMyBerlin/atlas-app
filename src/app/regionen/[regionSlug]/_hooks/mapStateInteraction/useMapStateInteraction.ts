@@ -77,9 +77,11 @@ function setIfChanged(get, set, name, value) {
 
 export const useMapStateInteraction = create<Store>((set, get) => {
   return {
+    // Guards againt errors when using `mainMap?.getStyle`
     mapLoaded: false,
     setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
+    // Toggels <LoadingIndicator>
     mapDataLoading: false,
     setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
 
@@ -88,9 +90,11 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
     resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
 
+    // Data for <Inspector> AND <SourcesLayersOsmNotes>
     osmNotesFeatures: turf.featureCollection([]),
     setOsmNotesFeatures: (osmNotesFeatures) => set({ osmNotesFeatures }),
 
+    // Data for <OsmNotesNew>
     osmNewNoteFeature: undefined,
     setOsmNewNoteFeature: (osmNewNoteFeature) => set({ osmNewNoteFeature }),
 
