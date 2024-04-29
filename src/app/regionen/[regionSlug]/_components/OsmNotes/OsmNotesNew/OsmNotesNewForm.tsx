@@ -87,7 +87,7 @@ export const OsmNotesNewForm = () => {
     <section className="">
       <div className="mt-4 flex justify-center">
         <h2 className="z-10 rounded-lg bg-teal-700 px-2 py-1 font-semibold leading-tight text-teal-50">
-          2. Kommentar verfassen
+          2. Hinweis verfassen
         </h2>
       </div>
       <form className="p-4" onSubmit={handleSubmit}>
@@ -105,7 +105,7 @@ export const OsmNotesNewForm = () => {
           herangezogen werden können?
         </p>
         <label>
-          <span className="sr-only">Kommentartext</span>
+          <span className="sr-only">Hinweistext</span>
           <textarea
             name="comment"
             className="my-3 block min-h-48 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"

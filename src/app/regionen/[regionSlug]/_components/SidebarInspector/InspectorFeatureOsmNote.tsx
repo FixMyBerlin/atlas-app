@@ -53,7 +53,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
 
   return (
     <div className="mt-5 w-full rounded-2xl">
-      <Disclosure title="Öffentlicher Kommentar auf openstreetmap.org" objectId={String(thread.id)}>
+      <Disclosure title="Öffentlicher Hinweis auf openstreetmap.org" objectId={String(thread.id)}>
         {thread.comments?.map((comment, index) => {
           const firstComment = index === 0
           const splitDate = comment.date.split(' ')
@@ -84,12 +84,12 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
               />
               {!firstComment && comment.action === 'opened' && (
                 <p>
-                  <em>Der Kommentar wurde erneut geöffnet.</em>
+                  <em>Der Hinweis wurde erneut geöffnet.</em>
                 </p>
               )}
               {comment.action === 'closed' && (
                 <p>
-                  <em>Der Kommentar wurde geschlossen.</em>
+                  <em>Der Hinweis wurde geschlossen.</em>
                 </p>
               )}
             </section>
