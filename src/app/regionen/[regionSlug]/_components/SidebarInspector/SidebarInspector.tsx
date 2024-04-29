@@ -30,7 +30,7 @@ type Props = Pick<
   selectedFeatures: SelectedFeature[]
 }
 
-const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoized(props: Props) {
+const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
   const checkBounds = useRef(true)
 
   const {
@@ -107,7 +107,7 @@ const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoize
   )
 })
 
-export const SidebarInspector: React.FC = () => {
+export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 

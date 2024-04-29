@@ -5,8 +5,8 @@ import {
   useMapStateInteraction,
 } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
-  type SelectedFeature,
   useSelectedFeatures,
+  type SelectedFeature,
 } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
@@ -19,12 +19,16 @@ type MemoProps = Pick<Store, 'mapLoaded' | 'inspectorFeatures' | 'calculatorArea
   selectedFeatures: SelectedFeature[]
 }
 
-const LayerHighlightMemoized: React.FC = memo(function LayerHighlightMemoized(
+const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   props: ParentLayerProps & MemoProps,
 ) {
-  const { mapLoaded, inspectorFeatures, calculatorAreasWithFeatures, selectedFeatures } = props
-
-  const { sourceData } = props
+  const {
+    mapLoaded,
+    inspectorFeatures,
+    calculatorAreasWithFeatures,
+    selectedFeatures,
+    sourceData,
+  } = props
 
   const features = inspectorFeatures.length
     ? inspectorFeatures
@@ -104,6 +108,5 @@ export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
     selectedFeatures,
   }
 
-  // @ts-ignore - let's keep it simple!
   return <LayerHighlightMemoized {...props} />
 }
