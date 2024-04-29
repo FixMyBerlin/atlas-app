@@ -64,7 +64,7 @@ export const UserFormOsmDescriptionMissing = () => {
   // === Text recommendation and helper to copy the text ===
   const [copySuccess, setCopySuccess] = useState('')
   const textToCopy = `Hallo! Dies ist der offizielle Account der Abteilung NAME im BEZIRKSAMT NAME. Wir nutzen ihn
-  im Rahmen des Projektes [Radverkehrsatlas](https://wiki.openstreetmap.org/wiki/FixMyCity_GmbH#Radverkehrsatlas) um die
+  im Rahmen des Projektes [Radverkehrsatlas](https://osm.wiki/FixMyCity_GmbH/Radverkehrsatlas) um die
   Fahrradinfrastruktur in unserer Region zu verbessern.`
   const copyToClipboard: React.ComponentProps<'button'>['onClick'] = async (event) => {
     event.preventDefault()
