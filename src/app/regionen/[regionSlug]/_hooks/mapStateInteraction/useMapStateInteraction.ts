@@ -1,6 +1,7 @@
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
-import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 

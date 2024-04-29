@@ -1,38 +1,38 @@
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import * as turf from '@turf/turf'
+import { uniqBy } from 'lodash'
 import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useState } from 'react'
-import { MapGeoJSONFeature } from 'react-map-gl'
 import {
   AttributionControl,
+  MapGeoJSONFeature,
   Map as MapGl,
   MapLayerMouseEvent,
   NavigationControl,
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
-import { uniqBy } from 'lodash'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  convertToUrlFeature,
+  useFeaturesParam,
+} from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { interactivityConfiguration } from '../../_mapData/mapDataSources/generalization/interacitvityConfiguartion'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
+import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
+import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Calculator } from './Calculator/Calculator'
+import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
-import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import {
-  convertToUrlFeature,
-  useFeaturesParam,
-} from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
-import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
-import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -54,11 +54,13 @@ export const Map = () => {
   // However, we do want to show an interaction (Tooltip) to inform our users,
   // which is why the layers stay in `interactiveLayerIds`
   const extractInteractiveFeatures = (features: MapGeoJSONFeature[] | undefined) => {
-    return features?.filter(
-      (f) =>
+    return features?.filter((f) => {
+      if (!f.sourceLayer) return true // TS guard so sourceLayer is not undefined
+      return (
         interactivityConfiguration[f.sourceLayer] === undefined ||
-        mapParam.zoom >= interactivityConfiguration[f.sourceLayer].minzoom,
-    )
+        mapParam.zoom >= interactivityConfiguration[f.sourceLayer].minzoom
+      )
+    })
   }
 
   const [cursorStyle, setCursorStyle] = useState('grab')

@@ -1,4 +1,4 @@
-import { MapGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { zip } from 'lodash'
 import { bbox } from '@turf/turf'
 import { z } from 'zod'

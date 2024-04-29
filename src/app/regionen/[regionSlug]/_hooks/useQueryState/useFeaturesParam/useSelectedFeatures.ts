@@ -1,7 +1,7 @@
 import { useMap } from 'react-map-gl/maplibre'
 import { useFeaturesParam } from './useFeaturesParam'
 import { findFeature } from '../../../_components/SidebarInspector/util'
-import { MapGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { Store, useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { UrlFeature } from '../types'
 
