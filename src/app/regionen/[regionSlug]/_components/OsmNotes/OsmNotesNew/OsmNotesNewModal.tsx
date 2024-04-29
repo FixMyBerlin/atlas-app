@@ -1,14 +1,17 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useOsmNotesParam'
 
 export const OsmNotesNewModal = ({ children }: { children: React.ReactNode }) => {
   const { setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
+  const { setOsmNewNoteFeature } = useMapStateInteraction()
   const closeButtonRef = useRef(null)
 
   const setClose = () => {
     setNewOsmNoteMapParam(null)
+    setOsmNewNoteFeature(undefined)
   }
 
   return (
