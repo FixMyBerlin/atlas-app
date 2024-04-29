@@ -7,15 +7,15 @@ local table = osm2pgsql.define_table({
   name = 'trafficSigns',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', type = 'text', not_null = true },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'point' },
+    { column = 'id',      type = 'text',   not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                method = 'btree', unique = true }
   }
 })
 
@@ -38,8 +38,8 @@ local directionTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'node_id', type = 'bigint' },
-    { column = 'idx', type = 'int' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'idx',     type = 'int' },
+    { column = 'geom',    type = 'linestring' },
   },
 })
 
@@ -53,7 +53,7 @@ local function splitDirections(tags)
     local both = "traffic_sing:both"
     if tags[directedTag] or tags[both] then
       traffic_signs[direction] = { ["traffic_sign"] = tags[directedTag] or tags[both], ["offset"] = offset }
-    elseif tags.direction == direction or tags.direction=="both" then
+    elseif tags.direction == direction or tags.direction == "both" then
       traffic_signs[direction] = { ["traffic_sign"] = tags.traffic_sign, ["offset"] = offset }
     end
   end
@@ -105,7 +105,9 @@ function osm2pgsql.process_node(object)
   local tags = object.tags
   if ExitProcessing(object) then return end
 
-  tags.direction = tags.direction or tags['traffic_sign:direction'] -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
+  tags.direction = tags.direction or
+  tags
+  ['traffic_sign:direction']                                        -- the tag `traffic_sign:direction` depicts the same as `direction` (give the original precedence)
   local direction
   local direction_source = nil
   if tags.direction ~= nil then
@@ -124,7 +126,7 @@ function osm2pgsql.process_node(object)
   for i, traffic_sign in pairs(splitDirections(tags)) do -- here we possibly duplicate a node due to the possibility of two traffic signs per node
     traffic_sign.direction = tonumber(direction)
     traffic_sign.direction_source = direction_source
-    for k,v in pairs(tags) do traffic_sign['osm_' .. k] = v end
+    for k, v in pairs(tags) do traffic_sign['osm_' .. k] = v end
     table:insert({
       tags = traffic_sign,
       meta = Metadata(object),
