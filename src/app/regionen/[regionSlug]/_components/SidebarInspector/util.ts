@@ -122,10 +122,6 @@ export function allUrlFeaturesInBounds(urlFeatures, boundingPolygon) {
     .every((r) => ['~', '>'].includes(r))
 }
 
-export function getUrlFeaturesBbox(urlFeatures: UrlFeature[]): Bounds {
-  return bbox(createFeatureCollection(urlFeatures)) as Bounds
-}
-
 export function fitBounds(mapInstance, urlFeatures, sidebarLayerControlsSize, inspectorSize) {
   const map = getMapSize(mapInstance)
   const [lay, ins] = [sidebarLayerControlsSize, inspectorSize]
