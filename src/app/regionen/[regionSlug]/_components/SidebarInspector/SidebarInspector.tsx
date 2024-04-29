@@ -1,18 +1,20 @@
-import React, { memo, Suspense, useRef } from 'react'
-import { useMap, MapRef } from 'react-map-gl/maplibre'
-import useResizeObserver from 'use-resize-observer'
 import { clsx } from 'clsx'
-
+import { memo, Suspense, useRef } from 'react'
+import { MapRef, useMap } from 'react-map-gl/maplibre'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import {
-  Store,
+  useSelectedFeatures,
+  type SelectedFeature,
+} from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
+import useResizeObserver from 'use-resize-observer'
+import {
   useMapStateInteraction,
+  type Store,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
-import { createBoundingPolygon, allUrlFeaturesInBounds, fitBounds } from './util'
-import { useSelectedFeatures } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
-import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
+import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 
 type Props = Pick<
   Store,
@@ -25,7 +27,7 @@ type Props = Pick<
   | 'sidebarLayerControlsSize'
 > & {
   map: MapRef
-  selectedFeatures: ReturnType<typeof useSelectedFeatures>
+  selectedFeatures: SelectedFeature[]
 }
 
 const SidebarInspectorMemoized: React.FC = memo(function SidebarInspectorMemoized(props: Props) {

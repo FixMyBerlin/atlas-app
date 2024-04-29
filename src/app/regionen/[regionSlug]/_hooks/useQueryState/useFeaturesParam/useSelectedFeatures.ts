@@ -1,19 +1,19 @@
-import { useMap } from 'react-map-gl/maplibre'
-import { useFeaturesParam } from './useFeaturesParam'
-import { findFeature } from '../../../_components/SidebarInspector/util'
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
 import { Store, useMapStateInteraction } from '../../mapStateInteraction/useMapStateInteraction'
 import { UrlFeature } from '../types'
+import { useFeaturesParam } from './useFeaturesParam'
 
 type Result = {
   urlFeature: UrlFeature
-  mapFeature: MapGeoJSONFeature | null
+  mapFeature: MapGeoJSONFeature | undefined
 }
 
 // State variables
 let prevMapLoaded = false
 let prevMapBounds: Store['mapBounds'] = null
 let prevResult: Result[] = []
+
+export type SelectedFeature = ReturnType<typeof useSelectedFeatures>[number]
 
 export const useSelectedFeatures = () => {
   const { mainMap: map } = useMap()
@@ -27,8 +27,7 @@ export const useSelectedFeatures = () => {
 
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
-    const mapFeature =
-      findFeature<MapGeoJSONFeature>(renderedFeatures, urlFeature.properties) || null
+    const mapFeature = renderedFeatures.find((f) => f.properties.id === urlFeature.properties.id)
     return { urlFeature, mapFeature }
   })
 

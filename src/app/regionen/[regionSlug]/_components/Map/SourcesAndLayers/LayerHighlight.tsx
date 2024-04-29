@@ -1,19 +1,22 @@
-import React, { memo } from 'react'
+import { memo } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import {
   Store,
   useMapStateInteraction,
 } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  type SelectedFeature,
+  useSelectedFeatures,
+} from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
+import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
-import { useSelectedFeatures } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 
 type ParentLayerProps = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
 type MemoProps = Pick<Store, 'mapLoaded' | 'inspectorFeatures' | 'calculatorAreasWithFeatures'> & {
-  selectedFeatures: ReturnType<typeof useSelectedFeatures>
+  selectedFeatures: SelectedFeature[]
 }
 
 const LayerHighlightMemoized: React.FC = memo(function LayerHighlightMemoized(

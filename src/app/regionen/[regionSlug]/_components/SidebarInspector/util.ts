@@ -96,18 +96,6 @@ export function compareFeatures(feature1, feature2) {
   }
 }
 
-export function findFeature<TFeature extends MapGeoJSONFeature>(
-  features: TFeature[],
-  props: NonNullable<GeoJsonProperties>,
-) {
-  const pkeys = Object.keys(props)
-  return features.find((f) => {
-    // we use lodash for shorter code and better readability
-    const fprops = pick(f.properties, pkeys)
-    return isEqual(props, fprops)
-  })
-}
-
 function geojsonFromCoordinates(coordinates: [number, number] | [number, number, number, number]) {
   return coordinates.length === 2 ? point(coordinates) : createBox(boundsToPoints(coordinates))
 }
