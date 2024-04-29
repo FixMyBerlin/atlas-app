@@ -1,16 +1,18 @@
-import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader'
-import OverlayOp from 'jsts/org/locationtech/jts/operation/overlay/OverlayOp'
 import {
+  FeatureCollection,
+  bbox,
   coordEach,
+  difference,
+  featureCollection,
   point,
   polygon,
-  featureCollection,
-  difference,
-  bbox,
-  FeatureCollection,
 } from '@turf/turf'
-import { pick, isEqual } from 'lodash'
+import { GeoJsonProperties } from 'geojson'
+import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader'
+import OverlayOp from 'jsts/org/locationtech/jts/operation/overlay/OverlayOp'
+import { isEqual, pick } from 'lodash'
 import { UrlFeature } from '../../_hooks/useQueryState/types'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 
 type Bounds = [number, number, number, number]
 type Points = [[number, number], [number, number]]
@@ -94,7 +96,10 @@ export function compareFeatures(feature1, feature2) {
   }
 }
 
-export function findFeature(features, props) {
+export function findFeature<TFeature extends MapGeoJSONFeature>(
+  features: TFeature[],
+  props: NonNullable<GeoJsonProperties>,
+) {
   const pkeys = Object.keys(props)
   return features.find((f) => {
     // we use lodash for shorter code and better readability

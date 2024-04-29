@@ -27,7 +27,8 @@ export const useSelectedFeatures = () => {
 
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
-    const mapFeature = findFeature(renderedFeatures, urlFeature.properties) || null
+    const mapFeature =
+      findFeature<MapGeoJSONFeature>(renderedFeatures, urlFeature.properties) || null
     return { urlFeature, mapFeature }
   })
 
