@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
+import { Markdown } from 'src/app/_components/text/Markdown'
 import { getOsmApiUrl, getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import updateOsmDescription from 'src/users/mutations/updateOsmDescription'
 import { twJoin } from 'tailwind-merge'
@@ -110,7 +111,9 @@ export const UserFormOsmDescriptionMissing = () => {
         )}
       </p>
 
-      <blockquote className="break-all">{textToCopy}</blockquote>
+      <blockquote>
+        <Markdown markdown={textToCopy} />
+      </blockquote>
       <button onClick={copyToClipboard} className={twJoin('flex items-center gap-0.5', linkStyles)}>
         <ClipboardIcon className="h-5 w-5" />
         Textvorlage kopieren {copySuccess}

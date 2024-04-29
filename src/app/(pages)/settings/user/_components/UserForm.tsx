@@ -17,6 +17,7 @@ import { UpdateUserSchema } from 'src/users/schema'
 import { twJoin } from 'tailwind-merge'
 import { z } from 'zod'
 import { UserFormOsmDescriptionMissing } from './UserFormOsmDescriptionMissing'
+import { Markdown } from 'src/app/_components/text/Markdown'
 export { FORM_ERROR } from 'src/app/_components/forms/Form'
 
 export function UserFormForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
@@ -93,7 +94,9 @@ export const UserForm = () => {
             <tbody>
               <tr>
                 <th className="pl-1 font-normal">Anzeigename</th>
-                <td className="py-1">{user.osmName ? user.osmName : '–'}</td>
+                <td className="py-1">
+                  <strong>{user.osmName ? user.osmName : '–'}</strong>
+                </td>
               </tr>
               <tr>
                 <th className="pl-1 font-normal">Avatar</th>
@@ -114,7 +117,12 @@ export const UserForm = () => {
               </tr>
               <tr>
                 <th className="pl-1 font-normal">Profilbeschreibung</th>
-                <td className="break-all py-1 text-sm">{user.osmDescription?.trim() || '–'}</td>
+                <td className="py-1 pr-1 text-sm">
+                  <Markdown
+                    markdown={user.osmDescription}
+                    className="prose-xs font-normal leading-snug text-gray-600"
+                  />
+                </td>
               </tr>
             </tbody>
           </table>
