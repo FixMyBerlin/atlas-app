@@ -67,9 +67,7 @@ export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, ins
   return poly
 }
 
-export type Visibility = '=' | '>' | '<' | '~' | '!='
-
-export function compareFeatures(feature1, feature2): Visibility {
+export function compareFeatures(feature1, feature2) {
   const geojsonReader = new GeoJSONReader()
   const f1 = geojsonReader.read(feature1.geometry)
   const f2 = geojsonReader.read(feature2.geometry)
@@ -79,20 +77,20 @@ export function compareFeatures(feature1, feature2): Visibility {
     const d21 = !OverlayOp.difference(f2, f1).isEmpty()
     if (!d12 && !d21) {
       // feature1 and feature2 are equal
-      return '='
+      return '=' as const
     } else if (d12 && !d21) {
       // feature2 is completely contained in feature1
-      return '>'
+      return '>' as const
     } else if (!d12 && d21) {
       // feature1 is completely contained in feature2
-      return '<'
+      return '<' as const
     } else {
       // feature1 and feature2 intersect
-      return '~'
+      return '~' as const
     }
   } else {
     // feature1 and feature2 do not intersect
-    return '!='
+    return '!=' as const
   }
 }
 
