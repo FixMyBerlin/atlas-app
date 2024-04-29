@@ -10,7 +10,7 @@ export const SourceLayerFeature = () => {
     <Source
       id="geometry_from_inspector"
       type="geojson"
-      data={turf.featureCollection([osmNewNoteFeature])}
+      data={turf.featureCollection([turf.feature(osmNewNoteFeature.geometry)])}
     >
       <Layer
         id="osm_notes_new_map_geometry_area"

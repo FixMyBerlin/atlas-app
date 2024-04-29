@@ -1,10 +1,8 @@
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { editorUrl } from './editorUrl'
-import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
+import { OsmTypeId, extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
 import { longOsmType, shortOsmType } from './shortLongOsmType'
-
-type OsmTypeId = ReturnType<typeof extractOsmTypeIdByConfig>
 
 export const osmTypeIdString = (type: string, id: string | number) => {
   return `${longOsmType[type]}/${id}`

@@ -32,7 +32,7 @@ export const OsmNotesNewMap = () => {
   const { osmNewNoteFeature } = useMapStateInteraction()
   if (osmNewNoteFeature) {
     initialViewState = {
-      bounds: turf.bbox(osmNewNoteFeature) as [number, number, number, number],
+      bounds: turf.bbox(osmNewNoteFeature.geometry) as [number, number, number, number],
       fitBoundsOptions: { padding: 100, maxZoom: 17 },
     }
   }

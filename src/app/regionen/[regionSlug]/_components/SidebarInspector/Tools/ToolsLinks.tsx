@@ -88,7 +88,7 @@ export const ToolsLinks = ({ properties, geometry, editors, osmIdConfig }: Props
         </LinkExternal>
       )}
 
-      <ToolsLinkNewOsmNote properties={properties} geometry={geometry} />
+      <ToolsLinkNewOsmNote properties={properties} geometry={geometry} osmIdConfig={osmIdConfig} />
     </section>
   )
 }

@@ -1,4 +1,3 @@
-import * as turf from '@turf/turf'
 import { useMap } from 'react-map-gl/maplibre'
 import { buttonStyles } from 'src/app/_components/links/styles'
 import {
@@ -9,14 +8,17 @@ import {
   useNewOsmNoteMapParam,
   useOsmNotesParam,
 } from '../../../_hooks/useQueryState/useOsmNotesParam'
+import { MapDataOsmIdConfig } from '../../../_mapData/types'
+import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './osmUrls/pointFromGeometry'
 
 type Props = {
   properties: StoreFeaturesInspector['inspectorFeatures'][number]['properties']
   geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
+  osmIdConfig: MapDataOsmIdConfig
 }
 
-export const ToolsLinkNewOsmNote = ({ properties, geometry }: Props) => {
+export const ToolsLinkNewOsmNote = ({ properties, geometry, osmIdConfig }: Props) => {
   const { mainMap } = useMap()
   const { setOsmNotesParam } = useOsmNotesParam()
   const { setOsmNewNoteFeature } = useMapStateInteraction()
@@ -24,14 +26,16 @@ export const ToolsLinkNewOsmNote = ({ properties, geometry }: Props) => {
 
   const [lng, lat] = pointFromGeometry(geometry)
 
-  if (!mainMap || !lng || !lat || !properties || !geometry) return null
+  const { osmType, osmId } = extractOsmTypeIdByConfig(properties, osmIdConfig)
+
+  if (!mainMap || !lng || !lat || !properties || !geometry || !osmType || !osmId) return null
 
   return (
     <button
       className={buttonStyles}
       onClick={() => {
         setOsmNotesParam(true)
-        setOsmNewNoteFeature(turf.feature(geometry, properties))
+        setOsmNewNoteFeature({ geometry, osmType, osmId })
         // Note: The zoom will be specified by the `bounds` prop in <OsmNotesNewMap/>
         setNewOsmNoteMapParam({ zoom: 12, lng, lat })
       }}

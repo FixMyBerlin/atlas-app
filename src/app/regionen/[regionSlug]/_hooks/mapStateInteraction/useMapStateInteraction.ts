@@ -1,12 +1,13 @@
 import * as turf from '@turf/turf'
-import type { Feature, FeatureCollection, Geometry, Point } from 'geojson'
+import type { FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson'
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 import { OsmNotesThread } from '../../_components/OsmNotes/types'
+import { OsmTypeIdNonNull } from '../../_components/SidebarInspector/Tools/osmUrls/extractOsmTypeIdByConfig'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
@@ -51,7 +52,7 @@ type StoreOsmNotesFeatures = {
 }
 
 type StoreOsmNewNoteFeature = {
-  osmNewNoteFeature: Feature<Geometry> | undefined
+  osmNewNoteFeature: ({ geometry: Geometry } & OsmTypeIdNonNull) | undefined
   setOsmNewNoteFeature: (osmNewNoteFeature: Store['osmNewNoteFeature']) => void
 }
 

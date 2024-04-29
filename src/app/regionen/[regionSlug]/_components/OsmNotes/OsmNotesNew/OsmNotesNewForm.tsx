@@ -7,7 +7,7 @@ import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useOsmNotesParam'
-import { osmUrl } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
+import { osmTypeIdString, osmUrl } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
 import { useRegion } from '../../regionUtils/useRegion'
 import { OsmNotesThread } from '../types'
 import { useBoundsBbox } from './utils/useBoundsBbox'
@@ -46,10 +46,10 @@ export const OsmNotesNewForm = () => {
 
   const hasPermissions = useHasPermissions()
   const region = useRegion()
-  const commentedFeatureId = osmNewNoteFeature?.properties?.id
-  const osmType = commentedFeatureId?.split('/')[0]
-  const osmId = commentedFeatureId?.split('/')[1]
-  const osmTypeId = osmType && osmId ? `${osmType}/${osmId}` : null
+  const commentedFeatureId =
+    osmNewNoteFeature?.osmType && osmNewNoteFeature?.osmId
+      ? osmTypeIdString(osmNewNoteFeature.osmType, osmNewNoteFeature.osmId)
+      : null
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
 
@@ -62,14 +62,20 @@ export const OsmNotesNewForm = () => {
     const footer = `\n--\n#radverkehrsatlas ${footerMemberHashtag} ${footerUrl} ${footerWiki}`
 
     // Text snippets for comment on a specific feature
-    const footerFeatureOsmUrl = osmUrl(osmType, osmId) || ''
-    const footerFeatureUrl = '' // TODO Add later once the direct link feature is rolled out
-    // const footerFeatureUrl = region.public
-    //   ? `${footerUrl}?map=${newOsmNoteMapParam}&f=${commentedFeatureId}`
-    //   : ''
-    const featureFooter = commentedFeatureId
-      ? `\n--\nDieser Hinweis bezieht sich auf ${footerFeatureOsmUrl} ${footerFeatureUrl}`
-      : ''
+    let featureFooter = ''
+    if (osmNewNoteFeature?.osmType && osmNewNoteFeature?.osmId) {
+      const footerFeatureOsmUrl = osmUrl({
+        osmType: osmNewNoteFeature.osmType,
+        osmId: osmNewNoteFeature.osmId,
+      })
+      const footerFeatureUrl = '' // TODO Add later once the direct link feature is rolled out
+      // const footerFeatureUrl = region.public
+      //   ? `${footerUrl}?map=${newOsmNoteMapParam}&f=${commentedFeatureId}`
+      //   : ''
+      featureFooter = commentedFeatureId
+        ? `\n--\nDieser Hinweis bezieht sich auf ${footerFeatureOsmUrl} ${footerFeatureUrl}`
+        : ''
+    }
 
     const userCommentText = new FormData(event.currentTarget).get('comment')
     const fullComment = `${userCommentText}\n${featureFooter}${footer}`
@@ -89,7 +95,8 @@ export const OsmNotesNewForm = () => {
           Bitte beschreiben Sie möglichst genau,{' '}
           {commentedFeatureId ? (
             <>
-              welche Angaben an dem Kartenelemente <code className="text-xs">{osmTypeId}</code>
+              welche Angaben an dem Kartenelemente{' '}
+              <code className="text-xs">{commentedFeatureId}</code>
             </>
           ) : (
             <>welche Angaben in der Karte</>
