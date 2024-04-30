@@ -41,10 +41,11 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
 
   if (sourceData.inspector.enabled) {
     highlightingKey = sourceData.inspector.highlightingKey
-    featureIds = extractHighlightFeatureIds(
-      features.filter((f) => f.layer.id === props.id),
-      highlightingKey,
-    )
+    // NOTE: We used to filter the features by layer.id to make sure we only highlight features from the correct layer.
+    // But with selectedFeatures we don't have the layer.id anymore.
+    // But we might run into issues here where a feature id is used in multiple layers.
+    // Idea: We could filter on source to guard against this…
+    featureIds = extractHighlightFeatureIds(features, highlightingKey)
   }
   if (sourceData.calculator.enabled) {
     highlightingKey = sourceData.calculator.highlightingKey
@@ -60,7 +61,7 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
     ...props,
     id: `${props.id}--highlight`,
     paint: structuredClone(props.paint),
-  }
+  } as LayerProps
 
   if (layerProps.type === 'line') {
     if (!layerProps.paint) layerProps.paint = {}
@@ -91,7 +92,7 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
   layerProps.filter = ['in', highlightingKey, ...featureIds]
 
-  return <Layer {...(layerProps as LayerProps)} />
+  return <Layer {...layerProps} />
 })
 
 export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
