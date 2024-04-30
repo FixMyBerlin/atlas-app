@@ -1,7 +1,7 @@
 import {
   exportApiIdentifier,
   exportFunctionIdentifier,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
 // specify license and attribution for data export

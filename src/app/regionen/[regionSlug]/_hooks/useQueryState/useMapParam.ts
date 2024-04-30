@@ -1,26 +1,26 @@
 import { createParser, useQueryState } from 'next-usequerystate'
+import { z } from 'zod'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
+import { parseObject, range } from './util'
 
 export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
 
-const parseMapParam = (query: string) => {
-  const splitQuery = query.split('/')
-  return {
-    zoom: Number(splitQuery[0] ?? mapParamFallback.zoom),
-    lat: Number(splitQuery[1] ?? mapParamFallback.lat),
-    lng: Number(splitQuery[2] ?? mapParamFallback.lng),
-  }
-}
-
-export const serializeMapParam = ({
-  zoom,
-  lat,
-  lng,
-}: {
+export type MapParam = {
   zoom: number
   lat: number
   lng: number
-}) => {
+}
+
+const MapParamSchema = z.tuple([range(0, 22), range(-90, 90), range(-180, 180)])
+
+export const parseMapParam = (query: string): MapParam | null => {
+  const parsed = parseObject(MapParamSchema, query.split('/'))
+  if (!parsed) return null
+  const [zoom, lat, lng] = parsed
+  return { zoom, lat, lng }
+}
+
+export const serializeMapParam = ({ zoom, lat, lng }: MapParam): string => {
   return `${zoom}/${lat}/${lng}`
 }
 

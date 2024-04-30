@@ -43,6 +43,31 @@ const seedRegions = async () => {
       public: false,
       exportPublic: false,
     },
+    {
+      slug: 'bb',
+      public: true,
+      exportPublic: false,
+    },
+    {
+      slug: 'bb-kampagne',
+      public: false,
+      exportPublic: false,
+    },
+    {
+      slug: 'bb-sg',
+      public: false,
+      exportPublic: false,
+    },
+    {
+      slug: 'bb-pg',
+      public: false,
+      exportPublic: false,
+    },
+    {
+      slug: 'bb-beteiligung',
+      public: false,
+      exportPublic: false,
+    },
   ]
 
   for (const data of seedRegions) {

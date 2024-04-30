@@ -3,7 +3,7 @@ import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreDebugInfo & StoreUseDebugLayer & StoreUseDebugCachelessTiles
+export type Store = StoreDebugInfo & StoreUseDebugLayer & StoreUseDebugCachelessTiles
 
 type StoreDebugInfo = {
   showDebugInfo: boolean

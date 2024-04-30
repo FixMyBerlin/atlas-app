@@ -6,6 +6,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
+  "typescript.referencesCodeLens.enabled": true,
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
   }

@@ -2,6 +2,7 @@ import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarI
 import { StaticDatasetCategoryKey } from 'src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import {
   FileMapDataSubcategoryStyleLegend,
+  MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
 } from 'src/app/regionen/[regionSlug]/_mapData/types'
 
@@ -19,9 +20,10 @@ type MapDataDatasetsSource = {
   /** @desc Entity that has to be named as creator (c) of the data on the map an at the dataset */
   attributionHtml: string
   /** @desc Licence Shortcode */
-  licence?: undefined | 'ODbL' | 'CC-Zero' | 'CC-BY-2.0' | 'CC-BY-4.0' | 'DD-DE/BY-2.0'
+  licence?: undefined | 'ODbL' | 'CC-Zero' | 'CC-BY-2.0' | 'CC-BY-4.0' | 'DL-DE/BY-2.0'
   /** @desc Are the data OSM compatible due to the licence itself or a explicit waiver */
   licenceOsmCompatible?: undefined | 'licence' | 'waiver' | 'no'
+  osmIdConfig?: MapDataOsmIdConfig
   inspector:
     | ({
         enabled: true

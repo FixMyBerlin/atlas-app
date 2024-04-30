@@ -1,4 +1,14 @@
 // Following https://nextjs.org/docs/app/building-your-application/configuring/eslint
 {
+  "rules": {
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true,
+        "allowTaggedTemplates": true
+      }
+    ]
+  },
   "extends": ["next/core-web-vitals", "prettier"]
 }

@@ -4,7 +4,7 @@ import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
-import { createSourceSubcatStyleLayerKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { createLayerKeyAtlasGeo } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import {
   createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
@@ -32,7 +32,7 @@ const collectInteractiveLayerIdsFromCategory = ({ categories }: Props) => {
           const layerData = styleConfig.layers.find((l) => l.id === layerConfig.id)
           if (layerData?.interactive === false) return
 
-          const layerKey = createSourceSubcatStyleLayerKey(
+          const layerKey = createLayerKeyAtlasGeo(
             subcatConfig.sourceId,
             subcatConfig.id,
             styleConfig.id,

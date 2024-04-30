@@ -70,7 +70,7 @@ export const subcat_bikelanes_plus_presence: FileMapDataSubcategory = {
           },
         },
         {
-          id: 'not_expected',
+          id: 'assumed_no',
           name: 'Keine RVA vermuted',
           desc: [
             'Auf einer Landstraße ist an einer Seite ein separater Radweg angegeben, auf der anderen nicht. Wir vermuten jetzt, dass an der fehlenden Seite auch keine Infrastruktur ist. Wir machen das, um den Blick auf die Fälle, wo gar keine Daten vorliegen zu lenken.',

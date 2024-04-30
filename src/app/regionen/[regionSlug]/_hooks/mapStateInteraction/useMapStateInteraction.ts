@@ -1,16 +1,19 @@
-import { MapGeoJSONFeature, MapboxGeoJSONFeature } from 'react-map-gl'
+import { isEqual } from 'lodash'
+import { LngLatBounds } from 'maplibre-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
-import { createInspectorFeatureKey } from '../../_components/utils/sourceKeyUtils/createInspectorFeatureKey'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-type Store = StoreMapLoadedState &
+export type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates &
-  StoreOsmNotesState
+  StoreOsmNotesState &
+  StoreSizes
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
@@ -22,6 +25,15 @@ type StoreMapDataLoadingState = {
   setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
 }
 
+type StoreSizes = {
+  mapBounds: LngLatBounds | null
+  setMapBounds: (mapBounds: Store['mapBounds']) => void
+  inspectorSize: { width: number; height: number }
+  setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
+  sidebarLayerControlsSize: { width: number; height: number }
+  setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
+}
+
 type StoreOsmNotesState = {
   osmNotesLoading: boolean
   setOsmNotesLoading: (osmNotesLoaded: Store['osmNotesLoading']) => void
@@ -31,10 +43,9 @@ type StoreOsmNotesState = {
 
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
-  unfilteredInspectorFeatures: MapGeoJSONFeature[]
-  getUniqueInspectorFeatures: () => MapGeoJSONFeature[]
-  setInspector: (inspectObject: Store['unfilteredInspectorFeatures']) => void
-  resetInspector: () => void
+  inspectorFeatures: MapGeoJSONFeature[]
+  setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
+  resetInspectorFeatures: () => void
 }
 
 export type StoreCalculator = {
@@ -52,49 +63,54 @@ type StoreLocalUpdates = {
   addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
 }
 
-export const useMapStateInteraction = create<Store>((set, get) => ({
-  mapLoaded: false,
-  setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+function setIfChanged(get, set, name, value) {
+  if (isEqual(get()[name], value)) return
+  set({ [name]: value })
+}
 
-  mapDataLoading: false,
-  setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
+export const useMapStateInteraction = create<Store>((set, get) => {
+  return {
+    mapLoaded: false,
+    setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
-  // We store this globally to separate the fetching from the UI logic
-  osmNotesLoading: false,
-  setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
-  osmNotesError: false,
-  setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
+    mapDataLoading: false,
+    setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
 
-  // Data for <Inspector> AND <LayerHighlight>
-  // (!) Usually we don't want to use `inspectorFeatures` directly, use `getUniqueInspectorFeatures` instead!
-  unfilteredInspectorFeatures: [],
-  getUniqueInspectorFeatures: () => {
-    // When we click on the map, MapLibre returns all Features for all layers.
-    // For hidden layers like the hitarea layer, those features are duplicates which we filter out.
-    const uniqueKeys: Record<string, boolean> = {}
-    const { unfilteredInspectorFeatures: inspectorFeatures } = get()
-    return inspectorFeatures.reduce((result: typeof inspectorFeatures, feature) => {
-      if (!uniqueKeys[createInspectorFeatureKey(feature)]) {
-        uniqueKeys[createInspectorFeatureKey(feature)] = true
-        result.push(feature)
-      }
-      return result
-    }, [])
-  },
-  setInspector: (inspectorFeatures) => set({ unfilteredInspectorFeatures: inspectorFeatures }),
-  resetInspector: () => set({ unfilteredInspectorFeatures: [] }),
+    // We store this globally to separate the fetching from the UI logic
+    osmNotesLoading: false,
+    setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
+    osmNotesError: false,
+    setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
 
-  // Data for <Inspector> AND <LayerHighlight>
-  calculatorAreasWithFeatures: [],
-  setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
-    set({ calculatorAreasWithFeatures }),
+    // Data for <Inspector> AND <LayerHighlight>
+    inspectorFeatures: [],
 
-  // Data for optimistic updates; show verification immediately <LayerHightlight>
-  localUpdates: [],
-  addLocalUpdate: (update) => {
-    const { localUpdates } = get()
-    set({
-      localUpdates: [...localUpdates, update],
-    })
-  },
-}))
+    setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
+    resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
+
+    // Data for <Inspector> AND <LayerHighlight>
+    calculatorAreasWithFeatures: [],
+    setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
+      set({ calculatorAreasWithFeatures }),
+
+    // Data for optimistic updates; show verification immediately <LayerHightlight>
+    localUpdates: [],
+    addLocalUpdate: (update) => {
+      const { localUpdates } = get()
+      set({
+        localUpdates: [...localUpdates, update],
+      })
+    },
+
+    mapBounds: null,
+    setMapBounds: (bounds) => set({ mapBounds: bounds }),
+
+    inspectorSize: { width: 0, height: 0 },
+    setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+
+    sidebarLayerControlsSize: { width: 0, height: 0 },
+    setSidebarLayerControlsSize: (size) => {
+      setIfChanged(get, set, 'sidebarLayerControlsSize', size)
+    },
+  }
+})

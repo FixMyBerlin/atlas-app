@@ -69,10 +69,11 @@ export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props)
   const numberConfigs: { key: string; suffix?: string }[] = [
     { key: 'capacity', suffix: undefined },
     { key: 'capacity:cargo_bike', suffix: undefined },
+    { key: 'capacity:disabled', suffix: undefined },
     { key: 'highway_width_proc_effective', suffix: 'm' }, // parkraumParkingStats
     { key: 'length', suffix: 'm' },
     { key: 'maxspeed', suffix: 'km/h' },
-    { key: 'maxspeed', suffix: 'km/h' },
+    { key: 'maxheight', suffix: 'm' },
     { key: 'population', suffix: 'Einwohner:innen' },
     { key: 'width', suffix: 'm' },
     { key: 'sum_km', suffix: 'km' }, // parkraumParkingStats

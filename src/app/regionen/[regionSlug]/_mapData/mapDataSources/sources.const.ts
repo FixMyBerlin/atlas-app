@@ -1,6 +1,9 @@
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { MapDataSource } from '../types'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
+import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
+import { SourceExportApiIdentifier } from './export/exportIdentifier'
+import { SourceVerificationApiIdentifier } from './verification/verificationIdentifier'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
 export type SourcesId =
@@ -23,50 +26,6 @@ export type SourcesId =
   | 'mapillary_mapfeatures'
   | 'mapillary_trafficSigns'
 
-// Define the verification tables
-// TODO: this is redundant, as we also define this property with the attribute `verification.enabled`
-export const verificationApiIdentifier = ['bikelanes'] as const
-export type SourceVerificationApiIdentifier = (typeof verificationApiIdentifier)[number]
-
-// Define the export tables
-export const exportApiIdentifier = [
-  'bicycleParking_points',
-  'bicycleParking_areas', // private for now
-  'bikelanes',
-  'bikeroutes',
-  // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
-  'landuse',
-  'places',
-  'poiClassification',
-  'publicTransport',
-  'roads',
-  'roadsPathClasses',
-  'trafficSigns',
-  'barrierAreas',
-  'barrierLines',
-  'boundaries',
-  'boundaryLabels',
-] as const
-
-export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
-export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
-  `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_geojson_${Lowercase<TId>}`
-
-export const generalizationFunctionIdentifier = <TId extends SourceExportApiIdentifier>(
-  tableName: TId,
-) => `atlas_generalization_${tableName.toLowerCase()}` as `atlas_generalization_${Lowercase<TId>}`
-
-// https://account.mapbox.com/access-tokens
-// "Default public token"
-const apiKeyMapbox =
-  'pk.eyJ1IjoiaGVqY28iLCJhIjoiY2piZjd2bzk2MnVsMjJybGxwOWhkbWxpNCJ9.L1UNUPutVJHWjSmqoN4h7Q'
-
-// https://www.mapillary.com/dashboard/developers
-// "Tarmac OSM Viewer", they call it "Client Token"
-const apiKeyMapillary = 'MLY|5337311709720950|61508fdcc416406fd8dfb79748463852'
-
-const tilesUrl = getTilesUrl()
-
 export const sources: MapDataSource<
   SourcesId,
   SourceVerificationApiIdentifier,
@@ -75,15 +34,18 @@ export const sources: MapDataSource<
   ...sourcesParking,
   {
     id: 'atlas_boundaries',
-    tiles: `${tilesUrl}/boundaries,boundaryLabels/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_boundaries,atlas_generalized_boundarylabels/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'area_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'admin_level'],
     },
     // presence: { enabled: false },
@@ -94,15 +56,16 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_boundaryStats',
-    tiles: `${tilesUrl}/boundaryStats/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/boundaryStats/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'admin_level'],
     },
     // presence: { enabled: false },
@@ -120,6 +83,7 @@ export const sources: MapDataSource<
     attributionHtml: 'Unfallatlas', // TODO
     licence: undefined, // TODO
     promoteId: undefined,
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'unfall_id',
@@ -132,16 +96,17 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikelanes',
-    tiles: `${tilesUrl}/bikelanes/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_bikelanes/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'name',
         'composit_highway',
@@ -174,16 +139,17 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_bikeroutes',
-    tiles: `${tilesUrl}/bikeroutes/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_bikeroutes/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'name',
         'ref',
@@ -215,16 +181,17 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roads',
-    tiles: `${tilesUrl}/roads/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_roads/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 8,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         // Same as 'roadsPathClasses'
         'name',
@@ -256,16 +223,17 @@ export const sources: MapDataSource<
   },
   {
     id: 'atlas_roadsPathClasses',
-    tiles: `${tilesUrl}/roadsPathClasses/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_roadspathclasses/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 10,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         // Same as 'roads'
         'name',
@@ -298,16 +266,17 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
-    tiles: `${tilesUrl}/publicTransport/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_publictransport/{z}/{x}/{y}'),
     maxzoom: 9,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'category'],
     },
     // presence: { enabled: false },
@@ -324,16 +293,17 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/poiClassification
     id: 'atlas_poiClassification',
-    tiles: `${tilesUrl}/poiClassification/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_poiclassification/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'category', 'type'],
     },
     // presence: { enabled: false },
@@ -350,16 +320,17 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/places
     id: 'atlas_places',
-    tiles: `${tilesUrl}/places/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_places/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['name', 'place', 'population', 'population:date'],
     },
     // presence: { enabled: false },
@@ -377,13 +348,16 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/barrierAreas
     // https://tiles.radverkehrsatlas.de/barrierLines
     id: 'atlas_barriers',
-    tiles: `${tilesUrl}/barrierAreas,barrierLines/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: { enabled: false },
     // presence: { enabled: false },
     verification: { enabled: false },
@@ -394,16 +368,17 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/landuse
     id: 'atlas_landuse',
-    tiles: `${tilesUrl}/landuse/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_landuse/{z}/{x}/{y}'),
     maxzoom: 10,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['landuse'],
     },
     // presence: { enabled: false },
@@ -416,16 +391,19 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/bicycleParking_points
     // https://tiles.radverkehrsatlas.de/bicycleParking_areas
     id: 'atlas_bicycleParking',
-    tiles: `${tilesUrl}/bicycleParking_points,bicycleParking_areas/{z}/{x}/{y}`,
+    tiles: getTilesUrl(
+      '/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}',
+    ),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: [
         'capacity',
         'capacity:cargo_bike__if_present',
@@ -447,16 +425,17 @@ export const sources: MapDataSource<
   {
     // https://tiles.radverkehrsatlas.de/trafficSigns
     id: 'atlas_trafficSigns',
-    tiles: `${tilesUrl}/trafficSigns/{z}/{x}/{y}`,
+    tiles: getTilesUrl('/atlas_generalized_trafficsigns/{z}/{x}/{y}'),
     maxzoom: 12,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
     licence: 'ODbL',
     promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
-      highlightingKey: 'osm_id',
+      highlightingKey: 'id',
       documentedKeys: ['traffic_sign'],
     },
     // presence: { enabled: false },
@@ -479,6 +458,7 @@ export const sources: MapDataSource<
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
     licence: undefined, // TODO
     promoteId: undefined,
+    osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
       highlightingKey: 'id', // OR: 'image_id' for points, 'sequence_id' for lines
@@ -486,12 +466,12 @@ export const sources: MapDataSource<
         {
           name: 'Mapillary Image',
           idKey: 'id',
-          urlTemplate: 'https://www.mapillary.com/app/?focus=photo&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?focus=photo&pKey={editor_id}',
         },
         {
           name: 'Mapillary Panorama',
           idKey: 'id',
-          urlTemplate: 'https://www.mapillary.com/app/?panos=true&pKey={osm_id}',
+          urlTemplate: 'https://www.mapillary.com/app/?panos=true&pKey={editor_id}',
         },
         {
           name: 'Kartaview',

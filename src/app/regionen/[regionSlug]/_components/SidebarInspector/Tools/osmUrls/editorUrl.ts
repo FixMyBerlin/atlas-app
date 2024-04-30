@@ -1,15 +1,17 @@
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
+import { shortOsmType } from './shortLongOsmType'
 import { pointFromGeometry } from './pointFromGeometry'
 
 type Props = {
   urlTemplate: MapDataSourceInspectorEditor['urlTemplate']
   geometry: maplibregl.GeoJSONFeature['geometry']
-  osmType?: string
-  osmId?: number | string
+  osmTypeId?: ReturnType<typeof extractOsmTypeIdByConfig>
+  editorId?: MapDataSourceInspectorEditor['idKey']
   zoom?: number
 }
 
-export const editorUrl = ({ urlTemplate, geometry, osmType, osmId, zoom }: Props) => {
+export const editorUrl = ({ urlTemplate, geometry, osmTypeId, editorId, zoom }: Props) => {
   const [lng, lat] = pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 
@@ -18,6 +20,8 @@ export const editorUrl = ({ urlTemplate, geometry, osmType, osmId, zoom }: Props
     .replace('{zoom}', zoom?.toString() ?? '19')
     .replace('{latitude}', lat.toString())
     .replace('{longitude}', lng.toString())
-    .replace('{osm_type}', osmType ?? '')
-    .replace('{osm_id}', osmId?.toString() ?? '')
+    .replace('{short_osm_type}', osmTypeId?.osmType ? shortOsmType[osmTypeId?.osmType] : '')
+    .replace('{long_osm_type}', osmTypeId?.osmType || '')
+    .replace('{editor_id}', editorId || '')
+    .replace('{osm_id}', osmTypeId?.osmId?.toString() ?? '')
 }

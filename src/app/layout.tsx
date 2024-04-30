@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     creator: '@fixmyberlin',
     images: [SocialSharingImage.src],
   },
-  themeColor: '#eab308',
+  themeColor: '#27272a',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

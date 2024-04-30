@@ -67,6 +67,7 @@ export type RegionSlug =
   | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-sg' // Land Brandenburg Steuerungsgruppe
   | 'bb' // Öffentlich, Land Brandenburg
+  | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'berlin'
   | 'bibi'
   | 'deutschland'
@@ -432,6 +433,27 @@ export const staticRegion: StaticRegion[] = [
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
   },
   {
+    name: 'Brandenburg Beteiligung',
+    fullName: 'Land Brandenburg – Version für Beteiligung',
+    slug: 'bb-beteiligung',
+    osmRelationIds: [62504],
+    map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
+    bbox: {
+      min: [11.2662278, 51.359064],
+      max: [14.7658159, 53.5590907],
+    },
+    externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes-minimal',
+      'poi',
+      'roads',
+      'mapillary',
+    ],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+  },
+  {
     slug: 'bb-pg',
     name: 'Brandenburg Projektgruppe',
     fullName: 'Land Brandenburg – Version für Projektgruppe',
@@ -494,6 +516,7 @@ export const staticRegion: StaticRegion[] = [
       'bikelanes',
       'roads',
       'surface',
+      'boundaries',
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],

@@ -6,7 +6,7 @@ import {
 
 export const extractHighlightFeatureIds = (
   features:
-    | StoreFeaturesInspector['unfilteredInspectorFeatures']
+    | StoreFeaturesInspector['inspectorFeatures']
     | StoreCalculator['calculatorAreasWithFeatures'][number]['features'],
   key: string | undefined,
 ) => {

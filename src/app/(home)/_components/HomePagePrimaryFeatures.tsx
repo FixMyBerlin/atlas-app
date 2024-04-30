@@ -61,18 +61,15 @@ export const HomePagePrimaryFeatures: React.FC = () => {
   const [tabOrientation, setTabOrientation] = useState('horizontal')
 
   useEffect(() => {
-    const lgMediaQuery = window.matchMedia('(min-width: 1024px)')
+    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+    setTabOrientation(mediaQuery.matches ? 'vertical' : 'horizontal')
 
-    function onMediaQueryChange({ matches }: { matches: any }) {
-      setTabOrientation(matches ? 'vertical' : 'horizontal')
+    const onMediaQueryChange = (event: MediaQueryListEvent) => {
+      setTabOrientation(event.matches ? 'vertical' : 'horizontal')
     }
 
-    onMediaQueryChange(lgMediaQuery)
-    lgMediaQuery.addEventListener('change', onMediaQueryChange)
-
-    return () => {
-      lgMediaQuery.removeEventListener('change', onMediaQueryChange)
-    }
+    mediaQuery.addEventListener('change', onMediaQueryChange)
+    return () => mediaQuery.removeEventListener('change', onMediaQueryChange)
   }, [])
 
   return (

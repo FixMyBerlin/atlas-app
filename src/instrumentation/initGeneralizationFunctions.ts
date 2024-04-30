@@ -1,64 +1,87 @@
-import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
+import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
+import { InteracitvityConfiguartion } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
 import { prismaClientForRawQueries } from 'src/prisma-client'
-import { Prisma } from '@prisma/client'
 
-// specify license and attribution for data export
-export async function initGeneralizationFunctions(tables) {
+async function createTileSpecification(tableName: TableId) {
+  // Get column names and types
+  const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
+  SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
+    FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = '${tableName}';`)
+  const { fields } = columnInformation?.[0] // this object has the form {columnName: columnType}
+
+  // Get the geometric extent
+  const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
+    `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
+    from (
+      SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
+        from "${tableName}"
+      ) extent;`,
+  )
+  const { bounds } = bbox && bbox[0]
+  // format as vector tile specifaction
+  const tileSpecification = {
+    vector_layers: [{ id: tableName, fields }],
+    bounds,
+  }
+  return tileSpecification
+}
+
+function toSqlArray(arr: string[]) {
+  return `Array[${arr.map((tag) => `'${tag}'`)}]::text[]`
+}
+
+export async function initGeneralizationFunctions(
+  interacitvityConfiguartion: InteracitvityConfiguartion,
+) {
   return Promise.all(
-    tables.map(async (tableName) => {
-      const functionName = generalizationFunctionIdentifier(tableName)
-      // Gather meta information for the tile specification
+    Object.entries(interacitvityConfiguartion).map(
+      async ([tableName, { minzoom, stylingKeys }]) => {
+        const functionName = generalizationFunctionIdentifier(tableName as TableId)
+        // Gather meta information for the tile specification
+        const tileSpecification = await createTileSpecification(tableName as TableId)
 
-      // Get column names and types
-      const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
-        SELECT jsonb_object_agg(column_name, udt_name) - 'geom' AS fields
-          FROM information_schema.columns
-          WHERE table_schema = 'public' AND table_name = '${tableName}';`)
-      const { fields } = columnInformation && columnInformation[0]
-
-      // Get the geometric extent
-      const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
-        `SELECT ST_XMIN(bbox) AS xmin, ST_YMIN(bbox) AS ymin, ST_XMAX(bbox) AS xmax, ST_YMAX(bbox) AS ymax
-          from (
-            SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
-              from ${tableName}
-            ) extent;`,
-      )
-      const { xmin, ymin, xmax, ymax } = bbox && bbox[0]
-      // format as vector tile specifaction
-      const tileSpecification = {
-        vector_layers: [{ id: functionName, fields }],
-        bounds: [xmin, ymin, xmax, ymax],
-      }
-      return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE OR REPLACE
+        return prismaClientForRawQueries.$transaction([
+          prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `CREATE OR REPLACE
           FUNCTION public.${functionName}(z integer, x integer, y integer)
           RETURNS bytea AS $$
           DECLARE
             mvt bytea;
+            tolerance float;
           BEGIN
-            SELECT INTO mvt ST_AsMVT(tile, '${functionName}', 4096, 'g') FROM (
-              select
-              *,
+            IF z BETWEEN 6 AND 14 THEN
+              tolerance = POWER(2, 14-z);
+            ELSE
+              tolerance = 0;
+            END IF;
+            SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
+              SELECT
+                id,
                 ST_AsMVTGeom(
-                    geom,
-                    ST_TileEnvelope(z, x, y),
-                    4096, 64, true) AS g
+                  ST_CurveToLine(
+                    ST_Simplify(geom, tolerance, true)
+                  ),
+                  ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                  stylingKeys,
+                )}) END as tags,
+                CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
               FROM "${tableName}"
               WHERE (geom && ST_TileEnvelope(z, x, y))
-                and (not tags?'_minzoom' or z >= (tags->'_minzoom')::integer)
-                and (not tags?'_maxzoom' or z < (tags->'_maxzoom')::integer)
-            ) AS tile WHERE geom IS NOT NULL;
+              AND z >= minzoom
+            ) AS tile;
             RETURN mvt;
           END
           $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
-        ),
-        prismaClientForRawQueries.$executeRawUnsafe(
-          `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
-        ),
-      ])
-    }),
+          ),
+          prismaClientForRawQueries.$executeRawUnsafe(
+            `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
+          ),
+        ])
+      },
+    ),
   )
 }

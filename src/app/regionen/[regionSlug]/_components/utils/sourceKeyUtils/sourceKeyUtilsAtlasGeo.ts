@@ -1,6 +1,6 @@
-import invariant from 'tiny-invariant'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 
 type SubcatStyleKey = `${SubcategoryId}-${StyleId}`
 export const createSubcatStyleKey = (subcatId: SubcategoryId, styleId: StyleId): SubcatStyleKey =>
@@ -13,39 +13,61 @@ export const createSubcatStyleLegendKey = (
   legendId: LegendId,
 ): SubcatStyleLegendKey => `${subCat}-${styleId}-${legendId}`
 
-export const createSourceSubcatStyleLayerKey = (
-  sourceId: string,
-  subCat: string,
+function createKey(obj: Record<string, string>) {
+  return Object.entries(obj)
+    .map(([shortKey, value]) => `${shortKey}:${value}`)
+    .join('--')
+}
+
+const delimiter = '--'
+function parseKey(key: string, shortToLong: Record<string, string>): Record<string, string> {
+  return Object.fromEntries(
+    key
+      .split(delimiter)
+      .map((s) => s.split(':'))
+      .map(([shortKey, value]) => [shortToLong[shortKey!], value]),
+  )
+}
+
+export const createLayerKeyAtlasGeo = (
+  sourceId: SourcesId,
+  subCat: SubcategoryId,
   styleId: string,
   layerId: string,
-) => {
-  return `${sourceId}--${subCat}--${styleId}--${layerId}`
+) =>
+  createKey({
+    source: sourceId,
+    subcat: subCat,
+    style: styleId,
+    layer: layerId,
+  })
+
+export const createSourceKeyAtlasGeo = (
+  categoryId: MapDataCategoryId,
+  sourceId: SourcesId,
+  subCat: SubcategoryId,
+): string =>
+  createKey({
+    cat: categoryId,
+    source: sourceId,
+    subcat: subCat,
+  })
+
+export function parseSourceKeyAtlasGeo(sourceKey: string) {
+  // source: "cat:mapillary--source:mapillary_coverage--subcat:mapillaryCoverage"
+  // returns: { categoryId: 'mapillary', sourceId: 'mapillary_coverage', subcategoryId: 'mapillaryCoverage' }
+  return parseKey(sourceKey, {
+    cat: 'categoryId',
+    source: 'sourceId',
+    subcat: 'subcategoryId',
+  }) as {
+    categoryId: MapDataCategoryId
+    sourceId: SourcesId
+    subcategoryId: SubcategoryId
+  }
 }
 
-export const createSourceKeyAtlasGeo = (categoryId: string, sourceId: string, subCat: string) => {
-  return `cat:${categoryId}--source:${sourceId}--subcat:${subCat}`
-}
-
-export const extractSourceIdIdFromAtlasGeoSourceKey = (
-  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
-) => {
-  const regex = /--source:(\w+)/
-  const match = sourceKey.match(regex)
-  invariant(
-    match,
-    `Did not find source in extractSourceIdIdFromSourceKey for sourceKey:${sourceKey}`,
-  )
-  return match[1] as SourcesId
-}
-
-export const extractSubcatIdFromAtlasGeoSourceKey = (
-  sourceKey: ReturnType<typeof createSourceKeyAtlasGeo>,
-) => {
-  const regex = /--subcat:(\w+)/
-  const match = sourceKey.match(regex)
-  invariant(
-    match,
-    `Did not find subcategory in extractSubcatIdFromSourceKey for sourceKey:${sourceKey}`,
-  )
-  return match[1] as SubcategoryId
+export function isSourceKeyAtlasGeo(key: string) {
+  const { categoryId, sourceId, subcategoryId } = parseSourceKeyAtlasGeo(key)
+  return !!categoryId && !!sourceId && !!subcategoryId
 }

@@ -1,20 +1,38 @@
-import React from 'react'
+import { memo } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
+import {
+  Store,
+  useMapStateInteraction,
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  useSelectedFeatures,
+  type SelectedFeature,
+} from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 
-type Props = {
+type ParentLayerProps = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
-export const LayerHighlight = (parentLayerProps: Props) => {
+type MemoProps = Pick<Store, 'mapLoaded' | 'inspectorFeatures' | 'calculatorAreasWithFeatures'> & {
+  selectedFeatures: SelectedFeature[]
+}
+
+const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
+  props: ParentLayerProps & MemoProps,
+) {
   const {
-    unfilteredInspectorFeatures: inspectorFeatures,
-    calculatorAreasWithFeatures,
     mapLoaded,
-  } = useMapStateInteraction()
-  const { sourceData } = parentLayerProps
+    inspectorFeatures,
+    calculatorAreasWithFeatures,
+    selectedFeatures,
+    sourceData,
+  } = props
+
+  const features = inspectorFeatures.length
+    ? inspectorFeatures
+    : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
 
   if (!mapLoaded) return null
 
@@ -24,7 +42,7 @@ export const LayerHighlight = (parentLayerProps: Props) => {
   if (sourceData.inspector.enabled) {
     highlightingKey = sourceData.inspector.highlightingKey
     featureIds = extractHighlightFeatureIds(
-      inspectorFeatures.filter((f) => f.layer.id === parentLayerProps.id),
+      features.filter((f) => f.layer.id === props.id),
       highlightingKey,
     )
   }
@@ -38,41 +56,57 @@ export const LayerHighlight = (parentLayerProps: Props) => {
 
   if (!highlightingKey || !featureIds || featureIds.length === 0) return null
 
-  const props = {
-    ...parentLayerProps,
-    id: `${parentLayerProps.id}--highlight`,
-    paint: structuredClone(parentLayerProps.paint),
+  const layerProps = {
+    ...props,
+    id: `${props.id}--highlight`,
+    paint: structuredClone(props.paint),
   }
 
-  if (props.type === 'line') {
-    if (!props.paint) props.paint = {}
-    props.paint['line-color'] = 'red'
-    delete props.paint['line-blur']
-    delete props.paint['line-opacity']
-  } else if (props.type === 'fill') {
-    props.paint = {
-      ...props.paint,
+  if (layerProps.type === 'line') {
+    if (!layerProps.paint) layerProps.paint = {}
+    layerProps.paint['line-color'] = 'red'
+    delete layerProps.paint['line-blur']
+    delete layerProps.paint['line-opacity']
+  } else if (layerProps.type === 'fill') {
+    layerProps.paint = {
+      ...layerProps.paint,
       'fill-color': 'red',
       'fill-opacity': 0.8,
     }
-  } else if (props.type === 'circle') {
-    props.paint = {
-      ...props.paint,
+  } else if (layerProps.type === 'circle') {
+    layerProps.paint = {
+      ...layerProps.paint,
       'circle-color': 'red',
       'circle-stroke-color': 'black',
       'circle-stroke-width': 2,
     }
-  } else if (props.type === 'symbol') {
-    props.paint = {
-      ...props.paint,
+  } else if (layerProps.type === 'symbol') {
+    layerProps.paint = {
+      ...layerProps.paint,
       'text-halo-color': 'red',
       'text-halo-width': 3,
     }
   }
 
-  if ('filter' in props) {
-    props.filter = ['in', highlightingKey, ...featureIds]
+  if ('filter' in layerProps) {
+    layerProps.filter = ['in', highlightingKey, ...featureIds]
   }
 
-  return <Layer {...(props as LayerProps)} />
+  return <Layer {...(layerProps as LayerProps)} />
+})
+
+export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
+  const { mapLoaded, inspectorFeatures, calculatorAreasWithFeatures } = useMapStateInteraction()
+
+  const selectedFeatures = useSelectedFeatures()
+
+  const props = {
+    ...parentLayerProps,
+    mapLoaded,
+    inspectorFeatures,
+    calculatorAreasWithFeatures,
+    selectedFeatures,
+  }
+
+  return <LayerHighlightMemoized {...props} />
 }

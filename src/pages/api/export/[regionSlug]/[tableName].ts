@@ -5,7 +5,7 @@ import { isProd } from 'src/app/_components/utils/isEnv'
 import {
   exportApiIdentifier,
   exportFunctionIdentifier,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { api } from 'src/blitz-server'
 import { prismaClientForRawQueries } from 'src/prisma-client'
 import { z } from 'zod'

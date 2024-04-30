@@ -6,7 +6,7 @@ import {
   LineLayer,
   RasterSource,
   SymbolLayer,
-} from 'react-map-gl'
+} from 'react-map-gl/maplibre'
 import { Prettify } from 'src/app/_components/types/types'
 import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
@@ -68,7 +68,9 @@ export type MapDataDatasetsSource<TIds> = {
 
 export type MapDataSourceInspectorEditor = {
   name: string
+  /** @desc `properties[idKey]` will replace `{editor_id_key}` in the URL */
   idKey?: string
+  /** @desc Allowed replacements are `{zoom}`, `{latitude}`, `{longitude}`, `{short_osm_type}`, `{long_osm_type}`, `{editor_id}`, `{osm_id}` */
   urlTemplate: `https://${string}`
 }
 
@@ -147,6 +149,11 @@ type MapDataSourceExport<TExpIds> =
       desc?: undefined
     }
 
+export type MapDataOsmIdConfig =
+  | undefined
+  | { osmType: string; osmId: string }
+  | { osmTypeId: string }
+
 /** @desc: Our own vector tile layers configured in 'sources.const.ts' */
 export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
@@ -161,6 +168,7 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   attributionHtml: string
   licence: 'ODbL' | undefined
   promoteId: mapboxgl.VectorSource['promoteId']
+  osmIdConfig: MapDataOsmIdConfig
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector
   /** @desc Inspector: Enable info data on presence */
@@ -237,13 +245,13 @@ export type FileMapDataSubcategoryHiddenStyle = {
 
 /** @desc: The technical glue between sources and styles. The name "layers" is defined by the library we use. */
 export type FileMapDataSubcategoryStyleLayer = Prettify<
-  (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) &
-    Required<Pick<AnyLayer, 'source-layer'>> & {
-      /**
-       * @default `true`
-       * @desc optional `false` will hide the layer from `interactiveLayerIds` */
-      interactive?: false
-    }
+  (CircleLayer | FillLayer | HeatmapLayer | LineLayer | SymbolLayer) & {
+    'source-layer': string
+    /**
+     * @default `true`
+     * @desc optional `false` will hide the layer from `interactiveLayerIds` */
+    interactive?: false
+  }
 >
 
 /** @desc: Optional legend to explain a given layer */

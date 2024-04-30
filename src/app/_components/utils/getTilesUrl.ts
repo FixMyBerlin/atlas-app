@@ -6,13 +6,15 @@ const tilesBaseUrl = {
   production: 'https://tiles.radverkehrsatlas.de',
 }
 
-export const getTilesUrl = () => {
+export const getTilesUrl = (path?: string) => {
+  let base = tilesBaseUrl[envKeyWithFallback]
+
   // NEXT_PUBLIC_TILES_ENV is a helper for local develoment
   if (process.env.NEXT_PUBLIC_TILES_ENV) {
-    return tilesBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
+    base = tilesBaseUrl[process.env.NEXT_PUBLIC_TILES_ENV]
   }
 
-  return tilesBaseUrl[envKeyWithFallback]
+  return path ? `${base}${path}` : base
 }
 
 export const makeTileUrlCacheless = ({ url, cacheless }: { url: string; cacheless: boolean }) => {
