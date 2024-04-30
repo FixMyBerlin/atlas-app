@@ -20,6 +20,7 @@ export const DebugMap = () => {
   const { mainMap } = useMap()
   const { mapLoaded } = useMapStateInteraction()
   const [_triggerRerender, setTriggerRerender] = useState(0)
+  const [layerFilter, setLayerFilter] = useState('')
 
   const interactiveLayerIds = useInteractiveLayers()
 
@@ -108,26 +109,38 @@ export const DebugMap = () => {
         >
           Manually update layers (eg. after filter changes)
         </button>
+        <input onChange={(e) => setLayerFilter(e.target.value)} placeholder="Filter Layer" />
 
-        {Object.entries(atlasLayers).map(([_key, layer]) => {
-          return (
-            <details key={layer.id} className="ml-2 border-l border-pink-200 pl-2">
-              <summary
-                className={twJoin(
-                  layer?.layout?.visibility === 'visible' ? 'font-semibold' : '',
-                  'cursor-pointer truncate hover:font-semibold',
-                )}
-                title={layer.id}
-              >
-                {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
-                {layer?.layout?.visibility === 'none' && '(off)'}
-                {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
-                {layer?.layout?.visibility === 'visible' && '(on)'} <code>{layer.id}</code>
-              </summary>
-              <pre>{JSON.stringify(layer, undefined, 2)}</pre>
-            </details>
-          )
-        })}
+        {Object.entries(atlasLayers)
+          .filter(([_key, layer]) => (Boolean(layerFilter) ? layer.id.includes(layerFilter) : true))
+          .map(([_key, layer]) => {
+            const layerName =
+              'source' in layer && layer.source.includes('atlas')
+                ? layer.id?.split('--')
+                : [layer.id]
+            return (
+              <details key={layer.id} className="ml-2 border-l border-pink-200 pb-1 pl-2">
+                <summary
+                  className={twJoin(
+                    layer?.layout?.visibility === 'visible' ? 'font-semibold' : '',
+                    'cursor-pointer truncate hover:underline',
+                  )}
+                  title={layer.id}
+                >
+                  {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
+                  {layer?.layout?.visibility === 'none' && '(off)'}
+                  {/* @ts-ignore this weird AnyLayer issue that I don't get worked around… */}
+                  {layer?.layout?.visibility === 'visible' && '(on)'}{' '}
+                  {layerName.map((line, index) => (
+                    <code key={`${line}${index}`} className={index == 0 ? '' : 'block'}>
+                      {line}
+                    </code>
+                  ))}
+                </summary>
+                <pre>{JSON.stringify(layer, undefined, 2)}</pre>
+              </details>
+            )
+          })}
       </details>
 
       <details>
