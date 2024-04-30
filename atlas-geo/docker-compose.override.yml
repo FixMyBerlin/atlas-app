@@ -1,0 +1,12 @@
+services:
+  processing:
+    image: !reset null
+    build:
+      context: .
+      dockerfile: ./processing.Dockerfile
+    volumes:
+      - ./processing:/processing
+
+configs:
+  postgres_conf:
+    file: ./configs/postgres.development.conf
