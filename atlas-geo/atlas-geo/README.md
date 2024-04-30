@@ -37,7 +37,7 @@ We use the [public Germany export from Geofabrik](https://download.geofabrik.de/
 
 1. First https://github.com/FixMyBerlin/atlas-geo/actions runs.
 2. Server (IONOS) runs the processing one table at a time.
-   The whole processing takes about 1.5 h. See [`run.sh`](app/run.sh) for details.
+   The whole processing takes about 1.5 h. See [`run.sh`](processing/run.sh) for details.
 
 **Skip CI Actions:**
 
@@ -57,25 +57,20 @@ The workflow is…
 1. Edit the files locally
 
 2. Rebuild and restart everything
-
-   ```npm run dev````
-
-   _OR_
-
    ```sh
-   docker compose -f docker-compose.development.yml --profile osm_processing build && docker compose  -f docker-compose.development.yml --profile osm_processing up -d
+   docker compose build && docker compose up -d
    ```
 
 3. Inspect the new results, see "Inspect changes"
 
 > **Note**
-> Learn more about the file/folder-structure and coding patterns in [`app/process/README.md`](/app/process/README.md)
+> Learn more about the file/folder-structure and coding patterns in [`processing/topics/README.md`](/processing/topics/README.md)
 
 ### Processing: Run changes only
 
 Whenever `SKIP_DOWNLOAD=1` is active we store a hash of all `.lua` and `.sql` per folder.
-During [`run-5-process.sh`](app/run-5-process.sh) we only run code if the hash has changed.
-If any helper in (`process/helper`)[app/process/helper] changed, we rerun everything.
+During [`run-5-process.sh`](processing/run-5-process.sh) we only run code if the hash has changed.
+If any helper in (`topics/helper`)[processing/topics/helper] changed, we rerun everything.
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
@@ -94,7 +89,7 @@ Whenever we talk about `diff`s in this code, this feature is referenced.
 ### Process only a single object
 
 For the development process it's often usefull to run the processing on a single object.
-For that you can specify an id (list) as `ID_FILTER` in the [`app/run-3-filter.sh`](/app/run-3-filter.sh).
+For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 ## 💛 Thanks to
