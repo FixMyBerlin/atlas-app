@@ -58,7 +58,7 @@ export const DownloadModal: React.FC = () => {
 
         <DownloadModalUpdateDate />
 
-        {canDownload && bboxDefined && <DownloadModalDownloadList visible={bboxDefined} />}
+        {canDownload && bboxDefined && <DownloadModalDownloadList />}
 
         {canDownload && !bboxDefined && (
           <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">

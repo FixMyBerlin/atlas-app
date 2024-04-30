@@ -1,20 +1,16 @@
+import { LinkExternal } from 'src/app/_components/links/LinkExternal'
+import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
+import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { useRegion } from '../regionUtils/useRegion'
 import { useRegionSlug } from '../regionUtils/useRegionSlug'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { sources } from '../../_mapData/mapDataSources/sources.const'
-import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 
-type Props = { visible: boolean }
-
-export const DownloadModalDownloadList: React.FC<Props> = ({ visible }) => {
+export const DownloadModalDownloadList = () => {
   const exportEnabledSources = sources.filter((source) => source.export.enabled)
 
   const regionSlug = useRegionSlug()
 
   // Get the bbox from our region data
   const { bbox } = useRegion()
-
-  if (!visible) return null
 
   return (
     <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
