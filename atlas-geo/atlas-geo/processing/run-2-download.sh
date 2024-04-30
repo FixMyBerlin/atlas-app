@@ -20,6 +20,8 @@ log "Downloading file: ${OSM_DOWNLOAD_URL}"
 # Note: Showing the progress (locally) is very verbose, unfortunately
 if wget --timestamping --no-verbose ${OSM_DOWNLOAD_URL} --directory-prefix=${OSM_DATADIR}; then
   ln -f ${OSM_DOWNLOAD_FILE} ${OSM_LOCAL_FILE}
+  FILE_SIZE=$(du -h ${OSM_DOWNLOAD_FILE} | cut -f1)
+  log "Downloaded ${OSM_DOWNLOAD_FILE}, ${FILE_SIZE}"
 else
   log "Error: Failed to download the file from ${OSM_DOWNLOAD_URL}"
 fi
