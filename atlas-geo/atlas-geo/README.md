@@ -57,8 +57,9 @@ The workflow is…
 1. Edit the files locally
 
 2. Rebuild and restart everything
+
    ```sh
-   docker compose build && docker compose up -d
+   docker compose build && docker compose up
    ```
 
 3. Inspect the new results, see "Inspect changes"
