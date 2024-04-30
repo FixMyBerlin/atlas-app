@@ -88,9 +88,8 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
     }
   }
 
-  if ('filter' in layerProps) {
-    layerProps.filter = ['in', highlightingKey, ...featureIds]
-  }
+  // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
+  layerProps.filter = ['in', highlightingKey, ...featureIds]
 
   return <Layer {...(layerProps as LayerProps)} />
 })
