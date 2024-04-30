@@ -1,4 +1,3 @@
-import { clsx } from 'clsx'
 import { memo, Suspense, useRef } from 'react'
 import { MapRef, useMap } from 'react-map-gl/maplibre'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
@@ -15,6 +14,7 @@ import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/us
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
+import { twJoin } from 'tailwind-merge'
 
 type Props = Pick<
   Store,
@@ -76,7 +76,7 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
 
   const renderFeatures = !!features.length
 
-  const className = clsx(
+  const className = twJoin(
     'absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md',
     !renderFeatures && 'opacity-0 pointer-events-none',
   )
