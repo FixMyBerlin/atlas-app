@@ -10,6 +10,7 @@ jobs:
       ENVIRONMENT: production
       NEXT_PUBLIC_APP_ORIGIN: https://radverkehrsatlas.de
       NEXT_PUBLIC_APP_ENV: production
+      NEXT_PUBLIC_OSM_API_URL: https://api.openstreetmap.org/api/0.6
       TRAEFIK_HOST: radverkehrsatlas.de
     secrets:
       # REMINDER: Public keys `NEXT_PUBLIC_*` have to be added to `/Dockerfile` as well
