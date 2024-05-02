@@ -1,50 +1,29 @@
 import { useSession } from '@blitzjs/auth'
 import { CheckBadgeIcon } from '@heroicons/react/24/solid'
+import dompurify from 'dompurify'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { proseClasses } from 'src/app/_components/text/prose'
-import SvgNotesClosed from './icons/notes_closed.svg'
-import SvgNotesOpen from './icons/notes_open.svg'
 import { twJoin } from 'tailwind-merge'
+import { OsmNotesComment, OsmNotesThread } from '../OsmNotes/types'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
-import dompurify from 'dompurify'
-
-type Comment = {
-  date: string
-  uid: number
-  user: string | undefined
-  user_url: `https://api.openstreetmap.org/user/${string}`
-  action: 'opened' | 'commented' | 'closed'
-  text: string
-  html: string
-}
-
-type Thread = {
-  id: number
-  url: `https://api.openstreetmap.org/api/0.6/notes/${number}`
-  comment_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/comment`
-  close_url: `https://api.openstreetmap.org/api/0.6/notes/${number}/close`
-  date_created: string
-  status: 'open' | 'closed'
-  comments: Comment[]
-}
+import SvgNotesClosed from './icons/notes_closed.svg'
+import SvgNotesOpen from './icons/notes_open.svg'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
 const OsmUserLink = ({
   user,
   hasPermission,
-}: Pick<Comment, 'user'> & { hasPermission: boolean }) => {
+}: Pick<OsmNotesComment, 'user'> & { hasPermission: boolean }) => {
   if (!user) return <>Eine anonyme Nutzer:in</>
 
   return (
-    <Link
-      blank
-      href={`https://www.openstreetmap.org/user/${user}`}
-      className="relative inline-flex gap-1"
-    >
+    <Link blank href={getOsmUrl(`/user/${user}`)} className="relative inline-flex gap-1">
       {user}{' '}
       {hasPermission ? (
         <Tooltip text="Ist Mitarbeiter:in dieser Region">
@@ -61,28 +40,29 @@ type Props = Pick<InspectorOsmNoteFeature, 'properties'>
 
 const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
   const { osmName } = useSession()
+  const { osmNotesFeatures } = useMapStateInteraction()
 
-  if (!properties) return null
+  // We look up our data from our internal store.
+  // This is better than to use the properties from Maplibre directly
+  // because those are escaped, so properties.comments is stringified.
+  const thread = osmNotesFeatures.features.find(
+    (feature) => feature.properties.id === properties?.id,
+  )?.properties
 
-  const thread = {
-    ...properties,
-    date_created: new Date(properties.date_created).toLocaleString('de-DE'),
-    comments: JSON.parse(properties.comments as string) as Comment[],
-  } as Thread
+  if (!thread) return null
 
   return (
     <div className="mt-5 w-full rounded-2xl">
-      <Disclosure title="Öffentlicher Kommentar auf openstreetmap.org" objectId={String(thread.id)}>
+      <Disclosure title="Öffentlicher Hinweis auf openstreetmap.org" objectId={String(thread.id)}>
         {thread.comments?.map((comment, index) => {
           const firstComment = index === 0
           const splitDate = comment.date.split(' ')
           const date = new Date(`${splitDate[0]}T${splitDate[1]}Z`).toLocaleString('de-DE')
           const userHasPermssionOnRegion = comment.user === osmName
-          const key = [comment.uid, comment.date].join('-')
 
           return (
             <section
-              key={key}
+              key={`${thread.id}-${comment.date}`}
               className={twJoin(
                 'border-b border-b-gray-200 px-3 py-5',
                 userHasPermssionOnRegion ? 'bg-teal-100/70' : 'bg-teal-50',
@@ -104,12 +84,12 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
               />
               {!firstComment && comment.action === 'opened' && (
                 <p>
-                  <em>Der Kommentar wurde erneut geöffnet.</em>
+                  <em>Der Hinweis wurde erneut geöffnet.</em>
                 </p>
               )}
               {comment.action === 'closed' && (
                 <p>
-                  <em>Der Kommentar wurde geschlossen.</em>
+                  <em>Der Hinweis wurde geschlossen.</em>
                 </p>
               )}
             </section>
@@ -133,7 +113,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             )}
           </p>
           <p>
-            <Link button blank href={`https://www.openstreetmap.org/note/${thread.id}`}>
+            <Link button blank href={getOsmUrl(`/note/${thread.id}`)}>
               Auf openstreetmap.org ansehen und kommentieren
             </Link>
           </p>

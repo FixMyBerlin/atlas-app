@@ -22,6 +22,10 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
   const isRegionsPage = Boolean(useRegionSlug())
   const hasPermissions = useHasPermissions()
 
+  const missingEmail = !user.email
+  const missingOsmDescription = !user.osmDescription?.trim()
+  const hasTodos = missingEmail || missingOsmDescription
+
   return (
     <Menu as="div" className="relative z-50 ml-3 sm:ml-6">
       <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
@@ -36,10 +40,12 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
             aria-hidden="true"
           />
         ) : (
-          <UserIcon
-            className={twJoin('h-6 w-6', user.email ? 'text-gray-300' : 'text-amber-400')}
-            aria-hidden="true"
-          />
+          <UserIcon className="h-6 w-6 text-gray-300" aria-hidden="true" />
+        )}
+        {hasTodos && (
+          <div className="absolute -top-0.5 right-0 h-2 w-2 rounded-full bg-amber-500">
+            <span className="sr-only">Es fehlen wichtige Informationen für den Account.</span>
+          </div>
         )}
       </Menu.Button>
       <Transition
@@ -69,13 +75,28 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
                 <span>Sie sind Mitarbeiter dieser Region</span>
               </div>
             )}
-            {!user.email && (
-              <div className="my-1 rounded-sm bg-amber-500 p-1">
-                Mit diesem Account ist noch keine E-Mail-Adresse verbunden. Diese wird benötigt um
-                Nachrichten schicken zu können.
+
+            {missingOsmDescription && (
+              <div className="my-2 rounded bg-amber-500 p-1 leading-snug">
+                Für diesen Account ist noch keine Beschreibung auf OpenStreetMap hinterlegt.
+                <br />
+                <Link href="/settings/user#description-missing" button>
+                  Account bearbeiten
+                </Link>
               </div>
             )}
-            <Link href="/settings/user">Account bearbeiten</Link>
+            {missingEmail ? (
+              <div className="my-2 rounded bg-amber-500 p-1 leading-snug">
+                Für diesen Account ist noch keine E-Mail-Adresse hinterlegt. Diese wird benötigt um
+                Nachrichten schicken zu können.
+                <br />
+                <Link href="/settings/user" button>
+                  Account bearbeiten
+                </Link>
+              </div>
+            ) : (
+              <Link href="/settings/user">Account bearbeiten</Link>
+            )}
 
             {isRegionsPage && hasPermissions === false && (
               <div className="text-xs leading-4">

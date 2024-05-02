@@ -1,4 +1,4 @@
-export const roundNumber = (number: number | string, precision?: number) => {
+const roundNumber = (number: number | string, precision?: number) => {
   if (typeof number === 'string') {
     return Number.parseFloat(Number.parseFloat(number).toFixed(precision))
   } else {

@@ -8,7 +8,7 @@ import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQue
 import {
   parseMapParam,
   serializeMapParam,
-} from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+} from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {

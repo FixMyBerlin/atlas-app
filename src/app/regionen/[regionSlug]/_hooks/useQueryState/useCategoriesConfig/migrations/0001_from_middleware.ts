@@ -1,4 +1,5 @@
-import { mapParamFallback, serializeMapParam } from '../../useMapParam'
+import { mapParamFallback } from '../../useMapParam'
+import { serializeMapParam } from '../../utils/mapParam'
 import { UrlMigration } from './types'
 
 const migration: UrlMigration = function (initialUrl) {

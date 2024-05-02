@@ -3,12 +3,12 @@ import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
 import { RegionTeaser } from './RegionTeaser'
 
-export const RegionListNonpublic = async () => {
+export const RegionListAdmins = async () => {
   const user = await invoke(getCurrentUser, null)
   if (user?.role !== 'ADMIN') return null
 
   // Has to be below the role check.
-  const regions = await invoke(getRegions, { where: { public: false } })
+  const nonPublicRegions = await invoke(getRegions, { where: { public: false } })
 
   return (
     <div className="bg-pink-200">
@@ -18,7 +18,10 @@ export const RegionListNonpublic = async () => {
         </div>
 
         <div className="my-10 grid grid-cols-2 border-l border-t border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
-          {regions?.map((region) => <RegionTeaser key={region.slug} region={region} />)}
+          {nonPublicRegions?.map((region) => <RegionTeaser key={region.slug} region={region} />)}
+          {nonPublicRegions?.length === 0 && (
+            <div className="p-4 font-semibold text-gray-400">Keine Regionen</div>
+          )}
         </div>
       </div>
     </div>

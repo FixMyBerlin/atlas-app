@@ -9,6 +9,12 @@ import { longOsmType } from './shortLongOsmType'
 
 const emptyResponse = { osmType: null, osmId: null }
 
+export type OsmTypeId = ReturnType<typeof extractOsmTypeIdByConfig>
+export type OsmTypeIdNonNull = Exclude<
+  ReturnType<typeof extractOsmTypeIdByConfig>,
+  { osmType: null; osmId: null }
+>
+
 export const extractOsmTypeIdByConfig = (
   properties: Record<string, string | number>,
   config: MapDataOsmIdConfig,

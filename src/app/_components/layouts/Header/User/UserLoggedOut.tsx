@@ -1,15 +1,8 @@
 import { UserIcon } from '@heroicons/react/24/outline'
-import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
-import { cookieName } from './cookieName'
+import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
 
 export const UserLoggedOut = () => {
-  const router = useRouter()
-
-  const handleLogin = () => {
-    Cookies.set(cookieName, `${location.pathname}${location.search}`)
-    void router.push('/api/auth/osm/login')
-  }
+  const handleLogin = useStartUserLogin()
 
   return (
     <button

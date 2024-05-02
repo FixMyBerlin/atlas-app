@@ -1,64 +1,26 @@
-import { FeatureCollection } from 'geojson'
-import React, { useEffect, useState } from 'react'
-import { Layer, Source, useMap } from 'react-map-gl/maplibre'
+import { Layer, Source } from 'react-map-gl/maplibre'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes: React.FC = () => {
-  const { mainMap } = useMap()
-  const { inspectorFeatures, mapLoaded, setOsmNotesLoading, setOsmNotesError } =
-    useMapStateInteraction()
-  const { osmNotesParam } = useOsmNotesParam()
+  const { osmNotesParam: osmNotesActive } = useOsmNotesParam()
+  const { osmNotesFeatures, inspectorFeatures } = useMapStateInteraction()
 
-  const osmNotesFeatureIds = inspectorFeatures
+  const selectedFeatureIds = inspectorFeatures
     .filter((feature) => feature.source === 'osm-notes')
     .map((feature) => (feature?.properties?.id || 0) as number)
-
-  const [geodata, setGeodata] = useState<FeatureCollection>({
-    type: 'FeatureCollection',
-    features: [],
-  })
-
-  // (Re)fetch whenever the view port changes
-  useEffect(() => {
-    if (mapLoaded && osmNotesParam) {
-      osmNotesApiRequest()
-    }
-
-    // Cache function, otherwise deactivating the event handler will not work
-    function osmNotesApiRequest() {
-      if (!mainMap) return
-      setOsmNotesLoading(true)
-
-      const apiUrl = `https://api.openstreetmap.org/api/0.6/notes?bbox=${mainMap
-        .getBounds()
-        .toArray()
-        .join(',')}`
-
-      void fetch(apiUrl, { headers: { Accept: 'application/json' } })
-        .then((res) => res.json())
-        .then((json) => {
-          setGeodata(json)
-          setOsmNotesLoading(false)
-        })
-        .catch((error) => {
-          console.error(`SourcesLayersOsmNotes: Error when fetching from ${apiUrl}`, error)
-          setOsmNotesError(true)
-        })
-    }
-  }, [mapLoaded, osmNotesParam, mainMap, setOsmNotesLoading, setOsmNotesError])
 
   return (
     <Source
       id="osm-notes"
       key="osm-notes"
       type="geojson"
-      data={geodata}
+      data={osmNotesFeatures}
       attribution="Notes: openstreetmap.org"
     >
-      {osmNotesParam && (
+      {osmNotesActive && (
         <>
           <Layer
             id="osm-notes-hover"
@@ -71,7 +33,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
               'circle-opacity': 0.6,
               'circle-blur': 0.3,
             }}
-            filter={['in', 'id', ...osmNotesFeatureIds]}
+            filter={['in', 'id', ...selectedFeatureIds]}
           />
           <Layer
             // The PNGs are transparent so we add this background

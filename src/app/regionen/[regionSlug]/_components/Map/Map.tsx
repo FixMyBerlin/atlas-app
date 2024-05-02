@@ -31,7 +31,6 @@ import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
-import { roundPositionForURL } from './utils/roundNumber'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
 export const Map = () => {
@@ -125,23 +124,10 @@ export const Map = () => {
     })
   }, [mainMap])
 
-  useEffect(() => {
-    if (!mainMap) return
-    const mapCenter = mainMap.getCenter()
-    const mapZoom = mainMap.getZoom()
-    const [lat_, lng_, zoom_] = roundPositionForURL(mapCenter.lat, mapCenter.lng, mapZoom)
-    if (mapParam?.lat === lat_ && mapParam?.lng === lng_ && mapParam?.zoom === zoom_) return
-    mainMap.flyTo({
-      center: [mapParam?.lng || 0, mapParam?.lat || 0],
-      zoom: mapParam?.zoom || undefined,
-    })
-  }, [mainMap, mapParam])
-
   const handleMoveEnd = (event: ViewStateChangeEvent) => {
     // Note: <SourcesAndLayersOsmNotes> simulates a moveEnd by watching the lat/lng url params
     const { latitude, longitude, zoom } = event.viewState
-    const [lat_, lng_, zoom_] = roundPositionForURL(latitude, longitude, zoom)
-    void setMapParam({ zoom: zoom_ ?? 2, lat: lat_ ?? 2, lng: lng_ ?? 2 }, { history: 'replace' })
+    void setMapParam({ zoom, lat: latitude, lng: longitude }, { history: 'replace' })
     setMapBounds(mainMap?.getBounds() || null)
   }
 

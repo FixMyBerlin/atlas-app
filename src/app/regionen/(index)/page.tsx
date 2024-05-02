@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
-import { RegionListNonpublic } from './_components/RegionListNonpublic'
+import { RegionListAdmins } from './_components/RegionListAdmins'
+import { RegionListPermissions } from './_components/RegionListPermissions'
 import { RegionListPublic } from './_components/RegionListPublic'
 
 export const metadata: Metadata = { title: 'Regionenauswahl' }
@@ -9,7 +10,8 @@ export default async function RegionsPage() {
     <>
       {/* <RegionIntro regions={regions} /> */}
       <RegionListPublic />
-      <RegionListNonpublic />
+      <RegionListPermissions />
+      <RegionListAdmins />
     </>
   )
 }

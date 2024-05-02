@@ -3,7 +3,7 @@ import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListPublic = async () => {
-  const regions = await invoke(getRegions, { where: { public: true } })
+  const publicRegions = await invoke(getRegions, { where: { public: true } })
 
   return (
     <div className="bg-transparent">
@@ -11,7 +11,10 @@ export const RegionListPublic = async () => {
         <h2 className="sr-only">Regionen</h2>
 
         <div className="my-10 grid grid-cols-2 border-l border-t border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
-          {regions?.map((region) => <RegionTeaser key={region.slug} region={region} />)}
+          {publicRegions?.map((region) => <RegionTeaser key={region.slug} region={region} />)}
+          {publicRegions?.length === 0 && (
+            <div className="p-4 font-semibold text-gray-400">Keine Regionen</div>
+          )}
         </div>
       </div>
     </div>
