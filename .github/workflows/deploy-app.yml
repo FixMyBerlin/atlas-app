@@ -86,6 +86,7 @@ jobs:
           build-args: |
             NEXT_PUBLIC_APP_ENV=${{ inputs.NEXT_PUBLIC_APP_ENV }}
             NEXT_PUBLIC_APP_ORIGIN=${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}
+            NEXT_PUBLIC_OSM_API_URL=${{ inputs.NEXT_PUBLIC_OSM_API_URL }}
 
       - name: Push image
         run: |
