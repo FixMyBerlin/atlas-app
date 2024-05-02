@@ -11,6 +11,9 @@ on:
       NEXT_PUBLIC_APP_ENV:
         required: true
         type: string
+      NEXT_PUBLIC_OSM_API_URL:
+        required: true
+        type: string
       TRAEFIK_HOST:
         required: true
         type: string
