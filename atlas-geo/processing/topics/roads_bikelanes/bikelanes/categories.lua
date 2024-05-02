@@ -229,7 +229,8 @@ local function sharedBusLaneBusWithBike(tags)
   local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:245") and
       (IsTermInString("1022-10", tags.traffic_sign) or IsTermInString("1022-14", tags.traffic_sign))
   if taggedWithAccessTagging or taggedWithTrafficsign then
-    return "sharedBusLane" -- NOTE: rename to "sharedBusLaneBusWithBike"
+    -- Note: Was `sharedBusLane` until 2024-05-02 when we introduced `sharedBusLaneBikeWithBus`
+    return "sharedBusLaneBusWithBike"
   end
 end
 
