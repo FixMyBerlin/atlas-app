@@ -1,15 +1,15 @@
-import { router } from 'next/client'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
+import { cookieName } from 'src/app/_components/layouts/Header/User/cookieName'
+import { linkStyles } from 'src/app/_components/links/styles'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import { useRegion } from '../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
-import Cookies from 'js-cookie'
-import { cookieName } from 'src/app/_components/layouts/Header/User/cookieName'
-import { useRouter } from 'next/navigation'
 
-const useCanDownload = (exportPublic) => {
+const useCanDownload = (exportPublic: boolean) => {
   if (exportPublic) {
     return true
   } else {
@@ -18,7 +18,7 @@ const useCanDownload = (exportPublic) => {
   }
 }
 
-export const DownloadModal: React.FC = () => {
+export const DownloadModal = () => {
   const region = useRegion()
   const router = useRouter()
   const bboxDefined = region?.bbox ? true : false
@@ -44,21 +44,19 @@ export const DownloadModal: React.FC = () => {
             <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
           </p>
         ) : (
-          <>
-            <p className="pb-2.5 pt-5 text-sm">
-              Die Daten stehen nur für Rechte-Inhaber zur Verfügung. <br />
-              Bitte loggen Sie sich{' '}
-              <a className="underline" href="#" onClick={handleLogin}>
-                hier
-              </a>{' '}
-              ein.
-            </p>
-          </>
+          <p className="pb-2.5 pt-5 text-sm">
+            Die Daten stehen nur für Rechte-Inhaber zur Verfügung. <br />
+            Bitte{' '}
+            <button className={linkStyles} onClick={handleLogin}>
+              loggen Sie sich ein
+            </button>
+            .
+          </p>
         )}
 
         <DownloadModalUpdateDate />
 
-        {canDownload && bboxDefined && <DownloadModalDownloadList visible={bboxDefined} />}
+        {canDownload && bboxDefined && <DownloadModalDownloadList />}
 
         {canDownload && !bboxDefined && (
           <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">
