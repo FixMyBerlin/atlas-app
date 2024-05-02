@@ -10,7 +10,5 @@ export default resolver.pipe(resolver.authorize(/* ok */), async ({}) => {
       LIMIT 1
     `
 
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-
   return result[0]
 })
