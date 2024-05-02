@@ -64,9 +64,7 @@ export const UserFormOsmDescriptionMissing = () => {
 
   // === Text recommendation and helper to copy the text ===
   const [copySuccess, setCopySuccess] = useState('')
-  const textToCopy = `Hallo! Dies ist der offizielle Account der Abteilung NAME im BEZIRKSAMT NAME. Wir nutzen ihn
-  im Rahmen des Projektes [Radverkehrsatlas](https://osm.wiki/FixMyCity_GmbH/Radverkehrsatlas) um die
-  Fahrradinfrastruktur in unserer Region zu verbessern.`
+  const textToCopy = `Dies ist ein Account der Abteilung NAME im AMT_NAME. Wir nutzen OSM-Daten für die Erfassung und Planung von Radinfrastruktur mithilfe des [Radverkehrsatlas](https://osm.wiki/FixMyCity_GmbH/Radverkehrsatlas).`
   const copyToClipboard: React.ComponentProps<'button'>['onClick'] = async (event) => {
     event.preventDefault()
     try {
@@ -85,11 +83,11 @@ export const UserFormOsmDescriptionMissing = () => {
       <h3>Bitte vervollständigen Sie Ihr Profil auf OpenStreetMap</h3>
       <p className="my-1">Ihre Profilbeschreibung auf OpenStreetMap ist aktuell leer.</p>
       <p className="my-1">
-        Für die Community ist es aber wichtig zu verstehen, aus welchem Kontext ein Benutzer heraus
-        seine Hinweise und Beiträge bringt.
+        Für die OSM-Community ist es hilfreich zu verstehen, aus welchem Kontext / welcher Position
+        ein Benutzer stammt, um Hinweise und Beiträge besser einordnen zu können.
       </p>
       <p className="my-1">
-        Wir bitten Sie daher, eine Profilbeschreibung im Stil des Vorschlags unten zu ergänzen.
+        Für die Profilbeschreibung können Sie sich an dem Vorschlag unten zu orientieren.
       </p>
       <p className="my-2 flex items-center gap-2">
         <LinkExternal

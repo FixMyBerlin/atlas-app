@@ -96,13 +96,14 @@ export const OsmNotesNewForm = () => {
           {commentedFeatureId ? (
             <>
               welche Angaben an dem Kartenelemente{' '}
-              <code className="text-xs">{commentedFeatureId}</code>
+              <code className="text-xs">{commentedFeatureId}</code> geändert oder ergänzt werden
+              sollen.
             </>
           ) : (
-            <>welche Angaben in der Karte</>
+            <>welche Angaben an diesem Ort geändert oder ergänzt werden sollen.</>
           )}{' '}
-          geändert werden sollen. Gibt es öffentliche Quellen (z.B. Mapillary), die als Referenz
-          herangezogen werden können?
+          Fügen Sie, wenn vorhanden, öffentliche Quellen (z. B. Mapillary-Links) hinzu, die als
+          Referenz herangezogen werden können.
         </p>
         <label>
           <span className="sr-only">Hinweistext</span>
