@@ -52,7 +52,7 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     minzoom: 9,
   },
   bikeroutes: {
-    stylingKeys: ['covered'],
+    stylingKeys: ['network', 'ref', 'cycle_highway'],
     minzoom: 9,
   },
   boundaries: {
