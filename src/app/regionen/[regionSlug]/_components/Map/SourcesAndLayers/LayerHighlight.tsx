@@ -63,25 +63,7 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
     paint: structuredClone(props.paint),
   } as LayerProps
 
-  if (layerProps.type === 'line') {
-    if (!layerProps.paint) layerProps.paint = {}
-    layerProps.paint['line-color'] = 'red'
-    delete layerProps.paint['line-blur']
-    delete layerProps.paint['line-opacity']
-  } else if (layerProps.type === 'fill') {
-    layerProps.paint = {
-      ...layerProps.paint,
-      'fill-color': 'red',
-      'fill-opacity': 0.8,
-    }
-  } else if (layerProps.type === 'circle') {
-    layerProps.paint = {
-      ...layerProps.paint,
-      'circle-color': 'red',
-      'circle-stroke-color': 'black',
-      'circle-stroke-width': 2,
-    }
-  } else if (layerProps.type === 'symbol') {
+  if (layerProps.type === 'symbol') {
     layerProps.paint = {
       ...layerProps.paint,
       'text-halo-color': 'red',

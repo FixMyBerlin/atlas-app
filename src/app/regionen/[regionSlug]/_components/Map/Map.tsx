@@ -26,6 +26,7 @@ import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspect
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Calculator } from './Calculator/Calculator'
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
+import { useGeojsonStore } from './SourcesAndLayers/SourceGeojson/useGeojsonStore'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
@@ -75,6 +76,7 @@ export const Map = () => {
 
   const { inspectorFeatures } = useMapStateInteraction()
 
+  const { setGeojson, resetGeojson, setFeatures } = useGeojsonStore()
   const handleClick = (event: MapLayerMouseEvent) => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
@@ -95,6 +97,7 @@ export const Map = () => {
         newInspectorFeatures = uniqueFeatures
       }
       setInspectorFeatures(newInspectorFeatures)
+      setFeatures(newInspectorFeatures)
 
       const persistableFeatures = newInspectorFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
       if (persistableFeatures.length) {
