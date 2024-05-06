@@ -52,8 +52,8 @@ export async function initGeneralizationFunctions(
             mvt bytea;
             tolerance float;
           BEGIN
-            IF z BETWEEN 6 AND 14 THEN
-              tolerance = POWER(2, 14-z);
+            IF z BETWEEN 5 AND 13 THEN
+              tolerance = 10 * POWER(2, 13-z);
             ELSE
               tolerance = 0;
             END IF;
