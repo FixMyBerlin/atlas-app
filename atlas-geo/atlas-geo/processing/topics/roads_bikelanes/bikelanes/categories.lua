@@ -1,7 +1,9 @@
 package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
+package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("IsTermInString")
 require("IsSidepath")
 require("AddAdjoiningOrIsolated")
+require("SanitizeTrafficSign")
 
 -- this category is for the explicit absence of bike infrastrucute
 local function dataNo(tags)
@@ -60,11 +62,12 @@ end
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:244
 local function bicycleRoad(tags)
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
   if tags.bicycle_road == "yes"
-      or osm2pgsql.has_prefix(tags.traffic_sign, 'DE:244') then
+      or osm2pgsql.has_prefix(trafficSign, 'DE:244') then
     -- Subcategory when bicycle road allows vehicle traffic
-    if tags.traffic_sign == 'DE:244.1,1020-30'
-        or tags.traffic_sign == 'DE:244,1020-30'
+    if trafficSign == 'DE:244.1,1020-30'
+        or trafficSign == 'DE:244,1020-30'
         or tags.vehicle == 'destination'
         or tags.motor_vehicle == 'destination' then
       return "bicycleRoad_vehicleDestination"
@@ -78,8 +81,9 @@ end
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:240
 local function footAndCyclewaySharedCases(tags)
   if tags.area == "yes" then return end
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no"
-  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:240")
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:240")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- isolated:
     -- Eg https://www.openstreetmap.org/way/440072364 highway=service
@@ -92,8 +96,9 @@ end
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:241-31
 local function footAndCyclewaySegregatedCases(tags)
   if tags.area == "yes" then return end
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
   local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes"
-  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:241")
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:241")
   if taggedWithAccessTagging or taggedWithTrafficsign then
     return AddAdjoiningOrIsolated("footAndCyclewaySegregated", tags)
   end
@@ -102,6 +107,8 @@ end
 -- Case: "Gehweg, Fahrrad frei"
 -- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign%3DDE:239
 local function footwayBicycleYesCases(tags)
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+
   -- mtb:scale=* is a strong indicator for path' that we do not want to show, so we skip them;
   --    This will likely need a better solution in the future.
   --    Eg https://www.openstreetmap.org/way/23366687
@@ -110,7 +117,7 @@ local function footwayBicycleYesCases(tags)
 
   if tags.highway == "footway" or tags.highway == "path" then
     local taggedWithAccessTagging = tags.bicycle == "yes"
-    local taggedWithTrafficsign = IsTermInString("1022-10", tags.traffic_sign)
+    local taggedWithTrafficsign = IsTermInString("1022-10", trafficSign)
     if taggedWithAccessTagging or taggedWithTrafficsign then
       return AddAdjoiningOrIsolated("footwayBicycleYes", tags)
     end
@@ -121,6 +128,8 @@ end
 -- The sub-tagging specifies if the cycleway is part of a road or a separate way.
 -- This part relies heavly on the `is_sidepath` tagging.
 local function cyclewaySeparatedCases(tags)
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+
   -- Case "Hochbordradwege"
   -- Detailled tagging to separate this case from `footAndCyclewaySegregatedCases`
   if tags.highway == "path"
@@ -128,7 +137,7 @@ local function cyclewaySeparatedCases(tags)
       and (tags.bicycle == "yes" or tags.bicycle == "designated")
       and tags.segregated == "yes"
       and tags.is_sidepath == "yes"
-      and not IsTermInString("241", tags.traffic_sign) then
+      and not IsTermInString("241", trafficSign) then
     return "cycleway_adjoining"
   end
 
@@ -138,7 +147,7 @@ local function cyclewaySeparatedCases(tags)
   local taggedWithAccessTagging = tags.highway == "cycleway" and
       (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath)
   -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
-  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:237") and not tags.cycleway == "lane"
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:237") and not tags.cycleway == "lane"
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- adjoining:
     -- This could be PBLs "Protected Bike Lanes"
@@ -223,10 +232,11 @@ end
 -- "Fahrrad & Mofa frei" traffic_sign=DE:245,1022-14
 -- (History: Until 2023-03-2: cyclewayAlone)
 local function sharedBusLaneBusWithBike(tags)
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
   local taggedWithAccessTagging = tags.highway == "cycleway" and
       (tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway")
-  local taggedWithTrafficsign = osm2pgsql.has_prefix(tags.traffic_sign, "DE:245") and
-      (IsTermInString("1022-10", tags.traffic_sign) or IsTermInString("1022-14", tags.traffic_sign))
+  local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:245") and
+      (IsTermInString("1022-10", trafficSign) or IsTermInString("1022-14", trafficSign))
   if taggedWithAccessTagging or taggedWithTrafficsign then
     -- Note: Was `sharedBusLane` until 2024-05-02 when we introduced `sharedBusLaneBikeWithBus`
     return "sharedBusLaneBusWithBike"
@@ -242,9 +252,10 @@ end
 --   - 87 overall https://taginfo.openstreetmap.org/tags/cycleway%3Aright%3Alane=share_busway#overview
 --   - 1 overall for left https://taginfo.openstreetmap.org/tags/cycleway%3Aleft%3Alane=share_busway#overview
 local function sharedBusLaneBikeWithBus(tags)
+  local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
   local taggedWithAccessTagging = tags.highway == "cycleway" and tags.lane == "share_busway"
   local taggedWithTrafficsign =
-      osm2pgsql.has_prefix(tags.traffic_sign, "DE:237") and IsTermInString("1024-14", tags.traffic_sign)
+      osm2pgsql.has_prefix(trafficSign, "DE:237") and IsTermInString("1024-14", trafficSign)
   if taggedWithAccessTagging or taggedWithTrafficsign then
     return "sharedBusLaneBikeWithBus"
   end
