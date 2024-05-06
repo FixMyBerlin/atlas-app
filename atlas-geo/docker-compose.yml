@@ -32,7 +32,7 @@ services:
       db:
         condition: service_healthy
   tiles:
-    image: ghcr.io/maplibre/martin:v0.13.0
+    image: ghcr.io/maplibre/martin:v0.11.6
     container_name: tiles
     command: "--config /config.yaml"
     restart: unless-stopped
