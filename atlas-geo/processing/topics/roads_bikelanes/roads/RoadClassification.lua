@@ -7,11 +7,7 @@ local tags_copied = {
   "mapillary",
   "description",
 }
-local tags_prefixed = {
-  'traffic_sign',
-  'traffic_sign:forward',
-  'traffic_sign:backward',
-}
+local tags_prefixed = {}
 
 
 function RoadClassification(object)
@@ -104,6 +100,9 @@ function RoadClassification(object)
   result_tags.oneway = Sanitize(tags.oneway, { "yes", "no" })
   result_tags.bridge = Sanitize(tags.bridge, { "yes" })
   result_tags.tunnel = Sanitize(tags.tunnel, { "yes" })
+  result_tags.traffic_sign = SanitizeTrafficSign(tags.traffic_sign) or SanitizeTrafficSign(tags['traffic_sign:both'])
+  result_tags['traffic_sign:left'] = SanitizeTrafficSign(tags['traffic_sign:left'])
+  result_tags['traffic_sign:right'] = SanitizeTrafficSign(tags['traffic_sign:left'])
 
   return result_tags
 end
