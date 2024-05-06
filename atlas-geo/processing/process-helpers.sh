@@ -107,9 +107,19 @@ run_dir() {
         else
           log "$table got deleted."
         fi
-        psql -q -c "DROP TABLE \"${table}_backup\";"
+        if [ "$FREEZE_DATA" == 1 ]; then
+          psql -q -c "DROP TABLE \"${table}\";"
+          psql -q -c "ALTER TABLE \"${table}_backup\" RENAME TO \"${table}\";"
+        else
+          psql -q -c "DROP TABLE \"${table}_backup\";"
+        fi
       done
-      rm $backedup_tables
+      if [ "$FREEZE_DATA" == 1 ]; then
+        log "Restored data (.env 'FREEZE_DATA=1')"
+        mv -f $backedup_tables $processed_tables
+      else
+        rm $backedup_tables
+      fi
       log_end "Compute Diffs"
     fi
   fi
