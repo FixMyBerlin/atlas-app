@@ -33,15 +33,15 @@ local roadsTable = osm2pgsql.define_table({
   name = 'roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', type = 'text', not_null = true },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
   }
 })
 
@@ -49,15 +49,15 @@ local roadsPathClassesTable = osm2pgsql.define_table({
   name = 'roadsPathClasses',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', type = 'text', not_null = true },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'linestring' },
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
   }
 })
 
@@ -66,15 +66,15 @@ local bikelanesTable = osm2pgsql.define_table({
   -- Note: We populate a custom `osm_id` (with unique ID values) below.
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id', type = 'text', not_null = true },
-    { column = 'tags',   type = 'jsonb' },
-    { column = 'meta',   type = 'jsonb' },
-    { column = 'geom',   type = 'linestring' },
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
   }
 })
 
@@ -149,7 +149,6 @@ function osm2pgsql.process_way(object)
         id = DefaultId(object)
       })
     else
-
       roadsTable:insert({
         tags = results,
         meta = Metadata(object),
