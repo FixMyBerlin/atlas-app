@@ -80,6 +80,7 @@ function Bikelanes(object)
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
+        
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
         CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
