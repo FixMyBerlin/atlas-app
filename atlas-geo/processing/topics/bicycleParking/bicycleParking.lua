@@ -4,6 +4,7 @@ require("Metadata")
 require("Set")
 require("Sanitize")
 require("DefaultId")
+require("SanitizeTrafficSign")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
@@ -87,12 +88,13 @@ local function processTags(tags)
   local tags_cc = {
     "area", "operator:type", "covered", "indoor", "access", "cargo_bike", "capacity",
     "capacity:cargo_bike", "fee", "lit", "surface", "bicycle_parking", "maxstay", "surveillance",
-    "bicycle_parking:count", "bicycle_parking:position", "traffic_sign", "description",
+    "bicycle_parking:count", "bicycle_parking:position", "description",
     "mapillary",
     "description",
   }
   CopyTags(results, tags, allowed_tags)
   CopyTags(results, tags, tags_cc, "osm_")
+  results.traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
 
   results.age = AgeInDays(ParseCheckDate(tags["check_date"]))
   return results

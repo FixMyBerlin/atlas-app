@@ -12,6 +12,7 @@ require("BikelanesTodos")
 require("Sanitize")
 require("DeriveOneway")
 require("DefaultId")
+require("DeriveTrafficSigns")
 
 local tags_copied = {
   "mapillary",
@@ -19,9 +20,6 @@ local tags_copied = {
 }
 local tags_prefixed = {
   'surface:colour',
-  'traffic_sign',
-  'traffic_sign:forward',
-  'traffic_sign:backward',
   'separation',
   'separation:left',
   'separation:right',
@@ -80,7 +78,8 @@ function Bikelanes(object)
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         }
-        
+
+        MergeTable(result_tags, DeriveTrafficSigns(transformedTags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
         CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
@@ -88,7 +87,7 @@ function Bikelanes(object)
         -- copy original tags
         CopyTags(result_tags, tags, tags_copied)
 
-         -- these keys are different for projected geometries
+        -- these keys are different for projected geometries
         if transformedTags._side ~= "self" then
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
           result_tags._parent_highway = transformedTags._parent_highway
