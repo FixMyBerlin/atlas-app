@@ -12,6 +12,7 @@ require("BikelanesTodos")
 require("Sanitize")
 require("DeriveOneway")
 require("DefaultId")
+require("DeriveTrafficSigns")
 
 local tags_copied = {
   "mapillary",
@@ -76,11 +77,9 @@ function Bikelanes(object)
           oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
-          traffic_sign = SanitizeTrafficSign(tags.traffic_sign) or SanitizeTrafficSign(tags['traffic_sign:both']),
-          ['traffic_sign:forward'] = SanitizeTrafficSign(tags['traffic_sign:forward']),
-          ['traffic_sign:backward'] = SanitizeTrafficSign(tags['traffic_sign:backward'])
         }
 
+        MergeTable(result_tags, DeriveTrafficSigns(transformedTags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
         CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
