@@ -57,8 +57,9 @@ The workflow is…
 1. Edit the files locally
 
 2. Rebuild and restart everything
+
    ```sh
-   docker compose build && docker compose up -d
+   docker compose build && docker compose up
    ```
 
 3. Inspect the new results, see "Inspect changes"
@@ -74,7 +75,7 @@ If any helper in (`topics/helper`)[processing/topics/helper] changed, we rerun e
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
-**Force rerun:** Whenever you need to force a rerun, open [any lua helper](./app/process/helper/Set.lua) and add a temporary code comment, save and restart the processing.
+**Force rerun:** Whenever you need to force a rerun, open [any lua helper](./processing/topics/helper/Set.lua) and add a temporary code comment, save and restart the processing.
 
 ### Processing: Inspect changes
 
@@ -82,9 +83,9 @@ Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<table
 
 It will compare the `tags` column to the previous run.
 
-The settings are the default for development but disabled on staging, production by default.
-
 Whenever we talk about `diff`s in this code, this feature is referenced.
+
+With `FREEZE_DATA=1` the system will **not** update the tables. This is usefull during development if one only wants to see the changes to a certain version. This flag will be ignored if `COMPUTE_DIFFS=0`.
 
 ### Process only a single object
 
