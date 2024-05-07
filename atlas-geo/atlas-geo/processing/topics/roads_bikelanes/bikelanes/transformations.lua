@@ -5,7 +5,6 @@ require('HighwayClasses')
 -- unnest all tags from ["prefix .. side:subtag"]=val -> ["subtag"]=val
 local function unnestTags(tags, prefix, infix, dest)
   dest = dest or {}
-  dest._parent = tags
   local fullPrefix = prefix .. infix
   local prefixLen = string.len(fullPrefix)
   for key, val in pairs(tags) do
@@ -28,11 +27,6 @@ local function unnestTags(tags, prefix, infix, dest)
   return dest
 end
 
-SideSignMap = {
-  ["left"] = 1,
-  ["right"] = -1,
-  ["self"] = 0
-}
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
 -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
 local sideDirectionMap = {
@@ -44,7 +38,7 @@ local sideDirectionMap = {
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"
-  center._prefix = ""
+  
   -- don't transform paths only unnest tags prefixed with `cycleway`
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     unnestTags(tags, 'cycleway', '', center)
@@ -59,6 +53,7 @@ function GetTransformedObjects(tags, transformations)
         local newObj = {
           _prefix = prefix,
           _side = side,
+          _parent = tags,
           _parent_highway = tags.highway,
           highway = transformation.highway
         }
