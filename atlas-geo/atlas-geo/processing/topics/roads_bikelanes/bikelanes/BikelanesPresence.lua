@@ -65,7 +65,7 @@ function BikelanesPresence(object, cycleways)
   end
 
   -- Set left side to "not_expected" for junctions
-  if tags.junctions == 'roundabout' then
+  if tags.junction == 'roundabout' then
     presence[LEFT_SIGN] = presence[LEFT_SIGN] or 'not_expected'
   end
 
