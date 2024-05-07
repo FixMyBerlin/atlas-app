@@ -4,7 +4,7 @@ describe("Bikelanes", function()
   require("osm2pgsql")
   require("Bikelanes")
 
-  describe('Handle `width`', function()
+  describe('Handle `width`:', function()
     it('handels width on centerline', function()
       local input_object = {
         tags = {
@@ -16,8 +16,8 @@ describe("Bikelanes", function()
         type = 'way'
       }
       local result = Bikelanes(input_object)
-      assert.are.same(result[1].category, "bicycleRoad")
-      assert.are.same(result[1].width, 5)
+      assert.are.equal(result[1].category, "bicycleRoad")
+      assert.are.equal(result[1].width, 5)
     end)
 
     it('handels explicit width on transformed objects', function()
@@ -32,7 +32,26 @@ describe("Bikelanes", function()
         type = 'way'
       }
       local result = Bikelanes(input_object)
-      -- Add assertions here
+      assert.are.equal(result[1].category, "cycleway_adjoining")
+      assert.are.equal(result[1].width, 5)
+    end)
+
+    it('handels nested width on paths', function()
+      local input_object = {
+        tags = {
+          highway = 'path',
+          bicycle = 'yes',
+          foot = 'yes',
+          segregated = "yes",
+          is_sidepath = "yes",
+          ['cycleway:width'] = '5 m',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(result[1].category, "cycleway_adjoining")
+      assert.are.equal(result[1].width, 5)
     end)
   end)
 end)

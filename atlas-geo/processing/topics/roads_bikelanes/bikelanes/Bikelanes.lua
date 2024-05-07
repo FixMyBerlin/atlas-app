@@ -77,7 +77,7 @@ function Bikelanes(object)
         if transformedTags._side == "self" then -- center line case
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date"]))
           result_tags._id = DefaultId(object)
-        else                                    -- left/right case
+        else -- left/right case
           MergeTable(result_tags, transformedTags)
           local freshKey = "check_date:" .. transformedTags._prefix
           result_tags.age = AgeInDays(ParseCheckDate(tags[freshKey]))

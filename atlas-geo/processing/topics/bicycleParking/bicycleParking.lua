@@ -9,15 +9,15 @@ local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id',   type = 'text', not_null = true },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'point' },
+    { column = 'id',      type = 'text',   not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'point' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
   }
 })
 
@@ -25,15 +25,15 @@ local areaTable = osm2pgsql.define_table({
   name = 'bicycleParking_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
-    { column = 'id',   type = 'text', not_null = true },
-    { column = 'tags', type = 'jsonb' },
-    { column = 'meta', type = 'jsonb' },
-    { column = 'geom', type = 'polygon' },
+    { column = 'id',      type = 'text',   not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'polygon' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
   }
 })
 
@@ -67,7 +67,7 @@ local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
   local results = capacityNormalization(tags)
-  local binary ={ "yes", "no" }
+  local binary = { "yes", "no" }
   results.access = Sanitize(tags.access, { "yes", "private", "permissive", "customers" })
   results.covered = Sanitize(tags.covered, binary, "implicit_no")
   results.fee = Sanitize(tags.fee, binary, "implicit_no")

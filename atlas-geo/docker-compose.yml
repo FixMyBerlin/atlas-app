@@ -18,6 +18,7 @@ services:
       SYNOLOGY_LOG_TOKEN:
       SYNOLOGY_ERROR_LOG_TOKEN:
       COMPUTE_DIFFS:
+      FREEZE_DATA:
     volumes:
       - osmfiles:/data
       - geodata:/data/db
@@ -32,7 +33,7 @@ services:
       db:
         condition: service_healthy
   tiles:
-    image: ghcr.io/maplibre/martin:v0.13.0
+    image: ghcr.io/maplibre/martin:v0.11.6
     container_name: tiles
     command: "--config /config.yaml"
     restart: unless-stopped
