@@ -121,7 +121,7 @@ function osm2pgsql.process_way(object)
       publicTags.road = results.road
       publicTags._parent_highway = cycleway._parent_highway
 
-      cycleway.segregated = nil            -- no idea why that is present in the inspector frontend for way 9717355
+      cycleway.segregated = nil -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
         id = cycleway._id,
         tags = publicTags,

@@ -2,16 +2,13 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("CopyTags")
 require("Sanitize")
+require("DeriveTrafficSigns")
 
 local tags_copied = {
   "mapillary",
   "description",
 }
-local tags_prefixed = {
-  'traffic_sign',
-  'traffic_sign:forward',
-  'traffic_sign:backward',
-}
+local tags_prefixed = {}
 
 
 function RoadClassification(object)
@@ -104,6 +101,7 @@ function RoadClassification(object)
   result_tags.oneway = Sanitize(tags.oneway, { "yes", "no" })
   result_tags.bridge = Sanitize(tags.bridge, { "yes" })
   result_tags.tunnel = Sanitize(tags.tunnel, { "yes" })
+  MergeTable(result_tags, DeriveTrafficSigns(tags))
 
   return result_tags
 end
