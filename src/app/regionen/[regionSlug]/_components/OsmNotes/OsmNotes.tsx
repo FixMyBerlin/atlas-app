@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { OsmNotesControls } from './OsmNotesControls/OsmNotesControls'
 import { OsmNotesNew } from './OsmNotesNew/OsmNotesNew'
-import { useBoundsBbox } from './OsmNotesNew/utils/useBoundsBbox'
-import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useNotesActiveByZoom } from './OsmNotesNew/utils/useNotesActiveByZoom'
 
 const osmNotesQueryClient = new QueryClient()
@@ -18,11 +17,15 @@ export const OsmNotes = () => {
 }
 
 const OsmNotesWrappedInQUeryClientProvider = () => {
-  const { mapLoaded, setOsmNotesFeatures } = useMapStateInteraction()
+  const { mapLoaded, mapBounds, setOsmNotesFeatures } = useMapStateInteraction()
   const { osmNotesParam: osmNotesActive } = useOsmNotesParam()
   const notesActiveByZoom = useNotesActiveByZoom()
 
-  const bbox = useBoundsBbox()
+  const bbox = mapBounds
+    ?.toArray()
+    ?.flat()
+    ?.map((coord) => coord.toFixed(3))
+    ?.join(',')
   const apiUrl = getOsmApiUrl(`/notes.json?bbox=${bbox}`)
   const { error, isLoading, isError } = useQuery({
     queryKey: ['osmNotes', bbox],

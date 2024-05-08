@@ -10,16 +10,19 @@ import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useOsmNotes
 import { osmTypeIdString, osmUrl } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
 import { useRegion } from '../../regionUtils/useRegion'
 import { OsmNotesThread } from '../types'
-import { useBoundsBbox } from './utils/useBoundsBbox'
 
 export const OsmNotesNewForm = () => {
   const session = useSession()
   const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
-  const { osmNewNoteFeature } = useMapStateInteraction()
+  const { mapBounds, osmNewNoteFeature } = useMapStateInteraction()
 
   const queryClient = useQueryClient()
   const apiUrl = getOsmApiUrl('/notes.json')
-  const bbox = useBoundsBbox()
+  const bbox = mapBounds
+    ?.toArray()
+    ?.flat()
+    ?.map((coord) => coord.toFixed(3))
+    ?.join(',')
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (body: string) => {
       const post = await fetch(apiUrl, {
