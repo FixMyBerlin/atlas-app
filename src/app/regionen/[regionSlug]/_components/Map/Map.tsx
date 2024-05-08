@@ -198,12 +198,12 @@ export const Map = () => {
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
       <SourcesLayersRegionMask />
+      {isDev ? <SourceGeojson /> : null}
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
-      {isDev ? <SourceGeojson /> : null}
-      <AttributionControl compact={true} position="bottom-left" />
 
+      <AttributionControl compact={true} position="bottom-left" />
       <NavigationControl showCompass={false} />
       <Calculator />
       {/* <GeolocateControl /> */}

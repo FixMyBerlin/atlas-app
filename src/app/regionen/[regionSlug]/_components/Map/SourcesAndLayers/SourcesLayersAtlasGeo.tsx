@@ -124,24 +124,9 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                         ...(layer.minzoom ? { minzoom: layer.minzoom } : {}),
                       } satisfies LayerProps
 
-                      // The verification style layer in Mapbox Studio has to include this string
-                      const isVerificationStatusLayer = layer.id.search('verification-status') != -1
-
                       return (
                         <React.Fragment key={layerId}>
-                          {isVerificationStatusLayer ? (
-                            <LayerVerificationStatus
-                              key={`${layerId}_verification`}
-                              {...layerProps}
-                            />
-                          ) : (
-                            <Layer key={layerId} {...layerProps} />
-                          )}
-                          <LayerHighlight
-                            key={`${layerId}_highlight`}
-                            {...layerProps}
-                            sourceData={sourceData}
-                          />
+                          <Layer key={layerId} {...layerProps} />
                         </React.Fragment>
                       )
                     })
