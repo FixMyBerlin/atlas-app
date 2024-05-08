@@ -1,8 +1,9 @@
 import { parseAsArrayOf, parseAsString, useQueryState } from 'next-usequerystate'
+import { searchParamsRegistry } from './searchParamsRegistry'
 
 export const useDataParam = () => {
   const [dataParam, setDataParam] = useQueryState(
-    'data',
+    searchParamsRegistry.data,
     parseAsArrayOf(parseAsString).withDefault([]),
   )
 

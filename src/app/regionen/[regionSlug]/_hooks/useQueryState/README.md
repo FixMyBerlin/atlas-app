@@ -1,4 +1,5 @@
 # REMINDER
 
-Any additional URL params needs to be registered in [middleware.ts](/src/middleware.ts) => `usedParams`.
-Otherwise they will be removed by on the initial page load.
+Search Params need to be registered in [searchParamsRegistry.ts](./searchParamsRegistry.ts).
+
+This will make shure they are not deleted by our [middleware.ts](/src/middleware.ts).

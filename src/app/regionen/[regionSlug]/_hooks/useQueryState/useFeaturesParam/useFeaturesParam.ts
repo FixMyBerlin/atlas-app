@@ -5,6 +5,7 @@ import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
 import { z } from 'zod'
 import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { searchParamsRegistry } from '../searchParamsRegistry'
 import { UrlFeature } from '../types'
 import { latitude, longitude } from '../utils/zodHelper'
 
@@ -66,7 +67,10 @@ export const useFeaturesParam = () => {
     serialize: serializeFeaturesParam,
   }).withOptions({ history: 'push' })
 
-  const [featuresParam, setFeaturesParam] = useQueryState('f', featuresParamParser)
+  const [featuresParam, setFeaturesParam] = useQueryState(
+    searchParamsRegistry.f,
+    featuresParamParser,
+  )
   const featuresParamWithKeys: Record<string, UrlFeature> =
     featuresParam && featuresParam.length
       ? Object.fromEntries(zip(serializeFeaturesParam(featuresParam).split(','), featuresParam))

@@ -1,9 +1,10 @@
 import { createParser, useQueryState } from 'next-usequerystate'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
+import { searchParamsRegistry } from '../searchParamsRegistry'
 import { createFreshCategoriesConfig } from './createFreshCategoriesConfig'
-import { MapDataCategoryConfig } from './type'
-import { configCustomStringify } from './parser/configCustomStringify'
 import { configCustomParse } from './parser/configCustomParse'
+import { configCustomStringify } from './parser/configCustomStringify'
+import { MapDataCategoryConfig } from './type'
 
 export const useCategoriesConfig = () => {
   const region = useStaticRegion()
@@ -16,7 +17,10 @@ export const useCategoriesConfig = () => {
     .withOptions({ history: 'push' })
     .withDefault(freshConfig)
 
-  const [categoriesConfig, setCategoriesConfig] = useQueryState('config', configParamParser)
+  const [categoriesConfig, setCategoriesConfig] = useQueryState(
+    searchParamsRegistry.config,
+    configParamParser,
+  )
 
   return { categoriesConfig, setCategoriesConfig }
 }
