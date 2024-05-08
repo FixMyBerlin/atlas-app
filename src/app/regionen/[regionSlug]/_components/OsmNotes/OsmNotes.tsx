@@ -5,6 +5,7 @@ import { OsmNotesControls } from './OsmNotesControls/OsmNotesControls'
 import { OsmNotesNew } from './OsmNotesNew/OsmNotesNew'
 import { useBoundsBbox } from './OsmNotesNew/utils/useBoundsBbox'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
+import { useNotesActiveByZoom } from './OsmNotesNew/utils/useNotesActiveByZoom'
 
 const osmNotesQueryClient = new QueryClient()
 
@@ -19,6 +20,7 @@ export const OsmNotes = () => {
 const OsmNotesWrappedInQUeryClientProvider = () => {
   const { mapLoaded, setOsmNotesFeatures } = useMapStateInteraction()
   const { osmNotesParam: osmNotesActive } = useOsmNotesParam()
+  const notesActiveByZoom = useNotesActiveByZoom()
 
   const bbox = useBoundsBbox()
   const apiUrl = getOsmApiUrl(`/notes.json?bbox=${bbox}`)
@@ -33,7 +35,7 @@ const OsmNotesWrappedInQUeryClientProvider = () => {
       setOsmNotesFeatures(featureCollection)
       return featureCollection
     },
-    enabled: mapLoaded && osmNotesActive,
+    enabled: mapLoaded && Boolean(bbox) && osmNotesActive && notesActiveByZoom,
   })
 
   if (isError) {

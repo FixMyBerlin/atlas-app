@@ -7,6 +7,7 @@ import {
   useNewOsmNoteMapParam,
   useOsmNotesParam,
 } from '../../../_hooks/useQueryState/useOsmNotesParam'
+import { useNotesActiveByZoom } from '../OsmNotesNew/utils/useNotesActiveByZoom'
 
 type Props = { isLoading: boolean; isError: boolean }
 
@@ -14,14 +15,17 @@ export const OsmNotesControls = ({ isLoading, isError }: Props) => {
   const { osmNotesParam: osmNotesActive, setOsmNotesParam } = useOsmNotesParam()
   const { setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
   const { mapParam } = useMapParam()
+  const notesActiveByZoom = useNotesActiveByZoom()
 
   return (
     <div className="relative flex shadow-lg">
       <Tooltip
         text={
-          osmNotesActive
-            ? 'Hinweise von openstreetmap.org ausblenden'
-            : 'Hinweise von openstreetmap.org anzeigen'
+          notesActiveByZoom
+            ? osmNotesActive
+              ? 'Hinweise von openstreetmap.org ausblenden'
+              : 'Hinweise von openstreetmap.org anzeigen'
+            : 'Hinweise von openstreetmap.org sind erst ab Zoomstufe 10 verfügbar; bitte zoomen Sie näher heran.'
         }
       >
         <button
@@ -30,7 +34,11 @@ export const OsmNotesControls = ({ isLoading, isError }: Props) => {
             'z-0 inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium shadow-md focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500',
             osmNotesActive ? 'rounded-l-md' : 'rounded-md',
             osmNotesActive ? 'text-gray-700' : 'text-gray-500 hover:text-gray-700',
-            osmNotesActive ? 'bg-yellow-400' : 'bg-white hover:bg-yellow-50',
+            osmNotesActive
+              ? notesActiveByZoom
+                ? 'bg-yellow-400'
+                : 'bg-orange-400'
+              : 'bg-white hover:bg-yellow-50',
           )}
         >
           {isLoading ? (

@@ -30,7 +30,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             paint={{
               'circle-radius': 15,
               'circle-color': '#115e59', // teal-800 https://tailwindcss.com/docs/customizing-colors
-              'circle-opacity': 0.6,
+              'circle-opacity': ['step', ['zoom'], 0.3, 10, 0.6],
               'circle-blur': 0.3,
             }}
             filter={['in', 'id', ...selectedFeatureIds]}
@@ -44,6 +44,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             paint={{
               'circle-radius': 11,
               'circle-color': 'white',
+              'circle-opacity': ['step', ['zoom'], 0.3, 10, 1],
             }}
           />
           <Layer
@@ -51,6 +52,9 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             key="osm-notes"
             source="osm-notes"
             type="symbol"
+            paint={{
+              'icon-opacity': ['step', ['zoom'], 0.3, 10, 1],
+            }}
             layout={{
               visibility: 'visible',
               'icon-image': [
