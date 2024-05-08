@@ -56,11 +56,14 @@ export const SourcesLayersOsmNotes: React.FC = () => {
               'icon-image': [
                 'match',
                 ['get', 'status'],
+                // The sprites in Mapbox are mixed up
+                // https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-osm-notes-layer"
+                // notes_open is the closed
                 'closed' /* status=closed */,
-                'notes_closed',
-                'open' /* status=open */,
                 'notes_open',
-                'notes_open' /* default */,
+                'open' /* status=open */,
+                'notes_closed',
+                'notes_closed' /* default */,
               ],
               'icon-size': 0.85,
               'icon-allow-overlap': true,
