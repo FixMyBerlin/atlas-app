@@ -85,7 +85,8 @@ It will compare the `tags` column to the previous run.
 
 Whenever we talk about `diff`s in this code, this feature is referenced.
 
-With `FREEZE_DATA=1` the system will **not** update the tables. This is usefull during development if one only wants to see the changes to a certain version. This flag will be ignored if `COMPUTE_DIFFS=0`.
+- With `FREEZE_DATA=0` you see the changes to the last run on every run
+- With `FREEZE_DATA=1` you see the changes to the last reference-run, allowing you to compare your changes to a certain version of your data. The reference will be the last time you ran with `FREEZE_DATA=0`. In this case the system will **not** update the `<tablename>_diff` tables. This flag will be ignored if `COMPUTE_DIFFS=0`.
 
 ### Process only a single object
 
