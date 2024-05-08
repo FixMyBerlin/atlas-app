@@ -25,10 +25,9 @@ import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Calculator } from './Calculator/Calculator'
-import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
-import { useGeojsonStore } from './SourcesAndLayers/SourceGeojson/useGeojsonStore'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
+import { SourcesLayersHighlight } from './SourcesAndLayers/SourcesLayersHighlight'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
@@ -76,7 +75,6 @@ export const Map = () => {
 
   const { inspectorFeatures } = useMapStateInteraction()
 
-  const { setGeojson, resetGeojson, setFeatures } = useGeojsonStore()
   const handleClick = (event: MapLayerMouseEvent) => {
     // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
     const features = event.features as MapGeoJSONFeature[] | undefined
@@ -97,7 +95,6 @@ export const Map = () => {
         newInspectorFeatures = uniqueFeatures
       }
       setInspectorFeatures(newInspectorFeatures)
-      setFeatures(newInspectorFeatures)
 
       const persistableFeatures = newInspectorFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
       if (persistableFeatures.length) {
@@ -198,7 +195,7 @@ export const Map = () => {
       {/* Order: First Background Sources, then Vector Tile Sources */}
       <SourcesLayerRasterBackgrounds />
       <SourcesLayersRegionMask />
-      {isDev ? <SourceGeojson /> : null}
+      <SourcesLayersHighlight />
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />

@@ -15,8 +15,6 @@ import {
   createSourceKeyAtlasGeo,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { layerVisibility } from '../utils/layerVisibility'
-import { LayerHighlight } from './LayerHighlight'
-import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
 
 // We add source+layer map-components for all categories and all subcategories of the given config.

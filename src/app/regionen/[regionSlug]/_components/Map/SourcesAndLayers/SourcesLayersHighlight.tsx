@@ -1,14 +1,18 @@
-import React, { memo } from 'react'
-import { Layer, Source } from 'react-map-gl/maplibre'
-import { Store, useGeojsonStore } from './useGeojsonStore'
 import { featureCollection } from '@turf/turf'
+import { memo } from 'react'
+import { Layer, Source } from 'react-map-gl/maplibre'
+import {
+  StoreFeaturesInspector,
+  useMapStateInteraction,
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
-type Props = Pick<Store, 'geojson' | 'features'>
+type Props = Pick<StoreFeaturesInspector, 'inspectorFeatures'>
 
-const SourceGeojsonMemoized = memo(function SourceGeojsonMemoized(props: Props) {
-  const { features } = props
-  const groupedFeatures: Record<string, typeof features> = {}
-  features?.forEach((f) => {
+const SourcesLayersHighlightMemoized = memo(function SourcesLayersHighlightMemoized({
+  inspectorFeatures,
+}: Props) {
+  const groupedFeatures: Record<string, typeof inspectorFeatures> = {}
+  inspectorFeatures?.forEach((f) => {
     const layerId = f.layer.id || 'boundary_country'
     if (!groupedFeatures[layerId]) groupedFeatures[layerId] = []
     groupedFeatures[layerId]!.push(f)
@@ -73,7 +77,7 @@ const SourceGeojsonMemoized = memo(function SourceGeojsonMemoized(props: Props) 
   )
 })
 
-export const SourceGeojson = () => {
-  const { geojson, features } = useGeojsonStore()
-  return <SourceGeojsonMemoized {...{ geojson, features }} />
+export const SourcesLayersHighlight = () => {
+  const { inspectorFeatures } = useMapStateInteraction()
+  return <SourcesLayersHighlightMemoized {...{ inspectorFeatures }} />
 }
