@@ -69,7 +69,7 @@ export function middleware(request: NextRequest) {
   migratedUrl = migrateUrl(migratedUrl)
 
   // Remove unused params
-  const usedParams = [['v'], ...Object.values(searchParamsRegistry)]
+  const usedParams = ['v', ...Object.values(searchParamsRegistry)]
   const u = new URL(migratedUrl)
   Array.from(u.searchParams.keys()).forEach((key) => {
     !usedParams.includes(key) && u.searchParams.delete(key)
