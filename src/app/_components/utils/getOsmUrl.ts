@@ -1,9 +1,16 @@
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { envKeyWithFallback } from './isEnv'
+
+const osmUrls = {
+  development: new URL(process.env.NEXT_PUBLIC_OSM_API_URL).origin,
+  staging: new URL(process.env.NEXT_PUBLIC_OSM_API_URL).origin,
+  production: 'https://www.openstreetmap.org',
+}
 
 export const getOsmUrl = (path?: string) => {
-  const origin = new URL(process.env.NEXT_PUBLIC_OSM_API_URL).origin
+  const base = osmUrls[envKeyWithFallback]
 
-  return (path ? `${origin}${path}` : origin) as MapDataSourceInspectorEditor['urlTemplate']
+  return (path ? `${base}${path}` : base) as MapDataSourceInspectorEditor['urlTemplate']
 }
 
 export const getOsmApiUrl = (path?: string) => {
