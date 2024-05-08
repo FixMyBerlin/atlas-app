@@ -1,10 +1,9 @@
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
-import { cookieName } from 'src/app/_components/layouts/Header/User/cookieName'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
+import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
 import { useRegion } from '../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
@@ -25,10 +24,7 @@ export const DownloadModal = () => {
 
   const canDownload = useCanDownload(region.exportPublic)
 
-  const handleLogin = () => {
-    Cookies.set(cookieName, `${location.pathname}${location.search}`)
-    void router.push('/api/auth/osm/login')
-  }
+  const handleLogin = useStartUserLogin()
 
   return (
     <section>

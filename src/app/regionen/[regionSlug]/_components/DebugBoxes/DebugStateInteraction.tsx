@@ -5,6 +5,7 @@ import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapS
 import { simplifyConfigForParams } from '../../_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
 import { useCategoriesConfig } from '../../_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useDrawParam } from '../../_hooks/useQueryState/useDrawParam'
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
 // A custom formatter to get a more compact output
 // Prefix [ signals an array, { signals an object
@@ -59,6 +60,7 @@ export const DebugStateInteraction = () => {
         <div className="font-mono">env.*ENV: {process.env.NEXT_PUBLIC_APP_ENV}</div>
         <div className="font-mono">env.*APP_ORIGIN: {process.env.NEXT_PUBLIC_APP_ORIGIN}</div>
         <div className="font-mono">env.NODE_ENV: {process.env.NODE_ENV}</div>
+        <div className="font-mono">OSM URL={getOsmUrl()}</div>
       </details>
 
       <details>

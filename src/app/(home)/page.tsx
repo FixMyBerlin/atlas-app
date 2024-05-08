@@ -7,7 +7,7 @@ import { HomePageHero } from './_components/HomePageHero'
 import { HomePageLive } from './_components/HomePageLive'
 import { HomePagePrimaryFeatures } from './_components/HomePagePrimaryFeatures'
 import { HomePageSecondaryFeaturesJustText } from './_components/HomePageSecondaryFeaturesJustText'
-import { cookieName } from '../_components/layouts/Header/User/cookieName'
+import { cookieName } from 'src/users/hooks/cookieName'
 
 export const metadata: Metadata = {} // Using the defaults from src/layout.tsx
 

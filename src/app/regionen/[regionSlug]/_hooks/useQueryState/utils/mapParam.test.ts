@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { parseMapParam } from './useMapParam'
+import { parseMapParam } from './mapParam'
 
-describe('useMapParam()', () => {
+describe('parseMapParam()', () => {
   test('Test parseMapParam()', () => {
     expect(parseMapParam('13/48.1/9.2')).toStrictEqual({ zoom: 13, lat: 48.1, lng: 9.2 })
     expect(parseMapParam('some-string')).toBeNull()

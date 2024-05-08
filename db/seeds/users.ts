@@ -19,6 +19,7 @@ const seedUsers = async () => {
     {
       osmId: osmId++,
       osmName: `OsmName${osmId++}`,
+      osmDescription: undefined,
       role: 'ADMIN',
       email: 'admin@example.com',
       firstName: 'Admin',
@@ -28,6 +29,7 @@ const seedUsers = async () => {
     {
       osmId: osmId++,
       osmName: `OsmName${osmId++}`,
+      osmDescription: undefined,
       role: 'USER',
       email: 'all-regions@example.com',
       firstName: 'All-Regions',
@@ -37,6 +39,7 @@ const seedUsers = async () => {
     {
       osmId: osmId++,
       osmName: `OsmName${osmId++}`,
+      osmDescription: undefined,
       role: 'USER',
       email: 'no-region@example.com',
       firstName: 'No-Region',
@@ -48,6 +51,7 @@ const seedUsers = async () => {
   const regionAdmins: Users = allRegions.map(({ id, slug }) => ({
     osmId: osmId++,
     osmName: `OsmName${osmId++}`,
+    osmDescription: undefined,
     role: 'USER',
     email: generateUserEmail(slug),
     firstName: `${capitalize(slug)}-Admin`,
@@ -59,6 +63,7 @@ const seedUsers = async () => {
     {
       osmId: 11881,
       osmName: 'tordans',
+      osmDescription: undefined,
       role: 'ADMIN',
       email: 'tobias@fixmycity.de',
       firstName: 'Tobias',
@@ -66,8 +71,20 @@ const seedUsers = async () => {
       hashedPassword,
     },
     {
+      // On master.apis.dev.openstreetmap.org
+      osmId: 6501,
+      osmName: 'tordansdev',
+      osmDescription: undefined,
+      role: 'ADMIN',
+      email: 'tobias+osmdev@fixmycity.de',
+      firstName: 'Tobias',
+      lastName: 'Jordans',
+      hashedPassword,
+    },
+    {
       osmId: 20340489,
       osmName: 'the-sven',
+      osmDescription: undefined,
       role: 'ADMIN',
       email: 'sven@fixmycity.de',
       firstName: 'Sven',

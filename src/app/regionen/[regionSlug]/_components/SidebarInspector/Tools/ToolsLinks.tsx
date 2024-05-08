@@ -5,6 +5,7 @@ import {
   MapDataSourceInspectorEditor,
 } from 'src/app/regionen/[regionSlug]/_mapData/types'
 import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { ToolsLinkNewOsmNote } from './ToolsLinkNewOsmNote'
 import { editorUrl } from './osmUrls/editorUrl'
 import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'
 import {
@@ -86,6 +87,8 @@ export const ToolsLinks = ({ properties, geometry, editors, osmIdConfig }: Props
           Mapillary Foto
         </LinkExternal>
       )}
+
+      <ToolsLinkNewOsmNote properties={properties} geometry={geometry} osmIdConfig={osmIdConfig} />
     </section>
   )
 }

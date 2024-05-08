@@ -1,18 +1,23 @@
+import * as turf from '@turf/turf'
+import type { FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson'
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
+import { OsmNotesThread } from '../../_components/OsmNotes/types'
+import { OsmTypeIdNonNull } from '../../_components/SidebarInspector/Tools/osmUrls/extractOsmTypeIdByConfig'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
 export type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
   StoreFeaturesInspector &
+  StoreOsmNotesFeatures &
+  StoreOsmNewNoteFeature &
   StoreCalculator &
   StoreLocalUpdates &
-  StoreOsmNotesState &
   StoreSizes
 
 type StoreMapLoadedState = {
@@ -34,18 +39,21 @@ type StoreSizes = {
   setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
 }
 
-type StoreOsmNotesState = {
-  osmNotesLoading: boolean
-  setOsmNotesLoading: (osmNotesLoaded: Store['osmNotesLoading']) => void
-  osmNotesError: boolean
-  setOsmNotesError: (osmNotesError: Store['osmNotesError']) => void
-}
-
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
   inspectorFeatures: MapGeoJSONFeature[]
   setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
   resetInspectorFeatures: () => void
+}
+
+type StoreOsmNotesFeatures = {
+  osmNotesFeatures: FeatureCollection<Point, OsmNotesThread>
+  setOsmNotesFeatures: (osmNotesFeatures: Store['osmNotesFeatures']) => void
+}
+
+type StoreOsmNewNoteFeature = {
+  osmNewNoteFeature: ({ geometry: Geometry } & OsmTypeIdNonNull) | undefined
+  setOsmNewNoteFeature: (osmNewNoteFeature: Store['osmNewNoteFeature']) => void
 }
 
 export type StoreCalculator = {
@@ -70,23 +78,26 @@ function setIfChanged(get, set, name, value) {
 
 export const useMapStateInteraction = create<Store>((set, get) => {
   return {
+    // Guards againt errors when using `mainMap?.getStyle`
     mapLoaded: false,
     setMapLoaded: (mapLoaded) => set({ mapLoaded }),
 
+    // Toggels <LoadingIndicator>
     mapDataLoading: false,
     setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
 
-    // We store this globally to separate the fetching from the UI logic
-    osmNotesLoading: false,
-    setOsmNotesLoading: (osmNotesLoading) => set({ osmNotesLoading }),
-    osmNotesError: false,
-    setOsmNotesError: (osmNotesError) => set({ osmNotesError }),
-
     // Data for <Inspector> AND <LayerHighlight>
     inspectorFeatures: [],
-
     setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
     resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
+
+    // Data for <Inspector> AND <SourcesLayersOsmNotes>
+    osmNotesFeatures: turf.featureCollection([]),
+    setOsmNotesFeatures: (osmNotesFeatures) => set({ osmNotesFeatures }),
+
+    // Data for <OsmNotesNew>
+    osmNewNoteFeature: undefined,
+    setOsmNewNoteFeature: (osmNewNoteFeature) => set({ osmNewNoteFeature }),
 
     // Data for <Inspector> AND <LayerHighlight>
     calculatorAreasWithFeatures: [],

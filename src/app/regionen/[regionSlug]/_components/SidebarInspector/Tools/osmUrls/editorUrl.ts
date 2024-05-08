@@ -1,12 +1,12 @@
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
-import { shortOsmType } from './shortLongOsmType'
+import { OsmTypeId } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
+import { shortOsmType } from './shortLongOsmType'
 
 type Props = {
   urlTemplate: MapDataSourceInspectorEditor['urlTemplate']
   geometry: maplibregl.GeoJSONFeature['geometry']
-  osmTypeId?: ReturnType<typeof extractOsmTypeIdByConfig>
+  osmTypeId?: OsmTypeId
   editorId?: MapDataSourceInspectorEditor['idKey']
   zoom?: number
 }

@@ -1,10 +1,26 @@
-import { parseAsBoolean, useQueryState } from 'next-usequerystate'
+import { createParser, parseAsBoolean, useQueryState } from 'next-usequerystate'
+import { searchParamsRegistry } from './searchParamsRegistry'
+import { parseMapParam, serializeMapParam } from './utils/mapParam'
 
 export const useOsmNotesParam = () => {
   const [osmNotesParam, setOsmNotesParam] = useQueryState(
-    'osmNotes',
+    searchParamsRegistry.osmNotes,
     parseAsBoolean.withDefault(false),
   )
 
   return { osmNotesParam, setOsmNotesParam }
+}
+
+export const useNewOsmNoteMapParam = () => {
+  const newOsmNoteMapParamParser = createParser({
+    parse: (query) => parseMapParam(query),
+    serialize: (object) => serializeMapParam(object),
+  }).withOptions({ history: 'replace' })
+
+  const [newOsmNoteMapParam, setNewOsmNoteMapParam] = useQueryState(
+    searchParamsRegistry.osmNote,
+    newOsmNoteMapParamParser,
+  )
+
+  return { newOsmNoteMapParam, setNewOsmNoteMapParam }
 }

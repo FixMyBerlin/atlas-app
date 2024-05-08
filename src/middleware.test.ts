@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { describe, expect, test } from 'vitest'
 import { middleware } from './middleware'
-import { parseMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { parseMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 
 function getStatus(response: ReturnType<typeof middleware>) {
   // @ts-expect-error response is not type correctly
