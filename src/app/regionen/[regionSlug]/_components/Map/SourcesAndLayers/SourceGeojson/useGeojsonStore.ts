@@ -1,7 +1,7 @@
-import { create } from 'zustand'
-import { FeatureCollection, GeoJSON } from 'geojson'
 import { featureCollection } from '@turf/turf'
-import { MapboxGeoJSONFeature } from 'react-map-gl'
+import { FeatureCollection, GeoJSON } from 'geojson'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { create } from 'zustand'
 
 export type Store = {
   geojson: GeoJSON | null
@@ -9,7 +9,7 @@ export type Store = {
   circleFeatures: FeatureCollection
   fillFeatures: FeatureCollection
   setGeojson: (geojson: Store['geojson']) => void
-  setFeatures: (features: MapboxGeoJSONFeature[]) => void
+  setFeatures: (features: MapGeoJSONFeature[]) => void
   resetGeojson: () => void
 }
 
