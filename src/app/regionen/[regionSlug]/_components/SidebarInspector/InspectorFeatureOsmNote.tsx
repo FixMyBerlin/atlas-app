@@ -7,14 +7,16 @@ import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { proseClasses } from 'src/app/_components/text/prose'
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
+import { isDev } from 'src/app/_components/utils/isEnv'
+import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
 import { twJoin } from 'tailwind-merge'
-import { OsmNotesComment, OsmNotesThread } from '../OsmNotes/types'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { OsmNotesComment } from '../OsmNotes/types'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 import SvgNotesClosed from './icons/notes_closed.svg'
 import SvgNotesOpen from './icons/notes_open.svg'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
 const OsmUserLink = ({
   user,
@@ -118,6 +120,8 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             </Link>
           </p>
         </div>
+
+        {isDev && <ObjectDump data={thread} />}
       </Disclosure>
     </div>
   )
