@@ -25,7 +25,7 @@ function SanitizeTrafficSign(traffic_sign)
 
   local substitutions = {
     ['^DE: '] = 'DE:',
-    ['^DE.'] = 'DE:',
+    ['^DE%.'] = 'DE:',
     ['^D:'] = 'DE:',
     ['^D%.'] = 'DE:',
     ['^de:'] = 'DE:',
