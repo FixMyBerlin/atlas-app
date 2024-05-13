@@ -3,14 +3,23 @@
 version: '3'
 services:
   app:
-    env_file:
-      - ./.env
     image: public.ecr.aws/n0p8j4k5/atlas/blitz:${GITHUB_SHA}
     container_name: blitz
     restart: unless-stopped
     environment:
-      SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
-      DATABASE_URL: ${DATABASE_URL}
+      SESSIONS_SECRET_KEY:
+      DATABASE_URL:
+      NEXT_PUBLIC_APP_ORIGIN:
+      NEXT_PUBLIC_APP_ENV:
+      TRAEFIK_HOST:
+      SESSION_SECRET_KEY:
+      OSM_CLIENT_ID:
+      OSM_CLIENT_SECRET:
+      NEXT_PUBLIC_OSM_API_URL:
+      ATLAS_API_KEY:
+      S3_KEY:
+      S3_SECRET:
+      S3_REGION:
     ports:
       - 4000:4000
     labels:
