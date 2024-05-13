@@ -4,7 +4,7 @@
 hash_dir() {
   directory=$1
   suffix=$2
-  echo $(find "$1" -type f -name "*$suffix" | sort | xargs shasum)
+  echo $(find "$directory" -type f -name "*$suffix" | sort | xargs shasum)
 }
 
 # (private function used by check_hash and update_hash)
