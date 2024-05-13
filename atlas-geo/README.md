@@ -75,7 +75,9 @@ If any helper in (`topics/helper`)[processing/topics/helper] changed, we rerun e
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
-**Force rerun:** Whenever you need to force a rerun, open [any lua helper](./processing/topics/helper/Set.lua) and add a temporary code comment, save and restart the processing.
+#### Force rerun
+
+Whenever you need to force a rerun, open [any lua helper](./processing/topics/helper/Set.lua) and add a temporary code comment, save and restart the processing. Use the helper `run-full.sh` to do this automatically.
 
 ### Processing: Inspect changes
 
@@ -85,8 +87,17 @@ It will compare the `tags` column to the previous run.
 
 Whenever we talk about `diff`s in this code, this feature is referenced.
 
+#### Reference
+
 - With `FREEZE_DATA=0` you see the changes to the last run on every run
 - With `FREEZE_DATA=1` you see the changes to the last reference-run, allowing you to compare your changes to a certain version of your data. The reference will be the last time you ran with `FREEZE_DATA=0`. In this case the system will **not** update the `<tablename>_diff` tables. This flag will be ignored if `COMPUTE_DIFFS=0`.
+
+Use `run-full.sh` to toggle `FREEZE_DATA` and force a full rerun for a fresh reference.
+
+#### `age` diffs
+
+If `age` diffs show up, you need to create a fresh reference run of all the data.
+You may use `run-full.sh` to set `FREEZE_DATA=0` and modify the helper folder to trigger a full rerun.
 
 ### Process only a single object
 
