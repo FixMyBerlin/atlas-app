@@ -61,32 +61,27 @@ local pedestrianAreaBicycleYes = BikelaneCategories.new({
       ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.' ..
       ' (We only process the ways, not the `area=yes` Polygon.)',
   categorization = function(tags)
-    if tags.highway == "pedestrian" and tags.bicycle == "yes" then
+    if tags.highway == "pedestrian" and (tags.bicycle == "yes" or tags.bicycle == "designated") then
       return "pedestrianAreaBicycleYes"
     end
   end
 })
 
--- Handle `highway=living_street`
--- DE: Verkehrsberuhigter Bereich AKA "Spielstraße"
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
 local livingStreet = BikelaneCategories.new({
-  desc = '', -- TODO desc
+  desc = 'Living streets are considered bike friendly and added unless prohibided.' ..
+      ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
   categorization = function(tags)
     if tags.highway == "living_street" then
-      -- TODO: Research the default access for bikes in living streets. Check the tags used in DB for "bicycle".
-      -- No vehicle except bicycles
-      -- TODO: This condition is wrong. It has to be…
-      -- if tags.vehicle == "no" and tags.bicycle == "yes" then
-      if tags.vehicle == "no" and not tags.bicycle == "yes" then
-        return "livingStreet"
+      -- Exit if all vehicle are prohibited (but not bikes)
+      if tags.vehicle == "no" and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
+        return nil
       end
-      -- Nothing about vehicle but bicycle=yes or similar
-      -- TODO: This condition is wrong. It has to be…
-      -- if tags.bicycle == "yes" or tags.bicycle == "destination" then
-      if (tags.vehicle == nil or tags.vehicle == "yes") and not tags.bicycle == "no" then
-        return "livingStreet"
+      -- Exit if bikes are prohibited
+      if tags.bicycle == "no" or tags.bicycle == "dismount" then
+        return nil
       end
+      return "livingStreet"
     end
   end
 })
