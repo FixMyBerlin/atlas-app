@@ -1,17 +1,28 @@
-version: "3"
+# this file is copied to the staging or production server to be used there
+
+version: '3'
 services:
-  db:
-    image: postgres:16
+  app:
+    env_file:
+      - ./.env
+    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${GITHUB_SHA}
+    container_name: blitz
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: mysecretpassword
-      LANG: en_US.UTF-8
-      LC_ALL: en_US.UTF-8
+      SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL}
     ports:
-      - "5432:5432"
-    volumes:
-      - atlas-data:/var/lib/postgresql/data
-    container_name: atlas-db
-volumes:
-  atlas-data:
+      - 4000:4000
+    labels:
+      traefik.enable: true
+      traefik.http.services.container.loadbalancer.server.port: 4000
+      traefik.http.routers.container.rule: Host(`${TRAEFIK_HOST}`) || Host(`www.${TRAEFIK_HOST}`)
+      traefik.http.routers.container.entrypoints: websecure
+      traefik.http.routers.container.tls.certresolver: letsencrypt
+      traefik.http.routers.container.tls: true
+    networks:
+      - processing_app_bridge
+
+networks:
+  processing_app_bridge:
+    external: true

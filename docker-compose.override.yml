@@ -1,0 +1,11 @@
+# this file is copied to the staging or production server to be used there
+
+version: '3'
+services:
+  app:
+    image: !reset null
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    entrypoint: npm run
+    command: dev
