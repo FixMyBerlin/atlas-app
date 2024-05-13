@@ -3,3 +3,4 @@ tiles
 .env.local
 *.mvt
 *.geojson
+node_modules
