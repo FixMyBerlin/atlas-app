@@ -1,0 +1,12 @@
+name: Run Tests
+on: [push, pull_request]
+jobs:
+  sile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Busted
+        uses: lunarmodules/busted@v2.2.0
+        with:
+          args: -p %.test%.lua$ --directory='./processing/' ./processing
