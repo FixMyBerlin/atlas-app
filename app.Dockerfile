@@ -6,13 +6,12 @@ WORKDIR /app
 
 RUN npm install --global pm2
 
-COPY package.json package-lock.json ./
-COPY patches ./patches
+# see .dockerignore for what is getting copied
+COPY . .
+
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
-# see .dockerignore for what is getting copied
-COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_APP_ORIGIN
