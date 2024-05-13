@@ -1,7 +1,7 @@
-name: Run Tests
-on: [push, pull_request]
+name: Check PR
+on: [pull_request]
 jobs:
-  Test:
+  run-ci:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
