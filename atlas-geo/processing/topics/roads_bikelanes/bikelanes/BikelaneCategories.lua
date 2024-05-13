@@ -58,10 +58,9 @@ local implicitOneWay = BikelaneCategories.new({
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=pedestrian
 local pedestrianAreaBicycleYes = BikelaneCategories.new({
   desc = 'Pedestrian area (DE:"Fußgängerzonen") with' ..
-      ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.',
+      ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.' ..
+      ' (We only process the ways, not the `area=yes` Polygon.)',
   categorization = function(tags)
-    -- area=yes is allowed; all other category disallow it
-    -- TODO: Check if we still have area=yes in our DB or if we filter this some other place
     if tags.highway == "pedestrian" and tags.bicycle == "yes" then
       return "pedestrianAreaBicycleYes"
     end
@@ -120,7 +119,6 @@ local footAndCyclewaySharedCases = BikelaneCategories.new({
   desc = 'Shared bike and foot path (DE: "Gemeinsamer Geh- und Radweg")' ..
       ' with subcategories for adjoining or isolated paths.',
   categorization = function(tags)
-    if tags.area == "yes" then return end
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
         tags.segregated == "no"
@@ -139,7 +137,6 @@ local footAndCyclewaySegregatedCases = BikelaneCategories.new({
   desc = 'Shared bike and foot path (DE: "Getrennter Geh- und Radweg", "Getrennter Rad- und Gehweg")' ..
       ' with subcategories for adjoining or isolated paths.',
   categorization = function(tags)
-    if tags.area == "yes" then return end
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
         tags.segregated == "yes"
@@ -163,7 +160,6 @@ local footwayBicycleYesCases = BikelaneCategories.new({
     --    This will likely need a better solution in the future.
     --    Eg https://www.openstreetmap.org/way/23366687
     if tags["mtb:scale"] then return end
-    if tags.area == "yes" then return end
 
     if tags.highway == "footway" or tags.highway == "path" then
       local taggedWithAccessTagging = tags.bicycle == "yes"
