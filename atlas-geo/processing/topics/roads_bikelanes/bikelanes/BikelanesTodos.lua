@@ -103,6 +103,16 @@ local missing_cycleway_lane = TodoIssue.new({
   end
 })
 
+local function RemoveNilValues(t)
+  local result = {}
+  for _, v in ipairs(t) do
+    if v ~= nil then
+      result[#result + 1] = v
+    end
+  end
+  return result
+end
+
 -- Public funtion
 function BikelanesTodos(tagsObject, resultTags)
   local todos = {}
@@ -117,14 +127,4 @@ function BikelanesTodos(tagsObject, resultTags)
   todos[#todos + 1] = missing_cycleway_lane:checkCondition(tagsObject, resultTags)
 
   return RemoveNilValues(todos)
-end
-
-function RemoveNilValues(t)
-  local result = {}
-  for _, v in ipairs(t) do
-    if v ~= nil then
-      result[#result + 1] = v
-    end
-  end
-  return result
 end
