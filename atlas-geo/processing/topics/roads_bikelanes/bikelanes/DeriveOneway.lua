@@ -38,7 +38,6 @@ local onewayImplicitYes = Set({
 ---@return 'yes' | 'no' | 'car_not_bike' | 'assumed_no' | 'implicit_yes' | 'unknown'
 --- Derive oneway information based on tags and given category
 function DeriveOneway(tags, category)
-
   -- if `oneway:bicycle` is explicitly tagged check if it differs from `oneway`
   if tags['oneway:bicycle'] == 'yes' then
     return 'yes'
@@ -49,16 +48,19 @@ function DeriveOneway(tags, category)
       return 'no'
     end
   end
-  if Sanitize(tags.oneway, {'yes', 'no'}) then
+
+  if Sanitize(tags.oneway, { 'yes', 'no' }) then
     return tags.oneway
   end
 
   if onewayAssumedNo[category] then
     return 'assumed_no'
   end
+
   if onewayImplicitYes[category] then
     return 'implicit_yes'
   end
+
   -- This should never happen / maybe in some kind of TODO-list
   return 'unknown'
 end
