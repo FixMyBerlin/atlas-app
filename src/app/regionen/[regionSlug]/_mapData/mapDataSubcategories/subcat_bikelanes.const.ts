@@ -23,6 +23,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
   name: 'Radinfrastruktur',
   ui: 'dropdown',
   sourceId: 'atlas_bikelanes',
+  beforeId: 'atlas-app-beforeid-top',
   styles: [
     defaultStyleHidden,
     {

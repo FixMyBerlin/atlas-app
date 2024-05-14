@@ -6674,17 +6674,6 @@
       }
     },
     {
-      "id": "atlas-app-beforeid-group1",
-      "type": "circle",
-      "source": "openmaptiles",
-      "source-layer": "place",
-      "layout": {},
-      "paint": {
-        "circle-color": "hsla(0, 0%, 0%, 0)",
-        "circle-opacity": 0
-      }
-    },
-    {
       "id": "atlas-app-beforeid-group2",
       "type": "circle",
       "source": "openmaptiles",
@@ -6696,7 +6685,18 @@
       }
     },
     {
-      "id": "atlas-app-beforeid-group3",
+      "id": "atlas-app-beforeid-fallback",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
+    },
+    {
+      "id": "atlas-app-beforeid-group1",
       "type": "circle",
       "source": "openmaptiles",
       "source-layer": "place",

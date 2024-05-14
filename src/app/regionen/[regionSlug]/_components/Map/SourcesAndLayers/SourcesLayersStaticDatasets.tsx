@@ -58,7 +58,10 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                 layout: layout,
                 filter: layerFilter,
                 paint: layerPaint,
-                beforeId: undefined, // on top of everything
+                beforeId:
+                  'beforeId' in layer
+                    ? layer.beforeId || 'atlas-app-beforeid-fallback'
+                    : 'atlas-app-beforeid-fallback',
               }
 
               // To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData
