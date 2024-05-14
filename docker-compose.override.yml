@@ -10,3 +10,6 @@ services:
       target: base
     entrypoint: npm run
     command: dev
+    volumes:
+      - ./src:/app/src
+      - ./.next:/app/.next
