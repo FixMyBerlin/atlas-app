@@ -4,6 +4,11 @@ import { Prisma } from '@prisma/client'
 const seedRegions = async () => {
   const seedRegions: Prisma.RegionUncheckedCreateInput[] = [
     {
+      slug: 'testing',
+      public: true,
+      exportPublic: false,
+    },
+    {
       slug: 'bibi',
       public: true,
       exportPublic: true,
