@@ -42,6 +42,9 @@ function GetTransformedObjects(tags, transformations)
   -- don't transform paths only unnest tags prefixed with `cycleway`
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     unnestTags(tags, 'cycleway', '', center)
+    if center.oneway == 'yes' and tags['oneway:bicycle'] ~= 'no' then
+      center.traffic_sign = center.traffic_sign or center['traffic_sign:forward']
+    end
     return { center }
   end
 
