@@ -7,5 +7,6 @@ services:
     build:
       context: .
       dockerfile: ./app.Dockerfile
+      target: base
     entrypoint: npm run
     command: dev

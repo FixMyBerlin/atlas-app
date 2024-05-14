@@ -1,6 +1,6 @@
 # this file is used by a github workflow to build the image
 
-FROM node:18-bullseye-slim
+FROM node:18-bullseye-slim as base
 
 WORKDIR /app
 
@@ -21,8 +21,11 @@ ENV NEXT_PUBLIC_APP_ENV ${NEXT_PUBLIC_APP_ENV}
 ARG NEXT_PUBLIC_OSM_API_URL
 ENV NEXT_PUBLIC_OSM_API_URL ${NEXT_PUBLIC_OSM_API_URL}
 
+FROM base as build
+
 RUN npx blitz@2.0.9 prisma generate
 RUN npx blitz@2.0.9 build
+RUN npx blitz prisma generate
 
 EXPOSE 4000
 
