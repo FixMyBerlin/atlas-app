@@ -1,7 +1,7 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("Set")
 require("TimeUtils")
-require("categories")
+require("BikelaneCategories")
 require("transformations")
 require("CopyTags")
 require("RoadWidth")
