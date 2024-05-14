@@ -88,20 +88,18 @@ function osm2pgsql.process_way(object)
   local allowed_highways = JoinSets({ HighwayClasses, MajorRoadClasses, MinorRoadClasses, PathClasses })
   if not allowed_highways[tags.highway] then return end
 
-  local exclude, _ = ExcludeHighways(tags)
-  if exclude then return end
-  if object.tags.area == 'yes' then return end
+  local excludeHighway, _ = ExcludeHighways(tags)
+  if excludeHighway then return end
 
-  -- TODO: Rething this. We should only exclude crossing which are not bikelane-crossings. See categories#crossing
-  -- if tags.footway == 'crossing' and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
-  --   return
-  -- end
+  -- Skip any area. See https://github.com/FixMyBerlin/private-issues/issues/1038 for more.
+  if tags.area == 'yes' then return end
 
   -- ====== (B) General conversions ======
   ConvertCyclewayOppositeSchema(tags)
   -- Calculate and format length, see also https://github.com/osm2pgsql-dev/osm2pgsql/discussions/1756#discussioncomment-3614364
   -- Use https://epsg.io/25833 (same as `boundaryStats.sql`); update `atlas_roads--length--tooltip` if changed.
   local length = Round(object:as_linestring():transform(25833):length(), 2)
+
   -- ====== (C) Compute results and insert ======
   local results = {
     name = tags.name or tags.ref or tags['is_sidepath:of:name'],
