@@ -8,7 +8,9 @@ export const debugLayerStyles = ({
 }: {
   source: string
   sourceLayer: string
-  filter?: ['match', ['get', string], string[], boolean, boolean]
+  filter?:
+    | ['match', ['get', string], (string | number | boolean)[], boolean, boolean]
+    | ['has', string]
 }) => {
   const layers = [
     {

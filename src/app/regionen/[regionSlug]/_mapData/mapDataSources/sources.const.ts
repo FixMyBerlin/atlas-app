@@ -14,7 +14,7 @@ export type SourcesId =
   | 'atlas_bikelanes'
   | 'atlas_bikeroutes'
   | 'atlas_boundaries'
-  | 'atlas_boundaryStats'
+  | 'atlas_presenceStats'
   | 'atlas_landuse'
   | 'atlas_places'
   | 'atlas_poiClassification'
@@ -55,8 +55,8 @@ export const sources: MapDataSource<
     export: { enabled: false },
   },
   {
-    id: 'atlas_boundaryStats',
-    tiles: getTilesUrl('/boundaryStats/{z}/{x}/{y}'),
+    id: 'atlas_presenceStats',
+    tiles: getTilesUrl('/presenceStats/{z}/{x}/{y}'),
     maxzoom: 14,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
@@ -66,7 +66,23 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'id',
-      documentedKeys: ['name', 'admin_level'],
+      documentedKeys: [
+        'name:prefix',
+        'name',
+        'admin_level',
+        'category_municipality__if_present',
+        'category_district__if_present',
+        //
+        'missing_km',
+        //
+        'data_no_km',
+        'assumed_no_km',
+        'not_expected_km',
+        'separate_geometry_km',
+        'cycleway_adjoining_km',
+        'cyclewayOnHighway_advisoryOrExclusive_km',
+        'footAndCyclewayShared_adjoiningOrIsolated_km',
+      ],
     },
     // presence: { enabled: false },
     verification: { enabled: false },
