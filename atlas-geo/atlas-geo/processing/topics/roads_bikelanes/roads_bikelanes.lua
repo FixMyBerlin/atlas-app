@@ -97,7 +97,7 @@ function osm2pgsql.process_way(object)
   -- ====== (B) General conversions ======
   ConvertCyclewayOppositeSchema(tags)
   -- Calculate and format length, see also https://github.com/osm2pgsql-dev/osm2pgsql/discussions/1756#discussioncomment-3614364
-  -- Use https://epsg.io/25833 (same as `boundaryStats.sql`); update `atlas_roads--length--tooltip` if changed.
+  -- Use https://epsg.io/25833 (same as `presenceStats.sql`); update `atlas_roads--length--tooltip` if changed.
   local length = Round(object:as_linestring():transform(25833):length(), 2)
 
   -- ====== (C) Compute results and insert ======
