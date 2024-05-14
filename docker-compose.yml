@@ -7,8 +7,8 @@ services:
     container_name: blitz
     restart: unless-stopped
     environment:
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?schema=prisma
       SESSIONS_SECRET_KEY:
-      DATABASE_URL:
       NEXT_PUBLIC_APP_ORIGIN:
       NEXT_PUBLIC_APP_ENV:
       TRAEFIK_HOST:
@@ -21,7 +21,7 @@ services:
       S3_SECRET:
       S3_REGION:
     ports:
-      - 4000:4000
+      - '4000:4000'
     labels:
       traefik.enable: true
       traefik.http.services.container.loadbalancer.server.port: 4000
