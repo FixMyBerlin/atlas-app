@@ -32,6 +32,10 @@ function toSqlArray(arr: string[]) {
   return `Array[${arr.map((tag) => `'${tag}'`)}]::text[]`
 }
 
+// From this zoom and above we deliver the original geometries.
+// That is why we can overzoom in sources.const with `maxzoom`.
+export const SIMPLIFY_MAX_ZOOM = 14
+
 export async function initGeneralizationFunctions(
   interacitvityConfiguartion: InteracitvityConfiguartion,
 ) {
@@ -52,8 +56,8 @@ export async function initGeneralizationFunctions(
             mvt bytea;
             tolerance float;
           BEGIN
-            IF z BETWEEN 5 AND 13 THEN
-              tolerance = 10 * POWER(2, 13-z);
+            IF z BETWEEN 5 AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
+              tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
             ELSE
               tolerance = 0;
             END IF;

@@ -1,8 +1,9 @@
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
+import { SIMPLIFY_MAX_ZOOM } from 'src/instrumentation/initGeneralizationFunctions'
 import { MapDataSource } from '../types'
-import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
 import { SourceExportApiIdentifier } from './export/exportIdentifier'
+import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 import { SourceVerificationApiIdentifier } from './verification/verificationIdentifier'
 
 // TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
@@ -57,7 +58,7 @@ export const sources: MapDataSource<
   {
     id: 'atlas_presenceStats',
     tiles: getTilesUrl('/presenceStats/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
@@ -113,7 +114,7 @@ export const sources: MapDataSource<
   {
     id: 'atlas_bikelanes',
     tiles: getTilesUrl('/atlas_generalized_bikelanes/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -156,7 +157,7 @@ export const sources: MapDataSource<
   {
     id: 'atlas_bikeroutes',
     tiles: getTilesUrl('/atlas_generalized_bikeroutes/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -198,7 +199,7 @@ export const sources: MapDataSource<
   {
     id: 'atlas_roads',
     tiles: getTilesUrl('/atlas_generalized_roads/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 8,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -240,7 +241,7 @@ export const sources: MapDataSource<
   {
     id: 'atlas_roadsPathClasses',
     tiles: getTilesUrl('/atlas_generalized_roadspathclasses/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 10,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -310,7 +311,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/poiClassification
     id: 'atlas_poiClassification',
     tiles: getTilesUrl('/atlas_generalized_poiclassification/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -337,7 +338,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/places
     id: 'atlas_places',
     tiles: getTilesUrl('/atlas_generalized_places/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -367,7 +368,7 @@ export const sources: MapDataSource<
     tiles: getTilesUrl(
       '/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}',
     ),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -410,7 +411,7 @@ export const sources: MapDataSource<
     tiles: getTilesUrl(
       '/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}',
     ),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -442,7 +443,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/trafficSigns
     id: 'atlas_trafficSigns',
     tiles: getTilesUrl('/atlas_generalized_trafficsigns/{z}/{x}/{y}'),
-    maxzoom: 14,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
