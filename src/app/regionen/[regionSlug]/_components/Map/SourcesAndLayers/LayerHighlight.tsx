@@ -10,6 +10,7 @@ import {
 } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
+import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
 type ParentLayerProps = {
   sourceData: (typeof sources)[number]
@@ -90,7 +91,10 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   }
 
   // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
-  layerProps.filter = ['in', highlightingKey, ...featureIds]
+  layerProps.filter =
+    'filter' in layerProps && layerProps.filter
+      ? wrapFilterWithAll([layerProps.filter, ['in', ['get', highlightingKey], ...featureIds]])
+      : ['in', ['get', highlightingKey], ...featureIds]
 
   return <Layer {...layerProps} />
 })

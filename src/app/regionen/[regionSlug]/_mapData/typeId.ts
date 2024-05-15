@@ -105,6 +105,10 @@ import {
   SubcatRoadsPlusFootwaysId,
   SubcatRoadsPlusFootwaysStyleIds,
 } from './mapDataSubcategories/subcat_roads_plus_footways.const'
+import {
+  SubcatRoadsPlusOnewayId,
+  SubcatRoadsPlusOnewayStyleIds,
+} from './mapDataSubcategories/subcat_roads_plus_oneway.const'
 import { SubcatSignsId, SubcatSignsStyleIds } from './mapDataSubcategories/subcat_signs.const'
 import {
   SubcatSurfaceBikelaneId,
@@ -146,6 +150,7 @@ export type SubcategoryId =
   | SubcatPoiPlusPublicTransportId
   | SubcatRoadsId
   | SubcatRoadsPlusFootwaysId
+  | SubcatRoadsPlusOnewayId
   | SubcatSignsId
   | SubcatSurfaceBikelaneId
   | SubcatSurfaceRoadsId
@@ -182,6 +187,7 @@ export type StyleId =
   | SubcatPoiPlusPublicTransportStyleIds
   | SubcatPoiStyleIds_Tarmac
   | SubcatRoadsPlusFootwaysStyleIds
+  | SubcatRoadsPlusOnewayStyleIds
   | SubcatRoadsStyleIds
   | SubcatSignsStyleIds
   | SubcatSurfaceBikelaneStyleIds

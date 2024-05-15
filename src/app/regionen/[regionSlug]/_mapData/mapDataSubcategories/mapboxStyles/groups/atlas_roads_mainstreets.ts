@@ -9,7 +9,7 @@ export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'road'],
-      ['trunk', 'motorway_link', 'motorway', 'trunk_link'],
+      ['motorway', 'motorway_link', 'trunk', 'trunk_link'],
       true,
       false,
     ],
@@ -25,7 +25,7 @@ export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'road'],
-      ['primary', 'tertiary_link', 'secondary_link', 'tertiary', 'secondary', 'primary_link'],
+      ['primary', 'primary_link', 'secondary', 'secondary_link', 'tertiary', 'tertiary_link'],
       true,
       false,
     ],
@@ -82,7 +82,7 @@ export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] 
       'symbol-placement': 'line',
       'text-rotation-alignment': 'viewport',
       'icon-size': 1.2,
-      'text-field': ['to-string', ['get', 'name']],
+      'text-field': ['to-string', ['get', 'name_ref']],
       'text-letter-spacing': -0.02,
       'icon-padding': 6,
     },
@@ -114,11 +114,15 @@ export const mapboxStyleGroupLayers_atlas_roads_mainstreets: MapboxStyleLayer[] 
       ],
     },
     filter: [
-      'match',
-      ['get', 'road'],
-      ['primary', 'secondary_link', 'secondary', 'primary_link'],
-      true,
-      false,
+      'all',
+      [
+        'match',
+        ['get', 'road'],
+        ['primary', 'primary_link', 'secondary', 'secondary_link'],
+        true,
+        false,
+      ],
+      ['has', 'name_ref'],
     ],
   },
   {

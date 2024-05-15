@@ -52,4 +52,53 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_fusswege: MapboxStyleLayer[
       ],
     },
   },
+  {
+    minzoom: 13,
+    layout: {
+      'line-cap': 'square',
+      'line-miter-limit': 0,
+    },
+    filter: [
+      'all',
+      ['match', ['get', 'road_oneway:bicycle'], ['no'], true, false],
+      [
+        'match',
+        ['get', 'road'],
+        ['path', 'track', 'bridleway', 'footway', 'cycleway'],
+        true,
+        false,
+      ],
+    ],
+    type: 'line',
+    id: 'roads-onewaybikeyes-pattern fusswege',
+    paint: {
+      'line-pattern': 'arrow-blue-dots-gap(1)',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 13, 3, 15, 5, 22, 10],
+      'line-opacity': 0.8,
+    },
+  },
+  {
+    minzoom: 13,
+    layout: {
+      'line-cap': 'square',
+    },
+    filter: [
+      'all',
+      ['match', ['get', 'road_oneway'], ['yes', 'implicit_yes'], true, false],
+      [
+        'match',
+        ['get', 'road'],
+        ['path', 'track', 'bridleway', 'footway', 'cycleway'],
+        true,
+        false,
+      ],
+    ],
+    type: 'line',
+    id: 'roads-oneway-pattern fusswege',
+    paint: {
+      'line-pattern': 'arrow-grey-gap(1)',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 13, 3, 15, 5, 22, 10],
+      'line-opacity': 0.7,
+    },
+  },
 ]
