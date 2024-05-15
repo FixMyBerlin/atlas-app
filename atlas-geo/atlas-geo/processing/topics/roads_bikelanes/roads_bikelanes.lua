@@ -146,6 +146,8 @@ function osm2pgsql.process_way(object)
         id = DefaultId(object)
       })
     else
+      -- The `ref` (e.g. "B 264") is used in your map style and only relevant for higher road classes.
+      results.name_ref = tags.ref
       roadsTable:insert({
         tags = results,
         meta = Metadata(object),
