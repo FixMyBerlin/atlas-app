@@ -94,11 +94,7 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const tableKeyTrafficSign = [
-  'osm_traffic_sign',
-  'osm_traffic_sign:forward',
-  'osm_traffic_sign:backward',
-]
+export const tableKeyTrafficSign = ['traffic_sign', 'traffic_sign:forward', 'traffic_sign:backward']
 export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,
