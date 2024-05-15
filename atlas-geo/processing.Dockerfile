@@ -18,7 +18,7 @@ LABEL maintainer="FixMyCity - https://fixmycity.de"
 COPY --from=docker:dind /usr/local/bin/docker /usr/local/bin/
 
 RUN apt update && \
-  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget && \
+  apt install -y osm2pgsql osmium-tool postgresql-client-15 tzdata wget curl && \
   apt upgrade -y
 
 # install node
