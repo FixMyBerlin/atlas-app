@@ -8,7 +8,7 @@ require("RoadWidth")
 require("ToMarkdownList")
 require("DeriveSurface")
 require("DeriveSmoothness")
-require("BikelanesTodos")
+require("BikelaneTodos")
 require("Sanitize")
 require("DeriveOneway")
 require("DefaultId")
@@ -95,7 +95,7 @@ function Bikelanes(object)
           result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
-        result_tags.todos = ToMarkdownList(BikelanesTodos(transformedTags, result_tags))
+        result_tags.todos = ToMarkdownList(BikelaneTodos(transformedTags, result_tags))
         table.insert(result_bikelanes, result_tags)
       end
     end
