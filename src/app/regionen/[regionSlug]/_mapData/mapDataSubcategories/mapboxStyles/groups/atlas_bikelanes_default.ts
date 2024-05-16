@@ -48,7 +48,12 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['sharedBusLane', 'sharedMotorVehicleLane', 'bicycleRoad_vehicleDestination'],
+      [
+        'sharedMotorVehicleLane',
+        'bicycleRoad_vehicleDestination',
+        'sharedBusLaneBusWithBike',
+        'explicitSharedLaneButNoSignage',
+      ],
       true,
       false,
     ],

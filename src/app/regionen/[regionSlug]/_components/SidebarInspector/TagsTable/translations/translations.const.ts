@@ -32,7 +32,7 @@ export const translations: { [key: string]: string } = {
   'ALL--category=needsClarification': 'Führungsform unklar. Die Attribute in OpenStreetMap sind nicht ausreichend, um die Führungsform zu kategorisieren. Das deutet darauf hin, dass zusätzlich Attribute in OSM ergänzt werden müssen.',
   'ALL--category=pedestrianAreaBicycleYes': 'Fußgängerzone, Fahrrad frei',
   'ALL--category=separate_geometry': 'RVA als separate Geometrie erfasst',
-  'ALL--category=sharedBusLane': 'Busfahrstreifen mit Freigabe Radverkehr',
+  'ALL--category=sharedBusLaneBusWithBike': 'Bussonderfahrstreifen mit Fahrrad frei',
   'ALL--category=sharedBusLaneBikeWithBus': 'Radfahrstreifen mit Freigabe Busverkehr',
   'ALL--category=sharedMotorVehicleLane': 'Gemeinsamer Fahrstreifen', // Anteilig genutzten Fahrstreifen
   'ALL--composit_mapillary--key': 'Mapillary',

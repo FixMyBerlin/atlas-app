@@ -91,6 +91,11 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
     signUrl:
       'https://upload.wikimedia.org/wikipedia/commons/a/a5/Zeichen_350.2_-_Ende_des_Radschnellwegs%3B_StVO_2020.svg',
   },
+  '1024-14': {
+    title: 'Kraftomnibusse frei',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/9/96/Zusatzzeichen_1024-14_-_Kraftomnibusse_frei%2C_StVO_1992.svg',
+  },
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 

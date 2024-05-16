@@ -73,6 +73,12 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         {
           id: 'mixed',
           name: 'Führung mit Kfz (explizit)',
+          desc: [
+            'Anteilig genutzten Fahrstreifen',
+            'Fahrradstraße mit Anlieger frei',
+            'Bussonderfahrstreifen mit Fahrrad frei',
+            'Radfahrstreifen mit Freigabe Busverkehr',
+          ],
           style: {
             type: 'line',
             color: '#0098f0',
@@ -194,7 +200,11 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         },
         {
           id: 'sharedBusLane',
-          name: 'Gemeinsamer Fahrstreifen mit Bus',
+          name: 'Gem. Fahrstreifen mit Bus',
+          desc: [
+            'Bussonderfahrstreifen mit Fahrrad frei',
+            'Radfahrstreifen mit Freigabe Busverkehr',
+          ],
           style: {
             type: 'line',
             color: '#059669',
@@ -202,7 +212,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
         },
         {
           id: 'sharedMotorVehicleLane',
-          name: 'Gemeinsamer Fahrstreifen mit Kfz (Markiert)',
+          name: 'Gem. Fahrstreifen mit Kfz (Markiert)',
           style: {
             type: 'line',
             color: '#059669',
