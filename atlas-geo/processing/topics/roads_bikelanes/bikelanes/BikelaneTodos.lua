@@ -1,19 +1,21 @@
-TodoIssue = {}
-TodoIssue.__index = TodoIssue
+package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('RemoveNilValues')
+BikelaneTodo = {}
+BikelaneTodo.__index = BikelaneTodo
 
 -- @param args table
 -- @param args.key string
 -- @param args.desc string
 -- @param args.conditions function
-function TodoIssue.new(args)
-  local self = setmetatable({}, TodoIssue)
+function BikelaneTodo.new(args)
+  local self = setmetatable({}, BikelaneTodo)
   self.key = args.key
   self.desc = args.desc
   self.conditions = args.conditions
   return self
 end
 
-function TodoIssue:checkCondition(objectTags, resultTags)
+function BikelaneTodo:checkCondition(objectTags, resultTags)
   if self.conditions(objectTags, resultTags) then
     return self.key
   else
@@ -22,14 +24,14 @@ function TodoIssue:checkCondition(objectTags, resultTags)
 end
 
 -- === Fahrradstraßen ===
-local missing_traffic_sign_244 = TodoIssue.new({
+local missing_traffic_sign_244 = BikelaneTodo.new({
   key = "missing_traffic_sign_244",
   desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
   conditions = function(tagsObject, _)
     return tagsObject.bicycle_road == "yes" and not IsTermInString('DE:244.1', tagsObject.traffic_sign)
   end
 })
-local missing_traffic_sign_vehicle_destination = TodoIssue.new({
+local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   key = "missing_traffic_sign_vehicle_destination",
   desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
   conditions = function(tagsObject, _)
@@ -38,7 +40,7 @@ local missing_traffic_sign_vehicle_destination = TodoIssue.new({
         and IsTermInString("1020-30", tagsObject.traffic_sign)
   end
 })
-local missing_acccess_tag_bicycle_road = TodoIssue.new({
+local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
   key = "missing_acccess_tag_bicycle_road",
   desc = "Expected access tag `bicycle=designated` that is required for routing.",
   conditions = function(tagsObject, _)
@@ -49,7 +51,7 @@ local missing_acccess_tag_bicycle_road = TodoIssue.new({
 })
 
 -- === Verkehrszeichen ===
-local missing_traffic_sign = TodoIssue.new({
+local missing_traffic_sign = BikelaneTodo.new({
   key = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
   conditions = function(tagsObject, _)
@@ -62,7 +64,7 @@ local missing_traffic_sign = TodoIssue.new({
 })
 
 -- === Fuß- und Radweg ===
-local missing_access_tag_240 = TodoIssue.new({
+local missing_access_tag_240 = BikelaneTodo.new({
   key = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
   conditions = function(tagsObject, _)
@@ -70,7 +72,7 @@ local missing_access_tag_240 = TodoIssue.new({
         and tagsObject.bicycle ~= 'designated' and tagsObject.foot ~= "designated"
   end
 })
-local missing_segregated = TodoIssue.new({
+local missing_segregated = BikelaneTodo.new({
   key = "missing_segregated",
   desc = "Expected tag `segregated=yes` or `segregated=no`.",
   conditions = function(tagsObject, resultTags)
@@ -83,7 +85,7 @@ local missing_segregated = TodoIssue.new({
 })
 
 -- === Sidepath ===
-local missing_sidepath = TodoIssue.new({
+local missing_sidepath = BikelaneTodo.new({
   key = "missing_sidepath",
   desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
   conditions = function(_, resultTags)
@@ -95,7 +97,7 @@ local missing_sidepath = TodoIssue.new({
 })
 
 -- === cycleway:side=lane subcategory ===
-local missing_cycleway_lane = TodoIssue.new({
+local missing_cycleway_lane = BikelaneTodo.new({
   key = "missing_cycleway_lane",
   desc = "Expected tag `cycleway:lane=advisory` or `cycleway:lane=exclusive`.",
   conditions = function(_, resultTags)
@@ -103,18 +105,9 @@ local missing_cycleway_lane = TodoIssue.new({
   end
 })
 
-local function RemoveNilValues(t)
-  local result = {}
-  for _, v in ipairs(t) do
-    if v ~= nil then
-      result[#result + 1] = v
-    end
-  end
-  return result
-end
 
 -- Public funtion
-function BikelanesTodos(tagsObject, resultTags)
+function BikelaneTodos(tagsObject, resultTags)
   local todos = {}
 
   todos[#todos + 1] = missing_traffic_sign:checkCondition(tagsObject, resultTags)
