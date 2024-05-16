@@ -73,7 +73,7 @@ local livingStreet = BikelaneCategory.new({
       ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
   condition = function(tags)
     if tags.highway == "living_street" then
-      -- Exit if all vehicle are prohibited (but not bikes)
+      -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
       if tags.vehicle == "no" and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
         return nil
       end
