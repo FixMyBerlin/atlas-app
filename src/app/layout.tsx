@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     creator: '@fixmyberlin',
     images: [SocialSharingImage.src],
-  }
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -54,5 +54,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 
 export const viewport: Viewport = {
-  themeColor: '#27272a'
+  themeColor: '#27272a',
 }
