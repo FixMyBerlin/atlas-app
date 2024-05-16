@@ -94,7 +94,7 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_fusswege: MapboxStyleLayer[
       ],
     ],
     type: 'line',
-    id: 'roads-oneway-pattern fusswege',
+    id: 'roads-oneway-pattern',
     paint: {
       'line-pattern': 'arrow-grey-gap(1)',
       'line-width': ['interpolate', ['linear'], ['zoom'], 13, 3, 15, 5, 22, 10],
