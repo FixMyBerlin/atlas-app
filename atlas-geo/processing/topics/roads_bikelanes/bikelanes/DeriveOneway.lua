@@ -24,7 +24,8 @@ local onewayImplicitYes = Set({
   'cyclewayOnHighway_exclusive',                   -- "lane"-like
   'cyclewayOnHighway_advisoryOrExclusive',         -- "lane"-like
   'cyclewayOnHighwayBetweenLanes',                 -- "lane"-like
-  'sharedBusLane',                                 -- "shared lane"-like
+  'sharedBusLaneBikeWithBus',                      -- "shared lane"-like
+  'sharedBusLaneBusWithBike',                      -- "shared lane"-like
   'footAndCyclewayShared_adjoining',               -- "shared lane"-like
   'footAndCyclewayShared_adjoiningOrIsolated',     -- unclear, fall back to "shared lane"-like
   'footAndCyclewaySegregated_adjoining',           -- "lane"-like
