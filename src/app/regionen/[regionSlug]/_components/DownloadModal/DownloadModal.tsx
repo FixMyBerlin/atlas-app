@@ -1,6 +1,8 @@
+import { useSession } from '@blitzjs/auth'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/navigation'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
+import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
@@ -23,6 +25,7 @@ export const DownloadModal = () => {
   const bboxDefined = region?.bbox ? true : false
 
   const canDownload = useCanDownload(region.exportPublic)
+  const isLoggedIn = Boolean(useSession()?.role)
 
   const handleLogin = useStartUserLogin()
 
@@ -40,14 +43,24 @@ export const DownloadModal = () => {
             <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
           </p>
         ) : (
-          <p className="pb-2.5 pt-5 text-sm">
-            Die Daten stehen nur für Rechte-Inhaber zur Verfügung. <br />
-            Bitte{' '}
-            <button className={linkStyles} onClick={handleLogin}>
-              loggen Sie sich ein
-            </button>
-            .
-          </p>
+          <>
+            <p className="pb-2.5 pt-5 text-sm">
+              Die Daten stehen nur für Rechte-Inhaber zur Verfügung.
+            </p>
+            {isLoggedIn ? (
+              <p className="pb-2.5 pt-5 text-sm">
+                Bitte <Link href="/kontakt">Kontaktieren Sie uns</Link>.
+              </p>
+            ) : (
+              <p className="pb-2.5 pt-5 text-sm">
+                Bitte{' '}
+                <button className={linkStyles} onClick={handleLogin}>
+                  loggen Sie sich ein
+                </button>
+                .
+              </p>
+            )}
+          </>
         )}
 
         <DownloadModalUpdateDate />
