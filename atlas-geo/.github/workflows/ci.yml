@@ -5,10 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build Image
-        run: |
-          docker build --target lua -f processing.Dockerfile -t test_img .
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./processing.Dockerfile
+          tags: test_img
+          target: lua
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
       - name: Run Tests
         run: |
           docker run -v ./processing:/processing test_img busted /processing/topics/ -p %.test%.lua$
