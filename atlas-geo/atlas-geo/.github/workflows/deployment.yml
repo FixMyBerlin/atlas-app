@@ -92,7 +92,7 @@ jobs:
 
       - name: Configure AWS credentials
         if: steps.git_changes.outputs.changes == 'true'
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -165,3 +165,4 @@ jobs:
             docker compose pull
             docker compose -f docker-compose.yml -f docker-compose.network.yml up -d
             docker image prune -fa
+            checkout
