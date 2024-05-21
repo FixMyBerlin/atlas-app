@@ -1,4 +1,4 @@
-import { createParser, useQueryState } from 'next-usequerystate'
+import { createParser, useQueryState } from 'nuqs'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { parseMapParam, serializeMapParam } from './utils/mapParam'
 import { searchParamsRegistry } from './searchParamsRegistry'

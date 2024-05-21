@@ -1,4 +1,4 @@
-import { parseAsArrayOf, parseAsString, useQueryState } from 'next-usequerystate'
+import { parseAsArrayOf, parseAsString, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
 
 export const useDataParam = () => {

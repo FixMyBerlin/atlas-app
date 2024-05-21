@@ -1,4 +1,4 @@
-import { createParser, parseAsBoolean, useQueryState } from 'next-usequerystate'
+import { createParser, parseAsBoolean, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
 import { parseMapParam, serializeMapParam } from './utils/mapParam'
 
