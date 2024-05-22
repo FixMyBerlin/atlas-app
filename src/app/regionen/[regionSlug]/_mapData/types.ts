@@ -206,6 +206,15 @@ export type TBeforeIds =
   | 'boundary_country'
   | 'landuse'
   | 'building'
+  // We have some layer without content that can be used as an anchor
+  // Modify at https://cloud.maptiler.com/maps/editor?map=08357855-50d4-44e1-ac9f-ea099d9de4a5
+  | 'atlas-app-beforeid-above-landuse'
+  | 'atlas-app-beforeid-below-road'
+  | 'atlas-app-beforeid-below-roadname'
+  | 'atlas-app-beforeid-group2'
+  | 'atlas-app-beforeid-fallback'
+  | 'atlas-app-beforeid-group1'
+  | 'atlas-app-beforeid-top'
   | undefined
 
 /** @desc: Thematic "filter" on the raw vector tile data; eg. 'Radinfrastruktur, Oberflächen, Beleuchtung' */

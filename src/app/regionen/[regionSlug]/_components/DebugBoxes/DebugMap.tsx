@@ -169,7 +169,7 @@ export const DebugMap = () => {
             {Object.entries(allLayers).map(([index, layer]) => {
               const source = 'source' in layer ? layer?.source ?? '-' : '-'
               return (
-                <tr key={`all${layer.id}`}>
+                <tr key={`all${layer.id}`} className="border-t border-t-white/10 leading-tight">
                   <td>{index}</td>
                   <td className={source == 'openmaptiles' ? 'font-semibold' : ''}>
                     <div className="w-28 truncate">{source}</div>

@@ -91,14 +91,20 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
     signUrl:
       'https://upload.wikimedia.org/wikipedia/commons/a/a5/Zeichen_350.2_-_Ende_des_Radschnellwegs%3B_StVO_2020.svg',
   },
+  '1024-14': {
+    title: 'Kraftomnibusse frei',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/9/96/Zusatzzeichen_1024-14_-_Kraftomnibusse_frei%2C_StVO_1992.svg',
+  },
+  '1026-36': {
+    title: 'Landwirtschaftlicher Verkehr frei',
+    signUrl:
+      'https://upload.wikimedia.org/wikipedia/commons/4/41/Zusatzzeichen_1026-36_-_Landwirtschaftlicher_Verkehr_frei_%28450x600%29%2C_StVO_1992.svg',
+  },
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const tableKeyTrafficSign = [
-  'osm_traffic_sign',
-  'osm_traffic_sign:forward',
-  'osm_traffic_sign:backward',
-]
+export const tableKeyTrafficSign = ['traffic_sign', 'traffic_sign:forward', 'traffic_sign:backward']
 export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
   sourceId,
   tagKey,

@@ -19,7 +19,7 @@ export const numericSourceIds: Record<number, SourceNames> = {
   5: 'parkraumParkingAreas',
   6: 'parkraumParkingStats',
   7: 'atlas_boundaries',
-  8: 'atlas_boundaryStats',
+  8: 'atlas_presenceStats',
   9: 'accidents_unfallatlas',
   10: 'atlas_bikelanes',
   11: 'atlas_bikeroutes',

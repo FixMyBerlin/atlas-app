@@ -1,7 +1,7 @@
 {
   "version": 8,
   "id": "08357855-50d4-44e1-ac9f-ea099d9de4a5",
-  "name": "atlas-staging",
+  "name": "atlas-basemap",
   "sources": {
     "openmaptiles": {
       "url": "https://api.maptiler.com/tiles/v3/tiles.json?key=ECOoUBmpqklzSCASXxcu",
@@ -375,7 +375,7 @@
       ]
     },
     {
-      "id": "Landuse_commercial",
+      "id": "landuse_commercial",
       "type": "fill",
       "source": "openmaptiles",
       "source-layer": "landuse",
@@ -527,6 +527,17 @@
           "retail"
         ]
       ]
+    },
+    {
+      "id": "atlas-app-beforeid-above-landuse",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
     },
     {
       "id": "waterway",
@@ -971,6 +982,17 @@
           "river"
         ]
       ]
+    },
+    {
+      "id": "atlas-app-beforeid-below-road",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
     },
     {
       "id": "tunnel_service_case",
@@ -6303,6 +6325,17 @@
       ]
     },
     {
+      "id": "atlas-app-beforeid-below-roadname",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
+    },
+    {
       "id": "roadname_minor",
       "type": "symbol",
       "source": "openmaptiles",
@@ -6638,6 +6671,50 @@
         "text-color": "hsl(37, 23%, 70%)",
         "text-halo-color": "hsla(0, 0%, 100%, 0.15)",
         "text-halo-width": 0.75
+      }
+    },
+    {
+      "id": "atlas-app-beforeid-group2",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
+    },
+    {
+      "id": "atlas-app-beforeid-fallback",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
+    },
+    {
+      "id": "atlas-app-beforeid-group1",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
+      }
+    },
+    {
+      "id": "atlas-app-beforeid-top",
+      "type": "circle",
+      "source": "openmaptiles",
+      "source-layer": "place",
+      "layout": {},
+      "paint": {
+        "circle-color": "hsla(0, 0%, 0%, 0)",
+        "circle-opacity": 0
       }
     }
   ],

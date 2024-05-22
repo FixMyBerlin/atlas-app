@@ -33,7 +33,13 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
       'line-color': '#059669',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
-    filter: ['match', ['get', 'category'], ['sharedBusLane'], true, false],
+    filter: [
+      'match',
+      ['get', 'category'],
+      ['sharedBusLaneBusWithBike', 'explicitSharedLaneButNoSignage'],
+      true,
+      false,
+    ],
   },
   {
     id: 'Verkehrsberuhigter Bereich',

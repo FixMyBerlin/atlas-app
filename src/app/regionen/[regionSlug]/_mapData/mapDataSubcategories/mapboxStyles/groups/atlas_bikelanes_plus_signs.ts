@@ -63,7 +63,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer
       ['get', 'traffic_sign'],
       [
         'DE:239,1022-10',
-        'de:239,1022-10',
         'DE:239;237;258',
         'DE:240',
         'DE:240;258',
@@ -73,7 +72,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer
         'DE:237',
         'DE:240;1000-31',
         'DE:244.1',
-        '245',
+        'DE:245',
         'DE:325;357,1026-32',
       ],
       true,

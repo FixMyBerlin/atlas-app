@@ -10,6 +10,7 @@ import {
 } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { sources } from '../../../_mapData/mapDataSources/sources.const'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
+import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
 type ParentLayerProps = {
   sourceData: (typeof sources)[number]
@@ -89,8 +90,19 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
     }
   }
 
-  // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
-  layerProps.filter = ['in', highlightingKey, ...featureIds]
+  // The component gets rendered regardless of visibility. Which means we flood react with filter
+  // definitions which never get used. We have to re-evaluate if we should just remove the layer from the tree
+  // unless used. But for now, lets only specify filters for visible layers.
+  if (layerProps.layout?.visibility === 'visible') {
+    // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
+    layerProps.filter =
+      'filter' in layerProps && layerProps.filter
+        ? wrapFilterWithAll([
+            ['in', ['get', highlightingKey], ['literal', featureIds]],
+            layerProps.filter,
+          ])
+        : ['in', ['get', highlightingKey], ['literal', featureIds]]
+  }
 
   return <Layer {...layerProps} />
 })
