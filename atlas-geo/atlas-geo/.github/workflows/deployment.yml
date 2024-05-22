@@ -165,4 +165,3 @@ jobs:
             docker compose pull
             docker compose -f docker-compose.yml -f docker-compose.network.yml up -d
             docker image prune -fa
-            checkout
