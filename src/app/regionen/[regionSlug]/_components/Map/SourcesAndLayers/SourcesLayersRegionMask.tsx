@@ -1,7 +1,7 @@
 import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { pmtilesUrl } from './utils/pmtilesUrl'
+import { createPmtilesUrl } from './utils/createPmtilesUrl'
 
 export const SourcesLayersRegionMask: React.FC = () => {
   const regionSlug = useRegionSlug()
@@ -14,7 +14,7 @@ export const SourcesLayersRegionMask: React.FC = () => {
   if (!regionSlug) return null
 
   return (
-    <Source id="mask" key={`source:${id}`} type="vector" url={pmtilesUrl(url)}>
+    <Source id="mask" key={`source:${id}`} type="vector" url={createPmtilesUrl(url)}>
       <Layer
         id="mask-buffer"
         type="fill"

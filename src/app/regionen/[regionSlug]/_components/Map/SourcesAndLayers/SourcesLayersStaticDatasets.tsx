@@ -9,7 +9,7 @@ import {
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { layerVisibility } from '../utils/layerVisibility'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { pmtilesUrl } from './utils/pmtilesUrl'
+import { createPmtilesUrl } from './utils/createPmtilesUrl'
 
 export const SourcesLayersStaticDatasets: React.FC = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
@@ -31,7 +31,7 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
             id={datasetSourceId}
             key={datasetSourceId}
             type={type}
-            url={pmtilesUrl(url)}
+            url={createPmtilesUrl(url)}
             attribution={attributionHtml}
           >
             {layers.map((layer) => {
