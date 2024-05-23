@@ -1,7 +1,17 @@
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
 import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl/maplibre'
 import { drawControlStyle } from './drawControlStyle'
+
+// Work around styling issues until MapboxDraw is updated
+// https://github.com/maplibre/maplibre-gl-js/issues/2601#issuecomment-1599769714
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_BASE = 'maplibregl-ctrl'
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_PREFIX = 'maplibregl-ctrl-'
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_GROUP = 'maplibregl-ctrl-group'
 
 export type DrawArea = Omit<GeoJSON.Feature<GeoJSON.Polygon, []>, 'id'> & {
   id: string

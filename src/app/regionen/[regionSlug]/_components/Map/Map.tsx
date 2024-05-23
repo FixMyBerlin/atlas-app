@@ -1,4 +1,3 @@
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import * as turf from '@turf/turf'
 import { uniqBy } from 'lodash'
 import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
