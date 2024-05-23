@@ -1,10 +1,9 @@
-import React from 'react'
 import { bikelanesPresenceColors } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
+import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { translations } from '../translations/translations.const'
 import { CompositTableRow } from './types'
-import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 
 const CompositRoadBikelanesTableValue = ({
   sourceId, // always atlas_roads

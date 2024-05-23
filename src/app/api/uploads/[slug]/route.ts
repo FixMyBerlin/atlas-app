@@ -60,6 +60,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
     )
   }
 
+  // @ts-expect-error this was working before and after some updates this causes type issues
   return new Response(response.Body!, {
     // @ts-expect-error this exists
     status: response.Body.statusCode,

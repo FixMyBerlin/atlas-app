@@ -4,7 +4,6 @@ import { middleware } from './middleware'
 import { parseMapParam } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 
 function getStatus(response: ReturnType<typeof middleware>) {
-  // @ts-expect-error response is not type correctly
   return response.status
 }
 

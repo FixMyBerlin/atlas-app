@@ -1,6 +1,6 @@
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
-import { editorUrl } from './editorUrl'
-import { OsmTypeId, extractOsmTypeIdByConfig } from './extractOsmTypeIdByConfig'
+import { EditorUrlGeometry, editorUrl } from './editorUrl'
+import { OsmTypeId } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
 import { longOsmType, shortOsmType } from './shortLongOsmType'
 
@@ -33,10 +33,7 @@ export const historyUrl = ({ osmType, osmId }: OsmTypeId) => {
   return `https://osmlab.github.io/osm-deep-history/#/${osmType}/${osmId}`
 }
 
-export const mapillaryUrl = (
-  geometry: maplibregl.GeoJSONFeature['geometry'],
-  yearsAgo?: number,
-) => {
+export const mapillaryUrl = (geometry: EditorUrlGeometry, yearsAgo?: number) => {
   const [lng, lat] = pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 
@@ -67,7 +64,7 @@ export const osmUrlViewport = (zoom?: number, lat?: number, lng?: number) => {
   const geometry = {
     type: 'Point',
     coordinates: [lng, lat],
-  } satisfies maplibregl.GeoJSONFeature['geometry']
+  } satisfies EditorUrlGeometry
 
   return editorUrl({
     urlTemplate,
@@ -83,7 +80,7 @@ export const mapillaryUrlViewport = (zoom?: number, lat?: number, lng?: number) 
   const geometry = {
     type: 'Point',
     coordinates: [lng, lat],
-  } satisfies maplibregl.GeoJSONFeature['geometry']
+  } satisfies EditorUrlGeometry
 
   return editorUrl({
     urlTemplate,
@@ -99,7 +96,7 @@ export const googleMapsUrlViewport = (zoom?: number, lat?: number, lng?: number)
   const geometry = {
     type: 'Point',
     coordinates: [lng, lat],
-  } satisfies maplibregl.GeoJSONFeature['geometry']
+  } satisfies EditorUrlGeometry
 
   return editorUrl({
     urlTemplate,

@@ -1,13 +1,13 @@
-import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
+import { InspectorFeatureProperty } from '../Inspector'
 
 type Props = {
   visible: boolean
-  properties: GeoJSONFeature['properties']
+  properties: InspectorFeatureProperty
 }
 
 // Docs https://www.mapillary.com/developer/api-documentation?locale=de_DE#embed
-export const MapillaryIframe: React.FC<Props> = ({ visible, properties }) => {
+export const MapillaryIframe = ({ visible, properties }: Props) => {
   if (!visible) return null
 
   return (

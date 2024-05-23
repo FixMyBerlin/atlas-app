@@ -53,7 +53,7 @@ export const OsmNotesNewForm = () => {
     osmNewNoteFeature?.osmType && osmNewNoteFeature?.osmId
       ? osmTypeIdString(osmNewNoteFeature.osmType, osmNewNoteFeature.osmId)
       : null
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     // Text snippes for regular comment

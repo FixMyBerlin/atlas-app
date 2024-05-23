@@ -1,15 +1,10 @@
-import React from 'react'
 import { TagsTableRow } from '../TagsTableRow'
-import { CompositTableRow } from './types'
-import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
+import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
+import { CompositTableRow } from './types'
 
 export const tableKeyLit = 'composit_lit'
-export const TagsTableRowCompositLit: React.FC<CompositTableRow> = ({
-  sourceId,
-  tagKey,
-  properties,
-}) => {
+export const TagsTableRowCompositLit = ({ sourceId, tagKey, properties }: CompositTableRow) => {
   if (!properties['lit']) return null
 
   return (

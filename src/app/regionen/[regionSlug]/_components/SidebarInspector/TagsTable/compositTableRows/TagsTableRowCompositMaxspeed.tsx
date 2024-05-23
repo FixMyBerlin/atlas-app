@@ -1,15 +1,14 @@
-import React from 'react'
 import { TagsTableRow } from '../TagsTableRow'
 import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { CompositTableRow } from './types'
 
 export const tableKeyMaxspeed = 'composit_maxspeed'
-export const TagsTableRowCompositMaxspeed: React.FC<CompositTableRow> = ({
+export const TagsTableRowCompositMaxspeed = ({
   sourceId,
   tagKey,
   properties,
-}) => {
+}: CompositTableRow) => {
   if (!properties['maxspeed']) return null
 
   return (

@@ -48,7 +48,7 @@ export const UserFormOsmDescriptionMissing = () => {
       }
     }
 
-    let timerId: NodeJS.Timeout | null = null
+    let timerId: ReturnType<typeof setInterval> | null = null
     if (pollUpdatedUserdataCount !== null && pollUpdatedUserdataCount < maxPollCount) {
       timerId = setInterval(pollUserDetails, 5000)
     } else if (timerId) {

@@ -31,8 +31,7 @@ export async function GET(
     })
   } catch (e) {
     if (!isProd) throw e
-    Response.status(400).send('Bad Request')
-    return
+    return new Response('Bad Request', { status: 200 })
   }
 
   try {
@@ -44,8 +43,9 @@ export async function GET(
     const nHits = await prismaClientForRawQueries.$executeRaw`
       SELECT osm_id FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
     if (nHits !== ids.length) {
-      Response.status(404).send("Couldn't find given ids. At least one id is wrong or dupplicated.")
-      return
+      return new Response("Couldn't find given ids. At least one id is wrong or dupplicated.", {
+        status: 404,
+      })
     }
 
     type QueryTpye = { type: string; id: string; geometry: LineString }[]
@@ -139,6 +139,8 @@ TODO
     })
   } catch (e) {
     if (!isProd) throw e
-    return Response.status(500).send('Internal Server Error')
+    return new Response('Internal Server Error', {
+      status: 500,
+    })
   }
 }

@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf'
 
-export const pointFromGeometry = (geometry: maplibregl.GeoJSONFeature['geometry']) => {
+export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']) => {
   let lat = 0
   let lng = 0
   switch (geometry.type) {

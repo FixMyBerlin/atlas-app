@@ -2,7 +2,7 @@ import { FormattedMessage, IntlProvider } from 'react-intl'
 import { getSourceData } from '../../_mapData/utils/getMapDataUtils'
 import { parseSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Disclosure } from './Disclosure/Disclosure'
-import { InspectorDataFeature } from './Inspector'
+import { InspectorFeature } from './Inspector'
 import { NoticeMaproulette } from './InspectorFeatureSource/NoticeMaproulette'
 import { NoticeTransformedGeometry } from './InspectorFeatureSource/NoticeTransformedGeometry'
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
@@ -15,11 +15,7 @@ import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { extractOsmTypeIdByConfig } from './Tools/osmUrls/extractOsmTypeIdByConfig'
 import { osmTypeIdString } from './Tools/osmUrls/osmUrls'
 
-export const InspectorFeatureAtlasGeo: React.FC<InspectorDataFeature> = ({
-  sourceKey,
-  properties,
-  geometry,
-}) => {
+export const InspectorFeatureAtlasGeo = ({ sourceKey, properties, geometry }: InspectorFeature) => {
   if (!sourceKey || !properties) return null
 
   // The documentedKeys info is placed on the source object

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import React from 'react'
 import { TagsTableRow } from '../TagsTableRow'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { CompositTableRow } from './types'
@@ -105,11 +104,11 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
 }
 
 export const tableKeyTrafficSign = ['traffic_sign', 'traffic_sign:forward', 'traffic_sign:backward']
-export const TagsTableRowCompositTrafficSign: React.FC<CompositTableRow> = ({
+export const TagsTableRowCompositTrafficSign = ({
   sourceId,
   tagKey,
   properties,
-}) => {
+}: CompositTableRow) => {
   const receivedSigns: string[] | undefined = properties[tagKey]
     ?.replaceAll('DE:', '')
     ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
