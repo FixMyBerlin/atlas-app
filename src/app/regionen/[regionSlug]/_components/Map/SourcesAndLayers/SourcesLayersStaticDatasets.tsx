@@ -1,4 +1,5 @@
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
+import { LayerSpecification } from 'maplibre-gl'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
@@ -26,13 +27,18 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
         const visible = selectedDatasetIds.includes(datasetSourceId)
         const visibility = layerVisibility(visible)
 
+        const sourceProps =
+          type === 'GEOJSON'
+            ? { type: 'geojson', data: url }
+            : { type: 'vector', url: createPmtilesUrl(url) }
+
         return (
+          // @ts-ignore - see comment at {...sourceProps}
           <Source
             id={datasetSourceId}
             key={datasetSourceId}
-            type={type}
-            url={createPmtilesUrl(url)}
             attribution={attributionHtml}
+            {...sourceProps} // type inference fails here - maybe a typescript bug?
           >
             {layers.map((layer) => {
               const layout =
@@ -50,12 +56,12 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                   }).find((l) => l.type === layer.type)?.paint
                 : (layer.paint as any)
 
-              const layerProps = {
+              let layerProps: LayerSpecification = {
                 id: layerId,
                 source: datasetSourceId,
-                'source-layer': 'default', // set in `datasets/process.ts`
                 type: layer.type,
                 layout: layout,
+                // @ts-ignore
                 filter: layerFilter,
                 paint: layerPaint,
                 beforeId:
@@ -64,7 +70,11 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                     : 'atlas-app-beforeid-fallback',
               }
 
-              // To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData
+              if (type === 'PMTILES') {
+                layerProps['source-layer'] = 'default'
+              }
+
+              // To get LayerHighlight working some more refactoring is needed to harmonize sourceData and datasetsData
               // <LayerHighlight {...layerProps} />
               return <Layer key={layerId} {...(layerProps as LayerProps)} />
             })}

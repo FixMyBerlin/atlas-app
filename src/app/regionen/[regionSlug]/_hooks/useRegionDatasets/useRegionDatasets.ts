@@ -20,6 +20,7 @@ export const useRegionDatasets = () => {
       isPublic: boolean
       id: string
       url: string
+      type: 'PMTILES' | 'GEOJSON'
       githubUrl: string // an addition to MetaData['configs'] in updateStaticDatasets.ts
     }
   >
@@ -31,6 +32,7 @@ export const useRegionDatasets = () => {
         ...config,
         isPublic: upload.public,
         id: upload.slug,
+        type: upload.type,
         url: getStaticDatasetUrl(upload.slug),
       })
     })
