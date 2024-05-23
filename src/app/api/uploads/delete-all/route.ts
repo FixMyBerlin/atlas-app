@@ -15,7 +15,7 @@ export async function DELETE(request: Request) {
   if (!check.ok) return check.errorResponse
 
   try {
-    await db.upload.deleteMany()
+    await db.upload.deleteMany({ where: { createdBy: 'SCRIPT' } })
   } catch (e) {
     return Response.json(
       { statusText: 'Internal Server Error', message: e.message },
