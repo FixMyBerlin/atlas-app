@@ -1,4 +1,4 @@
-import { Listbox } from '@headlessui/react'
+import { ListboxOption } from '@headlessui/react'
 import { CheckIcon, LinkIcon, LockClosedIcon } from '@heroicons/react/20/solid'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { isProd } from 'src/app/_components/utils/isEnv'
@@ -7,7 +7,6 @@ import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDa
 import { createSourceKeyStaticDatasets } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { iconFromLegend } from '../Legend/Legend'
 import { LegendNameDesc } from '../Legend/LegendNameDesc'
-import { Markdown } from 'src/app/_components/text/Markdown'
 
 export const SelectDataset = ({
   dataset,
@@ -31,17 +30,17 @@ export const SelectDataset = ({
   const key = createSourceKeyStaticDatasets(id, subId)
 
   return (
-    <Listbox.Option
+    <ListboxOption
       key={key}
       value={key}
-      className={({ active, selected }) =>
+      className={({ focus, selected }) =>
         twJoin(
           'relative cursor-pointer select-none py-2 pl-1.5 pr-2 leading-tight text-gray-900',
           selected ? 'bg-yellow-400' : 'hover:bg-yellow-50',
         )
       }
     >
-      {({ active, selected }) => (
+      {({ focus, selected }) => (
         <>
           <div className="justify-left relative flex items-center gap-1">
             <CheckIcon
@@ -116,6 +115,6 @@ export const SelectDataset = ({
           )}
         </>
       )}
-    </Listbox.Option>
+    </ListboxOption>
   )
 }

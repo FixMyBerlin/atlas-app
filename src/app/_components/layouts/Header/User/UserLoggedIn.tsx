@@ -1,5 +1,5 @@
 import { useMutation } from '@blitzjs/rpc'
-import { Menu, Transition } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import { Fragment } from 'react'
@@ -28,7 +28,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
 
   return (
     <Menu as="div" className="relative z-50 ml-3 sm:ml-6">
-      <Menu.Button className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+      <MenuButton className="flex rounded-full bg-gray-800 text-sm hover:ring-1 hover:ring-gray-500 hover:ring-offset-2 hover:ring-offset-gray-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
         <span className="sr-only">User-Menü</span>
         {user.osmAvatar ? (
           <Image
@@ -47,7 +47,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
             <span className="sr-only">Es fehlen wichtige Informationen für den Account.</span>
           </div>
         )}
-      </Menu.Button>
+      </MenuButton>
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
@@ -57,7 +57,7 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <MenuItems className="absolute right-0 z-50 mt-2 w-64 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="border-b border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700">
             <p className="mb-1">
               <strong>Angemeldet als {user.osmName}</strong>
@@ -105,22 +105,22 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
             )}
           </div>
           <UserLoggedInAdminInfo user={user} />
-          <Menu.Item>
-            {({ active }) => (
+          <MenuItem>
+            {({ focus }) => (
               <button
                 onClick={async () => {
                   await logoutMutation()
                 }}
                 className={twJoin(
-                  active ? 'bg-gray-100' : '',
+                  focus ? 'bg-gray-100' : '',
                   'w-full px-4 py-2 text-left text-sm text-gray-700',
                 )}
               >
                 Ausloggen
               </button>
             )}
-          </Menu.Item>
-        </Menu.Items>
+          </MenuItem>
+        </MenuItems>
       </Transition>
     </Menu>
   )

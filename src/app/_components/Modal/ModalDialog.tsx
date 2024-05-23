@@ -1,13 +1,13 @@
-import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, Transition, TransitionChild } from '@headlessui/react'
 import {
+  ArrowDownTrayIcon,
   BookOpenIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
-  ArrowDownTrayIcon,
 } from '@heroicons/react/24/outline'
-import { twJoin } from 'tailwind-merge'
 import React, { Fragment, useRef } from 'react'
+import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
+import { twJoin } from 'tailwind-merge'
 
 export type ModalDialogProps = {
   title: string
@@ -49,14 +49,14 @@ export const ModalDialog = ({
   }
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition show={open} as={Fragment}>
       <Dialog
         as="section"
         className="relative z-20"
         initialFocus={cancelButtonRef}
         onClose={setOpen}
       >
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -66,10 +66,10 @@ export const ModalDialog = ({
           leaveTo="opacity-0"
         >
           <div className="fixed inset-0 flex w-screen justify-center overflow-y-auto bg-gray-950/25 px-2 py-2 backdrop-blur-sm focus:outline-0 sm:px-6 sm:py-8 lg:px-8 lg:py-16 dark:bg-gray-950/50" />
-        </Transition.Child>
+        </TransitionChild>
         <div className="fixed inset-x-0 inset-y-5 max-h-screen overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
@@ -120,10 +120,10 @@ export const ModalDialog = ({
                   </div>
                 )}
               </Dialog.Panel>
-            </Transition.Child>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>
-    </Transition.Root>
+    </Transition>
   )
 }

@@ -1,6 +1,11 @@
-import React from 'react'
-import { Disclosure as HeadlessUiDisclosure, Transition } from '@headlessui/react'
+import {
+  DisclosureButton,
+  DisclosurePanel,
+  Disclosure as HeadlessUiDisclosure,
+  Transition,
+} from '@headlessui/react'
 import { ChevronRightIcon } from '@heroicons/react/20/solid'
+import React from 'react'
 import { twJoin } from 'tailwind-merge'
 
 type Props = {
@@ -22,7 +27,7 @@ export const Disclosure: React.FC<Props> = ({
     <HeadlessUiDisclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>
-          <HeadlessUiDisclosure.Button
+          <DisclosureButton
             className={twJoin(
               'flex w-full justify-between border-gray-300 bg-gray-50 px-3 py-2 text-left text-sm font-semibold text-gray-900 hover:border-gray-500 hover:bg-yellow-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-500 focus-visible:ring-opacity-75',
               open ? 'rounded-t-lg border border-b-gray-200 bg-gray-100' : 'rounded-lg border',
@@ -49,7 +54,7 @@ export const Disclosure: React.FC<Props> = ({
                 </div>
               </div>
             </h3>
-          </HeadlessUiDisclosure.Button>
+          </DisclosureButton>
           <Transition
             show={open}
             enter="transition duration-100 ease-out"
@@ -59,12 +64,12 @@ export const Disclosure: React.FC<Props> = ({
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <HeadlessUiDisclosure.Panel
+            <DisclosurePanel
               static
               className="overflow-clip rounded-b-lg border border-t-0 border-gray-300 bg-gray-50 text-sm text-gray-500"
             >
               {children}
-            </HeadlessUiDisclosure.Panel>
+            </DisclosurePanel>
           </Transition>
         </>
       )}

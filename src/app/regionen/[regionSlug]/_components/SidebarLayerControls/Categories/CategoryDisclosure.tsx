@@ -1,4 +1,4 @@
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -49,13 +49,13 @@ export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active 
                 {currCategoryConfig.desc}
               </p>
             </CategoryHeadlineToggle>
-            <Disclosure.Button className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
+            <DisclosureButton className="flex flex-none items-center justify-center border-l border-gray-200 px-1 text-yellow-500 hover:bg-yellow-50">
               {open ? (
                 <ChevronDownIcon className="h-7 w-7" />
               ) : (
                 <ChevronLeftIcon className="h-7 w-7" />
               )}
-            </Disclosure.Button>
+            </DisclosureButton>
           </div>
 
           <Transition
@@ -67,7 +67,7 @@ export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active 
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel static as="nav" className="mb-2 mt-3">
+            <DisclosurePanel static as="nav" className="mb-2 mt-3">
               {Boolean(dropdownSubcategories.length) && (
                 <SubcategoriesDropdown
                   categoryId={currCategoryConfig.id}
@@ -85,7 +85,7 @@ export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active 
                   />
                 </>
               )}
-            </Disclosure.Panel>
+            </DisclosurePanel>
           </Transition>
         </>
       )}

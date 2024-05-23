@@ -1,7 +1,7 @@
-import { Listbox } from '@headlessui/react'
+import { ListboxOption } from '@headlessui/react'
 import { ArrowSmallRightIcon } from '@heroicons/react/20/solid'
-import { twJoin } from 'tailwind-merge'
 import React from 'react'
+import { twJoin } from 'tailwind-merge'
 import { SourcesRasterIds } from '../../_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 
 type Props = { value: SourcesRasterIds; name: string }
@@ -9,20 +9,20 @@ type Props = { value: SourcesRasterIds; name: string }
 // https://headlessui.com/react/listbox#styling-the-active-and-selected-option
 export const ListOption: React.FC<Props> = ({ value, name }) => {
   return (
-    <Listbox.Option
+    <ListboxOption
       value={value}
-      className={({ active, selected }) =>
+      className={({ focus, selected }) =>
         twJoin(
           'relative select-none py-2 pl-10 pr-4 text-gray-900',
-          active && !selected ? 'cursor-pointer bg-yellow-50 text-yellow-900' : '',
+          focus && !selected ? 'cursor-pointer bg-yellow-50 text-yellow-900' : '',
           selected ? 'bg-yellow-400' : '',
         )
       }
     >
-      {({ active, selected }) => (
+      {({ focus, selected }) => (
         <>
           <span
-            className={twJoin('block truncate', active || selected ? 'font-medium' : 'font-normal')}
+            className={twJoin('block truncate', focus || selected ? 'font-medium' : 'font-normal')}
           >
             {name}
           </span>
@@ -33,6 +33,6 @@ export const ListOption: React.FC<Props> = ({ value, name }) => {
           )}
         </>
       )}
-    </Listbox.Option>
+    </ListboxOption>
   )
 }

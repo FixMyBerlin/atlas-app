@@ -53,7 +53,7 @@
     "@blitzjs/auth": "2.0.9",
     "@blitzjs/next": "2.0.9",
     "@blitzjs/rpc": "2.0.9",
-    "@headlessui/react": "^1.7.19",
+    "@headlessui/react": "2.0.3",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "3.3.2",
     "@mapbox/mapbox-gl-draw": "^1.4.3",
