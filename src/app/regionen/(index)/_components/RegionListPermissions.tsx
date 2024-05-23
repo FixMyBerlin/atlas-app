@@ -1,6 +1,4 @@
-'use client'
-
-import { invoke } from '@blitzjs/rpc'
+import { invoke } from 'src/blitz-server'
 import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
 import { RegionTeaser } from './RegionTeaser'
