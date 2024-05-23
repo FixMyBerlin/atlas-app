@@ -33,7 +33,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
 
 type UploadData = {
   uploadSlug: string
-  pmtilesUrl: string
+  url: string
   regionSlugs: string[]
   isPublic: boolean
   configs: Record<string, any>[]

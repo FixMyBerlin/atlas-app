@@ -4,7 +4,7 @@ import { RegionSchema } from '../regions/schemas'
 export const UploadSchema = z.object({
   id: z.number(),
   slug: z.string(),
-  pmtilesUrl: z.string().url(),
+  url: z.string().url(),
   public: z.boolean(),
 })
 

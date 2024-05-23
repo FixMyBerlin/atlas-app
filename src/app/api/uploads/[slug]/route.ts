@@ -32,7 +32,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
     }
   }
 
-  const { hostname, pathname } = new URL(upload!.pmtilesUrl)
+  const { hostname, pathname } = new URL(upload!.url)
   const accessKeyId = process.env.S3_KEY!
   const secretAccessKey = process.env.S3_SECRET!
   const region = process.env.S3_REGION!

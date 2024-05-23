@@ -57,15 +57,26 @@ export default function AdminUploadPage() {
       </p>
 
       <p>
-        Vorschau für Devs (<code>_API_KEY_</code> aus <code>.env</code>/Bitwarden für{' '}
-        <code>{process.env.NEXT_PUBLIC_APP_ENV}</code>)
-        <textarea value={previewUrl.toString()} className="w-full text-sm" />
+        Datentyp: <code>{upload.type}</code>
+      </p>
+
+      {upload.type === 'GEOJSON' ? (
+        <p>
+          <b>TODO: add link to geojson viewer</b>
+        </p>
+      ) : (
+        <p>
+          Vorschau für Devs (<code>_API_KEY_</code> aus <code>.env</code>/Bitwarden für{' '}
+          <code>{process.env.NEXT_PUBLIC_APP_ENV}</code>)
+          <textarea value={previewUrl.toString()} className="w-full text-sm" />
+        </p>
+      )}
+
+      <p>
+        Öffentliche URL: <code>{getStaticDatasetUrl(upload.slug)}</code>
       </p>
       <p>
-        Öffentliche URL <code>{getStaticDatasetUrl(upload.slug)}</code>
-      </p>
-      <p>
-        Interne URL auf S3 <code>{upload.pmtilesUrl}</code>
+        Interne URL: <code>{upload.url}</code>
       </p>
 
       {configs.map((config) => {

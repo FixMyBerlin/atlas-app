@@ -181,7 +181,7 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     })
     await createUpload({
       uploadSlug,
-      pmtilesUrl,
+      url: pmtilesUrl,
       regionSlugs,
       isPublic: metaData.public,
       configs: mergedConfigs,
