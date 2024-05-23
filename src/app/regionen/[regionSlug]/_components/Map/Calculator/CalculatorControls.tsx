@@ -1,13 +1,13 @@
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
-import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   StoreCalculator,
   useMapStateInteraction,
 } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   CalculatorControlsDrawControl,
   DrawArea,
@@ -75,13 +75,12 @@ export const CalculatorControls = ({ queryLayers, drawControlRef }: Props) => {
 
   // OnInit, add drawAreas from store to the UI
   useEffect(() => {
-    if (!mapLoaded || !drawParam) return
+    if (!mapLoaded || !drawParam || !drawParam.length) return
 
     drawParam.forEach((feature) => {
       return drawControlRef.current?.add(feature)
     })
-    updateDrawFeatures(drawParam, drawParam)
-  }, [drawControlRef, drawParam, mapLoaded, updateDrawFeatures])
+  }, [drawControlRef, drawParam, mapLoaded])
 
   return (
     <CalculatorControlsDrawControl
