@@ -1,4 +1,4 @@
-import { invoke } from '@blitzjs/rpc'
+import { invoke } from 'src/blitz-server'
 import { Metadata } from 'next'
 import getUploads from 'src/uploads/queries/getUploads'
 import { Breadcrumb } from '../_components/Breadcrumb'
