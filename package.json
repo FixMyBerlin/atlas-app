@@ -42,7 +42,7 @@
     "updatePackages:major": "npx taze major --write --includeLocked && npm install",
     "updatePackages:minor": "npx taze minor --write --includeLocked && npm install",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
-    "prepare": "husky install",
+    "prepare": "husky",
     "postinstall": "patch-package",
     "link-atlas-static-data": "ln -s ../../../atlas-static-data/geojson scripts/StaticDatasets"
   },
@@ -122,7 +122,7 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.3",
     "eslint-config-prettier": "^9.1.0",
-    "husky": "8.0.3",
+    "husky": "9.0.11",
     "jsdom": "24.0.0",
     "patch-package": "8.0.0",
     "postcss": "^8.4.38",
