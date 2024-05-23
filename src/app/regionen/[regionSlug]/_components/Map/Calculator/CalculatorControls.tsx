@@ -21,7 +21,7 @@ type Props = {
   drawControlRef: DrawControlProps['ref']
 }
 
-export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRef }) => {
+export const CalculatorControls = ({ queryLayers, drawControlRef }: Props) => {
   const { mainMap } = useMap()
   const { drawParam } = useDrawParam()
   const { mapLoaded, setCalculatorAreasWithFeatures } = useMapStateInteraction()
@@ -54,7 +54,6 @@ export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRe
 
       result.push({
         key: selectArea.id,
-        // @ts-expect-error we use a MapboxGL Library with styles from Maplibre Gl JS
         features: filteredFeatures,
       })
     })

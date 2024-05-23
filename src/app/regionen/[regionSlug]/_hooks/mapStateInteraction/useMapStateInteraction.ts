@@ -1,8 +1,7 @@
 import * as turf from '@turf/turf'
-import type { FeatureCollection, GeoJsonProperties, Geometry, Point } from 'geojson'
+import type { FeatureCollection, Geometry, Point } from 'geojson'
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
-import { MapboxGeoJSONFeature } from 'react-map-gl'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
@@ -59,7 +58,7 @@ type StoreOsmNewNoteFeature = {
 export type StoreCalculator = {
   calculatorAreasWithFeatures: {
     key: string
-    features: MapboxGeoJSONFeature[]
+    features: MapGeoJSONFeature[]
   }[]
   setCalculatorAreasWithFeatures: (
     calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures'],
