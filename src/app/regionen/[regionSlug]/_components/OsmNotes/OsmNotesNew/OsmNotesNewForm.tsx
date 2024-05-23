@@ -30,7 +30,7 @@ export const OsmNotesNewForm = () => {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session.osmToken}`, // replace userToken with your actual token variable
+          Authorization: `Bearer ${session.osmToken}`,
         },
         body: JSON.stringify({
           lat: newOsmNoteMapParam!.lat,
