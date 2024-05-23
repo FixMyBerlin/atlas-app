@@ -5,15 +5,15 @@ export const useDelete = () => {
   const { setDrawParam } = useDrawParam()
 
   const deleteDrawFeatures = (
-    drawAreas: DrawArea[] | undefined | null,
-    features: DrawArea[] | undefined,
+    currentFeatures: DrawArea[] | undefined | null,
+    inputFeatures: DrawArea[] | undefined,
   ) => {
-    if (!drawAreas || !features) return
+    if (!currentFeatures || !inputFeatures) return
 
-    const currFeatures = drawAreas
-    const inputFeatures = features
     const deletedFeaturesIds = inputFeatures.map((f) => f.id)
-    const newDrawAreas = currFeatures.filter((feature) => !deletedFeaturesIds.includes(feature.id))
+    const newDrawAreas = currentFeatures.filter(
+      (feature) => !deletedFeaturesIds.includes(feature.id),
+    )
     void setDrawParam(newDrawAreas)
   }
 
