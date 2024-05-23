@@ -1,4 +1,4 @@
-import jsurl from 'jsurl2'
+import { tryParse, stringify } from 'jsurl2'
 
 // Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
 // Using https://github.com/wmertens/jsurl2
@@ -10,11 +10,11 @@ export const isJsurlString = (value: string) => {
 }
 
 export const jsurlParse = (value: string): unknown => {
-  return jsurl.tryParse(value, { reset: true })
+  return tryParse(value, { reset: true })
 }
 
 export const jurlStringify = (value: Record<string, any>) => {
-  return jsurl.stringify(value, {
+  return stringify(value, {
     rich: true,
     short: false,
   })
