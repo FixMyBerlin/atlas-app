@@ -1,5 +1,5 @@
 import { ErrorMessage } from '@hookform/error-message'
-import { ComponentPropsWithoutRef, PropsWithoutRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, PropsWithoutRef, forwardRef, type JSX } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { twJoin, twMerge } from 'tailwind-merge'
 
