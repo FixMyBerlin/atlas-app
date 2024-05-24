@@ -40,7 +40,8 @@ export const DownloadModal = () => {
             </p>
             {isLoggedIn ? (
               <p className="pb-2.5 pt-5 text-sm">
-                Bitte <Link href="/kontakt">Kontaktieren Sie uns</Link>.
+                Bitte <Link href="/kontakt">kontaktieren Sie uns</Link> um Zugriff zur Region und
+                zum Download zu erhalten.
               </p>
             ) : (
               <p className="pb-2.5 pt-5 text-sm">
