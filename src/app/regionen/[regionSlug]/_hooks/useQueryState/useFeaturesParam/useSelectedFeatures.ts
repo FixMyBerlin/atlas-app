@@ -31,6 +31,8 @@ export const useSelectedFeatures = () => {
     return { urlFeature, mapFeature }
   })
 
+  // TODO: Find a way to do this that does not break the Rules of React https://react.dev/reference/rules
+  // eslint-disable-next-line react-compiler/react-compiler
   prevMapLoaded = mapLoaded
   prevMapBounds = mapBounds
   prevResult = result
