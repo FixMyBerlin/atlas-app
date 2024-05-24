@@ -1,6 +1,6 @@
 import { ErrorMessage } from '@hookform/error-message'
 import { twJoin } from 'tailwind-merge'
-import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, forwardRef, PropsWithoutRef, type JSX } from 'react'
 import { useFormContext } from 'react-hook-form'
 
 export interface LabeledTextareaProps extends PropsWithoutRef<JSX.IntrinsicElements['textarea']> {
