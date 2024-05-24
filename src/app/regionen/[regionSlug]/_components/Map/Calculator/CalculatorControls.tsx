@@ -45,6 +45,8 @@ export const CalculatorControls = ({ queryLayers, drawControlRef }: Props) => {
       updateCalculation(queryLayers, drawParam)
     })
     // We have to overwrite the dependency array rule here because something causes infinite loops
+    // TODO we need to find a better way of doing this …
+    // eslint-disable-next-line react-compiler/react-compiler
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mapLoaded, drawParam, drawControlRef])
 
