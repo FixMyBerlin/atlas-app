@@ -10,21 +10,12 @@ import { useRegion } from '../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
 
-const useCanDownload = (exportPublic: boolean) => {
-  if (exportPublic) {
-    return true
-  } else {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return useHasPermissions()
-  }
-}
-
 export const DownloadModal = () => {
   const region = useRegion()
-  const router = useRouter()
   const bboxDefined = region?.bbox ? true : false
 
-  const canDownload = useCanDownload(region.exportPublic)
+  const hasPermissions = useHasPermissions()
+  const canDownload = region.exportPublic ? true : hasPermissions
   const isLoggedIn = Boolean(useSession()?.role)
 
   const handleLogin = useStartUserLogin()
