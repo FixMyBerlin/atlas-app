@@ -1,5 +1,5 @@
 # This is `npm run check`
-npm run type-check
-npm run lint
-npm run format
-npm run test:run
+docker compose run app type-check
+docker compose run app lint
+docker compose run app format
+docker compose run app test:run
