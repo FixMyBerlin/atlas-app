@@ -22,13 +22,9 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 
 ### Testing the production bundle
 
-1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
-2. Create a `.env.production.local` with settings linke
-   ```
-   NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
-   NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
-   ```
-3. Run `npm run build` and `npm run start` to test the production bundle
+1. use `docker compose up` to start the developlemnt server and make sure everthing works as expected.
+2. use `docker compose run app start` to serve and build the production bundle.
+3. to run the npm scripts defined in the [`package.json`](./package.json) use `docker compose run app <script_name>`.
 
 ### NextJS tips
 
