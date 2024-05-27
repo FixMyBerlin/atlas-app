@@ -8,10 +8,9 @@ services:
       context: .
       dockerfile: ./app.Dockerfile
       target: base
-    entrypoint: npm run
-    command: dev
     networks: !reset []
     network_mode: 'host'
     volumes:
       - ./src:/app/src
+      - ./scripts:/app/scripts
       - ./.next:/app/.next
