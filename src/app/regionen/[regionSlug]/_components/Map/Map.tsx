@@ -26,6 +26,7 @@ import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlas
 import { Calculator } from './Calculator/Calculator'
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
+import { SourcesLayerStaticDatasetsHighlight } from './SourcesAndLayers/SourcesLayerStaticDatasetsHighlight'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
@@ -93,7 +94,20 @@ export const Map = () => {
         // ctrl is not down - just set features
         newInspectorFeatures = uniqueFeatures
       }
+
+      interactiveFeatures?.forEach((feature) => {
+        mainMap?.setFeatureState(
+          { source: feature.source, sourceLayer: feature.sourceLayer, id: feature.id },
+          { selected: false },
+        )
+      })
       setInspectorFeatures(newInspectorFeatures)
+      newInspectorFeatures?.forEach((feature) => {
+        mainMap?.setFeatureState(
+          { source: feature.source, sourceLayer: feature.sourceLayer, id: feature.id },
+          { selected: true },
+        )
+      })
 
       const persistableFeatures = newInspectorFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
       if (persistableFeatures.length) {
@@ -196,6 +210,7 @@ export const Map = () => {
       <SourcesLayersRegionMask />
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
+      <SourcesLayerStaticDatasetsHighlight />
       <SourcesLayersOsmNotes />
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
