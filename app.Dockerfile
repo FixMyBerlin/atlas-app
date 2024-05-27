@@ -5,13 +5,12 @@ FROM node:18-bookworm-slim as base
 WORKDIR /app
 
 RUN echo "deb http://deb.debian.org/debian bookworm-backports main" >> /etc/apt/sources.list.d/debian-12-backports.list
-RUN apt update && apt install -y tippecanoe/bookworm-backports
-RUN npm install --global pm2 bun
+RUN apt update && apt install -y tippecanoe/bookworm-backports openssl
 
 # see .dockerignore for what is getting copied
 COPY . .
 
-
+RUN npm install --global pm2 bun
 RUN npm install-clean --include=dev --legacy-peer-deps
 RUN npm run postinstall
 
