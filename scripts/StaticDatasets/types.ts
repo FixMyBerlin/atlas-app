@@ -27,7 +27,7 @@ type MapDataDatasetsSource = {
   inspector:
     | ({
         enabled: true
-        highlightingKey: 'TODO' // This is not implemented, yet
+        highlightingKey: string
         /** @desc Array of key strings OR `false` to list all available keys */
         documentedKeys: string[] | false
         editors?: MapDataSourceInspectorEditor[]
