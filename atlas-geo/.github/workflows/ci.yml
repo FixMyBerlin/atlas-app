@@ -16,7 +16,7 @@ jobs:
           context: .
           file: ./processing.Dockerfile
           tags: test_img
-          target: lua
+          target: testing
           push: false
           load: true
           cache-from: type=gha
@@ -24,4 +24,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          docker run -v ./processing:/processing test_img busted /processing/topics/ -p %.test%.lua$
+          docker run test_img
