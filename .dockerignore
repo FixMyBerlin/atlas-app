@@ -11,3 +11,5 @@
 !next.config.js
 !tsconfig.json
 !types.ts
+!tailwind.config.cjs
+!postcss.config.cjs
