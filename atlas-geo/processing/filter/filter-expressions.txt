@@ -14,7 +14,6 @@ nwr/place
 
 # Topic: Start-Ziel
 wr/landuse
-wr/building
 
 # Topic: Barriers
 w/railway
