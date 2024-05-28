@@ -1,5 +1,5 @@
 import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { envKeyWithFallback } from './isEnv'
+import { envKey } from './isEnv'
 
 const osmUrls = {
   development: new URL(process.env.NEXT_PUBLIC_OSM_API_URL).origin,
@@ -8,7 +8,7 @@ const osmUrls = {
 }
 
 export const getOsmUrl = (path?: string) => {
-  const base = osmUrls[envKeyWithFallback]
+  const base = osmUrls[envKey]
 
   return (path ? `${base}${path}` : base) as MapDataSourceInspectorEditor['urlTemplate']
 }
