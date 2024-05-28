@@ -1,11 +1,13 @@
-FROM ubuntu:mantic as lua
+FROM ubuntu:mantic as testing
 
 # Install Lua and "luarocks" (Lua package manager) – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
 
 RUN luarocks install busted
 
-FROM lua as processing
+CMD [ "busted", "/processing/topics/", "-p %.test%.lua\$" ]
+
+FROM testing as processing
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
