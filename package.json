@@ -12,8 +12,6 @@
     "dev": "npx blitz@2.0.9 dev --hostname 127.0.0.1 --port 5173",
     "predev": "node scripts/npm-run-predev/checkMigrations.js",
     "build": "npx blitz@2.0.9 build",
-    "bleach": "rm -rf node_modules/ && rm -rf .next/ && npm install",
-    "bleach:full": "rm package-lock.json && npm run bleach",
     "studio": "npx blitz@2.0.9 prisma studio",
     "openTypes": "code \"node_modules/.prisma/client/index.d.ts\"",
     "migrate": "npx blitz@2.0.9 prisma migrate dev",
