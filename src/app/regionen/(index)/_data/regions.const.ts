@@ -7,7 +7,10 @@ import {
   MapDataCategoryId,
   categories,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
-import { SourcesRasterIds } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import {
+  SourcesRasterIds,
+  sourcesBackgroundsRaster,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number
@@ -595,6 +598,6 @@ export const staticRegion: StaticRegion[] = [
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     categories: categories.map((t) => t.id),
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: sourcesBackgroundsRaster.map((s) => s.id),
   },
 ]
