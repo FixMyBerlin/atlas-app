@@ -77,25 +77,22 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     minzoom: 10,
     attributionHtml: '<a href="https://wiki.openstreetmap.org/wiki/Esri">Esri Terms & Feedback</a>',
   },
-  // Satellite from 2021 with aerial imagery for selected countries.
-  // About https://documentation.maptiler.com/hc/en-us/articles/4405596670865-Satellite-maps#Satellitemaps-MapTilersatellitemaps
-  //    But this article links to the deprecated source.
-  // Depredated Data https://cloud.maptiler.com/tiles/satellite/
-  // Data https://cloud.maptiler.com/tiles/satellite-v2/
-  // Data JSON https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=ECOoUBmpqklzSCASXxcu
   {
+    // https://cloud.maptiler.com/tiles/satellite/
+    // V1 is deprecated
     id: 'maptiler-satellite-v1',
     name: 'Luftbild Maptiler v1',
     tiles: `https://api.maptiler.com/tiles/satellite/{z}/{x}/{y}.jpg?key=${tokenMaptilerTilesets}`,
     tileSize: 512,
     maxzoom: 20,
-    minzoom: 0,
+    minzoom: 10, // Visible from 10.5 on. Even though https://cloud.maptiler.com/tiles/satellite/ says "0"
     attributionHtml:
       '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>',
   },
   {
+    // https://cloud.maptiler.com/tiles/satellite-v2/
     id: 'maptiler-satellite',
-    name: 'Luftbild Maptiler',
+    name: 'Luftbild Maptiler v2',
     tiles: `https://api.maptiler.com/tiles/satellite-v2/{z}/{x}/{y}.jpg?key=${tokenMaptilerTilesets}`,
     tileSize: 512,
     maxzoom: 22,
