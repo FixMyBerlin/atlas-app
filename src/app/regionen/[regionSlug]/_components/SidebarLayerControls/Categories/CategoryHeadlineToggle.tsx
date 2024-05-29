@@ -1,4 +1,4 @@
-import { Switch } from '@headlessui/react'
+import { Label, Switch, SwitchGroup } from '@headlessui/react'
 import { twJoin } from 'tailwind-merge'
 
 type Props = {
@@ -15,11 +15,11 @@ export const CategoryHeadlineToggle = ({
   children,
 }: Props) => {
   return (
-    <Switch.Group
+    <SwitchGroup
       as="div"
       className="group flex min-h-[3rem] w-full cursor-pointer items-center justify-between"
     >
-      <Switch.Label
+      <Label
         as="div"
         className={twJoin(
           'ml-2 w-full text-sm leading-[17px]',
@@ -28,7 +28,7 @@ export const CategoryHeadlineToggle = ({
         title={titleAttribute ? titleAttribute : undefined}
       >
         {children}
-      </Switch.Label>
+      </Label>
       <Switch
         checked={active}
         onChange={handleChange}
@@ -53,6 +53,6 @@ export const CategoryHeadlineToggle = ({
           )}
         />
       </Switch>
-    </Switch.Group>
+    </SwitchGroup>
   )
 }

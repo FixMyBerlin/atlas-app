@@ -1,16 +1,15 @@
-import React from 'react'
 import { TagsTableRow } from '../TagsTableRow'
+import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
 import { NodataFallbackWrapper } from './NodataFallbackWrapper'
 import { CompositTableRow } from './types'
-import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 
 export const tableKeySurfaceSmoothness = 'composit_surface_smoothness'
-export const TagsTableRowCompositSurfaceSmoothness: React.FC<CompositTableRow> = ({
+export const TagsTableRowCompositSurfaceSmoothness = ({
   sourceId,
   tagKey,
   properties,
-}) => {
+}: CompositTableRow) => {
   if (!(properties['smoothness'] || properties['surface'])) return null
 
   return (

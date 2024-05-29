@@ -4,18 +4,18 @@ import { quote } from 'src/app/_components/text/Quotes'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { extractSourceIdFromStaticDatasetSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { Disclosure } from './Disclosure/Disclosure'
-import { InspectorDataFeature } from './Inspector'
+import { InspectorFeature } from './Inspector'
 import { TagsTable } from './TagsTable/TagsTable'
 import { translations } from './TagsTable/translations/translations.const'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 
-export const InspectorFeatureStaticDataset: React.FC<InspectorDataFeature> = ({
+export const InspectorFeatureStaticDataset = ({
   sourceKey,
   properties,
   geometry,
-}) => {
+}: InspectorFeature) => {
   const regionDatasets = useRegionDatasets()
   if (!sourceKey || !properties) return null
 

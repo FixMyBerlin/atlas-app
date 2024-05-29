@@ -198,4 +198,26 @@ if (!keepTemporaryFiles) {
   fs.rmSync(tmpDir, { recursive: true, force: true })
 }
 
+// For production runs, add a tag so we can see which data was published
+//   https://github.com/FixMyBerlin/atlas-static-data/tags
+// How to use: Compare with the previous tag at
+//   https://github.com/FixMyBerlin/atlas-static-data/compare/main...publish_2024-05-23_prd
+if (process.env.S3_UPLOAD_FOLDER === 'production') {
+  const currentDate = new Date().toISOString().split('T')[0]
+  const tagName = `publish_${currentDate}_${process.env.S3_UPLOAD_FOLDER}`
+  const tagMessage = `publish data to ${process.env.S3_UPLOAD_FOLDER}`
+
+  try {
+    Bun.spawnSync(['git', 'tag', '-a', tagName, '-m', tagMessage], {
+      cwd: '../atlas-static-data',
+    })
+    Bun.spawnSync(['git', 'push', 'origin', tagName], {
+      cwd: '../atlas-static-data',
+    })
+    console.log(`Tag '${tagName}' has been created and pushed to GitHub.`)
+  } catch (error) {
+    console.error('Failed to create or push git tag:', error)
+  }
+}
+
 inverse('DONE')

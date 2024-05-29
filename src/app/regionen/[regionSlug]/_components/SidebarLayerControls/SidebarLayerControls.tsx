@@ -1,12 +1,12 @@
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, Suspense, useEffect, useState } from 'react'
-import useResizeObserver from 'use-resize-observer'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { twJoin } from 'tailwind-merge'
+import useResizeObserver from 'use-resize-observer'
+import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Categories } from './Categories/Categories'
 import { StaticDatasetCategories } from './StaticDatasets/StaticDatasetCategories'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 const SidebarLayerControlsChildren = () => {
   return (
@@ -53,7 +53,7 @@ export const SidebarLayerControls = () => {
         <Disclosure as={Fragment} defaultOpen={false}>
           {({ open }) => (
             <>
-              <Disclosure.Button className="flex w-full items-center gap-0.5 pr-3 text-sm font-semibold leading-none hover:bg-yellow-50">
+              <DisclosureButton className="flex w-full items-center gap-0.5 pr-3 text-sm font-semibold leading-none hover:bg-yellow-50">
                 <ChevronDownIcon
                   className={twJoin(
                     open ? '' : '-rotate-90 transform',
@@ -61,7 +61,7 @@ export const SidebarLayerControls = () => {
                   )}
                 />
                 <span>Kategorien</span>
-              </Disclosure.Button>
+              </DisclosureButton>
               <Transition
                 enter="transition duration-100 ease-out"
                 enterFrom="transform scale-95 opacity-0"
@@ -70,9 +70,9 @@ export const SidebarLayerControls = () => {
                 leaveFrom="transform scale-100 opacity-100"
                 leaveTo="transform scale-95 opacity-0"
               >
-                <Disclosure.Panel static>
+                <DisclosurePanel static>
                   <SidebarLayerControlsChildren />
-                </Disclosure.Panel>
+                </DisclosurePanel>
               </Transition>
             </>
           )}

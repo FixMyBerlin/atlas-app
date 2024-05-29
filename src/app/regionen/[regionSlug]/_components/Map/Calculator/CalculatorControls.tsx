@@ -1,13 +1,7 @@
-import bbox from '@turf/bbox'
-import booleanIntersects from '@turf/boolean-intersects'
-import React, { useEffect } from 'react'
-import { useMap } from 'react-map-gl/maplibre'
+import { useEffect } from 'react'
 import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
-import {
-  StoreCalculator,
-  useMapStateInteraction,
-} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   CalculatorControlsDrawControl,
   DrawArea,
@@ -15,74 +9,46 @@ import {
 } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 import { useUpdate } from './hooks/useUpdate'
+import { useUpdateCalculation } from './utils/useUpdateCalculation'
 
 type Props = {
   queryLayers: MapDataSourceCalculator['queryLayers']
   drawControlRef: DrawControlProps['ref']
 }
 
-export const CalculatorControls: React.FC<Props> = ({ queryLayers, drawControlRef }) => {
-  const { mainMap } = useMap()
+export const CalculatorControls = ({ queryLayers, drawControlRef }: Props) => {
   const { drawParam } = useDrawParam()
-  const { mapLoaded, setCalculatorAreasWithFeatures } = useMapStateInteraction()
-
-  // We store the Calculator Shapes as URL State `draw`
-  // and read from there to do the calculation
-  useEffect(() => {
-    if (!mainMap || !mapLoaded || !drawParam) return
-
-    const result: StoreCalculator['calculatorAreasWithFeatures'] = []
-
-    drawParam.forEach((selectArea) => {
-      const polygonBbox = bbox(selectArea)
-      const southWest: mapboxgl.LngLatLike = [polygonBbox[0], polygonBbox[1]]
-      const northEast: mapboxgl.LngLatLike = [polygonBbox[2], polygonBbox[3]]
-      const northEastPointPixel = mainMap.project(northEast)
-      const southWestPointPixel = mainMap.project(southWest)
-
-      const features = mainMap.queryRenderedFeatures([southWestPointPixel, northEastPointPixel], {
-        layers: queryLayers,
-      })
-
-      const filteredFeatures = features
-        .map((feature) => {
-          if (booleanIntersects(feature, selectArea)) {
-            return feature
-          }
-        })
-        .filter(Boolean)
-
-      result.push({
-        key: selectArea.id,
-        // @ts-expect-error we use a MapboxGL Library with styles from Maplibre Gl JS
-        features: filteredFeatures,
-      })
-    })
-
-    setCalculatorAreasWithFeatures(result)
-  }, [drawParam, mainMap, mapLoaded, queryLayers, setCalculatorAreasWithFeatures])
+  const { mapLoaded } = useMapStateInteraction()
+  const { updateCalculation } = useUpdateCalculation()
 
   // Update the URL, extracted as hook
   const { updateDrawFeatures } = useUpdate()
   const onUpdate = (e: { features: DrawArea[] }) => {
     updateDrawFeatures(drawParam, e.features)
+    updateCalculation(queryLayers, drawParam)
   }
 
   // Update the URL, extracted as hook
   const { deleteDrawFeatures } = useDelete()
   const onDelete = (e: { features: DrawArea[] }) => {
     deleteDrawFeatures(drawParam, e.features)
+    updateCalculation(queryLayers, drawParam)
   }
 
   // OnInit, add drawAreas from store to the UI
   useEffect(() => {
-    if (!mapLoaded || !drawParam) return
+    if (!mapLoaded || !drawParam || !drawParam.length) return
 
     drawParam.forEach((feature) => {
-      return drawControlRef.current?.add(feature)
+      // .add does not trigger draw.update, so we need to do this manually
+      drawControlRef.current?.add(feature)
+      updateCalculation(queryLayers, drawParam)
     })
-    updateDrawFeatures(drawParam, drawParam)
-  }, [drawControlRef, drawParam, mapLoaded, updateDrawFeatures])
+    // We have to overwrite the dependency array rule here because something causes infinite loops
+    // TODO we need to find a better way of doing this …
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mapLoaded, drawParam, drawControlRef])
 
   return (
     <CalculatorControlsDrawControl

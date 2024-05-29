@@ -1,14 +1,13 @@
-import React from 'react'
 import { TagsTableRow } from '../TagsTableRow'
-import { CompositTableRow } from './types'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
+import { CompositTableRow } from './types'
 
 export const tableKeyHighway = 'composit_highway'
-export const TagsTableRowCompositHighway: React.FC<CompositTableRow> = ({
+export const TagsTableRowCompositHighway = ({
   sourceId,
   tagKey: _, // is `composit_highway` which is not helpful here
   properties,
-}) => {
+}: CompositTableRow) => {
   if (properties['_parent_highway']) {
     return (
       <TagsTableRow sourceId={sourceId} tagKey={'_parent_highway'}>

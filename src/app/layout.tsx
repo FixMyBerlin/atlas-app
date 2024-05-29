@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.png'
 import { BlitzProvider } from 'src/blitz-client'
 import './_components/layouts/global.css'
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
     creator: '@fixmyberlin',
     images: [SocialSharingImage.src],
   },
-  themeColor: '#27272a',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -52,4 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   )
+}
+
+export const viewport: Viewport = {
+  themeColor: '#27272a',
 }

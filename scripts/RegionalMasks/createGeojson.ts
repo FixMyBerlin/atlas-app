@@ -138,8 +138,12 @@ for (const region of staticRegion) {
       JSON.stringify(boundaryFeature),
     )
     await Bun.write(
-      path.resolve(__dirname, `./geojson/${regionName}-mask-for-debugging.geojson`),
+      path.resolve(__dirname, `./geojson/${regionName}-buffered-boundary-for-debugging.geojson`),
       JSON.stringify(bufferFeature),
+    )
+    await Bun.write(
+      path.resolve(__dirname, `./geojson/${regionName}-mask-for-debugging.geojson`),
+      JSON.stringify(mask),
     )
     // And also store the bbox and centerOfMass for use in regions.const.ts
     await Bun.write(

@@ -1,6 +1,6 @@
-import { GeoJSONFeature } from 'maplibre-gl'
 import React from 'react'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
+import { InspectorFeatureProperty } from '../Inspector'
 import { TagsTableRow } from './TagsTableRow'
 import {
   TagsTableRowColor,
@@ -33,11 +33,11 @@ import {
   tableKeyTrafficSign,
 } from './compositTableRows/TagsTableRowCompositTrafficSign'
 import { TagsTableRowWebsite, tableKeyWebsite } from './compositTableRows/TagsTableRowWebsite'
-import { cleanKey } from './utils/cleanKey'
 import { TagsTableRowWikipedia, tableKeyWikipedia } from './compositTableRows/TagsTableRowWikipedia'
+import { cleanKey } from './utils/cleanKey'
 
 type Props = {
-  properties: GeoJSONFeature['properties']
+  properties: InspectorFeatureProperty
   sourceDocumentedKeys: string[] | undefined | false
   sourceId: SourcesId | string // string = StaticDatasetsIds
 }

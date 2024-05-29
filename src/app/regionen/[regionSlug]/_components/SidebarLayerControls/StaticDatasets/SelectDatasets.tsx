@@ -1,4 +1,11 @@
-import { Disclosure, Listbox, Transition } from '@headlessui/react'
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Listbox,
+  ListboxOptions,
+  Transition,
+} from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import { twJoin } from 'tailwind-merge'
@@ -46,7 +53,7 @@ export const SelectDatasets = ({
     <Disclosure key={category}>
       {({ open }) => (
         <>
-          <Disclosure.Button className="group flex justify-between border-t border-t-gray-200 text-left hover:bg-yellow-50">
+          <DisclosureButton className="group flex justify-between border-t border-t-gray-200 text-left hover:bg-yellow-50">
             <div
               className={twJoin(
                 'ml-2 flex min-h-[3rem] w-full flex-col items-start text-sm leading-[17px]',
@@ -76,7 +83,7 @@ export const SelectDatasets = ({
                 <ChevronLeftIcon className="h-7 w-7" />
               )}
             </div>
-          </Disclosure.Button>
+          </DisclosureButton>
 
           <Transition
             show={open}
@@ -87,7 +94,7 @@ export const SelectDatasets = ({
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Disclosure.Panel static as="nav" className="mb-2 mt-1">
+            <DisclosurePanel static as="nav" className="mb-2 mt-1">
               <div className="mt-1 text-right">
                 {allActive ? (
                   <button
@@ -115,7 +122,7 @@ export const SelectDatasets = ({
               >
                 {({ open }) => {
                   return (
-                    <Listbox.Options
+                    <ListboxOptions
                       static
                       className={twJoin(
                         'py-1 text-sm focus:outline-none',
@@ -127,11 +134,11 @@ export const SelectDatasets = ({
                         const key = createSourceKeyStaticDatasets(dataset.id, dataset.subId)
                         return <SelectDataset key={key} dataset={dataset} />
                       })}
-                    </Listbox.Options>
+                    </ListboxOptions>
                   )
                 }}
               </Listbox>
-            </Disclosure.Panel>
+            </DisclosurePanel>
           </Transition>
         </>
       )}

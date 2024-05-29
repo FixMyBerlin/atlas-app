@@ -1,6 +1,6 @@
 import { bbox } from '@turf/turf'
 import { zip } from 'lodash'
-import { createParser, useQueryState } from 'next-usequerystate'
+import { createParser, useQueryState } from 'nuqs'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
 import { z } from 'zod'

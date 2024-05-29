@@ -1,16 +1,14 @@
-import { Menu } from '@headlessui/react'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { produce } from 'immer'
-import React from 'react'
 import { Portal } from 'src/app/_components/utils/usePopper/Portal'
 import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { twJoin } from 'tailwind-merge'
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 import { createSubcatStyleKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Legend } from '../Legend/Legend'
-import invariant from 'tiny-invariant'
 
 type Props = {
   categoryId: MapDataCategoryId
@@ -56,7 +54,7 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
         {({ open }) => (
           <>
             <div>
-              <Menu.Button
+              <MenuButton
                 ref={trigger}
                 disabled={disabled}
                 // `w-*` has to be set fo the `truncate` to work
@@ -72,11 +70,11 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
                   <span className="truncate">{activeStyleConfig?.name}</span>
                 </div>
                 <ChevronDownIcon className="-mr-1 ml-0.5 h-5 w-5" aria-hidden="true" />
-              </Menu.Button>
+              </MenuButton>
             </div>
 
             <Portal>
-              <Menu.Items
+              <MenuItems
                 ref={container}
                 className="absolute left-0 z-40 mt-2 max-w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
               >
@@ -85,8 +83,8 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
                     if (!styleConfig) return null
                     const key = createSubcatStyleKey(subcatConfig.id, styleConfig.id)
                     return (
-                      <Menu.Item key={key}>
-                        {({ active }) => (
+                      <MenuItem key={key}>
+                        {({ focus }) => (
                           <button
                             type="button"
                             onClick={() =>
@@ -97,18 +95,18 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
                             }
                             className={twJoin(
                               styleConfig.active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
-                              active ? 'bg-yellow-50' : '',
+                              focus ? 'bg-yellow-50' : '',
                               'block w-full px-4 py-2 text-left text-sm',
                             )}
                           >
                             {styleConfig.name}
                           </button>
                         )}
-                      </Menu.Item>
+                      </MenuItem>
                     )
                   })}
                 </div>
-              </Menu.Items>
+              </MenuItems>
             </Portal>
           </>
         )}

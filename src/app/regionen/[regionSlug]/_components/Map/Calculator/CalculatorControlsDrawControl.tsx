@@ -1,7 +1,17 @@
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
 import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl/maplibre'
 import { drawControlStyle } from './drawControlStyle'
+
+// Work around styling issues until MapboxDraw is updated
+// https://github.com/maplibre/maplibre-gl-js/issues/2601#issuecomment-1599769714
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_BASE = 'maplibregl-ctrl'
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_PREFIX = 'maplibregl-ctrl-'
+// @ts-expect-errors
+MapboxDraw.constants.classes.CONTROL_GROUP = 'maplibregl-ctrl-group'
 
 export type DrawArea = Omit<GeoJSON.Feature<GeoJSON.Polygon, []>, 'id'> & {
   id: string
@@ -21,6 +31,16 @@ export const CalculatorControlsDrawControl = React.forwardRef<
   MapboxDraw | undefined,
   DrawControlProps
 >((props: DrawControlProps, ref) => {
+  const handleCreate = (event: { features: DrawArea[] }) => {
+    props.onCreate?.(event)
+  }
+  const handleUpdate = (event: { features: DrawArea[]; action: string }) => {
+    props.onUpdate?.(event)
+  }
+  const handleDelete = (event: { features: DrawArea[] }) => {
+    props.onDelete?.(event)
+  }
+
   const drawRef = useControl<MapboxDraw>(
     () => {
       // onCreate – MapboxDraw added to UI
@@ -32,15 +52,15 @@ export const CalculatorControlsDrawControl = React.forwardRef<
     // @ts-expect-error Missmatched types from Mapbox Library with Maplibre Map
     ({ map }: { map: MapRef }) => {
       // onAdd – MapboxDraw initialized
-      props.onCreate && map.on('draw.create', props.onCreate)
-      props.onUpdate && map.on('draw.update', props.onUpdate)
-      props.onDelete && map.on('draw.delete', props.onDelete)
+      map.on('draw.create', handleCreate)
+      map.on('draw.update', handleUpdate)
+      map.on('draw.delete', handleDelete)
     },
     ({ map }: { map: MapRef }) => {
       // onRemove – MapboxDraw removed to UI / cleanup
-      props.onCreate && map.off('draw.create', props.onCreate)
-      props.onUpdate && map.off('draw.update', props.onUpdate)
-      props.onDelete && map.off('draw.delete', props.onDelete)
+      map.off('draw.create', handleCreate)
+      map.off('draw.update', handleUpdate)
+      map.off('draw.delete', handleDelete)
     },
     {
       position: props.position,

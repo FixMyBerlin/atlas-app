@@ -1,4 +1,4 @@
-import { Tab } from '@headlessui/react'
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { CheckBadgeIcon, EyeIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import Image, { StaticImageData } from 'next/image'
 import { twJoin, twMerge } from 'tailwind-merge'
@@ -101,10 +101,10 @@ const FeaturesMobile = () => {
 
 const FeaturesDesktop = () => {
   return (
-    <Tab.Group as="div" className="hidden lg:mt-20 lg:block">
+    <TabGroup as="div" className="hidden lg:mt-20 lg:block">
       {({ selectedIndex }) => (
         <>
-          <Tab.List className="grid grid-cols-3 gap-x-8">
+          <TabList className="grid grid-cols-3 gap-x-8">
             {features.map((feature, featureIndex) => (
               <Feature
                 key={featureIndex}
@@ -121,11 +121,11 @@ const FeaturesDesktop = () => {
                 className="relative"
               />
             ))}
-          </Tab.List>
-          <Tab.Panels className="relative mt-12 overflow-hidden rounded-4xl bg-gray-200 px-14 py-16 xl:px-16">
+          </TabList>
+          <TabPanels className="relative mt-12 overflow-hidden rounded-4xl bg-gray-200 px-14 py-16 xl:px-16">
             <div className="-mx-5 flex">
               {features.map((feature, featureIndex) => (
-                <Tab.Panel
+                <TabPanel
                   static
                   key={featureIndex}
                   className={twJoin(
@@ -146,14 +146,14 @@ const FeaturesDesktop = () => {
                       alt=""
                     />
                   </div>
-                </Tab.Panel>
+                </TabPanel>
               ))}
             </div>
             <div className="pointer-events-none absolute inset-0 rounded-4xl ring-1 ring-inset ring-gray-900/10" />
-          </Tab.Panels>
+          </TabPanels>
         </>
       )}
-    </Tab.Group>
+    </TabGroup>
   )
 }
 

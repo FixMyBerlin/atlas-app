@@ -1,16 +1,13 @@
 diff --git a/node_modules/@blitzjs/auth/dist/next-auth.cjs b/node_modules/@blitzjs/auth/dist/next-auth.cjs
-index f7b02a2..2bcb910 100644
+index 97881e3..2466387 100644
 --- a/node_modules/@blitzjs/auth/dist/next-auth.cjs
 +++ b/node_modules/@blitzjs/auth/dist/next-auth.cjs
-@@ -358,7 +358,10 @@ function NextAuthAdapter(config) {
+@@ -406,7 +406,7 @@ function NextAuthAdapter(config) {
          cookies: internalRequest.cookies,
          isPost: req.method === "POST"
        });
 -      options.provider.callbackUrl = switchURL(options.provider.callbackUrl);
-+      /* patch start */
-+      // options.provider.callbackUrl = switchURL(options.provider.callbackUrl);
-+      options.provider.callbackUrl = `${process.env.NEXT_PUBLIC_APP_ORIGIN}/api/auth/osm/callback`
-+      /* patch end */
++      options.provider.callbackUrl = `${process.env.NEXT_PUBLIC_APP_ORIGIN}/api/auth/osm/callback`;
        blitz.log.debug("NEXT_AUTH_INTERNAL_OPTIONS", options);
        yield AuthHandler(middleware, config, internalRequest, action, options, cookies).then((_0) => __async(this, [_0], function* ({ middleware: middleware2 }) {
          yield blitz.handleRequestWithMiddleware(

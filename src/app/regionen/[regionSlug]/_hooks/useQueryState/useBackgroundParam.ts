@@ -1,4 +1,4 @@
-import { parseAsString, useQueryState } from 'next-usequerystate'
+import { parseAsString, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
 
 export const defaultBackgroundParam = 'default'

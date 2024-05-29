@@ -3,9 +3,11 @@ import { OsmTypeId } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
 import { shortOsmType } from './shortLongOsmType'
 
+export type EditorUrlGeometry = GeoJSON.Feature['geometry']
+
 type Props = {
   urlTemplate: MapDataSourceInspectorEditor['urlTemplate']
-  geometry: maplibregl.GeoJSONFeature['geometry']
+  geometry: EditorUrlGeometry
   osmTypeId?: OsmTypeId
   editorId?: MapDataSourceInspectorEditor['idKey']
   zoom?: number

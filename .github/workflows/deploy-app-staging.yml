@@ -20,7 +20,6 @@ jobs:
       SESSION_SECRET_KEY: ${{ secrets.SESSION_SECRET_KEY }}
       OSM_CLIENT_ID: ${{ secrets.OSM_CLIENT_ID }}
       OSM_CLIENT_SECRET: ${{ secrets.OSM_CLIENT_SECRET }}
-      NEXT_PUBLIC_OSM_API_URL: ${{ secrets.NEXT_PUBLIC_OSM_API_URL }}
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}

@@ -1,4 +1,4 @@
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOptions, Transition } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import React, { Fragment } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
@@ -20,8 +20,8 @@ export const SelectBackground: React.FC = () => {
 
   if (!region?.backgroundSources) return null
 
-  const backgrounds = sourcesBackgroundsRaster.filter(
-    (s) => region?.backgroundSources?.includes(s.id),
+  const backgrounds = sourcesBackgroundsRaster.filter((s) =>
+    region?.backgroundSources?.includes(s.id),
   )
 
   const onChange = (value: SourcesRasterIds) => {
@@ -34,10 +34,10 @@ export const SelectBackground: React.FC = () => {
   return (
     <Listbox as="section" className="" value={backgroundParam} onChange={onChange}>
       <div>
-        <Listbox.Button className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        <ListboxButton className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
           Hintergrundkarten
           <ChevronUpDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
-        </Listbox.Button>
+        </ListboxButton>
       </div>
       <Transition
         as={Fragment}
@@ -48,7 +48,7 @@ export const SelectBackground: React.FC = () => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Listbox.Options className="absolute bottom-10 right-0 max-h-[calc(100%_-_2.5rem)] w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+        <ListboxOptions className="absolute bottom-10 right-0 max-h-[calc(100%_-_2.5rem)] w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           <ListOption
             key={`${backgroundParam}-default`}
             value={defaultBackgroundParam}
@@ -57,7 +57,7 @@ export const SelectBackground: React.FC = () => {
           {backgrounds.map(({ name, id }) => {
             return <ListOption key={id} value={id} name={name} />
           })}
-        </Listbox.Options>
+        </ListboxOptions>
       </Transition>
     </Listbox>
   )

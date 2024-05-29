@@ -1,11 +1,10 @@
 import { BoltIcon, CheckCircleIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
-import { GeoJSONFeature } from 'maplibre-gl'
-import React from 'react'
 import { quote } from 'src/app/_components/text/Quotes'
+import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { MapDataSourceFreshnessConfig } from '../../../_mapData/types'
 
 type Props = {
-  properties: GeoJSONFeature['properties']
+  properties: StoreFeaturesInspector['inspectorFeatures'][number]['properties']
   freshConfig: MapDataSourceFreshnessConfig
 }
 

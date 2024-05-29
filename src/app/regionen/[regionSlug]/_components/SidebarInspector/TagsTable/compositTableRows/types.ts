@@ -1,6 +1,6 @@
-import { GeoJSONFeature } from 'maplibre-gl'
+import { InspectorFeatureProperty } from '../../Inspector'
 import { TagsTableRowProps } from '../TagsTableRow'
 
 export type CompositTableRow = Pick<TagsTableRowProps, 'sourceId' | 'tagKey'> & {
-  properties: GeoJSONFeature['properties']
+  properties: InspectorFeatureProperty
 }

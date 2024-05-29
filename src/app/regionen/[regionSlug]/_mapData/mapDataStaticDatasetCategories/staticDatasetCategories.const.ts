@@ -32,4 +32,14 @@ export const staticDatasetCategories = {
     title: 'Parkraum',
     subtitle: 'Statische Daten zum Parkraum',
   },
+  'nudafa/general': {
+    order: 1,
+    title: 'Statisch Daten',
+    subtitle: 'Statische Daten',
+  },
+  'nudafa/website': {
+    order: 2,
+    title: 'Daten für nudafa.de',
+    subtitle: 'Statische Daten die auf nudafa.de verwendet werden.',
+  },
 } as const

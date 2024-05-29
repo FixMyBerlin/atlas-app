@@ -18,7 +18,7 @@ import {
 } from './osmUrls/osmUrls'
 
 type Props = {
-  properties: maplibregl.GeoJSONFeature['properties']
+  properties: StoreFeaturesInspector['inspectorFeatures'][number]['properties']
   geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
   editors?: MapDataSourceInspectorEditor[]
   osmIdConfig?: MapDataOsmIdConfig

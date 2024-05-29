@@ -96,6 +96,9 @@ export const DebugStateInteraction = () => {
           return (
             <details key={draw.id}>
               <summary className="cursor-pointer">{draw.id}</summary>
+              <pre>
+                <code>{formatConfig({ draw })}</code>
+              </pre>
             </details>
           )
         })}

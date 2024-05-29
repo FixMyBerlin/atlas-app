@@ -1,4 +1,3 @@
-import React from 'react'
 import { NodataFallback } from './NodataFallback'
 
 export const NodataFallbackWrapper = ({

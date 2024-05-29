@@ -151,12 +151,12 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'poi',
       'bikelanes',
       'roads',
       'surface',
       'parking',
       'bicycleParking',
+      'poi',
       'mapillary',
     ],
     backgroundSources: [

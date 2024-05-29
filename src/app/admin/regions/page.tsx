@@ -1,4 +1,4 @@
-import { invoke } from '@blitzjs/rpc'
+import { invoke } from 'src/blitz-server'
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
 import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'

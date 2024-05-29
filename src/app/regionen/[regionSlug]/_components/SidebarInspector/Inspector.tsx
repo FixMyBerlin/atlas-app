@@ -6,13 +6,15 @@ import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
 
-export type InspectorDataFeature = {
+export type InspectorFeatureProperty = NonNullable<GeoJSON.GeoJsonProperties>
+
+export type InspectorFeature = {
   sourceKey: string
-  properties: GeoJSON.GeoJsonProperties
+  properties: InspectorFeatureProperty
   geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
 }
 
-export type InspectorOsmNoteFeature = Omit<InspectorDataFeature, 'sourceKey'>
+export type InspectorOsmNoteFeature = Omit<InspectorFeature, 'sourceKey'>
 
 type Props = { features: StoreFeaturesInspector['inspectorFeatures'] }
 
