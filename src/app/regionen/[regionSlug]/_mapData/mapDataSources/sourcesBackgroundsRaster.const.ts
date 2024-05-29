@@ -317,7 +317,7 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     tiles:
       'https://isk.geobasis-bb.de/mapproxy/dop20c/service/wms?FORMAT=image/png&TRANSPARENT=TRUE&VERSION=1.3.0&SERVICE=WMS&REQUEST=GetMap&LAYERS=bebb_dop20c&STYLES=&crs=EPSG:3857&WIDTH=512&HEIGHT=512&BBOX={bbox-epsg-3857}',
     maxzoom: 20,
-    minzoom: 10,
+    minzoom: 0,
     tileSize: 512,
     attributionHtml:
       'GeoBasis-DE/LGB / BB-BE DOP20c, dl-de/by-2-0; Geoportal Berlin / DOP20, dl-de/by-2-0',
