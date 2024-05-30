@@ -9,7 +9,7 @@ export type TUpload = Awaited<ReturnType<typeof getUploads>>['uploads'][number]
 
 export default resolver.pipe(
   resolver.authorize('ADMIN'),
-  async ({ where, skip = 0, take = 100 }: GetUploadInput) => {
+  async ({ where, skip = 0, take = 300 }: GetUploadInput) => {
     const {
       items: uploads,
       hasMore,
