@@ -8,10 +8,10 @@ import {
 
 // a modified version of MapDataDatasetsSource from '../../src/app/regionen/[regionSlug]/_mapData/types'
 type MapDataDatasetsSource = {
-  /** @desc Whenever we have one dataset multipe time, we need a subid to make them unique */
+  /** @desc Whenever we have one dataset multiple time, we need a subid to make them unique */
   subId?: string
   name: string
-  /** @desc A quick-n-dirty way to get type savety for categories. The prefix is just to make type savety per region (or cluster of regions) possible. */
+  /** @desc A quick-n-dirty way to get type safety for categories. The prefix is just to make type safety per region (or cluster of regions) possible. */
   category: StaticDatasetCategoryKey | null
   updatedAt?: string
   description?: string
@@ -21,7 +21,7 @@ type MapDataDatasetsSource = {
   attributionHtml: string
   /** @desc Licence Shortcode */
   licence?: undefined | 'ODbL' | 'CC-Zero' | 'CC-BY-2.0' | 'CC-BY-4.0' | 'DL-DE/BY-2.0'
-  /** @desc Are the data OSM compatible due to the licence itself or a explicit waiver */
+  /** @desc Are the data OSM compatible due to the licence itself or an explicit waiver */
   licenceOsmCompatible?: undefined | 'licence' | 'waiver' | 'no'
   osmIdConfig?: MapDataOsmIdConfig
   inspector:
