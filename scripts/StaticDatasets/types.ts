@@ -46,8 +46,6 @@ type MapDataDatasetsSource = {
     | (mapboxgl.SymbolLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint' | 'layout'>>)
     | (mapboxgl.HeatmapLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint'>>)
   )[]
-} & {
-  type: 'vector'
 }
 
 export type MetaData = {
