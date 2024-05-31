@@ -1,0 +1,2 @@
+# This file can be used to define which folders to ignore when updating static datasets
+# It uses globbing patterns and works the same way as .gitignore and .dockerignore files

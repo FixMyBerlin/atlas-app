@@ -12,6 +12,8 @@ import { generatePMTilesFile } from './updateStaticDatasets/generatePMTilesFile'
 import { transformFile } from './updateStaticDatasets/transformFile'
 import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
 import { green, inverse, red, yellow } from './utils/log'
+import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
+import { parse } from 'parse-gitignore'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
@@ -44,6 +46,9 @@ inverse('Starting update with settings', [
     ...(folderFilterTerm ? { folderFilterTerm } : {}),
   },
 ])
+
+const updateIgnorePath = path.resolve(__dirname, '.updateignore')
+const ignorePatterns = fs.existsSync(updateIgnorePath) ? parse(fs.readFileSync(updateIgnorePath)).patterns : []
 
 /** @returns Object or Function | null */
 export const import_ = async <ReturnModule extends Function | Object>(
@@ -104,7 +109,13 @@ const datasetFileFolderData = regionGroupFolderPaths
 
 for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFolderData) {
   const regionAndDatasetFolder = `${regionFolder}/${datasetFolder}`
-  inverse(`Processing folder "${regionAndDatasetFolder}"...`)
+
+  if (ignoreFolder(regionAndDatasetFolder, ignorePatterns)) {
+    yellow(`Ignoring folder "${regionAndDatasetFolder}"`)
+    continue
+  } else {
+    inverse(`Processing folder "${regionAndDatasetFolder}"...`)
+  }
 
   // Guard invalid folder names (characters)
   const uploadSlug = slugify(datasetFolder.replaceAll('_', '-'))
