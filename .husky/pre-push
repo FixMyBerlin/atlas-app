@@ -1,5 +1,1 @@
-# This is `npm run check`
-docker compose run app type-check
-docker compose run app lint
-docker compose run app format
-docker compose run app test:run
+docker compose run app check
