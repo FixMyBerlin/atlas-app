@@ -46,8 +46,8 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     type: 'line',
     paint: {
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-dasharray': [2, 2],
-      'line-color': '#fb923c',
+      'line-dasharray': [1, 2],
+      'line-color': '#f4b9e3',
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
     },
     filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
