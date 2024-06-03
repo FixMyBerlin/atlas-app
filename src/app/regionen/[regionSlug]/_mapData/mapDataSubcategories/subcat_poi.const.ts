@@ -87,7 +87,7 @@ export const subcat_poi: FileMapDataSubcategory = {
         },
         {
           id: 'uni',
-          name: 'Uni',
+          name: 'Hochschulen & Forschung',
           style: {
             type: 'circle',
             color: '#b070ff',
