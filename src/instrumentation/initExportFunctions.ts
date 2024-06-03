@@ -32,6 +32,7 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
               jsonb_build_object('type', 'Feature', 'geometry',
               ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb,
               -- Reminder: All tables that can be exported are required to have those exact columns
+              'id', inputs.id,
               'properties', jsonb_build_object('osm_id', inputs.osm_id) ||
                   jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta ||
                   inputs.tags) AS feature
