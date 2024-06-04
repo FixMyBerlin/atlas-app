@@ -17,8 +17,8 @@ export const osmUrl = ({ osmType, osmId }: OsmTypeId) => {
 export const osmEditIdUrl = ({ osmType, osmId }: OsmTypeId) => {
   if (!osmType || !osmId) return undefined
 
-  // return `https://www.openstreetmap.org/edit?${osmType}=${id}`
-  return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${shortOsmType[osmType]}${osmId}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
+  return `https://www.openstreetmap.org/edit?${osmType}=${osmId}`
+  // return `https://pr-1137--ideditor-presets-preview.netlify.app/id/dist/#id=${shortOsmType[osmType]}${osmId}&background=Brandenburg-DOP20c&disable_features=boundaries&locale=de&hashtags=radverkehrsatlas`
 }
 
 export const osmEditRapidUrl = ({ osmType, osmId }: OsmTypeId) => {
