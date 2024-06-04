@@ -80,6 +80,23 @@ local bikelanesTable = osm2pgsql.define_table({
   }
 })
 
+local bikelanesPresenceTable = osm2pgsql.define_table({
+  name = 'bikelanesPresence',
+  -- Note: We populate a custom `osm_id` (with unique ID values) below.
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
+  }
+})
+
 function osm2pgsql.process_way(object)
   local tags = object.tags
 
@@ -136,10 +153,24 @@ function osm2pgsql.process_way(object)
     end
   end
 
+  local presence = BikelanesPresence(object, cycleways)
+  if presence ~= nil and
+    (presence.bikelane_left ~= "not_expected"
+    or presence.bikelane_right ~= "not_expected"
+    or presence.bikelane_self ~= "not_expected")then
+    bikelanesPresenceTable:insert({
+      tags = presence,
+      meta = Metadata(object),
+      geom = object:as_linestring(),
+      minzoom = 0,
+      id = DefaultId(object)
+    })
+  end
+
   if not (PathClasses[tags.highway] or tags.highway == 'pedestrian') then
     MergeTable(results, Maxspeed(object))
   end
-  MergeTable(results, BikelanesPresence(object, cycleways))
+  MergeTable(results, presence)
   results.todos = CreateTodoList(RoadTodos, tags, results)
 
   -- We need sidewalk for Biklanes(), but not for `roads`
