@@ -14,22 +14,18 @@ RUN npm install --global pm2 bun
 RUN npm install-clean --include=dev --legacy-peer-deps
 RUN npm run postinstall
 
-ENV NEXT_TELEMETRY_DISABLED=1
-ARG NEXT_PUBLIC_APP_ORIGIN
-ENV NEXT_PUBLIC_APP_ORIGIN ${NEXT_PUBLIC_APP_ORIGIN}
-ARG NEXT_PUBLIC_APP_ENV
-ENV NEXT_PUBLIC_APP_ENV ${NEXT_PUBLIC_APP_ENV}
-ARG NEXT_PUBLIC_OSM_API_URL
-ENV NEXT_PUBLIC_OSM_API_URL ${NEXT_PUBLIC_OSM_API_URL}
-
-RUN npx blitz prisma generate
+RUN npx blitz@2.0.9 prisma generate
 
 ENTRYPOINT [ "npm", "run" ]
 CMD [ "dev" ]
 
 FROM base as build
 
-RUN npx blitz@2.0.9 prisma generate
+
+ARG NEXT_PUBLIC_APP_ORIGIN
+ARG NEXT_PUBLIC_APP_ENV
+ARG NEXT_PUBLIC_OSM_API_URL
+
 RUN npx blitz@2.0.9 build
 
 EXPOSE 4000

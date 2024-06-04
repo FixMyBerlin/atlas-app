@@ -8,6 +8,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?schema=prisma
       SESSIONS_SECRET_KEY:
+      NEXT_TELEMETRY_DISABLED: 1
       NEXT_PUBLIC_APP_ORIGIN:
       NEXT_PUBLIC_APP_ENV:
       NEXT_PUBLIC_OSM_API_URL:
