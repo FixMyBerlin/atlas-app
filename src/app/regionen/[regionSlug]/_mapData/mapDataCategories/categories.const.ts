@@ -177,7 +177,7 @@ export const categories: StaticMapDataCategory[] = [
   },
   {
     id: 'mapillary',
-    name: 'Mapillay',
+    name: 'Mapillary',
     desc: 'Straßenfotos',
     subcategories: [{ ...subcat_mapillaryCoverage, defaultStyle: 'default' }],
   },
