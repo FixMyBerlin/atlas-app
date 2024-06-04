@@ -3,6 +3,7 @@ export async function proxyUrl(request: Request, url: string) {
 
   return new Response(response.body!, {
     status: response.status,
+    // @ts-expect-error - TODO: find out why this is a type error
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Length': response.headers.get('content-length'),
