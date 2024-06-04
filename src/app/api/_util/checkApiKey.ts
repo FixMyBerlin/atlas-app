@@ -1,12 +1,18 @@
+import { isDev, isStaging } from '../../_components/utils/isEnv'
+
 export const parseData = (body, Schema) => {
   try {
     const data = Schema.parse(body)
     return { ok: true, data, errorResponse: null }
   } catch (e) {
+    const responseData: Record<string, any> = { statusText: 'Bad Request' }
+    if (isDev || isStaging) {
+      responseData.error = e
+    }
     return {
       ok: false,
       data: null,
-      errorResponse: Response.json({ statusText: 'Bad Request' }, { status: 400 }),
+      errorResponse: Response.json(responseData, { status: 400 }),
     }
   }
 }
