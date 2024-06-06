@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - develop
+      - tinkering
 jobs:
   call-deploy-app:
     uses: ./.github/workflows/deploy-app.yml
