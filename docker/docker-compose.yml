@@ -16,7 +16,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.services.container.loadbalancer.server.port: 4000
-      traefik.http.routers.container.rule: Host(`${TRAEFIK_HOST}`) || (`www.${TRAEFIK_HOST}`)
+      traefik.http.routers.container.rule: Host(`${TRAEFIK_HOST}`) || Host(`www.${TRAEFIK_HOST}`)
       traefik.http.routers.container.entrypoints: websecure
       traefik.http.routers.container.tls.certresolver: letsencrypt
       traefik.http.routers.container.tls: true
