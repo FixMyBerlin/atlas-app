@@ -45,6 +45,8 @@ on:
         required: true
       S3_REGION:
         required: true
+      S3_BUCKET:
+        required: true
 
 jobs:
   build-push-deploy-docker-images:
@@ -125,6 +127,7 @@ jobs:
             echo S3_KEY='${{ secrets.S3_KEY }}' >> .env
             echo S3_SECRET='${{ secrets.S3_SECRET }}' >> .env
             echo S3_REGION='${{ secrets.S3_REGION }}' >> .env
+            echo S3_BUCKET='${{ secrets.S3_BUCKET }}' >> .env
             docker compose up -d
             docker image prune -fa
             sleep 10
