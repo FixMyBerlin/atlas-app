@@ -1,9 +1,6 @@
 import db from 'db'
-import { GetObjectCommand, GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
-import { GetObjectCommandInput } from '@aws-sdk/client-s3/dist-types/commands/GetObjectCommand'
 import { getBlitzContext } from '@blitzjs/auth'
 import { proxyS3Url } from './proxyS3Url'
-import { proxyUrl } from './proxyUrl'
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   const { slug } = params
@@ -34,10 +31,12 @@ export async function GET(request: Request, { params }: { params: { slug: string
     }
   }
 
+  const url = upload!.url
   const s3baseUrl = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`
-  if (upload!.url.startsWith(s3baseUrl)) {
-    return proxyS3Url(request, upload!.url)
+
+  if (url.startsWith(s3baseUrl)) {
+    return proxyS3Url(request, url)
   } else {
-    return proxyUrl(request, upload!.url)
+    return await fetch(url)
   }
 }
