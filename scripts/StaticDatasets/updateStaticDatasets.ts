@@ -47,7 +47,7 @@ inverse('Starting update with settings', [
   },
 ])
 
-const updateIgnorePath = path.resolve(__dirname, '.updateignore')
+const updateIgnorePath = path.join(geoJsonFolder, '.updateignore')
 const ignorePatterns = fs.existsSync(updateIgnorePath) ? parse(fs.readFileSync(updateIgnorePath)).patterns : []
 
 /** @returns Object or Function | null */
