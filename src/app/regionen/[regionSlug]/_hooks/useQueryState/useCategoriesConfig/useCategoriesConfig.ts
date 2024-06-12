@@ -2,17 +2,17 @@ import { createParser, useQueryState } from 'nuqs'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { searchParamsRegistry } from '../searchParamsRegistry'
 import { createFreshCategoriesConfig } from './createFreshCategoriesConfig'
-import { configCustomParse } from './parser/configCustomParse'
-import { configCustomStringify } from './parser/configCustomStringify'
 import { MapDataCategoryConfig } from './type'
+import { parse } from './v2/parse'
+import { serialize } from './v2/serialize'
 
 export const useCategoriesConfig = () => {
   const region = useStaticRegion()
   const freshConfig = createFreshCategoriesConfig(region?.categories ?? [])
 
   const configParamParser = createParser({
-    parse: (query: string) => configCustomParse(query, freshConfig) as MapDataCategoryConfig[],
-    serialize: (value: MapDataCategoryConfig[]) => configCustomStringify(value),
+    parse: (query: string) => parse(query) as MapDataCategoryConfig,
+    serialize: (value: MapDataCategoryConfig[]) => serialize(value),
   })
     .withOptions({ history: 'push' })
     .withDefault(freshConfig)

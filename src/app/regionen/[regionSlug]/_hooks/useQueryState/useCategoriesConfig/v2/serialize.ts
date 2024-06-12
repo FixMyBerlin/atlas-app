@@ -2,10 +2,12 @@ import { MapDataCategoryConfig } from '../type'
 import { configStructures } from './configStructures'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { sortKeys, iterate, generateConfigStructureAndChecksum, encodeBits } from './lib'
+import { simplifyConfigForParams } from '../parser/configCustomStringify'
 
-export const serialize = (config: MapDataCategoryConfig) => {
-  config = sortKeys(config)
-  const [configStructure, checksum] = generateConfigStructureAndChecksum(config)
+export const serialize = (config: MapDataCategoryConfig[]) => {
+  const simplified = simplifyConfigForParams(config)
+  const sorted = sortKeys(simplified)
+  const [configStructure, checksum] = generateConfigStructureAndChecksum(sorted)
   // @ts-ignore
   if (!(checksum in configStructures) && isDev) {
     console.warn(`
