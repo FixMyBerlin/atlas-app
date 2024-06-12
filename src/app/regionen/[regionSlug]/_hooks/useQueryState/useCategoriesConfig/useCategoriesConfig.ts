@@ -11,7 +11,7 @@ export const useCategoriesConfig = () => {
   const freshConfig = createFreshCategoriesConfig(region?.categories ?? [])
 
   const configParamParser = createParser({
-    parse: (query: string) => parse(query) as MapDataCategoryConfig,
+    parse: (query: string) => parse(query, freshConfig),
     serialize: (value: MapDataCategoryConfig[]) => serialize(value),
   })
     .withOptions({ history: 'push' })

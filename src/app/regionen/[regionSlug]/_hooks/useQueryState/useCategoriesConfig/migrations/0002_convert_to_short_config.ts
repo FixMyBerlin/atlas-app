@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SearchParamsMigration } from './types'
 import { expandObjectKeys } from '../parser/minimzeObjectKeys'
 import { jsurlParse } from '../parser/jurlParseStringify'

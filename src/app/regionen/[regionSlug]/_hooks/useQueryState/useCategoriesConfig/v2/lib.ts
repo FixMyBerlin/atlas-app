@@ -1,38 +1,40 @@
 import adler32 from 'adler-32'
 import { MapDataCategoryConfig } from '../type'
+import { simplifyConfigForParams } from '../v1/configCustomStringify'
 
 function isObject(value) {
   const type = typeof value
   return value != null && (type === 'object' || type === 'function')
 }
 
-const isArray = Array.isArray
-
-export function deepCopy(obj) {
-  return JSON.parse(JSON.stringify(obj))
-}
-
 // sort keys of objects in a nested data structure of objects and arrays
 // to make recursively iterating over it deterministic and deep comparison save
 export function sortKeys(obj) {
-  if (isArray(obj)) {
-    return obj.map((v) => sortKeys(v))
-  } else if (isObject(obj)) {
-    return Object.fromEntries(
-      Object.entries(obj)
-        .sort((a, b) => (a > b ? 1 : -1))
-        .map(([k, v]) => [k, sortKeys(v)]),
-    )
-  } else {
-    return obj
+  const sort = (obj) => {
+    if (Array.isArray(obj)) {
+      return obj.map((v) => sort(v))
+    } else if (isObject(obj)) {
+      return Object.fromEntries(
+        Object.entries(obj)
+          .sort((a, b) => (a > b ? 1 : -1))
+          .map(([k, v]) => [k, sort(v)]),
+      )
+    } else {
+      return obj
+    }
   }
+  const sortedObj = structuredClone(obj)
+  sort(sortedObj)
+  return sortedObj
 }
 
 // recursively iterates over a nested data structure of objects and arrays
 // and calls fn(obj, path) for every object with properties 'id' and 'active'
-export function iterate(obj, fn, path?) {
+type Obj = Record<string, any> & { id: string; active: boolean }
+type Fn = (obj: Obj, path: any[]) => void
+export function iterate(obj, fn: Fn, path?) {
   if (!path) path = []
-  if (isArray(obj)) {
+  if (Array.isArray(obj)) {
     obj.forEach((v, i) => iterate(v, fn, [...path, i]))
   } else if (isObject(obj)) {
     if ('id' in obj && 'active' in obj) {
@@ -44,11 +46,18 @@ export function iterate(obj, fn, path?) {
   }
 }
 
-export function generateConfigStructureAndChecksum(config: MapDataCategoryConfig) {
-  config = deepCopy(config) as MapDataCategoryConfig
-  iterate(config, (obj) => (obj.active = false))
-  const checksum = new Uint32Array([adler32.str(JSON.stringify(config))])[0]!.toString(36) as string
-  return [config as MapDataCategoryConfig, checksum]
+export function setAllActiveToFalse(config: MapDataCategoryConfig[]) {
+  const allActiveFalse = structuredClone(config)
+  iterate(allActiveFalse, (obj) => (obj.active = false))
+  return allActiveFalse
+}
+
+export function calcConfigChecksum(config: MapDataCategoryConfig[]) {
+  const simplified = simplifyConfigForParams(config)
+  const sorted = sortKeys(simplified)
+  const allFalse = setAllActiveToFalse(sorted)
+  const checksum = new Uint32Array([adler32.str(JSON.stringify(allFalse))])[0]!.toString(36)
+  return checksum
 }
 
 const useBits = 31 // unsigned
