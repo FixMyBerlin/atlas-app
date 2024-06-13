@@ -10,6 +10,7 @@ import {
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
+import { serialize } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
@@ -84,12 +85,12 @@ export function middleware(request: NextRequest) {
   }
 
   // Make sure param 'config' is valid
-  const freshConfig = createFreshCategoriesConfig(region.categories)
-  const migratedConfig = configCustomStringify(
-    configCustomParse(u.searchParams.get('config'), freshConfig),
-  )
-  u.searchParams.delete('config')
-  u.searchParams.append('config', migratedConfig)
+  // TODO: Migrating config when categories have changed has to happen here
+  if (!u.searchParams.has('config')) {
+    const freshConfig = createFreshCategoriesConfig(region.categories)
+    const serialized = serialize(freshConfig)
+    u.searchParams.append('config', serialized)
+  }
 
   migratedUrl = u.toString()
 
