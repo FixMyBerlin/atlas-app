@@ -92,6 +92,16 @@ export function middleware(request: NextRequest) {
     u.searchParams.append('config', serialized)
   }
 
+  // Ensure order of params
+  const params = [...Object.values(searchParamsRegistry), 'v']
+  params.forEach((param) => {
+    if (u.searchParams.has(param)) {
+      const value = u.searchParams.get(param)!
+      u.searchParams.delete(param)
+      u.searchParams.append(param, value)
+    }
+  })
+
   migratedUrl = u.toString()
 
   return redirectIfChanged(initialUrl, migratedUrl)

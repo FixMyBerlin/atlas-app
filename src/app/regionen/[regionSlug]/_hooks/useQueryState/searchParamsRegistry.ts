@@ -1,11 +1,11 @@
 export const searchParamsRegistry = {
-  bg: 'bg',
+  map: 'map',
   config: 'config',
   data: 'data',
-  debugMap: 'debugMap',
-  draw: 'draw',
   f: 'f', // selected features
-  map: 'map',
+  bg: 'bg',
+  draw: 'draw',
   osmNote: 'osmNote',
   osmNotes: 'osmNotes',
+  debugMap: 'debugMap',
 } as const
