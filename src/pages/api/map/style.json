@@ -2594,18 +2594,20 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": {
-          "stops": [
-            [
-              5,
-              "hsl(40, 100%, 93%)"
-            ],
-            [
-              12,
-              "hsl(41, 100%, 90%)"
-            ]
-          ]
-        },
+        "line-color": [
+          "interpolate",
+          [
+            "exponential",
+            1
+          ],
+          [
+            "zoom"
+          ],
+          11.5,
+          "hsl(0, 0%, 100%)",
+          12,
+          "hsl(53, 71%, 89%)"
+        ],
         "line-width": {
           "stops": [
             [
@@ -3203,7 +3205,7 @@
           11.5,
           "hsl(53, 0%, 100%)",
           12.5,
-          "hsl(53, 100%, 96%)"
+          "hsl(54, 100%, 96%)"
         ],
         "line-width": [
           "interpolate",
@@ -3262,7 +3264,19 @@
         "visibility": "visible"
       },
       "paint": {
-        "line-color": "hsl(45, 100%, 91%)",
+        "line-color": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          11.5,
+          "hsl(60, 20%, 99%)",
+          12.5,
+          "hsl(54, 100%, 96%)"
+        ],
         "line-width": {
           "stops": [
             [
@@ -5172,7 +5186,7 @@
       "source": "openmaptiles",
       "source-layer": "place",
       "minzoom": 10,
-      "maxzoom": 11,
+      "maxzoom": 14,
       "layout": {
         "icon-size": 1,
         "text-font": [
@@ -5255,7 +5269,7 @@
       "source": "openmaptiles",
       "source-layer": "place",
       "minzoom": 8,
-      "maxzoom": 11,
+      "maxzoom": 12,
       "layout": {
         "icon-size": 1,
         "text-font": [
@@ -5312,6 +5326,7 @@
           0.2,
           0.2
         ],
+        "text-overlap": "cooperative",
         "text-max-width": 10,
         "text-transform": "none",
         "text-keep-upright": true
