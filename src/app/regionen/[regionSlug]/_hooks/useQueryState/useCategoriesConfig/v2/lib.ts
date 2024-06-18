@@ -7,27 +7,6 @@ function isObject(value) {
   return value != null && (type === 'object' || type === 'function')
 }
 
-// sort keys of objects in a nested data structure of objects and arrays
-// to make recursively iterating over it deterministic and deep comparison save
-export function sortKeys(obj) {
-  const sort = (obj) => {
-    if (Array.isArray(obj)) {
-      return obj.map((v) => sort(v))
-    } else if (isObject(obj)) {
-      return Object.fromEntries(
-        Object.entries(obj)
-          .sort((a, b) => (a > b ? 1 : -1))
-          .map(([k, v]) => [k, sort(v)]),
-      )
-    } else {
-      return obj
-    }
-  }
-  const sortedObj = structuredClone(obj)
-  sort(sortedObj)
-  return sortedObj
-}
-
 // recursively iterates over a nested data structure of objects and arrays
 // and calls fn(obj, path) for every object with properties 'id' and 'active'
 type Obj = Record<string, any> & { id: string; active: boolean }
@@ -46,7 +25,7 @@ export function iterate(obj, fn: Fn, path?) {
   }
 }
 
-export function setAllActiveToFalse(config: MapDataCategoryConfig[]) {
+export function setAllActiveToFalse<T>(config: T) {
   const allActiveFalse = structuredClone(config)
   iterate(allActiveFalse, (obj) => (obj.active = false))
   return allActiveFalse
@@ -54,8 +33,7 @@ export function setAllActiveToFalse(config: MapDataCategoryConfig[]) {
 
 export function calcConfigChecksum(config: MapDataCategoryConfig[]) {
   const simplified = simplifyConfigForParams(config)
-  const sorted = sortKeys(simplified)
-  const allFalse = setAllActiveToFalse(sorted)
+  const allFalse = setAllActiveToFalse(simplified)
   const checksum = new Uint32Array([adler32.str(JSON.stringify(allFalse))])[0]!.toString(36)
   return checksum
 }
