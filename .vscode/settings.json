@@ -9,5 +9,7 @@
   "typescript.referencesCodeLens.enabled": true,
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
-  }
+  },
+  // Use TS version from node_modules
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
