@@ -31,6 +31,7 @@ export type StaticRegion = {
   categories: MapDataCategoryId[]
   backgroundSources: SourcesRasterIds[]
   hideOsmNotes?: boolean
+  hideDownload?: boolean
 } & (
   | {
       logoPath: StaticImageData | null
@@ -226,6 +227,7 @@ export const staticRegion: StaticRegion[] = [
       'areal2019',
       'parkraumkarte_neukoelln',
     ],
+    hideDownload: true,
   },
   {
     slug: 'rs8',
