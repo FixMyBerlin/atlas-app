@@ -61,15 +61,13 @@ export const Map = () => {
     })
   }
 
-  const containMaskFeature = (features: MapGeoJSONFeature[] | undefined) => {
+  const containMaskFeature = (features: MapLayerMouseEvent['features']) => {
     if (!features) return false
     return features.some((f) => f.source === 'mask')
   }
 
   const [cursorStyle, setCursorStyle] = useState('grab')
-  const handleMouseEnter = (event: MapLayerMouseEvent) => {
-    // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
-    const features = event.features as MapGeoJSONFeature[] | undefined
+  const handleMouseEnter = ({ features }: MapLayerMouseEvent) => {
     if (containMaskFeature(features)) {
       setCursorStyle('not-allowed')
       return
@@ -84,9 +82,7 @@ export const Map = () => {
 
   const { inspectorFeatures } = useMapStateInteraction()
 
-  const handleClick = (event: MapLayerMouseEvent) => {
-    // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
-    const features = event.features as MapGeoJSONFeature[] | undefined
+  const handleClick = ({ features, ...event }: MapLayerMouseEvent) => {
     if (containMaskFeature(features)) {
       return
     }
