@@ -15,11 +15,11 @@ export const config = {
   matcher: ['/regionen/:path*'],
 }
 
-function splitPathname(url) {
+function splitPathname(url: string) {
   return new URL(url).pathname.slice(1).split('/')
 }
 
-function redirectIfChanged(oldUrl, newUrl) {
+function redirectIfChanged(oldUrl: string, newUrl: string) {
   if (oldUrl === newUrl) {
     return NextResponse.next()
   } else {
@@ -27,8 +27,7 @@ function redirectIfChanged(oldUrl, newUrl) {
   }
 }
 
-function renameRegionIfNecessary(url: string) {
-  const slug = splitPathname(url)[1]!
+function renameRegionIfNecessary(url: string, slug: string) {
   const renamedRegions = {
     // [oldName, newName]
     // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
@@ -51,9 +50,10 @@ export function middleware(request: NextRequest) {
   let [page, slug, subpage] = splitPathname(initialUrl)
   if (page !== 'regionen') return NextResponse.next()
   if (page === 'regionen' && !slug) return NextResponse.next()
+  if (!slug) return NextResponse.next()
   // from here path must be '/regionen/[slug]...'
 
-  let migratedUrl = renameRegionIfNecessary(initialUrl)
+  let migratedUrl = renameRegionIfNecessary(initialUrl, slug)
   // from here slugs were renamed
 
   const existingSlugs = staticRegion.map((r) => r.slug)
