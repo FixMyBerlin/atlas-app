@@ -3,14 +3,15 @@ import { NextResponse } from 'next/server'
 import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
-import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v1/configCustomParse'
-import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v1/configCustomStringify'
 import {
   parseMapParam,
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
-import { serialize } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
+import { parse as parseConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/parse'
+import { serialize as serializeConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
+import { configs } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/configs'
+import { mergeCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v1/mergeCategoriesConfig'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
@@ -85,11 +86,26 @@ export function middleware(request: NextRequest) {
   }
 
   // Make sure param 'config' is valid
-  // TODO: Migrating config when categories have changed has to happen here
-  if (!u.searchParams.has('config')) {
-    const freshConfig = createFreshCategoriesConfig(region.categories)
-    const serialized = serialize(freshConfig)
-    u.searchParams.append('config', serialized)
+  const freshConfig = createFreshCategoriesConfig(region.categories)
+  const resetConfig = () => u.searchParams.set('config', serializeConfig(freshConfig))
+  if (u.searchParams.has('config')) {
+    const configParam = u.searchParams.get('config')!
+    const checksum = configParam.split('.')[0]!
+    const simplifiedConfig = configs[checksum]
+    // console.log("simplifiedConfig: ", simplifiedConfig)
+    if (simplifiedConfig) {
+      const newConfigParam = serializeConfig(
+        mergeCategoriesConfig({
+          freshConfig,
+          urlConfig: parseConfig(configParam, simplifiedConfig),
+        }),
+      )
+      u.searchParams.set('config', newConfigParam)
+    } else {
+      resetConfig()
+    }
+  } else {
+    resetConfig()
   }
 
   // Ensure order of params
