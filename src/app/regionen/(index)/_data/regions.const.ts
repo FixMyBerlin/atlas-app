@@ -30,6 +30,7 @@ export type StaticRegion = {
   logoWhiteBackgroundRequired: boolean
   categories: MapDataCategoryId[]
   backgroundSources: SourcesRasterIds[]
+  hideOsmNotes?: boolean
 } & (
   | {
       logoPath: StaticImageData | null
@@ -455,6 +456,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    hideOsmNotes: true,
   },
   {
     slug: 'bb-pg',
