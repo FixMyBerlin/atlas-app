@@ -1,6 +1,8 @@
 import adler32 from 'adler-32'
 import { MapDataCategoryConfig } from '../type'
 import { simplifyConfigForParams } from '../v1/configCustomStringify'
+import { staticRegion } from '../../../../../(index)/_data/regions.const'
+import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 
 function isObject(value) {
   const type = typeof value
@@ -61,4 +63,15 @@ export function decodeBits(integers: number[]) {
     }
   }
   return booleans
+}
+
+export function getSimplifiedConfigs() {
+  return Object.fromEntries(
+    staticRegion.map((region) => {
+      const freshConfig = createFreshCategoriesConfig(region.categories)
+      const simplifiedConfig = simplifyConfigForParams(freshConfig)
+      const checksum = calcConfigChecksum(freshConfig)
+      return [checksum, simplifiedConfig]
+    }),
+  )
 }
