@@ -1,18 +1,18 @@
+import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { LayerSpecification } from 'maplibre-gl'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
-  createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
+  createSourceKeyStaticDatasets,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { layerVisibility } from '../utils/layerVisibility'
-import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 import { createPmtilesUrl } from './utils/createPmtilesUrl'
+import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
-export const SourcesLayersStaticDatasets: React.FC = () => {
+export const SourcesLayersStaticDatasets = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
   const { useDebugLayerStyles } = useMapDebugState()
 
@@ -29,11 +29,10 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
 
         const sourceProps =
           type === 'GEOJSON'
-            ? { type: 'geojson', data: url }
-            : { type: 'vector', url: createPmtilesUrl(url) }
+            ? { type: 'geojson' as const, data: url }
+            : { type: 'vector' as const, url: createPmtilesUrl(url) }
 
         return (
-          // @ts-ignore - see comment at {...sourceProps}
           <Source
             id={datasetSourceId}
             key={datasetSourceId}
@@ -45,8 +44,11 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                 layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
               const layerId = createDatasetSourceLayerKey(sourceId, subId, layer.id)
+
               // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-              const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+              const layerFilter = (
+                useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+              ) as FilterSpecification
 
               // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
               const layerPaint = useDebugLayerStyles
@@ -54,14 +56,13 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                     source: sourceId,
                     sourceLayer: 'default',
                   }).find((l) => l.type === layer.type)?.paint
-                : (layer.paint as any)
+                : layer.paint
 
-              let layerProps: LayerSpecification = {
+              const layerProps: LayerProps = {
                 id: layerId,
                 source: datasetSourceId,
                 type: layer.type,
-                layout: layout,
-                // @ts-ignore
+                layout,
                 filter: layerFilter,
                 paint: layerPaint,
                 beforeId:

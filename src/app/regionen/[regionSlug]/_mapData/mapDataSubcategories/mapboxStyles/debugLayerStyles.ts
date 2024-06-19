@@ -16,7 +16,7 @@ export const debugLayerStyles = ({
     {
       id: 'debugStyleLayerLine',
       type: 'line',
-      source: source,
+      source,
       'source-layer': sourceLayer,
       paint: {
         'line-width': 10,
@@ -29,7 +29,7 @@ export const debugLayerStyles = ({
     {
       id: 'debugStyleLayerCircle',
       type: 'circle',
-      source: source,
+      source,
       'source-layer': sourceLayer,
       paint: {
         'circle-radius': 5,
@@ -42,7 +42,7 @@ export const debugLayerStyles = ({
     {
       id: 'debugStyleLayerFill',
       type: 'fill',
-      source: source,
+      source,
       'source-layer': sourceLayer,
       paint: {
         'fill-color': '#a21caf',
@@ -55,7 +55,7 @@ export const debugLayerStyles = ({
     {
       id: 'debugStyleLayerSymbol',
       type: 'symbol',
-      source: source,
+      source,
       'source-layer': sourceLayer,
       paint: {},
       layout: {
