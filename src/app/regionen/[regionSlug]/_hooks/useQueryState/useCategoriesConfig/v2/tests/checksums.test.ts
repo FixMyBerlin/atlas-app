@@ -3,10 +3,10 @@ import { configs } from '../configs'
 import { getSimplifiedConfigs } from '../lib'
 
 describe('Check if configs were changed', () => {
-  test('Compare checksums current configs with previous configs.', () => {
-    // this test fails if a config was changed and means that one or more
-    // configs need to be saved because they might be needed in the future
-    // just run `npm run save-configs`
+  test('Validate that the current config is stored. Run `npm run save-configs` if this fails.', () => {
+    // This test fails if the config was changed.
+    // Which means you need to run `npm run save-configs` to preserve this config as a template.
+    // See [README.md](../../README.md) for more.
     const existingChecksums = Object.keys(configs)
     const currentChecksums = Object.keys(getSimplifiedConfigs())
     for (const checksum of currentChecksums) {
