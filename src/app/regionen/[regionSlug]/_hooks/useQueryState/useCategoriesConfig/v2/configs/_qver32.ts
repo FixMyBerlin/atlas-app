@@ -3,9 +3,9 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _pn8aa4: MapDataCategoryParam[] = [
+export const _qver32: MapDataCategoryParam[] = [
   {
-    id: 'bikelanes-minimal',
+    id: 'bikelanes',
     active: false,
     subcategories: [
       {
@@ -17,6 +17,11 @@ export const _pn8aa4: MapDataCategoryParam[] = [
           { id: 'width', active: false },
         ],
       },
+      { id: 'bikelanes_plus_presence', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_width', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
     ],
   },
   {
@@ -65,6 +70,7 @@ export const _pn8aa4: MapDataCategoryParam[] = [
           { id: 'default', active: true },
           { id: 'sidestreets', active: false },
           { id: 'mainstreets', active: false },
+          { id: 'classified', active: false },
         ],
       },
       {
@@ -79,6 +85,43 @@ export const _pn8aa4: MapDataCategoryParam[] = [
       { id: 'roads_plus_oneway', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_footways', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_label', styles: [{ id: 'default', active: true }] },
+    ],
+  },
+  {
+    id: 'surface',
+    active: false,
+    subcategories: [
+      {
+        id: 'surfaceRoads',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'bad', active: false },
+        ],
+      },
+      {
+        id: 'surfaceBikelanes',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'bad', active: false },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'lit',
+    active: false,
+    subcategories: [
+      {
+        id: 'lit',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'lit', active: false },
+        ],
+      },
+      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {

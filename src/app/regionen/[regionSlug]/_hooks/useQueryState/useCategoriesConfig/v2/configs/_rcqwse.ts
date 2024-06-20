@@ -3,42 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _16o3inb: MapDataCategoryParam[] = [
-  {
-    id: 'poi',
-    active: false,
-    subcategories: [
-      {
-        id: 'poi',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'education', active: false },
-        ],
-      },
-      {
-        id: 'poiPlaces',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'circle', active: false },
-        ],
-      },
-      {
-        id: 'poiBoundaries',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-          { id: 'category_district_label', active: false },
-          { id: 'category_municipality', active: false },
-          { id: 'category_municipality_label', active: false },
-        ],
-      },
-      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
-    ],
-  },
+export const _rcqwse: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',
     active: false,
@@ -70,6 +35,7 @@ export const _16o3inb: MapDataCategoryParam[] = [
           { id: 'default', active: true },
           { id: 'sidestreets', active: false },
           { id: 'mainstreets', active: false },
+          { id: 'classified', active: false },
         ],
       },
       {
@@ -109,16 +75,28 @@ export const _16o3inb: MapDataCategoryParam[] = [
     ],
   },
   {
-    id: 'bicycleParking',
+    id: 'boundaries',
     active: false,
     subcategories: [
       {
-        id: 'bicycleParking',
+        id: 'poiPlaces',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'circle', active: false },
+        ],
+      },
+      {
+        id: 'poiBoundaries',
         styles: [
           { id: 'hidden', active: false },
           { id: 'default', active: true },
+          { id: 'category_district_label', active: false },
+          { id: 'category_municipality', active: false },
+          { id: 'category_municipality_label', active: false },
         ],
       },
+      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
     ],
   },
   {

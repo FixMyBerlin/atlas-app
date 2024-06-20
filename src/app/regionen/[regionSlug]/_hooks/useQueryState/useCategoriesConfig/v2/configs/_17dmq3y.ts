@@ -3,27 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _9xmzn: MapDataCategoryParam[] = [
-  {
-    id: 'bikelanes',
-    active: false,
-    subcategories: [
-      {
-        id: 'bikelanes',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'details', active: false },
-          { id: 'width', active: false },
-        ],
-      },
-      { id: 'bikelanes_plus_presence', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_width', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
-    ],
-  },
+export const _17dmq3y: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -60,6 +40,26 @@ export const _9xmzn: MapDataCategoryParam[] = [
     ],
   },
   {
+    id: 'bikelanes',
+    active: false,
+    subcategories: [
+      {
+        id: 'bikelanes',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'details', active: false },
+          { id: 'width', active: false },
+        ],
+      },
+      { id: 'bikelanes_plus_presence', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_width', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
+    ],
+  },
+  {
     id: 'roads',
     active: false,
     subcategories: [
@@ -70,6 +70,7 @@ export const _9xmzn: MapDataCategoryParam[] = [
           { id: 'default', active: true },
           { id: 'sidestreets', active: false },
           { id: 'mainstreets', active: false },
+          { id: 'classified', active: false },
         ],
       },
       {
@@ -121,6 +122,62 @@ export const _9xmzn: MapDataCategoryParam[] = [
         ],
       },
       { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
+    ],
+  },
+  {
+    id: 'parking',
+    active: false,
+    subcategories: [
+      {
+        id: 'parking',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'presence', active: false },
+          { id: 'surface', active: false },
+        ],
+      },
+      {
+        id: 'parkingPoints',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
+      {
+        id: 'parkingAreas',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'street_side', active: false },
+        ],
+      },
+      {
+        id: 'parkingDebug',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
+      {
+        id: 'parkingStats',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'stats-admin-level-4', active: false },
+          { id: 'default', active: false },
+          { id: 'stats-admin-level-10', active: false },
+          { id: 'length-admin-level-4', active: false },
+          { id: 'length-admin-level-9', active: false },
+          { id: 'length-admin-level-10', active: false },
+        ],
+      },
+      {
+        id: 'signs',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
     ],
   },
   {

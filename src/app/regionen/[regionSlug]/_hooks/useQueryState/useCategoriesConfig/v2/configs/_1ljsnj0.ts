@@ -3,7 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _hbcnj5: MapDataCategoryParam[] = [
+export const _1ljsnj0: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',
     active: false,
@@ -85,6 +85,7 @@ export const _hbcnj5: MapDataCategoryParam[] = [
           { id: 'default', active: true },
           { id: 'sidestreets', active: false },
           { id: 'mainstreets', active: false },
+          { id: 'classified', active: false },
         ],
       },
       {

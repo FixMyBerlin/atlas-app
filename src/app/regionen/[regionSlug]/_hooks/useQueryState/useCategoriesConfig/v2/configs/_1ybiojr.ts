@@ -3,7 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _fdikzw: MapDataCategoryParam[] = [
+export const _1ybiojr: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -75,6 +75,7 @@ export const _fdikzw: MapDataCategoryParam[] = [
           { id: 'default', active: true },
           { id: 'sidestreets', active: false },
           { id: 'mainstreets', active: false },
+          { id: 'classified', active: false },
         ],
       },
       {
