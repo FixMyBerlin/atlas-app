@@ -42,5 +42,6 @@ module.exports = withBlitz(
         permanent: true,
       },
     ],
+    productionBrowserSourceMaps: true
   }),
 )
