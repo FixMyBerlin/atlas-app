@@ -20,7 +20,7 @@ fi
 while [ "$WAIT_FOR_FRESH_DATA" == 1 ] ; do
    remaining_tries=$(($remaining_tries - 1))
   # get the file's date from the header
-  file_date=$(curl -sI "$OSM_DOWNLOAD_URL" | grep -i "DATE" | cut -d' ' -f2-)
+  file_date=$(curl -sI "$OSM_DOWNLOAD_URL" | grep -i "Last-Modified" | cut -d' ' -f2-)
   file_date=$(date -d "$file_date" "$DATE_FORMAT")
   # if the file is from today break the loop
   if [ "$todays_date" == "$file_date" ]; then
