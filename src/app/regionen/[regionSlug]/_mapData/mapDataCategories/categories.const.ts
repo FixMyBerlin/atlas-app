@@ -24,6 +24,7 @@ import { subcat_poi_plus_landuse } from '../mapDataSubcategories/subcat_poi_plus
 import { subcat_poi_plus_publicTransport } from '../mapDataSubcategories/subcat_poi_plus_publicTransport.const'
 import { subcat_roads } from '../mapDataSubcategories/subcat_roads.const'
 import { subcat_roads_plus_footways } from '../mapDataSubcategories/subcat_roads_plus_footways.const'
+import { subcat_roads_plus_label } from '../mapDataSubcategories/subcat_roads_plus_label.const'
 import { subcat_roads_plus_oneway } from '../mapDataSubcategories/subcat_roads_plus_oneway.const'
 import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
 import { subcat_surface_bikelane } from '../mapDataSubcategories/subcat_surface_bikelane'
@@ -86,6 +87,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_maxspeed, defaultStyle: 'hidden' },
       { ...subcat_roads_plus_oneway, defaultStyle: 'hidden' },
       { ...subcat_roads_plus_footways, defaultStyle: 'hidden' },
+      { ...subcat_roads_plus_label, defaultStyle: 'default' },
       // { id: 'subcat_roads_plus_lanes_text', defaultStyle: 'hidden' },
       // { id: 'subcat_roads_plus_surface_text', defaultStyle: 'hidden' },
       // { ...subcat_maxspeed_plus_presence, defaultStyle: 'hidden' }, // TEMP deactivated, see https://github.com/FixMyBerlin/private-issues/issues/594#issuecomment-1969083526

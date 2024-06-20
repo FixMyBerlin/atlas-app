@@ -186,7 +186,7 @@ describe('middleware()', () => {
       const url = getUrl(response)
 
       expect(url.searchParams.get('v')).toBe('2')
-      expect(url.searchParams.get('config')).toBe('1j7ax4m.9fp0a1.ce4k')
+      expect(url.searchParams.get('config')).toBe('16o3inb.9fp0a1.os9w')
     })
   })
 })
