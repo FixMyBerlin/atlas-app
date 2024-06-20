@@ -87,15 +87,12 @@ const regionGroupFolderPaths = fs
   .readdirSync(geoJsonFolder)
   // Make sure we only select folders, no files
   .filter((item) => fs.statSync(path.join(geoJsonFolder, item)).isDirectory())
-  // We skip `_utils` and by convention prefix unpublished datasets with underscore
-  .filter((folder) => !folder.startsWith('_'))
+
 const datasetFileFolderData = regionGroupFolderPaths
   .map((regionGroupFolder) => {
     const subFolders = fs.readdirSync(path.join(geoJsonFolder, regionGroupFolder))
     return subFolders.map((datasetFolder) => {
       const targetFolder = path.join(geoJsonFolder, regionGroupFolder, datasetFolder)
-      // We skip `_utils` and by convention prefix unpublished datasets with underscore
-      if (datasetFolder.startsWith('_')) return
       // If a `folder-filter` is given, we only look at folder that include this term
       if (folderFilterTerm && !targetFolder.includes(folderFilterTerm)) return
       // Make sure we only select folders, no files
