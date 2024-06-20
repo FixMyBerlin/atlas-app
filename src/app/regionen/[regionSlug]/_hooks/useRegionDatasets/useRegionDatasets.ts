@@ -1,9 +1,15 @@
 import { useQuery } from '@blitzjs/rpc'
+import memoize from 'lodash/memoize'
 import { MetaData } from 'scripts/StaticDatasets/types'
 import getUploadsForRegion from 'src/uploads/queries/getUploadsForRegion'
 import { getStaticDatasetUrl } from '../../../../_components/utils/getStaticDatasetUrl'
 import { useRegionSlug } from '../../_components/regionUtils/useRegionSlug'
 import { Prettify } from 'src/app/_components/types/types'
+
+const memoized = memoize(
+  (regionDatasets) => regionDatasets,
+  (regionDatasets) => regionDatasets.map((r) => r.id).join(),
+)
 
 export const useRegionDatasets = () => {
   const regionSlug = useRegionSlug()
@@ -14,6 +20,7 @@ export const useRegionDatasets = () => {
       isPublic: boolean
       id: string
       url: string
+      type: 'PMTILES' | 'GEOJSON'
       githubUrl: string // an addition to MetaData['configs'] in updateStaticDatasets.ts
     }
   >
@@ -25,10 +32,13 @@ export const useRegionDatasets = () => {
         ...config,
         isPublic: upload.public,
         id: upload.slug,
+        type: upload.type,
         url: getStaticDatasetUrl(upload.slug),
       })
     })
   })
 
-  return regionDatasets.sort((a, b) => a.name.localeCompare(b.name))
+  regionDatasets.sort((a, b) => a.name.localeCompare(b.name))
+
+  return memoized(regionDatasets)
 }

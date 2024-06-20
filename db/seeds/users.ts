@@ -82,7 +82,7 @@ const seedUsers = async () => {
       hashedPassword,
     },
     {
-      osmId: 20340489,
+      osmId: 20561,
       osmName: 'the-sven',
       osmDescription: undefined,
       role: 'ADMIN',

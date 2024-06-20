@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
-import { expandObjectKeys, minimizeObjectKeys } from './minimzeObjectKeys'
+import { expandObjectKeys } from './expandObjectKeys'
 
-describe('minimizeObjectKeys()', () => {
+describe('expandObjectKeys()', () => {
   describe('transform cases', () => {
     const expanded = {
       id: 'foo1',
@@ -39,10 +39,7 @@ describe('minimizeObjectKeys()', () => {
         ],
       },
     }
-    test('minimize all keys in nested object', () => {
-      const result = minimizeObjectKeys(expanded)
-      expect(result).toMatchObject(minimized)
-    })
+
     test('expand all keys in nested object', () => {
       const result = expandObjectKeys(minimized)
       expect(result).toMatchObject(expanded)

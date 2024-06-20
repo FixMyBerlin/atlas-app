@@ -6,6 +6,11 @@ export const staticDatasetCategories = {
     title: 'Netzentwicklung Land',
     subtitle: 'Statische Daten zur Entwicklung des Radnetzes für Brandenburg',
   },
+  'bb/Beteiligung': {
+    order: 1.5,
+    title: 'Beteiligung',
+    subtitle: 'Aktuelle Beteiligungsbeiträge',
+  },
   'bb/Bestandsdaten': {
     order: 2,
     title: 'Bestandsdaten',

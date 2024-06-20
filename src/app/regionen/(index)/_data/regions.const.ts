@@ -30,6 +30,8 @@ export type StaticRegion = {
   logoWhiteBackgroundRequired: boolean
   categories: MapDataCategoryId[]
   backgroundSources: SourcesRasterIds[]
+  hideOsmNotes?: boolean
+  hideDownload?: boolean
 } & (
   | {
       logoPath: StaticImageData | null
@@ -225,6 +227,7 @@ export const staticRegion: StaticRegion[] = [
       'areal2019',
       'parkraumkarte_neukoelln',
     ],
+    hideDownload: true,
   },
   {
     slug: 'rs8',
@@ -455,6 +458,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    hideOsmNotes: true,
   },
   {
     slug: 'bb-pg',

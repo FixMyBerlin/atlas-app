@@ -3,24 +3,26 @@ import { NextResponse } from 'next/server'
 import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
-import { configCustomParse } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomParse'
-import { configCustomStringify } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/parser/configCustomStringify'
 import {
   parseMapParam,
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
 import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
+import { parse as parseConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/parse'
+import { serialize as serializeConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
+import { configs } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/configs'
+import { mergeCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/utils/mergeCategoriesConfig'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {
   matcher: ['/regionen/:path*'],
 }
 
-function splitPathname(url) {
+function splitPathname(url: string) {
   return new URL(url).pathname.slice(1).split('/')
 }
 
-function redirectIfChanged(oldUrl, newUrl) {
+function redirectIfChanged(oldUrl: string, newUrl: string) {
   if (oldUrl === newUrl) {
     return NextResponse.next()
   } else {
@@ -28,8 +30,7 @@ function redirectIfChanged(oldUrl, newUrl) {
   }
 }
 
-function renameRegionIfNecessary(url: string) {
-  const slug = splitPathname(url)[1]!
+function renameRegionIfNecessary(url: string, slug: string) {
   const renamedRegions = {
     // [oldName, newName]
     // Remember to also add a migration like db/migrations/20240307091010_migrate_region_slugs/migration.sql
@@ -52,9 +53,10 @@ export function middleware(request: NextRequest) {
   let [page, slug, subpage] = splitPathname(initialUrl)
   if (page !== 'regionen') return NextResponse.next()
   if (page === 'regionen' && !slug) return NextResponse.next()
+  if (!slug) return NextResponse.next()
   // from here path must be '/regionen/[slug]...'
 
-  let migratedUrl = renameRegionIfNecessary(initialUrl)
+  let migratedUrl = renameRegionIfNecessary(initialUrl, slug)
   // from here slugs were renamed
 
   const existingSlugs = staticRegion.map((r) => r.slug)
@@ -85,11 +87,36 @@ export function middleware(request: NextRequest) {
 
   // Make sure param 'config' is valid
   const freshConfig = createFreshCategoriesConfig(region.categories)
-  const migratedConfig = configCustomStringify(
-    configCustomParse(u.searchParams.get('config'), freshConfig),
-  )
-  u.searchParams.delete('config')
-  u.searchParams.append('config', migratedConfig)
+  const resetConfig = () => u.searchParams.set('config', serializeConfig(freshConfig))
+  if (u.searchParams.has('config')) {
+    const configParam = u.searchParams.get('config')!
+    const checksum = configParam.split('.')[0]!
+    const simplifiedConfig = configs[checksum]
+    // console.log("simplifiedConfig: ", simplifiedConfig)
+    if (simplifiedConfig) {
+      const newConfigParam = serializeConfig(
+        mergeCategoriesConfig({
+          freshConfig,
+          urlConfig: parseConfig(configParam, simplifiedConfig),
+        }),
+      )
+      u.searchParams.set('config', newConfigParam)
+    } else {
+      resetConfig()
+    }
+  } else {
+    resetConfig()
+  }
+
+  // Ensure order of params
+  const params = [...Object.values(searchParamsRegistry), 'v']
+  params.forEach((param) => {
+    if (u.searchParams.has(param)) {
+      const value = u.searchParams.get(param)!
+      u.searchParams.delete(param)
+      u.searchParams.append(param, value)
+    }
+  })
 
   migratedUrl = u.toString()
 

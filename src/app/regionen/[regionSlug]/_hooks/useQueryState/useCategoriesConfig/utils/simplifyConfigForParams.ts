@@ -1,6 +1,4 @@
 import { MapDataCategoryConfig, MapDataCategoryParam } from '../type'
-import { jurlStringify } from './jurlParseStringify'
-import { minimizeObjectKeys } from './minimzeObjectKeys'
 
 export const simplifyConfigForParams = (categoriesConfig: MapDataCategoryConfig[]) => {
   return categoriesConfig.map((categoryConfig) => {
@@ -18,11 +16,4 @@ export const simplifyConfigForParams = (categoriesConfig: MapDataCategoryConfig[
       }),
     }
   }) satisfies MapDataCategoryParam[]
-}
-
-export const configCustomStringify = (categoriesConfig: MapDataCategoryConfig[]) => {
-  const simplified = simplifyConfigForParams(categoriesConfig)
-  const minimized = minimizeObjectKeys(simplified)
-
-  return jurlStringify(minimized)
 }

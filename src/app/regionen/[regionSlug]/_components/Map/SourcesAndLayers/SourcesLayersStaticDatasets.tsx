@@ -1,17 +1,18 @@
+import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
-  createSourceKeyStaticDatasets,
   createDatasetSourceLayerKey,
+  createSourceKeyStaticDatasets,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { layerVisibility } from '../utils/layerVisibility'
+import { createPmtilesUrl } from './utils/createPmtilesUrl'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { pmtilesUrl } from './utils/pmtilesUrl'
 
-export const SourcesLayersStaticDatasets: React.FC = () => {
+export const SourcesLayersStaticDatasets = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
   const { useDebugLayerStyles } = useMapDebugState()
 
@@ -26,21 +27,28 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
         const visible = selectedDatasetIds.includes(datasetSourceId)
         const visibility = layerVisibility(visible)
 
+        const sourceProps =
+          type === 'GEOJSON'
+            ? { type: 'geojson' as const, data: url }
+            : { type: 'vector' as const, url: createPmtilesUrl(url) }
+
         return (
           <Source
             id={datasetSourceId}
             key={datasetSourceId}
-            type={type}
-            url={pmtilesUrl(url)}
             attribution={attributionHtml}
+            {...sourceProps} // type inference fails here - maybe a typescript bug?
           >
             {layers.map((layer) => {
               const layout =
                 layer.layout === undefined ? visibility : { ...visibility, ...layer.layout }
 
               const layerId = createDatasetSourceLayerKey(sourceId, subId, layer.id)
+
               // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
-              const layerFilter = useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+              const layerFilter = (
+                useDebugLayerStyles ? ['all'] : wrapFilterWithAll(layer.filter)
+              ) as FilterSpecification
 
               // Use ?debugMap=true and <DebugMap> to setUseDebugLayerStyles
               const layerPaint = useDebugLayerStyles
@@ -48,14 +56,13 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                     source: sourceId,
                     sourceLayer: 'default',
                   }).find((l) => l.type === layer.type)?.paint
-                : (layer.paint as any)
+                : layer.paint
 
-              const layerProps = {
+              const layerProps: LayerProps = {
                 id: layerId,
                 source: datasetSourceId,
-                'source-layer': 'default', // set in `datasets/process.ts`
                 type: layer.type,
-                layout: layout,
+                layout,
                 filter: layerFilter,
                 paint: layerPaint,
                 beforeId:
@@ -64,7 +71,11 @@ export const SourcesLayersStaticDatasets: React.FC = () => {
                     : 'atlas-app-beforeid-fallback',
               }
 
-              // To get LayerHighlight working some more refactoring is needed to harmoize sourceData and datasetsData
+              if (type === 'PMTILES') {
+                layerProps['source-layer'] = 'default'
+              }
+
+              // To get LayerHighlight working some more refactoring is needed to harmonize sourceData and datasetsData
               // <LayerHighlight {...layerProps} />
               return <Layer key={layerId} {...(layerProps as LayerProps)} />
             })}

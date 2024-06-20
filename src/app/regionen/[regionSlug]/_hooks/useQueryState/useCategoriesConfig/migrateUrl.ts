@@ -12,13 +12,23 @@ function getVersion(url: string) {
   return version
 }
 
+const DEBUG = false
+function debug(...args) {
+  if (DEBUG) console.debug(...args)
+}
+
 export function migrateUrl(url: string): string {
+  debug('========== migrateUrl ==========')
   const searchParamsVersion = getVersion(url)
+  debug('searchParamsVersion:', searchParamsVersion, ', currentVersion:', currentVersion)
   let migratedUrl = url
   for (let v = searchParamsVersion + 1; v <= currentVersion; v++) {
+    debug(`Running migration ${v}`)
+    debug('  before: ', migratedUrl)
     const migrate = migrations[v]
     if (!migrate) throw new Error(`Migration ${v} is missing.`)
     migratedUrl = migrations[v](migratedUrl)
+    debug('  after: ', migratedUrl)
   }
   const u = new URL(migratedUrl)
   u.searchParams.set('v', String(currentVersion))

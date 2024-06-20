@@ -5,10 +5,15 @@ import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapS
 import { OsmNotesControls } from './OsmNotesControls/OsmNotesControls'
 import { OsmNotesNew } from './OsmNotesNew/OsmNotesNew'
 import { useNotesActiveByZoom } from './OsmNotesNew/utils/useNotesActiveByZoom'
+import { useStaticRegion } from '../regionUtils/useStaticRegion'
 
 const osmNotesQueryClient = new QueryClient()
 
 export const OsmNotes = () => {
+  const region = useStaticRegion()
+  // This will not just hide the UI, but also prevent the query so no data is rendered on the map
+  if (region?.hideOsmNotes === true) return null
+
   return (
     <QueryClientProvider client={osmNotesQueryClient}>
       <OsmNotesWrappedInQUeryClientProvider />

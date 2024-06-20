@@ -16,7 +16,7 @@ const seedUploads = async () => {
   const seedUploadsNudafa: Prisma.UploadUncheckedCreateInput[] = [
     {
       slug: 'nudafa-combined',
-      pmtilesUrl:
+      url:
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
       configs: [
         {
@@ -39,7 +39,7 @@ const seedUploads = async () => {
   const seedUploadsBibi: Prisma.UploadUncheckedCreateInput[] = [
     {
       slug: 'two-configs',
-      pmtilesUrl:
+      url:
         'https://atlas-private.s3.eu-central-1.amazonaws.com/test-data/nudafa-combined.pmtiles',
       configs: [
         {

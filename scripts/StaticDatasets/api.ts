@@ -11,10 +11,11 @@ export const deleteAllUploadsUrl = `${apiRootUrl}/uploads/delete-all`
 const addApiKey = (url) =>
   url + '?' + new URLSearchParams({ apiKey: process.env.ATLAS_API_KEY! }).toString()
 
-function checkResponse(request: Request, response: Response) {
+async function checkResponse(request: Request, response: Response) {
   if (!response.ok) {
     const { status, statusText } = response
-    red(`  ERROR: ${request.url} - ${status} - ${statusText}`)
+    red(`ERROR: ${request.url} - ${status} - ${statusText}`)
+    red(JSON.stringify(await response.json(), null, 2))
     process.exit(1)
   }
 }
@@ -23,7 +24,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
   const url = addApiKey(getRegionsUrl)
   const request = new Request(url)
   const response = await fetch(request)
-  checkResponse(request, response)
+  await checkResponse(request, response)
   return (await response.json()).map((region) => ({
     id: region.id,
     slug: region.slug,
@@ -32,7 +33,7 @@ export const getRegions = async (): Promise<{ id: number; slug: string }[]> => {
 
 type UploadData = {
   uploadSlug: string
-  pmtilesUrl: string
+  url: string
   regionSlugs: string[]
   isPublic: boolean
   configs: Record<string, any>[]
@@ -48,7 +49,7 @@ export const createUpload = async (data: UploadData) => {
     }),
   })
   const response = await fetch(request)
-  checkResponse(request, response)
+  await checkResponse(request, response)
 }
 
 export const deleteAllUploads = async () => {
@@ -60,5 +61,5 @@ export const deleteAllUploads = async () => {
     }),
   })
   const response = await fetch(request)
-  checkResponse(request, response)
+  await checkResponse(request, response)
 }

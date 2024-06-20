@@ -1,7 +1,6 @@
 import db from 'db'
-import { GetObjectCommand, GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
-import { GetObjectCommandInput } from '@aws-sdk/client-s3/dist-types/commands/GetObjectCommand'
 import { getBlitzContext } from '@blitzjs/auth'
+import { proxyS3Url } from './proxyS3Url'
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   const { slug } = params
@@ -32,46 +31,12 @@ export async function GET(request: Request, { params }: { params: { slug: string
     }
   }
 
-  const { hostname, pathname } = new URL(upload!.pmtilesUrl)
-  const accessKeyId = process.env.S3_KEY!
-  const secretAccessKey = process.env.S3_SECRET!
-  const region = process.env.S3_REGION!
+  const url = upload!.url
+  const s3baseUrl = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`
 
-  const s3Client = new S3Client({
-    credentials: { accessKeyId, secretAccessKey },
-    region,
-  })
-
-  const sendParams: GetObjectCommandInput = {
-    Bucket: hostname.split('.')[0]!,
-    Key: pathname.substring(1),
+  if (url.startsWith(s3baseUrl)) {
+    return proxyS3Url(request, url)
+  } else {
+    return await fetch(url)
   }
-  const range = request.headers.get('range')
-  if (range !== null) sendParams.Range = range!
-
-  let response: GetObjectCommandOutput
-  try {
-    response = await s3Client.send(new GetObjectCommand(sendParams))
-  } catch (e) {
-    const { $metadata, message } = e
-    return Response.json(
-      { source: 'S3', statusText: message },
-      { status: $metadata.httpStatusCode },
-    )
-  }
-
-  // @ts-expect-error this was working before and after some updates this causes type issues
-  return new Response(response.Body!, {
-    // @ts-expect-error this exists
-    status: response.Body.statusCode,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Length': response.ContentLength!,
-      'Content-Type': response.ContentType!,
-      ETag: response.ETag!,
-      Pragma: 'no-cache',
-      'Cache-Control': 'no-cache',
-      Expires: 0,
-    },
-  })
 }

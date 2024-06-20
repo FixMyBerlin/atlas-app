@@ -1,7 +1,7 @@
-import { mergeCategoriesConfig } from './mergeCategoriesConfig'
+import { mergeCategoriesConfig } from '../utils/mergeCategoriesConfig'
 import { MapDataCategoryConfig } from '../type'
 import { isJsurlString, jsurlParse } from './jurlParseStringify'
-import { expandObjectKeys } from './minimzeObjectKeys'
+import { expandObjectKeys } from './expandObjectKeys'
 
 /** @desc A specific parser that also migrates any URL into the newest schema */
 export const configCustomParse = (value: string | null, freshConfig: MapDataCategoryConfig[]) => {

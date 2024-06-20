@@ -21,6 +21,7 @@ export const LayerVerificationStatus = (parentLayerProps: LayerProps) => {
   } catch (e) {
     if (!errorLogged) {
       console.error(e)
+      // eslint-disable-next-line react-compiler/react-compiler
       errorLogged = true
     }
     return <Layer {...(props as LayerProps)} />

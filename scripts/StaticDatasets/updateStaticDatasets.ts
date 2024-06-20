@@ -12,6 +12,8 @@ import { generatePMTilesFile } from './updateStaticDatasets/generatePMTilesFile'
 import { transformFile } from './updateStaticDatasets/transformFile'
 import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
 import { green, inverse, red, yellow } from './utils/log'
+import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
+import { parse } from 'parse-gitignore'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
@@ -44,6 +46,9 @@ inverse('Starting update with settings', [
     ...(folderFilterTerm ? { folderFilterTerm } : {}),
   },
 ])
+
+const updateIgnorePath = path.join(geoJsonFolder, '.updateignore')
+const ignorePatterns = fs.existsSync(updateIgnorePath) ? parse(fs.readFileSync(updateIgnorePath)).patterns : []
 
 /** @returns Object or Function | null */
 export const import_ = async <ReturnModule extends Function | Object>(
@@ -82,15 +87,12 @@ const regionGroupFolderPaths = fs
   .readdirSync(geoJsonFolder)
   // Make sure we only select folders, no files
   .filter((item) => fs.statSync(path.join(geoJsonFolder, item)).isDirectory())
-  // We skip `_utils` and by convention prefix unpublished datasets with underscore
-  .filter((folder) => !folder.startsWith('_'))
+
 const datasetFileFolderData = regionGroupFolderPaths
   .map((regionGroupFolder) => {
     const subFolders = fs.readdirSync(path.join(geoJsonFolder, regionGroupFolder))
     return subFolders.map((datasetFolder) => {
       const targetFolder = path.join(geoJsonFolder, regionGroupFolder, datasetFolder)
-      // We skip `_utils` and by convention prefix unpublished datasets with underscore
-      if (datasetFolder.startsWith('_')) return
       // If a `folder-filter` is given, we only look at folder that include this term
       if (folderFilterTerm && !targetFolder.includes(folderFilterTerm)) return
       // Make sure we only select folders, no files
@@ -104,7 +106,13 @@ const datasetFileFolderData = regionGroupFolderPaths
 
 for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFolderData) {
   const regionAndDatasetFolder = `${regionFolder}/${datasetFolder}`
-  inverse(`Processing folder "${regionAndDatasetFolder}"...`)
+
+  if (ignoreFolder(regionAndDatasetFolder, ignorePatterns)) {
+    yellow(`Ignoring folder "${regionAndDatasetFolder}"`)
+    continue
+  } else {
+    inverse(`Processing folder "${regionAndDatasetFolder}"...`)
+  }
 
   // Guard invalid folder names (characters)
   const uploadSlug = slugify(datasetFolder.replaceAll('_', '-'))
@@ -170,7 +178,7 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     })
     await createUpload({
       uploadSlug,
-      pmtilesUrl,
+      url: pmtilesUrl,
       regionSlugs,
       isPublic: metaData.public,
       configs: mergedConfigs,

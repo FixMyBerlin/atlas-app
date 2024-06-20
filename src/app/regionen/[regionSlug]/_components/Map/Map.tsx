@@ -61,22 +61,31 @@ export const Map = () => {
     })
   }
 
+  const containMaskFeature = (features: MapLayerMouseEvent['features']) => {
+    if (!features) return false
+    return features.some((f) => f.source === 'mask')
+  }
+
   const [cursorStyle, setCursorStyle] = useState('grab')
-  const handleMouseEnter = (event: MapLayerMouseEvent) => {
-    // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
-    const features = event.features as MapGeoJSONFeature[] | undefined
+  const handleMouseEnter = ({ features }: MapLayerMouseEvent) => {
+    if (containMaskFeature(features)) {
+      setCursorStyle('not-allowed')
+      return
+    }
     const interactiveFeatures = extractInteractiveFeatures(features)
     setCursorStyle(Boolean(interactiveFeatures?.length) ? 'pointer' : 'not-allowed')
   }
+
   const handleMouseLeave = (_event: MapLayerMouseEvent) => {
     setCursorStyle('grab')
   }
 
   const { inspectorFeatures } = useMapStateInteraction()
 
-  const handleClick = (event: MapLayerMouseEvent) => {
-    // NOTE: Cleanup once https://github.com/visgl/react-map-gl/issues/2299 is fixed
-    const features = event.features as MapGeoJSONFeature[] | undefined
+  const handleClick = ({ features, ...event }: MapLayerMouseEvent) => {
+    if (containMaskFeature(features)) {
+      return
+    }
     const interactiveFeatures = extractInteractiveFeatures(features)
     const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
 
@@ -130,7 +139,12 @@ export const Map = () => {
     setMapBounds(mainMap?.getBounds() || null)
   }
 
-  const interactiveLayerIds = useInteractiveLayers()
+  const interactiveLayerIds = [
+    ...useInteractiveLayers(),
+    'mask-buffer',
+    'mask-boundary',
+    'mask-boundary-bg',
+  ]
 
   if (!mapParam) {
     return null

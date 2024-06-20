@@ -142,24 +142,6 @@ describe('middleware()', () => {
       expect(configParam?.includes('topics')).toBeFalsy()
     })
 
-    test('MIGRATION: Update old `config`s: Check if the migrated config preserved the given active state', () => {
-      const responseMigrated = middleware(sharedMockMigrationRequest)
-      const urlMigrated = getUrl(responseMigrated)
-      const migratedParam = urlMigrated.searchParams.get('config')
-
-      // Also check that a fresh config has different defaults than our migrated version
-      const responseDefault = middleware(new NextRequest('http://127.0.0.1:5173/regionen/berlin'))
-      const urlDefault = getUrl(responseDefault)
-      const defaultParam = urlDefault.searchParams.get('config')
-
-      expect(defaultParam?.includes('(i~poi~s~!(i~hidden~a~_F)(i~default~a)')).toBe(true)
-      expect(migratedParam?.includes('(i~poi~s~!(i~hidden~a)(i~default~a~_F)')).toBe(true)
-
-      // Note: Subcategory of type ui:checkbox do not have a "hidden" layer
-      expect(defaultParam?.includes('(i~poiPlusBarriers~s~!(i~default~a~_F)')).toBe(true)
-      expect(migratedParam?.includes('(i~poiPlusBarriers~s~!(i~default~a)')).toBe(true)
-    })
-
     test('MIGRATION: Make sure params are only present once', () => {
       const responseMigrated = middleware(sharedMockMigrationRequest)
       const urlMigrated = getUrl(responseMigrated)
@@ -194,6 +176,17 @@ describe('middleware()', () => {
       expect(url.searchParams.get('bar')).toBe(null)
       expect(typeof url.searchParams.get('map')).toBe('string')
       expect(typeof url.searchParams.get('config')).toBe('string')
+    })
+
+    test('MIGRATION: Check if migration 0002 works', () => {
+      const request = new NextRequest(
+        'http://127.0.0.1:5173/regionen/bb?v=1&map=11/52.397/13.034&config=!(i~poi~a~~sc~!(i~poi~s~!(i~hidden~a~_F)(i~default~a~_F)(i~education~a))(i~poiPlaces~s~!(i~hidden~a~_F)(i~default~a)(i~circle~a~_F))(i~poiBoundaries~s~!(i~hidden~a)(i~default~a~_F)(i~category*_district*_label~a~_F)(i~category*_municipality~a~_F)(i~category*_municipality*_label~a~_F))(i~poiPlusBarriers~s~!(i~default~a~_F))(i~poiPlusLanduse~s~!(i~default~a~_F))(i~poiPlusPublicTransport~s~!(i~default~a~_F)))(i~bikelanes~a~_F~sc~!(i~bikelanes~s~!(i~hidden~a~_F)(i~default~a)(i~details~a~_F)(i~width~a~_F))(i~bikelanes*_plus*_presence~s~!(i~default~a~_F))(i~bikelanes*_plus*_width~s~!(i~default~a~_F))(i~bikelanes*_plus*_surface*_smoothness~s~!(i~default~a~_F))(i~bikelanes*_plus*_signs~s~!(i~default~a~_F))(i~bikelanes*_plus*_routes~s~!(i~default~a~_F)))(i~roads~a~~sc~!(i~roads~s~!(i~hidden~a~_F)(i~default~a~_F)(i~sidestreets~a~_F)(i~mainstreets~a))(i~maxspeed~s~!(i~hidden~a~_F)(i~default~a~_F)(i~below30~a~_F)(i~above40~a))(i~roads*_plus*_oneway~s~!(i~default~a~_F))(i~roads*_plus*_footways~s~!(i~default~a~_F)))(i~surface~a~_F~sc~!(i~surfaceRoads~s~!(i~hidden~a~_F)(i~default~a)(i~bad~a~_F))(i~surfaceBikelanes~s~!(i~hidden~a)(i~default~a~_F)(i~bad~a~_F)))(i~bicycleParking~a~~sc~!(i~bicycleParking~s~!(i~hidden~a~_F)(i~default~a)))(i~mapillary~a~~sc~!(i~mapillaryCoverage~s~!(i~hidden~a~_F)(i~default~a~_F)(i~all~a~_F)(i~age~a)(i~pano~a~_F)))~',
+      )
+      const response = middleware(request)
+      const url = getUrl(response)
+
+      expect(url.searchParams.get('v')).toBe('2')
+      expect(url.searchParams.get('config')).toBe('1j7ax4m.9fp0a1.ce4k')
     })
   })
 })

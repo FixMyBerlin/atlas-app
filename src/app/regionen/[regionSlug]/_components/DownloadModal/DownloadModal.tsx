@@ -20,6 +20,8 @@ export const DownloadModal = () => {
 
   const handleLogin = useStartUserLogin()
 
+  if (region.hideDownload === true) return null
+
   return (
     <section>
       <IconModal
