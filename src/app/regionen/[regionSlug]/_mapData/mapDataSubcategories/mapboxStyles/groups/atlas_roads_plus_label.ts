@@ -35,17 +35,6 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_label: MapboxStyleLayer[] =
         9.5,
         1,
       ],
-      'text-opacity': [
-        'interpolate',
-        ['linear'],
-        ['zoom'],
-        8,
-        ['match', ['get', 'network'], ['ncn'], 1, 0],
-        9.4,
-        ['match', ['get', 'network'], ['ncn'], 1, 0],
-        9.5,
-        1,
-      ],
     },
     filter: [
       'all',

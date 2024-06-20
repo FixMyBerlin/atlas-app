@@ -125,13 +125,23 @@ export const subcat_roads: FileMapDataSubcategory = {
       }),
       legends: [
         {
-          id: 'main',
-          name: 'Hauptstraßen',
-          style: { type: 'line', color: '#f6e7ac', width: 8 },
+          id: 'bundesstraßen',
+          name: 'Bundesstraßen',
+          style: { type: 'line', color: '#1992f5', width: 3 },
         },
         {
-          id: 'trunk',
-          name: 'Autobahn',
+          id: 'landesstraßen',
+          name: 'Landesstraßen',
+          style: { type: 'line', color: '#07b072', width: 3 },
+        },
+        {
+          id: 'kreissttraßen',
+          name: 'Kreissttraßen und weitere Klassen',
+          style: { type: 'line', color: '#cab007', width: 3 },
+        },
+        {
+          id: 'autobahnen',
+          name: 'Autobahnen',
           style: { type: 'line', color: '#828282', width: 1 },
         },
       ],
