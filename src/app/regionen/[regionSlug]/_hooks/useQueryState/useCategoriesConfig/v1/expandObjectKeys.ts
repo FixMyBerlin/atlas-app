@@ -60,19 +60,6 @@ const replaceKeyInNestedObject = <TInput>(input: TInput, searchKey: string, newK
   return input
 }
 
-export const minimizeObjectKeys = (inputObject: Record<string, any>) => {
-  let minimizedObject = inputObject
-  translateKeys.forEach(([fromKey, toKey]) => {
-    minimizedObject = replaceKeyInNestedObject<Record<string, TObjectInput>>(
-      minimizedObject,
-      fromKey,
-      toKey,
-    )
-  })
-
-  return minimizedObject
-}
-
 export const expandObjectKeys = (inputObject: Record<string, any>) => {
   let expandedObject = inputObject
   translateKeys.forEach(([toKey, fromKey]) => {
