@@ -5,8 +5,9 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_roads_plus_label: MapboxStyleLayer[] = [
   {
+    minzoom: 8,
     layout: {
-      'text-size': 9,
+      'text-size': ['interpolate', ['linear'], ['zoom'], 7, 4, 9, 9],
       'icon-text-fit': 'width',
       'icon-image': 'rectangle-yellow-3',
       'icon-rotation-alignment': 'viewport',
@@ -20,22 +21,6 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_label: MapboxStyleLayer[] =
       'text-letter-spacing': -0.02,
       'icon-padding': 6,
     },
-    type: 'symbol',
-    id: 'sign_label-roads',
-    paint: {
-      'text-color': '#595959',
-      'icon-opacity': [
-        'interpolate',
-        ['linear'],
-        ['zoom'],
-        8,
-        ['match', ['get', 'network'], ['ncn'], 1, 0],
-        9.4,
-        ['match', ['get', 'network'], ['ncn'], 1, 0],
-        9.5,
-        1,
-      ],
-    },
     filter: [
       'all',
       [
@@ -47,5 +32,10 @@ export const mapboxStyleGroupLayers_atlas_roads_plus_label: MapboxStyleLayer[] =
       ],
       ['has', 'name_ref'],
     ],
+    type: 'symbol',
+    id: 'sign_label-roads',
+    paint: {
+      'text-color': '#595959',
+    },
   },
 ]

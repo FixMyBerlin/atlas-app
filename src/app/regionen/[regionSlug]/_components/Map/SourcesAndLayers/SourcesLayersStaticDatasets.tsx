@@ -63,6 +63,7 @@ export const SourcesLayersStaticDatasets = () => {
                 source: datasetSourceId,
                 type: layer.type,
                 layout,
+                // @ts-expect-error I need to look into this later…
                 filter: layerFilter,
                 paint: layerPaint,
                 beforeId:
