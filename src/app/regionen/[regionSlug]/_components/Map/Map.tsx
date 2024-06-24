@@ -32,6 +32,7 @@ import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionM
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useBreakpoint } from '../utils/useBreakpoint'
+import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -213,6 +214,7 @@ export const Map = () => {
       <SourcesLayersAtlasGeo />
       <SourcesLayersStaticDatasets />
       <SourcesLayersOsmNotes />
+      <SourcesLayersAtlasNotes />
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 

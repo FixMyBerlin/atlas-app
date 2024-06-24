@@ -1,37 +1,42 @@
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useShowOsmNotesParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
-import { useOsmNotesFeatures } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useRegionSlug } from '../../regionUtils/useRegionSlug'
+import { useQuery } from '@blitzjs/rpc'
+import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
+import { useShowAtlasNotesParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 
-export const osmNotesLayerId = 'osm-notes'
+export const atlasNotesLayerId = 'atlas-notes'
 
-export const SourcesLayersOsmNotes = () => {
-  const { showOsmNotesParam } = useShowOsmNotesParam()
+export const SourcesLayersAtlasNotes = () => {
+  const { showAtlasNotesParam } = useShowAtlasNotesParam()
   const { inspectorFeatures } = useMapStateInteraction()
-  const osmNotesFeatures = useOsmNotesFeatures()
+
+  const regionSlug = useRegionSlug()
+  // For now, we load all notes. We will want to scope this to the viewport later.
+  const [notes] = useQuery(getNotesAndCommentsForRegion, { regionSlug })
 
   const selectedFeatureIds = inspectorFeatures
-    .filter((feature) => feature.source === 'osm-notes')
+    .filter((feature) => feature.source === 'atlas-notes')
     .map((feature) => (feature?.properties?.id || 0) as number)
 
   return (
     <Source
-      id="osm-notes"
-      key="osm-notes"
+      id="atlas-notes"
+      key="atlas-notes"
       type="geojson"
-      data={osmNotesFeatures}
-      attribution="Notes: openstreetmap.org"
+      data={notes}
+      // attribution="" Internal data / copyrighted
     >
-      {showOsmNotesParam && (
+      {showAtlasNotesParam && (
         <>
           <Layer
-            id="osm-notes-hover"
-            key="osm-notes-hover"
-            source="osm-notes"
+            id="atlas-notes-hover"
+            key="atlas-notes-hover"
+            source="atlas-notes"
             type="circle"
             paint={{
               'circle-radius': 15,
-              'circle-color': '#115e59', // teal-800 https://tailwindcss.com/docs/customizing-colors
+              'circle-color': '#b45309', // amber-700 https://tailwindcss.com/docs/customizing-colors
               'circle-opacity': ['step', ['zoom'], 0.3, 10, 0.6],
               'circle-blur': 0.3,
             }}
@@ -39,20 +44,20 @@ export const SourcesLayersOsmNotes = () => {
           />
           <Layer
             // The PNGs are transparent so we add this background
-            id="osm-notes-background"
-            key="osm-notes-background"
-            source="osm-notes"
+            id="atlas-notes-background"
+            key="atlas-notes-background"
+            source="atlas-notes"
             type="circle"
             paint={{
               'circle-radius': 11,
-              'circle-color': 'white',
+              'circle-color': '#fbbf24', // amber-400 https://tailwindcss.com/docs/customizing-colors
               'circle-opacity': ['step', ['zoom'], 0.3, 10, 1],
             }}
           />
           <Layer
-            id={osmNotesLayerId}
-            key="osm-notes"
-            source="osm-notes"
+            id={atlasNotesLayerId}
+            key="atlas-notes"
+            source="atlas-notes"
             type="symbol"
             paint={{
               'icon-opacity': ['step', ['zoom'], 0.3, 10, 1],
@@ -63,8 +68,8 @@ export const SourcesLayersOsmNotes = () => {
                 'match',
                 ['get', 'status'],
                 // The sprites in Mapbox are mixed up
-                // https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-osm-notes-layer"
-                // notes_open is the closed
+                // https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-atlas-notes-layer"
+                // notes_open is the resolved
                 'closed' /* status=closed */,
                 'notes_open',
                 'open' /* status=open */,

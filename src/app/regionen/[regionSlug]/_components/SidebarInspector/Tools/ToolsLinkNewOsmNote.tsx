@@ -1,13 +1,11 @@
 import { useMap } from 'react-map-gl/maplibre'
 import { buttonStyles } from 'src/app/_components/links/styles'
-import {
-  StoreFeaturesInspector,
-  useMapStateInteraction,
-} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
 import {
   useNewOsmNoteMapParam,
-  useOsmNotesParam,
-} from '../../../_hooks/useQueryState/useOsmNotesParam'
+  useShowOsmNotesParam,
+} from '../../../_hooks/useQueryState/useNotesOsmParams'
 import { MapDataOsmIdConfig } from '../../../_mapData/types'
 import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './osmUrls/pointFromGeometry'
@@ -20,8 +18,8 @@ type Props = {
 
 export const ToolsLinkNewOsmNote = ({ properties, geometry, osmIdConfig }: Props) => {
   const { mainMap } = useMap()
-  const { setOsmNotesParam } = useOsmNotesParam()
-  const { setOsmNewNoteFeature } = useMapStateInteraction()
+  const { setShowOsmNotesParam } = useShowOsmNotesParam()
+  const { setOsmNewNoteFeature } = useOsmNotesActions()
   const { setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
 
   const [lng, lat] = pointFromGeometry(geometry)
@@ -34,7 +32,7 @@ export const ToolsLinkNewOsmNote = ({ properties, geometry, osmIdConfig }: Props
     <button
       className={buttonStyles}
       onClick={() => {
-        setOsmNotesParam(true)
+        setShowOsmNotesParam(true)
         setOsmNewNoteFeature({ geometry, osmType, osmId })
         // Note: The zoom will be specified by the `bounds` prop in <OsmNotesNewMap/>
         setNewOsmNoteMapParam({ zoom: 12, lng, lat })

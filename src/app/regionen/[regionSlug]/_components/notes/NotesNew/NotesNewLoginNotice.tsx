@@ -1,7 +1,7 @@
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
 
-export const OsmNotesNewLoginNotice = () => {
+export const NotesNewLoginNotice = () => {
   const handleLogin = useStartUserLogin()
   return (
     <section className="prose p-5">

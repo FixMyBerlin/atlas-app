@@ -16,13 +16,13 @@ type Props = {
   defaultOpen?: boolean
 }
 
-export const Disclosure: React.FC<Props> = ({
+export const Disclosure = ({
   title,
   objectId,
   statusIcon,
   children,
   defaultOpen = true,
-}) => {
+}: Props) => {
   return (
     <HeadlessUiDisclosure defaultOpen={defaultOpen}>
       {({ open }) => (
@@ -44,7 +44,7 @@ export const Disclosure: React.FC<Props> = ({
                   {!!objectId && (
                     <span
                       className={twJoin(
-                        'rounded  px-1 py-0 font-mono',
+                        'inline-flex items-center rounded px-1 py-0 font-mono',
                         open ? 'bg-white' : 'bg-gray-100',
                       )}
                     >

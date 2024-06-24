@@ -5,6 +5,7 @@ import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspect
 import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
 import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
+import { InspectorFeatureAtlasNote } from './InspectorFeatureAtlasNote'
 
 export type InspectorFeatureProperty = NonNullable<GeoJSON.GeoJsonProperties>
 
@@ -33,6 +34,14 @@ export const Inspector = ({ features }: Props) => {
             <InspectorFeatureOsmNote
               key={`osm-note-${inspectObject?.properties?.id}`}
               properties={inspectObject.properties}
+            />
+          )
+        }
+        if (inspectObject.source === 'atlas-notes') {
+          return (
+            <InspectorFeatureAtlasNote
+              key={`atlas-note-${inspectObject?.properties?.id}`}
+              noteId={inspectObject.properties.id}
             />
           )
         }
