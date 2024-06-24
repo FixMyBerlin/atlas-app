@@ -44,7 +44,7 @@ type MapDataDatasetsSource = {
     | (mapboxgl.FillLayer & Required<Pick<mapboxgl.FillLayer, 'paint'>>)
     | (mapboxgl.LineLayer & Required<Pick<mapboxgl.LineLayer, 'paint'>>)
     | (mapboxgl.SymbolLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint' | 'layout'>>)
-    | (mapboxgl.HeatmapLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint'>>)
+    | (mapboxgl.HeatmapLayer & Required<Pick<mapboxgl.HeatmapLayer, 'paint'>>)
   )[]
 }
 
