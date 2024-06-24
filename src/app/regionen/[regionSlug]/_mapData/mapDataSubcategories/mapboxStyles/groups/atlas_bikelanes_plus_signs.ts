@@ -43,7 +43,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer
         'dot-9',
       ],
       'text-font': ['Open Sans Regular', 'Arial Unicode MS Regular'],
-      'icon-allow-overlap': true,
       'text-offset': [
         'interpolate',
         ['linear'],
@@ -56,6 +55,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_plus_signs: MapboxStyleLayer
       'icon-size': ['interpolate', ['linear'], ['zoom'], 10, 0.3, 13, 0.6, 22, 1.5],
       'text-anchor': 'top',
       'text-field': ['to-string', ['get', 'traffic_sign']],
+      'icon-padding': 50,
       'icon-ignore-placement': true,
     },
     filter: [

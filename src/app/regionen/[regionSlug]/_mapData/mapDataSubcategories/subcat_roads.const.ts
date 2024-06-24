@@ -2,6 +2,7 @@ import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_roads_all } from './mapboxStyles/groups/atlas_roads_all'
 import { mapboxStyleGroupLayers_atlas_roads_mainstreets } from './mapboxStyles/groups/atlas_roads_mainstreets'
+import { mapboxStyleGroupLayers_atlas_roads_mainstreets_classified } from './mapboxStyles/groups/atlas_roads_mainstreets_classified'
 import { mapboxStyleGroupLayers_atlas_roads_sidestreets } from './mapboxStyles/groups/atlas_roads_sidestreets'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -9,7 +10,7 @@ const subcatId = 'roads'
 const source = 'atlas_roads'
 const sourceLayer = 'roads'
 export type SubcatRoadsId = typeof subcatId
-export type SubcatRoadsStyleIds = 'default' | 'sidestreets' | 'mainstreets'
+export type SubcatRoadsStyleIds = 'default' | 'sidestreets' | 'mainstreets' | 'classified'
 export const subcat_roads: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Straßentypen',
@@ -109,6 +110,38 @@ export const subcat_roads: FileMapDataSubcategory = {
         {
           id: 'trunk',
           name: 'Autobahn',
+          style: { type: 'line', color: '#828282', width: 1 },
+        },
+      ],
+    },
+    {
+      id: 'classified',
+      name: 'Klassifizierung',
+      desc: null,
+      layers: mapboxStyleLayers({
+        layers: mapboxStyleGroupLayers_atlas_roads_mainstreets_classified,
+        source,
+        sourceLayer,
+      }),
+      legends: [
+        {
+          id: 'bundesstraßen',
+          name: 'Bundesstraßen',
+          style: { type: 'line', color: '#1992f5', width: 3 },
+        },
+        {
+          id: 'landesstraßen',
+          name: 'Landesstraßen',
+          style: { type: 'line', color: '#07b072', width: 3 },
+        },
+        {
+          id: 'kreissttraßen',
+          name: 'Kreissttraßen und weitere Klassen',
+          style: { type: 'line', color: '#cab007', width: 3 },
+        },
+        {
+          id: 'autobahnen',
+          name: 'Autobahnen',
           style: { type: 'line', color: '#828282', width: 1 },
         },
       ],
