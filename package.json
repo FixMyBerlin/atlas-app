@@ -91,6 +91,7 @@
     "react-popper": "^2.3.0",
     "react-remark": "^2.1.0",
     "secure-password": "4.0.0",
+    "server-only": "0.0.1",
     "sharp": "0.32.6",
     "slugify": "1.6.6",
     "tailwind-merge": "2.3.0",
