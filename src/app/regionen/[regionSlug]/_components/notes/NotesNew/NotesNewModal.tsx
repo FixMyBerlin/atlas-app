@@ -1,15 +1,18 @@
 import { Dialog, Transition, TransitionChild } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useOsmNotesParam'
+import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
+import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 
-export const OsmNotesNewModal = ({ children }: { children: React.ReactNode }) => {
+export const NotesNewModal = ({ children }: { children: React.ReactNode }) => {
+  const { setNewAtlasNoteMapParam } = useNewAtlasNoteMapParam()
   const { setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
-  const { setOsmNewNoteFeature } = useMapStateInteraction()
+  const { setOsmNewNoteFeature } = useOsmNotesActions()
   const closeButtonRef = useRef(null)
 
   const setClose = () => {
+    setNewAtlasNoteMapParam(null)
     setNewOsmNoteMapParam(null)
     setOsmNewNoteFeature(undefined)
   }

@@ -8,16 +8,25 @@ import {
   NavigationControl,
   type ViewStateChangeEvent,
 } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useOsmNotesParam'
-import { SourceLayerBikelanes } from './OsmNotesNewMap/SourceLayerBikelanes'
-import { SourceLayerFeature } from './OsmNotesNewMap/SourceLayerFeature'
+import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
+import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
+import { SourceLayerBikelanes } from './SourceLayerBikelanes'
+import { SourceLayerFeature } from './SourceLayerFeature'
 
-export const OsmNotesNewMap = () => {
-  const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
+type Props = {
+  mapId: 'newAtlasNoteMap' | 'newOsmNoteMap'
+  newNoteMapParam:
+    | ReturnType<typeof useNewOsmNoteMapParam>['newOsmNoteMapParam']
+    | ReturnType<typeof useNewAtlasNoteMapParam>['newAtlasNoteMapParam']
+  setNewNoteMapParam:
+    | ReturnType<typeof useNewOsmNoteMapParam>['setNewOsmNoteMapParam']
+    | ReturnType<typeof useNewAtlasNoteMapParam>['setNewAtlasNoteMapParam']
+}
 
+export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Props) => {
   const handleMove = (event: ViewStateChangeEvent) => {
-    setNewOsmNoteMapParam({
+    setNewNoteMapParam({
       zoom: event.viewState.zoom,
       lat: event.viewState.latitude,
       lng: event.viewState.longitude,
@@ -25,11 +34,11 @@ export const OsmNotesNewMap = () => {
   }
 
   let initialViewState: MapProps['initialViewState'] = {
-    longitude: newOsmNoteMapParam?.lng,
-    latitude: newOsmNoteMapParam?.lat,
-    zoom: newOsmNoteMapParam?.zoom,
+    longitude: newNoteMapParam?.lng,
+    latitude: newNoteMapParam?.lat,
+    zoom: newNoteMapParam?.zoom,
   }
-  const { osmNewNoteFeature } = useMapStateInteraction()
+  const osmNewNoteFeature = useOsmNewNoteFeature()
   if (osmNewNoteFeature) {
     initialViewState = {
       bounds: turf.bbox(osmNewNoteFeature.geometry) as [number, number, number, number],
@@ -37,7 +46,7 @@ export const OsmNotesNewMap = () => {
     }
   }
 
-  if (!newOsmNoteMapParam) return null
+  if (!newNoteMapParam) return null
 
   return (
     <section className="relative min-h-80">
@@ -48,7 +57,7 @@ export const OsmNotesNewMap = () => {
       </div>
 
       <MapGl
-        id="newNoteMap"
+        id={mapId}
         initialViewState={initialViewState}
         style={{ width: '100%', height: '100%' }}
         mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
@@ -66,11 +75,7 @@ export const OsmNotesNewMap = () => {
         <NavigationControl showCompass={false} position="bottom-left" />
         <AttributionControl compact={true} position="bottom-right" />
 
-        <Marker
-          latitude={newOsmNoteMapParam.lat}
-          longitude={newOsmNoteMapParam.lng}
-          anchor="bottom"
-        >
+        <Marker latitude={newNoteMapParam.lat} longitude={newNoteMapParam.lng} anchor="bottom">
           <MapPinIcon className="h-8 w-8 text-teal-700" />
           <PlusIcon className="-mb-4 h-8 w-8 text-teal-700" />
         </Marker>

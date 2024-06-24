@@ -4,6 +4,7 @@ import {
   BookOpenIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline'
 import React, { Fragment, useRef } from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
@@ -11,7 +12,7 @@ import { twJoin } from 'tailwind-merge'
 
 export type ModalDialogProps = {
   title: string
-  icon: 'info' | 'error' | 'copyright' | 'download'
+  icon: 'info' | 'error' | 'copyright' | 'download' | 'edit'
   buttonCloseName?: string
   open: boolean
   setOpen: (value: boolean) => void
@@ -45,6 +46,10 @@ export const ModalDialog = ({
     download: {
       bgClass: 'bg-purple-100',
       icon: <ArrowDownTrayIcon className="h-6 w-6 text-purple-600" aria-hidden="true" />,
+    },
+    edit: {
+      bgClass: 'bg-gray-100',
+      icon: <PencilIcon className="h-6 w-6 text-gray-600" aria-hidden="true" />,
     },
   }
 

@@ -1,11 +1,17 @@
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
-import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { OsmNotesControls } from './OsmNotesControls/OsmNotesControls'
-import { OsmNotesNew } from './OsmNotesNew/OsmNotesNew'
-import { useNotesActiveByZoom } from './OsmNotesNew/utils/useNotesActiveByZoom'
-import { useStaticRegion } from '../regionUtils/useStaticRegion'
+import { OsmNotesControls } from './OsmNotesControls'
+import { NotesNew } from '../NotesNew/NotesNew'
+import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { OsmNotesNewForm } from './OsmNotesNewForm'
+import { NotesNewMap } from '../NotesNew/NotesNewMap'
+import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import {
+  useNewOsmNoteMapParam,
+  useShowOsmNotesParam,
+} from '../../../_hooks/useQueryState/useNotesOsmParams'
 
 const osmNotesQueryClient = new QueryClient()
 
@@ -22,8 +28,10 @@ export const OsmNotes = () => {
 }
 
 const OsmNotesWrappedInQUeryClientProvider = () => {
-  const { mapLoaded, mapBounds, setOsmNotesFeatures } = useMapStateInteraction()
-  const { osmNotesParam: osmNotesActive } = useOsmNotesParam()
+  const { mapLoaded, mapBounds } = useMapStateInteraction()
+  const { setOsmNotesFeatures } = useOsmNotesActions()
+  const { showOsmNotesParam } = useShowOsmNotesParam()
+  const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
   const notesActiveByZoom = useNotesActiveByZoom()
 
   const bbox = mapBounds
@@ -43,7 +51,7 @@ const OsmNotesWrappedInQUeryClientProvider = () => {
       setOsmNotesFeatures(featureCollection)
       return featureCollection
     },
-    enabled: mapLoaded && Boolean(bbox) && osmNotesActive && notesActiveByZoom,
+    enabled: mapLoaded && Boolean(bbox) && showOsmNotesParam && notesActiveByZoom,
   })
 
   if (isError) {
@@ -53,7 +61,17 @@ const OsmNotesWrappedInQUeryClientProvider = () => {
   return (
     <>
       <OsmNotesControls isLoading={isLoading} isError={isError} />
-      <OsmNotesNew />
+      <NotesNew
+        visible={Boolean(newOsmNoteMapParam)}
+        title="Einen Hinweis auf OpenStreetMap veröffentlichen"
+      >
+        <NotesNewMap
+          mapId={'newOsmNoteMap'}
+          newNoteMapParam={newOsmNoteMapParam}
+          setNewNoteMapParam={setNewOsmNoteMapParam}
+        />
+        <OsmNotesNewForm />
+      </NotesNew>
     </>
   )
 }

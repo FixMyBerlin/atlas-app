@@ -1,9 +1,9 @@
 import * as turf from '@turf/turf'
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
 
 export const SourceLayerFeature = () => {
-  const { osmNewNoteFeature } = useMapStateInteraction()
+  const osmNewNoteFeature = useOsmNewNoteFeature()
   if (!osmNewNoteFeature) return null
 
   return (

@@ -1,48 +1,26 @@
 import { useSession } from '@blitzjs/auth'
-import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import dompurify from 'dompurify'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { proseClasses } from 'src/app/_components/text/prose'
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
 import { twJoin } from 'tailwind-merge'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { OsmNotesComment } from '../OsmNotes/types'
+import { useOsmNotesFeatures } from '../../_hooks/mapStateInteraction/userMapNotes'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 import SvgNotesClosed from './icons/notes_closed.svg'
 import SvgNotesOpen from './icons/notes_open.svg'
-
-const OsmUserLink = ({
-  user,
-  hasPermission,
-}: Pick<OsmNotesComment, 'user'> & { hasPermission: boolean }) => {
-  if (!user) return <>Eine anonyme Nutzer:in</>
-
-  return (
-    <Link blank href={getOsmUrl(`/user/${user}`)} className="relative inline-flex gap-1">
-      {user}{' '}
-      {hasPermission ? (
-        <Tooltip text="Ist Mitarbeiter:in dieser Region">
-          <CheckBadgeIcon className="h-5 w-5" />
-        </Tooltip>
-      ) : (
-        ''
-      )}
-    </Link>
-  )
-}
+import { OsmUserLink } from './OsmUserLink'
 
 type Props = Pick<InspectorOsmNoteFeature, 'properties'>
 
 const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
   const { osmName } = useSession()
-  const { osmNotesFeatures } = useMapStateInteraction()
+  const osmNotesFeatures = useOsmNotesFeatures()
 
   // We look up our data from our internal store.
   // This is better than to use the properties from Maplibre directly
@@ -72,7 +50,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             >
               <div className="text-black">
                 <strong>
-                  <OsmUserLink user={comment.user} hasPermission={userHasPermssionOnRegion} />
+                  <OsmUserLink osmName={comment.user} hasPermission={userHasPermssionOnRegion} />
                 </strong>{' '}
                 kommentierte am {date}:
               </div>

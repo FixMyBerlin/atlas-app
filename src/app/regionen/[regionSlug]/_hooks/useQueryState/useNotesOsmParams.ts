@@ -2,13 +2,13 @@ import { createParser, parseAsBoolean, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
 import { parseMapParam, serializeMapParam } from './utils/mapParam'
 
-export const useOsmNotesParam = () => {
-  const [osmNotesParam, setOsmNotesParam] = useQueryState(
+export const useShowOsmNotesParam = () => {
+  const [showOsmNotesParam, setShowOsmNotesParam] = useQueryState(
     searchParamsRegistry.osmNotes,
     parseAsBoolean.withDefault(false),
   )
 
-  return { osmNotesParam, setOsmNotesParam }
+  return { showOsmNotesParam, setShowOsmNotesParam }
 }
 
 export const useNewOsmNoteMapParam = () => {
