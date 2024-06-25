@@ -7,6 +7,7 @@ import useResizeObserver from 'use-resize-observer'
 import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Categories } from './Categories/Categories'
 import { StaticDatasetCategories } from './StaticDatasets/StaticDatasetCategories'
+import { useBreakpoint } from '../utils/useBreakpoint'
 
 const SidebarLayerControlsChildren = () => {
   return (
@@ -22,7 +23,7 @@ const SidebarLayerControlsChildren = () => {
 }
 
 export const SidebarLayerControls = () => {
-  const [isSmBreakpoitOrAbove, setIsSmBreakpoitOrAbove] = useState(true)
+  const isSmBreakpointOrAbove = useBreakpoint('sm')
   const { setSidebarLayerControlsSize } = useMapStateInteraction()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
@@ -30,24 +31,12 @@ export const SidebarLayerControls = () => {
     onResize: setSidebarLayerControlsSize,
   })
 
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 640px)')
-    setIsSmBreakpoitOrAbove(mediaQuery.matches)
-
-    const onMediaQueryChange = (event: MediaQueryListEvent) => {
-      setIsSmBreakpoitOrAbove(event.matches)
-    }
-
-    mediaQuery.addEventListener('change', onMediaQueryChange)
-    return () => mediaQuery.removeEventListener('change', onMediaQueryChange)
-  }, [])
-
   return (
     <section
       ref={ref}
       className="absolute left-0 top-0 z-10 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md"
     >
-      {isSmBreakpoitOrAbove ? (
+      {isSmBreakpointOrAbove ? (
         <SidebarLayerControlsChildren />
       ) : (
         <Disclosure as={Fragment} defaultOpen={false}>
