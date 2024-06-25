@@ -9,6 +9,7 @@ import screenshotOther from './assets/HomePagePrimaryFeatures/other.jpg'
 import screenshotPoiClassification from './assets/HomePagePrimaryFeatures/poiclassification.jpg'
 import screenshotSurface from './assets/HomePagePrimaryFeatures/surface.jpg'
 import backgroundImage from './assets/background-features.jpg'
+import { useBreakpoint } from 'src/app/regionen/[regionSlug]/_components/utils/useBreakpoint'
 
 type Feature = {
   title: string | React.ReactNode
@@ -57,20 +58,9 @@ const features: Feature[] = [
   },
 ]
 
-export const HomePagePrimaryFeatures: React.FC = () => {
-  const [tabOrientation, setTabOrientation] = useState('horizontal')
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(min-width: 1024px)')
-    setTabOrientation(mediaQuery.matches ? 'vertical' : 'horizontal')
-
-    const onMediaQueryChange = (event: MediaQueryListEvent) => {
-      setTabOrientation(event.matches ? 'vertical' : 'horizontal')
-    }
-
-    mediaQuery.addEventListener('change', onMediaQueryChange)
-    return () => mediaQuery.removeEventListener('change', onMediaQueryChange)
-  }, [])
+export const HomePagePrimaryFeatures = () => {
+  const isLgOrAbove = useBreakpoint('lg')
+  const tabOrientation = isLgOrAbove ? 'vertical' : 'horizontal'
 
   return (
     <section

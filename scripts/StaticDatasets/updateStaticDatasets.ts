@@ -48,7 +48,9 @@ inverse('Starting update with settings', [
 ])
 
 const updateIgnorePath = path.join(geoJsonFolder, '.updateignore')
-const ignorePatterns = fs.existsSync(updateIgnorePath) ? parse(fs.readFileSync(updateIgnorePath)).patterns : []
+const ignorePatterns = fs.existsSync(updateIgnorePath)
+  ? parse(fs.readFileSync(updateIgnorePath)).patterns
+  : []
 
 /** @returns Object or Function | null */
 export const import_ = async <ReturnModule extends Function | Object>(
@@ -211,8 +213,8 @@ if (!keepTemporaryFiles) {
 // How to use: Compare with the previous tag at
 //   https://github.com/FixMyBerlin/atlas-static-data/compare/main...publish_2024-05-23_prd
 if (process.env.S3_UPLOAD_FOLDER === 'production') {
-  const currentDate = new Date().toISOString().split('T')[0]
-  const tagName = `publish_${currentDate}_${process.env.S3_UPLOAD_FOLDER}`
+  const currentDateTime = new Date().toISOString()
+  const tagName = `publish_${currentDateTime}_${process.env.S3_UPLOAD_FOLDER}`
   const tagMessage = `publish data to ${process.env.S3_UPLOAD_FOLDER}`
 
   try {

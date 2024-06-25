@@ -9,8 +9,8 @@ export default async function RegionsPage() {
   return (
     <>
       {/* <RegionIntro regions={regions} /> */}
-      <RegionListPublic />
       <RegionListPermissions />
+      <RegionListPublic />
       <RegionListAdmins />
     </>
   )
