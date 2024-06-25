@@ -31,6 +31,7 @@ import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
+import { useBreakpoint } from '../utils/useBreakpoint'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -42,6 +43,7 @@ export const Map = () => {
     setMapDataLoading,
     setMapBounds,
   } = useMapStateInteraction()
+  const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
@@ -214,7 +216,7 @@ export const Map = () => {
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 
-      <NavigationControl showCompass={false} />
+      <NavigationControl showCompass={!isSmBreakpointOrAbove} />
       <Calculator />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
