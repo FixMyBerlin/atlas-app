@@ -63,8 +63,8 @@ export const SourcesLayersStaticDatasets = () => {
                 source: datasetSourceId,
                 type: layer.type,
                 layout,
-                // @ts-expect-error I need to look into this later…
-                filter: layerFilter,
+                // There is something very weird with TS here. We cannot use @ts-expect-errors because the build will fail. But without the `any` we get an error in `npm run type-check`.
+                filter: layerFilter as any,
                 paint: layerPaint,
                 beforeId:
                   'beforeId' in layer
