@@ -47,20 +47,26 @@ export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, ins
   const map = getMapSize(mapInstance)
   const lay = sidebarLayerControlsSize
   const ins = inspectorSize
-  const mapb = createBox([
+  const mapBox = createBox([
     [0, 0],
     [map.width, map.height],
   ])
-  const layb = createBox([
+  const layersBox = createBox([
     [0, 0],
     [lay.width, lay.height],
   ])
-  const insb = createBox([
+  const inspectorBox = createBox([
     [map.width - ins.width, 0],
     [map.width, map.height],
   ])
-  // @ts-ignore
-  const poly = difference(difference(mapb, layb), insb)!
+
+  // On Mobile, the Inspector is a layer above the Map. In this case, we use the whole mapBox
+  if (map.width <= ins.width) {
+    return mapBox
+  }
+
+  // @ts-expect-error
+  const poly = difference(difference(mapBox, layersBox), inspectorBox)!
   coordEach(poly, (point) => {
     const { lng, lat } = mapInstance.unproject(point)
     point[0] = lng
