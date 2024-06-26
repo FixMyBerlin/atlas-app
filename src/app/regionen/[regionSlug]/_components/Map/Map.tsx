@@ -216,7 +216,7 @@ export const Map = () => {
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 
-      <NavigationControl showCompass={!isSmBreakpointOrAbove} />
+      <NavigationControl showCompass={true} visualizePitch={true} />
       <Calculator />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
