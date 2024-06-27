@@ -4,12 +4,17 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { NotesNew } from '../NotesNew/NotesNew'
 import { NotesNewMap } from '../NotesNew/NotesNewMap'
 import { AtlasNotesControls } from './AtlasNotesControls'
 import { AtlasNotesNewForm } from './AtlasNotesNewForm'
 
 export const AtlasNotes = () => {
+  const region = useStaticRegion()
+  // This will not just hide the UI, but also prevent the query so no data is rendered on the map
+  if (!region || region.notes !== 'atlasNotes') return null
+
   return (
     <Suspense fallback={<SmallSpinner />}>
       <AtlasNotesSuspended />
