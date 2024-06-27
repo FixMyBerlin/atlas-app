@@ -5,7 +5,7 @@ import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { z } from 'zod'
 
-const Schema = z.object({ commentId: z.number(), body: z.string() })
+const Schema = z.object({ regionSlug: z.string(), commentId: z.number(), body: z.string() })
 
 export default resolver.pipe(
   resolver.zod(Schema),

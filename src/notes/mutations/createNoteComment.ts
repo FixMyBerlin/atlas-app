@@ -6,12 +6,14 @@ import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { AuthorizationError } from 'blitz'
 
-const Schema = CreateNoteCommentSchema.merge(z.object({ noteId: z.number() }))
+const Schema = CreateNoteCommentSchema.merge(
+  z.object({ regionSlug: z.string(), noteId: z.number() }),
+)
 
 export default resolver.pipe(
   resolver.zod(Schema),
   authorizeRegionAdmin(getRegionIdBySlug),
-  async ({ noteId, ...input }, ctx) => {
+  async ({ noteId, body }, ctx) => {
     const { session } = ctx
 
     if (!session.userId) {
@@ -19,7 +21,7 @@ export default resolver.pipe(
     }
 
     const result = await db.noteComment.create({
-      data: { ...input, noteId, userId: session.userId },
+      data: { noteId, body, userId: session.userId },
     })
     return result
   },
