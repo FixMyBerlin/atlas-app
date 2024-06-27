@@ -18,9 +18,6 @@ export default resolver.pipe(
   async ({ regionSlug }, ctx) => {
     const { session } = ctx
 
-    // Only logged in users see data
-    if (!session?.userId) return featureCollection([])
-
     const notes = await db.note.findMany({
       where: { region: { slug: regionSlug } },
       select: {
@@ -34,23 +31,32 @@ export default resolver.pipe(
       orderBy: { id: 'asc' },
     })
 
+    const notePoints = notes.map((note) => {
+      const { longitude, latitude, author, resolvedAt, id, regionId } = note
+      const coordinates = [longitude, latitude]
+      // We transform the properties for <SourcesLayersAtlasNotes />
+      const properties = {
+        osmName: author.osmName,
+        status: resolvedAt ? 'closed' : 'open',
+        id,
+        regionId,
+      }
+
+      return point(coordinates, properties, { id: note.id })
+    })
+
+    // Only logged in users see data
+    if (!session?.userId) return featureCollection([] as typeof notePoints)
+
     // Only logged members (or admins) see data
     const memberships = await db.membership.findMany({ where: { userId: session.userId } })
     const membershipRegionIds = memberships.map((membership) => membership.regionId)
 
     const regionNotes =
       session.role === 'ADMIN'
-        ? notes
-        : notes.filter((note) => membershipRegionIds.includes(note.regionId))
+        ? notePoints
+        : notePoints.filter((note) => membershipRegionIds.includes(note.properties.regionId))
 
-    const resultFeatures = regionNotes.map((note) => {
-      const { longitude, latitude, author, resolvedAt, id } = note
-      const coordinates = [longitude, latitude]
-      // We transform the properties for <SourcesLayersAtlasNotes />
-      const properties = { osmName: author.osmName, status: resolvedAt ? 'closed' : 'open', id }
-
-      return point(coordinates, properties, { id: note.id })
-    })
-    return featureCollection(resultFeatures)
+    return featureCollection(regionNotes)
   },
 )
