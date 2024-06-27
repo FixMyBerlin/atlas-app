@@ -7,18 +7,21 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNoteComment from 'src/notes/mutations/updateNoteComment'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 
 type Props = { body: string; commentId: number }
 
 export const EditNoteCommentForm = ({ body, commentId }: Props) => {
   const [updateNoteCommentMutation, { isLoading, error }] = useMutation(updateNoteComment)
   const [open, setOpen] = useState(false)
+  const region = useStaticRegion()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const sanitize = (input: string) => (input ? dompurify.sanitize(input) : input)
     updateNoteCommentMutation(
       {
+        regionSlug: region!.slug,
         commentId,
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
       },

@@ -4,17 +4,20 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import createNoteComment from 'src/notes/mutations/createNoteComment'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 
 type Props = { noteId: number }
 
 export const NewNoteCommentForm = ({ noteId }: Props) => {
   const [createNoteCommentMutation, { isLoading, error }] = useMutation(createNoteComment)
+  const region = useStaticRegion()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const sanitize = (input: string) => (input ? dompurify.sanitize(input) : input)
     createNoteCommentMutation(
       {
+        regionSlug: region!.slug,
         noteId,
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
       },

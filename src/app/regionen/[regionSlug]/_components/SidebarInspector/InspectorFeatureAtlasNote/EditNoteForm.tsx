@@ -10,6 +10,7 @@ import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { twJoin } from 'tailwind-merge'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 
 type Props = { subject: string; body: string | null; resolved: boolean; noteId: number }
 
@@ -17,12 +18,14 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
   const [updateNoteMutation, { isLoading, error }] = useMutation(updateNote)
   const [open, setOpen] = useState(false)
   const [formResolved, setFormResolved] = useState(resolved)
+  const region = useStaticRegion()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const sanitize = (input: string) => (input ? dompurify.sanitize(input) : input)
     updateNoteMutation(
       {
+        regionSlug: region!.slug,
         noteId,
         subject: sanitize(new FormData(event.currentTarget).get('subject')!.toString()),
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),

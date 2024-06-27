@@ -10,6 +10,7 @@ const Schema = z.object({
   subject: z.string(),
   body: z.string(),
   resolved: z.boolean(),
+  regionSlug: z.string(),
 })
 
 export default resolver.pipe(
