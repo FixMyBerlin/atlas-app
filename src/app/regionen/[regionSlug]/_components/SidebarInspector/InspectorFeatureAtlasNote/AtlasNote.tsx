@@ -22,7 +22,7 @@ export const AtlasNote = ({ note }: Props) => {
 
   return (
     <>
-      <div className="text-black">
+      <div className="relative text-black">
         <strong>
           <OsmUserLink
             firstName={note.author?.firstName}
