@@ -59,12 +59,14 @@ export const EditNoteCommentForm = ({ body, commentId }: Props) => {
               defaultValue={body}
             />
           </label>
-          <div className="flex items-center gap-1 leading-tight">
+
+          <div className="mt-6 flex items-center gap-1 leading-tight">
             <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
               Speichern
             </button>
             {isLoading && <SmallSpinner />}
           </div>
+
           {/* @ts-expect-errors TODO Research how the error message is provided by Blitz */}
           {error ? <p className="text-red-500">{error.message}</p> : null}
         </form>
