@@ -19,7 +19,7 @@ export const AtlasNoteComment = ({ comment }: Props) => {
 
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="relative flex items-center justify-between">
         <div className="text-black">
           <strong>
             <OsmUserLink
