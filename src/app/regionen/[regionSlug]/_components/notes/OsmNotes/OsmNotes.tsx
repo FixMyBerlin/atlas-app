@@ -18,7 +18,7 @@ const osmNotesQueryClient = new QueryClient()
 export const OsmNotes = () => {
   const region = useStaticRegion()
   // This will not just hide the UI, but also prevent the query so no data is rendered on the map
-  if (region?.hideOsmNotes === true) return null
+  if (!region || region.notes !== 'osmNotes') return null
 
   return (
     <QueryClientProvider client={osmNotesQueryClient}>
