@@ -21,7 +21,7 @@ export default function Page404() {
             </p>
             <div className="mt-6">
               <Link href="/regionen">
-                Zur Regionsliste
+                Zur öffentlichen Regionsliste
                 <span aria-hidden="true"> &rarr;</span>
               </Link>
             </div>

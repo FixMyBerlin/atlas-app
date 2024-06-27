@@ -7,11 +7,11 @@ export const metadata: Metadata = { title: 'Regionenauswahl' }
 
 export default async function RegionsPage() {
   return (
-    <>
+    <div className="mt-10">
       {/* <RegionIntro regions={regions} /> */}
       <RegionListPermissions />
       <RegionListPublic />
       <RegionListAdmins />
-    </>
+    </div>
   )
 }
