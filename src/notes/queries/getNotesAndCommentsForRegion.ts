@@ -1,8 +1,8 @@
 import { resolver } from '@blitzjs/rpc'
-import db from 'db'
-import { tuple, z } from 'zod'
-import getNotesAndCommentsForRegion from './getNotesAndCommentsForRegion'
 import { featureCollection, point } from '@turf/turf'
+import db from 'db'
+import { z } from 'zod'
+import getNotesAndCommentsForRegion from './getNotesAndCommentsForRegion'
 
 const Schema = z.object({
   regionSlug: z.string(),
@@ -13,10 +13,13 @@ export type NotesAndCommentsFeatureCollection = Awaited<
 >
 
 export default resolver.pipe(
-  resolver.authorize(),
+  // resolver.authorize(), // membership Check is done below becaues we don't want to throw
   resolver.zod(Schema),
   async ({ regionSlug }, ctx) => {
     const { session } = ctx
+
+    // Only logged in users see data
+    if (!session?.userId) return featureCollection([])
 
     const notes = await db.note.findMany({
       where: { region: { slug: regionSlug } },
@@ -31,6 +34,7 @@ export default resolver.pipe(
       orderBy: { id: 'asc' },
     })
 
+    // Only logged members (or admins) see data
     const memberships = await db.membership.findMany({ where: { userId: session.userId } })
     const membershipRegionIds = memberships.map((membership) => membership.regionId)
 

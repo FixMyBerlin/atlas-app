@@ -9,11 +9,13 @@ import { NotesNew } from '../NotesNew/NotesNew'
 import { NotesNewMap } from '../NotesNew/NotesNewMap'
 import { AtlasNotesControls } from './AtlasNotesControls'
 import { AtlasNotesNewForm } from './AtlasNotesNewForm'
+import { useSession } from '@blitzjs/auth'
+import { useAllowAtlasNotes } from './utils/useAllowAtlasNotes'
 
 export const AtlasNotes = () => {
-  const region = useStaticRegion()
+  const allowAtlasNotes = useAllowAtlasNotes()
   // This will not just hide the UI, but also prevent the query so no data is rendered on the map
-  if (!region || region.notes !== 'atlasNotes') return null
+  if (!allowAtlasNotes) return null
 
   return (
     <Suspense fallback={<SmallSpinner />}>
@@ -25,7 +27,7 @@ export const AtlasNotes = () => {
 const AtlasNotesSuspended = () => {
   const { newAtlasNoteMapParam, setNewAtlasNoteMapParam } = useNewAtlasNoteMapParam()
 
-  const regionSlug = useRegionSlug()
+  const regionSlug = useRegionSlug()!
   // For now, we load all notes. We will want to scope this to the viewport later.
   const [_, { isLoading, isError, error }] = useQuery(getNotesAndCommentsForRegion, {
     regionSlug,
@@ -40,7 +42,7 @@ const AtlasNotesSuspended = () => {
       <AtlasNotesControls isLoading={isLoading} isError={isError} />
       <NotesNew visible={Boolean(newAtlasNoteMapParam)} title="Einen internen Hinweis hinterlassen">
         <NotesNewMap
-          mapId={'newAtlasNoteMap'}
+          mapId="newAtlasNoteMap"
           newNoteMapParam={newAtlasNoteMapParam}
           setNewNoteMapParam={setNewAtlasNoteMapParam}
         />
