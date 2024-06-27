@@ -4,6 +4,7 @@ import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsF
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useShowAtlasNotesParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { useAllowAtlasNotes } from '../../notes/AtlasNotes/utils/useAllowAtlasNotes'
 
 export const atlasNotesLayerId = 'atlas-notes'
 
@@ -11,19 +12,20 @@ export const SourcesLayersAtlasNotes = () => {
   const { showAtlasNotesParam } = useShowAtlasNotesParam()
   const { inspectorFeatures } = useMapStateInteraction()
   const region = useStaticRegion()!
+  const allowAtlasNotes = useAllowAtlasNotes()
 
   // For now, we load all notes, but minimized data. We will want to scope this to the viewport later.
   const [notes] = useQuery(
     getNotesAndCommentsForRegion,
     { regionSlug: region.slug },
-    { enabled: region.notes !== 'atlasNotes' },
+    { enabled: allowAtlasNotes },
   )
 
   const selectedFeatureIds = inspectorFeatures
     .filter((feature) => feature.source === 'atlas-notes')
     .map((feature) => (feature?.properties?.id || 0) as number)
 
-  if (region.notes !== 'atlasNotes') return null
+  if (!allowAtlasNotes) return null
 
   return (
     <Source

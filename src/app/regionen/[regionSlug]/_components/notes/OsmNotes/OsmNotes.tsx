@@ -66,7 +66,7 @@ const OsmNotesWrappedInQUeryClientProvider = () => {
         title="Einen Hinweis auf OpenStreetMap veröffentlichen"
       >
         <NotesNewMap
-          mapId={'newOsmNoteMap'}
+          mapId="newOsmNoteMap"
           newNoteMapParam={newOsmNoteMapParam}
           setNewNoteMapParam={setNewOsmNoteMapParam}
         />
