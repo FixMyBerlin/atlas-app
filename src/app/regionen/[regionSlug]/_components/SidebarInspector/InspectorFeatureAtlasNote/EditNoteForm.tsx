@@ -8,6 +8,7 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { twJoin } from 'tailwind-merge'
 
 type Props = { subject: string; body: string | null; resolved: boolean; noteId: number }
@@ -29,8 +30,10 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
       },
       {
         onSuccess: (note) => {
-          const queryKey = getQueryKey(getNoteAndComments, { id: note.id })
-          getQueryClient().invalidateQueries(queryKey)
+          const queryKeyInspector = getQueryKey(getNoteAndComments, { id: note.id })
+          getQueryClient().invalidateQueries(queryKeyInspector)
+          const queryKeyMap = getQueryKey(getNotesAndCommentsForRegion)
+          getQueryClient().invalidateQueries(queryKeyMap)
           setOpen(false)
         },
       },
