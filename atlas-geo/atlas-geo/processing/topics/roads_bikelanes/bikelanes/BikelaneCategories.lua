@@ -18,7 +18,7 @@ function BikelaneCategory.new(args)
   return self
 end
 
-function BikelaneCategory:checkCondition(tags)
+function BikelaneCategory:__call(tags)
   return self.condition(tags)
 end
 
@@ -423,7 +423,7 @@ local needsClarification = BikelaneCategory.new({
 
 local function defineCategory(tags, categoryDefinitions)
   for _, category in pairs(categoryDefinitions) do
-    if category:checkCondition(tags) then
+    if category(tags) then
       return category.name
     end
   end
