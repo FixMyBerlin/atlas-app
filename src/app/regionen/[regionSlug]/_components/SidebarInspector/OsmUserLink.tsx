@@ -3,7 +3,12 @@ import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
-type Props = { osmName?: string; firstName?: string; lastName?: string; hasPermission: boolean }
+type Props = {
+  osmName?: string
+  firstName?: string | null
+  lastName?: string | null
+  hasPermission: boolean
+}
 
 export const OsmUserLink = ({ osmName, firstName, lastName, hasPermission }: Props) => {
   if (!osmName) return <>Eine anonyme Nutzer:in</>
