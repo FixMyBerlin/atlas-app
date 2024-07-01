@@ -1,5 +1,6 @@
 import { MapPinIcon, PlusIcon } from '@heroicons/react/24/solid'
 import * as turf from '@turf/turf'
+import { useState } from 'react'
 import { MapProps } from 'react-map-gl'
 import {
   AttributionControl,
@@ -25,12 +26,15 @@ type Props = {
 }
 
 export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Props) => {
+  const [showHint, setShowHint] = useState(true)
+
   const handleMove = (event: ViewStateChangeEvent) => {
     setNewNoteMapParam({
       zoom: event.viewState.zoom,
       lat: event.viewState.latitude,
       lng: event.viewState.longitude,
     })
+    setShowHint(false)
   }
 
   let initialViewState: MapProps['initialViewState'] = {
@@ -83,6 +87,13 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         <SourceLayerFeature />
         <SourceLayerBikelanes />
       </MapGl>
+
+      {showHint && (
+        <div className="pointer-events-none absolute inset-x-20 bottom-20 z-50 rounded-sm bg-white/90 p-2 text-center leading-tight">
+          Bewegen Sie die Karte, um das rote Kreuz dort zu positionieren, wo Sie Ihren Kommentar
+          eintragen möchten.
+        </div>
+      )}
     </section>
   )
 }
