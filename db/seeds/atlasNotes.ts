@@ -16,13 +16,13 @@ const seedAtlasNotes = async () => {
     {
       userId: 1,
       noteId: 999, // replaced below
-      body: 'Ich stimme zu. **Fettdruck**',
+      body: 'Ich stimme zu. **Fettdruck**.',
     },
     {
       userId: 2,
       noteId: 999, // replaced below
       updatedAt: new Date(),
-      body: 'Ich stimme zu. **Fettdruck**',
+      body: 'Ich habe das erledigt.',
     },
   ]
 
@@ -31,7 +31,7 @@ const seedAtlasNotes = async () => {
     const seedAtlasNotes: Prisma.NoteUncheckedCreateInput = {
       userId: 2,
       regionId: regionForId.id,
-      subject: 'Betreff der Notiz',
+      subject: 'X nicht Y',
       body: `
 An dieser Stelle ist nicht X sondern Y zu finden.
 
@@ -51,7 +51,7 @@ An dieser Stelle ist nicht X sondern Y zu finden.
     const seedResolvedAtlasNotes: Prisma.NoteUncheckedCreateInput = {
       userId: 1,
       regionId: regionForId.id,
-      subject: 'Betreff der Notiz',
+      subject: 'Prüfen ob Z richtig ist',
       body: `Dieser Hinweis ist bereits erledigt worden und außerdem bearbeitet.`,
       resolvedAt: new Date(),
       updatedAt: new Date(),

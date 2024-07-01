@@ -31,8 +31,8 @@ export const AtlasNote = ({ note }: Props) => {
             hasPermission={userHasPermssionOnRegion}
           />
         </strong>{' '}
-        kommentierte am {localDateTime(note.createdAt)}
-        {wasUpdate(note) && <> (aktualisiert am {localDateTime(note.updatedAt)})</>}:
+        erstellt am {localDateTime(note.createdAt)}
+        {wasUpdate(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
       </div>
 
       <div className="border-l-4 border-white pl-3 ">

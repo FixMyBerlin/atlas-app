@@ -33,18 +33,17 @@ export const NewNoteCommentForm = ({ noteId }: Props) => {
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        <span className="sr-only">Kommentar (Markdown)</span>
+        <span className="sr-only">Antwort (Markdown)</span>
         <textarea
           name="body"
           className="my-3 block min-h-28 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"
-          placeholder="Kommentar"
           data-1p-ignore
           data-lpignore
         />
       </label>
       <div className="flex items-center gap-1 leading-tight">
         <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
-          Kommentar eintragen
+          Antwort speichern
         </button>
         {isLoading && <SmallSpinner />}
       </div>
