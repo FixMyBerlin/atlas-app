@@ -75,7 +75,7 @@ export const AtlasNotesNewForm = () => {
         </label>
         <div className="flex items-center gap-1 leading-tight">
           <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
-            Interner Hinweis eintragen
+            Internen Hinweis speichern
           </button>
           {isLoading && <SmallSpinner />}
         </div>
