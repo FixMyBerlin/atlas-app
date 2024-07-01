@@ -44,7 +44,7 @@ export const SourcesLayersAtlasNotes = () => {
             type="circle"
             paint={{
               'circle-radius': 15,
-              'circle-color': '#b45309', // amber-700 https://tailwindcss.com/docs/customizing-colors
+              'circle-color': '#93c5fd', // amber-300 https://tailwindcss.com/docs/customizing-colors
               'circle-opacity': ['step', ['zoom'], 0.3, 10, 0.6],
               'circle-blur': 0.3,
             }}
@@ -58,7 +58,7 @@ export const SourcesLayersAtlasNotes = () => {
             type="circle"
             paint={{
               'circle-radius': 11,
-              'circle-color': '#fbbf24', // amber-400 https://tailwindcss.com/docs/customizing-colors
+              'circle-color': '#dbeafe', // blue-100 https://tailwindcss.com/docs/customizing-colors
               'circle-opacity': ['step', ['zoom'], 0.3, 10, 1],
             }}
           />
