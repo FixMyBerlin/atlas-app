@@ -1,17 +1,17 @@
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
-import { OsmNotesControls } from './OsmNotesControls'
-import { NotesNew } from '../NotesNew/NotesNew'
-import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useStaticRegion } from '../../regionUtils/useStaticRegion'
-import { OsmNotesNewForm } from './OsmNotesNewForm'
-import { NotesNewMap } from '../NotesNew/NotesNewMap'
 import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
 import {
   useNewOsmNoteMapParam,
   useShowOsmNotesParam,
 } from '../../../_hooks/useQueryState/useNotesOsmParams'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { NotesNew } from '../NotesNew/NotesNew'
+import { NotesNewMap } from '../NotesNew/NotesNewMap'
+import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
+import { OsmNotesControls } from './OsmNotesControls'
+import { OsmNotesNewForm } from './OsmNotesNewForm'
 
 const osmNotesQueryClient = new QueryClient()
 

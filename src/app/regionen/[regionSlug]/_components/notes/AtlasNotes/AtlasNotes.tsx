@@ -4,12 +4,10 @@ import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
-import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { NotesNew } from '../NotesNew/NotesNew'
 import { NotesNewMap } from '../NotesNew/NotesNewMap'
 import { AtlasNotesControls } from './AtlasNotesControls'
 import { AtlasNotesNewForm } from './AtlasNotesNewForm'
-import { useSession } from '@blitzjs/auth'
 import { useAllowAtlasNotes } from './utils/useAllowAtlasNotes'
 
 export const AtlasNotes = () => {
