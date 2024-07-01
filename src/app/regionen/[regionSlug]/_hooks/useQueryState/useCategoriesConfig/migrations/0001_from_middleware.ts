@@ -1,4 +1,4 @@
-import { mapParamFallback } from '../../useMapParam'
+import { mapParamFallback } from '../../utils/mapParamFallback.const'
 import { serializeMapParam } from '../../utils/mapParam'
 import { UrlMigration } from './types'
 
