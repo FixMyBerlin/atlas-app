@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
 const Author = z.object({
+  id: z.number(),
   osmName: z.string(),
-  osmAvatar: z.string().nullable(),
+  // osmAvatar: z.string().nullable(), // Not used ATM
   firstName: z.string().nullable(),
   lastName: z.string().nullable(),
   role: z.enum(['ADMIN', 'USER']),

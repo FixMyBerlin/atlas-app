@@ -6,19 +6,26 @@ import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import { z } from 'zod'
 import getNoteRegionId from './getNoteEntryRegionId'
 import { NoteAndCommentsSchema } from '../schemas'
+import getNoteAndComments from './getNoteAndComments'
 
 const GetNote = z.object({
   // This accepts type of undefined, but is required at runtime
   id: z.number().optional().refine(Boolean, 'Required'),
 })
 
+export type NoteAndComments = Awaited<ReturnType<typeof getNoteAndComments>>
+export type NoteComment = NonNullable<
+  Awaited<ReturnType<typeof getNoteAndComments>>['noteComments']
+>[number]
+
 export default resolver.pipe(
   resolver.zod(GetNote),
   authorizeRegionAdmin(getNoteRegionId),
   async ({ id }) => {
     const author = {
+      id: true,
       osmName: true,
-      osmAvatar: true,
+      // osmAvatar: true, // Not used ATM
       role: true,
       firstName: true,
       lastName: true,
@@ -43,7 +50,6 @@ export default resolver.pipe(
 
     if (!note) throw new NotFoundError()
 
-    return note
+    return NoteAndCommentsSchema.parse(note)
   },
-  resolver.zod(NoteAndCommentsSchema),
 )

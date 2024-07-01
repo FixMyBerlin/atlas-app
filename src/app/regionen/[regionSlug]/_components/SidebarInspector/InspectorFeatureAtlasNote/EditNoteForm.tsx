@@ -8,19 +8,20 @@ import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNote from 'src/notes/mutations/updateNote'
-import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { twJoin } from 'tailwind-merge'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import SvgNotesClosed from '../icons/notes_closed.svg'
 import SvgNotesOpen from '../icons/notes_open.svg'
+import { useIsAuthor } from './utils/useIsAuthor'
 
-type Props = { subject: string; body: string | null; resolved: boolean; noteId: number }
+type Props = { note: NoteAndComments }
 
-export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
+export const EditNoteForm = ({ note }: Props) => {
   const [updateNoteMutation, { isLoading, error }] = useMutation(updateNote)
   const [open, setOpen] = useState(false)
-  const [formResolved, setFormResolved] = useState(resolved)
+  const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
   const region = useStaticRegion()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,7 +30,7 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
     updateNoteMutation(
       {
         regionSlug: region!.slug,
-        noteId,
+        noteId: note.id,
         subject: sanitize(new FormData(event.currentTarget).get('subject')!.toString()),
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
         resolved: formResolved,
@@ -46,11 +47,17 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
     )
   }
 
+  const isAuthor = useIsAuthor(note.author.id)
+  if (!isAuthor) {
+    return null
+  }
+
   return (
     <>
-      <button type="button" className="" onClick={() => setOpen(true)}>
+      <button type="button" onClick={() => setOpen(true)}>
         <PencilSquareIcon className="size-6" />
       </button>
+
       <ModalDialog
         title="Hinweis bearbeiten"
         icon="edit"
@@ -69,7 +76,7 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
               data-1p-ignore
               data-lpignore
               required
-              defaultValue={subject}
+              defaultValue={note.subject}
             />
           </label>
 
@@ -82,7 +89,7 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
               data-1p-ignore
               data-lpignore
               required
-              defaultValue={body || ''}
+              defaultValue={note.body || ''}
             />
           </label>
 
@@ -133,7 +140,7 @@ export const EditNoteForm = ({ subject, body, resolved, noteId }: Props) => {
 
           <div className="mt-6 flex items-center gap-1 leading-tight">
             <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
-              Speichern
+              Änderung speichern
             </button>
             {isLoading && <SmallSpinner />}
           </div>
