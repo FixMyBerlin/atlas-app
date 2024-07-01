@@ -26,7 +26,7 @@ export const InspectorFeatureAtlasNoteWithQuery = ({ noteId }: Props) => {
         }
         objectId={String(noteAndComments.id)}
       >
-        <section className="bg-yellow-100/70 px-3 py-5">
+        <section className="bg-blue-50 px-3 py-5">
           <AtlasNote note={noteAndComments} />
 
           <ul>
