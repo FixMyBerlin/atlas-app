@@ -1,25 +1,21 @@
-import { useSession } from '@blitzjs/auth'
 import dompurify from 'dompurify'
 import Image from 'next/image'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import { proseClasses } from 'src/app/_components/text/prose'
-import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
 import { twJoin } from 'tailwind-merge'
 import { OsmUserLink } from '../OsmUserLink'
 import SvgNotesClosed from '../icons/notes_closed.svg'
 import SvgNotesOpen from '../icons/notes_open.svg'
-import { localDateTime } from './utils/localDateTime'
-import { wasUpdate } from './utils/wasUpdated'
 import { EditNoteForm } from './EditNoteForm'
+import { localDateTime } from './utils/localDateTime'
+import { wasUpdated } from './utils/wasUpdated'
 
 type Props = {
-  note: Awaited<ReturnType<typeof getNoteAndComments>>
+  note: NoteAndComments
 }
 
 export const AtlasNote = ({ note }: Props) => {
-  const { osmName } = useSession()
-  const userHasPermssionOnRegion = note.author.osmName === osmName
-
   return (
     <>
       <div className="relative text-black">
@@ -28,11 +24,11 @@ export const AtlasNote = ({ note }: Props) => {
             firstName={note.author?.firstName}
             lastName={note.author?.lastName}
             osmName={note.author.osmName}
-            hasPermission={userHasPermssionOnRegion}
           />
-        </strong>{' '}
+        </strong>
+        <br />
         erstellt am {localDateTime(note.createdAt)}
-        {wasUpdate(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
+        {wasUpdated(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
       </div>
 
       <div className="border-l-4 border-white pl-3 ">
@@ -64,12 +60,7 @@ export const AtlasNote = ({ note }: Props) => {
             </span>
           )}
         </p>
-        <EditNoteForm
-          subject={note.subject}
-          body={note.body}
-          resolved={!!note.resolvedAt}
-          noteId={note.id}
-        />
+        <EditNoteForm note={note} />
       </div>
     </>
   )

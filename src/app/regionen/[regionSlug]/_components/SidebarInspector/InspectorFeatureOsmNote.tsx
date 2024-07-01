@@ -50,7 +50,7 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             >
               <div className="text-black">
                 <strong>
-                  <OsmUserLink osmName={comment.user} hasPermission={userHasPermssionOnRegion} />
+                  <OsmUserLink osmName={comment.user} />
                 </strong>{' '}
                 kommentierte am {date}:
               </div>

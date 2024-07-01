@@ -10,11 +10,18 @@ import { Disclosure } from './Disclosure/Disclosure'
 import { AtlasNote } from './InspectorFeatureAtlasNote/AtlasNote'
 import { AtlasNoteComment } from './InspectorFeatureAtlasNote/AtlasNoteComment'
 import { NewNoteCommentForm } from './InspectorFeatureAtlasNote/NewNoteCommentForm'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
 type Props = { noteId: NotesAndCommentsFeatureCollection['features'][number]['properties']['id'] }
 
 export const InspectorFeatureAtlasNoteWithQuery = ({ noteId }: Props) => {
   const [noteAndComments] = useQuery(getNoteAndComments, { id: noteId })
+
+  // All users with permissions on the region may also read notes and commens
+  const hasPermissions = useHasPermissions()
+  if (!hasPermissions) {
+    return null
+  }
 
   return (
     <div className="mt-5 w-full rounded-2xl">

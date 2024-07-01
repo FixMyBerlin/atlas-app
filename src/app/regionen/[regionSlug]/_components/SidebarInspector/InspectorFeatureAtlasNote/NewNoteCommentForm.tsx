@@ -5,6 +5,7 @@ import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import createNoteComment from 'src/notes/mutations/createNoteComment'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
 type Props = { noteId: number }
 
@@ -28,6 +29,12 @@ export const NewNoteCommentForm = ({ noteId }: Props) => {
         },
       },
     )
+  }
+
+  // All users with permissions on the region may also comment
+  const hasPermissions = useHasPermissions()
+  if (!hasPermissions) {
+    return null
   }
 
   return (

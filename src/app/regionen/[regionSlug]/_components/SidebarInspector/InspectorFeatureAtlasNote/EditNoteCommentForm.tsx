@@ -6,12 +6,13 @@ import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNoteComment from 'src/notes/mutations/updateNoteComment'
-import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
+import getNoteAndComments, { NoteComment } from 'src/notes/queries/getNoteAndComments'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { useIsAuthor } from './utils/useIsAuthor'
 
-type Props = { body: string; commentId: number }
+type Props = { comment: NoteComment }
 
-export const EditNoteCommentForm = ({ body, commentId }: Props) => {
+export const EditNoteCommentForm = ({ comment }: Props) => {
   const [updateNoteCommentMutation, { isLoading, error }] = useMutation(updateNoteComment)
   const [open, setOpen] = useState(false)
   const region = useStaticRegion()
@@ -22,7 +23,7 @@ export const EditNoteCommentForm = ({ body, commentId }: Props) => {
     updateNoteCommentMutation(
       {
         regionSlug: region!.slug,
-        commentId,
+        commentId: comment.id,
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
       },
       {
@@ -35,11 +36,17 @@ export const EditNoteCommentForm = ({ body, commentId }: Props) => {
     )
   }
 
+  const isAuthor = useIsAuthor(comment.author.id)
+  if (!isAuthor) {
+    return null
+  }
+
   return (
     <>
-      <button type="button" className="" onClick={() => setOpen(true)}>
+      <button type="button" onClick={() => setOpen(true)}>
         <PencilSquareIcon className="size-6" />
       </button>
+
       <ModalDialog
         title="Antwort bearbeiten"
         icon="edit"
@@ -55,14 +62,14 @@ export const EditNoteCommentForm = ({ body, commentId }: Props) => {
               className="my-3 block min-h-28 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"
               data-1p-ignore
               data-lpignore
-              defaultValue={body}
+              defaultValue={comment.body}
               required
             />
           </label>
 
           <div className="mt-6 flex items-center gap-1 leading-tight">
             <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
-              Antwort speichern
+              Änderung speichern
             </button>
             {isLoading && <SmallSpinner />}
           </div>

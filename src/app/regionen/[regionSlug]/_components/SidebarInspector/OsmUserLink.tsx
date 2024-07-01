@@ -2,15 +2,17 @@ import { CheckBadgeIcon } from '@heroicons/react/24/solid'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 import { Link } from 'src/app/_components/links/Link'
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
 type Props = {
   osmName?: string
   firstName?: string | null
   lastName?: string | null
-  hasPermission: boolean
 }
 
-export const OsmUserLink = ({ osmName, firstName, lastName, hasPermission }: Props) => {
+export const OsmUserLink = ({ osmName, firstName, lastName }: Props) => {
+  const hasPermission = useHasPermissions()
+
   if (!osmName) return <>Eine anonyme Nutzer:in</>
 
   return (
