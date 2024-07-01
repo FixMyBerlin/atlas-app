@@ -55,29 +55,24 @@ function Bikelanes(object)
   local transformedObjects = GetTransformedObjects(tags, transformations)
 
   for _, transformedTags in ipairs(transformedObjects) do
-    local category = CategorizeOnlyPresent(transformedTags)
+    local category = CategorizeBikelane(transformedTags)
     if category ~= nil then
-      local result_tag = {
-        _infrastructureExists = false,
+      local result_tags = {
         _side = transformedTags._side,
-        category = category,
+        _infrastructureExists = category.infrastructureExists,
+        category = category.name,
       }
-      table.insert(result_bikelanes, result_tag)
-    else
-      local category = CategorizeBikelane(transformedTags)
-      if category ~= nil then
-        local result_tags = {
+      if category.infrastructureExists then
+        MergeTable(result_tags, {
           _id = DefaultId(object),
           _infrastructureExists = true,
-          _side = transformedTags._side,
           age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
-          category = category,
           width = ParseLength(transformedTags.width),
-          oneway = DeriveOneway(transformedTags, category),
+          oneway = DeriveOneway(transformedTags, category.name),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
-        }
+        })
 
         MergeTable(result_tags, DeriveTrafficSigns(transformedTags))
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
@@ -96,8 +91,8 @@ function Bikelanes(object)
         end
 
         result_tags.todos = ToMarkdownList(BikelaneTodos(transformedTags, result_tags))
-        table.insert(result_bikelanes, result_tags)
       end
+      table.insert(result_bikelanes, result_tags)
     end
   end
 
