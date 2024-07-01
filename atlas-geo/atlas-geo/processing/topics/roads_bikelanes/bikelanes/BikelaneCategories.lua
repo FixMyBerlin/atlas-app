@@ -14,6 +14,7 @@ function BikelaneCategory.new(args)
   local self = setmetatable({}, BikelaneCategory)
   self.name = args.name
   self.desc = args.desc
+  self.infrastructureExists = args.infrastructureExists
   self.condition = args.condition
   return self
 end
@@ -25,6 +26,7 @@ end
 local dataNo = BikelaneCategory.new({
   name = 'data_no',
   desc = 'The explicit absence of bike infrastrucute',
+  infrastructureExists = false,
   condition = function(tags)
     local nos = Set({ 'no', 'none' })
     if nos[tags.cycleway] then
@@ -36,6 +38,7 @@ local dataNo = BikelaneCategory.new({
 local isSeparate = BikelaneCategory.new({
   name = 'separate_geometry',
   desc = '',
+  infrastructureExists = false,
   condition = function(tags)
     if tags.cycleway == 'separate' then
       return true
@@ -48,6 +51,7 @@ local isSeparate = BikelaneCategory.new({
 local implicitOneWay = BikelaneCategory.new({
   name = 'not_expected',
   desc = '',
+  infrastructureExists = false,
   condition = function(tags)
     local result = tags._prefix == 'cycleway' and tags._infix == '' -- object is created from implicit case
     result = result and tags._parent.oneway == 'yes' and
@@ -65,6 +69,7 @@ local pedestrianAreaBicycleYes = BikelaneCategory.new({
   desc = 'Pedestrian area (DE:"Fußgängerzonen") with' ..
       ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.' ..
       ' (We only process the ways, not the `area=yes` Polygon.)',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == "pedestrian" and (tags.bicycle == "yes" or tags.bicycle == "designated") then
       return true
@@ -77,6 +82,7 @@ local livingStreet = BikelaneCategory.new({
   name = 'livingStreet',
   desc = 'Living streets are considered bike friendly and added unless prohibided.' ..
       ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == "living_street" then
       -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
@@ -98,6 +104,7 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   name = 'bicycleRoad_vehicleDestination',
   desc = 'Bicycle road (DE: "Fahrradstraße")' ..
       ' with vehicle access `destination`.',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     if tags.bicycle_road == "yes"
@@ -119,6 +126,7 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
 local bicycleRoad = BikelaneCategory.new({
   name = 'bicycleRoad',
   desc = 'Bicycle road (DE: "Fahrradstraße")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     if tags.bicycle_road == "yes"
@@ -133,6 +141,7 @@ local bicycleRoad = BikelaneCategory.new({
 local footAndCyclewayShared = BikelaneCategory.new({
   name = 'footAndCyclewayShared',
   desc = 'Shared bike and foot path (DE: "Gemeinsamer Geh- und Radweg")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
@@ -152,6 +161,7 @@ local footAndCycleway_adjoining, footAndCyclewayShared_isolated, footAndCycleway
 local footAndCyclewaySegregated = BikelaneCategory.new({
   name = 'footAndCyclewaySegregated',
   desc = 'Shared bike and foot path (DE: "Getrennter Geh- und Radweg", "Getrennter Rad- und Gehweg")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
@@ -170,6 +180,7 @@ local footwayBicycleYes = BikelaneCategory.new({
   name = 'footwayBicycleYes',
   desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`)' ..
       ' (DE: "Gehweg, Fahrrad frei")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
 
@@ -195,6 +206,7 @@ local footwayBicycleYes_adjoining, footwayBicycleYes_isolated, footwayBicycleYes
 local cyclewaySeparated = BikelaneCategory.new({
   name = 'cycleway',
   desc = '', -- TODO desc
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
 
@@ -235,6 +247,7 @@ local crossing = BikelaneCategory.new({
   name = 'crossing',
   desc = 'Crossings with relevance for bicycles.' ..
       ' There is no split into more specific infrastrucute categories for now.',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == "cycleway" and tags.cycleway == "crossing" then
       return true
@@ -255,6 +268,7 @@ local cyclewayLink = BikelaneCategory.new({
   desc = 'A non-infrastrucute category.' ..
       ' `cycleway=link` is used to connect the road network for routing use cases' ..
       ' when no physical infrastructure is present.',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == "cycleway" and tags.cycleway == "link" then
       return true
@@ -269,6 +283,7 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
   name = 'cyclewayOnHighway_advisory',
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       'For "advisory" lanes (DE: "Schutzstreifen")',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -287,6 +302,7 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
   name = 'cyclewayOnHighway_exclusive',
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       ' For "exclusive" lanes (DE: "Radfahrstreifen").',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -305,6 +321,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       ' This category is split into subcategories for "advisory" (DE: "Schutzstreifen")' ..
       ' and "exclusive" lanes (DE: "Radfahrstreifen").',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -319,6 +336,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
 local sharedMotorVehicleLane = BikelaneCategory.new({
   name = 'sharedMotorVehicleLane',
   desc = '', -- TODO desc; Wiki nochmal nachlesen und Conditions prüfen
+  infrastructureExists = true,
   condition = function(tags)
     local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
     if result then
@@ -333,6 +351,7 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
   name = 'cyclewayOnHighwayBetweenLanes',
   desc = 'Bike lane between motor vehicle lanes,' ..
       ' mostly on the left of a right turn lane. (DE: "Radweg in Mittellage")',
+  infrastructureExists = true,
   condition = function(tags)
     if tags['_parent_highway'] == nil or tags._prefix == 'sidewalk' then return end
 
@@ -355,6 +374,7 @@ local sharedBusLaneBusWithBike = BikelaneCategory.new({
   name = 'sharedBusLaneBusWithBike',
   desc = 'Bus lane with explicit allowance for bicycles (`cycleway=share_busway`).' ..
       ' (DE: "Bussonderfahrstreifen mit Fahrrad frei")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.highway == "cycleway" and
@@ -379,6 +399,7 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
   name = 'sharedBusLaneBikeWithBus',
   desc = 'Bicycle lane with explicit allowance for buses.' ..
       ' (DE: "Radfahrstreifen mit Freigabe Busverkehr")',
+  infrastructureExists = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.highway == "cycleway" and tags.lane == "share_busway"
@@ -400,6 +421,7 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
 local sharedLane = BikelaneCategory.new({
   name = 'explicitSharedLaneButNoSignage',
   desc = '',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.cycleway == "shared" then
       return true
@@ -413,6 +435,7 @@ local needsClarification = BikelaneCategory.new({
   name = 'needsClarification',
   desc = 'Bike infrastructure that we cannot categories properly due to missing or ambiguous tagging.' ..
       ' Check the `todos` property on hints on how to improve the tagging.',
+  infrastructureExists = true,
   condition = function(tags)
     if tags.highway == "cycleway"
         or (tags.highway == "path" and tags.bicycle == "designated") then
@@ -421,57 +444,47 @@ local needsClarification = BikelaneCategory.new({
   end
 })
 
-local function defineCategory(tags, categoryDefinitions)
+-- The order specifies the precedence; first one with a result win.
+local categoryDefinitions = {
+  dataNo,
+  isSeparate,
+  implicitOneWay,
+  cyclewayLink,
+  crossing,
+  livingStreet,
+  bicycleRoad_vehicleDestination,
+  bicycleRoad,
+  sharedBusLaneBikeWithBus,
+  sharedBusLaneBusWithBike,
+  sharedLane,
+  pedestrianAreaBicycleYes,
+  sharedMotorVehicleLane,
+  -- Detailed tagging cases
+  cyclewayOnHighwayBetweenLanes,
+  footAndCycleway_adjoining,
+  footAndCyclewayShared_isolated,
+  footAndCyclewayShared_adjoiningOrisolated,
+  footAndCyclewaySegregated_adjoining,
+  footAndCyclewaySegregated_isolated,
+  footAndCyclewaySegregated_adjoiningOrisolated,
+  cyclewaySeparated_adjoining,
+  cyclewaySeparated_isolated,
+  cyclewaySeparated_adjoiningOrisolated,
+  cyclewayOnHighway_advisory,
+  cyclewayOnHighway_exclusive,
+  cyclewayOnHighway_advisoryOrExclusive,
+  footwayBicycleYes_adjoining, -- after `cyclewaySeparatedCases`
+  footwayBicycleYes_isolated,
+  footwayBicycleYes_adjoiningOrIsolated,
+  -- Needs to be last
+  needsClarification,
+}
+
+function CategorizeBikelane(tags)
   for _, category in pairs(categoryDefinitions) do
     if category(tags) then
-      return category.name
+      return category
     end
   end
   return nil
-end
-
--- Categories for objects where no infrastructure is available but the data is considered complete
-function CategorizeOnlyPresent(tags)
-  local categories = {
-    dataNo,
-    isSeparate,
-    implicitOneWay,
-  }
-  return defineCategory(tags, categories)
-end
-
-function CategorizeBikelane(tags)
-  -- The order specifies the precedence; first one with a result win.
-  local categoryDefinitions = {
-    cyclewayLink,
-    crossing,
-    livingStreet,
-    bicycleRoad_vehicleDestination,
-    bicycleRoad,
-    sharedBusLaneBikeWithBus,
-    sharedBusLaneBusWithBike,
-    sharedLane,
-    pedestrianAreaBicycleYes,
-    sharedMotorVehicleLane,
-    -- Detailed tagging cases
-    cyclewayOnHighwayBetweenLanes,
-    footAndCycleway_adjoining,
-    footAndCyclewayShared_isolated,
-    footAndCyclewayShared_adjoiningOrisolated,
-    footAndCyclewaySegregated_adjoining,
-    footAndCyclewaySegregated_isolated,
-    footAndCyclewaySegregated_adjoiningOrisolated,
-    cyclewaySeparated_adjoining,
-    cyclewaySeparated_isolated,
-    cyclewaySeparated_adjoiningOrisolated,
-    cyclewayOnHighway_advisory,
-    cyclewayOnHighway_exclusive,
-    cyclewayOnHighway_advisoryOrExclusive,
-    footwayBicycleYes_adjoining, -- after `cyclewaySeparatedCases`
-    footwayBicycleYes_isolated,
-    footwayBicycleYes_adjoiningOrIsolated,
-    -- Needs to be last
-    needsClarification,
-  }
-  return defineCategory(tags, categoryDefinitions)
 end
