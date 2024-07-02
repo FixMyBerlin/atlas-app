@@ -2,7 +2,7 @@ package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/ca
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("IsTermInString")
 require("IsSidepath")
-require("AdjoiningOrIsolatedWrapper")
+require("CreateSubcategoriesAdjoiningOrIsolated")
 require("SanitizeTrafficSign")
 BikelaneCategory = {}
 BikelaneCategory.__index = BikelaneCategory
@@ -12,7 +12,7 @@ BikelaneCategory.__index = BikelaneCategory
 -- @param args.condition function
 function BikelaneCategory.new(args)
   local self = setmetatable({}, BikelaneCategory)
-  self.name = args.name
+  self.id = args.id
   self.desc = args.desc
   self.infrastructureExists = args.infrastructureExists
   self.condition = args.condition
@@ -24,7 +24,7 @@ function BikelaneCategory:__call(tags)
 end
 
 local dataNo = BikelaneCategory.new({
-  name = 'data_no',
+  id = 'data_no',
   desc = 'The explicit absence of bike infrastrucute',
   infrastructureExists = false,
   condition = function(tags)
@@ -36,7 +36,7 @@ local dataNo = BikelaneCategory.new({
 })
 
 local isSeparate = BikelaneCategory.new({
-  name = 'separate_geometry',
+  id = 'separate_geometry',
   desc = '',
   infrastructureExists = false,
   condition = function(tags)
@@ -49,7 +49,7 @@ local isSeparate = BikelaneCategory.new({
 -- for oneways we assume that the tag `cycleway=*` significates that there's one bike line on the right
 -- TODO: this assumes right hand traffic (would be nice to specify this as an option)
 local implicitOneWay = BikelaneCategory.new({
-  name = 'not_expected',
+  id = 'not_expected',
   desc = '',
   infrastructureExists = false,
   condition = function(tags)
@@ -65,7 +65,7 @@ local implicitOneWay = BikelaneCategory.new({
 
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=pedestrian
 local pedestrianAreaBicycleYes = BikelaneCategory.new({
-  name = "pedestrianAreaBicycleYes",
+  id = "pedestrianAreaBicycleYes",
   desc = 'Pedestrian area (DE:"Fußgängerzonen") with' ..
       ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.' ..
       ' (We only process the ways, not the `area=yes` Polygon.)',
@@ -79,7 +79,7 @@ local pedestrianAreaBicycleYes = BikelaneCategory.new({
 
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
 local livingStreet = BikelaneCategory.new({
-  name = 'livingStreet',
+  id = 'livingStreet',
   desc = 'Living streets are considered bike friendly and added unless prohibided.' ..
       ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
   infrastructureExists = true,
@@ -99,10 +99,10 @@ local livingStreet = BikelaneCategory.new({
 })
 
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
--- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
+-- traffic_sign=DE:244,1020-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
 local bicycleRoad_vehicleDestination = BikelaneCategory.new({
-  name = 'bicycleRoad_vehicleDestination',
-  desc = 'Bicycle road (DE: "Fahrradstraße")' ..
+  id = 'bicycleRoad_vehicleDestination',
+  desc = 'Bicycle road (DE: "Fahrradstraße mit Anlieger frei")' ..
       ' with vehicle access `destination`.',
   infrastructureExists = true,
   condition = function(tags)
@@ -124,7 +124,7 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
 local bicycleRoad = BikelaneCategory.new({
-  name = 'bicycleRoad',
+  id = 'bicycleRoad',
   desc = 'Bicycle road (DE: "Fahrradstraße")',
   infrastructureExists = true,
   condition = function(tags)
@@ -139,7 +139,7 @@ local bicycleRoad = BikelaneCategory.new({
 
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:240
 local footAndCyclewayShared = BikelaneCategory.new({
-  name = 'footAndCyclewayShared',
+  id = 'footAndCyclewayShared',
   desc = 'Shared bike and foot path (DE: "Gemeinsamer Geh- und Radweg")',
   infrastructureExists = true,
   condition = function(tags)
@@ -154,12 +154,12 @@ local footAndCyclewayShared = BikelaneCategory.new({
     end
   end
 })
-local footAndCycleway_adjoining, footAndCyclewayShared_isolated, footAndCyclewayShared_adjoiningOrisolated = AdjoiningOrIsolatedWrapper(footAndCyclewayShared)
+local footAndCycleway_adjoining, footAndCyclewayShared_isolated, footAndCyclewayShared_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewayShared)
 
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:241-31
 local footAndCyclewaySegregated = BikelaneCategory.new({
-  name = 'footAndCyclewaySegregated',
+  id = 'footAndCyclewaySegregated',
   desc = 'Shared bike and foot path (DE: "Getrennter Geh- und Radweg", "Getrennter Rad- und Gehweg")',
   infrastructureExists = true,
   condition = function(tags)
@@ -172,12 +172,12 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     end
   end
 })
-local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, footAndCyclewaySegregated_adjoiningOrisolated = AdjoiningOrIsolatedWrapper(footAndCyclewaySegregated)
+local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, footAndCyclewaySegregated_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewaySegregated)
 
 -- Case: "Gehweg, Fahrrad frei"
 -- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:239
 local footwayBicycleYes = BikelaneCategory.new({
-  name = 'footwayBicycleYes',
+  id = 'footwayBicycleYes',
   desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`)' ..
       ' (DE: "Gehweg, Fahrrad frei")',
   infrastructureExists = true,
@@ -198,13 +198,13 @@ local footwayBicycleYes = BikelaneCategory.new({
     end
   end
 })
-local footwayBicycleYes_adjoining, footwayBicycleYes_isolated, footwayBicycleYes_adjoiningOrIsolated = AdjoiningOrIsolatedWrapper(footwayBicycleYes)
+local footwayBicycleYes_adjoining, footwayBicycleYes_isolated, footwayBicycleYes_adjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(footwayBicycleYes)
 
 -- Handle different cases for separated bikelanes ("baulich abgesetzte Radwege")
 -- The sub-tagging specifies if the cycleway is part of a road or a separate way.
 -- This part relies heavly on the `is_sidepath` tagging.
 local cyclewaySeparated = BikelaneCategory.new({
-  name = 'cycleway',
+  id = 'cycleway',
   desc = '', -- TODO desc
   infrastructureExists = true,
   condition = function(tags)
@@ -240,11 +240,11 @@ local cyclewaySeparated = BikelaneCategory.new({
     end
   end
 })
-local cyclewaySeparated_adjoining, cyclewaySeparated_isolated, cyclewaySeparated_adjoiningOrisolated = AdjoiningOrIsolatedWrapper(cyclewaySeparated)
+local cyclewaySeparated_adjoining, cyclewaySeparated_isolated, cyclewaySeparated_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(cyclewaySeparated)
 
 -- Examples https://github.com/FixMyBerlin/atlas-app/issues/23
 local crossing = BikelaneCategory.new({
-  name = 'crossing',
+  id = 'crossing',
   desc = 'Crossings with relevance for bicycles.' ..
       ' There is no split into more specific infrastrucute categories for now.',
   infrastructureExists = true,
@@ -264,7 +264,7 @@ local crossing = BikelaneCategory.new({
 })
 
 local cyclewayLink = BikelaneCategory.new({
-  name = 'cyclewayLink',
+  id = 'cyclewayLink',
   desc = 'A non-infrastrucute category.' ..
       ' `cycleway=link` is used to connect the road network for routing use cases' ..
       ' when no physical infrastructure is present.',
@@ -280,8 +280,8 @@ local cyclewayLink = BikelaneCategory.new({
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
 -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
 local cyclewayOnHighway_advisory = BikelaneCategory.new({
-  name = 'cyclewayOnHighway_advisory',
-  desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
+  id = 'cyclewayOnHighway_advisory',
+  desc = 'Bicycle infrastructure on the highway, right next to motor vehicle traffic.' ..
       'For "advisory" lanes (DE: "Schutzstreifen")',
   infrastructureExists = true,
   condition = function(tags)
@@ -299,7 +299,7 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
 -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
 local cyclewayOnHighway_exclusive = BikelaneCategory.new({
-  name = 'cyclewayOnHighway_exclusive',
+  id = 'cyclewayOnHighway_exclusive',
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       ' For "exclusive" lanes (DE: "Radfahrstreifen").',
   infrastructureExists = true,
@@ -313,11 +313,12 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
     end
   end
 })
+
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=lane
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
 -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
 local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
-  name = 'cyclewayOnHighway_advisoryOrExclusive',
+  id = 'cyclewayOnHighway_advisoryOrExclusive',
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       ' This category is split into subcategories for "advisory" (DE: "Schutzstreifen")' ..
       ' and "exclusive" lanes (DE: "Radfahrstreifen").',
@@ -334,7 +335,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
 -- Case: Cycleway identified via "shared_lane"-tagging ("Anteilig genutzten Fahrstreifen")
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=shared_lane
 local sharedMotorVehicleLane = BikelaneCategory.new({
-  name = 'sharedMotorVehicleLane',
+  id = 'sharedMotorVehicleLane',
   desc = '', -- TODO desc; Wiki nochmal nachlesen und Conditions prüfen
   infrastructureExists = true,
   condition = function(tags)
@@ -348,7 +349,7 @@ local sharedMotorVehicleLane = BikelaneCategory.new({
 -- https://wiki.openstreetmap.org/wiki/Forward_&_backward,_left_&_right
 -- https://wiki.openstreetmap.org/wiki/Lanes#Crossing_with_a_designated_lane_for_bicycles
 local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
-  name = 'cyclewayOnHighwayBetweenLanes',
+  id = 'cyclewayOnHighwayBetweenLanes',
   desc = 'Bike lane between motor vehicle lanes,' ..
       ' mostly on the left of a right turn lane. (DE: "Radweg in Mittellage")',
   infrastructureExists = true,
@@ -371,7 +372,7 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
 -- "Fahrrad & Mofa frei" traffic_sign=DE:245,1022-14
 -- (History: Until 2023-03-2: cyclewayAlone)
 local sharedBusLaneBusWithBike = BikelaneCategory.new({
-  name = 'sharedBusLaneBusWithBike',
+  id = 'sharedBusLaneBusWithBike',
   desc = 'Bus lane with explicit allowance for bicycles (`cycleway=share_busway`).' ..
       ' (DE: "Bussonderfahrstreifen mit Fahrrad frei")',
   infrastructureExists = true,
@@ -396,7 +397,7 @@ local sharedBusLaneBusWithBike = BikelaneCategory.new({
 --   - 87 overall https://taginfo.openstreetmap.org/tags/cycleway%3Aright%3Alane=share_busway#overview
 --   - 1 overall for left https://taginfo.openstreetmap.org/tags/cycleway%3Aleft%3Alane=share_busway#overview
 local sharedBusLaneBikeWithBus = BikelaneCategory.new({
-  name = 'sharedBusLaneBikeWithBus',
+  id = 'sharedBusLaneBikeWithBus',
   desc = 'Bicycle lane with explicit allowance for buses.' ..
       ' (DE: "Radfahrstreifen mit Freigabe Busverkehr")',
   infrastructureExists = true,
@@ -419,7 +420,7 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
 --
 -- TODO: Remove this category and make it an exit conditino to "needsClarification"
 local sharedLane = BikelaneCategory.new({
-  name = 'explicitSharedLaneButNoSignage',
+  id = 'explicitSharedLaneButNoSignage',
   desc = '',
   infrastructureExists = true,
   condition = function(tags)
@@ -432,7 +433,7 @@ local sharedLane = BikelaneCategory.new({
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local needsClarification = BikelaneCategory.new({
-  name = 'needsClarification',
+  id = 'needsClarification',
   desc = 'Bike infrastructure that we cannot categories properly due to missing or ambiguous tagging.' ..
       ' Check the `todos` property on hints on how to improve the tagging.',
   infrastructureExists = true,
@@ -453,7 +454,7 @@ local categoryDefinitions = {
   crossing,
   livingStreet,
   bicycleRoad_vehicleDestination,
-  bicycleRoad,
+  bicycleRoad, -- has to come after `bicycleRoad_vehicleDestination`
   sharedBusLaneBikeWithBus,
   sharedBusLaneBusWithBike,
   sharedLane,

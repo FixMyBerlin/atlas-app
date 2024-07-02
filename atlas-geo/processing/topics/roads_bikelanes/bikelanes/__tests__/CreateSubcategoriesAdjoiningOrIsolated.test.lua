@@ -1,7 +1,7 @@
-describe("AdjoiningOrIsolatedWrapper", function()
+describe("CreateSubcategoriesAdjoiningOrIsolated", function()
   package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
   require("BikelaneCategories")
-  require("AdjoiningOrIsolatedWrapper")
+  require("CreateSubcategoriesAdjoiningOrIsolated")
 
   local testCategory = BikelaneCategory.new({id = "test", desc = '', condition= function () return true end })
   local testCategoryAdjoining, testCategoryIsolated, testCategoryAdjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(testCategory)

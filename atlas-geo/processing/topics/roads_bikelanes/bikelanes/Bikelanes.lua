@@ -60,7 +60,7 @@ function Bikelanes(object)
       local result_tags = {
         _side = transformedTags._side,
         _infrastructureExists = category.infrastructureExists,
-        category = category.name,
+        category = category.id,
       }
       if category.infrastructureExists then
         MergeTable(result_tags, {
@@ -69,7 +69,7 @@ function Bikelanes(object)
           age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           width = ParseLength(transformedTags.width),
-          oneway = DeriveOneway(transformedTags, category.name),
+          oneway = DeriveOneway(transformedTags, category.id),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         })
