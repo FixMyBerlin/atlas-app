@@ -1,4 +1,4 @@
-FROM ubuntu:mantic as testing
+FROM ubuntu:mantic AS testing
 
 # Install Lua and "luarocks" (Lua package manager) – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
@@ -9,7 +9,7 @@ COPY processing /processing/
 ENTRYPOINT [ "busted" ]
 CMD ["--pattern=%.test%.lua$", "/processing/topics/"]
 
-FROM testing as processing
+FROM testing AS processing
 
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
