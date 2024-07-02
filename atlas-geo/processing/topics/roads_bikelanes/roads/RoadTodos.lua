@@ -9,15 +9,15 @@ RoadTodo.__index = RoadTodo
 -- @param args.conditions function
 function RoadTodo.new(args)
   local self = setmetatable({}, RoadTodo)
-  self.key = args.key
+  self.id = args.id
   self.desc = args.desc
   self.conditions = args.conditions
   return self
 end
 
-function RoadTodo:checkCondition(objectTags, resultTags)
+function RoadTodo:__call(objectTags, resultTags)
   if self.conditions(objectTags, resultTags) then
-    return self.key
+    return self.id
   else
     return nil
   end
@@ -25,19 +25,11 @@ end
 
 -- === Fahrradstraßen ===
 local check_cycleway_shared = RoadTodo.new({
-  key = "check_cycleway_shared",
+  id = "check_cycleway_shared",
   desc = "Tagging `cycleway=shared` is very old tagging and should be checked an maybe removed.",
   conditions = function(tagsObject, _)
     return tagsObject.cycleway == "shared"
   end
 })
 
-
--- Public funtion
-function RoadTodos(tagsObject, resultTags)
-  local todos = {}
-
-  todos[#todos + 1] = check_cycleway_shared:checkCondition(tagsObject, resultTags)
-
-  return RemoveNilValues(todos)
-end
+RoadTodos = {check_cycleway_shared}
