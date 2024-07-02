@@ -24,8 +24,7 @@ blitz-log.log
 
 # local env files
 # See also https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#default-environment-variables
-.env.local
-.env.*.local
+.env
 .envrc
 
 # Logs
