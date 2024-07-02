@@ -1,6 +1,6 @@
 # this file is used by a github workflow to build the image
 
-FROM node:18-bookworm-slim as base
+FROM node:18-bookworm-slim AS base
 
 WORKDIR /app
 
@@ -19,7 +19,7 @@ RUN npx blitz@2.0.9 prisma generate
 ENTRYPOINT [ "npm", "run" ]
 CMD [ "dev" ]
 
-FROM base as build
+FROM base AS build
 
 
 ARG NEXT_PUBLIC_APP_ORIGIN
