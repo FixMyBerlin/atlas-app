@@ -7,8 +7,8 @@ services:
       context: .
       dockerfile: ./app.Dockerfile
       target: base
-    networks: !reset []
-    network_mode: 'host'
+    ports:
+      - 5173:5173
     volumes:
       - ./src:/app/src
       - ./scripts:/app/scripts
