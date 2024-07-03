@@ -58,7 +58,7 @@ export const NotesNewModal = ({ children }: { children: React.ReactNode }) => {
               <CloseButton
                 ref={closeButtonRef}
                 onClick={setClose}
-                positionClasses="absolute z-30 top-2 right-2"
+                positionClasses="absolute right-2 top-2 z-30"
               />
               {children}
             </TransitionChild>
