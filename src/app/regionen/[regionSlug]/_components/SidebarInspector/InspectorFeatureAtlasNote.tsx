@@ -12,7 +12,9 @@ import { AtlasNoteComment } from './InspectorFeatureAtlasNote/AtlasNoteComment'
 import { NewNoteCommentForm } from './InspectorFeatureAtlasNote/NewNoteCommentForm'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
-type Props = { noteId: NotesAndCommentsFeatureCollection['features'][number]['properties']['id'] }
+type Props = {
+  noteId: NotesAndCommentsFeatureCollection['featureCollection']['features'][number]['properties']['id']
+}
 
 export const InspectorFeatureAtlasNoteWithQuery = ({ noteId }: Props) => {
   const [noteAndComments] = useQuery(getNoteAndComments, { id: noteId })

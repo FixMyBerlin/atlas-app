@@ -1,6 +1,7 @@
-import { createParser, parseAsBoolean, useQueryState } from 'nuqs'
+import { createParser, parseAsBoolean, parseAsJson, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
 import { parseMapParam, serializeMapParam } from './utils/mapParam'
+import { z } from 'zod'
 
 export const useShowAtlasNotesParam = () => {
   const [showAtlasNotesParam, setShowAtlasNotesParam] = useQueryState(
@@ -23,4 +24,21 @@ export const useNewAtlasNoteMapParam = () => {
   )
 
   return { newAtlasNoteMapParam, setNewAtlasNoteMapParam }
+}
+
+export const zodAtlasFilterParam = z.object({
+  query: z.string().optional().nullable(),
+  completed: z.boolean().optional().nullable(),
+  user: z.coerce.number().optional().nullable(),
+  commented: z.boolean().optional().nullable(),
+})
+type TAtlasFilterParam = z.infer<typeof zodAtlasFilterParam>
+
+export const useAtlasFilterParam = () => {
+  const [atlasNotesFilterParam, setAtlasNotesFilterParam] = useQueryState(
+    searchParamsRegistry.atlasNotesFilter,
+    parseAsJson(zodAtlasFilterParam.parse),
+  )
+
+  return { atlasNotesFilterParam, setAtlasNotesFilterParam }
 }

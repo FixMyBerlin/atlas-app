@@ -15,6 +15,7 @@ import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import SvgNotesClosed from '../icons/notes_closed.svg'
 import SvgNotesOpen from '../icons/notes_open.svg'
 import { useIsAuthor } from './utils/useIsAuthor'
+import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 
 type Props = { note: NoteAndComments }
 
@@ -23,6 +24,7 @@ export const EditNoteForm = ({ note }: Props) => {
   const [open, setOpen] = useState(false)
   const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
   const region = useStaticRegion()
+  const queryKeyMap = useQueryKey()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -39,7 +41,6 @@ export const EditNoteForm = ({ note }: Props) => {
         onSuccess: (note) => {
           const queryKeyInspector = getQueryKey(getNoteAndComments, { id: note.id })
           getQueryClient().invalidateQueries(queryKeyInspector)
-          const queryKeyMap = getQueryKey(getNotesAndCommentsForRegion)
           getQueryClient().invalidateQueries(queryKeyMap)
           setOpen(false)
         },

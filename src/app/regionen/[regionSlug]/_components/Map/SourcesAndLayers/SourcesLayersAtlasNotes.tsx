@@ -2,37 +2,42 @@ import { useQuery } from '@blitzjs/rpc'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useShowAtlasNotesParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
+import {
+  useAtlasFilterParam,
+  useShowAtlasNotesParam,
+} from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { useAllowAtlasNotes } from '../../notes/AtlasNotes/utils/useAllowAtlasNotes'
+import { featureCollection } from '@turf/turf'
 
 export const atlasNotesLayerId = 'atlas-notes'
 
 export const SourcesLayersAtlasNotes = () => {
   const { showAtlasNotesParam } = useShowAtlasNotesParam()
-  const { inspectorFeatures } = useMapStateInteraction()
   const region = useStaticRegion()!
   const allowAtlasNotes = useAllowAtlasNotes()
+  const { inspectorFeatures } = useMapStateInteraction()
+  const { atlasNotesFilterParam } = useAtlasFilterParam()
 
   // For now, we load all notes, but minimized data. We will want to scope this to the viewport later.
-  const [notes] = useQuery(
+  const [result] = useQuery(
     getNotesAndCommentsForRegion,
-    { regionSlug: region.slug },
+    { regionSlug: region.slug, filter: atlasNotesFilterParam },
     { enabled: allowAtlasNotes },
   )
+  if (result === undefined) return null
+  if (!allowAtlasNotes) return null
 
   const selectedFeatureIds = inspectorFeatures
     .filter((feature) => feature.source === 'atlas-notes')
     .map((feature) => (feature?.properties?.id || 0) as number)
-
-  if (!allowAtlasNotes) return null
 
   return (
     <Source
       id="atlas-notes"
       key="atlas-notes"
       type="geojson"
-      data={notes}
+      data={result.featureCollection}
       // attribution="" Internal data / copyrighted
     >
       {showAtlasNotesParam && (

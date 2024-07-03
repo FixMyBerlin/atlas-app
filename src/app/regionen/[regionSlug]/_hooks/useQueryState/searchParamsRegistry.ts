@@ -9,5 +9,6 @@ export const searchParamsRegistry = {
   osmNote: 'osmNote', // show new osmNotes dialogue
   atlasNotes: 'notes', // show atlasNotes on the map
   atlasNote: 'atlasNote', // show new atlasNotes dialogue
+  atlasNotesFilter: 'atlasNotesFilter',
   debugMap: 'debugMap',
 } as const

@@ -1,4 +1,4 @@
-import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
+import { getQueryClient, useMutation } from '@blitzjs/rpc'
 import { PencilSquareIcon } from '@heroicons/react/20/solid'
 import dompurify from 'dompurify'
 import { useState } from 'react'
@@ -6,7 +6,8 @@ import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNoteComment from 'src/notes/mutations/updateNoteComment'
-import getNoteAndComments, { NoteComment } from 'src/notes/queries/getNoteAndComments'
+import { NoteComment } from 'src/notes/queries/getNoteAndComments'
+import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { useIsAuthor } from './utils/useIsAuthor'
 
@@ -16,6 +17,7 @@ export const EditNoteCommentForm = ({ comment }: Props) => {
   const [updateNoteCommentMutation, { isLoading, error }] = useMutation(updateNoteComment)
   const [open, setOpen] = useState(false)
   const region = useStaticRegion()
+  const queryKey = useQueryKey()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -28,7 +30,6 @@ export const EditNoteCommentForm = ({ comment }: Props) => {
       },
       {
         onSuccess: (comment) => {
-          const queryKey = getQueryKey(getNoteAndComments, { id: comment.noteId })
           getQueryClient().invalidateQueries(queryKey)
           setOpen(false)
         },

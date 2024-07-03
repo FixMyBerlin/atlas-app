@@ -1,16 +1,20 @@
-import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
+import { getQueryClient, useMutation } from '@blitzjs/rpc'
+import dompurify from 'dompurify'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import createNote from 'src/notes/mutations/createNote'
+import {
+  useAtlasFilterParam,
+  useNewAtlasNoteMapParam,
+} from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
-import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
-import dompurify from 'dompurify'
-import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
+import { useQueryKey } from './utils/useQueryKey'
 
 export const AtlasNotesNewForm = () => {
   const [createNoteMutation, { isLoading, error }] = useMutation(createNote)
   const { newAtlasNoteMapParam, setNewAtlasNoteMapParam } = useNewAtlasNoteMapParam()
   const regionSlug = useRegionSlug()
+  const queryKey = useQueryKey()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -31,7 +35,6 @@ export const AtlasNotesNewForm = () => {
       },
       {
         onSuccess: () => {
-          const queryKey = getQueryKey(getNotesAndCommentsForRegion)
           getQueryClient().invalidateQueries(queryKey)
           setNewAtlasNoteMapParam(null)
         },
