@@ -33,32 +33,24 @@ export const SelectBackground: React.FC = () => {
 
   return (
     <Listbox as="section" className="" value={backgroundParam} onChange={onChange}>
-      <div>
-        <ListboxButton className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-          Hintergrundkarten
-          <ChevronUpDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
-        </ListboxButton>
-      </div>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+      <ListboxButton className="inline-flex justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+        Hintergrundkarten
+        <ChevronUpDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
+      </ListboxButton>
+      <ListboxOptions
+        transition
+        anchor="top end"
+        className="absolute right-0 z-10 mt-2 max-h-[calc(100%_-_2.5rem)] w-60 overflow-auto rounded-md bg-white text-sm shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
       >
-        <ListboxOptions className="absolute bottom-10 right-0 max-h-[calc(100%_-_2.5rem)] w-60 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-          <ListOption
-            key={`${backgroundParam}-default`}
-            value={defaultBackgroundParam}
-            name="Standard"
-          />
-          {backgrounds.map(({ name, id }) => {
-            return <ListOption key={id} value={id} name={name} />
-          })}
-        </ListboxOptions>
-      </Transition>
+        {backgrounds.map(({ name, id }) => {
+          return <ListOption key={id} value={id} name={name} />
+        })}
+        <ListOption
+          key={`${backgroundParam}-default`}
+          value={defaultBackgroundParam}
+          name="Standard"
+        />
+      </ListboxOptions>
     </Listbox>
   )
 }

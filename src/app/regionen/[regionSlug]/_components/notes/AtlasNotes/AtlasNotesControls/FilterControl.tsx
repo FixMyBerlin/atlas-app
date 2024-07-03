@@ -27,7 +27,7 @@ export const FilterControl = () => {
   const menuItemClasses = (active: boolean) => {
     return twJoin(
       active ? 'bg-yellow-100' : 'data-[focus]:bg-gray-100',
-      'w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:text-gray-900',
+      'w-full px-4 py-2 text-left text-gray-700 data-[focus]:text-gray-900',
     )
   }
   const handleMenuClick = (
@@ -57,8 +57,8 @@ export const FilterControl = () => {
 
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-64 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
         anchor="top start"
+        className="absolute right-0 z-10 mt-2 w-64 rounded-md bg-white text-sm shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
       >
         <MenuSection className="m-1 overflow-clip rounded-md border">
           <MenuHeading className="bg-gray-100 px-4 py-1 text-xs font-semibold uppercase text-gray-600">
@@ -165,7 +165,7 @@ export const FilterControl = () => {
               id="query"
               type="text" // type "search" shows an `x` but that does not do anything in chrome, maybe due to the preventDefault…
               placeholder="Suchwort"
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:text-sm sm:leading-6"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600 sm:leading-6"
               onClick={(e) => {
                 // Required so the flyout does not close when I click in the input field
                 e.preventDefault()
