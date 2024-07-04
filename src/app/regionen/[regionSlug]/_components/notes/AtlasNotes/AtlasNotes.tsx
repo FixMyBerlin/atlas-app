@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@blitzjs/next'
 import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
@@ -51,11 +52,13 @@ const AtlasNotesSuspended = () => {
         isError={isError}
       />
       <NotesNew visible={Boolean(newAtlasNoteMapParam)} title="Einen internen Hinweis hinterlassen">
-        <NotesNewMap
-          mapId="newAtlasNoteMap"
-          newNoteMapParam={newAtlasNoteMapParam}
-          setNewNoteMapParam={setNewAtlasNoteMapParam}
-        />
+        <ErrorBoundary>
+          <NotesNewMap
+            mapId="newAtlasNoteMap"
+            newNoteMapParam={newAtlasNoteMapParam}
+            setNewNoteMapParam={setNewAtlasNoteMapParam}
+          />
+        </ErrorBoundary>
         <AtlasNotesNewForm />
       </NotesNew>
     </>

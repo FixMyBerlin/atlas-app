@@ -1,3 +1,4 @@
+import { ErrorBoundary } from '@blitzjs/next'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
@@ -65,11 +66,13 @@ const OsmNotesWrappedInQUeryClientProvider = () => {
         visible={Boolean(newOsmNoteMapParam)}
         title="Einen Hinweis auf OpenStreetMap veröffentlichen"
       >
-        <NotesNewMap
-          mapId="newOsmNoteMap"
-          newNoteMapParam={newOsmNoteMapParam}
-          setNewNoteMapParam={setNewOsmNoteMapParam}
-        />
+        <ErrorBoundary>
+          <NotesNewMap
+            mapId="newOsmNoteMap"
+            newNoteMapParam={newOsmNoteMapParam}
+            setNewNoteMapParam={setNewOsmNoteMapParam}
+          />
+        </ErrorBoundary>
         <OsmNotesNewForm />
       </NotesNew>
     </>
