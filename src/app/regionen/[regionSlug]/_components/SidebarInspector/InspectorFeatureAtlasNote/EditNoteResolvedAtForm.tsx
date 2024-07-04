@@ -1,6 +1,5 @@
 import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import { Field, Label, Switch } from '@headlessui/react'
-import Image from 'next/image'
 import { useState } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import updateNoteResolvedAt from 'src/notes/mutations/updateNoteResolvedAt'
@@ -8,8 +7,8 @@ import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAn
 import { twJoin } from 'tailwind-merge'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
-import SvgNotesClosed from '../icons/notes_closed.svg'
-import SvgNotesOpen from '../icons/notes_open.svg'
+import { SvgNotesClosed } from '../icons/SvgNotesClosed'
+import { SvgNotesOpen } from '../icons/SvgNotesOpen'
 
 type Props = { note: NoteAndComments }
 
@@ -69,7 +68,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <Image src={SvgNotesOpen} className="size-5" alt="" />
+              <SvgNotesOpen className="size-5 text-sky-700" />
             </span>
             <span
               className={twJoin(
@@ -80,7 +79,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <Image src={SvgNotesClosed} className="size-5" alt="" />
+              <SvgNotesClosed className="size-5 text-sky-700" />
             </span>
           </span>
         </Switch>

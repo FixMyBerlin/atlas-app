@@ -2,20 +2,18 @@ import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import { Field, Label, Switch } from '@headlessui/react'
 import { PencilSquareIcon } from '@heroicons/react/20/solid'
 import dompurify from 'dompurify'
-import Image from 'next/image'
 import { useState } from 'react'
 import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
-import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { twJoin } from 'tailwind-merge'
-import { useStaticRegion } from '../../regionUtils/useStaticRegion'
-import SvgNotesClosed from '../icons/notes_closed.svg'
-import SvgNotesOpen from '../icons/notes_open.svg'
-import { useIsAuthor } from './utils/useIsAuthor'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
+import { SvgNotesClosed } from '../icons/SvgNotesClosed'
+import { SvgNotesOpen } from '../icons/SvgNotesOpen'
+import { useIsAuthor } from './utils/useIsAuthor'
 
 type Props = { note: NoteAndComments }
 
@@ -119,7 +117,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <Image src={SvgNotesOpen} className="size-5" alt="" />
+                  <SvgNotesOpen className="size-5 text-sky-700" />
                 </span>
                 <span
                   className={twJoin(
@@ -130,7 +128,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <Image src={SvgNotesClosed} className="size-5" alt="" />
+                  <SvgNotesClosed className="size-5 text-sky-700" />
                 </span>
               </span>
             </Switch>

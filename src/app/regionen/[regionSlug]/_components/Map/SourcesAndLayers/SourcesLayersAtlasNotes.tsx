@@ -6,9 +6,8 @@ import {
   useAtlasFilterParam,
   useShowAtlasNotesParam,
 } from '../../../_hooks/useQueryState/useNotesAtlasParams'
-import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { useAllowAtlasNotes } from '../../notes/AtlasNotes/utils/useAllowAtlasNotes'
-import { featureCollection } from '@turf/turf'
+import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 
 export const atlasNotesLayerId = 'atlas-notes'
 
@@ -48,24 +47,10 @@ export const SourcesLayersAtlasNotes = () => {
             source="atlas-notes"
             type="circle"
             paint={{
-              'circle-radius': 15,
-              'circle-color': '#93c5fd', // amber-300 https://tailwindcss.com/docs/customizing-colors
-              'circle-opacity': ['step', ['zoom'], 0.3, 10, 0.6],
-              'circle-blur': 0.3,
+              'circle-radius': 12,
+              'circle-color': '#f9a8d4', // pink-300 https://tailwindcss.com/docs/customizing-colors
             }}
             filter={['in', 'id', ...selectedFeatureIds]}
-          />
-          <Layer
-            // The PNGs are transparent so we add this background
-            id="atlas-notes-background"
-            key="atlas-notes-background"
-            source="atlas-notes"
-            type="circle"
-            paint={{
-              'circle-radius': 11,
-              'circle-color': '#dbeafe', // blue-100 https://tailwindcss.com/docs/customizing-colors
-              'circle-opacity': ['step', ['zoom'], 0.3, 10, 1],
-            }}
           />
           <Layer
             id={atlasNotesLayerId}
@@ -77,16 +62,14 @@ export const SourcesLayersAtlasNotes = () => {
               'icon-image': [
                 'match',
                 ['get', 'status'],
-                // The sprites in Mapbox are mixed up
-                // https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-atlas-notes-layer"
-                // notes_open is the resolved
-                'closed' /* status=closed */,
-                'notes_open',
-                'open' /* status=open */,
-                'notes_closed',
-                'notes_closed' /* default */,
+                // The sprites from Mapbox https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-atlas-notes-layer"
+                'closed',
+                'note-closed-intern',
+                'open',
+                'note-open-intern',
+                'note-open-intern' /* fallback */,
               ],
-              'icon-size': 0.85,
+              'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.3, 10, 0.5, 22, 0.5],
               'icon-allow-overlap': true,
             }}
           />

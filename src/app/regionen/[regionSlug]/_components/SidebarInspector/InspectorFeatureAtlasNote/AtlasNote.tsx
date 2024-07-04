@@ -1,16 +1,13 @@
 import dompurify from 'dompurify'
-import Image from 'next/image'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import { proseClasses } from 'src/app/_components/text/prose'
 import { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
 import { twJoin } from 'tailwind-merge'
 import { OsmUserLink } from '../OsmUserLink'
-import SvgNotesClosed from '../icons/notes_closed.svg'
-import SvgNotesOpen from '../icons/notes_open.svg'
 import { EditNoteForm } from './EditNoteForm'
+import { EditNoteResolvedAtForm } from './EditNoteResolvedAtForm'
 import { localDateTime } from './utils/localDateTime'
 import { wasUpdated } from './utils/wasUpdated'
-import { EditNoteResolvedAtForm } from './EditNoteResolvedAtForm'
 
 type Props = {
   note: NoteAndComments

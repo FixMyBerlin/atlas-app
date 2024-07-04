@@ -13,3 +13,7 @@ Since we generate the sprites automatically with `npm run updateStyles`, we need
 The files we have here have a format that does not work in Mapbox for some reason.
 
 A workaround is, to add the files to Figma and "flatten" and/or "convert to outline", then re-export. Use those files for Mapbox.
+
+# Next JS
+
+Next.js does not play nice with <Image> + SVG + Tailwind so the icons are now react components using https://transform.tools/.

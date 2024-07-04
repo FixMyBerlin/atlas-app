@@ -12,9 +12,9 @@ import { twJoin } from 'tailwind-merge'
 import { useOsmNotesFeatures } from '../../_hooks/mapStateInteraction/userMapNotes'
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
-import SvgNotesClosed from './icons/notes_closed.svg'
-import SvgNotesOpen from './icons/notes_open.svg'
 import { OsmUserLink } from './OsmUserLink'
+import { SvgNotesOpen } from './icons/SvgNotesOpen'
+import { SvgNotesClosed } from './icons/SvgNotesClosed'
 
 type Props = Pick<InspectorOsmNoteFeature, 'properties'>
 
@@ -81,13 +81,13 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             Status:{' '}
             {thread.status === 'closed' && (
               <span className="inline-flex gap-1">
-                <Image src={SvgNotesClosed} className="h-5 w-5" alt="" />
+                <SvgNotesClosed className="size-5 text-teal-800" />
                 geschlossen
               </span>
             )}
             {thread.status === 'open' && (
               <span className="inline-flex gap-1">
-                <Image src={SvgNotesOpen} className="h-5 w-5" alt="" />
+                <SvgNotesOpen className="size-5 text-teal-800" />
                 offen
               </span>
             )}
