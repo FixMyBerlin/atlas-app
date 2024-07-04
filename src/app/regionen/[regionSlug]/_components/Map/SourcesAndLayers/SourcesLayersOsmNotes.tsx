@@ -55,6 +55,9 @@ export const SourcesLayersOsmNotes = () => {
             source="osm-notes"
             type="symbol"
             paint={{
+              // See `useNotesActiveByZoom` about this opacity.
+              // We will not load any data below a certain zoom level.
+              // However, we want to still show what we loaded, so the context is preserved.
               'icon-opacity': ['step', ['zoom'], 0.3, 10, 1],
             }}
             layout={{

@@ -72,9 +72,6 @@ export const SourcesLayersAtlasNotes = () => {
             key="atlas-notes"
             source="atlas-notes"
             type="symbol"
-            paint={{
-              'icon-opacity': ['step', ['zoom'], 0.3, 10, 1],
-            }}
             layout={{
               visibility: 'visible',
               'icon-image': [
