@@ -65,10 +65,10 @@ export const SourcesLayersStaticDatasets = () => {
                 layout,
                 // There is something very weird with TS here. We cannot use @ts-expect-errors because the build will fail. But without the `any` we get an error in `npm run type-check`.
                 filter: layerFilter as any,
-                paint: layerPaint,
+                paint: layerPaint as any,
                 beforeId:
                   'beforeId' in layer
-                    ? layer.beforeId || 'atlas-app-beforeid-fallback'
+                    ? (layer.beforeId as string) || 'atlas-app-beforeid-fallback'
                     : 'atlas-app-beforeid-fallback',
               }
 
