@@ -7,7 +7,7 @@ import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { AuthorizationError } from 'blitz'
 
 const Schema = CreateNoteCommentSchema.merge(
-  z.object({ regionSlug: z.string(), noteId: z.number() }),
+  z.object({ regionSlug: z.string(), noteId: z.number(), body: z.string() }),
 )
 
 export default resolver.pipe(
