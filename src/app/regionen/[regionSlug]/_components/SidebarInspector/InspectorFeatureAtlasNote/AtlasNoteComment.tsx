@@ -28,6 +28,7 @@ export const AtlasNoteComment = ({ comment }: Props) => {
           geschrieben am {localDateTime(comment.createdAt)}
           {wasUpdated(comment) && <>, aktualisiert am {localDateTime(comment.updatedAt)}</>}:
         </div>
+
         <EditNoteCommentForm comment={comment} />
       </div>
 

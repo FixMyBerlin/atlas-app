@@ -19,17 +19,21 @@ type Props = {
 export const AtlasNote = ({ note }: Props) => {
   return (
     <>
-      <div className="relative text-black">
-        <strong>
-          <OsmUserLink
-            firstName={note.author?.firstName}
-            lastName={note.author?.lastName}
-            osmName={note.author.osmName}
-          />
-        </strong>
-        <br />
-        erstellt am {localDateTime(note.createdAt)}
-        {wasUpdated(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
+      <div className="mt-3 flex items-center justify-between">
+        <div className="relative text-black">
+          <strong>
+            <OsmUserLink
+              firstName={note.author?.firstName}
+              lastName={note.author?.lastName}
+              osmName={note.author.osmName}
+            />
+          </strong>
+          <br />
+          erstellt am {localDateTime(note.createdAt)}
+          {wasUpdated(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
+        </div>
+
+        <EditNoteForm note={note} />
       </div>
 
       <div className="mt-3 border-l-4 border-white pl-3">
@@ -45,10 +49,7 @@ export const AtlasNote = ({ note }: Props) => {
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <EditNoteResolvedAtForm note={note} />
-        <EditNoteForm note={note} />
-      </div>
+      <EditNoteResolvedAtForm note={note} />
     </>
   )
 }

@@ -38,7 +38,7 @@ export const InspectorFeatureAtlasNoteWithQuery = ({ noteId }: Props) => {
         <section className="bg-blue-50 px-3 py-5">
           <AtlasNote note={noteAndComments} />
 
-          <ul>
+          <ul className="mt-2 border-t border-t-gray-200">
             {noteAndComments.noteComments?.map((comment) => {
               return (
                 <li key={comment.id} className="border-b border-b-gray-200 pt-2">
