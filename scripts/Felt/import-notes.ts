@@ -6,10 +6,10 @@ import db, { Prisma } from 'db'
 import invariant from 'tiny-invariant'
 
 // ---------- parameters ----------
-const dryRun = false
+const dryRun = true
 const regionSlug = 'bb-sg'
 const maxSubjectLength = 50
-const deleteFromId: null | number = 10
+const deleteFromId: null | number = 9
 const authorNameToUserId: Record<string, number | null> = {
   '': null, // set to null to ignore
   'Sabine Schmidt': 10,
@@ -19,7 +19,6 @@ const authorNameToUserId: Record<string, number | null> = {
   Pawels: 15,
   'Pawels (LS)': 15,
 }
-const splitTextAt = ['&#13;', '->', ';']
 // --------------------------------
 
 const dataPath = path.join(import.meta.dir, 'data.json')
@@ -80,16 +79,23 @@ authorNames.forEach((authorName) => {
 
 // process.exit(0)
 
+const cr = '&#13;'
+
 for (const entry of data) {
-  console.log('========== data =========')
-  console.log(entry)
   invariant(entry.comments.length > 0)
   let {
+    id,
     location: [latitude, longitude],
     comments: [{ authorName, text, createdAt }],
     isResolved,
   } = entry
   createdAt = new Date(createdAt)
+
+  // if (id !== '9BVu3toLaQg6K7kZ3fL0QNA') continue
+
+  console.log('========== data =========')
+  console.log(entry)
+
   const user = getUser(authorNameToUserId[authorName]!)
   if (!user) {
     console.log('* no user *')
@@ -97,10 +103,9 @@ for (const entry of data) {
   }
 
   let textWithLinefeeds = text
-  splitTextAt.forEach((splitter) => (textWithLinefeeds = textWithLinefeeds.replace(splitter, '\n')))
-  let [subject, ...body] = textWithLinefeeds.split('\n')
+  let [subject, ...body] = textWithLinefeeds.replaceAll(cr, '\n').split('\n')
   subject = subject.trim().replace(/ +/g, ' ')
-  body = body.join(' ').trim().replace(/ +/g, ' ')
+  body = body.join('\n').trim().replace(/ +/g, ' ')
   if (subject.length > maxSubjectLength) {
     body = '…' + subject.slice(maxSubjectLength) + body
     subject = subject.slice(0, maxSubjectLength) + '…'
@@ -136,7 +141,7 @@ for (const entry of data) {
       createdAt,
       userId: user.id,
       noteId: note?.id,
-      body: subject.trim().replace(/ +/g, ' '),
+      body: subject.trim().replaceAll(cr, '\n').replace(/ +/g, ' '),
     }
 
     console.log('---------- NoteComment ----------')
