@@ -4,7 +4,7 @@ import dompurify from 'dompurify'
 import { useState } from 'react'
 import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
+import { buttonStylesOnYellow, notesButtonStyle } from 'src/app/_components/links/styles'
 import updateNoteComment from 'src/notes/mutations/updateNoteComment'
 import getNoteAndComments, { NoteComment } from 'src/notes/queries/getNoteAndComments'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
@@ -46,11 +46,7 @@ export const EditNoteCommentForm = ({ comment }: Props) => {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="inline-flex select-none items-center rounded-md border border-transparent bg-gray-50 p-1.5 text-gray-800 shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-50 focus:ring-offset-2"
-      >
+      <button type="button" onClick={() => setOpen(true)} className={notesButtonStyle}>
         <PencilSquareIcon className="size-6" />
       </button>
 
