@@ -80,8 +80,8 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         <AttributionControl compact={true} position="bottom-right" />
 
         <Marker latitude={newNoteMapParam.lat} longitude={newNoteMapParam.lng} anchor="bottom">
-          <MapPinIcon className="h-8 w-8 text-teal-700" />
-          <PlusIcon className="-mb-4 h-8 w-8 text-teal-700" />
+          <MapPinIcon className="h-8 w-8 text-red-700" />
+          <PlusIcon className="-mb-4 h-8 w-8 text-red-700" />
         </Marker>
 
         <SourceLayerFeature />
