@@ -41,7 +41,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
     <form>
       <Field
         as="div"
-        className="flex items-center gap-1.5 text-sm"
+        className="mt-3 flex items-center gap-1.5 text-sm"
         title={note?.resolvedAt?.toLocaleString()}
       >
         <span>Status:</span>{' '}

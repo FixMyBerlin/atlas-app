@@ -19,7 +19,7 @@ type Props = {
 export const AtlasNote = ({ note }: Props) => {
   return (
     <>
-      <div className="mt-3 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="relative text-black">
           <strong>
             <OsmUserLink
