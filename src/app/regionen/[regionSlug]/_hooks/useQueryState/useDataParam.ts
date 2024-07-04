@@ -12,5 +12,9 @@ export const useDataParam = () => {
     searchParamsRegistry.data,
     parseAsArrayOf(parseAsString).withDefault([]),
   )
-  return memoized({ dataParam, setDataParam })
+
+  return memoized({ dataParam, setDataParam }) as {
+    dataParam: typeof dataParam
+    setDataParam: typeof setDataParam
+  }
 }
