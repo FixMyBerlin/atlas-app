@@ -32,16 +32,16 @@ export const AtlasNote = ({ note }: Props) => {
       </div>
 
       <div className="border-l-4 border-white pl-3 ">
-        <h2 className="my-3 font-semibold text-black">{note.subject}</h2>
-        {note.body && (
-          <Markdown
-            markdown={dompurify.sanitize(note.body)}
-            className={twJoin(
-              proseClasses,
-              'prose-sm my-2 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700',
-            )}
-          />
-        )}
+        <Markdown
+          markdown={
+            // Hinweis: Ein leerer body kommt nur bei importieren Notes vor, da der `body` ein Pflichtfeld in allen Formularen ist.
+            note.body ? dompurify.sanitize(note.body) : `_Es wurde nur ein Betreff angegeben._`
+          }
+          className={twJoin(
+            proseClasses,
+            'prose-sm my-2 prose-a:underline hover:prose-a:text-teal-700 hover:prose-a:decoration-teal-700',
+          )}
+        />
       </div>
 
       <div className="flex items-center justify-between py-3 pl-3">
