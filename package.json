@@ -70,7 +70,7 @@
     "ajv": "8.12.0",
     "blitz": "2.0.9",
     "dompurify": "^3.1.4",
-    "eslint-plugin-react-compiler": "0.0.0-experimental-51a85ea-20240601",
+    "eslint-plugin-react-compiler": "0.0.0-experimental-0998c1e-20240625",
     "immer": "10.1.1",
     "js-cookie": "3.0.5",
     "jsts": "2.11.3",

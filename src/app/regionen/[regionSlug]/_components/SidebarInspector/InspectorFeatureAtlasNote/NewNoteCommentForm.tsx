@@ -6,12 +6,14 @@ import createNoteComment from 'src/notes/mutations/createNoteComment'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
+import { useRef } from 'react'
 
 type Props = { noteId: number }
 
 export const NewNoteCommentForm = ({ noteId }: Props) => {
   const [createNoteCommentMutation, { isLoading, error }] = useMutation(createNoteComment)
   const region = useStaticRegion()
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -24,6 +26,9 @@ export const NewNoteCommentForm = ({ noteId }: Props) => {
       },
       {
         onSuccess: () => {
+          // NOTE: Remove once we update to the newest react-compiler-esling-package that fixed this false positive https://github.com/facebook/react/issues/29703#issuecomment-2166763791
+          // eslint-disable-next-line react-compiler/react-compiler
+          textareaRef.current!.value = ''
           const queryKey = getQueryKey(getNoteAndComments, { id: noteId })
           getQueryClient().invalidateQueries(queryKey)
         },
@@ -42,6 +47,7 @@ export const NewNoteCommentForm = ({ noteId }: Props) => {
       <label>
         <span className="sr-only">Antwort (Markdown)</span>
         <textarea
+          ref={textareaRef}
           name="body"
           className="my-3 block min-h-28 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"
           data-1p-ignore
