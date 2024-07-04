@@ -53,7 +53,11 @@ export const EditNoteForm = ({ note }: Props) => {
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)}>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="inline-flex select-none items-center rounded-md border border-transparent bg-gray-50 p-1.5 text-gray-800 shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-50 focus:ring-offset-2"
+      >
         <PencilSquareIcon className="size-6" />
       </button>
 
