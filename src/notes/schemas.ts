@@ -24,6 +24,7 @@ export const NoteAndCommentsSchema = z.object({
     .array(
       z.object({
         id: z.number(),
+        noteId: z.number(),
         createdAt: z.coerce.date(),
         updatedAt: z.coerce.date(),
         author: Author,
@@ -46,17 +47,6 @@ export const CreateNoteSchema = z.object({
   longitude: z.number(),
 })
 
-export const UpdateNoteSchema = CreateNoteSchema.merge(
-  z.object({
-    id: z.number(),
-    regionId: z.undefined(),
-  }),
-)
-
-export const DeleteNoteSchema = z.object({
-  id: z.number(),
-})
-
 export const CreateNoteCommentSchema = z.object({
   // id: z.string(),
   // createdAt: z.string(),
@@ -64,15 +54,4 @@ export const CreateNoteCommentSchema = z.object({
   // userId: z.number(),
   noteId: z.number(),
   body: z.string(),
-})
-
-export const UpdateNoteCommentSchema = CreateNoteCommentSchema.merge(
-  z.object({
-    id: z.number(),
-    noteId: z.string(),
-  }),
-)
-
-export const DeleteNoteCommentSchema = z.object({
-  id: z.number(),
 })

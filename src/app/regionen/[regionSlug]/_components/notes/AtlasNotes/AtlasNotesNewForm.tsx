@@ -74,6 +74,7 @@ export const AtlasNotesNewForm = () => {
             placeholder="Hinweis"
             data-1p-ignore
             data-lpignore
+            required
           />
         </label>
         <div className="flex items-center gap-1 leading-tight">

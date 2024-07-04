@@ -37,6 +37,7 @@ export default resolver.pipe(
         noteComments: {
           select: {
             id: true,
+            noteId: true,
             createdAt: true,
             updatedAt: true,
             body: true,

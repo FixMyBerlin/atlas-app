@@ -1,14 +1,31 @@
 import { resolver } from '@blitzjs/rpc'
+import { AuthorizationError } from 'blitz'
 import db from 'db'
-import { DeleteNoteCommentSchema } from '../schemas'
+import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
+import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
+import { z } from 'zod'
+
+const Schema = z.object({ regionSlug: z.string(), commentId: z.number() })
 
 export default resolver.pipe(
-  resolver.zod(DeleteNoteCommentSchema),
-  resolver.authorize('ADMIN'),
-  async ({ id }) => {
-    // TODO: in multi-tenant app, you must add validation to ensure correct tenant
-    const noteComment = await db.noteComment.deleteMany({ where: { id } })
+  resolver.zod(Schema),
+  authorizeRegionAdmin(getRegionIdBySlug),
+  async ({ commentId }, ctx) => {
+    const { session } = ctx
 
-    return noteComment
+    // Only author may delete own note comment
+    const { userId: dbUserId } = await db.noteComment.findFirstOrThrow({
+      where: { id: commentId },
+      select: { userId: true },
+    })
+
+    if (!session.userId || dbUserId !== session.userId) {
+      throw new AuthorizationError()
+    }
+
+    const result = await db.noteComment.deleteMany({
+      where: { id: commentId },
+    })
+    return result
   },
 )

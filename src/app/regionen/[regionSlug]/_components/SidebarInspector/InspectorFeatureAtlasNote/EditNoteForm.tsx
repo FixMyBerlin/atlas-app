@@ -1,23 +1,29 @@
 import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import { Field, Label, Switch } from '@headlessui/react'
 import { PencilSquareIcon } from '@heroicons/react/20/solid'
+import { TrashIcon } from '@heroicons/react/24/outline'
 import dompurify from 'dompurify'
 import { useState } from 'react'
 import { ModalDialog } from 'src/app/_components/Modal/ModalDialog'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
+import { buttonStylesOnYellow, notesButtonStyle } from 'src/app/_components/links/styles'
+import deleteNote from 'src/notes/mutations/deleteNote'
 import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
-import { twJoin } from 'tailwind-merge'
+import { twJoin, twMerge } from 'tailwind-merge'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { SvgNotesClosed } from '../icons/SvgNotesClosed'
 import { SvgNotesOpen } from '../icons/SvgNotesOpen'
 import { useIsAuthor } from './utils/useIsAuthor'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 type Props = { note: NoteAndComments }
 
 export const EditNoteForm = ({ note }: Props) => {
   const [updateNoteMutation, { isLoading, error }] = useMutation(updateNote)
+  const { resetInspectorFeatures } = useMapStateInteraction()
+  const [deleteNoteMutation] = useMutation(deleteNote)
   const [open, setOpen] = useState(false)
   const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
   const region = useStaticRegion()
@@ -136,11 +142,36 @@ export const EditNoteForm = ({ note }: Props) => {
             </Label>
           </Field>
 
-          <div className="mt-6 flex items-center gap-1 leading-tight">
-            <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
-              Änderung speichern
+          <div className="mt-6 flex items-center justify-between leading-tight">
+            <div className="flex items-center gap-1">
+              <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
+                Änderung speichern
+              </button>
+              {isLoading && <SmallSpinner />}
+            </div>
+            <button
+              type="button"
+              title="Hinweis löschen"
+              onClick={async () => {
+                if (window.confirm('Sind Sie sicher, dass Sie diesen Hinweis löschen möchten?')) {
+                  try {
+                    setOpen(false)
+                    await deleteNoteMutation({
+                      regionSlug: region!.slug,
+                      noteId: note.id,
+                    })
+                    resetInspectorFeatures()
+                    getQueryClient().invalidateQueries(queryKeyMap)
+                  } catch (error: any) {
+                    window.alert(error.toString())
+                    console.error(error)
+                  }
+                }
+              }}
+              className={twMerge(notesButtonStyle, 'hover:bg-orange-400')}
+            >
+              <TrashIcon className="size-6" />
             </button>
-            {isLoading && <SmallSpinner />}
           </div>
 
           {/* @ts-expect-errors TODO Research how the error message is provided by Blitz */}

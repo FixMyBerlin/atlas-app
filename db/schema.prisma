@@ -188,7 +188,7 @@ model NoteComment {
   author    User     @relation(fields: [userId], references: [id])
   userId    Int
   //
-  note      Note     @relation(fields: [noteId], references: [id])
+  note      Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
   noteId    Int
   //
   body      String
