@@ -16,24 +16,7 @@ type Props = {
 export const AtlasNote = ({ note }: Props) => {
   return (
     <>
-      <div className="flex items-center justify-between">
-        <div className="relative text-black">
-          <strong>
-            <OsmUserLink
-              firstName={note.author?.firstName}
-              lastName={note.author?.lastName}
-              osmName={note.author.osmName}
-            />
-          </strong>
-          <br />
-          erstellt am {localDateTime(note.createdAt)}
-          {wasUpdated(note) && <>, aktualisiert am {localDateTime(note.updatedAt)}</>}:
-        </div>
-
-        <EditNoteForm note={note} />
-      </div>
-
-      <div className="mt-3 border-l-4 border-white pl-3">
+      <div className="border-l-4 border-white pl-3">
         <Markdown
           markdown={
             // Hinweis: Ein leerer body kommt nur bei importieren Notes vor, da der `body` ein Pflichtfeld in allen Formularen ist.
@@ -46,7 +29,27 @@ export const AtlasNote = ({ note }: Props) => {
         />
       </div>
 
-      <EditNoteResolvedAtForm note={note} />
+      <div className="mt-3 flex items-center justify-between">
+        <div>
+          <div>
+            <strong>
+              <OsmUserLink
+                firstName={note.author?.firstName}
+                lastName={note.author?.lastName}
+                osmName={note.author.osmName}
+                showMembership={false}
+              />
+            </strong>
+            {wasUpdated(note) ? <br /> : ', '}
+            {localDateTime(note.createdAt)}
+            {wasUpdated(note) && <>, aktualisiert {localDateTime(note.updatedAt)}</>}
+          </div>
+
+          <EditNoteResolvedAtForm note={note} />
+        </div>
+
+        <EditNoteForm note={note} />
+      </div>
     </>
   )
 }

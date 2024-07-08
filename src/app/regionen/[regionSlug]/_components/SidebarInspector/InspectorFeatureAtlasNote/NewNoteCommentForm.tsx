@@ -49,17 +49,19 @@ export const NewNoteCommentForm = ({ noteId }: Props) => {
         <textarea
           ref={textareaRef}
           name="body"
-          className="my-3 block min-h-28 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"
+          className="block min-h-28 w-full rounded-md border-0 bg-gray-50 py-2 leading-tight text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-600"
           data-1p-ignore
           data-lpignore
         />
       </label>
-      <div className="flex items-center gap-1 leading-tight">
+
+      <div className="mt-3 flex items-center gap-1 leading-tight">
         <button type="submit" className={buttonStylesOnYellow} disabled={isLoading}>
           Antwort speichern
         </button>
         {isLoading && <SmallSpinner />}
       </div>
+
       {/* @ts-expect-errors TODO Research how the error message is provided by Blitz */}
       {error ? <p className="text-red-500">{error.message}</p> : null}
     </form>
