@@ -113,23 +113,22 @@ function osm2pgsql.process_way(object)
   MergeTable(results, SurfaceQuality(object))
 
   local cycleways = Bikelanes(object)
+  local road_info = {
+    name = results.name,
+    length = length,
+    road = results.road,
+  }
   for _, cycleway in ipairs(cycleways) do
     if cycleway._infrastructureExists then
       local publicTags = ExtractPublicTags(cycleway)
+      publicTags._parent_highway = cycleway._parent_highway
       local meta = Metadata(object)
       meta.age = cycleway._age
-
-      MergeTable(publicTags,{
-        name = results.name,
-        length = length,
-        road = results.road,
-        _parent_highway = cycleway._parent_highway
-      })
 
       cycleway.segregated = nil -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
         id = cycleway._id,
-        tags = publicTags,
+        tags = MergeTable(publicTags, road_info),
         meta = meta,
         geom = object:as_linestring(),
         minzoom = 0
