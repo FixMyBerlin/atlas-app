@@ -12,7 +12,7 @@ import {
 import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
-import { SourceLayerBikelanes } from './SourceLayerBikelanes'
+import { SourceLayerForRegion } from './SourceLayerForRegion'
 import { SourceLayerFeature } from './SourceLayerFeature'
 
 type Props = {
@@ -85,7 +85,7 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         </Marker>
 
         <SourceLayerFeature />
-        <SourceLayerBikelanes />
+        <SourceLayerForRegion />
       </MapGl>
 
       {showHint && (

@@ -25,8 +25,8 @@ export const SourceLayerBikelanes = () => {
       {bikelanesDefaultStyle?.layers?.map((layer) => {
         return (
           <Layer
-            key={`osm_notes_new_map_bikelanes_${layer.id}`}
-            id={`osm_notes_new_map_bikelanes_${layer.id}`}
+            key={`notes_new_map_bikelanes_${layer.id}`}
+            id={`notes_new_map_bikelanes_${layer.id}`}
             source={bikelanesSource.id}
             source-layer={layer['source-layer']}
             type={layer.type as any}
