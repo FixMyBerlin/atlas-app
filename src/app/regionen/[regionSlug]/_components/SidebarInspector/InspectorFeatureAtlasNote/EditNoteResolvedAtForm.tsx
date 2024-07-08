@@ -14,7 +14,7 @@ type Props = { note: NoteAndComments }
 
 export const EditNoteResolvedAtForm = ({ note }: Props) => {
   const [updateNoteMutation, { isLoading, error }] = useMutation(updateNoteResolvedAt)
-  const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
+  const [formResolved, setFormResolved] = useState(note.resolvedAt !== null)
   const region = useStaticRegion()
   const queryKeyMap = useQueryKey()
 
@@ -68,7 +68,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <SvgNotesOpen className="size-5 text-sky-700" />
+              <SvgNotesClosed className="size-5 text-sky-700" />
             </span>
             <span
               className={twJoin(
@@ -79,7 +79,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <SvgNotesClosed className="size-5 text-sky-700" />
+              <SvgNotesOpen className="size-5 text-sky-700" />
             </span>
           </span>
         </Switch>
