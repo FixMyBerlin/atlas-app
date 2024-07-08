@@ -5,6 +5,8 @@ require("Set")
 require("Sanitize")
 require("DefaultId")
 require("SanitizeTrafficSign")
+require("MergeTable")
+require("ExtractPublicTags")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
@@ -67,13 +69,14 @@ end
 local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
-  local results = capacityNormalization(tags)
+  local result_tags = {_meta = {}}
   local binary = { "yes", "no" }
-  results.access = Sanitize(tags.access, { "yes", "private", "permissive", "customers" })
-  results.covered = Sanitize(tags.covered, binary, "implicit_no")
-  results.fee = Sanitize(tags.fee, binary, "implicit_no")
-  results.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
-  results.bicycle_parking = Sanitize(
+  MergeTable(result_tags, capacityNormalization(tags))
+  result_tags.access = Sanitize(tags.access, { "yes", "private", "permissive", "customers" })
+  result_tags.covered = Sanitize(tags.covered, binary, "implicit_no")
+  result_tags.fee = Sanitize(tags.fee, binary, "implicit_no")
+  result_tags.access_cargo_bike = Sanitize(tags.cargo_bike, binary, "implicit_no")
+  result_tags.bicycle_parking = Sanitize(
     tags.bicycle_parking,
     { "stands", "wide_stands", "bollard", "wall_loops", "shed", "two-tier", "lockers" }
   )
@@ -92,21 +95,23 @@ local function processTags(tags)
     "mapillary",
     "description",
   }
-  CopyTags(results, tags, allowed_tags)
-  CopyTags(results, tags, tags_cc, "osm_")
-  results.traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
+  CopyTags(result_tags, tags, allowed_tags)
+  CopyTags(result_tags, tags, tags_cc, "osm_")
+  result_tags.traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
 
-  results.age = AgeInDays(ParseCheckDate(tags["check_date"]))
-  return results
+  result_tags._age = AgeInDays(ParseCheckDate(tags["check_date"]))
+  return result_tags
 end
 
 function osm2pgsql.process_node(object)
   if exitProcessing(object) then return end
-  local tags = processTags(object.tags)
+  local result_tags = processTags(object.tags)
+  local meta = Metadata(object)
+  meta.age = result_tags._age
 
   nodeTable:insert({
-    tags = tags,
-    meta = Metadata(object),
+    tags = ExtractPublicTags(result_tags),
+    meta = meta,
     geom = object:as_point(),
     minzoom = 0,
     id = DefaultId(object)
@@ -115,12 +120,13 @@ end
 
 function osm2pgsql.process_way(object)
   if exitProcessing(object) then return end
-  local tags = processTags(object.tags)
+  local result_tags = processTags(object.tags)
   local meta = Metadata(object)
+  meta.age = result_tags._age
 
   -- convert bicycle parking mapped as lines or areas to points by taking the centroid
   nodeTable:insert({
-    tags = tags,
+    tags = ExtractPublicTags(result_tags),
     meta = meta,
     geom = object:as_polygon():centroid(),
     minzoom = 0,
@@ -129,7 +135,7 @@ function osm2pgsql.process_way(object)
 
   if not object.is_closed then return end
   areaTable:insert({
-    tags = tags,
+    tags = ExtractPublicTags(result_tags),
     meta = meta,
     geom = object:as_polygon(),
     minzoom = 0,
