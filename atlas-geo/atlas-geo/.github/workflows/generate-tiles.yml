@@ -22,6 +22,7 @@ jobs:
           script: |
             echo "Restart app container"
             cd /srv/processing/
-            echo "WAIT_FOR_FRESH_DATA=1" >> .env
+            export WAIT_FOR_FRESH_DATA=1
             docker compose down processing
             docker compose up -d processing
+            export WAIT_FOR_FRESH_DATA=0
