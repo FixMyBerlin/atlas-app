@@ -103,9 +103,10 @@ for (const entry of data) {
   }
 
   let textWithLinefeeds = text
-  let [subject, ...body] = textWithLinefeeds.replaceAll(cr, '\n').split('\n')
+  text = textWithLinefeeds.replaceAll(cr, '\n')
+  let [subject, ...body] = textWithLinefeeds.split(':')
   subject = subject.trim().replace(/ +/g, ' ')
-  body = body.join('\n').trim().replace(/ +/g, ' ')
+  body = body.join(':').replaceAll(cr, '\n').trim().replace(/ +/g, ' ')
   if (subject.length > maxSubjectLength) {
     body = '…' + subject.slice(maxSubjectLength) + body
     subject = subject.slice(0, maxSubjectLength) + '…'
