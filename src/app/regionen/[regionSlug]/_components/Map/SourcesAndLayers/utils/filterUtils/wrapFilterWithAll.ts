@@ -1,5 +1,5 @@
 // See https://github.com/maplibre/maplibre-style-spec/blob/main/build/generate-style-spec.ts#L192
-import { type ExpressionSpecification } from 'maplibre-gl'
+import { type FilterSpecification } from 'maplibre-gl'
 
 /** @desc Private method, exported only for testing */
 export const _flattenFilter = (filterArray: any[] | undefined) => {
@@ -30,15 +30,15 @@ export const wrapFilterWithAll = (filterArray: any[] | undefined) => {
     filterArray[0] !== 'all'
   ) {
     // @ts-expect-error no idea what TS wants, but this should be fine
-    return ['all', filterArray] as ExpressionSpecification
+    return ['all', filterArray] as FilterSpecification
   }
 
   // Case: Array of filter expressions that we cleanup recursively and then wrap
   const flatFilterArray = _flattenFilter(filterArray)
 
   if (flatFilterArray.length === 0) {
-    return ['all'] as ExpressionSpecification
+    return ['all'] as FilterSpecification
   }
 
-  return ['all', ...flatFilterArray] as ExpressionSpecification
+  return ['all', ...flatFilterArray] as FilterSpecification
 }
