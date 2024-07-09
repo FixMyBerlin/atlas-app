@@ -1,6 +1,7 @@
 import { twJoin } from 'tailwind-merge'
 
 type Props = {
+  className?: string
   page?: boolean
   size?: keyof typeof sizeClasses
   color?: keyof typeof colorClasses
@@ -16,9 +17,9 @@ const colorClasses = {
   teal: 'fill-teal-500',
 }
 
-export const Spinner: React.FC<Props> = ({ page = false, size = '12', color = 'blue' }) => {
+export const Spinner = ({ className, page = false, size = '12', color = 'blue' }: Props) => {
   return (
-    <div className={twJoin('text-center', page ? 'h-screen' : '')}>
+    <div className={twJoin('text-center', page ? 'h-screen' : '', className)}>
       <div role="status" className="flex h-full items-center justify-center">
         <svg
           aria-hidden="true"

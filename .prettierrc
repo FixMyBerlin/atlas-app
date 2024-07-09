@@ -3,5 +3,7 @@
   "singleQuote": true,
   "arrowParens": "always",
   "printWidth": 100,
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindAttributes": ["positionClasses"],
+  "tailwindFunctions": ["twMerge", "clsx", "twJoin"]
 }

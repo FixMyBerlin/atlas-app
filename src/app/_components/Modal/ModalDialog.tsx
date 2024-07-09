@@ -4,6 +4,7 @@ import {
   BookOpenIcon,
   ExclamationTriangleIcon,
   InformationCircleIcon,
+  PencilIcon,
 } from '@heroicons/react/24/outline'
 import React, { Fragment, useRef } from 'react'
 import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
@@ -11,7 +12,7 @@ import { twJoin } from 'tailwind-merge'
 
 export type ModalDialogProps = {
   title: string
-  icon: 'info' | 'error' | 'copyright' | 'download'
+  icon: 'info' | 'error' | 'copyright' | 'download' | 'edit'
   buttonCloseName?: string
   open: boolean
   setOpen: (value: boolean) => void
@@ -46,6 +47,10 @@ export const ModalDialog = ({
       bgClass: 'bg-purple-100',
       icon: <ArrowDownTrayIcon className="h-6 w-6 text-purple-600" aria-hidden="true" />,
     },
+    edit: {
+      bgClass: 'bg-gray-100',
+      icon: <PencilIcon className="h-6 w-6 text-gray-600" aria-hidden="true" />,
+    },
   }
 
   return (
@@ -78,8 +83,8 @@ export const ModalDialog = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6">
-                <CloseButton onClick={() => setOpen(false)} positionClasses="top-6 right-3" />
+              <div className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:w-full sm:max-w-lg sm:p-6">
+                <CloseButton onClick={() => setOpen(false)} positionClasses="right-6 top-6" />
 
                 <div className="sm:flex sm:items-start">
                   <div
@@ -91,10 +96,8 @@ export const ModalDialog = ({
                     {iconComponent[icon].icon}
                   </div>
 
-                  <div className="mt-3 text-center sm:ml-4 sm:mt-2 sm:text-left">
-                    <Dialog.Title as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      {title}
-                    </Dialog.Title>
+                  <div className="mt-3 w-full text-center sm:ml-4 sm:mt-2 sm:text-left">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">{title}</h3>
                     <div className="mt-2">{children}</div>
                   </div>
                 </div>
@@ -119,7 +122,7 @@ export const ModalDialog = ({
                     </button>
                   </div>
                 )}
-              </Dialog.Panel>
+              </div>
             </TransitionChild>
           </div>
         </div>

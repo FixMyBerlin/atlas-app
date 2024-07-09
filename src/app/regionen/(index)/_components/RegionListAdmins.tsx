@@ -1,3 +1,4 @@
+import 'server-only'
 import { invoke } from 'src/blitz-server'
 import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
@@ -13,8 +14,8 @@ export const RegionListAdmins = async () => {
   return (
     <div className="bg-pink-200">
       <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">
-        <div className="prose mt-5">
-          <h2>Nicht veröffentlichte Regionen</h2>
+        <div className="prose mt-5 px-4 sm:px-0">
+          <h2>ADMIN: Nicht veröffentlichte Regionen</h2>
         </div>
 
         <div className="my-10 grid grid-cols-2 border-l border-t border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">

@@ -2,8 +2,7 @@ import { createParser, useQueryState } from 'nuqs'
 import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { parseMapParam, serializeMapParam } from './utils/mapParam'
 import { searchParamsRegistry } from './searchParamsRegistry'
-
-export const mapParamFallback = { lat: 52.5, lng: 13.4, zoom: 12.1 }
+import { mapParamFallback } from './utils/mapParamFallback.const'
 
 export const useMapParam = () => {
   const region = useStaticRegion()

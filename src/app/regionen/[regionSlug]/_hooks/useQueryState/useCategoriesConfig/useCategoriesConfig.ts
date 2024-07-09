@@ -28,5 +28,8 @@ export const useCategoriesConfig = () => {
     configParamParser,
   )
 
-  return memoized({ categoriesConfig, setCategoriesConfig })
+  return memoized({ categoriesConfig, setCategoriesConfig }) as {
+    categoriesConfig: typeof categoriesConfig
+    setCategoriesConfig: typeof setCategoriesConfig
+  }
 }

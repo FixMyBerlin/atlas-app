@@ -1,12 +1,14 @@
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useOsmNotesParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useOsmNotesParam'
 import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useOsmNotesFeatures } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useShowOsmNotesParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 
 export const osmNotesLayerId = 'osm-notes'
 
-export const SourcesLayersOsmNotes: React.FC = () => {
-  const { osmNotesParam: osmNotesActive } = useOsmNotesParam()
-  const { osmNotesFeatures, inspectorFeatures } = useMapStateInteraction()
+export const SourcesLayersOsmNotes = () => {
+  const { showOsmNotesParam } = useShowOsmNotesParam()
+  const { inspectorFeatures } = useMapStateInteraction()
+  const osmNotesFeatures = useOsmNotesFeatures()
 
   const selectedFeatureIds = inspectorFeatures
     .filter((feature) => feature.source === 'osm-notes')
@@ -20,7 +22,7 @@ export const SourcesLayersOsmNotes: React.FC = () => {
       data={osmNotesFeatures}
       attribution="Notes: openstreetmap.org"
     >
-      {osmNotesActive && (
+      {showOsmNotesParam && (
         <>
           <Layer
             id="osm-notes-hover"
@@ -28,24 +30,18 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             source="osm-notes"
             type="circle"
             paint={{
-              'circle-radius': 15,
-              'circle-color': '#115e59', // teal-800 https://tailwindcss.com/docs/customizing-colors
-              'circle-opacity': ['step', ['zoom'], 0.3, 10, 0.6],
-              'circle-blur': 0.3,
+              'circle-radius': 12,
+              'circle-color': '#f9a8d4', // pink-300 https://tailwindcss.com/docs/customizing-colors
             }}
             filter={['in', 'id', ...selectedFeatureIds]}
-          />
-          <Layer
-            // The PNGs are transparent so we add this background
-            id="osm-notes-background"
-            key="osm-notes-background"
-            source="osm-notes"
-            type="circle"
-            paint={{
-              'circle-radius': 11,
-              'circle-color': 'white',
-              'circle-opacity': ['step', ['zoom'], 0.3, 10, 1],
-            }}
+            // layout={{
+            //   'circle-sort-key': [
+            //     'case',
+            //     ['in', ['get', 'id'], ['literal', selectedFeatureIds]],
+            //     1,
+            //     0,
+            //   ],
+            // }}
           />
           <Layer
             id={osmNotesLayerId}
@@ -53,6 +49,9 @@ export const SourcesLayersOsmNotes: React.FC = () => {
             source="osm-notes"
             type="symbol"
             paint={{
+              // See `useNotesActiveByZoom` about this opacity.
+              // We will not load any data below a certain zoom level.
+              // However, we want to still show what we loaded, so the context is preserved.
               'icon-opacity': ['step', ['zoom'], 0.3, 10, 1],
             }}
             layout={{
@@ -60,16 +59,14 @@ export const SourcesLayersOsmNotes: React.FC = () => {
               'icon-image': [
                 'match',
                 ['get', 'status'],
-                // The sprites in Mapbox are mixed up
-                // https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-osm-notes-layer"
-                // notes_open is the closed
-                'closed' /* status=closed */,
-                'notes_open',
-                'open' /* status=open */,
-                'notes_closed',
-                'notes_closed' /* default */,
+                // The sprites from Mapbox https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-atlas-notes-layer"
+                'closed',
+                'note-closed-osm',
+                'open',
+                'note-open-osm',
+                'note-open-osm' /* fallback */,
               ],
-              'icon-size': 0.85,
+              'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.3, 10, 0.5, 22, 0.5],
               'icon-allow-overlap': true,
             }}
           />

@@ -40,5 +40,5 @@ export const useRegionDatasets = () => {
 
   regionDatasets.sort((a, b) => a.name.localeCompare(b.name))
 
-  return memoized(regionDatasets)
+  return memoized(regionDatasets) as typeof regionDatasets
 }

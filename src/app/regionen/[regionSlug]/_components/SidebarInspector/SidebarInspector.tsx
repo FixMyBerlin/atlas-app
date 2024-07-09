@@ -77,8 +77,8 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
   const renderFeatures = !!features.length
 
   const className = twJoin(
-    'absolute bottom-0 right-0 top-0 z-20 w-[35rem] overflow-y-scroll bg-white p-5 pr-3 shadow-md',
-    !renderFeatures && 'opacity-0 pointer-events-none',
+    'absolute bottom-0 right-0 top-0 z-20 w-[35rem] max-w-full overflow-y-scroll bg-white p-5 pr-3 shadow-md',
+    !renderFeatures && 'pointer-events-none opacity-0',
   )
 
   const { resetFeaturesParam } = useFeaturesParam()

@@ -30,7 +30,7 @@ export type StaticRegion = {
   logoWhiteBackgroundRequired: boolean
   categories: MapDataCategoryId[]
   backgroundSources: SourcesRasterIds[]
-  hideOsmNotes?: boolean
+  notes: 'osmNotes' | 'atlasNotes' | 'disabled'
   hideDownload?: boolean
 } & (
   | {
@@ -115,6 +115,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: defaultBackgroundSources,
+    notes: 'osmNotes',
   },
   {
     slug: 'trto',
@@ -138,6 +139,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources, 'trto-radwege'],
+    notes: 'osmNotes',
   },
   {
     slug: 'berlin',
@@ -175,6 +177,7 @@ export const staticRegion: StaticRegion[] = [
       'areal2019',
       'parkraumkarte_neukoelln',
     ],
+    notes: 'osmNotes',
   },
   {
     slug: 'nudafa',
@@ -206,6 +209,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: defaultBackgroundSources,
+    notes: 'osmNotes',
   },
   {
     slug: 'parkraum',
@@ -228,6 +232,7 @@ export const staticRegion: StaticRegion[] = [
       'parkraumkarte_neukoelln',
     ],
     hideDownload: true,
+    notes: 'osmNotes',
   },
   {
     slug: 'rs8',
@@ -255,6 +260,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'mainz',
@@ -278,6 +284,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'lueneburg',
@@ -302,6 +309,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'woldegk',
@@ -325,6 +333,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'ostalbkreis',
@@ -345,6 +354,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     name: 'Langerwehe',
@@ -368,6 +378,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     name: 'Herrenberg',
@@ -391,6 +402,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     name: 'Magdeburg',
@@ -414,6 +426,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     name: 'Brandenburg',
@@ -437,6 +450,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     name: 'Brandenburg Beteiligung',
@@ -458,7 +472,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
-    hideOsmNotes: true,
+    notes: 'disabled',
   },
   {
     slug: 'bb-pg',
@@ -482,6 +496,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'bb-sg',
@@ -505,6 +520,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    notes: 'atlasNotes',
   },
   {
     name: 'Brandenburg Kampagne',
@@ -527,6 +543,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'muenchen',
@@ -542,6 +559,7 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: ['bikelanes', 'lit', 'poi', 'roads', 'surface', 'bicycleParking', 'mapillary'],
     backgroundSources: defaultBackgroundSources,
+    notes: 'osmNotes',
   },
   {
     name: 'Fahrradstellplätze',
@@ -565,6 +583,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'deutschland',
@@ -588,6 +607,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'testing',
@@ -603,5 +623,6 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: categories.map((t) => t.id),
     backgroundSources: sourcesBackgroundsRaster.map((s) => s.id),
+    notes: 'osmNotes',
   },
 ]

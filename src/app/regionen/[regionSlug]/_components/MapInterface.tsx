@@ -9,11 +9,12 @@ import { DebugStateInteraction } from './DebugBoxes/DebugStateInteraction'
 import { DownloadModal } from './DownloadModal/DownloadModal'
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Map } from './Map/Map'
-import { OsmNotes } from './OsmNotes/OsmNotes'
 import { SidebarInspector } from './SidebarInspector/SidebarInspector'
 import { SidebarLayerControls } from './SidebarLayerControls/SidebarLayerControls'
 import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
+import { OsmNotes } from './notes/OsmNotes/OsmNotes'
+import { AtlasNotes } from './notes/AtlasNotes/AtlasNotes'
 
 export const MapInterface = () => {
   // Add PMTiles Protocol to be use by "Datasets"
@@ -40,6 +41,7 @@ export const MapInterface = () => {
         >
           <LoadingIndicator />
           <OsmNotes />
+          <AtlasNotes />
           <DownloadModal />
           <SelectBackground />
           <BackgroundLegend />

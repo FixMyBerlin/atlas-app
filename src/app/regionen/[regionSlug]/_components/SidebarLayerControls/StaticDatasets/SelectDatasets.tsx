@@ -1,11 +1,4 @@
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Listbox,
-  ListboxOptions,
-  Transition,
-} from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import { twJoin } from 'tailwind-merge'
@@ -25,9 +18,6 @@ export const SelectDatasets = ({
   const { dataParam, setDataParam } = useDataParam()
   const [allActive, setAllActive] = useState(false)
 
-  const onChange = (value: string[]) => {
-    void setDataParam(value)
-  }
   const allDatasetKeysForThisCategory = datasets.map((d) =>
     createSourceKeyStaticDatasets(d.id, d.subId),
   )
@@ -94,7 +84,7 @@ export const SelectDatasets = ({
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <DisclosurePanel static as="nav" className="mb-2 mt-1">
+            <DisclosurePanel static as="section" className="mb-2 mt-1">
               <div className="mt-1 text-right">
                 {allActive ? (
                   <button
@@ -112,32 +102,18 @@ export const SelectDatasets = ({
                   </button>
                 )}
               </div>
-              <Listbox
-                key={category}
-                multiple
-                as="section"
-                className=""
-                value={dataParam}
-                onChange={onChange}
+              <ul
+                className={twJoin(
+                  'py-1 text-sm focus:outline-none',
+                  // Style all the hover state of all a-tags inside this element; Helps understand the click target when `attributionHtml` has embedded external links.
+                  '[&_a:hover]:underline',
+                )}
               >
-                {({ open }) => {
-                  return (
-                    <ListboxOptions
-                      static
-                      className={twJoin(
-                        'py-1 text-sm focus:outline-none',
-                        // Style all the hover state of all a-tags inside this element; Helps understand the click target when `attributionHtml` has embedded external links.
-                        '[&_a:hover]:underline',
-                      )}
-                    >
-                      {datasets.map((dataset) => {
-                        const key = createSourceKeyStaticDatasets(dataset.id, dataset.subId)
-                        return <SelectDataset key={key} dataset={dataset} />
-                      })}
-                    </ListboxOptions>
-                  )
-                }}
-              </Listbox>
+                {datasets.map((dataset) => {
+                  const key = createSourceKeyStaticDatasets(dataset.id, dataset.subId)
+                  return <SelectDataset key={key} dataset={dataset} />
+                })}
+              </ul>
             </DisclosurePanel>
           </Transition>
         </>
