@@ -9,15 +9,15 @@ import invariant from 'tiny-invariant'
 const dryRun = true
 const regionSlug = 'bb-sg'
 const maxSubjectLength = 50
-const deleteFromId: null | number = 9
+const deleteFromId: null | number = 1
 const authorNameToUserId: Record<string, number | null> = {
   '': null, // set to null to ignore
-  'Sabine Schmidt': 10,
-  'Torsten Perner': 11,
-  'Valentin Kranz': 14,
-  'Pascale Christin Pawels': 15,
-  Pawels: 15,
-  'Pawels (LS)': 15,
+  'Sabine Schmidt': 22,
+  'Torsten Perner': null, // not in production db
+  'Valentin Kranz': 25,
+  'Pascale Christin Pawels': 71,
+  Pawels: 71,
+  'Pawels (LS)': 71,
 }
 // --------------------------------
 
