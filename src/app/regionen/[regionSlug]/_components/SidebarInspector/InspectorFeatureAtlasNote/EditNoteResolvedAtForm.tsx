@@ -7,8 +7,8 @@ import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAn
 import { twJoin } from 'tailwind-merge'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
-import { SvgNotesClosed } from '../icons/SvgNotesClosed'
-import { SvgNotesOpen } from '../icons/SvgNotesOpen'
+import { SvgNotesCheckmark } from '../icons/SvgNotesCheckmark'
+import { SvgNotesQuestionmark } from '../icons/SvgNotesQuestionmark'
 
 type Props = { note: NoteAndComments }
 
@@ -75,7 +75,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <SvgNotesClosed className="size-5 text-sky-700" />
+              <SvgNotesQuestionmark className="size-5 text-sky-700" />
             </span>
             <span
               className={twJoin(
@@ -86,7 +86,7 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
               )}
               aria-hidden="true"
             >
-              <SvgNotesOpen className="size-5 text-sky-700" />
+              <SvgNotesCheckmark className="size-5 text-sky-700" />
             </span>
           </span>
         </Switch>

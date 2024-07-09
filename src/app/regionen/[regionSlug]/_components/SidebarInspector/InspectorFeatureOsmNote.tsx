@@ -1,6 +1,5 @@
 import { useSession } from '@blitzjs/auth'
 import dompurify from 'dompurify'
-import Image from 'next/image'
 import { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { Link } from 'src/app/_components/links/Link'
@@ -13,8 +12,8 @@ import { useOsmNotesFeatures } from '../../_hooks/mapStateInteraction/userMapNot
 import { Disclosure } from './Disclosure/Disclosure'
 import { InspectorOsmNoteFeature } from './Inspector'
 import { OsmUserLink } from './OsmUserLink'
-import { SvgNotesOpen } from './icons/SvgNotesOpen'
-import { SvgNotesClosed } from './icons/SvgNotesClosed'
+import { SvgNotesCheckmark } from './icons/SvgNotesCheckmark'
+import { SvgNotesQuestionmark } from './icons/SvgNotesQuestionmark'
 
 type Props = Pick<InspectorOsmNoteFeature, 'properties'>
 
@@ -81,13 +80,13 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
             Status:{' '}
             {thread.status === 'closed' && (
               <span className="inline-flex gap-1">
-                <SvgNotesClosed className="size-5 text-teal-800" />
+                <SvgNotesCheckmark className="size-5 text-teal-800" />
                 geschlossen
               </span>
             )}
             {thread.status === 'open' && (
               <span className="inline-flex gap-1">
-                <SvgNotesOpen className="size-5 text-teal-800" />
+                <SvgNotesQuestionmark className="size-5 text-teal-800" />
                 offen
               </span>
             )}
