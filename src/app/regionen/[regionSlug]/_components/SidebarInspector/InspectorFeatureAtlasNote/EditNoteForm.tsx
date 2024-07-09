@@ -25,7 +25,7 @@ export const EditNoteForm = ({ note }: Props) => {
   const { resetInspectorFeatures } = useMapStateInteraction()
   const [deleteNoteMutation] = useMutation(deleteNote)
   const [open, setOpen] = useState(false)
-  const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
+  const [formResolved, setFormResolved] = useState(note.resolvedAt !== null)
   const region = useStaticRegion()
   const queryKeyMap = useQueryKey()
 
@@ -38,7 +38,7 @@ export const EditNoteForm = ({ note }: Props) => {
         noteId: note.id,
         subject: sanitize(new FormData(event.currentTarget).get('subject')!.toString()),
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
-        resolved: formResolved,
+        resolved: formResolved, // Note that for some reason the condition is different here than in <EditNoteResolvedAtForm>
       },
       {
         onSuccess: (note) => {
@@ -122,7 +122,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <SvgNotesOpen className="size-5 text-sky-700" />
+                  <SvgNotesClosed className="size-5 text-sky-700" />
                 </span>
                 <span
                   className={twJoin(
@@ -133,7 +133,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <SvgNotesClosed className="size-5 text-sky-700" />
+                  <SvgNotesOpen className="size-5 text-sky-700" />
                 </span>
               </span>
             </Switch>
@@ -149,6 +149,7 @@ export const EditNoteForm = ({ note }: Props) => {
               </button>
               {isLoading && <SmallSpinner />}
             </div>
+
             <button
               type="button"
               title="Hinweis löschen"

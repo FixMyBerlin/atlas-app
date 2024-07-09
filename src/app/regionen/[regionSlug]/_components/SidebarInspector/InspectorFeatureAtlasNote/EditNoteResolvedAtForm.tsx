@@ -1,6 +1,6 @@
 import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import { Field, Label, Switch } from '@headlessui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import updateNoteResolvedAt from 'src/notes/mutations/updateNoteResolvedAt'
 import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
@@ -17,6 +17,13 @@ export const EditNoteResolvedAtForm = ({ note }: Props) => {
   const [formResolved, setFormResolved] = useState(note.resolvedAt !== null)
   const region = useStaticRegion()
   const queryKeyMap = useQueryKey()
+
+  // note.resolvedAt can be changed by EditNoteForm which triggers
+  // a refetch of `note` outside, which triggers a rerender. However that is not enough to
+  // update the setFormResolved initial state. As a quick workaround we update the state here:
+  useEffect(() => {
+    setFormResolved(note.resolvedAt !== null)
+  }, [note?.resolvedAt])
 
   const handleSubmit = async (state: boolean) => {
     setFormResolved(state)
