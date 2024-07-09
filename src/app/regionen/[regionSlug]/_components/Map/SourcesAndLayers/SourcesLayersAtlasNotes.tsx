@@ -64,9 +64,9 @@ export const SourcesLayersAtlasNotes = () => {
                 ['get', 'status'],
                 // The sprites from Mapbox https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/ => "sprites-fuer-atlas-notes-layer"
                 'closed',
-                'note-closed-intern',
+                'note-closed-intern' /* Checkmark */,
                 'open',
-                'note-open-intern',
+                'note-open-intern' /* Questionmark */,
                 'note-open-intern' /* fallback */,
               ],
               'icon-size': ['interpolate', ['linear'], ['zoom'], 0, 0.3, 10, 0.5, 22, 0.5],

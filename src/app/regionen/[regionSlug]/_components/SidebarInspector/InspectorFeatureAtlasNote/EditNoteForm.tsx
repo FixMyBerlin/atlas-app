@@ -11,12 +11,12 @@ import deleteNote from 'src/notes/mutations/deleteNote'
 import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
 import { twJoin, twMerge } from 'tailwind-merge'
+import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
-import { SvgNotesClosed } from '../icons/SvgNotesClosed'
-import { SvgNotesOpen } from '../icons/SvgNotesOpen'
+import { SvgNotesCheckmark } from '../icons/SvgNotesCheckmark'
+import { SvgNotesQuestionmark } from '../icons/SvgNotesQuestionmark'
 import { useIsAuthor } from './utils/useIsAuthor'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 type Props = { note: NoteAndComments }
 
@@ -25,7 +25,7 @@ export const EditNoteForm = ({ note }: Props) => {
   const { resetInspectorFeatures } = useMapStateInteraction()
   const [deleteNoteMutation] = useMutation(deleteNote)
   const [open, setOpen] = useState(false)
-  const [formResolved, setFormResolved] = useState(!!note.resolvedAt)
+  const [formResolved, setFormResolved] = useState(note.resolvedAt !== null)
   const region = useStaticRegion()
   const queryKeyMap = useQueryKey()
 
@@ -38,7 +38,7 @@ export const EditNoteForm = ({ note }: Props) => {
         noteId: note.id,
         subject: sanitize(new FormData(event.currentTarget).get('subject')!.toString()),
         body: sanitize(new FormData(event.currentTarget).get('body')!.toString()),
-        resolved: formResolved,
+        resolved: formResolved, // Note that for some reason the condition is different here than in <EditNoteResolvedAtForm>
       },
       {
         onSuccess: (note) => {
@@ -122,7 +122,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <SvgNotesOpen className="size-5 text-sky-700" />
+                  <SvgNotesQuestionmark className="size-5 text-sky-700" />
                 </span>
                 <span
                   className={twJoin(
@@ -133,7 +133,7 @@ export const EditNoteForm = ({ note }: Props) => {
                   )}
                   aria-hidden="true"
                 >
-                  <SvgNotesClosed className="size-5 text-sky-700" />
+                  <SvgNotesCheckmark className="size-5 text-sky-700" />
                 </span>
               </span>
             </Switch>
@@ -149,6 +149,7 @@ export const EditNoteForm = ({ note }: Props) => {
               </button>
               {isLoading && <SmallSpinner />}
             </div>
+
             <button
               type="button"
               title="Hinweis löschen"
