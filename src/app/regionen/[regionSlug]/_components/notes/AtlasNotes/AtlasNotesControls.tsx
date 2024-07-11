@@ -8,7 +8,8 @@ import {
   useShowAtlasNotesParam,
 } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
-import { FilterControl } from './AtlasNotesControls/FilterControl'
+import { AtlasNotesDownloadModal } from './AtlasNotesControls/AtlasNotesDownloadModal'
+import { AtlasNotesFilterControl } from './AtlasNotesControls/AtlasNotesFilterControl'
 
 type Props = { totalNotes: number | undefined; isLoading: boolean; isError: boolean }
 
@@ -64,19 +65,21 @@ export const AtlasNotesControls = ({ totalNotes, isLoading, isError }: Props) =>
         </button>
       </Tooltip>
 
-      {showAtlasNotesParam && <FilterControl />}
-
       {showAtlasNotesParam && (
-        <Tooltip text="Interne Hinweis erstellen">
-          <button
-            // Default zoom since Note pins on osm.org are only visible when zoomed in…
-            onClick={() => setNewAtlasNoteMapParam(mapParam)}
-            className="z-0 -ml-px inline-flex justify-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 hover:text-gray-800 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500"
-          >
-            <PlusIcon className="size-5" aria-hidden="true" />
-            <span className="sr-only">Neuen Interne Hinweis erstellen</span>
-          </button>
-        </Tooltip>
+        <>
+          <AtlasNotesFilterControl />
+          <AtlasNotesDownloadModal />
+          <Tooltip text="Interne Hinweis erstellen">
+            <button
+              // Default zoom since Note pins on osm.org are only visible when zoomed in…
+              onClick={() => setNewAtlasNoteMapParam(mapParam)}
+              className="z-0 -ml-px inline-flex justify-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 hover:text-gray-800 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <PlusIcon className="size-5" aria-hidden="true" />
+              <span className="sr-only">Neuen Interne Hinweis erstellen</span>
+            </button>
+          </Tooltip>
+        </>
       )}
     </div>
   )

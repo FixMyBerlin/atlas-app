@@ -3,7 +3,8 @@ import { ModalDialog, ModalDialogProps } from './ModalDialog'
 
 export type Props = Pick<ModalDialogProps, 'title' | 'buttonCloseName'> & {
   titleIcon?: ModalDialogProps['icon']
-  triggerStyle: 'circle' | 'button' | 'debugCircle'
+  /* @desc: Either one of the 3 or custom css classes */
+  triggerStyle: 'circle' | 'button' | 'debugCircle' | (string & {})
   triggerIcon: React.ReactNode
   children: React.ReactNode
 }
@@ -27,9 +28,11 @@ export const IconModal: React.FC<Props> = ({
       'inline-flex justify-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 focus:outline-none focus:ring-2 focus:ring-yellow-500',
   }
 
+  const classes = triggerStyles[triggerStyle] ? triggerStyles[triggerStyle] : triggerStyle
+
   return (
     <>
-      <button type="button" className={triggerStyles[triggerStyle]} onClick={() => setOpen(true)}>
+      <button type="button" className={classes} onClick={() => setOpen(true)}>
         {triggerIcon}
       </button>
       <ModalDialog

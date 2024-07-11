@@ -37,7 +37,7 @@ export const DownloadModalDownloadList = () => {
                       __html:
                         sourceData.attributionHtml !== 'todo' ? sourceData.attributionHtml : '',
                     }}
-                  ></td>
+                  />
                 </tr>
                 <tr>
                   <th className="w-24 align-top text-xs font-medium text-gray-900">Lizenz:</th>

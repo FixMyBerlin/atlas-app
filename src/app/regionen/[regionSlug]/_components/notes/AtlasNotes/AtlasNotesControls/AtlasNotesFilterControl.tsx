@@ -11,7 +11,7 @@ import { twJoin } from 'tailwind-merge'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 import { useQueryKey } from '../utils/useQueryKey'
 
-export const FilterControl = () => {
+export const AtlasNotesFilterControl = () => {
   const { slug: regionSlug } = useStaticRegion()!
   const { atlasNotesFilterParam, setAtlasNotesFilterParam } = useAtlasFilterParam()
   const queryKey = useQueryKey()
@@ -45,7 +45,7 @@ export const FilterControl = () => {
           <button
             className={twJoin(
               'z-0 -ml-px inline-flex justify-center border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:text-gray-800 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500',
-              active ? 'bg-yellow-100' : 'bg-white hover:bg-yellow-50 ',
+              active ? 'bg-yellow-100' : 'bg-white hover:bg-yellow-50',
               noFilterActive ? '' : 'bg-yellow-400',
             )}
           >
