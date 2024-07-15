@@ -194,7 +194,7 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           name: 'Verkehrsberuhigter Bereich',
           style: {
             type: 'line',
-            color: '#ec4899',
+            color: '#f4b9e3',
             dasharray: [1, 2.5],
           },
         },
