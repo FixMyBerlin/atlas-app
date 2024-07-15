@@ -1,19 +1,30 @@
-name: Regenerate production tiles
+name: Regenerate Tiles
 
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 2 * * *'
-
+  workflow_call:
+    secrets:
+      SSH_USERNAME:
+        required: true
+      SSH_PASSWORD:
+        required: true
+      SSH_HOST:
+        required: true
+    inputs:
+      ENVIRONMENT:
+        type: string
+        required: true
+      url:
+        type: string
+        required: true
 jobs:
-  trigger_generation:
+  generate-tiles:
     environment:
-      name: production
-      url: https://tiles.radverkehrsatlas.de
+      name: ${{inputs.ENVIRONMENT}}
+      url: ${{inputs.url}}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Restart tile generation
+      - name: Start tile generation
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}

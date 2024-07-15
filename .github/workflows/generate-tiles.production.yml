@@ -2,12 +2,14 @@ name: Regenerate Production Tiles
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
 jobs:
   generate-tiles:
     uses: ./.github/workflows/generate-tiles.yml
     with:
-      ENVIRONMENT: staging
-      url: https://staging-tiles.radverkehrsatlas.de
+      ENVIRONMENT: production
+      url: https://tiles.radverkehrsatlas.de
     secrets:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
