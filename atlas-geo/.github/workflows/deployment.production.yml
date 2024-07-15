@@ -1,0 +1,28 @@
+name: Deployment Production
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  build_and_deploy:
+    uses: ./.github/workflows/deployment.yml
+    with:
+      ENVIRONMENT: production
+      TILES_URL: tiles.radverkehrsatlas.de
+      CACHELESS_URL: cacheless.radverkehrsatlas.de
+    secrets:
+      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      DATABASE_PASSWORD_ENCODED: ${{ secrets.DATABASE_PASSWORD_ENCODED }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
+      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}
