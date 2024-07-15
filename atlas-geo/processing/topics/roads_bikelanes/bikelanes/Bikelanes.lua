@@ -66,7 +66,7 @@ function Bikelanes(object)
         MergeTable(result_tags, {
           _id = DefaultId(object),
           _infrastructureExists = true,
-          age = AgeInDays(ParseCheckDate(tags["check_date"])),
+          _age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           width = ParseLength(transformedTags.width),
           oneway = DeriveOneway(transformedTags, category.id),
@@ -78,7 +78,6 @@ function Bikelanes(object)
         MergeTable(result_tags, DeriveSmoothness(transformedTags))
         MergeTable(result_tags, DeriveSurface(transformedTags))
         CopyTags(result_tags, transformedTags, tags_prefixed, 'osm_')
-
         -- copy original tags
         CopyTags(result_tags, tags, tags_copied)
 
@@ -87,7 +86,7 @@ function Bikelanes(object)
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
           result_tags._parent_highway = transformedTags._parent_highway
           result_tags.offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2
-          result_tags.age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
+          result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
         result_tags.todos = CreateTodoList(BikelaneTodos, transformedTags, result_tags)

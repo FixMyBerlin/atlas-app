@@ -8,7 +8,7 @@ local tags_prefixed = {}
 
 function Lit(object)
   local tags = object.tags
-  local result_tags = {}
+  local result_tags = {_meta = {}}
 
   -- Categorize the data in three groups: "lit", "unlit", "special"
   if tags.lit ~= nil then
@@ -19,7 +19,7 @@ function Lit(object)
     end
   end
 
-  result_tags.lit_age = AgeInDays(ParseCheckDate(tags["check_date:lit"]))
+  result_tags._lit_age = AgeInDays(ParseCheckDate(tags["check_date:lit"]))
 
   CopyTags(result_tags, tags, tags_copied)
   CopyTags(result_tags, tags, tags_prefixed, "osm_")

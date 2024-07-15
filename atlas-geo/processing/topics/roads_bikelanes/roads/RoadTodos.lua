@@ -1,5 +1,4 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-require('RemoveNilValues')
 RoadTodo = {}
 RoadTodo.__index = RoadTodo
 
