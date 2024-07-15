@@ -10,7 +10,7 @@
   "scripts": {
     "start": "npx blitz@2.0.10 start --hostname 127.0.0.1 --port 3000",
     "dev": "npx blitz@2.0.10 dev --hostname 127.0.0.1 --port 5173",
-    "predev": "if [ $(docker inspect -f '{{.State.Running}}' db) = \"true\" ]; then echo DOCKER: atlas-geo already running; else echo IMPORTANT: Start atlas-geo with npm run dev:up; fi && node scripts/npm-run-predev/checkMigrations.js",
+    "predev": "if [ $(docker inspect -f '{{.State.Running}}' db) != \"true\" ]; then docker compose up; fi && node scripts/npm-run-predev/checkMigrations.js",
     "build": "npx blitz@2.0.10 build",
     "bleach": "rm -rf node_modules/ && rm -rf .next/ && npm install",
     "bleach:full": "rm package-lock.json && npm run bleach",
