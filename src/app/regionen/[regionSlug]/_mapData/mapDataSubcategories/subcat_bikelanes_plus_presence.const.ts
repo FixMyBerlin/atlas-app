@@ -3,8 +3,8 @@ import { mapboxStyleGroupLayers_atlas_bikelane_presence } from './mapboxStyles/g
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes_plus_presence'
-const source = 'atlas_roads'
-const sourceLayer = 'roads'
+const source = 'atlas_bikelanesPresence'
+const sourceLayer = 'bikelanesPresence'
 export type SubcatBikelanesPlusPresenceId = typeof subcatId
 export type SubcatBikelanesPlusPresenceStyleIds = 'default'
 

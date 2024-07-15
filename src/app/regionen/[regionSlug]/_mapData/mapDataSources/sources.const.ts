@@ -22,6 +22,7 @@ export type SourcesId =
   | 'atlas_publicTransport'
   | 'atlas_roads'
   | 'atlas_roadsPathClasses'
+  | 'atlas_bikelanesPresence' // based on `roads`
   | 'atlas_trafficSigns'
   | 'mapillary_coverage'
   | 'mapillary_mapfeatures'
@@ -279,6 +280,31 @@ export const sources: MapDataSource<
       title: 'Straßennetz Wege',
       desc: 'Fuß-, Wald-, Feld-, Reit-, Fahrradwege, Treppen',
     },
+  },
+  {
+    id: 'atlas_bikelanesPresence',
+    tiles: getTilesUrl('/atlas_generalized_bikelanespresence/{z}/{x}/{y}'),
+    maxzoom: SIMPLIFY_MAX_ZOOM,
+    minzoom: 4,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [
+        // TODO: SHOULD BE…
+        //  Same as 'roads'
+        'composit_road_bikelanes',
+      ],
+    },
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: { enabled: false }, // can be exported as part of `roads`, `roadsPathClasses`
   },
   {
     // https://tiles.radverkehrsatlas.de/publicTransport

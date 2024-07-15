@@ -93,6 +93,11 @@ export const tilesetConfigs: Record<
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.ajf6t9k7/#14/52.51622/13.37036',
     bbox: bboxBerlinPlus,
   },
+  bikelanesPresence: {
+    sourceLayer: 'bikelanesPresence',
+    uploadUrl: '', //
+    bbox: bboxBrandenburg,
+  },
   bikeroutes: {
     sourceLayer: 'bikeroutes',
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.7h5266ql/#14/52.51622/13.37036',

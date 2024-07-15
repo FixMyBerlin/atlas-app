@@ -243,6 +243,7 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--surface_source=tag': 'OSM-Tag `surface`',
   'atlas_roads--title': 'Daten zur Straße',
   'atlas_roadsPathClasses--title': 'Daten zu Wegen',
+  'atlas_bikelanesPresence--title': 'Daten zu Radinfrastruktur an Straßen',
   'atlas_trafficSigns--title': 'Verkehrszeichen',
   'mapillary_coverage--title': 'Mapillary Foto',
 }

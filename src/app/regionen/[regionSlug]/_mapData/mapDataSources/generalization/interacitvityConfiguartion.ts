@@ -23,6 +23,10 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: ['road'],
     minzoom: 9,
   },
+  bikelanesPresence: {
+    stylingKeys: ['bikelane_left', 'bikelane_self', 'bikelane_right'],
+    minzoom: 0,
+  },
   bikelanes: {
     stylingKeys: ['category', 'surface', 'smoothness', 'width'],
     minzoom: 9,

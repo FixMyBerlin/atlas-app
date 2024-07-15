@@ -12,6 +12,7 @@ export const exportApiIdentifier = [
   'publicTransport',
   'roads',
   'roadsPathClasses',
+  'bikelanesPresence', // based on `roads`
   'trafficSigns',
   'barrierAreas',
   'barrierLines',

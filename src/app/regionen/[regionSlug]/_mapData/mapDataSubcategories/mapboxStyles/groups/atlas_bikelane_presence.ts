@@ -183,6 +183,5 @@ export const mapboxStyleGroupLayers_atlas_bikelane_presence: MapboxStyleLayer[] 
         0.5,
       ],
     },
-    filter: ['has', 'bikelane_self'],
   },
 ]
