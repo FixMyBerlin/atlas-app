@@ -9,8 +9,10 @@ services:
     container_name: blitz
     restart: unless-stopped
     environment:
-      SESSIONS_SECRET_KEY: ${SESSION_SECRET_KEY}
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_DATABASE}?schema=prisma
+      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_APP_ENV:
+      SESSIONS_SECRET_KEY:
     ports:
       - 4000:4000
     labels:
