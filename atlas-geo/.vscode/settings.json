@@ -1,4 +1,0 @@
-{
-  "Lua.diagnostics.globals": ["osm2pgsql"],
-  "Lua.runtime.version": "LuaJIT"
-}
