@@ -1,0 +1,28 @@
+name: Regenerate production tiles
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'
+
+jobs:
+  trigger_generation:
+    environment:
+      name: production
+      url: https://tiles.radverkehrsatlas.de
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restart tile generation
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "Restart app container"
+            cd /srv/processing/
+            export WAIT_FOR_FRESH_DATA=1
+            docker compose down processing
+            docker compose up -d processing
+            export WAIT_FOR_FRESH_DATA=0

@@ -1,0 +1,20 @@
+name: Start production services
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start_services:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Restart docker compose services
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "Restart all production services"
+            cd /srv/processing/
+            docker compose up -d tiles api
