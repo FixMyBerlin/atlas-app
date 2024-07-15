@@ -146,6 +146,7 @@ function osm2pgsql.process_way(object)
   if not IsSidepath(tags) then
     local meta = Metadata(object)
     MergeTable(meta, {
+      age = AgeInDays(ParseCheckDate(tags["check_date"])),
       surface_age = results._surface_age,
       smoothness_age = results._smoothness_age,
       maxspeed_age = results._maxspeed_age,
