@@ -1,4 +1,4 @@
-name: Deploy to App Ionos
+name: Deploy App to Ionos
 on:
   workflow_call:
     inputs:
@@ -55,7 +55,7 @@ on:
         required: true
 
 jobs:
-  build-push-deploy-docker-images:
+  build_and_deploy:
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
