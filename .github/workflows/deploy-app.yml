@@ -87,7 +87,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: db/ docker/ mailers/ publice/ scripts/ src/ package.json package-lock.json .eslintrc.json next.config.js tsconfig.json types.ts tailwind.config.js
+          CHECK_DIFF_LOCATIONS: db/ docker/ mailers/ publice/ scripts/ src/ package.json package-lock.json .eslintrc.json next.config.js tsconfig.json types.ts tailwind.config.cjs
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
