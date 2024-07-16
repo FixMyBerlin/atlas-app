@@ -1,4 +1,4 @@
-# this file is used by a github workflow to build the image
+# syntax=docker/dockerfile:1.7-labs
 
 FROM node:18-bullseye-slim
 
@@ -11,7 +11,7 @@ COPY patches ./patches
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
-COPY db mailers public src ./
+COPY --parents db mailers public src ./
 COPY .eslintrc.json next.config.js tsconfig.json types.ts ./
 
 ARG NEXT_PUBLIC_APP_ORIGIN
