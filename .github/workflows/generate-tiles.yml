@@ -31,7 +31,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Restart app container"
+            echo "Restart processing container"
             cd /srv/processing/
             export WAIT_FOR_FRESH_DATA=1
             docker compose down processing
