@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_and_deploy:
-    uses: ./.github/workflows/deployment.yml
+    uses: ./.github/workflows/deploy-processing.yml
     with:
       ENVIRONMENT: staging
       TILES_URL: staging-tiles.radverkehrsatlas.de
