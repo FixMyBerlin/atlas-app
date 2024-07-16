@@ -87,7 +87,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: db/ docker/ mailers/ publice/ scripts/ src/ package.json package-lock.json .eslintrc.json next.config.js tsconfig.json types.ts tailwind.config.cjs postcss.config.cjs
+          CHECK_DIFF_LOCATIONS: app/
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: steps.git_changes.outputs.changes == 'true'
@@ -112,7 +112,8 @@ jobs:
         if: steps.git_changes.outputs.changes == 'true'
         uses: docker/build-push-action@v5
         with:
-          file: ./docker/Dockerfile
+          file: ./app/docker/Dockerfile
+          context: ./app/
           push: false
           load: true
           cache-from: type=gha

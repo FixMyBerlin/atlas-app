@@ -45,7 +45,7 @@
     "updatePackages:major": "npx taze major --write --includeLocked && npm install",
     "updatePackages:minor": "npx taze minor --write --includeLocked && npm install",
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
-    "prepare": "husky",
+    "prepare": "cd .. && husky app/.husky",
     "postinstall": "patch-package",
     "link-atlas-static-data": "ln -s ../../../atlas-static-data/geojson scripts/StaticDatasets"
   },
