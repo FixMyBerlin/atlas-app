@@ -122,6 +122,7 @@ jobs:
             echo NEXT_PUBLIC_APP_ORIGIN='${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}' >> .env
             echo NEXT_PUBLIC_APP_ENV='${{ inputs.NEXT_PUBLIC_APP_ENV }}' >> .env
             echo TRAEFIK_HOST='${{ inputs.TRAEFIK_HOST }}' >> .env
+            echo DATABASE_HOST='${{ vars.DATABASE_HOST }}'
             echo DATABASE_USER='${{ secrets.DATABASE_USER }}' >> .env
             echo DATABASE_PASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
             echo DATABASE_NAME='${{ secrets.DATABASE_NAME }}' >> .env
