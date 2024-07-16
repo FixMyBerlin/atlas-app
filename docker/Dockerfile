@@ -12,7 +12,7 @@ RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
 COPY --parents db mailers public src scripts ./
-COPY .eslintrc.json next.config.js tsconfig.json types.ts ./
+COPY .eslintrc.json next.config.js tsconfig.json types.ts tailwind.config.js ./
 
 ARG NEXT_PUBLIC_APP_ORIGIN
 ARG NEXT_PUBLIC_APP_ENV
