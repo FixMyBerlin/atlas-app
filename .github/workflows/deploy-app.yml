@@ -31,8 +31,6 @@ on:
         required: true
       DATABASE_USER:
         required: true
-      DATABASE_HOST:
-        required: true
       SESSION_SECRET_KEY:
         required: true
       OSM_CLIENT_ID:
