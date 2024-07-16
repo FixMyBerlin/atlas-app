@@ -81,10 +81,10 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
     !renderFeatures && 'pointer-events-none opacity-0',
   )
 
-  const { resetFeaturesParam } = useFeaturesParam()
+  const { setFeaturesParam } = useFeaturesParam()
   const { resetInspectorFeatures } = props
   const handleClose = () => {
-    resetFeaturesParam()
+    setFeaturesParam(null)
     resetInspectorFeatures()
   }
 

@@ -36,7 +36,7 @@ import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNo
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
-  const { setFeaturesParam, resetFeaturesParam } = useFeaturesParam()
+  const { setFeaturesParam } = useFeaturesParam()
   const {
     setInspectorFeatures,
     resetInspectorFeatures,
@@ -111,7 +111,7 @@ export const Map = () => {
       if (persistableFeatures.length) {
         setFeaturesParam(persistableFeatures.map((feature) => convertToUrlFeature(feature)))
       } else {
-        resetFeaturesParam()
+        setFeaturesParam(null)
       }
     } else {
       resetInspectorFeatures()

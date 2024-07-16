@@ -1,11 +1,8 @@
 import { parseAsArrayOf, parseAsString, useQueryState } from 'nuqs'
-import { memoize } from 'lodash'
 import { searchParamsRegistry } from './searchParamsRegistry'
+import { createMemoizer } from './utils/createMemoizer'
 
-const memoized = memoize(
-  (data) => data,
-  ({ dataParam: selectedDatasetIds }) => selectedDatasetIds.join(),
-)
+const memoizer = createMemoizer()
 
 export const useDataParam = () => {
   const [dataParam, setDataParam] = useQueryState(
@@ -13,8 +10,5 @@ export const useDataParam = () => {
     parseAsArrayOf(parseAsString).withDefault([]),
   )
 
-  return memoized({ dataParam, setDataParam }) as {
-    dataParam: typeof dataParam
-    setDataParam: typeof setDataParam
-  }
+  return memoizer({ dataParam, setDataParam })
 }

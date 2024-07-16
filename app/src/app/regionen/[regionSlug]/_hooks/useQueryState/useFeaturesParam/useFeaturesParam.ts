@@ -1,5 +1,4 @@
 import { bbox } from '@turf/turf'
-import { zip } from 'lodash'
 import { createParser, useQueryState } from 'nuqs'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
@@ -61,22 +60,15 @@ export const parseFeaturesParam = (query: string) => {
     .filter((p) => p !== null) as unknown as UrlFeature[]
 }
 
-export const useFeaturesParam = () => {
-  const featuresParamParser = createParser({
-    parse: (query): UrlFeature[] => parseFeaturesParam(query),
-    serialize: serializeFeaturesParam,
-  }).withOptions({ history: 'push' })
+const featuresParamParser = createParser({
+  parse: (query): UrlFeature[] => parseFeaturesParam(query),
+  serialize: serializeFeaturesParam,
+}).withOptions({ history: 'push' })
 
+export const useFeaturesParam = () => {
   const [featuresParam, setFeaturesParam] = useQueryState(
     searchParamsRegistry.f,
     featuresParamParser,
   )
-  const featuresParamWithKeys: Record<string, UrlFeature> =
-    featuresParam && featuresParam.length
-      ? Object.fromEntries(zip(serializeFeaturesParam(featuresParam).split(','), featuresParam))
-      : {}
-  function resetFeaturesParam() {
-    setFeaturesParam(null)
-  }
-  return { featuresParam, featuresParamWithKeys, setFeaturesParam, resetFeaturesParam }
+  return { featuresParam, setFeaturesParam }
 }

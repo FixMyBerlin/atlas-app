@@ -5,12 +5,9 @@ import { createFreshCategoriesConfig } from './createFreshCategoriesConfig'
 import { MapDataCategoryConfig } from './type'
 import { parse } from './v2/parse'
 import { serialize } from './v2/serialize'
-import { memoize } from 'lodash'
+import { createMemoizer } from '../utils/createMemoizer'
 
-const memoized = memoize(
-  (data) => data,
-  ({ categoriesConfig }) => JSON.stringify(categoriesConfig),
-)
+const memoizer = createMemoizer()
 
 export const useCategoriesConfig = () => {
   const region = useStaticRegion()
@@ -28,8 +25,5 @@ export const useCategoriesConfig = () => {
     configParamParser,
   )
 
-  return memoized({ categoriesConfig, setCategoriesConfig }) as {
-    categoriesConfig: typeof categoriesConfig
-    setCategoriesConfig: typeof setCategoriesConfig
-  }
+  return memoizer({ categoriesConfig, setCategoriesConfig })
 }
