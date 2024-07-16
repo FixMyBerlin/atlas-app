@@ -1,4 +1,4 @@
-name: Deploy Staging
+name: Deploy App (Staging)
 on:
   push:
     branches:

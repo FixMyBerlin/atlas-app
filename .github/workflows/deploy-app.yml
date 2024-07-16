@@ -1,4 +1,4 @@
-name: Deploy to Ionos
+name: Deploy to App Ionos
 on:
   workflow_call:
     inputs:

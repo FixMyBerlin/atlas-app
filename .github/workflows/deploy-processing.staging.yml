@@ -1,4 +1,4 @@
-name: Deployment Staging
+name: Deploy Processing (Staging)
 
 on:
   push:
