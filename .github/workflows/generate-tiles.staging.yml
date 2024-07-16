@@ -1,4 +1,4 @@
-name: Regenerate Production Tiles
+name: Regenerate Staging Tiles
 
 on:
   workflow_dispatch:
