@@ -58,3 +58,21 @@ lib-cov
 .vscode/*
 !.vscode/extensions.json
 .idea
+
+*.osm
+*.pbf
+*.log
+.env
+*.DS_Store
+
+# IDE
+.idea
+
+# Nginx
+logs/
+
+# warm-cache
+processing/warm-cache
+
+# run helper
+processing/topics/helper/._trigger-full-run-helper.lua

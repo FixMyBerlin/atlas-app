@@ -11,16 +11,12 @@ COPY patches ./patches
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
-# see .dockerignore for what is getting copied
-COPY . .
+COPY db mailers public src ./
+COPY .eslintrc.js next.config.js tsconfig.json types.ts ./
 
-ENV NEXT_TELEMETRY_DISABLED=1
 ARG NEXT_PUBLIC_APP_ORIGIN
-ENV NEXT_PUBLIC_APP_ORIGIN ${NEXT_PUBLIC_APP_ORIGIN}
 ARG NEXT_PUBLIC_APP_ENV
-ENV NEXT_PUBLIC_APP_ENV ${NEXT_PUBLIC_APP_ENV}
 ARG NEXT_PUBLIC_OSM_API_URL
-ENV NEXT_PUBLIC_OSM_API_URL ${NEXT_PUBLIC_OSM_API_URL}
 
 RUN npx blitz@2.0.10 prisma generate
 RUN npx blitz@2.0.10 build
