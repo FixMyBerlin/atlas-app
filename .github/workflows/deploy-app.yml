@@ -23,6 +23,8 @@ on:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
+      AWS_REGION:
+        required: true
       DATABASE_NAME:
         required: true
       DATABASE_PASSWORD:
@@ -73,8 +75,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
-
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: Setup buildx
         uses: docker/setup-buildx-action@v3
 
