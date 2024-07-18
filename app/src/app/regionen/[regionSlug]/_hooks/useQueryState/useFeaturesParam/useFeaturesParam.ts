@@ -7,6 +7,10 @@ import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtil
 import { searchParamsRegistry } from '../searchParamsRegistry'
 import { UrlFeature } from '../types'
 import { latitude, longitude } from '../utils/zodHelper'
+import { createMemoizer } from '../utils/createMemoizer'
+import { memoize } from 'lodash'
+
+const memoizer = createMemoizer()
 
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
@@ -42,7 +46,7 @@ const Point = [longitude, latitude]
 // @ts-expect-errors - this work
 const QuerySchema = z.union([z.tuple([...Ids, ...Point]), z.tuple([...Ids, ...Point, ...Point])])
 
-export const parseFeaturesParam = (query: string) => {
+export const parseFeaturesParam = memoize((query: string) => {
   return query
     .split(',')
     .map((s) => {
@@ -58,7 +62,7 @@ export const parseFeaturesParam = (query: string) => {
       }
     })
     .filter((p) => p !== null) as unknown as UrlFeature[]
-}
+})
 
 const featuresParamParser = createParser({
   parse: (query): UrlFeature[] => parseFeaturesParam(query),
@@ -70,5 +74,5 @@ export const useFeaturesParam = () => {
     searchParamsRegistry.f,
     featuresParamParser,
   )
-  return { featuresParam, setFeaturesParam }
+  return memoizer({ featuresParam, setFeaturesParam })
 }
