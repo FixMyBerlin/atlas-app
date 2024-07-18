@@ -73,7 +73,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     // Toggels <LoadingIndicator>
     mapDataLoading: false, // ********** DONE **********
     // Data for <Inspector> AND <LayerHighlight>
-    inspectorFeatures: [],
+    inspectorFeatures: [], // ********** DONE **********
     // Data for <Inspector> AND <LayerHighlight>
     calculatorAreasWithFeatures: [],
     // Data for optimistic updates; show verification immediately <LayerHightlight>
@@ -105,6 +105,8 @@ export const useMapStateInteraction = create<Store>((set, get) => {
 
 export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.mapLoaded)
 export const useMapStoreDataLoading = () => useMapStateInteraction((state) => state.mapDataLoading)
+export const useMapStoreInspectorFeatures = () =>
+  useMapStateInteraction((state) => state.inspectorFeatures)
 export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)

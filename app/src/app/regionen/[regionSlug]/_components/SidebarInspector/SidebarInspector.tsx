@@ -9,9 +9,10 @@ import useResizeObserver from 'use-resize-observer'
 import {
   useMapStateInteraction,
   type Store,
-  useMapStoreActions,
   useMapStoreLoaded,
   useMapStoreBounds,
+  useMapStoreActions,
+  useMapStoreInspectorFeatures,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -19,7 +20,7 @@ import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 import { twJoin } from 'tailwind-merge'
 
-type Props = Pick<Store, 'inspectorFeatures' | 'inspectorSize' | 'sidebarLayerControlsSize'> & {
+type Props = Pick<Store, 'inspectorSize' | 'sidebarLayerControlsSize'> & {
   map: MapRef
   selectedFeatures: SelectedFeature[]
 }
@@ -27,10 +28,10 @@ type Props = Pick<Store, 'inspectorFeatures' | 'inspectorSize' | 'sidebarLayerCo
 const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
   const checkBounds = useRef(true)
 
-  const { map, inspectorFeatures, selectedFeatures, inspectorSize, sidebarLayerControlsSize } =
-    props
+  const { map, selectedFeatures, inspectorSize, sidebarLayerControlsSize } = props
 
   const mapLoaded = useMapStoreLoaded()
+  const inspectorFeatures = useMapStoreInspectorFeatures()
   const mapBounds = useMapStoreBounds() // needed to trigger rerendering
 
   const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
@@ -101,7 +102,7 @@ export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 
-  const { inspectorFeatures, inspectorSize, sidebarLayerControlsSize } = useMapStateInteraction()
+  const { inspectorSize, sidebarLayerControlsSize } = useMapStateInteraction()
 
   if (!map) {
     return null
@@ -109,7 +110,6 @@ export const SidebarInspector = () => {
 
   const props: Props = {
     map,
-    inspectorFeatures,
     selectedFeatures,
     inspectorSize,
     sidebarLayerControlsSize,

@@ -4,6 +4,7 @@ import {
   Store,
   useMapStateInteraction,
   useMapStoreLoaded,
+  useMapStoreInspectorFeatures,
 } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   useSelectedFeatures,
@@ -17,14 +18,15 @@ type ParentLayerProps = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
-type MemoProps = Pick<Store, 'inspectorFeatures' | 'calculatorAreasWithFeatures'> & {
+type MemoProps = Pick<Store, 'calculatorAreasWithFeatures'> & {
   selectedFeatures: SelectedFeature[]
 }
 
 const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   props: ParentLayerProps & MemoProps,
 ) {
-  const { inspectorFeatures, calculatorAreasWithFeatures, selectedFeatures, sourceData } = props
+  const { calculatorAreasWithFeatures, selectedFeatures, sourceData } = props
+  const inspectorFeatures = useMapStoreInspectorFeatures()
 
   const mapLoaded = useMapStoreLoaded()
 
@@ -105,13 +107,12 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
 })
 
 export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
-  const { inspectorFeatures, calculatorAreasWithFeatures } = useMapStateInteraction()
+  const { calculatorAreasWithFeatures } = useMapStateInteraction()
 
   const selectedFeatures = useSelectedFeatures()
 
   const props = {
     ...parentLayerProps,
-    inspectorFeatures,
     calculatorAreasWithFeatures,
     selectedFeatures,
   }

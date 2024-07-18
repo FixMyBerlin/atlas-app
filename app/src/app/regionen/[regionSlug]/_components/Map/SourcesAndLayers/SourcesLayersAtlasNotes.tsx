@@ -1,7 +1,9 @@
 import { useQuery } from '@blitzjs/rpc'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  useMapStoreInspectorFeatures
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   useAtlasFilterParam,
   useShowAtlasNotesParam,
@@ -15,7 +17,8 @@ export const SourcesLayersAtlasNotes = () => {
   const { showAtlasNotesParam } = useShowAtlasNotesParam()
   const region = useStaticRegion()!
   const allowAtlasNotes = useAllowAtlasNotes()
-  const { inspectorFeatures } = useMapStateInteraction()
+  const inspectorFeatures = useMapStoreInspectorFeatures()
+
   const { atlasNotesFilterParam } = useAtlasFilterParam()
 
   // For now, we load all notes, but minimized data. We will want to scope this to the viewport later.

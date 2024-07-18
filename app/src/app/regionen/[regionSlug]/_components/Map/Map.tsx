@@ -15,7 +15,7 @@ import {
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import {
-  useMapStateInteraction,
+  useMapStoreInspectorFeatures,
   useMapStoreActions,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
@@ -86,7 +86,7 @@ export const Map = () => {
     setCursorStyle('grab')
   }
 
-  const { inspectorFeatures } = useMapStateInteraction()
+  const inspectorFeatures = useMapStoreInspectorFeatures()
 
   const handleClick = ({ features, ...event }: MapLayerMouseEvent) => {
     if (containMaskFeature(features)) {
