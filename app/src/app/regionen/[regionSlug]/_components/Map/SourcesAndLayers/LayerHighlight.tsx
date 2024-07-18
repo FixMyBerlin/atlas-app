@@ -1,10 +1,9 @@
 import { memo } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import {
-  Store,
-  useMapStateInteraction,
   useMapStoreLoaded,
   useMapStoreInspectorFeatures,
+  useMapStoreCalculatorAreasWithFeatures,
 } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   useSelectedFeatures,
@@ -18,15 +17,17 @@ type ParentLayerProps = {
   sourceData: (typeof sources)[number]
 } & LayerProps
 
-type MemoProps = Pick<Store, 'calculatorAreasWithFeatures'> & {
+type MemoProps = {
   selectedFeatures: SelectedFeature[]
 }
 
 const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   props: ParentLayerProps & MemoProps,
 ) {
-  const { calculatorAreasWithFeatures, selectedFeatures, sourceData } = props
+  const { selectedFeatures, sourceData } = props
+
   const inspectorFeatures = useMapStoreInspectorFeatures()
+  const calculatorAreasWithFeatures = useMapStoreCalculatorAreasWithFeatures()
 
   const mapLoaded = useMapStoreLoaded()
 
@@ -107,13 +108,10 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
 })
 
 export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
-  const { calculatorAreasWithFeatures } = useMapStateInteraction()
-
   const selectedFeatures = useSelectedFeatures()
 
   const props = {
     ...parentLayerProps,
-    calculatorAreasWithFeatures,
     selectedFeatures,
   }
 

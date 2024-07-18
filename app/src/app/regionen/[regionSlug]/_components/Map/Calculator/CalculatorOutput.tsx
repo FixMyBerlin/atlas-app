@@ -1,7 +1,7 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/20/solid'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreCalculatorAreasWithFeatures } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { DrawArea, DrawControlProps } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 
@@ -13,7 +13,7 @@ type Props = {
 
 export const CalculatorOutput = ({ keys: _unused, drawControlRef }: Props) => {
   // <PointCalculator> only sums Point feature. Each point is considere `capacity=1`
-  const { calculatorAreasWithFeatures } = useMapStateInteraction()
+  const calculatorAreasWithFeatures = useMapStoreCalculatorAreasWithFeatures()
   const sums = calculatorAreasWithFeatures.map(({ key, features }) => {
     const onlyTypePoint = features.filter((f) => f.geometry.type === 'Point')
     return [key, onlyTypePoint.length] as const

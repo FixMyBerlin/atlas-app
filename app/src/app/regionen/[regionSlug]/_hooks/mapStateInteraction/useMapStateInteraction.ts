@@ -75,7 +75,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     // Data for <Inspector> AND <LayerHighlight>
     inspectorFeatures: [], // ********** DONE **********
     // Data for <Inspector> AND <LayerHighlight>
-    calculatorAreasWithFeatures: [],
+    calculatorAreasWithFeatures: [], // ********** DONE **********
     // Data for optimistic updates; show verification immediately <LayerHightlight>
     localUpdates: [],
     mapBounds: null, // ********** DONE **********
@@ -107,6 +107,8 @@ export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.m
 export const useMapStoreDataLoading = () => useMapStateInteraction((state) => state.mapDataLoading)
 export const useMapStoreInspectorFeatures = () =>
   useMapStateInteraction((state) => state.inspectorFeatures)
+export const useMapStoreCalculatorAreasWithFeatures = () =>
+  useMapStateInteraction((state) => state.calculatorAreasWithFeatures)
 export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)
