@@ -1,10 +1,7 @@
-import { memo, Suspense, useRef } from 'react'
-import { MapRef, useMap } from 'react-map-gl/maplibre'
+import { Suspense, useRef } from 'react'
+import { useMap } from 'react-map-gl/maplibre'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import {
-  useSelectedFeatures,
-  type SelectedFeature,
-} from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
+import { useSelectedFeatures } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import useResizeObserver from 'use-resize-observer'
 import {
   useMapStoreLoaded,
@@ -20,19 +17,14 @@ import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 import { twJoin } from 'tailwind-merge'
 
-type Props = {
-  map: MapRef
-  selectedFeatures: SelectedFeature[]
-}
-
-const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
+export const SidebarInspector = () => {
   const checkBounds = useRef(true)
 
-  const { map, selectedFeatures } = props
-
+  const { mainMap: map } = useMap()
   const mapLoaded = useMapStoreLoaded()
-  const inspectorFeatures = useMapStoreInspectorFeatures()
   const mapBounds = useMapStoreBounds() // needed to trigger rerendering
+  const inspectorFeatures = useMapStoreInspectorFeatures()
+  const selectedFeatures = useSelectedFeatures()
   const inspectorSize = useMapStoreInspectorSize()
   const sidebarSize = useMapStoreSidebarSize()
 
@@ -98,21 +90,4 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
       </Suspense>
     </div>
   )
-})
-
-export const SidebarInspector = () => {
-  const { mainMap: map } = useMap()
-  const selectedFeatures = useSelectedFeatures()
-
-  if (!map) {
-    return null
-  }
-
-  const props: Props = {
-    map,
-    selectedFeatures,
-  }
-
-  // @ts-ignore - let's keep it simple!
-  return <SidebarInspectorMemoized {...props} />
 }
