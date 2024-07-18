@@ -9,7 +9,7 @@ import {
   NavigationControl,
   type ViewStateChangeEvent,
 } from 'react-map-gl/maplibre'
-import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 import { SourceLayerForRegion } from './SourceLayerForRegion'

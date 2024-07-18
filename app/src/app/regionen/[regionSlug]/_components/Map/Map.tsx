@@ -14,10 +14,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import {
-  useMapStoreInspectorFeatures,
-  useMapStoreActions,
-} from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreInspectorFeatures, useMapStoreActions } from '../../_hooks/mapState/useMapState'
 import {
   convertToUrlFeature,
   useFeaturesParam,

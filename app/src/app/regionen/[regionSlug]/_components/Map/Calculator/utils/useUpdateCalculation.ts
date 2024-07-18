@@ -1,10 +1,7 @@
 import bbox from '@turf/bbox'
 import booleanIntersects from '@turf/boolean-intersects'
 import { useMap } from 'react-map-gl/maplibre'
-import {
-  StoreCalculator,
-  useMapStoreActions,
-} from '../../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreCalculator, useMapStoreActions } from '../../../../_hooks/mapState/useMapState'
 import { MapDataSourceCalculator } from '../../../../_mapData/types'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 

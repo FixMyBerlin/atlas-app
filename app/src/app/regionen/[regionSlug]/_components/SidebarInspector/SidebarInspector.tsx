@@ -10,7 +10,7 @@ import {
   useMapStoreInspectorFeatures,
   useMapStoreInspectorSize,
   useMapStoreSidebarSize,
-} from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+} from '../../_hooks/mapState/useMapState'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
 import { InspectorHeader } from './InspectorHeader'

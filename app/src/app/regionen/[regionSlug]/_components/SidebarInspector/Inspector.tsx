@@ -1,4 +1,4 @@
-import { StoreFeaturesInspector } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreFeaturesInspector } from '../../_hooks/mapState/useMapState'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { extractSourceIdFromStaticDatasetSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'

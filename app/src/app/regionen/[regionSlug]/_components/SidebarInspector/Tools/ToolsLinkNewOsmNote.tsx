@@ -1,7 +1,7 @@
 import { useMap } from 'react-map-gl/maplibre'
 import { buttonStyles } from 'src/app/_components/links/styles'
-import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
-import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { StoreFeaturesInspector } from '../../../_hooks/mapState/useMapState'
+import { useOsmNotesActions } from '../../../_hooks/mapState/userMapNotes'
 import {
   useNewOsmNoteMapParam,
   useShowOsmNotesParam,

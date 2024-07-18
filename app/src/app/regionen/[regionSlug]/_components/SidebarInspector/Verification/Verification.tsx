@@ -5,7 +5,7 @@ import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
-import { useMapStoreLocalUpdates } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreLocalUpdates } from '../../../_hooks/mapState/useMapState'
 import { VerificationForm } from './VerificationForm/VerificationForm'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'

@@ -1,6 +1,6 @@
 import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'

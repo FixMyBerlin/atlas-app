@@ -1,8 +1,5 @@
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
-import {
-  useMapStoreBounds,
-  useMapStoreLoaded,
-} from '../../mapStateInteraction/useMapStateInteraction'
+import { useMapStoreBounds, useMapStoreLoaded } from '../../mapState/useMapState'
 import { UrlFeature } from '../types'
 import { useFeaturesParam } from './useFeaturesParam'
 import { memoize } from 'lodash'

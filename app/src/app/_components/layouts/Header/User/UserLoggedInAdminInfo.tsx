@@ -7,7 +7,7 @@ import {
   mapillaryUrlViewport,
   osmUrlViewport,
 } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapDebugState'
+import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 import { UserLoggedInProp } from './UserLoggedIn'

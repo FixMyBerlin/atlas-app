@@ -4,7 +4,7 @@ import {
   useMapStoreLoaded,
   useMapStoreInspectorFeatures,
   useMapStoreCalculatorAreasWithFeatures,
-} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+} from '../../../_hooks/mapState/useMapState'
 import {
   useSelectedFeatures,
   type SelectedFeature,

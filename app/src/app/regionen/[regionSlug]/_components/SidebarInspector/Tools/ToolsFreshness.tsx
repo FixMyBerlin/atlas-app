@@ -1,6 +1,6 @@
 import { BoltIcon, CheckCircleIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/outline'
 import { quote } from 'src/app/_components/text/Quotes'
-import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreFeaturesInspector } from '../../../_hooks/mapState/useMapState'
 import { MapDataSourceFreshnessConfig } from '../../../_mapData/types'
 
 type Props = {

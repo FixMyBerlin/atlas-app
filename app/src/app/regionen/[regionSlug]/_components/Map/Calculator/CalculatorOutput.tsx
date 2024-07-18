@@ -1,7 +1,7 @@
 import { ArrowRightIcon, TrashIcon } from '@heroicons/react/20/solid'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
-import { useMapStoreCalculatorAreasWithFeatures } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreCalculatorAreasWithFeatures } from '../../../_hooks/mapState/useMapState'
 import { DrawArea, DrawControlProps } from './CalculatorControlsDrawControl'
 import { useDelete } from './hooks/useDelete'
 

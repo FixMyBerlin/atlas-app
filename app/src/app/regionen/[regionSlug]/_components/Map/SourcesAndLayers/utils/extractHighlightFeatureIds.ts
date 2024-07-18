@@ -1,8 +1,5 @@
 import { MapboxGeoJSONFeature } from 'mapbox-gl'
-import {
-  StoreCalculator,
-  StoreFeaturesInspector,
-} from '../../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreCalculator, StoreFeaturesInspector } from '../../../../_hooks/mapState/useMapState'
 
 export const extractHighlightFeatureIds = (
   features:

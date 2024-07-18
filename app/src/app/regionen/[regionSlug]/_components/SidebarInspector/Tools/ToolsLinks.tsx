@@ -4,7 +4,7 @@ import {
   MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
 } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { StoreFeaturesInspector } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { StoreFeaturesInspector } from '../../../_hooks/mapState/useMapState'
 import { ToolsLinkNewOsmNote } from './ToolsLinkNewOsmNote'
 import { editorUrl } from './osmUrls/editorUrl'
 import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'

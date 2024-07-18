@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@head
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { useMapStoreActions } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreActions } from '../../../_hooks/mapState/useMapState'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { SubcategoriesCheckbox } from '../Subcategories/SubcategoriesCheckbox'
 import { SubcategoriesDropdown } from '../Subcategories/SubcategoriesDropdown'

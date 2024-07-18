@@ -64,7 +64,7 @@ function setIfChanged(get, set, name, value) {
   set({ [name]: value })
 }
 
-export const useMapStateInteraction = create<Store>((set, get) => {
+export const useMapState = create<Store>((set, get) => {
   return {
     // Guards againt errors when using `mainMap?.getStyle`
     mapLoaded: false,
@@ -101,15 +101,14 @@ export const useMapStateInteraction = create<Store>((set, get) => {
   }
 })
 
-export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.mapLoaded)
-export const useMapStoreDataLoading = () => useMapStateInteraction((state) => state.mapDataLoading)
-export const useMapStoreInspectorFeatures = () =>
-  useMapStateInteraction((state) => state.inspectorFeatures)
+export const useMapStoreLoaded = () => useMapState((state) => state.mapLoaded)
+export const useMapStoreDataLoading = () => useMapState((state) => state.mapDataLoading)
+export const useMapStoreInspectorFeatures = () => useMapState((state) => state.inspectorFeatures)
 export const useMapStoreCalculatorAreasWithFeatures = () =>
-  useMapStateInteraction((state) => state.calculatorAreasWithFeatures)
-export const useMapStoreLocalUpdates = () => useMapStateInteraction((state) => state.localUpdates)
-export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
-export const useMapStoreInspectorSize = () => useMapStateInteraction((state) => state.inspectorSize)
-export const useMapStoreSidebarSize = () => useMapStateInteraction((state) => state.sidebarSize)
+  useMapState((state) => state.calculatorAreasWithFeatures)
+export const useMapStoreLocalUpdates = () => useMapState((state) => state.localUpdates)
+export const useMapStoreBounds = () => useMapState((state) => state.mapBounds)
+export const useMapStoreInspectorSize = () => useMapState((state) => state.inspectorSize)
+export const useMapStoreSidebarSize = () => useMapState((state) => state.sidebarSize)
 
-export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)
+export const useMapStoreActions = () => useMapState((state) => state.actions)

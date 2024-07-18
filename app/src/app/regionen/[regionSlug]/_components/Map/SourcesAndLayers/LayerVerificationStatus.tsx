@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { useMapStoreLocalUpdates } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreLocalUpdates } from '../../../_hooks/mapState/useMapState'
 
 let errorLogged = false
 

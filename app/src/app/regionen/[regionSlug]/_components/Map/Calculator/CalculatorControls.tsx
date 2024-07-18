@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
-import { useMapStoreLoaded } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreLoaded } from '../../../_hooks/mapState/useMapState'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   CalculatorControlsDrawControl,

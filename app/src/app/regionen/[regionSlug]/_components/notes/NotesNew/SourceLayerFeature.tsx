@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf'
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
+import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 
 export const SourceLayerFeature = () => {
   const osmNewNoteFeature = useOsmNewNoteFeature()
