@@ -5,7 +5,7 @@ import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import { appBaseUrl } from 'src/app/_components/utils/appBaseUrl.const'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreBounds } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
 import { useOsmNewNoteFeature } from '../../../_hooks/mapStateInteraction/userMapNotes'
 import { osmTypeIdString, osmUrl } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
 import { useRegion } from '../../regionUtils/useRegion'
@@ -15,7 +15,7 @@ import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsm
 export const OsmNotesNewForm = () => {
   const session = useSession()
   const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
-  const { mapBounds } = useMapStateInteraction()
+  const mapBounds = useMapStoreBounds()
   const osmNewNoteFeature = useOsmNewNoteFeature()
 
   const queryClient = useQueryClient()

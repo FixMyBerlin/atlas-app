@@ -11,6 +11,7 @@ import {
   type Store,
   useMapStoreActions,
   useMapStoreLoaded,
+  useMapStoreBounds,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -18,10 +19,7 @@ import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 import { twJoin } from 'tailwind-merge'
 
-type Props = Pick<
-  Store,
-  'mapBounds' | 'inspectorFeatures' | 'inspectorSize' | 'sidebarLayerControlsSize'
-> & {
+type Props = Pick<Store, 'inspectorFeatures' | 'inspectorSize' | 'sidebarLayerControlsSize'> & {
   map: MapRef
   selectedFeatures: SelectedFeature[]
 }
@@ -29,16 +27,12 @@ type Props = Pick<
 const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
   const checkBounds = useRef(true)
 
-  const {
-    map,
-    mapBounds, // needed to trigger rerendering
-    inspectorFeatures,
-    selectedFeatures,
-    inspectorSize,
-    sidebarLayerControlsSize,
-  } = props
+  const { map, inspectorFeatures, selectedFeatures, inspectorSize, sidebarLayerControlsSize } =
+    props
 
   const mapLoaded = useMapStoreLoaded()
+  const mapBounds = useMapStoreBounds() // needed to trigger rerendering
+
   const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
@@ -107,8 +101,7 @@ export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 
-  const { mapBounds, inspectorFeatures, inspectorSize, sidebarLayerControlsSize } =
-    useMapStateInteraction()
+  const { inspectorFeatures, inspectorSize, sidebarLayerControlsSize } = useMapStateInteraction()
 
   if (!map) {
     return null
@@ -116,7 +109,6 @@ export const SidebarInspector = () => {
 
   const props: Props = {
     map,
-    mapBounds,
     inspectorFeatures,
     selectedFeatures,
     inspectorSize,

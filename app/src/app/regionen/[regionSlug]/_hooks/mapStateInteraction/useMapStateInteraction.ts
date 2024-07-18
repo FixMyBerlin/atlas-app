@@ -78,7 +78,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     calculatorAreasWithFeatures: [],
     // Data for optimistic updates; show verification immediately <LayerHightlight>
     localUpdates: [],
-    mapBounds: null,
+    mapBounds: null, // ********** DONE **********
     inspectorSize: { width: 0, height: 0 },
     sidebarLayerControlsSize: { width: 0, height: 0 },
     actions: {
@@ -104,5 +104,6 @@ export const useMapStateInteraction = create<Store>((set, get) => {
 })
 
 export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.mapLoaded)
+export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)
