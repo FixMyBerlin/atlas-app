@@ -1,7 +1,7 @@
 import { useQuery } from '@blitzjs/rpc'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
-import { useMapStoreInspectorFeatures } from '../../../_hooks/mapState/useMapState'
+import { useMapInspectorFeatures } from '../../../_hooks/mapState/useMapState'
 import {
   useAtlasFilterParam,
   useShowAtlasNotesParam,
@@ -15,7 +15,7 @@ export const SourcesLayersAtlasNotes = () => {
   const { showAtlasNotesParam } = useShowAtlasNotesParam()
   const region = useStaticRegion()!
   const allowAtlasNotes = useAllowAtlasNotes()
-  const inspectorFeatures = useMapStoreInspectorFeatures()
+  const inspectorFeatures = useMapInspectorFeatures()
 
   const { atlasNotesFilterParam } = useAtlasFilterParam()
 

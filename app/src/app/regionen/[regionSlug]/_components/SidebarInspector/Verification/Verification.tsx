@@ -5,7 +5,7 @@ import getBikelaneVerificationsByOsmId from 'src/bikelane-verifications/queries/
 import { TVerificationStatus } from 'src/bikelane-verifications/schemas'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
-import { useMapStoreLocalUpdates } from '../../../_hooks/mapState/useMapState'
+import { useMapLocalUpdates } from '../../../_hooks/mapState/useMapState'
 import { VerificationForm } from './VerificationForm/VerificationForm'
 import { VerificationHistory } from './VerificationHistory/VerificationHistory'
 import { VerificationStatus } from './VerificationStatus/VerificationStatus'
@@ -17,7 +17,7 @@ type Props = {
 }
 
 export const Verification: React.FC<Props> = ({ properties, sourceId }) => {
-  const localUpdates = useMapStoreLocalUpdates()
+  const localUpdates = useMapLocalUpdates()
   const sourceData = getSourceData(sourceId)
   const hasPermissions = useHasPermissions()
 

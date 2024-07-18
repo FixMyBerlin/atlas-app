@@ -101,14 +101,14 @@ export const useMapState = create<Store>((set, get) => {
   }
 })
 
-export const useMapStoreLoaded = () => useMapState((state) => state.mapLoaded)
-export const useMapStoreDataLoading = () => useMapState((state) => state.mapDataLoading)
-export const useMapStoreInspectorFeatures = () => useMapState((state) => state.inspectorFeatures)
-export const useMapStoreCalculatorAreasWithFeatures = () =>
+export const useMapLoaded = () => useMapState((state) => state.mapLoaded)
+export const useMapDataLoading = () => useMapState((state) => state.mapDataLoading)
+export const useMapInspectorFeatures = () => useMapState((state) => state.inspectorFeatures)
+export const useMapCalculatorAreasWithFeatures = () =>
   useMapState((state) => state.calculatorAreasWithFeatures)
-export const useMapStoreLocalUpdates = () => useMapState((state) => state.localUpdates)
-export const useMapStoreBounds = () => useMapState((state) => state.mapBounds)
-export const useMapStoreInspectorSize = () => useMapState((state) => state.inspectorSize)
-export const useMapStoreSidebarSize = () => useMapState((state) => state.sidebarSize)
+export const useMapLocalUpdates = () => useMapState((state) => state.localUpdates)
+export const useMapBounds = () => useMapState((state) => state.mapBounds)
+export const useMapInspectorSize = () => useMapState((state) => state.inspectorSize)
+export const useMapSidebarSize = () => useMapState((state) => state.sidebarSize)
 
-export const useMapStoreActions = () => useMapState((state) => state.actions)
+export const useMapActions = () => useMapState((state) => state.actions)

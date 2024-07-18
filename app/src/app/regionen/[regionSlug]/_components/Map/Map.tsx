@@ -14,7 +14,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapStoreInspectorFeatures, useMapStoreActions } from '../../_hooks/mapState/useMapState'
+import { useMapInspectorFeatures, useMapActions } from '../../_hooks/mapState/useMapState'
 import {
   convertToUrlFeature,
   useFeaturesParam,
@@ -43,7 +43,7 @@ export const Map = () => {
     setMapLoaded,
     setMapDataLoading,
     setMapBounds,
-  } = useMapStoreActions()
+  } = useMapActions()
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
 
@@ -83,7 +83,7 @@ export const Map = () => {
     setCursorStyle('grab')
   }
 
-  const inspectorFeatures = useMapStoreInspectorFeatures()
+  const inspectorFeatures = useMapInspectorFeatures()
 
   const handleClick = ({ features, ...event }: MapLayerMouseEvent) => {
     if (containMaskFeature(features)) {

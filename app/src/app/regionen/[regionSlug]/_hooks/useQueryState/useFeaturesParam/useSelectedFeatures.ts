@@ -1,5 +1,5 @@
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
-import { useMapStoreBounds, useMapStoreLoaded } from '../../mapState/useMapState'
+import { useMapBounds, useMapLoaded } from '../../mapState/useMapState'
 import { UrlFeature } from '../types'
 import { useFeaturesParam } from './useFeaturesParam'
 import { memoize } from 'lodash'
@@ -20,8 +20,8 @@ export type SelectedFeature = ReturnType<typeof useSelectedFeatures>[number]
 
 export const useSelectedFeatures = () => {
   const { mainMap: map } = useMap()
-  const mapLoaded = useMapStoreLoaded()
-  const mapBounds = useMapStoreBounds()
+  const mapLoaded = useMapLoaded()
+  const mapBounds = useMapBounds()
   const { featuresParam } = useFeaturesParam()
 
   if (!map || !mapLoaded || !mapBounds || !featuresParam) return emptyArray

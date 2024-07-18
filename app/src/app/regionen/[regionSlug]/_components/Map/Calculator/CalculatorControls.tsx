@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
-import { useMapStoreLoaded } from '../../../_hooks/mapState/useMapState'
+import { useMapLoaded } from '../../../_hooks/mapState/useMapState'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {
   CalculatorControlsDrawControl,
@@ -18,7 +18,7 @@ type Props = {
 
 export const CalculatorControls = ({ queryLayers, drawControlRef }: Props) => {
   const { drawParam } = useDrawParam()
-  const mapLoaded = useMapStoreLoaded()
+  const mapLoaded = useMapLoaded()
   const { updateCalculation } = useUpdateCalculation()
 
   // Update the URL, extracted as hook

@@ -1,9 +1,9 @@
 import { memo } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import {
-  useMapStoreLoaded,
-  useMapStoreInspectorFeatures,
-  useMapStoreCalculatorAreasWithFeatures,
+  useMapLoaded,
+  useMapInspectorFeatures,
+  useMapCalculatorAreasWithFeatures,
 } from '../../../_hooks/mapState/useMapState'
 import {
   useSelectedFeatures,
@@ -26,10 +26,10 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
 ) {
   const { selectedFeatures, sourceData } = props
 
-  const inspectorFeatures = useMapStoreInspectorFeatures()
-  const calculatorAreasWithFeatures = useMapStoreCalculatorAreasWithFeatures()
+  const inspectorFeatures = useMapInspectorFeatures()
+  const calculatorAreasWithFeatures = useMapCalculatorAreasWithFeatures()
 
-  const mapLoaded = useMapStoreLoaded()
+  const mapLoaded = useMapLoaded()
 
   const features = inspectorFeatures.length
     ? inspectorFeatures

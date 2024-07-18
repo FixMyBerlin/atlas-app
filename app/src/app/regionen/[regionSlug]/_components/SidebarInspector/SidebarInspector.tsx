@@ -4,12 +4,12 @@ import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { useSelectedFeatures } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import useResizeObserver from 'use-resize-observer'
 import {
-  useMapStoreLoaded,
-  useMapStoreBounds,
-  useMapStoreActions,
-  useMapStoreInspectorFeatures,
-  useMapStoreInspectorSize,
-  useMapStoreSidebarSize,
+  useMapLoaded,
+  useMapBounds,
+  useMapActions,
+  useMapInspectorFeatures,
+  useMapInspectorSize,
+  useMapSidebarSize,
 } from '../../_hooks/mapState/useMapState'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -21,14 +21,14 @@ export const SidebarInspector = () => {
   const checkBounds = useRef(true)
 
   const { mainMap: map } = useMap()
-  const mapLoaded = useMapStoreLoaded()
-  const mapBounds = useMapStoreBounds() // needed to trigger rerendering
-  const inspectorFeatures = useMapStoreInspectorFeatures()
+  const mapLoaded = useMapLoaded()
+  const mapBounds = useMapBounds() // needed to trigger rerendering
+  const inspectorFeatures = useMapInspectorFeatures()
   const selectedFeatures = useSelectedFeatures()
-  const inspectorSize = useMapStoreInspectorSize()
-  const sidebarSize = useMapStoreSidebarSize()
+  const inspectorSize = useMapInspectorSize()
+  const sidebarSize = useMapSidebarSize()
 
-  const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
+  const { resetInspectorFeatures, setInspectorSize } = useMapActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',

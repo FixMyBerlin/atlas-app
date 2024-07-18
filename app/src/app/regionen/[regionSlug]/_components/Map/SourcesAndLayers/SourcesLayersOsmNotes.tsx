@@ -1,5 +1,5 @@
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useMapStoreInspectorFeatures } from '../../../_hooks/mapState/useMapState'
+import { useMapInspectorFeatures } from '../../../_hooks/mapState/useMapState'
 import { useOsmNotesFeatures } from '../../../_hooks/mapState/userMapNotes'
 import { useShowOsmNotesParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 
@@ -7,7 +7,7 @@ export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes = () => {
   const { showOsmNotesParam } = useShowOsmNotesParam()
-  const inspectorFeatures = useMapStoreInspectorFeatures()
+  const inspectorFeatures = useMapInspectorFeatures()
 
   const osmNotesFeatures = useOsmNotesFeatures()
 

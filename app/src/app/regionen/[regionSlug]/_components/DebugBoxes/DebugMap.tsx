@@ -4,7 +4,7 @@ import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl, isDevTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
 import { useMapDebugState } from '../../_hooks/mapState/useMapDebugState'
-import { useMapStoreLoaded } from '../../_hooks/mapState/useMapState'
+import { useMapLoaded } from '../../_hooks/mapState/useMapState'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { DebugMapDownload } from './DebugMapDownload'
 
@@ -18,7 +18,7 @@ export const DebugMap = () => {
     setUseDebugCachelessTiles,
   } = useMapDebugState()
   const { mainMap } = useMap()
-  const mapLoaded = useMapStoreLoaded()
+  const mapLoaded = useMapLoaded()
   const [_triggerRerender, setTriggerRerender] = useState(0)
   const [layerFilter, setLayerFilter] = useState('')
 
