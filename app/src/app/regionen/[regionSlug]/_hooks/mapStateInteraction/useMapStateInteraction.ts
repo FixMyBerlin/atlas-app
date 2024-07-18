@@ -69,7 +69,7 @@ function setIfChanged(get, set, name, value) {
 export const useMapStateInteraction = create<Store>((set, get) => {
   return {
     // Guards againt errors when using `mainMap?.getStyle`
-    mapLoaded: false,
+    mapLoaded: false, // ********** DONE **********
     // Toggels <LoadingIndicator>
     mapDataLoading: false,
     // Data for <Inspector> AND <LayerHighlight>
@@ -102,5 +102,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     },
   }
 })
+
+export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.mapLoaded)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)

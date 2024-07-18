@@ -2,13 +2,13 @@ import { featureCollection } from '@turf/helpers'
 import { LayerSpecification } from 'maplibre-gl'
 import React from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreLoaded } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
 
 type Props = { layers: LayerSpecification[] }
 
 export const DebugMapDownload: React.FC<Props> = ({ layers }) => {
   const { mainMap } = useMap()
-  const { mapLoaded } = useMapStateInteraction()
+  const mapLoaded = useMapStoreLoaded()
   if (!mapLoaded || !mainMap) return null
 
   const dateTody = new Date().toISOString().split('T')[0]

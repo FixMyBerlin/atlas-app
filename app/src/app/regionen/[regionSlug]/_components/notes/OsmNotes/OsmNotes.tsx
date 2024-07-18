@@ -1,7 +1,10 @@
 import { ErrorBoundary } from '@blitzjs/next'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  useMapStateInteraction,
+  useMapStoreLoaded,
+} from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useOsmNotesActions } from '../../../_hooks/mapStateInteraction/userMapNotes'
 import {
   useNewOsmNoteMapParam,
@@ -29,7 +32,8 @@ export const OsmNotes = () => {
 }
 
 const OsmNotesWrappedInQUeryClientProvider = () => {
-  const { mapLoaded, mapBounds } = useMapStateInteraction()
+  const { mapBounds } = useMapStateInteraction()
+  const mapLoaded = useMapStoreLoaded()
   const { setOsmNotesFeatures } = useOsmNotesActions()
   const { showOsmNotesParam } = useShowOsmNotesParam()
   const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
