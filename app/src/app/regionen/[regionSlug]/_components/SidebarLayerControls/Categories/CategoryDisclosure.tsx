@@ -2,7 +2,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@head
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapActions } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { SubcategoriesCheckbox } from '../Subcategories/SubcategoriesCheckbox'
 import { SubcategoriesDropdown } from '../Subcategories/SubcategoriesDropdown'
@@ -11,7 +11,7 @@ import { CategoryHeadlineToggle } from './CategoryHeadlineToggle'
 type Props = { categoryConfig: MapDataCategoryConfig; active: boolean }
 
 export const CategoryDisclosure = ({ categoryConfig: currCategoryConfig, active }: Props) => {
-  const { resetInspectorFeatures } = useMapStateInteraction()
+  const { resetInspectorFeatures } = useMapActions()
   const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
 
   const selectCategory = (categoryId: string) => {

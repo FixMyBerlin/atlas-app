@@ -9,6 +9,7 @@ import useResizeObserver from 'use-resize-observer'
 import {
   useMapStateInteraction,
   type Store,
+  useMapActions,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -18,13 +19,7 @@ import { twJoin } from 'tailwind-merge'
 
 type Props = Pick<
   Store,
-  | 'mapLoaded'
-  | 'mapBounds'
-  | 'inspectorFeatures'
-  | 'resetInspectorFeatures'
-  | 'setInspectorSize'
-  | 'inspectorSize'
-  | 'sidebarLayerControlsSize'
+  'mapLoaded' | 'mapBounds' | 'inspectorFeatures' | 'inspectorSize' | 'sidebarLayerControlsSize'
 > & {
   map: MapRef
   selectedFeatures: SelectedFeature[]
@@ -39,10 +34,11 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
     mapBounds, // needed to trigger rerendering
     inspectorFeatures,
     selectedFeatures,
-    setInspectorSize,
     inspectorSize,
     sidebarLayerControlsSize,
   } = props
+
+  const { resetInspectorFeatures, setInspectorSize } = useMapActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',
@@ -82,7 +78,6 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
   )
 
   const { setFeaturesParam } = useFeaturesParam()
-  const { resetInspectorFeatures } = props
   const handleClose = () => {
     setFeaturesParam(null)
     resetInspectorFeatures()
@@ -111,15 +106,8 @@ export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 
-  const {
-    mapLoaded,
-    mapBounds,
-    inspectorFeatures,
-    resetInspectorFeatures,
-    setInspectorSize,
-    inspectorSize,
-    sidebarLayerControlsSize,
-  } = useMapStateInteraction()
+  const { mapLoaded, mapBounds, inspectorFeatures, inspectorSize, sidebarLayerControlsSize } =
+    useMapStateInteraction()
 
   if (!map) {
     return null
@@ -130,9 +118,7 @@ export const SidebarInspector = () => {
     mapLoaded,
     mapBounds,
     inspectorFeatures,
-    resetInspectorFeatures,
     selectedFeatures,
-    setInspectorSize,
     inspectorSize,
     sidebarLayerControlsSize,
   }

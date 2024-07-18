@@ -3,14 +3,14 @@ import booleanIntersects from '@turf/boolean-intersects'
 import { useMap } from 'react-map-gl/maplibre'
 import {
   StoreCalculator,
-  useMapStateInteraction,
+  useMapActions,
 } from '../../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { MapDataSourceCalculator } from '../../../../_mapData/types'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 
 export const useUpdateCalculation = () => {
   const { mainMap } = useMap()
-  const { setCalculatorAreasWithFeatures } = useMapStateInteraction()
+  const { setCalculatorAreasWithFeatures } = useMapActions()
 
   // We store the Calculator Shapes as URL State `draw`
   // and read from there to do the calculation

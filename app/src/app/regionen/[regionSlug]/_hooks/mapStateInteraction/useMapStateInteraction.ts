@@ -5,38 +5,31 @@ import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
-
 export type Store = StoreMapLoadedState &
   StoreMapDataLoadingState &
   StoreFeaturesInspector &
   StoreCalculator &
   StoreLocalUpdates &
-  StoreSizes
+  StoreSizes &
+  Actions
 
 type StoreMapLoadedState = {
   mapLoaded: boolean
-  setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
 }
 
 type StoreMapDataLoadingState = {
   mapDataLoading: boolean
-  setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
 }
 
 type StoreSizes = {
   mapBounds: LngLatBounds | null
-  setMapBounds: (mapBounds: Store['mapBounds']) => void
   inspectorSize: { width: number; height: number }
-  setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
   sidebarLayerControlsSize: { width: number; height: number }
-  setSidebarLayerControlsSize: (sidebarLayerControlsSize: Store['sidebarLayerControlsSize']) => void
 }
 
 export type StoreFeaturesInspector = {
   // https://visgl.github.io/react-map-gl/docs/api-reference/types#mapgeojsonfeature
   inspectorFeatures: MapGeoJSONFeature[]
-  setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
-  resetInspectorFeatures: () => void
 }
 
 export type StoreCalculator = {
@@ -44,14 +37,28 @@ export type StoreCalculator = {
     key: string
     features: MapGeoJSONFeature[]
   }[]
-  setCalculatorAreasWithFeatures: (
-    calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures'],
-  ) => void
 }
 
 type StoreLocalUpdates = {
   localUpdates: Omit<TCreateVerificationSchema, 'id'>[]
-  addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
+}
+
+type Actions = {
+  actions: {
+    setMapLoaded: (mapLoaded: Store['mapLoaded']) => void
+    setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
+    setMapBounds: (mapBounds: Store['mapBounds']) => void
+    setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
+    setSidebarLayerControlsSize: (
+      sidebarLayerControlsSize: Store['sidebarLayerControlsSize'],
+    ) => void
+    setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
+    resetInspectorFeatures: () => void
+    setCalculatorAreasWithFeatures: (
+      calculatorAreasWithFeatures: Store['calculatorAreasWithFeatures'],
+    ) => void
+    addLocalUpdate: (id: Omit<TCreateVerificationSchema, 'id'>) => void
+  }
 }
 
 function setIfChanged(get, set, name, value) {
@@ -63,40 +70,37 @@ export const useMapStateInteraction = create<Store>((set, get) => {
   return {
     // Guards againt errors when using `mainMap?.getStyle`
     mapLoaded: false,
-    setMapLoaded: (mapLoaded) => set({ mapLoaded }),
-
     // Toggels <LoadingIndicator>
     mapDataLoading: false,
-    setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
-
     // Data for <Inspector> AND <LayerHighlight>
     inspectorFeatures: [],
-    setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
-    resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
-
     // Data for <Inspector> AND <LayerHighlight>
     calculatorAreasWithFeatures: [],
-    setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
-      set({ calculatorAreasWithFeatures }),
-
     // Data for optimistic updates; show verification immediately <LayerHightlight>
     localUpdates: [],
-    addLocalUpdate: (update) => {
-      const { localUpdates } = get()
-      set({
-        localUpdates: [...localUpdates, update],
-      })
-    },
-
     mapBounds: null,
-    setMapBounds: (bounds) => set({ mapBounds: bounds }),
-
     inspectorSize: { width: 0, height: 0 },
-    setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
-
     sidebarLayerControlsSize: { width: 0, height: 0 },
-    setSidebarLayerControlsSize: (size) => {
-      setIfChanged(get, set, 'sidebarLayerControlsSize', size)
+    actions: {
+      setMapLoaded: (mapLoaded) => set({ mapLoaded }),
+      setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
+      setInspectorFeatures: (inspectorFeatures) => set({ inspectorFeatures }),
+      resetInspectorFeatures: () => set({ inspectorFeatures: [] }),
+      setCalculatorAreasWithFeatures: (calculatorAreasWithFeatures) =>
+        set({ calculatorAreasWithFeatures }),
+      addLocalUpdate: (update) => {
+        const { localUpdates } = get()
+        set({
+          localUpdates: [...localUpdates, update],
+        })
+      },
+      setMapBounds: (bounds) => set({ mapBounds: bounds }),
+      setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
+      setSidebarLayerControlsSize: (size) => {
+        setIfChanged(get, set, 'sidebarLayerControlsSize', size)
+      },
     },
   }
 })
+
+export const useMapActions = () => useMapStateInteraction((state) => state.actions)

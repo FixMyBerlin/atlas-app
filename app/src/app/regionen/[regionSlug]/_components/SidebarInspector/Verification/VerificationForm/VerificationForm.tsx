@@ -4,7 +4,7 @@ import { Suspense } from 'react'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import Form, { FORM_ERROR } from 'src/app/_components/forms/Form'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapActions } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
 import createBikelaneVerification from 'src/bikelane-verifications/mutations/createBikelaneVerification'
 import {
   FormVerificationSchema,
@@ -32,7 +32,7 @@ export function VerificationFormWithQuery({
 
   // Reminder: We cannot use useForm() here. Instead we need to use useFormContext() from a child component of <Form>
 
-  const { addLocalUpdate } = useMapStateInteraction()
+  const { addLocalUpdate } = useMapActions()
   const handleSubmit = async (values) => {
     try {
       invariant(user)

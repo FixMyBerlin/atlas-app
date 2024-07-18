@@ -14,7 +14,10 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import {
+  useMapStateInteraction,
+  useMapActions,
+} from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   convertToUrlFeature,
   useFeaturesParam,
@@ -43,7 +46,7 @@ export const Map = () => {
     setMapLoaded,
     setMapDataLoading,
     setMapBounds,
-  } = useMapStateInteraction()
+  } = useMapActions()
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
 

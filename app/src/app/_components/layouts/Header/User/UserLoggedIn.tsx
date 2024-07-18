@@ -6,7 +6,7 @@ import { Fragment } from 'react'
 import { Link } from 'src/app/_components/links/Link'
 import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { useMapStateInteraction } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapActions } from 'src/app/regionen/[regionSlug]/_hooks/mapStateInteraction/useMapStateInteraction'
 import logout from 'src/auth/mutations/logout'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 import { CurrentUser } from 'src/users/queries/getCurrentUser'
@@ -19,7 +19,7 @@ export type UserLoggedInProp = {
 
 export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
   const [logoutMutation] = useMutation(logout)
-  const { resetInspectorFeatures } = useMapStateInteraction()
+  const { resetInspectorFeatures } = useMapActions()
 
   const isRegionsPage = Boolean(useRegionSlug())
   const hasPermissions = useHasPermissions()
