@@ -1,11 +1,11 @@
 import React from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import { useMapStateInteraction } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreLocalUpdates } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 
 let errorLogged = false
 
 export const LayerVerificationStatus = (parentLayerProps: LayerProps) => {
-  const { localUpdates } = useMapStateInteraction()
+  const localUpdates = useMapStoreLocalUpdates()
 
   const props = {
     ...parentLayerProps,
