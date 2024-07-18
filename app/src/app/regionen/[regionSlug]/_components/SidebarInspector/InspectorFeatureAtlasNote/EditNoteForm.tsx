@@ -11,7 +11,7 @@ import deleteNote from 'src/notes/mutations/deleteNote'
 import updateNote from 'src/notes/mutations/updateNote'
 import getNoteAndComments, { NoteAndComments } from 'src/notes/queries/getNoteAndComments'
 import { twJoin, twMerge } from 'tailwind-merge'
-import { useMapActions } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreActions } from '../../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { SvgNotesCheckmark } from '../icons/SvgNotesCheckmark'
@@ -22,7 +22,7 @@ type Props = { note: NoteAndComments }
 
 export const EditNoteForm = ({ note }: Props) => {
   const [updateNoteMutation, { isLoading, error }] = useMutation(updateNote)
-  const { resetInspectorFeatures } = useMapActions()
+  const { resetInspectorFeatures } = useMapStoreActions()
   const [deleteNoteMutation] = useMutation(deleteNote)
   const [open, setOpen] = useState(false)
   const [formResolved, setFormResolved] = useState(note.resolvedAt !== null)

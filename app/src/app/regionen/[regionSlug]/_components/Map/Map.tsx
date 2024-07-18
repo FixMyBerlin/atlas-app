@@ -16,7 +16,7 @@ import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import {
   useMapStateInteraction,
-  useMapActions,
+  useMapStoreActions,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import {
   convertToUrlFeature,
@@ -46,7 +46,7 @@ export const Map = () => {
     setMapLoaded,
     setMapDataLoading,
     setMapBounds,
-  } = useMapActions()
+  } = useMapStoreActions()
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
 

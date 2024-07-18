@@ -9,7 +9,7 @@ import useResizeObserver from 'use-resize-observer'
 import {
   useMapStateInteraction,
   type Store,
-  useMapActions,
+  useMapStoreActions,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -38,7 +38,7 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
     sidebarLayerControlsSize,
   } = props
 
-  const { resetInspectorFeatures, setInspectorSize } = useMapActions()
+  const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',

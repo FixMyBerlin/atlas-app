@@ -4,7 +4,7 @@ import { Fragment, Suspense, useEffect, useState } from 'react'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { twJoin } from 'tailwind-merge'
 import useResizeObserver from 'use-resize-observer'
-import { useMapActions } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreActions } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Categories } from './Categories/Categories'
 import { StaticDatasetCategories } from './StaticDatasets/StaticDatasetCategories'
 import { useBreakpoint } from '../utils/useBreakpoint'
@@ -24,7 +24,7 @@ const SidebarLayerControlsChildren = () => {
 
 export const SidebarLayerControls = () => {
   const isSmBreakpointOrAbove = useBreakpoint('sm')
-  const { setSidebarLayerControlsSize } = useMapActions()
+  const { setSidebarLayerControlsSize } = useMapStoreActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',

@@ -103,4 +103,4 @@ export const useMapStateInteraction = create<Store>((set, get) => {
   }
 })
 
-export const useMapActions = () => useMapStateInteraction((state) => state.actions)
+export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)
