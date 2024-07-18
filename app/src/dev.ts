@@ -37,3 +37,24 @@ export function createLogger(prefix: string) {
 }
 
 export const logMemo = memoize(console.log, (...args) => JSON.stringify(args))
+
+export function logColor(msg, color) {
+  console.log('%c' + msg, 'color:' + color + ';font-weight:bold;')
+}
+
+export function compareValuesBetweenRenders(
+  info: string,
+  values: Record<string, any>,
+  ref: React.MutableRefObject<{}>,
+  logChange: boolean,
+) {
+  Object.entries(values).forEach(([k, v]) => {
+    const changed = v !== ref[k]
+    console.log('COMPARE', info, k, changed ? 'CHANGED' : '')
+    if (logChange && changed) {
+      console.log(`  previous ${k}:`, ref[k])
+      console.log(`  current  ${k}:`, v)
+    }
+    ref[k] = v
+  })
+}
