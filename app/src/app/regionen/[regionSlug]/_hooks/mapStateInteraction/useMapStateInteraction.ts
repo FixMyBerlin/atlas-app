@@ -67,18 +67,18 @@ function setIfChanged(get, set, name, value) {
 export const useMapStateInteraction = create<Store>((set, get) => {
   return {
     // Guards againt errors when using `mainMap?.getStyle`
-    mapLoaded: false, // ********** DONE **********
+    mapLoaded: false,
     // Toggels <LoadingIndicator>
-    mapDataLoading: false, // ********** DONE **********
+    mapDataLoading: false,
     // Data for <Inspector> AND <LayerHighlight>
-    inspectorFeatures: [], // ********** DONE **********
+    inspectorFeatures: [],
     // Data for <Inspector> AND <LayerHighlight>
-    calculatorAreasWithFeatures: [], // ********** DONE **********
+    calculatorAreasWithFeatures: [],
     // Data for optimistic updates; show verification immediately <LayerHightlight>
-    localUpdates: [], // ********** DONE **********
-    mapBounds: null, // ********** DONE **********
-    inspectorSize: { width: 0, height: 0 }, // ********** DONE **********
-    sidebarSize: { width: 0, height: 0 }, // ********** DONE **********
+    localUpdates: [],
+    mapBounds: null,
+    inspectorSize: { width: 0, height: 0 },
+    sidebarSize: { width: 0, height: 0 },
     actions: {
       setMapLoaded: (mapLoaded) => set({ mapLoaded }),
       setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
