@@ -1,36 +1,33 @@
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
 import {
-  Store,
   useMapStoreBounds,
   useMapStoreLoaded,
 } from '../../mapStateInteraction/useMapStateInteraction'
 import { UrlFeature } from '../types'
 import { useFeaturesParam } from './useFeaturesParam'
+import { memoize } from 'lodash'
 
 type Result = {
   urlFeature: UrlFeature
   mapFeature: MapGeoJSONFeature | undefined
 }
 
-// State variables
-let prevMapLoaded = false
-let prevMapBounds: Store['mapBounds'] = null
-let prevResult: Result[] = []
+const emptyArray: Result[] = []
+
+const memoized = memoize(
+  (result) => result,
+  (result) => JSON.stringify(result.map((f) => [f.urlFeature, !!f.mapFeature])),
+)
 
 export type SelectedFeature = ReturnType<typeof useSelectedFeatures>[number]
 
 export const useSelectedFeatures = () => {
   const { mainMap: map } = useMap()
-
   const mapLoaded = useMapStoreLoaded()
   const mapBounds = useMapStoreBounds()
-
   const { featuresParam } = useFeaturesParam()
 
-  if (!map || !mapLoaded || !mapBounds || !featuresParam) return []
-  if (mapLoaded === prevMapLoaded && mapBounds === prevMapBounds) return prevResult
-
-  // code below only runs if map is loaded and map bounds has changed
+  if (!map || !mapLoaded || !mapBounds || !featuresParam) return emptyArray
 
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
@@ -38,11 +35,5 @@ export const useSelectedFeatures = () => {
     return { urlFeature, mapFeature }
   })
 
-  // TODO: Find a way to do this that does not break the Rules of React https://react.dev/reference/rules
-  // eslint-disable-next-line react-compiler/react-compiler
-  prevMapLoaded = mapLoaded
-  prevMapBounds = mapBounds
-  prevResult = result
-
-  return result
+  return memoized(result) as Result[]
 }
