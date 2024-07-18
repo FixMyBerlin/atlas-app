@@ -24,11 +24,11 @@ const SidebarLayerControlsChildren = () => {
 
 export const SidebarLayerControls = () => {
   const isSmBreakpointOrAbove = useBreakpoint('sm')
-  const { setSidebarLayerControlsSize } = useMapStoreActions()
+  const { setSidebarSize } = useMapStoreActions()
 
   const { ref } = useResizeObserver<HTMLDivElement>({
     box: 'border-box',
-    onResize: setSidebarLayerControlsSize,
+    onResize: setSidebarSize,
   })
 
   return (

@@ -7,13 +7,12 @@ import {
 } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import useResizeObserver from 'use-resize-observer'
 import {
-  useMapStateInteraction,
-  type Store,
   useMapStoreLoaded,
   useMapStoreBounds,
   useMapStoreActions,
   useMapStoreInspectorFeatures,
   useMapStoreInspectorSize,
+  useMapStoreSidebarSize,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -21,7 +20,7 @@ import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 import { twJoin } from 'tailwind-merge'
 
-type Props = Pick<Store, 'sidebarLayerControlsSize'> & {
+type Props = {
   map: MapRef
   selectedFeatures: SelectedFeature[]
 }
@@ -29,12 +28,13 @@ type Props = Pick<Store, 'sidebarLayerControlsSize'> & {
 const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
   const checkBounds = useRef(true)
 
-  const { map, selectedFeatures, sidebarLayerControlsSize } = props
+  const { map, selectedFeatures } = props
 
   const mapLoaded = useMapStoreLoaded()
   const inspectorFeatures = useMapStoreInspectorFeatures()
   const mapBounds = useMapStoreBounds() // needed to trigger rerendering
   const inspectorSize = useMapStoreInspectorSize()
+  const sidebarSize = useMapStoreSidebarSize()
 
   const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
 
@@ -56,10 +56,10 @@ const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: P
     checkBounds.current && // run this at most once
     inspectorSize.width !== 0 // size of the inspector needs to be known to check bounding box
   ) {
-    const boundingPolygon = createBoundingPolygon(map, sidebarLayerControlsSize, inspectorSize)
+    const boundingPolygon = createBoundingPolygon(map, sidebarSize, inspectorSize)
     const urlFeatures = selectedFeatures.map((f) => f.urlFeature)
     if (!allUrlFeaturesInBounds(urlFeatures, boundingPolygon)) {
-      fitBounds(map, urlFeatures, sidebarLayerControlsSize, inspectorSize)
+      fitBounds(map, urlFeatures, sidebarSize, inspectorSize)
     }
     checkBounds.current = false
   }
@@ -104,8 +104,6 @@ export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 
-  const { sidebarLayerControlsSize } = useMapStateInteraction()
-
   if (!map) {
     return null
   }
@@ -113,7 +111,6 @@ export const SidebarInspector = () => {
   const props: Props = {
     map,
     selectedFeatures,
-    sidebarLayerControlsSize,
   }
 
   // @ts-ignore - let's keep it simple!

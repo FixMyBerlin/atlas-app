@@ -24,7 +24,7 @@ type StoreMapDataLoadingState = {
 type StoreSizes = {
   mapBounds: LngLatBounds | null
   inspectorSize: { width: number; height: number }
-  sidebarLayerControlsSize: { width: number; height: number }
+  sidebarSize: { width: number; height: number }
 }
 
 export type StoreFeaturesInspector = {
@@ -49,9 +49,7 @@ type Actions = {
     setMapDataLoading: (mapDataLoading: Store['mapDataLoading']) => void
     setMapBounds: (mapBounds: Store['mapBounds']) => void
     setInspectorSize: (inspectorSize: Store['inspectorSize']) => void
-    setSidebarLayerControlsSize: (
-      sidebarLayerControlsSize: Store['sidebarLayerControlsSize'],
-    ) => void
+    setSidebarSize: (sidebarSize: Store['sidebarSize']) => void
     setInspectorFeatures: (inspectObject: Store['inspectorFeatures']) => void
     resetInspectorFeatures: () => void
     setCalculatorAreasWithFeatures: (
@@ -80,7 +78,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     localUpdates: [], // ********** DONE **********
     mapBounds: null, // ********** DONE **********
     inspectorSize: { width: 0, height: 0 }, // ********** DONE **********
-    sidebarLayerControlsSize: { width: 0, height: 0 },
+    sidebarSize: { width: 0, height: 0 }, // ********** DONE **********
     actions: {
       setMapLoaded: (mapLoaded) => set({ mapLoaded }),
       setMapDataLoading: (mapDataLoading) => set({ mapDataLoading }),
@@ -96,8 +94,8 @@ export const useMapStateInteraction = create<Store>((set, get) => {
       },
       setMapBounds: (bounds) => set({ mapBounds: bounds }),
       setInspectorSize: (size) => setIfChanged(get, set, 'inspectorSize', size),
-      setSidebarLayerControlsSize: (size) => {
-        setIfChanged(get, set, 'sidebarLayerControlsSize', size)
+      setSidebarSize: (size) => {
+        setIfChanged(get, set, 'sidebarSize', size)
       },
     },
   }
@@ -112,5 +110,6 @@ export const useMapStoreCalculatorAreasWithFeatures = () =>
 export const useMapStoreLocalUpdates = () => useMapStateInteraction((state) => state.localUpdates)
 export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
 export const useMapStoreInspectorSize = () => useMapStateInteraction((state) => state.inspectorSize)
+export const useMapStoreSidebarSize = () => useMapStateInteraction((state) => state.sidebarSize)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)

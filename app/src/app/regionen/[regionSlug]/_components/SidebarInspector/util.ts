@@ -43,9 +43,9 @@ export function getMapSize(mapInstance: any) {
   return { width: canvas.offsetWidth, height: canvas.offsetHeight }
 }
 
-export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, inspectorSize) {
+export function createBoundingPolygon(mapInstance, sidebarSize, inspectorSize) {
   const map = getMapSize(mapInstance)
-  const lay = sidebarLayerControlsSize
+  const side = sidebarSize
   const ins = inspectorSize
   const mapBox = createBox([
     [0, 0],
@@ -53,7 +53,7 @@ export function createBoundingPolygon(mapInstance, sidebarLayerControlsSize, ins
   ])
   const layersBox = createBox([
     [0, 0],
-    [lay.width, lay.height],
+    [side.width, side.height],
   ])
   const inspectorBox = createBox([
     [map.width - ins.width, 0],
@@ -119,13 +119,13 @@ export function allUrlFeaturesInBounds(urlFeatures, boundingPolygon) {
     .every((r) => ['~', '>'].includes(r))
 }
 
-export function fitBounds(mapInstance, urlFeatures, sidebarLayerControlsSize, inspectorSize) {
+export function fitBounds(mapInstance, urlFeatures, sidebarSize, inspectorSize) {
   const map = getMapSize(mapInstance)
-  const [lay, ins] = [sidebarLayerControlsSize, inspectorSize]
+  const [side, ins] = [sidebarSize, inspectorSize]
 
-  const pad = Math.floor(Math.min(map.width - ins.width - lay.width, map.height) / 10)
+  const pad = Math.floor(Math.min(map.width - ins.width - side.width, map.height) / 10)
 
-  const nwp = [lay.width + pad, pad]
+  const nwp = [side.width + pad, pad]
   const sep = {
     x: map.width - ins.width - pad,
     y: map.height - pad,
