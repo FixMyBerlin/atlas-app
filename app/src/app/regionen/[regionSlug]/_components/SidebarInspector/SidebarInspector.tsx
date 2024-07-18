@@ -13,6 +13,7 @@ import {
   useMapStoreBounds,
   useMapStoreActions,
   useMapStoreInspectorFeatures,
+  useMapStoreInspectorSize,
 } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { useFeaturesParam } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
 import { Inspector } from './Inspector'
@@ -20,7 +21,7 @@ import { InspectorHeader } from './InspectorHeader'
 import { allUrlFeaturesInBounds, createBoundingPolygon, fitBounds } from './util'
 import { twJoin } from 'tailwind-merge'
 
-type Props = Pick<Store, 'inspectorSize' | 'sidebarLayerControlsSize'> & {
+type Props = Pick<Store, 'sidebarLayerControlsSize'> & {
   map: MapRef
   selectedFeatures: SelectedFeature[]
 }
@@ -28,11 +29,12 @@ type Props = Pick<Store, 'inspectorSize' | 'sidebarLayerControlsSize'> & {
 const SidebarInspectorMemoized = memo(function SidebarInspectorMemoized(props: Props) {
   const checkBounds = useRef(true)
 
-  const { map, selectedFeatures, inspectorSize, sidebarLayerControlsSize } = props
+  const { map, selectedFeatures, sidebarLayerControlsSize } = props
 
   const mapLoaded = useMapStoreLoaded()
   const inspectorFeatures = useMapStoreInspectorFeatures()
   const mapBounds = useMapStoreBounds() // needed to trigger rerendering
+  const inspectorSize = useMapStoreInspectorSize()
 
   const { resetInspectorFeatures, setInspectorSize } = useMapStoreActions()
 
@@ -102,7 +104,7 @@ export const SidebarInspector = () => {
   const { mainMap: map } = useMap()
   const selectedFeatures = useSelectedFeatures()
 
-  const { inspectorSize, sidebarLayerControlsSize } = useMapStateInteraction()
+  const { sidebarLayerControlsSize } = useMapStateInteraction()
 
   if (!map) {
     return null
@@ -111,7 +113,6 @@ export const SidebarInspector = () => {
   const props: Props = {
     map,
     selectedFeatures,
-    inspectorSize,
     sidebarLayerControlsSize,
   }
 
