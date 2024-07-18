@@ -71,7 +71,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
     // Guards againt errors when using `mainMap?.getStyle`
     mapLoaded: false, // ********** DONE **********
     // Toggels <LoadingIndicator>
-    mapDataLoading: false,
+    mapDataLoading: false, // ********** DONE **********
     // Data for <Inspector> AND <LayerHighlight>
     inspectorFeatures: [],
     // Data for <Inspector> AND <LayerHighlight>
@@ -104,6 +104,7 @@ export const useMapStateInteraction = create<Store>((set, get) => {
 })
 
 export const useMapStoreLoaded = () => useMapStateInteraction((state) => state.mapLoaded)
+export const useMapStoreDataLoading = () => useMapStateInteraction((state) => state.mapDataLoading)
 export const useMapStoreBounds = () => useMapStateInteraction((state) => state.mapBounds)
 
 export const useMapStoreActions = () => useMapStateInteraction((state) => state.actions)

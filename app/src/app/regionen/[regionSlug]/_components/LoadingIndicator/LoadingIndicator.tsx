@@ -1,9 +1,9 @@
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { useMapStateInteraction } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
+import { useMapStoreDataLoading } from '../../_hooks/mapStateInteraction/useMapStateInteraction'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
 
 export const LoadingIndicator = () => {
-  const { mapDataLoading } = useMapStateInteraction()
+  const mapDataLoading = useMapStoreDataLoading()
 
   if (mapDataLoading === false) return null
 
