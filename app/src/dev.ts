@@ -90,3 +90,10 @@ export function compareValuesBetweenRenders(
     ref[k] = v
   })
 }
+
+const counters: { [key: string]: number } = {}
+
+export function count(key: string) {
+  if (!(key in counters)) counters[key] = 1
+  return counters[key]++
+}
