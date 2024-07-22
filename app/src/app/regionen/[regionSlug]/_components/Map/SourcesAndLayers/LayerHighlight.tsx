@@ -1,36 +1,22 @@
-import { memo } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import {
   useMapLoaded,
   useMapInspectorFeatures,
   useMapCalculatorAreasWithFeatures,
 } from '../../../_hooks/mapState/useMapState'
-import {
-  useSelectedFeatures,
-  type SelectedFeature,
-} from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
-import { sources } from '../../../_mapData/mapDataSources/sources.const'
+import { useSelectedFeatures } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
-type ParentLayerProps = {
-  sourceData: (typeof sources)[number]
-} & LayerProps
-
-type MemoProps = {
-  selectedFeatures: SelectedFeature[]
-}
-
-const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
-  props: ParentLayerProps & MemoProps,
-) {
-  const { selectedFeatures, sourceData } = props
+export const LayerHighlight = (props) => {
+  const { sourceData } = props
 
   const inspectorFeatures = useMapInspectorFeatures()
   const calculatorAreasWithFeatures = useMapCalculatorAreasWithFeatures()
 
   const mapLoaded = useMapLoaded()
 
+  const selectedFeatures = useSelectedFeatures()
   const features = inspectorFeatures.length
     ? inspectorFeatures
     : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
@@ -105,15 +91,4 @@ const LayerHighlightMemoized = memo(function LayerHighlightMemoized(
   }
 
   return <Layer {...layerProps} />
-})
-
-export const LayerHighlight = (parentLayerProps: ParentLayerProps) => {
-  const selectedFeatures = useSelectedFeatures()
-
-  const props = {
-    ...parentLayerProps,
-    selectedFeatures,
-  }
-
-  return <LayerHighlightMemoized {...props} />
 }

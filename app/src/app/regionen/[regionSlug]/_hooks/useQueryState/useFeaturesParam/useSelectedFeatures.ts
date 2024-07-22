@@ -24,7 +24,7 @@ export const useSelectedFeatures = () => {
   const mapBounds = useMapBounds()
   const { featuresParam } = useFeaturesParam()
 
-  if (!map || !mapLoaded || !mapBounds || !featuresParam) return emptyArray
+  if (!map || !mapLoaded || !mapBounds || !featuresParam) return memoized(emptyArray) as Result[]
 
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
