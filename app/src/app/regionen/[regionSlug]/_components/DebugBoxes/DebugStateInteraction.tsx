@@ -1,6 +1,9 @@
 import { Link } from 'src/app/_components/links/Link'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { useMapDebugState } from '../../_hooks/mapState/useMapDebugState'
+import {
+  useMapDebugActions,
+  useMapDebugShowDebugInfo,
+} from '../../_hooks/mapState/useMapDebugState'
 import { useMapState } from '../../_hooks/mapState/useMapState'
 import { simplifyConfigForParams } from '../../_hooks/useQueryState/useCategoriesConfig/utils/simplifyConfigForParams'
 import { useCategoriesConfig } from '../../_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -24,7 +27,8 @@ function formatConfig(config: any, indent = 0): string {
 export const DebugStateInteraction = () => {
   const regionSlug = useRegionSlug()
   const zustandValues = useMapState()
-  const { showDebugInfo, setShowDebugInfo } = useMapDebugState()
+  const showDebugInfo = useMapDebugShowDebugInfo()
+  const { setShowDebugInfo } = useMapDebugActions()
   const { categoriesConfig } = useCategoriesConfig()
   const { drawParam } = useDrawParam()
   // const { config: configCategories, draw: drawAreasStore } = useSearch<LocationGenerics>()

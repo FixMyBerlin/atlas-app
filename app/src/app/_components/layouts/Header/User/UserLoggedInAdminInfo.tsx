@@ -7,13 +7,13 @@ import {
   mapillaryUrlViewport,
   osmUrlViewport,
 } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
+import { useMapDebugActions } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 import { UserLoggedInProp } from './UserLoggedIn'
 
 export const UserLoggedInAdminInfo = ({ user }: UserLoggedInProp) => {
-  const { toggleShowDebugInfo } = useMapDebugState()
+  const { toggleShowDebugInfo } = useMapDebugActions()
 
   const { mapParam } = useMapParam()
   const osmUrlViewportUrl = mapParam && osmUrlViewport(mapParam.zoom, mapParam.lat, mapParam.lng)

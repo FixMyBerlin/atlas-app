@@ -1,6 +1,6 @@
 import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useMapDebugState } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
+import { useMapDebugUseDebugLayerStyles } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
@@ -14,8 +14,7 @@ import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
 
 export const SourcesLayersStaticDatasets = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
-  const { useDebugLayerStyles } = useMapDebugState()
-
+  const useDebugLayerStyles = useMapDebugUseDebugLayerStyles()
   const regionDatasets = useRegionDatasets()
 
   if (!regionDatasets || !selectedDatasetIds) return null

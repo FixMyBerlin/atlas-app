@@ -3,35 +3,37 @@ import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
-export type Store = StoreDebugInfo & StoreUseDebugLayer & StoreUseDebugCachelessTiles
-
-type StoreDebugInfo = {
+export type Store = {
   showDebugInfo: boolean
-  setShowDebugInfo: (showDebugInfo: Store['showDebugInfo']) => void
-  toggleShowDebugInfo: () => void
-}
-
-type StoreUseDebugLayer = {
   useDebugLayerStyles: boolean
-  setUseDebugLayerStyles: (useDebugLayerStyles: Store['useDebugLayerStyles']) => void
-}
-
-type StoreUseDebugCachelessTiles = {
   useDebugCachelessTiles: boolean
-  setUseDebugCachelessTiles: (useDebugCachelessTiles: Store['useDebugCachelessTiles']) => void
+  actions: {
+    setShowDebugInfo: (showDebugInfo: Store['showDebugInfo']) => void
+    toggleShowDebugInfo: () => void
+    setUseDebugLayerStyles: (useDebugLayerStyles: Store['useDebugLayerStyles']) => void
+    setUseDebugCachelessTiles: (useDebugCachelessTiles: Store['useDebugCachelessTiles']) => void
+  }
 }
 
-export const useMapDebugState = create<Store>((set, get) => ({
+const useMapDebugState = create<Store>((set, get) => ({
   showDebugInfo: isDev || isStaging,
-  setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
-  toggleShowDebugInfo: () => {
-    const { showDebugInfo } = get()
-    set({ showDebugInfo: !showDebugInfo })
-  },
-
   useDebugLayerStyles: false,
-  setUseDebugLayerStyles: (useDebugLayerStyles) => set({ useDebugLayerStyles }),
-
   useDebugCachelessTiles: false,
-  setUseDebugCachelessTiles: (useDebugCachelessTiles) => set({ useDebugCachelessTiles }),
+  actions: {
+    setShowDebugInfo: (showDebugInfo) => set({ showDebugInfo }),
+    toggleShowDebugInfo: () => {
+      const { showDebugInfo } = get()
+      set({ showDebugInfo: !showDebugInfo })
+    },
+    setUseDebugLayerStyles: (useDebugLayerStyles) => set({ useDebugLayerStyles }),
+    setUseDebugCachelessTiles: (useDebugCachelessTiles) => set({ useDebugCachelessTiles }),
+  },
 }))
+
+export const useMapDebugShowDebugInfo = () => useMapDebugState((state) => state.showDebugInfo)
+export const useMapDebugUseDebugLayerStyles = () =>
+  useMapDebugState((state) => state.useDebugLayerStyles)
+export const useMapDebugUseDebugCachelessTiles = () =>
+  useMapDebugState((state) => state.useDebugCachelessTiles)
+
+export const useMapDebugActions = () => useMapDebugState((state) => state.actions)

@@ -3,20 +3,22 @@ import { useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl, isDevTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
-import { useMapDebugState } from '../../_hooks/mapState/useMapDebugState'
+import {
+  useMapDebugShowDebugInfo,
+  useMapDebugUseDebugLayerStyles,
+  useMapDebugUseDebugCachelessTiles,
+  useMapDebugActions,
+} from '../../_hooks/mapState/useMapDebugState'
 import { useMapLoaded } from '../../_hooks/mapState/useMapState'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'
 import { DebugMapDownload } from './DebugMapDownload'
 
 export const DebugMap = () => {
-  const {
-    showDebugInfo,
-    setShowDebugInfo,
-    useDebugLayerStyles,
-    setUseDebugLayerStyles,
-    useDebugCachelessTiles,
-    setUseDebugCachelessTiles,
-  } = useMapDebugState()
+  const showDebugInfo = useMapDebugShowDebugInfo()
+  const useDebugLayerStyles = useMapDebugUseDebugLayerStyles()
+  const useDebugCachelessTiles = useMapDebugUseDebugCachelessTiles()
+  const { setShowDebugInfo, setUseDebugLayerStyles, setUseDebugCachelessTiles } =
+    useMapDebugActions()
   const { mainMap } = useMap()
   const mapLoaded = useMapLoaded()
   const [_triggerRerender, setTriggerRerender] = useState(0)

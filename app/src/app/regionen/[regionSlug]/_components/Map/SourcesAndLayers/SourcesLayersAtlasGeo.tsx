@@ -4,7 +4,8 @@ import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
 import {
   Store,
-  useMapDebugState,
+  useMapDebugUseDebugCachelessTiles,
+  useMapDebugUseDebugLayerStyles,
 } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
@@ -157,7 +158,8 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
 })
 
 export const SourcesLayersAtlasGeo = () => {
-  const { useDebugLayerStyles, useDebugCachelessTiles } = useMapDebugState()
+  const useDebugLayerStyles = useMapDebugUseDebugLayerStyles()
+  const useDebugCachelessTiles = useMapDebugUseDebugCachelessTiles()
   const { categoriesConfig } = useCategoriesConfig()
   const { backgroundParam } = useBackgroundParam()
 
