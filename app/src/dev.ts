@@ -43,15 +43,47 @@ export function logColor(msg, color) {
 }
 
 export function compareValuesBetweenRenders(
-  info: string,
-  values: Record<string, any>,
-  ref: React.MutableRefObject<{}>,
-  logChange: boolean,
+  /*
+    Can be used to track changes of values between renders.
+    Example
+
+    const Element = (foo) => {
+      const bar = useBar()
+      const baz = useBaz()
+
+      compareValuesBetweenRenders({
+        info: 'Element',
+        values: { foo, bar, baz },
+        ref: useRef({}),
+        logValue: true,
+      })
+
+      return (
+        <div>
+          <div>{foo}</div>
+          <div>{bar}</div>
+          <div>{baz}</div>
+        </div>
+      )
+    }
+    */
+
+  {
+    info,
+    values,
+    ref, // useRef({})
+    logValue = false,
+  }: {
+    info: string
+    values: { [key: string]: any }
+    ref: React.MutableRefObject<{}>
+    logValue: boolean
+  },
 ) {
   Object.entries(values).forEach(([k, v]) => {
     const changed = v !== ref[k]
     console.log('COMPARE', info, k, changed ? 'CHANGED' : '')
-    if (logChange && changed) {
+    if (logValue && changed) {
       console.log(`  previous ${k}:`, ref[k])
       console.log(`  current  ${k}:`, v)
     }
