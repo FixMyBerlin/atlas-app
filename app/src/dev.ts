@@ -38,7 +38,12 @@ export function createLogger(prefix: string) {
 
 export const logMemo = memoize(console.log, (...args) => JSON.stringify(args))
 
-export function logColor(msg, color) {
+export function logColor(...args) {
+  const color = args[args.length - 1]
+  const msg = args
+    .slice(0, -1)
+    .map((arg) => String(arg))
+    .join(' ')
   console.log('%c' + msg, 'color:' + color + ';font-weight:bold;')
 }
 
