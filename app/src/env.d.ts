@@ -36,5 +36,6 @@ namespace NodeJS {
       | 'https://radverkehrsatlas.de/api'
     readonly S3_BUCKET: string
     readonly S3_UPLOAD_FOLDER: production | staging | localdev
+    readonly NEXT_PUBLIC_DO_NOT_NAVIGATE: string
   }
 }
