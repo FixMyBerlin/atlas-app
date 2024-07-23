@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import { useMapLocalUpdates } from '../../../_hooks/mapState/useMapState'
 
-let errorLogged = false
-
 export const LayerVerificationStatus = (parentLayerProps: LayerProps) => {
   const localUpdates = useMapLocalUpdates()
+  const errorLogged = useRef(false)
 
   const props = {
     ...parentLayerProps,
@@ -19,10 +18,9 @@ export const LayerVerificationStatus = (parentLayerProps: LayerProps) => {
     colorRejected = _r || 'hsl(0, 100%, 41%)'
     colorNull = _n || '#fa7fe2'
   } catch (e) {
-    if (!errorLogged) {
+    if (!errorLogged.current) {
       console.error(e)
-      // eslint-disable-next-line react-compiler/react-compiler
-      errorLogged = true
+      errorLogged.current = true
     }
     return <Layer {...(props as LayerProps)} />
   }
