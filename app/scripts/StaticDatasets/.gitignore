@@ -1,2 +1,6 @@
 # Symlink `npm run link-atlas-static-data`
 /geojson
+
+.env.development
+.env.staging
+.env.production

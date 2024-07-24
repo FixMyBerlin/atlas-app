@@ -12,11 +12,9 @@ namespace NodeJS {
     readonly NEXT_PUBLIC_TILES_ENV: 'staging' | 'production' | 'development'
     // PRISMA
 
-    readonly DB_HOST: never
-    readonly DB_PORT: never
-    readonly DB_USER: never
-    readonly DB_PASSWORD: never
-    readonly DB_DATABASE: never
+    readonly PGUSER: never
+    readonly PGDATABASE: never
+    readonly PGPASSWORD: never
     readonly DATABASE_URL: never
     // LOGIN
     readonly OSM_CLIENT_ID: string
