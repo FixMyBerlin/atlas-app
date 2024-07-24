@@ -47,7 +47,7 @@
     "release": "gh pr create --base main --head develop --title \"Release $(date '+%Y-%m-%d')\" --body \"\"",
     "prepare": "cd .. && husky app/.husky",
     "postinstall": "patch-package",
-    "link-atlas-static-data": "ln -s ../../../atlas-static-data/geojson scripts/StaticDatasets"
+    "link-atlas-static-data": "ln -s ../../../../atlas-static-data/geojson scripts/StaticDatasets"
   },
   "prisma": {
     "schema": "db/schema.prisma"
