@@ -10,7 +10,9 @@
   "scripts": {
     "start": "npx blitz@2.0.10 start --hostname 127.0.0.1 --port 3000",
     "dev": "npx blitz@2.0.10 dev --hostname 127.0.0.1 --port 5173",
-    "predev": "if [ \"$(docker inspect -f '{{.State.Running}}' db)\" != \"true\" ]; then docker compose -f ../docker-compose.yml up db tiles -d; fi && node scripts/npm-run-predev/checkMigrations.js",
+    "predev": "npm run predev:check_docker && npm run predev:check_migration",
+    "predev:check_docker": "if [ \"$(docker inspect -f '{{.State.Running}}' db)\" != \"true\" ]; then docker compose -f ../docker-compose.yml up db tiles -d; fi",
+    "predev:check_migration": "node scripts/npm-run-predev/checkMigrations.js",
     "build": "npx blitz@2.0.10 build",
     "bleach": "rm -rf node_modules/ && rm -rf .next/ && npm install",
     "bleach:full": "rm package-lock.json && npm run bleach",
