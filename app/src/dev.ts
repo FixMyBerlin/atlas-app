@@ -100,5 +100,6 @@ const counters: { [key: string]: number } = {}
 
 export function count(key: string) {
   if (!(key in counters)) counters[key] = 1
+  // @ts-expect-error
   return counters[key]++
 }
