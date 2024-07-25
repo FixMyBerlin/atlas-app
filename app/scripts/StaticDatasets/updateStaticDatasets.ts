@@ -230,10 +230,10 @@ if (process.env.S3_UPLOAD_FOLDER === 'production') {
 
   try {
     Bun.spawnSync(['git', 'tag', '-a', tagName, '-m', tagMessage], {
-      cwd: '../atlas-static-data',
+      cwd: '../../atlas-static-data',
     })
     Bun.spawnSync(['git', 'push', 'origin', tagName], {
-      cwd: '../atlas-static-data',
+      cwd: '../../atlas-static-data',
     })
     console.log(`Tag '${tagName}' has been created and pushed to GitHub.`)
   } catch (error) {
