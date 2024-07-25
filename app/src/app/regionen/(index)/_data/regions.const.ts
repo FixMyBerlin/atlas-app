@@ -86,6 +86,7 @@ export type RegionSlug =
   | 'nudafa'
   | 'ostalbkreis'
   | 'parkraum'
+  | 'radplus'
   | 'rs8'
   | 'testing'
   | 'trto'
@@ -560,6 +561,19 @@ export const staticRegion: StaticRegion[] = [
     categories: ['bikelanes', 'lit', 'poi', 'roads', 'surface', 'bicycleParking', 'mapillary'],
     backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
+  },
+  {
+    slug: 'radplus',
+    name: 'Rad+',
+    fullName: 'Rad+ & Bahnhofsumfelddaten',
+    osmRelationIds: [62369],
+    map: { lat: 52.3919, lng: 13.0702, zoom: 13 },
+    bbox: null,
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    categories: ['bikelanes', 'poi', 'roads', 'bicycleParking', 'mapillary'],
+    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    notes: 'atlasNotes',
   },
   {
     name: 'Fahrradstellplätze',

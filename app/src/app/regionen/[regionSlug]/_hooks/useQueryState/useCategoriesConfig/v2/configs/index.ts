@@ -12,6 +12,7 @@ import { _1ljsnj0 } from './_1ljsnj0'
 import { _1oy2q4i } from './_1oy2q4i'
 import { _1p0kkkw } from './_1p0kkkw'
 import { _1r88sri } from './_1r88sri'
+import { _1tdocms } from './_1tdocms'
 import { _1x5utcr } from './_1x5utcr'
 import { _1ybiojr } from './_1ybiojr'
 import { _c8lcr0 } from './_c8lcr0'
@@ -37,6 +38,7 @@ export const configs = {
   '1oy2q4i': _1oy2q4i,
   '1p0kkkw': _1p0kkkw,
   '1r88sri': _1r88sri,
+  '1tdocms': _1tdocms,
   '1x5utcr': _1x5utcr,
   '1ybiojr': _1ybiojr,
   c8lcr0: _c8lcr0,
