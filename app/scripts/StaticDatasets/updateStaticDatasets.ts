@@ -165,6 +165,17 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     }
   })
 
+  // Check if any layer has layout.visibility property
+  metaData.configs.forEach((config) =>
+    config.layers.forEach((layer) => {
+      if (layer?.layout?.visibility) {
+        red(
+          `  layer "${layer.id}" has layout.visibility specified which is an error. Remove this property from the layer definition. Otherwise bugs come up like the layer does not show due to a hidden visibility.`,
+        )
+      }
+    }),
+  )
+
   const info =
     regionSlugs.length === 0
       ? 'will not be assigned to any region'
