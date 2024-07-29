@@ -11,5 +11,7 @@
     "editor.defaultFormatter": "Prisma.prisma"
   },
   // Use TS version from node_modules
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "Lua.diagnostics.globals": ["osm2pgsql"],
+  "Lua.runtime.version": "Lua 5.3"
 }

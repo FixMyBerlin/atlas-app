@@ -1,0 +1,6 @@
+tiles
+*.log
+.env.local
+*.mvt
+*.geojson
+node_modules

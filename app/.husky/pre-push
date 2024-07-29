@@ -1,0 +1,9 @@
+# This runs our unit tests for `Processing`
+
+docker build --target testing -f ./processing.Dockerfile -t test_img .
+docker run test_img
+
+# Linting, Formating and Type-Checks for `App`
+
+cd app
+npm run check

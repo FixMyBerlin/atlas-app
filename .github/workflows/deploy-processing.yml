@@ -1,0 +1,165 @@
+name: Deploy Processing to IONOS
+
+on:
+  workflow_call:
+    secrets:
+      SERVICE_NAME:
+        required: true
+      DATABASE_NAME:
+        required: true
+      DATABASE_PASSWORD:
+        required: true
+      DATABASE_USER:
+        required: true
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      SSH_USERNAME:
+        required: true
+      SSH_PASSWORD:
+        required: true
+      SSH_HOST:
+        required: true
+      SYNOLOGY_LOG_TOKEN:
+        required: true
+      SYNOLOGY_ERROR_LOG_TOKEN:
+        required: true
+    inputs:
+      ENVIRONMENT:
+        type: string
+        required: true
+      TILES_URL:
+        type: string
+        required: true
+      CACHELESS_URL:
+        type: string
+        required: true
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.ENVIRONMENT }}
+      url: https://${{ inputs.TILES_URL }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 6
+
+      - name: Get last run commit SHA
+        id: last_run
+        run: |
+          LAST_RUN_SHA=$(curl --request GET \
+          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
+          echo "::set-output name=sha::$LAST_RUN_SHA"
+        shell: bash
+
+      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
+        id: git_changes
+        run: |
+          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
+          if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
+            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
+              echo "changes=false" >> $GITHUB_OUTPUT
+            else
+              echo "changes=true" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "changes=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+        env:
+          CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile
+
+      - name: Upgrade AWS CLI version and setup lightsailctl
+        if: steps.git_changes.outputs.changes == 'true'
+        run: |
+          aws --version
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+          which aws
+          aws --version
+          sudo curl "https://s3.us-west-2.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+          sudo chmod +x /usr/local/bin/lightsailctl
+
+      - name: Configure AWS credentials
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup buildx
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build app image
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./processing.Dockerfile
+          push: false
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+
+      - name: Push the app image
+        if: steps.git_changes.outputs.changes == 'true'
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
+          docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+
+      - name: Copy files to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          source: 'docker-compose.yml, docker-compose.network.yml, configs/'
+          target: '/srv/processing/'
+          overwrite: true
+
+      - name: Update GITHUB_SHA
+        if: steps.git_changes.outputs.changes == 'true'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/processing/
+            sed -i "s|^GITHUB_SHA=.*$|GITHUB_SHA='${{ github.sha }}'|" .env
+
+      - name: Stop & Start containers on VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /srv/processing/
+            sed -i \
+              -e "s|^PGHOST=.*$|PGHOST='${{ vars.DATABASE_HOST }}'|" \
+              -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
+              -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
+              -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
+              -e "s|^PGUSER=.*$|PGUSER='${{ secrets.DATABASE_USER }}'|" \
+              -e "s|^PGPASSWORD=.*$|PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
+              -e "s|^PGDATABASE=.*$|PGDATABASE='${{ secrets.DATABASE_NAME }}'|" \
+              -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
+              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \#
+              -e "s|^CACHELESS_URL=.*$|TILES_URL='${{ inputs.CACHELESS_URL }}'|" \
+              .env
+            echo "Reload containers"
+            docker compose pull
+            docker compose -f docker-compose.yml -f docker-compose.network.yml up -d
+            docker image prune -fa

@@ -1,0 +1,14 @@
+name: Regenerate Staging Tiles
+
+on:
+  workflow_dispatch:
+jobs:
+  generate-tiles:
+    uses: ./.github/workflows/generate-tiles.yml
+    with:
+      ENVIRONMENT: staging
+      url: https://staging-tiles.radverkehrsatlas.de
+    secrets:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
