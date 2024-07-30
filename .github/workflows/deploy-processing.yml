@@ -124,8 +124,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: 'docker-compose.yml, docker-compose.network.yml, configs/'
-          target: '/srv/processing/'
+          source: "docker-compose.yml, docker-compose.network.yml, configs/"
+          target: "/srv/processing/"
           overwrite: true
 
       - name: Update GITHUB_SHA
