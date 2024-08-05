@@ -6,6 +6,9 @@ jobs:
   run-app-ci:
     name: Run Type Check & Linters
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -14,7 +17,6 @@ jobs:
         with:
           node-version-file: "app/.nvmrc"
           cache: 'npm'
-          cache-dependency-path: './app/package-lock.json'
 
       - name: Install dependencies (with cache)
         run: npm ci
