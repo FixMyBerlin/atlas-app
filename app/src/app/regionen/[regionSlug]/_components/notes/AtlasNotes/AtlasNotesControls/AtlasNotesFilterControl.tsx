@@ -32,7 +32,10 @@ export const AtlasNotesFilterControl = () => {
   )
 
   const handleMenuClick = (
-    e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>,
+    e:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.FormEvent<HTMLFormElement>
+      | React.KeyboardEvent<HTMLInputElement>,
     state: Record<string, any>,
   ) => {
     e.preventDefault()
@@ -170,6 +173,12 @@ export const AtlasNotesFilterControl = () => {
               onClick={(e) => {
                 // Required so the flyout does not close when I click in the input field
                 e.preventDefault()
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  handleMenuClick(e, { query: e.currentTarget.value })
+                }
               }}
               defaultValue={atlasNotesFilterParam?.query || ''}
             />
