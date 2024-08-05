@@ -57,4 +57,14 @@ export const staticDatasetCategories = {
     title: 'radparken.info',
     subtitle: 'Statische Daten der radparken.info Umfragen.',
   },
+  'parkraum/euvm': {
+    order: 1,
+    title: 'Parkflächen eUVM-Projekt',
+    subtitle: 'Statische Daten aus dem Parkflächen eUVM-Projekt.',
+  },
+  'parkraum/misc': {
+    order: 2,
+    title: 'Weitere Daten',
+    subtitle: 'Weitere statische Daten.',
+  },
 } as const

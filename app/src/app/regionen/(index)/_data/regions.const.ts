@@ -221,7 +221,11 @@ export const staticRegion: StaticRegion[] = [
     bbox: null,
     logoPath: imageParking,
     logoWhiteBackgroundRequired: false,
-    categories: ['parking', 'poi', 'trafficSigns', 'mapillary'],
+    categories: [
+      'parking',
+      // 'trafficSigns', // NOTE: Not finished, yet
+      'mapillary',
+    ],
     backgroundSources: [
       ...defaultBackgroundSources,
       'strassenbefahrung',

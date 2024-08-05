@@ -22,6 +22,7 @@ import { _nq3m12 } from './_nq3m12'
 import { _qver32 } from './_qver32'
 import { _rcqwse } from './_rcqwse'
 import { _tztqka } from './_tztqka'
+import { _up0vgv } from './_up0vgv'
 import { _vvhkik } from './_vvhkik'
 import { _wvqr4 } from './_wvqr4'
 import { _z9tzbb } from './_z9tzbb'
@@ -48,6 +49,7 @@ export const configs = {
   qver32: _qver32,
   rcqwse: _rcqwse,
   tztqka: _tztqka,
+  up0vgv: _up0vgv,
   vvhkik: _vvhkik,
   wvqr4: _wvqr4,
   z9tzbb: _z9tzbb,
