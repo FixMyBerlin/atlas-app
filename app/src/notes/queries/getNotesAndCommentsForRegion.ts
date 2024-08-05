@@ -70,11 +70,14 @@ export default resolver.pipe(
       // Filter by `query` on note.body/subject or any note.comment.body
       filteredNotes = filteredNotes.filter((note) => {
         if (typeof filter.query !== 'string') return true
+        const query = filter.query.toLocaleLowerCase()
         const fullNote = notes.find((fNote) => fNote.id == note.properties.id)
-        if (fullNote?.subject?.includes(filter.query)) return true
-        if (fullNote?.body?.includes(filter.query)) return true
-        if (fullNote?.noteComments?.some((c) => filter.query && c.body.includes(filter.query)))
-          return true
+        if (fullNote?.subject?.toLocaleLowerCase()?.includes(query)) return true
+        if (fullNote?.body?.toLocaleLowerCase()?.includes(query)) return true
+        const anyComment = fullNote?.noteComments?.some((c) => {
+          return query && c.body.toLocaleLowerCase().includes(query)
+        })
+        if (anyComment) return true
         return false
       })
       // Filter by `completed` on note.status
