@@ -34,10 +34,8 @@ export const MapInterface = () => {
         <SidebarLayerControls />
         <SidebarInspector />
         <div
-          // The wrapper specifies the max-height which is then used by the children (mainly <SelectBackground>).
-          // top-16 is the navbar, mt-2.5 is the gap given by the +/- controls.
           // The pointer-events classes make sure we can click though the empty div on the map but still use the buttons/dropdown
-          className="pointer-events-none fixed bottom-4 right-2.5 top-16 z-10 mt-2.5 flex items-end justify-end gap-1.5 [&>*]:pointer-events-auto"
+          className="pointer-events-none fixed bottom-4 right-2.5 z-10 mt-2.5 flex max-w-full flex-wrap items-end justify-end gap-1.5 [&>*]:pointer-events-auto"
         >
           <LoadingIndicator />
           <OsmNotes />
