@@ -12,7 +12,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: 'app/.nvmrc'
 
       - name: Install dependencies (with cache)
         uses: bahmutov/npm-install@HEAD
