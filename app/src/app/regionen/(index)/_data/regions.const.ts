@@ -74,6 +74,7 @@ export type RegionSlug =
   | 'bb' // Öffentlich, Land Brandenburg
   | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'berlin'
+  | 'parkraum-berlin'
   | 'bibi'
   | 'deutschland'
   | 'fahrradstellplaetze'
@@ -179,6 +180,35 @@ export const staticRegion: StaticRegion[] = [
       'areal2019',
       'parkraumkarte_neukoelln',
     ],
+    notes: 'osmNotes',
+  },
+  {
+    slug: 'parkraum-berlin',
+    name: 'Parkraum Berlin',
+    fullName: 'Parkraum Berlin',
+    osmRelationIds: [62422],
+    map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
+    bbox: null,
+    logoPath: imageParking,
+    logoWhiteBackgroundRequired: false,
+    categories: [
+      'parking',
+      // 'trafficSigns', // NOTE: Not finished, yet
+      'mapillary',
+    ],
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'strassenbefahrung',
+      'alkis',
+      'areal2024',
+      'areal2023',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+      'parkraumkarte_neukoelln',
+    ],
+    hideDownload: true,
     notes: 'osmNotes',
   },
   {
