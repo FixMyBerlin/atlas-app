@@ -310,7 +310,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
     tiles: getTilesUrl('/atlas_generalized_publictransport/{z}/{x}/{y}'),
-    maxzoom: 9,
+    maxzoom: 11,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
