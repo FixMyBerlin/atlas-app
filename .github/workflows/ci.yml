@@ -13,11 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: "app/.nvmrc"
+          cache: 'npm'
 
       - name: Install dependencies (with cache)
-        uses: bahmutov/npm-install@HEAD
-        with:
-          working-directory: app
+        run: npm ci
 
       - name: Check types
         run: npm run type-check
