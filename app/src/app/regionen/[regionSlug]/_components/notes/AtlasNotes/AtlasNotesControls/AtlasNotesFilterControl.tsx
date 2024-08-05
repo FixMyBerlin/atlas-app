@@ -11,6 +11,13 @@ import { twJoin } from 'tailwind-merge'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 import { useQueryKey } from '../utils/useQueryKey'
 
+const menuItemClasses = (active: boolean) => {
+  return twJoin(
+    active ? 'bg-yellow-100' : 'data-[focus]:bg-gray-100',
+    'w-full px-4 py-2 text-left text-gray-700 data-[focus]:text-gray-900',
+  )
+}
+
 export const AtlasNotesFilterControl = () => {
   const { slug: regionSlug } = useStaticRegion()!
   const { atlasNotesFilterParam, setAtlasNotesFilterParam } = useAtlasFilterParam()
@@ -24,12 +31,6 @@ export const AtlasNotesFilterControl = () => {
     (value) => value !== undefined,
   )
 
-  const menuItemClasses = (active: boolean) => {
-    return twJoin(
-      active ? 'bg-yellow-100' : 'data-[focus]:bg-gray-100',
-      'w-full px-4 py-2 text-left text-gray-700 data-[focus]:text-gray-900',
-    )
-  }
   const handleMenuClick = (
     e: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>,
     state: Record<string, any>,
