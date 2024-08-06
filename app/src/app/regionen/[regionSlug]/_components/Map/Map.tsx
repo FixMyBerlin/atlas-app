@@ -218,7 +218,7 @@ export const Map = () => {
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
 
-      <NavigationControl showCompass={true} visualizePitch={true} />
+      <NavigationControl showCompass={false /* TODO: See Story */} visualizePitch={true} />
       <Calculator />
       {/* <GeolocateControl /> */}
       {/* <ScaleControl /> */}
