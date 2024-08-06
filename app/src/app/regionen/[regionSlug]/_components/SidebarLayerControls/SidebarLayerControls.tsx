@@ -34,7 +34,7 @@ export const SidebarLayerControls = () => {
   return (
     <section
       ref={ref}
-      className="absolute left-0 top-0 z-10 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md"
+      className="absolute left-0 top-0 z-20 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md"
     >
       {isSmBreakpointOrAbove ? (
         <SidebarLayerControlsChildren />

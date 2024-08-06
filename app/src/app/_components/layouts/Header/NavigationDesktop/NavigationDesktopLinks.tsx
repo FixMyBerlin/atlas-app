@@ -8,7 +8,7 @@ type Props = {
   menuItems: PrimaryNavigationProps['primaryNavigation']
 }
 
-export const NavigationDesktopLinks: React.FC<Props> = ({ menuItems }) => {
+export const NavigationDesktopLinks = ({ menuItems }: Props) => {
   const pathname = usePathname()
 
   return (

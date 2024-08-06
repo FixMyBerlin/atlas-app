@@ -1,3 +1,4 @@
+import { CircleLayer, FillLayer, HeatmapLayer, LineLayer, SymbolLayer } from 'react-map-gl'
 import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import { StaticDatasetCategoryKey } from 'src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import {
@@ -40,11 +41,11 @@ type MapDataDatasetsSource = {
       }
   legends?: null | FileMapDataSubcategoryStyleLegend[]
   layers: (
-    | (mapboxgl.CircleLayer & Required<Pick<mapboxgl.CircleLayer, 'paint'>>)
-    | (mapboxgl.FillLayer & Required<Pick<mapboxgl.FillLayer, 'paint'>>)
-    | (mapboxgl.LineLayer & Required<Pick<mapboxgl.LineLayer, 'paint'>>)
-    | (mapboxgl.SymbolLayer & Required<Pick<mapboxgl.SymbolLayer, 'paint' | 'layout'>>)
-    | (mapboxgl.HeatmapLayer & Required<Pick<mapboxgl.HeatmapLayer, 'paint'>>)
+    | (CircleLayer & Required<Pick<CircleLayer, 'paint'>> & { beforeId?: string })
+    | (FillLayer & Required<Pick<FillLayer, 'paint'>> & { beforeId?: string })
+    | (LineLayer & Required<Pick<LineLayer, 'paint'>> & { beforeId?: string })
+    | (SymbolLayer & Required<Pick<SymbolLayer, 'paint' | 'layout'>> & { beforeId?: string })
+    | (HeatmapLayer & Required<Pick<HeatmapLayer, 'paint'>> & { beforeId?: string })
   )[]
 }
 

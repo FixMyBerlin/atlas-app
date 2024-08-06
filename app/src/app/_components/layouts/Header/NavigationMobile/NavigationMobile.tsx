@@ -1,7 +1,6 @@
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { usePathname } from 'next/navigation'
-import React from 'react'
 import { twJoin } from 'tailwind-merge'
 import { User } from '../User/User'
 import { PrimaryNavigationProps } from '../types'
@@ -10,11 +9,7 @@ type Props = PrimaryNavigationProps & {
   logo: React.ReactElement
 }
 
-export const NavigationMobile: React.FC<Props> = ({
-  primaryNavigation,
-  secondaryNavigation,
-  logo: Logo,
-}) => {
+export const NavigationMobile = ({ primaryNavigation, secondaryNavigation, logo: Logo }: Props) => {
   const pathname = usePathname()
 
   return (

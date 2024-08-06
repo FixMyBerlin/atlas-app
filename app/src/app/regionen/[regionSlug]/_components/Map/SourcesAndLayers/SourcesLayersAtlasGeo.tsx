@@ -66,6 +66,7 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                   id={sourceKey}
                   type="vector"
                   tiles={[tileUrl]}
+                  promoteId={sourceData.promoteId}
                   maxzoom={sourceData.maxzoom}
                   minzoom={sourceData.minzoom}
                 >

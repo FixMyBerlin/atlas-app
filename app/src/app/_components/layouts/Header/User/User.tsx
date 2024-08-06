@@ -1,10 +1,9 @@
-import React from 'react'
 import { useCurrentUser } from 'src/users/hooks/useCurrentUser'
+import { RemoveCookie } from './RemoveCookie'
 import { UserLoggedIn } from './UserLoggedIn'
 import { UserLoggedOut } from './UserLoggedOut'
-import { RemoveCookie } from './RemoveCookie'
 
-export const User: React.FC = () => {
+export const User = () => {
   const user = useCurrentUser()
   return (
     <>

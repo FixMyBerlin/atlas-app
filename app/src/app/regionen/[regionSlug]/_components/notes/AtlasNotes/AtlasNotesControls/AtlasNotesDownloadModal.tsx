@@ -33,7 +33,11 @@ export const AtlasNotesDownloadModal = () => {
             </span>
           </LinkExternal>
 
-          <LinkExternal
+          {/*
+            We start by only offering the CSV export to see if there is any demand for the other formats.
+            If not, we can remove the other formats from the codebase at some point.
+          */}
+          {/* <LinkExternal
             href={`${appBaseUrl[process.env.NEXT_PUBLIC_APP_ENV]}/api/notes/${region.slug}`}
             classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
             download
@@ -43,7 +47,7 @@ export const AtlasNotesDownloadModal = () => {
             <span className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm">
               GeoJSON
             </span>
-          </LinkExternal>
+          </LinkExternal> */}
         </div>
       </IconModal>
     </section>

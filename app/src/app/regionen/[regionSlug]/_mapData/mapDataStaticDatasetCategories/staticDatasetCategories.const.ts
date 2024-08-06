@@ -52,7 +52,7 @@ export const staticDatasetCategories = {
     title: 'Rad+ Fahrten',
     subtitle: 'Statische Daten der Fahrten von Rad+ Nutzer:innen.',
   },
-  'radplus/radaparken': {
+  'radplus/radparken': {
     order: 2,
     title: 'radparken.info',
     subtitle: 'Statische Daten der radparken.info Umfragen.',
