@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/r
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { Fragment } from 'react'
+import { Fragment } from 'react'
 import { twJoin } from 'tailwind-merge'
 import { PrimaryNavigationProps } from '../types'
 
@@ -10,7 +10,7 @@ type Props = {
   menuItems: PrimaryNavigationProps['secondaryNavigation']
 }
 
-export const NavigationDesktopMenu: React.FC<Props> = ({ menuItems }) => {
+export const NavigationDesktopMenu = ({ menuItems }: Props) => {
   const pathname = usePathname()
 
   return (
