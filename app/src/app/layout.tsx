@@ -1,5 +1,5 @@
 import { Metadata, Viewport } from 'next'
-import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.png'
+import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.jpg'
 import { BlitzProvider } from 'src/blitz-client'
 import './_components/layouts/global.css'
 import { MissingEnvError } from './_components/layouts/helper/MissingEnvError'
