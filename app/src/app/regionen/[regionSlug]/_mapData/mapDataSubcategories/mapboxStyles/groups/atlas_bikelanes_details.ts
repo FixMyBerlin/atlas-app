@@ -36,7 +36,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     filter: [
       'match',
       ['get', 'category'],
-      ['sharedBusLaneBusWithBike', 'explicitSharedLaneButNoSignage'],
+      ['sharedBusLaneBusWithBike', 'sharedBusLaneBikeWithBus'],
       true,
       false,
     ],
