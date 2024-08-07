@@ -1,8 +1,8 @@
 import * as turf from '@turf/turf'
-import { uniqBy } from 'lodash'
-import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
+import { uniqBy, differenceBy } from 'lodash'
+import { type MapLibreEvent, MapMouseEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   AttributionControl,
   MapGeoJSONFeature,
@@ -35,6 +35,24 @@ import { useBreakpoint } from '../utils/useBreakpoint'
 import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
 import { UpdateFeatureState } from './UpdateFeatureState'
 
+// On lower zoom level, our source data is stripped down to only styling data
+// We do not show those features in our Inspector, which would show wrong data
+// However, we do want to show an interaction (Tooltip) to inform our users,
+// which is why the layers stay in `interactiveLayerIds`
+const extractInteractiveFeatures = (
+  mapParam,
+  features: MapGeoJSONFeature[] | undefined,
+): MapGeoJSONFeature[] => {
+  if (!features) return []
+  return features?.filter(({ sourceLayer }) => {
+    sourceLayer = String(sourceLayer)
+    return (
+      !(sourceLayer in interactivityConfiguration) ||
+      mapParam.zoom >= interactivityConfiguration[sourceLayer].minzoom
+    )
+  })
+}
+
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
   const { setFeaturesParam } = useFeaturesParam()
@@ -47,41 +65,15 @@ export const Map = () => {
   } = useMapActions()
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
+  const [cursorStyle, setCursorStyle] = useState('grab')
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
   mainMap?.getMap().touchZoomRotate.disableRotation()
-  // On lower zoom level, our source data is stripped down to only styling data
-  // We do not show those features in our Inspector, which would show wrong data
-  // However, we do want to show an interaction (Tooltip) to inform our users,
-  // which is why the layers stay in `interactiveLayerIds`
-  const extractInteractiveFeatures = (features: MapGeoJSONFeature[] | undefined) => {
-    return features?.filter((f) => {
-      if (!f.sourceLayer) return true // TS guard so sourceLayer is not undefined
-      return (
-        interactivityConfiguration[f.sourceLayer] === undefined ||
-        mapParam.zoom >= interactivityConfiguration[f.sourceLayer].minzoom
-      )
-    })
-  }
 
   const containMaskFeature = (features: MapLayerMouseEvent['features']) => {
     if (!features) return false
     return features.some((f) => f.source === 'mask')
-  }
-
-  const [cursorStyle, setCursorStyle] = useState('grab')
-  const handleMouseEnter = ({ features }: MapLayerMouseEvent) => {
-    if (containMaskFeature(features)) {
-      setCursorStyle('not-allowed')
-      return
-    }
-    const interactiveFeatures = extractInteractiveFeatures(features)
-    setCursorStyle(Boolean(interactiveFeatures?.length) ? 'pointer' : 'not-allowed')
-  }
-
-  const handleMouseLeave = (_event: MapLayerMouseEvent) => {
-    setCursorStyle('grab')
   }
 
   const inspectorFeatures = useMapInspectorFeatures()
@@ -90,7 +82,7 @@ export const Map = () => {
     if (containMaskFeature(features)) {
       return
     }
-    const interactiveFeatures = extractInteractiveFeatures(features)
+    const interactiveFeatures = extractInteractiveFeatures(mapParam, features)
     const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
 
     if (uniqueFeatures) {
@@ -117,6 +109,50 @@ export const Map = () => {
     } else {
       resetInspectorFeatures()
     }
+  }
+
+  const updateCursor = (features: MapGeoJSONFeature[] | undefined) => {
+    if (!features || !features.length) {
+      setCursorStyle('grab')
+      return
+    }
+    if (containMaskFeature(features)) {
+      setCursorStyle('not-allowed')
+      return
+    }
+    setCursorStyle(features.length ? 'pointer' : 'not-allowed')
+  }
+
+  const hoveredFeatures = useRef<MapGeoJSONFeature[]>([])
+  const key = ({ id, layer }: MapGeoJSONFeature) => `${id}>${layer.id}`
+  const updateHover = (features: MapGeoJSONFeature[] | undefined) => {
+    if (containMaskFeature(features)) features = []
+    const previous = hoveredFeatures.current
+    const current = features || []
+    differenceBy(previous, current, key).forEach((f) => {
+      mainMap?.setFeatureState(f, { hover: false })
+    })
+    differenceBy(current, previous, key).forEach((f) => {
+      mainMap?.setFeatureState(f, { hover: true })
+    })
+    hoveredFeatures.current = current
+  }
+
+  const getFeatures = (e: MapMouseEvent) =>
+    mainMap?.queryRenderedFeatures([e.point.x, e.point.y], {
+      layers: interactiveLayerIds,
+    }) || []
+
+  const handleMouseMove = (e: MapLayerMouseEvent) => {
+    const features = extractInteractiveFeatures(mapParam, getFeatures(e))
+    updateCursor(features)
+    updateHover(features)
+  }
+
+  const handleMouseLeave = (e: MapLayerMouseEvent) => {
+    const features = extractInteractiveFeatures(mapParam, getFeatures(e))
+    updateCursor(features)
+    updateHover(features)
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {
@@ -194,11 +230,11 @@ export const Map = () => {
       // onMouseMove={}
       // onLoad={handleInspect}
       cursor={cursorStyle}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
       onMoveEnd={handleMoveEnd}
       // onZoomEnd={} // zooming is always also moving
       onClick={handleClick}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       onLoad={handleLoad}
       onData={() => setMapDataLoading(true)}
       onIdle={() => setMapDataLoading(false)}
