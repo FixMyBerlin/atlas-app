@@ -130,22 +130,21 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                       const isVerificationStatusLayer = layer.id.search('verification-status') != -1
 
                       return (
-                        <Layer key={layerId} {...layerProps} />
-                        //   <React.Fragment key={layerId}>
-                        //     {isVerificationStatusLayer ? (
-                        //       <LayerVerificationStatus
-                        //       key={`${layerId}_verification`}
-                        //       {...layerProps}
-                        //       />
-                        //     ) : (
-                        //       <Layer key={layerId} {...layerProps} />
-                        //     )}
-                        //     <LayerHighlight
-                        //       key={`${layerId}_highlight`}
-                        //       {...layerProps}
-                        //       sourceData={sourceData}
-                        //     />
-                        //   </React.Fragment>
+                        <React.Fragment key={layerId}>
+                          {isVerificationStatusLayer ? (
+                            <LayerVerificationStatus
+                              key={`${layerId}_verification`}
+                              {...layerProps}
+                            />
+                          ) : (
+                            <Layer key={layerId} {...layerProps} />
+                          )}
+                          <LayerHighlight
+                            key={`${layerId}_highlight`}
+                            {...layerProps}
+                            sourceData={sourceData}
+                          />
+                        </React.Fragment>
                       )
                     })
                   })}
