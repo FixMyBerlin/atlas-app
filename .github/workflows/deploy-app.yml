@@ -71,14 +71,14 @@ jobs:
           --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
-          echo "::set-output name=sha::$LAST_RUN_SHA"
+          echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
         shell: bash
 
       - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
         id: git_changes
         run: |
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
-          if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
+          if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
             if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
               echo "CHANGES=false" >> $GITHUB_ENV
               echo "no changes"
@@ -88,9 +88,6 @@ jobs:
             fi
           else
             echo "CHANGES=true" >> $GITHUB_ENV
-            echo $LAST_6_COMMITS
-            echo $LAST_RUN_SHA
-            echo "Commit not in last 6"
           fi
         shell: bash
         env:
@@ -99,7 +96,6 @@ jobs:
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
         run: |
-          echo $CHANGES
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
