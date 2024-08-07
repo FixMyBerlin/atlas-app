@@ -100,6 +100,7 @@ let counters: { [key: string]: number } = {}
 
 export function count(key: string) {
   if (!(key in counters)) counters[key] = 1
+  // @ts-ignore
   return counters[key]++
 }
 
