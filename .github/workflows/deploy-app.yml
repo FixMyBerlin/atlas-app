@@ -81,13 +81,15 @@ jobs:
           if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
             if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
               echo "CHANGES=false" >> $GITHUB_ENV
+              echo "no changes"
             else
               echo "CHANGES=true" >> $GITHUB_ENV
+              echo "changes diff"
             fi
           else
             echo "CHANGES=true" >> $GITHUB_ENV
+            echo "Commit not in last 6"
           fi
-          echo $CHANGES
         shell: bash
         env:
           CHECK_DIFF_LOCATIONS: app/
@@ -95,6 +97,7 @@ jobs:
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
         run: |
+          echo $CHANGES
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
           sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
