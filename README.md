@@ -5,11 +5,13 @@
 
 # About
 
-**Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and visualized in multiple map views. The integrated verification process provided a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
+**Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and then visualized in multiple map views. The integrated verification process provides a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
 
-The backend, for processing and storing the geographic data, is located at [atlas-geo](https://github.com/FixMyBerlin/atlas-geo).
+This project is split into two major parts. The [processing](#processing) of Open-Street-Maps data and the ['frontend'](#frontend) for the visualization.
 
 # Frontend
+
+The frontend visualizes our processed data it also provides options to annotate and export the data.
 
 ## Develop
 
@@ -24,7 +26,7 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 ### Testing the production bundle
 
 1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
-2. Create a `.env.production.local` with settings linke
+2. Create a `.env.production.local` with settings like
    ```
    NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
    NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
@@ -62,27 +64,10 @@ If you find any bugs, feel free to open an issue in this repository.
 This project is licensed under the AGPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for more information.
 It contains dependencies which have different Licenses, see [`package.json`](./package.json).
 
-## Thanks
-
-For the current version:
-
-- Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
-- Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
-- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
-
-For the alpha version:
-
-- Thank you [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
-- Thank you [React Location](https://github.com/TanStack/router)
-
 # Processing
 
-## About
-
-This project handles the processing of geo data for [`atlas-app`](https://github.com/FixMyBerlin/atlas-app).
-The data is selected and optimize to make planning of bicycle infrastructure easier.
-
-`atlas-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with [`martin`](https://github.com/maplibre/martin).
+The processing downloads the OpenStreetMap (OSM) data, filters and processes it into a PostgreSQL/PostGIS database which are then made available as vector tiles with [`martin`](https://github.com/maplibre/martin).
+The data gets selected and optimized to make planning of bicycle infrastructure easier.
 
 ## Server
 
@@ -116,7 +101,7 @@ ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the co
 
 ### Initial setup
 
-1. First create a `.env` file. You can use the `.env.example` file as a template.
+1. First, create a `.env` file. You can use the `.env.example` file as a template.
 2. Follow "Run the whole system"
 
 ### Run the whole system
@@ -170,10 +155,21 @@ You may use `run-full.sh` to set `FREEZE_DATA=0` and modify the helper folder to
 
 ### Process only a single object
 
-For the development process it's often usefull to run the processing on a single object.
+For the development process it's often useful to run the processing on a single object.
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
 ## 💛 Thanks to
 
-The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
+For the current version:
+
+- Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
+- Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
+- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
+
+For the alpha version:
+
+- Thank you [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
+- Thank you [React Location](https://github.com/TanStack/router)
+
+The first iteration of the processing pipeline was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
