@@ -143,7 +143,7 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
                           )}
                           <LayerHighlight
                             key={layerHighlightId}
-                            {...{...layerProps, id: layerHighlightId}}
+                            {...{ ...layerProps, id: layerHighlightId }}
                             sourceData={sourceData}
                           />
                         </React.Fragment>

@@ -1,70 +1,42 @@
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
-import {
-  useMapLoaded,
-  useMapInspectorFeatures,
-  useMapCalculatorAreasWithFeatures,
-} from '../../../_hooks/mapState/useMapState'
-import { useSelectedFeatures } from '../../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
-import { extractHighlightFeatureIds } from './utils/extractHighlightFeatureIds'
-import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
+import { useMapLoaded } from '../../../_hooks/mapState/useMapState'
 
 export const LayerHighlight = (props) => {
-  const { sourceData } = props
-
-  const inspectorFeatures = useMapInspectorFeatures()
-  const calculatorAreasWithFeatures = useMapCalculatorAreasWithFeatures()
-
   const mapLoaded = useMapLoaded()
-
-  const selectedFeatures = useSelectedFeatures()
-  const features = inspectorFeatures.length
-    ? inspectorFeatures
-    : selectedFeatures.map((f) => f.mapFeature).filter(Boolean)
-
   if (!mapLoaded) return null
-
-  let highlightingKey: string | undefined = undefined
-  let featureIds: string[] | undefined = undefined
-
-  if (sourceData.inspector.enabled) {
-    highlightingKey = sourceData.inspector.highlightingKey
-    // NOTE: We used to filter the features by layer.id to make sure we only highlight features from the correct layer.
-    // But with selectedFeatures we don't have the layer.id anymore.
-    // But we might run into issues here where a feature id is used in multiple layers.
-    // Idea: We could filter on source to guard against this…
-    featureIds = extractHighlightFeatureIds(features, highlightingKey)
-  }
-  if (sourceData.calculator.enabled) {
-    highlightingKey = sourceData.calculator.highlightingKey
-    featureIds = extractHighlightFeatureIds(
-      calculatorAreasWithFeatures.map((e) => e.features).flat(),
-      highlightingKey,
-    )
-  }
-
-  if (!highlightingKey || !featureIds || featureIds.length === 0) return null
 
   const layerProps = {
     ...props,
-    id: `${props.id}--highlight`,
     paint: structuredClone(props.paint),
   } as LayerProps
 
+  const opacity = ['case', ['boolean', ['feature-state', 'selected'], false], 1, 0]
+
   if (layerProps.type === 'line') {
     if (!layerProps.paint) layerProps.paint = {}
-    layerProps.paint['line-color'] = 'red'
     delete layerProps.paint['line-blur']
-    delete layerProps.paint['line-opacity']
+    layerProps.paint = {
+      ...layerProps.paint,
+      'line-color': 'red',
+      // @ts-ignore
+      'line-opacity': opacity,
+      'line-width': layerProps.paint['line-width'],
+    }
   } else if (layerProps.type === 'fill') {
     layerProps.paint = {
       ...layerProps.paint,
       'fill-color': 'red',
-      'fill-opacity': 0.8,
+      // @ts-ignore
+      'fill-opacity': opacity,
     }
   } else if (layerProps.type === 'circle') {
     layerProps.paint = {
       ...layerProps.paint,
       'circle-color': 'red',
+      // @ts-ignore
+      'circle-opacity': opacity,
+      // @ts-ignore
+      'circle-stroke-opacity': opacity,
       'circle-stroke-color': 'black',
       'circle-stroke-width': 2,
     }
@@ -72,22 +44,10 @@ export const LayerHighlight = (props) => {
     layerProps.paint = {
       ...layerProps.paint,
       'text-halo-color': 'red',
+      // @ts-ignore
+      'text-opacity': opacity,
       'text-halo-width': 3,
     }
-  }
-
-  // The component gets rendered regardless of visibility. Which means we flood react with filter
-  // definitions which never get used. We have to re-evaluate if we should just remove the layer from the tree
-  // unless used. But for now, lets only specify filters for visible layers.
-  if (layerProps.layout?.visibility === 'visible') {
-    // @ts-expect-error layerProps has also BackgroundLayer which does not have filter
-    layerProps.filter =
-      'filter' in layerProps && layerProps.filter
-        ? wrapFilterWithAll([
-            ['in', ['get', highlightingKey], ['literal', featureIds]],
-            layerProps.filter,
-          ])
-        : ['in', ['get', highlightingKey], ['literal', featureIds]]
   }
 
   return <Layer {...layerProps} />

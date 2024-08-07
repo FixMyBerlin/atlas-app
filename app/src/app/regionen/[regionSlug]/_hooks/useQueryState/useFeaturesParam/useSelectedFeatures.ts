@@ -3,6 +3,7 @@ import { useMapBounds, useMapLoaded } from '../../mapState/useMapState'
 import { UrlFeature } from '../types'
 import { useFeaturesParam } from './useFeaturesParam'
 import { memoize } from 'lodash'
+import { isLayerHighlightId } from '../../../_components/Map/utils/layerHighlight'
 
 type Result = {
   urlFeature: UrlFeature
@@ -28,7 +29,9 @@ export const useSelectedFeatures = () => {
 
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
-    const mapFeature = renderedFeatures.find((f) => f.properties.id === urlFeature.properties.id)
+    const mapFeature = renderedFeatures.find(
+      (f) => f.properties.id === urlFeature.properties.id && !isLayerHighlightId(f.layer.id),
+    )
     return { urlFeature, mapFeature }
   })
 

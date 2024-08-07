@@ -33,6 +33,7 @@ import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersSta
 import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useBreakpoint } from '../utils/useBreakpoint'
 import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
+import { UpdateFeatureState } from './UpdateFeatureState'
 
 export const Map = () => {
   const { mapParam, setMapParam } = useMapParam()
@@ -209,6 +210,7 @@ export const Map = () => {
       attributionControl={false}
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
+      <UpdateFeatureState />
       <SourcesLayerRasterBackgrounds />
       <SourcesLayersRegionMask />
       <SourcesLayersAtlasGeo />
