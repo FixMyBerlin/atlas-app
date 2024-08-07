@@ -81,10 +81,8 @@ jobs:
           if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
             if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
               echo "CHANGES=false" >> $GITHUB_ENV
-              echo "no changes"
             else
               echo "CHANGES=true" >> $GITHUB_ENV
-              echo "changes diff"
             fi
           else
             echo "CHANGES=true" >> $GITHUB_ENV
