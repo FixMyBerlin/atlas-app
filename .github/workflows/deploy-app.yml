@@ -80,19 +80,20 @@ jobs:
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
           if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
             if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "changes=false" >> $GITHUB_OUTPUT
+              echo "CHANGES=false" >> $GITHUB_ENV
             else
-              echo "changes=true" >> $GITHUB_OUTPUT
+              echo "CHANGES=true" >> $GITHUB_ENV
             fi
           else
-            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "CHANGES=true" >> $GITHUB_ENV
           fi
+          echo $CHANGES
         shell: bash
         env:
           CHECK_DIFF_LOCATIONS: app/
 
       - name: Upgrade AWS CLI version and setup lightsailctl
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
@@ -101,18 +102,18 @@ jobs:
           sudo chmod +x /usr/local/bin/lightsailctl
 
       - name: Configure AWS credentials
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Setup buildx
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Build app image
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         uses: docker/build-push-action@v5
         with:
           file: ./app/docker/Dockerfile
@@ -128,7 +129,7 @@ jobs:
             NEXT_PUBLIC_OSM_API_URL=${{ inputs.NEXT_PUBLIC_OSM_API_URL }}
 
       - name: Push image
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         run: |
           echo push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
@@ -146,7 +147,7 @@ jobs:
           overwrite: true
 
       - name: Update GITHUB_SHA
-        if: steps.git_changes.outputs.changes == 'true'
+        if: env.CHANGES == 'true'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
