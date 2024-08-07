@@ -88,6 +88,8 @@ jobs:
             fi
           else
             echo "CHANGES=true" >> $GITHUB_ENV
+            echo $LAST_6_COMMITS
+            echo $LAST_RUN_SHA
             echo "Commit not in last 6"
           fi
         shell: bash
