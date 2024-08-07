@@ -7,7 +7,13 @@
 
 **Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and then visualized in multiple map views. The integrated verification process provides a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
 
-This project is split into two major parts. The [processing](#processing) of Open-Street-Maps data and the ['frontend'](#frontend) for the visualization.
+Please [contact FixMyCity GmbH to learn more](https://www.fixmycity.de/radverkehrsatlas).
+
+This project is split into two major parts. The [processing](#processing) of OpenStreetMap data and the [frontend](#frontend) for the visualization and Web GIS.
+
+# Contribute
+
+If you find any bugs, feel free to open an issue in this repository.
 
 # Frontend
 
@@ -21,7 +27,7 @@ The frontend visualizes our processed data it also provides options to annotate 
 
 For VS Code we [recommended](.vscode/extensions.json) some extensions.
 
-To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and use [update the credentials](/.env.example).
+To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and [update the credentials](/.env.example).
 
 ### Testing the production bundle
 
@@ -41,23 +47,11 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 
 ## Helper scripts
 
-All helper scripts run with [bun](https://bun.sh/).
+All [helper scripts](./app/scripts) run with [bun](https://bun.sh/). 
 
-### Update mapbox styles
-
-See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
-
-### Update regional masks
-
-See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
-
-### Update datasets
-
-See [/datasets/README.md](./datasets/README.md) on how to process and update external datasets.
-
-## Contribute
-
-If you find any bugs, feel free to open an issue in this repository.
+- **Update mapbox styles** – See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
+- **Update regional masks** – See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
+- **Update datasets** – See [/datasets/README.md](./datasets/README.md) on how to process and update external datasets.
 
 ## License
 
@@ -79,7 +73,7 @@ The data gets selected and optimized to make planning of bicycle infrastructure 
 
 ### Freshness of source data
 
-We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) `<3` which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
+We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
 
 ### Freshness of processed data
 
@@ -159,17 +153,17 @@ For the development process it's often useful to run the processing on a single 
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
-## 💛 Thanks to
+# 💛 Thanks to
 
-For the current version:
+**Processing:**
+
+- Thank you [osm2pgsql](https://osm2pgsql.org/)
+- Thank you [Geofabrik](https://download.geofabrik.de/)
+
+The first iteration of the processing pipeline was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
+
+**Frontend:**
 
 - Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
 - Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
 - Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
-
-For the alpha version:
-
-- Thank you [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
-- Thank you [React Location](https://github.com/TanStack/router)
-
-The first iteration of the processing pipeline was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
