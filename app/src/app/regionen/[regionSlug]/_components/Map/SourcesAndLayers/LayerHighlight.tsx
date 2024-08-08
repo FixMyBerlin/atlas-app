@@ -1,39 +1,30 @@
 import { Layer, LayerProps } from 'react-map-gl/maplibre'
 import { useMapLoaded } from '../../../_hooks/mapState/useMapState'
 
-const statesToNumber = [
-  '+',
-  ['to-number', ['feature-state', 'hover']],
-  ['*', ['to-number', ['feature-state', 'selected']], 2],
-]
+function createMatchExpression<T extends string | number>(
+  valueNone: T,
+  valueHover: T,
+  valueSelected: T,
+  valueHoverSelected: T,
+) {
+  // prettier-ignore
+  return [
+    'match',
+    [
+      '+',
+      ['to-number', ['feature-state', 'hover']],
+      ['*', ['to-number', ['feature-state', 'selected']], 2],
+    ],
+    0, valueNone,
+    1, valueHover,
+    2, valueSelected,
+    3, valueHoverSelected,
+    valueNone,
+  ]
+}
 
-const HOVER = 1
-const SELECTED = 2
-
-const [opacityNone, colorNone] = [0, 'black']
-const [opacitySelected, colorSelected] = [1, '#ff0000']
-const [opacityHover, colorHover] = [0.5, '#ff9933']
-const [opacityBoth, colorBoth] = [1, '#ff9933']
-
-// prettier-ignore
-const opacity = [
-  'match',
-  statesToNumber,
-  HOVER, opacityHover,
-  SELECTED, opacitySelected,
-  HOVER | SELECTED, opacityBoth,
-  opacityNone,
-]
-
-// prettier-ignore
-const color = [
-  'match',
-  statesToNumber,
-  HOVER, colorHover,
-  SELECTED, colorSelected,
-  HOVER | SELECTED, colorBoth,
-  colorNone,
-]
+const opacity = createMatchExpression(0, 0.5, 1, 1)
+const color = createMatchExpression('black', '#ff9933', '#ff0000', '#ff9933')
 
 export const LayerHighlight = (props) => {
   const mapLoaded = useMapLoaded()
@@ -53,7 +44,6 @@ export const LayerHighlight = (props) => {
       'line-color': color,
       // @ts-ignore
       'line-opacity': opacity,
-      'line-width': layerProps.paint['line-width'],
     }
   } else if (layerProps.type === 'fill') {
     layerProps.paint = {
