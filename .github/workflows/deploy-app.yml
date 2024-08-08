@@ -137,7 +137,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "app/docker/docker-compose.yml"
-          target: "/srv/blitz"
+          target: "/srv/blitz/docker-compose.yml"
           strip_components: 1
           overwrite: true
 
@@ -180,4 +180,4 @@ jobs:
             docker compose up -d
             docker image prune -fa
             sleep 10
-            curl http://localhost:3000 > /dev/null
+            curl http://localhost:4000 > /dev/null
