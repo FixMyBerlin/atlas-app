@@ -137,8 +137,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: "app/docker/docker-compose.yml"
-          target: "/srv/blitz/docker-compose.yml"
-          strip_components: 1
+          target: "/srv/blitz/"
+          strip_components: 2
           overwrite: true
 
       - name: Update GITHUB_SHA
