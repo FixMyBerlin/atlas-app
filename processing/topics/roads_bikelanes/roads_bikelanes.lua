@@ -176,6 +176,7 @@ function osm2pgsql.process_way(object)
   -- We need sidewalk for Biklanes(), but not for `roads`
   if not IsSidepath(tags) then
     local meta = Metadata(object)
+
     MergeTable(meta, {
       age = AgeInDays(ParseCheckDate(tags["check_date"])),
       surface_age = results._surface_age,
@@ -183,6 +184,7 @@ function osm2pgsql.process_way(object)
       maxspeed_age = results._maxspeed_age,
       lit_age = results._lit_age
     })
+
     if PathClasses[tags.highway] then
       roadsPathClassesTable:insert({
         tags = ExtractPublicTags(results),
