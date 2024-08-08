@@ -11,6 +11,8 @@ module.exports = withBlitz(
     // See also: https://github.com/facebook/react/issues/29130
     reactStrictMode: true,
     experimental: {
+      // https://react.dev/learn/react-compiler#usage-with-nextjs
+      reactCompiler: true,
       // https://nextjs.org/docs/app/building-your-application/configuring/typescript#statically-typed-links
       typedRoutes: true,
       instrumentationHook: true,

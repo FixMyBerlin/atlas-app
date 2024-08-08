@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PropsWithoutRef, ReactNode, useState } from 'react'
+import { PropsWithoutRef, ReactNode, useState, type JSX } from 'react'
 import { FormProvider, UseFormProps, useForm } from 'react-hook-form'
 import { IntlProvider } from 'react-intl'
 import { twMerge } from 'tailwind-merge'

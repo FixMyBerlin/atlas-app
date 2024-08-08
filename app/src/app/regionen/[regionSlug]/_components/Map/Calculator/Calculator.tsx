@@ -6,7 +6,7 @@ import { CalculatorOutput } from './CalculatorOutput'
 import { flattenSubcategories } from './utils/flattenSubcategories'
 
 export const Calculator = () => {
-  const drawControlRef = useRef<MapboxDraw>()
+  const drawControlRef = useRef<MapboxDraw | undefined>(undefined)
 
   // This blob ist just to check if the Calculator should be enabled
   // by checking the sourceData.
