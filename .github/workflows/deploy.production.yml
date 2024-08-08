@@ -4,7 +4,27 @@ on:
     branches:
       - main
 jobs:
+  deploy_processing:
+    uses: ./.github/workflows/deploy-processing.yml
+    with:
+      ENVIRONMENT: production
+      TILES_URL: tiles.radverkehrsatlas.de
+      CACHELESS_URL: cacheless.radverkehrsatlas.de
+    secrets:
+      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
+      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}
   deploy_app:
+    needs: deploy_processing
     uses: ./.github/workflows/deploy-app.yml
     with:
       ENVIRONMENT: production
@@ -31,22 +51,3 @@ jobs:
       S3_SECRET: ${{ secrets.S3_SECRET }}
       S3_REGION: ${{ secrets.S3_REGION }}
       S3_BUCKET: ${{ secrets.S3_BUCKET }}
-  deploy_processing:
-    uses: ./.github/workflows/deploy-processing.yml
-    with:
-      ENVIRONMENT: production
-      TILES_URL: tiles.radverkehrsatlas.de
-      CACHELESS_URL: cacheless.radverkehrsatlas.de
-    secrets:
-      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
-      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}
