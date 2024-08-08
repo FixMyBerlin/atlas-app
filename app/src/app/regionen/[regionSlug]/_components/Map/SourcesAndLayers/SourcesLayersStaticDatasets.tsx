@@ -11,6 +11,8 @@ import {
 import { layerVisibility } from '../utils/layerVisibility'
 import { createPmtilesUrl } from './utils/createPmtilesUrl'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
+import { getLayerHighlightId } from '../utils/layerHighlight'
+import { LayerHighlight } from './LayerHighlight'
 
 export const SourcesLayersStaticDatasets = () => {
   const { dataParam: selectedDatasetIds } = useDataParam()
@@ -75,9 +77,17 @@ export const SourcesLayersStaticDatasets = () => {
                 layerProps['source-layer'] = 'default'
               }
 
-              // To get LayerHighlight working some more refactoring is needed to harmonize sourceData and datasetsData
-              // <LayerHighlight {...layerProps} />
-              return <Layer key={layerId} {...(layerProps as LayerProps)} />
+              const layerHighlightId = getLayerHighlightId(layerId)
+
+              return (
+                <>
+                  <Layer key={layerId} {...(layerProps as LayerProps)} />
+                  <LayerHighlight
+                    key={layerHighlightId}
+                    {...{ ...layerProps, id: layerHighlightId }}
+                  />
+                </>
+              )
             })}
           </Source>
         )
