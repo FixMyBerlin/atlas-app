@@ -1,4 +1,4 @@
-name: Deploy Processing to IONOS
+name: Deploy Processing to Ionos
 
 on:
   workflow_call:
