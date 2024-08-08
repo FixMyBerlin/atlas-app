@@ -31,6 +31,8 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 
 ### Testing the production bundle
 
+In the [`app/`](./app/) directory do the following:
+
 1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
 2. Create a `.env.production.local` with settings like
    ```
@@ -47,7 +49,7 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 
 ## Helper scripts
 
-All [helper scripts](./app/scripts) run with [bun](https://bun.sh/). 
+All [helper scripts](./app/scripts) run with [bun](https://bun.sh/).
 
 - **Update mapbox styles** – See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
 - **Update regional masks** – See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
