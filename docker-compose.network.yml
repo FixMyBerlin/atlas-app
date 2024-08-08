@@ -27,8 +27,6 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
-    networks:
-      - app_bridge
   proxy:
     image: nginx:alpine
     restart: unless-stopped
@@ -44,8 +42,6 @@ services:
     volumes:
       - ./cache:/var/cache/nginx
       - ./logs:/var/log/nginx
-    networks:
-      - app_bridge
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
