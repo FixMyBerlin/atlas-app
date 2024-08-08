@@ -11,19 +11,7 @@ jobs:
       ENVIRONMENT: staging
       TILES_URL: staging-tiles.radverkehrsatlas.de
       CACHELESS_URL: staging-cacheless.radverkehrsatlas.de
-    secrets:
-      SERVICE_NAME: ${{ secrets.SERVICE_NAME }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-      SYNOLOGY_LOG_TOKEN: ${{ secrets.SYNOLOGY_LOG_TOKEN }}
-      SYNOLOGY_ERROR_LOG_TOKEN: ${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}
+    secrets: inherit
   deploy-app:
     needs: deploy_processing
     uses: ./.github/workflows/deploy-app.yml
@@ -33,22 +21,4 @@ jobs:
       NEXT_PUBLIC_APP_ENV: staging
       NEXT_PUBLIC_OSM_API_URL: https://master.apis.dev.openstreetmap.org/api/0.6
       TRAEFIK_HOST: staging.radverkehrsatlas.de
-    secrets:
-      # REMINDER: Public keys `NEXT_PUBLIC_*` have to be added to `/Dockerfile` as well
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
-      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
-      DATABASE_USER: ${{ secrets.DATABASE_USER }}
-      SESSION_SECRET_KEY: ${{ secrets.SESSION_SECRET_KEY }}
-      OSM_CLIENT_ID: ${{ secrets.OSM_CLIENT_ID }}
-      OSM_CLIENT_SECRET: ${{ secrets.OSM_CLIENT_SECRET }}
-      SSH_HOST: ${{ secrets.SSH_HOST }}
-      SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      ATLAS_API_KEY: ${{ secrets.ATLAS_API_KEY }}
-      S3_KEY: ${{ secrets.S3_KEY }}
-      S3_SECRET: ${{ secrets.S3_SECRET }}
-      S3_REGION: ${{ secrets.S3_REGION }}
-      S3_BUCKET: ${{ secrets.S3_BUCKET }}
+    secrets: inherit

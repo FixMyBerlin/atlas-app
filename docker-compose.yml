@@ -1,6 +1,6 @@
 services:
   processing:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${PROCESSING_GITHUB_SHA}
     container_name: processing
     environment:
       PGHOST:
@@ -34,6 +34,42 @@ services:
         condition: service_healthy
     logging:
       driver: journald
+  app:
+    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${APP_GITHUB_SHA}
+    container_name: blitz
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}?schema=prisma
+      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_APP_ENV:
+      NEXT_PUBLIC_OSM_API_URL:
+      NEXT_PUBLIC_APP_ORIGIN:
+      SESSIONS_SECRET_KEY:
+      TRAEFIK_HOST:
+      SESSION_SECRET_KEY:
+      OSM_CLIENT_ID:
+      OSM_CLIENT_SECRET:
+      ATLAS_API_KEY:
+      S3_KEY:
+      S3_SECRET:
+      S3_REGION:
+      S3_BUCKE:
+    ports:
+      - 4000:4000
+    labels:
+      traefik.enable: true
+      traefik.http.services.container.loadbalancer.server.port: 4000
+      traefik.http.routers.container.rule: Host(`${TRAEFIK_HOST}`) || Host(`www.${TRAEFIK_HOST}`)
+      traefik.http.routers.container.entrypoints: websecure
+      traefik.http.routers.container.tls.certresolver: letsencrypt
+      traefik.http.routers.container.tls: true
+    depends_on:
+      db:
+        condition: service_healthy
+      tiles:
+        condition: service_started
+    logging:
+      driver: journald
   tiles:
     image: ghcr.io/maplibre/martin:v0.14.2
     container_name: tiles
@@ -52,8 +88,6 @@ services:
       traefik.http.routers.tiles.tls: true
     ports:
       - 3000:3000
-    networks:
-      - app_bridge
     configs:
       - source: martin_conf
         target: /config.yaml
@@ -86,12 +120,11 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - app_bridge
 
 volumes:
   geodata:
   osmfiles:
+
 configs:
   martin_conf:
     file: ./configs/martin.yaml
@@ -101,6 +134,3 @@ configs:
     file: ./configs/postgres.conf
   warm_chache_conf:
     file: ./configs/warm-cache.json
-
-networks:
-  app_bridge:
