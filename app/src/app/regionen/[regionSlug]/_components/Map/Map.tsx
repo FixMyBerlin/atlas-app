@@ -144,6 +144,7 @@ export const Map = () => {
     }) || []
 
   const handleMouseMove = ({ features }: MapLayerMouseEvent) => {
+    console.log('--- move ---', features)
     features = extractInteractiveFeatures(mapParam, features)
     updateCursor(features)
     updateHover(features)
