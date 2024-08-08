@@ -169,7 +169,7 @@ export const DebugMap = () => {
           </thead>
           <tbody>
             {Object.entries(allLayers).map(([index, layer]) => {
-              const source = 'source' in layer ? (layer?.source ?? '-') : '-'
+              const source = 'source' in layer ? layer?.source ?? '-' : '-'
               return (
                 <tr key={`all${layer.id}`} className="border-t border-t-white/10 leading-tight">
                   <td>{index}</td>
