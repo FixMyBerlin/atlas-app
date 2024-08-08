@@ -143,16 +143,15 @@ export const Map = () => {
       layers: interactiveLayerIds,
     }) || []
 
-  const handleMouseMove = (e: MapLayerMouseEvent) => {
-    const features = extractInteractiveFeatures(mapParam, getFeatures(e))
+  const handleMouseMove = ({ features }: MapLayerMouseEvent) => {
+    features = extractInteractiveFeatures(mapParam, features)
     updateCursor(features)
     updateHover(features)
   }
 
   const handleMouseLeave = (e: MapLayerMouseEvent) => {
-    const features = extractInteractiveFeatures(mapParam, getFeatures(e))
-    updateCursor(features)
-    updateHover(features)
+    updateCursor([])
+    updateHover([])
   }
 
   const handleLoad = (_event: MapLibreEvent<undefined>) => {
