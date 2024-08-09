@@ -27,7 +27,7 @@ export const transformFile = async (
     (f) => (f.id = new Uint32Array([adler32.str(JSON.stringify(f))])[0]!),
   )
 
-  Bun.write(outputFullFilename, JSON.stringify(data, null, 2))
+  await Bun.write(outputFullFilename, JSON.stringify(data, null, 2))
 
   return outputFullFilename
 }
