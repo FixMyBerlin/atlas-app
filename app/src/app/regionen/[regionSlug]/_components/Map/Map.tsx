@@ -34,6 +34,8 @@ import { useInteractiveLayers } from './utils/useInteractiveLayers'
 import { useBreakpoint } from '../utils/useBreakpoint'
 import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
 import { UpdateFeatureState } from './UpdateFeatureState'
+import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
+import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 
 // On lower zoom level, our source data is stripped down to only styling data
 // We do not show those features in our Inspector, which would show wrong data
@@ -66,6 +68,7 @@ export const Map = () => {
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
   const [cursorStyle, setCursorStyle] = useState('grab')
+  const regionDatasets = useRegionDatasets()
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
   const { mainMap } = useMap()
@@ -100,7 +103,11 @@ export const Map = () => {
       }
       setInspectorFeatures(newInspectorFeatures)
 
-      const persistableFeatures = newInspectorFeatures.filter((f) => isSourceKeyAtlasGeo(f.source))
+      const persistableFeatures = newInspectorFeatures.filter(
+        (f) =>
+          isSourceKeyAtlasGeo(f.source) ||
+          regionDatasets.some(({ id }) => id === parseSourceKeyStaticDatasets(f.source).sourceId),
+      )
       if (persistableFeatures.length) {
         setFeaturesParam(persistableFeatures.map((feature) => convertToUrlFeature(feature)))
       } else {
