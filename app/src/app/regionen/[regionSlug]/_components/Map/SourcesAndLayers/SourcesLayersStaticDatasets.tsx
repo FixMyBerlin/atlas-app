@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { Fragment, useRef } from 'react'
 import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugUseDebugLayerStyles } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
@@ -87,13 +87,10 @@ export const SourcesLayersStaticDatasets = () => {
               const layerHighlightId = getLayerHighlightId(layerId)
 
               return (
-                <>
-                  <Layer key={layerId} {...(layerProps as LayerProps)} />
-                  <LayerHighlight
-                    key={layerHighlightId}
-                    {...{ ...layerProps, id: layerHighlightId }}
-                  />
-                </>
+                <Fragment key={layerId}>
+                  <Layer {...(layerProps as LayerProps)} />
+                  <LayerHighlight {...{ ...layerProps, id: layerHighlightId }} />
+                </Fragment>
               )
             })}
           </Source>
