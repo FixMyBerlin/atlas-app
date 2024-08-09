@@ -5,7 +5,7 @@ import path from 'node:path'
 import pluralize from 'pluralize'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
-import { createUpload, getRegions } from './api'
+import { createUpload, getRegions, type UploadType } from './api'
 import { MetaData } from './types'
 import { findGeojson } from './updateStaticDatasets/findGeojson'
 import { generatePMTilesFile } from './updateStaticDatasets/generatePMTilesFile'
@@ -14,11 +14,14 @@ import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
 import { green, inverse, red, yellow } from './utils/log'
 import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
 import { parse } from 'parse-gitignore'
+import { isCompressedSmallerThan } from './updateStaticDatasets/isCompressedSmallerThan'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
 export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
+// if a file is smaller than maxCompressedSize it will be uploaded as geojson
+const maxCompressedSize = 50000
 
 // use --dry-run to run all checks and transformation (but no pmtiles created, no upload to S3, no DB modifications)
 // use --keep-tmp to keep temporary generated files
@@ -37,6 +40,10 @@ const { values, positionals } = parseArgs({
 const dryRun = !!values['dry-run']
 const keepTemporaryFiles = !!values['keep-tmp']
 const folderFilterTerm = values['folder-filter']
+
+function logInfo(info, dryRun: boolean) {
+  console.log(dryRun ? `  DRY RUN: SKIPPING ${info}` : `  ${info}`)
+}
 
 inverse('Starting update with settings', [
   {
@@ -141,19 +148,32 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   }
 
   // Create the transformed data (or duplicate existing geojson)
-  const inputFullFilepath = await transformFile(datasetFolderPath, geojsonFullFilename, tmpDir)
+  const transformedFilepath = await transformFile(datasetFolderPath, geojsonFullFilename, tmpDir)
 
-  // Create the pmtiles
-  const outputFullFilepath = dryRun
-    ? '/tmp/does-not-exist.pmtiles'
-    : await generatePMTilesFile(inputFullFilepath, tmpDir)
-  if (dryRun) console.log(`  DRY RUN: SKIPPING Generating pmtiles file...`)
+  console.log('  Checking compressed file size...')
+  const isSmall = await isCompressedSmallerThan(transformedFilepath, maxCompressedSize)
 
-  // Upload pmtiles to S3
-  const pmtilesUrl = dryRun
-    ? 'http://example.com/does-not-exist.pmtiles'
-    : await uploadFileToS3(outputFullFilepath, datasetFolder)
-  if (dryRun) console.log(`  DRY RUN: SKIPPING Uploading generated pmtiles file to S3...`)
+  let uploadFilepath: string
+  let uploadType: UploadType
+  if (!isSmall) {
+    console.log('  File is big and will be converted to pmtiles.')
+    logInfo(`Generating pmtiles file......`, dryRun)
+    uploadFilepath = dryRun
+      ? '/tmp/does-not-exist.pmtiles'
+      : await generatePMTilesFile(transformedFilepath, tmpDir)
+    uploadType = 'PMTILES'
+  } else {
+    console.log('  File is small and will be uploaded as geojson.')
+    uploadFilepath = transformedFilepath
+    uploadType = 'GEOJSON'
+  }
+
+  // Upload file to S3
+  const ext = uploadType.toLowerCase()
+  logInfo(`Uploading generated ${ext} file to S3...`, dryRun)
+  const uploadUrl = dryRun
+    ? 'http://example.com/does-not-exist.${ext}'
+    : await uploadFileToS3(uploadFilepath, datasetFolder)
 
   // Create database entries dataset per region (from meta.ts)
   const regionSlugs: string[] = []
@@ -180,9 +200,9 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     regionSlugs.length === 0
       ? 'will not be assigned to any region'
       : `will be assigned to ${pluralize('region', regionSlugs.length)} ${regionSlugs.join(', ')}`
-  if (dryRun) console.log(`  DRY RUN: SKIPPING Saving upload to DB (${info})...`)
+
+  logInfo(`Saving upload to DB (${info})...`, dryRun)
   if (!dryRun) {
-    console.log(`  Saving upload to DB (${info})...`)
     const mergedConfigs = metaData.configs.map((config) => {
       return {
         githubUrl: `https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${regionAndDatasetFolder}`,
@@ -191,7 +211,8 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     })
     await createUpload({
       uploadSlug,
-      url: pmtilesUrl,
+      url: uploadUrl,
+      type: uploadType,
       regionSlugs,
       isPublic: metaData.public,
       configs: mergedConfigs,

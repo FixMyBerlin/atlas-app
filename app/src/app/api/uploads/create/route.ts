@@ -6,6 +6,7 @@ const Schema = z.object({
   apiKey: z.string().nullish(),
   uploadSlug: z.string(),
   url: z.string(),
+  type: z.enum(['GEOJSON', 'PMTILES']),
   regionSlugs: z.array(z.string()),
   isPublic: z.boolean(),
   configs: z.array(z.record(z.string(), z.any())),
@@ -19,7 +20,7 @@ export async function POST(request: Request) {
   const check = checkApiKey(data)
   if (!check.ok) return check.errorResponse
 
-  const { uploadSlug, url, regionSlugs, isPublic, configs } = data
+  const { uploadSlug, url, type, regionSlugs, isPublic, configs } = data
 
   await db.upload.deleteMany({ where: { slug: uploadSlug } })
 
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
       data: {
         slug: uploadSlug,
         url,
+        type,
         regions: { connect: regionSlugs.map((slug) => ({ slug })) },
         public: isPublic,
         configs,
