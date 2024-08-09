@@ -6,6 +6,15 @@ services:
       dockerfile: ./processing.Dockerfile
     volumes:
       - ./processing:/processing
+  app:
+    image: !reset null
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    environment:
+      DATABASE_URL:
+    profiles:
+      - app_dockerized
 
 configs:
   postgres_conf:
