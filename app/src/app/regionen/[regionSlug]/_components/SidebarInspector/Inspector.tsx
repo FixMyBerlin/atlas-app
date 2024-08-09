@@ -1,6 +1,6 @@
 import { StoreFeaturesInspector } from '../../_hooks/mapState/useMapState'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
-import { extractSourceIdFromStaticDatasetSourceKey } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
@@ -48,7 +48,7 @@ export const Inspector = ({ features }: Props) => {
 
         // Inspector-Block for Datasets
         const isDataset = regionDatasets.some(
-          (d) => d.id === extractSourceIdFromStaticDatasetSourceKey(sourceKey),
+          (d) => d.id === parseSourceKeyStaticDatasets(sourceKey).sourceId,
         )
         if (isDataset) {
           return (
