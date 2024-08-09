@@ -74,7 +74,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile
+          CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile configs/ docker-compose*
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
@@ -119,6 +119,7 @@ jobs:
           docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
 
       - name: Copy files to server
+        if: env.CHANGES == 'true'
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -140,6 +141,7 @@ jobs:
             sed -i "s|^GITHUB_SHA=.*$|GITHUB_SHA='${{ github.sha }}'|" .env
 
       - name: Stop & Start containers on VPS
+        if: env.CHANGES == 'true'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
