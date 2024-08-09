@@ -6,12 +6,12 @@ WORKDIR /app
 
 RUN npm install --global pm2
 
-COPY package.json package-lock.json ./
-COPY patches ./patches
+COPY /app/package*.json /app/
+COPY /app/patches /app/patches
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
-COPY . .
+COPY /app /app
 
 ARG NEXT_PUBLIC_APP_ORIGIN
 ARG NEXT_PUBLIC_APP_ENV

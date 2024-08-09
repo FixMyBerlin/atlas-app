@@ -80,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           file: ./app.Dockerfile
-          context: ./app/
+          context: ./
           push: false
           load: true
           cache-from: type=gha
