@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { FilterSpecification } from 'maplibre-gl'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugUseDebugLayerStyles } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
@@ -15,6 +16,7 @@ import { getLayerHighlightId } from '../utils/layerHighlight'
 import { LayerHighlight } from './LayerHighlight'
 
 export const SourcesLayersStaticDatasets = () => {
+  const datasetsPreviouslyVisible = useRef({})
   const { dataParam: selectedDatasetIds } = useDataParam()
   const useDebugLayerStyles = useMapDebugUseDebugLayerStyles()
   const regionDatasets = useRegionDatasets()
@@ -27,6 +29,11 @@ export const SourcesLayersStaticDatasets = () => {
         const datasetSourceId = createSourceKeyStaticDatasets(sourceId, subId)
         const visible = selectedDatasetIds.includes(datasetSourceId)
         const visibility = layerVisibility(visible)
+
+        // don't render Source (and load data) before it was not visible at least once
+        const datasetWasVisible = !!datasetsPreviouslyVisible.current[datasetSourceId]
+        if (!datasetWasVisible && !visible) return null
+        datasetsPreviouslyVisible.current[datasetSourceId] = true
 
         const sourceProps =
           type === 'GEOJSON'
