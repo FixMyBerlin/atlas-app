@@ -17,8 +17,6 @@ const memoized = memoize(
   (result) => JSON.stringify(result.map((f) => [f.urlFeature, !!f.mapFeature])),
 )
 
-export type SelectedFeature = ReturnType<typeof useSelectedFeatures>[number]
-
 export const useSelectedFeatures = () => {
   const { mainMap: map } = useMap()
   const mapLoaded = useMapLoaded()
@@ -30,7 +28,7 @@ export const useSelectedFeatures = () => {
   const renderedFeatures = map.queryRenderedFeatures()
   const result = featuresParam.map((urlFeature) => {
     const mapFeature = renderedFeatures.find(
-      (f) => f.properties.id === urlFeature.properties.id && !isLayerHighlightId(f.layer.id),
+      (f) => f.id === urlFeature.id && !isLayerHighlightId(f.layer.id),
     )
     return { urlFeature, mapFeature }
   })

@@ -15,10 +15,10 @@ const memoizer = createMemoizer()
 const stringSourceIds = Object.fromEntries(Object.entries(numericSourceIds).map(([k, v]) => [v, k]))
 
 export const convertToUrlFeature = (feature: MapGeoJSONFeature): UrlFeature => {
-  const { properties, source, geometry } = feature
+  const { id, source, geometry } = feature
   const sourceId = source === 'osm-notes' ? 'osm-notes' : parseSourceKeyAtlasGeo(source).sourceId
   const data: any = {
-    properties: { id: properties!.id },
+    id,
     sourceId,
     coordinates: (geometry.type === 'Point' ? geometry.coordinates : bbox(geometry)).map((v) =>
       Number(v.toFixed(6)),
@@ -31,8 +31,8 @@ export const serializeFeaturesParam = (urlFeatures: UrlFeature[]): string => {
   return urlFeatures
     .map((f) => {
       const {
+        id,
         sourceId,
-        properties: { id },
         coordinates,
       } = f
       const numericSourceId = stringSourceIds[sourceId]
@@ -56,8 +56,8 @@ export const parseFeaturesParam = memoize((query: string) => {
       const sourceId = numericSourceIds[numericSourceId]
       if (!sourceId) return null
       return {
+        id,
         sourceId,
-        properties: { id },
         coordinates,
       }
     })
