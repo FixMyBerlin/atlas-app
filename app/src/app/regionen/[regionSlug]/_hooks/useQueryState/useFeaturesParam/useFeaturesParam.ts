@@ -12,6 +12,7 @@ import { memoize } from 'lodash'
 import { parseSourceKeyStaticDatasets } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import adler32 from 'adler-32'
 import { useRegionDatasets } from '../../useRegionDatasets/useRegionDatasets'
+import { globalize } from '../../../../../../dev'
 
 const memoizer = createMemoizer()
 
@@ -58,22 +59,14 @@ const Point = [longitude, latitude]
 const QuerySchema = z.union([z.tuple([...Ids, ...Point]), z.tuple([...Ids, ...Point, ...Point])])
 
 export const parseFeaturesParam = memoize((query: string) => {
-  const regionDatasets = useRegionDatasets()
-  const checksumToDatasetId = Object.fromEntries(
-    regionDatasets.map((r) => [adlerChecksum(r.id), r.id]),
-  )
   return query
     .split(',')
     .map((s) => {
       const parsed = QuerySchema.safeParse(s.split('|'))
       if (!parsed.success) return null
       const [numericSourceId, id, ...coordinates] = parsed.data
-      let sourceId: undefined | string = numericSourceIds[numericSourceId]
-      if (!sourceId) sourceId = checksumToDatasetId[numericSourceId]
-      if (!sourceId) return null
       return {
         id,
-        sourceId,
         coordinates,
       }
     })
