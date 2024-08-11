@@ -14,7 +14,11 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapInspectorFeatures, useMapActions } from '../../_hooks/mapState/useMapState'
+import {
+  useMapInspectorFeatures,
+  useMapActions,
+  useMapDataLoading,
+} from '../../_hooks/mapState/useMapState'
 import {
   convertToUrlFeature,
   useFeaturesParam,
@@ -68,6 +72,7 @@ export const Map = () => {
   const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
   const [cursorStyle, setCursorStyle] = useState('grab')
+  const mapDataLoading = useMapDataLoading()
   const regionDatasets = useRegionDatasets()
 
   // Position the map when URL change is triggered from the outside (eg a Button that changes the URL-state to move the map)
@@ -235,7 +240,7 @@ export const Map = () => {
       interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}
-      cursor={cursorStyle}
+      cursor={mapDataLoading ? 'progress' : cursorStyle}
       onMoveEnd={handleMoveEnd}
       // onZoomEnd={} // zooming is always also moving
       onClick={handleClick}
