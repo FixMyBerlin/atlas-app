@@ -60,6 +60,7 @@ const extractInteractiveFeatures = (
 }
 
 export const Map = () => {
+  console.log('FOO')
   const { mapParam, setMapParam } = useMapParam()
   const { setFeaturesParam } = useFeaturesParam()
   const {
