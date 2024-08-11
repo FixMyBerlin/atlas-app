@@ -24,7 +24,7 @@ export const SidebarInspector = () => {
   const mapLoaded = useMapLoaded()
   const mapBounds = useMapBounds() // needed to trigger rerendering
   const inspectorFeatures = useMapInspectorFeatures()
-  const selectedFeatures = useSelectedFeatures()
+  const selectedFeatures = useSelectedFeatures(!inspectorFeatures.length)
   const inspectorSize = useMapInspectorSize()
   const sidebarSize = useMapSidebarSize()
 

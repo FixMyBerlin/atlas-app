@@ -9,8 +9,8 @@ const key = (f: MapGeoJSONFeature) => `${f.id}:::${f.layer.id}`
 export const UpdateFeatureState = () => {
   const { mainMap } = useMap()
   const previous = useRef<MapGeoJSONFeature[]>([])
-  const selectedFeatures = useSelectedFeatures()
   const inspectorFeatures = useMapInspectorFeatures()
+  const selectedFeatures = useSelectedFeatures(!inspectorFeatures.length)
 
   const previousSelectedFeatures = previous.current
   const currentSelectedFeatures = inspectorFeatures.length
