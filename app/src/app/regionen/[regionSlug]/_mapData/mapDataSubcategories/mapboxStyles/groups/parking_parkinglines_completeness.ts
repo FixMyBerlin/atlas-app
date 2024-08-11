@@ -5,15 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_parking_parkinglines_completeness: MapboxStyleLayer[] = [
   {
-    id: 'capacity_status-no_parking',
-    type: 'line',
-    paint: {
-      'line-color': 'hsl(273, 78%, 37%)',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 10],
-    },
-    filter: ['match', ['get', 'capacity_status'], ['no_parking'], true, false],
-  },
-  {
     id: 'capacity_status-segment_too_small',
     type: 'line',
     paint: {
@@ -29,6 +20,15 @@ export const mapboxStyleGroupLayers_parking_parkinglines_completeness: MapboxSty
       ],
     },
     filter: ['match', ['get', 'capacity_status'], ['segment_too_small'], true, false],
+  },
+  {
+    id: 'capacity_status-no_parking',
+    type: 'line',
+    paint: {
+      'line-color': 'hsl(273, 78%, 37%)',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 16, 2, 20, 10],
+    },
+    filter: ['match', ['get', 'capacity_status'], ['no_parking'], true, false],
   },
   {
     id: 'capacity_status-data_missing',
