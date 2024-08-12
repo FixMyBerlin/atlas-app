@@ -25,13 +25,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
     configs:
-    - source: warm_chache_conf
-      target: /processing/warm-cache/config.json
+      - source: warm_chache_conf
+        target: /processing/warm-cache/config.json
     networks:
       - app_bridge
     depends_on:
       db:
         condition: service_healthy
+    logging:
+      driver: journald
+
   tiles:
     image: ghcr.io/maplibre/martin:v0.14.2
     container_name: tiles
