@@ -20,10 +20,6 @@ jobs:
       name: ${{ inputs.ENVIRONMENT }}
       url: https://${{ inputs.TILES_URL }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 6
-
       - name: Get last run commit SHA
         id: last_run
         run: |
@@ -34,16 +30,19 @@ jobs:
           echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
         shell: bash
 
-      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
+      - name: Checkout current version
+        uses: actions/checkout@v4
+
+      - name: Checkout last run
+        uses: actions/checkout@v4
+        with:
+          ref: $LAST_RUN_SHA
+
+      - name: Check for changes
         id: git_changes
         run: |
-          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
-          if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
-            if git diff --quiet $LAST_RUN_SHA HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "CHANGES=false" >> $GITHUB_ENV
-            else
-              echo "CHANGES=true" >> $GITHUB_ENV
-            fi
+          if git diff --quiet $LAST_RUN_SHA HEAD -- $CHECK_DIFF_LOCATIONS; then
+            echo "CHANGES=false" >> $GITHUB_ENV
           else
             echo "CHANGES=true" >> $GITHUB_ENV
           fi
