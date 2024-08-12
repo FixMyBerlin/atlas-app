@@ -1,6 +1,6 @@
 services:
   processing:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${PROCESSING_GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}
     container_name: processing
     environment:
       PGHOST:
@@ -35,7 +35,7 @@ services:
     logging:
       driver: journald
   app:
-    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${APP_GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${ENVIRONMENT}
     container_name: blitz
     restart: unless-stopped
     environment:

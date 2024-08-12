@@ -84,35 +84,15 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+          tags: |
+            public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
+            public.ecr.aws/n0p8j4k5/atlas/app:${{ inputs.ENVIRONMENT }}
 
       - name: Push the app image
         if: env.CHANGES == 'true'
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
-
-      - name: Copy files to server
-        if: env.CHANGES == 'true'
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml, docker-compose.network.yml, configs/"
-          target: "/srv/"
-          overwrite: true
-
-      - name: Update GITHUB_SHA
-        if: env.CHANGES == 'true'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd /srv
-            sed -i "s|^PROCESSING_GITHUB_SHA=.*$|PROCESSING_GITHUB_SHA='${{ github.sha }}'|" .env
+          docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/app
 
       - name: Copy files to server
         uses: appleboy/scp-action@master

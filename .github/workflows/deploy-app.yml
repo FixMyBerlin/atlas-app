@@ -85,7 +85,9 @@ jobs:
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+          tags: |
+            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ inputs.ENVIRONMENT }}
           build-args: |
             NEXT_PUBLIC_APP_ENV=${{ inputs.NEXT_PUBLIC_APP_ENV }}
             NEXT_PUBLIC_APP_ORIGIN=${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}
@@ -94,9 +96,8 @@ jobs:
       - name: Push image
         if: env.CHANGES == 'true'
         run: |
-          echo push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+          docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/blitz
 
       - name: Copy files to server
         uses: appleboy/scp-action@v0.1.7
@@ -108,17 +109,6 @@ jobs:
           target: "/srv"
           strip_components: 2
           overwrite: true
-
-      - name: Update GITHUB_SHA
-        if: env.CHANGES == 'true'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd /srv
-            sed -i "s|^APP_GITHUB_SHA=.*$|APP_GITHUB_SHA='${{ github.sha }}'|" .env
 
       - name: Stop & Start container on Server
         uses: appleboy/ssh-action@master
