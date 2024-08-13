@@ -19,42 +19,17 @@ on:
         type: string
 
 jobs:
+  check_changes_app:
+    uses: ./.github/diff-last-run.yml
+    with:
+      CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
   build_and_deploy_app:
+    needs: check_changes_app
+    if: ${{ needs.check_changes_app.outputs.changes }} == 'true'
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 6
-
-      - name: Get last run commit SHA
-        id: last_run
-        run: |
-          LAST_RUN_SHA=$(curl --request GET \
-          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
-          echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
-        shell: bash
-
-      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
-        id: git_changes
-        run: |
-          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
-          if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
-            if git diff --quiet $LAST_RUN_SHA HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "CHANGES=false" >> $GITHUB_ENV
-            else
-              echo "CHANGES=true" >> $GITHUB_ENV
-            fi
-          else
-            echo "CHANGES=true" >> $GITHUB_ENV
-          fi
-        shell: bash
-        env:
-          CHECK_DIFF_LOCATIONS: app/
-
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
         run: |
