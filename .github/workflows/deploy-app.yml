@@ -19,44 +19,21 @@ on:
         type: string
 
 jobs:
+  check_changes_app:
+    uses: ./.github/workflows/diff-last-run.yml
+    with:
+      CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
   build_and_deploy_app:
+    needs: check_changes_app
+    if: ${{ needs.check_changes_app.outputs.changes }} == 'true'
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 6
-
-      - name: Get last run commit SHA
-        id: last_run
-        run: |
-          LAST_RUN_SHA=$(curl --request GET \
-          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
-          echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
-        shell: bash
-
-      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
-        id: git_changes
-        run: |
-          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
-          if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
-            if git diff --quiet $LAST_RUN_SHA HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "CHANGES=false" >> $GITHUB_ENV
-            else
-              echo "CHANGES=true" >> $GITHUB_ENV
-            fi
-          else
-            echo "CHANGES=true" >> $GITHUB_ENV
-          fi
-        shell: bash
-        env:
-          CHECK_DIFF_LOCATIONS: app/
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Upgrade AWS CLI version and setup lightsailctl
-        if: env.CHANGES == 'true'
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
@@ -65,18 +42,15 @@ jobs:
           sudo chmod +x /usr/local/bin/lightsailctl
 
       - name: Configure AWS credentials
-        if: env.CHANGES == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
       - name: Setup buildx
-        if: env.CHANGES == 'true'
         uses: docker/setup-buildx-action@v3
 
       - name: Build app image
-        if: env.CHANGES == 'true'
         uses: docker/build-push-action@v5
         with:
           file: ./app.Dockerfile
@@ -94,7 +68,6 @@ jobs:
             NEXT_PUBLIC_OSM_API_URL=${{ inputs.NEXT_PUBLIC_OSM_API_URL }}
 
       - name: Push image
-        if: env.CHANGES == 'true'
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/blitz
