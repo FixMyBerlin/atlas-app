@@ -43,7 +43,6 @@ services:
       NEXT_PUBLIC_OSM_API_URL:
       NEXT_PUBLIC_APP_ORIGIN:
       SESSIONS_SECRET_KEY:
-      TRAEFIK_HOST:
       SESSION_SECRET_KEY:
       OSM_CLIENT_ID:
       OSM_CLIENT_SECRET:
@@ -57,7 +56,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.services.container.loadbalancer.server.port: 4000
-      traefik.http.routers.container.rule: Host(`${TRAEFIK_HOST}`) || Host(`www.${TRAEFIK_HOST}`)
+      traefik.http.routers.container.rule: Host(`${APP_URL}`) || Host(`www.${APP_URL}`)
       traefik.http.routers.container.entrypoints: websecure
       traefik.http.routers.container.tls.certresolver: letsencrypt
       traefik.http.routers.container.tls: true

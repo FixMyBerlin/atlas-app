@@ -14,7 +14,7 @@ on:
       NEXT_PUBLIC_OSM_API_URL:
         required: true
         type: string
-      TRAEFIK_HOST:
+      APP_URL:
         required: true
         type: string
 
@@ -95,7 +95,7 @@ jobs:
             sed -i \
               -e "s|^NEXT_PUBLIC_APP_ORIGIN=.*$|NEXT_PUBLIC_APP_ORIGIN='${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}'|"\
               -e "s|^NEXT_PUBLIC_APP_ENV=.*$|NEXT_PUBLIC_APP_ENV='${{ inputs.NEXT_PUBLIC_APP_ENV }}'|" \
-              -e "s|^TRAEFIK_HOST=.*$|TRAEFIK_HOST='${{ inputs.TRAEFIK_HOST }}'|" \
+              -e "s|^APP_URL=.*$|APP_URL='${{ inputs.APP_URL }}'|" \
               -e "s|^DATABASE_HOST=.*$|DATABASE_HOST='${{ vars.DATABASE_HOST }}'|" \
               -e "s|^DATABASE_USER=.*$|DATABASE_USER='${{ secrets.DATABASE_USER }}'|" \
               -e "s|^DATABASE_PASSWORD=.*$|DATABASE_PASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \

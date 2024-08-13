@@ -20,5 +20,5 @@ jobs:
       NEXT_PUBLIC_APP_ORIGIN: https://staging.radverkehrsatlas.de
       NEXT_PUBLIC_APP_ENV: staging
       NEXT_PUBLIC_OSM_API_URL: https://master.apis.dev.openstreetmap.org/api/0.6
-      TRAEFIK_HOST: staging.radverkehrsatlas.de
+      APP_URL: staging.radverkehrsatlas.de
     secrets: inherit
