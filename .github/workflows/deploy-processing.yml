@@ -86,7 +86,7 @@ jobs:
           cache-to: type=gha,mode=max
           tags: |
             public.ecr.aws/n0p8j4k5/atlas/app:${{ github.sha }}
-            public.ecr.aws/n0p8j4k5/atlas/app:${{ inputs.ENVIRONMENT }}
+            public.ecr.aws/n0p8j4k5/atlas/app:${{ inputs.ENVIRONMENT }}-latest
 
       - name: Push the app image
         if: env.CHANGES == 'true'

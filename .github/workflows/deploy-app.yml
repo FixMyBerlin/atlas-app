@@ -87,7 +87,7 @@ jobs:
           cache-to: type=gha,mode=max
           tags: |
             public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
-            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ inputs.ENVIRONMENT }}
+            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ inputs.ENVIRONMENT }}-latest
           build-args: |
             NEXT_PUBLIC_APP_ENV=${{ inputs.NEXT_PUBLIC_APP_ENV }}
             NEXT_PUBLIC_APP_ORIGIN=${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}
