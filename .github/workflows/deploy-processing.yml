@@ -119,9 +119,10 @@ jobs:
               -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
               -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
               -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
-              -e "s|^PGUSER=.*$|PGUSER='${{ secrets.DATABASE_USER }}'|" \
-              -e "s|^PGPASSWORD=.*$|PGPASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
-              -e "s|^PGDATABASE=.*$|PGDATABASE='${{ secrets.DATABASE_NAME }}'|" \
+              -e "s|^DATABASE_HOST=.*$|DATABASE_HOST='${{ vars.DATABASE_HOST }}'|" \
+              -e "s|^DATABASE_USER=.*$|DATABASE_USER='${{ secrets.DATABASE_USER }}'|" \
+              -e "s|^DATABASE_PASSWORD=.*$|DATABASE_PASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
+              -e "s|^DATABASE_NAME=.*$|DATABASE_NAME='${{ secrets.DATABASE_NAME }}'|" \
               -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
               -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \#
               -e "s|^CACHELESS_URL=.*$|TILES_URL='${{ inputs.CACHELESS_URL }}'|" \
