@@ -138,7 +138,7 @@ jobs:
               -e "s|^S3_BUCKET=.*$|S3_BUCKET='${{ secrets.S3_BUCKET }}'|" \
               .env
             echo "Restarting container `app`"
-            docker compose up app -d
+            docker compose --profile frontend up app -d
             docker image prune -fa
             sleep 10
             curl http://localhost:4000 > /dev/null
