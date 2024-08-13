@@ -13,9 +13,6 @@ services:
       dockerfile: ./app.Dockerfile
     environment:
       DATABASE_URL:
-    profiles:
-      - app_dockerized
-
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
