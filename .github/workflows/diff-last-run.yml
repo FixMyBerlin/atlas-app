@@ -29,7 +29,7 @@ jobs:
       - name: Checkout last run
         uses: actions/checkout@v4
         with:
-          ref: $LAST_RUN_SHA
+          ref: /$LAST_RUN_SHA
 
       - name: Checkout current version
         uses: actions/checkout@v4
