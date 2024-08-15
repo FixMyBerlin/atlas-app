@@ -15,7 +15,7 @@ on:
 
 jobs:
   check_changes_processing:
-    uses: ./.github/diff-last-run.yml
+    uses: ./.github/workflows/diff-last-run.yml
     with:
       CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile configs/ docker-compose*
   build_and_deploy_processing:

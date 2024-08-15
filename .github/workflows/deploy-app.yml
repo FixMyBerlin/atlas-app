@@ -20,7 +20,7 @@ on:
 
 jobs:
   check_changes_app:
-    uses: ./.github/diff-last-run.yml
+    uses: ./.github/workflows/diff-last-run.yml
     with:
       CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
   build_and_deploy_app:
