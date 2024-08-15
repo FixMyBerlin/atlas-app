@@ -21,7 +21,7 @@ export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
 // if a file is smaller than maxCompressedSize it will be uploaded as geojson
-const maxCompressedSize = 50000
+const maxCompressedSize = 1 // TODO: Revert back to 50000
 
 // use --dry-run to run all checks and transformation (but no pmtiles created, no upload to S3, no DB modifications)
 // use --keep-tmp to keep temporary generated files

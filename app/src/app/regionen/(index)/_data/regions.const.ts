@@ -603,7 +603,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'radplus',
     name: 'Rad+',
     fullName: 'Rad+ & Bahnhofsumfelddaten',
-    osmRelationIds: [62369],
+    osmRelationIds: [62369, 62422],
     map: { lat: 52.3919, lng: 13.0702, zoom: 13 },
     bbox: null,
     logoPath: null,
