@@ -99,7 +99,7 @@ services:
     shm_size: 1gb
     restart: unless-stopped
     environment:
-      PGUSER: ${DATABASE_USER}
+      POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       LANG: en_US.UTF-8
