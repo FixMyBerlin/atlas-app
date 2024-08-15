@@ -26,13 +26,13 @@ jobs:
           echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
         shell: bash
 
-      - name: Checkout current version
-        uses: actions/checkout@v4
-
       - name: Checkout last run
         uses: actions/checkout@v4
         with:
           ref: $LAST_RUN_SHA
+
+      - name: Checkout current version
+        uses: actions/checkout@v4
 
       - name: Check for changes
         id: git_changes
