@@ -33,7 +33,7 @@ jobs:
       - name: Checkout last build
         uses: actions/checkout@v4
         with:
-          ref: $LAST_RUN_SHA
+          ref: ${{ env.LAST_RUN_SHA }}
 
       - name: Check for changes
         id: git_changes
