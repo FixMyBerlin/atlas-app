@@ -74,7 +74,7 @@ jobs:
           fi
         shell: bash
         env:
-          CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile configs/ docker-compose*
+          CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile configs/ docker-compose.yml docker-compose.network.yml
 
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
