@@ -78,7 +78,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "app/docker/docker-compose.yml"
+          source: "docker-compose.yml"
           target: "/srv"
           strip_components: 2
           overwrite: true
