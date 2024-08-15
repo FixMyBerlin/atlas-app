@@ -23,6 +23,8 @@ services:
       traefik.http.routers.container.tls: true
     networks:
       - processing_app_bridge
+    logging:
+      driver: journald
 
 networks:
   processing_app_bridge:
