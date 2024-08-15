@@ -26,6 +26,9 @@ jobs:
           echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
         shell: bash
 
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Check for changes
         id: git_changes
         run: |
