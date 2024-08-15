@@ -26,6 +26,9 @@ jobs:
       name: ${{ inputs.ENVIRONMENT }}
       url: https://${{ inputs.TILES_URL }}
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Upgrade AWS CLI version and setup lightsailctl
         run: |
           aws --version

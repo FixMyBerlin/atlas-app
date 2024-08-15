@@ -30,6 +30,9 @@ jobs:
     environment:
       name: ${{ inputs.ENVIRONMENT }}
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Upgrade AWS CLI version and setup lightsailctl
         if: env.CHANGES == 'true'
         run: |
