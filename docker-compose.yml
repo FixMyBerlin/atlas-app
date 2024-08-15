@@ -1,6 +1,6 @@
 services:
   processing:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}-latest
     container_name: processing
     environment:
       PGHOST: ${DATABASE_HOST}
