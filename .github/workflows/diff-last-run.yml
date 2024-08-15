@@ -5,9 +5,6 @@ on:
       CHECK_DIFF_LOCATIONS:
         type: string
         required: true
-      ENVIRONMENT:
-        type: string
-        required: true
     outputs:
       CHANGES:
         description: "Whether the given directories have changed since the last successfull workflow run."
@@ -16,8 +13,6 @@ on:
 jobs:
   diff:
     runs-on: ubuntu-latest
-    environment:
-      name: ${{ inputs.ENVIRONMENT }}
     outputs:
       CHANGES: ${{ steps.git_changes.CHANGES }}
     steps:
