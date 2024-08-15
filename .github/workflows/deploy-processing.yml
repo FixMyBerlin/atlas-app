@@ -88,7 +88,6 @@ jobs:
             cd /srv
             echo "Updating `.env`"
             sed -i \
-              -e "s|^PGHOST=.*$|PGHOST='${{ vars.DATABASE_HOST }}'|" \
               -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
               -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
               -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
