@@ -27,8 +27,6 @@ services:
     configs:
       - source: warm_chache_conf
         target: /processing/warm-cache/config.json
-    networks:
-      - app_bridge
     depends_on:
       db:
         condition: service_healthy
