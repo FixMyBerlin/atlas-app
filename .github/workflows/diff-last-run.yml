@@ -24,7 +24,6 @@ jobs:
           --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
           | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
           echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
-          echo $LAST_RUN_SHA
         shell: bash
 
       - name: Checkout current version
