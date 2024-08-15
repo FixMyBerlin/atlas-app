@@ -64,7 +64,7 @@ jobs:
         run: |
           LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
           if echo "$LAST_6_COMMITS" | grep -q $LAST_RUN_SHA; then
-            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
+            if git diff --quiet $LAST_RUN_SHA HEAD -- $CHECK_DIFF_LOCATIONS; then
               echo "CHANGES=false" >> $GITHUB_ENV
             else
               echo "CHANGES=true" >> $GITHUB_ENV
