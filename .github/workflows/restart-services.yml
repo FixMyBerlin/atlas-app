@@ -12,7 +12,7 @@ jobs:
     uses: ./.github/workflows/diff-last-run.yml
     with:
       CHECK_DIFF_LOCATIONS: docker-compose* configs/ .env.example
-  build_and_deploy_processing:
+  restart_services:
     needs: check_config_changes
     if: ${{ needs.check_changes_processing.outputs.changes }} == 'true'
     runs-on: ubuntu-latest
