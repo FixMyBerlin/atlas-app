@@ -1,12 +1,12 @@
 services:
   processing:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${GITHUB_SHA}
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}-latest
     container_name: processing
     environment:
-      PGHOST:
-      PGDATABASE:
-      PGUSER:
-      PGPASSWORD:
+      PGHOST: ${DATABASE_HOST}
+      PGDATABASE: ${DATABASE_NAME}
+      PGUSER: ${DATABASE_USER}
+      PGPASSWORD: ${DATABASE_PASSWORD}
       OSM_DOWNLOAD_URL:
       SKIP_DOWNLOAD:
       SKIP_TAG_FILTER:
@@ -27,11 +27,46 @@ services:
     configs:
       - source: warm_chache_conf
         target: /processing/warm-cache/config.json
-    networks:
-      - app_bridge
     depends_on:
       db:
         condition: service_healthy
+    logging:
+      driver: journald
+  app:
+    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${ENVIRONMENT}-latest
+    container_name: blitz
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}?schema=prisma
+      NEXT_TELEMETRY_DISABLED: 1
+      NEXT_PUBLIC_APP_ENV:
+      NEXT_PUBLIC_OSM_API_URL:
+      NEXT_PUBLIC_APP_ORIGIN:
+      SESSIONS_SECRET_KEY:
+      SESSION_SECRET_KEY:
+      OSM_CLIENT_ID:
+      OSM_CLIENT_SECRET:
+      ATLAS_API_KEY:
+      S3_KEY:
+      S3_SECRET:
+      S3_REGION:
+      S3_BUCKE:
+    ports:
+      - 4000:4000
+    labels:
+      traefik.enable: true
+      traefik.http.services.container.loadbalancer.server.port: 4000
+      traefik.http.routers.container.rule: Host(`${APP_URL}`) || Host(`www.${APP_URL}`)
+      traefik.http.routers.container.entrypoints: websecure
+      traefik.http.routers.container.tls.certresolver: letsencrypt
+      traefik.http.routers.container.tls: true
+    profiles:
+      - frontend
+    depends_on:
+      db:
+        condition: service_healthy
+      tiles:
+        condition: service_started
     logging:
       driver: journald
   tiles:
@@ -40,7 +75,7 @@ services:
     command: "--config /config.yaml"
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}
+      DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}
       # https://maplibre.org/martin/troubleshooting.html?highlight=log#troubleshooting
       # RUST_LOG: actix_web=info,martin=debug,tokio_postgres=debug
       RUST_LOG: actix_web=info,martin=info,tokio_postgres=info
@@ -52,8 +87,6 @@ services:
       traefik.http.routers.tiles.tls: true
     ports:
       - 3000:3000
-    networks:
-      - app_bridge
     configs:
       - source: martin_conf
         target: /config.yaml
@@ -62,13 +95,13 @@ services:
         condition: service_healthy
   db:
     image: postgis/postgis:14-3.3-alpine
-    container_name: db
+    container_name: ${DATABASE_HOST}
     shm_size: 1gb
     restart: unless-stopped
     environment:
-      PGUSER:
-      POSTGRES_DB: ${PGDATABASE}
-      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       LANG: en_US.UTF-8
       LC_ALL: en_US.UTF-8
     ports:
@@ -82,16 +115,15 @@ services:
         target: /docker-entrypoint-initdb.d/11-postgres.sql
     command: ["-c", "config_file=/postgresql/postgresql.conf"]
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -h ${PGHOST} -d ${PGDATABASE}"]
+      test: ["CMD-SHELL", "pg_isready -h ${DATABASE_HOST} -d ${DATABASE_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - app_bridge
 
 volumes:
   geodata:
   osmfiles:
+
 configs:
   martin_conf:
     file: ./configs/martin.yaml
@@ -101,6 +133,3 @@ configs:
     file: ./configs/postgres.conf
   warm_chache_conf:
     file: ./configs/warm-cache.json
-
-networks:
-  app_bridge:

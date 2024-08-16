@@ -6,7 +6,13 @@ services:
       dockerfile: ./processing.Dockerfile
     volumes:
       - ./processing:/processing
-
+  app:
+    image: !reset null
+    build:
+      context: .
+      dockerfile: ./app.Dockerfile
+    environment:
+      DATABASE_URL:
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
