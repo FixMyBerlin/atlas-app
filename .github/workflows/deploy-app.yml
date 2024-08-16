@@ -81,7 +81,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
-            echo "Restarting container `app`"
+            echo "Restarting `app` container"
             docker compose --profile frontend up app -d
             docker image prune -fa
             sleep 10
