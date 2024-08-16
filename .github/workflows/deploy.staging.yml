@@ -18,12 +18,14 @@ jobs:
     secrets: inherit
   deploy_processing:
     uses: ./.github/workflows/deploy-processing.yml
+    needs: setup_env
     with:
       ENVIRONMENT: staging
       TILES_URL: staging-tiles.radverkehrsatlas.de
     secrets: inherit
   deploy-app:
     uses: ./.github/workflows/deploy-app.yml
+    needs: setup_env
     with:
       ENVIRONMENT: staging
       NEXT_PUBLIC_APP_ORIGIN: https://staging.radverkehrsatlas.de
