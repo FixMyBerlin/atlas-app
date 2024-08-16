@@ -17,11 +17,12 @@ jobs:
     secrets: inherit
   restart_services:
     uses: ./github/workflows/restart-services.yml
+    needs: setup_env
     with:
       ENVIRONMENT: production
     secrets: inherit
   deploy_processing:
-    needs: setup_env
+    needs: restart_services
     uses: ./.github/workflows/deploy-processing.yml
     with:
       ENVIRONMENT: production
@@ -29,7 +30,7 @@ jobs:
     secrets: inherit
   deploy_app:
     uses: ./.github/workflows/deploy-app.yml
-    needs: setup_env
+    needs: restart_services
     with:
       ENVIRONMENT: production
       NEXT_PUBLIC_APP_ORIGIN: https://radverkehrsatlas.de
