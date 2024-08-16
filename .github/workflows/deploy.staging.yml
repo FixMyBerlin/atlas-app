@@ -15,6 +15,7 @@ jobs:
       NEXT_PUBLIC_APP_ENV: staging
       NEXT_PUBLIC_OSM_API_URL: https://master.apis.dev.openstreetmap.org/api/0.6
       APP_URL: staging.radverkehrsatlas.de
+    secrets: inherit
   deploy_processing:
     uses: ./.github/workflows/deploy-processing.yml
     with:
