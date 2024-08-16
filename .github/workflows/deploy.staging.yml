@@ -21,7 +21,6 @@ jobs:
     with:
       ENVIRONMENT: staging
       TILES_URL: staging-tiles.radverkehrsatlas.de
-      CACHELESS_URL: staging-cacheless.radverkehrsatlas.de
     secrets: inherit
   deploy-app:
     uses: ./.github/workflows/deploy-app.yml
