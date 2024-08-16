@@ -9,15 +9,12 @@ on:
       TILES_URL:
         type: string
         required: true
-      CACHELESS_URL:
-        type: string
-        required: true
 
 jobs:
   check_changes_processing:
     uses: ./.github/workflows/diff-last-run.yml
     with:
-      CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile configs/ docker-compose*
+      CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile
   build_and_deploy_processing:
     needs: check_changes_processing
     if: ${{ needs.check_changes_processing.outputs.changes }} == 'true'
@@ -68,16 +65,6 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/app
 
-      - name: Copy files to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml, docker-compose.network.yml, configs/"
-          target: "/srv"
-          overwrite: true
-
       - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
@@ -86,20 +73,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
-            echo "Updating `.env`"
-            sed -i \
-              -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
-              -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
-              -e "s|^SYNOLOGY_ERROR_LOG_TOKEN=.*$|SYNOLOGY_ERROR_LOG_TOKEN='${{ secrets.SYNOLOGY_ERROR_LOG_TOKEN }}'|" \
-              -e "s|^DATABASE_HOST=.*$|DATABASE_HOST='${{ vars.DATABASE_HOST }}'|" \
-              -e "s|^DATABASE_USER=.*$|DATABASE_USER='${{ secrets.DATABASE_USER }}'|" \
-              -e "s|^DATABASE_PASSWORD=.*$|DATABASE_PASSWORD='${{ secrets.DATABASE_PASSWORD }}'|" \
-              -e "s|^DATABASE_NAME=.*$|DATABASE_NAME='${{ secrets.DATABASE_NAME }}'|" \
-              -e "s|^OSM_DOWNLOAD_URL=.*$|OSM_DOWNLOAD_URL='${{ vars.OSM_DOWNLOAD_URL }}'|" \
-              -e "s|^TILES_URL=.*$|TILES_URL='${{ inputs.TILES_URL }}'|" \
-              -e "s|^CACHELESS_URL=.*$|CACHELESS_URL='${{ inputs.CACHELESS_URL }}'|" \
-              .env
-            echo "Restarting containers `processing`, `tiles`, `db`, `traefik` and `proxy`"
+            echo "Restarting `processing`"
             docker compose pull
-            docker compose -f docker-compose.yml -f docker-compose.network.yml up -d
+            docker compose -f docker-compose.yml -f docker-compose.network.yml up processing -d
             docker image prune -fa
