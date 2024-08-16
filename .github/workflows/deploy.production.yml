@@ -16,7 +16,7 @@ jobs:
       APP_URL: radverkehrsatlas.de
     secrets: inherit
   restart_services:
-    uses: ./github/workflows/restart-services.yml
+    uses: ./.github/workflows/restart-services.yml
     needs: setup_env
     with:
       ENVIRONMENT: production
