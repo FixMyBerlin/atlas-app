@@ -5,6 +5,16 @@ on:
       - develop
       - tinkering
 jobs:
+  setup_env:
+    uses: ./.github/workflows/setup-env.yml
+    with:
+      ENVIRONMENT: staging
+      TILES_URL: staging-tiles.radverkehrsatlas.de
+      CACHELESS_URL: staging-cacheless.radverkehrsatlas.de
+      NEXT_PUBLIC_APP_ORIGIN: https://staging.radverkehrsatlas.de
+      NEXT_PUBLIC_APP_ENV: staging
+      NEXT_PUBLIC_OSM_API_URL: https://master.apis.dev.openstreetmap.org/api/0.6
+      APP_URL: staging.radverkehrsatlas.de
   deploy_processing:
     uses: ./.github/workflows/deploy-processing.yml
     with:
@@ -13,7 +23,6 @@ jobs:
       CACHELESS_URL: staging-cacheless.radverkehrsatlas.de
     secrets: inherit
   deploy-app:
-    needs: deploy_processing
     uses: ./.github/workflows/deploy-app.yml
     with:
       ENVIRONMENT: staging
