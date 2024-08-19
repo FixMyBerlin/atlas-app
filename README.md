@@ -39,7 +39,7 @@ In the [`app/`](./app/) directory do the following:
    NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
    NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
    ```
-3. Run `npm run build` and `npm run start` to test the production bundle
+3. Run `npm run build` and `npm run start` to test the production bundle. There is also a dockerized version of our frontend which one can run with `docker compose --profile frontend up`.
 
 ### NextJS tips
 
