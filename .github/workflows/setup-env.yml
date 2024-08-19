@@ -67,7 +67,6 @@ jobs:
               -e "s|^NEXT_PUBLIC_APP_ORIGIN=.*$|NEXT_PUBLIC_APP_ORIGIN='${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}'|"\
               -e "s|^NEXT_PUBLIC_APP_ENV=.*$|NEXT_PUBLIC_APP_ENV='${{ inputs.NEXT_PUBLIC_APP_ENV }}'|" \
               -e "s|^APP_URL=.*$|APP_URL='${{ inputs.APP_URL }}'|" \
-              -e "s|^DATABASE_NAME=.*$|DATABASE_NAME='${{ secrets.DATABASE_NAME }}'|" \
               -e "s|^SESSION_SECRET_KEY=.*$|SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}'|" \
               -e "s|^OSM_CLIENT_ID=.*$|OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}'|" \
               -e "s|^OSM_CLIENT_SECRET=.*$|OSM_CLIENT_SECRET='${{ secrets.OSM_CLIENT_SECRET }}'|" \
