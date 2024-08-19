@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml, docker-compose.network.yml, configs/ .env.example"
+          source: "docker-compose.yml, docker-compose.network.yml, configs/ .env.example psql_shell.sh"
           target: "/srv"
           overwrite: true
 
