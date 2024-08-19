@@ -16,16 +16,6 @@ export SYNOLOGY_URL='https://fixmy.diskstation.me:54545/webapi/entry.cgi?api=SYN
 
 source /processing/utils/logging.sh
 
-# Post messages to Synology Chat Channel
-# The alert `text` uses Markdown and #Hash tags to highlight the message in Synology Chat
-alert() {
-  if [ -z $SYNOLOGY_ERROR_LOG_TOKEN ]; then
-    return 0;
-  fi
-  local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
-  local url="$SYNOLOGY_URL$SYNOLOGY_ERROR_LOG_TOKEN"
-  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
-}
 
 if ! ./run-1-wait-for-fresh-data.sh; then
     alert '*ERROR*: #run-1-wait-for-fresh-data exited with non-zero status code'

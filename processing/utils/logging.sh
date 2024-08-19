@@ -45,11 +45,22 @@ log() {
   echo "$(format_now) $1"
 }
 
+# Post messages to Synology Chat Channel
+# The alert `text` uses Markdown and #Hash tags to highlight the message in Synology Chat
 notify() {
   if [ -z $SYNOLOGY_LOG_TOKEN ]; then
     return 0
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
   local url="$SYNOLOGY_URL$SYNOLOGY_LOG_TOKEN"
+  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
+}
+
+alert() {
+  if [ -z $SYNOLOGY_ERROR_LOG_TOKEN ]; then
+    return 0;
+  fi
+  local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
+  local url="$SYNOLOGY_URL$SYNOLOGY_ERROR_LOG_TOKEN"
   curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
 }
