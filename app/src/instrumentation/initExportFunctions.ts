@@ -43,7 +43,7 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
               ${tagKeys},
               ${metaKeys}
               FROM public."${tableName}"
-              WHERE geom && ST_Transform(region, 3857)
+              WHERE geom && ST_Transform(region, 3857) AND minzoom > -1
             ) q;
             RETURN fgb;
            END;
