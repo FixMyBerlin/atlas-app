@@ -84,12 +84,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const binaryResponse = await prismaClientForRawQueries.$queryRawUnsafe<Buffer>(
       `SELECT * FROM "${functionName}"(
         ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
-      )`,
+      ) AS data`,
     )
 
     res.setHeader('Content-Disposition', `attachment; filename="${tableName}.fgb"`)
     res.setHeader('Content-Type', 'application/octet-stream')
-    res.send(binaryResponse[0]?.[functionName])
+    res.send(binaryResponse[0]?.['data'])
   } catch (e) {
     if (!isProd) throw e
     res.status(500).send('Internal Server Error')
