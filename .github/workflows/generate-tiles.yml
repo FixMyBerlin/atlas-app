@@ -31,8 +31,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Restart processing container"
-            cd /srv/processing/
+            echo "Restarting `processing` container"
+            cd /srv/
             export WAIT_FOR_FRESH_DATA=1
             docker compose down processing
             docker compose up -d processing

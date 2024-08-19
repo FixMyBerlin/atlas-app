@@ -19,7 +19,7 @@ jobs:
     environment:
       name: ${{ inputs.ENVIRONMENT }}
     steps:
-      - name: Restart containers on VPS
+      - name: Restart containers
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
-            echo "Restarting containers `tiles`, `db`, `traefik` and `proxy`"
+            echo "Restarting containers: `tiles`, `db`, `traefik` and `proxy`"
             docker compose pull
             docker compose -f docker-compose.yml -f docker-compose.network.yml up tiles db traefik proxy -d
             docker image prune -fa
