@@ -25,7 +25,7 @@ jobs:
       CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
   build_and_deploy_app:
     needs: check_changes_app
-    if: ${{ needs.check_changes_app.outputs.changes }} == 'true'
+    if: ${{ needs.check_changes_app.outputs.changes == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
