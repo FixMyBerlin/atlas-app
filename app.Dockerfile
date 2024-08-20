@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.7-labs
-
 FROM node:18-bullseye-slim
 
 WORKDIR /app
@@ -12,6 +10,19 @@ RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
 COPY /app /app
+
+EXPOSE 4000
+
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN npx blitz@2.0.10 prisma generate
+
+CMD npx blitz@2.0.10 dev --port 4000
+
+
+FROM base AS production
+
+RUN npm install --global pm2
 
 ARG NEXT_PUBLIC_APP_ORIGIN
 ARG NEXT_PUBLIC_APP_ENV
