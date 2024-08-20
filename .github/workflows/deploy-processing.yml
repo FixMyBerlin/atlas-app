@@ -73,7 +73,9 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
+            echo "Pulling latest image"
+            docker compose pull processing
             echo "Restarting processing container"
-            docker compose pull
             docker compose -f docker-compose.yml -f docker-compose.network.yml up processing -d
+            echo "Pruning images"
             docker image prune -fa
