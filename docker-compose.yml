@@ -19,6 +19,7 @@ services:
       SYNOLOGY_ERROR_LOG_TOKEN:
       COMPUTE_DIFFS:
       FREEZE_DATA:
+      ATLAS_API_KEY:
     volumes:
       - osmfiles:/data
       - geodata:/data/db
