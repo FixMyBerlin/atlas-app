@@ -1,9 +1,6 @@
-FROM node:18-bullseye-slim
+FROM node:18-bullseye-slim AS base
 
 WORKDIR /app
-
-RUN npm install --global pm2
-
 COPY /app/package*.json /app/
 COPY /app/patches /app/patches
 RUN npm install-clean --legacy-peer-deps
