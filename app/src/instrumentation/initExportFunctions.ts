@@ -24,7 +24,7 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
       const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET SCHEMA 'public';`,
+        prismaClientForRawQueries.$executeRaw`SET search_path 'public';`,
         prismaClientForRawQueries.$executeRawUnsafe(
           `DROP FUNCTION IF EXISTS public."${functionName}"(region Geometry(Polygon));`,
         ),

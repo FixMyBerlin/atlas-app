@@ -80,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { tableName, minlon, minlat, maxlon, maxlat } = params
     const functionName = exportFunctionIdentifier(tableName)
 
-    await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
+    await prismaClientForRawQueries.$executeRaw`SET search_path TO public;`
     const binaryResponse = await prismaClientForRawQueries.$queryRawUnsafe<Buffer>(
       `SELECT * FROM "${functionName}"(
         ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
