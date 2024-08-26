@@ -24,12 +24,12 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
       const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path public;`,
+        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
           `DROP FUNCTION IF EXISTS public."${functionName}"(region Geometry(Polygon));`,
         ),
         prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE or REPLACE FUNCTION public."${functionName}"(region Geometry(Polygon))
+          `CREATE FUNCTION public."${functionName}"(region Geometry(Polygon))
            RETURNS BYTEA
            LANGUAGE plpgsql
            AS $$
