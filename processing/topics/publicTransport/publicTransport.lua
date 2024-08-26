@@ -22,12 +22,19 @@ local table = osm2pgsql.define_table({
 
 local function ExitProcessing(object)
   -- ["operator"!= "Berliner Parkeisenbahn"] - a smalll train in a park that we cannot propery exclude by other means
-  if object.tags.operator == "Berliner Parkeisenbahn" then
+  local tags = object.tags
+
+  -- See: https://wiki.openstreetmap.org/wiki/Key:usage?uselang=en#Railways
+  local forbidden_usage = {'industrial', 'military', 'leisure', 'science', 'test', 'tourism'}
+  if Set(forbidden_usage)[tags.usage] then
+    return true
+  end
+  if tags.operator == "Berliner Parkeisenbahn" then
     return true
   end
 
   -- ["disused"!="yes"] - ignore all that are not in use
-  if object.tags.disused == "yes" then
+  if tags.disused == "yes" then
     return true
   end
 
@@ -36,7 +43,7 @@ local function ExitProcessing(object)
     "station",
     "halt",
   })
-  if allowed_tags[object.tags.railway] or object.tags.amenity == "ferry_terminal" then
+  if allowed_tags[tags.railway] or tags.amenity == "ferry_terminal" then
     return false
   end
 
