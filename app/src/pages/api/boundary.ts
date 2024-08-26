@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 
 const idType = z.coerce.bigint().positive()
@@ -21,9 +21,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { ids } = params
-    await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
+    await geoDataClient.$queryRawUnsafe('SET search_path TO public')
 
-    const nHits = await prismaClientForRawQueries.$executeRaw`
+    const nHits = await geoDataClient.$executeRaw`
       SELECT osm_id
       FROM boundaries
       WHERE osm_id IN (${Prisma.join(ids)})
@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return
     }
 
-    const boundary = await prismaClientForRawQueries.$queryRaw<Record<'geom', object>[]>`
+    const boundary = await geoDataClient.$queryRaw<Record<'geom', object>[]>`
       SELECT ST_AsGeoJSON(ST_Transform(ST_UNION(geom), 4326))::jsonb AS geom
       FROM boundaries
       WHERE osm_id IN (${Prisma.join(ids)})

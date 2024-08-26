@@ -1,25 +1,25 @@
 import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
 import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
 import { InteracitvityConfiguartion } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 
 async function createTileSpecification(tableName: TableId) {
   // Get column names and types
-  const columnInformation = await prismaClientForRawQueries.$queryRawUnsafe(`
+  const columnInformation = await geoDataClient.$queryRawUnsafe(`
   SELECT jsonb_object_agg(column_name, udt_name) - 'geom' - 'minzoom' AS fields
     FROM information_schema.columns
     WHERE table_schema = 'public' AND table_name = '${tableName}';`)
   const { fields } = columnInformation?.[0] // this object has the form {columnName: columnType}
 
   // Get the geometric extent
-  const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
+  const bbox = await geoDataClient.$queryRawUnsafe(
     `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] AS bounds
      FROM (
       SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
         FROM "${tableName}"
       ) extent;`,
   )
-  await prismaClientForRawQueries.$executeRaw`SET search_path TO public;`
+  await geoDataClient.$executeRaw`SET search_path TO public;`
   const { bounds } = bbox && bbox[0]
   // format as vector tile specifaction
   const tileSpecification = {
@@ -47,8 +47,8 @@ export async function initGeneralizationFunctions(
         // Gather meta information for the tile specification
         const tileSpecification = await createTileSpecification(tableName as TableId)
 
-        return prismaClientForRawQueries.$transaction([
-          prismaClientForRawQueries.$executeRawUnsafe(
+        return geoDataClient.$transaction([
+          geoDataClient.$executeRawUnsafe(
             `CREATE OR REPLACE
              FUNCTION public."${functionName}"(z integer, x integer, y integer)
              RETURNS bytea AS $$
@@ -80,7 +80,7 @@ export async function initGeneralizationFunctions(
              END
              $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
           ),
-          prismaClientForRawQueries.$executeRawUnsafe(
+          geoDataClient.$executeRawUnsafe(
             `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
           ),
         ])

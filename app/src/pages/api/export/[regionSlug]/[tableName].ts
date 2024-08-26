@@ -7,7 +7,7 @@ import {
   exportFunctionIdentifier,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { api } from 'src/blitz-server'
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 
 const ExportSchema = z.object({
@@ -80,8 +80,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { tableName, minlon, minlat, maxlon, maxlat } = params
     const functionName = exportFunctionIdentifier(tableName)
 
-    await prismaClientForRawQueries.$executeRaw`SET search_path TO public;`
-    const binaryResponse = await prismaClientForRawQueries.$queryRawUnsafe<Buffer>(
+    await geoDataClient.$executeRaw`SET search_path TO public;`
+    const binaryResponse = await geoDataClient.$queryRawUnsafe<Buffer>(
       `SELECT * FROM "${functionName}"(
         ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
       ) AS data`,
