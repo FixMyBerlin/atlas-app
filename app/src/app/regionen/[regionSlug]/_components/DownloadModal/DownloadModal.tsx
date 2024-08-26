@@ -32,7 +32,7 @@ export const DownloadModal = () => {
       >
         {canDownload ? (
           <p className="pb-2.5 pt-5 text-sm">
-            Alle Daten stehen als <strong>GeoJSON</strong> zum Download sowie als{' '}
+            Alle Daten stehen als <strong>FlatGeoBuf</strong> zum Download sowie als{' '}
             <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
           </p>
         ) : (
@@ -63,7 +63,7 @@ export const DownloadModal = () => {
 
         {canDownload && !bboxDefined && (
           <p className="mb-2.5 rounded bg-orange-100 p-2 text-sm">
-            Hinweis: GeoJSON Export ist für diese Region {region.fullName} nicht eingerichtet.
+            Hinweis: Der Export ist für diese Region {region.fullName} nicht eingerichtet.
           </p>
         )}
       </IconModal>

@@ -5,49 +5,50 @@ import {
 import { prismaClientForRawQueries } from 'src/prisma-client'
 
 // specify license and attribution for data export
-const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
-const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
+// const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
+// const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
 
 export async function initExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
-    tables.map((tableName) => {
+    tables.map(async (tableName) => {
       const functionName = exportFunctionIdentifier(tableName)
+      const tagKeyQuery: Array<{ key: string }> = await prismaClientForRawQueries.$queryRawUnsafe(`
+        SELECT DISTINCT jsonb_object_keys(tags) AS key
+        FROM public."${tableName}"
+      `)
+      const metaKeyQuery: Array<{ key: string }> = await prismaClientForRawQueries.$queryRawUnsafe(`
+        SELECT DISTINCT jsonb_object_keys(meta) AS key
+        FROM public."${tableName}"
+      `)
+      const tagKeys = tagKeyQuery.map(({ key }) => `tags->>'${key}' as "${key}"`).join(',')
+      const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
+        prismaClientForRawQueries.$executeRaw`SET search_path public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
-          `DROP FUNCTION IF EXISTS public.${functionName}(region geometry);`,
+          `DROP FUNCTION IF EXISTS public."${functionName}"(region Geometry(Polygon));`,
         ),
         prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE FUNCTION public.${functionName}(region geometry)
-          RETURNS json
-          LANGUAGE sql
-          AS $function$
-          SELECT
-          json_build_object(
-            'type', 'FeatureCollection',
-            'license', ${license},
-            'attribution', ${attribution},
-            'features', json_agg(features.feature)
-          )
-          FROM(
-              SELECT
-              jsonb_build_object('type', 'Feature', 'geometry',
-              ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb,
-              -- Reminder: All tables that can be exported are required to have those exact columns
-              'id', inputs.id,
-              'properties', jsonb_build_object('osm_id', inputs.osm_id) ||
-                  jsonb_build_object('osm_type', inputs.osm_type) || inputs.meta ||
-                  inputs.tags) AS feature
-              FROM(
-                  SELECT
-                      *
-                  FROM
-                    "${tableName}"
-                  WHERE
-                      ST_Transform(geom, 4326) && region) inputs) features;
-
-        $function$;`,
+          `CREATE FUNCTION public."${functionName}"(region Geometry(Polygon))
+           RETURNS BYTEA
+           LANGUAGE plpgsql
+           AS $$
+           DECLARE
+            fgb BYTEA;
+           BEGIN
+            SELECT ST_AsFlatGeobuf(q, false, 'geom') INTO fgb FROM (
+              SELECT st_transform(geom, 4326) AS geom,
+              id,
+              osm_id,
+              osm_type::text,
+              ${tagKeys},
+              ${metaKeys}
+              FROM public."${tableName}"
+              WHERE geom && ST_Transform(region, 3857) AND minzoom > -1
+            ) q;
+            RETURN fgb;
+           END;
+           $$;`,
         ),
       ])
     }),

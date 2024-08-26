@@ -58,7 +58,7 @@ export const DownloadModalDownloadList = () => {
                     Download:
                   </strong>
                   <span className="block w-full border-0 p-0 font-mono text-gray-500 placeholder-gray-500 focus:ring-0 sm:text-sm">
-                    GeoJSON
+                    FlatGeoBuf
                   </span>
                 </LinkExternal>
               )}
