@@ -24,7 +24,6 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
       const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
 
       return prismaClientForRawQueries.$transaction([
-        prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
           `DROP FUNCTION IF EXISTS public."${functionName}"(region Geometry(Polygon));`,
         ),
@@ -38,12 +37,12 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
            BEGIN
             SELECT ST_AsFlatGeobuf(q, false, 'geom') INTO fgb FROM (
               SELECT st_transform(geom, 4326) AS geom,
-              id,
-              osm_id,
-              osm_type::text,
-              ${tagKeys},
-              ${metaKeys}
-              FROM public."${tableName}"
+                id,
+                osm_id,
+                osm_type::text,
+                ${tagKeys},
+                ${metaKeys}
+              FROM "${tableName}"
               WHERE geom && ST_Transform(region, 3857) AND minzoom > -1
             ) q;
             RETURN fgb;

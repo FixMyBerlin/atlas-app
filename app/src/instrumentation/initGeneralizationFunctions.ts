@@ -13,12 +13,13 @@ async function createTileSpecification(tableName: TableId) {
 
   // Get the geometric extent
   const bbox = await prismaClientForRawQueries.$queryRawUnsafe(
-    `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] as bounds
-    from (
+    `SELECT Array[ST_XMIN(bbox), ST_YMIN(bbox), ST_XMAX(bbox), ST_YMAX(bbox)] AS bounds
+     FROM (
       SELECT ST_Transform(ST_SetSRID(ST_Extent(geom), 3857), 4326) AS bbox
-        from "${tableName}"
+        FROM "${tableName}"
       ) extent;`,
   )
+  await prismaClientForRawQueries.$executeRaw`SET search_path TO public;`
   const { bounds } = bbox && bbox[0]
   // format as vector tile specifaction
   const tileSpecification = {
@@ -47,7 +48,6 @@ export async function initGeneralizationFunctions(
         const tileSpecification = await createTileSpecification(tableName as TableId)
 
         return prismaClientForRawQueries.$transaction([
-          prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
           prismaClientForRawQueries.$executeRawUnsafe(
             `CREATE OR REPLACE
              FUNCTION public."${functionName}"(z integer, x integer, y integer)
@@ -73,7 +73,7 @@ export async function initGeneralizationFunctions(
                       stylingKeys,
                     )}) END as tags,
                     CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
-                  FROM public."${tableName}"
+                  FROM "${tableName}"
                   WHERE (geom && ST_TileEnvelope(z, x, y)) AND z >= minzoom
                 ) AS tile;
                 RETURN mvt;
