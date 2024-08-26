@@ -16,7 +16,10 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
       return prismaClientForRawQueries.$transaction([
         prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
         prismaClientForRawQueries.$executeRawUnsafe(
-          `CREATE OR REPLACE FUNCTION public.${functionName}(region geometry)
+          `DROP FUNCTION IF EXISTS public.${functionName}(region geometry);`,
+        ),
+        prismaClientForRawQueries.$executeRawUnsafe(
+          `CREATE FUNCTION public.${functionName}(region geometry)
           RETURNS json
           LANGUAGE sql
           AS $function$
