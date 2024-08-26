@@ -72,6 +72,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
+            sleep 5
             cd /srv
             echo "Pulling latest image"
             docker compose pull processing
