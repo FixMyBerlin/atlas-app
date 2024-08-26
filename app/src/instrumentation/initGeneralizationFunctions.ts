@@ -50,36 +50,35 @@ export async function initGeneralizationFunctions(
           prismaClientForRawQueries.$executeRaw`SET search_path TO public;`,
           prismaClientForRawQueries.$executeRawUnsafe(
             `CREATE OR REPLACE
-          FUNCTION public."${functionName}"(z integer, x integer, y integer)
-          RETURNS bytea AS $$
-          DECLARE
-            mvt bytea;
-            tolerance float;
-          BEGIN
-            IF z BETWEEN 5 AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
-              tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
-            ELSE
-              tolerance = 0;
-            END IF;
-            SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
-              SELECT
-                id,
-                ST_AsMVTGeom(
-                  ST_CurveToLine(
-                    ST_Simplify(geom, tolerance, true)
-                  ),
-                  ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
-                  stylingKeys,
-                )}) END as tags,
-                CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
-              FROM public."${tableName}"
-              WHERE (geom && ST_TileEnvelope(z, x, y))
-              AND z >= minzoom
-            ) AS tile;
-            RETURN mvt;
-          END
-          $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
+             FUNCTION public."${functionName}"(z integer, x integer, y integer)
+             RETURNS bytea AS $$
+             DECLARE
+               mvt bytea;
+               tolerance float;
+             BEGIN
+                IF z BETWEEN 5 AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
+                  tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
+                ELSE
+                  tolerance = 0;
+                END IF;
+                SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
+                  SELECT
+                    id,
+                    ST_AsMVTGeom(
+                      ST_CurveToLine(
+                        ST_Simplify(geom, tolerance, true)
+                      ),
+                      ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                      stylingKeys,
+                    )}) END as tags,
+                    CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
+                  FROM public."${tableName}"
+                  WHERE (geom && ST_TileEnvelope(z, x, y)) AND z >= minzoom
+                ) AS tile;
+                RETURN mvt;
+             END
+             $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
           ),
           prismaClientForRawQueries.$executeRawUnsafe(
             `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
