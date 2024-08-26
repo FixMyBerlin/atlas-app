@@ -80,7 +80,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { tableName, minlon, minlat, maxlon, maxlat } = params
     const functionName = exportFunctionIdentifier(tableName)
 
-    await geoDataClient.$executeRaw`SET search_path TO public;`
     const binaryResponse = await geoDataClient.$queryRawUnsafe<Buffer>(
       `SELECT * FROM "${functionName}"(
         ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )

@@ -39,7 +39,6 @@ export async function GET(
   try {
     // PREPARE
     const { ids } = parsedParams
-    await geoDataClient.$queryRaw`SET search_path TO public`
 
     // CHECK REGIONS (`ids` params)
     const nHits = await geoDataClient.$executeRaw`

@@ -21,7 +21,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { ids } = params
-    await geoDataClient.$queryRawUnsafe('SET search_path TO public')
 
     const nHits = await geoDataClient.$executeRaw`
       SELECT osm_id

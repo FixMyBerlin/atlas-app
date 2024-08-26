@@ -19,7 +19,6 @@ async function createTileSpecification(tableName: TableId) {
         FROM "${tableName}"
       ) extent;`,
   )
-  await geoDataClient.$executeRaw`SET search_path TO public;`
   const { bounds } = bbox && bbox[0]
   // format as vector tile specifaction
   const tileSpecification = {
