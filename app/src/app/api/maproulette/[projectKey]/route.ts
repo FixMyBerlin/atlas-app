@@ -4,7 +4,7 @@ import { LineString } from '@turf/turf'
 import { NextRequest } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import { osmTypeIdString } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 import { maprouletteProjects } from './_utils/maprouletteProjects.const'
 import { taskDescriptionMarkdown } from './_utils/taskMarkdown'
@@ -31,10 +31,9 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
   try {
     // PREPARE
     const { projectKey, ids } = parsedParams
-    await prismaClientForRawQueries.$queryRaw`SET search_path TO public`
 
     // CHECK REGIONS (`ids` params)
-    const nHits = await prismaClientForRawQueries.$executeRaw`
+    const nHits = await geoDataClient.$executeRaw`
       SELECT osm_id FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
     if (nHits !== ids.length) {
       return new Response("Couldn't find given ids. At least one id is wrong or dupplicated.", {
@@ -55,7 +54,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     })()
 
     type QueryTpye = { type: string; id: string; category: string; geometry: LineString }[]
-    const sqlWays = await prismaClientForRawQueries.$queryRaw<QueryTpye>`
+    const sqlWays = await geoDataClient.$queryRaw<QueryTpye>`
       SELECT
         bikelanes.osm_type as type,
         bikelanes.osm_id as id,
