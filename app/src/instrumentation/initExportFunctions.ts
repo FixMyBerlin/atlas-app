@@ -14,11 +14,11 @@ export async function initExportFunctions(tables: typeof exportApiIdentifier) {
       const functionName = exportFunctionIdentifier(tableName)
       const tagKeyQuery: Array<{ key: string }> = await geoDataClient.$queryRawUnsafe(`
         SELECT DISTINCT jsonb_object_keys(tags) AS key
-        FROM public."${tableName}"
+        FROM "${tableName}"
       `)
       const metaKeyQuery: Array<{ key: string }> = await geoDataClient.$queryRawUnsafe(`
         SELECT DISTINCT jsonb_object_keys(meta) AS key
-        FROM public."${tableName}"
+        FROM "${tableName}"
       `)
       const tagKeys = tagKeyQuery.map(({ key }) => `tags->>'${key}' as "${key}"`).join(',')
       const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
