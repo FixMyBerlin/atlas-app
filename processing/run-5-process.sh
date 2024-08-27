@@ -37,6 +37,9 @@ for name in ${topics[@]}; do
   run_dir $name
 done
 
+# Call the refresh endpoint to update the generalization and export functions
+curl -X GET "http://app:4000/api/refresh?apiKey=$ATLAS_API_KEY" &> /dev/null
+
 notify "Processing finished."
 
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "

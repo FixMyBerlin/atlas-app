@@ -11,8 +11,13 @@ services:
     build:
       context: .
       dockerfile: ./app.Dockerfile
+      target: base
     environment:
       DATABASE_URL:
+    ports:
+      - 4000:4000
+    volumes:
+      - ./app/src:/app/src
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf

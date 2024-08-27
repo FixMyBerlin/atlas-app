@@ -19,6 +19,7 @@ services:
       SYNOLOGY_ERROR_LOG_TOKEN:
       COMPUTE_DIFFS:
       FREEZE_DATA:
+      ATLAS_API_KEY:
     volumes:
       - osmfiles:/data
       - geodata:/data/db
@@ -38,7 +39,6 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}?schema=prisma
-      NEXT_TELEMETRY_DISABLED: 1
       NEXT_PUBLIC_APP_ENV:
       NEXT_PUBLIC_OSM_API_URL:
       NEXT_PUBLIC_APP_ORIGIN:
