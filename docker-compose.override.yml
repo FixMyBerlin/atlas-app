@@ -15,7 +15,7 @@ services:
     environment:
       DATABASE_URL:
     ports:
-      - 5173:5173
+      - 4000:4000
     volumes:
       - ./app/src:/app/src
 configs:
