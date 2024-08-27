@@ -10,12 +10,14 @@ export async function register() {
     try {
       await initCustomFunctions()
       console.log(' ✓ Custom SQL functions initialized')
-      initExportFunctions(exportApiIdentifier).then(() =>
+      const exportFunctionPromise = initExportFunctions(exportApiIdentifier).then(() =>
         console.log(' ✓ Export functions initialized'),
       )
-      initGeneralizationFunctions(interactivityConfiguration).then(() =>
-        console.log(' ✓ Generalization functions initialized'),
-      )
+      const generalizationFunctionPromise = initGeneralizationFunctions(
+        interactivityConfiguration,
+      ).then(() => console.log(' ✓ Generalization functions initialized'))
+
+      return Promise.all([exportFunctionPromise, generalizationFunctionPromise])
     } catch (e) {
       console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
     }

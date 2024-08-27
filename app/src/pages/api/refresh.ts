@@ -8,6 +8,7 @@ const RefreshSchema = z.object({
 })
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Parse and validate the query string
   let params
   try {
     params = RefreshSchema.parse(req.query)
@@ -17,13 +18,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return
   }
 
+  // Check the API key
   try {
     if (params.apiKey !== process.env.ATLAS_API_KEY) {
       res.status(403).send('Forbidden')
       return
     }
 
-    register()
+    await register()
+
     res.status(200).send('OK')
   } catch (e) {
     if (!isProd) throw e
