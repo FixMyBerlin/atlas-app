@@ -23,4 +23,4 @@ export const exportApiIdentifier = [
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]
 
 export const exportFunctionIdentifier = <TId extends SourceExportApiIdentifier>(tableName: TId) =>
-  `atlas_export_geojson_${tableName.toLowerCase()}` as `atlas_export_fgb_${Lowercase<TId>}`
+  `atlas_export_flatgeobuf_${tableName.toLowerCase()}` as `atlas_export_flatgeobuf_${Lowercase<TId>}`

@@ -80,10 +80,9 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            sleep 5
             cd /srv
             echo "Pulling latest image"
-            docker compose pull up app
+            docker compose pull app
             echo "Restarting app container"
             docker compose --profile frontend up app -d
             echo "Pruning images"

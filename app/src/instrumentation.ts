@@ -9,8 +9,8 @@ export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
     try {
       await initCustomFunctions()
-      await initExportFunctions(exportApiIdentifier)
-      await initGeneralizationFunctions(interactivityConfiguration)
+      initExportFunctions(exportApiIdentifier)
+      initGeneralizationFunctions(interactivityConfiguration)
     } catch (e) {
       console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
     }
