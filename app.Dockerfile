@@ -16,7 +16,7 @@ RUN npx blitz@2.0.10 prisma generate
 
 CMD npx blitz@2.0.10 dev --port 4000
 
-
+# From here on we are building the production image
 FROM base AS production
 
 RUN npm install --global pm2
