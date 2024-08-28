@@ -5,17 +5,17 @@ namespace NodeJS {
     readonly NEXT_PUBLIC_APP_ENV: 'staging' | 'production' | 'development'
     readonly SESSION_SECRET_KEY: string
     // MAP API KEYS
-
     readonly MAPBOX_STYLE_ACCESS_TOKEN: `pk.${string}`
     readonly MAPBOX_PARKING_STYLE_ACCESS_TOKEN: `pk.${string}`
     // DEVELOPMENT
     readonly NEXT_PUBLIC_TILES_ENV: 'staging' | 'production' | 'development'
-    // PRISMA
+    // DATABASE
 
     readonly PGUSER: never
     readonly PGDATABASE: never
     readonly PGPASSWORD: never
     readonly DATABASE_URL: string
+    readonly GEO_DATABASE_URL: string
     // LOGIN
     readonly OSM_CLIENT_ID: string
     readonly OSM_CLIENT_SECRET: string
