@@ -84,7 +84,7 @@ jobs:
             echo "Pulling latest image"
             docker compose pull app
             echo "Restarting app container"
-            docker compose --profile frontend up app -d
+            docker compose up app -d
             echo "Pruning images"
             docker image prune -fa
             sleep 10

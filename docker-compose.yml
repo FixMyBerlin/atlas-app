@@ -60,8 +60,6 @@ services:
       traefik.http.routers.container.entrypoints: websecure
       traefik.http.routers.container.tls.certresolver: letsencrypt
       traefik.http.routers.container.tls: true
-    profiles:
-      - frontend
     depends_on:
       db:
         condition: service_healthy

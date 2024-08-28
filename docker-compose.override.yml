@@ -16,6 +16,8 @@ services:
         NEXT_PUBLIC_APP_ORIGIN: ${NEXT_PUBLIC_APP_ORIGIN}
         NEXT_PUBLIC_APP_ENV: ${NEXT_PUBLIC_APP_ENV}
         NEXT_PUBLIC_OSM_API_URL: ${NEXT_PUBLIC_OSM_API_URL}
+    profiles:
+      - frontend
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
