@@ -16,12 +16,6 @@ services:
         NEXT_PUBLIC_APP_ORIGIN: ${NEXT_PUBLIC_APP_ORIGIN}
         NEXT_PUBLIC_APP_ENV: ${NEXT_PUBLIC_APP_ENV}
         NEXT_PUBLIC_OSM_API_URL: ${NEXT_PUBLIC_OSM_API_URL}
-    environment:
-      DATABASE_URL:
-    ports:
-      - 4000:4000
-    volumes:
-      - ./app/src:/app/src
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
