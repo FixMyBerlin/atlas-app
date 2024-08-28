@@ -4,6 +4,5 @@ import { PrismaClient } from '@prisma/client'
 // It allows direct SQL queries to the database, so it should be used cautiously as it bypasses Prisma's integrated security checks.
 
 export const geoDataClient = new PrismaClient({
-  log: ['query'],
   datasourceUrl: process.env.GEO_DATABASE_URL,
 })
