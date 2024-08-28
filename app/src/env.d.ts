@@ -14,7 +14,7 @@ namespace NodeJS {
     readonly PGUSER: never
     readonly PGDATABASE: never
     readonly PGPASSWORD: never
-    readonly DATABASE_URL: string
+    readonly DATABASE_URL: never
     readonly GEO_DATABASE_URL: string
     // LOGIN
     readonly OSM_CLIENT_ID: string
