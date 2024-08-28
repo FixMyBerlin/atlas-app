@@ -1,7 +1,7 @@
 FROM ubuntu:mantic AS testing
 
 # Install Lua and "luarocks" (Lua package manager) – https://luarocks.org/, https://packages.ubuntu.com/luarocks
-RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
+RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks tzdata
 
 RUN luarocks install busted
 
