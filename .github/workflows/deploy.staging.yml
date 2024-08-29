@@ -28,6 +28,7 @@ jobs:
     with:
       ENVIRONMENT: staging
       TILES_URL: staging-tiles.radverkehrsatlas.de
+      CONFIG_CHANGED: ${{ needs.restart_services.outputs.CHANGES == 'true' }}
     secrets: inherit
   deploy-app:
     uses: ./.github/workflows/deploy-app.yml
@@ -38,4 +39,5 @@ jobs:
       NEXT_PUBLIC_APP_ENV: staging
       NEXT_PUBLIC_OSM_API_URL: https://master.apis.dev.openstreetmap.org/api/0.6
       APP_URL: staging.radverkehrsatlas.de
+      CONFIG_CHANGED: ${{ needs.restart_services.outputs.CHANGES == 'true' }}
     secrets: inherit
