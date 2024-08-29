@@ -19,13 +19,13 @@ on:
         type: string
 
 jobs:
-  check_changes_app:
+  diff_app:
     uses: ./.github/workflows/diff-last-run.yml
     with:
       CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
-  build_and_deploy_app:
-    needs: check_changes_app
-    if: ${{ needs.check_changes_app.outputs.changes == 'true' }}
+  build_app:
+    needs: diff_app
+    if: ${{ needs.diff_app.outputs.changes == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
@@ -72,7 +72,10 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/blitz
-
+  restart_app:
+    needs: build_app
+    runs-on: ubuntu-latest
+    steps:
       - name: Stop & Start container on Server
         uses: appleboy/ssh-action@master
         with:

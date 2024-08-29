@@ -11,13 +11,13 @@ on:
         required: true
 
 jobs:
-  check_changes_processing:
+  diff_processing:
     uses: ./.github/workflows/diff-last-run.yml
     with:
       CHECK_DIFF_LOCATIONS: processing/ warm-cache/ processing.Dockerfile
-  build_and_deploy_processing:
-    needs: check_changes_processing
-    if: ${{ needs.check_changes_processing.outputs.changes == 'true' }}
+  build_processing:
+    needs: diff_processing
+    if: ${{ needs.diff_processing.outputs.changes == 'true' }}
     runs-on: ubuntu-latest
     environment:
       name: ${{ inputs.ENVIRONMENT }}
@@ -64,7 +64,10 @@ jobs:
         run: |
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
           docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/app
-
+  restart_processing:
+    needs: build_processing
+    runs-on: ubuntu-latest
+    steps:
       - name: Stop & Start containers on VPS
         uses: appleboy/ssh-action@master
         with:
