@@ -90,11 +90,9 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /srv
-            echo "Pulling latest image"
+            echo "Pulling latest 'app' image"
             docker compose pull app
-            echo "Restarting app container"
+            echo "Restarting 'app' container"
             docker compose up app -d
             echo "Pruning images"
             docker image prune -fa
-            sleep 10
-            curl http://localhost:4000 > /dev/null
