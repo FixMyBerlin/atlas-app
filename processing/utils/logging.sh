@@ -7,7 +7,7 @@ format_left_right() {
 
 format_now() {
   # echo `date +"%Y-%m-%dT%H:%M:%S%z"` # with timezone
-  echo $(TZ=UTC0 date +"%Y-%m-%dT%H:%M:%S")
+  echo $(date +"%Y-%m-%dT%H:%M:%S")
 }
 
 seconds() {
