@@ -11,6 +11,7 @@ COPY /app /app
 EXPOSE 4000
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV TZ=Europe/Berlin
 
 RUN npx blitz@2.0.10 prisma generate
 
