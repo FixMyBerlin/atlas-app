@@ -52,7 +52,7 @@ jobs:
           script: |
             echo "Updating `.env`"
             cd /srv
-            sed 's/^\([^=]*\)=.*/\1/' .env.example > .env
+            sed -n '/^[^#].*=/s/^\([^=]*\)=.*/\1=/p' .env.example > .env
             rm .env.example
             sed -i \
               -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
