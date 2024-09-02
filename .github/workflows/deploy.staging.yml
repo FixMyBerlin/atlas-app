@@ -30,7 +30,7 @@ jobs:
       TILES_URL: staging-tiles.radverkehrsatlas.de
       CONFIG_CHANGED: ${{ needs.restart_services.outputs.CHANGES == 'true' }}
     secrets: inherit
-  deploy-app:
+  deploy_app:
     uses: ./.github/workflows/deploy-app.yml
     needs: restart_services
     with:

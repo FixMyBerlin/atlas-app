@@ -69,7 +69,7 @@ jobs:
   restart_processing:
     runs-on: ubuntu-latest
     needs: [diff_processing, build_processing]
-    if: ${{ needs.diff_processing.outputs.changes == 'true' }} || ${{ inputs.CONFIG_CHANGED }} && ${{ always() }}
+    if: ${{ needs.diff_processing.outputs.changes == 'true' || inputs.CONFIG_CHANGED && always() }}
     environment:
       name: ${{ inputs.ENVIRONMENT }}
       url: https://${{ inputs.TILES_URL }}
