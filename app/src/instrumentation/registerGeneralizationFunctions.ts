@@ -36,7 +36,7 @@ function toSqlArray(arr: string[]) {
 // That is why we can overzoom in sources.const with `maxzoom`.
 export const SIMPLIFY_MAX_ZOOM = 14
 
-export async function initGeneralizationFunctions(
+export async function registerGeneralizationFunctions(
   interacitvityConfiguartion: InteracitvityConfiguartion,
 ) {
   return Promise.all(

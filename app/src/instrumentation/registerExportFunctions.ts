@@ -8,7 +8,7 @@ import { geoDataClient } from 'src/prisma-client'
 // const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
 // const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
 
-export async function initExportFunctions(tables: typeof exportApiIdentifier) {
+export async function registerExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
     tables.map(async (tableName) => {
       const functionName = exportFunctionIdentifier(tableName)
