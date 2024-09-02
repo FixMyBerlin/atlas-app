@@ -38,4 +38,4 @@ WORKDIR /processing
 # 'data' folder is root
 RUN mkdir /data
 RUN chmod +x /processing/*.sh
-ENTRYPOINT /processing/run.sh
+CMD /processing/run.sh
