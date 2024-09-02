@@ -76,7 +76,7 @@ run_dir() {
 
   # Skip topic if the hashes haven't changed
   if [ "$SKIP_UNCHANGED" == 1 ] && check_hash $directory ".lua" && check_hash $directory ".sql"; then
-    log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
+    log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_UNCHANGED=1'."
   else
     # Backup tables for diffs
     if [ "$COMPUTE_DIFFS" == 1 ]; then
