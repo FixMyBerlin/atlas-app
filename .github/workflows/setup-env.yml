@@ -52,7 +52,8 @@ jobs:
           script: |
             echo "Updating `.env`"
             cd /srv
-            mv ./.env.example ./.env
+            sed 's/^\([^=]*\)=.*/\1/' .env.example > .env
+            rm .env.example
             sed -i \
               -e "s|^ENVIRONMENT=.*$|ENVIRONMENT='${{ inputs.ENVIRONMENT }}'|" \
               -e "s|^SYNOLOGY_LOG_TOKEN=.*$|SYNOLOGY_LOG_TOKEN='${{ secrets.SYNOLOGY_LOG_TOKEN }}'|" \
