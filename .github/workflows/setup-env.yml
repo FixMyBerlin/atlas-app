@@ -77,4 +77,6 @@ jobs:
               -e "s|^S3_SECRET=.*$|S3_SECRET='${{ secrets.S3_SECRET }}'|" \
               -e "s|^S3_REGION=.*$|S3_REGION='${{ secrets.S3_REGION }}'|" \
               -e "s|^S3_BUCKET=.*$|S3_BUCKET='${{ secrets.S3_BUCKET }}'|" \
+              -e "s|^SKIP_DOWNLOAD=.*$|SKIP_DOWNLOAD='${{ vars.SKIP_DOWNLOAD }}'|" \
+              -e "s|^SKIP_UNCHANGED=.*$|SKIP_UNCHANGED='${{ vars.SKIP_UNCHANGED }}'|" \
               .env

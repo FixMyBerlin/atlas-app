@@ -2,6 +2,8 @@ name: Regenerate Staging Tiles
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * 1"
 jobs:
   generate-tiles:
     uses: ./.github/workflows/generate-tiles.yml
