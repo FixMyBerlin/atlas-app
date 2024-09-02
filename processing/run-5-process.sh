@@ -13,7 +13,7 @@ mkdir -p $TABLE_INFO
 
 log_start "$0"
 
-if ! check_hash $OSM_DATADIR "osm.pbf" || [ "$SKIP_DOWNLOAD" == 0 ]; then
+if ! check_hash $OSM_DATADIR "osm.pbf"; then
   log "OSM files have changed. Deleting all checksums and table info!"
   rm -f $CODE_HASHES/*
   rm -f $TABLE_INFO/*
