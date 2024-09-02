@@ -71,6 +71,7 @@ run_dir() {
   if [ -f "$processed_tables" ]; then
     for table in $(cat $processed_tables); do
       psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
+      psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
     done
   fi
 
