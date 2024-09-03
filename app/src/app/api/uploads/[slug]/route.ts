@@ -14,10 +14,9 @@ export async function GET(request: Request, { params }: { params: { slug: string
   }
 
   if (!upload.public) {
-    const forbidden = Response.json({ statusText: 'Forbidden' }, { status: 403 })
     const session = (await getBlitzContext()).session
     if (!session.userId) {
-      return forbidden
+      return Response.json({ statusText: 'Forbidden (missing user session)' }, { status: 403 })
     }
     if (session.role !== 'ADMIN') {
       // user must be a member in one or more regions the upload is related to
@@ -26,7 +25,7 @@ export async function GET(request: Request, { params }: { params: { slug: string
         where: { userId: session.userId!, region: { id: { in: regionIds } } },
       }))
       if (!membershipExists) {
-        return forbidden
+        return Response.json({ statusText: 'Forbidden (missing user membership)' }, { status: 403 })
       }
     }
   }
