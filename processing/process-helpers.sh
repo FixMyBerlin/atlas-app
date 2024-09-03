@@ -19,7 +19,7 @@ run_lua() {
   # `--log-sql`
   # maybe even `--log-sql-data` // "This will write out a huge amount of data! "
 
-  ${OSM2PGSQL_BIN} --number-processes=8 --create --output=flex --extra-attributes --style=$file ${OSM_FILTERED_FILE}
+  ${OSM2PGSQL_BIN} --number-processes=8 --verbose --create --output=flex --extra-attributes --style=$file ${OSM_FILTERED_FILE}
 
   end_time=$(date +%s)
   duration=$((end_time - start_time))
