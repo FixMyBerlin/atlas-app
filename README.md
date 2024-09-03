@@ -67,9 +67,7 @@ The data gets selected and optimized to make planning of bicycle infrastructure 
 
 ## Server
 
-- Production Tiles https://tiles.radverkehrsatlas.de/
-- Staging Tiles https://staging-tiles.radverkehrsatlas.de/
-- Development Tiles http://localhost:7800/
+See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/run-5-process.sh#L45-L50
 
 ## Data
 
