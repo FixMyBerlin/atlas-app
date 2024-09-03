@@ -6,6 +6,8 @@ services:
       dockerfile: ./processing.Dockerfile
     volumes:
       - ./processing:/processing
+    logging:
+      driver: json-file
   app:
     image: !reset null
     build:
@@ -18,6 +20,8 @@ services:
         NEXT_PUBLIC_OSM_API_URL: ${NEXT_PUBLIC_OSM_API_URL}
     environment:
       NEXT_PUBLIC_APP_ORIGIN: localhost
+    logging:
+      driver: json-file
     profiles:
       - frontend
 configs:
