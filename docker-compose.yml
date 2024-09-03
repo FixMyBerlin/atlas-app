@@ -52,7 +52,7 @@ services:
       S3_KEY:
       S3_SECRET:
       S3_REGION:
-      S3_BUCKE:
+      S3_BUCKET:
     ports:
       - 4000:4000
     labels:
