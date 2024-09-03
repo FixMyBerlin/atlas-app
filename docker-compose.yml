@@ -97,7 +97,7 @@ services:
   db:
     image: postgis/postgis:14-3.3-alpine
     container_name: ${DATABASE_HOST}
-    shm_size: 1gb
+    shm_size: 1g
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${DATABASE_USER}
