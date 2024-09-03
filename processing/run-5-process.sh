@@ -47,6 +47,7 @@ log "Completed:"
 log "Development http://localhost:3000/catalog"
 log "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
 log "Production https://tiles.radverkehrsatlas.de/catalog"
+log "Preview https://viewer.radverkehrsatlas.de/index.html (Staging, Production)"
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 
 log_end "$0"
