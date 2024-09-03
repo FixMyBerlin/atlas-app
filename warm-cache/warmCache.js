@@ -9,7 +9,7 @@ import { checkFile, log, formatBytes, formatDuration, readJson } from './util.js
 import { program, Option } from 'commander'
 
 dotenv.config()
-dotenv.config({ path: `.env.local`, override: true })
+dotenv.config({ path: `.env`, override: true })
 const tilesBaseUrl = `https://${process.env.TILES_URL}`
 
 // prettier-ignore
