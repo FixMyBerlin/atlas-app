@@ -65,6 +65,10 @@ import {
   SubcatParkingAreasStyleIds,
 } from './mapDataSubcategories/subcat_parkingAreas.const'
 import {
+  SubcatParkingBoundariesId,
+  SubcatParkingBoundariesStyleIds,
+} from './mapDataSubcategories/subcat_parkingBoundaries.const'
+import {
   SubcatParkingDebugId,
   SubcatParkingDebugStyleIds,
 } from './mapDataSubcategories/subcat_parkingDebug.const'
@@ -146,6 +150,7 @@ export type SubcategoryId =
   | SubcatParkingId
   | SubcatParkingPointsId
   | SubcatParkingStatsId
+  | SubcatParkingBoundariesId
   | SubcatPoiBoundariesId
   | SubcatPoiId_Tarmac
   | SubcatPoiPlacesId
@@ -184,6 +189,7 @@ export type StyleId =
   | SubcatParkingDebugStyleIds
   | SubcatParkingPointsStyleIds
   | SubcatParkingStatsStyleIds
+  | SubcatParkingBoundariesStyleIds
   | SubcatParkingStyleIds
   | SubcatPoiBoundariesStyleIds
   | SubcatPoiPlacesStyleIds

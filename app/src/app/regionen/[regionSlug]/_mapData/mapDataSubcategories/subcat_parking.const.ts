@@ -3,6 +3,7 @@ import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_parking_parkinglines } from './mapboxStyles/groups/parking_parkinglines'
 import { mapboxStyleGroupLayers_parking_parkinglines_completeness } from './mapboxStyles/groups/parking_parkinglines_completeness'
 import { mapboxStyleGroupLayers_parking_parkinglines_labels } from './mapboxStyles/groups/parking_parkinglines_labels'
+import { mapboxStyleGroupLayers_parking_parkinglines_missing } from './mapboxStyles/groups/parking_parkinglines_missing'
 import { mapboxStyleGroupLayers_parking_parkinglines_surface } from './mapboxStyles/groups/parking_parkinglines_surface'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
@@ -10,7 +11,7 @@ const subcatId = 'parking'
 const source = 'parkraumParking'
 const sourceLayer = 'processing.parking_segments'
 export type SubcatParkingId = typeof subcatId
-export type SubcatParkingStyleIds = 'default' | 'presence' | 'surface' | 'raw'
+export type SubcatParkingStyleIds = 'default' | 'presence' | 'missing' | 'surface' | 'raw'
 
 export const subcat_parking: FileMapDataSubcategory = {
   id: subcatId,
@@ -84,7 +85,7 @@ export const subcat_parking: FileMapDataSubcategory = {
           },
         },
         {
-          id: 'capacity_status--data_missing',
+          id: 'capacity_status--notexpected',
           name: 'Daten nicht erwartet',
           desc: ['Gilt für Zufahrten und Fußgängerzonen'],
           style: {
@@ -106,6 +107,37 @@ export const subcat_parking: FileMapDataSubcategory = {
           style: {
             type: 'line',
             color: 'rgb(99, 53, 50)',
+          },
+        },
+      ],
+    },
+    {
+      id: 'missing',
+      name: 'Fehlende Daten',
+      desc: null,
+      layers: [
+        mapboxStyleLayers({
+          layers: mapboxStyleGroupLayers_parking_parkinglines_missing,
+          source,
+          sourceLayer,
+        }),
+      ].flat(),
+      legends: [
+        {
+          id: 'capacity_status--data_missing',
+          name: 'Daten fehlen noch',
+          style: {
+            type: 'line',
+            color: 'rgb(187, 17, 133)',
+          },
+        },
+        {
+          id: 'capacity_status--notexpected',
+          name: 'Daten nicht erwartet',
+          desc: ['Gilt für Zufahrten und Fußgängerzonen'],
+          style: {
+            type: 'line',
+            color: 'rgba(187, 17, 133, 0.25)',
           },
         },
       ],

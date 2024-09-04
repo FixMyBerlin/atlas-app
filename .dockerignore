@@ -1,0 +1,4 @@
+app/.husky
+app/.next
+app/.env*
+.editorconfig

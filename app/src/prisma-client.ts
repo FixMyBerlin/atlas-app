@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 
-// This is experimental. It is used in /regionen/slug/stats (page RSC).
-// The idea is to use it with prismaClientForRawQueries.$queryRaw``
-// But only in situations where permissions are already handled by Blitz.
-export const prismaClientForRawQueries = new PrismaClient()
+// This is the client for accessing the geo data.
+// It allows direct SQL queries to the database, so it should be used cautiously as it bypasses Prisma's integrated security checks.
+
+export const geoDataClient = new PrismaClient({
+  datasourceUrl: process.env.GEO_DATABASE_URL,
+})

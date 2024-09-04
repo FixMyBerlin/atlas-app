@@ -2,14 +2,15 @@ export const createSourceKeyStaticDatasets = (sourceId: string, subId: string | 
   return [sourceId, subId].filter(Boolean).join('--')
 }
 
+export const parseSourceKeyStaticDatasets = (key: string) => {
+  const [sourceId, subId] = key.split('--')
+  return { sourceId, subId }
+}
+
 export const createDatasetSourceLayerKey = (
   sourceId: string,
   subId: string | undefined,
   layerId: string,
 ) => {
   return [sourceId, subId, layerId].filter(Boolean).join('--')
-}
-
-export const extractSourceIdFromStaticDatasetSourceKey = (sourceKey: string) => {
-  return sourceKey.split('--')[0]!
 }

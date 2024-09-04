@@ -27,6 +27,7 @@ export type SourcesRasterIds =
   | 'opentopomap'
   | 'trto-radwege'
   | 'brandenburg-dop20'
+  | 'brandenburg-aktualitaet'
 
 // https://account.mapbox.com/access-tokens
 // https://account.mapbox.com/access-tokens/clileup4r0b1r3gmp4hxqhou8/
@@ -333,5 +334,21 @@ export const sourcesBackgroundsRaster: MapDataBackgroundSource<SourcesRasterIds>
     attributionHtml:
       'GeoBasis-DE/LGB / BB-BE DOP20c, dl-de/by-2-0; Geoportal Berlin / DOP20, dl-de/by-2-0',
     legendUrl: undefined,
+  },
+  {
+    // https://geobroker.geobasis-bb.de/gbss.php?MODE=GetProductPreview&PRODUCTID=b4c381ab-7e34-4ede-8e4f-7df6a776e909
+    // ^-- but only one layer
+    // Other source https://geobasis-bb.de/lgb/de/geodaten/luftbilder/luftbilder-aktuell/ which links to the PDF below
+    id: 'brandenburg-aktualitaet',
+    name: 'Brandenburg Aktualitätsübersicht Luftbilder',
+    tiles:
+      'https://isk.geobasis-bb.de/ows/aktualitaeten_wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=true&LAYERS=bb_dop_info&STYLES=default&CRS=EPSG:3857&MAP_RESOLUTION=180&WIDTH=1342&HEIGHT=1000&BBOX={bbox-epsg-3857}',
+    maxzoom: 20,
+    minzoom: 0,
+    tileSize: 512,
+    attributionHtml:
+      'GeoBasis-DE/LGB / BB-BE DOP20c, dl-de/by-2-0; Geoportal Berlin / DOP20, dl-de/by-2-0',
+    legendUrl:
+      'https://data.geobasis-bb.de/geobasis/information/aktualitaeten/bb_dop_aktualitaet.pdf',
   },
 ]

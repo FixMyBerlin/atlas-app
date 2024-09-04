@@ -20,7 +20,7 @@ export const subcat_parkingStats: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Statistik',
   ui: 'dropdown',
-  sourceId: 'parkraumParkingStats',
+  sourceId: source,
   beforeId: undefined,
   styles: [
     defaultStyleHidden,

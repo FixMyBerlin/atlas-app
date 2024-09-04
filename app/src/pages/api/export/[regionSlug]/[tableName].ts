@@ -7,7 +7,7 @@ import {
   exportFunctionIdentifier,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { api } from 'src/blitz-server'
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 
 const ExportSchema = z.object({
@@ -80,17 +80,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { tableName, minlon, minlat, maxlon, maxlat } = params
     const functionName = exportFunctionIdentifier(tableName)
 
-    await prismaClientForRawQueries.$queryRawUnsafe('SET search_path TO public')
-    const geoJson = await prismaClientForRawQueries.$queryRawUnsafe<
-      Record<typeof functionName, object>[]
-    >(
+    const binaryResponse = await geoDataClient.$queryRawUnsafe<Buffer>(
       `SELECT * FROM "${functionName}"(
         ( SELECT * FROM ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326) )
-      )`,
+      ) AS data`,
     )
 
-    res.setHeader('Content-Disposition', `attachment; filename="${tableName}.geojson"`)
-    res.json(geoJson?.at(0)?.[functionName])
+    res.setHeader('Content-Disposition', `attachment; filename="${tableName}.fgb"`)
+    res.setHeader('Content-Type', 'application/octet-stream')
+    res.send(binaryResponse[0]?.['data'])
   } catch (e) {
     if (!isProd) throw e
     res.status(500).send('Internal Server Error')

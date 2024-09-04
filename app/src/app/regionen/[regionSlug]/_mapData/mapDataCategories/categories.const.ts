@@ -13,6 +13,7 @@ import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapilla
 import { subcat_maxspeed } from '../mapDataSubcategories/subcat_maxspeed.const'
 import { subcat_parking } from '../mapDataSubcategories/subcat_parking.const'
 import { subcat_parkingAreas } from '../mapDataSubcategories/subcat_parkingAreas.const'
+import { subcat_parkingBoundaries } from '../mapDataSubcategories/subcat_parkingBoundaries.const'
 import { subcat_parkingDebug } from '../mapDataSubcategories/subcat_parkingDebug.const'
 import { subcat_parkingPoints } from '../mapDataSubcategories/subcat_parkingPoints.const'
 import { subcat_parkingStats } from '../mapDataSubcategories/subcat_parkingStats.const'
@@ -157,6 +158,7 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_parkingAreas, defaultStyle: 'default' },
       { ...subcat_parkingDebug, defaultStyle: 'hidden' },
       { ...subcat_parkingStats, defaultStyle: 'hidden' },
+      { ...subcat_parkingBoundaries, defaultStyle: 'hidden' },
       { ...subcat_signs, defaultStyle: 'hidden' },
       // { id: 'mapillaryCoverage', defaultStyle: "hidden" },
       // { id: 'accidents', defaultStyle: "hidden" },

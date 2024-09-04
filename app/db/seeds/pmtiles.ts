@@ -26,7 +26,6 @@ const seedUploads = async () => {
           type: 'vector',
           inspector: {
             enabled: true,
-            highlightingKey: 'TODO',
             documentedKeys: false,
             disableTranslations: true,
           },
@@ -49,7 +48,6 @@ const seedUploads = async () => {
           type: 'vector',
           inspector: {
             enabled: true,
-            highlightingKey: 'TODO',
             documentedKeys: false,
             disableTranslations: true,
           },
@@ -62,7 +60,6 @@ const seedUploads = async () => {
           attributionHtml: 'Lorem Ipsum',
           inspector: {
             enabled: true,
-            highlightingKey: 'TODO',
             documentedKeys: false,
             disableTranslations: true,
           },

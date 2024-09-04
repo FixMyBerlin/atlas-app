@@ -67,14 +67,17 @@ run_dir() {
   processed_tables="${TABLE_INFO}$topic.processed"
   backedup_tables="${TABLE_INFO}$topic.backedup"
 
-  if check_hash $directory ".lua" && check_hash $directory ".sql"; then
-    log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_DOWNLOAD=1'."
-    if [ -f "$processed_tables" ]; then
-      for table in $(cat $processed_tables); do
-        # Remove old diffs
-        psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
-      done
-    fi
+  # Remove old diffs
+  if [ -f "$processed_tables" ]; then
+    for table in $(cat $processed_tables); do
+      psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
+      psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
+    done
+  fi
+
+  # Skip topic if the hashes haven't changed
+  if [ "$SKIP_UNCHANGED" == 1 ] && check_hash $directory ".lua" && check_hash $directory ".sql"; then
+    log "💥 SKIPPED $topic – the code hash hasn't changed and .env 'SKIP_UNCHANGED=1'."
   else
     # Backup tables for diffs
     if [ "$COMPUTE_DIFFS" == 1 ]; then

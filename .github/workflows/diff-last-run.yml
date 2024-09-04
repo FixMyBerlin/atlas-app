@@ -1,0 +1,44 @@
+name: Diff with last workflow run
+on:
+  workflow_call:
+    inputs:
+      CHECK_DIFF_LOCATIONS:
+        type: string
+        required: true
+    outputs:
+      CHANGES:
+        description: "Whether the given directories have changed since the last successfull workflow run."
+        value: ${{ jobs.diff.outputs.CHANGES }}
+
+jobs:
+  diff:
+    runs-on: ubuntu-latest
+    outputs:
+      CHANGES: ${{ steps.git_changes.outputs.CHANGES }}
+    steps:
+      - name: Get last run commit SHA
+        run: |
+          LAST_RUN_SHA=$(curl --request GET \
+          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
+          echo LAST_RUN_SHA=$LAST_RUN_SHA >> $GITHUB_ENV
+        shell: bash
+
+      - name: Checkout current version
+        uses: actions/checkout@v4
+
+      - name: Checkout last build
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.LAST_RUN_SHA }}
+
+      - name: Check for changes
+        id: git_changes
+        run: |
+          if git diff --exit-code ${{ env.LAST_RUN_SHA }} ${{ github.sha }} -- ${{ inputs.CHECK_DIFF_LOCATIONS }} .github/workflows/; then
+            echo "CHANGES=false" >> $GITHUB_OUTPUT
+          else
+            echo "CHANGES=true" >> $GITHUB_OUTPUT
+          fi
+        shell: bash

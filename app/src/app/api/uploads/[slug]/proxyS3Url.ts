@@ -1,5 +1,6 @@
 import { GetObjectCommand, GetObjectCommandOutput, S3Client } from '@aws-sdk/client-s3'
 import { GetObjectCommandInput } from '@aws-sdk/client-s3/dist-types/commands/GetObjectCommand'
+import pako from 'pako'
 
 export async function proxyS3Url(request: Request, url: string) {
   const { hostname, pathname } = new URL(url)
@@ -30,18 +31,33 @@ export async function proxyS3Url(request: Request, url: string) {
     )
   }
 
-  // @ts-expect-error this was working before and after some updates this causes type issues
-  return new Response(response.Body!, {
-    // @ts-expect-error this exists
-    status: response.Body.statusCode,
+  let Body: any = null
+  // @ts-ignore
+  const statusCode = response.Body.statusCode
+  let { ContentLength, ContentType, ContentEncoding, ETag } = response
+  if (url.endsWith('.geojson')) {
+    ContentType = 'application/geo+json'
+    if (request.headers.get('accept-encoding')?.includes('gzip')) {
+      const jsonString = await response.Body!.transformToString()
+      const compressedArray = new Uint8Array(pako.gzip(jsonString))
+      Body = compressedArray
+      ContentLength = compressedArray.length
+      ContentEncoding = 'gzip'
+    }
+  }
+
+  return new Response(Body || response.Body, {
+    status: statusCode,
+    // @ts-ignore
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Content-Length': response.ContentLength!,
-      'Content-Type': response.ContentType!,
-      ETag: response.ETag!,
+      'Content-Length': ContentLength,
+      'Content-Type': ContentType,
+      'Content-Encoding': ContentEncoding,
+      ETag,
       Pragma: 'no-cache',
       'Cache-Control': 'no-cache',
-      Expires: 0,
+      Expires: '0',
     },
   })
 }

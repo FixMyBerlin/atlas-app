@@ -48,7 +48,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
       </summary>
       <div className="mt-3 grid grid-cols-2 gap-4 break-all text-xs ">
         <div>
-          <h5 className="mb-2 font-semibold">Weitere OSM Werte:</h5>
+          <h5 className="mb-2 font-semibold">Inhaltliche Daten</h5>
           {otherOsmProperties.length ? (
             otherOsmProperties.map(([key, value]) => {
               return (
@@ -74,7 +74,7 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
           )}
         </div>
         <div>
-          <h5 className="mb-2 font-semibold">System-Werte:</h5>
+          <h5 className="mb-2 font-semibold">System-Daten:</h5>
           {systemProperties.length ? (
             systemProperties.map(([key, value]) => {
               return (

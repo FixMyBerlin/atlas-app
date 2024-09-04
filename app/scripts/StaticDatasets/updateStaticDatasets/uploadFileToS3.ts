@@ -5,8 +5,6 @@ import { red } from '../utils/log'
 
 /** @returns URL of pmtile on S3 */
 export const uploadFileToS3 = async (uploadFullFilename: string, datasetFolder: string) => {
-  console.log('  Uploading generated pmtiles file to S3...')
-
   const accessKeyId = process.env.S3_KEY
   const secretAccessKey = process.env.S3_SECRET
   const region = process.env.S3_REGION

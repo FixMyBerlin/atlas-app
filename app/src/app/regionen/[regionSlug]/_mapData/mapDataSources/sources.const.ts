@@ -1,5 +1,5 @@
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
-import { SIMPLIFY_MAX_ZOOM } from 'src/instrumentation/initGeneralizationFunctions'
+import { SIMPLIFY_MAX_ZOOM } from 'src/instrumentation/registerGeneralizationFunctions'
 import { MapDataSource } from '../types'
 import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
 import { SourceExportApiIdentifier } from './export/exportIdentifier'
@@ -219,7 +219,6 @@ export const sources: MapDataSource<
         'composit_surface_smoothness',
         'composit_lit',
         'composit_maxspeed',
-        'composit_road_bikelanes',
         'traffic_sign',
         'traffic_sign:forward__if_present',
         'traffic_sign:backward__if_present',
@@ -261,7 +260,6 @@ export const sources: MapDataSource<
         'composit_surface_smoothness',
         'composit_lit',
         'composit_maxspeed',
-        'composit_road_bikelanes',
         'traffic_sign',
         'traffic_sign:forward__if_present',
         'traffic_sign:backward__if_present',
@@ -294,11 +292,7 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'id',
-      documentedKeys: [
-        // TODO: SHOULD BE…
-        //  Same as 'roads'
-        'composit_road_bikelanes',
-      ],
+      documentedKeys: ['composit_road_bikelanes'],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },

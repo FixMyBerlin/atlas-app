@@ -96,10 +96,16 @@ export function compareValuesBetweenRenders(
   })
 }
 
-const counters: { [key: string]: number } = {}
+let counters: { [key: string]: number } = {}
 
 export function count(key: string) {
   if (!(key in counters)) counters[key] = 1
-  // @ts-expect-error
+  // @ts-ignore
   return counters[key]++
 }
+
+export function resetCounters() {
+  counters = {}
+}
+
+globalize({ resetCounters })

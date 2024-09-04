@@ -13,7 +13,7 @@ mkdir -p $TABLE_INFO
 
 log_start "$0"
 
-if ! check_hash $OSM_DATADIR "osm.pbf" || [ "$SKIP_DOWNLOAD" == 0 ]; then
+if ! check_hash $OSM_DATADIR "osm.pbf"; then
   log "OSM files have changed. Deleting all checksums and table info!"
   rm -f $CODE_HASHES/*
   rm -f $TABLE_INFO/*
@@ -37,6 +37,9 @@ for name in ${topics[@]}; do
   run_dir $name
 done
 
+# Call the refresh endpoint to update the generalization and export functions
+curl -X GET "http://app:4000/api/private/refresh?apiKey=$ATLAS_API_KEY" &> /dev/null
+
 notify "Processing finished."
 
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
@@ -44,6 +47,7 @@ log "Completed:"
 log "Development http://localhost:3000/catalog"
 log "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
 log "Production https://tiles.radverkehrsatlas.de/catalog"
+log "Preview https://viewer.radverkehrsatlas.de/index.html (Staging, Production)"
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 
 log_end "$0"

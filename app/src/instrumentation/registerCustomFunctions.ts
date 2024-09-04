@@ -1,8 +1,8 @@
-import { prismaClientForRawQueries } from 'src/prisma-client'
+import { geoDataClient } from 'src/prisma-client'
 
-export async function initCustomFunctions() {
-  const queries = prismaClientForRawQueries.$transaction([
-    prismaClientForRawQueries.$executeRaw`
+export async function registerCustomFunctions() {
+  const queries = geoDataClient.$transaction([
+    geoDataClient.$executeRaw`
   CREATE OR REPLACE FUNCTION public.jsonb_select(json_in JSONB, keys text[])
   RETURNS JSONB AS $$
   DECLARE

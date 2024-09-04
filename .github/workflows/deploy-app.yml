@@ -14,83 +14,29 @@ on:
       NEXT_PUBLIC_OSM_API_URL:
         required: true
         type: string
-      TRAEFIK_HOST:
+      APP_URL:
         required: true
         type: string
-    secrets:
-      # REMINDER: Public keys `NEXT_PUBLIC_*` have to be added to `/Dockerfile` as well
-      AWS_ACCESS_KEY_ID:
+      CONFIG_CHANGED:
         required: true
-      AWS_SECRET_ACCESS_KEY:
-        required: true
-      AWS_REGION:
-        required: true
-      DATABASE_NAME:
-        required: true
-      DATABASE_PASSWORD:
-        required: true
-      DATABASE_USER:
-        required: true
-      SESSION_SECRET_KEY:
-        required: true
-      OSM_CLIENT_ID:
-        required: true
-      OSM_CLIENT_SECRET:
-        required: true
-      SSH_HOST:
-        required: true
-      SSH_PASSWORD:
-        required: true
-      SSH_USERNAME:
-        required: true
-      ATLAS_API_KEY:
-        required: true
-      S3_KEY:
-        required: true
-      S3_SECRET:
-        required: true
-      S3_REGION:
-        required: true
-      S3_BUCKET:
-        required: true
+        type: boolean
 
 jobs:
-  build_and_deploy_app:
+  diff_app:
+    uses: ./.github/workflows/diff-last-run.yml
+    with:
+      CHECK_DIFF_LOCATIONS: app/ app.Dockerfile
+  build_app:
     runs-on: ubuntu-latest
+    needs: diff_app
+    if: ${{ needs.diff_app.outputs.changes == 'true' }}
     environment:
       name: ${{ inputs.ENVIRONMENT }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Get last run commit SHA
-        id: last_run
-        run: |
-          LAST_RUN_SHA=$(curl --request GET \
-          --url https://api.github.com/repos/${{ github.repository }}/actions/runs?branch=${{ github.head_ref || github.ref_name }} \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          | jq -r '.workflow_runs[] | select(.conclusion == "success") | .head_sha' | head -1)
-          echo "::set-output name=sha::$LAST_RUN_SHA"
-        shell: bash
-
-      - name: Check if LAST_RUN_SHA is one of the last 6 commits and check changes
-        id: git_changes
-        run: |
-          LAST_6_COMMITS=$(git log -n 6 --pretty=format:"%H")
-          if echo "$LAST_6_COMMITS" | grep -q "${{ steps.last_run.outputs.sha }}"; then
-            if git diff --quiet ${{ steps.last_run.outputs.sha }} HEAD -- $CHECK_DIFF_LOCATIONS; then
-              echo "changes=false" >> $GITHUB_OUTPUT
-            else
-              echo "changes=true" >> $GITHUB_OUTPUT
-            fi
-          else
-            echo "changes=true" >> $GITHUB_OUTPUT
-          fi
-        shell: bash
-        env:
-          CHECK_DIFF_LOCATIONS: app/
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Upgrade AWS CLI version and setup lightsailctl
-        if: steps.git_changes.outputs.changes == 'true'
         run: |
           curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
           unzip awscliv2.zip
@@ -99,7 +45,6 @@ jobs:
           sudo chmod +x /usr/local/bin/lightsailctl
 
       - name: Configure AWS credentials
-        if: steps.git_changes.outputs.changes == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -109,16 +54,17 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build app image
-        if: steps.git_changes.outputs.changes == 'true'
         uses: docker/build-push-action@v5
         with:
-          file: ./app/docker/Dockerfile
-          context: ./app/
+          file: ./app.Dockerfile
+          context: ./
           push: false
           load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          tags: public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+          tags: |
+            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
+            public.ecr.aws/n0p8j4k5/atlas/blitz:${{ inputs.ENVIRONMENT }}-latest
           build-args: |
             NEXT_PUBLIC_APP_ENV=${{ inputs.NEXT_PUBLIC_APP_ENV }}
             NEXT_PUBLIC_APP_ORIGIN=${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}
@@ -126,32 +72,16 @@ jobs:
 
       - name: Push image
         run: |
-          echo push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/n0p8j4k5/
-          docker push public.ecr.aws/n0p8j4k5/atlas/blitz:${{ github.sha }}
-
-      - name: Copy files to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          source: "app/docker/docker-compose.yml"
-          target: "/srv/blitz/"
-          strip_components: 2
-          overwrite: true
-
-      - name: Update GITHUB_SHA
-        if: steps.git_changes.outputs.changes == 'true'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd /srv/blitz/
-            sed -i "s|^GITHUB_SHA=.*$|GITHUB_SHA='${{ github.sha }}'|" .env
-
+          docker push --all-tags public.ecr.aws/n0p8j4k5/atlas/blitz
+  restart_app:
+    runs-on: ubuntu-latest
+    needs: [diff_app, build_app]
+    if: ${{ needs.diff_app.outputs.changes == 'true' || inputs.CONFIG_CHANGED && always() }}
+    environment:
+      name: ${{ inputs.ENVIRONMENT }}
+      url: https://${{ inputs.APP_URL }}
+    steps:
       - name: Stop & Start container on Server
         uses: appleboy/ssh-action@master
         with:
@@ -159,25 +89,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            cd /srv/blitz/
-            echo "Updating '.env'"
-            echo NEXT_PUBLIC_APP_ORIGIN='${{ inputs.NEXT_PUBLIC_APP_ORIGIN }}' >> .env
-            echo NEXT_PUBLIC_APP_ENV='${{ inputs.NEXT_PUBLIC_APP_ENV }}' >> .env
-            echo TRAEFIK_HOST='${{ inputs.TRAEFIK_HOST }}' >> .env
-            echo DATABASE_HOST='${{ vars.DATABASE_HOST }}' >> .env
-            echo DATABASE_USER='${{ secrets.DATABASE_USER }}' >> .env
-            echo DATABASE_PASSWORD='${{ secrets.DATABASE_PASSWORD }}' >> .env
-            echo DATABASE_NAME='${{ secrets.DATABASE_NAME }}' >> .env
-            echo SESSION_SECRET_KEY='${{ secrets.SESSION_SECRET_KEY }}' >> .env
-            echo OSM_CLIENT_ID='${{ secrets.OSM_CLIENT_ID }}' >> .env
-            echo OSM_CLIENT_SECRET='${{ secrets.OSM_CLIENT_SECRET }}' >> .env
-            echo NEXT_PUBLIC_OSM_API_URL='${{ inputs.NEXT_PUBLIC_OSM_API_URL }}' >> .env
-            echo ATLAS_API_KEY='${{ secrets.ATLAS_API_KEY }}' >> .env
-            echo S3_KEY='${{ secrets.S3_KEY }}' >> .env
-            echo S3_SECRET='${{ secrets.S3_SECRET }}' >> .env
-            echo S3_REGION='${{ secrets.S3_REGION }}' >> .env
-            echo S3_BUCKET='${{ secrets.S3_BUCKET }}' >> .env
-            docker compose up -d
+            cd /srv
+            echo "Pulling latest 'app' image"
+            docker compose pull app
+            echo "Restarting 'app' container"
+            docker compose up app -d
+            echo "Pruning images"
             docker image prune -fa
-            sleep 10
-            curl http://localhost:4000 > /dev/null

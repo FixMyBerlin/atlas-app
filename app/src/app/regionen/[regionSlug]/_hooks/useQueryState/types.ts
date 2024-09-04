@@ -7,6 +7,6 @@ type PointOrBbox =
     }
 
 export type UrlFeature = {
+  id: number | string
   sourceId: string
-  properties: { id: number }
 } & PointOrBbox

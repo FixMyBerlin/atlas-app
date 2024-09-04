@@ -19,6 +19,7 @@ import { layerVisibility } from '../utils/layerVisibility'
 import { LayerHighlight } from './LayerHighlight'
 import { LayerVerificationStatus } from './LayerVerificationStatus'
 import { beforeId } from './utils/beforeId'
+import { getLayerHighlightId } from '../utils/layerHighlight'
 
 // We add source+layer map-components for all categories and all subcategories of the given config.
 // We then toggle the visibility of the layer base on the URL state (config).
@@ -128,24 +129,24 @@ const SourcesLayersAtlasGeoMemoized = memo(function SourcesLayersAtlasGeoMemoize
 
                       // The verification style layer in Mapbox Studio has to include this string
                       const isVerificationStatusLayer = layer.id.search('verification-status') != -1
+                      const layerHighlightId = getLayerHighlightId(layer.id)
 
                       return (
-                        <Layer key={layerId} {...layerProps} />
-                        //   <React.Fragment key={layerId}>
-                        //     {isVerificationStatusLayer ? (
-                        //       <LayerVerificationStatus
-                        //       key={`${layerId}_verification`}
-                        //       {...layerProps}
-                        //       />
-                        //     ) : (
-                        //       <Layer key={layerId} {...layerProps} />
-                        //     )}
-                        //     <LayerHighlight
-                        //       key={`${layerId}_highlight`}
-                        //       {...layerProps}
-                        //       sourceData={sourceData}
-                        //     />
-                        //   </React.Fragment>
+                        <React.Fragment key={layerId}>
+                          {isVerificationStatusLayer ? (
+                            <LayerVerificationStatus
+                              key={`${layerId}_verification`}
+                              {...layerProps}
+                            />
+                          ) : (
+                            <Layer key={layerId} {...layerProps} />
+                          )}
+                          <LayerHighlight
+                            key={layerHighlightId}
+                            {...{ ...layerProps, id: layerHighlightId }}
+                            sourceData={sourceData}
+                          />
+                        </React.Fragment>
                       )
                     })
                   })}

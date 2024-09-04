@@ -235,6 +235,8 @@ export const staticRegion: StaticRegion[] = [
       'areal2021',
       'areal2020',
       'areal2019',
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
       'parkraumkarte_neukoelln',
     ],
     hideDownload: true,
@@ -269,7 +271,11 @@ export const staticRegion: StaticRegion[] = [
       'bicycleParking',
       'mapillary',
     ],
-    backgroundSources: defaultBackgroundSources,
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'osmNotes',
   },
   {
@@ -509,7 +515,11 @@ export const staticRegion: StaticRegion[] = [
       'roads',
       'mapillary',
     ],
-    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'disabled',
   },
   {
@@ -533,7 +543,11 @@ export const staticRegion: StaticRegion[] = [
       'bicycleParking',
       'mapillary',
     ],
-    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'osmNotes',
   },
   {
@@ -557,7 +571,11 @@ export const staticRegion: StaticRegion[] = [
       'bicycleParking',
       'mapillary',
     ],
-    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'atlasNotes',
   },
   {
@@ -580,7 +598,11 @@ export const staticRegion: StaticRegion[] = [
       'boundaries',
       'mapillary',
     ],
-    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'osmNotes',
   },
   {
@@ -603,13 +625,17 @@ export const staticRegion: StaticRegion[] = [
     slug: 'radplus',
     name: 'Rad+',
     fullName: 'Rad+ & Bahnhofsumfelddaten',
-    osmRelationIds: [62369],
+    osmRelationIds: [62369, 62422],
     map: { lat: 52.3919, lng: 13.0702, zoom: 13 },
     bbox: null,
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     categories: ['bikelanes', 'poi', 'roads', 'bicycleParking', 'mapillary'],
-    backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
+    backgroundSources: [
+      'brandenburg-dop20',
+      'brandenburg-aktualitaet',
+      ...defaultBackgroundSources,
+    ],
     notes: 'atlasNotes',
   },
   {

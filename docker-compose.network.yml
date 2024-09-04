@@ -4,6 +4,8 @@ services:
     container_name: traefik
     # Networking: See https://techoverflow.net/2021/06/11/how-to-fix-traefik-gateway-timeout-for-docker-services/ for network_mode
     restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
     command:
       - "--log.level=WARN"
       - "--api.insecure=false"
@@ -27,12 +29,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
-    networks:
-      - app_bridge
   proxy:
     image: nginx:alpine
     restart: unless-stopped
     container_name: tiles_proxy
+    environment:
+      TZ: Europe/Berlin
     labels:
       traefik.enable: true
       traefik.http.routers.proxy.rule: Host(`${TILES_URL}`)
@@ -44,8 +46,6 @@ services:
     volumes:
       - ./cache:/var/cache/nginx
       - ./logs:/var/log/nginx
-    networks:
-      - app_bridge
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf

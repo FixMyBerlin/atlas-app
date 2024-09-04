@@ -5,11 +5,19 @@
 
 # About
 
-**Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and visualized in multiple map views. The integrated verification process provided a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
+**Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and then visualized in multiple map views. The integrated verification process provides a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
 
-The backend, for processing and storing the geographic data, is located at [atlas-geo](https://github.com/FixMyBerlin/atlas-geo).
+Please [contact FixMyCity GmbH to learn more](https://www.fixmycity.de/radverkehrsatlas).
+
+This project is split into two major parts. The [processing](#processing) of OpenStreetMap data and the [frontend](#frontend) for the visualization and Web GIS.
+
+# Contribute
+
+If you find any bugs, feel free to open an issue in this repository.
 
 # Frontend
+
+The frontend visualizes our processed data it also provides options to annotate and export the data.
 
 ## Develop
 
@@ -19,17 +27,19 @@ The backend, for processing and storing the geographic data, is located at [atla
 
 For VS Code we [recommended](.vscode/extensions.json) some extensions.
 
-To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and use [update the credentials](/.env.example).
+To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-auth](https://github.com/osmlab/osm-auth#registering-an-application) and [update the credentials](/.env.example).
 
 ### Testing the production bundle
 
+In the [`app/`](./app/) directory do the following:
+
 1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
-2. Create a `.env.production.local` with settings linke
+2. Create a `.env.production.local` with settings like
    ```
    NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
    NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
    ```
-3. Run `npm run build` and `npm run start` to test the production bundle
+3. Run `npm run build` and `npm run start` to test the production bundle. There is also a dockerized version of our frontend which one can run with `docker compose --profile frontend up`.
 
 ### NextJS tips
 
@@ -39,62 +49,31 @@ To test the login, you need to setup your own OSM OAuth 2-Application, see [osm-
 
 ## Helper scripts
 
-All helper scripts run with [bun](https://bun.sh/).
+All [helper scripts](./app/scripts) run with [bun](https://bun.sh/).
 
-### Update mapbox styles
-
-See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
-
-### Update regional masks
-
-See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
-
-### Update datasets
-
-See [/datasets/README.md](./datasets/README.md) on how to process and update external datasets.
-
-## Contribute
-
-If you find any bugs, feel free to open an issue in this repository.
+- **Update mapbox styles** – See [/scripts/MapboxStyles/README.md](./scripts/MapboxStyles/README.md) on how to fetch updated style definitions from Mapbox.
+- **Update regional masks** – See [/scripts/RegionalMasks/README.md](./scripts/RegionalMasks/README.md) on how to fetch updated the regional mask data.
+- **Update datasets** – See [/datasets/README.md](./datasets/README.md) on how to process and update external datasets.
 
 ## License
 
 This project is licensed under the AGPL-3.0 License - see the [LICENSE.md](LICENSE.md) file for more information.
 It contains dependencies which have different Licenses, see [`package.json`](./package.json).
 
-## Thanks
-
-For the current version:
-
-- Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
-- Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
-- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
-
-For the alpha version:
-
-- Thank you [Vite](https://vitejs.dev/) and [Vitest](https://vitest.dev/)
-- Thank you [React Location](https://github.com/TanStack/router)
-
 # Processing
 
-## About
-
-This project handles the processing of geo data for [`atlas-app`](https://github.com/FixMyBerlin/atlas-app).
-The data is selected and optimize to make planning of bicycle infrastructure easier.
-
-`atlas-geo` will download, filter and process OpenStreetMap (OSM) data in a PostgreSQL/PostGIS Database and make them available as vector tiles with [`martin`](https://github.com/maplibre/martin).
+The processing downloads the OpenStreetMap (OSM) data, filters and processes it into a PostgreSQL/PostGIS database which are then made available as vector tiles with [`martin`](https://github.com/maplibre/martin).
+The data gets selected and optimized to make planning of bicycle infrastructure easier.
 
 ## Server
 
-- Production Tiles https://tiles.radverkehrsatlas.de/
-- Staging Tiles https://staging-tiles.radverkehrsatlas.de/
-- Development Tiles http://localhost:7800/
+See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/run-5-process.sh#L45-L50
 
 ## Data
 
 ### Freshness of source data
 
-We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) `<3` which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
+We use the [public Germany export from Geofabrik](https://download.geofabrik.de/europe/germany.html) which includes OSM Data up until ~20:00 h of the previous day. All processing is done on this dataset.
 
 ### Freshness of processed data
 
@@ -116,7 +95,7 @@ ATM, the CI runs on every commit. To skip commits add `[skip actions]` to the co
 
 ### Initial setup
 
-1. First create a `.env` file. You can use the `.env.example` file as a template.
+1. First, create a `.env` file. You can use the `.env.example` file as a template.
 2. Follow "Run the whole system"
 
 ### Run the whole system
@@ -170,10 +149,21 @@ You may use `run-full.sh` to set `FREEZE_DATA=0` and modify the helper folder to
 
 ### Process only a single object
 
-For the development process it's often usefull to run the processing on a single object.
+For the development process it's often useful to run the processing on a single object.
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
-## 💛 Thanks to
+# 💛 Thanks to
 
-The first iteration of iteration of this repo was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
+**Processing:**
+
+- Thank you [osm2pgsql](https://osm2pgsql.org/)
+- Thank you [Geofabrik](https://download.geofabrik.de/)
+
+The first iteration of the processing pipeline was inspired by [gislars/osm-parking-processing](https://github.com/gislars/osm-parking-processing)
+
+**Frontend:**
+
+- Thank you [BlitzJS](https://blitzjs.com/) and [NextJS](https://nextjs.org/)
+- Thank you [next-usequerystate](https://github.com/47ng/next-usequerystate/)
+- Thank you [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
