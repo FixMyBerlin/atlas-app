@@ -76,5 +76,6 @@ export const LayerHighlight = (props) => {
     }
   }
 
-  return <Layer {...layerProps} />
+  // HOTFIX: https://github.com/FixMyBerlin/private-issues/issues/1955#issuecomment-2326722336
+  return null //<Layer {...layerProps} />
 }
