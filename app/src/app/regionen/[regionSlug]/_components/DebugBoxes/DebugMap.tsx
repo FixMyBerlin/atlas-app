@@ -33,8 +33,10 @@ export const DebugMap = () => {
   // There are situations, when all our guards are not enough and `mainMap.getStyle()` still errors.
   // One way to force this is: (1) open /regionen/bibi, (2) Goto "Acount bearbeiten", (3) Save the form, (4) Use the browser back to show the map again.
   let getStyles: StyleSpecification | undefined = undefined
+  let orderedLayers: string[] = []
   try {
     getStyles = mainMap.getStyle()
+    orderedLayers = mainMap.getLayersOrder()
   } catch (error) {
     console.warn('DebugMap', { error })
     return null
@@ -156,7 +158,7 @@ export const DebugMap = () => {
       </details>
 
       <details>
-        <summary className="cursor-pointer hover:font-semibold">All layer with order</summary>
+        <summary className="cursor-pointer hover:font-semibold">All layer</summary>
 
         <table>
           <thead>
@@ -168,11 +170,10 @@ export const DebugMap = () => {
             </tr>
           </thead>
           <tbody>
-            {Object.entries(allLayers).map(([index, layer]) => {
+            {allLayers.map((layer) => {
               const source = 'source' in layer ? (layer?.source ?? '-') : '-'
               return (
                 <tr key={`all${layer.id}`} className="border-t border-t-white/10 leading-tight">
-                  <td>{index}</td>
                   <td className={source == 'openmaptiles' ? 'font-semibold' : ''}>
                     <div className="w-28 truncate">{source}</div>
                   </td>
@@ -183,6 +184,33 @@ export const DebugMap = () => {
             })}
           </tbody>
         </table>
+      </details>
+
+      <details>
+        <summary className="cursor-pointer hover:font-semibold">
+          Ordered Layers ({orderedLayers.length})
+        </summary>
+        {orderedLayers.map((layer, index) => (
+          <details key={layer} className="mt-0.5">
+            <summary className="flex cursor-pointer items-center gap-2 hover:underline">
+              <div className="flex min-w-6 items-center justify-center rounded bg-white/20 px-0.5">
+                {index}
+              </div>{' '}
+              {layer}
+            </summary>
+            <div className="text-white/60">
+              <pre>
+                <code>
+                  {JSON.stringify(
+                    allLayers.find((l) => l.id === layer),
+                    undefined,
+                    2,
+                  ) || 'NOT FOUND'}
+                </code>
+              </pre>
+            </div>
+          </details>
+        ))}
       </details>
     </div>
   )
