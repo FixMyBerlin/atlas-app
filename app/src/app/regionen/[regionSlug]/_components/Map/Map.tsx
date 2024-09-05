@@ -145,11 +145,6 @@ export const Map = () => {
     hoveredFeatures.current = current
   }
 
-  const getFeatures = (e: MapMouseEvent) =>
-    mainMap?.queryRenderedFeatures([e.point.x, e.point.y], {
-      layers: interactiveLayerIds,
-    }) || []
-
   const handleMouseMove = ({ features }: MapLayerMouseEvent) => {
     features = extractInteractiveFeatures(mapParam, features)
     updateCursor(features)
