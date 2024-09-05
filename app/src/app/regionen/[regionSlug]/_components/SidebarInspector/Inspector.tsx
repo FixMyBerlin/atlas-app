@@ -32,7 +32,7 @@ export const Inspector = ({ features }: Props) => {
           return (
             <InspectorFeatureOsmNote
               key={`osm-note-${inspectObject?.properties?.id}`}
-              properties={inspectObject.properties}
+              feature={inspectObject}
             />
           )
         }
