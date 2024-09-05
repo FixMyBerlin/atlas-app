@@ -73,6 +73,12 @@ export const ToolsOtherProperties = ({ feature, documentedKeys }: Props) => {
         </div>
         <div>
           <h5 className="mb-2 font-semibold">System-Daten:</h5>
+          <p className="mb-0.5 border-b border-gray-200 pb-0.5">
+            <strong>
+              <code>feature.id</code>
+            </strong>
+            : {feature.id || 'MISSING'}
+          </p>
           {systemProperties.length ? (
             systemProperties.map(([key, value]) => {
               return (
