@@ -1,5 +1,5 @@
-import { Fragment, useRef } from 'react'
 import { FilterSpecification } from 'maplibre-gl'
+import { Fragment, useRef } from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { useMapDebugUseDebugLayerStyles } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
@@ -9,11 +9,11 @@ import {
   createDatasetSourceLayerKey,
   createSourceKeyStaticDatasets,
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import { getLayerHighlightId } from '../utils/layerHighlight'
 import { layerVisibility } from '../utils/layerVisibility'
+import { LayerHighlight } from './LayerHighlight'
 import { createPmtilesUrl } from './utils/createPmtilesUrl'
 import { wrapFilterWithAll } from './utils/filterUtils/wrapFilterWithAll'
-import { getLayerHighlightId } from '../utils/layerHighlight'
-import { LayerHighlight } from './LayerHighlight'
 
 export const SourcesLayersStaticDatasets = () => {
   const datasetsPreviouslyVisible = useRef({})
@@ -88,8 +88,8 @@ export const SourcesLayersStaticDatasets = () => {
 
               return (
                 <Fragment key={layerId}>
-                  <Layer {...(layerProps as LayerProps)} />
-                  <LayerHighlight {...{ ...layerProps, id: layerHighlightId }} />
+                  <Layer key={layerId} {...layerProps} />
+                  <LayerHighlight key={layerHighlightId} {...layerProps} id={layerHighlightId} />
                 </Fragment>
               )
             })}
