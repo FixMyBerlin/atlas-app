@@ -12,7 +12,7 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
-import { isDev } from 'src/app/_components/utils/isEnv'
+import { isDev, isProd } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapInspectorFeatures, useMapActions } from '../../_hooks/mapState/useMapState'
 import {
@@ -85,6 +85,19 @@ export const Map = () => {
     if (containMaskFeature(features)) {
       return
     }
+    if (!isProd) {
+      // Our app relies on a unique `feature.id`. Without it, the uniqueness check below fails as do the hover/select feautres on the map.
+      // Remember that the `feature.id` has to be an integer, otherwise Maplibre will silently remove it.
+      // There is a workaround to use strings by using `promoteId` but for now we focus on fixing the source data.
+      const featuresWithoutId = features?.filter((f) => f.id === undefined)
+      if (featuresWithoutId?.length) {
+        console.warn(
+          'WARNING, there are features without a `feature.id` which will break the app:',
+          featuresWithoutId,
+        )
+      }
+    }
+
     const interactiveFeatures = extractInteractiveFeatures(mapParam, features)
     const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
 
