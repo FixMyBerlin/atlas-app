@@ -50,7 +50,7 @@ const components = {
   a: MdA,
 }
 
-export const Markdown: React.FC<Props> = ({ markdown, className }) => {
+export const Markdown = ({ markdown, className }: Props) => {
   if (!markdown) return null
 
   return (
