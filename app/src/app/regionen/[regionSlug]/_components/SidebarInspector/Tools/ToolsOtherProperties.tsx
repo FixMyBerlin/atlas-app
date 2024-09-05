@@ -1,14 +1,12 @@
-import React from 'react'
 import { Link } from 'src/app/_components/links/Link'
-import { Pill } from 'src/app/_components/text/Pill'
-import { isProd } from 'src/app/_components/utils/isEnv'
+import { InspectorFeature } from '../Inspector'
 
 type Props = {
-  properties: { [key: string]: any }
+  feature: InspectorFeature['feature']
   documentedKeys: string[] | undefined | false
 }
 
-export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKeys }) => {
+export const ToolsOtherProperties = ({ feature, documentedKeys }: Props) => {
   const systemKeys = [
     '_freshNotes',
     '_skip',
@@ -31,11 +29,11 @@ export const ToolsOtherProperties: React.FC<Props> = ({ properties, documentedKe
     'prefix',
     'id',
   ]
-  const otherOsmProperties = Object.entries(properties)
+  const otherOsmProperties = Object.entries(feature.properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
     .filter(([key, _v]) => !systemKeys.includes(key))
 
-  const systemProperties = Object.entries(properties)
+  const systemProperties = Object.entries(feature.properties)
     .sort((a, b) => a[0].localeCompare(b[0]))
     .filter(
       ([key, _v]) => systemKeys.includes(key) && documentedKeys && !documentedKeys?.includes(key),

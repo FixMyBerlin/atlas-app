@@ -11,13 +11,9 @@ import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
 
-export const InspectorFeatureStaticDataset = ({
-  sourceKey,
-  properties,
-  geometry,
-}: InspectorFeature) => {
+export const InspectorFeatureStaticDataset = ({ sourceKey, feature }: InspectorFeature) => {
   const regionDatasets = useRegionDatasets()
-  if (!sourceKey || !properties) return null
+  if (!sourceKey || !feature.properties) return null
 
   // The documentedKeys info is placed on the source object
   const sourceId = parseSourceKeyStaticDatasets(sourceKey).sourceId as string
@@ -33,27 +29,26 @@ export const InspectorFeatureStaticDataset = ({
       <IntlProvider messages={datasetTranslations} locale="de" defaultLocale="de">
         <Disclosure
           title={<>Statische Daten {quote(sourceData.name)}</>}
-          objectId={properties.osm_id}
+          objectId={feature.properties.osm_id}
         >
           <p
             dangerouslySetInnerHTML={{ __html: sourceData.attributionHtml }}
             className="border-b py-1.5 pl-4 pr-3 text-gray-400"
           />
           <TagsTable
-            properties={properties}
+            properties={feature.properties}
             sourceDocumentedKeys={sourceData.inspector.documentedKeys}
             sourceId={sourceId}
           />
 
           <ToolsWrapper>
             <ToolsLinks
-              properties={properties}
-              geometry={geometry}
+              feature={feature}
               editors={sourceData.inspector.editors}
               osmIdConfig={sourceData.osmIdConfig}
             />
             <ToolsOtherProperties
-              properties={properties}
+              feature={feature}
               documentedKeys={sourceData.inspector.documentedKeys}
             />
           </ToolsWrapper>
