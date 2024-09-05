@@ -1,6 +1,6 @@
-import path from 'node:path'
-import { import_, tmpDir } from '../updateStaticDatasets'
 import adler32 from 'adler-32'
+import path from 'node:path'
+import { import_ } from '../updateStaticDatasets'
 
 /** @returns geojson outputFullFilename which is either the initial geojson or the transformed geojson  */
 export const transformFile = async (
@@ -15,7 +15,6 @@ export const transformFile = async (
 
   const datasetFolderName = datasetFolderPath.split('/').at(-1)
   let outputFullFilename: string
-  let transformedData: string
 
   outputFullFilename = path.join(outputFolder, `${datasetFolderName}.transformed.geojson`)
   if (transform !== null) {
@@ -23,9 +22,7 @@ export const transformFile = async (
     data = transform(data)
   }
   console.log(`  Adding ids...`)
-  data.features.forEach(
-    (f) => (f.id = new Uint32Array([adler32.str(JSON.stringify(f))])[0]!),
-  )
+  data.features.forEach((f) => (f.id = new Uint32Array([adler32.str(JSON.stringify(f))])[0]!))
 
   await Bun.write(outputFullFilename, JSON.stringify(data, null, 2))
 
