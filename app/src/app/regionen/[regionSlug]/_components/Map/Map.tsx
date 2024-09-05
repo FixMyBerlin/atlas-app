@@ -103,15 +103,16 @@ export const Map = () => {
 
     if (uniqueFeatures) {
       let newInspectorFeatures: MapGeoJSONFeature[] = []
-      if (event.originalEvent.ctrlKey) {
-        // ctrl is down - toggle features
+      // Allow multi select with Control (Windows) / Command (Mac)
+      if (event.originalEvent.ctrlKey || event.originalEvent.metaKey) {
+        // ctrl/command is down - toggle features
         const featureInArray = (f0, farr) =>
           !!farr.find((f1) => f0.properties.id === f1.properties.id)
         const keepFeatures = inspectorFeatures.filter((f) => !featureInArray(f, uniqueFeatures))
         const addFeatures = uniqueFeatures.filter((f) => !featureInArray(f, inspectorFeatures))
         newInspectorFeatures = [...keepFeatures, ...addFeatures]
       } else {
-        // ctrl is not down - just set features
+        // ctrl/command is not down - just set features
         newInspectorFeatures = uniqueFeatures
       }
       setInspectorFeatures(newInspectorFeatures)
