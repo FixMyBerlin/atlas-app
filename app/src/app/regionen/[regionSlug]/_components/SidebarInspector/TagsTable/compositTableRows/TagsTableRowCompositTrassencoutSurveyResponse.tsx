@@ -10,10 +10,10 @@ export const TagsTableRowCompositTrassencoutSurveyResponse = ({
   properties,
 }: CompositTableRow) => {
   const color =
-    properties.geometryType === 'point'
+    properties.precision === 'point'
       ? '#7c3aed' // violet-600
       : '#c026d3' // fuscia-600
-  const dimColor = properties.geometryType === 'point' ? '#ede9fe' : '#fae8ff'
+  const dimColor = properties.precision === 'point' ? '#ede9fe' : '#fae8ff'
 
   return (
     <tr className="group">
@@ -23,7 +23,7 @@ export const TagsTableRowCompositTrassencoutSurveyResponse = ({
         style={{ borderColor: color }}
       >
         <div style={{ backgroundColor: dimColor }} className="-ml-4 -mr-3 -mt-2 px-4 py-3">
-          {properties.geometryType === 'point'
+          {properties.precision === 'point'
             ? 'Dieser Hinweis ist an einer konkreten Stelle verortet'
             : 'Dieser Hinweis bezieht sich auf die gesamte Verbindung'}
         </div>
