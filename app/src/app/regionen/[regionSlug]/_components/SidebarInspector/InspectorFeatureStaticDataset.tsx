@@ -10,6 +10,7 @@ import { translations } from './TagsTable/translations/translations.const'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
+import { RegionBbPgNewPriorityNoteButton } from './InspectorFeatureAtlasNote/RegionBbPgNewPriorityNoteButton'
 
 export const InspectorFeatureStaticDataset = ({ sourceKey, feature }: InspectorFeature) => {
   const regionDatasets = useRegionDatasets()
@@ -40,6 +41,8 @@ export const InspectorFeatureStaticDataset = ({ sourceKey, feature }: InspectorF
             sourceDocumentedKeys={sourceData.inspector.documentedKeys}
             sourceId={sourceId}
           />
+
+          <RegionBbPgNewPriorityNoteButton feature={feature} />
 
           <ToolsWrapper>
             <ToolsLinks
