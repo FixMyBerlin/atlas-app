@@ -1,14 +1,10 @@
 import { Markdown } from 'src/app/_components/text/Markdown'
-import { CompositTableRow } from './types'
 import { Pill } from 'src/app/_components/text/Pill'
+import { CompositTableRow } from './types'
 
 // Use by `app/scripts/StaticDatasets/geojson/region-bb/bb-trassenscout-beteiligung/meta.ts`
 export const tableKeyTrassencoutSurveyResponse = 'composit_trassenscout_survey_response'
-export const TagsTableRowCompositTrassencoutSurveyResponse = ({
-  sourceId,
-  tagKey,
-  properties,
-}: CompositTableRow) => {
+export const TagsTableRowCompositTrassencoutSurveyResponse = ({ properties }: CompositTableRow) => {
   const color =
     properties.precision === 'point'
       ? '#7c3aed' // violet-600
