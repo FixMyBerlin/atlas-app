@@ -138,6 +138,7 @@
     "jsdom": "24.1.1",
     "minimatch": "9.0.5",
     "pako": "2.1.0",
+    "papaparse": "5.4.1",
     "parse-gitignore": "2.0.0",
     "patch-package": "8.0.0",
     "postcss": "^8.4.39",
