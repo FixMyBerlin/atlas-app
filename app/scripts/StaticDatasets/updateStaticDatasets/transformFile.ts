@@ -39,8 +39,27 @@ export const transformFile = async (
     console.log(`  Transforming geojson file...`)
     data = transform(data)
   }
-  console.log(`  Adding ids...`)
-  data.features.forEach((f) => (f.id = new Uint32Array([adler32.str(JSON.stringify(f))])[0]!))
+  const allHaveIds = data.features.every((f) => !f.id)
+  let allIdsUnique = false
+  if (allHaveIds) {
+    const areIdsUnique = (features: { id: any }[]) => {
+      const ids = new Set()
+      for (const feature of features) {
+        if (ids.has(feature.id)) {
+          return false // Duplicate ID found
+        }
+        ids.add(feature.id)
+      }
+      return true // All IDs are unique
+    }
+    allIdsUnique = areIdsUnique(data.features)
+  }
+  if (allIdsUnique) {
+    console.log(`  All features have a unique id, using those...`)
+  } else {
+    console.log(`  Adding unique ids...`)
+    data.features.forEach((f) => (f.id = new Uint32Array([adler32.str(JSON.stringify(f))])[0]!))
+  }
 
   const outputFullFilename = path.join(outputFolder, `${datasetFolderName}.transformed.geojson`)
   await Bun.write(outputFullFilename, JSON.stringify(data, null, 2))
