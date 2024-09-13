@@ -227,7 +227,7 @@ if (keepTemporaryFiles) {
   inverse('Processed temporary files')
   const tempGeojsonFiles = fs
     .readdirSync(tmpDir)
-    .filter((file) => file.endsWith('.geojson'))
+    .filter((file) => file.endsWith('.geojson') || file.endsWith('.geojson.gz'))
     .filter((file) => (folderFilterTerm ? file.includes(folderFilterTerm) : true))
     .sort()
   tempGeojsonFiles.map((file) => {

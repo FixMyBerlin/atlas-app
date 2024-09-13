@@ -6,7 +6,8 @@ import { yellow } from '../utils/log'
 export const findGeojson = (datasetFolderPath: string) => {
   const filenames = fs
     .readdirSync(datasetFolderPath)
-    .filter((filename) => path.parse(filename).ext === '.geojson')
+    .filter((filename) => filename.includes('.geojson') || filename.includes('.geojson.gz'))
+    .filter((filename) => ['.geojson', '.gz'].includes(path.parse(filename).ext))
 
   if (filenames.length === 0) {
     yellow(`  Folder "${datasetFolderPath}" does not contain a geojson.`)
