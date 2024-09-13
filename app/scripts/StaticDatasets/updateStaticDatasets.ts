@@ -17,7 +17,7 @@ import { parse } from 'parse-gitignore'
 import { isCompressedSmallerThan } from './updateStaticDatasets/isCompressedSmallerThan'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
-export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
+export const tmpDir = path.join(os.tmpdir(), 'StaticDatasets')
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
 // if a file is smaller than maxCompressedSize it will be uploaded as geojson
