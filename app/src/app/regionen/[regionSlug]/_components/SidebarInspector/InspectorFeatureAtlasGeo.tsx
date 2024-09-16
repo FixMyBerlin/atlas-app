@@ -15,7 +15,8 @@ import { ToolsWrapper } from './Tools/ToolsWrapper'
 import { extractOsmTypeIdByConfig } from './Tools/osmUrls/extractOsmTypeIdByConfig'
 import { osmTypeIdString } from './Tools/osmUrls/osmUrls'
 
-export const InspectorFeatureAtlasGeo = ({ sourceKey, properties, geometry }: InspectorFeature) => {
+export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeature) => {
+  const { geometry, properties } = feature
   if (!sourceKey || !properties) return null
 
   // The documentedKeys info is placed on the source object
@@ -53,8 +54,7 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, properties, geometry }: In
 
           <ToolsWrapper>
             <ToolsLinks
-              properties={properties}
-              geometry={geometry}
+              feature={feature}
               editors={sourceData.inspector.editors}
               osmIdConfig={sourceData.osmIdConfig}
             />
@@ -69,7 +69,7 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, properties, geometry }: In
                 )
               })}
             <ToolsOtherProperties
-              properties={properties}
+              feature={feature}
               documentedKeys={sourceData.inspector.documentedKeys}
             />
           </ToolsWrapper>

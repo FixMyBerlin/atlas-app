@@ -12,7 +12,7 @@ import { HeaderWrapper } from '../_components/HeaderWrapper'
 import { getFullname } from './_components/utils/getFullname'
 
 export default function AdminMembershipsPage() {
-  const [{ users: userAndMemberships }] = useQuery(getUsersAndMemberships, {})
+  const [{ users: userAndMemberships }] = useQuery(getUsersAndMemberships, { take: 250 })
 
   const router = useRouter()
   const [deleteMembershipMutation] = useMutation(deleteMembership)
@@ -35,11 +35,18 @@ export default function AdminMembershipsPage() {
         <Breadcrumb pages={[{ href: '/admin/memberships', name: 'Nutzer & Mitgliedschaften' }]} />
       </HeaderWrapper>
 
+      {userAndMemberships.length >= 250 && (
+        <p className="my-12 text-red-500">
+          Achtung, die Liste zeigt maximal 250 Einträge. Wir müssen eine Paginierung bauen oder
+          `maxTake` erhöhen.
+        </p>
+      )}
+
       <table className="min-w-full divide-y divide-gray-300">
         <thead className="bg-gray-50">
           <tr>
             <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6">
-              User
+              User ({userAndMemberships.length})
             </th>
             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold sm:pr-6">
               Projekt

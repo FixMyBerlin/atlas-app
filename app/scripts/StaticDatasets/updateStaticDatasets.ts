@@ -1,7 +1,7 @@
 // We use bun.sh to run this file
 import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
+import { parse } from 'parse-gitignore'
 import pluralize from 'pluralize'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
@@ -9,18 +9,20 @@ import { createUpload, getRegions, type UploadType } from './api'
 import { MetaData } from './types'
 import { findGeojson } from './updateStaticDatasets/findGeojson'
 import { generatePMTilesFile } from './updateStaticDatasets/generatePMTilesFile'
+import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
+import { isCompressedSmallerThan } from './updateStaticDatasets/isCompressedSmallerThan'
 import { transformFile } from './updateStaticDatasets/transformFile'
 import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
 import { green, inverse, red, yellow } from './utils/log'
-import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
-import { parse } from 'parse-gitignore'
-import { isCompressedSmallerThan } from './updateStaticDatasets/isCompressedSmallerThan'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
-export const tmpDir = path.join(os.tmpdir(), 'pmtiles')
+export const tempFolder = 'scripts/StaticDatasets/_geojson_temp'
+if (!fs.existsSync(tempFolder)) fs.mkdirSync(tempFolder, { recursive: true })
+
 const regions = await getRegions()
 const existingRegionSlugs = regions.map((region) => region.slug)
-// if a file is smaller than maxCompressedSize it will be uploaded as geojson
+
+// If a file is smaller than maxCompressedSize it will be uploaded as geojson
 const maxCompressedSize = 1 // TODO: Revert back to 50000
 
 // use --dry-run to run all checks and transformation (but no pmtiles created, no upload to S3, no DB modifications)
@@ -49,8 +51,8 @@ inverse('Starting update with settings', [
   {
     API_ROOT_URL: process.env.API_ROOT_URL,
     S3_UPLOAD_FOLDER: process.env.S3_UPLOAD_FOLDER,
-    ...(keepTemporaryFiles ? { tmpDir } : {}),
-    ...(folderFilterTerm ? { folderFilterTerm } : {}),
+    keepTemporaryFiles,
+    folderFilterTerm,
   },
 ])
 
@@ -79,11 +81,6 @@ export const import_ = async <ReturnModule extends Function | Object>(
     return null
   }
   return module_[valueName] as ReturnModule
-}
-
-// create tmp folder
-if (!fs.existsSync(tmpDir)) {
-  fs.mkdirSync(tmpDir, { recursive: true })
 }
 
 if (!fs.existsSync(geoJsonFolder)) {
@@ -148,7 +145,11 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   }
 
   // Create the transformed data (or duplicate existing geojson)
-  const transformedFilepath = await transformFile(datasetFolderPath, geojsonFullFilename, tmpDir)
+  const transformedFilepath = await transformFile(
+    datasetFolderPath,
+    geojsonFullFilename,
+    tempFolder,
+  )
 
   console.log('  Checking compressed file size...')
   const isSmall = await isCompressedSmallerThan(transformedFilepath, maxCompressedSize)
@@ -160,7 +161,7 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
     logInfo(`Generating pmtiles file......`, dryRun)
     uploadFilepath = dryRun
       ? '/tmp/does-not-exist.pmtiles'
-      : await generatePMTilesFile(transformedFilepath, tmpDir)
+      : await generatePMTilesFile(transformedFilepath, tempFolder)
     uploadType = 'PMTILES'
   } else {
     console.log('  File is small and will be uploaded as geojson.')
@@ -226,18 +227,18 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
 if (keepTemporaryFiles) {
   inverse('Processed temporary files')
   const tempGeojsonFiles = fs
-    .readdirSync(tmpDir)
-    .filter((file) => file.endsWith('.geojson'))
+    .readdirSync(tempFolder)
+    .filter((file) => file.endsWith('.geojson') || file.endsWith('.geojson.gz'))
     .filter((file) => (folderFilterTerm ? file.includes(folderFilterTerm) : true))
     .sort()
   tempGeojsonFiles.map((file) => {
-    console.log(`  ${path.join(tmpDir, file)}`)
+    console.log(`  ${path.join(tempFolder, file)}`)
   })
 }
 
 // Clean up
 if (!keepTemporaryFiles) {
-  fs.rmSync(tmpDir, { recursive: true, force: true })
+  fs.rmSync(tempFolder, { recursive: true, force: true })
 }
 
 // For production runs, add a tag so we can see which data was published

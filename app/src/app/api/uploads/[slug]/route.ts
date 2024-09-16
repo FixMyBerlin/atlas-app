@@ -31,12 +31,10 @@ export async function GET(request: Request, { params }: { params: { slug: string
     }
   }
 
-  const url = upload!.url
-  const s3baseUrl = `https://${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com`
-
-  if (url.startsWith(s3baseUrl)) {
-    return proxyS3Url(request, url)
-  } else {
-    return await fetch(url)
+  switch (upload.type) {
+    case 'PMTILES':
+      return proxyS3Url(request, upload.url)
+    case 'GEOJSON':
+      return await fetch(upload.url)
   }
 }

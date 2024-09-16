@@ -11,8 +11,7 @@ export type InspectorFeatureProperty = NonNullable<GeoJSON.GeoJsonProperties>
 
 export type InspectorFeature = {
   sourceKey: string
-  properties: InspectorFeatureProperty
-  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
+  feature: StoreFeaturesInspector['inspectorFeatures'][number]
 }
 
 export type InspectorOsmNoteFeature = Omit<InspectorFeature, 'sourceKey'>
@@ -33,7 +32,7 @@ export const Inspector = ({ features }: Props) => {
           return (
             <InspectorFeatureOsmNote
               key={`osm-note-${inspectObject?.properties?.id}`}
-              properties={inspectObject.properties}
+              feature={inspectObject}
             />
           )
         }
@@ -55,8 +54,7 @@ export const Inspector = ({ features }: Props) => {
             <InspectorFeatureStaticDataset
               key={createInspectorFeatureKey(inspectObject)}
               sourceKey={sourceKey}
-              properties={inspectObject.properties}
-              geometry={inspectObject.geometry}
+              feature={inspectObject}
             />
           )
         }
@@ -66,8 +64,7 @@ export const Inspector = ({ features }: Props) => {
           <InspectorFeatureAtlasGeo
             key={createInspectorFeatureKey(inspectObject)}
             sourceKey={sourceKey}
-            properties={inspectObject.properties}
-            geometry={inspectObject.geometry}
+            feature={inspectObject}
           />
         )
       })}

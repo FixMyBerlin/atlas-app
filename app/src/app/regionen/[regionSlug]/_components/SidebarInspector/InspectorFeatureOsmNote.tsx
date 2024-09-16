@@ -15,9 +15,9 @@ import { OsmUserLink } from './OsmUserLink'
 import { SvgNotesCheckmark } from './icons/SvgNotesCheckmark'
 import { SvgNotesQuestionmark } from './icons/SvgNotesQuestionmark'
 
-type Props = Pick<InspectorOsmNoteFeature, 'properties'>
+type Props = Pick<InspectorOsmNoteFeature, 'feature'>
 
-const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
+const InspectorFeatureOsmNoteWithQuery = ({ feature: { properties } }: Props) => {
   const { osmName } = useSession()
   const osmNotesFeatures = useOsmNotesFeatures()
 
@@ -104,10 +104,10 @@ const InspectorFeatureOsmNoteWithQuery = ({ properties }: Props) => {
   )
 }
 
-export const InspectorFeatureOsmNote = ({ properties }: Props) => {
+export const InspectorFeatureOsmNote = ({ feature }: Props) => {
   return (
     <Suspense fallback={<Spinner />}>
-      <InspectorFeatureOsmNoteWithQuery properties={properties} />
+      <InspectorFeatureOsmNoteWithQuery feature={feature} />
     </Suspense>
   )
 }

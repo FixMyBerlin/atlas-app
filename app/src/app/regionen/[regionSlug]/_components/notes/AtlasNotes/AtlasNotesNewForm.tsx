@@ -3,10 +3,7 @@ import dompurify from 'dompurify'
 import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
 import createNote from 'src/notes/mutations/createNote'
-import {
-  useAtlasFilterParam,
-  useNewAtlasNoteMapParam,
-} from '../../../_hooks/useQueryState/useNotesAtlasParams'
+import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
 import { useQueryKey } from './utils/useQueryKey'
 

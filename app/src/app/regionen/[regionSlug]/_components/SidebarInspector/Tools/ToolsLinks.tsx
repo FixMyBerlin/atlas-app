@@ -4,7 +4,7 @@ import {
   MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
 } from 'src/app/regionen/[regionSlug]/_mapData/types'
-import { StoreFeaturesInspector } from '../../../_hooks/mapState/useMapState'
+import { InspectorFeature } from '../Inspector'
 import { ToolsLinkNewOsmNote } from './ToolsLinkNewOsmNote'
 import { editorUrl } from './osmUrls/editorUrl'
 import { extractOsmTypeIdByConfig } from './osmUrls/extractOsmTypeIdByConfig'
@@ -18,30 +18,29 @@ import {
 } from './osmUrls/osmUrls'
 
 type Props = {
-  properties: StoreFeaturesInspector['inspectorFeatures'][number]['properties']
-  geometry: StoreFeaturesInspector['inspectorFeatures'][number]['geometry']
+  feature: InspectorFeature['feature']
   editors?: MapDataSourceInspectorEditor[]
   osmIdConfig?: MapDataOsmIdConfig
 }
 
-export const ToolsLinks = ({ properties, geometry, editors, osmIdConfig }: Props) => {
-  const osmTypeId = extractOsmTypeIdByConfig(properties, osmIdConfig)
+export const ToolsLinks = ({ feature, editors, osmIdConfig }: Props) => {
+  const osmTypeId = extractOsmTypeIdByConfig(feature.properties, osmIdConfig)
 
   const osmUrlHref = osmUrl(osmTypeId)
   const osmEditIdUrlHref = osmEditIdUrl(osmTypeId)
   const osmEditRapidUrlHref = osmEditRapidUrl(osmTypeId)
   const historyUrlHref = historyUrl(osmTypeId)
-  const mapillaryUrlHref = mapillaryUrl(geometry)
-  const mapillaryKeyUrlHref = mapillaryKeyUrl(properties.mapillary)
+  const mapillaryUrlHref = mapillaryUrl(feature.geometry)
+  const mapillaryKeyUrlHref = mapillaryKeyUrl(feature.properties.mapillary)
 
   return (
     <section className="flex flex-wrap gap-3 pb-1 text-xs">
       {editors?.map(({ urlTemplate, name, idKey }) => {
         const url = editorUrl({
           urlTemplate,
-          geometry,
+          geometry: feature.geometry,
           osmTypeId,
-          editorId: idKey && properties[idKey],
+          editorId: idKey && feature.properties[idKey],
         })
         if (!url) return null
         return (
@@ -88,7 +87,11 @@ export const ToolsLinks = ({ properties, geometry, editors, osmIdConfig }: Props
         </LinkExternal>
       )}
 
-      <ToolsLinkNewOsmNote properties={properties} geometry={geometry} osmIdConfig={osmIdConfig} />
+      <ToolsLinkNewOsmNote
+        properties={feature.properties}
+        geometry={feature.geometry}
+        osmIdConfig={osmIdConfig}
+      />
     </section>
   )
 }

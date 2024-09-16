@@ -12,7 +12,7 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
-import { isDev } from 'src/app/_components/utils/isEnv'
+import { isDev, isProd } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapInspectorFeatures, useMapActions } from '../../_hooks/mapState/useMapState'
 import {
@@ -85,20 +85,34 @@ export const Map = () => {
     if (containMaskFeature(features)) {
       return
     }
+    if (!isProd) {
+      // Our app relies on a unique `feature.id`. Without it, the uniqueness check below fails as do the hover/select feautres on the map.
+      // Remember that the `feature.id` has to be an integer, otherwise Maplibre will silently remove it.
+      // There is a workaround to use strings by using `promoteId` but for now we focus on fixing the source data.
+      const featuresWithoutId = features?.filter((f) => f.id === undefined)
+      if (featuresWithoutId?.length) {
+        console.warn(
+          'WARNING, there are features without a `feature.id` which will break the app:',
+          featuresWithoutId,
+        )
+      }
+    }
+
     const interactiveFeatures = extractInteractiveFeatures(mapParam, features)
     const uniqueFeatures = uniqBy(interactiveFeatures, (f) => createInspectorFeatureKey(f))
 
     if (uniqueFeatures) {
       let newInspectorFeatures: MapGeoJSONFeature[] = []
-      if (event.originalEvent.ctrlKey) {
-        // ctrl is down - toggle features
+      // Allow multi select with Control (Windows) / Command (Mac)
+      if (event.originalEvent.ctrlKey || event.originalEvent.metaKey) {
+        // ctrl/command is down - toggle features
         const featureInArray = (f0, farr) =>
           !!farr.find((f1) => f0.properties.id === f1.properties.id)
         const keepFeatures = inspectorFeatures.filter((f) => !featureInArray(f, uniqueFeatures))
         const addFeatures = uniqueFeatures.filter((f) => !featureInArray(f, inspectorFeatures))
         newInspectorFeatures = [...keepFeatures, ...addFeatures]
       } else {
-        // ctrl is not down - just set features
+        // ctrl/command is not down - just set features
         newInspectorFeatures = uniqueFeatures
       }
       setInspectorFeatures(newInspectorFeatures)
@@ -144,11 +158,6 @@ export const Map = () => {
     })
     hoveredFeatures.current = current
   }
-
-  const getFeatures = (e: MapMouseEvent) =>
-    mainMap?.queryRenderedFeatures([e.point.x, e.point.y], {
-      layers: interactiveLayerIds,
-    }) || []
 
   const handleMouseMove = ({ features }: MapLayerMouseEvent) => {
     features = extractInteractiveFeatures(mapParam, features)

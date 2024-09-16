@@ -35,6 +35,10 @@ import {
 import { TagsTableRowWebsite, tableKeyWebsite } from './compositTableRows/TagsTableRowWebsite'
 import { TagsTableRowWikipedia, tableKeyWikipedia } from './compositTableRows/TagsTableRowWikipedia'
 import { cleanKey } from './utils/cleanKey'
+import {
+  tableKeyTrassencoutSurveyResponse,
+  TagsTableRowCompositTrassencoutSurveyResponse,
+} from './compositTableRows/TagsTableRowCompositTrassencoutSurveyResponse'
 
 type Props = {
   properties: InspectorFeatureProperty
@@ -159,6 +163,16 @@ export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, s
             case tableKeyWikipedia: {
               return (
                 <TagsTableRowWikipedia
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={key}
+                  properties={properties}
+                />
+              )
+            }
+            case tableKeyTrassencoutSurveyResponse: {
+              return (
+                <TagsTableRowCompositTrassencoutSurveyResponse
                   key={cleanedKey}
                   sourceId={sourceId}
                   tagKey={key}

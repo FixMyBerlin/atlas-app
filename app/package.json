@@ -120,6 +120,7 @@
     "@types/dompurify": "^3.0.5",
     "@types/jsurl2": "^2.1.4",
     "@types/node": "18.19.41",
+    "@types/pako": "2.0.3",
     "@types/preview-email": "2.0.1",
     "@types/react": "18.3.3",
     "@types/react-dom": "^18.3.0",
@@ -138,6 +139,7 @@
     "jsdom": "24.1.1",
     "minimatch": "9.0.5",
     "pako": "2.1.0",
+    "papaparse": "5.4.1",
     "parse-gitignore": "2.0.0",
     "patch-package": "8.0.0",
     "postcss": "^8.4.39",
@@ -151,5 +153,6 @@
     "use-changed-props": "0.1.0",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.6.0"
-  }
+  },
+  "packageManager": "npm@10.8.3+sha512.d08425c8062f56d43bb8e84315864218af2492eb769e1f1ca40740f44e85bd148969382d651660363942e5909cb7ffcbef7ca0ae963ddc2c57a51243b4da8f56"
 }
