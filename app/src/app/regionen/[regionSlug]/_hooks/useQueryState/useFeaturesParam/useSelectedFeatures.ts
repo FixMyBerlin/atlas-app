@@ -1,11 +1,11 @@
+import { memoize } from 'lodash'
+import { useRef } from 'react'
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
+import { isLayerHighlightId } from '../../../_components/Map/utils/layerHighlight'
+import { useInteractiveLayers } from '../../../_components/Map/utils/useInteractiveLayers'
 import { useMapBounds, useMapLoaded } from '../../mapState/useMapState'
 import { UrlFeature } from '../types'
 import { useFeaturesParam } from './useFeaturesParam'
-import { memoize } from 'lodash'
-import { isLayerHighlightId } from '../../../_components/Map/utils/layerHighlight'
-import { useInteractiveLayers } from '../../../_components/Map/utils/useInteractiveLayers'
-import { useRef } from 'react'
 
 type Result = {
   urlFeature: UrlFeature
@@ -19,6 +19,8 @@ const memoized = memoize(
   (result) => JSON.stringify(result.map((f) => [f.urlFeature, !!f.mapFeature])),
 )
 
+// TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+/* eslint-disable react-compiler/react-compiler */
 export const useSelectedFeatures = (run: Boolean) => {
   const featuresCache = useRef<{ [key: string | number]: MapGeoJSONFeature }>({}).current
   const { mainMap: map } = useMap()

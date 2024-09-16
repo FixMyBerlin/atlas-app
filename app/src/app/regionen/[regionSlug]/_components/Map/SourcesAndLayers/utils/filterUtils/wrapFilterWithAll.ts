@@ -2,8 +2,9 @@
 import { type FilterSpecification } from 'maplibre-gl'
 
 /** @desc Private method, exported only for testing */
-export const _flattenFilter = (filterArray: any[] | undefined) => {
+export const _flattenFilter = (filterArray: any[] | FilterSpecification | undefined) => {
   if (!Array.isArray(filterArray)) {
+    // NOTE: We later added the types `FilterSpecification` which include `boolean`. This guard will transofrm the boolean input to an empty array. This might not be right…
     return []
   }
 
@@ -22,14 +23,13 @@ export const _flattenFilter = (filterArray: any[] | undefined) => {
   return result
 }
 
-export const wrapFilterWithAll = (filterArray: any[] | undefined) => {
+export const wrapFilterWithAll = (filterArray: any[] | FilterSpecification | undefined) => {
   // Case: Filter expression is passed directly, no wrapping array
   if (
     Array.isArray(filterArray) &&
     typeof filterArray[0] === 'string' &&
     filterArray[0] !== 'all'
   ) {
-    // @ts-expect-error no idea what TS wants, but this should be fine
     return ['all', filterArray] as FilterSpecification
   }
 

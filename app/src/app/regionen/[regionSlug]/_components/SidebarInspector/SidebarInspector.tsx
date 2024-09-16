@@ -40,11 +40,15 @@ export const SidebarInspector = () => {
   })
 
   if (inspectorFeatures.length) {
+    // TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+    // eslint-disable-next-line react-compiler/react-compiler
     checkBounds.current = false
   }
 
   if (
     mapLoaded && // before map is not completely loaded we can't queryRenderedFeatures()
+    // TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+    // eslint-disable-next-line react-compiler/react-compiler
     checkBounds.current && // run this at most once
     inspectorSize.width !== 0 // size of the inspector needs to be known to check bounding box
   ) {
@@ -53,6 +57,8 @@ export const SidebarInspector = () => {
     if (!allUrlFeaturesInBounds(urlFeatures, boundingPolygon)) {
       fitBounds(map, urlFeatures, sidebarSize, inspectorSize)
     }
+    // TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+    // eslint-disable-next-line react-compiler/react-compiler
     checkBounds.current = false
   }
 

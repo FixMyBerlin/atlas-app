@@ -1,5 +1,5 @@
+import { SourceProps } from 'react-map-gl'
 import {
-  AnyLayer,
   CircleLayer,
   FillLayer,
   HeatmapLayer,
@@ -161,13 +161,13 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   tiles: string
   /** @desc maxzoom:12 (default) means visible from 12 and down/further away (12+ is overzoomed)
    * @desc `0---4=minzoom->----<-maxzoom=12----22` */
-  maxzoom: mapboxgl.VectorSource['maxzoom']
+  maxzoom: SourceProps['maxzoom']
   /** @desc minzoom:4 (default) means visible from 4 and up/closer
    * @desc `0---4=minzoom->----<-maxzoom=12----22` */
-  minzoom: mapboxgl.VectorSource['minzoom']
+  minzoom: SourceProps['minzoom']
   attributionHtml: string
   licence: 'ODbL' | undefined
-  promoteId: mapboxgl.VectorSource['promoteId']
+  promoteId: SourceProps['promoteId']
   osmIdConfig: MapDataOsmIdConfig
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector

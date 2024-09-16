@@ -1,7 +1,7 @@
 import { MapPinIcon, PlusIcon } from '@heroicons/react/24/solid'
 import * as turf from '@turf/turf'
 import { useState } from 'react'
-import { MapProps } from 'react-map-gl'
+import { MapProps } from 'react-map-gl/maplibre'
 import {
   AttributionControl,
   Map as MapGl,

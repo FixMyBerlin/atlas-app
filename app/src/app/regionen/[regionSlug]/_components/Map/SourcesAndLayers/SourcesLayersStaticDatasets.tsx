@@ -25,6 +25,8 @@ export const SourcesLayersStaticDatasets = () => {
 
   return (
     <>
+      {/* TODO: Rework as part of https://github.com/FixMyBerlin/private-issues/issues/1775 */}
+      {/* eslint-disable-next-line react-compiler/react-compiler */}
       {regionDatasets.map(({ id: sourceId, subId, type, url, attributionHtml, layers }) => {
         const datasetSourceId = createSourceKeyStaticDatasets(sourceId, subId)
         const visible = selectedDatasetIds.includes(datasetSourceId)
