@@ -11,6 +11,7 @@ export const getDecompressedFilename = ({ inputFilename, outputFilename, outputF
     // Using Bun.spanSync to copy the file did not work; using Bun to copy did not work either.
     fs.copyFileSync(inputFilename, compressedCopy)
 
+    // TODO: Maybe use pako.ungzip() here instead, we use pako in `StaticDatasets/updateStaticDatasets/isCompressedSmallerThan.ts`
     const bunFeedback = Bun.spawnSync(['gzip', '--decompress', '--force', compressedCopy], {})
     if (bunFeedback.success === false) {
       red(

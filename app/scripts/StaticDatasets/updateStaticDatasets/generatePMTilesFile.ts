@@ -8,6 +8,17 @@ export const generatePMTilesFile = async (inputFullFile: string, outputFolder: s
 
   console.log(`  Generating pmtiles file "${outputFullFile}"...`)
 
+  // TODO: Check out https://github.com/amandasaurus/waterwaymap.org/blob/main/functions.sh#L20-L33
+  // We should add those commands…
+  // -n "OSM River Topologies" \
+  // -N "Generated on $(date -I) from OSM data from ${FILE_TIMESTAMP:-OSMIUM_HEADER_MISSING} with $(osm-lump-ways --version) and argument $LUMP_ARGS" \
+  // -A "© OpenStreetMap. Open Data under ODbL. https://osm.org/copyright" \
+  //
+  // TODO: We might want to make this an optional flag that we specify based on the meta.js?
+  // The goal would be to have lines merged automatically instead of just dropped in spieces
+  // BUT, the docs suggest it does not work for linestrings… https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
+  // --coalesce-smallest-as-needed
+
   Bun.spawnSync(
     [
       'tippecanoe',
