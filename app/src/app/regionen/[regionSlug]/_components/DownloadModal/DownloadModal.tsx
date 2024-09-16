@@ -1,6 +1,5 @@
 import { useSession } from '@blitzjs/auth'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { useRouter } from 'next/navigation'
 import { IconModal } from 'src/app/_components/Modal/IconModal'
 import { Link } from 'src/app/_components/links/Link'
 import { linkStyles } from 'src/app/_components/links/styles'

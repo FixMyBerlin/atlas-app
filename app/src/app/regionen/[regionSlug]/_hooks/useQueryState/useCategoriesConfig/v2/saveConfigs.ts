@@ -3,8 +3,8 @@
 // This script generates the files `./_{checksum}.ts` and `./index.ts`
 // don't run it directly but use `npm run save-configs` which run prettier after code generation
 
-import path from 'node:path'
 import fs from 'node:fs'
+import path from 'node:path'
 import { getSimplifiedConfigs } from './lib'
 
 const configsFolder = path.join(import.meta.dir, 'configs')

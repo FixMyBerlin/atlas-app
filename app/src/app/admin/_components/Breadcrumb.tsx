@@ -1,9 +1,9 @@
 'use client'
 
 import { HomeIcon } from '@heroicons/react/20/solid'
-import { twJoin } from 'tailwind-merge'
 import { Route } from 'next'
 import { usePathname } from 'next/navigation'
+import { twJoin } from 'tailwind-merge'
 
 export type TBreadcrumb = { href: Route; name: string }
 type Props = { pages: TBreadcrumb[] }

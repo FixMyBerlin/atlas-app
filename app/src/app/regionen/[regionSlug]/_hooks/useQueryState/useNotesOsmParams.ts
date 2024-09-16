@@ -1,7 +1,7 @@
 import { createParser, parseAsBoolean, useQueryState } from 'nuqs'
 import { searchParamsRegistry } from './searchParamsRegistry'
-import { parseMapParam, serializeMapParam } from './utils/mapParam'
 import { createMemoizer } from './utils/createMemoizer'
+import { parseMapParam, serializeMapParam } from './utils/mapParam'
 
 const useShowOsmNotesParamMemoizer = createMemoizer()
 const useNewOsmNoteMapParamMemoizer = createMemoizer()

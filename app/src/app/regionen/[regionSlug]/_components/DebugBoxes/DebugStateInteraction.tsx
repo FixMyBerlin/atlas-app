@@ -1,14 +1,14 @@
 import { Link } from 'src/app/_components/links/Link'
+import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import {
   useMapDebugActions,
   useMapDebugShowDebugInfo,
 } from '../../_hooks/mapState/useMapDebugState'
 import { useMapState } from '../../_hooks/mapState/useMapState'
-import { simplifyConfigForParams } from '../../_hooks/useQueryState/useCategoriesConfig/utils/simplifyConfigForParams'
 import { useCategoriesConfig } from '../../_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
+import { simplifyConfigForParams } from '../../_hooks/useQueryState/useCategoriesConfig/utils/simplifyConfigForParams'
 import { useDrawParam } from '../../_hooks/useQueryState/useDrawParam'
-import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 
 // A custom formatter to get a more compact output
 // Prefix [ signals an array, { signals an object

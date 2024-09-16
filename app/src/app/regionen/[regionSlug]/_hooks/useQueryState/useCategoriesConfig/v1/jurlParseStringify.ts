@@ -1,4 +1,4 @@
-import { tryParse, stringify } from 'jsurl2'
+import { stringify, tryParse } from 'jsurl2'
 
 // Docs: https://react-location.tanstack.com/guides/custom-search-param-serialization#using-jsurl
 // Using https://github.com/wmertens/jsurl2

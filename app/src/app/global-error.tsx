@@ -3,7 +3,6 @@
 import { useEffect } from 'react'
 import { Footer } from './_components/layouts/Footer/Footer'
 import { Link } from './_components/links/Link'
-import { buttonStyles } from './_components/links/styles'
 
 type Props = {
   error: Error & { digest?: string }

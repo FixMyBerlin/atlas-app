@@ -1,7 +1,6 @@
 import { Link } from 'src/app/_components/links/Link'
 import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import { linkStyles } from 'src/app/_components/links/styles'
-import { getAdminInfoEnvUrl } from './utils/getAdminInfoEnvUrl'
 import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
@@ -11,6 +10,7 @@ import { useMapDebugActions } from 'src/app/regionen/[regionSlug]/_hooks/mapStat
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { isAdmin } from 'src/users/components/utils/usersUtils'
 import { UserLoggedInProp } from './UserLoggedIn'
+import { getAdminInfoEnvUrl } from './utils/getAdminInfoEnvUrl'
 
 export const UserLoggedInAdminInfo = ({ user }: UserLoggedInProp) => {
   const { toggleShowDebugInfo } = useMapDebugActions()

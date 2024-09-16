@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
-import { FileMapDataSubcategoryStyleLayer } from '../../../../_mapData/types'
-import { mergeCategoriesConfig } from './mergeCategoriesConfig'
-import { MapDataCategoryConfig } from '../type'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
+import { FileMapDataSubcategoryStyleLayer } from '../../../../_mapData/types'
+import { MapDataCategoryConfig } from '../type'
+import { mergeCategoriesConfig } from './mergeCategoriesConfig'
 
 describe('mergeCategoriesConfig()', () => {
   const defaultSubcategoryObject = {

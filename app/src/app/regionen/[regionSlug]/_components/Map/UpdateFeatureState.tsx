@@ -1,8 +1,8 @@
+import differenceBy from 'lodash/differenceBy'
 import { useRef } from 'react'
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
-import differenceBy from 'lodash/differenceBy'
-import { useSelectedFeatures } from '../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { useMapInspectorFeatures } from '../../_hooks/mapState/useMapState'
+import { useSelectedFeatures } from '../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 
 const key = (f: MapGeoJSONFeature) => `${f.id}:::${f.layer.id}`
 

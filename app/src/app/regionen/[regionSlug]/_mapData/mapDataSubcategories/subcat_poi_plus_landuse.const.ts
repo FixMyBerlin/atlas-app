@@ -1,5 +1,4 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_ziele_plus_landuse } from './mapboxStyles/groups/atlas_ziele_plus_landuse'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 

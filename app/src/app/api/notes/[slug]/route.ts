@@ -1,7 +1,7 @@
-import db, { Prisma } from 'db'
-import { NextRequest } from 'next/server'
-import GeoJSON from 'geojson'
 import { Parser } from '@json2csv/plainjs'
+import db from 'db'
+import GeoJSON from 'geojson'
+import { NextRequest } from 'next/server'
 import { getBlitzContext } from 'src/blitz-server'
 
 export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {

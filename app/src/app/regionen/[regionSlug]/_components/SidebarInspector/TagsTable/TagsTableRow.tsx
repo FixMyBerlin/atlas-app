@@ -1,8 +1,8 @@
 import React from 'react'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
-import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
 import { TagsTableRowValueWithTooltip } from './TagsTableRowValueWithTooltip'
 import { NodataFallback } from './compositTableRows/NodataFallback'
+import { ConditionalFormattedKey } from './translations/ConditionalFormattedKey'
 
 export type TagsTableRowProps =
   | {

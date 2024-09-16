@@ -1,4 +1,3 @@
-import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useGeojsonData } from './useGeojsonState'
 

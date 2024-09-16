@@ -1,5 +1,5 @@
-import { isDev } from './app/_components/utils/isEnv'
 import { memoize } from 'lodash'
+import { isDev } from './app/_components/utils/isEnv'
 
 export function warnDev(...args) {
   if (isDev) {

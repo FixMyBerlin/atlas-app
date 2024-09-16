@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
-import { Link } from './_components/links/Link'
 import { Footer } from './_components/layouts/Footer/Footer'
+import { Link } from './_components/links/Link'
 
 export const metadata: Metadata = {
   robots: 'noindex',

@@ -1,10 +1,10 @@
 import { resolver } from '@blitzjs/rpc'
+import { AuthorizationError } from 'blitz'
 import db from 'db'
-import { CreateNoteCommentSchema } from '../schemas'
-import { z } from 'zod'
 import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
-import { AuthorizationError } from 'blitz'
+import { z } from 'zod'
+import { CreateNoteCommentSchema } from '../schemas'
 
 const Schema = CreateNoteCommentSchema.merge(
   z.object({ regionSlug: z.string(), noteId: z.number(), body: z.string() }),

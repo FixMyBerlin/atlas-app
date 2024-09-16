@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
-import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { MapDataCategoryId } from '../../../../_mapData/mapDataCategories/categories.const'
+import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { configCustomParse } from './configCustomParse'
 
 describe('config param parser v1', () => {

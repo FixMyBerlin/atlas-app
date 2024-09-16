@@ -1,5 +1,5 @@
-import { create } from 'zustand'
 import { GeoJSON } from 'geojson'
+import { create } from 'zustand'
 
 export type Store = {
   geojson: GeoJSON | null

@@ -13,8 +13,8 @@ import { SidebarInspector } from './SidebarInspector/SidebarInspector'
 import { SidebarLayerControls } from './SidebarLayerControls/SidebarLayerControls'
 import { BackgroundLegend } from './background/BackgroundLegend'
 import { SelectBackground } from './background/SelectBackground'
-import { OsmNotes } from './notes/OsmNotes/OsmNotes'
 import { AtlasNotes } from './notes/AtlasNotes/AtlasNotes'
+import { OsmNotes } from './notes/OsmNotes/OsmNotes'
 
 export const MapInterface = () => {
   // Add PMTiles Protocol to be use by "Datasets"

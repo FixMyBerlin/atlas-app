@@ -1,6 +1,6 @@
-import { twJoin } from 'tailwind-merge'
 import type { Route } from 'next'
 import React from 'react'
+import { twJoin } from 'tailwind-merge'
 import { Link } from './Link'
 import { buttonStyles, linkStyles } from './styles'
 

@@ -1,8 +1,8 @@
-import { UrlMigration } from './types'
 import { StaticRegion, staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { configCustomParse } from '../v1/configCustomParse'
 import { serialize } from '../v2/serialize'
+import { UrlMigration } from './types'
 
 const migration: UrlMigration = function (initialUrl) {
   const u = new URL(initialUrl)

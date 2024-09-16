@@ -1,6 +1,6 @@
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { useMapDataLoading } from '../../_hooks/mapState/useMapState'
 import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
+import { useMapDataLoading } from '../../_hooks/mapState/useMapState'
 
 export const LoadingIndicator = () => {
   const mapDataLoading = useMapDataLoading()

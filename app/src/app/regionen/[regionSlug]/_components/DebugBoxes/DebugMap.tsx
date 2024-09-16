@@ -4,10 +4,10 @@ import { useMap } from 'react-map-gl/maplibre'
 import { getTilesUrl, isDevTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
 import {
-  useMapDebugShowDebugInfo,
-  useMapDebugUseDebugLayerStyles,
-  useMapDebugUseDebugCachelessTiles,
   useMapDebugActions,
+  useMapDebugShowDebugInfo,
+  useMapDebugUseDebugCachelessTiles,
+  useMapDebugUseDebugLayerStyles,
 } from '../../_hooks/mapState/useMapDebugState'
 import { useMapLoaded } from '../../_hooks/mapState/useMapState'
 import { useInteractiveLayers } from '../Map/utils/useInteractiveLayers'

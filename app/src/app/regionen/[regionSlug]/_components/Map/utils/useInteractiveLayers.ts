@@ -1,17 +1,17 @@
-import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
 import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
-import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
+import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
-import { createLayerKeyAtlasGeo } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
-import {
-  createSourceKeyStaticDatasets,
-  createDatasetSourceLayerKey,
-} from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
-import { atlasNotesLayerId } from '../SourcesAndLayers/SourcesLayersAtlasNotes'
 import { useShowAtlasNotesParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useShowOsmNotesParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
+import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
+import { createLayerKeyAtlasGeo } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import {
+  createDatasetSourceLayerKey,
+  createSourceKeyStaticDatasets,
+} from '../../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import { atlasNotesLayerId } from '../SourcesAndLayers/SourcesLayersAtlasNotes'
+import { osmNotesLayerId } from '../SourcesAndLayers/SourcesLayersOsmNotes'
 
 type Props = { categories: MapDataCategoryConfig[] | undefined }
 

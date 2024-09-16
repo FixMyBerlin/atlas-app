@@ -1,4 +1,3 @@
-import { Link } from 'src/app/_components/links/Link'
 import { EnvelopeIcon } from '@heroicons/react/20/solid'
 import { LinkMail } from 'src/app/_components/links/LinkMail'
 

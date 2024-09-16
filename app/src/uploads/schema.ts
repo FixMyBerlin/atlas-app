@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { RegionSchema } from '../regions/schemas'
 
 export const UploadSchema = z.object({
   id: z.number(),

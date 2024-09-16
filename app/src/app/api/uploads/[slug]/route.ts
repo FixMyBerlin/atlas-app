@@ -1,6 +1,6 @@
 import db from 'db'
-import { proxyS3Url } from './proxyS3Url'
 import { getBlitzContext } from 'src/blitz-server'
+import { proxyS3Url } from './proxyS3Url'
 
 export async function GET(request: Request, { params }: { params: { slug: string } }) {
   const { slug } = params

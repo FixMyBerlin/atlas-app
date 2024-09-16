@@ -1,5 +1,5 @@
-import { twJoin } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
+import { twJoin } from 'tailwind-merge'
 import { proseClasses } from '../text/prose'
 import { isDev } from '../utils/isEnv'
 

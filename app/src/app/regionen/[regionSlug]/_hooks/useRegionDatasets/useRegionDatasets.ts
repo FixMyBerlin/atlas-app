@@ -1,10 +1,10 @@
 import { useQuery } from '@blitzjs/rpc'
 import memoize from 'lodash/memoize'
 import { MetaData } from 'scripts/StaticDatasets/types'
+import { Prettify } from 'src/app/_components/types/types'
 import getUploadsForRegion from 'src/uploads/queries/getUploadsForRegion'
 import { getStaticDatasetUrl } from '../../../../_components/utils/getStaticDatasetUrl'
 import { useRegionSlug } from '../../_components/regionUtils/useRegionSlug'
-import { Prettify } from 'src/app/_components/types/types'
 
 type RegionDataset = Prettify<
   MetaData['configs'][number] & {

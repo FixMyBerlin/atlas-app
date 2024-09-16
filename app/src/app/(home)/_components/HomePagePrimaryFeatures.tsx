@@ -2,14 +2,13 @@
 
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image, { StaticImageData } from 'next/image'
-import { useEffect, useState } from 'react'
+import { useBreakpoint } from 'src/app/regionen/[regionSlug]/_components/utils/useBreakpoint'
 import { twJoin } from 'tailwind-merge'
 import screenshotBikelanes from './assets/HomePagePrimaryFeatures/bikelanes.jpg'
 import screenshotOther from './assets/HomePagePrimaryFeatures/other.jpg'
 import screenshotPoiClassification from './assets/HomePagePrimaryFeatures/poiclassification.jpg'
 import screenshotSurface from './assets/HomePagePrimaryFeatures/surface.jpg'
 import backgroundImage from './assets/background-features.jpg'
-import { useBreakpoint } from 'src/app/regionen/[regionSlug]/_components/utils/useBreakpoint'
 
 type Feature = {
   title: string | React.ReactNode

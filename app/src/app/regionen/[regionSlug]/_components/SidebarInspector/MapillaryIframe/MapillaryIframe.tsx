@@ -1,4 +1,3 @@
-import React from 'react'
 import { InspectorFeatureProperty } from '../Inspector'
 
 type Props = {

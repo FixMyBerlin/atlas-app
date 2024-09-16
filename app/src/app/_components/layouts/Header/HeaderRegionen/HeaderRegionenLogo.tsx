@@ -1,8 +1,7 @@
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
-import { twJoin } from 'tailwind-merge'
 import Image from 'next/image'
-import React from 'react'
 import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
+import { twJoin } from 'tailwind-merge'
 
 export const HeaderRegionenLogo = () => {
   const region = useRegion()

@@ -1,11 +1,11 @@
 import { StoreFeaturesInspector } from '../../_hooks/mapState/useMapState'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
-import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
-import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
-import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
+import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { InspectorFeatureAtlasGeo } from './InspectorFeatureAtlasGeo'
 import { InspectorFeatureAtlasNote } from './InspectorFeatureAtlasNote'
+import { InspectorFeatureOsmNote } from './InspectorFeatureOsmNote'
+import { InspectorFeatureStaticDataset } from './InspectorFeatureStaticDataset'
 
 export type InspectorFeatureProperty = NonNullable<GeoJSON.GeoJsonProperties>
 
