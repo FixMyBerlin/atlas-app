@@ -1,6 +1,6 @@
 import 'server-only'
 import { invoke } from 'src/blitz-server'
-import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
 import { RegionTeaser } from './RegionTeaser'
 
@@ -9,7 +9,7 @@ export const RegionListAdmins = async () => {
   if (user?.role !== 'ADMIN') return null
 
   // Has to be below the role check.
-  const nonPublicRegions = await invoke(getRegions, { where: { public: false } })
+  const nonPublicRegions = await invoke(getRegionsWithAdditionalData, { where: { public: false } })
 
   return (
     <div className="bg-pink-200">

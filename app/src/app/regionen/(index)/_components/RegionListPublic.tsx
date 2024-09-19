@@ -1,10 +1,10 @@
 import 'server-only'
 import { invoke } from 'src/blitz-server'
-import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListPublic = async () => {
-  const publicRegions = await invoke(getRegions, { where: { public: true } })
+  const publicRegions = await invoke(getRegionsWithAdditionalData, { where: { public: true } })
 
   return (
     <div className="mx-auto max-w-7xl overflow-hidden sm:px-6 lg:px-8">

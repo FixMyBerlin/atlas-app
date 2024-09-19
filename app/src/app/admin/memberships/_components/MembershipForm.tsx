@@ -3,7 +3,7 @@
 import { useQuery } from '@blitzjs/rpc'
 import Form, { FormProps } from 'src/app/_components/forms/Form'
 import { LabeledSelect } from 'src/app/_components/forms/LabeledSelect'
-import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import getUsers from 'src/users/queries/getUsers'
 import { z } from 'zod'
 import { getRegionSelectOptions } from '../../regions/_components/utils/getRegionSelectOptions'
@@ -12,7 +12,7 @@ export { FORM_ERROR } from 'src/app/_components/forms/Form'
 
 export function MembershipForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   const [{ users }] = useQuery(getUsers, {})
-  const [regions] = useQuery(getRegions, {})
+  const [regions] = useQuery(getRegionsWithAdditionalData, {})
 
   return (
     <Form<S> {...props}>
