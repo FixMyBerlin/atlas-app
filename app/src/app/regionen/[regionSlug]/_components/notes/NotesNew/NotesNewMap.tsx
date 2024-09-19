@@ -71,8 +71,7 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         onMove={handleMove}
         doubleClickZoom={true}
         dragRotate={false}
-        // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
-        RTLTextPlugin={null}
+        RTLTextPlugin={false}
         minZoom={3}
         attributionControl={false}
       >
