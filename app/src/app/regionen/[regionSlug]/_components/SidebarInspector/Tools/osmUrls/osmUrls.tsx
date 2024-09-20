@@ -1,3 +1,4 @@
+import { Point } from 'geojson'
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { EditorUrlGeometry, editorUrl } from './editorUrl'
 import { OsmTypeId } from './extractOsmTypeIdByConfig'
@@ -33,8 +34,8 @@ export const historyUrl = ({ osmType, osmId }: OsmTypeId) => {
   return `https://osmlab.github.io/osm-deep-history/#/${osmType}/${osmId}`
 }
 
-export const mapillaryUrl = (geometry: EditorUrlGeometry, yearsAgo?: number) => {
-  const [lng, lat] = pointFromGeometry(geometry)
+export const mapillaryUrl = (geometry: EditorUrlGeometry | Point, yearsAgo?: number) => {
+  const [lng, lat] = geometry.type === 'Point' ? geometry.coordinates : pointFromGeometry(geometry)
   if (!lng || !lat) return undefined
 
   const url = new URL('https://www.mapillary.com/app/')

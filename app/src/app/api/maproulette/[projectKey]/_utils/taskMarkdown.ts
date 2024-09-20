@@ -1,4 +1,5 @@
 import { LineString } from '@turf/helpers'
+import { point } from '@turf/turf'
 import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import { mapillaryUrl } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
@@ -37,7 +38,10 @@ export const taskDescriptionMarkdown = ({
   category,
   geometry,
 }: Props) => {
-  const [lng, lat] = pointFromGeometry(geometry)
+  const [centerLng, centerLat] = pointFromGeometry(geometry)
+  const startPoint = point(geometry.coordinates[0]!).geometry
+  const endPoint = point(geometry.coordinates.at(-1)!).geometry
+
   const categoryTranslated = translations[`ALL--category=${category}`]
     ?.replace('(Straßenbegleitend oder selbstständig geführt; Kategorisierung unklar)', '')
     ?.replace('(Kategorisierung unklar)', '')
@@ -61,8 +65,9 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
@@ -87,8 +92,9 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
@@ -111,8 +117,9 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
