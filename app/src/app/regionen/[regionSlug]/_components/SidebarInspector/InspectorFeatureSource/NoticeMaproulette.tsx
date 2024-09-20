@@ -14,9 +14,9 @@ type Props = {
 }
 
 export const NoticeMaproulette = ({ identifier, osmTypeIdString, category, geometry }: Props) => {
-  const maprouletteProjectKey = categoryToMaprouletteProjectKey(identifier)
+  const maprouletteProjectKeys = categoryToMaprouletteProjectKey(identifier)
   if (
-    !maprouletteProjectKey ||
+    !maprouletteProjectKeys.length ||
     !identifier ||
     !osmTypeIdString ||
     !category ||
@@ -30,16 +30,21 @@ export const NoticeMaproulette = ({ identifier, osmTypeIdString, category, geome
       <summary className="cursor-pointer hover:font-semibold">
         Kampagne zur Datenverbesserung
       </summary>
-      <div className="my-0 ml-3 py-3">
-        <Markdown
-          markdown={taskDescriptionMarkdown({
-            projectKey: maprouletteProjectKey,
-            osmTypeIdString,
-            category,
-            geometry: geometry as LineString, // Guarded above
-          })}
-          className="prose-sm marker:text-purple-700"
-        />
+      <div className="my-0 ml-3 space-y-3">
+        {maprouletteProjectKeys.map((projectKey) => {
+          return (
+            <Markdown
+              key={projectKey}
+              markdown={taskDescriptionMarkdown({
+                projectKey: projectKey,
+                osmTypeIdString,
+                category,
+                geometry: geometry as LineString, // Guarded above
+              })}
+              className="prose-sm marker:text-purple-700"
+            />
+          )
+        })}
       </div>
     </details>
   )

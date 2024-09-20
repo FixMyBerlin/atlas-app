@@ -12,17 +12,23 @@ type Props = {
   geometry: LineString
 }
 
+// Our Inspector knows about the `properties.category` which is more detailed that our MapRouletteProjects
 export const categoryToMaprouletteProjectKey = (category: string | undefined | null) => {
-  if (category?.includes('adjoiningOrIsolated')) {
-    return 'adjoiningOrIsolated' as MapRouletteProjectKey
+  const matches: MapRouletteProjectKey[] = []
+  if (!category) return matches
+  // Handle cases where the category is more detailed
+  if (category.includes('adjoiningOrIsolated')) {
+    matches.push('adjoiningOrIsolated')
   }
-  if (category?.includes('advisoryOrExclusive')) {
-    return 'advisoryOrExclusive' as MapRouletteProjectKey
+  if (category.includes('advisoryOrExclusive')) {
+    matches.push('advisoryOrExclusive')
   }
-  if (category === 'needsClarification') {
-    return 'needsClarification' as MapRouletteProjectKey
+  // Handle cases where category and MapRoulette Key match
+  const directMatch = maprouletteProjects.find((p) => p === category)
+  if (directMatch) {
+    matches.push(directMatch)
   }
-  return undefined
+  return matches
 }
 
 export const taskDescriptionMarkdown = ({
