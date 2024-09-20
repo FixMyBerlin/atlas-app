@@ -5,7 +5,7 @@ import { createDatasetSourceLayerKey } from '../../utils/sourceKeyUtils/sourceKe
 
 export const SourceLayerRegionBbSg = () => {
   const regionDatasets = useRegionDatasets()
-  const datasetKey = 'bb-ramboll-umgelegte-linien'
+  const datasetKey = 'bb-ramboll-netzentwurf-2'
   const dataset = regionDatasets.find((dataset) => dataset.id === datasetKey)
 
   if (!dataset) {

@@ -24,7 +24,7 @@ export const RegionBbPgNewPriorityNoteButton = ({ feature }: Pick<InspectorFeatu
 
   if (regionSlug !== 'bb-pg') return null
   if (!isAuthenticated) return null
-  if (!feature.layer.id.includes('bb-ramboll-umgelegte-linien')) return null
+  if (!feature.layer.id.includes('bb-ramboll-netzentwurf-2')) return null
 
   const handleSubmit = async (
     importance: 'höchste Priorität' | 'hohe Priorität' | 'geringere Priorität',
