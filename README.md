@@ -5,11 +5,23 @@
 
 # About
 
-**Radverkehrsatlas** provides access to **bicycle infrastructure** data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) for administrative staff. The OSM data is processed and then visualized in multiple map views. The integrated verification process provides a way for administrations to check the given data and provide feedback – internally and to the community. Based on this data, administrations can plan new bike lanes and networks and maintain existing infrastrucutre.
+**Radverkehrsatlas** makes **bicycle infrastructure** and related data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) easily accessible. The OSM data is processed and visualized in various map views.
+
+**Core use cases:**
+
+- Plan bicycle networks using POI and infrastructure data from OpenStreetMap, along with region-specific datasets (both private and public).
+- Work with street-side parking data sourced from OpenStreetMap.
+- Showcase data relevant for urban planning to support local planning efforts.
+
+**Core features:**
+
+- Display different data layers in a web GIS.
+- Provide feedback to the OpenStreetMap community through OSM Notes.
+- Collect internal notes and discuss them with regional stakeholders.
+- Process OpenStreetMap data to normalize and sanitize it for easy use in the daily work of administrative staff.
+- Gather feedback on potential mapping issues to improve OpenStreetMap data.
 
 Please [contact FixMyCity GmbH to learn more](https://www.fixmycity.de/radverkehrsatlas).
-
-This project is split into two major parts. The [processing](#processing) of OpenStreetMap data and the [frontend](#frontend) for the visualization and Web GIS.
 
 # Contribute
 
