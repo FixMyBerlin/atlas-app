@@ -37,7 +37,7 @@ export const taskDescriptionMarkdown = ({
   osmTypeIdString,
   category,
   geometry,
-}: Props) => {
+}: Props): string => {
   const [centerLng, centerLat] = pointFromGeometry(geometry)
   const startPoint = point(geometry.coordinates[0]!).geometry
   const endPoint = point(geometry.coordinates.at(-1)!).geometry
@@ -48,11 +48,10 @@ export const taskDescriptionMarkdown = ({
     ?.trim()
 
   // Do not add indentation, it will break the Markdown in Maproulette
-  // Use in Maproulette as `{task_markdown}`
-  return (() => {
-    switch (projectKey) {
-      case 'adjoiningOrIsolated':
-        return `
+  // Use in MapRoulette as `{task_markdown}`
+  switch (projectKey) {
+    case 'adjoiningOrIsolated':
+      return `
 ## Kontext
 
 Für diese Infrastruktur (${categoryTranslated}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
@@ -71,8 +70,8 @@ Bitte präzisiere das Tagging.
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-      case 'advisoryOrExclusive':
-        return `
+    case 'advisoryOrExclusive':
+      return `
 ## Kontext
 
 Für diese Infrastruktur fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.
@@ -98,8 +97,8 @@ Bitte präzisiere das Tagging.
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-      case 'needsClarification':
-        return `
+    case 'needsClarification':
+      return `
 ## Kontext
 
 Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.
@@ -123,6 +122,110 @@ Bitte präzisiere das Tagging.
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-    }
-  })()
+    case 'missing_traffic_sign_244':
+      return `
+## Kontext
+
+Dieser Weg ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**
+
+## Aufgabe
+
+Bitte ergänze das Verkehrszeichen an der Straßenlinie:
+
+* \`traffic_sign=DE:244.1\`, wenn es eine "echte" Fahrradstraße ohne Kfz-Verkehr.
+* \`traffic_sign=DE:244.1,1020-30\`, wenn es Fahrradstraße mit "Anlieger Frei" ist.
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+Andere Zusatzzeichen kannst du beispielsweise [im Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/?signs=DE:244.1) oder [im Wiki](https://wiki.openstreetmap.org/wiki/DE:Tag:bicycle_road%3Dyes#Zusatzzeichen) finden.
+
+Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um diese Information explizit zu erfassen.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
+    case 'missing_traffic_sign_vehicle_destination':
+      return `
+## Kontext
+
+Dieser Weg ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
+
+## Aufgabe
+
+Bitte ergänze oder erweitere das Verkehrszeichen an der Straßenlinie:
+
+* \`traffic_sign=DE:244.1,1020-30\`, wenn es Fahrradstraße mit "Anlieger Frei" ist. Dazu gehört dann für Fahrzeuge \`destination\`.
+* \`traffic_sign=DE:244.1\`, wenn es eine "echte" Fahrradstraße ohne Kfz-Verkehr ist. Dazu gehört dann für Fahrzeuge \`no\`.
+* Andere Zusatzzeichen kannst du beispielsweise [im Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/?signs=DE:244.1) oder [im Wiki](https://wiki.openstreetmap.org/wiki/DE:Tag:bicycle_road%3Dyes#Zusatzzeichen) finden.
+
+Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um diese Information explizit zu erfassen.
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
+
+`
+    case 'missing_acccess_tag_bicycle_road':
+      return `
+## Kontext
+
+Dieser Weg ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.
+
+## Aufgabe
+
+Bitte ergänze den Access-Tag \`bicycle=designated\` an der Straßenlinie:
+
+Nutze gerne die Gelegenheit, um auch die übrigen Tags der Fahrradstraße zu prüfen. Hinweise zum Tagging geben [das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/?signs=DE:244.1) und [das Wiki](https://wiki.openstreetmap.org/wiki/DE:Tag:bicycle_road%3Dyes#Zusatzzeichen).
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+
+Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
+
+`
+    case 'missing_traffic_sign':
+      return `
+## Kontext
+
+Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fuß- und Fahrrad-Infrastruktur ist es sehr hilfreich, das Verkehrszeichen explizit zu erfassen.
+
+## Aufgabe
+
+**Bitte ergänze das Verkehrszeichen am Weg.**
+
+1. Prüfe mit Mapillary (s.u.) oder vor Ort, welches Verkehrszeichen vorliegt.
+   Ideal ist, wenn du über den \`mapillary=*\` Tag den Mapillary-Key von einem Foto hinterlegst, auf dem das Verkehrszeichen zu sehen ist.
+
+2. Nutze beispielsweise [das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/) umd Tagging-Empfehlungen zu erhalten und ergänze den \`traffic_sign=*\` Tag.
+
+3. Wenn kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um diese Information explizit zu erfassen. Das hilft bei zukünftigen Auswertungen.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
+  }
 }
