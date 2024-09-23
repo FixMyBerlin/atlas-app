@@ -48,7 +48,16 @@ export const taskDescriptionMarkdown = ({
     ?.trim()
 
   // Do not add indentation, it will break the Markdown in Maproulette
-  // Use in MapRoulette as `{task_markdown}`
+  // Use in MapRoulette as… (min 150 chars)
+  /*
+    ```
+{{task_markdown}}
+
+
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    ```
+    */
   switch (projectKey) {
     case 'adjoiningOrIsolated':
       return `
