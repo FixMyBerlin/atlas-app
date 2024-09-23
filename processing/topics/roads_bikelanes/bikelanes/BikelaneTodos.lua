@@ -23,6 +23,15 @@ function BikelaneTodo:__call(objectTags, resultTags)
 end
 
 -- === Fahrradstraßen ===
+local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
+  id = "missing_traffic_sign_vehicle_destination",
+  desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
+  conditions = function(tagsObject, _)
+    return tagsObject.bicycle_road == "yes"
+        and (tagsObject.vehicle == "destination" or tagsObject.motor_vehicle == "destination")
+            and not IsTermInString("1020-30", tagsObject.traffic_sign)
+  end
+})
 -- Note: We ignore the misstagging of `motor_vehicle` instead of `vehicle` as it is currently hard to map in iD and not that relevant for routing.
 local missing_traffic_sign_244 = BikelaneTodo.new({
   id = "missing_traffic_sign_244",
@@ -30,15 +39,7 @@ local missing_traffic_sign_244 = BikelaneTodo.new({
   conditions = function(tagsObject, _)
     return tagsObject.bicycle_road == "yes"
         and not IsTermInString('244', tagsObject.traffic_sign)
-  end
-})
-local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
-  id = "missing_traffic_sign_vehicle_destination",
-  desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
-  conditions = function(tagsObject, _)
-    return tagsObject.bicycle_road == "yes"
-        and (tagsObject.vehicle == "destination" or tagsObject.motor_vehicle == "destination")
-        and not IsTermInString("1020-30", tagsObject.traffic_sign)
+        and not missing_traffic_sign_vehicle_destination(tagsObject)
   end
 })
 local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
