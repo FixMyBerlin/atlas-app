@@ -64,8 +64,8 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -91,8 +91,8 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -116,8 +116,8 @@ Bitte präzisiere das Tagging.
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -143,8 +143,8 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -169,8 +169,8 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -193,8 +193,8 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
@@ -221,8 +221,8 @@ Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fu
 
 ## Hilfsmittel
 
-* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, 3)})
-* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, 3)})
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
