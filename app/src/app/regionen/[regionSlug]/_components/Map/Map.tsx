@@ -215,7 +215,7 @@ export const Map = () => {
     ] satisfies ReturnType<typeof turf.bbox>
     mapMaxBoundsSettings = {
       // Buffer is in km to add the mask buffer and some more
-      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 40, { units: 'kilometers' })),
+      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 60, { units: 'kilometers' })),
       // Padding is in pixel to make sure the map controls are visible
       padding: {
         // TODO: We might need different padding on mobile…
