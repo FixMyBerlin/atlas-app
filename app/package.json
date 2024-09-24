@@ -155,6 +155,5 @@
     "use-changed-props": "0.1.0",
     "vite-tsconfig-paths": "4.3.2",
     "vitest": "1.6.0"
-  },
-  "packageManager": "npm@10.8.3"
+  }
 }
