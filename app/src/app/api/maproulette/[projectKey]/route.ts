@@ -1,7 +1,8 @@
 import { Prisma } from '@prisma/client'
+import { Sql } from '@prisma/client/runtime/library'
 import * as turf from '@turf/turf'
 import { LineString } from '@turf/turf'
-import { NextRequest } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import { osmTypeIdString } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { geoDataClient } from 'src/prisma-client'
@@ -9,47 +10,72 @@ import { z } from 'zod'
 import { maprouletteProjects } from './_utils/maprouletteProjects.const'
 import { taskDescriptionMarkdown } from './_utils/taskMarkdown'
 
-const idType = z.coerce.bigint().positive()
-const MaprouletteSchema = z.object({
-  projectKey: z.enum(maprouletteProjects),
-  ids: z.union([z.array(idType), idType.transform((x) => [x])]),
-})
+const idType = z.coerce.number().positive()
+const MaprouletteSchema = z
+  .object({
+    projectKey: z.enum(maprouletteProjects),
+    ids: z.union([z.array(idType).min(1), idType.transform((x) => [x])]),
+  })
+  .strict()
 
+// For testing:
+// Brandenburg http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62504
+// Berlin http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62422
+// Germany http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=51477 https://www.openstreetmap.org/relation/51477
 export async function GET(request: NextRequest, { params }: { params: { projectKey: string } }) {
-  let parsedParams: z.infer<typeof MaprouletteSchema>
   const searchParams = request.nextUrl.searchParams
-  try {
-    parsedParams = MaprouletteSchema.parse({
-      ids: searchParams.getAll('ids'),
-      projectKey: params.projectKey,
-    })
-  } catch (e) {
-    if (!isProd) throw e
-    return new Response('Bad Request', { status: 200 })
+  const parsedParams = MaprouletteSchema.safeParse({
+    ids: searchParams.getAll('ids'),
+    projectKey: params.projectKey,
+  })
+
+  // VALIDATE PARAMS
+  if (parsedParams.success === false || parsedParams.data.ids.length === 0) {
+    return NextResponse.json(
+      {
+        error: 'Invalid input',
+        info: '`?ids=62504&ids=62422` has to be an OSM Relation ID. Use https://hanshack.com/geotools/gimmegeodata/ to find IDs, but not all boundaries are present in atlas.',
+        ...parsedParams,
+      },
+      { status: 404 },
+    )
+  }
+  const { projectKey, ids } = parsedParams.data
+
+  // CHECK REGIONS (`ids` params)
+  type NHitsType = { osm_id: number }[]
+  const nHits = await geoDataClient.$queryRaw<NHitsType>`
+    SELECT osm_id::integer FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
+  if (nHits.length !== ids.length) {
+    return NextResponse.json(
+      {
+        error: 'Invalid Region IDs',
+        message: 'The given region relation IDs could not be found or returned mismatched results.',
+        inputIds: ids.map((id) => Number(id)),
+        foundIds: nHits.map(({ osm_id }) => Number(osm_id)),
+      },
+      { status: 404 },
+    )
   }
 
   try {
-    // PREPARE
-    const { projectKey, ids } = parsedParams
-
-    // CHECK REGIONS (`ids` params)
-    const nHits = await geoDataClient.$executeRaw`
-      SELECT osm_id FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
-    if (nHits !== ids.length) {
-      return new Response("Couldn't find given ids. At least one id is wrong or dupplicated.", {
-        status: 404,
-      })
-    }
-
     // SELECT WAYS FROM DB
-    const wherePart = (() => {
+    const wherePart: Sql = (() => {
       switch (projectKey) {
+        // Lookup: Category LIKE "*KEY"
         case 'adjoiningOrIsolated':
-          return Prisma.sql`bikelanes.tags->>'category' LIKE '%adjoiningOrIsolated'`
         case 'advisoryOrExclusive':
-          return Prisma.sql`bikelanes.tags->>'category' LIKE '%advisoryOrExclusive'`
+          return Prisma.sql`bikelanes.tags->>'category' LIKE ${`%${projectKey}`}`
+        // Lookup: Category = KEY
         case 'needsClarification':
-          return Prisma.sql`bikelanes.tags->>'category' = 'needsClarification'`
+          return Prisma.sql`bikelanes.tags->>'category' = ${projectKey}`
+        // Lookup: Todos = "*KEY*"
+        case 'missing_traffic_sign_244':
+        case 'missing_traffic_sign_vehicle_destination':
+        case 'missing_acccess_tag_bicycle_road':
+        case 'missing_traffic_sign':
+          // Docs: The part that gets injected will be wrapped in `'`, so it has to include prefixes like the `%`.
+          return Prisma.sql`bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`}`
       }
     })()
 

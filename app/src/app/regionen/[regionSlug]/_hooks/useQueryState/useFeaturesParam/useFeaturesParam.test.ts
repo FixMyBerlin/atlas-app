@@ -1,6 +1,6 @@
-import { describe, expect, test } from 'vitest'
 import { pick } from 'lodash'
-import { serializeFeaturesParam, parseFeaturesParam, convertToUrlFeature } from './useFeaturesParam'
+import { describe, expect, test } from 'vitest'
+import { convertToUrlFeature, serializeFeaturesParam } from './useFeaturesParam'
 
 const allTestData = [
   // feature with string id and LineString geometry

@@ -1,10 +1,10 @@
 import { MapPinIcon, PlusIcon } from '@heroicons/react/24/solid'
 import * as turf from '@turf/turf'
 import { useState } from 'react'
-import { MapProps } from 'react-map-gl'
 import {
   AttributionControl,
   Map as MapGl,
+  MapProps,
   Marker,
   NavigationControl,
   type ViewStateChangeEvent,
@@ -12,8 +12,8 @@ import {
 import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
-import { SourceLayerForRegion } from './SourceLayerForRegion'
 import { SourceLayerFeature } from './SourceLayerFeature'
+import { SourceLayerForRegion } from './SourceLayerForRegion'
 
 type Props = {
   mapId: 'newAtlasNoteMap' | 'newOsmNoteMap'
@@ -71,8 +71,7 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         onMove={handleMove}
         doubleClickZoom={true}
         dragRotate={false}
-        // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
-        RTLTextPlugin={null}
+        RTLTextPlugin={false}
         minZoom={3}
         attributionControl={false}
       >

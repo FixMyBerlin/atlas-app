@@ -1,5 +1,4 @@
 import { FileMapDataSubcategory } from '../types'
-import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 import { mapboxStyleGroupLayers_atlas_barriers__area } from './mapboxStyles/groups/atlas_barriers__area'
 import { mapboxStyleGroupLayers_atlas_barriers__line } from './mapboxStyles/groups/atlas_barriers__line'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'

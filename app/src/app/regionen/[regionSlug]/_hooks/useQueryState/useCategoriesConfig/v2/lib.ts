@@ -1,8 +1,8 @@
 import adler32 from 'adler-32'
-import { MapDataCategoryConfig } from '../type'
-import { simplifyConfigForParams } from '../utils/simplifyConfigForParams'
 import { staticRegion } from '../../../../../(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
+import { MapDataCategoryConfig } from '../type'
+import { simplifyConfigForParams } from '../utils/simplifyConfigForParams'
 
 function isObject(value) {
   const type = typeof value

@@ -1,5 +1,5 @@
-import { migrations } from './migrations'
 import { warnDev } from 'src/dev'
+import { migrations } from './migrations'
 
 const currentVersion = Math.max(...Object.keys(migrations).map((key) => Number(key)))
 

@@ -1,6 +1,6 @@
+import { resolver } from '@blitzjs/rpc'
 import db from 'db'
 import { z } from 'zod'
-import { resolver } from '@blitzjs/rpc'
 
 export const MembershipSchema = z.object({
   userId: z.number().nullish(),

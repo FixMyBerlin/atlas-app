@@ -1,17 +1,17 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
+import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
+import { mergeCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/utils/mergeCategoriesConfig'
+import { configs } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/configs'
+import { parse as parseConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/parse'
+import { serialize as serializeConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
 import {
   parseMapParam,
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
-import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
-import { parse as parseConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/parse'
-import { serialize as serializeConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/serialize'
-import { configs } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/v2/configs'
-import { mergeCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/utils/mergeCategoriesConfig'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {

@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
-import { encodeBits, decodeBits, iterate } from '../lib'
-import { freshConfig } from './freshConfig'
-import { serialize } from '../serialize'
+import { decodeBits, encodeBits, iterate } from '../lib'
 import { parse } from '../parse'
+import { serialize } from '../serialize'
+import { freshConfig } from './freshConfig'
 
 // used to generate the inputs for "test('array of booleans is the same..."
 function randomBits() {

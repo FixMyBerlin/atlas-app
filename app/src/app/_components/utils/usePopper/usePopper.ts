@@ -1,5 +1,5 @@
-import { useRef, useCallback, useMemo } from 'react'
 import { createPopper, Options } from '@popperjs/core'
+import { useCallback, useMemo, useRef } from 'react'
 
 export function usePopper(
   options?: Partial<Options>,

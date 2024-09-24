@@ -15,6 +15,8 @@ module.exports = withBlitz(
       typedRoutes: true,
       instrumentationHook: true,
     },
+    swcMinify: true, // See https://nextjs.org/docs/messages/swc-minify-enabled
+    productionBrowserSourceMaps: true, // build source maps in production – https://nextjs.org/docs/advanced-features/source-maps
     images: {
       // Allowlist of external image sources for next/image <Image />
       // Docs https://nextjs.org/docs/messages/next-image-unconfigured-host

@@ -1,6 +1,6 @@
 import * as turf from '@turf/turf'
-import { uniqBy, differenceBy } from 'lodash'
-import { type MapLibreEvent, MapMouseEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
+import { differenceBy, uniqBy } from 'lodash'
+import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
 import { useEffect, useRef, useState } from 'react'
 import {
@@ -14,28 +14,28 @@ import {
 } from 'react-map-gl/maplibre'
 import { isDev, isProd } from 'src/app/_components/utils/isEnv'
 import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { useMapInspectorFeatures, useMapActions } from '../../_hooks/mapState/useMapState'
+import { useMapActions, useMapInspectorFeatures } from '../../_hooks/mapState/useMapState'
 import {
   convertToUrlFeature,
   useFeaturesParam,
 } from '../../_hooks/useQueryState/useFeaturesParam/useFeaturesParam'
+import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { interactivityConfiguration } from '../../_mapData/mapDataSources/generalization/interacitvityConfiguartion'
 import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import { useBreakpoint } from '../utils/useBreakpoint'
 import { Calculator } from './Calculator/Calculator'
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
+import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
 import { SourcesLayersOsmNotes } from './SourcesAndLayers/SourcesLayersOsmNotes'
 import { SourcesLayersRegionMask } from './SourcesAndLayers/SourcesLayersRegionMask'
 import { SourcesLayersStaticDatasets } from './SourcesAndLayers/SourcesLayersStaticDatasets'
-import { useInteractiveLayers } from './utils/useInteractiveLayers'
-import { useBreakpoint } from '../utils/useBreakpoint'
-import { SourcesLayersAtlasNotes } from './SourcesAndLayers/SourcesLayersAtlasNotes'
 import { UpdateFeatureState } from './UpdateFeatureState'
-import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
-import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import { useInteractiveLayers } from './utils/useInteractiveLayers'
 
 // On lower zoom level, our source data is stripped down to only styling data
 // We do not show those features in our Inspector, which would show wrong data
@@ -215,7 +215,7 @@ export const Map = () => {
     ] satisfies ReturnType<typeof turf.bbox>
     mapMaxBoundsSettings = {
       // Buffer is in km to add the mask buffer and some more
-      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 40, { units: 'kilometers' })),
+      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 60, { units: 'kilometers' })),
       // Padding is in pixel to make sure the map controls are visible
       padding: {
         // TODO: We might need different padding on mobile…
@@ -255,8 +255,7 @@ export const Map = () => {
       onIdle={() => setMapDataLoading(false)}
       doubleClickZoom={true}
       dragRotate={false}
-      // @ts-expect-error: See https://github.com/visgl/react-map-gl/issues/2310
-      RTLTextPlugin={null}
+      RTLTextPlugin={false}
       minZoom={3}
       attributionControl={false}
     >

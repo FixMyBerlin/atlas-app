@@ -7,12 +7,9 @@ import {
   point,
   polygon,
 } from '@turf/turf'
-import { GeoJsonProperties } from 'geojson'
 import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader'
 import OverlayOp from 'jsts/org/locationtech/jts/operation/overlay/OverlayOp'
-import { isEqual, pick } from 'lodash'
 import { UrlFeature } from '../../_hooks/useQueryState/types'
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 
 type Bounds = [number, number, number, number]
 type Points = [[number, number], [number, number]]

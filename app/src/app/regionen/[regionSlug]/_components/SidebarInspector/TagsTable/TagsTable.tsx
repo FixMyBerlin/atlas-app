@@ -32,13 +32,13 @@ import {
   TagsTableRowCompositTrafficSign,
   tableKeyTrafficSign,
 } from './compositTableRows/TagsTableRowCompositTrafficSign'
+import {
+  TagsTableRowCompositTrassencoutSurveyResponse,
+  tableKeyTrassencoutSurveyResponse,
+} from './compositTableRows/TagsTableRowCompositTrassencoutSurveyResponse'
 import { TagsTableRowWebsite, tableKeyWebsite } from './compositTableRows/TagsTableRowWebsite'
 import { TagsTableRowWikipedia, tableKeyWikipedia } from './compositTableRows/TagsTableRowWikipedia'
 import { cleanKey } from './utils/cleanKey'
-import {
-  tableKeyTrassencoutSurveyResponse,
-  TagsTableRowCompositTrassencoutSurveyResponse,
-} from './compositTableRows/TagsTableRowCompositTrassencoutSurveyResponse'
 
 type Props = {
   properties: InspectorFeatureProperty

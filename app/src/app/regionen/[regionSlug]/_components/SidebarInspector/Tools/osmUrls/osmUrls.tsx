@@ -1,3 +1,5 @@
+import { format, subYears } from 'date-fns'
+import { Point } from 'geojson'
 import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { EditorUrlGeometry, editorUrl } from './editorUrl'
 import { OsmTypeId } from './extractOsmTypeIdByConfig'
@@ -33,20 +35,32 @@ export const historyUrl = ({ osmType, osmId }: OsmTypeId) => {
   return `https://osmlab.github.io/osm-deep-history/#/${osmType}/${osmId}`
 }
 
-export const mapillaryUrl = (geometry: EditorUrlGeometry, yearsAgo?: number) => {
-  const [lng, lat] = pointFromGeometry(geometry)
-  if (!lng || !lat) return undefined
-
-  const url = new URL('https://www.mapillary.com/app/')
-  url.searchParams.set('lat', lat.toString())
-  url.searchParams.set('lng', lng.toString())
-  url.searchParams.set('z', '15')
-  if (yearsAgo) {
-    url.searchParams.set(
-      'dateFrom',
-      new Date(new Date().setFullYear(new Date().getFullYear() - 2)).toISOString().slice(0, 10),
-    )
+export const mapillaryUrl = (
+  geometry: EditorUrlGeometry | Point,
+  options?: {
+    yearsAgo?: number
+    zoom?: number
+    trafficSign?: 'all' | undefined
+    panos?: true | undefined
+  },
+) => {
+  const opt = {
+    yearsAgo: 3,
+    zoom: 15,
+    ...options,
   }
+  const url = new URL('https://www.mapillary.com/app/')
+
+  const [lng, lat] = pointFromGeometry(geometry)
+  url.searchParams.set('lat', String(lat))
+  url.searchParams.set('lng', String(lng))
+  url.searchParams.set('z', String(opt.zoom))
+
+  opt.trafficSign && url.searchParams.set('trafficSign', String(opt.trafficSign))
+  opt.panos && url.searchParams.set('panos', String(opt.panos))
+
+  const dateYearsAgo = format(subYears(new Date(), opt.yearsAgo), 'yyyy-MM-dd')
+  opt.yearsAgo && url.searchParams.set('dateFrom', dateYearsAgo)
 
   return url.toString()
 }

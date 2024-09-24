@@ -1,6 +1,5 @@
-import { twJoin } from 'tailwind-merge'
-import React from 'react'
 import { linkStyles } from 'src/app/_components/links/styles'
+import { twJoin } from 'tailwind-merge'
 
 type Props = { data: Object; open?: true; className?: string }
 

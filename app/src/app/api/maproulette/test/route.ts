@@ -78,7 +78,7 @@ TODO
 
 ## Hilfsmittel
 
-* [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry, 3)})
+* [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry)})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 `

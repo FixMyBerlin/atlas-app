@@ -1,12 +1,11 @@
 import { resolver } from '@blitzjs/rpc'
-import { point } from '@turf/turf'
 import { NotFoundError } from 'blitz'
 import db from 'db'
 import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
 import { z } from 'zod'
-import getNoteRegionId from './getNoteEntryRegionId'
 import { NoteAndCommentsSchema } from '../schemas'
 import getNoteAndComments from './getNoteAndComments'
+import getNoteRegionId from './getNoteEntryRegionId'
 
 const GetNote = z.object({
   // This accepts type of undefined, but is required at runtime

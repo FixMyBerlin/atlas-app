@@ -11,11 +11,11 @@ import {
 } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { LegendIconArea } from './LegendIcons/LegendIconArea'
 import { LegendIconCircle } from './LegendIcons/LegendIconCircle'
+import { LegendIconHeatmap } from './LegendIcons/LegendIconHeatmap'
 import { LegendIconLine } from './LegendIcons/LegendIconLine'
 import { LegendIconText } from './LegendIcons/LegendIconText'
 import { LegendIconTypes } from './LegendIcons/types'
 import { LegendNameDesc } from './LegendNameDesc'
-import { LegendIconHeatmap } from './LegendIcons/LegendIconHeatmap'
 
 type Props = {
   subcategoryId: SubcategoryId

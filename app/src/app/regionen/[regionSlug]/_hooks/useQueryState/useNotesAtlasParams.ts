@@ -1,8 +1,8 @@
 import { createParser, parseAsBoolean, parseAsJson, useQueryState } from 'nuqs'
-import { searchParamsRegistry } from './searchParamsRegistry'
-import { parseMapParam, serializeMapParam } from './utils/mapParam'
 import { z } from 'zod'
+import { searchParamsRegistry } from './searchParamsRegistry'
 import { createMemoizer } from './utils/createMemoizer'
+import { parseMapParam, serializeMapParam } from './utils/mapParam'
 
 const useShowAtlasNotesParamMemoizer = createMemoizer()
 const useNewAtlasNoteMapParamMemoizer = createMemoizer()

@@ -1,5 +1,5 @@
-import { twJoin } from 'tailwind-merge'
 import React from 'react'
+import { twJoin } from 'tailwind-merge'
 import { LabeledCheckbox, LabeledCheckboxProps } from './LabeledCheckbox'
 
 type Props = {

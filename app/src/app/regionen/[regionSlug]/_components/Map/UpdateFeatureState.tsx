@@ -1,8 +1,8 @@
+import differenceBy from 'lodash/differenceBy'
 import { useRef } from 'react'
 import { MapGeoJSONFeature, useMap } from 'react-map-gl/maplibre'
-import differenceBy from 'lodash/differenceBy'
-import { useSelectedFeatures } from '../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { useMapInspectorFeatures } from '../../_hooks/mapState/useMapState'
+import { useSelectedFeatures } from '../../_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 
 const key = (f: MapGeoJSONFeature) => `${f.id}:::${f.layer.id}`
 
@@ -12,6 +12,8 @@ export const UpdateFeatureState = () => {
   const inspectorFeatures = useMapInspectorFeatures()
   const selectedFeatures = useSelectedFeatures(!inspectorFeatures.length)
 
+  // TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+  // eslint-disable-next-line react-compiler/react-compiler
   const previousSelectedFeatures = previous.current
   const currentSelectedFeatures = inspectorFeatures.length
     ? inspectorFeatures
@@ -24,6 +26,8 @@ export const UpdateFeatureState = () => {
     mainMap?.setFeatureState(f, { selected: true })
   })
 
+  // TODO: See https://github.com/FixMyBerlin/private-issues/issues/1775
+  // eslint-disable-next-line react-compiler/react-compiler
   previous.current = currentSelectedFeatures
 
   return null

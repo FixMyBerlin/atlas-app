@@ -1,5 +1,5 @@
 import { MapDataCategoryConfig } from '../type'
-import { iterate, encodeBits, calcConfigChecksum } from './lib'
+import { calcConfigChecksum, encodeBits, iterate } from './lib'
 
 export const serialize = (config: MapDataCategoryConfig[]) => {
   // Part 1: The config template

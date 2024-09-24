@@ -1,18 +1,16 @@
 import { bbox } from '@turf/turf'
+import adler32 from 'adler-32'
+import { memoize } from 'lodash'
 import { createParser, useQueryState } from 'nuqs'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { numericSourceIds } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/url'
 import { z } from 'zod'
 import { parseSourceKeyAtlasGeo } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
+import { parseSourceKeyStaticDatasets } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { searchParamsRegistry } from '../searchParamsRegistry'
 import { UrlFeature } from '../types'
-import { latitude, longitude } from '../utils/zodHelper'
 import { createMemoizer } from '../utils/createMemoizer'
-import { memoize } from 'lodash'
-import { parseSourceKeyStaticDatasets } from '../../../_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import adler32 from 'adler-32'
-import { useRegionDatasets } from '../../useRegionDatasets/useRegionDatasets'
-import { globalize } from '../../../../../../dev'
+import { latitude, longitude } from '../utils/zodHelper'
 
 const memoizer = createMemoizer()
 

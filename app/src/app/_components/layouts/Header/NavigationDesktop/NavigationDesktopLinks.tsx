@@ -1,7 +1,6 @@
-import { twJoin } from 'tailwind-merge'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import { twJoin } from 'tailwind-merge'
 import { PrimaryNavigationProps } from '../types'
 
 type Props = {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
-import { z } from 'zod'
 import { register } from 'src/instrumentation'
+import { z } from 'zod'
 
 const RefreshSchema = z.object({
   apiKey: z.string(),

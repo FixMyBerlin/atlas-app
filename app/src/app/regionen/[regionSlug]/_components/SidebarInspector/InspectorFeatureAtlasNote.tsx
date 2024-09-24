@@ -3,6 +3,7 @@ import { LockClosedIcon } from '@heroicons/react/20/solid'
 import { Suspense } from 'react'
 import { Spinner } from 'src/app/_components/Spinner/Spinner'
 import { isDev } from 'src/app/_components/utils/isEnv'
+import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
 import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
 import { NotesAndCommentsFeatureCollection } from 'src/notes/queries/getNotesAndCommentsForRegion'
@@ -10,7 +11,6 @@ import { Disclosure } from './Disclosure/Disclosure'
 import { AtlasNote } from './InspectorFeatureAtlasNote/AtlasNote'
 import { AtlasNoteComment } from './InspectorFeatureAtlasNote/AtlasNoteComment'
 import { NewNoteCommentForm } from './InspectorFeatureAtlasNote/NewNoteCommentForm'
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
 
 type Props = {
   noteId: NotesAndCommentsFeatureCollection['featureCollection']['features'][number]['properties']['id']

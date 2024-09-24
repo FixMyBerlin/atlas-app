@@ -1,5 +1,5 @@
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import MapboxDraw from '@mapbox/mapbox-gl-draw'
+import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css'
 import React, { MutableRefObject } from 'react'
 import { ControlPosition, MapRef, useControl } from 'react-map-gl/maplibre'
 import { drawControlStyle } from './drawControlStyle'
@@ -41,6 +41,7 @@ export const CalculatorControlsDrawControl = React.forwardRef<
     props.onDelete?.(event)
   }
 
+  // @ts-expect-error This error came when we updated `"@types/mapbox__mapbox-gl-draw` from 1.4.6 to 1.4.7 or maplibre from 4.5.0 to 4.7.0
   const drawRef = useControl<MapboxDraw>(
     () => {
       // onCreate – MapboxDraw added to UI
@@ -49,7 +50,6 @@ export const CalculatorControlsDrawControl = React.forwardRef<
         styles: drawControlStyle,
       })
     },
-    // @ts-expect-error Missmatched types from Mapbox Library with Maplibre Map
     ({ map }: { map: MapRef }) => {
       // onAdd – MapboxDraw initialized
       map.on('draw.create', handleCreate)
@@ -67,6 +67,8 @@ export const CalculatorControlsDrawControl = React.forwardRef<
     },
   )
 
+  // TODO: Solve as part of https://github.com/FixMyBerlin/private-issues/issues/1775
+  // eslint-disable-next-line react-compiler/react-compiler
   React.useImperativeHandle(ref, () => drawRef, [drawRef]) // This way I exposed drawRef outside the component
 
   return null

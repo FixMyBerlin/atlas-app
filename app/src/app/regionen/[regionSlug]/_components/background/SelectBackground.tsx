@@ -1,6 +1,6 @@
-import { Listbox, ListboxButton, ListboxOptions, Transition } from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
-import React, { Fragment } from 'react'
+import React from 'react'
 import { useMap } from 'react-map-gl/maplibre'
 import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
 import {

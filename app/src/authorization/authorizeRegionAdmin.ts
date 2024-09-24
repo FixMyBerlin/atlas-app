@@ -1,6 +1,6 @@
+import { SessionContext } from '@blitzjs/auth'
 import { AuthorizationError } from 'blitz'
 import db, { UserRoleEnum } from 'db'
-import { SessionContext } from '@blitzjs/auth'
 
 type GetterFn =
   | ((input: Record<string, any>) => number)

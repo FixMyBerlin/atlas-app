@@ -23,20 +23,23 @@ function BikelaneTodo:__call(objectTags, resultTags)
 end
 
 -- === Fahrradstraßen ===
-local missing_traffic_sign_244 = BikelaneTodo.new({
-  id = "missing_traffic_sign_244",
-  desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
-  conditions = function(tagsObject, _)
-    return tagsObject.bicycle_road == "yes" and not IsTermInString('DE:244.1', tagsObject.traffic_sign)
-  end
-})
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   id = "missing_traffic_sign_vehicle_destination",
   desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
   conditions = function(tagsObject, _)
     return tagsObject.bicycle_road == "yes"
-        and tagsObject.vehicle == "destination"
-        and IsTermInString("1020-30", tagsObject.traffic_sign)
+        and (tagsObject.vehicle == "destination" or tagsObject.motor_vehicle == "destination")
+            and not IsTermInString("1020-30", tagsObject.traffic_sign)
+  end
+})
+-- Note: We ignore the misstagging of `motor_vehicle` instead of `vehicle` as it is currently hard to map in iD and not that relevant for routing.
+local missing_traffic_sign_244 = BikelaneTodo.new({
+  id = "missing_traffic_sign_244",
+  desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
+  conditions = function(tagsObject, _)
+    return tagsObject.bicycle_road == "yes"
+        and not IsTermInString('244', tagsObject.traffic_sign)
+        and not missing_traffic_sign_vehicle_destination(tagsObject)
   end
 })
 local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
@@ -44,10 +47,13 @@ local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
   desc = "Expected access tag `bicycle=designated` that is required for routing.",
   conditions = function(tagsObject, _)
     return tagsObject.bicycle_road == "yes"
+        -- Only check `vehicle` because `motor_vehicle` does exclude `bicycle` already.
+        -- However the wiki recomments `vehicle` over `motor_vehicle`, so once that is fixed this will trigger again.
         and (tagsObject.vehicle == "no" or tagsObject.vehicle == "destination")
-        and tagsObject.bicycle == 'designated'
+        and tagsObject.bicycle ~= 'designated'
   end
 })
+-- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
 -- === Verkehrszeichen ===
 local missing_traffic_sign = BikelaneTodo.new({
@@ -58,6 +64,7 @@ local missing_traffic_sign = BikelaneTodo.new({
         and not (
           missing_traffic_sign_244(tagsObject) or
           missing_traffic_sign_vehicle_destination(tagsObject)
+          -- Add any missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
         )
   end
 })
@@ -67,10 +74,12 @@ local missing_access_tag_240 = BikelaneTodo.new({
   id = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
   conditions = function(tagsObject, _)
-    return (IsTermInString('DE:240', tagsObject.traffic_sign) or IsTermInString('DE:241', tagsObject.traffic_sign))
-        and tagsObject.bicycle ~= 'designated' and tagsObject.foot ~= "designated"
+    return (IsTermInString('240', tagsObject.traffic_sign) or IsTermInString('241', tagsObject.traffic_sign))
+        and tagsObject.bicycle ~= 'designated'
+        and tagsObject.foot ~= "designated"
   end
 })
+-- TODO: If both bicycle=designated and foot=designated are present, check if the traffic_sign is 240 or 241.
 local missing_segregated = BikelaneTodo.new({
   id = "missing_segregated",
   desc = "Expected tag `segregated=yes` or `segregated=no`.",

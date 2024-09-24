@@ -1,6 +1,6 @@
 import 'server-only'
 import { invoke } from 'src/blitz-server'
-import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import getCurrentUser from 'src/users/queries/getCurrentUser'
 import { RegionTeaser } from './RegionTeaser'
 
@@ -9,7 +9,7 @@ export const RegionListPermissions = async () => {
   if (!user?.id || !user?.role) return null
 
   // Has to be below the role check.
-  const permissionsRegions = await invoke(getRegions, {
+  const permissionsRegions = await invoke(getRegionsWithAdditionalData, {
     where: { Membership: { some: { userId: user.id } } },
   })
 

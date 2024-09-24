@@ -1,8 +1,8 @@
 import { createParser, useQueryState } from 'nuqs'
-import { parseMapParam, serializeMapParam } from './utils/mapParam'
 import { searchParamsRegistry } from './searchParamsRegistry'
-import { mapParamFallback } from './utils/mapParamFallback.const'
 import { createMemoizer } from './utils/createMemoizer'
+import { parseMapParam, serializeMapParam } from './utils/mapParam'
+import { mapParamFallback } from './utils/mapParamFallback.const'
 
 const memoizer = createMemoizer()
 

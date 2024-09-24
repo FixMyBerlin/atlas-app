@@ -1,5 +1,5 @@
 import { MapDataCategoryConfig } from '../type'
-import { iterate, decodeBits } from './lib'
+import { decodeBits, iterate } from './lib'
 
 export const parse = (
   searchParam: string,

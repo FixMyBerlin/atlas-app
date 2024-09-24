@@ -11,10 +11,12 @@ export const StaticDatasetCategories = () => {
   // The catgory can be null, which is our default Category.
   // The .category is also used as the named _for_now_ (in a cleaned up version).
   const groupedDatasets: { [category: string]: typeof regionDatasets } = {}
-  regionDatasets.forEach((dataset) => {
-    const category = (dataset.category as string) || fallbackCategory
-    groupedDatasets[category] = [...(groupedDatasets[category] || []), dataset]
-  })
+  regionDatasets
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .forEach((dataset) => {
+      const category = (dataset.category as string) || fallbackCategory
+      groupedDatasets[category] = [...(groupedDatasets[category] || []), dataset]
+    })
 
   // We sort the categories by the `order` defined in `staticDatasetCategories`
   const sortedGroupKeys = Object.keys(groupedDatasets).sort((a, b) => {

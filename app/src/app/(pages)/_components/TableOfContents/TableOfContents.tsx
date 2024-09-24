@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import { TocHashLink } from './types'
 import { Link } from 'src/app/_components/links/Link'
+import { TocHashLink } from './types'
 
 /*
   We could make this more fancy…

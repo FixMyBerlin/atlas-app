@@ -1,6 +1,6 @@
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { LegendId, StyleId, SubcategoryId } from '../../../_mapData/typeId'
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
 
 type SubcatStyleKey = `${SubcategoryId}-${StyleId}`
 export const createSubcatStyleKey = (subcatId: SubcategoryId, styleId: StyleId): SubcatStyleKey =>

@@ -1,7 +1,7 @@
-import { invoke } from 'src/blitz-server'
 import { Metadata } from 'next'
 import { Link } from 'src/app/_components/links/Link'
-import getRegions from 'src/regions/queries/getRegionsWithAdditionalData'
+import { invoke } from 'src/blitz-server'
+import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import { Breadcrumb } from '../_components/Breadcrumb'
 import { HeaderWrapper } from '../_components/HeaderWrapper'
 import { MissingRegions } from './_components/MissingRegions'
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminRegionsPage() {
-  const regions = await invoke(getRegions, {})
+  const regions = await invoke(getRegionsWithAdditionalData, {})
 
   return (
     <>
