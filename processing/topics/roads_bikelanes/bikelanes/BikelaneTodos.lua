@@ -56,14 +56,32 @@ local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
 -- === Verkehrszeichen ===
+local missing_traffic_sign_but_bicycle_designated = BikelaneTodo.new({
+  id = "missing_traffic_sign_but_bicycle_designated",
+  desc = "Bicycle Infrastructure recognized with `bicycle=designated` but no `traffic_sign`.",
+  conditions = function(objectTags, resultTags)
+    return resultTags.category ~= nil
+      and objectTags.bicycle == "designated"
+  end
+})
+local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
+  id = "missing_traffic_sign_but_bicycle_yes",
+  desc = "Bicycle Infrastructure recognized with `bicycle=yes` but no `traffic_sign`.",
+  conditions = function(objectTags, resultTags)
+    return resultTags.category ~= nil
+      and objectTags.bicycle == "yes"
+  end
+})
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
-  conditions = function(tagsObject, _)
+  conditions = function(tagsObject, resultTags)
     return tagsObject.traffic_sign == nil
         and not (
           missing_traffic_sign_244(tagsObject) or
-          missing_traffic_sign_vehicle_destination(tagsObject)
+          missing_traffic_sign_vehicle_destination(tagsObject) or
+          missing_traffic_sign_but_bicycle_designated(tagsObject, resultTags) or
+          missing_traffic_sign_but_bicycle_yes(tagsObject, resultTags)
           -- Add any missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
         )
   end
@@ -119,6 +137,9 @@ BikelaneTodos = {
   missing_traffic_sign_244,
   missing_traffic_sign_vehicle_destination,
   missing_acccess_tag_bicycle_road,
+  missing_traffic_sign_but_bicycle_designated,
+  missing_traffic_sign_but_bicycle_yes,
+  missing_traffic_sign,
   missing_access_tag_240,
   missing_segregated,
   missing_sidepath,
