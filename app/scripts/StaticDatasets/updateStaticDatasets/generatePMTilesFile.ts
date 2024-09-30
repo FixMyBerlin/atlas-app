@@ -4,6 +4,8 @@ import { red } from '../utils/log'
 /** @returns pmtiles outputFullFile */
 export const generatePMTilesFile = async (inputFullFile: string, outputFolder: string) => {
   const outputFilename = path.parse(inputFullFile).name
+  // This line is only used for `app/scripts/StaticDatasets/geojson/region-bb/bb-ramboll-netzentwurf-2/README.md`
+  // const outputFullFile = path.join(outputFolder, `${outputFilename}.mbtiles`)
   const outputFullFile = path.join(outputFolder, `${outputFilename}.pmtiles`)
 
   console.log(`  Generating pmtiles file "${outputFullFile}"...`)
