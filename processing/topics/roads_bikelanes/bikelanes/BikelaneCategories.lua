@@ -442,6 +442,9 @@ local needsClarification = BikelaneCategory.new({
         or (tags.highway == "path" and tags.bicycle == "designated") then
       return true
     end
+    if tags.highway == 'footway' and tags.bicycle == 'designated' then
+      return true
+    end
   end
 })
 
