@@ -2,6 +2,8 @@
 set -e
 
 source /processing/utils/logging.sh
+source /processing/utils/hashing.sh
+
 log_start "$0"
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
@@ -11,8 +13,8 @@ FILTER_DIR="./filter/"
 OSM_FILTER_EXPRESSIONS=${FILTER_DIR}filter-expressions.txt
 OSM_INTERMEDIATE_FILE=${FILTER_DIR}intermediate.pbf
 
-if [ $SKIP_TAG_FILTER == 1 ]; then
-  log "💥 SKIPPED tag filter with .env 'SKIP_TAG_FILTER=1'"
+if [ check_hash $OSM_DATADIR "osm.pbf" && check_hash $FILTER_DIR ".txt" ]; then
+  log "💥 SKIPPED tag filter because OSM files and filter-expressions.txt remaind unchanged"
   ln -f ${OSM_LOCAL_FILE} ${OSM_FILTERED_FILE}
 else
   # Docs https://docs.osmcode.org/osmium/latest/osmium-tags-filter.html
@@ -24,5 +26,7 @@ if [ "$ID_FILTER" != "" ]; then
   osmium getid --overwrite --output=${OSM_INTERMEDIATE_FILE} --verbose-ids ${OSM_FILTERED_FILE} ${ID_FILTER}
   mv ${OSM_INTERMEDIATE_FILE} ${OSM_FILTERED_FILE}
 fi
+
+update_hash $FILTER_DIR ".txt"
 
 log_end "$0"
