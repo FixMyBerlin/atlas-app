@@ -20,6 +20,7 @@ local onewayAssumedNo = Set({
   'needsClarification'                  -- really unknown, but `oneway=yes` (which is common in cities) is usually explicit
 })
 local onewayImplicitYes = Set({
+  'protectedCyclewayOnHighway',                    -- "lane"-like
   'cyclewayOnHighway_advisory',                    -- "lane"-like
   'cyclewayOnHighway_exclusive',                   -- "lane"-like
   'cyclewayOnHighway_advisoryOrExclusive',         -- "lane"-like

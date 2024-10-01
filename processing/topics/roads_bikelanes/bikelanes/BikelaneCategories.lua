@@ -450,6 +450,33 @@ local bikeSuitableSurface = BikelaneCategory.new({
   end
 })
 
+local protectedCyclewayOnHighway = BikelaneCategory.new({
+  id = 'protectedCyclewayOnHighway',
+  desc = 'Protected bikelanes e.g. bikelanes with physical separation from motorized traffic.',
+  infrastructureExists = true,
+  condition = function(tags)
+    local nonPhysicalSeparations = Set({'no', 'none', 'dashed_line', 'solid_line'})
+    -- we go from specific to general tags (:side > :both > '')
+    local separationFallback = tags['separation:both'] or tags['separation']
+    -- only include center line tagged cycleways
+    if tags._prefix == nil then
+      return false
+    end
+
+    local separation = tags['separation:left'] or separationFallback
+    if separation == nil or nonPhysicalSeparations[separation] then
+      return false
+    end
+    -- Check also the left separation for the rare case that there is motorized traffic on the right hand side
+    if (tags['traffic_mode:right'] or tags['traffic_mode:both']) == 'motorized' then
+      separation = tags['separation:right'] or separationFallback
+      if separation == nil or nonPhysicalSeparations[separation] then
+        return false
+      end
+    end
+    return true
+  end
+})
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local needsClarification = BikelaneCategory.new({
@@ -473,6 +500,7 @@ local categoryDefinitions = {
   dataNo,
   isSeparate,
   implicitOneWay,
+  protectedCyclewayOnHighway,
   cyclewayLink,
   crossing,
   livingStreet,
