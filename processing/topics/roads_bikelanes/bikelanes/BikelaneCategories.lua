@@ -436,13 +436,17 @@ local bikeSuitableSurface = BikelaneCategory.new({
   desc = 'Paths which have a surface which is suited for biking.',
   infrastructureExists = true,
   condition = function(tags)
-    if tags.highway == 'path' or tags.highway == 'track' then
-      local smoothness = DeriveSmoothness(tags).smoothness
-      if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
-        return false
-      end
-      return true
+    if tags.surface ~= 'asphalt' then
+      return false
     end
+    if not Set({'path', 'track'})[tags.highway] then
+      return false
+    end
+    local smoothness = DeriveSmoothness(tags).smoothness
+    if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
+      return false
+    end
+      return true
   end
 })
 
@@ -496,9 +500,9 @@ local categoryDefinitions = {
   footwayBicycleYes_adjoining, -- after `cyclewaySeparatedCases`
   footwayBicycleYes_isolated,
   footwayBicycleYes_adjoiningOrIsolated,
-  bikeSuitableSurface,
   -- Needs to be last
   needsClarification,
+  bikeSuitableSurface,
 }
 
 function CategorizeBikelane(tags)
