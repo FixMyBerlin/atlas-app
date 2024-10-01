@@ -16,6 +16,7 @@ function BikelaneCategory.new(args)
   self.id = args.id
   self.desc = args.desc
   self.infrastructureExists = args.infrastructureExists
+  self.implicitOneWay = args.implicitOneWay
   self.condition = args.condition
   return self
 end
@@ -143,6 +144,7 @@ local footAndCyclewayShared = BikelaneCategory.new({
   id = 'footAndCyclewayShared',
   desc = 'Shared bike and foot path (DE: "Gemeinsamer Geh- und Radweg")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
@@ -163,6 +165,7 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
   id = 'footAndCyclewaySegregated',
   desc = 'Shared bike and foot path (DE: "Getrennter Geh- und Radweg", "Getrennter Rad- und Gehweg")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.bicycle == "designated" and tags.foot == "designated" and
@@ -182,6 +185,7 @@ local footwayBicycleYes = BikelaneCategory.new({
   desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`)' ..
       ' (DE: "Gehweg, Fahrrad frei")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
 
@@ -285,6 +289,7 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
   desc = 'Bicycle infrastructure on the highway, right next to motor vehicle traffic.' ..
       'For "advisory" lanes (DE: "Schutzstreifen")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -304,6 +309,7 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
   desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
       ' For "exclusive" lanes (DE: "Radfahrstreifen").',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -324,6 +330,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
       ' This category is split into subcategories for "advisory" (DE: "Schutzstreifen")' ..
       ' and "exclusive" lanes (DE: "Radfahrstreifen").',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
@@ -354,6 +361,7 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
   desc = 'Bike lane between motor vehicle lanes,' ..
       ' mostly on the left of a right turn lane. (DE: "Radweg in Mittellage")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     if tags['_parent_highway'] == nil or tags._prefix == 'sidewalk' then return end
 
@@ -377,6 +385,7 @@ local sharedBusLaneBusWithBike = BikelaneCategory.new({
   desc = 'Bus lane with explicit allowance for bicycles (`cycleway=share_busway`).' ..
       ' (DE: "Bussonderfahrstreifen mit Fahrrad frei")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.highway == "cycleway" and
@@ -402,6 +411,7 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
   desc = 'Bicycle lane with explicit allowance for buses.' ..
       ' (DE: "Radfahrstreifen mit Freigabe Busverkehr")',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.highway == "cycleway" and tags.lane == "share_busway"
@@ -454,6 +464,7 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
   id = 'protectedCyclewayOnHighway',
   desc = 'Protected bikelanes e.g. bikelanes with physical separation from motorized traffic.',
   infrastructureExists = true,
+  implicitOneWay = true,
   condition = function(tags)
     local nonPhysicalSeparations = Set({'no', 'none', 'dashed_line', 'solid_line'})
     -- we go from specific to general tags (:side > :both > '')
