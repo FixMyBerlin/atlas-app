@@ -4,6 +4,7 @@ require("IsTermInString")
 require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")
 require("SanitizeTrafficSign")
+require("DeriveSmoothness")
 BikelaneCategory = {}
 BikelaneCategory.__index = BikelaneCategory
 
@@ -429,6 +430,21 @@ local sharedLane = BikelaneCategory.new({
     end
   end
 })
+-- Paths which have a surface which is suited for biking
+local bikeSuitableSurface = BikelaneCategory.new({
+  id = 'bikeSuitableSurface',
+  desc = 'Paths which have a surface which is suited for biking.',
+  infrastructureExists = true,
+  condition = function(tags)
+    if tags.highway == 'path' or tags.highway == 'track' then
+      local smoothness = DeriveSmoothness(tags).smoothness
+      if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
+        return false
+      end
+      return true
+    end
+  end
+})
 
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
@@ -480,6 +496,7 @@ local categoryDefinitions = {
   footwayBicycleYes_adjoining, -- after `cyclewaySeparatedCases`
   footwayBicycleYes_isolated,
   footwayBicycleYes_adjoiningOrIsolated,
+  bikeSuitableSurface,
   -- Needs to be last
   needsClarification,
 }
