@@ -5,6 +5,7 @@ require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")
 require("SanitizeTrafficSign")
 require("DeriveSmoothness")
+require("HighwayClasses")
 BikelaneCategory = {}
 BikelaneCategory.__index = BikelaneCategory
 
@@ -440,6 +441,7 @@ local sharedLane = BikelaneCategory.new({
     end
   end
 })
+
 -- Paths which have a surface which is suited for biking
 local bikeSuitableSurface = BikelaneCategory.new({
   id = 'bikeSuitableSurface',
@@ -457,6 +459,23 @@ local bikeSuitableSurface = BikelaneCategory.new({
       return false
     end
       return true
+  end
+})
+
+-- Ways which have no motorized vehicle access
+local bikeSuitableNoVehicle = BikelaneCategory.new({
+  id = 'bikeSuitableNoVehicle',
+  desc = 'Ways which have a surface which have no vehicle access except bicycles.',
+  infrastructureExists = true,
+  condition = function(tags)
+    if not PathClasses[tags.highway] then
+      return false
+    end
+    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
+    if not (IsTermInString('260', traffic_sign) or IsTermInString('250', traffic_sign) or tags.motorized_vehicles == 'no')then
+      return false
+    end
+    return true
   end
 })
 
@@ -542,6 +561,7 @@ local categoryDefinitions = {
   -- Needs to be last
   needsClarification,
   bikeSuitableSurface,
+  bikeSuitableNoVehicle
 }
 
 function CategorizeBikelane(tags)
