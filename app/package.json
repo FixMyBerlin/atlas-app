@@ -55,6 +55,11 @@
   "prisma": {
     "schema": "db/schema.prisma"
   },
+  "browserslist": [
+    "defaults",
+    "last 2 IE major versions",
+    "last 4 Edge major versions"
+  ],
   "dependencies": {
     "@blitzjs/auth": "2.1.0",
     "@blitzjs/next": "2.1.0",
