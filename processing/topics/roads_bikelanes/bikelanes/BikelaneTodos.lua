@@ -61,7 +61,12 @@ local missing_traffic_sign_but_bicycle_designated = BikelaneTodo.new({
   desc = "Bicycle Infrastructure recognized with `bicycle=designated` but no `traffic_sign`.",
   conditions = function(objectTags, resultTags)
     return resultTags.category ~= nil
-      and objectTags.bicycle == "designated"
+        and objectTags.bicycle == "designated"
+        and (
+          objectTags.traffic_sign == nil
+          and objectTags['traffic_sign:forward'] == nil
+          and objectTags['traffic_sign:backward'] == nil
+        )
   end
 })
 local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
@@ -69,7 +74,12 @@ local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
   desc = "Bicycle Infrastructure recognized with `bicycle=yes` but no `traffic_sign`.",
   conditions = function(objectTags, resultTags)
     return resultTags.category ~= nil
-      and objectTags.bicycle == "yes"
+        and objectTags.bicycle == "yes"
+        and (
+          objectTags.traffic_sign == nil
+          and objectTags['traffic_sign:forward'] == nil
+          and objectTags['traffic_sign:backward'] == nil
+        )
   end
 })
 local missing_traffic_sign = BikelaneTodo.new({
