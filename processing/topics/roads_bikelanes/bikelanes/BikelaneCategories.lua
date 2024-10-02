@@ -485,7 +485,24 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true,
   condition = function(tags)
-    local nonPhysicalSeparations = Set({'no', 'none', 'dashed_line', 'solid_line'})
+    local function isPhysicalSeperation(separation)
+      local physicalSeparations = {
+        'bollard',
+        'parking_lane',
+        'bump',
+        'separation_kerb',
+        'vertical_panel',
+        'fence',
+        'flex_post',
+        'jersey_barrier',
+        'kerb'
+      }
+      for _, value in pairs(physicalSeparations) do
+        if IsTermInString(value, separation) then
+          return true
+        end
+      end
+    end
     -- we go from specific to general tags (:side > :both > '')
     local separationFallback = tags['separation:both'] or tags['separation']
     -- only include center line tagged cycleways
@@ -493,14 +510,15 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
       return false
     end
 
-    local separation = tags['separation:left'] or separationFallback
-    if separation == nil or nonPhysicalSeparations[separation] then
+    local separation_left = tags['separation:left'] or separationFallback
+    if not isPhysicalSeperation(separation_left) then
       return false
     end
     -- Check also the left separation for the rare case that there is motorized traffic on the right hand side
-    if (tags['traffic_mode:right'] or tags['traffic_mode:both']) == 'motorized' then
-      separation = tags['separation:right'] or separationFallback
-      if separation == nil or nonPhysicalSeparations[separation] then
+    local traffic_mode_right = tags['traffic_mode:right'] or tags['traffic_mode:both'] or tags['traffic_mode']
+    if traffic_mode_right == 'motorized' then
+      local separation_right = tags['separation:right'] or separationFallback
+      if not isPhysicalSeperation(separation_right) then
         return false
       end
     end
