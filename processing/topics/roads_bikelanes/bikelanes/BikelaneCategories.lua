@@ -12,13 +12,17 @@ BikelaneCategory.__index = BikelaneCategory
 -- @param args table
 -- @param args.desc string
 -- @param args.condition function
+-- @param args.insfrastructureExists boolean
+-- @param args.implicitOneWay boolean
 function BikelaneCategory.new(args)
   local self = setmetatable({}, BikelaneCategory)
-  self.id = args.id
-  self.desc = args.desc
-  self.infrastructureExists = args.infrastructureExists
-  self.implicitOneWay = args.implicitOneWay
-  self.condition = args.condition
+  local fields = {'id', 'desc', 'infrastructureExists', 'implicitOneWay', 'condition'}
+  for _, v in pairs(fields) do
+    if args[v] == nil then
+      error('Missing field "' .. v .. '" for BikelaneCategory "' .. args.id .. '"')
+    end
+    self[v] = args[v]
+  end
   return self
 end
 
@@ -30,6 +34,7 @@ local dataNo = BikelaneCategory.new({
   id = 'data_no',
   desc = 'The explicit absence of bike infrastrucute',
   infrastructureExists = false,
+  implicitOneWay = false, -- explicit absence category
   condition = function(tags)
     local nos = Set({ 'no', 'none' })
     if nos[tags.cycleway] then
@@ -42,6 +47,7 @@ local isSeparate = BikelaneCategory.new({
   id = 'separate_geometry',
   desc = '',
   infrastructureExists = false,
+  implicitOneWay = false, -- explicit absence category
   condition = function(tags)
     if tags.cycleway == 'separate' then
       return true
@@ -55,6 +61,7 @@ local implicitOneWay = BikelaneCategory.new({
   id = 'not_expected',
   desc = '',
   infrastructureExists = false,
+  implicitOneWay = false, -- explicit absence category
   condition = function(tags)
     local result = tags._prefix == 'cycleway' and tags._infix == '' -- object is created from implicit case
     result = result and tags._parent.oneway == 'yes' and
@@ -73,6 +80,7 @@ local pedestrianAreaBicycleYes = BikelaneCategory.new({
       ' explicit allowance for bicycles (`bicycle=yes`). `dismount` counts as `no`.' ..
       ' (We only process the ways, not the `area=yes` Polygon.)',
   infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     if tags.highway == "pedestrian" and (tags.bicycle == "yes" or tags.bicycle == "designated") then
       return true
@@ -86,6 +94,7 @@ local livingStreet = BikelaneCategory.new({
   desc = 'Living streets are considered bike friendly and added unless prohibided.' ..
       ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
   infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     if tags.highway == "living_street" then
       -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
@@ -108,6 +117,7 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   desc = 'Bicycle road (DE: "Fahrradstraße mit Anlieger frei")' ..
       ' with vehicle access `destination`.',
   infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     if tags.bicycle_road == "yes"
@@ -130,6 +140,7 @@ local bicycleRoad = BikelaneCategory.new({
   id = 'bicycleRoad',
   desc = 'Bicycle road (DE: "Fahrradstraße")',
   infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     if tags.bicycle_road == "yes"
@@ -213,6 +224,7 @@ local cyclewaySeparated = BikelaneCategory.new({
   id = 'cycleway',
   desc = '', -- TODO desc
   infrastructureExists = true,
+  implicitOneWay = false,  -- "track"-like and `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
 
@@ -254,6 +266,7 @@ local crossing = BikelaneCategory.new({
   desc = 'Crossings with relevance for bicycles.' ..
       ' There is no split into more specific infrastrucute categories for now.',
   infrastructureExists = true,
+  implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
     if tags.highway == "cycleway" and tags.cycleway == "crossing" then
       return true
@@ -275,6 +288,7 @@ local cyclewayLink = BikelaneCategory.new({
       ' `cycleway=link` is used to connect the road network for routing use cases' ..
       ' when no physical infrastructure is present.',
   infrastructureExists = true,
+  implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
     if tags.highway == "cycleway" and tags.cycleway == "link" then
       return true
@@ -347,6 +361,7 @@ local sharedMotorVehicleLane = BikelaneCategory.new({
   id = 'sharedMotorVehicleLane',
   desc = '', -- TODO desc; Wiki nochmal nachlesen und Conditions prüfen
   infrastructureExists = true,
+  implicitOneWay = false, -- (both) road shared, both lanes, (left|right would be `implicit_yes`)
   condition = function(tags)
     local result = tags.highway == 'cycleway' and tags.cycleway == "shared_lane"
     if result then
@@ -483,6 +498,7 @@ local sharedLane = BikelaneCategory.new({
   id = 'explicitSharedLaneButNoSignage',
   desc = '',
   infrastructureExists = true,
+  implicitOneWay = false, -- (both) road shared, both lanes, (left|right would be `implicit_yes`)
   condition = function(tags)
     if tags.cycleway == "shared" then
       return true
@@ -495,6 +511,7 @@ local bikeSuitableSurface = BikelaneCategory.new({
   id = 'bikeSuitableSurface',
   desc = 'Paths which have a surface which is suited for biking.',
   infrastructureExists = true,
+  implicitOneWay = false, -- path shared, both lanes
   condition = function(tags)
     if tags.surface ~= 'asphalt' then
       return false
@@ -515,6 +532,7 @@ local bikeSuitableNoVehicle = BikelaneCategory.new({
   id = 'bikeSuitableNoVehicle',
   desc = 'Ways which have a surface which have no vehicle access except bicycles.',
   infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     if not PathClasses[tags.highway] then
       return false
@@ -534,6 +552,7 @@ local needsClarification = BikelaneCategory.new({
   desc = 'Bike infrastructure that we cannot categories properly due to missing or ambiguous tagging.' ..
       ' Check the `todos` property on hints on how to improve the tagging.',
   infrastructureExists = true,
+  implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
     if tags.highway == "cycleway"
         or (tags.highway == "path" and tags.bicycle == "designated") then
