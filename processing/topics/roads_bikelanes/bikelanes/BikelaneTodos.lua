@@ -145,8 +145,8 @@ local missing_cycleway_lane = BikelaneTodo.new({
 local deprecated_cycleway_shared = BikelaneTodo.new({
   id = "deprecated_cycleway_shared",
   desc = "The tagging `cycleway=shared` is deprecated.",
-  conditions = function(_, resultTags)
-    return resultTags.category == "needsClarification"
+  conditions = function(objectTags, resultTags)
+    return resultTags.category == "needsClarification" and objectTags.cycleway == "shared"
   end
 })
 
