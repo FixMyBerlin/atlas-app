@@ -27,7 +27,15 @@ local function unnestTags(tags, prefix, infix, dest)
   return dest
 end
 
-local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
+local directedTags = {
+  centerline = {
+    'cycleway:lanes',
+    'bicycle:lanes'
+  },
+  side = {
+    'traffic_sign'
+  }
+}
 
 -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
 local sideToDirection = {
@@ -73,9 +81,18 @@ function GetTransformedObjects(tags, transformations)
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
           -- project directed keys from the center line
-          for _, key in pairs(directedTags) do
+          for _, key in pairs(directedTags.centerline) do
             local directedKey = key .. sideToDirection[side]
             newObj[key] = newObj[key] or tags[key] or tags[directedKey]
+          end
+          -- project directed keys from the side
+          for _, key in pairs(directedTags.side) do
+            if transformation.direction_reference == 'self' then
+              newObj[key] = newObj[key] or newObj[key .. ':forward']
+            elseif transformation.direction_reference == 'center_line' then
+              local directedKey = key .. sideToDirection[side]
+              newObj[key] = newObj[key] or newObj[directedKey]
+            end
           end
           if not transformation.filter or transformation.filter(newObj) then
             table.insert(results, newObj)

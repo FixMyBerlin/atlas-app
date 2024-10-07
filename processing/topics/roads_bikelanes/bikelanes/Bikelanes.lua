@@ -38,11 +38,13 @@ local footwayTransformation = {
   prefix = "sidewalk",
   filter = function(tags)
     return not (tags.footway == 'no' or tags.footway == 'separate')
-  end
+  end,
+  direction_reference = 'center_line'
 }
 local cyclewayTransformation = {
   highway = "cycleway",
   prefix = "cycleway",
+  direction_reference = 'self'
 }
 
 local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
