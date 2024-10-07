@@ -71,7 +71,7 @@ run_dir() {
   if [ -f "$processed_tables" ]; then
     for table in $(cat $processed_tables); do
       psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
-      psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
+      psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
     done
   fi
 
@@ -83,8 +83,8 @@ run_dir() {
     if [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
-          psql -q -c "DROP TABLE IF EXISTS \"${table}_backup\";" &> /dev/null
-          psql -q -c "ALTER TABLE \"$table\" RENAME TO \"${table}_backup\";"
+          psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
+          psql -q -c "ALTER TABLE public.\"$table\" SET SCHEMA backup;"
         done
         cp $processed_tables $backedup_tables
       fi
@@ -112,9 +112,9 @@ run_dir() {
         fi
         if [ "$FREEZE_DATA" == 1 ]; then
           psql -q -c "DROP TABLE \"${table}\";"
-          psql -q -c "ALTER TABLE \"${table}_backup\" RENAME TO \"${table}\";"
+          psql -q -c "ALTER TABLE backup.\"${table}\" SET SCHEMA public";"
         else
-          psql -q -c "DROP TABLE \"${table}_backup\";"
+          psql -q -c "DROP TABLE backup.\"${table}\";"
         fi
       done
       if [ "$FREEZE_DATA" == 1 ]; then
