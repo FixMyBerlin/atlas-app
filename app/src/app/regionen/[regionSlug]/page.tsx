@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 }
 
 // This page will always initialize with a `map` an `config` param, courtesy of ./middleware.ts
-export default function ShowRegionPage() {
+export default function RegionPage() {
   return (
     <>
       <DevMiddlewareHostnameWorkaround />

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   title: 'Kontakt und Impressum',
 }
 
-export default function Kontakt() {
+export default function KontaktPage() {
   return (
     <>
       <h1>Kontakt und Impressum</h1>

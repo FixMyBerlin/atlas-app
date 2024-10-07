@@ -11,7 +11,7 @@ import { HeaderWrapper } from '../_components/HeaderWrapper'
 
 const ITEMS_PER_PAGE = 100
 
-export default function AdminBikelaneVerificationsPage() {
+export default function AdminVerificationsPage() {
   const router = useRouter()
   const pathname = usePathname()
   const page = Number(useSearchParams()?.get('page')) || 0
@@ -68,4 +68,4 @@ export default function AdminBikelaneVerificationsPage() {
   )
 }
 
-AdminBikelaneVerificationsPage.authenticate = { role: 'ADMIN' }
+AdminVerificationsPage.authenticate = { role: 'ADMIN' }

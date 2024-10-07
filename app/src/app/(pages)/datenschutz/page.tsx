@@ -37,7 +37,7 @@ const tocItems: TocHashLink = [
   Original Dokument https://docs.google.com/document/d/1Tymx04eNjC0atCuQje5Df_bxxn8HJAyr/edit
 */
 
-export default function Datenschutz() {
+export default function DatenschutzPage() {
   return (
     <>
       <h1>Datenschutzerklärung</h1>

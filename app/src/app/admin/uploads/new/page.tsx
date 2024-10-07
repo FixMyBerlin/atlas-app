@@ -8,7 +8,7 @@ import { RegionFormSchema } from 'src/regions/schemas'
 import { Breadcrumb } from '../../_components/Breadcrumb'
 import { HeaderWrapper } from '../../_components/HeaderWrapper'
 
-export default function AdminNewRegionPage() {
+export default function AdminUploadsNewPage() {
   const router = useRouter()
   const searchParamSlug = useSearchParams()?.get('slug') || undefined
   const [createRegionMutation] = useMutation(createRegion)
@@ -51,4 +51,4 @@ export default function AdminNewRegionPage() {
   )
 }
 
-AdminNewRegionPage.authenticate = true
+AdminUploadsNewPage.authenticate = true

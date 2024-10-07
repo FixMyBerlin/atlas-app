@@ -11,7 +11,7 @@ import { HomePageSecondaryFeaturesJustText } from './_components/HomePageSeconda
 
 export const metadata: Metadata = {} // Using the defaults from src/layout.tsx
 
-export default function Home() {
+export default function Homepage() {
   const cookieStore = cookies()
   const redirectUrl = cookieStore.get(cookieName)?.value
   if (redirectUrl && redirectUrl !== '/') {

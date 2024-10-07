@@ -5,7 +5,7 @@ import { HeaderWrapper } from './_components/HeaderWrapper'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
-export default async function AdminDashboard() {
+export default async function AdminDashboardPage() {
   return (
     <>
       <HeaderWrapper>

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function ShowRegionStatsPage({ params, searchParams }) {
+export default async function RegionStatsPage({ params, searchParams }) {
   const region = await invoke(getRegion, { slug: params.regionSlug })
   const stats = await geoDataClient.$queryRaw<any>`
       SELECT osm_id::numeric, tags->'name', tags, meta, presence_categories
