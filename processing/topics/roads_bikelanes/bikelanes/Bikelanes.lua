@@ -39,11 +39,13 @@ local footwayTransformation = {
   filter = function(tags)
     return not (tags.footway == 'no' or tags.footway == 'separate')
   end,
+  -- this means that the suffixed `:backward` and `:forward` are relative to the direction of the center line geometry
   direction_reference = 'center_line'
 }
 local cyclewayTransformation = {
   highway = "cycleway",
   prefix = "cycleway",
+  -- this means that the suffixed `:backward` and `:forward` are relative to the direction of the bicycle lane itsel
   direction_reference = 'self'
 }
 

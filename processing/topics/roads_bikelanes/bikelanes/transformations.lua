@@ -27,11 +27,14 @@ local function unnestTags(tags, prefix, infix, dest)
   return dest
 end
 
+-- tags that get projected based on the direction suffix e.g `:forward` or `:backward`
 local directedTags = {
+  -- these are tags that get copied from the center line
   centerline = {
     'cycleway:lanes',
     'bicycle:lanes'
   },
+  -- these are tags that get copied from the projected sides
   side = {
     'traffic_sign'
   }
