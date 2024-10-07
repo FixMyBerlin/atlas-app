@@ -150,6 +150,17 @@ local deprecated_cycleway_shared = BikelaneTodo.new({
   end
 })
 
+local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
+  id = "unexpected_bicycle_access_on_footway",
+  desc = "Expected `highway=path+bicycle=designated` (informal/explicit DE:240)" ..
+    "or `highway=footway+bicycle=yes` (informal/explicit DE:239,1022-10);"..
+    " Add traffic_sign=none to specify unsigned path.",
+  conditions = function(objectTags, resultTags)
+    if objectTags.highway == 'footway' and objectTags.bicycle == 'designated' and resultTags.category == 'needsClarification' then
+      return true
+    end
+  end
+})
 
 BikelaneTodos = {
   missing_traffic_sign,
@@ -163,5 +174,6 @@ BikelaneTodos = {
   missing_segregated,
   missing_sidepath,
   missing_cycleway_lane,
-  deprecated_cycleway_shared
+  deprecated_cycleway_shared,
+  unexpected_bicycle_access_on_footway
 }
