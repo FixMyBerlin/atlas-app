@@ -487,25 +487,6 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
   end
 })
 
--- Explicit tagging as "Mischverkehr" without any traffic sign or road marking
--- In our style, we ignore this tagging and do not assign an explicit category.
--- The default for highways is, that they are shared unless forbidden.
--- This is an explicit category so that it is not rendered as "needsClarification"
--- Example https://www.openstreetmap.org/way/35396829/history
---
--- TODO: Remove this category and make it an exit conditino to "needsClarification"
-local sharedLane = BikelaneCategory.new({
-  id = 'explicitSharedLaneButNoSignage',
-  desc = '',
-  infrastructureExists = true,
-  implicitOneWay = false, -- (both) road shared, both lanes, (left|right would be `implicit_yes`)
-  condition = function(tags)
-    if tags.cycleway == "shared" then
-      return true
-    end
-  end
-})
-
 -- Paths which have a surface which is suited for biking
 local bikeSuitableSurface = BikelaneCategory.new({
   id = 'bikeSuitableSurface',
@@ -554,6 +535,9 @@ local needsClarification = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
+    if tags.cycleway == "shared" then
+      return true
+    end
     if tags.highway == "cycleway"
         or (tags.highway == "path" and tags.bicycle == "designated") then
       return true
@@ -577,7 +561,6 @@ local categoryDefinitions = {
   bicycleRoad, -- has to come after `bicycleRoad_vehicleDestination`
   sharedBusLaneBikeWithBus,
   sharedBusLaneBusWithBike,
-  sharedLane,
   pedestrianAreaBicycleYes,
   sharedMotorVehicleLane,
   -- Detailed tagging cases
