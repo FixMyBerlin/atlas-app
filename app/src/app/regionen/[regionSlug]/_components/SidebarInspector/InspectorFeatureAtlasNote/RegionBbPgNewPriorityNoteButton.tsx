@@ -49,7 +49,7 @@ ID: ${feature.properties.id}
     createNoteMutation(
       {
         regionSlug,
-        subject: `Hohe Prioritätkeit: ${importance}`,
+        subject: `Priorität: ${importance}`,
         latitude: point[1],
         longitude: point[0],
         body,
