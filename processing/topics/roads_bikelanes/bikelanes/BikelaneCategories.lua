@@ -548,6 +548,20 @@ local needsClarification = BikelaneCategory.new({
   end
 })
 
+-- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
+-- They are in OSM, but they need to be improved, which we show in the UI.
+local sharedLaneNoOvertaking = BikelaneCategory.new({
+  id = 'sharedLaneNoOvertaking',
+  desc = 'Shared lane with over taking prohibition for motorized vehicles.',
+  infrastructureExists = true,
+  implicitOneWay = true, -- lane-like
+  condition = function(tags)
+    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
+    if IsTermInString("DE:277.1", traffic_sign) then
+      return true
+    end
+  end
+})
 -- The order specifies the precedence; first one with a result win.
 local categoryDefinitions = {
   dataNo,
@@ -583,7 +597,8 @@ local categoryDefinitions = {
   -- Needs to be last
   needsClarification,
   bikeSuitableSurface,
-  bikeSuitableNoVehicle
+  bikeSuitableNoVehicle,
+  sharedLaneNoOvertaking
 }
 
 function CategorizeBikelane(tags)
