@@ -28,17 +28,20 @@ local function unnestTags(tags, prefix, infix, dest)
 end
 
 local directedTags = { 'cycleway:lanes', 'bicycle:lanes' }
+
 -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
-local sideDirectionMap = {
-  ["left"] = 'backward',
-  ["right"] = 'forward',
+local sideToDirection = {
+  [''] = '',
+  both = '',
+  left = ':backward',
+  right = ':forward',
 }
 
 -- these tags get transformed from the forward backward schema
 function GetTransformedObjects(tags, transformations)
   local center = MergeTable({}, tags)
   center._side = "self"
-  
+
   -- don't transform paths only unnest tags prefixed with `cycleway`
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
     unnestTags(tags, 'cycleway', '', center)
@@ -69,8 +72,9 @@ function GetTransformedObjects(tags, transformations)
 
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
+          -- project directed keys from the center line
           for _, key in pairs(directedTags) do
-            local directedKey = key .. ':' .. sideDirectionMap[side]
+            local directedKey = key .. sideToDirection[side]
             newObj[key] = newObj[key] or tags[key] or tags[directedKey]
           end
           if not transformation.filter or transformation.filter(newObj) then
