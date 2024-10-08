@@ -40,7 +40,7 @@ local footwayTransformation = {
     return not (tags.footway == 'no' or tags.footway == 'separate')
   end,
   -- this means that the suffixed `:backward` and `:forward` are relative to the direction of the center line geometry
-  direction_reference = 'center_line'
+  direction_reference = 'parent'
 }
 local cyclewayTransformation = {
   highway = "cycleway",

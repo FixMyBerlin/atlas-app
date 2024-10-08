@@ -34,13 +34,13 @@ end
 
 -- tags that get projected based on the direction suffix e.g `:forward` or `:backward`
 local directedTags = {
-  -- these are tags that get copied from the center line
-  centerline = {
+  -- these are tags that get copied from the parent
+  parent = {
     'cycleway:lanes',
     'bicycle:lanes'
   },
-  -- these are tags that get copied from the projected sides
-  side = {
+  -- these are tags that get copied from the cycleway itself
+  self = {
     'traffic_sign'
   }
 }
@@ -52,6 +52,30 @@ local sideToDirection = {
   left = ':backward',
   right = ':forward',
 }
+
+-- convert all `directedTags` from `[directedTags:direction]=val` -> `[directedTags]=val`
+---@param cycleway table
+---@param direction_reference string if `self` then the direction is relative to the `cycleway` itself if `center_line` then the direction is relative to the `parent`
+---@return table
+local function convertDirectedTags(cycleway, direction_reference)
+  local parent = cycleway._parent
+  local side = cycleway._side
+  -- project directed keys from the center line
+  for _, key in pairs(directedTags.parent) do
+    local directedKey = key .. sideToDirection[side]
+    cycleway[key] = cycleway[key] or parent[key] or parent[directedKey]
+  end
+  -- project directed keys from the side
+  for _, key in pairs(directedTags.self) do
+    if direction_reference == 'self' then
+      cycleway[key] = cycleway[key] or cycleway[key .. ':forward']
+    elseif direction_reference == 'parent' then
+      local directedKey = key .. sideToDirection[side]
+      cycleway[key] = cycleway[key] or cycleway[directedKey]
+    end
+  end
+  return cycleway
+end
 
 -- these tags get transformed from the forward backward schema
 function GetTransformedObjects(tags, transformations)
@@ -88,21 +112,8 @@ function GetTransformedObjects(tags, transformations)
 
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
-          -- project directed keys from the center line
-          for _, key in pairs(directedTags.centerline) do
-            local directedKey = key .. sideToDirection[side]
-            newObj[key] = newObj[key] or tags[key] or tags[directedKey]
-          end
-          -- project directed keys from the side
-          for _, key in pairs(directedTags.side) do
-            if transformation.direction_reference == 'self' then
-              newObj[key] = newObj[key] or newObj[key .. ':forward']
-            elseif transformation.direction_reference == 'center_line' then
-              local directedKey = key .. sideToDirection[side]
-              newObj[key] = newObj[key] or newObj[directedKey]
-            end
-          end
           if not transformation.filter or transformation.filter(newObj) then
+            convertDirectedTags(newObj, transformation)
             table.insert(results, newObj)
           end
         end
