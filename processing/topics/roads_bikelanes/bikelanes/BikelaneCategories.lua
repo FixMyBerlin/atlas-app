@@ -296,6 +296,39 @@ local cyclewayLink = BikelaneCategory.new({
   end
 })
 
+
+-- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=lane
+-- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
+-- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
+local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
+  id = 'cyclewayOnHighway_advisoryOrExclusive',
+  desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
+      ' This category is split into subcategories for "advisory" (DE: "Schutzstreifen")' ..
+      ' and "exclusive" lanes (DE: "Radfahrstreifen").',
+  infrastructureExists = true,
+  implicitOneWay = true, -- "lane"-like
+  condition = function(tags)
+    if tags.highway == 'cycleway' then
+      if tags._side ~= 'self' then
+        if IsTermInString('|lane|', tags.lanes) then
+          if not osm2pgsql.has_suffix(tags.lanes, '|lane') then
+            return false
+          end
+        end
+        if IsTermInString('|designated|', tags._parent['bicycle:lanes']) then
+          if not osm2pgsql.has_suffix(tags._parent['bicycle:lanes'], '|designated') then
+            return false
+          end
+        end
+      end
+      if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
+        return true
+      end
+    end
+  end
+})
+
+
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=lane
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
 -- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
@@ -306,12 +339,11 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if tags.highway == 'cycleway' then
-      if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
-        if tags['lane'] == 'advisory' then
-          return true -- DE: Schutzstreifen
-        end
-      end
+    if not cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+      return false
+    end
+    if tags['lane'] == 'advisory' then
+      return true -- DE: Schutzstreifen
     end
   end
 })
@@ -326,31 +358,11 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if tags.highway == 'cycleway' then
-      if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
-        if tags['lane'] == 'exclusive' then
-          return true -- DE: Radfahrstreifen
-        end
-      end
+    if not cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+      return false
     end
-  end
-})
-
--- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=lane
--- https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_lane
--- https://wiki.openstreetmap.org/wiki/Key:cycleway:lane
-local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
-  id = 'cyclewayOnHighway_advisoryOrExclusive',
-  desc = 'Bicycle infrastrucute on the highway, right next to motor vehicle traffic.' ..
-      ' This category is split into subcategories for "advisory" (DE: "Schutzstreifen")' ..
-      ' and "exclusive" lanes (DE: "Radfahrstreifen").',
-  infrastructureExists = true,
-  implicitOneWay = true, -- "lane"-like
-  condition = function(tags)
-    if tags.highway == 'cycleway' then
-      if tags.cycleway == "lane" or tags.cycleway == "opposite_lane" then
-        return true
-      end
+    if tags['lane'] == 'exclusive' then
+      return true -- DE: Radfahrstreifen
     end
   end
 })
@@ -379,7 +391,9 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if tags['_parent_highway'] == nil or tags._prefix == 'sidewalk' then return end
+    if tags._side ~= 'self' then
+      return false
+    end
 
     if IsTermInString("|lane|", tags['cycleway:lanes']) or
         IsTermInString("|designated|", tags['bicycle:lanes'])
