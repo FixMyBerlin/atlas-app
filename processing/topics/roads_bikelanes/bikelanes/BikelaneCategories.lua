@@ -1,6 +1,6 @@
 package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("IsTermInString")
+require("ContainsSubstring")
 require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")
 require("SanitizeTrafficSign")
@@ -208,7 +208,7 @@ local footwayBicycleYes = BikelaneCategory.new({
 
     if tags.highway == "footway" or tags.highway == "path" then
       local taggedWithAccessTagging = tags.bicycle == "yes"
-      local taggedWithTrafficsign = IsTermInString("1022-10", trafficSign)
+      local taggedWithTrafficsign = ContainsSubstring(trafficSign, "1022-10")
       if taggedWithAccessTagging or taggedWithTrafficsign then
         return true
       end
@@ -235,7 +235,7 @@ local cyclewaySeparated = BikelaneCategory.new({
         and (tags.bicycle == "yes" or tags.bicycle == "designated")
         and tags.segregated == "yes"
         and tags.is_sidepath == "yes"
-        and not IsTermInString("241", trafficSign) then
+        and not ContainsSubstring(trafficSign, "241") then
       return true
     end
 
@@ -310,12 +310,12 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags._side ~= 'self' then
-        if IsTermInString('|lane|', tags.lanes) then
+        if ContainsSubstring(tags.lanes,'|lane|') then
           if not osm2pgsql.has_suffix(tags.lanes, '|lane') then
             return false
           end
         end
-        if IsTermInString('|designated|', tags._parent['bicycle:lanes']) then
+        if ContainsSubstring(tags._parent['bicycle:lanes'], '|designated|') then
           if not osm2pgsql.has_suffix(tags._parent['bicycle:lanes'], '|designated') then
             return false
           end
@@ -395,8 +395,8 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
       return false
     end
 
-    if IsTermInString("|lane|", tags['cycleway:lanes']) or
-        IsTermInString("|designated|", tags['bicycle:lanes'])
+    if ContainsSubstring(tags['cycleway:lanes'], "|lane|") or
+        ContainsSubstring(tags['bicycle:lanes'], "|designated|")
     then
       return true
     end
@@ -423,7 +423,7 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
         'kerb'
       }
       for _, value in pairs(physicalSeparations) do
-        if IsTermInString(value, separation) then
+        if ContainsSubstring(separation, value) then
           return true
         end
       end
@@ -469,7 +469,7 @@ local sharedBusLaneBusWithBike = BikelaneCategory.new({
     local taggedWithAccessTagging = tags.highway == "cycleway" and
         (tags.cycleway == "share_busway" or tags.cycleway == "opposite_share_busway")
     local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:245") and
-        (IsTermInString("1022-10", trafficSign) or IsTermInString("1022-14", trafficSign))
+        (ContainsSubstring(trafficSign, "1022-10") or ContainsSubstring(trafficSign, "1022-14"))
     if taggedWithAccessTagging or taggedWithTrafficsign then
       -- Note: Was `sharedBusLane` until 2024-05-02 when we introduced `sharedBusLaneBikeWithBus`
       return true
@@ -494,7 +494,7 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
     local taggedWithAccessTagging = tags.highway == "cycleway" and tags.lane == "share_busway"
     local taggedWithTrafficsign =
-        osm2pgsql.has_prefix(trafficSign, "DE:237") and IsTermInString("1024-14", trafficSign)
+        osm2pgsql.has_prefix(trafficSign, "DE:237") and ContainsSubstring(trafficSign, "1024-14")
     if taggedWithAccessTagging or taggedWithTrafficsign then
       return true
     end
@@ -533,7 +533,7 @@ local bikeSuitableNoVehicle = BikelaneCategory.new({
       return false
     end
     local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if not (IsTermInString('260', traffic_sign) or IsTermInString('250', traffic_sign) or tags.motorized_vehicles == 'no')then
+    if not (ContainsSubstring(traffic_sign, '260') or ContainsSubstring(traffic_sign, '250') or tags.motorized_vehicles == 'no')then
       return false
     end
     return true
@@ -571,7 +571,7 @@ local sharedLaneNoOvertaking = BikelaneCategory.new({
   implicitOneWay = true, -- lane-like
   condition = function(tags)
     local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if IsTermInString("DE:277.1", traffic_sign) then
+    if ContainsSubstring(traffic_sign, "DE:277.1") then
       return true
     end
   end

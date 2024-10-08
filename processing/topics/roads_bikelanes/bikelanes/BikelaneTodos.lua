@@ -29,7 +29,7 @@ local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
         and (objectTags.vehicle == "destination" or objectTags.motor_vehicle == "destination")
-            and not IsTermInString("1020-30", objectTags.traffic_sign)
+            and not ContainsSubstring(objectTags.traffic_sign, "1020-30")
   end
 })
 -- Note: We ignore the misstagging of `motor_vehicle` instead of `vehicle` as it is currently hard to map in iD and not that relevant for routing.
@@ -38,7 +38,7 @@ local missing_traffic_sign_244 = BikelaneTodo.new({
   desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
-        and not IsTermInString('244', objectTags.traffic_sign)
+        and not ContainsSubstring(objectTags.traffic_sign, '244')
         and not missing_traffic_sign_vehicle_destination(objectTags)
   end
 })
@@ -102,7 +102,7 @@ local missing_access_tag_240 = BikelaneTodo.new({
   id = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
   conditions = function(objectTags, _)
-    return (IsTermInString('240', objectTags.traffic_sign) or IsTermInString('241', objectTags.traffic_sign))
+    return (ContainsSubstring( objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
         and objectTags.bicycle ~= 'designated'
         and objectTags.foot ~= "designated"
   end
