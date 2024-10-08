@@ -111,30 +111,6 @@ local livingStreet = BikelaneCategory.new({
 })
 
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
--- traffic_sign=DE:244,1020-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
-local bicycleRoad_vehicleDestination = BikelaneCategory.new({
-  id = 'bicycleRoad_vehicleDestination',
-  desc = 'Bicycle road (DE: "Fahrradstraße mit Anlieger frei")' ..
-      ' with vehicle access `destination`.',
-  infrastructureExists = true,
-  implicitOneWay = false, -- road shared, both lanes
-  condition = function(tags)
-    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if tags.bicycle_road == "yes"
-        or osm2pgsql.has_prefix(trafficSign, 'DE:244')
-    then
-      -- Subcategory when bicycle road allows vehicle traffic
-      if trafficSign == 'DE:244.1,1020-30'
-          or trafficSign == 'DE:244,1020-30'
-          or tags.vehicle == 'destination'
-          or tags.motor_vehicle == 'destination' then
-          return true
-      end
-    end
-  end
-})
-
--- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
 local bicycleRoad = BikelaneCategory.new({
   id = 'bicycleRoad',
@@ -150,6 +126,30 @@ local bicycleRoad = BikelaneCategory.new({
     end
   end
 })
+
+-- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
+-- traffic_sign=DE:244,1020-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
+local bicycleRoad_vehicleDestination = BikelaneCategory.new({
+  id = 'bicycleRoad_vehicleDestination',
+  desc = 'Bicycle road (DE: "Fahrradstraße mit Anlieger frei")' ..
+      ' with vehicle access `destination`.',
+  infrastructureExists = true,
+  implicitOneWay = false, -- road shared, both lanes
+  condition = function(tags)
+    if not bicycleRoad.condition(tags) then
+      return false
+    end
+    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+    -- Subcategory when bicycle road allows vehicle traffic
+    if trafficSign == 'DE:244.1,1020-30'
+        or trafficSign == 'DE:244,1020-30'
+        or tags.vehicle == 'destination'
+        or tags.motor_vehicle == 'destination' then
+        return true
+    end
+  end
+})
+
 
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:240
 local footAndCyclewayShared = BikelaneCategory.new({
