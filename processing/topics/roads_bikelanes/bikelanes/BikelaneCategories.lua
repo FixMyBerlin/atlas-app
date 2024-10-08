@@ -504,7 +504,7 @@ local bikeSuitableSurface = BikelaneCategory.new({
     if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
       return false
     end
-      return true
+    return true
   end
 })
 
