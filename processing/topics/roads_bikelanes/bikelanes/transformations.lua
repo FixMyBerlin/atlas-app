@@ -2,8 +2,13 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require('MergeTable')
 require('HighwayClasses')
 
--- unnest all tags from ["prefix .. side:subtag"]=val -> ["subtag"]=val
-local function unnestTags(tags, prefix, infix, dest)
+-- unnest all tags from `["prefix .. side:subtag"]=val` -> `["subtag"]=val`
+---@param tags table
+---@param prefix string prefix to look for e.g. `cycleway`
+---@param infix string? infix to look for either a side e.g. `:left`, `:right`, `:both` or `''`
+---@param dest table? destination table to write to
+---@return table
+local function unnestPrefixedTags(tags, prefix, infix, dest)
   dest = dest or {}
   local fullPrefix = prefix .. infix
   local prefixLen = string.len(fullPrefix)
@@ -55,7 +60,7 @@ function GetTransformedObjects(tags, transformations)
 
   -- don't transform paths only unnest tags prefixed with `cycleway`
   if PathClasses[tags.highway] or tags.highway == 'pedestrian' then
-    unnestTags(tags, 'cycleway', '', center)
+    unnestPrefixedTags(tags, 'cycleway', '', center)
     if center.oneway == 'yes' and tags['oneway:bicycle'] ~= 'no' then
       center.traffic_sign = center.traffic_sign or center['traffic_sign:forward']
     end
@@ -77,9 +82,9 @@ function GetTransformedObjects(tags, transformations)
 
         -- we look for tags with the following hirachy: `prefix:side` > `prefix:both` > `prefix`
         -- thus a more specific tag will always overwrite a more general one
-        unnestTags(tags, prefix, '', newObj)
-        unnestTags(tags, prefix, ':both', newObj)
-        unnestTags(tags, prefix, ':' .. side, newObj)
+        unnestPrefixedTags(tags, prefix, '', newObj)
+        unnestPrefixedTags(tags, prefix, ':both', newObj)
+        unnestPrefixedTags(tags, prefix, ':' .. side, newObj)
 
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
