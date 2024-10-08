@@ -2,6 +2,28 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 require('MergeTable')
 require('HighwayClasses')
 
+CenterLineTransformation = {}
+CenterLineTransformation.__index = CenterLineTransformation
+
+---@param args table
+--@param args.highway string
+--@param args.prefix string
+--@param args.direction_reference 'self' | 'parent'
+--@param args.filter function?
+--@return table
+function CenterLineTransformation.new(args)
+  local self = setmetatable({}, CenterLineTransformation)
+  local mandatory = { 'highway', 'prefix', 'direction_reference' }
+  for k, v in pairs(mandatory) do
+    if args[v] == nil then
+      error('Missing mandatory argument ' .. v .. ' for CenterLineTransformation')
+    end
+    self[v] = args[v]
+  end
+  self.filter = args.filter or function(_) return true end
+  return self
+end
+
 -- unnest all tags from `["prefix .. side:subtag"]=val` -> `["subtag"]=val`
 ---@param tags table
 ---@param prefix string prefix to look for e.g. `cycleway`
@@ -55,7 +77,7 @@ local sideToDirection = {
 
 -- convert all `directedTags` from `[directedTags:direction]=val` -> `[directedTags]=val`
 ---@param cycleway table
----@param direction_reference string if `self` then the direction is relative to the `cycleway` itself if `center_line` then the direction is relative to the `parent`
+---@param direction_reference 'self' | 'parent' whether directions refer to the cycleway or its parent
 ---@return table
 local function convertDirectedTags(cycleway, direction_reference)
   local parent = cycleway._parent
@@ -112,7 +134,7 @@ function GetTransformedObjects(tags, transformations)
 
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
-          if not transformation.filter or transformation.filter(newObj) then
+          if transformation.filter(newObj) then
             convertDirectedTags(newObj, transformation)
             table.insert(results, newObj)
           end

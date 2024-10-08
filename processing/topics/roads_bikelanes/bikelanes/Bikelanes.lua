@@ -33,21 +33,19 @@ local sideSignMap = {
 }
 
 -- transformations for nested tags:
-local footwayTransformation = {
+local footwayTransformation = CenterLineTransformation.new({
   highway = "footway",
   prefix = "sidewalk",
   filter = function(tags)
     return not (tags.footway == 'no' or tags.footway == 'separate')
   end,
-  -- this means that the suffixed `:backward` and `:forward` are relative to the direction of the center line geometry
   direction_reference = 'parent'
-}
-local cyclewayTransformation = {
+})
+local cyclewayTransformation = CenterLineTransformation.new({
   highway = "cycleway",
   prefix = "cycleway",
-  -- this means that the suffixed `:backward` and `:forward` are relative to the direction of the bicycle lane itsel
   direction_reference = 'self'
-}
+})
 
 local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
