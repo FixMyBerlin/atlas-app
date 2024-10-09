@@ -501,45 +501,6 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
   end
 })
 
--- Paths which have a surface which is suited for biking
-local bikeSuitableSurface = BikelaneCategory.new({
-  id = 'bikeSuitableSurface',
-  desc = 'Paths which have a surface which is suited for biking.',
-  infrastructureExists = true,
-  implicitOneWay = false, -- path shared, both lanes
-  condition = function(tags)
-    if tags.surface ~= 'asphalt' then
-      return false
-    end
-    if not Set({'path', 'track'})[tags.highway] then
-      return false
-    end
-    local smoothness = DeriveSmoothness(tags).smoothness
-    if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
-      return false
-    end
-    return true
-  end
-})
-
--- Ways which have no motorized vehicle access
-local bikeSuitableNoVehicle = BikelaneCategory.new({
-  id = 'bikeSuitableNoVehicle',
-  desc = 'Ways which have a surface which have no vehicle access except bicycles.',
-  infrastructureExists = true,
-  implicitOneWay = false, -- road shared, both lanes
-  condition = function(tags)
-    if not PathClasses[tags.highway] then
-      return false
-    end
-    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if not (ContainsSubstring(traffic_sign, '260') or ContainsSubstring(traffic_sign, '250') or tags.motorized_vehicles == 'no')then
-      return false
-    end
-    return true
-  end
-})
-
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
 local needsClarification = BikelaneCategory.new({
@@ -562,20 +523,6 @@ local needsClarification = BikelaneCategory.new({
   end
 })
 
--- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
--- They are in OSM, but they need to be improved, which we show in the UI.
-local sharedLaneNoOvertaking = BikelaneCategory.new({
-  id = 'sharedLaneNoOvertaking',
-  desc = 'Shared lane with over taking prohibition for motorized vehicles.',
-  infrastructureExists = true,
-  implicitOneWay = true, -- lane-like
-  condition = function(tags)
-    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if ContainsSubstring(traffic_sign, "DE:277.1") then
-      return true
-    end
-  end
-})
 -- The order specifies the precedence; first one with a result win.
 local categoryDefinitions = {
   dataNo,
@@ -609,10 +556,7 @@ local categoryDefinitions = {
   footwayBicycleYes_isolated,
   footwayBicycleYes_adjoiningOrIsolated,
   -- Needs to be last
-  needsClarification,
-  bikeSuitableSurface,
-  bikeSuitableNoVehicle,
-  sharedLaneNoOvertaking
+  needsClarification
 }
 
 function CategorizeBikelane(tags)
