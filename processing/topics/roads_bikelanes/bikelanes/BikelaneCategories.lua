@@ -510,6 +510,14 @@ local needsClarification = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
+      -- hack: because `cyclewayBetweenLanes` is now detected on the `self` object we need to filter out the right side here
+      -- to fix this we would need to double classify objects
+    if tags._side == 'right' then
+      if (ContainsSubstring(tags['cycleway:lanes'], "|lane|") or
+        ContainsSubstring(tags['bicycle:lanes'], "|designated|")) then
+        return false
+      end
+    end
     if tags.cycleway == "shared" then
       return true
     end
