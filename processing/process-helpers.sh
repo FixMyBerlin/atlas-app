@@ -83,8 +83,12 @@ run_dir() {
     if [ "$COMPUTE_DIFFS" == 1 ]; then
       if [ -f "$processed_tables" ]; then
         for table in $(cat $processed_tables); do # iterate over tables from last run
-          psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
-          psql -q -c "ALTER TABLE public.\"$table\" SET SCHEMA backup;"
+          if grep $table $backedup_tables && ["$FREEZE_DATA" == 1] then
+            log "Skipping $table because it is already backed up (FREEZE_DATA=1)"
+          else
+            psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
+            psql -q -c "ALTER TABLE public.\"$table\" SET SCHEMA backup;"
+          fi
         done
         cp $processed_tables $backedup_tables
       fi
@@ -110,19 +114,7 @@ run_dir() {
         else
           log "$table got deleted."
         fi
-        if [ "$FREEZE_DATA" == 1 ]; then
-          psql -q -c "DROP TABLE \"${table}\";"
-          psql -q -c "ALTER TABLE backup.\"${table}\" SET SCHEMA public";"
-        else
-          psql -q -c "DROP TABLE backup.\"${table}\";"
-        fi
       done
-      if [ "$FREEZE_DATA" == 1 ]; then
-        log "Restored data (.env 'FREEZE_DATA=1')"
-        mv -f $backedup_tables $processed_tables
-      else
-        rm $backedup_tables
-      fi
       log_end "Compute Diffs"
     fi
   fi
