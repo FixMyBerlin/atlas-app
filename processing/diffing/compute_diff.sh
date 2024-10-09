@@ -7,9 +7,9 @@ psql -q -f /processing/diffing/JSONDiff.sql &> /dev/null
 
 # (private function used by run_dir)
 compute_diff() {
-  backup_table=backup.\"$1\"
-  table=\"$1\"
-  diff_table=$1_diff
+  backup_table="backup.\"$1\""
+  table="public.\"$1\""
+  diff_table="$1_diff"
 
   psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";" &> /dev/null
 
@@ -24,8 +24,8 @@ compute_diff() {
         jsonb_diff($backup_table.tags, $table.tags) AS tags,
         $table.id, $table.meta, $table.geom
       FROM $table
-      JOIN backup_table
-        ON $table.id = backup_table.id
+      JOIN $backup_table
+        ON $table.id = $backup_table.id
     ) sq
     WHERE tags != '{}'::jsonb;
     UPDATE  \"$diff_table\" SET tags = tags || '{\"CHANGE\": \"modified\"}'::jsonb;
@@ -41,9 +41,9 @@ compute_diff() {
         $table.meta,
         $table.geom
       FROM $table
-      FULL OUTER JOIN backup_table
-        ON $table.id = backup_table.id
-      WHERE backup_table.id IS NULL;
+      FULL OUTER JOIN $backup_table
+        ON $table.id = $backup_table.id
+      WHERE $backup_table.id IS NULL;
     UPDATE  added_rows SET tags = tags || '{\"CHANGE\": \"added\"}'::jsonb;
     SELECT count(*) FROM added_rows;
     INSERT INTO \"$diff_table\" SELECT $columns FROM added_rows;"
@@ -53,13 +53,13 @@ compute_diff() {
   query="
     CREATE TEMP TABLE deleted_rows AS
       SELECT
-        jsonb_prefix_values(backup_table.tags, '(-)') || jsonb_build_object('CHANGE', 'deleted') as tags,
-        backup_table.id,
-        backup_table.meta,
-        backup_table.geom
-      FROM backup_table
+        jsonb_prefix_values($backup_table.tags, '(-)') || jsonb_build_object('CHANGE', 'deleted') as tags,
+        $backup_table.id,
+        $backup_table.meta,
+        $backup_table.geom
+      FROM $backup_table
       FULL OUTER JOIN $table
-        ON backup_table.id = $table.id
+        ON $backup_table.id = $table.id
       WHERE $table.id IS NULL;
     UPDATE  deleted_rows SET tags = tags || '{\"CHANGE\": \"deleted\"}'::jsonb;
     SELECT count(*) FROM deleted_rows;
