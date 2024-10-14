@@ -1,4 +1,5 @@
 import { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import SocialSharingImage from 'src/app/_components/layouts/assets/og-image-default.jpg'
 import { BlitzProvider } from 'src/blitz-client'
 import './_components/layouts/global.css'
@@ -43,7 +44,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="de" className="h-full">
       <body className="flex min-h-full w-full text-gray-800 antialiased">
         <BlitzProvider>
-          <div className="relative flex-auto">{children}</div>
+          <Suspense>
+            <div className="relative flex-auto">{children}</div>
+          </Suspense>
         </BlitzProvider>
         <TailwindResponsiveHelper />
       </body>
