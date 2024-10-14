@@ -61,7 +61,7 @@ local noMotorizedVehicle = BikeSuitability.new({
       return false
     end
     local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if not (ContainsSubstring(traffic_sign, '260') or ContainsSubstring(traffic_sign, '250') or tags.motorized_vehicles == 'no')then
+    if not (ContainsSubstring(traffic_sign, '260') or ContainsSubstring(traffic_sign, '250') or tags.motor_vehicle == 'no')then
       return false
     end
     return true
