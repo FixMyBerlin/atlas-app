@@ -1,8 +1,8 @@
 describe("Bikelanes", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/?.lua"
-require("osm2pgsql")
-require("Bikelanes")
+  require("osm2pgsql")
+  require("Bikelanes")
 
   describe('Handle `width`:', function()
     it('handels width on centerline', function()
