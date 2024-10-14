@@ -36,6 +36,40 @@ describe("Bikelanes", function()
       assert.are.equal(result[1].width, 5)
     end)
 
+    it('Categories for "angstweiche"', function()
+      local input_object = {
+        tags = {
+          highway = 'tertiary',
+          ['cycleway:right'] = 'lane',
+          ['cycleway:right:lane'] = 'exclusive',
+          ['cycleway:lanes'] = 'no|no|no|lane|no|lane',
+          ['cycleway:right:traffic_sign'] = 'DE:237'
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      for _, v in pairs(result) do
+        if v._side == 'self' then
+          assert.are.equal(v.category, "cyclewayOnHighwayBetweenLanes")
+        end
+        if v._side == 'right' and v.prefix == 'cycleway' then
+          assert.are.equal(v.category, "cyclewayOnHighway_exclusive")
+        end
+      end
+      -- same test but with `bicycle:lanes`
+      input_object['cycleway:lanes'] = nil
+      input_object['bicycle:lanaes'] = 'no|no|no|designated|no|designated'
+      local result = Bikelanes(input_object)
+      for _, v in pairs(result) do
+        if v._side == 'self' then
+          assert.are.equal(v.category, "cyclewayOnHighwayBetweenLanes")
+        end
+        if v._side == 'right' and v.prefix == 'cycleway' then
+          assert.are.equal(v.category, "cyclewayOnHighway_exclusive")
+        end
+      end
+    end)
     it('handels nested width on paths', function()
       local input_object = {
         tags = {
