@@ -135,7 +135,7 @@ function GetTransformedObjects(tags, transformations)
         -- this condition checks if we acutally projected something
         if newObj._infix ~= nil then
           if transformation.filter(newObj) then
-            convertDirectedTags(newObj, transformation)
+            convertDirectedTags(newObj, transformation.direction_reference)
             table.insert(results, newObj)
           end
         end
