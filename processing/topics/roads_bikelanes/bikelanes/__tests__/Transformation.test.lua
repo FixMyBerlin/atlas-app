@@ -31,36 +31,36 @@ describe("Bikelanes", function()
       results = GetTransformedObjects(input_tags, {})
       assert.are.equal(nil, results[1].traffic_sign)
     end)
-  end)
 
-  it('traffic_sign on sidewalks', function()
-    local traffic_sign = 'DE:237'
-    local input_tags = {
-        highway = 'primary',
-        ['sidewalk:left:traffic_sign:backward'] = traffic_sign,
-    }
-    local results = GetTransformedObjects(input_tags, {footwayTransformation})
-    for _, v in pairs(results) do
-      if v._side == 'left' then
-        assert.are.equal(traffic_sign, v.traffic_sign)
-      else
-        assert.are.equal(nil, v.traffic_sign)
+    it('traffic_sign on sidewalks', function()
+      local traffic_sign = 'DE:237'
+      local input_tags = {
+          highway = 'primary',
+          ['sidewalk:left:traffic_sign:backward'] = traffic_sign,
+      }
+      local results = GetTransformedObjects(input_tags, {footwayTransformation})
+      for _, v in pairs(results) do
+        if v._side == 'left' then
+          assert.are.equal(traffic_sign, v.traffic_sign)
+        else
+          assert.are.equal(nil, v.traffic_sign)
+        end
       end
-    end
-  end)
-  it('traffic_sign on bikelanes', function()
-    local traffic_sign = 'DE:237'
-    local input_tags = {
-        highway = 'primary',
-        ['cycleway:left:traffic_sign:forward'] = traffic_sign,
-    }
-    local results = GetTransformedObjects(input_tags, {cyclewayTransformation})
-    for _, v in pairs(results) do
-      if v._side == 'left' then
-        assert.are.equal(traffic_sign, v.traffic_sign)
-      else
-        assert.are.equal(nil, v.traffic_sign)
+    end)
+    it('traffic_sign on bikelanes', function()
+      local traffic_sign = 'DE:237'
+      local input_tags = {
+          highway = 'primary',
+          ['cycleway:left:traffic_sign:forward'] = traffic_sign,
+      }
+      local results = GetTransformedObjects(input_tags, {cyclewayTransformation})
+      for _, v in pairs(results) do
+        if v._side == 'left' then
+          assert.are.equal(traffic_sign, v.traffic_sign)
+        else
+          assert.are.equal(nil, v.traffic_sign)
+        end
       end
-    end
+    end)
   end)
 end)
