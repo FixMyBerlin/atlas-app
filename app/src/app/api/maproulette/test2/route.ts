@@ -31,6 +31,7 @@ export async function GET(
     })
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     return new Response('Bad Request', { status: 200 })
   }
 
@@ -175,8 +176,7 @@ TODO
     })
   } catch (e) {
     if (!isProd) throw e
-    return new Response('Internal Server Error', {
-      status: 500,
-    })
+    console.error(e)
+    return new Response('Internal Server Error', { status: 500 })
   }
 }

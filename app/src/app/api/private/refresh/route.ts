@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
     params = RefreshSchema.parse(Object.fromEntries(url.searchParams.entries()))
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     return NextResponse.json({ message: 'Bad Request' }, { status: 400 })
   }
 
@@ -28,6 +29,8 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
+    if (!isProd) throw e
+    console.error(e)
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
   }
 }

@@ -124,8 +124,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     })
   } catch (e) {
     if (!isProd) throw e
-    return new Response('Internal Server Error', {
-      status: 500,
-    })
+    console.error(e)
+    return new Response('Internal Server Error', { status: 500 })
   }
 }

@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     params = ExportSchema.parse(req.query)
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(400).send('Bad Request')
     return
   }
@@ -95,6 +96,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.send(binaryResponse[0]?.['data'])
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(500).send('Internal Server Error')
   }
 }

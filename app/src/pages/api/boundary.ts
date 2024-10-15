@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     params = BoundarySchema.parse(req.query)
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(400).send('Bad Request')
     return
   }
@@ -42,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.json(boundary?.at(0)?.geom)
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(500).send('Internal Server Error')
   }
 }
