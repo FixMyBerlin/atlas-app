@@ -11,7 +11,7 @@ import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,
 } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
-import { TableId } from 'src/tables.const'
+import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number
