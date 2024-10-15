@@ -20,6 +20,10 @@ const ExportSchema = z.object({
   maxlat: z.coerce.number().default(52.3),
 })
 
+// Handle Warning/Error "API Routes Response Size Limited to 4MB"
+// Docs https://nextjs.org/docs/messages/api-routes-response-size-limit#possible-ways-to-fix-it
+export const config = { api: { responseLimit: false } }
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   let params: z.infer<typeof ExportSchema>
   try {
