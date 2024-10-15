@@ -77,7 +77,7 @@ export default function AdminMembershipsPage() {
                     <ul>
                       {user?.Membership?.map((membership) => {
                         return (
-                          <li key={membership.id} className="list-item list-disc ">
+                          <li key={membership.id} className="list-item list-disc">
                             <div className="flex justify-between">
                               <Link blank href={`/regionen/${membership.region.slug}`}>
                                 {membership.region.slug}

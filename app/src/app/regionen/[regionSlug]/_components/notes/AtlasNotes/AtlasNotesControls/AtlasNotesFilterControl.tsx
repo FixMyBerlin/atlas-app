@@ -190,7 +190,7 @@ export const AtlasNotesFilterControl = () => {
                 <MagnifyingGlassIcon className="size-5 text-gray-700" aria-hidden="true" />
               </button>
               <button
-                className="flex size-7 items-center justify-center rounded-md border border-white hover:border-gray-300  hover:bg-yellow-100 hover:shadow-sm"
+                className="flex size-7 items-center justify-center rounded-md border border-white hover:border-gray-300 hover:bg-yellow-100 hover:shadow-sm"
                 onClick={(e) => handleMenuClick(e, { query: undefined })}
               >
                 <XMarkIcon className="size-5 text-gray-400" aria-hidden="true" />

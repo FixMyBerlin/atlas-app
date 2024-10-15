@@ -1,4 +1,4 @@
-import { LineString } from '@turf/turf'
+import { LineString } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { Markdown } from 'src/app/_components/text/Markdown'
 import {

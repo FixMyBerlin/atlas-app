@@ -1,4 +1,4 @@
-import * as turf from '@turf/turf'
+import { feature, featureCollection } from '@turf/turf'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 
@@ -10,7 +10,7 @@ export const SourceLayerFeature = () => {
     <Source
       id="geometry_from_inspector"
       type="geojson"
-      data={turf.featureCollection([turf.feature(osmNewNoteFeature.geometry)])}
+      data={featureCollection([feature(osmNewNoteFeature.geometry)])}
     >
       <Layer
         id="osm_notes_new_map_geometry_area"

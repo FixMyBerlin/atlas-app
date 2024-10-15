@@ -1,7 +1,7 @@
 import { Prisma } from '@prisma/client'
 import { Sql } from '@prisma/client/runtime/library'
-import * as turf from '@turf/turf'
-import { LineString } from '@turf/turf'
+import { feature, featureCollection, truncate } from '@turf/turf'
+import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import { osmTypeIdString } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
@@ -112,12 +112,12 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         }).replaceAll('\n', ' \n'),
       }
       // Create feature and also shorten lat/lng values to 8 digits
-      return turf.truncate(turf.feature(geometry, properties), { precision: 8 })
+      return truncate(feature(geometry, properties), { precision: 8 })
     })
 
     // RESPONSE
-    const featureCollection = turf.featureCollection(features)
-    return Response.json(featureCollection, {
+    const featureCollectionData = featureCollection(features)
+    return Response.json(featureCollectionData, {
       headers: {
         'Content-Disposition': `attachment; filename="maproulette_${projectKey}.geojson"`,
       },

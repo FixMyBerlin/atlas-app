@@ -11,6 +11,7 @@ import {
   simplify,
 } from '@turf/turf'
 import chalk from 'chalk'
+import { Feature, MultiPolygon, Polygon } from 'geojson'
 import path from 'node:path'
 import { getBoundaryExportApiBaseUrl } from 'src/app/_components/utils/getExportApiUrl'
 import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
@@ -88,9 +89,15 @@ const createBoundaryFeature = (geojson, ids: string, region: string) => {
   return result
 }
 
-const createBufferFeature = (boundaryPoly, ids: string, region: string) => {
-  const { geometry: bufferedPoly } = buffer(boundaryPoly, 10, { units: 'kilometers' })
-  const result = geoJsonResultSchema.parse(feature(bufferedPoly, { kind: 'buffer', ids, region }))
+const createBufferFeature = (
+  boundaryPoly: ReturnType<typeof createBoundaryFeature>,
+  ids: string,
+  region: string,
+) => {
+  const bufferedFeature = buffer(boundaryPoly, 10, { units: 'kilometers' })!
+  const result = geoJsonResultSchema.parse(
+    feature(bufferedFeature.geometry, { kind: 'buffer', ids, region }),
+  )
   return result
 }
 
@@ -109,7 +116,12 @@ const createMaskFeature = (featureToCutOut: ReturnType<typeof createBufferFeatur
     featureToCutOut.properties, // those will be added to the returning feature
   )
 
-  const mask = difference(germanyBboxPolygon, featureToCutOut)
+  const mask = difference(
+    featureCollection([
+      germanyBboxPolygon as Feature<Polygon | MultiPolygon>,
+      featureToCutOut as Feature<Polygon | MultiPolygon>,
+    ]),
+  )
   const result = geoJsonResultSchema.parse(mask)
   return result
 }

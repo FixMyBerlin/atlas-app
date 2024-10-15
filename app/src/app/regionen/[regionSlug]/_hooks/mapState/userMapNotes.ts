@@ -1,4 +1,4 @@
-import * as turf from '@turf/turf'
+import { featureCollection } from '@turf/turf'
 import type { FeatureCollection, Geometry, Point } from 'geojson'
 import { create } from 'zustand'
 import { OsmTypeIdNonNull } from '../../_components/SidebarInspector/Tools/osmUrls/extractOsmTypeIdByConfig'
@@ -21,7 +21,7 @@ type StoreOsmNewNoteFeature = {
 const useMapNotes = create<Store>((set) => {
   return {
     // Data for <Inspector> AND <SourcesLayersOsmNotes>
-    osmNotesFeatures: turf.featureCollection([]),
+    osmNotesFeatures: featureCollection([]),
     // Data for <OsmNotesNew>
     osmNewNoteFeature: undefined,
 

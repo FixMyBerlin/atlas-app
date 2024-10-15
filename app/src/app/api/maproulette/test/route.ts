@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
-import * as turf from '@turf/turf'
-import { LineString } from '@turf/turf'
+import { feature, featureCollection, truncate } from '@turf/turf'
+import { LineString } from 'geojson'
 import { NextRequest } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import {
@@ -98,7 +98,7 @@ TODO
       }
 
       // Create feature and also shorten lat/lng values to 8 digits
-      const feature = turf.truncate(turf.feature(geometry, properties), { precision: 8 })
+      const featureData = truncate(feature(geometry, properties), { precision: 8 })
 
       const maprouletteCooperativeWork = {
         meta: {
@@ -122,9 +122,9 @@ TODO
           },
         ],
       }
-      const featureCollection = turf.featureCollection([feature], { id: idString })
-      featureCollection['cooperativeWork'] = maprouletteCooperativeWork
-      return featureCollection
+      const featureCollectionData = featureCollection([featureData], { id: idString })
+      featureCollectionData['cooperativeWork'] = maprouletteCooperativeWork
+      return featureCollectionData
     })
 
     // RESPONSE

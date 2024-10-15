@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import * as turf from '@turf/turf'
-import { LineString } from '@turf/turf'
+import { LineString } from 'geojson'
 import { NextRequest } from 'next/server'
 import { isProd } from 'src/app/_components/utils/isEnv'
 import {
