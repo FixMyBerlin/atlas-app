@@ -23,9 +23,9 @@ const MaprouletteSchema = z
 // Berlin http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62422
 // Germany http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=51477 https://www.openstreetmap.org/relation/51477
 export async function GET(request: NextRequest, { params }: { params: { projectKey: string } }) {
-  const searchParams = request.nextUrl.searchParams
+  const rawSearchParams = request.nextUrl.searchParams
   const parsedParams = MaprouletteSchema.safeParse({
-    ids: searchParams.getAll('ids'),
+    ids: rawSearchParams.getAll('ids'),
     projectKey: params.projectKey,
   })
 
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       {
         error: 'Invalid input',
         info: '`?ids=62504&ids=62422` has to be an OSM Relation ID. Use https://hanshack.com/geotools/gimmegeodata/ to find IDs, but not all boundaries are present in atlas.',
-        ...parsedParams,
+        ...(parsedParams.success === false ? parsedParams.error : parsedParams.data),
       },
       { status: 404 },
     )
@@ -123,8 +123,13 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       },
     })
   } catch (e) {
-    if (!isProd) throw e
-    console.error(e)
-    return new Response('Internal Server Error', { status: 500 })
+    if (isProd) console.error(e)
+    return Response.json(
+      {
+        error: 'Internal Server Error',
+        info: isProd ? undefined : e,
+      },
+      { status: 500 },
+    )
   }
 }

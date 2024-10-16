@@ -138,8 +138,13 @@ TODO
       },
     })
   } catch (e) {
-    if (!isProd) throw e
-    console.error(e)
-    return new Response('Internal Server Error', { status: 500 })
+    if (isProd) console.error(e)
+    return Response.json(
+      {
+        error: 'Internal Server Error',
+        info: isProd ? undefined : e,
+      },
+      { status: 500 },
+    )
   }
 }
