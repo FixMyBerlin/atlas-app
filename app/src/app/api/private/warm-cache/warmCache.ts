@@ -1,3 +1,4 @@
+import { padStart } from 'lodash'
 import { URL } from 'node:url'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
@@ -34,6 +35,9 @@ function bbox2Tiles(
   return { minX, maxX, minY, maxY }
 }
 
+function tileFactor(zoomDelta: number) {
+  return (Math.pow(4, zoomDelta) - 1) / 3
+}
 export async function warmCache(
   {
     min: [minLng, minLat],
@@ -46,38 +50,28 @@ export async function warmCache(
   maxZoom: number,
   tables: TableId[],
 ): Promise<void> {
-  const zoomDelta = maxZoom - minZoom + 1
   const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, minZoom)
-  const tileFactor = (Math.pow(4, zoomDelta) - 1) / 3
-  let tilesOnLevel = (maxX - minX + 1) * (maxY - minY + 1)
-  const tilesTotal = tilesOnLevel * tileFactor
-  console.log(`Warming cache for ${zoomDelta} zoom levels`)
-  console.log(`Upper bound for tiles is ${tilesTotal}`)
+  const nTilesTopLevel = (maxX - minX + 1) * (maxY - minY + 1)
+  const nTilesTotal = nTilesTopLevel * tileFactor(maxZoom - minZoom + 1)
 
+  let nTilesLevel = nTilesTopLevel
   for (let z = minZoom; z <= maxZoom; z++) {
     const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, z)
-    const tilesDiff = tilesOnLevel - (maxX - minX + 1) * (maxY - minY + 1)
-    console.log(
-      `Zoom level ${z}: Skipping ${tilesDiff} tiles, because they are not inside the given bbox`,
-    )
     for (let x = minX; x <= maxX; x++) {
       for (let y = minY; y <= maxY; y++) {
-        const responses = await Promise.all(
+        await Promise.all(
           tables.map((tableId) => {
             const tileUrl = new URL(
               `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
             )
-            // console.log(tileUrl.toString())
             return fetch(tileUrl.toString(), { method: 'HEAD' })
           }),
         )
-        // console.log(responses)
-        responses.map((response) => {
-          console.log(response.url)
-          console.log(response.headers.get('x-cache-status'))
-        })
       }
     }
-    tilesOnLevel = (maxX - minX + 1) * (maxY - minY + 1) * 4
+    const nTilesSkipped = padStart(`${nTilesLevel - (maxX - minX + 1) * (maxY - minY + 1)}`, 2)
+    const nTilesWarmed = padStart(`${nTilesTopLevel * tileFactor(z - minZoom + 1)}`, 2)
+    console.log(`   Warmed ${nTilesWarmed}/${nTilesTotal} tiles (${nTilesSkipped} skipped)`)
+    nTilesLevel *= 4
   }
 }
