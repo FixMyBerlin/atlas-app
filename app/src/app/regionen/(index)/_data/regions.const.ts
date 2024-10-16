@@ -183,6 +183,11 @@ export const staticRegion: StaticRegion[] = [
       'parkraumkarte_neukoelln',
     ],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 8,
+      maxZoom: 10,
+      tables: ['bikelanes'],
+    },
   },
   {
     slug: 'parkraum-berlin',
