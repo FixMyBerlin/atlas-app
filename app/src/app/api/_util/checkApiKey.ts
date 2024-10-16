@@ -19,7 +19,7 @@ export const parseData = (body, Schema) => {
 
 export const checkApiKey = (data: Request | Record<string, any>) => {
   if (process.env.NODE_ENV === 'development') {
-    return { ok: true, errorResponse: null }
+    return { ok: true as const, errorResponse: null }
   }
 
   let apiKey: string | null
@@ -32,10 +32,10 @@ export const checkApiKey = (data: Request | Record<string, any>) => {
   }
 
   if (apiKey === process.env.ATLAS_API_KEY) {
-    return { ok: true, errorResponse: null }
+    return { ok: true as const, errorResponse: null }
   } else {
     return {
-      ok: false,
+      ok: false as const,
       errorResponse: Response.json({ statusText: 'Unauthorized' }, { status: 401 }),
     }
   }
