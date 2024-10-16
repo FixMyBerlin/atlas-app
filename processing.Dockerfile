@@ -25,14 +25,6 @@ RUN apt update && \
   apt install -y osm2pgsql osmium-tool wget curl && \
   apt upgrade -y
 
-# install node
-RUN apt-get install -y nodejs npm
-
-WORKDIR /processing/warm-cache
-COPY warm-cache/package*.json .
-RUN cd /processing/warm-cache && npm install
-COPY warm-cache/util.js .
-COPY warm-cache/warmCache.js .
 
 WORKDIR /processing
 # 'data' folder is root
