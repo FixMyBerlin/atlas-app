@@ -1,4 +1,5 @@
 import { URL } from 'node:url'
+import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
 import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
@@ -64,7 +65,7 @@ export async function warmCache(
         const responses = await Promise.all(
           tables.map((tableId) => {
             const tileUrl = new URL(
-              `http://staging-tiles.radverkehrsatlas.de/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
+              `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
             )
             // console.log(tileUrl.toString())
             return fetch(tileUrl.toString(), { method: 'HEAD' })
