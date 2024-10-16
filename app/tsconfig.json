@@ -2,8 +2,11 @@
   "compilerOptions": {
     "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    // Note: No `baseUrl`, just the `paths`
-    // We need to specify this explicitly, so that Vitest can pick it up and work
+    // We used to hav only `baseUrl` without `paths` and use the Vitest `vite-tsconfig-paths` plugin
+    // That broke with Vitest 2. Just using the `paths` fixes this.
+    // However, that breaks our bun scripts like updateStaticDatasets.
+    // So now we have both but all imports use the `paths` syntax.
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./*"]
     },
