@@ -61,7 +61,7 @@ notify() {
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
   local url="$SYNOLOGY_URL$SYNOLOGY_LOG_TOKEN"
-  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
+  curl ---silent --show-error --fail -X POST $url -d "payload=$payload" --output "/dev/null"
 }
 
 alert() {
@@ -70,5 +70,5 @@ alert() {
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
   local url="$SYNOLOGY_URL$SYNOLOGY_ERROR_LOG_TOKEN"
-  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
+  curl --silent --show-error --fail -X POST $url -d "payload=$payload" --output "/dev/null"
 }

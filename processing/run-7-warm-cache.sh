@@ -14,7 +14,7 @@ else
   log "Flush Cache"
   rm -rf /var/cache/nginx/*
   log "Warm Cache"
-  curl -X GET "http://app:4000/api/private/warm-cache?apiKey=$ATLAS_API_KEY" &> /dev/null
+  curl --silent --show-error --fail -X GET "http://app:4000/api/private/warm-cache?apiKey=$ATLAS_API_KEY" --output "/dev/null"
 fi
 
 log_end "$0"
