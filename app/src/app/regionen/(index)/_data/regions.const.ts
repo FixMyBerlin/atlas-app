@@ -183,11 +183,6 @@ export const staticRegion: StaticRegion[] = [
       'parkraumkarte_neukoelln',
     ],
     notes: 'osmNotes',
-    cacheWarming: {
-      minZoom: 8,
-      maxZoom: 10,
-      tables: ['bikelanes'],
-    },
   },
   {
     slug: 'parkraum-berlin',
@@ -502,6 +497,21 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 8,
+      maxZoom: 11,
+      // TODO: extend to allow joined tables
+      tables: [
+        'bikelanes',
+        'roads',
+        'poiClassification',
+        'roadsPathClasses',
+        'publicTransport',
+        'landuse',
+        'places',
+        'landuse',
+      ],
+    },
   },
   {
     name: 'Brandenburg Beteiligung',
@@ -695,7 +705,7 @@ export const staticRegion: StaticRegion[] = [
     cacheWarming: {
       minZoom: 5,
       maxZoom: 8,
-      tables: ['bikelanes', 'roads', 'roadsPathClasses'],
+      tables: ['bikelanes'],
     },
   },
   {
