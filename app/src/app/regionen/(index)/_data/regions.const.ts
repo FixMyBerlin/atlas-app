@@ -692,6 +692,11 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 5,
+      maxZoom: 8,
+      tables: ['bikelanes', 'roads', 'roadsPathClasses'],
+    },
   },
   {
     slug: 'testing',
