@@ -33,24 +33,12 @@ export async function GET(
     maxlon: rawSearchParams.get('maxlon'),
     maxlat: rawSearchParams.get('maxlat'),
   })
-  console.log(
-    'iii',
-    {
-      regionSlug: params.regionSlug,
-      tableName: params.tableName,
-      apiKey: rawSearchParams.get('apiKey'),
-      minlon: rawSearchParams.get('minlon'),
-      minlat: rawSearchParams.get('minlat'),
-      maxlon: rawSearchParams.get('maxlon'),
-      maxlat: rawSearchParams.get('maxlat'),
-    },
-    parsedParams,
-    parsedParams.error,
-  )
 
   // VALIDATE PARAMS
   if (parsedParams.success === false) {
-    return NextResponse.json({ error: 'Invalid input', ...parsedParams.error }, { status: 400 })
+    const error = { error: 'Invalid input', ...parsedParams.error }
+    console.error(error) // Log files
+    return NextResponse.json(error, { status: 400 })
   }
   const { regionSlug, tableName, apiKey, minlon, minlat, maxlon, maxlat } = parsedParams.data
 
@@ -116,12 +104,12 @@ export async function GET(
         'Content-Length': String(binaryResponse?.data?.byteLength),
       },
     })
-  } catch (e) {
-    if (isProd) console.error(e)
+  } catch (error) {
+    console.error(error) // Log files
     return Response.json(
       {
         error: 'Internal Server Error',
-        info: isProd ? undefined : e,
+        info: isProd ? undefined : error,
       },
       { status: 500 },
     )
