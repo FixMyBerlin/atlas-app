@@ -14,7 +14,7 @@ else
   log "Flush Cache"
   rm -rf /var/cache/nginx/*
   log "Warm Cache"
-  node /processing/warm-cache/warmCache.js --config=/processing/warm-cache/config.json
+  curl -X GET "http://app:4000/api/private/warm-cache?apiKey=$ATLAS_API_KEY" &> /dev/null
 fi
 
 log_end "$0"
