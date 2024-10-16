@@ -1,4 +1,4 @@
-import { bikelanesPresenceColors } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes_plus_presence.const'
+import { bikelanesPresenceColors } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { TagsTableRow, TagsTableRowProps } from '../TagsTableRow'
 import { ValueDisclosure, ValueDisclosureButton, ValueDisclosurePanel } from '../ValueDisclosure'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'

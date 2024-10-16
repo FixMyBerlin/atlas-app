@@ -1,8 +1,8 @@
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { useBackgroundParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
+import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { ArrowTopRightOnSquareIcon, MapIcon } from '@heroicons/react/24/outline'
 import React from 'react'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
-import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { sourcesBackgroundsRaster } from '../../_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { replaceZxy } from './utils/replaceZxy'
 

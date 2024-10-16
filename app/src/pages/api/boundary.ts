@@ -1,7 +1,7 @@
+import { isProd } from '@/src/app/_components/utils/isEnv'
+import { geoDataClient } from '@/src/prisma-client'
 import { Prisma } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { isProd } from 'src/app/_components/utils/isEnv'
-import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 
 const idType = z.coerce.bigint().positive()

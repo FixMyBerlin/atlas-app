@@ -1,4 +1,4 @@
-import db from 'db'
+import db from '@/db'
 import { checkApiKey } from '../_util/checkApiKey'
 
 export async function GET(request: Request) {

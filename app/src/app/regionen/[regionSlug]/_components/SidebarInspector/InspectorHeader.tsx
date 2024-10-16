@@ -1,4 +1,4 @@
-import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
+import { CloseButton } from '@/src/app/_components/CloseButton/CloseButton'
 import { twJoin } from 'tailwind-merge'
 
 type Props = {

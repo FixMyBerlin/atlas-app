@@ -1,7 +1,7 @@
+import { Spinner } from '@/src/app/_components/Spinner/Spinner'
+import { useSelectedFeatures } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { Suspense, useRef } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { useSelectedFeatures } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useFeaturesParam/useSelectedFeatures'
 import { twJoin } from 'tailwind-merge'
 import useResizeObserver from 'use-resize-observer'
 import {

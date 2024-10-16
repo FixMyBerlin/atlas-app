@@ -1,4 +1,4 @@
-import { Link } from 'src/app/_components/links/Link'
+import { Link } from '@/src/app/_components/links/Link'
 import { InspectorFeature } from '../Inspector'
 
 type Props = {

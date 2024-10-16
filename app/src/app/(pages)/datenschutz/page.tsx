@@ -1,9 +1,9 @@
+import { TableOfContents } from '@/src/app/(pages)/_components/TableOfContents/TableOfContents'
+import { TocHashLink } from '@/src/app/(pages)/_components/TableOfContents/types'
+import { Link } from '@/src/app/_components/links/Link'
+import { LinkMail } from '@/src/app/_components/links/LinkMail'
+import { LinkTel } from '@/src/app/_components/links/LinkTel'
 import { Metadata } from 'next'
-import { TableOfContents } from 'src/app/(pages)/_components/TableOfContents/TableOfContents'
-import { TocHashLink } from 'src/app/(pages)/_components/TableOfContents/types'
-import { Link } from 'src/app/_components/links/Link'
-import { LinkMail } from 'src/app/_components/links/LinkMail'
-import { LinkTel } from 'src/app/_components/links/LinkTel'
 
 export const metadata: Metadata = {
   robots: 'noindex',

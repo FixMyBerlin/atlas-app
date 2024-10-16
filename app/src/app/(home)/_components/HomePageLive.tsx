@@ -1,5 +1,5 @@
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import Image, { StaticImageData } from 'next/image'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import screenshotBiBi from './assets/HomePageLive/bibi.jpg'
 import screenshotTrTo from './assets/HomePageLive/trto.jpg'
 import screenshotNudafa from './assets/HomePageLive/zes.jpg'

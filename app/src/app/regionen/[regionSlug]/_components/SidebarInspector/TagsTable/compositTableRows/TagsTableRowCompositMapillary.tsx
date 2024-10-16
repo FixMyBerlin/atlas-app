@@ -1,4 +1,4 @@
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { mapillaryKeyUrl } from '../../Tools/osmUrls/osmUrls'
 import { TagsTableRow } from '../TagsTableRow'
 import { CompositTableRow } from './types'

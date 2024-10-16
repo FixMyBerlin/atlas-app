@@ -1,6 +1,6 @@
+import { getOsmUrl } from '@/src/app/_components/utils/getOsmUrl'
 import { format, subYears } from 'date-fns'
 import { Point } from 'geojson'
-import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
 import { EditorUrlGeometry, editorUrl } from './editorUrl'
 import { OsmTypeId } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'

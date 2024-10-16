@@ -1,5 +1,5 @@
+import { useStartUserLogin } from '@/src/users/hooks/useStartUserLogin'
 import { UserIcon } from '@heroicons/react/24/outline'
-import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
 
 export const UserLoggedOut = () => {
   const handleLogin = useStartUserLogin()

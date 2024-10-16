@@ -1,5 +1,5 @@
+import { CurrentUser } from '@/src/users/queries/getCurrentUser'
 import { User } from '@prisma/client'
-import { CurrentUser } from 'src/users/queries/getCurrentUser'
 
 type Props = (Partial<CurrentUser> | Partial<User>) & {
   firstName?: string | null

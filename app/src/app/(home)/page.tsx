@@ -1,7 +1,7 @@
+import { cookieName } from '@/src/users/hooks/cookieName'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { cookieName } from 'src/users/hooks/cookieName'
 import { HomePageCallToAction } from './_components/HomePageCallToAction'
 import { HomePageCompanies } from './_components/HomePageCompanies'
 import { HomePageHero } from './_components/HomePageHero'

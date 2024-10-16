@@ -1,13 +1,13 @@
-import { getSession } from '@blitzjs/auth'
-import db from 'db'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { isProd } from 'src/app/_components/utils/isEnv'
+import db from '@/db'
+import { isProd } from '@/src/app/_components/utils/isEnv'
 import {
   exportApiIdentifier,
   exportFunctionIdentifier,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
-import { api } from 'src/blitz-server'
-import { geoDataClient } from 'src/prisma-client'
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
+import { api } from '@/src/blitz-server'
+import { geoDataClient } from '@/src/prisma-client'
+import { getSession } from '@blitzjs/auth'
+import { NextApiRequest, NextApiResponse } from 'next'
 import { z } from 'zod'
 
 const ExportSchema = z.object({

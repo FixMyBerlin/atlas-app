@@ -2,9 +2,10 @@
   "compilerOptions": {
     "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "baseUrl": ".",
+    // Note: No `baseUrl`, just the `paths`
+    // We need to specify this explicitly, so that Vitest can pick it up and work
     "paths": {
-      // "@foo/*": ["src/*"],
+      "@/*": ["./*"]
     },
     "allowJs": true,
     "skipLibCheck": true,

@@ -1,4 +1,4 @@
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { useRegion } from '../regionUtils/useRegion'

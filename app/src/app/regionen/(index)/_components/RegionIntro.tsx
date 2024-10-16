@@ -1,5 +1,5 @@
+import { TRegion } from '@/src/regions/queries/getRegion'
 import Image from 'next/image'
-import { TRegion } from 'src/regions/queries/getRegion'
 
 type Props = { regions: TRegion[] | undefined }
 

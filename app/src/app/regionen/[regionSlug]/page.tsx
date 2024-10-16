@@ -1,5 +1,5 @@
-import { invoke } from 'src/blitz-server'
-import getRegion from 'src/regions/queries/getRegion'
+import { invoke } from '@/src/blitz-server'
+import getRegion from '@/src/regions/queries/getRegion'
 import { DevMiddlewareHostnameWorkaround } from './_components/DevMiddlewareHostnameWorkaround'
 import { MapInterface } from './_components/MapInterface'
 

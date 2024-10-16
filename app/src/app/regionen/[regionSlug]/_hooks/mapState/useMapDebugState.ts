@@ -1,4 +1,4 @@
-import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
+import { isDev, isStaging } from '@/src/app/_components/utils/isEnv'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware

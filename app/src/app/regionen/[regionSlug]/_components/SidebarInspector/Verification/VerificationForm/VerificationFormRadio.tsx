@@ -1,5 +1,8 @@
+import {
+  TVerificationStatus,
+  verificationStatusOptions,
+} from '@/src/bikelane-verifications/schemas'
 import { useFormContext } from 'react-hook-form'
-import { TVerificationStatus, verificationStatusOptions } from 'src/bikelane-verifications/schemas'
 import { verifiedColor } from '../verifiedColor.const'
 
 type Props = {

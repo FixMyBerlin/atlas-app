@@ -1,7 +1,7 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, Suspense } from 'react'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { twJoin } from 'tailwind-merge'
 import useResizeObserver from 'use-resize-observer'
 import { useMapActions } from '../../_hooks/mapState/useMapState'

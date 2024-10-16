@@ -1,5 +1,5 @@
+import { useStaticRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { createParser, useQueryState } from 'nuqs'
-import { useStaticRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { searchParamsRegistry } from '../searchParamsRegistry'
 import { createMemoizer } from '../utils/createMemoizer'
 import { createFreshCategoriesConfig } from './createFreshCategoriesConfig'

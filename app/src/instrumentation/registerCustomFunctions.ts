@@ -1,4 +1,4 @@
-import { geoDataClient } from 'src/prisma-client'
+import { geoDataClient } from '@/src/prisma-client'
 
 export async function registerCustomFunctions() {
   const queries = geoDataClient.$transaction([

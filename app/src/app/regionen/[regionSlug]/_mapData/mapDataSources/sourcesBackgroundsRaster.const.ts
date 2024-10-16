@@ -1,4 +1,4 @@
-import { MapDataBackgroundSource } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { MapDataBackgroundSource } from '@/src/app/regionen/[regionSlug]/_mapData/types'
 
 export type SourcesRasterIds =
   | 'default'

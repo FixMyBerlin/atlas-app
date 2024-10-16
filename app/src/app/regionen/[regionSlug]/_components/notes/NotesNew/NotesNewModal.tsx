@@ -1,6 +1,6 @@
+import { CloseButton } from '@/src/app/_components/CloseButton/CloseButton'
 import { Dialog, Transition, TransitionChild } from '@headlessui/react'
 import { Fragment, useRef } from 'react'
-import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
 import { useOsmNotesActions } from '../../../_hooks/mapState/userMapNotes'
 import { useNewAtlasNoteMapParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'

@@ -1,8 +1,8 @@
 // We use bun.sh to run this file
 import chalk from 'chalk'
-import { getExportApiBboxUrl } from 'src/app/_components/utils/getExportApiUrl'
-import { StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
-import { SourceExportApiIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
+import { getExportApiBboxUrl } from '@/src/app/_components/utils/getExportApiUrl'
+import { StaticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
+import { SourceExportApiIdentifier } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { tilesetConfigs } from './datasets'
 
 console.log(chalk.inverse.bold('START'), __filename)

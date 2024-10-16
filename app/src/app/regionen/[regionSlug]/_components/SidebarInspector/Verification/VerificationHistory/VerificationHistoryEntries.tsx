@@ -1,7 +1,7 @@
+import { Markdown } from '@/src/app/_components/text/Markdown'
+import { TVerification } from '@/src/bikelane-verifications/queries/getBikelaneVerification'
+import { userById } from '@/src/users/components/utils/usersUtils'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
-import { Markdown } from 'src/app/_components/text/Markdown'
-import { TVerification } from 'src/bikelane-verifications/queries/getBikelaneVerification'
-import { userById } from 'src/users/components/utils/usersUtils'
 
 type Props = {
   history: TVerification[]

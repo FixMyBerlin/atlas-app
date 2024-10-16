@@ -1,7 +1,7 @@
+import { IconModal } from '@/src/app/_components/Modal/IconModal'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { appBaseUrl } from '@/src/app/_components/utils/appBaseUrl.const'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { IconModal } from 'src/app/_components/Modal/IconModal'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { appBaseUrl } from 'src/app/_components/utils/appBaseUrl.const'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 
 export const AtlasNotesDownloadModal = () => {

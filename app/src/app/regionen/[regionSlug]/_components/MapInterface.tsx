@@ -1,5 +1,4 @@
 'use client'
-
 import maplibregl from 'maplibre-gl'
 import { Protocol } from 'pmtiles'
 import { useEffect } from 'react'

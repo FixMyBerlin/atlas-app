@@ -1,4 +1,4 @@
-import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { sources } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
 import { describe, expect, test } from 'vitest'
 import { additionalSourceKeys, numericSourceIds } from './url'
 

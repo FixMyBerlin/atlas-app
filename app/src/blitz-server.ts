@@ -1,8 +1,8 @@
+import db from '@/db'
 import { AuthServerPlugin, PrismaStorage, simpleRolesIsAuthorized } from '@blitzjs/auth'
 import { setupBlitzServer } from '@blitzjs/next'
 import { RpcServerPlugin } from '@blitzjs/rpc'
 import { BlitzLogger, NotFoundError } from 'blitz'
-import db from 'db'
 import { notFound } from 'next/navigation'
 import { authConfig } from './blitz-auth-config'
 

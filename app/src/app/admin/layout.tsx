@@ -1,5 +1,5 @@
+import { useAuthenticatedBlitzContext } from '@/src/blitz-server'
 import { Metadata } from 'next'
-import { useAuthenticatedBlitzContext } from 'src/blitz-server'
 
 export const metadata: Metadata = {
   robots: 'noindex',

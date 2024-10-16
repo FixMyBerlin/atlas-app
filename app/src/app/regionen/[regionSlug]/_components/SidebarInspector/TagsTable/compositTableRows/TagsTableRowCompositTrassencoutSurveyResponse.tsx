@@ -1,5 +1,5 @@
-import { Markdown } from 'src/app/_components/text/Markdown'
-import { Pill } from 'src/app/_components/text/Pill'
+import { Markdown } from '@/src/app/_components/text/Markdown'
+import { Pill } from '@/src/app/_components/text/Pill'
 import { CompositTableRow } from './types'
 
 // Use by `app/scripts/StaticDatasets/geojson/region-bb/bb-trassenscout-beteiligung/meta.ts`

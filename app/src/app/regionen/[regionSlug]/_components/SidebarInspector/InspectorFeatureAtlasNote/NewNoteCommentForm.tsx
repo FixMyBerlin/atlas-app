@@ -1,11 +1,11 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import { buttonStylesOnYellow } from '@/src/app/_components/links/styles'
+import { useHasPermissions } from '@/src/app/_hooks/useHasPermissions'
+import createNoteComment from '@/src/notes/mutations/createNoteComment'
+import getNoteAndComments from '@/src/notes/queries/getNoteAndComments'
 import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import dompurify from 'dompurify'
 import { useRef } from 'react'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
-import createNoteComment from 'src/notes/mutations/createNoteComment'
-import getNoteAndComments from 'src/notes/queries/getNoteAndComments'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 
 type Props = { noteId: number }

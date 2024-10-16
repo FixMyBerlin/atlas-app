@@ -1,14 +1,14 @@
+import { isProd } from '@/src/app/_components/utils/isEnv'
+import {
+  mapillaryUrl,
+  osmTypeIdString,
+} from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
+import { pointFromGeometry } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
+import { geoDataClient } from '@/src/prisma-client'
 import { Prisma } from '@prisma/client'
 import * as turf from '@turf/turf'
 import { LineString } from 'geojson'
 import { NextRequest } from 'next/server'
-import { isProd } from 'src/app/_components/utils/isEnv'
-import {
-  mapillaryUrl,
-  osmTypeIdString,
-} from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { pointFromGeometry } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
-import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 // import { maprouletteProjects } from './_utils/maprouletteProjects.const'
 // import { taskDescriptionMarkdown } from './_utils/taskMarkdown'

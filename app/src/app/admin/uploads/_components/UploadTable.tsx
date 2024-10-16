@@ -1,9 +1,8 @@
 'use client'
-
-import { MetaData } from 'scripts/StaticDatasets/types'
-import { Link } from 'src/app/_components/links/Link'
-import { Pill } from 'src/app/_components/text/Pill'
-import { TUpload } from 'src/uploads/queries/getUploads'
+import { MetaData } from '@/scripts/StaticDatasets/types'
+import { Link } from '@/src/app/_components/links/Link'
+import { Pill } from '@/src/app/_components/text/Pill'
+import { TUpload } from '@/src/uploads/queries/getUploads'
 import { AdminTable } from '../../_components/AdminTable'
 
 export const UploadsTable = ({ uploads }: { uploads: TUpload[] }) => {

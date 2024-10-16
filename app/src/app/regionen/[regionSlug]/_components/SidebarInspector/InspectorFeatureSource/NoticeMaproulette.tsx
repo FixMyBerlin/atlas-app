@@ -1,10 +1,10 @@
-import { LineString } from 'geojson'
-import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
-import { Markdown } from 'src/app/_components/text/Markdown'
+import { Markdown } from '@/src/app/_components/text/Markdown'
 import {
   categoryToMaprouletteProjectKey,
   taskDescriptionMarkdown,
-} from 'src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
+} from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
+import { LineString } from 'geojson'
+import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 
 type Props = {
   identifier: string | null | undefined
