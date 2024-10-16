@@ -38,6 +38,7 @@ function bbox2Tiles(
 function tileFactor(zoomDelta: number) {
   return (Math.pow(4, zoomDelta) - 1) / 3
 }
+
 export async function warmCache(
   {
     min: [minLng, minLat],
@@ -49,7 +50,7 @@ export async function warmCache(
   minZoom: number,
   maxZoom: number,
   tables: TableId[],
-): Promise<void> {
+) {
   const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, minZoom)
   const nTilesTopLevel = (maxX - minX + 1) * (maxY - minY + 1)
   const nTilesTotal = nTilesTopLevel * tileFactor(maxZoom - minZoom + 1)
@@ -58,7 +59,7 @@ export async function warmCache(
     const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, z)
     for (let x = minX; x <= maxX; x++) {
       for (let y = minY; y <= maxY; y++) {
-        await Promise.all(
+        Promise.all(
           tables.map((tableId) => {
             const tileUrl = new URL(
               `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
