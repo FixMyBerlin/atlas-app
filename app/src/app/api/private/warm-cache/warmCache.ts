@@ -54,7 +54,6 @@ export async function warmCache(
   const nTilesTopLevel = (maxX - minX + 1) * (maxY - minY + 1)
   const nTilesTotal = nTilesTopLevel * tileFactor(maxZoom - minZoom + 1)
 
-  let nTilesLevel = nTilesTopLevel
   for (let z = minZoom; z <= maxZoom; z++) {
     const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, z)
     for (let x = minX; x <= maxX; x++) {
@@ -69,9 +68,8 @@ export async function warmCache(
         )
       }
     }
-    const nTilesSkipped = padStart(`${nTilesLevel - (maxX - minX + 1) * (maxY - minY + 1)}`, 2)
+
     const nTilesWarmed = padStart(`${nTilesTopLevel * tileFactor(z - minZoom + 1)}`, 2)
-    console.log(`   Warmed ${nTilesWarmed}/${nTilesTotal} tiles (${nTilesSkipped} skipped)`)
-    nTilesLevel *= 4
+    console.log(`   Warmed ${nTilesWarmed}/${nTilesTotal}`)
   }
 }
