@@ -62,12 +62,14 @@ export async function warmCache(
     const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, z)
     for (let x = minX; x <= maxX; x++) {
       for (let y = minY; y <= maxY; y++) {
-        tables.forEach((tableId) => {
-          const tileUrl = new URL(
-            `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
-          )
-          fetch(tileUrl.toString(), { method: 'HEAD' })
-        })
+        await Promise.all(
+          tables.map((tableId) => {
+            const tileUrl = new URL(
+              `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
+            )
+            fetch(tileUrl.toString(), { method: 'HEAD' })
+          }),
+        )
       }
     }
 
