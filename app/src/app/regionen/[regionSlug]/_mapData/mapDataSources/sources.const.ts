@@ -6,10 +6,7 @@ import { SourceExportApiIdentifier } from './export/exportIdentifier'
 import { sourcesParking, SourcesParkingId } from './sourcesParking.const'
 import { SourceVerificationApiIdentifier } from './verification/verificationIdentifier'
 
-// TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
-export type SourcesId =
-  | SourcesParkingId
-  | 'accidents_unfallatlas'
+type AtlasSourceId =
   | 'atlas_barriers'
   | 'atlas_bicycleParking'
   | 'atlas_bikelanes'
@@ -24,9 +21,15 @@ export type SourcesId =
   | 'atlas_roadsPathClasses'
   | 'atlas_bikelanesPresence' // based on `roads`
   | 'atlas_trafficSigns'
-  | 'mapillary_coverage'
-  | 'mapillary_mapfeatures'
-  | 'mapillary_trafficSigns'
+
+type MapillarySourceId = 'mapillary_coverage' | 'mapillary_mapfeatures' | 'mapillary_trafficSigns'
+
+// TODO type MapDataConfigSourcesIds = typeof sources[number]['id']
+export type SourcesId =
+  | SourcesParkingId
+  | AtlasSourceId
+  | MapillarySourceId
+  | 'accidents_unfallatlas'
 
 export const sources: MapDataSource<
   SourcesId,
