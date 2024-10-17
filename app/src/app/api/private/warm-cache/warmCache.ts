@@ -68,7 +68,7 @@ export async function warmCache(
             const tileUrl = new URL(
               `${getTilesUrl()}/${generalizationFunctionIdentifier(tableId)}/${z}/${x}/${y}`,
             )
-            fetch(tileUrl.toString(), { method: 'HEAD' })
+            return fetch(tileUrl.toString(), { method: 'HEAD' })
           }),
         )
       }
