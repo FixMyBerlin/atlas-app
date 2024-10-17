@@ -53,6 +53,7 @@ export async function warmCache(
   minZoom: number,
   maxZoom: number,
   tables: UnionTiles<TableId>[],
+  regionSlug: string,
 ) {
   const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, minZoom)
   const nTilesTopLevel = (maxX - minX + 1) * (maxY - minY + 1)
@@ -74,6 +75,6 @@ export async function warmCache(
     }
 
     const nTilesWarmed = padStart(`${nTilesTopLevel * tileFactor(z - minZoom + 1)}`, 2)
-    console.log(`   Warmed ${nTilesWarmed}/${nTilesTotal}`)
+    console.log(`   ${regionSlug}: warmed ${nTilesWarmed}/${nTilesTotal} tiles`)
   }
 }
