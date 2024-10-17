@@ -1,12 +1,23 @@
 import chalk from 'chalk'
 import { NextRequest, NextResponse } from 'next/server'
-import { staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
+import { staticRegion, StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 import { warmCache } from './warmCache'
 
 const Schema = z.object({
   apiKey: z.string(),
 })
+
+export async function warmRegions(staticRegion: StaticRegion[]) {
+  for (const region of staticRegion) {
+    if (region.cacheWarming != undefined && region.bbox != null) {
+      const { minZoom, maxZoom, tables } = region.cacheWarming
+      console.log(chalk.grey(' ○'), `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`)
+      await warmCache(region.bbox, minZoom, maxZoom, tables)
+      console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`)
+    }
+  }
+}
 
 export async function GET(req: NextRequest) {
   // Parse and validate the query string
@@ -21,16 +32,7 @@ export async function GET(req: NextRequest) {
     if (params.data.apiKey !== process.env.ATLAS_API_KEY) {
       return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
     }
-
-    for (const region of staticRegion) {
-      if (region.cacheWarming != undefined && region.bbox != null) {
-        const { minZoom, maxZoom, tables } = region.cacheWarming
-        console.log(chalk.grey(' ○'), `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`)
-        warmCache(region.bbox, minZoom, maxZoom, tables)
-        console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`)
-      }
-    }
-
+    warmRegions(staticRegion)
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 })
