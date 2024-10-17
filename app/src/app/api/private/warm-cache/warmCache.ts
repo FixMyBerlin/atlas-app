@@ -2,7 +2,10 @@ import { padStart } from 'lodash'
 import { URL } from 'node:url'
 import { getTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { generalizationFunctionIdentifier } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
-import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
+import {
+  TableId,
+  UnionTiles,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
 function lng2X(lng: number, z: number): number {
   return Math.floor(((lng + 180) / 360) * Math.pow(2, z))
@@ -49,7 +52,7 @@ export async function warmCache(
   },
   minZoom: number,
   maxZoom: number,
-  tables: TableId[],
+  tables: UnionTiles<TableId>[],
 ) {
   const { minX, minY, maxX, maxY } = bbox2Tiles(minLng, minLat, maxLng, maxLat, minZoom)
   const nTilesTopLevel = (maxX - minX + 1) * (maxY - minY + 1)

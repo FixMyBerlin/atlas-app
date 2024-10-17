@@ -1,5 +1,12 @@
-import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
+import {
+  TableId,
+  UnionTiles,
+} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
 export type GeneralizedTableId = `atlas_generalized_${Lowercase<TableId>}`
-export const generalizationFunctionIdentifier = (tableName: TableId) =>
-  `atlas_generalized_${tableName.toLowerCase()}` as GeneralizedTableId
+export function generalizationFunctionIdentifier<T extends UnionTiles<TableId>>(tileId: T) {
+  return tileId
+    .split(',')
+    .map((id) => `atlas_generalized_${id.toLowerCase()}`)
+    .join(',') as UnionTiles<GeneralizedTableId>
+}

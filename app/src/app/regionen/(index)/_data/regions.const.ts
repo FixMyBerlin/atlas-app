@@ -10,7 +10,10 @@ import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,
 } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
-import { TableId } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
+import {
+  TableId,
+  UnionTiles,
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { StaticImageData } from 'next/image'
 
 type StaticRegionInitialMapPositionZoom = {
@@ -33,7 +36,7 @@ export type StaticRegion = {
   backgroundSources: SourcesRasterIds[]
   notes: 'osmNotes' | 'atlasNotes' | 'disabled'
   hideDownload?: boolean
-  cacheWarming?: { minZoom: number; maxZoom: number; tables: TableId[] }
+  cacheWarming?: { minZoom: number; maxZoom: number; tables: UnionTiles<TableId>[] }
 } & (
   | {
       logoPath: StaticImageData | null
@@ -510,6 +513,8 @@ export const staticRegion: StaticRegion[] = [
         'landuse',
         'places',
         'landuse',
+        'boundaries,boundaryLabels',
+        'barrierAreas,barrierLines',
       ],
     },
   },
