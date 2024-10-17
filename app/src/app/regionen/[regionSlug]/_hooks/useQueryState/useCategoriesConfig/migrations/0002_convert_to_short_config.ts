@@ -1,4 +1,4 @@
-import { StaticRegion, staticRegion } from 'src/app/regionen/(index)/_data/regions.const'
+import { StaticRegion, staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { configCustomParse } from '../v1/configCustomParse'
 import { serialize } from '../v2/serialize'

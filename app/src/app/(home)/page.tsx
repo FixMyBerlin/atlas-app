@@ -1,7 +1,7 @@
+import { cookieName } from '@/src/users/hooks/cookieName'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { cookieName } from 'src/users/hooks/cookieName'
 import { HomePageCallToAction } from './_components/HomePageCallToAction'
 import { HomePageCompanies } from './_components/HomePageCompanies'
 import { HomePageHero } from './_components/HomePageHero'
@@ -11,7 +11,7 @@ import { HomePageSecondaryFeaturesJustText } from './_components/HomePageSeconda
 
 export const metadata: Metadata = {} // Using the defaults from src/layout.tsx
 
-export default function Home() {
+export default function Homepage() {
   const cookieStore = cookies()
   const redirectUrl = cookieStore.get(cookieName)?.value
   if (redirectUrl && redirectUrl !== '/') {

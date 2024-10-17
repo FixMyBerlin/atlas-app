@@ -1,5 +1,5 @@
+import db from '@/db'
 import { Ctx } from 'blitz'
-import db from 'db'
 
 export type CurrentUser = Awaited<ReturnType<typeof getCurrentUser>>
 

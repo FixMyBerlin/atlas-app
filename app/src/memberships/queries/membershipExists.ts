@@ -1,5 +1,5 @@
+import db from '@/db'
 import { resolver } from '@blitzjs/rpc'
-import db from 'db'
 import { z } from 'zod'
 
 export const MembershipSchema = z.object({

@@ -1,12 +1,5 @@
-import {
-  FeatureCollection,
-  bbox,
-  coordEach,
-  difference,
-  featureCollection,
-  point,
-  polygon,
-} from '@turf/turf'
+import { bbox, coordEach, difference, featureCollection, point, polygon } from '@turf/turf'
+import { FeatureCollection } from 'geojson'
 import GeoJSONReader from 'jsts/org/locationtech/jts/io/GeoJSONReader'
 import OverlayOp from 'jsts/org/locationtech/jts/operation/overlay/OverlayOp'
 import { UrlFeature } from '../../_hooks/useQueryState/types'
@@ -62,8 +55,8 @@ export function createBoundingPolygon(mapInstance, sidebarSize, inspectorSize) {
     return mapBox
   }
 
-  // @ts-expect-error
-  const poly = difference(difference(mapBox, layersBox), inspectorBox)!
+  const diff1 = difference(featureCollection([mapBox, layersBox]))!
+  const poly = difference(featureCollection([diff1, inspectorBox]))!
   coordEach(poly, (point) => {
     const { lng, lat } = mapInstance.unproject(point)
     point[0] = lng

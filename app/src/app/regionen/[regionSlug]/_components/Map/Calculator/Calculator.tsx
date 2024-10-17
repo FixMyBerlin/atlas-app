@@ -1,5 +1,5 @@
+import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useMemo, useRef } from 'react'
-import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import { CalculatorControls } from './CalculatorControls'
 import { CalculatorOutput } from './CalculatorOutput'

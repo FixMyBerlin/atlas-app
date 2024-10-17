@@ -1,9 +1,9 @@
+import db, { User } from '@/db'
+import { getOsmApiUrl, getOsmUrl } from '@/src/app/_components/utils/getOsmUrl'
+import { api } from '@/src/blitz-server'
+import { Role } from '@/types'
 import { NextAuthAdapter } from '@blitzjs/auth/next-auth'
-import db, { User } from 'db'
 import { Provider } from 'next-auth/providers'
-import { getOsmApiUrl, getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
-import { api } from 'src/blitz-server'
-import { Role } from 'types'
 
 const providers: Provider[] = [
   {

@@ -1,8 +1,8 @@
 import {
   exportApiIdentifier,
   exportFunctionIdentifier,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
-import { geoDataClient } from 'src/prisma-client'
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
+import { geoDataClient } from '@/src/prisma-client'
 
 // specify license and attribution for data export
 // const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"

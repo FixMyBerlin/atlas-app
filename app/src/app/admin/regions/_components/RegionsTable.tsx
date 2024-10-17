@@ -1,12 +1,11 @@
 'use client'
-
+import { Link } from '@/src/app/_components/links/Link'
+import { linkStyles } from '@/src/app/_components/links/styles'
+import { Pill } from '@/src/app/_components/text/Pill'
+import deleteRegion from '@/src/regions/mutations/deleteRegion'
+import { TRegion } from '@/src/regions/queries/getRegion'
 import { useMutation } from '@blitzjs/rpc'
 import { useRouter } from 'next/navigation'
-import { Link } from 'src/app/_components/links/Link'
-import { linkStyles } from 'src/app/_components/links/styles'
-import { Pill } from 'src/app/_components/text/Pill'
-import deleteRegion from 'src/regions/mutations/deleteRegion'
-import { TRegion } from 'src/regions/queries/getRegion'
 import { AdminTable } from '../../_components/AdminTable'
 import { ObjectDump } from '../../_components/ObjectDump'
 

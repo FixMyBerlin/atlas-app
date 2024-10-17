@@ -1,15 +1,15 @@
-import { FilterSpecification } from 'maplibre-gl'
-import React, { memo } from 'react'
-import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { makeTileUrlCacheless } from 'src/app/_components/utils/getTilesUrl'
+import { makeTileUrlCacheless } from '@/src/app/_components/utils/getTilesUrl'
 import {
   Store,
   useMapDebugUseDebugCachelessTiles,
   useMapDebugUseDebugLayerStyles,
-} from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
-import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
-import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { debugLayerStyles } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
+} from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
+import { useBackgroundParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
+import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
+import { debugLayerStyles } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
+import { FilterSpecification } from 'maplibre-gl'
+import React, { memo } from 'react'
+import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
 import { getSourceData } from '../../../_mapData/utils/getMapDataUtils'
 import {
   createLayerKeyAtlasGeo,

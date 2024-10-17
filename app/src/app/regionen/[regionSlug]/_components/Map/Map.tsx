@@ -1,4 +1,6 @@
-import * as turf from '@turf/turf'
+import { isDev, isProd } from '@/src/app/_components/utils/isEnv'
+import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { bbox, bboxPolygon, buffer } from '@turf/turf'
 import { differenceBy, uniqBy } from 'lodash'
 import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
@@ -12,8 +14,6 @@ import {
   ViewStateChangeEvent,
   useMap,
 } from 'react-map-gl/maplibre'
-import { isDev, isProd } from 'src/app/_components/utils/isEnv'
-import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { useMapActions, useMapInspectorFeatures } from '../../_hooks/mapState/useMapState'
 import {
   convertToUrlFeature,
@@ -205,17 +205,17 @@ export const Map = () => {
     return null
   }
 
-  let mapMaxBoundsSettings: ReturnType<typeof turf.bbox> | {} = {}
+  let mapMaxBoundsSettings: ReturnType<typeof bbox> | {} = {}
   if (region?.bbox) {
     const maxBounds = [
       region.bbox.min[0],
       region.bbox.min[1],
       region.bbox.max[0],
       region.bbox.max[1],
-    ] satisfies ReturnType<typeof turf.bbox>
+    ] satisfies ReturnType<typeof bbox>
     mapMaxBoundsSettings = {
       // Buffer is in km to add the mask buffer and some more
-      maxBounds: turf.bbox(turf.buffer(turf.bboxPolygon(maxBounds), 60, { units: 'kilometers' })),
+      maxBounds: bbox(buffer(bboxPolygon(maxBounds), 60, { units: 'kilometers' })!),
       // Padding is in pixel to make sure the map controls are visible
       padding: {
         // TODO: We might need different padding on mobile…

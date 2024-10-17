@@ -1,4 +1,4 @@
-import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
+import { useDrawParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
 import { DrawArea } from '../CalculatorControlsDrawControl'
 import { simplifyPositions } from '../utils/simplifyPositions'
 

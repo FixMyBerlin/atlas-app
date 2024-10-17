@@ -1,5 +1,5 @@
+import { buttonStyles } from '@/src/app/_components/links/styles'
 import { useMap } from 'react-map-gl/maplibre'
-import { buttonStyles } from 'src/app/_components/links/styles'
 import { StoreFeaturesInspector } from '../../../_hooks/mapState/useMapState'
 import { useOsmNotesActions } from '../../../_hooks/mapState/userMapNotes'
 import {

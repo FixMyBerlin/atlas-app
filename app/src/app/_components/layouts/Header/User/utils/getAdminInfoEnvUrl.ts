@@ -1,4 +1,4 @@
-import { envKey, isBrowser } from 'src/app/_components/utils/isEnv'
+import { envKey, isBrowser } from '@/src/app/_components/utils/isEnv'
 
 const envFrontendDomain = {
   development: 'http://127.0.0.1:5173/',

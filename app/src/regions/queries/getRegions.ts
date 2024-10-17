@@ -1,5 +1,5 @@
+import db, { Prisma } from '@/db'
 import { resolver } from '@blitzjs/rpc'
-import db, { Prisma } from 'db'
 
 interface GetRegionsInput
   extends Pick<Prisma.RegionFindManyArgs, 'where' | 'orderBy' | 'skip' | 'take'> {}

@@ -1,5 +1,5 @@
+import { Link } from '@/src/app/_components/links/Link'
 import { Metadata } from 'next'
-import { Link } from 'src/app/_components/links/Link'
 
 export const metadata: Metadata = {
   robots: 'noindex',

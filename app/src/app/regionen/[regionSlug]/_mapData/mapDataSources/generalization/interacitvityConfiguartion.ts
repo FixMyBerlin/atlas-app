@@ -1,4 +1,4 @@
-import { TableId } from './generalizationIdentifier'
+import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
 export type InteracitvityConfiguartion = Record<TableId, { minzoom: number; stylingKeys: string[] }>
 export const interactivityConfiguration: InteracitvityConfiguartion = {

@@ -1,10 +1,10 @@
+import { Form, FormProps } from '@/src/app/_components/forms/Form'
+import { LabeledCheckboxGroup } from '@/src/app/_components/forms/LabeledCheckboxGroup'
+import { LabeledRadiobuttonGroup } from '@/src/app/_components/forms/LabeledRadiobuttonGroup'
+import getRegionsWithAdditionalData from '@/src/regions/queries/getRegionsWithAdditionalData'
 import { useQuery } from '@blitzjs/rpc'
-import { Form, FormProps } from 'src/app/_components/forms/Form'
-import { LabeledCheckboxGroup } from 'src/app/_components/forms/LabeledCheckboxGroup'
-import { LabeledRadiobuttonGroup } from 'src/app/_components/forms/LabeledRadiobuttonGroup'
-import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import { z } from 'zod'
-export { FORM_ERROR } from 'src/app/_components/forms/Form'
+export { FORM_ERROR } from '@/src/app/_components/forms/Form'
 
 export function UploadForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
   const [regions] = useQuery(getRegionsWithAdditionalData, {})

@@ -1,8 +1,7 @@
 'use client'
-
+import { useBreakpoint } from '@/src/app/regionen/[regionSlug]/_components/utils/useBreakpoint'
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import Image, { StaticImageData } from 'next/image'
-import { useBreakpoint } from 'src/app/regionen/[regionSlug]/_components/utils/useBreakpoint'
 import { twJoin } from 'tailwind-merge'
 import screenshotBikelanes from './assets/HomePagePrimaryFeatures/bikelanes.jpg'
 import screenshotOther from './assets/HomePagePrimaryFeatures/other.jpg'

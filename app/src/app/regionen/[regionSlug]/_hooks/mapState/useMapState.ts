@@ -1,7 +1,7 @@
+import { TCreateVerificationSchema } from '@/src/bikelane-verifications/schemas'
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
-import { TCreateVerificationSchema } from 'src/bikelane-verifications/schemas'
 import { create } from 'zustand'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware

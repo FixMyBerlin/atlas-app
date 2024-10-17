@@ -1,11 +1,11 @@
+import { Link } from '@/src/app/_components/links/Link'
 import { Metadata } from 'next'
-import { Link } from 'src/app/_components/links/Link'
 import { Breadcrumb } from './_components/Breadcrumb'
 import { HeaderWrapper } from './_components/HeaderWrapper'
 
 export const metadata: Metadata = { title: 'Dashboard' }
 
-export default async function AdminDashboard() {
+export default async function AdminDashboardPage() {
   return (
     <>
       <HeaderWrapper>

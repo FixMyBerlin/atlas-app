@@ -1,5 +1,5 @@
-import { Footer } from 'src/app/_components/layouts/Footer/Footer'
-import { HeaderApp } from 'src/app/_components/layouts/Header/HeaderApp/HeaderApp'
+import { Footer } from '@/src/app/_components/layouts/Footer/Footer'
+import { HeaderApp } from '@/src/app/_components/layouts/Header/HeaderApp/HeaderApp'
 
 export default function RegionLayout({ children }: { children: React.ReactNode }) {
   return (
