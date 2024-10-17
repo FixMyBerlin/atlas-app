@@ -26,9 +26,8 @@ export async function GET(req: NextRequest) {
       if (region.cacheWarming != undefined && region.bbox != null) {
         const { minZoom, maxZoom, tables } = region.cacheWarming
         console.log(chalk.grey(' ○'), `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`)
-        warmCache(region.bbox, minZoom, maxZoom, tables, region.slug).then(() =>
-          console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`),
-        )
+        await warmCache(region.bbox, minZoom, maxZoom, tables, region.slug)
+        console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`)
       }
     }
 
