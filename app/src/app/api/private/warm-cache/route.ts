@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { NextRequest, NextResponse } from 'next/server'
 import { staticRegion, StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
+import { guardEnpoint } from '../guardEndpoint'
 import { warmCache } from './warmCache'
 
 const Schema = z.object({
@@ -20,18 +21,9 @@ export async function warmRegions(staticRegion: StaticRegion[]) {
 }
 
 export async function GET(req: NextRequest) {
-  // Parse and validate the query string
-  const requestUrl = new URL(req.url)
-  const params = Schema.safeParse(Object.fromEntries(requestUrl.searchParams.entries()))
-  if (params.success == false) {
-    console.error("Couldn't parse query string", params.error)
-    return NextResponse.json({ error: 'Invalid input', ...params.error }, { status: 400 })
-  }
-  // Check the API key
+  const { access, response } = guardEnpoint(req, Schema)
+  if (!access) return response
   try {
-    if (params.data.apiKey !== process.env.ATLAS_API_KEY) {
-      return NextResponse.json({ message: 'Forbidden' }, { status: 403 })
-    }
     warmRegions(staticRegion)
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
