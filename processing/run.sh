@@ -47,7 +47,3 @@ fi
 if ! ./run-7-warm-cache.sh; then
     alert '*ERROR*: #run-7-warm-cache exited with non-zero status code'
 fi
-
-if ! ./run-8-analysis.sh; then
-    alert '*ERROR*: #run-8-analysis exited with non-zero status code'
-fi

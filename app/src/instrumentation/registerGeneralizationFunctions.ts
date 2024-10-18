@@ -68,7 +68,7 @@ export async function registerGeneralizationFunctions(
                         ST_Simplify(geom, tolerance, true)
                       ),
                       ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${minzoom} THEN tags ELSE jsonb_select(tags, ${toSqlArray(
+                    CASE WHEN z >= ${minzoom} THEN tags ELSE atlas_jsonb_select(tags, ${toSqlArray(
                       stylingKeys,
                     )}) END as tags,
                     CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
