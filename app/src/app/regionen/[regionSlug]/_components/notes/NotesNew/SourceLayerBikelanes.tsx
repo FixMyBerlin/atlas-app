@@ -1,6 +1,6 @@
+import { sources } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { subcat_bikelanes } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes.const'
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { sources } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
-import { subcat_bikelanes } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/subcat_bikelanes.const'
 
 export const SourceLayerBikelanes = () => {
   const bikelanesSource = sources.find((source) => source.id.includes('bikelanes'))

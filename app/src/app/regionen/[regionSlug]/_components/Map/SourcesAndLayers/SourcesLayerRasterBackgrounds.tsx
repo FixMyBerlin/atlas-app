@@ -1,7 +1,7 @@
+import { useRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
+import { useBackgroundParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
-import { useBackgroundParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { sourcesBackgroundsRaster } from '../../../_mapData/mapDataSources/sourcesBackgroundsRaster.const'
 import { layerVisibility } from '../utils/layerVisibility'
 

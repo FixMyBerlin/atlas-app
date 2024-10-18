@@ -1,6 +1,6 @@
 services:
   processing:
-    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}-latest
+    image: public.ecr.aws/n0p8j4k5/atlas/processing:${ENVIRONMENT}-latest
     container_name: processing
     environment:
       PGHOST: ${DATABASE_HOST}
@@ -35,8 +35,8 @@ services:
     logging:
       driver: journald
   app:
-    image: public.ecr.aws/n0p8j4k5/atlas/blitz:${ENVIRONMENT}-latest
-    container_name: blitz
+    image: public.ecr.aws/n0p8j4k5/atlas/app:${ENVIRONMENT}-latest
+    container_name: app
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}?schema=prisma
@@ -72,7 +72,7 @@ services:
   tiles:
     image: ghcr.io/maplibre/martin:v0.14.2
     container_name: tiles
-    command: "--config /config.yaml"
+    command: '--config /config.yaml'
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}
@@ -107,7 +107,7 @@ services:
       LC_ALL: en_US.UTF-8
       TZ: Europe/Berlin
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - geodata:/var/lib/postgresql/data
     configs:
@@ -115,9 +115,9 @@ services:
         target: /postgresql/postgresql.conf
       - source: postgres_init
         target: /docker-entrypoint-initdb.d/11-postgres.sql
-    command: ["-c", "config_file=/postgresql/postgresql.conf"]
+    command: ['-c', 'config_file=/postgresql/postgresql.conf']
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      test: ['CMD-SHELL', 'pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}']
       interval: 5s
       timeout: 5s
       retries: 5

@@ -1,10 +1,10 @@
-import { Link } from 'src/app/_components/links/Link'
-import { linkStyles } from 'src/app/_components/links/styles'
-import { proseClasses } from 'src/app/_components/text/prose'
-import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { invoke } from 'src/blitz-server'
-import { geoDataClient } from 'src/prisma-client'
-import getRegion from 'src/regions/queries/getRegion'
+import { Link } from '@/src/app/_components/links/Link'
+import { linkStyles } from '@/src/app/_components/links/styles'
+import { proseClasses } from '@/src/app/_components/text/prose'
+import { ObjectDump } from '@/src/app/admin/_components/ObjectDump'
+import { invoke } from '@/src/blitz-server'
+import { geoDataClient } from '@/src/prisma-client'
+import getRegion from '@/src/regions/queries/getRegion'
 import { twJoin } from 'tailwind-merge'
 import { hackyIdListForBB } from './list.const'
 
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   }
 }
 
-export default async function ShowRegionStatsPage({ params, searchParams }) {
+export default async function RegionStatsPage({ params, searchParams }) {
   const region = await invoke(getRegion, { slug: params.regionSlug })
   const stats = await geoDataClient.$queryRaw<any>`
       SELECT osm_id::numeric, tags->'name', tags, meta, presence_categories

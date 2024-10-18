@@ -1,7 +1,7 @@
+import db from '@/db'
+import { zodAtlasFilterParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
 import { resolver } from '@blitzjs/rpc'
 import { featureCollection, point } from '@turf/turf'
-import db from 'db'
-import { zodAtlasFilterParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
 import { z } from 'zod'
 import getNotesAndCommentsForRegion from './getNotesAndCommentsForRegion'
 

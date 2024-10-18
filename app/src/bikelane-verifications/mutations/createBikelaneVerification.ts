@@ -1,7 +1,7 @@
+import db from '@/db'
+import { authorizeRegionAdmin } from '@/src/authorization/authorizeRegionAdmin'
+import getRegionIdBySlug from '@/src/regions/queries/getRegionIdBySlug'
 import { resolver } from '@blitzjs/rpc'
-import db from 'db'
-import { authorizeRegionAdmin } from 'src/authorization/authorizeRegionAdmin'
-import getRegionIdBySlug from 'src/regions/queries/getRegionIdBySlug'
 import { z } from 'zod'
 import { CreateVerificationSchema, VerificationSchema } from '../schemas'
 

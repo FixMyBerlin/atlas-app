@@ -35,6 +35,14 @@ module.exports = withBlitz(
         },
       ],
     },
+    // Source Maps on the Server
+    // Via https://www.highlight.io/blog/lw5-next-js-server-sourcemaps
+    webpack: (config, { isServer }) => {
+      if (isServer) {
+        config.devtool = 'source-map'
+      }
+      return config
+    },
     redirects: async () => [
       // https://stackoverflow.com/a/70184067
       {

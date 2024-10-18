@@ -1,5 +1,5 @@
+import { Link } from '@/src/app/_components/links/Link'
 import React from 'react'
-import { Link } from 'src/app/_components/links/Link'
 import { twMerge } from 'tailwind-merge'
 
 import { FooterMenuItem } from './footerLinks.const'

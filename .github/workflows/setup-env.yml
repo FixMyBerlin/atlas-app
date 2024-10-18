@@ -39,8 +39,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: "docker-compose.yml, docker-compose.network.yml, configs, .env.example, psql_shell.sh"
-          target: "/srv"
+          source: 'docker-compose.yml, docker-compose.network.yml, configs, .env.example, psql_shell.sh'
+          target: '/srv'
           overwrite: true
 
       - name: Stop & Start container on Server
@@ -79,4 +79,5 @@ jobs:
               -e "s|^S3_BUCKET=.*$|S3_BUCKET='${{ secrets.S3_BUCKET }}'|" \
               -e "s|^SKIP_DOWNLOAD=.*$|SKIP_DOWNLOAD='${{ vars.SKIP_DOWNLOAD }}'|" \
               -e "s|^SKIP_UNCHANGED=.*$|SKIP_UNCHANGED='${{ vars.SKIP_UNCHANGED }}'|" \
+              -e "s|^COMPUTE_DIFFS=.*$|COMPUTE_DIFFS='${{ vars.COMPUTE_DIFFS }}'|" \
               .env

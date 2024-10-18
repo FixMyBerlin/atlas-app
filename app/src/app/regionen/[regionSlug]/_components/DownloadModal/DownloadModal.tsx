@@ -1,10 +1,11 @@
+import { IconModal } from '@/src/app/_components/Modal/IconModal'
+import { Link } from '@/src/app/_components/links/Link'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { linkStyles } from '@/src/app/_components/links/styles'
+import { useHasPermissions } from '@/src/app/_hooks/useHasPermissions'
+import { useStartUserLogin } from '@/src/users/hooks/useStartUserLogin'
 import { useSession } from '@blitzjs/auth'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { IconModal } from 'src/app/_components/Modal/IconModal'
-import { Link } from 'src/app/_components/links/Link'
-import { linkStyles } from 'src/app/_components/links/styles'
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
-import { useStartUserLogin } from 'src/users/hooks/useStartUserLogin'
 import { useRegion } from '../regionUtils/useRegion'
 import { DownloadModalDownloadList } from './DownloadModalDownloadList'
 import { DownloadModalUpdateDate } from './DownloadModalUpdateDate'
@@ -31,8 +32,13 @@ export const DownloadModal = () => {
       >
         {canDownload ? (
           <p className="pb-2.5 pt-5 text-sm">
-            Alle Daten stehen als <strong>FlatGeoBuf</strong> zum Download sowie als{' '}
-            <strong>Vector Tiles</strong> zur Darstellung zur Verfügung.
+            Alle Daten stehen als <strong>FlatGeobuf</strong> zum Download sowie als{' '}
+            <strong>Vector Tiles</strong> zur Darstellung zur Verfügung. Die FlatGeobuf Dateien
+            können über den{' '}
+            <LinkExternal blank href="https://play.placemark.io/">
+              kostenlosen Dienst Placemark
+            </LinkExternal>{' '}
+            in GeoJSON umgewandelt werden.
           </p>
         ) : (
           <>

@@ -33,17 +33,19 @@ local sideSignMap = {
 }
 
 -- transformations for nested tags:
-local footwayTransformation = {
+local footwayTransformation = CenterLineTransformation.new({
   highway = "footway",
   prefix = "sidewalk",
   filter = function(tags)
     return not (tags.footway == 'no' or tags.footway == 'separate')
-  end
-}
-local cyclewayTransformation = {
+  end,
+  direction_reference = 'parent'
+})
+local cyclewayTransformation = CenterLineTransformation.new({
   highway = "cycleway",
   prefix = "cycleway",
-}
+  direction_reference = 'self'
+})
 
 local transformations = { cyclewayTransformation, footwayTransformation } -- order matters for presence
 
@@ -69,7 +71,7 @@ function Bikelanes(object)
           _age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           width = ParseLength(transformedTags.width),
-          oneway = DeriveOneway(transformedTags, category.id),
+          oneway = DeriveOneway(transformedTags, category),
           bridge = Sanitize(tags.bridge, { "yes" }),
           tunnel = Sanitize(tags.tunnel, { "yes" }),
         })

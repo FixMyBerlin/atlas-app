@@ -1,8 +1,7 @@
 'use client'
-
+import { isBrowser, isDev } from '@/src/app/_components/utils/isEnv'
 import { Route } from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { isBrowser, isDev } from 'src/app/_components/utils/isEnv'
 
 // NOTICE:
 // This is a workaround for a bug in NextJS in dev mode in the middleware.

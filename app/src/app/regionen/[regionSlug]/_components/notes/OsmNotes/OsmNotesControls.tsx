@@ -1,7 +1,7 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import { Tooltip } from '@/src/app/_components/Tooltip/Tooltip'
+import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { ChatBubbleLeftRightIcon, PlusIcon } from '@heroicons/react/24/outline'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
-import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { twJoin } from 'tailwind-merge'
 import {
   useNewOsmNoteMapParam,

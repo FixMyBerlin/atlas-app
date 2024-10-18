@@ -1,3 +1,5 @@
+import { Prettify } from '@/src/app/_components/types/types'
+import { RegionSlug } from '@/src/app/regionen/(index)/_data/regions.const'
 import { SourceProps } from 'react-map-gl'
 import {
   CircleLayer,
@@ -7,8 +9,6 @@ import {
   RasterSource,
   SymbolLayer,
 } from 'react-map-gl/maplibre'
-import { Prettify } from 'src/app/_components/types/types'
-import { RegionSlug } from 'src/app/regionen/(index)/_data/regions.const'
 import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/Legend/LegendIcons/types'
 import { MapDataCategoryId } from './mapDataCategories/categories.const'

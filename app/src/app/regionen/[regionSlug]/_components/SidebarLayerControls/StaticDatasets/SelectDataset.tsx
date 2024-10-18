@@ -1,6 +1,6 @@
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { isProd } from '@/src/app/_components/utils/isEnv'
 import { CheckIcon, LinkIcon, LockClosedIcon } from '@heroicons/react/20/solid'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { isProd } from 'src/app/_components/utils/isEnv'
 import { twJoin } from 'tailwind-merge'
 import { useDataParam } from '../../../_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'

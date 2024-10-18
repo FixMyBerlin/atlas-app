@@ -1,6 +1,6 @@
+import { getOsmApiUrl } from '@/src/app/_components/utils/getOsmUrl'
 import { ErrorBoundary } from '@blitzjs/next'
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { getOsmApiUrl } from 'src/app/_components/utils/getOsmUrl'
 import { useMapBounds, useMapLoaded } from '../../../_hooks/mapState/useMapState'
 import { useOsmNotesActions } from '../../../_hooks/mapState/userMapNotes'
 import {

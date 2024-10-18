@@ -1,4 +1,4 @@
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { useRegion } from '../regionUtils/useRegion'
@@ -50,7 +50,7 @@ export const DownloadModalDownloadList = () => {
               {bbox && (
                 <LinkExternal
                   href={getExportApiBboxUrl(regionSlug!, sourceData.export.apiIdentifier, bbox)}
-                  classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
+                  classNameOverwrite="w-28 flex-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
                   download
                   blank
                 >

@@ -1,4 +1,4 @@
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
+import { useHasPermissions } from '@/src/app/_hooks/useHasPermissions'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 
 export const useAllowAtlasNotes = () => {

@@ -1,8 +1,8 @@
+import { isDev, isStaging } from '@/src/app/_components/utils/isEnv'
+import { useRegionDatasets } from '@/src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
+import { SourcesId } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
+import { getDatasetOrSourceData } from '@/src/app/regionen/[regionSlug]/_mapData/utils/getMapDataUtils'
 import { FormattedDate, FormattedMessage, FormattedNumber } from 'react-intl'
-import { isDev, isStaging } from 'src/app/_components/utils/isEnv'
-import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
-import { SourcesId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sources.const'
-import { getDatasetOrSourceData } from 'src/app/regionen/[regionSlug]/_mapData/utils/getMapDataUtils'
 import { NodataFallback } from '../compositTableRows/NodataFallback'
 import { translations } from './translations.const'
 

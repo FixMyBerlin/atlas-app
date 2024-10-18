@@ -1,8 +1,8 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import getNotesAndCommentsForRegion from '@/src/notes/queries/getNotesAndCommentsForRegion'
 import { ErrorBoundary } from '@blitzjs/next'
 import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import {
   useAtlasFilterParam,
   useNewAtlasNoteMapParam,

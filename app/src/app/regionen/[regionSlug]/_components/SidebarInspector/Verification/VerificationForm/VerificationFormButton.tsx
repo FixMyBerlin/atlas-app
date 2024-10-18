@@ -1,7 +1,7 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import { buttonStyles } from '@/src/app/_components/links/styles'
 import { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { buttonStyles } from 'src/app/_components/links/styles'
 import { twJoin } from 'tailwind-merge'
 
 export const VerificationFormButton = () => {

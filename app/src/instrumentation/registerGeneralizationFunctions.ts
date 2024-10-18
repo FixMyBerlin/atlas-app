@@ -1,9 +1,7 @@
-import {
-  generalizationFunctionIdentifier,
-  TableId,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
-import { InteracitvityConfiguartion } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
-import { geoDataClient } from 'src/prisma-client'
+import { generalizationFunctionIdentifier } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
+import { InteracitvityConfiguartion } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
+import { TableId } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
+import { geoDataClient } from '@/src/prisma-client'
 
 async function createTileSpecification(tableName: TableId) {
   // Get column names and types

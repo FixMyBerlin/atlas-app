@@ -1,5 +1,5 @@
+import { isDev } from '@/src/app/_components/utils/isEnv'
 import { parseAsBoolean, useQueryState } from 'nuqs'
-import { isDev } from 'src/app/_components/utils/isEnv'
 import { searchParamsRegistry } from './searchParamsRegistry'
 import { createMemoizer } from './utils/createMemoizer'
 
