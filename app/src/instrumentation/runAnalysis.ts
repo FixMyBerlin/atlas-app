@@ -15,13 +15,17 @@ async function registerCustomFunctions() {
       RETURN query
       SELECT
         input_length / n as length,
-        ST_LineInterpolatePoint(input_geom, (generate_series(1, n) - 0.5) / n) AS geom;
+        ST_SetSRID
+        (
+          ST_LineInterpolatePoint(input_geom, (generate_series(1, n) - 0.5) / n),
+          ST_SRID(input_geom)
+        ) AS geom;
     END;
     $$
     LANGUAGE plpgsql;
   `
   const countCategoryLengthsPromise = geoDataClient.$executeRaw`
-    CREATE OR REPLACE FUNCTION atlas_count_category_lengths(input_polygon GEOMETRY)
+    CREATE OR REPLACE FUNCTION atlas_count_category_lengths(input_polygon Geometry(MultiPolygon, 3857))
     RETURNS JSONB AS $$
     DECLARE
       category_length JSONB;
@@ -72,15 +76,24 @@ export async function runAnalysis() {
     (
       id TEXT UNIQUE,
       name TEXT,
-      category_length JSONB
+      category_length JSONB,
+      geom Geometry(MultiPolygon, 3857)
     );
     `
-  return geoDataClient.$executeRaw`
-    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length)
-    SELECT id, tags->>'name', atlas_count_category_lengths(geom)
+  return geoDataClient.$transaction([
+    geoDataClient.$executeRaw`
+    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length, geom)
+    SELECT id, tags->>'name', atlas_count_category_lengths(geom), geom
       FROM "boundaries"
       WHERE (tags->>'admin_level')::TEXT = '4'
       ON CONFLICT (id)
       DO UPDATE SET category_length = EXCLUDED.category_length;
-  `
+  `,
+    geoDataClient.$executeRaw`
+      DROP INDEX IF EXISTS "bikelaneCategoryLengths_geom_idx";
+  `,
+    geoDataClient.$executeRaw`
+      CREATE INDEX "bikelaneCategoryLengths_geom_idx" ON "bikelaneCategoryLengths" USING gist(geom);
+  `,
+  ])
 }
