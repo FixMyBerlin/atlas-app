@@ -66,7 +66,53 @@ async function registerCustomFunctions() {
     END;
     $$ LANGUAGE plpgsql;
   `
-  return Promise.all([segmentizeLinestringPromise, countCategoryLengthsPromise])
+
+  const countStreetLengthsPromise = geoDataClient.$executeRaw`
+  CREATE OR REPLACE FUNCTION atlas_count_street_lengths(input_polygon Geometry(MultiPolygon, 3857))
+  RETURNS FLOAT AS $$
+  DECLARE
+    street_length FLOAT;
+  BEGIN
+      -- create a temporary table which holds all bikelanes cutted into points with their respective length
+    BEGIN
+      CREATE temp TABLE temp_roads_segmentized AS
+        SELECT
+          id,
+          tags->>'road_oneway' AS oneway,
+          (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
+        FROM
+          roads;
+      CREATE INDEX "temp_roads_segmentized_geom_idx" ON temp_roads_segmentized USING gist(geom);
+    EXCEPTION
+      WHEN duplicate_table THEN
+        -- If the table already exists, do nothing
+        RAISE NOTICE 'Using cached "temp_roads_segmentized" table';
+    END;
+
+    SELECT
+      ROUND(SUM(effective_length) / 1000.0)
+    INTO street_length
+    FROM (
+      SELECT
+        CASE
+          WHEN oneway = 'yes_dual_carriageway' THEN roads.length
+          ELSE roads.length * 2
+        END AS effective_length
+      FROM
+        temp_roads_segmentized as roads
+      WHERE
+        ST_Intersects(roads.geom, input_polygon)  -- Spatial intersection with input polygon
+    ) AS corrected_data;
+
+    RETURN street_length;
+  END;
+  $$ LANGUAGE plpgsql;
+`
+  return Promise.all([
+    segmentizeLinestringPromise,
+    countCategoryLengthsPromise,
+    countStreetLengthsPromise,
+  ])
 }
 export async function runAnalysis() {
   console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
@@ -77,13 +123,14 @@ export async function runAnalysis() {
       id TEXT UNIQUE,
       name TEXT,
       category_length JSONB,
+      street_length FLOAT,
       geom Geometry(MultiPolygon, 3857)
     );
     `
   return geoDataClient.$transaction([
     geoDataClient.$executeRaw`
-    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length, geom)
-    SELECT id, tags->>'name', atlas_count_category_lengths(geom), geom
+    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length, street_length, geom)
+    SELECT id, tags->>'name', atlas_count_category_lengths(geom), atlas_count_street_lengths(geom), geom
       FROM "boundaries"
       WHERE (tags->>'admin_level')::TEXT = '4'
       ON CONFLICT (id)
