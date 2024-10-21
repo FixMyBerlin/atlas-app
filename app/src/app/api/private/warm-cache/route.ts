@@ -13,7 +13,10 @@ export async function warmRegions(staticRegion: StaticRegion[]) {
   for (const region of staticRegion) {
     if (region.cacheWarming != undefined && region.bbox != null) {
       const { minZoom, maxZoom, tables } = region.cacheWarming
-      console.log(chalk.grey(' ○'), `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`)
+      console.log(
+        chalk.bold(chalk.white(' ○')),
+        `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`,
+      )
       await warmCache(region.bbox, minZoom, maxZoom, tables)
       console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`)
     }

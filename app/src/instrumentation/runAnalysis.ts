@@ -65,7 +65,7 @@ async function registerCustomFunctions() {
   return Promise.all([segmentizeLinestringPromise, countCategoryLengthsPromise])
 }
 export async function runAnalysis() {
-  console.log(chalk.grey(' ○'), `Running Analysis`)
+  console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
   await registerCustomFunctions()
   await geoDataClient.$executeRaw`
     CREATE TABLE IF NOT EXISTS "bikelaneCategoryLengths"
