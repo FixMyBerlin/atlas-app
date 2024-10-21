@@ -122,14 +122,14 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
             color: '#174ed9',
           },
         },
-        // {
-        //   id: 'todo-pbl',
-        //   name: 'Geschuetzter Radfahrstreifen',
-        //   style: {
-        //     type: 'line',
-        //     color: '#2dd4bf',
-        //   },
-        // },
+        {
+          id: 'protectedCyclewayOnHighway',
+          name: 'Geschuetzter Radfahrstreifen',
+          style: {
+            type: 'line',
+            color: '#2dd4bf',
+          },
+        },
         {
           id: 'cyclewayOnHighway_exclusive',
           name: 'Radfahrstreifen',
