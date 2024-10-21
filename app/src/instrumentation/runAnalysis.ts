@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import { geoDataClient } from '../prisma-client'
 
 async function registerCustomFunctions() {
@@ -64,6 +65,7 @@ async function registerCustomFunctions() {
   return Promise.all([segmentizeLinestringPromise, countCategoryLengthsPromise])
 }
 export async function runAnalysis() {
+  console.log(chalk.grey(' ○'), `Running Analysis`)
   await registerCustomFunctions()
   await geoDataClient.$executeRaw`
     CREATE TABLE IF NOT EXISTS "bikelaneCategoryLengths"
@@ -73,7 +75,7 @@ export async function runAnalysis() {
       category_length JSONB
     );
     `
-  geoDataClient.$executeRaw`
+  return geoDataClient.$executeRaw`
     INSERT INTO "bikelaneCategoryLengths" (id, name, category_length)
     SELECT id, tags->>'name', atlas_count_category_lengths(geom)
       FROM "boundaries"

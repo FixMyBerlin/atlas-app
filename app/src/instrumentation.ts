@@ -15,7 +15,7 @@ export async function register() {
       const generalizationFunctionPromise = registerGeneralizationFunctions(
         interactivityConfiguration,
       ).then(() => console.log(greenHook, 'Generalization functions registered'))
-      runAnalysis()
+      runAnalysis().then(() => console.log(greenHook, 'Analysis completed'))
       return Promise.all([exportFunctionPromise, generalizationFunctionPromise])
     } catch (e) {
       console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
