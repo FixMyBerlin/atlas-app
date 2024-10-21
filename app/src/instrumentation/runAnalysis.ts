@@ -1,7 +1,3 @@
-// specify license and attribution for data export
-// const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
-// const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
-
 import { geoDataClient } from '../prisma-client'
 
 async function registerCustomFunctions() {
