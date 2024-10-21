@@ -5,8 +5,20 @@
 import { geoDataClient } from '../prisma-client'
 
 export async function runAnalysis() {
-  geoDataClient.$executeRaw`DROP TABLE IF EXISTS "boundaryStats";`
+  await geoDataClient.$executeRaw`
+    CREATE TABLE IF NOT EXISTS "bikelaneCategoryLengths"
+    (
+      id TEXT UNIQUE,
+      name TEXT,
+      category_length JSONB
+    );
+    `
   geoDataClient.$executeRaw`
-  SELECT id, tags->'name', count_category_lengths(geom)
-    FROM (SELECT * FROM "boundaries" WHERE (tags->>'admin_level')::TEXT = '4') sq;`
+    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length)
+    SELECT id, tags->>'name', atlas_count_category_lengths(geom)
+      FROM "boundaries"
+      WHERE (tags->>'admin_level')::TEXT = '4'
+      ON CONFLICT (id)
+      DO UPDATE SET category_length = EXCLUDED.category_length;
+  `
 }
