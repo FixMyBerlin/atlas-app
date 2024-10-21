@@ -79,8 +79,4 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: [],
     minzoom: 0,
   },
-  presenceStats: {
-    stylingKeys: [],
-    minzoom: 0,
-  },
 }
