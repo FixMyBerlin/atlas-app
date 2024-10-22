@@ -42,7 +42,7 @@ export const sources: MapDataSource<
     tiles: getTilesUrl(
       '/atlas_generalized_boundaries,atlas_generalized_boundarylabels/{z}/{x}/{y}',
     ),
-    maxzoom: 12,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>',
     licence: 'ODbL',
@@ -307,7 +307,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
     tiles: getTilesUrl('/atlas_generalized_publictransport/{z}/{x}/{y}'),
-    maxzoom: 11,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -409,7 +409,7 @@ export const sources: MapDataSource<
     // https://tiles.radverkehrsatlas.de/landuse
     id: 'atlas_landuse',
     tiles: getTilesUrl('/atlas_generalized_landuse/{z}/{x}/{y}'),
-    maxzoom: 10,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
     minzoom: 4,
     attributionHtml:
       '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
@@ -493,8 +493,8 @@ export const sources: MapDataSource<
     // https://www.mapillary.com/developer/api-documentation/#coverage-tiles
     id: 'mapillary_coverage',
     tiles: `https://tiles.mapillary.com/maps/vtp/mly1_public/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
-    minzoom: 0,
     maxzoom: 14,
+    minzoom: 0,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
     licence: undefined, // TODO
     promoteId: undefined,
@@ -530,8 +530,8 @@ export const sources: MapDataSource<
   //   // https://www.mapillary.com/developer/api-documentation/#point-tiles
   //   id: 'mapillary_mapfeatures',
   //   tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_point/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
-  //   minzoom: 14,
   //   maxzoom: 14,
+  //   minzoom: 14,
   //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   //   highlightingKey: 'id',
   // },
@@ -540,8 +540,8 @@ export const sources: MapDataSource<
   //   // https://www.mapillary.com/developer/api-documentation/#traffic-sign-tiles
   //   id: 'mapillary_trafficSigns',
   //   tiles: `https://tiles.mapillary.com/maps/vtp/mly_map_feature_traffic_sign/2/{z}/{x}/{y}?access_token=${apiKeyMapillary}`,
-  //   minzoom: 14,
   //   maxzoom: 14,
+  //   minzoom: 14,
   //   attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
   //   highlightingKey: 'id',
   // },
