@@ -10,15 +10,16 @@ const Schema = z.object({
 })
 
 export async function warmRegions(staticRegion: StaticRegion[]) {
+  const greenHook = chalk.bold(chalk.green(' ✓'))
+  const whiteCircle = chalk.bold(chalk.white(' ○'))
   for (const region of staticRegion) {
     if (region.cacheWarming != undefined && region.bbox != null) {
       const { minZoom, maxZoom, tables } = region.cacheWarming
-      console.log(
-        chalk.bold(chalk.white(' ○')),
-        `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`,
-      )
+      console.log(whiteCircle, `Warming cache for ${region.slug} (${minZoom}-${maxZoom})`)
+      const startTime = Date.now()
       await warmCache(region.bbox, minZoom, maxZoom, tables)
-      console.log(chalk.bold(chalk.green(' ✓')), `Warmed cache for ${region.slug}`)
+      const secondsElapsed = Math.round((Date.now() - startTime) / 100) / 10
+      console.log(greenHook, `Warmed cache for ${region.slug} in ${secondsElapsed} s`)
     }
   }
 }

@@ -11,7 +11,7 @@ export async function analysis() {
     // collect promises and add a final log message
     const analysisPromise = Promise.all([aggregateLengthsPromise]).then(() => {
       const secondsElapsed = Math.round((Date.now() - startTime) / 100) / 10
-      console.log(`${chalk.bold(chalk.green(' ✓'))} Analysis completed ${secondsElapsed} s`)
+      console.log(`${chalk.bold(chalk.green(' ✓'))} Analysis completed in ${secondsElapsed} s`)
     })
     return analysisPromise
   } catch (e) {
