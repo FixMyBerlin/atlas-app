@@ -57,6 +57,7 @@ async function registerCustomFunctions() {
         id,
         tags->>'road' AS aggregator_key,
         CASE
+          WHEN tags->>'road_oneway' = 'yes' THEN 1
           WHEN tags->>'road_oneway' = 'yes_dual_carriageway' THEN 1
           ELSE 2
         END AS factor,
