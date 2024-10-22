@@ -36,6 +36,11 @@ async function registerCustomFunctions() {
           SELECT
             id,
             tags->>'category' AS category,
+            CASE
+              WHEN tags->>'oneway' = 'yes' THEN 1
+              WHEN tags->>'oneway' = 'implicit_yes' THEN 1
+              ELSE 2
+            END AS factor,
             (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
           FROM
             bikelanes;
@@ -53,7 +58,7 @@ async function registerCustomFunctions() {
       FROM (
         SELECT
           category,
-          SUM(bikelanes.length) AS total_length_km
+          SUM(bikelanes.length * bikelanes.factor) AS total_length_km
         FROM
           temp_bikelanes_segmentized as bikelanes
         WHERE
@@ -78,7 +83,10 @@ async function registerCustomFunctions() {
       CREATE temp TABLE temp_roads_segmentized AS
         SELECT
           id,
-          tags->>'road_oneway' AS oneway,
+          CASE
+            WHEN tags->>'road_oneway' = 'yes_dual_carriageway' THEN 1
+            ELSE 2
+          END AS factor,
           (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
         FROM
           roads;
@@ -94,10 +102,7 @@ async function registerCustomFunctions() {
     INTO street_length
     FROM (
       SELECT
-        CASE
-          WHEN oneway = 'yes_dual_carriageway' THEN roads.length
-          ELSE roads.length * 2
-        END AS effective_length
+        roads.length * roads.factor as effective_length
       FROM
         temp_roads_segmentized as roads
       WHERE
