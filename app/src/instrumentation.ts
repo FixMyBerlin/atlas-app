@@ -15,7 +15,12 @@ export async function register() {
       const generalizationFunctionPromise = registerGeneralizationFunctions(
         interactivityConfiguration,
       ).then(() => console.log(greenHook, 'Generalization functions registered'))
-      aggregateLengths().then(() => console.log(greenHook, 'Analysis completed'))
+      console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
+      const startTime = Date.now()
+      aggregateLengths().then(() => {
+        const secondsElapsed = Math.round((Date.now() - startTime) / 100) / 10
+        console.log(`${greenHook} Analysis completed ${secondsElapsed} s`)
+      })
       return Promise.all([exportFunctionPromise, generalizationFunctionPromise])
     } catch (e) {
       console.error('\n\nINSTRUMENTATION HOOK FAILED', e)

@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import { TableId } from '../app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { geoDataClient } from '../prisma-client'
 
@@ -106,7 +105,6 @@ async function registerCustomFunctions() {
 }
 export async function aggregateLengths() {
   await geoDataClient.$connect()
-  console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
   await registerCustomFunctions()
   await geoDataClient.$executeRaw`
     CREATE TABLE IF NOT EXISTS "aggregated_lengths"
