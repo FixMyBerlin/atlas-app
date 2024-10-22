@@ -1,3 +1,4 @@
+import { analysis } from '@/src/analysis/analysis'
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { register } from '@/src/instrumentation'
 import { NextRequest, NextResponse } from 'next/server'
@@ -13,6 +14,7 @@ export async function GET(req: NextRequest) {
   if (!access) return response
   try {
     await register()
+    analysis()
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
     if (!isProd) throw e
