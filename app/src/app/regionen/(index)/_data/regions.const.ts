@@ -570,7 +570,8 @@ export const staticRegion: StaticRegion[] = [
       'brandenburg-aktualitaet',
       ...defaultBackgroundSources,
     ],
-    notes: 'atlasNotes',
+    notes: 'disabled',
+    // notes: 'atlasNotes',
   },
   {
     slug: 'bb-sg',
