@@ -1,5 +1,11 @@
 import chalk from 'chalk'
+import { TableId } from '../app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { geoDataClient } from '../prisma-client'
+
+const lengthCounterIdentifier = (id: TableId) =>
+  `atlas_count_${id.toLowerCase()}_length` as `atlas_count_${Lowercase<TableId>}_length`
+const segmentizedTableIdentifier = (id: TableId) =>
+  `temp_${id.toLowerCase()}_segmentized` as `temp_${Lowercase<TableId>}_segmentized`
 
 async function registerCustomFunctions() {
   const segmentizeLinestringPromise = geoDataClient.$executeRaw`
@@ -24,128 +30,112 @@ async function registerCustomFunctions() {
     $$
     LANGUAGE plpgsql;
   `
-  const countCategoryLengthsPromise = geoDataClient.$executeRaw`
-    CREATE OR REPLACE FUNCTION atlas_count_category_lengths(input_polygon Geometry(MultiPolygon, 3857))
-    RETURNS JSONB AS $$
-    DECLARE
-      category_length JSONB;
-    BEGIN
-        -- create a temporary table which holds all bikelanes cutted into points with their respective length
-      BEGIN
-        CREATE temp TABLE temp_bikelanes_segmentized AS
-          SELECT
-            id,
-            tags->>'category' AS category,
-            CASE
-              WHEN tags->>'oneway' = 'yes' THEN 1
-              WHEN tags->>'oneway' = 'implicit_yes' THEN 1
-              ELSE 2
-            END AS factor,
-            (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
-          FROM
-            bikelanes;
-        CREATE INDEX "temp_bikelanes_segmentized_geom_idx" ON temp_bikelanes_segmentized USING gist(geom);
-        CREATE INDEX "temp_bikelanes_segmentized_category_idx" ON temp_bikelanes_segmentized (category);
-      EXCEPTION
-        WHEN duplicate_table THEN
-          -- If the table already exists, do nothing
-          RAISE NOTICE 'Using cached "temp_bikelanes_segmentized" table';
-      END;
-
+  const bikelanesSegmentizedPromise = geoDataClient.$executeRaw`
+    CREATE TABLE IF NOT EXISTS temp_bikelanes_segmentized AS
       SELECT
-        jsonb_object_agg(category, ROUND(total_length_km / 1000.0))
-      INTO category_length
-      FROM (
-        SELECT
-          category,
-          SUM(bikelanes.length * bikelanes.factor) AS total_length_km
-        FROM
-          temp_bikelanes_segmentized as bikelanes
-        WHERE
-          ST_Intersects(bikelanes.geom, input_polygon)  -- Spatial intersection with input polygon
-        GROUP BY
-          category
-      ) AS aggregated_data;
-
-      RETURN category_length;
-    END;
-    $$ LANGUAGE plpgsql;
-  `
-
-  const countStreetLengthsPromise = geoDataClient.$executeRaw`
-  CREATE OR REPLACE FUNCTION atlas_count_street_lengths(input_polygon Geometry(MultiPolygon, 3857))
-  RETURNS FLOAT AS $$
-  DECLARE
-    street_length FLOAT;
-  BEGIN
-      -- create a temporary table which holds all bikelanes cutted into points with their respective length
-    BEGIN
-      CREATE temp TABLE temp_roads_segmentized AS
-        SELECT
-          id,
-          CASE
-            WHEN tags->>'road_oneway' = 'yes_dual_carriageway' THEN 1
-            ELSE 2
-          END AS factor,
-          (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
-        FROM
-          roads;
-      CREATE INDEX "temp_roads_segmentized_geom_idx" ON temp_roads_segmentized USING gist(geom);
-    EXCEPTION
-      WHEN duplicate_table THEN
-        -- If the table already exists, do nothing
-        RAISE NOTICE 'Using cached "temp_roads_segmentized" table';
-    END;
-
-    SELECT
-      ROUND(SUM(effective_length) / 1000.0)
-    INTO street_length
-    FROM (
-      SELECT
-        roads.length * roads.factor as effective_length
+        id,
+        tags->>'category' AS aggregator_key,
+        CASE
+          WHEN tags->>'oneway' = 'yes' THEN 1
+          WHEN tags->>'oneway' = 'implicit_yes' THEN 1
+          ELSE 2
+        END AS factor,
+        (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
       FROM
-        temp_roads_segmentized as roads
-      WHERE
-        ST_Intersects(roads.geom, input_polygon)  -- Spatial intersection with input polygon
-    ) AS corrected_data;
+        bikelanes;`.then(() => {
+    geoDataClient.$executeRaw`
+    CREATE INDEX IF NOT EXISTS "temp_bikelanes_segmentized_geom_idx" ON temp_bikelanes_segmentized USING gist(geom);`
+    geoDataClient.$executeRaw`
+    CREATE INDEX IF NOT EXISTS "temp_bikelanes_segmentized_aggregator_idx" ON temp_bikelanes_segmentized (aggregator_key);`
+  })
 
-    RETURN street_length;
-  END;
-  $$ LANGUAGE plpgsql;
-`
+  const roadsSegmentizedPromiset = geoDataClient.$executeRaw`
+    CREATE TABLE IF NOT EXISTS temp_roads_segmentized AS
+      SELECT
+        id,
+        tags->>'road' AS aggregator_key,
+        CASE
+          WHEN tags->>'road_oneway' = 'yes_dual_carriageway' THEN 1
+          ELSE 2
+        END AS factor,
+        (atlas_segmentize_linestring(geom, (tags->>'length')::FLOAT, 100)).*
+      FROM
+        roads;`.then(() => {
+    geoDataClient.$executeRaw`
+    CREATE INDEX IF NOT EXISTS "temp_roads_segmentized_geom_idx" ON temp_roads_segmentized USING gist(geom);`
+    geoDataClient.$executeRaw`
+    CREATE INDEX IF NOT EXISTS "temp_roads_segmentized_aggregator_idx" ON temp_bikelanes_segmentized (aggregator_key);`
+  })
+
+  const counterPromises = ['roads', 'bikelanes'].map((id: TableId) => {
+    return geoDataClient.$executeRawUnsafe(`
+      CREATE OR REPLACE FUNCTION ${lengthCounterIdentifier(id)}(input_polygon Geometry(MultiPolygon, 3857))
+      RETURNS JSONB AS $$
+      DECLARE
+        aggregated_length JSONB;
+      BEGIN
+        SELECT
+          jsonb_object_agg(aggregator_key, ROUND(total_length_km / 1000.0))
+        INTO aggregated_length
+        FROM (
+          SELECT
+            segmentized.aggregator_key,
+            SUM(segmentized.length * segmentized.factor) AS total_length_km
+          FROM
+            ${segmentizedTableIdentifier(id)} as segmentized
+          WHERE
+            ST_Intersects(segmentized.geom, input_polygon)
+          GROUP BY
+            segmentized.aggregator_key
+        ) AS aggregated_data;
+
+        RETURN aggregated_length;
+      END;
+      $$ LANGUAGE plpgsql;
+  `)
+  })
   return Promise.all([
     segmentizeLinestringPromise,
-    countCategoryLengthsPromise,
-    countStreetLengthsPromise,
+    bikelanesSegmentizedPromise,
+    roadsSegmentizedPromiset,
+    ...counterPromises,
   ])
 }
 export async function runAnalysis() {
+  await geoDataClient.$connect()
   console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
   await registerCustomFunctions()
   await geoDataClient.$executeRaw`
-    CREATE TABLE IF NOT EXISTS "bikelaneCategoryLengths"
+    CREATE TABLE IF NOT EXISTS "aggregatedLengths"
     (
       id TEXT UNIQUE,
       name TEXT,
-      category_length JSONB,
-      street_length FLOAT,
-      geom Geometry(MultiPolygon, 3857)
+      geom Geometry(MultiPolygon, 3857),
+      bikelane_length JSONB,
+      road_length JSONB
     );
     `
   return geoDataClient.$transaction([
     geoDataClient.$executeRaw`
-    INSERT INTO "bikelaneCategoryLengths" (id, name, category_length, street_length, geom)
-    SELECT id, tags->>'name', atlas_count_category_lengths(geom), atlas_count_street_lengths(geom), geom
+      INSERT INTO "aggregatedLengths" (id, name,  geom, bikelane_length, road_length)
+      SELECT
+        id,
+        tags->>'name',
+        geom,
+        atlas_count_bikelanes_length(geom),
+        atlas_count_roads_length(geom)
       FROM "boundaries"
       WHERE (tags->>'admin_level')::TEXT = '4'
       ON CONFLICT (id)
-      DO UPDATE SET category_length = EXCLUDED.category_length;
+        DO UPDATE SET
+          bikelane_length = EXCLUDED.bikelane_length,
+          road_length = EXCLUDED.road_length;
   `,
     geoDataClient.$executeRaw`
-      DROP INDEX IF EXISTS "bikelaneCategoryLengths_geom_idx";
+      DROP INDEX IF EXISTS "aggregatedLengths_geom_idx";
   `,
     geoDataClient.$executeRaw`
-      CREATE INDEX "bikelaneCategoryLengths_geom_idx" ON "bikelaneCategoryLengths" USING gist(geom);
+      CREATE INDEX "aggregatedLengths_geom_idx" ON "aggregatedLengths" USING gist(geom);
   `,
   ])
 }
