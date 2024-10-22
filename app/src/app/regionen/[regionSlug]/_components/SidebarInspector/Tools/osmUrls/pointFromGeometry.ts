@@ -81,7 +81,7 @@ export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']): Return
     }
     case 'MultiPolygon': {
       // This is not the best point. But we can always improve it to take the center of the largest Polygon
-      const feature = centerOfMass(geometry.coordinates)
+      const feature = center(geometry)
       const lng = feature.geometry.coordinates[0] || fallback[0]
       const lat = feature.geometry.coordinates[1] || fallback[1]
       return [lng, lat] satisfies ReturnPosition
