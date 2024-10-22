@@ -1,6 +1,6 @@
 import { analysis } from '@/src/analysis/analysis'
 import { isProd } from '@/src/app/_components/utils/isEnv'
-import { registerSQLFunctions } from '@/src/instrumentation/registerSQLFunctions'
+import { registerSQLFunctions } from '@/src/registerSQLFunctions/registerSQLFunctions'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { guardEnpoint } from '../guardEndpoint'
