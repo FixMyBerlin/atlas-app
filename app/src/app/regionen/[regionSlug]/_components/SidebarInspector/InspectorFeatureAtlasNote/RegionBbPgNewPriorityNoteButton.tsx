@@ -22,6 +22,7 @@ export const RegionBbPgNewPriorityNoteButton = ({ feature }: Pick<InspectorFeatu
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
+  if (true) return null // NOTE: REMOVE to enable the feature again (and the ts-expect-error below)
   if (regionSlug !== 'bb-pg') return null
   if (!isAuthenticated) return null
   if (!feature.layer.id.includes('bb-ramboll-netzentwurf-2')) return null
@@ -48,6 +49,7 @@ ID: ${feature.properties.id}
     const point = pointFromGeometry(feature.geometry)
     createNoteMutation(
       {
+        // @ts-expect-error
         regionSlug,
         subject: `Priorität: ${importance}`,
         latitude: point[1],
