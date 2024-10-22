@@ -1,4 +1,13 @@
-import { centerOfMass, feature, length, lineSliceAlong, lineString, polygon } from '@turf/turf'
+import {
+  booleanValid,
+  center,
+  centerOfMass,
+  feature,
+  length,
+  lineSliceAlong,
+  lineString,
+  polygon,
+} from '@turf/turf'
 
 type ReturnPosition = [number, number]
 
@@ -18,6 +27,22 @@ const pointOnMiddleOfLinestring = (geometry: GeoJSON.LineString) => {
 
 // TS Note: For some reason I need to add the return type once I add the recursion at the end.
 export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']): ReturnPosition => {
+  if (!booleanValid(geometry)) {
+    // UseCase: We had a wrong maxzoom setting wich returned an invalid Polygon
+    const fallbackFirstPoint =
+      geometry.type === 'GeometryCollection'
+        ? pointFromGeometry(geometry.geometries[0]!)
+        : geometry.coordinates.flat(2).at(0) || fallback
+    const lng = fallbackFirstPoint[0] || fallback[0]
+    const lat = fallbackFirstPoint[1] || fallback[1]
+    console.log('ERROR', 'Geometry invalid, using fallback', {
+      geometry,
+      fallbackFirstPoint,
+      point: [lng, lat],
+    })
+    return [lng, lat] satisfies ReturnPosition
+  }
+
   switch (geometry.type) {
     case 'Point': {
       const lng = geometry.coordinates[0] || fallback[0]
@@ -65,7 +90,7 @@ export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']): Return
       // `GeometryCollection` are an array of Point|LineString|Polygon|….
       // This should never happen for our data, so we just pick the first to create a center.
       const firstCollectionItem = geometry.geometries[0]
-      if (!firstCollectionItem) {
+      if (!firstCollectionItem || !booleanValid(firstCollectionItem)) {
         return fallback
       }
       return pointFromGeometry(firstCollectionItem)
