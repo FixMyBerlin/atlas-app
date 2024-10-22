@@ -101,7 +101,7 @@ async function registerCustomFunctions() {
     ...counterPromises,
   ])
 }
-export async function runAnalysis() {
+export async function aggregateLengths() {
   await geoDataClient.$connect()
   console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
   await registerCustomFunctions()
