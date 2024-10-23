@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line react-compiler/react-compiler
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   await useAuthenticatedBlitzContext({
     // TODO MIGRATION AUTH: next param does not work; is not supported by src/pages/api/auth/[...nextauth].ts
     redirectTo: '/api/auth/osm/login?next=/admin',
