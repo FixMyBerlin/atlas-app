@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   if (!access) return response
   try {
     await registerSQLFunctions()
-    analysis()
+    analysis() // this may take some time, so we don't await it
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
     if (!isProd) throw e
