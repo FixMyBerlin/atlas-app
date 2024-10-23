@@ -38,6 +38,10 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: ['bikelane_left', 'bikelane_self', 'bikelane_right'],
     minzoom: 0,
   },
+  bikeSuitability: {
+    stylingKeys: ['bikeSuitability'],
+    minzoom: 11,
+  },
   bikelanes: {
     stylingKeys: ['category', 'surface', 'smoothness', 'width'],
     minzoom: 9,

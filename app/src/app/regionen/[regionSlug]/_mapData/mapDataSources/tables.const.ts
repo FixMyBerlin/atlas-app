@@ -14,6 +14,7 @@ export type TableId =
   | 'roads'
   | 'roadsPathClasses'
   | 'bikelanesPresence' // based on `roads`
+  | 'bikeSuitability' // based on `roads`
   | 'bikelanes'
   | 'trafficSigns'
 

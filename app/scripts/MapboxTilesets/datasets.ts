@@ -98,6 +98,11 @@ export const tilesetConfigs: Record<
     uploadUrl: '', //
     bbox: bboxPartOfNorthGermany,
   },
+  bikeSuitability: {
+    sourceLayer: 'bikeSuitability',
+    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.6s7gn4lg/#14/52.51622/13.37036',
+    bbox: bboxPartOfNorthGermany,
+  },
   bikeroutes: {
     sourceLayer: 'bikeroutes',
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.7h5266ql/#14/52.51622/13.37036',

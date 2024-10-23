@@ -23,6 +23,7 @@ type AtlasSourceId =
   | 'atlas_roads'
   | 'atlas_roadsPathClasses'
   | 'atlas_bikelanesPresence' // based on `roads`
+  | 'atlas_bikeSuitability' // based on `roads`
   | 'atlas_trafficSigns'
 
 type MapillarySourceId = 'mapillary_coverage' | 'mapillary_mapfeatures' | 'mapillary_trafficSigns'
@@ -299,6 +300,27 @@ export const sources: MapDataSource<
       enabled: true,
       highlightingKey: 'id',
       documentedKeys: ['composit_road_bikelanes'],
+    },
+    // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
+    verification: { enabled: false },
+    freshness: { enabled: true },
+    calculator: { enabled: false },
+    export: { enabled: false }, // can be exported as part of `roads`, `roadsPathClasses`
+  },
+  {
+    id: 'atlas_bikeSuitability',
+    tiles: getTilesUrl('/atlas_generalized_bikesuitability/{z}/{x}/{y}'),
+    minzoom: 10,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: ['name', 'road', 'bikeSuitability', 'composit_surface_smoothness'],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
