@@ -1,5 +1,10 @@
 # dependencies
-node_modules
+node_modules/*
+!node_modules/.prisma
+node_modules/.prisma/*
+!node_modules/.prisma/client
+node_modules/.prisma/client/*
+!node_modules/.prisma/client/sql
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
