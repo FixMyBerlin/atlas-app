@@ -3,6 +3,7 @@ FROM node:18-bullseye-slim AS base
 WORKDIR /app
 COPY /app/package*.json /app/
 COPY /app/patches /app/patches
+COPY /app/node_modules/.prisma/client/sql /app/node_modules/.prisma/client/sql
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
