@@ -3,7 +3,6 @@ require("Set")
 require("CopyTags")
 require("Sanitize")
 require("DeriveTrafficSigns")
-require("BikeSuitability")
 
 local tags_copied = {
   "mapillary",
@@ -84,11 +83,6 @@ function RoadClassification(object)
   --   end
   -- end
 
-  -- Bike Suitability
-  local bikeSuitability = CategorizeBikeSuitability(tags)
-  if bikeSuitability then
-    result_tags.bikeSuitability = bikeSuitability.id
-  end
 
   if tags.oneway == 'yes' then
     -- Note: We do not pass 'oneway=no' to the 'road_oneway' key
