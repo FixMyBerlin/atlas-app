@@ -3,7 +3,7 @@ import { interactivityConfiguration } from '@/src/app/regionen/[regionSlug]/_map
 import chalk from 'chalk'
 import { registerExportFunctions } from './registerExportFunctions'
 import { registerGeneralizationFunctions } from './registerGeneralizationFunctions'
-// This function gets called on every server startup. For details see /src/instrumentation/README.md
+
 export async function registerSQLFunctions() {
   try {
     const greenCheckmark = chalk.bold(chalk.green(' ✓'))
