@@ -5,7 +5,7 @@ import { point } from '@turf/turf'
 import { LineString } from 'geojson'
 import { maprouletteProjects } from './maprouletteProjects.const'
 
-type MapRouletteProjectKey = (typeof maprouletteProjects)[number]
+export type MapRouletteProjectKey = (typeof maprouletteProjects)[number]
 type Props = {
   projectKey: MapRouletteProjectKey
   osmTypeIdString: string
@@ -30,6 +30,14 @@ export const categoryToMaprouletteProjectKey = (category: string | undefined | n
     matches.push(directMatch)
   }
   return matches
+}
+
+export const todoMarkdownToMaprouletteProjectKey = (todos: string | undefined) => {
+  return maprouletteProjects.map((project) => {
+    if (todos?.includes(`* ${project}`)) {
+      return project
+    }
+  })
 }
 
 export const taskDescriptionMarkdown = ({
@@ -232,6 +240,36 @@ Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fu
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
+    case 'unexpected_bicycle_access_on_footway':
+      return `
+## Kontext
+
+Dieser Weg verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.
+
+## Aufgabe
+
+**Bitte prüfe und korrigieren die Tags.**
+
+Prüfe mit Mapillary (s.u.) oder vor Ort, welches Verkehrszeichen vorliegt.
+Ideal ist, wenn du über den \`mapillary=*\` Tag den Mapillary-Key von einem Foto hinterlegst, auf dem das Verkehrszeichen zu sehen ist:
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+
+Tagging-Empfehlungen:
+
+* Ist es ein **"Gehweg + Fahrrad frei"**? Dann ändere \`bicycle=yes\` und ergänze [das Verkehrszeichen](https://trafficsigns.osm-verkehrswende.org/?signs=DE:239,DE:1022-10) \`traffic_sign=DE:239,1022-10\`.
+
+* Ist es ein **"Gemeinsamer Geh- und Radweg"**? Dann ändere \`highway=path\` und ergänze [das Verkehrszeichen](https://trafficsigns.osm-verkehrswende.org/?signs=DE:240) \`traffic_sign=DE:240\`.
+
+* Ist es ein **unbeschildeter Weg**? Dann wähle eine der Tagging kombinationen anhand der Verkehrsbedeutung vor Ort und ergänze \`traffic_sign=none\`.
+
+## Hilfsmittel
+
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
