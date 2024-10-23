@@ -38,7 +38,7 @@ for name in ${topics[@]}; do
 done
 
 # Call the refresh endpoint to update the generalization and export functions
-curl --silent --show-error --fail -X GET "http://app:4000/api/private/refresh?apiKey=$ATLAS_API_KEY" --output "/dev/null"
+curl --silent --show-error --fail -X GET "http://app:4000/api/private/post-processing-hook?apiKey=$ATLAS_API_KEY" --output "/dev/null"
 
 notify "Processing finished."
 

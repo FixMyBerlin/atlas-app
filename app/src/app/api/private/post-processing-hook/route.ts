@@ -1,5 +1,6 @@
+import { analysis } from '@/src/analysis/analysis'
 import { isProd } from '@/src/app/_components/utils/isEnv'
-import { register } from '@/src/instrumentation'
+import { registerSQLFunctions } from '@/src/registerSQLFunctions/registerSQLFunctions'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { guardEnpoint } from '../guardEndpoint'
@@ -12,7 +13,8 @@ export async function GET(req: NextRequest) {
   const { access, response } = guardEnpoint(req, Schema)
   if (!access) return response
   try {
-    await register()
+    await registerSQLFunctions()
+    analysis() // this may take some time, so we don't await it
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
     if (!isProd) throw e

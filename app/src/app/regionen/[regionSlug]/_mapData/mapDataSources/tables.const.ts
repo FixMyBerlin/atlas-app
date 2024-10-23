@@ -7,7 +7,6 @@ export type TableId =
   | 'bikeroutes'
   | 'boundaries'
   | 'boundaryLabels'
-  | 'presenceStats'
   | 'landuse'
   | 'places'
   | 'poiClassification'
