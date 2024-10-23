@@ -12,8 +12,8 @@ export async function generateMetadata() {
 
 const sumLength = (lengthMap) =>
   Object.values(lengthMap).reduce((acc: number, curr: number) => acc + curr, 0)
-const stats = await geoDataClient.$queryRawTyped(getAllStatistics())
 export default async function StatsPage() {
+  const stats = await geoDataClient.$queryRawTyped(getAllStatistics())
   return (
     <div className={twJoin(proseClasses, 'mx-auto max-w-prose')}>
       {stats.map((region) => {
