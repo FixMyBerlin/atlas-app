@@ -30,6 +30,7 @@ require("DefaultId")
 require("PathsGeneralization")
 require("RoadTodos")
 require("CreateTodoList")
+require("BikeSuitability")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -97,6 +98,23 @@ local bikelanesPresenceTable = osm2pgsql.define_table({
   }
 })
 
+local bikeSuitabilityTable = osm2pgsql.define_table({
+  name = 'bikeSuitability',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
+  }
+})
+
+
 function osm2pgsql.process_way(object)
   local tags = object.tags
 
@@ -129,6 +147,7 @@ function osm2pgsql.process_way(object)
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
+  -- bikelanes
   local cycleways = Bikelanes(object)
   local road_info = {
     name = results.name,
@@ -153,6 +172,7 @@ function osm2pgsql.process_way(object)
     end
   end
 
+  -- presence
   local presence = BikelanesPresence(object, cycleways)
   if presence ~= nil and
     (presence.bikelane_left ~= "not_expected"
@@ -185,6 +205,22 @@ function osm2pgsql.process_way(object)
       lit_age = results._lit_age
     })
 
+    -- bike suitability
+    local bikeSuitability = CategorizeBikeSuitability(tags)
+    if bikeSuitability then
+      local bikeSuitabilityTags = {
+        bikeSuitability = bikeSuitability.id
+      }
+      bikeSuitabilityTable:insert({
+        id = DefaultId(object),
+        tags = bikeSuitabilityTags,
+        meta = meta,
+        geom = object:as_linestring(),
+        minzoom = 0
+      })
+    end
+
+    -- roads
     if PathClasses[tags.highway] then
       roadsPathClassesTable:insert({
         tags = ExtractPublicTags(results),
