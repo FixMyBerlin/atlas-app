@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import { aggregateLengths } from './aggregateLengths'
-// This function gets called on every server startup. For details see /src/instrumentation/README.md
+
+// This function gets called by the `private/post-processing-hook` endpoint
 export async function analysis() {
   try {
     const startTime = Date.now()
