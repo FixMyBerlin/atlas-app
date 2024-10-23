@@ -2,6 +2,6 @@ import { registerSQLFunctions } from './registerSQLFunctions/registerSQLFunction
 // This function gets called on every server startup. For details see /src/registerSQLFunctions/README.md
 export async function register() {
   if (process.env.NEXT_RUNTIME === 'nodejs') {
-    registerSQLFunctions()
+    return registerSQLFunctions()
   }
 }
