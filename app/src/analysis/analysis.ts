@@ -5,7 +5,7 @@ import { aggregateLengths } from './aggregateLengths'
 export async function analysis() {
   try {
     const startTime = Date.now()
-    console.log(chalk.bold(chalk.white(' ○')), `Running Analysis`)
+    console.log(chalk.bold(chalk.white(' ○')), `Running analysis`)
 
     const aggregateLengthsPromise = aggregateLengths()
 
