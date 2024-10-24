@@ -23,7 +23,40 @@ export const subcat_bikelanes_plus_bikesuitability: FileMapDataSubcategory = {
         source,
         sourceLayer,
       }),
-      legends: undefined,
+      legends: [
+        {
+          id: 'goodSurface',
+          name: 'Oberfläche',
+          style: {
+            type: 'line',
+            color: '#0fcc51',
+          },
+        },
+        {
+          id: 'noMotorizedVehicle',
+          name: 'Kfz Verbot',
+          style: {
+            type: 'line',
+            color: '#0b7f83',
+          },
+        },
+        {
+          id: 'noOvertaking',
+          name: 'Überholverbot',
+          style: {
+            type: 'line',
+            color: '#07dfd7',
+          },
+        },
+        {
+          id: 'livingStreet',
+          name: 'Verkehrsberuhigter Bereich',
+          style: {
+            type: 'line',
+            color: '#0bbce0',
+          },
+        },
+      ],
     },
   ],
 }
