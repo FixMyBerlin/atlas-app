@@ -1,6 +1,5 @@
 import { Prettify } from '@/src/app/_components/types/types'
 import { RegionSlug } from '@/src/app/regionen/(index)/_data/regions.const'
-import { SourceProps } from 'react-map-gl'
 import {
   CircleLayer,
   FillLayer,
@@ -8,6 +7,7 @@ import {
   LineLayer,
   RasterSource,
   SymbolLayer,
+  VectorTileSource,
 } from 'react-map-gl/maplibre'
 import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/Legend/LegendIcons/types'
@@ -159,15 +159,15 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   id: TIds
   /** @desc URL of the vector tiles */
   tiles: string
-  /** @desc maxzoom:12 (default) means visible from 12 and down/further away (12+ is overzoomed)
-   * @desc `0---4=minzoom->----<-maxzoom=12----22` */
-  maxzoom: SourceProps['maxzoom']
-  /** @desc minzoom:4 (default) means visible from 4 and up/closer
-   * @desc `0---4=minzoom->----<-maxzoom=12----22` */
-  minzoom: SourceProps['minzoom']
+  /** @desc minzoom:4 (default, see `SIMPLIFY_MIN_ZOOM`) means no data is loaded for 0-4, only from 5+ (zoomed in) data is present
+   * @desc `0---4=minzoom->-----maxzoom=14=overzoom->---22` */
+  minzoom: VectorTileSource['minzoom']
+  /** @desc maxzoom:14 (default, see `SIMPLIFY_MAX_ZOOM`) means data is still visible for 14+ but it uses the data from z=14 (overzoom)
+   * @desc `0---4=minzoom->-----maxzoom=14=overzoom->---22` */
+  maxzoom: VectorTileSource['maxzoom']
   attributionHtml: string
   licence: 'ODbL' | undefined
-  promoteId: SourceProps['promoteId']
+  promoteId: VectorTileSource['promoteId'] | undefined
   osmIdConfig: MapDataOsmIdConfig
   /** @desc Inspector: Enable and configure Inspector */
   inspector: MapDataSourceInspector

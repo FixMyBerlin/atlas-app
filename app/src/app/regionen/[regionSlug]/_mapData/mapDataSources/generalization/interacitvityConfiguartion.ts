@@ -1,6 +1,17 @@
 import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
-export type InteracitvityConfiguartion = Record<TableId, { minzoom: number; stylingKeys: string[] }>
+export type InteracitvityConfiguartion = Record<
+  TableId,
+  {
+    // See `docs/VectorTiles-Minzoom-Maxzoom.md`
+    // When zoom < `minzoom` only `stylingKeys` are present
+    // When zoom >= `minzoom` all tags are present
+    minzoom: number
+    // Only those keys will be present
+    stylingKeys: string[]
+  }
+>
+
 export const interactivityConfiguration: InteracitvityConfiguartion = {
   roads: {
     stylingKeys: [
