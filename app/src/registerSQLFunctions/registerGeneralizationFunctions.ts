@@ -53,7 +53,9 @@ function toSqlArray(arr: string[]) {
 
 // From this zoom and above we deliver the original geometries.
 // That is why we can overzoom in sources.const with `maxzoom`.
-export const SIMPLIFY_MAX_ZOOM = 14
+export const SIMPLIFY_MAX_ZOOM = 14 as const
+// We prohibid data below 5 in <Map> and simplify geometries from 5 on
+export const SIMPLIFY_MIN_ZOOM = 4 as const
 
 export async function registerGeneralizationFunctions() {
   await registerCustomFunction()
@@ -74,7 +76,7 @@ export async function registerGeneralizationFunctions() {
                mvt bytea;
                tolerance float;
              BEGIN
-                IF z BETWEEN 5 AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
+                IF z BETWEEN ${SIMPLIFY_MIN_ZOOM + 1} AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
                   tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
                 ELSE
                   tolerance = 0;

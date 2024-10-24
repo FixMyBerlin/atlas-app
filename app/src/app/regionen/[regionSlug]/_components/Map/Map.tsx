@@ -1,5 +1,6 @@
 import { isDev, isProd } from '@/src/app/_components/utils/isEnv'
 import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { SIMPLIFY_MIN_ZOOM } from '@/src/registerSQLFunctions/registerGeneralizationFunctions'
 import { bbox, bboxPolygon, buffer } from '@turf/turf'
 import { differenceBy, uniqBy } from 'lodash'
 import { type MapLibreEvent, type MapStyleImageMissingEvent } from 'maplibre-gl'
@@ -254,7 +255,7 @@ export const Map = () => {
       doubleClickZoom={true}
       dragRotate={false}
       RTLTextPlugin={false}
-      minZoom={3}
+      minZoom={SIMPLIFY_MIN_ZOOM}
       attributionControl={false}
     >
       {/* Order: First Background Sources, then Vector Tile Sources */}
