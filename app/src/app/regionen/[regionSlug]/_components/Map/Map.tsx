@@ -25,7 +25,6 @@ import { useStaticRegion } from '../regionUtils/useStaticRegion'
 import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspectorFeatureKey'
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import { useBreakpoint } from '../utils/useBreakpoint'
 import { Calculator } from './Calculator/Calculator'
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
@@ -65,7 +64,6 @@ export const Map = () => {
     setMapDataLoading,
     setMapBounds,
   } = useMapActions()
-  const isSmBreakpointOrAbove = useBreakpoint('sm')
   const region = useStaticRegion()
   const [cursorStyle, setCursorStyle] = useState('grab')
   const regionDatasets = useRegionDatasets()
