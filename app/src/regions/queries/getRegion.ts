@@ -1,6 +1,6 @@
+import db from '@/db'
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
-import db from 'db'
 import { z } from 'zod'
 import { staticRegion } from '../../app/regionen/(index)/_data/regions.const'
 import getRegion from './getRegion'

@@ -6,4 +6,5 @@ export const maprouletteProjects = [
   'missing_traffic_sign_vehicle_destination',
   'missing_acccess_tag_bicycle_road',
   'missing_traffic_sign',
+  'unexpected_bicycle_access_on_footway',
 ] as const

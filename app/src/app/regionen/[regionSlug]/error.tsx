@@ -1,9 +1,9 @@
 'use client' // Error components must be Client Components
 
+import { Footer } from '@/src/app/_components/layouts/Footer/Footer'
+import { Link } from '@/src/app/_components/links/Link'
+import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useEffect } from 'react'
-import { Footer } from 'src/app/_components/layouts/Footer/Footer'
-import { Link } from 'src/app/_components/links/Link'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 
 type Props = {
   error: Error & { digest?: string }

@@ -1,5 +1,5 @@
+import { useAuthenticatedBlitzContext } from '@/src/blitz-server'
 import { Metadata } from 'next'
-import { useAuthenticatedBlitzContext } from 'src/blitz-server'
 
 export const metadata: Metadata = {
   robots: 'noindex',
@@ -10,6 +10,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+  // eslint-disable-next-line react-compiler/react-compiler
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   await useAuthenticatedBlitzContext({
     // TODO MIGRATION AUTH: next param does not work; is not supported by src/pages/api/auth/[...nextauth].ts
     redirectTo: '/api/auth/osm/login?next=/admin',
@@ -21,10 +23,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <div className="min-h-full bg-pink-300">
-      <div className="prose mx-auto w-full max-w-4xl py-10">
+      <main className="prose mx-auto w-full max-w-4xl py-10">
         <h1>Radverkehrsatlas ADMIN</h1>
         {children}
-      </div>
+      </main>
     </div>
   )
 }

@@ -1,11 +1,11 @@
+import { isProd } from '@/src/app/_components/utils/isEnv'
+import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
+import { geoDataClient } from '@/src/prisma-client'
 import { Prisma } from '@prisma/client'
 import { Sql } from '@prisma/client/runtime/library'
-import * as turf from '@turf/turf'
-import { LineString } from '@turf/turf'
+import { feature, featureCollection, truncate } from '@turf/turf'
+import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
-import { isProd } from 'src/app/_components/utils/isEnv'
-import { osmTypeIdString } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 import { maprouletteProjects } from './_utils/maprouletteProjects.const'
 import { taskDescriptionMarkdown } from './_utils/taskMarkdown'
@@ -23,9 +23,9 @@ const MaprouletteSchema = z
 // Berlin http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62422
 // Germany http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=51477 https://www.openstreetmap.org/relation/51477
 export async function GET(request: NextRequest, { params }: { params: { projectKey: string } }) {
-  const searchParams = request.nextUrl.searchParams
+  const rawSearchParams = request.nextUrl.searchParams
   const parsedParams = MaprouletteSchema.safeParse({
-    ids: searchParams.getAll('ids'),
+    ids: rawSearchParams.getAll('ids'),
     projectKey: params.projectKey,
   })
 
@@ -35,7 +35,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       {
         error: 'Invalid input',
         info: '`?ids=62504&ids=62422` has to be an OSM Relation ID. Use https://hanshack.com/geotools/gimmegeodata/ to find IDs, but not all boundaries are present in atlas.',
-        ...parsedParams,
+        ...(parsedParams.success === false ? parsedParams.error : parsedParams.data),
       },
       { status: 404 },
     )
@@ -74,6 +74,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         case 'missing_traffic_sign_vehicle_destination':
         case 'missing_acccess_tag_bicycle_road':
         case 'missing_traffic_sign':
+        case 'unexpected_bicycle_access_on_footway':
           // Docs: The part that gets injected will be wrapped in `'`, so it has to include prefixes like the `%`.
           return Prisma.sql`bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`}`
       }
@@ -112,20 +113,24 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         }).replaceAll('\n', ' \n'),
       }
       // Create feature and also shorten lat/lng values to 8 digits
-      return turf.truncate(turf.feature(geometry, properties), { precision: 8 })
+      return truncate(feature(geometry, properties), { precision: 8 })
     })
 
     // RESPONSE
-    const featureCollection = turf.featureCollection(features)
-    return Response.json(featureCollection, {
+    const featureCollectionData = featureCollection(features)
+    return Response.json(featureCollectionData, {
       headers: {
         'Content-Disposition': `attachment; filename="maproulette_${projectKey}.geojson"`,
       },
     })
   } catch (e) {
-    if (!isProd) throw e
-    return new Response('Internal Server Error', {
-      status: 500,
-    })
+    if (isProd) console.error(e)
+    return Response.json(
+      {
+        error: 'Internal Server Error',
+        info: isProd ? undefined : e,
+      },
+      { status: 500 },
+    )
   }
 }

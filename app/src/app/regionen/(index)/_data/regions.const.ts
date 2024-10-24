@@ -1,16 +1,20 @@
-import { StaticImageData } from 'next/image'
-import imageBibi from 'src/app/_components/assets/bibi-logo.svg'
-import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
-import imageParking from 'src/app/_components/assets/parking.svg'
-import imageTrTo from 'src/app/_components/assets/trto-logo.png'
+import imageBibi from '@/src/app/_components/assets/bibi-logo.svg'
+import imageNudafa from '@/src/app/_components/assets/nudafa-logo.svg'
+import imageParking from '@/src/app/_components/assets/parking.svg'
+import imageTrTo from '@/src/app/_components/assets/trto-logo.png'
 import {
   MapDataCategoryId,
   categories,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
 import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,
-} from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/sourcesBackgroundsRaster.const'
+import {
+  TableId,
+  UnionTiles,
+} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
+import { StaticImageData } from 'next/image'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number
@@ -32,6 +36,7 @@ export type StaticRegion = {
   backgroundSources: SourcesRasterIds[]
   notes: 'osmNotes' | 'atlasNotes' | 'disabled'
   hideDownload?: boolean
+  cacheWarming?: { minZoom: number; maxZoom: number; tables: UnionTiles<TableId>[] }
 } & (
   | {
       logoPath: StaticImageData | null
@@ -495,6 +500,23 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: ['brandenburg-dop20', ...defaultBackgroundSources],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 8,
+      maxZoom: 11,
+      // TODO: extend to allow joined tables
+      tables: [
+        'bikelanes',
+        'roads',
+        'poiClassification',
+        'roadsPathClasses',
+        'publicTransport',
+        'landuse',
+        'places',
+        'landuse',
+        'boundaries,boundaryLabels',
+        'barrierAreas,barrierLines',
+      ],
+    },
   },
   {
     name: 'Brandenburg Beteiligung',
@@ -548,7 +570,8 @@ export const staticRegion: StaticRegion[] = [
       'brandenburg-aktualitaet',
       ...defaultBackgroundSources,
     ],
-    notes: 'atlasNotes',
+    notes: 'disabled',
+    // notes: 'atlasNotes',
   },
   {
     slug: 'bb-sg',
@@ -685,6 +708,11 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 5,
+      maxZoom: 8,
+      tables: ['bikelanes'],
+    },
   },
   {
     slug: 'testing',

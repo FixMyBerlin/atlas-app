@@ -1,5 +1,5 @@
+import { Link } from '@/src/app/_components/links/Link'
 import { Route } from 'next'
-import { Link } from 'src/app/_components/links/Link'
 import { twMerge } from 'tailwind-merge'
 
 const baseStyles = {

@@ -1,6 +1,6 @@
+import { invoke } from '@/src/blitz-server'
+import getRegionsWithAdditionalData from '@/src/regions/queries/getRegionsWithAdditionalData'
 import 'server-only'
-import { invoke } from 'src/blitz-server'
-import getRegionsWithAdditionalData from 'src/regions/queries/getRegionsWithAdditionalData'
 import { RegionTeaser } from './RegionTeaser'
 
 export const RegionListPublic = async () => {

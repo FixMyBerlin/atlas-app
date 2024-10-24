@@ -6,25 +6,23 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_atlas_barriers__line: MapboxStyleLayer[] = [
   {
     minzoom: 7,
-    filter: ['has', 'highway'],
+    filter: [
+      'match',
+      ['get', 'highway'],
+      ['motorway', 'motorway_link', 'trunk', 'trunk_link'],
+      true,
+      false,
+    ],
     type: 'line',
     id: 'barriers-motorway',
     paint: {
       'line-color': [
         'case',
-        [
-          'match',
-          ['get', 'highway'],
-          ['motorway', 'motorway_link', 'trunk', 'trunk_link'],
-          true,
-          false,
-        ],
-        'hsl(0, 0%, 3%)',
         ['match', ['get', 'bridge'], ['yes'], true, false],
-        '#b007e4',
+        '#ef34e5',
         ['match', ['get', 'tunnel'], ['yes'], true, false],
-        'rgba(164, 162, 162, 0)',
-        'rgba(235, 0, 0, 0)',
+        'rgba(172, 109, 176, 0.59)',
+        '#000000',
       ],
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 2, 18, 4],
       'line-opacity': 0.8,

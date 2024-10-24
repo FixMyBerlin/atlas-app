@@ -1,5 +1,5 @@
+import { quote } from '@/src/app/_components/text/Quotes'
 import { IntlProvider } from 'react-intl'
-import { quote } from 'src/app/_components/text/Quotes'
 import { useRegionDatasets } from '../../_hooks/useRegionDatasets/useRegionDatasets'
 import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { Disclosure } from './Disclosure/Disclosure'

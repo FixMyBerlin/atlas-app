@@ -7,8 +7,8 @@ import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 const subcatId = 'poi'
 const source = 'atlas_poiClassification'
 const sourceLayer = 'poiClassification'
-export type SubcatPoiId_Tarmac = typeof subcatId
-export type SubcatPoiStyleIds_Tarmac = 'default' | 'education'
+export type SubcatPoiId = typeof subcatId
+export type SubcatPoiStyleIds = 'default' | 'education'
 
 export const subcat_poi: FileMapDataSubcategory = {
   id: subcatId,

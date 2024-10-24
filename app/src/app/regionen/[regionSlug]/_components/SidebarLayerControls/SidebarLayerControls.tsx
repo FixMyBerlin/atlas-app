@@ -1,7 +1,7 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { Fragment, Suspense } from 'react'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
 import { twJoin } from 'tailwind-merge'
 import useResizeObserver from 'use-resize-observer'
 import { useMapActions } from '../../_hooks/mapState/useMapState'
@@ -34,7 +34,7 @@ export const SidebarLayerControls = () => {
   return (
     <section
       ref={ref}
-      className="absolute left-0 top-0 z-20 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px  shadow-md"
+      className="absolute left-0 top-0 z-20 max-h-full max-w-72 overflow-y-auto overflow-x-visible bg-white py-px shadow-md"
     >
       {isSmBreakpointOrAbove ? (
         <SidebarLayerControlsChildren />

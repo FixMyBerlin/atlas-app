@@ -1,11 +1,12 @@
-import { vi } from "vitest"
-import { render as defaultRender } from "@testing-library/react"
-import { renderHook as defaultRenderHook } from "@testing-library/react-hooks"
-import { NextRouter } from "next/router"
-import { BlitzProvider, RouterContext } from "@blitzjs/next"
-import { QueryClient } from "@blitzjs/rpc"
+import { BlitzProvider, RouterContext } from '@blitzjs/next'
+import { QueryClient } from '@blitzjs/rpc'
+import { render as defaultRender } from '@testing-library/react'
+import { renderHook as defaultRenderHook } from '@testing-library/react-hooks'
+import { NextRouter } from 'next/router'
+import { Suspense } from 'react'
+import { vi } from 'vitest'
 
-export * from "@testing-library/react"
+export * from '@testing-library/react'
 
 // --------------------------------------------------------------------------------
 // This file customizes the render() and renderHook() test functions provided
@@ -31,14 +32,14 @@ export * from "@testing-library/react"
 const queryClient = new QueryClient()
 export function render(
   ui: RenderUI,
-  { wrapper, router, dehydratedState, ...options }: RenderOptions = {}
+  { wrapper, router, dehydratedState, ...options }: RenderOptions = {},
 ) {
   if (!wrapper) {
     // Add a default context wrapper if one isn't supplied from the test
     wrapper = ({ children }: { children: React.ReactNode }) => (
       <BlitzProvider dehydratedState={dehydratedState} client={queryClient}>
         <RouterContext.Provider value={{ ...mockRouter, ...router }}>
-          {children}
+          <Suspense>{children}</Suspense>
         </RouterContext.Provider>
       </BlitzProvider>
     )
@@ -59,14 +60,14 @@ export function render(
 // --------------------------------------------------
 export function renderHook(
   hook: RenderHook,
-  { wrapper, router, dehydratedState, ...options }: RenderOptions = {}
+  { wrapper, router, dehydratedState, ...options }: RenderOptions = {},
 ) {
   if (!wrapper) {
     // Add a default context wrapper if one isn't supplied from the test
     wrapper = ({ children }: { children: React.ReactNode }) => (
       <BlitzProvider dehydratedState={dehydratedState} client={queryClient}>
         <RouterContext.Provider value={{ ...mockRouter, ...router }}>
-          {children}
+          <Suspense>{children}</Suspense>
         </RouterContext.Provider>
       </BlitzProvider>
     )
@@ -75,10 +76,10 @@ export function renderHook(
 }
 
 export const mockRouter: NextRouter = {
-  basePath: "",
-  pathname: "/",
-  route: "/",
-  asPath: "/",
+  basePath: '',
+  pathname: '/',
+  route: '/',
+  asPath: '/',
   query: {},
   isReady: true,
   isLocaleDomain: false,

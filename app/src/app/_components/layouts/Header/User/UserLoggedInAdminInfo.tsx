@@ -1,14 +1,14 @@
-import { Link } from 'src/app/_components/links/Link'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { linkStyles } from 'src/app/_components/links/styles'
+import { Link } from '@/src/app/_components/links/Link'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { linkStyles } from '@/src/app/_components/links/styles'
 import {
   googleMapsUrlViewport,
   mapillaryUrlViewport,
   osmUrlViewport,
-} from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { useMapDebugActions } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
-import { useMapParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
-import { isAdmin } from 'src/users/components/utils/usersUtils'
+} from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
+import { useMapDebugActions } from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
+import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
+import { isAdmin } from '@/src/users/components/utils/usersUtils'
 import { UserLoggedInProp } from './UserLoggedIn'
 import { getAdminInfoEnvUrl } from './utils/getAdminInfoEnvUrl'
 

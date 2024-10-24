@@ -34,4 +34,5 @@ export const numericSourceIds: Record<number, SourceNames> = {
   20: 'atlas_trafficSigns',
   21: 'mapillary_coverage',
   22: 'atlas_bikelanesPresence',
+  23: 'atlas_bikeSuitability',
 }

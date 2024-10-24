@@ -1,10 +1,10 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import { buttonStylesOnYellow } from '@/src/app/_components/links/styles'
+import createNote from '@/src/notes/mutations/createNote'
 import { useSession } from '@blitzjs/auth'
 import { getQueryClient, useMutation } from '@blitzjs/rpc'
 import { useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { buttonStylesOnYellow } from 'src/app/_components/links/styles'
-import createNote from 'src/notes/mutations/createNote'
 import { useShowAtlasNotesParam } from '../../../_hooks/useQueryState/useNotesAtlasParams'
 import { useQueryKey } from '../../notes/AtlasNotes/utils/useQueryKey'
 import { useRegionSlug } from '../../regionUtils/useRegionSlug'
@@ -22,6 +22,7 @@ export const RegionBbPgNewPriorityNoteButton = ({ feature }: Pick<InspectorFeatu
 
   const [formSubmitted, setFormSubmitted] = useState(false)
 
+  if (true) return null // NOTE: REMOVE to enable the feature again (and the ts-expect-error below)
   if (regionSlug !== 'bb-pg') return null
   if (!isAuthenticated) return null
   if (!feature.layer.id.includes('bb-ramboll-netzentwurf-2')) return null
@@ -48,6 +49,7 @@ ID: ${feature.properties.id}
     const point = pointFromGeometry(feature.geometry)
     createNoteMutation(
       {
+        // @ts-expect-error
         regionSlug,
         subject: `Priorität: ${importance}`,
         latitude: point[1],

@@ -1,12 +1,12 @@
+import { useRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
+import {
+  defaultBackgroundParam,
+  useBackgroundParam,
+} from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import { Listbox, ListboxButton, ListboxOptions } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { useRegion } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
-import {
-  defaultBackgroundParam,
-  useBackgroundParam,
-} from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useBackgroundParam'
 import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,

@@ -28,4 +28,4 @@ FROM base AS production
 
 RUN npm install --global pm2
 
-CMD exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 4000
+CMD npx blitz@2.0.10 prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 4000

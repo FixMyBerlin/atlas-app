@@ -2,7 +2,15 @@
 #!/bin/bash
 
 format_left_right() {
-  node -e "a='${1}';b='${2}';c='${3}' || '-';console.log(a+c.repeat(Math.max(0, 80-a.length-b.length))+b)"
+  # Generate the padding string
+  padding_length=$((80 - ${#1} - ${#2}))
+  padding=""
+  for ((i=0; i<padding_length; i++)); do
+    padding="${padding}$3"
+  done
+
+  # Print the result
+  echo "$1${padding}$2"
 }
 
 format_now() {
@@ -53,7 +61,7 @@ notify() {
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
   local url="$SYNOLOGY_URL$SYNOLOGY_LOG_TOKEN"
-  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
+  curl --silent --show-error --fail -X POST $url -d "payload=$payload" --output "/dev/null"
 }
 
 alert() {
@@ -62,5 +70,5 @@ alert() {
   fi
   local payload="{\"text\": \"#$ENVIRONMENT: $1\"}"
   local url="$SYNOLOGY_URL$SYNOLOGY_ERROR_LOG_TOKEN"
-  curl -X POST $url -d "payload=$payload" --silent --output "/dev/null"
+  curl --silent --show-error --fail -X POST $url -d "payload=$payload" --output "/dev/null"
 }

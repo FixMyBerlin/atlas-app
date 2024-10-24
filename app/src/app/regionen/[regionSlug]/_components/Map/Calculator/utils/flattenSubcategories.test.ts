@@ -1,4 +1,4 @@
-import { uniqueArray } from 'src/app/_components/utils/uniqueArray'
+import { uniqueArray } from '@/src/app/_components/utils/uniqueArray'
 import { describe, expect, test } from 'vitest'
 import { createFreshCategoriesConfig } from '../../../../_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { flattenSubcategories } from './flattenSubcategories'
