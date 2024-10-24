@@ -210,7 +210,8 @@ function osm2pgsql.process_way(object)
     if bikeSuitability then
 
       local bikeSuitabilityTags = {
-        bikeSuitability = bikeSuitability.id
+        bikeSuitability = bikeSuitability.id,
+        traffic_sign = results.traffic_sign,
       }
       MergeTable(bikeSuitabilityTags, road_info)
       MergeTable(bikeSuitabilityTags, RoadClassification(object))

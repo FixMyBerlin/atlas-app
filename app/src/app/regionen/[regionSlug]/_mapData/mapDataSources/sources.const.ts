@@ -320,7 +320,15 @@ export const sources: MapDataSource<
     inspector: {
       enabled: true,
       highlightingKey: 'id',
-      documentedKeys: ['name', 'road', 'bikeSuitability', 'composit_surface_smoothness'],
+      documentedKeys: [
+        'name',
+        'road',
+        'bikeSuitability',
+        'composit_surface_smoothness',
+        'traffic_sign',
+        'traffic_sign:forward__if_present',
+        'traffic_sign:backward__if_present',
+      ],
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
