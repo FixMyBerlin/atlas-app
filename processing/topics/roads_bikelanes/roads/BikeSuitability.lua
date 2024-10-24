@@ -81,11 +81,32 @@ local noOvertaking = BikeSuitability.new({
   end
 })
 
+-- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
+local livingStreet = BikeSuitability.new({
+  id = 'livingStreet',
+  desc = 'Living streets are considered bike friendly unless prohibided.' ..
+      ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
+  condition = function(tags)
+    if tags.highway == "living_street" then
+      -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
+      if tags.vehicle == "no" and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
+        return nil
+      end
+      -- Exit if bikes are prohibited
+      if tags.bicycle == "no" or tags.bicycle == "dismount" then
+        return nil
+      end
+      return true
+    end
+  end
+})
+
 -- The order specifies the precedence; first one with a result win.
 local categoryDefinitions = {
+  livingStreet,
   goodSurface,
   noMotorizedVehicle,
-  noOvertaking
+  noOvertaking,
 }
 
 function CategorizeBikeSuitability(tags)
