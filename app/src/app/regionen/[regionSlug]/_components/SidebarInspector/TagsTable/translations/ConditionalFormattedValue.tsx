@@ -127,6 +127,7 @@ export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props)
     'bibi-on-street-parking-ortskerne-2023-offstreet': 'parkraumParkingAreas',
     atlas_roadsPathClasses: 'atlas_roads',
     atlas_bikelanesPresence: 'atlas_roads',
+    atlas_bikeSuitability: 'atlas_roads',
   }
   const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)
   if (lookAtThisSourceFirst) {
@@ -142,6 +143,7 @@ export const ConditionalFormattedValue = ({ sourceId, tagKey, tagValue }: Props)
     'atlas_roads--road': 'highway',
     'atlas_roadsPathClasses--road': 'highway',
     'atlas_bikelanesPresence--road': 'highway',
+    'atlas_bikeSuitability--road': 'highway',
   }
   const lookThereForKeyEntry = Object.keys(lookThereForKey).find(
     (k) => k === `${sourceId}--${tagKey}`,
