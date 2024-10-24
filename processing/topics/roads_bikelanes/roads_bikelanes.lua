@@ -208,13 +208,18 @@ function osm2pgsql.process_way(object)
     -- bike suitability
     local bikeSuitability = CategorizeBikeSuitability(tags)
     if bikeSuitability then
+
       local bikeSuitabilityTags = {
         bikeSuitability = bikeSuitability.id
       }
+      MergeTable(bikeSuitabilityTags, road_info)
+      MergeTable(bikeSuitabilityTags, RoadClassification(object))
+      MergeTable(bikeSuitabilityTags, SurfaceQuality(object))
+
       bikeSuitabilityTable:insert({
         id = DefaultId(object),
-        tags = bikeSuitabilityTags,
-        meta = meta,
+        tags = ExtractPublicTags(bikeSuitabilityTags),
+        meta = Metadata(object), -- without the *_age tags
         geom = object:as_linestring(),
         minzoom = 0
       })
@@ -223,21 +228,21 @@ function osm2pgsql.process_way(object)
     -- roads
     if PathClasses[tags.highway] then
       roadsPathClassesTable:insert({
+        id = DefaultId(object),
         tags = ExtractPublicTags(results),
         meta = meta,
         geom = object:as_linestring(),
-        minzoom = PathsGeneralization(tags, results),
-        id = DefaultId(object)
+        minzoom = PathsGeneralization(tags, results)
       })
     else
       -- The `ref` (e.g. "B 264") is used in your map style and only relevant for higher road classes.
       results.name_ref = tags.ref
       roadsTable:insert({
+        id = DefaultId(object),
         tags = ExtractPublicTags(results),
         meta = meta,
         geom = object:as_linestring(),
-        minzoom = RoadGeneralization(tags, results),
-        id = DefaultId(object)
+        minzoom = RoadGeneralization(tags, results)
       })
     end
   end
