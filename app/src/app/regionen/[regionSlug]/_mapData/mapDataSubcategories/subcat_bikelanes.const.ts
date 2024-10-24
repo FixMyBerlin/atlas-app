@@ -190,15 +190,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
           },
         },
         {
-          id: 'livingStreet',
-          name: 'Verkehrsberuhigter Bereich',
-          style: {
-            type: 'line',
-            color: '#f4b9e3',
-            dasharray: [1, 2.5],
-          },
-        },
-        {
           id: 'sharedBusLane',
           name: 'Gem. Fahrstreifen mit Bus',
           desc: [

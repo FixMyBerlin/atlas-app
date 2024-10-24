@@ -53,7 +53,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_default: MapboxStyleLayer[] 
         'bicycleRoad_vehicleDestination',
         'sharedBusLaneBusWithBike',
         'sharedBusLaneBikeWithBus',
-        'livingStreet',
       ],
       true,
       false,

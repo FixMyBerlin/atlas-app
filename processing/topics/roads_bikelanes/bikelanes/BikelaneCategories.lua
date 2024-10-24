@@ -88,11 +88,13 @@ local pedestrianAreaBicycleYes = BikelaneCategory.new({
   end
 })
 
+-- TODO DEPRECATED: Remove after 2025-01-01
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
 local livingStreet = BikelaneCategory.new({
   id = 'livingStreet',
-  desc = 'Living streets are considered bike friendly and added unless prohibided.' ..
-      ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
+  desc = '(DEPRECATED) Living streets are considered bike friendly and added unless prohibided.' ..
+      ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")' ..
+      ' — DEPRECATION: This was moved to bikeSuitability.bikeSuitability=livingStreet on 2024-10 and will be removed from roads 2025-01-01.',
   infrastructureExists = true,
   implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)

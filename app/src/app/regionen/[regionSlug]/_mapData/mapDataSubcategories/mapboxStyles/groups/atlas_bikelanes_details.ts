@@ -42,17 +42,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     ],
   },
   {
-    id: 'Verkehrsberuhigter Bereich',
-    type: 'line',
-    paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-dasharray': [1, 2],
-      'line-color': '#f4b9e3',
-      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-    },
-    filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
-  },
-  {
     id: 'Fahrradstrasse Mischverkehr',
     type: 'line',
     paint: {
