@@ -1,5 +1,5 @@
 import { generalizationFunctionIdentifier } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/generalizationIdentifier'
-import { InteracitvityConfiguartion } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
+import { interactivityConfiguration } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/generalization/interacitvityConfiguartion'
 import { TableId } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { geoDataClient } from '@/src/prisma-client'
 
@@ -55,12 +55,11 @@ function toSqlArray(arr: string[]) {
 // That is why we can overzoom in sources.const with `maxzoom`.
 export const SIMPLIFY_MAX_ZOOM = 14
 
-export async function registerGeneralizationFunctions(
-  interacitvityConfiguartion: InteracitvityConfiguartion,
-) {
+export async function registerGeneralizationFunctions() {
   await registerCustomFunction()
+
   return Promise.all(
-    Object.entries(interacitvityConfiguartion).map(
+    Object.entries(interactivityConfiguration).map(
       async ([tableName, { minzoom, stylingKeys }]) => {
         const functionName = generalizationFunctionIdentifier(tableName as TableId)
         // Gather meta information for the tile specification
