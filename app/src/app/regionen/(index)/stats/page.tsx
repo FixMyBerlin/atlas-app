@@ -2,8 +2,8 @@ import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { invoke } from '@/src/blitz-server'
 import getAllStats from '@/src/statistics/queries/getAllStats'
 
-const sumLength = (lengthMap) =>
-  Object.values(lengthMap).reduce((acc: number, curr: number) => acc + curr, 0)
+const sumLength = (lengthMap): number =>
+  Object.values(lengthMap).reduce((acc: number, curr: number) => acc + curr, 0) as number
 
 export default async function StatsPage() {
   const stats = await invoke(getAllStats, {})
@@ -29,9 +29,9 @@ export default async function StatsPage() {
               <div key={region.name}>
                 <h1> {region.name}</h1>
                 <h2 className="text-gray-900">{`admin_level=${region.level}`}</h2>
-                Bikelanes ({sumLength(region.bikelane_length) as number} km):
+                Bikelanes ({sumLength(region.bikelane_length)} km):
                 <p>{JSON.stringify(region.bikelane_length, null, 2)}</p>
-                Roads ({sumLength(region.road_length) as number} km):
+                Roads ({sumLength(region.road_length)} km):
                 <p>{JSON.stringify(region.road_length, null, 2)}</p>
               </div>
             )
