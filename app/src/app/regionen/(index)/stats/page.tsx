@@ -9,6 +9,18 @@ export default async function StatsPage() {
   const stats = await invoke(getAllStats, {})
   return (
     <main className="prose z-0 mx-auto my-10 max-w-prose flex-grow">
+      <div className="pb-8">
+        <h1>Download</h1>
+        <LinkExternal
+          href="/api/stats"
+          classNameOverwrite="w-28 flex-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
+          download
+          blank
+        >
+          <strong className="mb-0.5 text-xs font-medium text-gray-900">Download</strong>
+        </LinkExternal>
+      </div>
+
       {stats &&
         stats
           .sort((a, b) => Number(a.level) - Number(b.level))
@@ -24,14 +36,6 @@ export default async function StatsPage() {
               </div>
             )
           })}
-      <LinkExternal
-        href="/api/stats"
-        classNameOverwrite="w-28 flex-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
-        download
-        blank
-      >
-        <strong className="mb-0.5 text-xs font-medium text-gray-900">Download</strong>
-      </LinkExternal>
     </main>
   )
 }
