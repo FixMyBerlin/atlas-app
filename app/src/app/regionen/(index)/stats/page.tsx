@@ -14,6 +14,7 @@ export default async function StatsPage() {
           return (
             <div key={region.name}>
               <h1> {region.name}</h1>
+              <h2 className="text-gray-900">{`admin_level=${region.level}`}</h2>
               Bikelanes ({sumLength(region.bikelane_length) as number} km):
               <p>{JSON.stringify(region.bikelane_length, null, 2)}</p>
               Roads ({sumLength(region.road_length) as number} km):
