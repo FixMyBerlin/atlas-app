@@ -128,6 +128,7 @@ export async function aggregateLengths() {
         atlas_aggregate_roads(geom)
       FROM "boundaries"
       WHERE (tags->>'admin_level')::TEXT = '4'
+        OR (tags->>'admin_level')::TEXT = '6'
       ON CONFLICT (id)
         DO UPDATE SET
           bikelane_length = EXCLUDED.bikelane_length,
