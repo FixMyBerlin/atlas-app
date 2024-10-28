@@ -112,6 +112,7 @@ export async function aggregateLengths() {
     (
       id TEXT UNIQUE,
       name TEXT,
+      level TEXT,
       geom Geometry(MultiPolygon, 3857),
       bikelane_length JSONB,
       road_length JSONB
@@ -119,10 +120,11 @@ export async function aggregateLengths() {
     `
   return geoDataClient.$transaction([
     geoDataClient.$executeRaw`
-      INSERT INTO "aggregated_lengths" (id, name,  geom, bikelane_length, road_length)
+      INSERT INTO "aggregated_lengths" (id, name, level, geom, bikelane_length, road_length)
       SELECT
         id,
         tags->>'name',
+        tags->>'admin_level',
         geom,
         atlas_aggregate_bikelanes(geom),
         atlas_aggregate_roads(geom)
