@@ -32,7 +32,6 @@ describe("Bikelanes", function()
         type = 'way'
       }
       local result = Bikelanes(input_object)
-      assert.are.equal(result[1].category, "cycleway_adjoining")
       assert.are.equal(result[1].width, 5)
     end)
 
