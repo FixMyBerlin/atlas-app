@@ -1,12 +1,12 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { invoke } from '@/src/blitz-server'
-import getAllStats from '@/src/statistics/queries/getAllStats'
+import getAllStatistics from '@/src/statistics/queries/getAllStatistics'
 
 const sumLength = (lengthMap): number =>
   Object.values(lengthMap).reduce((acc: number, curr: number) => acc + curr, 0) as number
 
 export default async function StatsPage() {
-  const stats = await invoke(getAllStats, {})
+  const stats = await invoke(getAllStatistics, {})
   return (
     <main className="prose z-0 mx-auto my-10 max-w-prose flex-grow">
       <div className="pb-8">

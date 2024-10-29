@@ -7,8 +7,7 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["typedSql"]
+  provider = "prisma-client-js"
 }
 
 // This is an optional zod helper script:
