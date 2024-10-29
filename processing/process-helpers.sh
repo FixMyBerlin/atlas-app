@@ -4,6 +4,7 @@ source /processing/utils/hashing.sh
 source /processing/diffing/compute_diff.sh
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
+export PGOPTIONS="-c client_min_messages=error"
 
 # (private function used by run_dir)
 run_lua() {
@@ -70,7 +71,7 @@ run_dir() {
   # Remove old diffs
   if [ -f "$processed_tables" ]; then
     for table in $(cat $processed_tables); do
-      psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";" &> /dev/null
+      psql -q -c "DROP TABLE IF EXISTS \"${table}_diff\";"
     done
   fi
 
@@ -85,7 +86,7 @@ run_dir() {
           if [ -f $backedup_tables ] && grep -q -E "^${table}\$" "$backedup_tables" && [ "$FREEZE_DATA" == 1 ]; then
             log "Found a backup of \"$table\" (FREEZE_DATA=1)"
           else
-            psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
+            psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";"
             psql -q -c "CREATE TABLE backup.\"$table\" AS TABLE public.\"$table\";"
           fi
         done

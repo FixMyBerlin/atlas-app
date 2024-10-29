@@ -3,7 +3,7 @@
 source /processing/utils/logging.sh
 
 # Create functions needed for jsonb diffs
-psql -q -f /processing/diffing/JSONDiff.sql &> /dev/null
+psql -q -f /processing/diffing/JSONDiff.sql
 
 # (private function used by run_dir)
 compute_diff() {
@@ -11,8 +11,7 @@ compute_diff() {
   table="public.\"$1\""
   diff_table="$1_diff"
 
-  psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";" &> /dev/null
-
+  psql -q -c "DROP TABLE IF EXISTS \"$diff_table\";"
   columns="tags, id, meta, geom"
 
   # Compute diff of `tags` column using `jsonb_diff` from `JSONDiff.sql`
