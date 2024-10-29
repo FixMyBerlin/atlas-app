@@ -246,6 +246,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_track
     local taggedWithAccessTagging = tags.highway == "cycleway" and
         (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath)
+        and tags._side == 'self'
     -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
     local taggedWithTrafficsign = osm2pgsql.has_prefix(trafficSign, "DE:237") and not tags.cycleway == "lane"
     if taggedWithAccessTagging or taggedWithTrafficsign then
@@ -533,6 +534,28 @@ local needsClarification = BikelaneCategory.new({
   end
 })
 
+-- This is where we collect tracks that do not have sufficient tagging to be categorized well.
+-- TODO
+local needsClarificationTrack = BikelaneCategory.new({
+  id = 'needsClarificationTrack',
+  desc = 'TODO',
+  infrastructureExists = true,
+  implicitOneWay = false, -- really unknown, but `oneway=yes` (common in cities) is usually explicit
+  condition = function(tags)
+    if tags._side == 'self' then
+      return false
+    end
+    if tags.highway ~= "cycleway" then
+      return false
+    end
+    if tags.cycleway ~= "track" then
+      return false
+    end
+    return true
+  end
+})
+
+
 -- The order specifies the precedence; first one with a result win.
 local categoryDefinitions = {
   dataNo,
@@ -566,7 +589,8 @@ local categoryDefinitions = {
   footwayBicycleYes_isolated,
   footwayBicycleYes_adjoiningOrIsolated,
   -- Needs to be last
-  needsClarification
+  needsClarification,
+  needsClarificationTrack
 }
 
 function CategorizeBikelane(tags)
