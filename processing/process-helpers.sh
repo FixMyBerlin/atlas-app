@@ -86,7 +86,7 @@ run_dir() {
             log "Found a backup of \"$table\" (FREEZE_DATA=1)"
           else
             psql -q -c "DROP TABLE IF EXISTS backup.\"${table}\";" &> /dev/null
-            psql -q -c "ALTER TABLE public.\"$table\" SET SCHEMA backup;"
+            psql -q -c "CREATE TABLE backup.\"$table\" AS TABLE public.\"$table\";"
           fi
         done
         cp $processed_tables $backedup_tables
