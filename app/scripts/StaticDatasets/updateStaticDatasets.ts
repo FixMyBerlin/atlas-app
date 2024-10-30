@@ -62,7 +62,6 @@ const ignorePatterns = fs.existsSync(updateIgnorePath)
   ? parse(fs.readFileSync(updateIgnorePath)).patterns
   : []
 
-
 if (!fs.existsSync(geoJsonFolder)) {
   red(`folder "${geoJsonFolder}" does not exists. Please run "npm run link-atlas-static-data"?`)
   process.exit(1)
