@@ -13,6 +13,7 @@ import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
 import { isCompressedSmallerThan } from './updateStaticDatasets/isCompressedSmallerThan'
 import { transformFile } from './updateStaticDatasets/transformFile'
 import { uploadFileToS3 } from './updateStaticDatasets/uploadFileToS3'
+import { import_ } from './utils/import_'
 import { green, inverse, red, yellow } from './utils/log'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
@@ -61,27 +62,6 @@ const ignorePatterns = fs.existsSync(updateIgnorePath)
   ? parse(fs.readFileSync(updateIgnorePath)).patterns
   : []
 
-/** @returns Object or Function | null */
-export const import_ = async <ReturnModule extends Function | Object>(
-  folderName: string,
-  moduleName: string,
-  valueName: string,
-) => {
-  const moduleFileName = `${moduleName}.ts`
-  const moduleFullFilename = path.join(folderName, moduleFileName)
-
-  if (!fs.existsSync(moduleFullFilename)) {
-    return null
-  }
-
-  const module_ = await import(moduleFullFilename)
-
-  if (!(valueName in module_)) {
-    yellow(`  ${moduleFileName} does not export value "${valueName}".`)
-    return null
-  }
-  return module_[valueName] as ReturnModule
-}
 
 if (!fs.existsSync(geoJsonFolder)) {
   red(`folder "${geoJsonFolder}" does not exists. Please run "npm run link-atlas-static-data"?`)
