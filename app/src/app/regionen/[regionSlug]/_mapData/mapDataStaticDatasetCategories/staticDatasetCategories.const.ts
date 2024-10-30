@@ -67,4 +67,9 @@ export const staticDatasetCategories = {
     title: 'Weitere Daten',
     subtitle: 'Weitere statische Daten.',
   },
+  'berlin/netz': {
+    order: 1,
+    title: 'Netze',
+    subtitle: 'Statische Geodaten zum Straßennetz und Radinfrastruktur.',
+  },
 } as const
