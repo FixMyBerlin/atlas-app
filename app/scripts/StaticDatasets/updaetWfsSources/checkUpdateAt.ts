@@ -66,6 +66,8 @@ export const checkUpdatedAt = async (wfsUrl: string, datasetFolderPath: string) 
       const outdatedDates = metaDates?.filter((d) => d !== date)
       if (outdatedDates?.length) {
         red('  Some `meta.ts` have outdated `config.updatedAt`', outdatedDates)
+      } else {
+        green('  meta.ts `updatedAt` are all correct', metaDates)
       }
     }
   } catch (error) {

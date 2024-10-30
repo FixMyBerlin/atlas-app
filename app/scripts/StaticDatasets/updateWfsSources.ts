@@ -4,30 +4,37 @@ import path from 'node:path'
 import { parse } from 'parse-gitignore'
 import slugify from 'slugify'
 import { parseArgs } from 'util'
+import { checkFilesizeAndGzip } from './updaetWfsSources/checkFilesizeAndGzip'
 import { checkUpdatedAt } from './updaetWfsSources/checkUpdateAt'
 import { createWfsUrl, WfsConfig } from './updaetWfsSources/createWfsUrl'
-import { fetchGeojsonFromWfs } from './updaetWfsSources/fetchGeojsonFromWfs'
+import { fetchAndStoreGeopackage } from './updaetWfsSources/fetchAndStoreGeopackage'
+import { transformGeopackageToGeojson } from './updaetWfsSources/transformGeopackageToGeojson'
 import { ignoreFolder } from './updateStaticDatasets/ignoreFolder'
 import { import_ } from './utils/import_'
 import { green, inverse, red } from './utils/log'
 
 const geoJsonFolder = 'scripts/StaticDatasets/geojson'
+export const tempFolder = 'scripts/StaticDatasets/_geojson_temp'
+if (!fs.existsSync(tempFolder)) fs.mkdirSync(tempFolder, { recursive: true })
 
 // use --folder-filter to run only folders that include this filter string (check the full path, so `region-bb` (group folder) and `bb-` (dataset folder) will both work)
 const { values, positionals } = parseArgs({
   args: Bun.argv,
   options: {
+    'keep-tmp': { type: 'boolean' },
     'folder-filter': { type: 'string' },
   },
   strict: true,
   allowPositionals: true,
 })
 
+const keepTemporaryFiles = !!values['keep-tmp']
 const folderFilterTerm = values['folder-filter']
 
 inverse('Starting update with settings', [
   {
     folderFilterTerm,
+    keepTemporaryFiles,
   },
 ])
 
@@ -62,9 +69,12 @@ const datasetFileFolderData = regionGroupFolderPaths
 for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFolderData) {
   // Get the `wfsConfig.js` data ready
   const wfsConfig = await import_<WfsConfig>(datasetFolderPath, 'wfsConfig', 'wfsConfig')
+  if (!wfsConfig) continue
+
+  const dataFilename = slugify(wfsConfig.layer.replaceAll(':', '-'))
 
   const regionAndDatasetFolder = `${regionFolder}/${datasetFolder}`
-  if (ignoreFolder(regionAndDatasetFolder, ignorePatterns) || wfsConfig === null) {
+  if (ignoreFolder(regionAndDatasetFolder, ignorePatterns)) {
     // console.log(`Ignoring folder "${regionAndDatasetFolder}"`)
     continue
   } else {
@@ -74,14 +84,13 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   const wfsUrl = createWfsUrl(wfsConfig)
   console.log('  Downloading', wfsUrl.toString())
   try {
-    const data = await fetchGeojsonFromWfs(wfsUrl)
-    const outputFullFilename = path.join(
-      datasetFolderPath,
-      `${slugify(wfsConfig.layer.replaceAll(':', '-'))}.downloaded.geojson`,
-    )
-    await Bun.write(outputFullFilename, JSON.stringify(data, null, 2))
+    const geoPackageFilename = path.join(tempFolder, `${dataFilename}.gpkg`)
+    const geojsonFilename = path.join(datasetFolderPath, `${dataFilename}.wfs.geojson`)
+    await fetchAndStoreGeopackage(wfsUrl, geoPackageFilename)
+    await transformGeopackageToGeojson(geoPackageFilename, geojsonFilename)
+    const resultFilename = await checkFilesizeAndGzip(geojsonFilename)
 
-    green('  Data saved', data.features.length, 'features', outputFullFilename)
+    green('  Data saved', resultFilename)
   } catch (error) {
     red('   Error', error, wfsConfig, wfsUrl.toString())
     continue

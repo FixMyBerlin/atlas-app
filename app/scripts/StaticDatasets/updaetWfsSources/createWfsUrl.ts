@@ -16,7 +16,8 @@ export const createWfsUrl = ({ endpoint, layer, opt }: WfsConfig) => {
   url.searchParams.append('service', 'WFS')
   url.searchParams.append('version', '2.0.0')
   url.searchParams.append('request', 'GetFeature')
-  url.searchParams.append('outputFormat', 'application/json') // https://docs.geoserver.org/main/en/user/services/wfs/outputformats.html
+  // url.searchParams.append('outputFormat', 'application/json') // https://docs.geoserver.org/main/en/user/services/wfs/outputformats.html
+  url.searchParams.append('outputFormat', 'geopackage') // via https://gdi.berlin.de/services/wfs/radverkehrsanlagen?REQUEST=GetCapabilities&SERVICE=wfs
   url.searchParams.append('typeNames', layer)
   url.searchParams.append('srsName', opt?.crs || 'urn:ogc:def:crs:EPSG::4326')
   opt?.bbox && url.searchParams.append('bbox', opt.bbox.join(','))
