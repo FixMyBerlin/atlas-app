@@ -5,6 +5,7 @@ source /processing/diffing/compute_diff.sh
 
 OSM2PGSQL_BIN=/usr/bin/osm2pgsql
 export PGOPTIONS="-c client_min_messages=error"
+psql -q -c "CREATE SCHEMA IF NOT EXISTS backup;"
 
 # (private function used by run_dir)
 run_lua() {
