@@ -109,7 +109,7 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
-      { ...subcat_bikelanes_plus_bikesuitability, defaultStyle: 'default' },
+      { ...subcat_bikelanes_plus_bikesuitability, defaultStyle: 'hidden' },
       // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
