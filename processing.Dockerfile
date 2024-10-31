@@ -1,4 +1,5 @@
 FROM ubuntu:noble AS testing
+WORKDIR /processing
 
 # Install Lua and "luarocks" (Lua package manager) – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
@@ -6,6 +7,7 @@ RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
 RUN luarocks install busted
 
 COPY processing /processing/
+
 ENTRYPOINT [ "busted" ]
 CMD ["--pattern=%.test%.lua$", "/processing/topics/"]
 
@@ -26,9 +28,10 @@ RUN apt update && \
   apt upgrade -y
 
 RUN curl -fsSL https://bun.sh/install | bash
-
-WORKDIR /processing
+ENV PATH=/root/.bun/bin:$PATH
+RUN bun install
 # 'data' folder is root
 RUN mkdir /data
-RUN chmod +x /processing/*.sh
-ENTRYPOINT /processing/run.sh
+RUN bunx prisma generate
+ENTRYPOINT bash
+CMD bun run /processing/index.ts

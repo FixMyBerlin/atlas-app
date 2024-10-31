@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
   const { access, response } = guardEnpoint(req, Schema)
   if (!access) return response
   try {
-    registerSQLFunctions()
+    await registerSQLFunctions()
     analysis()
     return NextResponse.json({ message: 'OK' }, { status: 200 })
   } catch (e) {
