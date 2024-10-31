@@ -25,6 +25,7 @@ RUN apt update && \
   apt install -y osm2pgsql osmium-tool wget curl && \
   apt upgrade -y
 
+RUN curl -fsSL https://bun.sh/install | bash
 
 WORKDIR /processing
 # 'data' folder is root
