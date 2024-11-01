@@ -82,6 +82,7 @@ export type RegionSlug =
   | 'parkraum-berlin'
   | 'bibi'
   | 'deutschland'
+  | 'radinframap' // radinframap.org
   | 'fahrradstellplaetze'
   | 'herrenberg'
   | 'langerwehe'
@@ -713,6 +714,30 @@ export const staticRegion: StaticRegion[] = [
       maxZoom: 8,
       tables: ['bikelanes'],
     },
+  },
+  {
+    slug: 'radinframap',
+    name: 'RadInfraMap.org',
+    fullName: 'RadInfraMap.org',
+    osmRelationIds: [],
+    map: { lat: 51.07, lng: 13.35, zoom: 5 },
+    bbox: {
+      min: [5.8663153, 47.2701114],
+      max: [15.0419309, 55.099161],
+    },
+    logoPath: null,
+    logoWhiteBackgroundRequired: false,
+    categories: [
+      // The order here specifies the order in the UI
+      'bikelanes',
+      // 'poi',
+      // 'roads',
+      'surface',
+      // 'lit',
+      'mapillary',
+    ],
+    backgroundSources: [...defaultBackgroundSources],
+    notes: 'osmNotes',
   },
   {
     slug: 'testing',

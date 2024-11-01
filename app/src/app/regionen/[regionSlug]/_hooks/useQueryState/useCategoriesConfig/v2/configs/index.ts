@@ -8,6 +8,7 @@ import { _19sklui } from './_19sklui'
 import { _1cjo3ur } from './_1cjo3ur'
 import { _1d3t4i0 } from './_1d3t4i0'
 import { _1dhu3si } from './_1dhu3si'
+import { _1e6163i } from './_1e6163i'
 import { _1gk36d0 } from './_1gk36d0'
 import { _1j7ax4m } from './_1j7ax4m'
 import { _1k7izoy } from './_1k7izoy'
@@ -50,6 +51,7 @@ export const configs = {
   '1cjo3ur': _1cjo3ur,
   '1d3t4i0': _1d3t4i0,
   '1dhu3si': _1dhu3si,
+  '1e6163i': _1e6163i,
   '1gk36d0': _1gk36d0,
   '1j7ax4m': _1j7ax4m,
   '1k7izoy': _1k7izoy,
