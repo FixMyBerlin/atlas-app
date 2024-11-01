@@ -709,11 +709,6 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',
-    cacheWarming: {
-      minZoom: 5,
-      maxZoom: 8,
-      tables: ['bikelanes'],
-    },
   },
   {
     slug: 'radinframap',
@@ -721,10 +716,7 @@ export const staticRegion: StaticRegion[] = [
     fullName: 'RadInfraMap.org',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
-    bbox: {
-      min: [5.8663153, 47.2701114],
-      max: [15.0419309, 55.099161],
-    },
+    bbox: null,
     logoPath: null,
     logoWhiteBackgroundRequired: false,
     categories: [
@@ -738,6 +730,11 @@ export const staticRegion: StaticRegion[] = [
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',
+    cacheWarming: {
+      minZoom: 5,
+      maxZoom: 8,
+      tables: ['bikelanes'],
+    },
   },
   {
     slug: 'testing',
