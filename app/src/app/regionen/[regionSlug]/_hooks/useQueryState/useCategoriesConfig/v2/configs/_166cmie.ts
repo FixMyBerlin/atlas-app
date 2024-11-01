@@ -57,7 +57,7 @@ export const _166cmie: MapDataCategoryParam[] = [
       { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: true }] },
+      { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: false }] },
     ],
   },
   {
