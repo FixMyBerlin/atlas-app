@@ -62,7 +62,7 @@ export async function registerGeneralizationFunctions() {
 
   return Promise.all(
     Object.entries(interactivityConfiguration).map(
-      async ([tableName, { minzoom, stylingKeys }]) => {
+      async ([tableName, { minzoom: fullTagsMinZoom, stylingKeys }]) => {
         const functionName = generalizationFunctionIdentifier(tableName as TableId)
         // Gather meta information for the tile specification
         const tileSpecification = await createTileSpecification(tableName as TableId)
@@ -76,7 +76,7 @@ export async function registerGeneralizationFunctions() {
                mvt bytea;
                tolerance float;
              BEGIN
-                IF z BETWEEN ${SIMPLIFY_MIN_ZOOM + 1} AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
+                IF z BETWEEN ${SIMPLIFY_MIN_ZOOM} AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
                   tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
                 ELSE
                   tolerance = 0;
@@ -89,10 +89,10 @@ export async function registerGeneralizationFunctions() {
                         ST_Simplify(geom, tolerance, true)
                       ),
                       ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${minzoom} THEN tags ELSE atlas_jsonb_select(tags, ${toSqlArray(
+                    CASE WHEN z >= ${fullTagsMinZoom} THEN tags ELSE atlas_jsonb_select(tags, ${toSqlArray(
                       stylingKeys,
                     )}) END as tags,
-                    CASE WHEN z >= ${minzoom} THEN meta ELSE NULL END as meta
+                    CASE WHEN z >= ${fullTagsMinZoom} THEN meta ELSE NULL END as meta
                   FROM "${tableName}"
                   WHERE (geom && ST_TileEnvelope(z, x, y)) AND z >= minzoom
                 ) AS tile;
