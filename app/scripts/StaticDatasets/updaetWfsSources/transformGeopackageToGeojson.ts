@@ -6,4 +6,12 @@ export const transformGeopackageToGeojson = async (input: string, output: string
       error && console.log('error:', error)
     },
   })
+
+  console.log('  Run prettier')
+  Bun.spawnSync(['npx', 'prettier', '--write', output], {
+    onExit(_proc, exitCode, _signalCode, error) {
+      exitCode && console.log('exitCode:', exitCode)
+      error && console.log('error:', error)
+    },
+  })
 }

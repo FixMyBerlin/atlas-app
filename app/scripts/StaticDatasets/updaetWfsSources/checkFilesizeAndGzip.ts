@@ -14,7 +14,7 @@ export const checkFilesizeAndGzip = async (file: string) => {
     })
     return `${file}.gz`
   } else {
-    console.log('  File is bigger smaller than 10MB, doing nothing')
+    console.log('  File is smaller than 10MB, doing nothing')
     return file
   }
 }
