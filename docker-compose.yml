@@ -26,9 +26,6 @@ services:
       - geodata:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-    configs:
-      - source: warm_chache_conf
-        target: /processing/warm-cache/config.json
     depends_on:
       db:
         condition: service_healthy
@@ -133,5 +130,3 @@ configs:
     file: ./configs/postgres-init.sql
   postgres_conf:
     file: ./configs/postgres.conf
-  warm_chache_conf:
-    file: ./configs/warm-cache.json
