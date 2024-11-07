@@ -187,6 +187,9 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     if osm2pgsql.has_prefix(trafficSign, "DE:241") then
         return true
     end
+    -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
+    -- No traffic_sign but mapper decided to map foot- and bike lane as separate geometry
+    if tags.highway == "cycleway" and tags['traffic_mode:right'] == "foot" then
       return true
     end
   end
