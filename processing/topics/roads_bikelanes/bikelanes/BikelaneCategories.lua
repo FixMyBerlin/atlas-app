@@ -170,7 +170,7 @@ local footAndCyclewayShared = BikelaneCategory.new({
     end
   end
 })
-local footAndCycleway_adjoining, footAndCyclewayShared_isolated, footAndCyclewayShared_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewayShared)
+local footAndCycleway_adjoining, footAndCyclewayShared_isolated, footAndCyclewayShared_adjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewayShared)
 
 -- traffic_sign=DE:241-30, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:241-30
 -- traffic_sign=DE:241-31, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:241-31
@@ -191,7 +191,7 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     end
   end
 })
-local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, footAndCyclewaySegregated_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewaySegregated)
+local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, footAndCyclewaySegregated_adjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(footAndCyclewaySegregated)
 
 -- Case: "Gehweg, Fahrrad frei"
 -- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:239
@@ -261,7 +261,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     end
   end
 })
-local cyclewaySeparated_adjoining, cyclewaySeparated_isolated, cyclewaySeparated_adjoiningOrisolated = CreateSubcategoriesAdjoiningOrIsolated(cyclewaySeparated)
+local cyclewaySeparated_adjoining, cyclewaySeparated_isolated, cyclewaySeparated_adjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(cyclewaySeparated)
 
 -- Examples https://github.com/FixMyBerlin/atlas-app/issues/23
 local crossing = BikelaneCategory.new({
@@ -550,13 +550,13 @@ local categoryDefinitions = {
   cyclewayOnHighwayBetweenLanes,
   footAndCycleway_adjoining,
   footAndCyclewayShared_isolated,
-  footAndCyclewayShared_adjoiningOrisolated,
+  footAndCyclewayShared_adjoiningOrIsolated,
   footAndCyclewaySegregated_adjoining,
   footAndCyclewaySegregated_isolated,
-  footAndCyclewaySegregated_adjoiningOrisolated,
+  footAndCyclewaySegregated_adjoiningOrIsolated,
   cyclewaySeparated_adjoining,
   cyclewaySeparated_isolated,
-  cyclewaySeparated_adjoiningOrisolated,
+  cyclewaySeparated_adjoiningOrIsolated,
   cyclewayOnHighway_advisory,
   cyclewayOnHighway_exclusive,
   cyclewayOnHighway_advisoryOrExclusive,
