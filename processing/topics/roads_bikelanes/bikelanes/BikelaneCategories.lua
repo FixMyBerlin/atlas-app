@@ -140,7 +140,7 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
     -- Subcategory when bicycle road allows vehicle traffic
-    if bicycleRoad.condition(tags) then
+    if bicycleRoad(tags) then
       local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
       if ContainsSubstring(trafficSign, "1020-30") then
         return true
@@ -346,7 +346,7 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+    if cyclewayOnHighway_advisoryOrExclusive(tags) then
       if tags['lane'] == 'advisory' then
         return true -- DE: Schutzstreifen
       end
@@ -364,7 +364,7 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+    if cyclewayOnHighway_advisoryOrExclusive(tags) then
       if tags['lane'] == 'exclusive' then
         return true -- DE: Radfahrstreifen
       end
