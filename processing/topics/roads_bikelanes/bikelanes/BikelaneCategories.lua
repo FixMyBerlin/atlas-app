@@ -189,7 +189,8 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     end
     -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
     -- No traffic_sign but mapper decided to map foot- and bike lane as separate geometry
-    if tags.highway == "cycleway" and tags['traffic_mode:right'] == "foot" then
+    local traffic_mode_left = tags['traffic_mode:left'] or tags['traffic_mode:both'] or tags['traffic_mode']
+    if tags.highway == "cycleway" and traffic_mode_left == "foot" then
       return true
     end
   end
