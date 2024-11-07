@@ -189,8 +189,15 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     end
     -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
     -- No traffic_sign but mapper decided to map foot- and bike lane as separate geometry
-    local traffic_mode_left = tags['traffic_mode:left'] or tags['traffic_mode:both'] or tags['traffic_mode']
-    if tags.highway == "cycleway" and traffic_mode_left == "foot" then
+    -- We check for traffic_mode:right=foot
+    -- But in some cases, it is OK to map traffic_mode:right=foot but there is a separation.
+    -- Those cases are not `footAndCyclewaySegregated`. So if a separation is given, this has to be "no".
+    -- Eg. https://www.openstreetmap.org/way/244549219
+    local separation_right = tags['separation:right'] or tags['separation:both'] or tags['separation']
+    local separation_condition = true
+    if(separation_right ~= nil) then separation_condition = separation_right == "no" end
+    local traffic_mode_right = tags['traffic_mode:right'] or tags['traffic_mode:both'] or tags['traffic_mode']
+    if tags.highway == "cycleway" and traffic_mode_right == "foot" and separation_condition then
       return true
     end
   end

@@ -55,6 +55,68 @@ describe("Bikelanes", function()
     end)
   end)
 
+  describe('Handle footAndCyclewaySegregated with traffic_mode', function()
+    it('simple footAndCyclewaySegregated', function()
+      local input_object = {
+        tags = {
+          highway = 'path',
+          bicycle = 'designated',
+          foot = 'designated',
+          segregated = 'yes',
+          is_sidepath = 'yes',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(result[1].category, "footAndCyclewaySegregated_adjoining")
+    end)
+
+    it('separate cycle and foot geometry with traffic_mode', function()
+      local input_object = {
+        tags = {
+          highway = 'cycleway',
+          ["traffic_mode:right"] = 'foot',
+          is_sidepath = 'yes',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(result[1].category, "footAndCyclewaySegregated_adjoining")
+    end)
+
+    it('separate cycle and foot geometry with traffic_mode and separation=no', function()
+      local input_object = {
+        tags = {
+          highway = 'cycleway',
+          ["traffic_mode:right"] = 'foot',
+          ["separation:right"] = 'no',
+          is_sidepath = 'yes',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(result[1].category, "footAndCyclewaySegregated_adjoining")
+    end)
+
+    it('separate cycle and foot geometry with traffic_mode and separation=something', function()
+      local input_object = {
+        tags = {
+          highway = 'cycleway',
+          ["traffic_mode:right"] = 'foot',
+          ["separation:right"] = 'something',
+          is_sidepath = 'yes',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(result[1].category, "cycleway_adjoining")
+    end)
+  end)
+
   describe("explicit category tests", function()
 
     it('Categories for "angstweiche"', function()
