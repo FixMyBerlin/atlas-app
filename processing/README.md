@@ -86,6 +86,22 @@ For the development process it's often useful to run the processing on a single 
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
+## Tests
+
+We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as our testing framework.
+
+### Run
+
+```
+./processing/run-tests.sh
+```
+
+### Conventions
+
+- Create one test file per helper
+- Filename has to be `\*.test.lua`
+- Place it in a `__tests__` folder next to the file
+
 ## Deployment
 
 1. First https://github.com/FixMyBerlin/atlas-app/actions runs.
