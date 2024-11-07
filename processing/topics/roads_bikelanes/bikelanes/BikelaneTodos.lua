@@ -86,7 +86,8 @@ local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
   conditions = function(objectTags, resultTags)
-    return objectTags.traffic_sign == nil
+    local traffic_sign = objectTags['traffic_sign'] or objectTags['traffic_sign:forward'] or objectTags['traffic_sign:backward']
+    return traffic_sign == nil
         and not (
           missing_traffic_sign_244(objectTags) or
           missing_traffic_sign_vehicle_destination(objectTags) or
