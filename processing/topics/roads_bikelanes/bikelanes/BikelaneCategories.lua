@@ -139,10 +139,8 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false, -- road shared, both lanes
   condition = function(tags)
-    if not bicycleRoad.condition(tags) then
-      return false
-    end
     -- Subcategory when bicycle road allows vehicle traffic
+    if bicycleRoad.condition(tags) then
       local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
       if ContainsSubstring(trafficSign, "1020-30") then
         return true
@@ -344,11 +342,10 @@ local cyclewayOnHighway_advisory = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if not cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
-      return false
-    end
-    if tags['lane'] == 'advisory' then
-      return true -- DE: Schutzstreifen
+    if cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+      if tags['lane'] == 'advisory' then
+        return true -- DE: Schutzstreifen
+      end
     end
   end
 })
@@ -363,11 +360,10 @@ local cyclewayOnHighway_exclusive = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if not cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
-      return false
-    end
-    if tags['lane'] == 'exclusive' then
-      return true -- DE: Radfahrstreifen
+    if cyclewayOnHighway_advisoryOrExclusive.condition(tags) then
+      if tags['lane'] == 'exclusive' then
+        return true -- DE: Radfahrstreifen
+      end
     end
   end
 })
@@ -395,10 +391,7 @@ local cyclewayOnHighwayBetweenLanes = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    if tags._side ~= 'self' then
-      return false
-    end
-
+    if tags._side == 'self' then
       if ContainsSubstring(tags['cycleway:lanes'], "|lane|") then
         return true
       end
