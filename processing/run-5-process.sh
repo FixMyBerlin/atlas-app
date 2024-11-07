@@ -44,10 +44,10 @@ notify "Processing finished."
 
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 log "Completed:"
+log "Preview https://viewer.radverkehrsatlas.de/index.html (Development, Staging, Production)"
 log "Development http://localhost:3000/catalog"
 log "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
 log "Production https://tiles.radverkehrsatlas.de/catalog"
-log "Preview https://viewer.radverkehrsatlas.de/index.html (Staging, Production)"
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 
 log_end "$0"
