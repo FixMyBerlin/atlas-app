@@ -23,6 +23,7 @@ services:
       COMPUTE_DIFFS:
       FREEZE_DATA:
       ATLAS_API_KEY:
+      FORCE_COLOR: 1
     volumes:
       - osmfiles:/data
       - geodata:/data/db
@@ -52,6 +53,7 @@ services:
       S3_SECRET:
       S3_REGION:
       S3_BUCKET:
+      FORCE_COLOR: 1
     ports:
       - 4000:4000
     labels:
@@ -71,7 +73,7 @@ services:
   tiles:
     image: ghcr.io/maplibre/martin:v0.14.2
     container_name: tiles
-    command: '--config /config.yaml'
+    command: "--config /config.yaml"
     restart: unless-stopped
     environment:
       DATABASE_URL: postgres://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}
@@ -106,7 +108,7 @@ services:
       LC_ALL: en_US.UTF-8
       TZ: Europe/Berlin
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - geodata:/var/lib/postgresql/data
     configs:
@@ -114,9 +116,9 @@ services:
         target: /postgresql/postgresql.conf
       - source: postgres_init
         target: /docker-entrypoint-initdb.d/11-postgres.sql
-    command: ['-c', 'config_file=/postgresql/postgresql.conf']
+    command: ["-c", "config_file=/postgresql/postgresql.conf"]
     healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}']
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
       interval: 5s
       timeout: 5s
       retries: 5
