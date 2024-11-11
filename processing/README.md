@@ -50,19 +50,15 @@ The workflow is…
 
 ### Processing: Run changes only
 
-Whenever `SKIP_DOWNLOAD=1` is active we store a hash of all `.lua` and `.sql` per folder.
-During [`run-5-process.sh`](processing/run-5-process.sh) we only run code if the hash has changed.
-If any helper in (`topics/helper`)[processing/topics/helper] changed, we rerun everything.
+With `SKIP_UNCHANGED=1` we compare the hashes of all `.lua` and `.sql` files to the last run per topic.
+During [`run-5-process.sh`](processing/run-5-process.sh) we only run code if the respective hash has changed.
+If any helper in (`topics/helper`)[processing/topics/helper] or the OSM file has changed, we rerun everything.
 
 Whenever we talk about `hash`es in this code, this feature is referenced.
 
-#### Force rerun
-
-Whenever you need to force a rerun, open [any lua helper](./processing/topics/helper/Set.lua) and add a temporary code comment, save and restart the processing. Use the helper `run-full.sh` to do this automatically.
-
 ### Processing: Inspect changes
 
-Whenever `SKIP_DOWNLOAD=1` and `COMPUTE_DIFFS=1`, the system will create `<tablename>_diff` tables that contain only changed entries.
+With `COMPUTE_DIFFS=1` the system will create `<tablename>_diff` tables that contain only changed entries.
 
 It will compare the `tags` column to the previous run.
 
@@ -71,7 +67,7 @@ Whenever we talk about `diff`s in this code, this feature is referenced.
 #### Reference
 
 - With `FREEZE_DATA=0` you see the changes to the last run on every run
-- With `FREEZE_DATA=1` you see the changes to the last reference-run, allowing you to compare your changes to a certain version of your data. The reference will be the last time you ran with `FREEZE_DATA=0`. In this case the system will **not** update the `<tablename>_diff` tables. This flag will be ignored if `COMPUTE_DIFFS=0`.
+- With `FREEZE_DATA=1` you see the changes to the last reference-run, allowing you to compare your changes to a certain version of your data. The reference will be the last time you ran with `FREEZE_DATA=0`. In this case the system will **not** update the `backup.<tablename>` tables. This flag will be ignored if `COMPUTE_DIFFS=0`.
 
 Use `run-full.sh` to toggle `FREEZE_DATA` and force a full rerun for a fresh reference.
 
