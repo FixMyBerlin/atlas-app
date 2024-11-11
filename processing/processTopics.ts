@@ -14,10 +14,11 @@ import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { logEnd, logStart } from './utils/logging'
 import { params } from './utils/parameters'
 
-const mainFile = (topic: Topic) => join(TOPIC_DIR, topic, topic)
+const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
+const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
 
 async function runSQL(topic: Topic) {
-  const psqlFile = `${mainFile(topic)}.sql`
+  const psqlFile = `${mainFilePath(topic)}.sql`
 
   if (await Bun.file(psqlFile).exists()) {
     const logId = `Run SQL ${topic}`
@@ -29,7 +30,7 @@ async function runSQL(topic: Topic) {
 async function runLua(fileName: string, topic: Topic) {
   const filePath = filteredFile(fileName)
   const logId = `Run LUA ${topic}`
-  const luaFile = `${mainFile(topic)}.lua`
+  const luaFile = `${mainFilePath(topic)}.lua`
 
   console.time(logId)
   return $`osm2pgsql \
@@ -60,11 +61,12 @@ export async function processTopics(
   }
 
   // when the helpers have changed we disable all diffing functionality
-  const diffingPossible = !(await directoryHasChanged('helper')) && !fileChanged
-  updateDirectoryHash('helper')
+  const helpersChanged = await directoryHasChanged(topicPath('helper'))
+  const diffingPossible = !helpersChanged && !fileChanged
+  updateDirectoryHash(topicPath('helper'))
 
   for (const topic of topics) {
-    if (params.skipUnchanged && (await directoryHasChanged(topic))) {
+    if (params.skipUnchanged && (await directoryHasChanged(topicPath(topic)))) {
       logStart(topic)
 
       // get all tables related to `topic` and are already present in our db
@@ -85,7 +87,7 @@ export async function processTopics(
 
       await runTopic(fileName, topic)
 
-      updateDirectoryHash(topic)
+      updateDirectoryHash(topicPath(topic))
 
       if (diffingPossible && params.computeDiffs) {
         for (const table of topicTables) {

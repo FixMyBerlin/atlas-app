@@ -48,7 +48,7 @@ try {
 // call the cache warming hook
 if (!params.skipWarmCache) {
   try {
-    await $`rm -rf /var/cache/nginx/*`
+    await $`rm -rf "/var/cache/nginx/*"`
     console.log('Succesfully cleared the cache.')
   } catch {
     console.warn('Clearing the cache failed.')
