@@ -46,14 +46,17 @@ try {
 } catch {
   throw new Error('Restarting the tiles container failed.')
 }
+
+// clear the cache
+try {
+  await $`rm -rf "/var/cache/nginx/*"`
+  console.log('Succesfully cleared the cache.')
+} catch {
+  console.warn('Clearing the cache failed.')
+}
+
 // call the cache warming hook
 if (!params.skipWarmCache) {
-  try {
-    await $`rm -rf "/var/cache/nginx/*"`
-    console.log('Succesfully cleared the cache.')
-  } catch {
-    console.warn('Clearing the cache failed.')
-  }
   try {
     await fetch(`http://app:4000api/private/warm-cache?apiKey=${params.apiKey}`)
   } catch {
