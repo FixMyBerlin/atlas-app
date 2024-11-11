@@ -9,14 +9,14 @@ export type SubcatBikelanesPlusBikeSuitabilityId = typeof subcatId
 export type SubcatBikelanesPlusBikeSuitabilityStyleIds = 'default'
 export const subcat_bikelanes_plus_bikesuitability: FileMapDataSubcategory = {
   id: subcatId,
-  name: 'Radeignung',
+  name: 'Radeignung (Beta)',
   ui: 'checkbox',
   sourceId: source,
   // beforeId: 'atlas-app-beforeid-group1',
   styles: [
     {
       id: 'default',
-      name: 'Radeignung',
+      name: 'Radeignung (Beta)',
       desc: '',
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_atlas_bikelanes_plus_bikesuitability,
