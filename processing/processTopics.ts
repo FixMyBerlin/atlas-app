@@ -91,15 +91,19 @@ export async function processTopics(
 
       // compute diffs
       if (diffChanges) {
-        for (const table of topicTables) {
-          const { nTotal, nModified, nAdded, nRemoved } = await computeDiff(table)
-          if (nTotal > 0) {
+        const diffResults = await Promise.all(
+          topicTables.map((table) =>
+            computeDiff(table).then((diffResult) => ({ table, ...diffResult })),
+          ),
+        )
+        diffResults
+          .filter(({ nTotal }) => nTotal > 0)
+          .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
             console.log(`${nTotal} changes in ${table}:`)
             console.log(`     ${nModified} modified`)
             console.log(`     ${nAdded} added`)
             console.log(`     ${nRemoved} removed`)
-          }
-        }
+          })
       }
       logEnd(topic)
     } else {
