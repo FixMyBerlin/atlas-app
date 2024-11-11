@@ -8,7 +8,7 @@ const tableIdentifier = (table: string) => `public."${table}"`
 export async function getTopicTables(topic: Topic) {
   return $`lua /processing/utils/TableNames.lua ${topic}`
     .text()
-    .then((tables) => tables.split('\n'))
+    .then((tables) => new Set(tables.split('\n')))
 }
 
 const prisma = new PrismaClient()

@@ -67,20 +67,18 @@ export async function processTopics(
       logStart(topic)
 
       // get all tables related to `topic` that are already present in our db
-      const topicTables = (await getTopicTables(topic)).filter((table) =>
-        processedTables.has(table),
-      )
+      const topicTables = await getTopicTables(topic)
+      const processdTopicTables = topicTables.intersection(processedTables)
 
       // backup all tables related to topic
       if (diffChanges) {
-        await Promise.all(
-          topicTables
-            .filter((table) => !params.freezeData || !backedUpTables.has(table))
-            .map(async (table) => {
-              backedUpTables.add(table)
-              return backupTable(table)
-            }),
-        )
+        if (params.freezeData) {
+          // with FREEZE_DATA=1 we only backup tables that are not already backed up
+          const toBackup = [...processdTopicTables.difference(backedUpTables)]
+          await Promise.all(toBackup.map(backupTable))
+        } else {
+          await Promise.all([...processdTopicTables].map(backupTable))
+        }
       }
 
       // run the topic with osm2pgsql and the sql post-processing
@@ -89,13 +87,14 @@ export async function processTopics(
       // update the code hashes
       updateDirectoryHash(topicPath(topic))
 
-      // compute diffs
       if (diffChanges) {
+        // compute all diffs in parallel
         const diffResults = await Promise.all(
-          topicTables.map((table) =>
+          [...processdTopicTables].map((table) =>
             computeDiff(table).then((diffResult) => ({ table, ...diffResult })),
           ),
         )
+        // print the results for each table that changed
         diffResults
           .filter(({ nTotal }) => nTotal > 0)
           .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
@@ -105,6 +104,7 @@ export async function processTopics(
             console.log(`     ${nRemoved} removed`)
           })
       }
+
       logEnd(topic)
     } else {
       console.log(`The ${topic} hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
