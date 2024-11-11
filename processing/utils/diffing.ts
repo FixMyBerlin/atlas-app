@@ -33,7 +33,7 @@ export async function backupTable(table: string) {
 
 export async function dropDiffTable(table: string) {
   const diffTableId = diffTableIdentifier(table)
-  return prisma.$executeRawUnsafe(`DROP TABLE ${diffTableId}`)
+  return prisma.$executeRawUnsafe(`DROP TABLE IF EXISTS ${diffTableId}`)
 }
 
 async function createSpatialIndex(table: string) {
