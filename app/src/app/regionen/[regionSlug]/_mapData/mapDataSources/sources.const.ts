@@ -530,7 +530,7 @@ export const sources: MapDataSource<
     maxzoom: 14,
     attributionHtml: 'Daten von Mapillary', // TODO – could not find anything specific; they don't attribute on their own page.
     licence: undefined, // TODO
-    promoteId: undefined,
+    promoteId: 'id', // required, because `feautre.id` is not unique and different from `properties.id`
     osmIdConfig: { osmTypeId: 'id' },
     inspector: {
       enabled: true,
