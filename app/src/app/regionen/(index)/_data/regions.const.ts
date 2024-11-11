@@ -82,7 +82,7 @@ export type RegionSlug =
   | 'parkraum-berlin'
   | 'bibi'
   | 'deutschland'
-  | 'radinframap' // radinframap.org
+  | 'radinfra' // radinfra.de
   | 'fahrradstellplaetze'
   | 'herrenberg'
   | 'langerwehe'
@@ -711,9 +711,9 @@ export const staticRegion: StaticRegion[] = [
     notes: 'osmNotes',
   },
   {
-    slug: 'radinframap',
-    name: 'RadInfraMap.org',
-    fullName: 'RadInfraMap.org',
+    slug: 'radinfra',
+    name: 'Radinfra.de',
+    fullName: 'Radinfrastruktur Detuschland (radinfra.de)',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: null,
