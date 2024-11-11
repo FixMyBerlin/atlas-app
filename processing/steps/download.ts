@@ -1,6 +1,6 @@
 import { basename, join } from 'path'
-import { OSM_DOWNLOAD_DIR } from './directories.const'
-import { readPersistent, writePersistent } from './utils/persistentData'
+import { OSM_DOWNLOAD_DIR } from '../directories.const'
+import { readPersistent, writePersistent } from '../utils/persistentData'
 export async function waitForFreshData(fileURL: URL, maxTries: number, timeout: number) {
   const todaysDate = new Date().toDateString()
   let tries = 0

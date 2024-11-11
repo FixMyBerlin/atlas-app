@@ -1,9 +1,10 @@
 import { $ } from 'bun'
 import { FILTER_DIR, ID_FILTERED_FILE } from './directories.const'
-import { downloadFile, waitForFreshData } from './download'
-import { idFilter, tagFilter } from './filter'
-import { processTopics } from './processTopics'
-import { setup } from './setup'
+import { downloadFile, waitForFreshData } from './steps/download'
+import { idFilter, tagFilter } from './steps/filter'
+import { writeMetadata } from './steps/metadata'
+import { processTopics } from './steps/processTopics'
+import { setup } from './steps/setup'
 import { topicList } from './topics.const'
 import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { params } from './utils/parameters'
@@ -22,13 +23,12 @@ if (fileChanged && !(await directoryHasChanged(FILTER_DIR))) {
 
 if (params.idFilter && params.idFilter !== '') {
   await idFilter(fileName, params.idFilter)
-  await processTopics(topicList, ID_FILTERED_FILE, false)
+  await processTopics(topicList, ID_FILTERED_FILE, true)
 } else {
-  const diffChanges = params.computeDiffs && !fileChanged
-  await processTopics(topicList, fileName, diffChanges)
+  await processTopics(topicList, fileName, fileChanged)
 }
 
-// await writeMetadata(fileName, 0)
+await writeMetadata(fileName, 0)
 
 // call the frontend update hook
 try {

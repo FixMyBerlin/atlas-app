@@ -5,7 +5,7 @@ import {
   ID_FILTERED_FILE,
   OSM_DOWNLOAD_DIR,
   OSM_FILTER_DIR,
-} from './directories.const'
+} from '../directories.const'
 
 const downloadFile = (fileName: string) => join(OSM_DOWNLOAD_DIR, fileName)
 export const filteredFile = (fileName: string) => join(OSM_DOWNLOAD_DIR, fileName)

@@ -1,18 +1,18 @@
 import { $ } from 'bun'
 import { join } from 'path'
-import { TOPIC_DIR } from './directories.const'
-import { filteredFile } from './filter'
-import { type Topic } from './topics.const'
+import { TOPIC_DIR } from '../directories.const'
+import { type Topic } from '../topics.const'
 import {
   backupTable,
   computeDiff,
   dropDiffTable,
   getSchemaTables,
   getTopicTables,
-} from './utils/diffing'
-import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
-import { logEnd, logStart } from './utils/logging'
-import { params } from './utils/parameters'
+} from '../utils/diffing'
+import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
+import { logEnd, logStart } from '../utils/logging'
+import { params } from '../utils/parameters'
+import { filteredFile } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
@@ -46,7 +46,7 @@ export async function runTopic(fileName: string, topic: Topic) {
 export async function processTopics(
   topics: readonly Topic[],
   fileName: string,
-  diffChanges: boolean,
+  fileChanged: boolean,
 ) {
   const processedTables = await getSchemaTables('public')
   const backedUpTables = await getSchemaTables('backup')
@@ -60,10 +60,14 @@ export async function processTopics(
   const helpersChanged = await directoryHasChanged(topicPath('helper'))
   updateDirectoryHash(topicPath('helper'))
 
+  const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
+  const diffChanges = params.computeDiffs && !fileChanged
+
   for (const topic of topics) {
     const topicChanged = await directoryHasChanged(topicPath(topic))
-    const skipCode = params.skipUnchanged && !topicChanged && !helpersChanged
-    if (skipCode) {
+    if (skipCode && !topicChanged) {
+      console.log(`The ${topic} hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
+    } else {
       logStart(topic)
 
       // get all tables related to `topic` that are already present in our db
@@ -106,8 +110,6 @@ export async function processTopics(
       }
 
       logEnd(topic)
-    } else {
-      console.log(`The ${topic} hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
     }
   }
 }
