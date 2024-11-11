@@ -1,5 +1,5 @@
-import { params } from './parameters'
 import { join } from 'path'
+import { params } from './parameters'
 
 async function logToSynology(message: string, token: string) {
   if (!params.synologyURL) {

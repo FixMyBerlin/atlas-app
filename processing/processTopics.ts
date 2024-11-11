@@ -1,13 +1,18 @@
-import { type Topic } from './topics.const'
-import { backupTable, computeDiff, dropDiffTable, getSchemaTables } from './utils/diffing'
-import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
-import { params } from './utils/parameters'
-import { TOPIC_DIR } from './directories.const'
-import { join } from 'path'
 import { $ } from 'bun'
+import { join } from 'path'
+import { TOPIC_DIR } from './directories.const'
 import { filteredFile } from './filter'
-import { getTopicTables } from './utils/diffing'
+import { type Topic } from './topics.const'
+import {
+  backupTable,
+  computeDiff,
+  dropDiffTable,
+  getSchemaTables,
+  getTopicTables,
+} from './utils/diffing'
+import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { logEnd, logStart } from './utils/logging'
+import { params } from './utils/parameters'
 
 const mainFile = (topic: Topic) => join(TOPIC_DIR, topic, topic)
 
@@ -44,7 +49,7 @@ export async function runTopic(fileName: string, topic: Topic) {
 export async function processTopics(
   topics: readonly Topic[],
   fileName: string,
-  fileChanged: boolean
+  fileChanged: boolean,
 ) {
   const processedTables = await getSchemaTables('public')
   const backedUpTables = await getSchemaTables('backup')
@@ -62,7 +67,7 @@ export async function processTopics(
 
       // get all tables related to `topic` and are already present in our db
       const topicTables = (await getTopicTables(topic)).filter((table) =>
-        processedTables.has(table)
+        processedTables.has(table),
       )
 
       if (diffingPossible && params.computeDiffs) {
@@ -72,7 +77,7 @@ export async function processTopics(
             .map(async (table) => {
               backedUpTables.add(table)
               return backupTable(table)
-            })
+            }),
         )
       }
 

@@ -1,13 +1,13 @@
 import { $ } from 'bun'
+import { FILTER_DIR, ID_FILTERED_FILE } from './directories.const'
 import { downloadFile, waitForFreshData } from './download'
 import { idFilter, tagFilter } from './filter'
-import { params } from './utils/parameters'
+import { writeMetadata } from './metadata'
 import { processTopics } from './processTopics'
-import { FILTER_DIR, ID_FILTERED_FILE } from './directories.const'
+import { setup } from './setup'
 import { topicList } from './topics.const'
 import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
-import { writeMetadata } from './metadata'
-import { setup } from './setup'
+import { params } from './utils/parameters'
 
 await setup()
 
@@ -35,7 +35,7 @@ try {
   await fetch(`http://app:4000/api/private/post-processing-hook?apiKey=${params.apiKey}`)
 } catch {
   console.warn(
-    'Calling the post processing hook failed. This is liekely due to the NextJS application not running.'
+    'Calling the post processing hook failed. This is liekely due to the NextJS application not running.',
   )
 }
 
@@ -49,7 +49,7 @@ if (!params.skipWarmCache) {
     await fetch(`http://app:4000api/private/warm-cache?apiKey=${params.apiKey}`)
   } catch {
     console.warn(
-      'Calling the cache warming hook failed. This is liekely due to the NextJS application not running.'
+      'Calling the cache warming hook failed. This is liekely due to the NextJS application not running.',
     )
   }
 }

@@ -1,5 +1,5 @@
 import { basename, join } from 'path'
-import { HASHES_DIR, OSM_DOWNLOAD_DIR } from './directories.const'
+import { OSM_DOWNLOAD_DIR } from './directories.const'
 import { readPersistent, writePersistent } from './utils/persistentData'
 export async function waitForFreshData(fileURL: URL, maxTries: number, timeout: number) {
   const todaysDate = new Date().toDateString()
@@ -36,7 +36,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
 
   // check if file has changed
   const eTag = await fetch(fileURL.toString(), { method: 'HEAD' }).then((response) =>
-    response.headers.get('ETag')
+    response.headers.get('ETag'),
   )
   if (!eTag) {
     throw new Error('No ETag found')

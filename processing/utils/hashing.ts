@@ -1,7 +1,7 @@
 import { $ } from 'bun'
-import { TOPIC_DIR } from '../directories.const'
 import { join } from 'path'
-import { writePersistent, readPersistent } from './persistentData'
+import { TOPIC_DIR } from '../directories.const'
+import { readPersistent, writePersistent } from './persistentData'
 
 async function computeDirectoryHash(directory: string) {
   const directoryPath = join(TOPIC_DIR, directory)

@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
-import type { Topic } from '../topics.const'
 import { $ } from 'bun'
+import type { Topic } from '../topics.const'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"`
 const diffTableIdentifier = (table: string) => `public."${table}_diff"`
@@ -120,6 +120,6 @@ export async function computeDiff(table: string) {
         nAdded,
         nRemoved,
       }
-    }
+    },
   )
 }

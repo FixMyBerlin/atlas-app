@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import type { Topic } from '../topics.const'
-import { logInfo } from './synology'
 import { formatTimestamp } from './formatTimestamp'
+import { logInfo } from './synology'
 
 const startTimes: Partial<Record<Topic, number>> = {}
 export function logStart(topic: Topic) {

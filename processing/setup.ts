@@ -1,6 +1,6 @@
 import { $ } from 'bun'
-import { createBackupSchema } from './utils/diffing'
 import { HASHES_DIR, OSM_DOWNLOAD_DIR, OSM_FILTER_DIR } from './directories.const'
+import { createBackupSchema } from './utils/diffing'
 
 export async function setup() {
   //create directories and backup schema

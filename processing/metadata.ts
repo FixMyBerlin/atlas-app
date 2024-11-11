@@ -1,6 +1,6 @@
+import { PrismaClient } from '@prisma/client'
 import { $ } from 'bun'
 import { filteredFile } from './filter'
-import { PrismaClient } from '@prisma/client'
 export async function getFileTimestamp(fileName: string) {
   return $`osmium fileinfo ${filteredFile(fileName)} -g header.option.timestamp`.text()
 }
