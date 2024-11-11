@@ -13,6 +13,9 @@ CMD ["--pattern=%.test%.lua$", "/processing/topics/"]
 
 FROM testing AS processing
 
+# reset the entrypoint
+ENTRYPOINT []
+
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Berlin
 LABEL maintainer="FixMyCity - https://fixmycity.de"
@@ -27,11 +30,12 @@ RUN apt update && \
   apt install -y osm2pgsql osmium-tool wget curl && \
   apt upgrade -y
 
+# 'data' folder is root
+RUN mkdir /data
+
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH=/root/.bun/bin:$PATH
 RUN bun install
-# 'data' folder is root
-RUN mkdir /data
+
 RUN bunx prisma generate
-ENTRYPOINT bash
 CMD bun run /processing/index.ts
