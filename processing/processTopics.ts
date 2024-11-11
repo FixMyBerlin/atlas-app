@@ -55,7 +55,9 @@ export async function processTopics(
   const backedUpTables = await getSchemaTables('backup')
 
   // drop all previous diffs
-  processedTables.forEach(dropDiffTable)
+  if (!params.freezeData) {
+    processedTables.forEach(dropDiffTable)
+  }
 
   // when the helpers have changed we disable all diffing functionality
   const diffingPossible = !(await directoryHasChanged('helper')) && !fileChanged
