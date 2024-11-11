@@ -6,7 +6,7 @@ import { logInfo } from './synology'
 const startTimes: Partial<Record<Topic, number>> = {}
 export function logStart(topic: Topic) {
   logInfo(`Processing ${topic} started`)
-  console.log(chalk.black.bgWhite(`Processing ${topic} started)`))
+  console.log(chalk.black.bgWhite(`Processing ${topic} started`))
   startTimes[topic] = Date.now()
 }
 

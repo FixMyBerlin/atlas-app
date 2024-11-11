@@ -21,25 +21,21 @@ async function runSQL(topic: Topic) {
   const psqlFile = `${mainFilePath(topic)}.sql`
 
   if (await Bun.file(psqlFile).exists()) {
-    const logId = `Run SQL ${topic}`
-    console.time(logId)
-    return $`psql -q -f ${psqlFile}`.then(() => console.timeEnd(logId))
+    return $`psql -q -f ${psqlFile}`
   }
 }
 
 async function runLua(fileName: string, topic: Topic) {
   const filePath = filteredFile(fileName)
-  const logId = `Run LUA ${topic}`
   const luaFile = `${mainFilePath(topic)}.lua`
 
-  console.time(logId)
   return $`osm2pgsql \
             --number-processes=8 \
             --create \
             --output=flex \
             --extra-attributes \
             --style=${luaFile} \
-            ${filePath}`.then(() => console.timeEnd(logId))
+            ${filePath}`
 }
 
 export async function runTopic(fileName: string, topic: Topic) {
