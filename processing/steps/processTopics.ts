@@ -1,4 +1,5 @@
 import { $ } from 'bun'
+import chalk from 'chalk'
 import { join } from 'path'
 import { TOPIC_DIR } from '../directories.const'
 import { type Topic } from '../topics.const'
@@ -59,6 +60,9 @@ export async function processTopics(
   // when the helpers have changed we disable all diffing functionality
   const helpersChanged = await directoryHasChanged(topicPath('helper'))
   updateDirectoryHash(topicPath('helper'))
+  if (helpersChanged) {
+    console.log('Helpers have changed. Rerunning all code.')
+  }
 
   const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
   const diffChanges = params.computeDiffs && !fileChanged
@@ -66,7 +70,7 @@ export async function processTopics(
   for (const topic of topics) {
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
-      console.log(`The ${topic} hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
+      console.log(`Topic "${topic}" hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
     } else {
       logStart(topic)
 
@@ -102,10 +106,11 @@ export async function processTopics(
         diffResults
           .filter(({ nTotal }) => nTotal > 0)
           .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
-            console.log(`${nTotal} changes in ${table}:`)
-            console.log(`     ${nModified} modified`)
-            console.log(`     ${nAdded} added`)
-            console.log(`     ${nRemoved} removed`)
+            const padding = ' '.repeat(5)
+            console.log(`Table "${table}" has ${nTotal} changed entries:`)
+            console.log(padding + chalk.blue(`${nModified} modified`))
+            console.log(padding + chalk.green(`${nAdded} added`))
+            console.log(padding + chalk.red(`${nRemoved} removed`))
           })
       }
 

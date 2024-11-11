@@ -8,13 +8,14 @@ import { setup } from './steps/setup'
 import { topicList } from './topics.const'
 import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { params } from './utils/parameters'
+import { endTimer, startTimer } from './utils/timeTracking'
 
 await setup()
 
 if (params.waitForFreshData) {
   await waitForFreshData(params.fileURL, 24, 10)
 }
-const { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
+let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
 
 if (fileChanged && !(await directoryHasChanged(FILTER_DIR))) {
   await tagFilter(fileName)
@@ -23,12 +24,16 @@ if (fileChanged && !(await directoryHasChanged(FILTER_DIR))) {
 
 if (params.idFilter && params.idFilter !== '') {
   await idFilter(fileName, params.idFilter)
-  await processTopics(topicList, ID_FILTERED_FILE, true)
-} else {
-  await processTopics(topicList, fileName, fileChanged)
+  fileName = ID_FILTERED_FILE
+  fileChanged = true
 }
 
-await writeMetadata(fileName, 0)
+startTimer('processing')
+await processTopics(topicList, fileName, fileChanged)
+const processingTime = endTimer('processing')
+
+// write runs metadata
+await writeMetadata(fileName, processingTime)
 
 // call the frontend update hook
 try {
