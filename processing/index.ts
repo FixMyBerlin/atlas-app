@@ -22,9 +22,10 @@ if (fileChanged && !(await directoryHasChanged(FILTER_DIR))) {
 
 if (params.idFilter && params.idFilter !== '') {
   await idFilter(fileName, params.idFilter)
-  await processTopics(topicList, ID_FILTERED_FILE, fileChanged)
+  await processTopics(topicList, ID_FILTERED_FILE, false)
 } else {
-  await processTopics(topicList, fileName, fileChanged)
+  const diffChanges = params.computeDiffs && !fileChanged
+  await processTopics(topicList, fileName, diffChanges)
 }
 
 // await writeMetadata(fileName, 0)

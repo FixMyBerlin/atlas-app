@@ -46,7 +46,7 @@ export async function runTopic(fileName: string, topic: Topic) {
 export async function processTopics(
   topics: readonly Topic[],
   fileName: string,
-  fileChanged: boolean,
+  diffChanges: boolean,
 ) {
   const processedTables = await getSchemaTables('public')
   const backedUpTables = await getSchemaTables('backup')
@@ -58,19 +58,21 @@ export async function processTopics(
 
   // when the helpers have changed we disable all diffing functionality
   const helpersChanged = await directoryHasChanged(topicPath('helper'))
-  const diffingPossible = !helpersChanged && !fileChanged
   updateDirectoryHash(topicPath('helper'))
 
   for (const topic of topics) {
-    if (params.skipUnchanged && (await directoryHasChanged(topicPath(topic)))) {
+    const topicChanged = await directoryHasChanged(topicPath(topic))
+    const skipCode = params.skipUnchanged && !topicChanged && !helpersChanged
+    if (skipCode) {
       logStart(topic)
 
-      // get all tables related to `topic` and are already present in our db
+      // get all tables related to `topic` that are already present in our db
       const topicTables = (await getTopicTables(topic)).filter((table) =>
         processedTables.has(table),
       )
 
-      if (diffingPossible && params.computeDiffs) {
+      // backup all tables related to topic
+      if (diffChanges) {
         await Promise.all(
           topicTables
             .filter((table) => !params.freezeData || !backedUpTables.has(table))
@@ -81,11 +83,14 @@ export async function processTopics(
         )
       }
 
+      // run the topic with osm2pgsql and the sql post-processing
       await runTopic(fileName, topic)
 
+      // update the code hashes
       updateDirectoryHash(topicPath(topic))
 
-      if (diffingPossible && params.computeDiffs) {
+      // compute diffs
+      if (diffChanges) {
         for (const table of topicTables) {
           const { nTotal, nModified, nAdded, nRemoved } = await computeDiff(table)
           if (nTotal > 0) {
