@@ -1,6 +1,7 @@
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../directories.const'
 import { readPersistent, writePersistent } from '../utils/persistentData'
+import { logError } from '../utils/synology'
 
 /**
  * Get the full path to the downloaded file.
@@ -20,19 +21,27 @@ export async function waitForFreshData(fileURL: URL, maxTries: number, timeoutMi
   const todaysDate = new Date().toDateString()
   let tries = 0
   while (true) {
+    // get last modified date
     const response = await fetch(fileURL.toString(), { method: 'HEAD' })
     const lastModified = response.headers.get('Last-Modified')
-    if (lastModified) {
-      if (todaysDate === new Date(lastModified).toDateString()) {
-        return true
-      }
+    if (!lastModified) {
+      throw new Error('No Last-Modified header found')
+    }
+
+    // check if last modified date is today
+    const lastModifiedDate = new Date(lastModified).toDateString()
+    if (todaysDate === lastModifiedDate) {
+      return true
     }
 
     tries++
-
+    // if we exceeded the maximum number of tries, return false and log to synlogy
     if (tries >= maxTries) {
+      logError(`Timeout exceeded while waiting for fresh data. File is from ${lastModifiedDate}`)
       return false
     }
+
+    // wait for the timeout
     await new Promise((resolve) => setTimeout(resolve, timeoutMinutes * 1000 * 60))
   }
 }
