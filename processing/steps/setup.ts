@@ -1,5 +1,5 @@
 import { $ } from 'bun'
-import { OSM_DOWNLOAD_DIR, OSM_FILTERED_DIR, PERSISTENT_DIR } from '../directories.const'
+import { OSM_DOWNLOAD_DIR, OSM_FILTERED_DIR, PERSISTENT_DIR } from '../constants/directories.const'
 import { createBackupSchema } from '../utils/diffing'
 import { createMetadataTable } from './metadata'
 

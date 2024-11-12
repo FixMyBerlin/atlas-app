@@ -1,7 +1,7 @@
 import { $ } from 'bun'
 import { join } from 'path'
-import { TOPIC_DIR } from '../directories.const'
-import { type Topic } from '../topics.const'
+import { TOPIC_DIR } from '../constants/directories.const'
+import { type Topic } from '../constants/topics.const'
 import {
   backupTable,
   diffTables,

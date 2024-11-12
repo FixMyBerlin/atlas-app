@@ -5,7 +5,7 @@ import {
   FILTER_EXPRESSIONS,
   ID_FILTERED_FILE,
   OSM_FILTERED_DIR,
-} from '../directories.const'
+} from '../constants/directories.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { originalFilePath } from './download'
 

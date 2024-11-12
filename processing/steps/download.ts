@@ -1,5 +1,5 @@
 import { basename, join } from 'path'
-import { OSM_DOWNLOAD_DIR } from '../directories.const'
+import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
 import { readPersistent, writePersistent } from '../utils/persistentData'
 import { logError } from '../utils/synology'
 

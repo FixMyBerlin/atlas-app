@@ -1,3 +1,4 @@
+import { topicList } from './constants/topics.const'
 import { downloadFile, waitForFreshData } from './steps/download'
 import {
   clearCache,
@@ -9,7 +10,6 @@ import { idFilter, tagFilter } from './steps/filter'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
-import { topicList } from './topics.const'
 import { params } from './utils/parameters'
 import { logError } from './utils/synology'
 

@@ -1,5 +1,5 @@
 import { join } from 'path'
-import { PERSISTENT_DIR } from '../directories.const'
+import { PERSISTENT_DIR } from '../constants/directories.const'
 
 const filePath = (id: string) => join(PERSISTENT_DIR, id)
 

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { $ } from 'bun'
 import chalk from 'chalk'
-import type { Topic } from '../topics.const'
+import type { Topic } from '../constants/topics.const'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"`
 const diffTableIdentifier = (table: string) => `public."${table}_diff"`

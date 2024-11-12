@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import type { Topic } from '../topics.const'
+import type { Topic } from '../constants/topics.const'
 import { formatTimestamp } from './formatTimestamp'
 import { logInfo } from './synology'
 import { endTimer, startTimer } from './timeTracking'
