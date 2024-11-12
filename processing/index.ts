@@ -29,8 +29,7 @@ await tagFilter(fileName, fileChanged)
 
 // filter osm file by ids if given
 if (params.idFilter && params.idFilter !== '') {
-  await idFilter(fileName, params.idFilter)
-  fileName = ID_FILTERED_FILE
+  fileName = await idFilter(fileName, params.idFilter)
   fileChanged = true
 }
 
