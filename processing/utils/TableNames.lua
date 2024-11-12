@@ -1,5 +1,15 @@
 -- This file mocks the osm2pgsql library.
 -- We use this to extract the table names from *.lua files, which we use to compute diffs.
+-- Additionally, we validate the columns in the tables to ensure they are consistent.
+
+-- define require columns and types
+local requiredColumns = {
+  id = 'text',
+  tags = 'jsonb',
+  meta = 'jsonb',
+  geom = nil,
+  minzoom = 'integer',
+}
 
 local function validate_columns(columnList)
   -- convert list of columns to dict {columnName: type}
@@ -8,22 +18,18 @@ local function validate_columns(columnList)
     columnTable[column.column] = column.type
   end
 
-  -- define require columns and types
-  local required_columns = {
-    id = 'text',
-    tags = 'jsonb',
-    meta = 'jsonb',
-    geom = nil,
-    minzoom = 'integer',
-  }
-  for columnName, columnType in pairs(required_columns) do
+
+  for columnName, columnType in pairs(requiredColumns) do
     -- validate that required column is present
     if not columnTable[columnName] then
       error('Missing column: ' .. columnName)
     end
-    -- validate the column type
-    if columnType ~= nil and columnTable[columnName] ~= columnType then
-      error('Invalid column type for ' .. columnName .. ': ' .. columnList[columnName])
+
+    -- validate the column type if defined
+    if columnType ~= nil then
+      if columnTable[columnName] ~= columnType then
+        error('Invalid column type for ' .. columnName .. ': ' .. columnList[columnName])
+      end
     end
   end
 end
