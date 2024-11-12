@@ -1,5 +1,5 @@
 export const OSM_DOWNLOAD_DIR = '/data/downloads'
-export const OSM_FILTER_DIR = '/data/filtered'
+export const OSM_FILTERED_DIR = '/data/filtered'
 export const HASHES_DIR = '/data/hashes'
 export const FILTER_DIR = '/filter'
 export const FILTER_EXPRESSIONS = `${FILTER_DIR}/filter-expressions.txt`

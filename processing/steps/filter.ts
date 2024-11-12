@@ -4,8 +4,7 @@ import {
   FILTER_DIR,
   FILTER_EXPRESSIONS,
   ID_FILTERED_FILE,
-  OSM_DOWNLOAD_DIR,
-  OSM_FILTER_DIR,
+  OSM_FILTERED_DIR,
 } from '../directories.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { originalFilePath } from './download'
@@ -15,7 +14,7 @@ import { originalFilePath } from './download'
  * @param fileName file name
  * @returns full path to the file
  */
-export const filteredFilePath = (fileName: string) => join(OSM_DOWNLOAD_DIR, fileName)
+export const filteredFilePath = (fileName: string) => join(OSM_FILTERED_DIR, fileName)
 
 /**
  * Filter the OSM file wiht osmiumm and the given filter expressions.
@@ -28,6 +27,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
   // only run tag filters if the file or the filters have changed
   const filtersChanged = await directoryHasChanged(FILTER_DIR)
   if (fileChanged || filtersChanged) {
+    console.log('Filtering the OSM file...')
     await $`osmium tags-filter \
                 --overwrite \
                 --expressions ${FILTER_EXPRESSIONS} \
@@ -51,7 +51,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
 export async function idFilter(fileName: string, ids: string) {
   await $`osmium getid \
             --overwrite \
-            --output=${join(OSM_FILTER_DIR, ID_FILTERED_FILE)} \
+            --output=${filteredFilePath(ID_FILTERED_FILE)} \
             --verbose-ids ${filteredFilePath(fileName)} \
             ${ids}`
 
