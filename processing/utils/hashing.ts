@@ -7,7 +7,12 @@ import { readPersistent, writePersistent } from './persistentData'
  * @returns The hash of the directory
  */
 async function computeDirectoryHash(path: string) {
-  return $`find "${path}" -type f | sort | xargs shasum`.text()
+  try {
+    const hash = await $`find "${path}" -type f | sort | xargs shasum`.text()
+    return hash
+  } catch {
+    throw new Error('Could not compute the hash of the directory')
+  }
 }
 
 /**
