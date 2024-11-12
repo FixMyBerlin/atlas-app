@@ -5,7 +5,7 @@ async function triggerPrivateApi(endpoint: string) {
   try {
     const response = await fetch(`http://app:4000/api/private/${endpoint}?apiKey=${params.apiKey}`)
     if (!response.ok) {
-      throw new Error(`Failed to call the ${endpoint} hook.`)
+      throw new Error(`The ${endpoint} endpoint failed with status code ${response.status}.`)
     }
   } catch {
     console.warn(
