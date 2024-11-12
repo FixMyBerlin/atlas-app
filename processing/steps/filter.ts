@@ -28,11 +28,15 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
   const filtersChanged = await directoryHasChanged(FILTER_DIR)
   if (fileChanged || filtersChanged) {
     console.log('Filtering the OSM file...')
-    await $`osmium tags-filter \
-                --overwrite \
-                --expressions ${FILTER_EXPRESSIONS} \
-                --output=${filteredFilePath(fileName)} \
-                ${originalFilePath(fileName)}`
+    try {
+      await $`osmium tags-filter \
+                  --overwrite \
+                  --expressions ${FILTER_EXPRESSIONS} \
+                  --output=${filteredFilePath(fileName)} \
+                  ${originalFilePath(fileName)}`
+    } catch {
+      throw new Error('Failed to filter the OSM file.')
+    }
   } else {
     console.log('⏩ Skipping tag filter. The file and filters are unchanged.')
   }
@@ -49,11 +53,15 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
  * @returns the resulting file's name
  */
 export async function idFilter(fileName: string, ids: string) {
-  await $`osmium getid \
-            --overwrite \
-            --output=${filteredFilePath(ID_FILTERED_FILE)} \
-            --verbose-ids ${filteredFilePath(fileName)} \
-            ${ids}`
+  try {
+    await $`osmium getid \
+              --overwrite \
+              --output=${filteredFilePath(ID_FILTERED_FILE)} \
+              --verbose-ids ${filteredFilePath(fileName)} \
+              ${ids}`
+  } catch {
+    throw new Error('Failed to filter the OSM file by ids.')
+  }
 
   return ID_FILTERED_FILE
 }
