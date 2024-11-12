@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { $ } from 'bun'
+import chalk from 'chalk'
 import type { Topic } from '../topics.const'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"`
@@ -122,4 +123,21 @@ export async function computeDiff(table: string) {
       }
     },
   )
+}
+
+export async function diffTables(tables: string[]) {
+  // compute all diffs in parallel
+  const diffResults = await Promise.all(
+    tables.map((table) => computeDiff(table).then((diffResult) => ({ table, ...diffResult }))),
+  )
+  // print the results for each table that changed
+  diffResults
+    .filter(({ nTotal }) => nTotal > 0)
+    .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
+      const padding = ' '.repeat(5)
+      console.log(`Table "${table}" has ${nTotal} changed entries:`)
+      console.log(padding + chalk.blue(`${nModified} modified`))
+      console.log(padding + chalk.green(`${nAdded} added`))
+      console.log(padding + chalk.red(`${nRemoved} removed`))
+    })
 }

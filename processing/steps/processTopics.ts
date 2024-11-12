@@ -1,11 +1,10 @@
 import { $ } from 'bun'
-import chalk from 'chalk'
 import { join } from 'path'
 import { TOPIC_DIR } from '../directories.const'
 import { type Topic } from '../topics.const'
 import {
   backupTable,
-  computeDiff,
+  diffTables,
   dropDiffTable,
   getSchemaTables,
   getTopicTables,
@@ -84,10 +83,10 @@ export async function processTopics(
       if (diffChanges) {
         if (params.freezeData) {
           // with FREEZE_DATA=1 we only backup tables that are not already backed up
-          const toBackup = [...processdTopicTables.difference(backedUpTables)]
-          await Promise.all(toBackup.map(backupTable))
+          const toBackup = processdTopicTables.difference(backedUpTables)
+          await Promise.all(Array.from(toBackup).map(backupTable))
         } else {
-          await Promise.all([...processdTopicTables].map(backupTable))
+          await Promise.all(Array.from(processdTopicTables).map(backupTable))
         }
       }
 
@@ -98,27 +97,13 @@ export async function processTopics(
       updateDirectoryHash(topicPath(topic))
 
       if (diffChanges) {
-        // compute all diffs in parallel
-        const diffResults = await Promise.all(
-          [...processdTopicTables].map((table) =>
-            computeDiff(table).then((diffResult) => ({ table, ...diffResult })),
-          ),
-        )
-        // print the results for each table that changed
-        diffResults
-          .filter(({ nTotal }) => nTotal > 0)
-          .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
-            const padding = ' '.repeat(5)
-            console.log(`Table "${table}" has ${nTotal} changed entries:`)
-            console.log(padding + chalk.blue(`${nModified} modified`))
-            console.log(padding + chalk.green(`${nAdded} added`))
-            console.log(padding + chalk.red(`${nRemoved} removed`))
-          })
+        diffTables(Array.from(processdTopicTables))
       }
 
       logEnd(topic)
     }
   }
+
   const timeElapsed = endTimer('processing')
   return timeElapsed
 }
