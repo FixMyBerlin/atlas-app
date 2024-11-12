@@ -14,7 +14,7 @@ import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
 import { endTimer, startTimer } from '../utils/timeTracking'
-import { filteredFile } from './filter'
+import { filteredFilePath } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
@@ -28,7 +28,7 @@ async function runSQL(topic: Topic) {
 }
 
 async function runLua(fileName: string, topic: Topic) {
-  const filePath = filteredFile(fileName)
+  const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
 
   return $`osm2pgsql \

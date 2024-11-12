@@ -20,6 +20,10 @@ export async function triggerCacheWarming() {
   return triggerPrivateApi('cache-warming')
 }
 
+/**
+ * Clears the cache of the nginx server.
+ * This requires the /var/cache/nginx directory from the nginx container to be mounted in this container.
+ */
 export async function clearCache() {
   try {
     await $`rm -rf "/var/cache/nginx/*"`
@@ -29,6 +33,10 @@ export async function clearCache() {
   }
 }
 
+/**
+ * Restarts the tiles container to refresh the /catalog endpoint.
+ * This requires that the docker socket is mounted in this container.
+ */
 export async function restartTileServer() {
   try {
     await $`docker restart tiles > /dev/null`

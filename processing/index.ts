@@ -13,6 +13,7 @@ import { setup } from './steps/setup'
 import { topicList } from './topics.const'
 import { params } from './utils/parameters'
 
+// setup directories and backup schema
 await setup()
 
 // wait for fresh data
