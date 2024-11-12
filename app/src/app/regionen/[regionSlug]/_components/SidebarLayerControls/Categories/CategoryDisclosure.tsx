@@ -1,7 +1,7 @@
+import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import { ChevronDownIcon, ChevronLeftIcon } from '@heroicons/react/20/solid'
 import { produce } from 'immer'
-import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { useMapActions } from '../../../_hooks/mapState/useMapState'
 import { MapDataCategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { SubcategoriesCheckbox } from '../Subcategories/SubcategoriesCheckbox'

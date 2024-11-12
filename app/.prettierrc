@@ -4,6 +4,6 @@
   "arrowParens": "always",
   "printWidth": 100,
   "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
-  "tailwindAttributes": ["positionClasses"],
+  "tailwindAttributes": ["positionClasses", "classNameOverwrite"],
   "tailwindFunctions": ["twMerge", "clsx", "twJoin"]
 }

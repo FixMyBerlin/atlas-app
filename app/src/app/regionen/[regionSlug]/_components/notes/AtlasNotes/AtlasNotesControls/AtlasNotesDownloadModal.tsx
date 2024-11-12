@@ -1,7 +1,7 @@
+import { IconModal } from '@/src/app/_components/Modal/IconModal'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { appBaseUrl } from '@/src/app/_components/utils/appBaseUrl.const'
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline'
-import { IconModal } from 'src/app/_components/Modal/IconModal'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { appBaseUrl } from 'src/app/_components/utils/appBaseUrl.const'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 
 export const AtlasNotesDownloadModal = () => {
@@ -23,7 +23,7 @@ export const AtlasNotesDownloadModal = () => {
         <div className="flex gap-2">
           <LinkExternal
             href={`${appBaseUrl[process.env.NEXT_PUBLIC_APP_ENV]}/api/notes/${region.slug}?format=csv`}
-            classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:ring-1 focus:ring-yellow-500 hover:bg-yellow-50 bg-gray-50"
+            classNameOverwrite="w-24 flex-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
             download
             blank
           >

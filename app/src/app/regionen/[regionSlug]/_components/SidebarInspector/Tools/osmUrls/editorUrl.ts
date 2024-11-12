@@ -1,4 +1,4 @@
-import { MapDataSourceInspectorEditor } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { MapDataSourceInspectorEditor } from '@/src/app/regionen/[regionSlug]/_mapData/types'
 import { OsmTypeId } from './extractOsmTypeIdByConfig'
 import { pointFromGeometry } from './pointFromGeometry'
 import { shortOsmType } from './shortLongOsmType'

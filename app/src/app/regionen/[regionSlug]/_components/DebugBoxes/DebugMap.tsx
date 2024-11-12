@@ -1,7 +1,7 @@
+import { getTilesUrl, isDevTilesUrl } from '@/src/app/_components/utils/getTilesUrl'
 import { StyleSpecification } from 'maplibre-gl'
 import { useState } from 'react'
 import { useMap } from 'react-map-gl/maplibre'
-import { getTilesUrl, isDevTilesUrl } from 'src/app/_components/utils/getTilesUrl'
 import { twJoin } from 'tailwind-merge'
 import {
   useMapDebugActions,

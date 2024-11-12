@@ -1,12 +1,11 @@
 'use client'
-
+import { Link } from '@/src/app/_components/links/Link'
+import { linkStyles } from '@/src/app/_components/links/styles'
+import { Pill } from '@/src/app/_components/text/Pill'
+import deleteMembership from '@/src/memberships/mutations/deleteMembership'
+import getUsersAndMemberships from '@/src/users/queries/getUsersAndMemberships'
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import { useRouter } from 'next/navigation'
-import { Link } from 'src/app/_components/links/Link'
-import { linkStyles } from 'src/app/_components/links/styles'
-import { Pill } from 'src/app/_components/text/Pill'
-import deleteMembership from 'src/memberships/mutations/deleteMembership'
-import getUsersAndMemberships from 'src/users/queries/getUsersAndMemberships'
 import { Breadcrumb } from '../_components/Breadcrumb'
 import { HeaderWrapper } from '../_components/HeaderWrapper'
 import { getFullname } from './_components/utils/getFullname'
@@ -77,7 +76,7 @@ export default function AdminMembershipsPage() {
                     <ul>
                       {user?.Membership?.map((membership) => {
                         return (
-                          <li key={membership.id} className="list-item list-disc ">
+                          <li key={membership.id} className="list-item list-disc">
                             <div className="flex justify-between">
                               <Link blank href={`/regionen/${membership.region.slug}`}>
                                 {membership.region.slug}

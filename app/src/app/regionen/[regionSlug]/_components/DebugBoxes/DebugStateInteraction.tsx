@@ -1,6 +1,6 @@
-import { Link } from 'src/app/_components/links/Link'
-import { getOsmUrl } from 'src/app/_components/utils/getOsmUrl'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { Link } from '@/src/app/_components/links/Link'
+import { getOsmUrl } from '@/src/app/_components/utils/getOsmUrl'
+import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import {
   useMapDebugActions,
   useMapDebugShowDebugInfo,

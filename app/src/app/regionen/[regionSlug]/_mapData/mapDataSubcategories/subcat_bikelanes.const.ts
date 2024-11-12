@@ -122,14 +122,14 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
             color: '#174ed9',
           },
         },
-        // {
-        //   id: 'todo-pbl',
-        //   name: 'Geschuetzter Radfahrstreifen',
-        //   style: {
-        //     type: 'line',
-        //     color: '#2dd4bf',
-        //   },
-        // },
+        {
+          id: 'protectedCyclewayOnHighway',
+          name: 'Geschuetzter Radfahrstreifen',
+          style: {
+            type: 'line',
+            color: '#2dd4bf',
+          },
+        },
         {
           id: 'cyclewayOnHighway_exclusive',
           name: 'Radfahrstreifen',
@@ -187,15 +187,6 @@ export const subcat_bikelanes: FileMapDataSubcategory = {
             type: 'line',
             color: '#fb923c',
             dasharray: [2.5, 1],
-          },
-        },
-        {
-          id: 'livingStreet',
-          name: 'Verkehrsberuhigter Bereich',
-          style: {
-            type: 'line',
-            color: '#f4b9e3',
-            dasharray: [1, 2.5],
           },
         },
         {

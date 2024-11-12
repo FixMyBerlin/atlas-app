@@ -1,7 +1,7 @@
+import { isDev } from '@/src/app/_components/utils/isEnv'
+import { useRegionDatasets } from '@/src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
-import { isDev } from 'src/app/_components/utils/isEnv'
-import { useRegionDatasets } from 'src/app/regionen/[regionSlug]/_hooks/useRegionDatasets/useRegionDatasets'
 import { SourcesId } from '../../../../_mapData/mapDataSources/sources.const'
 import { getDatasetOrSourceData } from '../../../../_mapData/utils/getMapDataUtils'
 import { translations } from './translations.const'
@@ -33,6 +33,7 @@ export const ConditionalFormattedKey: React.FC<Props> = ({ sourceId, tagKey }) =
     'bibi-on-street-parking-ortskerne-2023-offstreet': 'parkraumParkingAreas',
     atlas_roadsPathClasses: 'atlas_roads',
     atlas_bikelanesPresence: 'atlas_roads',
+    atlas_bikeSuitability: 'atlas_roads',
   }
   const lookAtThisSourceFirst = Object.keys(lookAtFirstSources).find((s) => s === sourceId)
   if (lookAtThisSourceFirst) {

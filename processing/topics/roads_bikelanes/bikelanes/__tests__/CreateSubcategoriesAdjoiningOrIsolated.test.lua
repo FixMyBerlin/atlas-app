@@ -3,7 +3,13 @@ describe("CreateSubcategoriesAdjoiningOrIsolated", function()
   require("BikelaneCategories")
   require("CreateSubcategoriesAdjoiningOrIsolated")
 
-  local testCategory = BikelaneCategory.new({id = "test", desc = '', condition= function () return true end })
+  local testCategory = BikelaneCategory.new({
+    id = "test",
+    desc = '',
+    infrastructureExists=true,
+    implicitOneWay=true,
+    condition= function () return true end
+  })
   local testCategoryAdjoining, testCategoryIsolated, testCategoryAdjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(testCategory)
   it('should add postfix "adjoining" when IsSidepath is true', function()
     local tags = { ["is_sidepath"] = "yes" }

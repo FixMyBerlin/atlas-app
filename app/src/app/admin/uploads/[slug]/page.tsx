@@ -1,16 +1,15 @@
 'use client'
-
+import { MetaData } from '@/scripts/StaticDatasets/types'
+import { Link } from '@/src/app/_components/links/Link'
+import { getStaticDatasetUrl } from '@/src/app/_components/utils/getStaticDatasetUrl'
+import { useSlug } from '@/src/app/_hooks/useSlug'
+import { Breadcrumb } from '@/src/app/admin/_components/Breadcrumb'
+import { HeaderWrapper } from '@/src/app/admin/_components/HeaderWrapper'
+import { ObjectDump } from '@/src/app/admin/_components/ObjectDump'
+import { createSourceKeyStaticDatasets } from '@/src/app/regionen/[regionSlug]/_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
+import getUploadWithRegions from '@/src/uploads/queries/getUploadWithRegions'
 import { useQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
-import { MetaData } from 'scripts/StaticDatasets/types'
-import { Link } from 'src/app/_components/links/Link'
-import { getStaticDatasetUrl } from 'src/app/_components/utils/getStaticDatasetUrl'
-import { useSlug } from 'src/app/_hooks/useSlug'
-import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
-import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
-import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { createSourceKeyStaticDatasets } from 'src/app/regionen/[regionSlug]/_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import getUploadWithRegions from 'src/uploads/queries/getUploadWithRegions'
 
 export default function AdminUploadPage() {
   const slug = useSlug()

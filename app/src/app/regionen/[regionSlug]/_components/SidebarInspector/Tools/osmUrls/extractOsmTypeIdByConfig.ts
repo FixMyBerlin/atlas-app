@@ -1,4 +1,4 @@
-import { MapDataOsmIdConfig } from 'src/app/regionen/[regionSlug]/_mapData/types'
+import { MapDataOsmIdConfig } from '@/src/app/regionen/[regionSlug]/_mapData/types'
 import { longOsmType } from './shortLongOsmType'
 
 // This file looks complicated due to all the type guarding.

@@ -1,6 +1,6 @@
+import db, { Prisma } from '@/db'
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
-import db, { Prisma } from 'db'
 import { staticRegion } from '../../app/regionen/(index)/_data/regions.const'
 import { TRegion } from './getRegion'
 

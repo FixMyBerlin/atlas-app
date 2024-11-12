@@ -26,31 +26,31 @@ end
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   id = "missing_traffic_sign_vehicle_destination",
   desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
-  conditions = function(tagsObject, _)
-    return tagsObject.bicycle_road == "yes"
-        and (tagsObject.vehicle == "destination" or tagsObject.motor_vehicle == "destination")
-            and not IsTermInString("1020-30", tagsObject.traffic_sign)
+  conditions = function(objectTags, _)
+    return objectTags.bicycle_road == "yes"
+        and (objectTags.vehicle == "destination" or objectTags.motor_vehicle == "destination")
+            and not ContainsSubstring(objectTags.traffic_sign, "1020-30")
   end
 })
 -- Note: We ignore the misstagging of `motor_vehicle` instead of `vehicle` as it is currently hard to map in iD and not that relevant for routing.
 local missing_traffic_sign_244 = BikelaneTodo.new({
   id = "missing_traffic_sign_244",
   desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
-  conditions = function(tagsObject, _)
-    return tagsObject.bicycle_road == "yes"
-        and not IsTermInString('244', tagsObject.traffic_sign)
-        and not missing_traffic_sign_vehicle_destination(tagsObject)
+  conditions = function(objectTags, _)
+    return objectTags.bicycle_road == "yes"
+        and not ContainsSubstring(objectTags.traffic_sign, '244')
+        and not missing_traffic_sign_vehicle_destination(objectTags)
   end
 })
 local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
   id = "missing_acccess_tag_bicycle_road",
   desc = "Expected access tag `bicycle=designated` that is required for routing.",
-  conditions = function(tagsObject, _)
-    return tagsObject.bicycle_road == "yes"
-        -- Only check `vehicle` because `motor_vehicle` does exclude `bicycle` already.
+  conditions = function(objectTags, _)
+    return objectTags.bicycle_road == "yes"
+        -- Only check `vehicle` because `motor_vehicle` does allow `bicycle` already.
         -- However the wiki recomments `vehicle` over `motor_vehicle`, so once that is fixed this will trigger again.
-        and (tagsObject.vehicle == "no" or tagsObject.vehicle == "destination")
-        and tagsObject.bicycle ~= 'designated'
+        and (objectTags.vehicle == "no" or objectTags.vehicle == "destination")
+        and objectTags.bicycle ~= 'designated'
   end
 })
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
@@ -61,7 +61,12 @@ local missing_traffic_sign_but_bicycle_designated = BikelaneTodo.new({
   desc = "Bicycle Infrastructure recognized with `bicycle=designated` but no `traffic_sign`.",
   conditions = function(objectTags, resultTags)
     return resultTags.category ~= nil
-      and objectTags.bicycle == "designated"
+        and objectTags.bicycle == "designated"
+        and (
+          objectTags.traffic_sign == nil
+          and objectTags['traffic_sign:forward'] == nil
+          and objectTags['traffic_sign:backward'] == nil
+        )
   end
 })
 local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
@@ -69,19 +74,25 @@ local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
   desc = "Bicycle Infrastructure recognized with `bicycle=yes` but no `traffic_sign`.",
   conditions = function(objectTags, resultTags)
     return resultTags.category ~= nil
-      and objectTags.bicycle == "yes"
+        and objectTags.bicycle == "yes"
+        and (
+          objectTags.traffic_sign == nil
+          and objectTags['traffic_sign:forward'] == nil
+          and objectTags['traffic_sign:backward'] == nil
+        )
   end
 })
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
-  conditions = function(tagsObject, resultTags)
-    return tagsObject.traffic_sign == nil
+  conditions = function(objectTags, resultTags)
+    local traffic_sign = objectTags['traffic_sign'] or objectTags['traffic_sign:forward'] or objectTags['traffic_sign:backward']
+    return traffic_sign == nil
         and not (
-          missing_traffic_sign_244(tagsObject) or
-          missing_traffic_sign_vehicle_destination(tagsObject) or
-          missing_traffic_sign_but_bicycle_designated(tagsObject, resultTags) or
-          missing_traffic_sign_but_bicycle_yes(tagsObject, resultTags)
+          missing_traffic_sign_244(objectTags) or
+          missing_traffic_sign_vehicle_destination(objectTags) or
+          missing_traffic_sign_but_bicycle_designated(objectTags, resultTags) or
+          missing_traffic_sign_but_bicycle_yes(objectTags, resultTags)
           -- Add any missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
         )
   end
@@ -91,21 +102,21 @@ local missing_traffic_sign = BikelaneTodo.new({
 local missing_access_tag_240 = BikelaneTodo.new({
   id = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
-  conditions = function(tagsObject, _)
-    return (IsTermInString('240', tagsObject.traffic_sign) or IsTermInString('241', tagsObject.traffic_sign))
-        and tagsObject.bicycle ~= 'designated'
-        and tagsObject.foot ~= "designated"
+  conditions = function(objectTags, _)
+    return (ContainsSubstring( objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
+        and objectTags.bicycle ~= 'designated'
+        and objectTags.foot ~= "designated"
   end
 })
 -- TODO: If both bicycle=designated and foot=designated are present, check if the traffic_sign is 240 or 241.
 local missing_segregated = BikelaneTodo.new({
   id = "missing_segregated",
   desc = "Expected tag `segregated=yes` or `segregated=no`.",
-  conditions = function(tagsObject, resultTags)
+  conditions = function(objectTags, resultTags)
     return resultTags.category == "needsClarification"
         and (
-          (tagsObject.bicycle == "designated" and tagsObject.foot == "designated")
-          or osm2pgsql.has_prefix(tagsObject.traffic_sign, "DE:240")
+          (objectTags.bicycle == "designated" and objectTags.foot == "designated")
+          or osm2pgsql.has_prefix(objectTags.traffic_sign, "DE:240")
         )
   end
 })
@@ -131,6 +142,29 @@ local missing_cycleway_lane = BikelaneTodo.new({
   end
 })
 
+-- === cycleway=shared subcategory ===
+local deprecated_cycleway_shared = BikelaneTodo.new({
+  id = "deprecated_cycleway_shared",
+  desc = "The tagging `cycleway=shared` is deprecated.",
+  conditions = function(objectTags, _)
+    return objectTags.cycleway == "shared"
+  end
+})
+
+local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
+  id = "unexpected_bicycle_access_on_footway",
+  desc = "Expected `highway=path+bicycle=designated` (unsigned/explicit DE:240)" ..
+    "or `highway=footway+bicycle=yes` (unsigned/explicit DE:239,1022-10);"..
+    " Add traffic_sign=none to specify unsigned path.",
+  conditions = function(objectTags, resultTags)
+    if objectTags.highway == 'footway'
+      and objectTags.bicycle == 'designated'
+      and resultTags.category == 'needsClarification'
+    then
+      return true
+    end
+  end
+})
 
 BikelaneTodos = {
   missing_traffic_sign,
@@ -143,5 +177,7 @@ BikelaneTodos = {
   missing_access_tag_240,
   missing_segregated,
   missing_sidepath,
-  missing_cycleway_lane
+  missing_cycleway_lane,
+  deprecated_cycleway_shared,
+  unexpected_bicycle_access_on_footway
 }

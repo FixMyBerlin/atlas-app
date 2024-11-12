@@ -1,5 +1,5 @@
-import { Spinner } from 'src/app/_components/Spinner/Spinner'
-import { Tooltip } from 'src/app/_components/Tooltip/Tooltip'
+import { Spinner } from '@/src/app/_components/Spinner/Spinner'
+import { Tooltip } from '@/src/app/_components/Tooltip/Tooltip'
 import { useMapDataLoading } from '../../_hooks/mapState/useMapState'
 
 export const LoadingIndicator = () => {

@@ -42,17 +42,6 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     ],
   },
   {
-    id: 'Verkehrsberuhigter Bereich',
-    type: 'line',
-    paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 2, 16, 3],
-      'line-dasharray': [1, 2],
-      'line-color': '#f4b9e3',
-      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-    },
-    filter: ['match', ['get', 'category'], ['livingStreet'], true, false],
-  },
-  {
     id: 'Fahrradstrasse Mischverkehr',
     type: 'line',
     paint: {
@@ -158,32 +147,7 @@ export const mapboxStyleGroupLayers_atlas_bikelanes_details: MapboxStyleLayer[] 
     },
   },
   {
-    filter: [
-      'all',
-      ['match', ['get', 'category'], '', true, false],
-      [
-        'match',
-        ['get', 'osm_separation:left'],
-        [
-          'solid_line;parking_lane',
-          'bollard;parking_lane',
-          'separation_kerb;parking_lane',
-          'separation_kerb;vertical_panel',
-          'planter',
-          'bump',
-          'vertical_panel',
-          'bollard;kerb',
-          'flex_post',
-          'vertical_panel;parking_lane',
-          'parking_lane',
-          'kerb',
-          'bollard',
-          'separation_kerb',
-        ],
-        true,
-        false,
-      ],
-    ],
+    filter: ['match', ['get', 'category'], 'protectedCyclewayOnHighway', true, false],
     type: 'line',
     id: 'Geschuetzter Radfahrstreifen',
     paint: {

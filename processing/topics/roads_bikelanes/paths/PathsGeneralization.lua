@@ -4,7 +4,7 @@ require("Set")
 ---@param original_tags table
 ---@param result_tags table
 ---@return integer
---- Return the minzoom and maxzoom for paths
+--- Return the minzoom for paths
 function PathsGeneralization(original_tags, result_tags)
   -- highway=path and length < 1k  only from zoom 13
   if original_tags.highway == 'path' and result_tags.length < 1000 then

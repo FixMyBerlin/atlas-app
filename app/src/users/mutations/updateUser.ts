@@ -1,5 +1,5 @@
+import db from '@/db'
 import { resolver } from '@blitzjs/rpc'
-import db from 'db'
 import { UpdateUserSchema } from '../schema'
 
 export default resolver.pipe(

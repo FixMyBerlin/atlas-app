@@ -1,3 +1,4 @@
+import { CloseButton } from '@/src/app/_components/CloseButton/CloseButton'
 import { Dialog, Transition, TransitionChild } from '@headlessui/react'
 import {
   ArrowDownTrayIcon,
@@ -7,7 +8,6 @@ import {
   PencilIcon,
 } from '@heroicons/react/24/outline'
 import React, { Fragment, useRef } from 'react'
-import { CloseButton } from 'src/app/_components/CloseButton/CloseButton'
 import { twJoin } from 'tailwind-merge'
 
 export type ModalDialogProps = {

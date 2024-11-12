@@ -1,5 +1,5 @@
 import path from 'node:path'
-import { import_ } from '../updateStaticDatasets'
+import { import_ } from '../utils/import_'
 import { addUniqueIds } from './addUniqueIds'
 import { getDecompressedFilename } from './getDecompressedFilename'
 

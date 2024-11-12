@@ -1,9 +1,9 @@
+import { Portal } from '@/src/app/_components/utils/usePopper/Portal'
+import { usePopper } from '@/src/app/_components/utils/usePopper/usePopper'
+import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { produce } from 'immer'
-import { Portal } from 'src/app/_components/utils/usePopper/Portal'
-import { usePopper } from 'src/app/_components/utils/usePopper/usePopper'
-import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
@@ -59,7 +59,7 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
                 disabled={disabled}
                 // `w-*` has to be set fo the `truncate` to work
                 className={twJoin(
-                  'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300  px-3 py-1.5 text-sm font-medium shadow-sm',
+                  'inline-flex w-[12.5rem] justify-between rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium shadow-sm',
                   open ? 'shadow-md' : '',
                   disabled
                     ? 'bg-gray-50 text-gray-400'

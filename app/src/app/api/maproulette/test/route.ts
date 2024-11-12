@@ -1,14 +1,14 @@
-import { Prisma } from '@prisma/client'
-import * as turf from '@turf/turf'
-import { LineString } from '@turf/turf'
-import { NextRequest } from 'next/server'
-import { isProd } from 'src/app/_components/utils/isEnv'
+import { isProd } from '@/src/app/_components/utils/isEnv'
 import {
   mapillaryUrl,
   osmTypeIdString,
-} from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { pointFromGeometry } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
-import { geoDataClient } from 'src/prisma-client'
+} from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
+import { pointFromGeometry } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
+import { geoDataClient } from '@/src/prisma-client'
+import { Prisma } from '@prisma/client'
+import { feature, featureCollection, truncate } from '@turf/turf'
+import { LineString } from 'geojson'
+import { NextRequest } from 'next/server'
 import { z } from 'zod'
 // import { maprouletteProjects } from './_utils/maprouletteProjects.const'
 // import { taskDescriptionMarkdown } from './_utils/taskMarkdown'
@@ -31,6 +31,7 @@ export async function GET(
     })
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     return new Response('Bad Request', { status: 200 })
   }
 
@@ -98,7 +99,7 @@ TODO
       }
 
       // Create feature and also shorten lat/lng values to 8 digits
-      const feature = turf.truncate(turf.feature(geometry, properties), { precision: 8 })
+      const featureData = truncate(feature(geometry, properties), { precision: 8 })
 
       const maprouletteCooperativeWork = {
         meta: {
@@ -122,9 +123,9 @@ TODO
           },
         ],
       }
-      const featureCollection = turf.featureCollection([feature], { id: idString })
-      featureCollection['cooperativeWork'] = maprouletteCooperativeWork
-      return featureCollection
+      const featureCollectionData = featureCollection([featureData], { id: idString })
+      featureCollectionData['cooperativeWork'] = maprouletteCooperativeWork
+      return featureCollectionData
     })
 
     // RESPONSE
@@ -137,9 +138,13 @@ TODO
       },
     })
   } catch (e) {
-    if (!isProd) throw e
-    return new Response('Internal Server Error', {
-      status: 500,
-    })
+    if (isProd) console.error(e)
+    return Response.json(
+      {
+        error: 'Internal Server Error',
+        info: isProd ? undefined : e,
+      },
+      { status: 500 },
+    )
   }
 }

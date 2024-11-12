@@ -1,6 +1,6 @@
+import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { produce } from 'immer'
 import React from 'react'
-import { useCategoriesConfig } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
 import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'

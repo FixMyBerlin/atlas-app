@@ -1,5 +1,5 @@
 import { MapPinIcon, PlusIcon } from '@heroicons/react/24/solid'
-import * as turf from '@turf/turf'
+import { bbox } from '@turf/turf'
 import { useState } from 'react'
 import {
   AttributionControl,
@@ -45,7 +45,7 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
   const osmNewNoteFeature = useOsmNewNoteFeature()
   if (osmNewNoteFeature) {
     initialViewState = {
-      bounds: turf.bbox(osmNewNoteFeature.geometry) as [number, number, number, number],
+      bounds: bbox(osmNewNoteFeature.geometry) as [number, number, number, number],
       fitBoundsOptions: { padding: 100, maxZoom: 17 },
     }
   }

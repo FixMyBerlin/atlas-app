@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'Fehler bei der Nutzung der OpenStreetMap Anmeldung',
 }
 
-export default function Kontakt({ searchParams }) {
+export default function OAuthErrorPage({ searchParams }) {
   return (
     <>
       <h1>Fehler bei der Nutzung der OpenStreetMap Anmeldung</h1>

@@ -37,6 +37,7 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeatur
             identifier={properties?.category}
             osmTypeIdString={osmTypeId}
             category={properties?.category}
+            todos={properties?.todos}
             geometry={geometry}
           />
 

@@ -1,5 +1,5 @@
+import { useDrawParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
 import { useEffect } from 'react'
-import { useDrawParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDrawParam'
 import { useMapLoaded } from '../../../_hooks/mapState/useMapState'
 import { MapDataSourceCalculator } from '../../../_mapData/types'
 import {

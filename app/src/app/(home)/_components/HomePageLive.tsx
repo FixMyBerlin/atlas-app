@@ -1,5 +1,5 @@
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import Image, { StaticImageData } from 'next/image'
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
 import screenshotBiBi from './assets/HomePageLive/bibi.jpg'
 import screenshotTrTo from './assets/HomePageLive/trto.jpg'
 import screenshotNudafa from './assets/HomePageLive/zes.jpg'
@@ -54,7 +54,7 @@ export const HomePageLive = () => {
             <LinkExternal
               href={callout.href}
               key={callout.name}
-              classNameOverwrite="block group relative lg:max-w-[26rem]"
+              classNameOverwrite="group relative block lg:max-w-[26rem]"
             >
               <div className="sm:aspect-w-2 sm:aspect-h-1 lg:aspect-w-1 lg:aspect-h-1 relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:h-64">
                 <Image

@@ -1,15 +1,16 @@
+import { Link } from '@/src/app/_components/links/Link'
+import { useHasPermissions } from '@/src/app/_hooks/useHasPermissions'
+import { getFullname } from '@/src/app/admin/memberships/_components/utils/getFullname'
+import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import { useMapActions } from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapState'
+import logout from '@/src/auth/mutations/logout'
+import { isAdmin } from '@/src/users/components/utils/usersUtils'
+import { CurrentUser } from '@/src/users/queries/getCurrentUser'
 import { useMutation } from '@blitzjs/rpc'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { CheckBadgeIcon, UserIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image'
 import { Fragment } from 'react'
-import { Link } from 'src/app/_components/links/Link'
-import { useHasPermissions } from 'src/app/_hooks/useHasPermissions'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import { useMapActions } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapState'
-import logout from 'src/auth/mutations/logout'
-import { isAdmin } from 'src/users/components/utils/usersUtils'
-import { CurrentUser } from 'src/users/queries/getCurrentUser'
 import { twJoin } from 'tailwind-merge'
 import { UserLoggedInAdminInfo } from './UserLoggedInAdminInfo'
 
@@ -26,7 +27,8 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
 
   const missingEmail = !user.email
   const missingOsmDescription = !user.osmDescription?.trim()
-  const hasTodos = missingEmail || missingOsmDescription
+  const regionButNoPermission = isRegionsPage && hasPermissions === false
+  const hasTodos = missingEmail || missingOsmDescription || regionButNoPermission
 
   return (
     <Menu as="div" className="relative z-50 ml-3 sm:ml-6">
@@ -64,12 +66,28 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
             <p className="mb-1">
               <strong>Angemeldet als {user.osmName}</strong>
             </p>
+            {isRegionsPage && hasPermissions === false && (
+              <p className="my-2 rounded bg-amber-500 p-1 leading-snug">
+                Hinweis: Sie haben bisher{' '}
+                <strong>keine zusätzlichen Rechte auf dieser Region</strong>. Sie können damit alle
+                öffentlichen Daten sehen, aber eventuelle geschützte Daten nicht.
+              </p>
+            )}
             <p className="mb-1">
-              Vorname: {user.firstName ?? '–'}
-              <br />
-              Nachname: {user.lastName ?? '–'}
-              <br />
-              eMail: {user.email ?? '–'}
+              <div className="truncate">
+                Name:{' '}
+                {getFullname(user) ? (
+                  getFullname(user)
+                ) : (
+                  <Link
+                    href="/settings/user"
+                    classNameOverwrite="text-gray-400 hover:text-blue-500 hover:underline"
+                  >
+                    Bitte Name ergänzen…
+                  </Link>
+                )}
+              </div>
+              <div className="truncate">eMail: {user.email ?? '–'}</div>
             </p>
             {isRegionsPage && hasPermissions === true && !isAdmin(user) && (
               <div className="flex items-center gap-1 text-xs leading-4">
@@ -98,12 +116,6 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
               </div>
             ) : (
               <Link href="/settings/user">Account bearbeiten</Link>
-            )}
-
-            {isRegionsPage && hasPermissions === false && (
-              <div className="text-xs leading-4">
-                Sie haben zur Zeit keine Zugriffsrechte in dieser Region.
-              </div>
             )}
           </div>
           <UserLoggedInAdminInfo user={user} />

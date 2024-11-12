@@ -1,6 +1,17 @@
-import { TableId } from './generalizationIdentifier'
+import { TableId } from 'src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 
-export type InteracitvityConfiguartion = Record<TableId, { minzoom: number; stylingKeys: string[] }>
+export type InteracitvityConfiguartion = Record<
+  TableId,
+  {
+    // See `docs/VectorTiles-Minzoom-Maxzoom.md`
+    // When zoom < `minzoom` only `stylingKeys` are present
+    // When zoom >= `minzoom` all tags are present
+    minzoom: number
+    // Only those keys will be present
+    stylingKeys: string[]
+  }
+>
+
 export const interactivityConfiguration: InteracitvityConfiguartion = {
   roads: {
     stylingKeys: [
@@ -26,6 +37,10 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
   bikelanesPresence: {
     stylingKeys: ['bikelane_left', 'bikelane_self', 'bikelane_right'],
     minzoom: 0,
+  },
+  bikeSuitability: {
+    stylingKeys: ['bikeSuitability'],
+    minzoom: 11,
   },
   bikelanes: {
     stylingKeys: ['category', 'surface', 'smoothness', 'width'],
@@ -76,10 +91,6 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     minzoom: 11,
   },
   trafficSigns: {
-    stylingKeys: [],
-    minzoom: 0,
-  },
-  presenceStats: {
     stylingKeys: [],
     minzoom: 0,
   },

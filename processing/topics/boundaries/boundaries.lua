@@ -36,30 +36,6 @@ local labelTable = osm2pgsql.define_table({
   }
 })
 
--- local bikelaneCategoryStats = osm2pgsql.define_table({
---   name = 'bikelaneCategoryStats',
---   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
---   columns = {
---     { column = 'tags',                type = 'jsonb' },
---     { column = 'meta',                type = 'jsonb' },
---     { column = 'bikelane_categories', type = 'jsonb',       create_only = true },
---     { column = 'geom',                type = 'multipolygon' },
---   }
--- })
-
-local presenceStats = osm2pgsql.define_table({
-  name = 'presenceStats',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',                  type = 'text', not_null = true },
-    { column = 'tags',                type = 'jsonb' },
-    { column = 'meta',                type = 'jsonb' },
-    { column = 'presence_categories', type = 'jsonb',       create_only = true },
-    { column = 'geom',                type = 'multipolygon' },
-  },
-  indexes = { { column = 'id', method = 'btree', unique = true  } }
-})
-
 function osm2pgsql.process_relation(object)
   local tags = object.tags
   if not (tags.type == 'boundary' and tags.boundary == "administrative") then
@@ -84,6 +60,7 @@ function osm2pgsql.process_relation(object)
     results.category_municipality = "Stadtstaat"
     results.category_district = "Stadtstaat"
   end
+
   -- these tags are copied (Eigennamen)
   local allowed_tags = { "name", "name:prefix" }
   CopyTags(results, tags, allowed_tags)
@@ -110,21 +87,4 @@ function osm2pgsql.process_relation(object)
     minzoom = 0,
     id = DefaultId(object)
   })
-
-  -- local admin_levels = Set({ "4", "6", "7", "8" })
-  -- if admin_levels[tags.admin_level] then
-  --   bikelaneCategoryStats:insert({
-  --     tags = results,
-  --     meta = Metadata(object),
-  --     geom = object:as_multipolygon()
-  --   })
-  -- end
-  if results.category_district or results.category_municipality then
-    presenceStats:insert({
-      tags = results,
-      meta = Metadata(object),
-      geom = object:as_multipolygon(),
-      id = DefaultId(object)
-    })
-  end
 end

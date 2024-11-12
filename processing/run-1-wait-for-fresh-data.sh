@@ -4,7 +4,7 @@ set -e
 source /processing/utils/logging.sh
 log_start "$0"
 
-MAX_TRIES=12
+MAX_TRIES=24
 TIMEOUT_M=10
 TIMEOUT_S=$(($TIMEOUT_M * 60))
 DATE_FORMAT="+%F"

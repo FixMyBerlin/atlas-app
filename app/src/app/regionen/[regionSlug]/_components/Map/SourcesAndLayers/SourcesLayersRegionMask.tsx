@@ -1,6 +1,6 @@
+import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import React from 'react'
 import { Layer, Source } from 'react-map-gl/maplibre'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { createPmtilesUrl } from './utils/createPmtilesUrl'
 
 export const SourcesLayersRegionMask: React.FC = () => {

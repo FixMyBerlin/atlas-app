@@ -1,12 +1,12 @@
+import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
+import { getFullname } from '@/src/app/admin/memberships/_components/utils/getFullname'
+import { useAtlasFilterParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
+import getNotesAndCommentsForRegion from '@/src/notes/queries/getNotesAndCommentsForRegion'
 import { useQuery } from '@blitzjs/rpc'
 import { Menu, MenuButton, MenuHeading, MenuItem, MenuItems, MenuSection } from '@headlessui/react'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { FunnelIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
-import { SmallSpinner } from 'src/app/_components/Spinner/SmallSpinner'
-import { getFullname } from 'src/app/admin/memberships/_components/utils/getFullname'
-import { useAtlasFilterParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
-import getNotesAndCommentsForRegion from 'src/notes/queries/getNotesAndCommentsForRegion'
 import { twJoin } from 'tailwind-merge'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 import { useQueryKey } from '../utils/useQueryKey'
@@ -190,7 +190,7 @@ export const AtlasNotesFilterControl = () => {
                 <MagnifyingGlassIcon className="size-5 text-gray-700" aria-hidden="true" />
               </button>
               <button
-                className="flex size-7 items-center justify-center rounded-md border border-white hover:border-gray-300  hover:bg-yellow-100 hover:shadow-sm"
+                className="flex size-7 items-center justify-center rounded-md border border-white hover:border-gray-300 hover:bg-yellow-100 hover:shadow-sm"
                 onClick={(e) => handleMenuClick(e, { query: undefined })}
               >
                 <XMarkIcon className="size-5 text-gray-400" aria-hidden="true" />

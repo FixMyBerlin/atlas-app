@@ -1,9 +1,9 @@
-import { LinkExternal } from 'src/app/_components/links/LinkExternal'
-import { isProd } from 'src/app/_components/utils/isEnv'
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { isProd } from '@/src/app/_components/utils/isEnv'
 import {
   MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
-} from 'src/app/regionen/[regionSlug]/_mapData/types'
+} from '@/src/app/regionen/[regionSlug]/_mapData/types'
 import { InspectorFeature } from '../Inspector'
 import { ToolsLinkNewOsmNote } from './ToolsLinkNewOsmNote'
 import { editorUrl } from './osmUrls/editorUrl'

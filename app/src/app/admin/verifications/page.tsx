@@ -1,17 +1,16 @@
 'use client'
-
+import { buttonStyles } from '@/src/app/_components/links/styles'
+import { Markdown } from '@/src/app/_components/text/Markdown'
+import getBikelaneVerifications from '@/src/bikelane-verifications/queries/getBikelaneVerifications'
 import { usePaginatedQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { buttonStyles } from 'src/app/_components/links/styles'
-import { Markdown } from 'src/app/_components/text/Markdown'
-import getBikelaneVerifications from 'src/bikelane-verifications/queries/getBikelaneVerifications'
 import { Breadcrumb } from '../_components/Breadcrumb'
 import { HeaderWrapper } from '../_components/HeaderWrapper'
 
 const ITEMS_PER_PAGE = 100
 
-export default function AdminBikelaneVerificationsPage() {
+export default function AdminVerificationsPage() {
   const router = useRouter()
   const pathname = usePathname()
   const page = Number(useSearchParams()?.get('page')) || 0
@@ -68,4 +67,4 @@ export default function AdminBikelaneVerificationsPage() {
   )
 }
 
-AdminBikelaneVerificationsPage.authenticate = { role: 'ADMIN' }
+AdminVerificationsPage.authenticate = { role: 'ADMIN' }

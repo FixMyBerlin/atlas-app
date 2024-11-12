@@ -1,4 +1,4 @@
-import db from 'db'
+import db from '@/db'
 import { z } from 'zod'
 import { checkApiKey, parseData } from '../../_util/checkApiKey'
 

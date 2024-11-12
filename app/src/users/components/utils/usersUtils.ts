@@ -1,6 +1,6 @@
-import { User } from 'db'
-import { users } from 'src/users/components/users.const'
-import { CurrentUser } from 'src/users/queries/getCurrentUser'
+import { User } from '@/db'
+import { users } from '@/src/users/components/users.const'
+import { CurrentUser } from '@/src/users/queries/getCurrentUser'
 
 export const adminIds = users.filter((u) => u.isAdmin).map((u) => u.id)
 

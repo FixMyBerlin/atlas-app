@@ -1,5 +1,5 @@
-import { invoke } from 'src/blitz-server'
-import getRegion from 'src/regions/queries/getRegion'
+import { invoke } from '@/src/blitz-server'
+import getRegion from '@/src/regions/queries/getRegion'
 import { DevMiddlewareHostnameWorkaround } from './_components/DevMiddlewareHostnameWorkaround'
 import { MapInterface } from './_components/MapInterface'
 
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 }
 
 // This page will always initialize with a `map` an `config` param, courtesy of ./middleware.ts
-export default function ShowRegionPage() {
+export default function RegionPage() {
   return (
     <>
       <DevMiddlewareHostnameWorkaround />

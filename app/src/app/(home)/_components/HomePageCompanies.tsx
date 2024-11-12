@@ -1,7 +1,7 @@
+import imageBiBi from '@/src/app/_components/assets/bibi-logo.svg'
+import imageNudafa from '@/src/app/_components/assets/nudafa-logo.svg'
+import imageTrTo from '@/src/app/_components/assets/trto-logo.png'
 import Image from 'next/image'
-import imageBiBi from 'src/app/_components/assets/bibi-logo.svg'
-import imageNudafa from 'src/app/_components/assets/nudafa-logo.svg'
-import imageTrTo from 'src/app/_components/assets/trto-logo.png'
 
 export const HomePageCompanies: React.FC = () => {
   return (

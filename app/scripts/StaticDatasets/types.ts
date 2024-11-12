@@ -1,11 +1,11 @@
 import { CircleLayer, FillLayer, HeatmapLayer, LineLayer, SymbolLayer } from 'react-map-gl/maplibre'
-import { translations } from 'src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
-import { StaticDatasetCategoryKey } from 'src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
+import { translations } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
+import { StaticDatasetCategoryKey } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import {
   FileMapDataSubcategoryStyleLegend,
   MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
-} from 'src/app/regionen/[regionSlug]/_mapData/types'
+} from '@/src/app/regionen/[regionSlug]/_mapData/types'
 
 // a modified version of MapDataDatasetsSource from '../../src/app/regionen/[regionSlug]/_mapData/types'
 type MapDataDatasetsSource = {

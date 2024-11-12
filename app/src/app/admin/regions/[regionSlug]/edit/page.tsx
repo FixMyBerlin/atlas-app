@@ -1,16 +1,15 @@
 'use client'
-
+import { Breadcrumb } from '@/src/app/admin/_components/Breadcrumb'
+import { HeaderWrapper } from '@/src/app/admin/_components/HeaderWrapper'
+import { ObjectDump } from '@/src/app/admin/_components/ObjectDump'
+import { FORM_ERROR, RegionForm } from '@/src/app/admin/regions/_components/RegionForm'
+import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
+import updateRegion from '@/src/regions/mutations/updateRegion'
+import getRegion from '@/src/regions/queries/getRegion'
+import { RegionFormSchema } from '@/src/regions/schemas'
 import { useMutation, useQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { useRouter } from 'next/navigation'
-import { Breadcrumb } from 'src/app/admin/_components/Breadcrumb'
-import { HeaderWrapper } from 'src/app/admin/_components/HeaderWrapper'
-import { ObjectDump } from 'src/app/admin/_components/ObjectDump'
-import { FORM_ERROR, RegionForm } from 'src/app/admin/regions/_components/RegionForm'
-import { useRegionSlug } from 'src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import updateRegion from 'src/regions/mutations/updateRegion'
-import getRegion from 'src/regions/queries/getRegion'
-import { RegionFormSchema } from 'src/regions/schemas'
 
 export default function AdminEditRegionPage() {
   const router = useRouter()

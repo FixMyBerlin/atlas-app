@@ -1,7 +1,7 @@
+import { isProd } from '@/src/app/_components/utils/isEnv'
+import { geoDataClient } from '@/src/prisma-client'
 import { Prisma } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { isProd } from 'src/app/_components/utils/isEnv'
-import { geoDataClient } from 'src/prisma-client'
 import { z } from 'zod'
 
 const idType = z.coerce.bigint().positive()
@@ -15,6 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     params = BoundarySchema.parse(req.query)
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(400).send('Bad Request')
     return
   }
@@ -42,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.json(boundary?.at(0)?.geom)
   } catch (e) {
     if (!isProd) throw e
+    console.error(e)
     res.status(500).send('Internal Server Error')
   }
 }

@@ -2,6 +2,7 @@ import { subcat_accidents } from '../mapDataSubcategories/subcat_accidents.const
 import { subcat_bicycleParking } from '../mapDataSubcategories/subcat_bicycleParking'
 import { subcat_bikelanes } from '../mapDataSubcategories/subcat_bikelanes.const'
 import { subcat_bikelanesStatistics } from '../mapDataSubcategories/subcat_bikelanesStatistics.const'
+import { subcat_bikelanes_plus_bikesuitability } from '../mapDataSubcategories/subcat_bikelanes_plus_bikeSuitability'
 import { subcat_bikelanes_plus_presence } from '../mapDataSubcategories/subcat_bikelanes_plus_presence.const'
 import { subcat_bikelanes_plus_routes } from '../mapDataSubcategories/subcat_bikelanes_plus_routes.const'
 import { subcat_bikelanes_plus_signs } from '../mapDataSubcategories/subcat_bikelanes_plus_signs.const'
@@ -108,6 +109,7 @@ export const categories: StaticMapDataCategory[] = [
       // { id: 'bikelanesOneway', defaultStyle: 'default' },
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
+      { ...subcat_bikelanes_plus_bikesuitability, defaultStyle: 'hidden' },
       // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },

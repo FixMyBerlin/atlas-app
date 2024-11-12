@@ -38,16 +38,16 @@ for name in ${topics[@]}; do
 done
 
 # Call the refresh endpoint to update the generalization and export functions
-curl -X GET "http://app:4000/api/private/refresh?apiKey=$ATLAS_API_KEY" &> /dev/null
+curl --silent --show-error --fail -X GET "http://app:4000/api/private/post-processing-hook?apiKey=$ATLAS_API_KEY" --output "/dev/null"
 
 notify "Processing finished."
 
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 log "Completed:"
+log "Preview https://viewer.radverkehrsatlas.de/index.html (Development, Staging, Production)"
 log "Development http://localhost:3000/catalog"
 log "Staging https://staging-tiles.radverkehrsatlas.de/catalog"
 log "Production https://tiles.radverkehrsatlas.de/catalog"
-log "Preview https://viewer.radverkehrsatlas.de/index.html (Staging, Production)"
 log "✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ "
 
 log_end "$0"

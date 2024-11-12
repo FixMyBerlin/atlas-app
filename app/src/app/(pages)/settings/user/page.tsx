@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Account bearbeiten',
 }
 
-export default function SettingsUser() {
+export default function SettingsUserPage() {
   return (
     <>
       <h1>Account bearbeiten</h1>

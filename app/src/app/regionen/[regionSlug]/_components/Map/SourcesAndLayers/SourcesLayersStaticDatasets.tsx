@@ -1,8 +1,8 @@
+import { useMapDebugUseDebugLayerStyles } from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
+import { useDataParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { FilterSpecification } from 'maplibre-gl'
 import { Fragment, useRef } from 'react'
 import { Layer, LayerProps, Source } from 'react-map-gl/maplibre'
-import { useMapDebugUseDebugLayerStyles } from 'src/app/regionen/[regionSlug]/_hooks/mapState/useMapDebugState'
-import { useDataParam } from 'src/app/regionen/[regionSlug]/_hooks/useQueryState/useDataParam'
 import { useRegionDatasets } from '../../../_hooks/useRegionDatasets/useRegionDatasets'
 import { debugLayerStyles } from '../../../_mapData/mapDataSubcategories/mapboxStyles/debugLayerStyles'
 import {
