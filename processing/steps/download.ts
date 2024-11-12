@@ -1,7 +1,7 @@
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
 import { readPersistent, writePersistent } from '../utils/persistentData'
-import { logError } from '../utils/synology'
+import { synologyLogError } from '../utils/synology'
 
 /**
  * Get the full path to the downloaded file.
@@ -37,7 +37,9 @@ export async function waitForFreshData(fileURL: URL, maxTries: number, timeoutMi
     tries++
     // if we exceeded the maximum number of tries, return false and log to synlogy
     if (tries >= maxTries) {
-      logError(`Timeout exceeded while waiting for fresh data. File is from ${lastModifiedDate}`)
+      synologyLogError(
+        `Timeout exceeded while waiting for fresh data. File is from ${lastModifiedDate}`,
+      )
       return false
     }
 

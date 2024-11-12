@@ -17,12 +17,16 @@ export async function createMetadataTable() {
 /**
  * Get the timestamp from the given OSM file. Uses osmium fileinfo to get the timestamp.
  * @param fileName the file name to take the timestamp from
- * @returns
+ * @returns the time stamp as a string
  */
 export async function getFileTimestamp(fileName: string) {
-  return $`osmium fileinfo ${filteredFilePath(fileName)} -g header.option.timestamp`
-    .text()
-    .then((timestamp) => timestamp.trim())
+  try {
+    const timestamp =
+      await $`osmium fileinfo ${filteredFilePath(fileName)} -g header.option.timestamp`.text()
+    return timestamp.trim()
+  } catch {
+    throw new Error(`Failed to get timestamp from file ${fileName}`)
+  }
 }
 
 /**

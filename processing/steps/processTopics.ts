@@ -25,7 +25,11 @@ async function runSQL(topic: Topic) {
   const psqlFile = `${mainFilePath(topic)}.sql`
 
   if (await Bun.file(psqlFile).exists()) {
-    return $`psql -q -f ${psqlFile}`
+    try {
+      await $`psql -q -f ${psqlFile}`
+    } catch {
+      throw new Error(`Failed to run SQL file ${psqlFile}`)
+    }
   }
 }
 
@@ -38,14 +42,17 @@ async function runSQL(topic: Topic) {
 async function runLua(fileName: string, topic: Topic) {
   const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
-
-  return $`osm2pgsql \
-            --number-processes=8 \
-            --create \
-            --output=flex \
-            --extra-attributes \
-            --style=${luaFile} \
-            ${filePath}`
+  try {
+    await $`osm2pgsql \
+              --number-processes=8 \
+              --create \
+              --output=flex \
+              --extra-attributes \
+              --style=${luaFile} \
+              ${filePath}`
+  } catch {
+    throw new Error(`Failed to run lua file ${luaFile}`)
+  }
 }
 
 /**

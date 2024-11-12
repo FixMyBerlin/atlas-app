@@ -16,14 +16,25 @@ async function logToSynology(message: string, token: string) {
   })
 }
 
-export async function logInfo(message: string) {
+/**
+ * Log an info message to the synology chat
+ * @param message
+ * @returns
+ */
+
+export async function synologyLogInfo(message: string) {
   if (!params.synologyLogToken) {
     return
   }
   await logToSynology(message, params.synologyLogToken)
 }
 
-export async function logError(message: string) {
+/**
+ * Log an error message to the synology chat
+ * @param message
+ * @returns
+ */
+export async function synologyLogError(message: string) {
   if (!params.synologyErrorLogToken) {
     return
   }

@@ -12,7 +12,7 @@ import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
 import { params } from './utils/parameters'
-import { logError } from './utils/synology'
+import { synologyLogError } from './utils/synology'
 
 try {
   // setup directories and backup schema
@@ -65,5 +65,5 @@ try {
   }
 } catch (e) {
   console.error(e)
-  logError('Processing failed')
+  synologyLogError('Processing failed')
 }
