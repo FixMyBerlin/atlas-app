@@ -137,6 +137,7 @@ export async function computeDiff(table: string) {
       }
       await prisma.$executeRawUnsafe(`DROP TABLE ${joinedTableId}`)
       return {
+        table,
         nTotal,
         nModified,
         nAdded,
@@ -146,23 +147,29 @@ export async function computeDiff(table: string) {
   )
 }
 
+function printDiffInfo(diffInfo: Awaited<ReturnType<typeof computeDiff>>) {
+  const { table } = diffInfo
+  console.log(`🔍 Diffing table "${table}":`)
+  const loggingStyle = [
+    { name: 'total:', color: chalk.yellow, key: 'nTotal' as const },
+    { name: 'added:', color: chalk.green, key: 'nAdded' as const },
+    { name: 'removed:', color: chalk.red, key: 'nRemoved' as const },
+    { name: 'modified:', color: chalk.blue, key: 'nModified' as const },
+  ]
+  const indent = ' '.repeat(5)
+  loggingStyle.forEach(({ name, color, key }) => {
+    console.log(`${indent}${name.padEnd(10)}${color(diffInfo[key])}`)
+  })
+}
+
 /**
  * Diff the given tables and print the results.
  * @param tables
  */
 export async function diffTables(tables: string[]) {
   // compute all diffs in parallel
-  const diffResults = await Promise.all(
-    tables.map((table) => computeDiff(table).then((diffResult) => ({ table, ...diffResult }))),
-  )
+  const diffResults = await Promise.all(tables.map((table) => computeDiff(table)))
+
   // print the results for each table that changed
-  diffResults
-    .filter(({ nTotal }) => nTotal > 0)
-    .forEach(({ table, nTotal, nModified, nAdded, nRemoved }) => {
-      const padding = ' '.repeat(5)
-      console.log(`Table "${table}" has ${nTotal} changed entries:`)
-      console.log(padding + chalk.blue(`${nModified} modified`))
-      console.log(padding + chalk.green(`${nAdded} added`))
-      console.log(padding + chalk.red(`${nRemoved} removed`))
-    })
+  diffResults.filter(({ nTotal }) => nTotal > 0).map(printDiffInfo)
 }

@@ -9,7 +9,7 @@ async function triggerPrivateApi(endpoint: string) {
     }
   } catch {
     console.warn(
-      `Calling the ${endpoint} hook failed. This is likely due to the NextJS application not running.`,
+      `⚠️  Calling the ${endpoint} hook failed. This is likely due to the NextJS application not running.`,
     )
   }
 }

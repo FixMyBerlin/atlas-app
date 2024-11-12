@@ -1,26 +1,24 @@
 import chalk from 'chalk'
-import type { Topic } from '../constants/topics.const'
 import { formatTimestamp } from './formatTimestamp'
 import { logInfo } from './synology'
 import { endTimer, startTimer } from './timeTracking'
 
-const startTimes: Partial<Record<Topic, number>> = {}
-const lineLength = process.stdout.columns || 80
-export function logStart(topic: Topic) {
-  logInfo(`Processing ${topic} started`)
-  const message = `Processing ${topic} started`
-  const padding = ' '.repeat(Math.max(0, lineLength - message.length))
-  console.log(chalk.inverse(message + padding))
-  startTimer(topic)
+const lineLength = process.stdout.columns || 120
+
+export function logPadded(left: string, right: string = '') {
+  console.log(chalk.inverse(left.padEnd(lineLength - right.length) + right))
+}
+export function logStart(id: string) {
+  const message = `${id} started`
+  logInfo(message)
+  logPadded(message)
+  startTimer(id)
 }
 
-export function logEnd(topic: Topic) {
-  if (!startTimes[topic]) {
-    throw new Error(`Processing ${topic} ended before it started`)
-  }
-  const timeElapsed = formatTimestamp(endTimer(topic))
-  logInfo(`Processing ${topic} finished`)
-  const message = `Processing ${topic} finished`
-  const padding = ' '.repeat(Math.max(0, lineLength - message.length - timeElapsed.length))
-  console.log(chalk.inverse(message + padding + timeElapsed))
+export function logEnd(id: string) {
+  const timeElapsed = endTimer(id)
+  const message = `${id} finished`
+  logInfo(message)
+  logPadded(message, formatTimestamp(timeElapsed))
+  return timeElapsed
 }

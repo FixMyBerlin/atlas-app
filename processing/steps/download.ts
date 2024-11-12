@@ -61,7 +61,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
 
   // check if file already exists
   if (skipIfExists && fileExists) {
-    console.log('Skipped download with the `SKIP_DOWNLOAD` flag')
+    console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
     return { fileName, fileChanged: false }
   }
 

@@ -34,7 +34,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
                 --output=${filteredFilePath(fileName)} \
                 ${originalFilePath(fileName)}`
   } else {
-    console.log('Skipping tag filter because the file and the filters have not changed!')
+    console.log('⏩ Skipping tag filter. The file and filters are unchanged.')
   }
 
   updateDirectoryHash(FILTER_DIR)

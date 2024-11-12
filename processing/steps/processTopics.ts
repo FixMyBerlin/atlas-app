@@ -11,7 +11,6 @@ import {
 } from '../utils/diffing'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
-import { endTimer, startTimer } from '../utils/timeTracking'
 import { filteredFilePath } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
@@ -95,26 +94,28 @@ export async function processTopics(
   const skipCode = skipUnchanged && !helpersChanged && !fileChanged
   const diffChanges = computeDiffs && !fileChanged
 
-  startTimer('processing')
+  logStart('Processing')
   for (const topic of topics) {
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
-      console.log(`Topic "${topic}" hasn't change. Skipping execution with SKIP_UNCHANGED=1!`)
+      console.log(
+        `⏩ Skipping topic "${topic}". The code hasn't changed and SKIP_UNCHANGED is active.`,
+      )
     } else {
-      logStart(topic)
+      logStart(`Processing ${topic}`)
 
       // get all tables related to `topic` that are already present in our db
       const topicTables = await getTopicTables(topic)
-      const processdTopicTables = topicTables.intersection(processedTables)
+      const processedTopicTables = topicTables.intersection(processedTables)
 
       // backup all tables related to topic
       if (diffChanges) {
         if (freezeData) {
           // with FREEZE_DATA=1 we only backup tables that are not already backed up
-          const toBackup = processdTopicTables.difference(backedUpTables)
+          const toBackup = processedTopicTables.difference(backedUpTables)
           await Promise.all(Array.from(toBackup).map(backupTable))
         } else {
-          await Promise.all(Array.from(processdTopicTables).map(backupTable))
+          await Promise.all(Array.from(processedTopicTables).map(backupTable))
         }
       }
 
@@ -125,13 +126,13 @@ export async function processTopics(
       updateDirectoryHash(topicPath(topic))
 
       if (diffChanges) {
-        diffTables(Array.from(processdTopicTables))
+        await diffTables(Array.from(processedTopicTables))
       }
 
-      logEnd(topic)
+      logEnd(`Processing ${topic}`)
     }
   }
 
-  const timeElapsed = endTimer('processing')
+  const timeElapsed = logEnd('Processing')
   return timeElapsed
 }
