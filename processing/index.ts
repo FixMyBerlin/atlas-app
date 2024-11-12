@@ -1,6 +1,11 @@
-import { $ } from 'bun'
 import { FILTER_DIR, ID_FILTERED_FILE } from './directories.const'
 import { downloadFile, waitForFreshData } from './steps/download'
+import {
+  clearCache,
+  restartTileServer,
+  triggerCacheWarming,
+  triggerPostProcessing,
+} from './steps/externalTriggers'
 import { idFilter, tagFilter } from './steps/filter'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
@@ -8,7 +13,6 @@ import { setup } from './steps/setup'
 import { topicList } from './topics.const'
 import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { params } from './utils/parameters'
-import { endTimer, startTimer } from './utils/timeTracking'
 
 await setup()
 
@@ -17,7 +21,9 @@ if (params.waitForFreshData) {
 }
 let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
 
-if (fileChanged && !(await directoryHasChanged(FILTER_DIR))) {
+// only run tag filters if the file or the filters have changed
+const filtersChanged = await directoryHasChanged(FILTER_DIR)
+if (fileChanged && !filtersChanged) {
   await tagFilter(fileName)
   updateDirectoryHash(FILTER_DIR)
 }
@@ -28,45 +34,21 @@ if (params.idFilter && params.idFilter !== '') {
   fileChanged = true
 }
 
-startTimer('processing')
-await processTopics(topicList, fileName, fileChanged)
-const processingTime = endTimer('processing')
+const processingTime = await processTopics(topicList, fileName, fileChanged)
 
 // write runs metadata
 await writeMetadata(fileName, processingTime)
 
 // call the frontend update hook
-try {
-  await fetch(`http://app:4000/api/private/post-processing-hook?apiKey=${params.apiKey}`)
-} catch {
-  console.warn(
-    'Calling the post processing hook failed. This is likely due to the NextJS application not running.',
-  )
-}
+await triggerPostProcessing()
 
 // restart `tiles` container to refresh /catalog
-try {
-  await $`docker restart tiles > /dev/null`
-  console.log('Succesfully restarted the tiles container.')
-} catch {
-  throw new Error('Restarting the tiles container failed.')
-}
+await restartTileServer()
 
 // clear the cache
-try {
-  await $`rm -rf "/var/cache/nginx/*"`
-  console.log('Succesfully cleared the cache.')
-} catch {
-  console.warn('Clearing the cache failed.')
-}
+await clearCache()
 
 // call the cache warming hook
 if (!params.skipWarmCache) {
-  try {
-    await fetch(`http://app:4000api/private/warm-cache?apiKey=${params.apiKey}`)
-  } catch {
-    console.warn(
-      'Calling the cache warming hook failed. This is likely due to the NextJS application not running.',
-    )
-  }
+  triggerCacheWarming()
 }

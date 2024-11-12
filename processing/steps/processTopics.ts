@@ -13,6 +13,7 @@ import {
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
+import { endTimer, startTimer } from '../utils/timeTracking'
 import { filteredFile } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
@@ -67,6 +68,7 @@ export async function processTopics(
   const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
   const diffChanges = params.computeDiffs && !fileChanged
 
+  startTimer('processing')
   for (const topic of topics) {
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
@@ -117,4 +119,6 @@ export async function processTopics(
       logEnd(topic)
     }
   }
+  const timeElapsed = endTimer('processing')
+  return timeElapsed
 }
