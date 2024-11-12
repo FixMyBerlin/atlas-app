@@ -20,6 +20,8 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
                 --expressions ${FILTER_EXPRESSIONS} \
                 --output=${filteredFile(fileName)} \
                 ${downloadFile(fileName)}`
+  } else {
+    console.log('Skipping tag filter because the file and the filters have not changed!')
   }
 
   return updateDirectoryHash(FILTER_DIR)
