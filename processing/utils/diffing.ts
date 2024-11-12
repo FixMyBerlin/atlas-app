@@ -7,9 +7,16 @@ const backupTableIdentifier = (table: string) => `backup."${table}"`
 const diffTableIdentifier = (table: string) => `public."${table}_diff"`
 const tableIdentifier = (table: string) => `public."${table}"`
 export async function getTopicTables(topic: Topic) {
-  return $`lua /processing/utils/TableNames.lua ${topic}`
-    .text()
-    .then((tables) => new Set(tables.split('\n')))
+  try {
+    const tables = await $`lua /processing/utils/TableNames.lua ${topic}`
+      .text()
+      .then((tables) => new Set(tables.split('\n')))
+    return tables
+  } catch {
+    throw new Error(
+      `Failed to get tables for topic ${topic}. This is likely due to some required columns missing.`,
+    )
+  }
 }
 
 const prisma = new PrismaClient()
