@@ -25,8 +25,8 @@ export const filteredFilePath = (fileName: string) => join(OSM_DOWNLOAD_DIR, fil
  * @returns the resulting file's name
  */
 export async function tagFilter(fileName: string, fileChanged: boolean) {
-  const filtersChanged = await directoryHasChanged(FILTER_DIR)
   // only run tag filters if the file or the filters have changed
+  const filtersChanged = await directoryHasChanged(FILTER_DIR)
   if (fileChanged || filtersChanged) {
     await $`osmium tags-filter \
                 --overwrite \
@@ -36,7 +36,9 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
   } else {
     console.log('Skipping tag filter because the file and the filters have not changed!')
   }
+
   updateDirectoryHash(FILTER_DIR)
+
   return fileName
 }
 
@@ -52,5 +54,6 @@ export async function idFilter(fileName: string, ids: string) {
             --output=${join(OSM_FILTER_DIR, ID_FILTERED_FILE)} \
             --verbose-ids ${filteredFilePath(fileName)} \
             ${ids}`
+
   return ID_FILTERED_FILE
 }

@@ -74,10 +74,12 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   }
 
   if (eTag === (await readPersistent(fileName))) {
+    console.log('Skipped download because the file has not changed')
     return { fileName, fileChanged: false }
   }
 
   // download file and write to disc
+  console.log(`Downloading file ${fileName}...`)
   const response = await fetch(fileURL.toString())
   await Bun.write(file, response)
 
