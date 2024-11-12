@@ -32,3 +32,8 @@ export const TOPIC_DIR = '/processing/topics'
  * The file name for the id filtered OSM file.
  */
 export const ID_FILTERED_FILE = `id_filtered.osm.pbf`
+
+/**
+ * The path to save auto generated types to.
+ */
+export const TYPES_DIR = '/data/processingTypes'

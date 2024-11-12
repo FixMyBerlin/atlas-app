@@ -7,6 +7,7 @@ import {
   triggerPostProcessing,
 } from './steps/externalTriggers'
 import { idFilter, tagFilter } from './steps/filter'
+import { generateTypes } from './steps/generateTypes'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
@@ -29,13 +30,13 @@ try {
   await tagFilter(fileName, fileChanged)
 
   // filter osm file by ids if given
-  if (params.idFilter && params.idFilter !== '') {
+  if (params.idFilter !== '') {
     fileName = await idFilter(fileName, params.idFilter)
     fileChanged = true
   }
 
   // process topics
-  const processingTime = await processTopics(
+  const { timeElapsed: processingTime, processedTables } = await processTopics(
     topicList,
     fileName,
     fileChanged,
@@ -43,6 +44,8 @@ try {
     params.computeDiffs,
     params.freezeData,
   )
+
+  generateTypes(params.environment, processedTables)
 
   // write runs metadata
   await writeMetadata(fileName, processingTime)

@@ -134,5 +134,5 @@ export async function processTopics(
   }
 
   const timeElapsed = logEnd('Processing')
-  return timeElapsed
+  return { timeElapsed, processedTables: Array.from(processedTables) }
 }
