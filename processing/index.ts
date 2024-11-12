@@ -35,7 +35,14 @@ if (params.idFilter && params.idFilter !== '') {
 }
 
 // process topics
-const processingTime = await processTopics(topicList, fileName, fileChanged)
+const processingTime = await processTopics(
+  topicList,
+  fileName,
+  fileChanged,
+  params.skipUnchanged,
+  params.computeDiffs,
+  params.freezeData,
+)
 
 // write runs metadata
 await writeMetadata(fileName, processingTime)
