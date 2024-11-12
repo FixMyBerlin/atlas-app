@@ -1,23 +1,23 @@
 import { $ } from 'bun'
 import { params } from '../utils/parameters'
 
-export async function triggerPostProcessing() {
+async function triggerPrivateApi(endpoint: string) {
   try {
-    await fetch(`http://app:4000/api/private/post-processing-hook?apiKey=${params.apiKey}`)
+    const response = await fetch(`http://app:4000/api/private/${endpoint}?apiKey=${params.apiKey}`)
+    if (!response.ok) {
+      throw new Error(`Failed to call the ${endpoint} hook.`)
+    }
   } catch {
     console.warn(
-      'Calling the post processing hook failed. This is likely due to the NextJS application not running.',
+      `Calling the ${endpoint} hook failed. This is likely due to the NextJS application not running.`,
     )
   }
 }
+export async function triggerPostProcessing() {
+  return triggerPrivateApi('post-processing-hook')
+}
 export async function triggerCacheWarming() {
-  try {
-    await fetch(`http://app:4000api/private/warm-cache?apiKey=${params.apiKey}`)
-  } catch {
-    console.warn(
-      'Calling the cache warming hook failed. This is likely due to the NextJS application not running.',
-    )
-  }
+  return triggerPrivateApi('cache-warming')
 }
 
 export async function clearCache() {
