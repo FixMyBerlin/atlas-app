@@ -17,6 +17,11 @@ const prisma = new PrismaClient()
 export async function createBackupSchema() {
   prisma.$executeRaw`CREATE SCHEMA IF NOT EXISTS backup`
 }
+/**
+ * Get all table names from the given schema.
+ * @param schema
+ * @returns a set of table names
+ */
 export async function getSchemaTables(schema: string) {
   const rows: { table_name: string }[] = await prisma.$queryRaw`
     SELECT table_name
@@ -25,6 +30,12 @@ export async function getSchemaTables(schema: string) {
     AND table_type = 'BASE TABLE';`
   return new Set(rows.map(({ table_name }) => table_name))
 }
+
+/**
+ * Backup the given table by copying it to the `backup` schema.
+ * @param table
+ * @returns the Promise of the query
+ */
 export async function backupTable(table: string) {
   const tableId = tableIdentifier(table)
   const backupTableId = backupTableIdentifier(table)
@@ -37,11 +48,21 @@ export async function dropDiffTable(table: string) {
   return prisma.$executeRawUnsafe(`DROP TABLE IF EXISTS ${diffTableId}`)
 }
 
+/**
+ * Create a spatial index on the given table's `geom` column.
+ * @param table
+ * @returns the Promise of the query
+ */
 async function createSpatialIndex(table: string) {
   const tableId = diffTableIdentifier(table)
   return prisma.$executeRawUnsafe(`CREATE INDEX ON ${tableId} USING GIST(geom)`)
 }
 
+/**
+ * Diff the given table with the backup table and store the result in the `table_diff` table.
+ * @param table
+ * @returns the number of added, removed and modified entries
+ */
 export async function computeDiff(table: string) {
   const tableId = tableIdentifier(table)
   const backupTableId = backupTableIdentifier(table)
@@ -125,6 +146,10 @@ export async function computeDiff(table: string) {
   )
 }
 
+/**
+ * Diff the given tables and print the results.
+ * @param tables
+ */
 export async function diffTables(tables: string[]) {
   // compute all diffs in parallel
   const diffResults = await Promise.all(
