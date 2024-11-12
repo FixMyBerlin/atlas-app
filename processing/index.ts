@@ -1,4 +1,4 @@
-import { FILTER_DIR, ID_FILTERED_FILE } from './directories.const'
+import { ID_FILTERED_FILE } from './directories.const'
 import { downloadFile, waitForFreshData } from './steps/download'
 import {
   clearCache,
@@ -11,29 +11,29 @@ import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
 import { topicList } from './topics.const'
-import { directoryHasChanged, updateDirectoryHash } from './utils/hashing'
 import { params } from './utils/parameters'
 
 await setup()
 
+// wait for fresh data
 if (params.waitForFreshData) {
   await waitForFreshData(params.fileURL, 24, 10)
 }
+
+// download osm file
 let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
 
-// only run tag filters if the file or the filters have changed
-const filtersChanged = await directoryHasChanged(FILTER_DIR)
-if (fileChanged && !filtersChanged) {
-  await tagFilter(fileName)
-  updateDirectoryHash(FILTER_DIR)
-}
+// filter osm file with /filter/filter-expressions.txt
+await tagFilter(fileName, fileChanged)
 
+// filter osm file by ids if given
 if (params.idFilter && params.idFilter !== '') {
   await idFilter(fileName, params.idFilter)
   fileName = ID_FILTERED_FILE
   fileChanged = true
 }
 
+// process topics
 const processingTime = await processTopics(topicList, fileName, fileChanged)
 
 // write runs metadata
