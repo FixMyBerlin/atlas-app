@@ -1,8 +1,9 @@
-describe("BikeSuitability", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
-  require("osm2pgsql")
-  require("BikeSuitability")
+describe('BikeSuitability', function()
+  package.path = package.path .. ';/processing/topics/helper/?.lua'
+  package.path = package.path .. ';/processing/topics/roads_bikelanes/roads/?.lua'
+  require('osm2pgsql')
+  require('BikeSuitability')
+
   describe('goodSurface', function()
     it('only surface', function()
       local input_tags = {
@@ -36,7 +37,7 @@ describe("BikeSuitability", function()
   describe('noMotorizedVehicle', function()
     it('`motor_vehicle = no`', function()
       local input_tags = {
-          highway = 'path',
+          highway = 'track',
           motor_vehicle = 'no'
         }
       local result = CategorizeBikeSuitability(input_tags)
@@ -45,7 +46,7 @@ describe("BikeSuitability", function()
 
     it('`traffic_sign = 250`', function()
       local input_tags = {
-          highway = 'path',
+          highway = 'track',
           traffic_sign = 'DE:250'
         }
       local result = CategorizeBikeSuitability(input_tags)
@@ -54,14 +55,15 @@ describe("BikeSuitability", function()
 
     it('`traffic_sign = 260`', function()
       local input_tags = {
-          highway = 'path',
+          highway = 'service',
           traffic_sign = 'DE:260'
         }
       local result = CategorizeBikeSuitability(input_tags)
       assert.are.equal('noMotorizedVehicle', result.id)
     end)
   end)
-  describe("noOvertaking", function ()
+
+  describe('noOvertaking', function ()
     it('`traffic_sign = DE:277.1`', function()
       local input_tags = {
           traffic_sign = 'DE:277.1'
@@ -69,6 +71,5 @@ describe("BikeSuitability", function()
       local result = CategorizeBikeSuitability(input_tags)
       assert.are.equal('noOvertaking', result.id)
     end)
-
   end)
 end)

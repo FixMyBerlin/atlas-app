@@ -4,6 +4,7 @@
 import { _14zbfci } from './_14zbfci'
 import { _166cmie } from './_166cmie'
 import { _17dmq3y } from './_17dmq3y'
+import { _1874z8l } from './_1874z8l'
 import { _19sklui } from './_19sklui'
 import { _1cjo3ur } from './_1cjo3ur'
 import { _1d3t4i0 } from './_1d3t4i0'
@@ -47,6 +48,7 @@ export const configs = {
   '14zbfci': _14zbfci,
   '166cmie': _166cmie,
   '17dmq3y': _17dmq3y,
+  '1874z8l': _1874z8l,
   '19sklui': _19sklui,
   '1cjo3ur': _1cjo3ur,
   '1d3t4i0': _1d3t4i0,

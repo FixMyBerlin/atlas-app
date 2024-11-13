@@ -80,6 +80,7 @@ export type RegionSlug =
   | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'berlin'
   | 'parkraum-berlin'
+  | 'parkraum-berlin-euvm'
   | 'bibi'
   | 'deutschland'
   | 'radinfra' // radinfra.de
@@ -216,6 +217,36 @@ export const staticRegion: StaticRegion[] = [
     ],
     hideDownload: true,
     notes: 'osmNotes',
+  },
+  {
+    slug: 'parkraum-berlin-euvm',
+    name: 'Parkraum Berlin eUVM',
+    fullName: 'Parkraum Berlin eUVM',
+    osmRelationIds: [62422],
+    map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
+    bbox: null,
+    logoPath: imageParking,
+    logoWhiteBackgroundRequired: false,
+    categories: [
+      'roads',
+      // 'parking', // only static data
+      // 'trafficSigns', // NOTE: Not finished, yet
+      'mapillary',
+    ],
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'strassenbefahrung',
+      'alkis',
+      'areal2024',
+      'areal2023',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+      'parkraumkarte_neukoelln',
+    ],
+    hideDownload: true,
+    notes: 'atlasNotes',
   },
   {
     slug: 'parkraum',

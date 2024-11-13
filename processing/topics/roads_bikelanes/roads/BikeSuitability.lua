@@ -1,11 +1,8 @@
 package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("ContainsSubstring")
-require("IsSidepath")
-require("CreateSubcategoriesAdjoiningOrIsolated")
-require("SanitizeTrafficSign")
 require("DeriveSmoothness")
-require("HighwayClasses")
+require("ContainsTrafficSignId")
 
 BikeSuitability = {}
 BikeSuitability.__index = BikeSuitability
@@ -13,8 +10,6 @@ BikeSuitability.__index = BikeSuitability
 -- @param args table
 -- @param args.desc string
 -- @param args.condition function
--- @param args.insfrastructureExists boolean
--- @param args.implicitOneWay boolean
 function BikeSuitability.new(args)
   local self = setmetatable({}, BikeSuitability)
   local fields = {'id', 'desc', 'condition'}
@@ -31,51 +26,56 @@ function BikeSuitability:__call(tags)
   return self.condition(tags)
 end
 
--- Paths which have a surface which is suited for biking
 local goodSurface = BikeSuitability.new({
   id = 'goodSurface',
   desc = 'Paths which have a surface which is suited for biking.',
-  infrastructureExists = true,
-  implicitOneWay = false, -- path shared, both lanes
   condition = function(tags)
-    if tags.surface ~= 'asphalt' then
-      return false
+    if tags.highway == "track" or tags.highway == "path"  then
+      local smoothness = DeriveSmoothness(tags).smoothness
+      if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
+        return false
+      end
+      return true
     end
-    if not Set({'path', 'track'})[tags.highway] then
-      return false
-    end
-    local smoothness = DeriveSmoothness(tags).smoothness
-    if smoothness == nil or smoothness == 'bad' or smoothness == 'very_bad' then
-      return false
-    end
-    return true
   end
 })
 
--- Ways which have no motorized vehicle access
 local noMotorizedVehicle = BikeSuitability.new({
   id = 'noMotorizedVehicle',
-  desc = 'Ways which have a surface which have no vehicle access except bicycles.',
+  desc = 'Track-like ways which disallow vehicles are bike friendly and can potentially be developed into bike infrastructure.',
   condition = function(tags)
-    if not PathClasses[tags.highway] then
-      return false
+    if tags.highway == "track" or tags.highway == "service"  then
+      -- https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:250
+      -- This includes bike. However the sign is often used incorrectly; and this is a "suitability" category which indicates that the signs could be changed
+      if tags.vehicle == 'no'
+        or ContainsSubstring(tags.vehicle, 'delivery')
+        or ContainsSubstring(tags.vehicle, 'destination')
+        or ContainsTrafficSignId(tags.traffic_sign, '250') then
+        return true
+      end
+      -- https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:260
+      if tags.motor_vehicle == 'no'
+        or ContainsSubstring(tags.motor_vehicle, 'delivery')
+        or ContainsSubstring(tags.motor_vehicle, 'destination')
+        or ContainsTrafficSignId(tags.traffic_sign, '260') then
+          return true
+      end
+      -- https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:251
+      if tags.motorcar == 'no'
+        or ContainsSubstring(tags.motorcar, 'delivery')
+        or ContainsSubstring(tags.motorcar, 'destination')
+        or ContainsTrafficSignId(tags.traffic_sign, '251') then
+        return true
+      end
     end
-    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if not (ContainsSubstring(traffic_sign, '260') or ContainsSubstring(traffic_sign, '250') or tags.motor_vehicle == 'no')then
-      return false
-    end
-    return true
   end
 })
 
--- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
--- They are in OSM, but they need to be improved, which we show in the UI.
 local noOvertaking = BikeSuitability.new({
   id = 'noOvertaking',
-  desc = 'Shared lane with over taking prohibition for motorized vehicles.',
+  desc = 'Shared lane with overtaking prohibition for motor vehicles indicate that someone tried to make this infrastructure bike friendly.',
   condition = function(tags)
-    local traffic_sign = SanitizeTrafficSign(tags.traffic_sign)
-    if ContainsSubstring(traffic_sign, "DE:277.1") then
+    if ContainsTrafficSignId(tags.traffic_sign, "277.1") then
       return true
     end
   end
@@ -90,11 +90,11 @@ local livingStreet = BikeSuitability.new({
     if tags.highway == "living_street" then
       -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
       if tags.vehicle == "no" and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
-        return nil
+        return false
       end
       -- Exit if bikes are prohibited
       if tags.bicycle == "no" or tags.bicycle == "dismount" then
-        return nil
+        return false
       end
       return true
     end
