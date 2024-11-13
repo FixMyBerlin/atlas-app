@@ -62,6 +62,12 @@ export const staticDatasetCategories = {
     title: 'Parkflächen eUVM-Projekt',
     subtitle: 'Statische Daten aus dem Parkflächen eUVM-Projekt.',
   },
+  'parkraum/osm_euvm': {
+    order: 1,
+    title: 'Parkflächen OSM aus eUVM',
+    subtitle:
+      'Statische Daten aus OpenStreetMap für Testgebiete in denen eUVM Daten übernommen wurden.',
+  },
   'parkraum/misc': {
     order: 2,
     title: 'Weitere Daten',
