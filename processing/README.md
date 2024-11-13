@@ -69,12 +69,7 @@ Whenever we talk about `diff`s in this code, this feature is referenced.
 - With `FREEZE_DATA=0` you see the changes to the last run on every run
 - With `FREEZE_DATA=1` you see the changes to the last reference-run, allowing you to compare your changes to a certain version of your data. The reference will be the last time you ran with `FREEZE_DATA=0`. In this case the system will **not** update the `backup.<tablename>` tables. This flag will be ignored if `COMPUTE_DIFFS=0`.
 
-Use `run-full.sh` to toggle `FREEZE_DATA` and force a full rerun for a fresh reference.
-
-#### `age` diffs
-
-If `age` diffs show up, you need to create a fresh reference run of all the data.
-You may use `run-full.sh` to set `FREEZE_DATA=0` and modify the helper folder to trigger a full rerun.
+To run everything without code caching and diffing set `SKIP_UNCHANGED=0` and `COMPUTE_DIFFS=0`.
 
 ### Process only a single object
 
