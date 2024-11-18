@@ -1,11 +1,14 @@
 import { params } from './parameters'
 
 async function logToSynology(message: string, token: string) {
+  // if the URL is not set, we don't log
   if (!params.synologyURL) {
     return
   }
+  // prepare the URL and payload
   const url = params.synologyURL + token
   const payload = { text: `#${params.environment}: ${message}` }
+  const body = new URLSearchParams({ payload: JSON.stringify(payload) })
 
   try {
     const response = await fetch(url, {
@@ -13,7 +16,7 @@ async function logToSynology(message: string, token: string) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: body.toString(),
     })
 
     if (response.status !== 200) {
