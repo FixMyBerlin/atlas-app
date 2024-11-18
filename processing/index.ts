@@ -64,6 +64,5 @@ try {
     triggerCacheWarming()
   }
 } catch (e) {
-  console.error(e)
   synologyLogError('Processing failed')
 }
