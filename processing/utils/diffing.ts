@@ -10,7 +10,7 @@ export async function getTopicTables(topic: Topic) {
   try {
     const tables = await $`lua /processing/utils/TableNames.lua ${topic}`
       .text()
-      .then((tables) => new Set(tables.split('\n')))
+      .then((tables) => new Set(tables.split('\n').filter((table) => table !== '')))
     return tables
   } catch {
     throw new Error(

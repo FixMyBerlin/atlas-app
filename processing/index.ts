@@ -45,7 +45,7 @@ try {
     params.freezeData,
   )
 
-  generateTypes(params.environment, processedTables)
+  await generateTypes(params.environment, processedTables)
 
   // write runs metadata
   await writeMetadata(fileName, processingTime)

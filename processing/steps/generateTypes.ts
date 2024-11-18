@@ -3,7 +3,7 @@ import { join } from 'path'
 import { TYPES_DIR } from '../constants/directories.const'
 
 export function generateTableIdType(processedTables: string[]) {
-  const unionString = Array.from(processedTables)
+  const unionString = processedTables
     .sort()
     .map((tableName) => `'${tableName}'`)
     .join(' | ')

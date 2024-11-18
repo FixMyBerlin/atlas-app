@@ -83,12 +83,13 @@ export async function processTopics(
   computeDiffs: boolean,
   freezeData: boolean,
 ) {
-  const processedTables = await getSchemaTables('public')
-  const backedUpTables = await getSchemaTables('backup')
+  const tableListPublic = await getSchemaTables('public')
+  const tableListBackup = await getSchemaTables('backup')
+  const processedTables = new Set<string>()
 
   // drop all previous diffs
   if (!freezeData) {
-    processedTables.forEach(dropDiffTable)
+    tableListPublic.forEach(dropDiffTable)
   }
 
   // when the helpers have changed we disable all diffing functionality
@@ -103,6 +104,10 @@ export async function processTopics(
 
   logStart('Processing')
   for (const topic of topics) {
+    // get all tables related to `topic`
+    const topicTables = await getTopicTables(topic)
+    topicTables.forEach((table) => processedTables.add(table))
+
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
       console.log(
@@ -111,15 +116,13 @@ export async function processTopics(
     } else {
       logStart(`Processing ${topic}`)
 
-      // get all tables related to `topic` that are already present in our db
-      const topicTables = await getTopicTables(topic)
-      const processedTopicTables = topicTables.intersection(processedTables)
+      const processedTopicTables = topicTables.intersection(tableListPublic)
 
       // backup all tables related to topic
       if (diffChanges) {
         if (freezeData) {
           // with FREEZE_DATA=1 we only backup tables that are not already backed up
-          const toBackup = processedTopicTables.difference(backedUpTables)
+          const toBackup = processedTopicTables.difference(tableListBackup)
           await Promise.all(Array.from(toBackup).map(backupTable))
         } else {
           await Promise.all(Array.from(processedTopicTables).map(backupTable))
