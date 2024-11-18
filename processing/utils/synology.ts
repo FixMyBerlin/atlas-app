@@ -14,11 +14,9 @@ async function logToSynology(message: string, token: string) {
     version: '2',
   }
   const url = new URL(params.synologyURL)
-  Object.entries(synologyParams)
-    .sort()
-    .forEach(([key, value]) => {
-      url.searchParams.append(key, value)
-    })
+  Object.entries(synologyParams).forEach(([key, value]) => {
+    url.searchParams.append(key, value)
+  })
 
   //prepare the payload
   const payload = { text: `#${params.environment}: ${message}` }
