@@ -22,3 +22,15 @@ export function logEnd(id: string) {
   logPadded(message, formatTimestamp(timeElapsed))
   return timeElapsed
 }
+
+export function logTileInfo(environment: string) {
+  const tileURLs = {
+    development: 'http://localhost:3000/catalog',
+    staging: 'https://staging-tiles.radverkehrsatlas.de/catalog',
+    production: 'https://tiles.radverkehrsatlas.de/catalog',
+  } as const
+  if (environment in tileURLs) {
+    console.log('Tile Inspector: https://viewer.radverkehrsatlas.de/index.html')
+    console.log(`Tile Catalog:   ${tileURLs[environment as keyof typeof tileURLs]}`)
+  }
+}

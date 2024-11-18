@@ -11,6 +11,7 @@ import { generateTypes } from './steps/generateTypes'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
+import { logTileInfo } from './utils/logging'
 import { params } from './utils/parameters'
 import { synologyLogError } from './utils/synology'
 
@@ -55,14 +56,15 @@ try {
 
   // restart `tiles` container to refresh /catalog
   await restartTileServer()
-
   // clear the cache
   await clearCache()
 
   // call the cache warming hook
   if (!params.skipWarmCache) {
-    triggerCacheWarming()
+    await triggerCacheWarming()
   }
+
+  await logTileInfo(params.environment)
 } catch (e) {
   synologyLogError('Processing failed')
 }
