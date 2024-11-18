@@ -83,7 +83,18 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   // download file and write to disc
   console.log(`Downloading file ${fileName}...`)
   const response = await fetch(fileURL.toString())
-  await Bun.write(file, response)
+
+  if (response.status !== 200 || !response.body) {
+    throw new Error(`Failed to download file. Status code: ${response.status}`)
+  }
+
+  const reader = response.body.getReader()
+  const writer = file.writer()
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+    await writer.write(value)
+  }
 
   // save etag
   writePersistent(fileName, eTag)
