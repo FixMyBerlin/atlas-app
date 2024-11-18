@@ -6,13 +6,22 @@ async function logToSynology(message: string, token: string) {
   }
   const url = params.synologyURL + token
   const payload = { text: `#${params.environment}: ${message}` }
-  await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  })
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    if (response.status !== 200) {
+      throw new Error(`Error logging to Synology: ${response.statusText}`)
+    }
+  } catch (error) {
+    console.error(`Error logging to Synology`)
+  }
 }
 
 /**
