@@ -8,7 +8,7 @@ async function logToSynology(message: string, token: string) {
 
   // prepare the URL
   const synologyParams = {
-    token,
+    token: decodeURIComponent(token), // the token is already encoded in the env
     api: 'SYNO.Chat.External',
     method: 'incoming',
     version: '2',
