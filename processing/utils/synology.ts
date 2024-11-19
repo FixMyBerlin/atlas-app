@@ -27,7 +27,7 @@ async function logToSynology(message: string, token: string) {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: body.toString(),
     })
