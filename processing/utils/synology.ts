@@ -1,8 +1,13 @@
 import { params } from './parameters'
 
 // this is the delay we wait between two consecutive requests to synology
-const requestDelayMs = 10000
+const requestDelayMs = 1000
 let lastRequest = 0
+let lock = false
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
 
 async function logToSynology(message: string, token: string) {
   // if the URL is not set, we don't log
@@ -11,11 +16,16 @@ async function logToSynology(message: string, token: string) {
   }
 
   // due to the rate limit we need to wait between two consecuitive requests
-  const timeElapsed = Date.now() - lastRequest
-  lastRequest = Date.now()
-  if (timeElapsed < requestDelayMs) {
-    await new Promise((resolve) => setTimeout(resolve, requestDelayMs - timeElapsed))
+  while (lock) {
+    await sleep(500)
   }
+  lock = true
+  const timeElapsed = Date.now() - lastRequest
+  if (timeElapsed < requestDelayMs) {
+    await sleep(requestDelayMs - timeElapsed)
+  }
+  lastRequest = Date.now()
+  lock = false
 
   // prepare the URL
   const synologyParams = {
