@@ -17,9 +17,11 @@ export async function logStart(id: string) {
 
 export async function logEnd(id: string) {
   const timeElapsed = endTimer(id)
+  const timeFormatted = formatTimestamp(timeElapsed)
+
   const message = `${id} finished`
-  await synologyLogInfo(message)
-  logPadded(message, formatTimestamp(timeElapsed))
+  synologyLogInfo(`${message} in ${timeFormatted}`)
+  logPadded(message, timeFormatted)
   return timeElapsed
 }
 
