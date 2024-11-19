@@ -21,6 +21,8 @@ async function logToSynology(message: string, token: string) {
   //prepare the payload
   const payload = { text: `#${params.environment}: ${message}` }
   const body = new URLSearchParams({ payload: JSON.stringify(payload) })
+
+  // send the request
   try {
     const response = await fetch(url, {
       method: 'POST',

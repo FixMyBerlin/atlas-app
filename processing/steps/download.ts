@@ -81,7 +81,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   }
 
   // download file and write to disc
-  console.log(`Downloading file ${fileName}...`)
+  console.log(`Downloading file "${fileName}"...`)
   const response = await fetch(fileURL.toString())
 
   if (response.status !== 200 || !response.body) {

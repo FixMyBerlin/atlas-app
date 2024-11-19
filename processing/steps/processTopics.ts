@@ -102,7 +102,7 @@ export async function processTopics(
   const skipCode = skipUnchanged && !helpersChanged && !fileChanged
   const diffChanges = computeDiffs && !fileChanged
 
-  logStart('Processing')
+  await logStart('Processing')
   for (const topic of topics) {
     // get all tables related to `topic`
     const topicTables = await getTopicTables(topic)
@@ -114,7 +114,7 @@ export async function processTopics(
         `⏩ Skipping topic "${topic}". The code hasn't changed and SKIP_UNCHANGED is active.`,
       )
     } else {
-      logStart(`Processing ${topic}`)
+      await logStart(`Topic "${topic}"`)
 
       const processedTopicTables = topicTables.intersection(tableListPublic)
 
@@ -139,10 +139,10 @@ export async function processTopics(
         await diffTables(Array.from(processedTopicTables))
       }
 
-      logEnd(`Processing ${topic}`)
+      await logEnd(`Topic "${topic}"`)
     }
   }
 
-  const timeElapsed = logEnd('Processing')
+  const timeElapsed = await logEnd('Processing')
   return { timeElapsed, processedTables: Array.from(processedTables) }
 }
