@@ -2,3 +2,4 @@ app/.husky
 app/.next
 app/.env*
 .editorconfig
+processing/node_modules

@@ -12,7 +12,7 @@ export async function registerSQLFunctions() {
     const generalizationFunctionPromise = registerGeneralizationFunctions().then(() =>
       console.log(greenCheckmark, 'Generalization functions registered'),
     )
-    return Promise.all([exportFunctionPromise, generalizationFunctionPromise])
+    await Promise.all([exportFunctionPromise, generalizationFunctionPromise])
   } catch (e) {
     console.error('\n\nINSTRUMENTATION HOOK FAILED', e)
   }
