@@ -24,8 +24,8 @@ export async function getFileTimestamp(fileName: string) {
     const timestamp =
       await $`osmium fileinfo ${filteredFilePath(fileName)} -g header.option.timestamp`.text()
     return timestamp.trim()
-  } catch {
-    throw new Error(`Failed to get timestamp from file ${fileName}`)
+  } catch (error) {
+    throw new Error(`Failed to get timestamp from file "${fileName}": ${error}`)
   }
 }
 

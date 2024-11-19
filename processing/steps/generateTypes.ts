@@ -25,8 +25,8 @@ export async function generateTypes(environment: string, processedTables: string
     await Bun.write(typeFile, tableIdType)
     try {
       await $`bunx prettier -w --config=/processing/.prettierrc ${TYPES_DIR} > /dev/null`
-    } catch {
-      throw new Error('Failed to run prettier on auto generated types')
+    } catch (error) {
+      throw new Error(`Failed to run prettier on auto generated types: ${error}`)
     }
   }
 }

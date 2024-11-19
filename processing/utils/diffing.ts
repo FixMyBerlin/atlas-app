@@ -12,9 +12,9 @@ export async function getTopicTables(topic: Topic) {
       .text()
       .then((tables) => new Set(tables.split('\n').filter((table) => table !== '')))
     return tables
-  } catch {
+  } catch (error) {
     throw new Error(
-      `Failed to get tables for topic ${topic}. This is likely due to some required columns missing.`,
+      `Failed to get tables for topic "${topic}". This is likely due to some required columns missing: ${error}`,
     )
   }
 }

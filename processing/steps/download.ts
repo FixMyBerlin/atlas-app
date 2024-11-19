@@ -76,7 +76,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   }
 
   if (eTag === (await readPersistent(fileName))) {
-    console.log('Skipped download because the file has not changed')
+    console.log('⏩ Skipped download because the file has not changed.')
     return { fileName, fileChanged: false }
   }
 
@@ -84,10 +84,11 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   console.log(`Downloading file "${fileName}"...`)
   const response = await fetch(fileURL.toString())
 
-  if (response.status !== 200 || !response.body) {
-    throw new Error(`Failed to download file. Status code: ${response.status}`)
+  if (!response.ok || !response.body) {
+    throw new Error(`Failed to download file. Status code: ${response.statusText}`)
   }
 
+  // we need to download the file as a stream to avoid memory issues
   const reader = response.body.getReader()
   const writer = file.writer()
   while (true) {

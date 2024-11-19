@@ -27,8 +27,8 @@ async function runSQL(topic: Topic) {
   if (await Bun.file(psqlFile).exists()) {
     try {
       await $`psql -q -f ${psqlFile}`
-    } catch {
-      throw new Error(`Failed to run SQL file ${psqlFile}`)
+    } catch (error) {
+      throw new Error(`Failed to run SQL file "${psqlFile}": ${error}`)
     }
   }
 }
@@ -50,8 +50,8 @@ async function runLua(fileName: string, topic: Topic) {
               --extra-attributes \
               --style=${luaFile} \
               ${filePath}`
-  } catch {
-    throw new Error(`Failed to run lua file ${luaFile}`)
+  } catch (error) {
+    throw new Error(`Failed to run lua file "${luaFile}": ${error}`)
   }
 }
 

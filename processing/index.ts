@@ -65,6 +65,7 @@ try {
   }
 
   await logTileInfo(params.environment)
-} catch (e) {
-  synologyLogError('Processing failed')
+} catch (error) {
+  synologyLogError(`Processing failed: ${error}`)
+  throw error
 }

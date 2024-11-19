@@ -28,8 +28,8 @@ export async function clearCache() {
   try {
     await $`rm -rf "/var/cache/nginx/*"`
     console.log('Succesfully cleared the cache.')
-  } catch {
-    console.warn('Clearing the cache failed.')
+  } catch (error) {
+    console.warn(`Clearing the cache failed: ${error}`)
   }
 }
 
@@ -41,7 +41,7 @@ export async function restartTileServer() {
   try {
     await $`docker restart tiles > /dev/null`
     console.log('Succesfully restarted the tiles container.')
-  } catch {
-    throw new Error('Restarting the tiles container failed.')
+  } catch (error) {
+    throw new Error(`Restarting the tiles container failed: ${error}`)
   }
 }

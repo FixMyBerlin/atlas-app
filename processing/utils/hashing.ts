@@ -10,8 +10,8 @@ async function computeDirectoryHash(path: string) {
   try {
     const hash = await $`find "${path}" -type f | sort | xargs shasum`.text()
     return hash
-  } catch {
-    throw new Error('Could not compute the hash of the directory')
+  } catch (error) {
+    throw new Error(`Could not compute the hash of the directory "${path}": ${error}`)
   }
 }
 

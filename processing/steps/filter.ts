@@ -34,8 +34,8 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
                   --expressions ${FILTER_EXPRESSIONS} \
                   --output=${filteredFilePath(fileName)} \
                   ${originalFilePath(fileName)}`
-    } catch {
-      throw new Error('Failed to filter the OSM file.')
+    } catch (error) {
+      throw new Error(`Failed to filter the OSM file: ${error}`)
     }
   } else {
     console.log('⏩ Skipping tag filter. The file and filters are unchanged.')
@@ -59,8 +59,8 @@ export async function idFilter(fileName: string, ids: string) {
               --output=${filteredFilePath(ID_FILTERED_FILE)} \
               --verbose-ids ${filteredFilePath(fileName)} \
               ${ids}`
-  } catch {
-    throw new Error('Failed to filter the OSM file by ids.')
+  } catch (error) {
+    throw new Error(`Failed to filter the OSM file by ids: ${error}`)
   }
 
   return ID_FILTERED_FILE
