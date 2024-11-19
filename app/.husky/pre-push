@@ -1,7 +1,6 @@
 # This runs our unit tests for `Processing`
 
-docker build --target testing -f ./processing.Dockerfile -t test_img .
-docker run test_img
+./processing/run-tests.sh
 
 # Linting, Formating and Type-Checks for `App`
 
