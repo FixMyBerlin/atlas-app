@@ -8,14 +8,14 @@ const lineLength = process.stdout.columns || 120
 export function logPadded(left: string, right: string = '') {
   console.log(chalk.inverse(left.padEnd(lineLength - right.length) + right))
 }
-export async function logStart(id: string) {
+export function logStart(id: string) {
   const message = `${id} started`
-  await synologyLogInfo(message)
+  synologyLogInfo(message)
   logPadded(message)
   startTimer(id)
 }
 
-export async function logEnd(id: string) {
+export function logEnd(id: string) {
   const timeElapsed = endTimer(id)
   const timeFormatted = formatTimestamp(timeElapsed)
 
