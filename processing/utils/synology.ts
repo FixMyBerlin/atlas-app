@@ -19,8 +19,8 @@ async function logToSynology(message: string, token: string) {
   })
 
   //prepare the payload
-  const payload = { text: `#${params.environment}: ${message}` }
-  const body = new URLSearchParams({ payload: JSON.stringify(payload) })
+  const payload = JSON.stringify({ text: `#${params.environment}: ${message}` })
+  const body = new URLSearchParams({ payload }).toString()
 
   // send the request
   try {
@@ -29,10 +29,10 @@ async function logToSynology(message: string, token: string) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: body.toString(),
+      body,
     })
 
-    if (response.status !== 200) {
+    if (!response.ok) {
       throw new Error(`Error logging to Synology: ${response.statusText}`)
     }
   } catch (error) {
