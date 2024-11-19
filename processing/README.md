@@ -83,9 +83,13 @@ We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as 
 
 ### Run
 
+To run the tests manually:
+
 ```
 ./processing/run-tests.sh
 ```
+
+Additionally all tests are being run in the [husky](https://typicode.github.io/husky/) [pre-push](../app/.husky/pre-push) hook.
 
 ### Conventions
 
