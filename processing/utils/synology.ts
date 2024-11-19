@@ -31,12 +31,16 @@ async function logToSynology(message: string, token: string) {
       },
       body,
     })
-
     if (!response.ok) {
-      throw new Error(`Error logging to Synology: ${response.statusText}`)
+      throw new Error(`${response.statusText}`)
+    }
+    // the synology API isn't implemented correctly the error code and message are actually in the body
+    const responseBody = await response.json()
+    if (!responseBody.success) {
+      throw new Error(`${responseBody.error.errors}`)
     }
   } catch (error) {
-    console.error(`Error logging to Synology`)
+    console.error(`Error logging to Synology: ${error}`)
   }
 }
 
