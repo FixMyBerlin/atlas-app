@@ -6,6 +6,7 @@ services:
       dockerfile: ./processing.Dockerfile
     volumes:
       - ./processing:/processing
+      - /processing/node_modules
     logging:
       driver: json-file
   app:

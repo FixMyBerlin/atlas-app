@@ -1,0 +1,13 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = env("GEO_DATABASE_URL")
+}
+
+// we need to have a schema definition to run `prisma generate` even though we don't use any ORM functionality
+model Dummy {
+  id Int @id @default(autoincrement())
+}
