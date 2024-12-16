@@ -29,11 +29,31 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
   if (fileChanged || filtersChanged) {
     console.log('Filtering the OSM file...')
     try {
-      await $`osmium tags-filter \
-                  --overwrite \
-                  --expressions ${FILTER_EXPRESSIONS} \
-                  --output=${filteredFilePath(fileName)} \
-                  ${originalFilePath(fileName)}`
+      Bun.spawnSync([
+        'osmium',
+        'tags-filter',
+        '--overwrite',
+        '--expressions',
+        FILTER_EXPRESSIONS,
+        `--output=${filteredFilePath(fileName)}`,
+        originalFilePath(fileName),
+      ])
+      // NOTE: Fails with…
+      //    processing  | PBF error: invalid BlobHeader size (> max_blob_header_size)
+      //    processing  | 33 |                   --overwrite \
+      //    processing  | 34 |                   --expressions ${FILTER_EXPRESSIONS} \
+      //    processing  | 35 |                   --output=${filteredFilePath(fileName)} \
+      //    processing  | 36 |                   ${originalFilePath(fileName)}`
+      //    processing  | 37 |     } catch (error) {
+      //    processing  | 38 |       throw new Error(`Failed to filter the OSM file: ${error}`)
+      //    processing  |                  ^
+      //    processing  | error: Failed to filter the OSM file: ShellError: Failed with exit code 1
+      //    processing  |       at /processing/steps/filter.ts:38:13
+      // await $`osmium tags-filter \
+      //             --overwrite \
+      //             --expressions ${FILTER_EXPRESSIONS} \
+      //             --output=${filteredFilePath(fileName)} \
+      //             ${originalFilePath(fileName)}`
     } catch (error) {
       throw new Error(`Failed to filter the OSM file: ${error}`)
     }
