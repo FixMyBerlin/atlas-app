@@ -6,8 +6,14 @@ Please read the [README](../README.md) first.
 
 ## About
 
-The processing downloads the OpenStreetMap (OSM) data, filters and processes it into a PostgreSQL/PostGIS database which are then made available as vector tiles with [`martin`](https://github.com/maplibre/martin).
-The data gets selected and optimized to make planning of bicycle infrastructure easier.
+The processing downloads the OpenStreetMap (OSM) data, filters and processes it into a PostgreSQL/PostGIS database, which is then made available as vector tiles with [`martin`](https://github.com/maplibre/martin).
+
+The data is selected and optimized to make planning of bicycle infrastructure easier.
+
+## Orchestration
+
+We use Bun and [Bun Shell](https://bun.sh/docs/runtime/shell) to orchestrate the commands needed to fetch, filter, process and post-process the data and trigger post-processing hooks.
+See [`index.ts`](./index.ts) for more.
 
 ## Freshness
 
@@ -28,6 +34,11 @@ We use the [public Germany export from Geofabrik](https://download.geofabrik.de/
 See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/run-5-process.sh#L45-L50 for a list URLs to see the data that Martin provides.
 
 ## Development
+
+### Preparation
+
+- [Install bun](https://bun.sh/docs/installation)
+- Run `bun install` in `./processing`
 
 ### Run the whole system
 
@@ -102,7 +113,7 @@ Additionally all tests are being run in the [husky](https://typicode.github.io/h
 1. First https://github.com/FixMyBerlin/atlas-app/actions runs.
 2. Server (IONOS) runs the processing one table at a time.
    The whole processing takes about 1.5 h.
-   See [`run.sh`](./run.sh) for details.
+   See [`index.ts`](./index.ts) for details.
 
 # 💛 Thanks to
 

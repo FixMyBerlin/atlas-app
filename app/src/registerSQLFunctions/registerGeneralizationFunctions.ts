@@ -68,41 +68,41 @@ export async function registerGeneralizationFunctions() {
         const tileSpecification = await createTileSpecification(tableName as TableId)
 
         return geoDataClient.$transaction([
-          geoDataClient.$executeRawUnsafe(
-            `CREATE OR REPLACE
-             FUNCTION public."${functionName}"(z integer, x integer, y integer)
-             RETURNS bytea AS $$
-             DECLARE
-               mvt bytea;
-               tolerance float;
-             BEGIN
-                IF z BETWEEN ${SIMPLIFY_MIN_ZOOM} AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
-                  tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
-                ELSE
-                  tolerance = 0;
-                END IF;
-                SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
-                  SELECT
-                    id,
-                    ST_AsMVTGeom(
-                      ST_CurveToLine(
-                        ST_Simplify(geom, tolerance, true)
-                      ),
-                      ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
-                    CASE WHEN z >= ${fullTagsMinZoom} THEN tags ELSE atlas_jsonb_select(tags, ${toSqlArray(
-                      stylingKeys,
-                    )}) END as tags,
-                    CASE WHEN z >= ${fullTagsMinZoom} THEN meta ELSE NULL END as meta
-                  FROM "${tableName}"
-                  WHERE (geom && ST_TileEnvelope(z, x, y)) AND z >= minzoom
-                ) AS tile;
-                RETURN mvt;
-             END
-             $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;`,
-          ),
-          geoDataClient.$executeRawUnsafe(
-            `COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';`,
-          ),
+          geoDataClient.$executeRawUnsafe(`
+            CREATE OR REPLACE
+            FUNCTION public."${functionName}"(z integer, x integer, y integer)
+            RETURNS bytea AS $$
+            DECLARE
+              mvt bytea;
+              tolerance float;
+            BEGIN
+              IF z BETWEEN ${SIMPLIFY_MIN_ZOOM} AND ${SIMPLIFY_MAX_ZOOM - 1} THEN
+                tolerance = 10 * POWER(2, ${SIMPLIFY_MAX_ZOOM - 1}-z);
+              ELSE
+                tolerance = 0;
+              END IF;
+              SELECT INTO mvt ST_AsMVT(tile, '${tableName}', 4096, 'geom') FROM (
+                SELECT
+                  id,
+                  ST_AsMVTGeom(
+                    ST_CurveToLine(
+                      ST_Simplify(geom, tolerance, true)
+                    ),
+                    ST_TileEnvelope(z, x, y), 4096, 64, true) AS geom,
+                  CASE WHEN z >= ${fullTagsMinZoom} THEN tags ELSE atlas_jsonb_select(tags, ${toSqlArray(
+                    stylingKeys,
+                  )}) END as tags,
+                  CASE WHEN z >= ${fullTagsMinZoom} THEN meta ELSE NULL END as meta
+                FROM "${tableName}"
+                WHERE (geom && ST_TileEnvelope(z, x, y)) AND z >= minzoom
+              ) AS tile;
+              RETURN mvt;
+            END
+            $$ LANGUAGE plpgsql IMMUTABLE STRICT PARALLEL SAFE;
+          `),
+          geoDataClient.$executeRawUnsafe(`
+            COMMENT ON FUNCTION ${functionName} IS '${JSON.stringify(tileSpecification)}';
+          `),
         ])
       },
     ),

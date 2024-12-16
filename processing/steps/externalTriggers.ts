@@ -17,7 +17,7 @@ export async function triggerPostProcessing() {
   return triggerPrivateApi('post-processing-hook')
 }
 export async function triggerCacheWarming() {
-  return triggerPrivateApi('cache-warming')
+  return triggerPrivateApi('warm-cache')
 }
 
 /**

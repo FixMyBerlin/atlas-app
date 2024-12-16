@@ -78,4 +78,9 @@ export const staticDatasetCategories = {
     title: 'Netze',
     subtitle: 'Statische Geodaten zum Straßennetz und Radinfrastruktur.',
   },
+  'berlin/cc': {
+    order: 1,
+    title: 'Changing Cities Monitoring',
+    subtitle: 'Statische Geodaten zum Monitoring des Radnetzes von Changing Cities.',
+  },
 } as const
