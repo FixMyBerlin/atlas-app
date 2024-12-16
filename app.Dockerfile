@@ -1,8 +1,10 @@
 FROM node:18-bullseye-slim AS base
 
 WORKDIR /app
+
 COPY /app/package*.json /app/
 COPY /app/patches /app/patches
+
 RUN npm install-clean --legacy-peer-deps
 RUN npm run postinstall
 
@@ -13,12 +15,11 @@ EXPOSE 4000
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV TZ=Europe/Berlin
 
-RUN npx blitz@2.1.0 prisma generate
-
 ARG NEXT_PUBLIC_APP_ORIGIN
 ARG NEXT_PUBLIC_APP_ENV
 ARG NEXT_PUBLIC_OSM_API_URL
 
+RUN npx blitz@2.1.0 prisma generate
 RUN npx blitz@2.1.0 build
 
 CMD npx blitz@2.1.0 prisma migrate deploy && npx blitz@2.1.0 start -p 4000
