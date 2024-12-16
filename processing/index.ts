@@ -6,7 +6,7 @@ import {
   triggerCacheWarming,
   triggerPostProcessing,
 } from './steps/externalTriggers'
-import { idFilter, tagFilter } from './steps/filter'
+import { idFilter } from './steps/filter'
 import { generateTypes } from './steps/generateTypes'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
@@ -28,7 +28,8 @@ try {
   let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
 
   // filter osm file with /filter/filter-expressions.txt
-  await tagFilter(fileName, fileChanged)
+  // FILTERING DISABLED
+  // await tagFilter(fileName, fileChanged)
 
   // filter osm file by ids if given
   if (params.idFilter !== '') {
