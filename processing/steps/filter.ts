@@ -29,23 +29,15 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
   if (fileChanged || filtersChanged) {
     console.log('Filtering the OSM file...')
     try {
-      Bun.spawnSync(
-        [
-          'osmium',
-          'tags-filter',
-          '--overwrite',
-          '--expressions',
-          FILTER_EXPRESSIONS,
-          `--output=${filteredFilePath(fileName)}`,
-          originalFilePath(fileName),
-        ],
-        {
-          onExit(_proc, exitCode, _signalCode, error) {
-            exitCode && console.log('exitCode:', exitCode)
-            error && console.log('error:', error)
-          },
-        },
-      )
+      Bun.spawnSync([
+        'osmium',
+        'tags-filter',
+        '--overwrite',
+        '--expressions',
+        FILTER_EXPRESSIONS,
+        `--output=${filteredFilePath(fileName)}`,
+        originalFilePath(fileName),
+      ])
       // NOTE: Fails with…
       //    processing  | PBF error: invalid BlobHeader size (> max_blob_header_size)
       //    processing  | 33 |                   --overwrite \
