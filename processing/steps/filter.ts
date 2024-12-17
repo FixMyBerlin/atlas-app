@@ -1,5 +1,11 @@
 import { $ } from 'bun'
-import { FILTER_DIR, FILTER_EXPRESSIONS, ID_FILTERED_FILE } from '../constants/directories.const'
+import { join } from 'path'
+import {
+  FILTER_DIR,
+  FILTER_EXPRESSIONS,
+  ID_FILTERED_FILE,
+  OSM_FILTERED_DIR,
+} from '../constants/directories.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { originalFilePath } from './download'
 
@@ -8,9 +14,7 @@ import { originalFilePath } from './download'
  * @param fileName file name
  * @returns full path to the file
  */
-// FILTERING DISABLED
-// export const filteredFilePath = (fileName: string) => join(OSM_FILTERED_DIR, fileName)
-export const filteredFilePath = (fileName: string) => originalFilePath(fileName)
+export const filteredFilePath = (fileName: string) => join(OSM_FILTERED_DIR, fileName)
 
 /**
  * Filter the OSM file wiht osmiumm and the given filter expressions.
