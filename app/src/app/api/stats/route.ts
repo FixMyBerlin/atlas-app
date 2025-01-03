@@ -17,7 +17,7 @@ const StatSchema = z.object({
   name: z.string(),
   level: z.enum(['4', '6']),
   road_length: z.record(z.string(), z.number()),
-  bikelane_length: z.record(z.string(), z.number()).optional(),
+  bikelane_length: z.record(z.string(), z.number()).nullable(),
   geojson: multiPolygon,
 })
 const StatsSchema = z.array(StatSchema)
