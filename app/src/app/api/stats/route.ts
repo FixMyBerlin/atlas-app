@@ -12,7 +12,7 @@ const multiPolygon = z.object({
   type: z.literal('MultiPolygon'),
   coordinates: z.array(polygon),
 })
-const StatSchema = z.object({
+const DbStatSchema = z.object({
   id: z.string(),
   name: z.string(),
   level: z.enum(['4', '6']),
@@ -20,18 +20,10 @@ const StatSchema = z.object({
   bikelane_length: z.record(z.string(), z.number()).nullable(),
   geojson: multiPolygon,
 })
-const StatsSchema = z.array(StatSchema)
+const DbStatsSchema = z.array(DbStatSchema)
 
 export async function GET() {
   try {
-    type TDate = { osm_data_from: string }[]
-    const rawDate = await geoDataClient.$queryRaw<TDate>`
-      SELECT osm_data_from
-      FROM public.meta
-      ORDER BY id DESC
-      LIMIT 1
-    `
-
     const raw = await geoDataClient.$queryRaw`
       SELECT
         id,
@@ -42,7 +34,7 @@ export async function GET() {
         ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb AS geojson
       FROM public.aggregated_lengths;`
 
-    const parsed = StatsSchema.parse(raw)
+    const parsed = DbStatsSchema.parse(raw)
 
     const features = parsed.map(({ geojson, ...stat }) => {
       // PROPERTIES: Add children
@@ -77,10 +69,7 @@ export async function GET() {
       return feature(geomTruncated, properties, { id: stat.id })
     })
 
-    const collection = featureCollection(features)
-    // @ts-expect-error We breakt he feature collection convention here
-    collection.updatedAt = rawDate.at(0)?.osm_data_from
-    return NextResponse.json(collection)
+    return NextResponse.json(featureCollection(features))
   } catch (error) {
     console.error(error) // Log files
     return Response.json(
