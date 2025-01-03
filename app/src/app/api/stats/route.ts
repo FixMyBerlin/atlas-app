@@ -1,9 +1,8 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { geoDataClient } from '@/src/prisma-client'
-import { feature, featureCollection, simplify, transformScale, truncate } from '@turf/turf'
+import { feature, featureCollection, simplify, truncate } from '@turf/turf'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
-import { compareFeatures } from '../../regionen/[regionSlug]/_components/SidebarInspector/util'
 
 const position = z.tuple([z.number(), z.number()])
 const linearRing = z.array(position)
@@ -36,37 +35,14 @@ export async function GET() {
 
     const parsed = DbStatsSchema.parse(raw)
 
-    const features = parsed.map(({ geojson, ...stat }) => {
-      // PROPERTIES: Add children
-      // Docs https://turfjs.org/docs/api/transformScale
-      const geomParentLarger = transformScale(geojson, 1.1)
-      const children =
-        // Only level 4 can have children
-        stat.level === '4'
-          ? parsed
-              // Children can only be level 6
-              .filter(({ level }) => level === '6')
-              .map(({ geojson: geomChildCandidate, id, name }) => {
-                // Note: We cannot use https://turfjs.org/docs/api/booleanWithin
-                const compareToken = compareFeatures(
-                  { geometry: geomChildCandidate },
-                  { geometry: geomParentLarger },
-                )
-                if (compareToken === '>') {
-                  return { id, name }
-                }
-              })
-              .filter(Boolean)
-          : undefined
-      const properties = { ...stat, children }
-
+    const features = parsed.map(({ geojson, ...properties }) => {
       // GEOMETRY: Cleanup
       // Docs https://turfjs.org/docs/api/simplify
-      const geomSimplified = simplify(geojson, { tolerance: 0.05, highQuality: true })
+      const geomSimplified = simplify(geojson, { tolerance: 0.05 })
       // Docs https://turfjs.org/docs/api/truncate
       const geomTruncated = truncate(geomSimplified, { precision: 6, coordinates: 2 })
 
-      return feature(geomTruncated, properties, { id: stat.id })
+      return feature(geomTruncated, properties, { id: properties.id })
     })
 
     return NextResponse.json(featureCollection(features))
