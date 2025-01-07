@@ -187,6 +187,7 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     if osm2pgsql.has_prefix(trafficSign, "DE:241") then
         return true
     end
+
     -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
     -- No traffic_sign but mapper decided to map foot- and bike lane as separate geometry
     -- We check for traffic_mode:right=foot
@@ -324,6 +325,11 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags._side ~= 'self' then
+        -- "Angstweichen" are a special case where the cycleway is part of the road which is tagged using one of their `*:lanes` schema.
+        -- Those get usually dual tagged as `cycleway:right=lane` to make the "Angstweiche" "visible" to routing.
+        -- For this category, we skip the dual tagging but still want to capture cases where there is an actual `lane` ("Schutzstreifen") as well as a "Angstweiche".
+        -- The actual double infra is present when the lanes have both "|lane|" (the "Angstweiche") as well a a suffix "|lane" (the "Schutzstreifen").
+        -- Note: `tags.lanes` is `cycleway:lanes` but unnested whereas `bicycle:lanes` does not get unnested.
         if ContainsSubstring(tags.lanes,'|lane|') then
           if not osm2pgsql.has_suffix(tags.lanes, '|lane') then
             return false
