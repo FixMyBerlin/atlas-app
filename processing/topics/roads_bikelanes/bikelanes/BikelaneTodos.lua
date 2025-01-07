@@ -173,7 +173,6 @@ BikelaneTodos = {
   missing_acccess_tag_bicycle_road,
   missing_traffic_sign_but_bicycle_designated,
   missing_traffic_sign_but_bicycle_yes,
-  missing_traffic_sign,
   missing_access_tag_240,
   missing_segregated,
   missing_sidepath,
