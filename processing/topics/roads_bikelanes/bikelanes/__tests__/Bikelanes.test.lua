@@ -119,7 +119,7 @@ describe("Bikelanes", function()
 
   describe("explicit category tests", function()
 
-    it('Categories for "angstweiche"', function()
+    it('Categories for "Angstweiche" and "Schutzstreifen" using cycleway:lanes', function()
       local input_object = {
         tags = {
           highway = 'tertiary',
@@ -140,9 +140,62 @@ describe("Bikelanes", function()
           assert.are.equal(v.category, "cyclewayOnHighway_exclusive")
         end
       end
-      -- same test but with `bicycle:lanes`
-      input_object.tags['cycleway:lanes'] = nil
-      input_object.tags['bicycle:lanaes'] = 'no|no|no|designated|no|designated'
+    end)
+
+    it('Categories for "Angstweiche" and "Schutzstreifen" using bicycle:lanes', function()
+      local input_object = {
+        tags = {
+          highway = 'tertiary',
+          ['cycleway:right'] = 'lane',
+          ['cycleway:right:lane'] = 'exclusive',
+          ['bicycle:lanes'] = 'no|no|no|designated|no|designated',
+          ['cycleway:right:traffic_sign'] = 'DE:237'
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      for _, v in pairs(result) do
+        if v._side == 'self' then
+          assert.are.equal(v.category, "cyclewayOnHighwayBetweenLanes")
+        end
+        if v._side == 'right' and v.prefix == 'cycleway' then
+          assert.are.equal(v.category, "cyclewayOnHighway_exclusive")
+        end
+      end
+    end)
+
+    it('Categories for "Angstweiche" (only) using cycleway:lanes', function()
+      local input_object = {
+        tags = {
+          highway = 'tertiary',
+          ['cycleway:right'] = 'lane',
+          ['cycleway:lanes'] = 'no|no|no|lane|no',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      for _, v in pairs(result) do
+        if v._side == 'self' then
+          assert.are.equal(v.category, "cyclewayOnHighwayBetweenLanes")
+        end
+        if v._side == 'right' and v.prefix == 'cycleway' then
+          assert.are.equal(v.category, "cyclewayOnHighway_exclusive")
+        end
+      end
+    end)
+
+    it('Categories for "Angstweiche" (only) using bicycle:lanes', function()
+      local input_object = {
+        tags = {
+          highway = 'tertiary',
+          ['cycleway:right'] = 'lane',
+          ['bicycle:lanes'] = 'no|no|no|designated|no',
+        },
+        id = 1,
+        type = 'way'
+      }
       local result = Bikelanes(input_object)
       for _, v in pairs(result) do
         if v._side == 'self' then
