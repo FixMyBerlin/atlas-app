@@ -743,12 +743,12 @@ export const staticRegion: StaticRegion[] = [
   },
   {
     slug: 'radinfra',
-    name: 'Radinfra.de',
-    fullName: 'Radinfrastruktur Detuschland (radinfra.de)',
+    name: 'radinfra.de',
+    fullName: 'Radinfrastrukturdaten für Deutschland (radinfra.de)',
     osmRelationIds: [],
-    map: { lat: 51.07, lng: 13.35, zoom: 5 },
+    map: { lat: 51.07, lng: 13.35, zoom: 6 },
     bbox: null,
-    logoPath: null,
+    externalLogoPath: 'https://radinfra.de/radinfra-de-logo.png',
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
