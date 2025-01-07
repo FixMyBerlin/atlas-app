@@ -249,5 +249,28 @@ describe("Bikelanes", function()
         end
       end
     end)
+
+    pending('Bug https://www.openstreetmap.org/way/565095160/history/5', function()
+      local input_object = {
+        highway = 'primary',
+        tags = {
+          ['cycleway:left'] = 'lane',
+          ['cycleway:left:bicyle'] = 'yes',
+          ['cycleway:separation:left'] = 'yes'
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+            for _, v in pairs(result) do
+        if v._side == 'right' and v.prefix == 'cycleway' then
+          assert.are.equal("a", v)
+          assert.are.equal("a", v.category)
+        end
+        if v._side == 'left' and v.prefix == 'cycleway' then
+          assert.are.equal("cyclewayOnHighway_advisoryOrExclusive", v.category)
+        end
+      end
+    end)
   end)
 end)
