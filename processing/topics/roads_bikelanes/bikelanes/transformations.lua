@@ -126,13 +126,13 @@ function GetTransformedObjects(tags, transformations)
           highway = transformation.highway
         }
 
-        -- we look for tags with the following hirachy: `prefix:side` > `prefix:both` > `prefix`
+        -- We look for tags with the following hierarchy: `prefix:side` > `prefix:both` > `prefix`
         -- thus a more specific tag will always overwrite a more general one
         unnestPrefixedTags(tags, prefix, '', newObj)
         unnestPrefixedTags(tags, prefix, ':both', newObj)
         unnestPrefixedTags(tags, prefix, ':' .. side, newObj)
 
-        -- this condition checks if we acutally projected something
+        -- This condition checks if we actually projected something
         if newObj._infix ~= nil then
           if transformation.filter(newObj) then
             convertDirectedTags(newObj, transformation.direction_reference)

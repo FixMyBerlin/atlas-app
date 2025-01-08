@@ -1,5 +1,6 @@
 package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
 package.path = package.path .. ";/processing/topics/helper/?.lua"
+require("Set")
 require("ContainsSubstring")
 require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")
@@ -187,6 +188,7 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     if osm2pgsql.has_prefix(trafficSign, "DE:241") then
         return true
     end
+
     -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
     -- No traffic_sign but mapper decided to map foot- and bike lane as separate geometry
     -- We check for traffic_mode:right=foot
@@ -324,6 +326,11 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
   condition = function(tags)
     if tags.highway == 'cycleway' then
       if tags._side ~= 'self' then
+        -- "Angstweichen" are a special case where the cycleway is part of the road which is tagged using one of their `*:lanes` schema.
+        -- Those get usually dual tagged as `cycleway:right=lane` to make the "Angstweiche" "visible" to routing.
+        -- For this category, we skip the dual tagging but still want to capture cases where there is an actual `lane` ("Schutzstreifen") as well as a "Angstweiche".
+        -- The actual double infra is present when the lanes have both "|lane|" (the "Angstweiche") as well a a suffix "|lane" (the "Schutzstreifen").
+        -- Note: `tags.lanes` is `cycleway:lanes` but unnested whereas `bicycle:lanes` does not get unnested.
         if ContainsSubstring(tags.lanes,'|lane|') then
           if not osm2pgsql.has_suffix(tags.lanes, '|lane') then
             return false
@@ -420,43 +427,38 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "lane"-like
   condition = function(tags)
-    local function isPhysicalSeperation(separation)
-      local physicalSeparations = {
-        'bollard',
-        'parking_lane',
-        'bump',
-        'separation_kerb',
-        'vertical_panel',
-        'fence',
-        'flex_post',
-        'jersey_barrier',
-        'kerb'
-      }
-      for _, value in pairs(physicalSeparations) do
-        if ContainsSubstring(separation, value) then
-          return true
-        end
-      end
-    end
-    -- we go from specific to general tags (:side > :both > '')
-    local separationFallback = tags['separation:both'] or tags['separation']
-    -- only include center line tagged cycleways
+    -- Only include center line tagged cycleways
     if tags._prefix == nil then
       return false
     end
 
-    local separation_left = tags['separation:left'] or separationFallback
-    if not isPhysicalSeperation(separation_left) then
+    -- We go from specific to general tags (:side > :both > '')
+    local separation_left = tags['separation:left'] or tags['separation:both'] or tags['separation']
+    local separation_right = tags['separation:right'] or tags['separation:both'] or tags['separation']
+    local physicalSeparations = Set({
+      'bollard',
+      'parking_lane',
+      'bump',
+      'separation_kerb',
+      'vertical_panel',
+      'fence',
+      'flex_post',
+      'jersey_barrier',
+      'kerb'
+    })
+
+    if not physicalSeparations[separation_left] then
       return false
     end
+
     -- Check also the left separation for the rare case that there is motorized traffic on the right hand side
     local traffic_mode_right = tags['traffic_mode:right'] or tags['traffic_mode:both'] or tags['traffic_mode']
     if traffic_mode_right == 'motorized' then
-      local separation_right = tags['separation:right'] or separationFallback
-      if not isPhysicalSeperation(separation_right) then
+      if not physicalSeparations[separation_right] then
         return false
       end
     end
+
     return true
   end
 })
@@ -529,13 +531,16 @@ local needsClarification = BikelaneCategory.new({
         return false
       end
     end
+
     if tags.cycleway == "shared" then
       return true
     end
+
     if tags.highway == "cycleway"
         or (tags.highway == "path" and tags.bicycle == "designated") then
       return true
     end
+
     if tags.highway == 'footway' and tags.bicycle == 'designated' then
       return true
     end
@@ -571,7 +576,7 @@ local categoryDefinitions = {
   cyclewayOnHighway_advisory,
   cyclewayOnHighway_exclusive,
   cyclewayOnHighway_advisoryOrExclusive,
-  footwayBicycleYes_adjoining, -- after `cyclewaySeparatedCases`
+  footwayBicycleYes_adjoining, -- after `cyclewaySeparated_*`
   footwayBicycleYes_isolated,
   footwayBicycleYes_adjoiningOrIsolated,
   -- Needs to be last

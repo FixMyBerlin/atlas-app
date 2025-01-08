@@ -1,6 +1,6 @@
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
-import { writePersistent } from '../utils/persistentData'
+import { readPersistent, writePersistent } from '../utils/persistentData'
 import { synologyLogError } from '../utils/synology'
 
 /**
@@ -75,10 +75,10 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
     throw new Error('No ETag found')
   }
 
-  // if (eTag === (await readPersistent(fileName))) {
-  //   console.log('⏩ Skipped download because the file has not changed.')
-  //   return { fileName, fileChanged: false }
-  // }
+  if (eTag === (await readPersistent(fileName))) {
+    console.log('⏩ Skipped download because the file has not changed.')
+    return { fileName, fileChanged: false }
+  }
 
   // download file and write to disc
   console.log(`Downloading file "${fileName}"...`)
@@ -96,6 +96,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
     if (done) break
     await writer.write(value)
   }
+  writer.end()
 
   // save etag
   writePersistent(fileName, eTag)

@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { aggregateLengths } from './aggregateLengths'
 
 // This function gets called by the `private/post-processing-hook` endpoint
+// To run it locally, use http://127.0.0.1:5173/api/private/post-processing-hook?apiKey=<KEY_FROM_ENV>
 export async function analysis() {
   try {
     const startTime = Date.now()

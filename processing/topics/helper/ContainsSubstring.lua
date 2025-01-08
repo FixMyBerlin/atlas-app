@@ -1,5 +1,5 @@
----@param str string
----@param subStr string
+---@param str string | nil
+---@param subStr string | nil
 ---@return boolean
 function ContainsSubstring(str, subStr)
   if (str == nil) then return false end
