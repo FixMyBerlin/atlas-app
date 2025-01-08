@@ -524,6 +524,10 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
 
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
+-- GOTCHA:
+-- This category will also collect all transformed geometries that had any `cycleway:*` tag.
+-- This can include false translformations like when someone tagged `cycleway:separation:right=foo` which will create a transformed object
+-- (which we "see" as an `highway=cycleway`) for both sides (based on `cycleway:NIL` being recognized as `cycleway:both`).
 local needsClarification = BikelaneCategory.new({
   id = 'needsClarification',
   desc = 'Bike infrastructure that we cannot categories properly due to missing or ambiguous tagging.' ..
