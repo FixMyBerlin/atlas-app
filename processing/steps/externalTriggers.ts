@@ -7,9 +7,10 @@ async function triggerPrivateApi(endpoint: string) {
     if (!response.ok) {
       throw new Error(`The ${endpoint} endpoint failed with status code ${response.status}.`)
     }
-  } catch {
+  } catch (error) {
     console.warn(
       `⚠️  Calling the ${endpoint} hook failed. This is likely due to the NextJS application not running.`,
+      error,
     )
   }
 }
@@ -29,7 +30,7 @@ export async function clearCache() {
     await $`rm -rf "/var/cache/nginx/*"`
     console.log('Succesfully cleared the cache.')
   } catch (error) {
-    console.warn(`Clearing the cache failed: ${error}`)
+    console.warn('Clearing the cache failed:', error)
   }
 }
 
