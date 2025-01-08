@@ -123,6 +123,7 @@ function GetTransformedObjects(tags, transformations)
           _side = side,
           _parent = tags,
           _parent_highway = tags.highway,
+          -- REFACOTRING: This should be `_highway`, see https://github.com/FixMyBerlin/private-issues/issues/2236
           highway = transformation.highway
         }
 

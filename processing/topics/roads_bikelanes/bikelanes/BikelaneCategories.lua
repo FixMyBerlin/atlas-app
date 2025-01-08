@@ -1,6 +1,5 @@
 package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-require("Set")
 require("ContainsSubstring")
 require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")
@@ -432,29 +431,38 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
       return false
     end
 
+    -- We don't use our `Set` pattern here because we need a Substring check
+    local function isPhysicalSeperation(separation)
+      local physicalSeparations = {
+        'bollard',
+        'parking_lane',
+        'bump',
+        'separation_kerb',
+        'vertical_panel',
+        'fence',
+        'flex_post',
+        'jersey_barrier',
+        'kerb'
+      }
+      for _, value in pairs(physicalSeparations) do
+        if ContainsSubstring(separation, value) then
+          return true
+        end
+      end
+    end
+
     -- We go from specific to general tags (:side > :both > '')
     local separation_left = tags['separation:left'] or tags['separation:both'] or tags['separation']
     local separation_right = tags['separation:right'] or tags['separation:both'] or tags['separation']
-    local physicalSeparations = Set({
-      'bollard',
-      'parking_lane',
-      'bump',
-      'separation_kerb',
-      'vertical_panel',
-      'fence',
-      'flex_post',
-      'jersey_barrier',
-      'kerb'
-    })
 
-    if not physicalSeparations[separation_left] then
+    if not isPhysicalSeperation(separation_left) then
       return false
     end
 
     -- Check also the left separation for the rare case that there is motorized traffic on the right hand side
     local traffic_mode_right = tags['traffic_mode:right'] or tags['traffic_mode:both'] or tags['traffic_mode']
     if traffic_mode_right == 'motorized' then
-      if not physicalSeparations[separation_right] then
+      if not isPhysicalSeperation(separation_right) then
         return false
       end
     end
@@ -516,6 +524,10 @@ local sharedBusLaneBikeWithBus = BikelaneCategory.new({
 
 -- This is where we collect bike lanes that do not have sufficient tagging to be categorized well.
 -- They are in OSM, but they need to be improved, which we show in the UI.
+-- GOTCHA:
+-- This category will also collect all transformed geometries that had any `cycleway:*` tag.
+-- This can include false translformations like when someone tagged `cycleway:separation:right=foo` which will create a transformed object
+-- (which we "see" as an `highway=cycleway`) for both sides (based on `cycleway:NIL` being recognized as `cycleway:both`).
 local needsClarification = BikelaneCategory.new({
   id = 'needsClarification',
   desc = 'Bike infrastructure that we cannot categories properly due to missing or ambiguous tagging.' ..
