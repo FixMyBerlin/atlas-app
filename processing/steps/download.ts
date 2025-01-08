@@ -62,7 +62,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   const fileExists = await file.exists()
 
   // check if file already exists
-  if (skipIfExists && fileExists) {
+  if (fileExists && skipIfExists) {
     console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
     return { fileName, fileChanged: false }
   }
@@ -75,7 +75,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
     throw new Error('No ETag found')
   }
 
-  if (eTag === (await readPersistent(fileName))) {
+  if (fileExists && eTag === (await readPersistent(fileName))) {
     console.log('⏩ Skipped download because the file has not changed.')
     return { fileName, fileChanged: false }
   }
