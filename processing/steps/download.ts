@@ -96,6 +96,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
     if (done) break
     await writer.write(value)
   }
+  writer.end()
 
   // save etag
   writePersistent(fileName, eTag)
