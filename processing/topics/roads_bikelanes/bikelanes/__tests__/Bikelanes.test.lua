@@ -242,6 +242,7 @@ describe("Bikelanes", function()
       local result = Bikelanes(input_object)
       for _, v in pairs(result) do
         if v._side == 'right' and v.prefix == 'cycleway' then
+          -- Any `cycleway:(nil|both|right)` creates a transformed geometry for `right` which will fall back to `needsClarification` if no other tags are given
           assert.are.equal("needsClarification", v.category)
         end
         if v._side == 'left' and v.prefix == 'cycleway' then
@@ -250,25 +251,22 @@ describe("Bikelanes", function()
       end
     end)
 
-    pending('Bug https://www.openstreetmap.org/way/565095160/history/5', function()
+    it('Categories for protected bikelanes (only left)', function()
       local input_object = {
         highway = 'primary',
         tags = {
           ['cycleway:left'] = 'lane',
           ['cycleway:left:bicyle'] = 'yes',
-          ['cycleway:separation:left'] = 'yes'
+          ['cycleway:left:separation:left'] = 'yes'
         },
         id = 1,
         type = 'way'
       }
       local result = Bikelanes(input_object)
-            for _, v in pairs(result) do
-        if v._side == 'right' and v.prefix == 'cycleway' then
-          assert.are.equal("a", v)
-          assert.are.equal("a", v.category)
-        end
+      for _, v in pairs(result) do
+        assert.are.equal('left', v._side) -- no 'right' side
         if v._side == 'left' and v.prefix == 'cycleway' then
-          assert.are.equal("cyclewayOnHighway_advisoryOrExclusive", v.category)
+          assert.are.equal('cyclewayOnHighway_advisoryOrExclusive', v.category)
         end
       end
     end)
