@@ -17,7 +17,6 @@
   - `footAndCycleway_segregated` – "Getrennter Geh- und Radweg" (and Rad- und Gehweg) based on tagging OR traffic_sign
   - `footAndCycleway_shared` – "Gemeinsamer Geh- und Radweg" based on tagging OR traffic_sign
   - `footway_bicycleYes` – "Gehweg, Fahrrad frei"
-  - `livingStreet` – Verkehrsberuhigter Bereich AKA "Spielstraße" based on highway tag
   - `pedestrianArea_bicycleYes` – "Fußgängerzonen, Fahrrad frei" ("dismount" does count as "no")
 
 ## Style helper tags
