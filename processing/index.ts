@@ -26,7 +26,7 @@ async function main() {
     }
 
     // Download osm file
-    let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
+    let { fileName, fileChanged } = await downloadFile(params.fileURL)
 
     // Filter osm file with /filter/filter-expressions.txt
     await tagFilter(fileName, fileChanged)

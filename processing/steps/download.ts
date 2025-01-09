@@ -1,5 +1,6 @@
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
+import { params } from '../utils/parameters'
 import { readPersistent, writePersistent } from '../utils/persistentData'
 import { synologyLogError } from '../utils/synology'
 
@@ -52,17 +53,16 @@ export async function waitForFreshData(fileURL: URL, maxTries: number, timeoutMi
  * Download a file from the given url and save it to the disk.
  * When the files eTag is the same as the last download, the download will be skipped.
  * @param fileURL the url to download from
- * @param skipIfExists  whether to skip the download if the file already exists
  * @returns the file name and whether the file has changed
  */
-export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
+export async function downloadFile(fileURL: URL) {
   const fileName = basename(fileURL.toString())
   const filePath = originalFilePath(fileName)
   const file = await Bun.file(filePath)
   const fileExists = await file.exists()
 
   // Check if file already exists
-  if (fileExists && skipIfExists) {
+  if (fileExists && params.skipDownload) {
     console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
     return { fileName, fileChanged: false }
   }
