@@ -72,7 +72,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         // Lookup: Todos = "*KEY*"
         case 'missing_traffic_sign_244':
         case 'missing_traffic_sign_vehicle_destination':
-        case 'missing_acccess_tag_bicycle_road':
+        case 'missing_access_tag_bicycle_road':
         case 'missing_traffic_sign':
         case 'unexpected_bicycle_access_on_footway':
           // Docs: The part that gets injected will be wrapped in `'`, so it has to include prefixes like the `%`.

@@ -42,8 +42,8 @@ local missing_traffic_sign_244 = BikelaneTodo.new({
         and not missing_traffic_sign_vehicle_destination(objectTags)
   end
 })
-local missing_acccess_tag_bicycle_road = BikelaneTodo.new({
-  id = "missing_acccess_tag_bicycle_road",
+local missing_access_tag_bicycle_road = BikelaneTodo.new({
+  id = "missing_access_tag_bicycle_road",
   desc = "Expected access tag `bicycle=designated` that is required for routing.",
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
@@ -170,7 +170,7 @@ BikelaneTodos = {
   missing_traffic_sign,
   missing_traffic_sign_244,
   missing_traffic_sign_vehicle_destination,
-  missing_acccess_tag_bicycle_road,
+  missing_access_tag_bicycle_road,
   missing_traffic_sign_but_bicycle_designated,
   missing_traffic_sign_but_bicycle_yes,
   missing_access_tag_240,

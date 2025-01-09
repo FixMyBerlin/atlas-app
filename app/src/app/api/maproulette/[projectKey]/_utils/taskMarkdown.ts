@@ -194,7 +194,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
 
 `
-    case 'missing_acccess_tag_bicycle_road':
+    case 'missing_access_tag_bicycle_road':
       return `
 ## Kontext
 
