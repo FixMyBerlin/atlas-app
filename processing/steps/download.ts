@@ -61,26 +61,25 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   const file = await Bun.file(filePath)
   const fileExists = await file.exists()
 
-  // check if file already exists
+  // Check if file already exists
   if (fileExists && skipIfExists) {
     console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
     return { fileName, fileChanged: false }
   }
 
-  // check if file has changed
+  // Check if file has changed
   const eTag = await fetch(fileURL.toString(), { method: 'HEAD' }).then((response) =>
     response.headers.get('ETag'),
   )
   if (!eTag) {
     throw new Error('No ETag found')
   }
-
   if (fileExists && eTag === (await readPersistent(fileName))) {
     console.log('⏩ Skipped download because the file has not changed.')
     return { fileName, fileChanged: false }
   }
 
-  // download file and write to disc
+  // Download file and write to disc
   console.log(`Downloading file "${fileName}"...`)
   const response = await fetch(fileURL.toString())
 
@@ -88,7 +87,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
     throw new Error(`Failed to download file. Status code: ${response.statusText}`)
   }
 
-  // we need to download the file as a stream to avoid memory issues
+  // We need to download the file as a stream to avoid memory issues
   const reader = response.body.getReader()
   const writer = file.writer()
   while (true) {
@@ -98,7 +97,7 @@ export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
   }
   writer.end()
 
-  // save etag
+  // Save etag
   writePersistent(fileName, eTag)
 
   return { fileName, fileChanged: true }

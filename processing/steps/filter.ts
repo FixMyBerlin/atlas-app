@@ -24,21 +24,28 @@ export const filteredFilePath = (fileName: string) => join(OSM_FILTERED_DIR, fil
  * @returns the resulting file's name
  */
 export async function tagFilter(fileName: string, fileChanged: boolean) {
-  // only run tag filters if the file or the filters have changed
+  const filePath = filteredFilePath(fileName)
+  const fileMissing = !(await Bun.file(filePath).exists())
+
+  // Only run tag filters if the file or the filters have changed
   const filtersChanged = await directoryHasChanged(FILTER_DIR)
-  if (fileChanged || filtersChanged) {
+  if (fileChanged || filtersChanged || fileMissing) {
     console.log('Filtering the OSM file...')
     try {
       await $`osmium tags-filter \
                   --overwrite \
                   --expressions ${FILTER_EXPRESSIONS} \
-                  --output=${filteredFilePath(fileName)} \
+                  --output=${filePath} \
                   ${originalFilePath(fileName)}`
     } catch (error) {
       throw new Error(`Failed to filter the OSM file: ${error}`)
     }
   } else {
-    console.log('⏩ Skipping tag filter. The file and filters are unchanged.')
+    console.log('⏩ Skipping tag filter. The file and filters are unchanged.', {
+      fileChanged,
+      filtersChanged,
+      fileMissing,
+    })
   }
 
   updateDirectoryHash(FILTER_DIR)
