@@ -588,52 +588,64 @@
       "type": "line",
       "source": "openmaptiles",
       "source-layer": "boundary",
-      "minzoom": 9,
-      "maxzoom": 22,
+      "minzoom": 0,
+      "maxzoom": 20,
       "layout": {
         "visibility": "visible"
       },
       "paint": {
-        "line-color": {
-          "stops": [
-            [
-              4,
-              "hsl(210, 0%, 92%)"
-            ],
-            [
-              5,
-              "hsl(210, 0%, 92%)"
-            ],
-            [
-              6,
-              "hsl(356, 3%, 91%)"
-            ]
-          ]
-        },
-        "line-width": {
-          "stops": [
-            [
-              4,
-              0.5
-            ],
-            [
-              7,
-              1
-            ]
-          ]
-        }
+        "line-color": [
+          "interpolate",
+          [
+            "linear"
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          "hsla(328, 5%, 36%, 0.7)",
+          12,
+          "hsla(328, 5%, 36%, 0.4)",
+          16,
+          "hsla(328, 5%, 36%, 0.2)"
+        ],
+        "line-width": [
+          "interpolate",
+          [
+            "exponential",
+            1
+          ],
+          [
+            "zoom"
+          ],
+          4,
+          1,
+          7,
+          1.5,
+          22,
+          10
+        ],
+        "line-opacity": 1
       },
       "filter": [
         "all",
         [
           "==",
-          "admin_level",
-          6
+          "$type",
+          "LineString"
         ],
         [
-          "==",
-          "maritime",
-          0
+          "all",
+          [
+            "==",
+            "admin_level",
+            2
+          ],
+          [
+            "==",
+            "maritime",
+            0
+          ]
         ]
       ]
     },
