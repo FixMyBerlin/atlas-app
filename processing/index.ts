@@ -20,13 +20,10 @@ async function main() {
     // Setup directories and backup schema
     await setup()
 
-    // Wait for fresh data
-    if (params.waitForFreshData) {
-      await waitForFreshData(params.fileURL, 24, 10)
-    }
-
     // Download osm file
-    let { fileName, fileChanged } = await downloadFile(params.fileURL)
+    await waitForFreshData()
+
+    let { fileName, fileChanged } = await downloadFile()
 
     // Filter osm file with /filter/filter-expressions.txt
     await tagFilter(fileName, fileChanged)
@@ -38,17 +35,10 @@ async function main() {
     }
 
     // Process topics
-    const { timeElapsed: processingTime, processedTables } = await processTopics(
-      topicList,
-      fileName,
-      fileChanged,
-      params.skipUnchanged,
-      params.computeDiffs,
-      params.freezeData,
-    )
+    const { timeElapsed, processedTables } = await processTopics(topicList, fileName, fileChanged)
 
-    await generateTypes(params.environment, processedTables)
-    await writeMetadata(fileName, processingTime)
+    await generateTypes(processedTables)
+    await writeMetadata(fileName, timeElapsed)
 
     // Call the frontend update hook which registers sql functions and starts the analysis run
     await triggerPostProcessing()
@@ -62,7 +52,7 @@ async function main() {
       await triggerCacheWarming()
     }
 
-    await logTileInfo(params.environment)
+    logTileInfo()
   } catch (error) {
     // This `catch` will only trigger if child functions are `await`ed AND file calls a `main()` function. Top level code does not work.
     synologyLogError(`Processing failed: ${error}`)

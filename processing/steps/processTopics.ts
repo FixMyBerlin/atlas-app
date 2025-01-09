@@ -11,6 +11,7 @@ import {
 } from '../utils/diffing'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
+import { params } from '../utils/parameters'
 import { filteredFilePath } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
@@ -35,9 +36,6 @@ async function runSQL(topic: Topic) {
 
 /**
  * Run the given topic's lua file with osm2pgsql on the given file
- * @param fileName
- * @param topic
- * @returns
  */
 async function runLua(fileName: string, topic: Topic) {
   const filePath = filteredFilePath(fileName)
@@ -70,25 +68,18 @@ export async function runTopic(fileName: string, topic: Topic) {
  * @param topics a list of topics to run
  * @param fileName an OSM file name to run the topics on
  * @param fileChanged whether the file has changed since the last run
- * @param skipUnchanged whether to skip topics that haven't changed
- * @param computeDiffs whether to compute diffs
- * @param freezeData whether to freeze the data
- * @returns
  */
 export async function processTopics(
   topics: readonly Topic[],
   fileName: string,
   fileChanged: boolean,
-  skipUnchanged: boolean,
-  computeDiffs: boolean,
-  freezeData: boolean,
 ) {
   const tableListPublic = await getSchemaTables('public')
   const tableListBackup = await getSchemaTables('backup')
   const processedTables = new Set<string>()
 
   // drop all previous diffs
-  if (!freezeData) {
+  if (!params.freezeData) {
     tableListPublic.forEach(dropDiffTable)
   }
 
@@ -99,8 +90,8 @@ export async function processTopics(
     console.log('Helpers have changed. Rerunning all code.')
   }
 
-  const skipCode = skipUnchanged && !helpersChanged && !fileChanged
-  const diffChanges = computeDiffs && !fileChanged
+  const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
+  const diffChanges = params.computeDiffs && !fileChanged
 
   logStart('Processing')
   for (const topic of topics) {
@@ -120,7 +111,7 @@ export async function processTopics(
 
       // backup all tables related to topic
       if (diffChanges) {
-        if (freezeData) {
+        if (params.freezeData) {
           // with FREEZE_DATA=1 we only backup tables that are not already backed up
           const toBackup = processedTopicTables.difference(tableListBackup)
           await Promise.all(Array.from(toBackup).map(backupTable))

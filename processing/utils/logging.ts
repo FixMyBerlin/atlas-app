@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 import { formatTimestamp } from './formatTimestamp'
+import { params } from './parameters'
 import { synologyLogInfo } from './synology'
 import { endTimer, startTimer } from './timeTracking'
 
@@ -26,14 +27,15 @@ export function logEnd(id: string) {
   return timeElapsed
 }
 
-export function logTileInfo(environment: string) {
+export function logTileInfo() {
   const tileURLs = {
     development: 'http://localhost:3000/catalog',
     staging: 'https://staging-tiles.radverkehrsatlas.de/catalog',
     production: 'https://tiles.radverkehrsatlas.de/catalog',
   } as const
-  if (environment in tileURLs) {
+
+  if (params.environment in tileURLs) {
     console.log('Tile Inspector: https://viewer.radverkehrsatlas.de/index.html')
-    console.log(`Tile Catalog:   ${tileURLs[environment as keyof typeof tileURLs]}`)
+    console.log(`Tile Catalog:   ${tileURLs[params.environment as keyof typeof tileURLs]}`)
   }
 }
