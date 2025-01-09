@@ -1,5 +1,4 @@
-require("ToMarkdownList")
-function CreateTodoList(todos, tagsObject, resultTags)
+function CollectTodos(todos, tagsObject, resultTags)
   local todoList = {}
 
   for _, todo in ipairs(todos) do
@@ -8,5 +7,5 @@ function CreateTodoList(todos, tagsObject, resultTags)
       table.insert(todoList, result)
     end
   end
-  return ToMarkdownList(todoList)
+  return todoList
 end

@@ -15,4 +15,5 @@ export type TableId =
   | 'publicTransport'
   | 'roads'
   | 'roadsPathClasses'
+  | 'todos_lines'
   | 'trafficSigns'

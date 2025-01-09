@@ -12,7 +12,8 @@ require("Sanitize")
 require("DeriveOneway")
 require("DefaultId")
 require("DeriveTrafficSigns")
-require("CreateTodoList")
+require("CollectTodos")
+require("ToMarkdownList")
 
 local tags_copied = {
   "mapillary",
@@ -91,7 +92,8 @@ function Bikelanes(object)
           result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
 
-        result_tags.todos = CreateTodoList(BikelaneTodos, transformedTags, result_tags)
+        result_tags._todo_list = CollectTodos(BikelaneTodos, transformedTags, result_tags)
+        result_tags.todos = ToMarkdownList(result_tags._todo_list)
       end
       table.insert(result_bikelanes, result_tags)
     end
