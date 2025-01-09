@@ -1,3 +1,4 @@
+import { $ } from 'bun'
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
 import { params } from '../utils/parameters'
@@ -58,8 +59,7 @@ export async function waitForFreshData(fileURL: URL, maxTries: number, timeoutMi
 export async function downloadFile(fileURL: URL) {
   const fileName = basename(fileURL.toString())
   const filePath = originalFilePath(fileName)
-  const file = await Bun.file(filePath)
-  const fileExists = await file.exists()
+  const fileExists = await Bun.file(filePath).exists()
 
   // Check if file already exists
   if (fileExists && params.skipDownload) {
@@ -81,21 +81,13 @@ export async function downloadFile(fileURL: URL) {
 
   // Download file and write to disc
   console.log(`Downloading file "${fileName}"...`)
-  const response = await fetch(fileURL.toString())
-
-  if (!response.ok || !response.body) {
-    throw new Error(`Failed to download file. Status code: ${response.statusText}`)
+  try {
+    await $`wget --quiet --output-document=${filePath} ${fileURL.toString()}`
+  } catch (error) {
+    throw new Error(
+      `Failed to download file with \`wget --quiet --output-document=${filePath} ${fileURL.toString()}\``,
+    )
   }
-
-  // We need to download the file as a stream to avoid memory issues
-  const reader = response.body.getReader()
-  const writer = file.writer()
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    await writer.write(value)
-  }
-  writer.end()
 
   // Save etag
   writePersistent(fileName, eTag)
