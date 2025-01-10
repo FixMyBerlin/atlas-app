@@ -191,7 +191,7 @@ function osm2pgsql.process_way(object)
       if #cycleway._todo_list > 0 then
         meta.table = 'bikelanes'
         todoLiniesTable:insert({
-          id = "bikelanes" .. cycleway._id,
+          id = "bikelanes/" .. cycleway._id,
           tags = Set(cycleway._todo_list),
           meta = meta,
           geom = object:as_linestring(),
@@ -280,7 +280,7 @@ function osm2pgsql.process_way(object)
     if #results._todo_list > 0 then
       meta.table = 'roads'
       todoLiniesTable:insert({
-        id = "roads" .. DefaultId(object),
+        id = "roads/" .. DefaultId(object),
         tags = Set(results._todo_list),
         meta = meta,
         geom = object:as_linestring(),
