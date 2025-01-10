@@ -105,15 +105,15 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
 
       const processedTopicTables = topicTables.intersection(tableListPublic)
 
-      // backup all tables related to topic
+      // Backup all tables related to topic
       if (diffChanges) {
-        if (params.freezeData) {
-          // with FREEZE_DATA=1 we only backup tables that are not already backed up
-          const toBackup = processedTopicTables.difference(tableListBackup)
-          await Promise.all(Array.from(toBackup).map(backupTable))
-        } else {
-          await Promise.all(Array.from(processedTopicTables).map(backupTable))
-        }
+        // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
+        // Which means existing backup tables don't change (are frozen).
+        // Learn more in [processing/README](../../processing/README.md#reference)
+        const toBackup = params.freezeData
+          ? processedTopicTables.difference(tableListBackup)
+          : processedTopicTables
+        await Promise.all(Array.from(toBackup).map(backupTable))
       }
 
       // run the topic with osm2pgsql and the sql post-processing
