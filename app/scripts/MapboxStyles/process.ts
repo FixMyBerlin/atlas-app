@@ -10,7 +10,7 @@ console.log(chalk.inverse.bold('START'), __filename)
 // Configuration
 const baseMapStyle =
   'https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=ECOoUBmpqklzSCASXxcu'
-const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'parking']
+const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'atlas-style-package-3', 'parking']
 const apiConfigs = [
   // The order in this array specifies which sprite "wins" when sprite filenames are identical (the last entry "wins")
   {
@@ -19,6 +19,14 @@ const apiConfigs = [
     enabled: process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN,
     apiUrl: `https://console.mapbox.com/studio/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
     mapboxGroupPrefix: 'parking_',
+  },
+  {
+    key: 'atlas-style-package-3-radinfra',
+    // Style https://studio.mapbox.com/styles/hejco/cm5qlrsda004401sb9c3bbc6w/edit/#13.49/48.95568/9.13281
+    enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
+    apiUrl: `https://console.mapbox.com/studio/styles/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
+    // Only groups with `atlas_` prefix are used
+    mapboxGroupPrefix: 'atlas_',
   },
   {
     key: 'atlas-style-package-2',
