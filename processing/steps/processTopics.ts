@@ -98,36 +98,38 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
       console.log(
-        `⏩ Skipping topic "${topic}". The code hasn't changed and SKIP_UNCHANGED is active.`,
+        `⏩ Skipping topic "${topic}".`,
+        "The code hasn't changed and `SKIP_UNCHANGED` is active.",
       )
-    } else {
-      logStart(`Topic "${topic}"`)
-
-      const processedTopicTables = topicTables.intersection(tableListPublic)
-
-      // Backup all tables related to topic
-      if (diffChanges) {
-        // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
-        // Which means existing backup tables don't change (are frozen).
-        // Learn more in [processing/README](../../processing/README.md#reference)
-        const toBackup = params.freezeData
-          ? processedTopicTables.difference(tableListBackup)
-          : processedTopicTables
-        await Promise.all(Array.from(toBackup).map(backupTable))
-      }
-
-      // run the topic with osm2pgsql and the sql post-processing
-      await runTopic(fileName, topic)
-
-      // update the code hashes
-      updateDirectoryHash(topicPath(topic))
-
-      if (diffChanges) {
-        await diffTables(Array.from(processedTopicTables))
-      }
-
-      logEnd(`Topic "${topic}"`)
+      continue
     }
+
+    logStart(`Topic "${topic}"`)
+
+    const processedTopicTables = topicTables.intersection(tableListPublic)
+
+    // Backup all tables related to topic
+    if (diffChanges) {
+      // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
+      // Which means existing backup tables don't change (are frozen).
+      // Learn more in [processing/README](../../processing/README.md#reference)
+      const toBackup = params.freezeData
+        ? processedTopicTables.difference(tableListBackup)
+        : processedTopicTables
+      await Promise.all(Array.from(toBackup).map(backupTable))
+    }
+
+    // run the topic with osm2pgsql and the sql post-processing
+    await runTopic(fileName, topic)
+
+    // update the code hashes
+    updateDirectoryHash(topicPath(topic))
+
+    if (diffChanges) {
+      await diffTables(Array.from(processedTopicTables))
+    }
+
+    logEnd(`Topic "${topic}"`)
   }
 
   const timeElapsed = logEnd('Processing')
