@@ -8,7 +8,7 @@ export function generateTableIdType(processedTables: string[]) {
     .sort()
     .map((tableName) => `'${tableName}'`)
     .join(' | ')
-  return `export type TableId = ${unionString}`
+  return `export type TableId = ${unionString || 'ERROR'}`
 }
 
 /**
@@ -20,10 +20,12 @@ export async function generateTypes(processedTables: string[]) {
   if (params.environment !== 'development') return
 
   console.log('Generating types...')
+
   const typeFilePath = join(TYPES_DIR, 'tableId.ts')
-  const tableIdType = generateTableIdType(processedTables)
   const typeFile = Bun.file(typeFilePath)
+  const tableIdType = generateTableIdType(processedTables)
   await Bun.write(typeFile, tableIdType)
+
   try {
     await $`bunx prettier -w --config=/processing/.prettierrc ${TYPES_DIR} > /dev/null`
   } catch (error) {
