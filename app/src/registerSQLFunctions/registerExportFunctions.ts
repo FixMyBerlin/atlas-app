@@ -20,8 +20,12 @@ export async function registerExportFunctions(tables: typeof exportApiIdentifier
         SELECT DISTINCT jsonb_object_keys(meta) AS key
         FROM "${tableName}"
       `)
-      const tagKeys = tagKeyQuery.map(({ key }) => `tags->>'${key}' as "${key}"`).join(',')
-      const metaKeys = metaKeyQuery.map(({ key }) => `meta->>'${key}' as "${key}"`).join(',')
+      const tagKeys = tagKeyQuery
+        .map(({ key }) => `COALESCE(tags->>'${key}', '') as "${key}"`)
+        .join(',\n')
+      const metaKeys = metaKeyQuery
+        .map(({ key }) => `COALESCE(meta->>'${key}', '') as "${key}"`)
+        .join(',\n')
 
       if (!tagKeys || !metaKeys) {
         console.error(
