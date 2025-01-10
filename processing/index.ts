@@ -11,25 +11,26 @@ import { generateTypes } from './steps/generateTypes'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
 import { setup } from './steps/setup'
-import { logTileInfo } from './utils/logging'
+import { logPadded, logTileInfo } from './utils/logging'
 import { params } from './utils/parameters'
 import { synologyLogError } from './utils/synology'
 
 async function main() {
   try {
-    // Setup directories and backup schema
     await setup()
+    logPadded('Processing')
+    console.log('Processing:', 'Initilize')
 
-    // Download osm file
+    console.log('Processing:', 'Handle Data')
     await waitForFreshData()
-
     let { fileName, fileChanged } = await downloadFile()
 
-    // Filter osm file with /filter/filter-expressions.txt
+    console.log('Processing:', 'Handle Filter')
     await tagFilter(fileName, fileChanged)
     const idFilterResponse = await idFilter(fileName, params.idFilter)
     if (idFilterResponse) ({ fileName, fileChanged } = idFilterResponse)
 
+    console.log('Processing:', 'Handle Topics')
 
     // Process topics
     const { timeElapsed, processedTables } = await processTopics(topicList, fileName, fileChanged)
@@ -37,6 +38,7 @@ async function main() {
     await generateTypes(processedTables)
     await writeMetadata(fileName, timeElapsed)
 
+    console.log('Processing:', 'Finishing up')
     // Call the frontend update hook which registers sql functions and starts the analysis run
     await triggerPostProcessing()
 
