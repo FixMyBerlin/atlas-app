@@ -14,6 +14,7 @@ async function triggerPrivateApi(endpoint: string) {
     )
   }
 }
+
 export async function triggerPostProcessing() {
   return triggerPrivateApi('post-processing-hook')
 }
