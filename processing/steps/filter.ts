@@ -7,6 +7,7 @@ import {
   OSM_FILTERED_DIR,
 } from '../constants/directories.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
+import { params } from '../utils/parameters'
 import { originalFilePath } from './download'
 
 /**
@@ -60,6 +61,9 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
  * @returns the resulting file's name
  */
 export async function idFilter(fileName: string, ids: string) {
+  if (params.idFilter === '') return
+
+  console.log(`Filtering the OSM file with \`ID_FILTER=${ids}\`...`)
   try {
     await $`osmium getid \
               --overwrite \
@@ -70,5 +74,5 @@ export async function idFilter(fileName: string, ids: string) {
     throw new Error(`Failed to filter the OSM file by ids: ${error}`)
   }
 
-  return ID_FILTERED_FILE
+  return { fileName: ID_FILTERED_FILE, fileChanged: true }
 }

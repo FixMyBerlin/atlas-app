@@ -27,12 +27,9 @@ async function main() {
 
     // Filter osm file with /filter/filter-expressions.txt
     await tagFilter(fileName, fileChanged)
+    const idFilterResponse = await idFilter(fileName, params.idFilter)
+    if (idFilterResponse) ({ fileName, fileChanged } = idFilterResponse)
 
-    // Filter osm file by ids if given
-    if (params.idFilter !== '') {
-      fileName = await idFilter(fileName, params.idFilter)
-      fileChanged = true
-    }
 
     // Process topics
     const { timeElapsed, processedTables } = await processTopics(topicList, fileName, fileChanged)
