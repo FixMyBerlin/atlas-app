@@ -192,7 +192,7 @@ function osm2pgsql.process_way(object)
         meta.table = 'bikelanes'
         todoLiniesTable:insert({
           id = "bikelanes/" .. cycleway._id,
-          tags = Set(cycleway._todo_list),
+          tags = TodoPrioMap(cycleway._todo_list),
           meta = meta,
           geom = object:as_linestring(),
           minzoom = 0
@@ -281,7 +281,7 @@ function osm2pgsql.process_way(object)
       meta.table = 'roads'
       todoLiniesTable:insert({
         id = "roads/" .. DefaultId(object),
-        tags = Set(results._todo_list),
+        tags = TodoPrioMap(results._todo_list),
         meta = meta,
         geom = object:as_linestring(),
         minzoom = 0
