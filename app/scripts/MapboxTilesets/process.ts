@@ -73,7 +73,7 @@ for (const dataset of Object.entries(tilesetConfigs)) {
       'upload',
       mbtilesFile,
       'to',
-      `https://studio.mapbox.com/tilesets/?q=${datasetKey}`,
+      `https://console.mapbox.com/studio/tilesets/?q=${datasetKey}`,
       '(and then add the upload URL to the processing file…)',
     )
   }
