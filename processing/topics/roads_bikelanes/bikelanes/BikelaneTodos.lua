@@ -142,15 +142,6 @@ local missing_cycleway_lane = BikelaneTodo.new({
   end
 })
 
--- === cycleway=shared subcategory ===
-local deprecated_cycleway_shared = BikelaneTodo.new({
-  id = "deprecated_cycleway_shared",
-  desc = "The tagging `cycleway=shared` is deprecated.",
-  conditions = function(objectTags, _)
-    return objectTags.cycleway == "shared"
-  end
-})
-
 local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
   id = "unexpected_bicycle_access_on_footway",
   desc = "Expected `highway=path+bicycle=designated` (unsigned/explicit DE:240)" ..
@@ -177,6 +168,5 @@ BikelaneTodos = {
   missing_segregated,
   missing_sidepath,
   missing_cycleway_lane,
-  deprecated_cycleway_shared,
   unexpected_bicycle_access_on_footway
 }

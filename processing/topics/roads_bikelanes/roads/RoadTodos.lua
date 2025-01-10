@@ -22,13 +22,13 @@ function RoadTodo:__call(objectTags, resultTags)
   end
 end
 
--- === Fahrradstraßen ===
-local check_cycleway_shared = RoadTodo.new({
-  id = "check_cycleway_shared",
-  desc = "Tagging `cycleway=shared` is very old tagging and should be checked an maybe removed.",
+-- === Deprecated cycleway tagging ===
+local deprecated_cycleway_shared = RoadTodo.new({
+  id = "deprecated_cycleway_shared",
+  desc = "The tagging `cycleway=shared` is deprecated and should be replaced or removed.",
   conditions = function(tagsObject, _)
     return tagsObject.cycleway == "shared"
   end
 })
 
-RoadTodos = {check_cycleway_shared}
+RoadTodos = {deprecated_cycleway_shared}

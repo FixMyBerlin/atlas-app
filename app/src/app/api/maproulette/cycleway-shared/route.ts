@@ -63,7 +63,7 @@ export async function GET(
           WHERE boundaries.osm_id IN (${Prisma.join(ids)})
         ) as subquery
       WHERE
-        roads.tags->>'todos' LIKE '%check_cycleway_shared%'
+        roads.tags->>'todos' LIKE '%deprecated_cycleway_shared%'
         AND ST_intersects(subquery.union_geom, roads.geom);
     `
 
