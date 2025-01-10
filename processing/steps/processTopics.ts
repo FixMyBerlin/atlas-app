@@ -89,12 +89,14 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
   const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
   const diffChanges = params.computeDiffs && !fileChanged
 
-  logStart('Processing')
+  logStart('Processing Topics')
   for (const topic of topicList) {
-    // get all tables related to `topic`
+    // Get all tables related to `topic`
+    // This needs to happen first, so `processedTables` includes what we skip below
     const topicTables = await getTopicTables(topic)
     topicTables.forEach((table) => processedTables.add(table))
 
+    // Guard
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
       console.log(
@@ -105,7 +107,6 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     }
 
     logStart(`Topic "${topic}"`)
-
     const processedTopicTables = topicTables.intersection(tableListPublic)
 
     // Backup all tables related to topic
@@ -119,12 +120,13 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
       await Promise.all(Array.from(toBackup).map(backupTable))
     }
 
-    // run the topic with osm2pgsql and the sql post-processing
+    // Run the topic with osm2pgsql and the sql post-processing
     await runTopic(fileName, topic)
 
-    // update the code hashes
+    // Update the code hashes
     updateDirectoryHash(topicPath(topic))
 
+    // Update the diff tables
     if (diffChanges) {
       await diffTables(Array.from(processedTopicTables))
     }
@@ -132,6 +134,6 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     logEnd(`Topic "${topic}"`)
   }
 
-  const timeElapsed = logEnd('Processing')
+  const timeElapsed = logEnd('Processing Topics')
   return { timeElapsed, processedTables: Array.from(processedTables) }
 }
