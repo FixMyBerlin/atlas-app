@@ -1,14 +1,14 @@
----@param array string[]
+---@param array table[]
 ---@return string|nil
 -- Transform a list of string into a Markdown list
 function ToMarkdownList(array)
-  if not array or #array == 0 then
+  if not array or next(array) == nil then
     return nil
   end
 
   local result = ""
-  for _, v in ipairs(array) do
-    result = result .. "* " .. v .. "\n"
+  for k, _ in pairs(array) do
+    result = result .. "* " .. k .. "\n"
   end
   return result
 end

@@ -188,11 +188,11 @@ function osm2pgsql.process_way(object)
         minzoom = 0
       })
 
-      if #cycleway._todo_list > 0 then
+      if next(cycleway._todo_list) ~= nil then
         meta.table = 'bikelanes'
         todoLiniesTable:insert({
           id = "bikelanes/" .. cycleway._id,
-          tags = TodoPrioMap(cycleway._todo_list),
+          tags = cycleway._todo_list,
           meta = meta,
           geom = object:as_linestring(),
           minzoom = 0
@@ -277,11 +277,11 @@ function osm2pgsql.process_way(object)
     end
 
     -- (C.4b) WRITE `todoLiniesTable` table for roads
-    if #results._todo_list > 0 then
+    if next(results._todo_list) ~= nil then
       meta.table = 'roads'
       todoLiniesTable:insert({
         id = "roads/" .. DefaultId(object),
-        tags = TodoPrioMap(results._todo_list),
+        tags = results._todo_list,
         meta = meta,
         geom = object:as_linestring(),
         minzoom = 0
