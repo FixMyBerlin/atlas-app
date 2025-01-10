@@ -25,6 +25,7 @@ type AtlasSourceId =
   | 'atlas_bikelanesPresence' // based on `roads`
   | 'atlas_bikeSuitability' // based on `roads`
   | 'atlas_trafficSigns'
+  | 'atlas_todos_lines'
 
 type MapillarySourceId = 'mapillary_coverage' | 'mapillary_mapfeatures' | 'mapillary_trafficSigns'
 
@@ -520,6 +521,33 @@ export const sources: MapDataSource<
       apiIdentifier: 'trafficSigns',
       title: 'Verkehrszeichen',
       desc: 'Verkehrszeichen und Routen-Beschilderungen',
+    },
+  },
+  {
+    // https://tiles.radverkehrsatlas.de/todos_lines
+    id: 'atlas_todos_lines',
+    tiles: getTilesUrl('/atlas_generalized_todos_lines/{z}/{x}/{y}'),
+    minzoom: SIMPLIFY_MIN_ZOOM,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false }, // TODO
+    export: {
+      enabled: true,
+      apiIdentifier: 'todos_lines',
+      title: 'Aufgaben',
+      desc: 'Hinweise zu Aufgaben in den Fahrrad und Straßendaten.',
     },
   },
   {

@@ -17,5 +17,6 @@ export type TableId =
   | 'bikeSuitability' // based on `roads`
   | 'bikelanes'
   | 'trafficSigns'
+  | 'todos_lines'
 
 export type UnionTiles<T extends string> = T | `${T},${T}`

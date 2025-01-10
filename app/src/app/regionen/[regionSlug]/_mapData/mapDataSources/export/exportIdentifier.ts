@@ -19,6 +19,7 @@ export const exportApiIdentifier = [
   'barrierLines',
   'boundaries',
   'boundaryLabels',
+  'todos_lines',
 ] as const
 
 export type SourceExportApiIdentifier = (typeof exportApiIdentifier)[number]

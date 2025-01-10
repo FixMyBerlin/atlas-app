@@ -94,4 +94,8 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: [],
     minzoom: 0,
   },
+  todos_lines: {
+    stylingKeys: [],
+    minzoom: 0,
+  },
 }

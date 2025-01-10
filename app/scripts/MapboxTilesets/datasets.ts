@@ -108,4 +108,9 @@ export const tilesetConfigs: Record<
     uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.7h5266ql/#14/52.51622/13.37036',
     bbox: bboxPartOfNorthGermany,
   },
+  todos_lines: {
+    sourceLayer: 'todos_lines',
+    uploadUrl: 'https://studio.mapbox.com/tilesets/hejco.1yvm8bes/#14/52.51622/13.37036',
+    bbox: bboxBrandenburg,
+  },
 }
