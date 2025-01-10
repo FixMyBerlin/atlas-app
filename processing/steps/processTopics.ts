@@ -1,7 +1,7 @@
 import { $ } from 'bun'
 import { join } from 'path'
 import { TOPIC_DIR } from '../constants/directories.const'
-import { type Topic } from '../constants/topics.const'
+import { topicList, type Topic } from '../constants/topics.const'
 import {
   backupTable,
   diffTables,
@@ -69,11 +69,7 @@ export async function runTopic(fileName: string, topic: Topic) {
  * @param fileName an OSM file name to run the topics on
  * @param fileChanged whether the file has changed since the last run
  */
-export async function processTopics(
-  topics: readonly Topic[],
-  fileName: string,
-  fileChanged: boolean,
-) {
+export async function processTopics(fileName: string, fileChanged: boolean) {
   const tableListPublic = await getSchemaTables('public')
   const tableListBackup = await getSchemaTables('backup')
   const processedTables = new Set<string>()
@@ -94,7 +90,7 @@ export async function processTopics(
   const diffChanges = params.computeDiffs && !fileChanged
 
   logStart('Processing')
-  for (const topic of topics) {
+  for (const topic of topicList) {
     // get all tables related to `topic`
     const topicTables = await getTopicTables(topic)
     topicTables.forEach((table) => processedTables.add(table))

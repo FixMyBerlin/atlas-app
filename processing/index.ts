@@ -1,4 +1,3 @@
-import { topicList } from './constants/topics.const'
 import { downloadFile, waitForFreshData } from './steps/download'
 import {
   clearCache,
@@ -31,9 +30,7 @@ async function main() {
     if (idFilterResponse) ({ fileName, fileChanged } = idFilterResponse)
 
     console.log('Processing:', 'Handle Topics')
-
-    // Process topics
-    const { timeElapsed, processedTables } = await processTopics(topicList, fileName, fileChanged)
+    const { timeElapsed, processedTables } = await processTopics(fileName, fileChanged)
 
     await generateTypes(processedTables)
     await writeMetadata(fileName, timeElapsed)
