@@ -1,11 +1,12 @@
 import chalk from 'chalk'
 
-export const fetchStyle = async (key, url, folder) => {
+export const fetchStyle = async (key: string, url: string, folder: string) => {
   const fetchStyle = await fetch(url)
   if (!fetchStyle.ok) {
-    console.error('Fetch failed', fetchStyle)
+    console.error('Fetch failed', { fetchStyle, url })
     process.exit()
   }
+  console.log('x', url)
   const data: any = await fetchStyle.json()
   await Bun.write(`${folder}/raw-api-response_${key}.json`, JSON.stringify(data, null, 2))
   return data

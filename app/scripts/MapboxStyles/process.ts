@@ -17,31 +17,28 @@ const apiConfigs = [
     key: 'parking',
     // Style https://studio.mapbox.com/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q/edit/#17.14/52.484928/13.430058
     enabled: process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://console.mapbox.com/studio/styles/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
+    apiUrl: `https://api.mapbox.com/styles/v1/osm-verkehrswende/clev6ho1i00hd01o9bfo80n9q?fresh=true&access_token=${process.env.MAPBOX_PARKING_STYLE_ACCESS_TOKEN}`,
     mapboxGroupPrefix: 'parking_',
   },
   {
     key: 'atlas-style-package-3-radinfra',
     // Style https://studio.mapbox.com/styles/hejco/cm5qlrsda004401sb9c3bbc6w/edit/#13.49/48.95568/9.13281
     enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://console.mapbox.com/studio/styles/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
-    // Only groups with `atlas_` prefix are used
-    mapboxGroupPrefix: 'atlas_',
+    apiUrl: `https://api.mapbox.com/styles/v1/hejco/cm5qlrsda004401sb9c3bbc6w?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
+    mapboxGroupPrefix: 'radinfra_',
   },
   {
     key: 'atlas-style-package-2',
     // Style https://studio.mapbox.com/styles/hejco/clfs9mdh9007n01t6lw99gyqr/edit/#13.49/48.95568/9.13281
     enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://console.mapbox.com/studio/styles/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
-    // Only groups with `atlas_` prefix are used
+    apiUrl: `https://api.mapbox.com/styles/v1/hejco/clfs9mdh9007n01t6lw99gyqr?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
     mapboxGroupPrefix: 'atlas_',
   },
   {
     key: 'atlas-style-package-1',
     // Style https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
     enabled: process.env.MAPBOX_STYLE_ACCESS_TOKEN,
-    apiUrl: `https://console.mapbox.com/studio/styles/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
-    // Only groups with `atlas_` prefix are used
+    apiUrl: `https://api.mapbox.com/styles/v1/hejco/cl706a84j003v14o23n2r81w7?fresh=true&access_token=${process.env.MAPBOX_STYLE_ACCESS_TOKEN}`,
     mapboxGroupPrefix: 'atlas_',
   },
 ].filter((c) => c.enabled)
