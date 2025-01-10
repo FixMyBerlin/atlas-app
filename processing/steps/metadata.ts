@@ -8,7 +8,7 @@ const prisma = new PrismaClient()
  * Create the metadata table in the database. If already exists, does nothing.
  * @returns the Promise of the query
  */
-export async function createMetadataTable() {
+export async function initializeMetadataTable() {
   return prisma.$executeRaw`
     CREATE TABLE IF NOT EXISTS public.meta (
       id SERIAL PRIMARY KEY,

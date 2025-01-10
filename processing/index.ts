@@ -8,18 +8,18 @@ import {
 } from './steps/externalTriggers'
 import { idFilter, tagFilter } from './steps/filter'
 import { generateTypes } from './steps/generateTypes'
+import { initialize } from './steps/initialize'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
-import { setup } from './steps/setup'
 import { logPadded, logTileInfo } from './utils/logging'
 import { params } from './utils/parameters'
 import { synologyLogError } from './utils/synology'
 
 async function main() {
   try {
-    await setup()
     logPadded('Processing')
     console.log('Processing:', 'Initilize')
+    await initialize()
 
     console.log('Processing:', 'Handle Data')
     await waitForFreshData()

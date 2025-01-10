@@ -21,9 +21,13 @@ export async function getTopicTables(topic: Topic) {
 
 const prisma = new PrismaClient()
 
-export async function createBackupSchema() {
-  prisma.$executeRaw`CREATE SCHEMA IF NOT EXISTS backup`
+export async function initializeBackupSchema() {
+  return prisma.$executeRaw`CREATE SCHEMA IF NOT EXISTS backup`
 }
+export async function initializeCustonFunctions() {
+  return $`psql -q -f ./utils/diffing/jsonb_diff.sql`
+}
+
 /**
  * Get all table names from the given schema.
  * @param schema
@@ -40,7 +44,6 @@ export async function getSchemaTables(schema: string) {
 
 /**
  * Backup the given table by copying it to the `backup` schema.
- * @param table
  * @returns the Promise of the query
  */
 export async function backupTable(table: string) {
@@ -57,7 +60,6 @@ export async function dropDiffTable(table: string) {
 
 /**
  * Create a spatial index on the given table's `geom` column.
- * @param table
  * @returns the Promise of the query
  */
 async function createSpatialIndex(table: string) {
