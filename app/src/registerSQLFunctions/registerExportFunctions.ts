@@ -8,6 +8,17 @@ import { geoDataClient } from '@/src/prisma-client'
 // const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
 // const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
 
+// See the following issues on tests to handle type `number`/`float` and `null` values
+// https://github.com/flatgeobuf/flatgeobuf/discussions/342#discussioncomment-11806223
+// https://github.com/FixMyBerlin/private-issues/issues/2239#issuecomment-2585264839
+function generateKeys(keyQuery: Array<{ key: string }>, columnType: 'tags' | 'meta'): string {
+  return keyQuery
+    .map(({ key }) => {
+      return `              COALESCE(${columnType}->>'${key}', '') as "${key}"`
+    })
+    .join(',\n')
+}
+
 export async function registerExportFunctions(tables: typeof exportApiIdentifier) {
   return Promise.all(
     tables.map(async (tableName) => {
@@ -20,16 +31,12 @@ export async function registerExportFunctions(tables: typeof exportApiIdentifier
         SELECT DISTINCT jsonb_object_keys(meta) AS key
         FROM "${tableName}"
       `)
-      const tagKeys = tagKeyQuery
-        .map(({ key }) => `COALESCE(tags->>'${key}', '') as "${key}"`)
-        .join(',\n')
-      const metaKeys = metaKeyQuery
-        .map(({ key }) => `COALESCE(meta->>'${key}', '') as "${key}"`)
-        .join(',\n')
+      const tagKeys = generateKeys(tagKeyQuery, 'tags')
+      const metaKeys = generateKeys(tagKeyQuery, 'meta')
 
       if (!tagKeys || !metaKeys) {
         console.error(
-          'Failed to `registerExportFunctions` because required tagKeys and metaKeys are empty',
+          'Failed to `registerExportFunctions` because required tagKeys or metaKeys are empty',
           { functionName, tagKeyQuery, metaKeyQuery },
         )
       }
