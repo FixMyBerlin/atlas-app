@@ -6,7 +6,7 @@ import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { produce } from 'immer'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/MapDataCategoryId'
 import { createSubcatStyleKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Legend } from '../Legend/Legend'
 

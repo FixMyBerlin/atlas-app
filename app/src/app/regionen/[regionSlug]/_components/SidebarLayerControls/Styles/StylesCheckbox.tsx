@@ -3,7 +3,7 @@ import { produce } from 'immer'
 import React from 'react'
 import { twJoin } from 'tailwind-merge'
 import { MapDataSubcategoryConfig } from '../../../_hooks/useQueryState/useCategoriesConfig/type'
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/MapDataCategoryId'
 import { createSubcatStyleKey } from '../../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { Legend } from '../Legend/Legend'
 

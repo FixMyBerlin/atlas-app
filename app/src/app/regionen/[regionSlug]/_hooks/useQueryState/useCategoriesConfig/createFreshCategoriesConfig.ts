@@ -1,4 +1,4 @@
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/MapDataCategoryId'
 import { getCategoryData } from '../../../_mapData/utils/getMapDataUtils'
 import { MapDataCategoryConfig } from './type'
 

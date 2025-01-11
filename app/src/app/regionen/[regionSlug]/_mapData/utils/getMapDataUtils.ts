@@ -1,5 +1,6 @@
 import invariant from 'tiny-invariant'
-import { MapDataCategoryId, categories } from '../mapDataCategories/categories.const'
+import { categories } from '../mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../mapDataCategories/MapDataCategoryId'
 import { SourcesId, sources } from '../mapDataSources/sources.const'
 
 export const getCategoryData = (categoryId: MapDataCategoryId | undefined) => {

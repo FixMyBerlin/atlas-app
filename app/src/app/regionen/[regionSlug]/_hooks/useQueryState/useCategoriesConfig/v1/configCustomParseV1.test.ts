@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { MapDataCategoryId } from '../../../../_mapData/mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../../../../_mapData/mapDataCategories/MapDataCategoryId'
 import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { configCustomParse } from './configCustomParse'
 
