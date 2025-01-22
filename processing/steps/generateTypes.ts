@@ -3,14 +3,6 @@ import { join } from 'path'
 import { TYPES_DIR } from '../constants/directories.const'
 import { params } from '../utils/parameters'
 
-export function generateTableIdType(processedTables: string[]) {
-  const unionString = processedTables
-    .sort()
-    .map((tableName) => `'${tableName}'`)
-    .join(' | ')
-  return `export type TableId = ${unionString || 'ERROR'}`
-}
-
 /**
  * Generate types based on the processing tables.
  * @param processedTables the list of tables to include in the type
@@ -21,11 +13,26 @@ export async function generateTypes(processedTables: string[]) {
 
   console.log('Generating types...')
 
+  writeTableIdTypes(processedTables)
+
+  autoformatTypeFiles()
+}
+
+async function writeTableIdTypes(processedTables: string[]) {
   const typeFilePath = join(TYPES_DIR, 'tableId.ts')
   const typeFile = Bun.file(typeFilePath)
-  const tableIdType = generateTableIdType(processedTables)
-  await Bun.write(typeFile, tableIdType)
 
+  const fileContent = `export type TableId = ${
+    processedTables
+      .sort()
+      .map((tableName) => `'${tableName}'`)
+      .join(' | ') || 'ERROR'
+  }`
+
+  await Bun.write(typeFile, fileContent)
+}
+
+async function autoformatTypeFiles() {
   try {
     await $`bunx prettier -w --config=/processing/.prettierrc ${TYPES_DIR} > /dev/null`
   } catch (error) {
