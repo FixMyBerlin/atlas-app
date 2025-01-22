@@ -33,4 +33,6 @@ local deprecated_cycleway_shared = RoadTodo.new({
   end
 })
 
-RoadTodos = {deprecated_cycleway_shared}
+RoadTodos = {
+  deprecated_cycleway_shared,
+}

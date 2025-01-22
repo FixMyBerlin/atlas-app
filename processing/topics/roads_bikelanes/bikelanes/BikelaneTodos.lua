@@ -1,4 +1,5 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('ContainsSubstring')
 BikelaneTodo = {}
 BikelaneTodo.__index = BikelaneTodo
 
@@ -23,7 +24,33 @@ function BikelaneTodo:__call(objectTags, resultTags)
   end
 end
 
--- === Fahrradstraßen ===
+-- === Infrastructure ===
+local needsClarification = BikelaneTodo.new({
+  id = "needsClarification",
+  desc = "Tagging insufficient to categorize the bike infrastructure.",
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return resultTags.category == "needsClarification"
+  end
+})
+local adjoiningOrIsolated = BikelaneTodo.new({
+  id = "adjoiningOrIsolated",
+  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
+  end
+})
+local advisoryOrExclusive = BikelaneTodo.new({
+  id = "advisoryOrExclusive",
+  desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
+  end
+})
+
+-- === Bicycle Roads ===
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   id = "missing_traffic_sign_vehicle_destination",
   desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
@@ -59,7 +86,7 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
 })
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
--- === Verkehrszeichen ===
+-- === Traffic Signs ===
 local missing_traffic_sign_but_bicycle_designated = BikelaneTodo.new({
   id = "missing_traffic_sign_but_bicycle_designated",
   desc = "Bicycle Infrastructure recognized with `bicycle=designated` but no `traffic_sign`.",
@@ -105,7 +132,7 @@ local missing_traffic_sign = BikelaneTodo.new({
   end
 })
 
--- === Fuß- und Radweg ===
+-- === Bike- and Foot Path ===
 local missing_access_tag_240 = BikelaneTodo.new({
   id = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
@@ -129,30 +156,6 @@ local missing_segregated = BikelaneTodo.new({
         )
   end
 })
-
--- === Sidepath ===
-local missing_sidepath = BikelaneTodo.new({
-  id = "missing_sidepath",
-  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
-    return resultTags.category == "footAndCyclewayShared_adjoiningOrIsolated"
-        or resultTags.category == "footAndCyclewaySegregated_adjoiningOrIsolated"
-        or resultTags.category == "footwayBicycleYes_adjoiningOrIsolated"
-        or resultTags.category == "cycleway_adjoiningOrIsolated"
-  end
-})
-
--- === cycleway:side=lane subcategory ===
-local missing_cycleway_lane = BikelaneTodo.new({
-  id = "missing_cycleway_lane",
-  desc = "Expected tag `cycleway:lane=advisory` or `cycleway:lane=exclusive`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
-    return resultTags.category == "cyclewayOnHighway_advisoryOrExclusive"
-  end
-})
-
 local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
   id = "unexpected_bicycle_access_on_footway",
   desc = "Expected `highway=path+bicycle=designated` (unsigned/explicit DE:240)" ..
@@ -170,15 +173,20 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
 })
 
 BikelaneTodos = {
-  missing_traffic_sign,
-  missing_traffic_sign_244,
+  -- Infrastructure
+  needsClarification,
+  adjoiningOrIsolated,
+  advisoryOrExclusive,
+  -- Bicycle Roads
   missing_traffic_sign_vehicle_destination,
+  missing_traffic_sign_244,
   missing_access_tag_bicycle_road,
+  -- Traffic Signs
   missing_traffic_sign_but_bicycle_designated,
   missing_traffic_sign_but_bicycle_yes,
+  missing_traffic_sign,
+  -- Bike- and Foot Path
   missing_access_tag_240,
   missing_segregated,
-  missing_sidepath,
-  missing_cycleway_lane,
-  unexpected_bicycle_access_on_footway
+  unexpected_bicycle_access_on_footway,
 }
