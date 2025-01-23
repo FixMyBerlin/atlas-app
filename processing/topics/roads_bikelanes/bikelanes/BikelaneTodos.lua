@@ -138,7 +138,7 @@ local missing_access_tag_240 = BikelaneTodo.new({
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
-    return (ContainsSubstring( objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
+    return (ContainsSubstring(objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
         and objectTags.bicycle ~= 'designated'
         and objectTags.foot ~= "designated"
   end
@@ -150,9 +150,11 @@ local missing_segregated = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
     return resultTags.category == "needsClarification"
+        and (objectTags.segregated ~= "yes" or objectTags.segregated ~= "no")
         and (
           (objectTags.bicycle == "designated" and objectTags.foot == "designated")
-          or osm2pgsql.has_prefix(objectTags.traffic_sign, "DE:240")
+          or ContainsSubstring( objectTags.traffic_sign, '240')
+          or ContainsSubstring( objectTags.traffic_sign, '241')
         )
   end
 })
