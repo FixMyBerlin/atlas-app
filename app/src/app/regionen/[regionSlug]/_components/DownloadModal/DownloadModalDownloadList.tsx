@@ -1,4 +1,5 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
+import { ogrFormats } from '@/src/app/api/export-ogr/[regionSlug]/[tableName]/_utils/ogrFormats.const'
 import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { useRegion } from '../regionUtils/useRegion'
@@ -16,6 +17,9 @@ export const DownloadModalDownloadList = () => {
     <ul className="mb-2 divide-y divide-gray-200 border-y border-gray-200">
       {exportEnabledSources.map((sourceData) => {
         if (!sourceData.export.apiIdentifier) return null
+        const url = bbox
+          ? getExportApiBboxUrl(regionSlug!, sourceData.export.apiIdentifier, bbox)
+          : undefined
 
         return (
           <li key={sourceData.id} className="py-5">
@@ -47,9 +51,9 @@ export const DownloadModalDownloadList = () => {
             </table>
 
             <div className="flex gap-2">
-              {bbox && (
+              {url && (
                 <LinkExternal
-                  href={getExportApiBboxUrl(regionSlug!, sourceData.export.apiIdentifier, bbox)}
+                  href={url}
                   classNameOverwrite="w-28 flex-none rounded-md border border-gray-300 bg-gray-50 px-3 py-2 shadow-sm hover:bg-yellow-50 focus:ring-1 focus:ring-yellow-500"
                   download
                   blank
@@ -80,6 +84,22 @@ export const DownloadModalDownloadList = () => {
                   onFocus={(event) => event.target.select()}
                 />
               </div>
+            </div>
+            <div className="space-x-3">
+              {url &&
+                Object.entries(ogrFormats).map(([param, name]) => {
+                  return (
+                    <LinkExternal
+                      key={param}
+                      href={`${url.replace('export', 'export-ogr')}&format=${param}`}
+                      className="text-xs"
+                      download
+                      blank
+                    >
+                      {name}
+                    </LinkExternal>
+                  )
+                })}
             </div>
           </li>
         )
