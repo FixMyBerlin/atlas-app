@@ -192,7 +192,7 @@ function osm2pgsql.process_way(object)
         meta.table = 'bikelanes'
         meta.todos = publicTags.todos
         todoLiniesTable:insert({
-          id = "bikelanes/" .. cycleway._id,
+          id = cycleway._id .. "/bikelanes",
           tags = cycleway._todo_list,
           meta = meta,
           geom = object:as_linestring(),
@@ -282,7 +282,7 @@ function osm2pgsql.process_way(object)
       meta.table = 'roads'
       meta.todos = publicTags.todos
       todoLiniesTable:insert({
-        id = "roads/" .. DefaultId(object),
+        id = DefaultId(object) .. "/roads",
         tags = results._todo_list,
         meta = meta,
         geom = object:as_linestring(),
