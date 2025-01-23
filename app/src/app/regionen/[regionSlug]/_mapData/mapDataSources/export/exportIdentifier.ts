@@ -5,7 +5,7 @@ export const exportApiIdentifier = [
   'bicycleParking_areas', // private for now
   'bikelanes',
   'bikeroutes',
-  // ,'boundaries' // Does not work, yet, see 'tarmac-geo'
+  // 'boundaries', // Does not work, yet, see 'tarmac-geo'
   'landuse',
   'places',
   'poiClassification',
@@ -19,6 +19,7 @@ export const exportApiIdentifier = [
   'barrierLines',
   'boundaries',
   'boundaryLabels',
+  'aggregated_lengths',
   'todos_lines',
 ] as const
 

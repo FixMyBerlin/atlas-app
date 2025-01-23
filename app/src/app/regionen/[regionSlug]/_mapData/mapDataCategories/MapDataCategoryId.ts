@@ -24,4 +24,5 @@ export type MapDataCategoryId =
   | 'radinfra_trafficSigns'
   | 'radinfra_surface'
   | 'radinfra_width'
+  | 'radinfra_campagins'
   | 'radinfra_statistics'

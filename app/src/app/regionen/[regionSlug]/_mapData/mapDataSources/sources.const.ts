@@ -26,6 +26,7 @@ type AtlasSourceId =
   | 'atlas_bikeSuitability' // based on `roads`
   | 'atlas_trafficSigns'
   | 'atlas_todos_lines'
+  | 'atlas_aggregated_lengths'
 
 type MapillarySourceId = 'mapillary_coverage' | 'mapillary_mapfeatures' | 'mapillary_trafficSigns'
 
@@ -338,7 +339,6 @@ export const sources: MapDataSource<
     export: { enabled: false }, // can be exported as part of `roads`, `roadsPathClasses`
   },
   {
-    // https://tiles.radverkehrsatlas.de/publicTransport
     id: 'atlas_publicTransport',
     tiles: getTilesUrl('/atlas_generalized_publictransport/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,
@@ -365,7 +365,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/poiClassification
     id: 'atlas_poiClassification',
     tiles: getTilesUrl('/atlas_generalized_poiclassification/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,
@@ -392,7 +391,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/places
     id: 'atlas_places',
     tiles: getTilesUrl('/atlas_generalized_places/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,
@@ -419,8 +417,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/barrierAreas
-    // https://tiles.radverkehrsatlas.de/barrierLines
     id: 'atlas_barriers',
     tiles: getTilesUrl(
       '/atlas_generalized_barrierareas,atlas_generalized_barrierlines/{z}/{x}/{y}',
@@ -440,7 +436,6 @@ export const sources: MapDataSource<
     export: { enabled: false },
   },
   {
-    // https://tiles.radverkehrsatlas.de/landuse
     id: 'atlas_landuse',
     tiles: getTilesUrl('/atlas_generalized_landuse/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,
@@ -462,8 +457,6 @@ export const sources: MapDataSource<
     export: { enabled: false },
   },
   {
-    // https://tiles.radverkehrsatlas.de/bicycleParking_points
-    // https://tiles.radverkehrsatlas.de/bicycleParking_areas
     id: 'atlas_bicycleParking',
     tiles: getTilesUrl(
       '/atlas_generalized_bicycleparking_points,atlas_generalized_bicycleparking_areas/{z}/{x}/{y}',
@@ -497,7 +490,6 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/trafficSigns
     id: 'atlas_trafficSigns',
     tiles: getTilesUrl('/atlas_generalized_trafficsigns/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,
@@ -524,7 +516,27 @@ export const sources: MapDataSource<
     },
   },
   {
-    // https://tiles.radverkehrsatlas.de/todos_lines
+    id: 'atlas_aggregated_lengths',
+    tiles: getTilesUrl('/aggregated_lengths/{z}/{x}/{y}'),
+    minzoom: SIMPLIFY_MIN_ZOOM,
+    maxzoom: SIMPLIFY_MAX_ZOOM,
+    attributionHtml:
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; Prozessierung <a href="https://www.radverkehrsatlas.de">Radverkehrsatlas</a>',
+    licence: 'ODbL',
+    promoteId: 'id',
+    osmIdConfig: { osmTypeId: 'id' },
+    inspector: {
+      enabled: true,
+      highlightingKey: 'id',
+      documentedKeys: [],
+    },
+    // presence: { enabled: false },
+    verification: { enabled: false },
+    freshness: { enabled: false },
+    calculator: { enabled: false }, // TODO
+    export: { enabled: false },
+  },
+  {
     id: 'atlas_todos_lines',
     tiles: getTilesUrl('/atlas_generalized_todos_lines/{z}/{x}/{y}'),
     minzoom: SIMPLIFY_MIN_ZOOM,

@@ -17,6 +17,7 @@ export type TableId =
   | 'bikeSuitability' // based on `roads`
   | 'bikelanes'
   | 'trafficSigns'
+  // | 'aggregated_lengths' // Statistik; Does not work, see https://github.com/FixMyBerlin/private-issues/issues/2240
   | 'todos_lines'
 
 export type UnionTiles<T extends string> = T | `${T},${T}`
