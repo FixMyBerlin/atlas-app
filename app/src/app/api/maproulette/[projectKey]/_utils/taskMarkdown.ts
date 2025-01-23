@@ -1,59 +1,38 @@
 import { translations } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import { mapillaryUrl } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
+import { TodoId, todoIds } from '@/src/processingTypes/todoId'
 import { point } from '@turf/turf'
 import { LineString } from 'geojson'
-import { maprouletteProjects } from './maprouletteProjects.const'
 
-export type MapRouletteProjectKey = (typeof maprouletteProjects)[number]
 type Props = {
-  projectKey: MapRouletteProjectKey
+  projectKey: TodoId
   osmTypeIdString: string
-  category: string
+  bikelaneCategory: string | undefined
   geometry: LineString
 }
 
-// Our Inspector knows about the `properties.category` which is more detailed that our MapRouletteProjects
-export const categoryToMaprouletteProjectKey = (category: string | undefined | null) => {
-  const matches: MapRouletteProjectKey[] = []
-  if (!category) return matches
-  // Handle cases where the category is more detailed
-  if (category.includes('adjoiningOrIsolated')) {
-    matches.push('adjoiningOrIsolated')
-  }
-  if (category.includes('advisoryOrExclusive')) {
-    matches.push('advisoryOrExclusive')
-  }
-  // Handle cases where category and MapRoulette Key match
-  const directMatch = maprouletteProjects.find((p) => p === category)
-  if (directMatch) {
-    matches.push(directMatch)
-  }
-  return matches
-}
-
-export const todoMarkdownToMaprouletteProjectKey = (todos: string | undefined) => {
-  return maprouletteProjects.map((project) => {
+export const todoMarkdownToMaprouletteCampaignKey = (todos: string | undefined) => {
+  return todoIds.map((project) => {
     if (todos?.includes(`* ${project}`)) {
       return project
     }
   })
 }
 
-export const taskDescriptionMarkdown = ({
+export const maprouletteTaskDescriptionMarkdown = ({
   projectKey,
   osmTypeIdString,
-  category,
+  bikelaneCategory,
   geometry,
-}: Props): string => {
+}: Props) => {
   const [centerLng, centerLat] = pointFromGeometry(geometry)
   const startPoint = point(geometry.coordinates[0]!).geometry
   const endPoint = point(geometry.coordinates.at(-1)!).geometry
 
-  const categoryTranslated = translations[`ALL--category=${category}`]
+  const infrastructureName = translations[`ALL--category=${bikelaneCategory}`]
     ?.replace('(Straßenbegleitend oder selbstständig geführt; Kategorisierung unklar)', '')
     ?.replace('(Kategorisierung unklar)', '')
-    ?.trim()
 
   // Do not add indentation, it will break the Markdown in Maproulette
   // Use in MapRoulette as… (min 150 chars)
@@ -71,7 +50,7 @@ export const taskDescriptionMarkdown = ({
       return `
 ## Kontext
 
-Für diese Infrastruktur (${categoryTranslated}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
+Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
 
 ## Aufgabe
 

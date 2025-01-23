@@ -1,19 +1,18 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { geoDataClient } from '@/src/prisma-client'
+import { bikelaneTodoIds, todoIds } from '@/src/processingTypes/todoId'
 import { Prisma } from '@prisma/client'
-import { Sql } from '@prisma/client/runtime/library'
 import { feature, featureCollection, truncate } from '@turf/turf'
 import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { maprouletteProjects } from './_utils/maprouletteProjects.const'
-import { taskDescriptionMarkdown } from './_utils/taskMarkdown'
+import { maprouletteTaskDescriptionMarkdown } from './_utils/taskMarkdown'
 
 const idType = z.coerce.number().positive()
 const MaprouletteSchema = z
   .object({
-    projectKey: z.enum(maprouletteProjects),
+    projectKey: z.enum(todoIds),
     ids: z.union([z.array(idType).min(1), idType.transform((x) => [x])]),
   })
   .strict()
@@ -59,33 +58,20 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
   }
 
   try {
-    // SELECT WAYS FROM DB
-    const wherePart: Sql = (() => {
-      switch (projectKey) {
-        // Lookup: Category LIKE "*KEY"
-        case 'adjoiningOrIsolated':
-        case 'advisoryOrExclusive':
-          return Prisma.sql`bikelanes.tags->>'category' LIKE ${`%${projectKey}`}`
-        // Lookup: Category = KEY
-        case 'needsClarification':
-          return Prisma.sql`bikelanes.tags->>'category' = ${projectKey}`
-        // Lookup: Todos = "*KEY*"
-        case 'missing_traffic_sign_244':
-        case 'missing_traffic_sign_vehicle_destination':
-        case 'missing_access_tag_bicycle_road':
-        case 'missing_traffic_sign':
-        case 'unexpected_bicycle_access_on_footway':
-          // Docs: The part that gets injected will be wrapped in `'`, so it has to include prefixes like the `%`.
-          return Prisma.sql`bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`}`
-      }
-    })()
+    // SELECT DATA FROM `bikelanes` or `roads`
+    type QueryType = {
+      type: string
+      id: string
+      kind: string | undefined
+      geometry: LineString
+    }[]
 
-    type QueryTpye = { type: string; id: string; category: string; geometry: LineString }[]
-    const sqlWays = await geoDataClient.$queryRaw<QueryTpye>`
+    const sqlWays = bikelaneTodoIds.includes(projectKey)
+      ? await geoDataClient.$queryRaw<QueryType>`
       SELECT
         bikelanes.osm_type as type,
         bikelanes.osm_id as id,
-        bikelanes.tags->'category' AS category,
+        bikelanes.tags->'category' AS kind,
         ST_AsGeoJSON(ST_Transform(bikelanes.geom, 4326))::jsonb AS geometry
       FROM public.bikelanes as bikelanes,
         (
@@ -94,23 +80,39 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
           WHERE boundaries.osm_id IN (${Prisma.join(ids)})
         ) as subquery
       WHERE
-        ${wherePart}
+        bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`}
         AND ST_intersects(subquery.union_geom, bikelanes.geom);
+    `
+      : await geoDataClient.$queryRaw<QueryType>`
+      SELECT
+        roads.osm_type as type,
+        roads.osm_id as id,
+        roads.tags->'road' AS kind,
+        ST_AsGeoJSON(ST_Transform(roads.geom, 4326))::jsonb AS geometry
+      FROM public.roads as roads,
+        (
+          SELECT ST_Union(boundaries.geom) as union_geom
+          FROM public.boundaries as boundaries
+          WHERE boundaries.osm_id IN (${Prisma.join(ids)})
+        ) as subquery
+      WHERE
+        roads.tags->>'todos' LIKE ${`* %${projectKey}%`}
+        AND ST_intersects(subquery.union_geom, roads.geom);
     `
 
     // ADD MAPROULETTE TASK DATA
-    const features = sqlWays.map(({ type, id, category, geometry }) => {
+    const features = sqlWays.map(({ type, id, kind, geometry }) => {
       const osmTypeId = osmTypeIdString(type, id)
+      const text = maprouletteTaskDescriptionMarkdown({
+        projectKey,
+        osmTypeIdString: osmTypeId,
+        bikelaneCategory: kind,
+        geometry,
+      })
       const properties = {
         id: osmTypeId,
-        category,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
-        task_markdown: taskDescriptionMarkdown({
-          projectKey,
-          osmTypeIdString: osmTypeId,
-          category,
-          geometry,
-        }).replaceAll('\n', ' \n'),
+        task_markdown: (text || 'MISSING').replaceAll('\n', ' \n'),
       }
       // Create feature and also shorten lat/lng values to 8 digits
       return truncate(feature(geometry, properties), { precision: 8 })
@@ -123,12 +125,12 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         'Content-Disposition': `attachment; filename="maproulette_${projectKey}.geojson"`,
       },
     })
-  } catch (e) {
-    if (isProd) console.error(e)
+  } catch (error) {
+    if (isProd) console.error(error)
     return Response.json(
       {
         error: 'Internal Server Error',
-        info: isProd ? undefined : e,
+        info: isProd ? undefined : error,
       },
       { status: 500 },
     )
