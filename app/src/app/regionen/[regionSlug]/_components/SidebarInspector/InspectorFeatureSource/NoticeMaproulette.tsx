@@ -1,4 +1,5 @@
 import { Markdown } from '@/src/app/_components/text/Markdown'
+import { campaignTitleTranslations } from '@/src/app/api/maproulette/[projectKey]/_utils/campaignTitleTranslations.const'
 import {
   maprouletteTaskDescriptionMarkdown,
   todoMarkdownToMaprouletteCampaignKey,
@@ -44,7 +45,7 @@ export const NoticeMaproulette = ({
         bikelaneCategory,
         geometry: geometry as LineString, // Guarded above
       }),
-    ]
+    ] as const
   })
 
   if (texts.length === 0) {
@@ -62,11 +63,14 @@ export const NoticeMaproulette = ({
       <div className="my-0 ml-3">
         {texts.map(([projectKey, text]) => {
           return (
-            <Markdown
-              key={projectKey}
-              markdown={text}
-              className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"
-            />
+            <>
+              <h2>{campaignTitleTranslations[projectKey]}</h2>
+              <Markdown
+                key={projectKey}
+                markdown={text}
+                className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"
+              />
+            </>
           )
         })}
       </div>
