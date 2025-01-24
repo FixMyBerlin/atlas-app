@@ -5,6 +5,7 @@ import {
   todoMarkdownToMaprouletteCampaignKey,
 } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
 import { LineString } from 'geojson'
+import { Fragment } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 
 type Props = {
@@ -63,14 +64,13 @@ export const NoticeMaproulette = ({
       <div className="my-0 ml-3">
         {texts.map(([projectKey, text]) => {
           return (
-            <>
+            <Fragment key={projectKey}>
               <h2>{campaignTitleTranslations[projectKey]}</h2>
               <Markdown
-                key={projectKey}
                 markdown={text}
                 className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"
               />
-            </>
+            </Fragment>
           )
         })}
       </div>
