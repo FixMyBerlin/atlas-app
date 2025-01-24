@@ -104,12 +104,17 @@ export async function GET(
 
     const sanitizeKey = (key: string) => key.replace(/[^a-z]/gi, '_')
     const generateColumn = (key: string, columnType: 'tags' | 'meta') => {
-      const numberKeys = ['age', 'updated_age', 'length', 'width', 'offset']
+      const numberKeywordsEquals = ['age', 'length', 'width', 'offset']
+      const numberKeywordsIncludes = ['_age']
+      const shouldCastToNumber = key.startsWith('osm_')
+        ? false
+        : numberKeywordsEquals.some((keyword) => key == keyword) ||
+          numberKeywordsIncludes.some((keyword) => key.includes(keyword))
       const sanitizedKey = sanitizeKey(key)
-      if (numberKeys.includes(key)) {
-        return `CAST(${columnType}->>'${key}' AS numeric) AS "${sanitizedKey}"`
-      }
-      return `${columnType}->>'${key}' AS "${sanitizedKey}"`
+
+      return shouldCastToNumber
+        ? `CAST(${columnType}->>'${key}' AS numeric) AS "${sanitizedKey}"`
+        : `${columnType}->>'${key}' AS "${sanitizedKey}"`
     }
 
     const tagColumns = tagKeyQuery.map(({ key }) => generateColumn(key, 'tags')).join(',\n')
