@@ -28,6 +28,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
+    logging:
+      driver: journald
   proxy:
     image: nginx:alpine
     restart: unless-stopped
@@ -48,6 +50,8 @@ services:
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
+    logging:
+      driver: journald
 
 configs:
   nginx_conf:

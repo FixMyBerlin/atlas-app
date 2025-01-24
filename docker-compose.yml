@@ -94,6 +94,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    logging:
+      driver: journald
   db:
     image: postgis/postgis:14-3.4-alpine
     container_name: ${DATABASE_HOST}
@@ -121,6 +123,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    logging:
+      driver: journald
 
 volumes:
   geodata:

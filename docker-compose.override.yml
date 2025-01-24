@@ -25,6 +25,13 @@ services:
       driver: json-file
     profiles:
       - frontend
+  tiles:
+    logging:
+      driver: json-file
+  db:
+    logging:
+      driver: json-file
+
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf
