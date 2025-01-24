@@ -1,5 +1,5 @@
 import db from '@/db'
-import { isProd } from '@/src/app/_components/utils/isEnv'
+import { isDev, isProd } from '@/src/app/_components/utils/isEnv'
 import { exportApiIdentifier } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { getBlitzContext } from '@/src/blitz-server'
 import { geoDataClient } from '@/src/prisma-client'
@@ -138,8 +138,8 @@ export async function GET(
     const outputFilePath = path.resolve('public', `export-temp-${Date.now()}.${format}`)
     const dbConnection = `PG:"${process.env.GEO_DATABASE_URL.replace('?pool_timeout=0', '')}"`
     const ogrCommand = `ogr2ogr -f "${ogrFormats[format]}" ${outputFilePath} ${dbConnection} -t_srs EPSG:4326 -sql "${sqlQuery}"`
-    console.log('Running', ogrCommand)
 
+    console.log('Running ogr2ogr', isDev ? ogrCommand : undefined)
     await new Promise((resolve, reject) => {
       exec(ogrCommand, (error, stdout, stderr) => {
         if (error) {
