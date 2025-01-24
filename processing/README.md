@@ -25,13 +25,12 @@ We use the [public Germany export from Geofabrik](https://download.geofabrik.de/
 
 - Data is processed every day ([cron job definition](/.github/workflows/generate-tiles.yml#L3-L6))
 - Data is processed on every deploy/release
-- Data can be processed manually [via Github Actions ("Run workflow > from Branch: `main`")](https://github.com/FixMyBerlin/atlas-geo/actions/workflows/generate-tiles.yml).
 
 ## Preview
 
 ### Martin catalogue and preview
 
-See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/run-5-process.sh#L45-L50 for a list URLs to see the data that Martin provides.
+See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/utils/logging.ts#L31-L40 for a list URLs to see the data that Martin provides.
 
 ## Development
 
@@ -95,21 +94,23 @@ See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) 
 
 We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as our testing framework.
 
-### Run
-
 To run the tests manually:
 
 ```
-./processing/run-tests.sh
+./processing/run-tests.sh // from the root of the project
 ```
 
-Additionally all tests are being run in the [husky](https://typicode.github.io/husky/) [pre-push](../app/.husky/pre-push) hook.
+Additionally all tests are being run in the [husky](https://typicode.github.io/husky/) [pre-push](../.husky/pre-push) hook.
 
-### Conventions
+**Conventions:**
 
 - Create one test file per helper
 - Filename has to be `\*.test.lua`
 - Place it in a `__tests__` folder next to the file
+
+**Good to know:**
+
+- To use the `inspect` package we need to require it first `inspect = require('inspect')` ([Docs](https://github.com/kikito/inspect.lua?tab=readme-ov-file#installation))
 
 ## Deployment
 
