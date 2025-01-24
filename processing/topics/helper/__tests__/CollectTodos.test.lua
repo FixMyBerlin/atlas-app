@@ -7,7 +7,7 @@ describe("CollectTodos", function()
   it('Return id and priority', function()
     local tagsObject = { cycleway = "shared" }
     local result = CollectTodos(RoadTodos, tagsObject, {})
-    assert.are.same(result, { deprecated_cycleway_shared = "1" })
+    assert.are.same(result, { deprecated_cycleway_shared = "prio1" })
   end)
 
   it('Handle no match', function()
