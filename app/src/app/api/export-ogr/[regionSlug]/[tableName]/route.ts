@@ -93,9 +93,6 @@ export async function GET(
 
   // DATA
   try {
-    const dbConnection = `PG:"host=${process.env.DATABASE_HOST} dbname=${process.env.DATABASE_NAME} user=${process.env.DATABASE_USER} password=${process.env.DATABASE_PASSWORD}"`
-    const outputFilePath = path.resolve('public', `export-temp-${Date.now()}.${format}`)
-
     const tagKeyQuery: Array<{ key: string }> = await geoDataClient.$queryRawUnsafe(`
         SELECT DISTINCT jsonb_object_keys(tags) AS key
         FROM "${tableName}"
@@ -132,6 +129,9 @@ export async function GET(
         3857
       )
     `
+
+    const outputFilePath = path.resolve('public', `export-temp-${Date.now()}.${format}`)
+    const dbConnection = `PG:"${process.env.GEO_DATABASE_URL.replace('?pool_timeout=0', '')}"`
     const ogrCommand = `ogr2ogr -f "${ogrFormats[format]}" ${outputFilePath} ${dbConnection} -t_srs EPSG:4326 -sql "${sqlQuery}"`
     console.log('Running', ogrCommand)
 
