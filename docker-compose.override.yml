@@ -1,6 +1,6 @@
 services:
   processing:
-    image: !reset null
+    image: processing:latest
     build:
       context: .
       dockerfile: ./processing.Dockerfile
@@ -10,7 +10,7 @@ services:
     logging:
       driver: json-file
   app:
-    image: !reset null
+    image: app:latest
     build:
       context: .
       dockerfile: ./app.Dockerfile
