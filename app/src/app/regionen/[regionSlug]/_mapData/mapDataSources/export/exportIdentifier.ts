@@ -19,7 +19,7 @@ export const exportApiIdentifier = [
   'barrierLines',
   'boundaries',
   'boundaryLabels',
-  'aggregated_lengths',
+  // 'aggregated_lengths', // Does not work because the table does not conform to the required table structure with `tags` and `meta`
   'todos_lines',
 ] as const
 
