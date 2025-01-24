@@ -119,7 +119,6 @@ export async function GET(
 
     const tagColumns = tagKeyQuery.map(({ key }) => generateColumn(key, 'tags')).join(',\n')
     const metaColumns = metaKeyQuery.map(({ key }) => generateColumn(key, 'meta')).join(',\n')
-
     const sqlQuery = `
       SELECT
         id,
@@ -137,7 +136,9 @@ export async function GET(
 
     const outputFilePath = path.resolve('public', `export-temp-${Date.now()}.${format}`)
     const dbConnection = `PG:"${process.env.GEO_DATABASE_URL.replace('?pool_timeout=0', '')}"`
-    const ogrCommand = `ogr2ogr -f "${ogrFormats[format]}" ${outputFilePath} ${dbConnection} -t_srs EPSG:4326 -sql "${sqlQuery}"`
+    // LATER: Add something like -lco WRITE_NULL_VALUES=NO to cleanup the NULL properties from GeoJSON
+    // See https://github.com/OSGeo/gdal/issues/1187
+    const ogrCommand = `ogr2ogr -f "${ogrFormats[format]}" ${outputFilePath} ${dbConnection} -t_srs EPSG:4326 -lco COORDINATE_PRECISION=8 -sql "${sqlQuery}"`
 
     console.log('Running ogr2ogr', isDev ? ogrCommand : undefined)
     await new Promise((resolve, reject) => {
