@@ -86,11 +86,15 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
+          # Note on the "Cleanup docker"
+          # There might be a race condition with the other github action as we are building app an processing in parallel
+          # The 72h grace period should make sure nothing happend during the current build but old things get cleaned up
           script: |
             cd /srv
             echo "Pulling latest 'app' image"
             docker compose pull app
             echo "Restarting 'app' container"
             docker compose up app -d
-            echo "Pruning images"
-            docker image prune -fa
+            echo "Cleanup docker (containers and images) that are older than 72h"
+            docker container prune -f --filter "until=72h"
+            docker image prune -fa --filter "until=72h"

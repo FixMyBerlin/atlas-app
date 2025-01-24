@@ -34,4 +34,3 @@ jobs:
             echo "Restarting containers: tiles, db, traefik and proxy"
             docker compose pull
             docker compose -f docker-compose.yml -f docker-compose.network.yml up tiles db traefik proxy -d
-            docker image prune -fa
