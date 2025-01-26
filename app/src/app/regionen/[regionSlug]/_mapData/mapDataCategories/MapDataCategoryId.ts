@@ -26,3 +26,4 @@ export type MapDataCategoryId =
   | 'radinfra_width'
   | 'radinfra_campagins'
   | 'radinfra_statistics'
+  | 'radinfra_mapillary'

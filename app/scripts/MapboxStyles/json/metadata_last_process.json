@@ -2,7 +2,7 @@
   "atlas-style-package-1": {
     "key": "atlas-style-package-1",
     "about": "Metadata on the last processing of the atlas-style-package-1 styles api response",
-    "processed_at": "12.1.2025, 06:34:01",
+    "processed_at": "26.1.2025, 06:50:00",
     "style_last_published": {
       "published_at": "11.1.2025, 07:50:59",
       "version": 8
@@ -18,7 +18,7 @@
   "atlas-style-package-2": {
     "key": "atlas-style-package-2",
     "about": "Metadata on the last processing of the atlas-style-package-2 styles api response",
-    "processed_at": "12.1.2025, 06:34:01",
+    "processed_at": "26.1.2025, 06:50:00",
     "style_last_published": {
       "published_at": "14.8.2024, 09:44:08",
       "version": 8
@@ -34,7 +34,7 @@
   "parking": {
     "key": "parking",
     "about": "Metadata on the last processing of the parking styles api response",
-    "processed_at": "12.1.2025, 06:34:01",
+    "processed_at": "26.1.2025, 06:50:00",
     "style_last_published": {
       "published_at": "11.8.2024, 06:42:30",
       "version": 8
@@ -59,9 +59,9 @@
   "atlas-style-package-3-radinfra": {
     "key": "atlas-style-package-3-radinfra",
     "about": "Metadata on the last processing of the atlas-style-package-3-radinfra styles api response",
-    "processed_at": "12.1.2025, 06:34:01",
+    "processed_at": "26.1.2025, 06:50:00",
     "style_last_published": {
-      "published_at": "12.1.2025, 06:33:54",
+      "published_at": "26.1.2025, 06:49:54",
       "version": 8
     },
     "style_id": "cm5qlrsda004401sb9c3bbc6w",

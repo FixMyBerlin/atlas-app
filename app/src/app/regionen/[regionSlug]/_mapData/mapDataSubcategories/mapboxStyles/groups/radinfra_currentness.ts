@@ -12,5 +12,9 @@ export const mapboxStyleGroupLayers_radinfra_currentness: MapboxStyleLayer[] = [
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
       'line-color': ['step', ['get', 'updated_age'], '#15c65c', 1095, '#f6de09', 2190, '#fda5e4'],
     },
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
   },
 ]

@@ -750,7 +750,6 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      //
       'radinfra_bikelanes',
       'radinfra_surface',
       'radinfra_width',
@@ -758,7 +757,7 @@ export const staticRegion: StaticRegion[] = [
       'radinfra_currentness',
       'radinfra_campagins',
       'radinfra_statistics',
-      'mapillary',
+      'radinfra_mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',

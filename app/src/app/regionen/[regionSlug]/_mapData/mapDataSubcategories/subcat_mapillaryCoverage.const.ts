@@ -36,6 +36,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
   name: 'Mapillary',
   ui: 'dropdown',
   sourceId: 'mapillary_coverage',
+  beforeId: 'atlas-app-beforeid-below-roadname',
   styles: [
     defaultStyleHidden,
     {

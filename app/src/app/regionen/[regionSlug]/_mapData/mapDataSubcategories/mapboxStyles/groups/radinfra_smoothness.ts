@@ -5,6 +5,10 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_radinfra_smoothness: MapboxStyleLayer[] = [
   {
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
     type: 'line',
     id: 'smooth-missing',
     paint: {
@@ -20,6 +24,10 @@ export const mapboxStyleGroupLayers_radinfra_smoothness: MapboxStyleLayer[] = [
     ],
   },
   {
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round',
+    },
     type: 'line',
     id: 'smooth-colors',
     paint: {

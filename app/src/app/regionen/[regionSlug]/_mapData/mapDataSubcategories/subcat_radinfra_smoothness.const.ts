@@ -22,6 +22,7 @@ export const subcat_radinfra_smoothness: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Oberflächenqualität',
   ui: 'checkbox',
+  beforeId: 'atlas-app-beforeid-top',
   sourceId: source,
   styles: [
     {

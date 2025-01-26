@@ -5,21 +5,15 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_radinfra_campaign: MapboxStyleLayer[] = [
   {
-    maxzoom: 13,
-    type: 'heatmap',
-    id: 'campaign-heatmap',
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    type: 'line',
+    id: 'campaign-fake-heatmap',
     paint: {
-      'heatmap-color': [
-        'interpolate',
-        ['linear'],
-        ['heatmap-density'],
-        0,
-        'rgba(0, 0, 255, 0)',
-        1,
-        '#a97bea',
-      ],
-      'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 0, 2, 6, 2, 8, 4, 11, 16, 13, 20],
-      'heatmap-opacity': 0.8,
+      'line-color': '#a97bea',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 0, 8, 10, 7, 14, 6, 18, 0],
     },
   },
   {
@@ -29,6 +23,11 @@ export const mapboxStyleGroupLayers_radinfra_campaign: MapboxStyleLayer[] = [
     paint: {
       'line-color': '#a97bea',
       'line-opacity': 0.6,
+      'line-width': 4,
+    },
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
     },
   },
 ]

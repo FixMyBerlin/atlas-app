@@ -27,6 +27,7 @@ import { _1tdocms } from './_1tdocms'
 import { _1x5utcr } from './_1x5utcr'
 import { _1ybiojr } from './_1ybiojr'
 import { _b5k2yc } from './_b5k2yc'
+import { _bsue6w } from './_bsue6w'
 import { _bv3m8i } from './_bv3m8i'
 import { _c8lcr0 } from './_c8lcr0'
 import { _diykzs } from './_diykzs'
@@ -35,6 +36,7 @@ import { _eu560i } from './_eu560i'
 import { _gdl8v6 } from './_gdl8v6'
 import { _l464fe } from './_l464fe'
 import { _nq3m12 } from './_nq3m12'
+import { _pcvinc } from './_pcvinc'
 import { _qver32 } from './_qver32'
 import { _r6m1yq } from './_r6m1yq'
 import { _rcqwse } from './_rcqwse'
@@ -73,6 +75,7 @@ export const configs = {
   '1x5utcr': _1x5utcr,
   '1ybiojr': _1ybiojr,
   b5k2yc: _b5k2yc,
+  bsue6w: _bsue6w,
   bv3m8i: _bv3m8i,
   c8lcr0: _c8lcr0,
   diykzs: _diykzs,
@@ -81,6 +84,7 @@ export const configs = {
   gdl8v6: _gdl8v6,
   l464fe: _l464fe,
   nq3m12: _nq3m12,
+  pcvinc: _pcvinc,
   qver32: _qver32,
   r6m1yq: _r6m1yq,
   rcqwse: _rcqwse,

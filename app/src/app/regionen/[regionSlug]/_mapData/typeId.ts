@@ -110,6 +110,10 @@ import {
   SubcatRadinfraCampaignStyleIds,
 } from './mapDataSubcategories/subcat_radinfra_campaigns.const'
 import {
+  SubcatRadinfraPlusMapillaryId,
+  SubcatRadinfraPlusMapillaryStyleIds,
+} from './mapDataSubcategories/subcat_radinfra_plus_mapillary.const'
+import {
   SubcatRadinfraStatsId,
   SubcatRadinfraStatsStyleIds,
 } from './mapDataSubcategories/subcat_radinfra_stats'
@@ -168,6 +172,7 @@ export type SubcategoryId =
   | SubcatPoiPlusLanduseId
   | SubcatPoiPlusPublicTransportId
   | SubcatRadinfraCampaignId
+  | SubcatRadinfraPlusMapillaryId
   | SubcatRadinfraStatsId
   | SubcatRadinfraStatsId
   | SubcatRoadsId
@@ -212,6 +217,7 @@ export type StyleId =
   | SubcatPoiPlusPublicTransportStyleIds
   | SubcatPoiStyleIds
   | SubcatRadinfraCampaignStyleIds
+  | SubcatRadinfraPlusMapillaryStyleIds
   | SubcatRadinfraStatsStyleIds
   | SubcatRadinfraStatsStyleIds
   | SubcatRoadsPlusFootwaysStyleIds

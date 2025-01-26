@@ -14,6 +14,10 @@ export const mapboxStyleGroupLayers_radinfra_width: MapboxStyleLayer[] = [
       'line-dasharray': [3, 1],
     },
     filter: ['any', ['!', ['has', 'width']], ['match', ['get', 'width'], [''], true, false]],
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round',
+    },
   },
   {
     type: 'line',

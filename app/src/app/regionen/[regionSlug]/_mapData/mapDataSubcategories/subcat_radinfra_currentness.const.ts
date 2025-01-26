@@ -39,6 +39,7 @@ export const subcat_radinfra_currentness: FileMapDataSubcategory = {
   id: subcatId,
   name: 'RVA Aktualität',
   ui: 'checkbox',
+  beforeId: 'atlas-app-beforeid-top',
   sourceId: source,
   styles: [
     {

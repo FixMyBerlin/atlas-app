@@ -6,6 +6,7 @@ import { MapboxStyleLayer } from '../types'
 export const mapboxStyleGroupLayers_radinfra_traffic_signs: MapboxStyleLayer[] = [
   {
     maxzoom: 13,
+    filter: ['!', ['has', 'traffic_sign']],
     type: 'heatmap',
     id: 'sign-heatmap',
     paint: {

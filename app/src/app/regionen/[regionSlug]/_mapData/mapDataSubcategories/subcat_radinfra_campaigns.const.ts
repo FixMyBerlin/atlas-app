@@ -25,6 +25,7 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Kampagnen',
   ui: 'dropdown',
+  beforeId: 'atlas-app-beforeid-top',
   sourceId: source,
   styles: [
     {

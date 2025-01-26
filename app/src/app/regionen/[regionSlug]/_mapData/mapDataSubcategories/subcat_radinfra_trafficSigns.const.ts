@@ -35,6 +35,7 @@ export const subcat_radinfra_trafficSigns: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Beschilderung',
   ui: 'checkbox',
+  beforeId: 'atlas-app-beforeid-top',
   sourceId: source,
   styles: [
     {
