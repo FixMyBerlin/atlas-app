@@ -100,7 +100,7 @@ To run the tests manually:
 ./processing/run-tests.sh // from the root of the project
 ```
 
-Additionally all tests are being run in the [husky](https://typicode.github.io/husky/) [pre-push](../.husky/pre-push) hook.
+Additionally all tests are being run in the [husky](https://typicode.github.io/husky/) [pre-push](../app/.husky/pre-push) hook.
 
 **Conventions:**
 
