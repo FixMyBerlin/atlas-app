@@ -34,5 +34,6 @@ local deprecated_cycleway_shared = RoadTodo.new({
 })
 
 RoadTodos = {
+  -- REMINDER: Always use snake_case, never camelCase
   deprecated_cycleway_shared,
 }

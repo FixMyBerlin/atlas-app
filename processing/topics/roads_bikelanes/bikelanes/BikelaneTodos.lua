@@ -121,8 +121,8 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
 })
 
 -- === Infrastructure ===
-local needsClarification = BikelaneTodo.new({
-  id = "needsClarification",
+local needs_clarification = BikelaneTodo.new({
+  id = "needs_clarification",
   desc = "Tagging insufficient to categorize the bike infrastructure.",
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
@@ -133,16 +133,16 @@ local needsClarification = BikelaneTodo.new({
       )
   end
 })
-local adjoiningOrIsolated = BikelaneTodo.new({
-  id = "adjoiningOrIsolated",
+local adjoining_or_isolated = BikelaneTodo.new({
+  id = "adjoining_or_isolated",
   desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
     return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
   end
 })
-local advisoryOrExclusive = BikelaneTodo.new({
-  id = "advisoryOrExclusive",
+local advisory_or_exclusive = BikelaneTodo.new({
+  id = "advisory_or_exclusive",
   desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
@@ -151,10 +151,11 @@ local advisoryOrExclusive = BikelaneTodo.new({
 })
 
 BikelaneTodos = {
+  -- REMINDER: Always use snake_case, never camelCase
   -- Infrastructure
-  needsClarification,
-  adjoiningOrIsolated,
-  advisoryOrExclusive,
+  needs_clarification,
+  adjoining_or_isolated,
+  advisory_or_exclusive,
   -- Bicycle Roads
   missing_traffic_sign_vehicle_destination,
   missing_traffic_sign_244,

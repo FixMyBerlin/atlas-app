@@ -46,7 +46,7 @@ export const maprouletteTaskDescriptionMarkdown = ({
     ```
     */
   switch (projectKey) {
-    case 'adjoiningOrIsolated':
+    case 'adjoining_or_isolated':
       return `
 ## Kontext
 
@@ -66,7 +66,7 @@ Bitte präzisiere das Tagging.
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-    case 'advisoryOrExclusive':
+    case 'advisory_or_exclusive':
       return `
 ## Kontext
 
@@ -93,7 +93,7 @@ Bitte präzisiere das Tagging.
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-    case 'needsClarification':
+    case 'needs_clarification':
       return `
 ## Kontext
 
