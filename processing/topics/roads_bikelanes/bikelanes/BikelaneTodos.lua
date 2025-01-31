@@ -24,31 +24,6 @@ function BikelaneTodo:__call(objectTags, resultTags)
   end
 end
 
--- === Infrastructure ===
-local needsClarification = BikelaneTodo.new({
-  id = "needsClarification",
-  desc = "Tagging insufficient to categorize the bike infrastructure.",
-  priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
-    return resultTags.category == "needsClarification"
-  end
-})
-local adjoiningOrIsolated = BikelaneTodo.new({
-  id = "adjoiningOrIsolated",
-  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
-    return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
-  end
-})
-local advisoryOrExclusive = BikelaneTodo.new({
-  id = "advisoryOrExclusive",
-  desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
-    return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
-  end
-})
 
 -- === Bicycle Roads ===
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
@@ -142,6 +117,36 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
     return objectTags.highway == 'footway'
       and objectTags.bicycle == 'designated'
       and resultTags.category == 'needsClarification'
+  end
+})
+
+-- === Infrastructure ===
+local needsClarification = BikelaneTodo.new({
+  id = "needsClarification",
+  desc = "Tagging insufficient to categorize the bike infrastructure.",
+  priority = function(_, _) return "1" end,
+  conditions = function(objectTags, resultTags)
+    return resultTags.category == "needsClarification"
+      and not (
+        objectTags.cycleway == "shared" or -- Handled by RoadTodos.lua `deprecated_cycleway_shared`
+        unexpected_bicycle_access_on_footway(objectTags, resultTags)
+      )
+  end
+})
+local adjoiningOrIsolated = BikelaneTodo.new({
+  id = "adjoiningOrIsolated",
+  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
+  end
+})
+local advisoryOrExclusive = BikelaneTodo.new({
+  id = "advisoryOrExclusive",
+  desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
   end
 })
 
