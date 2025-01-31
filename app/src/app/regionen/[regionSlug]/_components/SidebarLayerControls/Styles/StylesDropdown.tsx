@@ -1,7 +1,5 @@
-import { Portal } from '@/src/app/_components/utils/usePopper/Portal'
-import { usePopper } from '@/src/app/_components/utils/usePopper/usePopper'
 import { useCategoriesConfig } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/useCategoriesConfig'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { Menu, MenuButton, MenuHeading, MenuItem, MenuItems, MenuSection } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { produce } from 'immer'
 import { twJoin } from 'tailwind-merge'
@@ -18,12 +16,6 @@ type Props = {
 
 export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) => {
   const { categoriesConfig, setCategoriesConfig } = useCategoriesConfig()
-
-  const [trigger, container] = usePopper({
-    placement: 'bottom-start',
-    strategy: 'fixed',
-    modifiers: [{ name: 'offset', options: { offset: [0, 8] } }],
-  })
 
   type SelectActiveProps = { subcatId: string; styleId: string }
   const selectActive = ({ subcatId, styleId }: SelectActiveProps) => {
@@ -46,7 +38,14 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
 
   const activeStyleConfig = subcatConfig.styles.find((s) => s.active)
 
-  // invariant(activeStyleConfig && activeStyleConfig.ui === 'dropdown')
+  const groupedStyles: Map<string, typeof subcatConfig.styles> = new Map([])
+  subcatConfig.styles.forEach((style) => {
+    const category = style?.category || 'fallback'
+    if (!groupedStyles.has(category)) {
+      groupedStyles.set(category, [])
+    }
+    groupedStyles.get(category)?.push(style)
+  })
 
   return (
     <div>
@@ -55,7 +54,6 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
           <>
             <div>
               <MenuButton
-                ref={trigger}
                 disabled={disabled}
                 // `w-*` has to be set fo the `truncate` to work
                 className={twJoin(
@@ -73,41 +71,57 @@ export const StylesDropdown = ({ categoryId, subcatConfig, disabled }: Props) =>
               </MenuButton>
             </div>
 
-            <Portal>
-              <MenuItems
-                ref={container}
-                className="absolute left-0 z-40 mt-2 max-w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
-              >
-                <div className="py-1">
-                  {subcatConfig.styles.map((styleConfig) => {
-                    if (!styleConfig) return null
-                    const key = createSubcatStyleKey(subcatConfig.id, styleConfig.id)
-                    return (
-                      <MenuItem key={key}>
-                        {({ focus }) => (
-                          <button
-                            type="button"
-                            onClick={() =>
-                              selectActive({
-                                subcatId: subcatConfig.id,
-                                styleId: styleConfig.id,
-                              })
-                            }
-                            className={twJoin(
-                              styleConfig.active ? 'bg-yellow-400 text-gray-900' : 'text-gray-700',
-                              focus ? 'bg-yellow-50' : '',
-                              'block w-full px-4 py-2 text-left text-sm',
+            <MenuItems
+              anchor="bottom"
+              className="absolute left-0 z-40 mt-2 max-w-full origin-top-left rounded-md bg-white shadow-lg ring-1 ring-gray-300 focus:outline-none"
+            >
+              <div className="py-1">
+                {Array.from(groupedStyles.entries()).map(([group, styles]) => {
+                  const showHeadline = group !== 'fallback'
+
+                  return (
+                    <MenuSection key={group}>
+                      {showHeadline && (
+                        <MenuHeading className="px-4 py-2 text-left text-sm font-semibold text-gray-400">
+                          {group}:
+                        </MenuHeading>
+                      )}
+
+                      {styles.map((styleConfig) => {
+                        if (!styleConfig) return null
+                        const key = createSubcatStyleKey(subcatConfig.id, styleConfig.id)
+
+                        return (
+                          <MenuItem key={key}>
+                            {({ focus }) => (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  selectActive({
+                                    subcatId: subcatConfig.id,
+                                    styleId: styleConfig.id,
+                                  })
+                                }
+                                className={twJoin(
+                                  styleConfig.active
+                                    ? 'bg-yellow-400 text-gray-900'
+                                    : 'text-gray-700',
+                                  focus ? 'bg-yellow-50' : '',
+                                  'block w-full py-2 pr-4 text-left text-sm',
+                                  showHeadline ? 'pl-8' : 'pl-4',
+                                )}
+                              >
+                                {styleConfig.name}
+                              </button>
                             )}
-                          >
-                            {styleConfig.name}
-                          </button>
-                        )}
-                      </MenuItem>
-                    )
-                  })}
-                </div>
-              </MenuItems>
-            </Portal>
+                          </MenuItem>
+                        )
+                      })}
+                    </MenuSection>
+                  )
+                })}
+              </div>
+            </MenuItems>
           </>
         )}
       </Menu>

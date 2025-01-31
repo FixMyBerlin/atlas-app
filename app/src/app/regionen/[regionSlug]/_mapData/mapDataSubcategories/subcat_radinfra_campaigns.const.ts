@@ -21,6 +21,16 @@ export const campaignLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
 ]
 
+// Copied from radinfra.de/cms/utils/campaignCategorySelect.ts
+export const campaignCategorySelect = [
+  { label: 'Radinfrastruktur', value: 'radinfra' },
+  { label: 'Aktualität', value: 'currentness' },
+  { label: 'Verkehrszeichen', value: 'traffic_signs' },
+  { label: 'Oberfläche', value: 'surface' },
+  { label: 'Breite', value: 'width' },
+  { label: 'Straßenfotos/Mapillary', value: 'mapillary' },
+]
+
 export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Kampagnen',
@@ -41,9 +51,14 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
     },
     ...todoIds.map((todoId) => {
       const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.menuTitle
+      const category = campaignCategorySelect.find(
+        (entry) => entry.value === radinfraDeCampaigns.find((c) => c.id === todoId)?.category,
+      )?.label
+
       return {
         id: todoId,
         name: headline || `(Unbekannte Überschrift für ${todoId})`,
+        category,
         desc: null,
         layers: mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_radinfra_campaign,
