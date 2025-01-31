@@ -145,6 +145,31 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
+    case 'missing_access_tag_240':
+      return `
+## Kontext
+
+Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
+
+* [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
+* [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))
+
+## Aufgabe
+
+Bitte prüfe die Infrastruktur und ergänze:
+
+* \`bicycle=designated\` und \`foot=designated\`
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
     case 'missing_traffic_sign_vehicle_destination':
       return `
 ## Kontext
