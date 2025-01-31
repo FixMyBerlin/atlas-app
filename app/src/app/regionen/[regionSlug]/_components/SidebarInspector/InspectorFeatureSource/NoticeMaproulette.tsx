@@ -3,7 +3,7 @@ import {
   maprouletteTaskDescriptionMarkdown,
   todoMarkdownToMaprouletteCampaignKey,
 } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
-import { radinfraDeCampaigns } from '@/src/app/regionen/(index)/_data/radinfraDeCampaigns.const'
+import { radinfraDeCampaigns } from '@/src/app/regionen/(index)/_data/radinfraDeCampaigns.generated.const'
 import { LineString } from 'geojson'
 import { Fragment } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'

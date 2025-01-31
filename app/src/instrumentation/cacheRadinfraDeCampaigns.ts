@@ -29,7 +29,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = ${JSON.stringify(
 
     const filePath = path.resolve(
       __dirname,
-      '../../src/app/regionen/(index)/_data/radinfraDeCampaigns.const.ts',
+      '../../src/app/regionen/(index)/_data/radinfraDeCampaigns.generated.const.ts',
     )
     await fs.writeFile(filePath, data.trim(), 'utf8')
 

@@ -1,4 +1,4 @@
-import { todoIds } from '@/src/processingTypes/todoId'
+import { todoIds } from '@/src/processingTypes/todoIds.const'
 import { z } from 'zod'
 
 export const radinfraDeCampaignSchema = z.array(

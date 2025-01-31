@@ -20,7 +20,7 @@ export async function generateTypes(processedTables: string[]) {
 }
 
 async function writeTableIdTypes(processedTables: string[]) {
-  const typeFilePath = join(TYPES_DIR, 'tableId.ts')
+  const typeFilePath = join(TYPES_DIR, 'tableId.generated.const.ts')
   const typeFile = Bun.file(typeFilePath)
 
   const fileContent = `export type TableId = ${
@@ -46,7 +46,7 @@ async function callLuaForNames(luaFilename: 'ExtractBikelaneTodos' | 'ExtractRoa
 }
 
 async function writeTodoIdTypes() {
-  const typeFilePath = join(TYPES_DIR, 'todoId.ts')
+  const typeFilePath = join(TYPES_DIR, 'todoId.generated.const.ts')
   const typeFile = Bun.file(typeFilePath)
 
   const bikelaneTodoNames = await callLuaForNames('ExtractBikelaneTodos')
@@ -58,9 +58,6 @@ async function writeTodoIdTypes() {
 
   export const roadTodoIds = [${roadTodoNames.map((name) => `'${name}'`).join(',')}] as const
   export type RoadTodoId = (typeof roadTodoIds)[number]
-
-  export const todoIds = [...bikelaneTodoIds, ...roadTodoIds] as const
-  export type TodoId = BikelaneTodoId | RoadTodoId
   `
 
   const content = prefixGeneratedFiles(fileContent)

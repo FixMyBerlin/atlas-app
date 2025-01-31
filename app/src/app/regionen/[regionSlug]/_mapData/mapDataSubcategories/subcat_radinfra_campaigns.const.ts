@@ -1,5 +1,5 @@
-import { TodoId, todoIds } from '@/src/processingTypes/todoId'
-import { radinfraDeCampaigns } from '../../../(index)/_data/radinfraDeCampaigns.const'
+import { TodoId, todoIds } from '@/src/processingTypes/todoIds.const'
+import { radinfraDeCampaigns } from '../../../(index)/_data/radinfraDeCampaigns.generated.const'
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
 import { mapboxStyleGroupLayers_radinfra_campaign } from './mapboxStyles/groups/radinfra_campaign'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
