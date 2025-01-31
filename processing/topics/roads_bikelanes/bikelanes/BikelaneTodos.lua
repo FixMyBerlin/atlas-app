@@ -150,6 +150,20 @@ local advisory_or_exclusive = BikelaneTodo.new({
   end
 })
 
+-- === Currentness ===
+local currentness_too_old = BikelaneTodo.new({
+  id = "currentness_too_old",
+  desc = "Infrastructure that has not been edited for about 7 years",
+  priority = function(_, resultTags)
+    -- Older than ~10 years is "prio1", everything else "prio2"
+    if resultTags._age >= 3600 then return "1" else return "2" end
+  end,
+  conditions = function(_, resultTags)
+    -- Sync date with `app/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/groups/radinfra_currentness.ts`
+    return resultTags.category ~= nil and resultTags._age >= 2190
+  end
+})
+
 BikelaneTodos = {
   -- REMINDER: Always use snake_case, never camelCase
   -- Infrastructure
@@ -166,4 +180,6 @@ BikelaneTodos = {
   missing_access_tag_240,
   missing_segregated,
   unexpected_bicycle_access_on_footway,
+    -- Currentness
+  currentness_too_old,
 }

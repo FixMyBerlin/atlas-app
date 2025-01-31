@@ -36,6 +36,20 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     task: '**Bitte prüfe die Radinfrastruktur und ergänze die nötigen Attribute.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
   },
   {
+    id: 'currentness_too_old',
+    name: 'Radinfrastruktur die seit langer Zeit nicht editiert wurde',
+    menuTitle: 'Sehr lange nicht geprüfte Wege',
+    pubDate: '2025-01-01T14:00:00.000Z',
+    category: 'currentness',
+    maprouletteChallenge: {
+      id: null,
+      enabled: true,
+      name: 'Sehr lange nicht geprüfte Wege',
+    },
+    description: 'Diese Kampagne enthält Wege, die seit mehr als 6 Jahren nicht editiert wurden.',
+    task: '**Bitte prüfe und aktualisiere diese Infrastruktur.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
     id: 'deprecated_cycleway_shared',
     name: 'Die Angabe `cycleway=shared` soll nicht mehr verwendet werden',
     menuTitle: 'Veraltetes Tagging (`shared`)',

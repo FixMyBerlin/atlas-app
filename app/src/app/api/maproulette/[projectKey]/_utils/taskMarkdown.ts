@@ -306,5 +306,31 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
+    case 'currentness_too_old':
+      return `
+## Kontext
+
+Dieser Weg ist seht vielen Jahren nicht mehr überprüft worden.
+
+## Aufgabe
+
+**Bitte prüfe und aktualisiere diese Infrastruktur:**
+
+* Wenn du Tags veränderst, wird automatisch das Datum der letzten Bearbeitung aktualisiert. (Reine Geometrie-Änderungen ändern das Datum dagegen nicht.)
+* Wenn bereits alles richtig ist getaggt ist, ergänze \`check_date=2025-MM-TT\` um zu hinterlegen, dass aus deiner Sicht alles aktuell ist.
+* Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)) bzw. \`traffic_sign=none\`.
+* Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+
+Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
+
+`
   }
 }

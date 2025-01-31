@@ -5,6 +5,7 @@
 export const bikelaneTodoIds = [
   'adjoining_or_isolated',
   'advisory_or_exclusive',
+  'currentness_too_old',
   'missing_access_tag_240',
   'missing_access_tag_bicycle_road',
   'missing_segregated',
