@@ -1,9 +1,9 @@
 import { Markdown } from '@/src/app/_components/text/Markdown'
-import { campaignTitleTranslations } from '@/src/app/api/maproulette/[projectKey]/_utils/campaignTitleTranslations.const'
 import {
   maprouletteTaskDescriptionMarkdown,
   todoMarkdownToMaprouletteCampaignKey,
 } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
+import { radinfraDeCampaigns } from '@/src/app/regionen/(index)/_data/radinfraDeCampaigns.const'
 import { LineString } from 'geojson'
 import { Fragment } from 'react'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
@@ -63,9 +63,11 @@ export const NoticeMaproulette = ({
       </summary>
       <div className="my-0 ml-3">
         {texts.map(([projectKey, text]) => {
+          const headline = radinfraDeCampaigns.find((c) => c.id === projectKey)?.menuTitle
+
           return (
             <Fragment key={projectKey}>
-              <h2>{campaignTitleTranslations[projectKey]}</h2>
+              <h2>{headline || `(Überschrift für ${projectKey} unbekannt)`}</h2>
               <Markdown
                 markdown={text}
                 className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"

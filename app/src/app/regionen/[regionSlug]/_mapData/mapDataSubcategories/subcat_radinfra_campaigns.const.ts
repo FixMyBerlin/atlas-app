@@ -1,5 +1,5 @@
-import { campaignTitleTranslations } from '@/src/app/api/maproulette/[projectKey]/_utils/campaignTitleTranslations.const'
 import { TodoId, todoIds } from '@/src/processingTypes/todoId'
+import { radinfraDeCampaigns } from '../../../(index)/_data/radinfraDeCampaigns.const'
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
 import { mapboxStyleGroupLayers_radinfra_campaign } from './mapboxStyles/groups/radinfra_campaign'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
@@ -40,9 +40,10 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
       legends: campaignLegend,
     },
     ...todoIds.map((todoId) => {
+      const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.menuTitle
       return {
         id: todoId,
-        name: campaignTitleTranslations[todoId],
+        name: headline || `(Unbekannte Überschrift für ${todoId})`,
         desc: null,
         layers: mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_radinfra_campaign,
