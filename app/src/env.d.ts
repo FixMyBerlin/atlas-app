@@ -22,8 +22,6 @@ namespace NodeJS {
     readonly NEXT_PUBLIC_OSM_API_URL:
       | 'https://api.openstreetmap.org/api/0.6'
       | 'https://master.apis.dev.openstreetmap.org/api/0.6'
-    // API
-    readonly ATLAS_API_KEY: string
     // StaticDatasets
     readonly S3_KEY: string
     readonly S3_SECRET: string
@@ -34,6 +32,9 @@ namespace NodeJS {
       | 'https://radverkehrsatlas.de/api'
     readonly S3_BUCKET: string
     readonly S3_UPLOAD_FOLDER: production | staging | localdev
+    // API
+    readonly ATLAS_API_KEY: string
+    readonly MAPROULETTE_API_KEY: string
     readonly NEXT_PUBLIC_DO_NOT_NAVIGATE: string
   }
 }

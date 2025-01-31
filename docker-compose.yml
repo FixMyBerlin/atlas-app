@@ -47,11 +47,12 @@ services:
       SESSION_SECRET_KEY:
       OSM_CLIENT_ID:
       OSM_CLIENT_SECRET:
-      ATLAS_API_KEY:
       S3_KEY:
       S3_SECRET:
       S3_REGION:
       S3_BUCKET:
+      ATLAS_API_KEY:
+      MAPROULETTE_API_KEY:
       FORCE_COLOR: 1
     ports:
       - 4000:4000
