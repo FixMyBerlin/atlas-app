@@ -2,7 +2,7 @@ import { getTilesUrl } from '@/src/app/_components/utils/getTilesUrl'
 import {
   SIMPLIFY_MAX_ZOOM,
   SIMPLIFY_MIN_ZOOM,
-} from '@/src/registerSQLFunctions/registerGeneralizationFunctions'
+} from '@/src/instrumentation/registerGeneralizationFunctions'
 import { MapDataSource } from '../types'
 import { apiKeyMapbox, apiKeyMapillary } from './apiKeys.const'
 import { SourceExportApiIdentifier } from './export/exportIdentifier'
