@@ -6,9 +6,69 @@ import { RadinfraDeCampaignSchema } from './radinfraDeCampaignSchema'
 
 export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   {
+    id: 'adjoining_or_isolated',
+    name: 'Ergänze ob die Fahrradinfrastruktur straßenbegleitend oder selbstständig geführt ist',
+    menuTitle: 'Straßenbegleitend oder selbstständig geführt?',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50885,
+      enabled: true,
+      name: 'Fahrradinfrastruktur straßenbegleitend oder selbstständig geführt?',
+    },
+    description:
+      'Diese Kampagne enthält Wege, deren Führungsform [im Radverkehrsatlas](https://radverkehrsatlas.de/) nicht präzise angegeben werden kann.\n',
+    task: '**Bitte prüfe ob die Radinfrastruktur straßenbegleitend ist und ergänze den fehlenden Zugangs-Tag `is_sidepath=yes` oder `no`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.\n',
+  },
+  {
+    id: 'advisory_or_exclusive',
+    name: 'Ergänze, ob es sich um einen Schutzstreifen oder Angebotsstreifen handelt',
+    menuTitle: 'Schutzstreifen oder Angebotsstreifen?',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50888,
+      enabled: true,
+      name: 'Schutzstreifen oder Angebotsstreifen?',
+    },
+    description:
+      'Diese Kampagne enthält Radinfrastruktur auf der Fahrbahn bei denen die Angabe fehlt, ob es sich um einen Schutzstreifen oder Angebotsstreifen handelt.',
+    task: '**Bitte prüfe die Radinfrastruktur und ergänze die nötigen Attribute.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'deprecated_cycleway_shared',
+    name: 'Die Angabe `cycleway=shared` soll nicht mehr verwendet werden',
+    menuTitle: 'Veraltetes Tagging (`shared`)',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50889,
+      enabled: true,
+      name: 'Veraltetes Tagging (`cycleway=shared`)',
+    },
+    description:
+      'Diese Kampagne enthält Wege, die die veraltete Angabe `cycleway=shared` verwenden.',
+    task: '**Bitte ändere das Tagging. In vielen Fällen kann es ersatzlos gestrichen werden. Es ist aber wichtig, die Infrastruktur in diesem Zuge zu prüfen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'missing_access_tag_240',
+    name: 'Ergänze das Zugangs-Tagging für Geh-/Radwege',
+    menuTitle: 'Zugangs-Tagging fehlt (Geh-/Radweg)',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50890,
+      enabled: true,
+      name: 'Geh-/Radweg: Zugangs-Tagging fehlt?',
+    },
+    description:
+      'Diese Kampagne enthält Wege die mit dem Verkehrszeichen `240` (Gem. Geh- und Radweg) oder `241` (Getr. Rad- und Gehweg) markiert sind aber das dazu passende Zugangs-Tagging fehlt.',
+    task: '**Bitte prüfe die Radinfrastruktur und ergänze die Zugangs-Tags.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
     id: 'missing_access_tag_bicycle_road',
     name: 'Fahrradstraßen mit fehlendem `bicycle=designated`',
-    menuTitle: 'Fahrradstraßen ohne Zusatzzeichen',
+    menuTitle: 'Zugangs-Tagging fehlt (Fahrradstraße)',
     pubDate: '2024-10-01T15:00:00.000Z',
     category: 'traffic_signs',
     maprouletteChallenge: {
@@ -19,6 +79,51 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     description:
       'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße klassifiziert sind, bei denen jedoch das `bicycle=designated` fehlt.',
     task: '**Bitte prüfe die Situation und ergänze den fehlenden Zugangs-Tag `bicycle=designated`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'missing_segregated',
+    name: 'Ergänze Angaben zur Trennung von Fahrrad- und Fußverkehr auf Geh-/Radwegen',
+    menuTitle: 'Gemeinsame oder getrennte Führung?',
+    pubDate: '2024-09-20T15:00:00.000Z',
+    category: 'traffic_signs',
+    maprouletteChallenge: {
+      id: 50887,
+      enabled: true,
+      name: 'Geh-/Radweg: Gemeinsame oder getrennte Führung?',
+    },
+    description:
+      'Diese Kampagne enthält Wege, die sowohl von Fahrrad- als auch Fußverkehr genutzt werden. Es fehlt aber die Angabe, ob eine Trennung der Verkehrsformen vorliegt.',
+    task: '**Bitte ergänze die Angabe `segregated=yes` oder `no`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'missing_traffic_sign',
+    name: 'Radinfrastruktur ohne Verkehrszeichen',
+    menuTitle: 'Fehlendes Verkehrszeichen (Generell)',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'traffic_signs',
+    maprouletteChallenge: {
+      id: 50886,
+      enabled: true,
+      name: 'Radinfrastruktur ohne Verkehrszeichen',
+    },
+    description:
+      'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Radinfrastruktur kategorisiert wurden, jedoch fehlt das zugehörige Verkehrszeichen.',
+    task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'missing_traffic_sign_244',
+    name: 'Fahrradstraßen ohne Verkehrszeichen',
+    menuTitle: 'Fehlendes Verkehrszeichen (Fahradstraße)',
+    pubDate: '2024-09-20T15:00:00.000Z',
+    category: 'traffic_signs',
+    maprouletteChallenge: {
+      id: 49357,
+      enabled: true,
+      name: 'Fahrradstraßen ohne Verkehrszeichen',
+    },
+    description:
+      'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße kategorisiert wurden, jedoch fehlt das zugehörige Verkehrszeichen.',
+    task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
   },
   {
     id: 'missing_traffic_sign_vehicle_destination',
@@ -36,18 +141,47 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
   },
   {
-    id: 'missing_traffic_sign_244',
-    name: 'Fahrradstraßen ohne Verkehrszeichen',
-    menuTitle: 'Fahrradstraßen ohne Verkehrszeichen',
-    pubDate: '2024-09-20T15:00:00.000Z',
-    category: 'traffic_signs',
+    id: 'needs_clarification',
+    name: 'Die Radinfrastruktur konnte nicht kategorisiert werden',
+    menuTitle: 'Führungsform unklar',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
     maprouletteChallenge: {
-      id: 49357,
+      id: 50891,
       enabled: true,
-      name: 'Fahrradstraßen ohne Verkehrszeichen',
+      name: 'Führungsform der Radinfrastruktur unklar',
+    },
+    description: 'Diese Kampagne enthält Radinfrastruktur die nicht kategorisiert werden konnte.',
+    task: '**Bitte prüfe das Tagging und ergänze weitere Attribute, die bei der Kategorisierung helfen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+  },
+  {
+    id: 'test_maproulette',
+    name: 'Test Kampagne um MapRoulette Funktionen zu test',
+    menuTitle: 'Test MapRoulette Updates',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50884,
+      enabled: false,
+      name: 'Test MapRoulette Updates',
     },
     description:
-      'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße kategorisiert wurden, jedoch fehlt das zugehörige Verkehrszeichen.',
-    task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+      'Mit dieser Kampagne test ich, wie sich MapRoulette verhält, wenn sich Daten extern ändern.',
+    task: 'Hier gibt es nihts zu tun.',
+  },
+  {
+    id: 'unexpected_bicycle_access_on_footway',
+    name: 'Die Straßenklasse "Fußweg" ist unerwartet wenn Radinfrastruktur vorhanden ist',
+    menuTitle: 'Straßenklasse unklar (Fußweg)',
+    pubDate: '2025-01-01T15:00:00.000Z',
+    category: 'radinfra',
+    maprouletteChallenge: {
+      id: 50883,
+      enabled: true,
+      name: "Straßenklasse 'Fußweg' unklar",
+    },
+    description:
+      'Diese Kampagne enthält Fußwege, die gleichzeitig Angaben zur Radinfrastruktur haben.',
+    task: '**Bitte prüfe das Tagging; Eventuell ist eine andere Straßenklasse angebracht.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
   },
 ]

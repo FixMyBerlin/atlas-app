@@ -16,6 +16,7 @@ export const cacheRadinfraDeCampaigns = async () => {
     }
     const json = await response.json()
     const parsed = radinfraDeCampaignSchema.parse(json)
+    const sorted = parsed.sort((c1, c2) => c1.id.localeCompare(c2.id))
 
     const data = `
 // DO NOT EDIT MANUALLY
@@ -24,7 +25,7 @@ export const cacheRadinfraDeCampaigns = async () => {
 
 import { RadinfraDeCampaignSchema } from './radinfraDeCampaignSchema'
 
-export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = ${JSON.stringify(parsed, undefined, 2)}
+export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = ${JSON.stringify(sorted, undefined, 2)}
 `
 
     const filePath = path.resolve(
