@@ -139,12 +139,9 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
     " Add traffic_sign=none to specify unsigned path.",
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
-    if objectTags.highway == 'footway'
+    return objectTags.highway == 'footway'
       and objectTags.bicycle == 'designated'
       and resultTags.category == 'needsClarification'
-    then
-      return true
-    end
   end
 })
 
