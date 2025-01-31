@@ -10,8 +10,6 @@ export const bikelaneTodoIds = [
   'missing_segregated',
   'missing_traffic_sign',
   'missing_traffic_sign_244',
-  'missing_traffic_sign_but_bicycle_designated',
-  'missing_traffic_sign_but_bicycle_yes',
   'missing_traffic_sign_vehicle_destination',
   'needsClarification',
   'unexpected_bicycle_access_on_footway',

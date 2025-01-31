@@ -18,7 +18,7 @@ end
 
 function BikelaneTodo:__call(objectTags, resultTags)
   if self.conditions(objectTags, resultTags) then
-    return { id = self.id, priority = self.priority() }
+    return { id = self.id, priority = self.priority(objectTags, resultTags) }
   else
     return nil
   end
@@ -87,46 +87,20 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
 -- === Traffic Signs ===
-local missing_traffic_sign_but_bicycle_designated = BikelaneTodo.new({
-  id = "missing_traffic_sign_but_bicycle_designated",
-  desc = "Bicycle Infrastructure recognized with `bicycle=designated` but no `traffic_sign`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(objectTags, resultTags)
-    return resultTags.category ~= nil
-        and objectTags.bicycle == "designated"
-        and (
-          objectTags.traffic_sign == nil
-          and objectTags['traffic_sign:forward'] == nil
-          and objectTags['traffic_sign:backward'] == nil
-        )
-  end
-})
-local missing_traffic_sign_but_bicycle_yes = BikelaneTodo.new({
-  id = "missing_traffic_sign_but_bicycle_yes",
-  desc = "Bicycle Infrastructure recognized with `bicycle=yes` but no `traffic_sign`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(objectTags, resultTags)
-    return resultTags.category ~= nil
-        and objectTags.bicycle == "yes"
-        and (
-          objectTags.traffic_sign == nil
-          and objectTags['traffic_sign:forward'] == nil
-          and objectTags['traffic_sign:backward'] == nil
-        )
-  end
-})
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
-  priority = function(_, _) return "1" end,
-  conditions = function(objectTags, resultTags)
+  priority = function(objectTags, _)
+    if objectTags.bicycle == "designated" then return "1" end
+    if objectTags.bicycle == "yes" then return "1" end
+    return "3"
+  end,
+  conditions = function(objectTags, _)
     local traffic_sign = objectTags['traffic_sign'] or objectTags['traffic_sign:forward'] or objectTags['traffic_sign:backward']
     return traffic_sign == nil
         and not (
           missing_traffic_sign_244(objectTags) or
-          missing_traffic_sign_vehicle_destination(objectTags) or
-          missing_traffic_sign_but_bicycle_designated(objectTags, resultTags) or
-          missing_traffic_sign_but_bicycle_yes(objectTags, resultTags)
+          missing_traffic_sign_vehicle_destination(objectTags)
           -- Add any missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
         )
   end
@@ -184,8 +158,6 @@ BikelaneTodos = {
   missing_traffic_sign_244,
   missing_access_tag_bicycle_road,
   -- Traffic Signs
-  missing_traffic_sign_but_bicycle_designated,
-  missing_traffic_sign_but_bicycle_yes,
   missing_traffic_sign,
   -- Bike- and Foot Path
   missing_access_tag_240,
