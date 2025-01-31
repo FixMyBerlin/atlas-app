@@ -98,17 +98,20 @@ Bitte präzisiere das Tagging.
 ## Kontext
 
 Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.
-Es ist ein \`highway=cycleway\` oder ein \`highway=path+bicycle=designated\` ohne weitere Attribute.
+
+Das passiert häufig, wenn der Weg als \`highway=cycleway\` ohne weitere Attribute angegeben ist.
 
 ## Aufgabe
 
 Bitte präzisiere das Tagging.
-* Ist es ein Übergang an einer Straße? Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
-* Ist es ein Verbindungsstück das nur für das Routing relevant ist? Füge \`cycleway=link\` hinzu.
-* Ist es ein gemeinsamer oder getrennter Geh- und Radweg? Fürge \`segregated=yes\` oder  \`segregated=no\` hinzu.
-* Wenn möglich, ergänze bitte auch \`is_sidepath=yes|no\` um anzuzeigen, ob die Infrastruktur straßenbegleitend (\`yes\`) oder selbständig geführt (\`no\`) ist (bzw. bei Gehwegen stattdessen \`footway=sidepath\`).
+* Ist es ein Übergang an einer Straße? ➔ Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
+* Ist es ein Verbindungsstück das nur für das Routing relevant ist? ➔ Füge \`cycleway=link\` hinzu.
+* Ist es ein gemeinsamer oder getrennter Geh- und Radweg? ➔ Füge \`segregated=yes\` oder  \`segregated=no\` hinzu.
+* Ist es ein Radweg \`highway=cycleway\`? ➔ Ergänze \`is_sidepath=yes\` für straßenbegleitende Wege bzw. \`no\` für selbständig geführte Wege.
 * Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)).
 * Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
+
+Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de/dokumentation/fuehrungsform) findest du in der Dokumentation.
 
 ## Hilfsmittel
 
