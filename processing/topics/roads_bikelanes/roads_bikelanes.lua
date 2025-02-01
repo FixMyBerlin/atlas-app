@@ -128,7 +128,8 @@ local todoLiniesTable = osm2pgsql.define_table({
   },
   indexes = {
     { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = { 'id', 'table' },     method = 'btree', unique = true }
+    { column = { 'id', 'table' },     method = 'btree', unique = true },
+    { column = { 'tags' },            method = 'gin' } -- locally this is not used
   }
 })
 

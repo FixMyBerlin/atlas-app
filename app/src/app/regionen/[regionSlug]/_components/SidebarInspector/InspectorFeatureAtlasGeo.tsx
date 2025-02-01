@@ -36,7 +36,7 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeatur
           <NoticeMaproulette
             sourceId={sourceId}
             osmTypeIdString={osmTypeId}
-            bikelaneCategory={properties?.category}
+            kind={properties?.category || properties?.road}
             todos={properties?.todos}
             geometry={geometry}
           />

@@ -8,7 +8,8 @@ import { LineString } from 'geojson'
 type Props = {
   projectKey: TodoId
   osmTypeIdString: string
-  bikelaneCategory: string | undefined
+  /** `bikelane.category` or `roads.road` */
+  kind: string
   geometry: LineString
 }
 
@@ -23,14 +24,14 @@ export const todoMarkdownToMaprouletteCampaignKey = (todos: string | undefined) 
 export const maprouletteTaskDescriptionMarkdown = ({
   projectKey,
   osmTypeIdString,
-  bikelaneCategory,
+  kind,
   geometry,
 }: Props) => {
   const [centerLng, centerLat] = pointFromGeometry(geometry)
   const startPoint = point(geometry.coordinates[0]!).geometry
   const endPoint = point(geometry.coordinates.at(-1)!).geometry
 
-  const infrastructureName = translations[`ALL--category=${bikelaneCategory}`]
+  const infrastructureName = translations[`ALL--category=${kind}`]
     ?.replace('(Straßenbegleitend oder selbstständig geführt; Kategorisierung unklar)', '')
     ?.replace('(Kategorisierung unklar)', '')
 

@@ -11,18 +11,12 @@ import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 type Props = {
   sourceId: string
   osmTypeIdString: string | undefined
-  bikelaneCategory: string | undefined
+  kind: string | undefined
   todos: string | undefined
   geometry: MapGeoJSONFeature['geometry'] | undefined
 }
 
-export const NoticeMaproulette = ({
-  sourceId,
-  osmTypeIdString,
-  bikelaneCategory,
-  todos,
-  geometry,
-}: Props) => {
+export const NoticeMaproulette = ({ sourceId, osmTypeIdString, kind, todos, geometry }: Props) => {
   const defaultOpen = sourceId.includes('todos_lines')
   const showTrafficSigns = sourceId.includes('todos_lines')
 
@@ -43,7 +37,7 @@ export const NoticeMaproulette = ({
       maprouletteTaskDescriptionMarkdown({
         projectKey,
         osmTypeIdString,
-        bikelaneCategory,
+        kind: kind || 'UNKOWN', // Falback is needed because TS cannot know that we only use this when the `kind` is known
         geometry: geometry as LineString, // Guarded above
       }),
     ] as const
