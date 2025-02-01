@@ -75,11 +75,7 @@ export async function GET({ params }: { params: { projectKey: string } }) {
 
     // RESPONSE
     const featureCollectionData = featureCollection(features)
-    return Response.json(featureCollectionData, {
-      headers: {
-        'Content-Disposition': `attachment; filename="maproulette_${projectKey}.geojson"`,
-      },
-    })
+    return Response.json(featureCollectionData)
   } catch (error) {
     if (isProd) console.error(error)
     return Response.json(
