@@ -3,60 +3,26 @@ import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/Sid
 import { geoDataClient } from '@/src/prisma-client'
 import { bikelaneTodoIds } from '@/src/processingTypes/todoId.generated.const'
 import { todoIds } from '@/src/processingTypes/todoIds.const'
-import { Prisma } from '@prisma/client'
 import { feature, featureCollection, truncate } from '@turf/turf'
 import { LineString } from 'geojson'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { maprouletteTaskDescriptionMarkdown } from './_utils/taskMarkdown'
 
-const idType = z.coerce.number().positive()
-const MaprouletteSchema = z
-  .object({
-    projectKey: z.enum(todoIds),
-    ids: z.union([z.array(idType).min(1), idType.transform((x) => [x])]),
-  })
-  .strict()
+const MaprouletteSchema = z.strictObject({ projectKey: z.enum(todoIds) })
 
 // For testing:
-// Brandenburg http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62504
-// Berlin http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=62422
-// Germany http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244?ids=51477 https://www.openstreetmap.org/relation/51477
-export async function GET(request: NextRequest, { params }: { params: { projectKey: string } }) {
-  const rawSearchParams = request.nextUrl.searchParams
+// Germany http://127.0.0.1:5173/api/maproulette/missing_traffic_sign_244
+export async function GET({ params }: { params: { projectKey: string } }) {
   const parsedParams = MaprouletteSchema.safeParse({
-    ids: rawSearchParams.getAll('ids'),
     projectKey: params.projectKey,
   })
 
   // VALIDATE PARAMS
-  if (parsedParams.success === false || parsedParams.data.ids.length === 0) {
-    return NextResponse.json(
-      {
-        error: 'Invalid input',
-        info: '`?ids=62504&ids=62422` has to be an OSM Relation ID. Use https://hanshack.com/geotools/gimmegeodata/ to find IDs, but not all boundaries are present in atlas.',
-        ...(parsedParams.success === false ? parsedParams.error : parsedParams.data),
-      },
-      { status: 404 },
-    )
+  if (parsedParams.success === false) {
+    return NextResponse.json({ error: 'Invalid input', ...parsedParams.error }, { status: 404 })
   }
-  const { projectKey, ids } = parsedParams.data
-
-  // CHECK REGIONS (`ids` params)
-  type NHitsType = { osm_id: number }[]
-  const nHits = await geoDataClient.$queryRaw<NHitsType>`
-    SELECT osm_id::integer FROM boundaries WHERE osm_id IN (${Prisma.join(ids)})`
-  if (nHits.length !== ids.length) {
-    return NextResponse.json(
-      {
-        error: 'Invalid Region IDs',
-        message: 'The given region relation IDs could not be found or returned mismatched results.',
-        inputIds: ids.map((id) => Number(id)),
-        foundIds: nHits.map(({ osm_id }) => Number(osm_id)),
-      },
-      { status: 404 },
-    )
-  }
+  const { projectKey } = parsedParams.data
 
   try {
     // SELECT DATA FROM `bikelanes` or `roads`
@@ -74,15 +40,9 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         bikelanes.osm_id as id,
         bikelanes.tags->'category' AS kind,
         ST_AsGeoJSON(ST_Transform(bikelanes.geom, 4326))::jsonb AS geometry
-      FROM public.bikelanes as bikelanes,
-        (
-          SELECT ST_Union(boundaries.geom) as union_geom
-          FROM public.boundaries as boundaries
-          WHERE boundaries.osm_id IN (${Prisma.join(ids)})
-        ) as subquery
+      FROM public.bikelanes as bikelanes
       WHERE
-        bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`}
-        AND ST_intersects(subquery.union_geom, bikelanes.geom);
+        bikelanes.tags->>'todos' LIKE ${`* %${projectKey}%`};
     `
       : await geoDataClient.$queryRaw<QueryType>`
       SELECT
@@ -90,15 +50,9 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         roads.osm_id as id,
         roads.tags->'road' AS kind,
         ST_AsGeoJSON(ST_Transform(roads.geom, 4326))::jsonb AS geometry
-      FROM public.roads as roads,
-        (
-          SELECT ST_Union(boundaries.geom) as union_geom
-          FROM public.boundaries as boundaries
-          WHERE boundaries.osm_id IN (${Prisma.join(ids)})
-        ) as subquery
+      FROM public.roads as roads
       WHERE
-        roads.tags->>'todos' LIKE ${`* %${projectKey}%`}
-        AND ST_intersects(subquery.union_geom, roads.geom);
+        roads.tags->>'todos' LIKE ${`* %${projectKey}%`};
     `
 
     // ADD MAPROULETTE TASK DATA
@@ -129,10 +83,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
   } catch (error) {
     if (isProd) console.error(error)
     return Response.json(
-      {
-        error: 'Internal Server Error',
-        info: isProd ? undefined : error,
-      },
+      { error: 'Internal Server Error', info: isProd ? undefined : error },
       { status: 500 },
     )
   }
