@@ -120,6 +120,7 @@ local todoLiniesTable = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
+    { column = 'table',   type = 'text',      not_null = true },
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'linestring' },
@@ -127,7 +128,7 @@ local todoLiniesTable = osm2pgsql.define_table({
   },
   indexes = {
     { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
+    { column = { 'id', 'table' },     method = 'btree', unique = true }
   }
 })
 
@@ -189,10 +190,11 @@ function osm2pgsql.process_way(object)
       })
 
       if next(cycleway._todo_list) ~= nil then
-        meta.table = 'bikelanes'
         meta.todos = publicTags.todos
+        meta.category = publicTags.category
         todoLiniesTable:insert({
-          id = cycleway._id .. "/bikelanes",
+          id = cycleway._id,
+          table = 'bikelanes',
           tags = cycleway._todo_list,
           meta = meta,
           geom = object:as_linestring(),
@@ -279,10 +281,11 @@ function osm2pgsql.process_way(object)
 
     -- (C.4b) WRITE `todoLiniesTable` table for roads
     if next(results._todo_list) ~= nil then
-      meta.table = 'roads'
+      meta.road = results.road
       meta.todos = results.todos
       todoLiniesTable:insert({
-        id = DefaultId(object) .. "/roads",
+        id = DefaultId(object),
+        table = "roads",
         tags = results._todo_list,
         meta = meta,
         geom = object:as_linestring(),
