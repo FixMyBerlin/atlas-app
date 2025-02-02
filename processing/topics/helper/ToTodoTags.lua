@@ -1,16 +1,14 @@
 ---@param array `Array<{id: string, prio: string, todoTableOnly: boolean}>`
----@return string|nil
+---@return table A table where each entry is a table with the structure `{ID: PRIORITY}`
 -- Transform a list of string into a Markdown list
-function ToMarkdownList(array)
+function ToTodoTags(array)
   if not array or next(array) == nil then
-    return nil
+    return {}
   end
 
-  local result = ""
+  local result = {}
   for _, obj in ipairs(array) do
-    if obj.todoTableOnly ~= true then
-      result = result .. "* " .. obj.id .. "\n"
-    end
+    result[obj.id] = obj.priority
   end
   return result
 end

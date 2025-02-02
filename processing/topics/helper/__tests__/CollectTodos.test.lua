@@ -3,11 +3,19 @@ describe("CollectTodos", function()
   package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
   require("CollectTodos")
   require("RoadTodos")
+  -- local inspect = require("inspect")
 
-  it('Return id and priority', function()
+  it('Return id, priority, todoTableOnly', function()
     local tagsObject = { cycleway = "shared" }
     local result = CollectTodos(RoadTodos, tagsObject, {})
-    assert.are.same(result, { deprecated_cycleway_shared = "prio1" })
+    local expected = {
+      [1] = {
+        ["id"] = "deprecated_cycleway_shared",
+        ["priority"] = "prio1",
+        ["todoTableOnly"] = false,
+      },
+    }
+    assert.are.same(result, expected)
   end)
 
   it('Handle no match', function()

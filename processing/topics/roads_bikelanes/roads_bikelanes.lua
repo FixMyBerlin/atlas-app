@@ -31,6 +31,7 @@ require("PathsGeneralization")
 require("RoadTodos")
 require("CollectTodos")
 require("ToMarkdownList")
+require("ToTodoTags")
 require("BikeSuitability")
 
 local roadsTable = osm2pgsql.define_table({
@@ -224,8 +225,9 @@ function osm2pgsql.process_way(object)
     MergeTable(results, Maxspeed(object))
   end
   MergeTable(results, presence)
-  results._todo_list = CollectTodos(RoadTodos, tags, results)
-  results.todos = ToMarkdownList(results.todo_list)
+  local todos = CollectTodos(RoadTodos, tags, results)
+  results._todo_list = ToTodoTags(todos)
+  results.todos = ToMarkdownList(todos)
 
   -- We need sidewalk for Biklanes(), but not for `roads`
   if not IsSidepath(tags) then

@@ -14,6 +14,7 @@ require("DefaultId")
 require("DeriveTrafficSigns")
 require("CollectTodos")
 require("ToMarkdownList")
+require("ToTodoTags")
 
 local tags_copied = {
   "mapillary",
@@ -94,8 +95,10 @@ function Bikelanes(object)
           result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix])) or result_tags._age
         end
 
-        result_tags._todo_list = CollectTodos(BikelaneTodos, transformedTags, result_tags)
-        result_tags.todos = ToMarkdownList(result_tags._todo_list)
+
+        local todos = CollectTodos(BikelaneTodos, transformedTags, result_tags)
+        result_tags._todo_list = ToTodoTags(todos)
+        result_tags.todos = ToMarkdownList(todos)
       end
       table.insert(result_bikelanes, result_tags)
     end

@@ -6,11 +6,13 @@ BikelaneTodo.__index = BikelaneTodo
 -- @param args table
 -- @param args.id string
 -- @param args.desc string
+-- @param args.todoTableOnly boolean
 -- @param args.conditions function
 function BikelaneTodo.new(args)
   local self = setmetatable({}, BikelaneTodo)
   self.id = args.id
   self.desc = args.desc
+  self.todoTableOnly = args.todoTableOnly
   self.priority = args.priority
   self.conditions = args.conditions
   return self
@@ -18,7 +20,11 @@ end
 
 function BikelaneTodo:__call(objectTags, resultTags)
   if self.conditions(objectTags, resultTags) then
-    return { id = self.id, priority = self.priority(objectTags, resultTags) }
+    return {
+      id = self.id,
+      priority = self.priority(objectTags, resultTags),
+      todoTableOnly = self.todoTableOnly,
+    }
   else
     return nil
   end
@@ -29,6 +35,7 @@ end
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   id = "missing_traffic_sign_vehicle_destination",
   desc = "Expecting tag traffic_sign 'Anlieger frei' `traffic_sign=DE:244.1,1020-30` or similar.",
+  todoTableOnly = true,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
@@ -40,6 +47,7 @@ local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
 local missing_traffic_sign_244 = BikelaneTodo.new({
   id = "missing_traffic_sign_244",
   desc = "Expecting tag `traffic_sign=DE:244.1` or similar.",
+  todoTableOnly = true,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
@@ -50,6 +58,7 @@ local missing_traffic_sign_244 = BikelaneTodo.new({
 local missing_access_tag_bicycle_road = BikelaneTodo.new({
   id = "missing_access_tag_bicycle_road",
   desc = "Expected access tag `bicycle=designated` that is required for routing.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
@@ -65,6 +74,7 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
+  todoTableOnly = true,
   priority = function(objectTags, _)
     if objectTags.bicycle == "designated" then return "1" end
     if objectTags.bicycle == "yes" then return "1" end
@@ -85,6 +95,7 @@ local missing_traffic_sign = BikelaneTodo.new({
 local missing_access_tag_240 = BikelaneTodo.new({
   id = "missing_access_tag_240",
   desc = "Expected tag `bicycle=designated` and `foot=designated`.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return (ContainsSubstring(objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
@@ -96,6 +107,7 @@ local missing_access_tag_240 = BikelaneTodo.new({
 local missing_segregated = BikelaneTodo.new({
   id = "missing_segregated",
   desc = "Expected tag `segregated=yes` or `segregated=no`.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
     return resultTags.category == "needsClarification"
@@ -112,6 +124,7 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
   desc = "Expected `highway=path+bicycle=designated` (unsigned/explicit DE:240)" ..
     "or `highway=footway+bicycle=yes` (unsigned/explicit DE:239,1022-10);"..
     " Add traffic_sign=none to specify unsigned path.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
     return objectTags.highway == 'footway'
@@ -124,6 +137,7 @@ local unexpected_bicycle_access_on_footway = BikelaneTodo.new({
 local needs_clarification = BikelaneTodo.new({
   id = "needs_clarification",
   desc = "Tagging insufficient to categorize the bike infrastructure.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, resultTags)
     return resultTags.category == "needsClarification"
@@ -136,6 +150,7 @@ local needs_clarification = BikelaneTodo.new({
 local adjoining_or_isolated = BikelaneTodo.new({
   id = "adjoining_or_isolated",
   desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
     return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
@@ -144,16 +159,18 @@ local adjoining_or_isolated = BikelaneTodo.new({
 local advisory_or_exclusive = BikelaneTodo.new({
   id = "advisory_or_exclusive",
   desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
+  todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
     return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
   end
 })
 
--- === Currentness ===
+-- === Other ===
 local currentness_too_old = BikelaneTodo.new({
   id = "currentness_too_old",
   desc = "Infrastructure that has not been edited for about 7 years",
+  todoTableOnly = true,
   priority = function(_, resultTags)
     -- Older than ~10 years is "prio1", everything else "prio2"
     if resultTags._age >= 3600 then return "1" else return "2" end
@@ -180,6 +197,6 @@ BikelaneTodos = {
   missing_access_tag_240,
   missing_segregated,
   unexpected_bicycle_access_on_footway,
-    -- Currentness
+  -- Other
   currentness_too_old,
 }
