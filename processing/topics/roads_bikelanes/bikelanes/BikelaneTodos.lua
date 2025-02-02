@@ -177,7 +177,7 @@ local currentness_too_old = BikelaneTodo.new({
   end,
   conditions = function(_, resultTags)
     -- Sync date with `app/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/groups/radinfra_currentness.ts`
-    return resultTags.category ~= nil and resultTags._age >= 2190
+    return resultTags.category ~= nil and resultTags._age ~= nil and resultTags._age >= 2190
   end
 })
 
