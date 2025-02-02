@@ -39,8 +39,8 @@ local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
-        and (objectTags.vehicle == "destination" or objectTags.motor_vehicle == "destination")
-        and not ContainsSubstring(objectTags.traffic_sign, "1020-30")
+      and (objectTags.vehicle == "destination" or objectTags.motor_vehicle == "destination")
+      and not ContainsSubstring(objectTags.traffic_sign, "1020-30")
   end
 })
 -- Note: We ignore the misstagging of `motor_vehicle` instead of `vehicle` as it is currently hard to map in iD and not that relevant for routing.
@@ -51,8 +51,8 @@ local missing_traffic_sign_244 = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
-        and not ContainsSubstring(objectTags.traffic_sign, '244')
-        and not missing_traffic_sign_vehicle_destination(objectTags)
+      and not ContainsSubstring(objectTags.traffic_sign, '244')
+      and not missing_traffic_sign_vehicle_destination(objectTags)
   end
 })
 local missing_access_tag_bicycle_road = BikelaneTodo.new({
@@ -62,10 +62,10 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     return objectTags.bicycle_road == "yes"
-        -- Only check `vehicle` because `motor_vehicle` does allow `bicycle` already.
-        -- However the wiki recomments `vehicle` over `motor_vehicle`, so once that is fixed this will trigger again.
-        and (objectTags.vehicle == "no" or objectTags.vehicle == "destination")
-        and objectTags.bicycle ~= 'designated'
+      -- Only check `vehicle` because `motor_vehicle` does allow `bicycle` already.
+      -- However the wiki recomments `vehicle` over `motor_vehicle`, so once that is fixed this will trigger again.
+      and (objectTags.vehicle == "no" or objectTags.vehicle == "destination")
+      and objectTags.bicycle ~= 'designated'
   end
 })
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
