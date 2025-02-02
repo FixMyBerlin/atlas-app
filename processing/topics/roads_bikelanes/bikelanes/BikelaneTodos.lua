@@ -77,7 +77,7 @@ local missing_traffic_sign = BikelaneTodo.new({
   todoTableOnly = true,
   priority = function(objectTags, _)
     if objectTags.bicycle == "designated" then return "1" end
-    if objectTags.bicycle == "yes" then return "1" end
+    if objectTags.bicycle == "yes" then return "2" end
     return "3"
   end,
   conditions = function(objectTags, _)
@@ -180,6 +180,24 @@ local currentness_too_old = BikelaneTodo.new({
     return resultTags.category ~= nil and resultTags._age ~= nil and resultTags._age >= 2190
   end
 })
+local missing_width = BikelaneTodo.new({
+  id = "missing_width",
+  desc = "Ways without `width`",
+  todoTableOnly = true,
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return resultTags.width ~= nil
+  end
+})
+local missing_surface = BikelaneTodo.new({
+  id = "missing_surface",
+  desc = "Ways without `surface`",
+  todoTableOnly = true,
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return resultTags.surface ~= nil
+  end
+})
 
 BikelaneTodos = {
   -- REMINDER: Always use snake_case, never camelCase
@@ -199,4 +217,6 @@ BikelaneTodos = {
   unexpected_bicycle_access_on_footway,
   -- Other
   currentness_too_old,
+  missing_width,
+  missing_surface,
 }
