@@ -6,7 +6,6 @@ export const fetchStyle = async (key: string, url: string, folder: string) => {
     console.error('Fetch failed', { fetchStyle, url })
     process.exit()
   }
-  console.log('x', url)
   const data: any = await fetchStyle.json()
   await Bun.write(`${folder}/raw-api-response_${key}.json`, JSON.stringify(data, null, 2))
   return data
