@@ -1,4 +1,4 @@
-import { TodoId, todoIds } from '@/src/processingTypes/todoIds.const'
+import { bikelaneTodoIds, roadTodoIds, TodoId } from '@/src/processingTypes/todoIds.const'
 import { radinfraDeCampaigns } from '../../../(index)/_data/radinfraDeCampaigns.generated.const'
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
 import { mapboxStyleGroupLayers_radinfra_campaign } from './mapboxStyles/groups/radinfra_campaign'
@@ -49,7 +49,7 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
       }),
       legends: campaignLegend,
     },
-    ...todoIds.map((todoId) => {
+    ...[...bikelaneTodoIds, ...roadTodoIds].map((todoId) => {
       const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.menuTitle
       const category = campaignCategorySelect.find(
         (entry) => entry.value === radinfraDeCampaigns.find((c) => c.id === todoId)?.category,
