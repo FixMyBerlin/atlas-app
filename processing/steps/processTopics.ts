@@ -12,6 +12,7 @@ import {
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
+import { synologyLogInfo } from '../utils/synology'
 import { filteredFilePath } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
@@ -90,6 +91,16 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
   const diffChanges = params.computeDiffs && !fileChanged
 
   logStart('Processing Topics')
+
+  try {
+    const response = await fetch(params.fileURL.toString(), { method: 'HEAD' })
+    const lastModified = response.headers.get('Last-Modified')
+    const lastModifiedDate = lastModified ? new Date(lastModified).toISOString() : undefined
+    synologyLogInfo(`Processing file from ${lastModifiedDate || 'UNKOWN_DATE'}`)
+  } catch (error) {
+    console.log('ERROR logging the lastModified date', error)
+  }
+
   for (const topic of topicList) {
     // Get all tables related to `topic`
     // This needs to happen first, so `processedTables` includes what we skip below

@@ -44,7 +44,7 @@ export async function waitForFreshData() {
     // If we exceeded the maximum number of tries, return false and log to Synology
     if (tries >= maxTries) {
       synologyLogError(
-        `Timeout exceeded while waiting for fresh data. File is from ${lastModifiedDate}, ${new Date(lastModified).toTimeString()}`,
+        `Timeout exceeded while waiting for fresh data. File is from ${new Date(lastModified).toISOString()}`,
       )
       return false
     }
