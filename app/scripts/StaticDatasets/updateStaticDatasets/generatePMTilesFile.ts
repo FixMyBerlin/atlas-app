@@ -27,10 +27,14 @@ export const generatePMTilesFile = async (inputFullFile: string, outputFolder: s
       `--output=${outputFullFile}`,
       '--force',
       '--minimum-zoom=6', // Lowest zoom level for which tiles are generated (default `0`) (`6` is all of Germany on a Laptop)
-      '--smallest-maximum-zoom-guess=8', // Smallest maxzoom which is acceptable for our precision requirements, is higher, if tippecanoe guesses a higher maxzoom, it will be used ttps://github.com/felt/tippecanoe#zoom-levels / Automatic --maximum-zoom didn't have the required precision
-      '-rg', // If you use -rg, it will guess a drop rate that will keep at most 50,000 features in the densest tile https://github.com/felt/tippecanoe#dropping-a-fixed-fraction-of-features-by-zoom-level
-      '--drop-densest-as-needed', // https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
-      '--extend-zooms-if-still-dropping', // https://github.com/felt/tippecanoe?tab=readme-ov-file#zoom-levels
+      // Smallest maxzoom which is acceptable for our precision requirements, is higher, if tippecanoe guesses a higher maxzoom, it will be used ttps://github.com/felt/tippecanoe#zoom-levels / Automatic --maximum-zoom didn't have the required precision
+      '--smallest-maximum-zoom-guess=8',
+      // If you use -rg, it will guess a drop rate that will keep at most 50,000 features in the densest tile https://github.com/felt/tippecanoe#dropping-a-fixed-fraction-of-features-by-zoom-level
+      '-rg',
+      // https://github.com/felt/tippecanoe?tab=readme-ov-file#dropping-a-fraction-of-features-to-keep-under-tile-size-limits
+      '--drop-densest-as-needed',
+      // https://github.com/felt/tippecanoe?tab=readme-ov-file#zoom-levels
+      '--extend-zooms-if-still-dropping',
       '--layer=default',
       inputFullFile,
     ],
