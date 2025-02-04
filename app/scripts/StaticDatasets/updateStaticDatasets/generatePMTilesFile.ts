@@ -26,6 +26,12 @@ export const generatePMTilesFile = async (inputFullFile: string, outputFolder: s
       'tippecanoe',
       `--output=${outputFullFile}`,
       '--force',
+      // Don't simplify lines and polygons at maxzoom (but do simplify at lower zooms)
+      '--simplify-only-low-zooms',
+      // Combine the area of very small polygons into small squares that represent their combined area only at zoom levels below the maximum.
+      '--no-tiny-polygon-reduction-at-maximum-zoom',
+      // Preserve typology when possible https://github.com/felt/tippecanoe?tab=readme-ov-file#line-and-polygon-simplification
+      '--no-simplification-of-shared-nodes',
       // Lowest zoom level for which tiles are generated (default `0`) (`6` is all of Germany on a Laptop, `8` is a litte smaller than a State in Germany)
       '--minimum-zoom=7',
       // Smallest maxzoom which is acceptable for our precision requirements, is higher, if tippecanoe guesses a higher maxzoom, it will be used ttps://github.com/felt/tippecanoe#zoom-levels / Automatic --maximum-zoom didn't have the required precision
