@@ -21,14 +21,14 @@ import { maprouletteTaskDescriptionMarkdown } from '../[projectKey]/_utils/taskM
 // For testing:
 // http://127.0.0.1:5173/api/maproulette/test_maproulette_updates
 export async function GET() {
-  const projectKey = 'needsClarification'
+  const projectKey = 'needs_clarification'
 
   try {
     // SELECT DATA
     type QueryType = {
       type: string
       id: string
-      kind: string | undefined
+      kind: string
       geometry: LineString
     }[]
 
@@ -50,7 +50,7 @@ export async function GET() {
       const text = maprouletteTaskDescriptionMarkdown({
         projectKey,
         osmTypeIdString: osmTypeId,
-        bikelaneCategory: kind,
+        kind,
         geometry,
       })
       const properties = {
