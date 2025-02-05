@@ -40,7 +40,7 @@
     "updateStaticDatasets:staging": "bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.staging ./scripts/StaticDatasets/updateStaticDatasets.ts --folder-filter=",
     "updateStaticDatasets:production": "bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.production ./scripts/StaticDatasets/updateStaticDatasets.ts --folder-filter=",
     "updateWfsSources": "bun --env-file=.env ./scripts/StaticDatasets/updateWfsSources.ts --folder-filter=",
-    "deleteAllStaticDatasets:dev": "bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.development ./scripts/StaticDatasets/deleteAllStaticDatasets.ts",
+    "deleteAllStaticDatasets:dev": "echo \"Reminder: We cannot use this on staging, production, see https://github.com/FixMyBerlin/private-issues/issues/2283\" && bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.development ./scripts/StaticDatasets/deleteAllStaticDatasets.ts",
     "updateMasks": "npm run updateMasks:createGeojson && npm run updateMasks:createPmtiles && npm run updateMasks:upload && github",
     "updateMasks:createGeojson": "bun ./scripts/RegionalMasks/createGeojson.ts && prettier \"scripts/RegionalMasks/geojson/\" --write",
     "updateMasks:createPmtiles": "bun ./scripts/RegionalMasks/createPmtiles.ts",
