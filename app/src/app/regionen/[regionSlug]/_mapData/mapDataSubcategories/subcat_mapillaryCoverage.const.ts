@@ -1,3 +1,4 @@
+import { DataDrivenPropertyValueSpecification } from 'maplibre-gl'
 import { FileMapDataSubcategory } from '../types'
 import { defaultStyleHidden } from './defaultStyle/defaultStyleHidden'
 
@@ -5,11 +6,37 @@ const subcatId = 'mapillaryCoverage'
 export type SubcatMapillaryCoverageId = typeof subcatId
 export type SubcatMapillaryCoverageStyleIds = 'default' | 'all' | 'age' | 'pano'
 
+const layoutCircleNewestOntop: { 'circle-sort-key': DataDrivenPropertyValueSpecification<number> } =
+  {
+    'circle-sort-key': [
+      'step',
+      ['get', 'captured_at'],
+      100,
+      new Date().setFullYear(new Date().getFullYear() - 4),
+      200,
+      new Date().setFullYear(new Date().getFullYear() - 2),
+      300,
+    ],
+  }
+
+const layoutLineNewestOntop: { 'line-sort-key': DataDrivenPropertyValueSpecification<number> } = {
+  'line-sort-key': [
+    'step',
+    ['get', 'captured_at'],
+    100,
+    new Date().setFullYear(new Date().getFullYear() - 4),
+    200,
+    new Date().setFullYear(new Date().getFullYear() - 2),
+    300,
+  ],
+}
+
 export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Mapillary',
   ui: 'dropdown',
   sourceId: 'mapillary_coverage',
+  beforeId: 'atlas-app-beforeid-below-roadname',
   styles: [
     defaultStyleHidden,
     {
@@ -79,6 +106,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'circle',
           source: 'mapillary-source',
           'source-layer': 'image',
+          layout: layoutCircleNewestOntop,
           paint: {
             'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
@@ -96,6 +124,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'line',
           source: 'mapillary-source',
           'source-layer': 'sequence',
+          layout: layoutLineNewestOntop,
           paint: {
             'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
@@ -149,6 +178,10 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'circle',
           source: 'mapillary-source',
           'source-layer': 'image',
+          layout: {
+            // Sort pano on top of non-pano pictures
+            'circle-sort-key': ['case', ['==', ['get', 'is_pano'], true], 300, 100],
+          },
           paint: {
             'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
@@ -160,6 +193,10 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'line',
           source: 'mapillary-source',
           'source-layer': 'sequence',
+          layout: {
+            // Sort pano on top of non-pano pictures
+            'line-sort-key': ['case', ['==', ['get', 'is_pano'], true], 300, 100],
+          },
           paint: {
             'line-color': ['case', ['==', ['get', 'is_pano'], true], 'blue', 'green'],
             'line-opacity': ['interpolate', ['linear'], ['zoom'], 10, 0.7, 14, 0.4],
@@ -215,6 +252,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'circle',
           source: 'mapillary-source',
           'source-layer': 'image',
+          layout: layoutCircleNewestOntop,
           paint: {
             'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
@@ -234,6 +272,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'line',
           source: 'mapillary-source',
           'source-layer': 'sequence',
+          layout: layoutLineNewestOntop,
           paint: {
             'line-color': [
               'step',
@@ -312,6 +351,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'circle',
           source: 'mapillary-source',
           'source-layer': 'image',
+          layout: layoutCircleNewestOntop,
           paint: {
             'circle-radius': ['interpolate', ['linear'], ['zoom'], 14, 0.1, 14.5, 3, 15, 3, 17, 5],
             'circle-blur': 0.5,
@@ -332,6 +372,7 @@ export const subcat_mapillaryCoverage: FileMapDataSubcategory = {
           type: 'line',
           source: 'mapillary-source',
           'source-layer': 'sequence',
+          layout: layoutLineNewestOntop,
           paint: {
             'line-color': [
               'step',

@@ -35,4 +35,6 @@ export const numericSourceIds: Record<number, SourceNames> = {
   21: 'mapillary_coverage',
   22: 'atlas_bikelanesPresence',
   23: 'atlas_bikeSuitability',
+  24: 'atlas_todos_lines',
+  25: 'atlas_aggregated_lengths',
 }

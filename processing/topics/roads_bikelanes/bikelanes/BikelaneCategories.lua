@@ -88,30 +88,6 @@ local pedestrianAreaBicycleYes = BikelaneCategory.new({
   end
 })
 
--- TODO DEPRECATED: Remove after 2025-01-01
--- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
-local livingStreet = BikelaneCategory.new({
-  id = 'livingStreet',
-  desc = '(DEPRECATED) Living streets are considered bike friendly and added unless prohibided.' ..
-      ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")' ..
-      ' — DEPRECATION: This was moved to bikeSuitability.bikeSuitability=livingStreet on 2024-10 and will be removed from roads 2025-01-01.',
-  infrastructureExists = true,
-  implicitOneWay = false, -- road shared, both lanes
-  condition = function(tags)
-    if tags.highway == "living_street" then
-      -- Exit if all vehicle are prohibited (but don't exit if bikes are allowed)
-      if tags.vehicle == "no" and not (tags.bicycle == "yes" or tags.bicycle == "designated") then
-        return nil
-      end
-      -- Exit if bikes are prohibited
-      if tags.bicycle == "no" or tags.bicycle == "dismount" then
-        return nil
-      end
-      return true
-    end
-  end
-})
-
 -- https://wiki.openstreetmap.org/wiki/DE:Key:bicycle%20road
 -- traffic_sign=DE:244, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:244
 local bicycleRoad = BikelaneCategory.new({
@@ -268,7 +244,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- isolated:
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
-    if osm2pgsql.has_prefix(trafficSign, "DE:237") and not tags.cycleway == "lane" then
+    if ContainsSubstring(trafficSign, "DE:237") and not tags.cycleway == "lane" then
       return true
     end
   end
@@ -567,7 +543,6 @@ local categoryDefinitions = {
   protectedCyclewayOnHighway,
   cyclewayLink,
   crossing,
-  livingStreet,
   bicycleRoad_vehicleDestination,
   bicycleRoad, -- has to come after `bicycleRoad_vehicleDestination`
   sharedBusLaneBikeWithBus,

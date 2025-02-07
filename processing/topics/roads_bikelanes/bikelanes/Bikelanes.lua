@@ -12,7 +12,9 @@ require("Sanitize")
 require("DeriveOneway")
 require("DefaultId")
 require("DeriveTrafficSigns")
-require("CreateTodoList")
+require("CollectTodos")
+require("ToMarkdownList")
+require("ToTodoTags")
 
 local tags_copied = {
   "mapillary",
@@ -62,13 +64,15 @@ function Bikelanes(object)
       local result_tags = {
         _side = transformedTags._side,
         _infrastructureExists = category.infrastructureExists,
+        -- We have to duplicate Metadata.lua so we can use this value in BikelaneTodos.lua
+        _age = AgeInDays(object.timestamp),
         category = category.id,
       }
       if category.infrastructureExists then
         MergeTable(result_tags, {
           _id = DefaultId(object),
           _infrastructureExists = true,
-          _age = AgeInDays(ParseCheckDate(tags["check_date"])),
+          _age = AgeInDays(ParseCheckDate(tags["check_date"])) or result_tags._age,
           prefix = transformedTags._prefix,
           width = ParseLength(transformedTags.width),
           oneway = DeriveOneway(transformedTags, category),
@@ -88,10 +92,13 @@ function Bikelanes(object)
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
           result_tags._parent_highway = transformedTags._parent_highway
           result_tags.offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2
-          result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
+          result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix])) or result_tags._age
         end
 
-        result_tags.todos = CreateTodoList(BikelaneTodos, transformedTags, result_tags)
+
+        local todos = CollectTodos(BikelaneTodos, transformedTags, result_tags)
+        result_tags._todo_list = ToTodoTags(todos)
+        result_tags.todos = ToMarkdownList(todos)
       end
       table.insert(result_bikelanes, result_tags)
     end

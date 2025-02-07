@@ -41,21 +41,17 @@ export default function KontaktPage() {
         <LinkMail subject="Feedback Radverkehrsatlas">feedback@fixmycity.de</LinkMail>
       </p>
       <p>
-        Du findest uns auch auf{' '}
-        <Link blank href="https://twitter.com/fixmyberlin">
-          Twitter
-        </Link>{' '}
-        und{' '}
+        Sie finden uns auch auf{' '}
         <Link blank href="https://www.linkedin.com/company/fixmycity">
           LinkedIn
         </Link>
       </p>
       <p>
-        Sofern du Bugs oder Verbesserungsvorschläge hast, gib uns gerne{' '}
+        Sofern Sie Bugs oder Verbesserungsvorschläge haben, geben Sie uns gerne{' '}
         <Link blank href="https://github.com/FixMyBerlin/atlas-app">
           auf GitHub Feedback
         </Link>
-        . Du kannst den Source Code auch weiterentwickeln. Lizenz:{' '}
+        . Sie können den Source Code auch weiterentwickeln. Lizenz:{' '}
         <Link href="https://github.com/FixMyBerlin/atlas-app/blob/develop/LICENSE.md" blank>
           AGPL v3
         </Link>

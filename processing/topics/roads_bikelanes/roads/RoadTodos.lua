@@ -5,30 +5,42 @@ RoadTodo.__index = RoadTodo
 -- @param args table
 -- @param args.key string
 -- @param args.desc string
+-- @param args.todoTableOnly boolean
 -- @param args.conditions function
 function RoadTodo.new(args)
   local self = setmetatable({}, RoadTodo)
   self.id = args.id
   self.desc = args.desc
+  self.todoTableOnly = args.todoTableOnly
+  self.priority = args.priority
   self.conditions = args.conditions
   return self
 end
 
 function RoadTodo:__call(objectTags, resultTags)
   if self.conditions(objectTags, resultTags) then
-    return self.id
+    return {
+      id = self.id,
+      priority = self.priority(objectTags, resultTags),
+      todoTableOnly = self.todoTableOnly,
+    }
   else
     return nil
   end
 end
 
--- === Fahrradstraßen ===
-local check_cycleway_shared = RoadTodo.new({
-  id = "check_cycleway_shared",
-  desc = "Tagging `cycleway=shared` is very old tagging and should be checked an maybe removed.",
+-- === Deprecated cycleway tagging ===
+local deprecated_cycleway_shared = RoadTodo.new({
+  id = "deprecated_cycleway_shared",
+  desc = "The tagging `cycleway=shared` is deprecated and should be replaced or removed.",
+  todoTableOnly = false,
+  priority = function(_, _) return "1" end,
   conditions = function(tagsObject, _)
     return tagsObject.cycleway == "shared"
   end
 })
 
-RoadTodos = {check_cycleway_shared}
+RoadTodos = {
+  -- REMINDER: Always use snake_case, never camelCase
+  deprecated_cycleway_shared,
+}

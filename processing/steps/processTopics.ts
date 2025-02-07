@@ -1,7 +1,7 @@
 import { $ } from 'bun'
 import { join } from 'path'
 import { TOPIC_DIR } from '../constants/directories.const'
-import { type Topic } from '../constants/topics.const'
+import { topicList, type Topic } from '../constants/topics.const'
 import {
   backupTable,
   diffTables,
@@ -11,6 +11,8 @@ import {
 } from '../utils/diffing'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
+import { params } from '../utils/parameters'
+import { synologyLogInfo } from '../utils/synology'
 import { filteredFilePath } from './filter'
 
 const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
@@ -35,9 +37,6 @@ async function runSQL(topic: Topic) {
 
 /**
  * Run the given topic's lua file with osm2pgsql on the given file
- * @param fileName
- * @param topic
- * @returns
  */
 async function runLua(fileName: string, topic: Topic) {
   const filePath = filteredFilePath(fileName)
@@ -70,25 +69,14 @@ export async function runTopic(fileName: string, topic: Topic) {
  * @param topics a list of topics to run
  * @param fileName an OSM file name to run the topics on
  * @param fileChanged whether the file has changed since the last run
- * @param skipUnchanged whether to skip topics that haven't changed
- * @param computeDiffs whether to compute diffs
- * @param freezeData whether to freeze the data
- * @returns
  */
-export async function processTopics(
-  topics: readonly Topic[],
-  fileName: string,
-  fileChanged: boolean,
-  skipUnchanged: boolean,
-  computeDiffs: boolean,
-  freezeData: boolean,
-) {
+export async function processTopics(fileName: string, fileChanged: boolean) {
   const tableListPublic = await getSchemaTables('public')
   const tableListBackup = await getSchemaTables('backup')
   const processedTables = new Set<string>()
 
   // drop all previous diffs
-  if (!freezeData) {
+  if (!params.freezeData) {
     tableListPublic.forEach(dropDiffTable)
   }
 
@@ -99,50 +87,64 @@ export async function processTopics(
     console.log('Helpers have changed. Rerunning all code.')
   }
 
-  const skipCode = skipUnchanged && !helpersChanged && !fileChanged
-  const diffChanges = computeDiffs && !fileChanged
+  const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
+  const diffChanges = params.computeDiffs && !fileChanged
 
-  logStart('Processing')
-  for (const topic of topics) {
-    // get all tables related to `topic`
+  logStart('Processing Topics')
+
+  try {
+    const response = await fetch(params.fileURL.toString(), { method: 'HEAD' })
+    const lastModified = response.headers.get('Last-Modified')
+    const lastModifiedDate = lastModified ? new Date(lastModified).toISOString() : undefined
+    synologyLogInfo(`Processing file from ${lastModifiedDate || 'UNKOWN_DATE'}`)
+  } catch (error) {
+    console.log('ERROR logging the lastModified date', error)
+  }
+
+  for (const topic of topicList) {
+    // Get all tables related to `topic`
+    // This needs to happen first, so `processedTables` includes what we skip below
     const topicTables = await getTopicTables(topic)
     topicTables.forEach((table) => processedTables.add(table))
 
+    // Guard
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
       console.log(
-        `⏩ Skipping topic "${topic}". The code hasn't changed and SKIP_UNCHANGED is active.`,
+        `⏩ Skipping topic "${topic}".`,
+        "The code hasn't changed and `SKIP_UNCHANGED` is active.",
       )
-    } else {
-      logStart(`Topic "${topic}"`)
-
-      const processedTopicTables = topicTables.intersection(tableListPublic)
-
-      // backup all tables related to topic
-      if (diffChanges) {
-        if (freezeData) {
-          // with FREEZE_DATA=1 we only backup tables that are not already backed up
-          const toBackup = processedTopicTables.difference(tableListBackup)
-          await Promise.all(Array.from(toBackup).map(backupTable))
-        } else {
-          await Promise.all(Array.from(processedTopicTables).map(backupTable))
-        }
-      }
-
-      // run the topic with osm2pgsql and the sql post-processing
-      await runTopic(fileName, topic)
-
-      // update the code hashes
-      updateDirectoryHash(topicPath(topic))
-
-      if (diffChanges) {
-        await diffTables(Array.from(processedTopicTables))
-      }
-
-      logEnd(`Topic "${topic}"`)
+      continue
     }
+
+    logStart(`Topic "${topic}"`)
+    const processedTopicTables = topicTables.intersection(tableListPublic)
+
+    // Backup all tables related to topic
+    if (diffChanges) {
+      // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
+      // Which means existing backup tables don't change (are frozen).
+      // Learn more in [processing/README](../../processing/README.md#reference)
+      const toBackup = params.freezeData
+        ? processedTopicTables.difference(tableListBackup)
+        : processedTopicTables
+      await Promise.all(Array.from(toBackup).map(backupTable))
+    }
+
+    // Run the topic with osm2pgsql and the sql post-processing
+    await runTopic(fileName, topic)
+
+    // Update the code hashes
+    updateDirectoryHash(topicPath(topic))
+
+    // Update the diff tables
+    if (diffChanges) {
+      await diffTables(Array.from(processedTopicTables))
+    }
+
+    logEnd(`Topic "${topic}"`)
   }
 
-  const timeElapsed = logEnd('Processing')
+  const timeElapsed = logEnd('Processing Topics')
   return { timeElapsed, processedTables: Array.from(processedTables) }
 }

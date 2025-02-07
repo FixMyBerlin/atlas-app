@@ -32,26 +32,7 @@ import { subcat_signs } from '../mapDataSubcategories/subcat_signs.const'
 import { subcat_surface_bikelane } from '../mapDataSubcategories/subcat_surface_bikelane'
 import { subcat_surface_roads } from '../mapDataSubcategories/subcat_surface_roads.const'
 import { StaticMapDataCategory } from '../types'
-
-// TODO type MapDataCategoryIds = typeof sources[number]['id']
-export type MapDataCategoryId =
-  // Radverkehrsatlas
-  | 'bikelanes'
-  | 'bikelanes-minimal'
-  | 'boundaries' // Only used ONCE for now for the 'bb-kampagne'-region
-  | 'lit'
-  | 'poi'
-  | 'roads'
-  | 'statistics'
-  | 'surface'
-  // Parking Atlas
-  | 'parking'
-  // bicycleParking Atlas
-  | 'bicycleParking'
-  // Special only:
-  | 'mapillary'
-  | 'accidents'
-  | 'trafficSigns'
+import { radinfraCategories } from './radinfraCategories.const'
 
 export const categories: StaticMapDataCategory[] = [
   {
@@ -123,12 +104,6 @@ export const categories: StaticMapDataCategory[] = [
     subcategories: [{ ...subcat_bikelanes, defaultStyle: 'default' }],
   },
   {
-    id: 'trafficSigns',
-    name: 'Verkehrszeichen (WIP)',
-    desc: 'Als Punkt erfasste Verkehrszeichen aus OSM.',
-    subcategories: [{ ...subcat_signs, defaultStyle: 'hidden' }],
-  },
-  {
     id: 'lit',
     name: 'Beleuchtung',
     desc: 'Fahrbahn & Radinfrastruktur',
@@ -193,4 +168,5 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Unfalldaten',
     subcategories: [{ ...subcat_accidents, defaultStyle: 'default' }],
   },
+  ...radinfraCategories,
 ]

@@ -1,5 +1,5 @@
 import { Prettify } from '@/src/app/_components/types/types'
-import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/categories.const'
+import { MapDataCategoryId } from '../../../_mapData/mapDataCategories/MapDataCategoryId'
 import { StyleId, SubcategoryId } from '../../../_mapData/typeId'
 import { StaticMapDataCategory } from '../../../_mapData/types'
 

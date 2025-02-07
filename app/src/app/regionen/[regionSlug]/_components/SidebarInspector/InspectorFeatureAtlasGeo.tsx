@@ -34,10 +34,10 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeatur
         <Disclosure title={<FormattedMessage id={`${sourceId}--title`} />} objectId={osmTypeId}>
           <NoticeTransformedGeometry visible={properties?.prefix} />
           <NoticeMaproulette
-            identifier={properties?.category}
+            sourceId={sourceId}
             osmTypeIdString={osmTypeId}
-            category={properties?.category}
-            todos={properties?.todos}
+            kind={properties?.category || properties?.road}
+            properties={properties}
             geometry={geometry}
           />
 

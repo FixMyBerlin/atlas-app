@@ -1,104 +1,98 @@
+import { $ } from 'bun'
 import { basename, join } from 'path'
 import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
+import { params } from '../utils/parameters'
 import { readPersistent, writePersistent } from '../utils/persistentData'
 import { synologyLogError } from '../utils/synology'
 
 /**
  * Get the full path to the downloaded file.
- * @param fileName file name
  * @returns full path to the file
  */
 export const originalFilePath = (fileName: string) => join(OSM_DOWNLOAD_DIR, fileName)
 
 /**
  * Wait for the givien url to have todays date as last modified.
- * @param fileURL the url to check
- * @param maxTries the maximum number of tries
- * @param timeoutMinutes the timeout between tries in minutes
  * @returns true if the file has been updated today, false otherwise
  */
-export async function waitForFreshData(fileURL: URL, maxTries: number, timeoutMinutes: number) {
+export async function waitForFreshData() {
+  if (!params.waitForFreshData) {
+    console.log('Skipping `waitForFreshData` due to `WAIT_FOR_FRESH_DATA=0`')
+    return
+  }
+
+  const maxTries = 30 // 5 hours (at 10 Min per try)
+  const timeoutMinutes = 10
   const todaysDate = new Date().toDateString()
   let tries = 0
+
   while (true) {
-    // get last modified date
-    const response = await fetch(fileURL.toString(), { method: 'HEAD' })
+    // Get last modified date
+    const response = await fetch(params.fileURL.toString(), { method: 'HEAD' })
     const lastModified = response.headers.get('Last-Modified')
     if (!lastModified) {
       throw new Error('No Last-Modified header found')
     }
 
-    // check if last modified date is today
+    // Check if last modified date is today
     const lastModifiedDate = new Date(lastModified).toDateString()
     if (todaysDate === lastModifiedDate) {
       return true
     }
 
     tries++
-    // if we exceeded the maximum number of tries, return false and log to synlogy
+    // If we exceeded the maximum number of tries, return false and log to Synology
     if (tries >= maxTries) {
       synologyLogError(
-        `Timeout exceeded while waiting for fresh data. File is from ${lastModifiedDate}`,
+        `Timeout exceeded while waiting for fresh data. File is from ${new Date(lastModified).toISOString()}`,
       )
       return false
     }
 
-    // wait for the timeout
+    // Wait for the timeout
     await new Promise((resolve) => setTimeout(resolve, timeoutMinutes * 1000 * 60))
   }
 }
 
 /**
- * Download a file from the given url and save it to the disk.
+ * Download the file from the configured url and save it to the disk.
  * When the files eTag is the same as the last download, the download will be skipped.
- * @param fileURL the url to download from
- * @param skipIfExists  whether to skip the download if the file already exists
- * @returns the file name and whether the file has changed
  */
-export async function downloadFile(fileURL: URL, skipIfExists: boolean) {
-  const fileName = basename(fileURL.toString())
+export async function downloadFile() {
+  const downloadUrl = params.fileURL.toString()
+  const fileName = basename(downloadUrl)
   const filePath = originalFilePath(fileName)
-  const file = await Bun.file(filePath)
-  const fileExists = await file.exists()
+  const fileExists = await Bun.file(filePath).exists()
 
-  // check if file already exists
-  if (skipIfExists && fileExists) {
+  // Check if file already exists
+  if (fileExists && params.skipDownload) {
     console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
     return { fileName, fileChanged: false }
   }
 
-  // check if file has changed
-  const eTag = await fetch(fileURL.toString(), { method: 'HEAD' }).then((response) =>
+  // Check if file has changed
+  const eTag = await fetch(downloadUrl, { method: 'HEAD' }).then((response) =>
     response.headers.get('ETag'),
   )
   if (!eTag) {
     throw new Error('No ETag found')
   }
-
-  if (eTag === (await readPersistent(fileName))) {
+  if (fileExists && eTag === (await readPersistent(fileName))) {
     console.log('⏩ Skipped download because the file has not changed.')
     return { fileName, fileChanged: false }
   }
 
-  // download file and write to disc
+  // Download file and write to disc
   console.log(`Downloading file "${fileName}"...`)
-  const response = await fetch(fileURL.toString())
-
-  if (!response.ok || !response.body) {
-    throw new Error(`Failed to download file. Status code: ${response.statusText}`)
+  try {
+    await $`wget --quiet --output-document=${filePath} ${downloadUrl}`
+  } catch (error) {
+    throw new Error(
+      `Failed to download file with \`wget --quiet --output-document=${filePath} ${downloadUrl}\``,
+    )
   }
 
-  // we need to download the file as a stream to avoid memory issues
-  const reader = response.body.getReader()
-  const writer = file.writer()
-  while (true) {
-    const { done, value } = await reader.read()
-    if (done) break
-    await writer.write(value)
-  }
-  writer.end()
-
-  // save etag
+  // Save etag
   writePersistent(fileName, eTag)
 
   return { fileName, fileChanged: true }

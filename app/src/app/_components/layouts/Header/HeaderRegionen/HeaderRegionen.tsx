@@ -1,5 +1,5 @@
 'use client'
-import { RenderIfNotDoNotNavigate } from '../../../RenderIfNotDoNotNavigate'
+import { RenderIfNotDoNotNavigate } from '../../RenderIfNotDoNotNavigate'
 import { NavigationDesktop } from '../NavigationDesktop/NavigationDesktop'
 import { NavigationMobile } from '../NavigationMobile/NavigationMobile'
 import { NavigationWrapper } from '../NavigationWrapper/NavigationWrapper'

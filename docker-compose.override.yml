@@ -1,16 +1,21 @@
 services:
   processing:
-    image: !reset null
+    image: processing:latest
     build:
       context: .
       dockerfile: ./processing.Dockerfile
+    # INFO: Mounting processing as volumen allows us to edit data without constant rebuild
+    # However, that would also overwrite the `node_modules` that where build inside docker
+    # with local data. The second line prevents this overwrite by excepting the `node_modules`
+    # from the mounting.
     volumes:
       - ./processing:/processing
       - /processing/node_modules
+    # INFO: The overwrite of `journald` is needed for mac systems which did not work with `journald`
     logging:
       driver: json-file
   app:
-    image: !reset null
+    image: app:latest
     build:
       context: .
       dockerfile: ./app.Dockerfile
@@ -25,6 +30,13 @@ services:
       driver: json-file
     profiles:
       - frontend
+  tiles:
+    logging:
+      driver: json-file
+  db:
+    logging:
+      driver: json-file
+
 configs:
   postgres_conf:
     file: ./configs/postgres.development.conf

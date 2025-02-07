@@ -31,6 +31,7 @@ export const translations: { [key: string]: string } = {
   'ALL--category=livingStreet': 'Verkehrsberuhigter Bereich (Spielstraße)',
   'ALL--category=needsClarification': 'Führungsform unklar. Die Attribute in OpenStreetMap sind nicht ausreichend, um die Führungsform zu kategorisieren. Das deutet darauf hin, dass zusätzlich Attribute in OSM ergänzt werden müssen.',
   'ALL--category=pedestrianAreaBicycleYes': 'Fußgängerzone, Fahrrad frei',
+  'ALL--category=protectedCyclewayOnHighway': 'Geschützter Radfahrstreifen (Protected Bike Lane / PBL)',
   'ALL--category=separate_geometry': 'RVA als separate Geometrie erfasst',
   'ALL--category=sharedBusLaneBikeWithBus': 'Radfahrstreifen mit Freigabe Busverkehr',
   'ALL--category=sharedBusLaneBusWithBike': 'Bussonderfahrstreifen mit Fahrrad frei',
@@ -250,6 +251,7 @@ export const translations: { [key: string]: string } = {
   'atlas_roads--surface_source=tag': 'OSM-Tag `surface`',
   'atlas_roads--title': 'Daten zur Straße',
   'atlas_roadsPathClasses--title': 'Daten zu Wegen',
+  'atlas_todos_lines--title': 'Kampagnen',
   'atlas_trafficSigns--title': 'Verkehrszeichen',
   'mapillary_coverage--title': 'Mapillary Foto',
 }

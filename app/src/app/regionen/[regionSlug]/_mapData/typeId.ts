@@ -105,6 +105,18 @@ import {
   SubcatPoiPlusPublicTransportId,
   SubcatPoiPlusPublicTransportStyleIds,
 } from './mapDataSubcategories/subcat_poi_plus_publicTransport.const'
+import {
+  SubcatRadinfraCampaignId,
+  SubcatRadinfraCampaignStyleIds,
+} from './mapDataSubcategories/subcat_radinfra_campaigns.const'
+import {
+  SubcatRadinfraPlusMapillaryId,
+  SubcatRadinfraPlusMapillaryStyleIds,
+} from './mapDataSubcategories/subcat_radinfra_plus_mapillary.const'
+import {
+  SubcatRadinfraStatsId,
+  SubcatRadinfraStatsStyleIds,
+} from './mapDataSubcategories/subcat_radinfra_stats'
 import { SubcatRoadsId, SubcatRoadsStyleIds } from './mapDataSubcategories/subcat_roads.const'
 import {
   SubcatRoadsPlusFootwaysId,
@@ -133,6 +145,7 @@ export type SubcategoryId =
   | SubcatAccidentsId
   | SubcatBicycleParkingId
   | SubcatBikelanesId
+  | SubcatBikelanesPlusBikeSuitabilityId
   | SubcatBikelanesPlusPresenceId
   | SubcatBikelanesPlusRoutesId
   | SubcatBikelanesPlusSignsId
@@ -158,8 +171,11 @@ export type SubcategoryId =
   | SubcatPoiPlusBarriersId
   | SubcatPoiPlusLanduseId
   | SubcatPoiPlusPublicTransportId
+  | SubcatRadinfraCampaignId
+  | SubcatRadinfraPlusMapillaryId
+  | SubcatRadinfraStatsId
+  | SubcatRadinfraStatsId
   | SubcatRoadsId
-  | SubcatBikelanesPlusBikeSuitabilityId
   | SubcatRoadsPlusFootwaysId
   | SubcatRoadsPlusLabelId
   | SubcatRoadsPlusOnewayId
@@ -173,6 +189,7 @@ export type StyleId =
   | StyleIdDefaults
   | SubcatAccidentsStyleIds
   | SubcatBicycleParkingStyleIds
+  | SubcatBikelanesPlusBikeSuitabilityStyleIds
   | SubcatBikelanesPlusPresenceStyleIds
   | SubcatBikelanesPlusRoutesStyleIds
   | SubcatBikelanesPlusSignsStyleIds
@@ -185,13 +202,13 @@ export type StyleId =
   | SubcatLitPlusFreshnessStyleIds
   | SubcatLitStyleIds
   | SubcatMapillaryCoverageStyleIds
-  | SubcatMaxspeedStyleIds
   | SubcatMaxspeedPlusPresenceStyleIds
+  | SubcatMaxspeedStyleIds
   | SubcatParkingAreasStyleIds
+  | SubcatParkingBoundariesStyleIds
   | SubcatParkingDebugStyleIds
   | SubcatParkingPointsStyleIds
   | SubcatParkingStatsStyleIds
-  | SubcatParkingBoundariesStyleIds
   | SubcatParkingStyleIds
   | SubcatPoiBoundariesStyleIds
   | SubcatPoiPlacesStyleIds
@@ -199,7 +216,10 @@ export type StyleId =
   | SubcatPoiPlusLanduseStyleIds
   | SubcatPoiPlusPublicTransportStyleIds
   | SubcatPoiStyleIds
-  | SubcatBikelanesPlusBikeSuitabilityStyleIds
+  | SubcatRadinfraCampaignStyleIds
+  | SubcatRadinfraPlusMapillaryStyleIds
+  | SubcatRadinfraStatsStyleIds
+  | SubcatRadinfraStatsStyleIds
   | SubcatRoadsPlusFootwaysStyleIds
   | SubcatRoadsPlusLabelStyleIds
   | SubcatRoadsPlusOnewayStyleIds

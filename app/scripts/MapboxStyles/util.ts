@@ -1,9 +1,9 @@
 import chalk from 'chalk'
 
-export const fetchStyle = async (key, url, folder) => {
+export const fetchStyle = async (key: string, url: string, folder: string) => {
   const fetchStyle = await fetch(url)
   if (!fetchStyle.ok) {
-    console.error('Fetch failed', fetchStyle)
+    console.error('Fetch failed', { fetchStyle, url })
     process.exit()
   }
   const data: any = await fetchStyle.json()

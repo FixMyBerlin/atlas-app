@@ -2,10 +2,7 @@ import imageBibi from '@/src/app/_components/assets/bibi-logo.svg'
 import imageNudafa from '@/src/app/_components/assets/nudafa-logo.svg'
 import imageParking from '@/src/app/_components/assets/parking.svg'
 import imageTrTo from '@/src/app/_components/assets/trto-logo.png'
-import {
-  MapDataCategoryId,
-  categories,
-} from '@/src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
+import { categories } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
 import {
   SourcesRasterIds,
   sourcesBackgroundsRaster,
@@ -15,6 +12,7 @@ import {
   UnionTiles,
 } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { StaticImageData } from 'next/image'
+import { MapDataCategoryId } from '../../[regionSlug]/_mapData/mapDataCategories/MapDataCategoryId'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number
@@ -752,12 +750,14 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: false,
     categories: [
       // The order here specifies the order in the UI
-      'bikelanes',
-      // 'poi',
-      // 'roads',
-      'surface',
-      // 'lit',
-      'mapillary',
+      'radinfra_bikelanes',
+      'radinfra_surface',
+      'radinfra_width',
+      'radinfra_trafficSigns',
+      'radinfra_currentness',
+      'radinfra_campagins',
+      'radinfra_statistics',
+      'radinfra_mapillary',
     ],
     backgroundSources: [...defaultBackgroundSources],
     notes: 'osmNotes',

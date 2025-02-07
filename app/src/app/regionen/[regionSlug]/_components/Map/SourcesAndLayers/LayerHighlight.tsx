@@ -96,6 +96,9 @@ export const LayerHighlight = (props: LayerProps) => {
         'circle-radius': 10,
       },
     }
+  } else if (layerProps.type === 'heatmap') {
+    // We don't provide a highlight for heatmap for now
+    return null
   }
 
   return <Layer {...layerProps} />

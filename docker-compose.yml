@@ -11,7 +11,6 @@ services:
       OSM_DOWNLOAD_URL:
       SKIP_UNCHANGED:
       SKIP_DOWNLOAD:
-      SKIP_TAG_FILTER:
       WAIT_FOR_FRESH_DATA:
       SKIP_WARM_CACHE:
       TILES_URL:
@@ -48,11 +47,12 @@ services:
       SESSION_SECRET_KEY:
       OSM_CLIENT_ID:
       OSM_CLIENT_SECRET:
-      ATLAS_API_KEY:
       S3_KEY:
       S3_SECRET:
       S3_REGION:
       S3_BUCKET:
+      ATLAS_API_KEY:
+      MAPROULETTE_API_KEY:
       FORCE_COLOR: 1
     ports:
       - 4000:4000
@@ -95,6 +95,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    logging:
+      driver: journald
   db:
     image: postgis/postgis:14-3.4-alpine
     container_name: ${DATABASE_HOST}
@@ -122,6 +124,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    logging:
+      driver: journald
 
 volumes:
   geodata:

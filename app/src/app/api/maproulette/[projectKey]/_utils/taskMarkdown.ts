@@ -1,59 +1,41 @@
 import { translations } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import { mapillaryUrl } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
+import { TodoId, todoIds } from '@/src/processingTypes/todoIds.const'
 import { point } from '@turf/turf'
 import { LineString } from 'geojson'
-import { maprouletteProjects } from './maprouletteProjects.const'
 
-export type MapRouletteProjectKey = (typeof maprouletteProjects)[number]
 type Props = {
-  projectKey: MapRouletteProjectKey
+  projectKey: TodoId
   osmTypeIdString: string
-  category: string
+  /** `bikelane.category` or `roads.road` */
+  kind: string
   geometry: LineString
 }
 
-// Our Inspector knows about the `properties.category` which is more detailed that our MapRouletteProjects
-export const categoryToMaprouletteProjectKey = (category: string | undefined | null) => {
-  const matches: MapRouletteProjectKey[] = []
-  if (!category) return matches
-  // Handle cases where the category is more detailed
-  if (category.includes('adjoiningOrIsolated')) {
-    matches.push('adjoiningOrIsolated')
-  }
-  if (category.includes('advisoryOrExclusive')) {
-    matches.push('advisoryOrExclusive')
-  }
-  // Handle cases where category and MapRoulette Key match
-  const directMatch = maprouletteProjects.find((p) => p === category)
-  if (directMatch) {
-    matches.push(directMatch)
-  }
-  return matches
+export const todoMarkdownToMaprouletteCampaignKey = (todos: string | undefined) => {
+  return todoIds
+    .map((project) => {
+      if (todos?.includes(`* ${project}`)) {
+        return project
+      }
+    })
+    .filter(Boolean)
 }
 
-export const todoMarkdownToMaprouletteProjectKey = (todos: string | undefined) => {
-  return maprouletteProjects.map((project) => {
-    if (todos?.includes(`* ${project}`)) {
-      return project
-    }
-  })
-}
-
-export const taskDescriptionMarkdown = ({
+export const maprouletteTaskDescriptionMarkdown = ({
   projectKey,
   osmTypeIdString,
-  category,
+  kind,
   geometry,
-}: Props): string => {
+}: Props) => {
   const [centerLng, centerLat] = pointFromGeometry(geometry)
   const startPoint = point(geometry.coordinates[0]!).geometry
   const endPoint = point(geometry.coordinates.at(-1)!).geometry
 
-  const categoryTranslated = translations[`ALL--category=${category}`]
+  const infrastructureName = translations[`ALL--category=${kind}`]
     ?.replace('(Straßenbegleitend oder selbstständig geführt; Kategorisierung unklar)', '')
     ?.replace('(Kategorisierung unklar)', '')
-    ?.trim()
 
   // Do not add indentation, it will break the Markdown in Maproulette
   // Use in MapRoulette as… (min 150 chars)
@@ -67,11 +49,11 @@ export const taskDescriptionMarkdown = ({
     ```
     */
   switch (projectKey) {
-    case 'adjoiningOrIsolated':
+    case 'adjoining_or_isolated':
       return `
 ## Kontext
 
-Für diese Infrastruktur (${categoryTranslated}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
+Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
 
 ## Aufgabe
 
@@ -83,11 +65,11 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-    case 'advisoryOrExclusive':
+    case 'advisory_or_exclusive':
       return `
 ## Kontext
 
@@ -110,32 +92,35 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
-    case 'needsClarification':
+    case 'needs_clarification':
       return `
 ## Kontext
 
 Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.
-Es ist ein \`highway=cycleway\` oder ein \`highway=path+bicycle=designated\` ohne weitere Attribute.
+
+Das passiert häufig, wenn der Weg als \`highway=cycleway\` ohne weitere Attribute angegeben ist.
 
 ## Aufgabe
 
 Bitte präzisiere das Tagging.
-* Ist es ein Übergang an einer Straße? Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
-* Ist es ein Verbindungsstück das nur für das Routing relevant ist? Füge \`cycleway=link\` hinzu.
-* Ist es ein gemeinsamer oder getrennter Geh- und Radweg? Fürge \`segregated=yes\` oder  \`segregated=no\` hinzu.
-* Wenn möglich, ergänze bitte auch \`is_sidepath=yes|no\` um anzuzeigen, ob die Infrastruktur straßenbegleitend (\`yes\`) oder selbständig geführt (\`no\`) ist (bzw. bei Gehwegen stattdessen \`footway=sidepath\`).
+* Ist es ein Übergang an einer Straße? ➔ Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
+* Ist es ein Verbindungsstück das nur für das Routing relevant ist? ➔ Füge \`cycleway=link\` hinzu.
+* Ist es ein gemeinsamer oder getrennter Geh- und Radweg? ➔ Füge \`segregated=yes\` oder  \`segregated=no\` hinzu.
+* Ist es ein Radweg \`highway=cycleway\`? ➔ Ergänze \`is_sidepath=yes\` für straßenbegleitende Wege bzw. \`no\` für selbständig geführte Wege.
 * Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)).
 * Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
+
+Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de/dokumentation/fuehrungsform) findest du in der Dokumentation.
 
 ## Hilfsmittel
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
@@ -162,7 +147,32 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
+    case 'missing_access_tag_240':
+      return `
+## Kontext
+
+Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
+
+* [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
+* [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))
+
+## Aufgabe
+
+Bitte prüfe die Infrastruktur und ergänze:
+
+* \`bicycle=designated\` und \`foot=designated\`
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
@@ -188,13 +198,13 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
 
 `
-    case 'missing_acccess_tag_bicycle_road':
+    case 'missing_access_tag_bicycle_road':
       return `
 ## Kontext
 
@@ -212,7 +222,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 
@@ -240,7 +250,7 @@ Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fu
 
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 `
@@ -270,9 +280,106 @@ Tagging-Empfehlungen:
 
 ## Hilfsmittel
 
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${centerLat}/${centerLng})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+`
+    case 'missing_segregated':
+      return `
+## Kontext
+
+Diese Wege werden von Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).
+
+## Aufgabe
+
+**Bitte ergänze die Angabe, ob die Verkehrsformen getrennt oder gemeinsam geführt werden:**
+
+* \`segregated=yes\`, wenn eine Trennung vorliegt, beispielweise durch eine farbige Linie ([Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))).
+* \`segregated=no\`, wenn keine Trennung vorliegt ([Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)).
+
+Die Angabe, ob ein Verkehrszeichen vorliegt ist unabhängig davon, wie die Infrastruktur vor Ort wahrgenommen wird. In Ausnahmen kann es zu differenzen kommen, wenn das Verkehrszeichen \`241\` eine Trennung angibt aber (Abschnittsweise) keine Trennung zu erkennen ist.
+
+Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+`
+    case 'currentness_too_old':
+      return `
+## Kontext
+
+Dieser Weg ist seht vielen Jahren nicht mehr überprüft worden.
+
+## Aufgabe
+
+**Bitte prüfe und aktualisiere diese Infrastruktur:**
+
+* Wenn du Tags veränderst, wird automatisch das Datum der letzten Bearbeitung aktualisiert. (Reine Geometrie-Änderungen ändern das Datum dagegen nicht.)
+* Wenn bereits alles richtig ist getaggt ist, ergänze \`check_date=2025-MM-TT\` um zu hinterlegen, dass aus deiner Sicht alles aktuell ist.
+* Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)) bzw. \`traffic_sign=none\`.
+* Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+
+Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
+
+`
+    // TODO: Add line about how to count width based on stones
+    // TODO: Add wiki link about how to calculate the width
+    case 'missing_width':
+      return `
+## Kontext
+
+Diesem Weg fehlt eine Angabe zur Breite.
+
+## Aufgabe
+
+**Bitte ergänze die Breitenangabe.**
+
+* Nutze \`width\`, wenn du die Breite ausmessen kannst. Das geht mit einem Metermaß oder einer Handy-App.
+* Nutze \`est_width\`, wenn du nur einen Schätzwert eintragen kannst.
+
+Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete.app/). Dort ist ein Messgerät direkt eingebaut.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+`
+    case 'missing_surface':
+      return `
+## Kontext
+
+Diesem Weg fehlt eine Angabe zur Oberfläche.
+
+## Aufgabe
+
+**Bitte ergänze die Angabe zur Oberfläche** und gerne auch zur Oberflächenqualität.
+
+* Nutze \`surface\` um die Oberfläche zu beschreiben. [Zum Wiki](https://wiki.openstreetmap.org/wiki/DE:Key:surface)
+* Nutze \`smoothness\` um die Oberflächenqualität zu beschreiben. Dieser Wert ist subjektiver, bitte orientiere dich an den [Beispielen im Wiki](https://wiki.openstreetmap.org/wiki/DE:Key:smoothness) und [in dieser Gallerie](https://wiki.openstreetmap.org/wiki/Key:smoothness/Gallery).
+
+Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete.app/). Dort findet du gute Beispielbilder, was die Erfassung vereinfacht.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
   }
 }

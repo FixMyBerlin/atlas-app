@@ -4,5 +4,4 @@
 - Each folder must have one `/processing/topics/<topic>/<topic>.lua` file
 - Each folder may have one `/processing/topics/<topic>/<topic>.sql` file
 
-See also ["Processing: Run changes only"](../../README.md#processing-run-changes-only)
-
+See also ["Processing: Run changes only"](../README.md#processing-run-changes-only)

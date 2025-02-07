@@ -28,23 +28,20 @@ Run `npm run dev` wich will start docker and `../processing` automatically if ne
 - ORM: [Prisma](https://blitzjs.com/docs/cli-prisma)
 - Styling: [Tailwind CSS](https://tailwindcss.com/), [Tailwind UI](https://tailwindui.com/) and [Headless UI](https://headlessui.com/)
 
-### (Tip) Testing the production bundle
+### Running the production bundle locally
 
 In the [`app/`](./app/) directory do the following:
 
 1. Make sure `npm run dev` works as expected. This will make sure all packages are patched.
-2. Create a `.env.production.local` with settings like
-   ```
-   NEXT_PUBLIC_APP_ORIGIN=http://127.0.0.1:3000
-   NEXT_PUBLIC_APP_ENV='staging' # 'staging', 'production'
-   ```
-3. Run `npm run build` and `npm run start` to test the production bundle. There is also a dockerized version of our frontend which one can run with `docker compose --profile frontend up`.
+2. Double check [`.env.production`](/app/.env.production)
+3. Run `npm run build` and `npm run start` to test the production bundle.
 
-### (Tip) NextJS
+There is also a dockerized version of our frontend:
 
-- Favicons:
-  `icon.svg` https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons
-  Generator for `favicon.ico` https://realfavicongenerator.net/
+```
+docker compose --profile frontend build
+docker compose --profile frontend up
+```
 
 ## Helper scripts
 

@@ -4,8 +4,10 @@ WORKDIR /processing
 # Install Lua and "luarocks" (Lua package manager) – https://luarocks.org/, https://packages.ubuntu.com/luarocks
 RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
 
-RUN luarocks install busted
-
+# `busted` is our testing framework https://lunarmodules.github.io/busted/
+# `inspect` is to print / inspect tables https://github.com/kikito/inspect.lua
+RUN luarocks install busted && \
+    luarocks install inspect
 COPY processing /processing/
 
 ENTRYPOINT [ "busted" ]

@@ -29,8 +29,11 @@ require("Round")
 require("DefaultId")
 require("PathsGeneralization")
 require("RoadTodos")
-require("CreateTodoList")
+require("CollectTodos")
+require("ToMarkdownList")
+require("ToTodoTags")
 require("BikeSuitability")
+-- local inspect = require('inspect')
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -114,6 +117,24 @@ local bikeSuitabilityTable = osm2pgsql.define_table({
   }
 })
 
+local todoLiniesTable = osm2pgsql.define_table({
+  name = 'todos_lines',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'table',   type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = { 'id', 'table' },     method = 'btree', unique = true },
+    { column = { 'tags' },            method = 'gin' } -- locally this is not used
+  }
+})
+
 
 function osm2pgsql.process_way(object)
   local tags = object.tags
@@ -147,7 +168,8 @@ function osm2pgsql.process_way(object)
   MergeTable(results, Lit(object))
   MergeTable(results, SurfaceQuality(object))
 
-  -- bikelanes
+  -- (C.1a) WRITE `bikelanes` table
+  -- (C.1b) WRITE `todoLiniesTable` table for bikelanes
   local cycleways = Bikelanes(object)
   local road_info = {
     name = results.name,
@@ -169,21 +191,34 @@ function osm2pgsql.process_way(object)
         geom = object:as_linestring(),
         minzoom = 0
       })
+
+      if next(cycleway._todo_list) ~= nil then
+        meta.todos = publicTags.todos
+        meta.category = publicTags.category
+        todoLiniesTable:insert({
+          id = cycleway._id,
+          table = 'bikelanes',
+          tags = cycleway._todo_list,
+          meta = meta,
+          geom = object:as_linestring(),
+          minzoom = 0
+        })
+      end
     end
   end
 
-  -- presence
+  -- (C.2) WRITE `presence` table
   local presence = BikelanesPresence(object, cycleways)
   if presence ~= nil and
     (presence.bikelane_left ~= "not_expected"
     or presence.bikelane_right ~= "not_expected"
     or presence.bikelane_self ~= "not_expected")then
     bikelanesPresenceTable:insert({
+      id = DefaultId(object),
       tags = presence,
       meta = Metadata(object),
       geom = object:as_linestring(),
-      minzoom = 0,
-      id = DefaultId(object)
+      minzoom = 0
     })
   end
 
@@ -191,7 +226,9 @@ function osm2pgsql.process_way(object)
     MergeTable(results, Maxspeed(object))
   end
   MergeTable(results, presence)
-  results.todos = CreateTodoList(RoadTodos, tags, results)
+  local todos = CollectTodos(RoadTodos, tags, results)
+  results._todo_list = ToTodoTags(todos)
+  results.todos = ToMarkdownList(todos)
 
   -- We need sidewalk for Biklanes(), but not for `roads`
   if not IsSidepath(tags) then
@@ -205,7 +242,7 @@ function osm2pgsql.process_way(object)
       lit_age = results._lit_age
     })
 
-    -- bike suitability
+    -- (C.3) WRITE `bikeSuitability` table
     local bikeSuitability = CategorizeBikeSuitability(tags)
     if bikeSuitability then
       local bikeSuitabilityTags = {
@@ -225,7 +262,7 @@ function osm2pgsql.process_way(object)
       })
     end
 
-    -- roads
+    -- (C.4a) WRITE `roads` table
     if PathClasses[tags.highway] then
       roadsPathClassesTable:insert({
         id = DefaultId(object),
@@ -243,6 +280,20 @@ function osm2pgsql.process_way(object)
         meta = meta,
         geom = object:as_linestring(),
         minzoom = RoadGeneralization(tags, results)
+      })
+    end
+
+    -- (C.4b) WRITE `todoLiniesTable` table for roads
+    if next(results._todo_list) ~= nil then
+      meta.road = results.road
+      meta.todos = results.todos
+      todoLiniesTable:insert({
+        id = DefaultId(object),
+        table = "roads",
+        tags = results._todo_list,
+        meta = meta,
+        geom = object:as_linestring(),
+        minzoom = 0
       })
     end
   end

@@ -1,70 +1,78 @@
-import { Markdown } from '@/src/app/_components/text/Markdown'
-import {
-  categoryToMaprouletteProjectKey,
-  taskDescriptionMarkdown,
-  todoMarkdownToMaprouletteProjectKey,
-} from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
-import { LineString } from 'geojson'
+import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
+import { todoIds, todoIdsTableOnly } from '@/src/processingTypes/todoIds.const'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { GeoJsonProperties } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { NoticeMaprouletteTask } from './NoticeMaprouletteTask'
 
-type Props = {
-  identifier: string | null | undefined
+const maprouletteQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+    },
+  },
+})
+
+export type NoticeMaproulette = {
+  sourceId: string
   osmTypeIdString: string | undefined
-  category: string | undefined
-  todos: string | undefined
+  kind: string | undefined
+  properties: NonNullable<GeoJsonProperties>
   geometry: MapGeoJSONFeature['geometry'] | undefined
 }
 
 export const NoticeMaproulette = ({
-  identifier,
+  sourceId,
   osmTypeIdString,
-  category,
-  todos,
+  kind,
+  properties,
   geometry,
-}: Props) => {
-  // Unique array of projectKeys
-  const maprouletteProjectKeys = Array.from(
-    new Set([
-      ...categoryToMaprouletteProjectKey(identifier),
-      ...todoMarkdownToMaprouletteProjectKey(todos),
-    ]),
-  )
-    .filter(Boolean)
-    // For now, we don't want to show all those "missing traffic sign" tasks in the Inspector
-    .filter((key) => !key.startsWith('missing_traffic_sign'))
+}: NoticeMaproulette) => {
+  // This is how we store todos on `bikelanes`, `roads`
+  const todosKeyFromTodoTag = todoMarkdownToMaprouletteCampaignKey(properties?.todos)
+  // This is how we store todos on `todos_lines`
+  const todoKeysFromKeys = todoIds.filter((id) => Object.keys(properties).includes(id))
+  const todoKeys = Array.from(new Set([...todosKeyFromTodoTag, ...todoKeysFromKeys]))
 
-  if (
-    !maprouletteProjectKeys.length ||
-    !identifier ||
-    !osmTypeIdString ||
-    !category ||
-    geometry?.type !== 'LineString'
-  ) {
+  // When we are on `bikelanes`, `roads`, we only show some todos; on
+  const maprouletteProjectKeys =
+    sourceId === 'atlas_todos_lines'
+      ? todoKeys
+      : todoKeys.filter((key) => todoIdsTableOnly.includes(key))
+
+  if (!maprouletteProjectKeys.length || !osmTypeIdString || geometry?.type !== 'LineString') {
     return null
   }
 
+  const defaultOpen = sourceId.includes('todos_lines')
+
   return (
-    <details className="prose prose-sm border-t border-white bg-purple-100 p-1 px-4 py-1.5">
-      <summary className="cursor-pointer hover:font-semibold">
-        Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
-        {maprouletteProjectKeys.length})
-      </summary>
-      <div className="my-0 ml-3">
-        {maprouletteProjectKeys.map((projectKey) => {
-          return (
-            <Markdown
-              key={projectKey}
-              markdown={taskDescriptionMarkdown({
-                projectKey: projectKey,
-                osmTypeIdString,
-                category,
-                geometry: geometry as LineString, // Guarded above
-              })}
-              className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"
-            />
-          )
-        })}
-      </div>
-    </details>
+    <QueryClientProvider client={maprouletteQueryClient}>
+      <details
+        className="prose prose-sm border-t border-white bg-purple-100 p-1 px-4 py-1.5"
+        open={defaultOpen}
+      >
+        <summary className="cursor-pointer hover:font-semibold">
+          {/* NOTE: `maprouletteProjectKeys` is not ideal here because we might show viewer text block which is decided in the child component */}
+          Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
+          {maprouletteProjectKeys.length})
+        </summary>
+
+        <div className="my-0 ml-3">
+          {maprouletteProjectKeys.map((projectKey) => {
+            return (
+              <NoticeMaprouletteTask
+                key={projectKey}
+                projectKey={projectKey}
+                osmTypeIdString={osmTypeIdString}
+                kind={kind}
+                properties={properties}
+                geometry={geometry}
+              />
+            )
+          })}
+        </div>
+      </details>
+    </QueryClientProvider>
   )
 }

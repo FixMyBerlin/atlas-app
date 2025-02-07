@@ -11,7 +11,7 @@ import {
 } from 'react-map-gl/maplibre'
 import { translations } from '../_components/SidebarInspector/TagsTable/translations/translations.const'
 import { LegendIconTypes } from '../_components/SidebarLayerControls/Legend/LegendIcons/types'
-import { MapDataCategoryId } from './mapDataCategories/categories.const'
+import { MapDataCategoryId } from './mapDataCategories/MapDataCategoryId'
 import { SourcesId } from './mapDataSources/sources.const'
 import { StyleId, SubcategoryId } from './typeId'
 
@@ -239,6 +239,7 @@ export type FileMapDataSubcategory = {
 export type FileMapDataSubcategoryStyle = {
   id: StyleId
   name: string
+  category?: string
   desc: null | string // TODO REMOVE
   layers: FileMapDataSubcategoryStyleLayer[]
   legends?: null | FileMapDataSubcategoryStyleLegend[]
@@ -247,6 +248,7 @@ export type FileMapDataSubcategoryStyle = {
 export type FileMapDataSubcategoryHiddenStyle = {
   id: 'hidden'
   name: string
+  category?: never
   desc: null // TODO REMOVE
   layers?: never
   legends?: never

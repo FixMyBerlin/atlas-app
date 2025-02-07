@@ -1,3 +1,12 @@
+# INFO: `traefik` and (tiles_)`proxy` are required for production but should not run on development.
+# Our current setup has them in this separate docke-compose files.
+# To start those additional services they need to be started together with the main docker-compose.yml
+# which means both files get merged.
+# See `.github/workflows/restart-services.yml`:
+#   `docker compose -f docker-compose.yml -f docker-compose.network.yml up -d`
+#
+# FUTURE: We could merge those services into `docker-compose.yml` and use the `docker-compose.overwride.yml`
+# to disable them from regular development use by adding a `profiles: - network` to them.
 services:
   traefik:
     image: traefik:v3.1
@@ -28,6 +37,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "./letsencrypt:/letsencrypt"
+    logging:
+      driver: journald
   proxy:
     image: nginx:alpine
     restart: unless-stopped
@@ -48,6 +59,8 @@ services:
     configs:
       - source: nginx_conf
         target: /etc/nginx/nginx.conf
+    logging:
+      driver: journald
 
 configs:
   nginx_conf:

@@ -1,8 +1,0 @@
-# This runs our unit tests for `Processing`
-
-./processing/run-tests.sh
-
-# Linting, Formating and Type-Checks for `App`
-
-cd app
-npm run check

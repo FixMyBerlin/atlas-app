@@ -94,4 +94,12 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     stylingKeys: [],
     minzoom: 0,
   },
+  // aggregated_lengths: { // Does not work, see https://github.com/FixMyBerlin/private-issues/issues/2240
+  //   stylingKeys: [],
+  //   minzoom: 0,
+  // },
+  todos_lines: {
+    stylingKeys: [],
+    minzoom: 0,
+  },
 }

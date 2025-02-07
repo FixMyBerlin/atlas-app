@@ -1,4 +1,3 @@
-import { topicList } from './constants/topics.const'
 import { downloadFile, waitForFreshData } from './steps/download'
 import {
   clearCache,
@@ -8,48 +7,35 @@ import {
 } from './steps/externalTriggers'
 import { idFilter, tagFilter } from './steps/filter'
 import { generateTypes } from './steps/generateTypes'
+import { initialize } from './steps/initialize'
 import { writeMetadata } from './steps/metadata'
 import { processTopics } from './steps/processTopics'
-import { setup } from './steps/setup'
-import { logTileInfo } from './utils/logging'
+import { logPadded, logTileInfo } from './utils/logging'
 import { params } from './utils/parameters'
 import { synologyLogError } from './utils/synology'
 
 async function main() {
   try {
-    // Setup directories and backup schema
-    await setup()
+    logPadded('Processing')
+    console.log('Processing:', 'Initilize')
+    await initialize()
 
-    // Wait for fresh data
-    if (params.waitForFreshData) {
-      await waitForFreshData(params.fileURL, 24, 10)
-    }
+    console.log('Processing:', 'Handle Data')
+    await waitForFreshData()
+    let { fileName, fileChanged } = await downloadFile()
 
-    // Download osm file
-    let { fileName, fileChanged } = await downloadFile(params.fileURL, params.skipDownload)
-
-    // Filter osm file with /filter/filter-expressions.txt
+    console.log('Processing:', 'Handle Filter')
     await tagFilter(fileName, fileChanged)
+    const idFilterResponse = await idFilter(fileName, params.idFilter)
+    if (idFilterResponse) ({ fileName, fileChanged } = idFilterResponse)
 
-    // Filter osm file by ids if given
-    if (params.idFilter !== '') {
-      fileName = await idFilter(fileName, params.idFilter)
-      fileChanged = true
-    }
+    console.log('Processing:', 'Handle Topics')
+    const { timeElapsed, processedTables } = await processTopics(fileName, fileChanged)
 
-    // Process topics
-    const { timeElapsed: processingTime, processedTables } = await processTopics(
-      topicList,
-      fileName,
-      fileChanged,
-      params.skipUnchanged,
-      params.computeDiffs,
-      params.freezeData,
-    )
+    await generateTypes(processedTables)
+    await writeMetadata(fileName, timeElapsed)
 
-    await generateTypes(params.environment, processedTables)
-    await writeMetadata(fileName, processingTime)
-
+    console.log('Processing:', 'Finishing up')
     // Call the frontend update hook which registers sql functions and starts the analysis run
     await triggerPostProcessing()
 
@@ -62,7 +48,7 @@ async function main() {
       await triggerCacheWarming()
     }
 
-    await logTileInfo(params.environment)
+    logTileInfo()
   } catch (error) {
     // This `catch` will only trigger if child functions are `await`ed AND file calls a `main()` function. Top level code does not work.
     synologyLogError(`Processing failed: ${error}`)

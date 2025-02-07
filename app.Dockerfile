@@ -1,4 +1,9 @@
-FROM node:18-bullseye-slim AS base
+FROM node:18-bookworm-slim AS base
+
+RUN apt-get update && \
+    apt-get install -y gdal-bin && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
