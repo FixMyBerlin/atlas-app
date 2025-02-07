@@ -6,6 +6,7 @@ require("CreateSubcategoriesAdjoiningOrIsolated")
 require("SanitizeTrafficSign")
 require("DeriveSmoothness")
 require("HighwayClasses")
+local inspect = require("inspect")
 BikelaneCategory = {}
 BikelaneCategory.__index = BikelaneCategory
 
@@ -159,9 +160,10 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
     if tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes" then
       return true
     end
+
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if osm2pgsql.has_prefix(trafficSign, "DE:241") then
-        return true
+    if ContainsSubstring(trafficSign, "DE:241") and tags.highway ~= "footway" then
+      return true
     end
 
     -- Edge case: https://www.openstreetmap.org/way/1319011143#map=18/52.512226/13.288552
