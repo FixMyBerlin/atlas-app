@@ -57,8 +57,8 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
 
       return {
         id: todoId,
-        name: headline || `(Unbekannte Überschrift für ${todoId})`,
-        category,
+        name: headline || `${todoId} (in Arbeit)`,
+        category: category || 'In Vorbereitung',
         desc: null,
         layers: mapboxStyleLayers({
           layers: mapboxStyleGroupLayers_radinfra_campaign,

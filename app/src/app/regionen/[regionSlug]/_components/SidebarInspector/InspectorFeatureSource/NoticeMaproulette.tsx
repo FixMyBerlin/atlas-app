@@ -1,51 +1,41 @@
-import { Markdown } from '@/src/app/_components/text/Markdown'
-import {
-  maprouletteTaskDescriptionMarkdown,
-  todoMarkdownToMaprouletteCampaignKey,
-} from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
-import { radinfraDeCampaigns } from '@/src/app/regionen/(index)/_data/radinfraDeCampaigns.generated.const'
-import { LineString } from 'geojson'
-import { Fragment } from 'react'
+import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
+import { todoIds, todoIdsTableOnly } from '@/src/processingTypes/todoIds.const'
+import { GeoJsonProperties } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
+import { NoticeMaprouletteTask } from './NoticeMaprouletteTask'
 
-type Props = {
+export type NoticeMaproulette = {
   sourceId: string
   osmTypeIdString: string | undefined
   kind: string | undefined
-  todos: string | undefined
+  properties: NonNullable<GeoJsonProperties>
   geometry: MapGeoJSONFeature['geometry'] | undefined
 }
 
-export const NoticeMaproulette = ({ sourceId, osmTypeIdString, kind, todos, geometry }: Props) => {
-  const defaultOpen = sourceId.includes('todos_lines')
-  const showTrafficSigns = sourceId.includes('todos_lines')
+export const NoticeMaproulette = ({
+  sourceId,
+  osmTypeIdString,
+  kind,
+  properties,
+  geometry,
+}: NoticeMaproulette) => {
+  // This is how we store todos on `bikelanes`, `roads`
+  const todosKeyFromTodoTag = todoMarkdownToMaprouletteCampaignKey(properties?.todos)
+  // This is how we store todos on `todos_lines`
+  const todoKeysFromKeys = todoIds.filter((id) => Object.keys(properties).includes(id))
+  const todoKeys = Array.from(new Set([...todosKeyFromTodoTag, ...todoKeysFromKeys]))
 
-  const maprouletteProjectKeys = todoMarkdownToMaprouletteCampaignKey(todos)
-    .filter(Boolean)
-    .filter((key) =>
-      // We hide the (verbose) traffic sign todos in our regular inspector.
-      showTrafficSigns === true ? true : !key.startsWith('missing_traffic_sign'),
-    )
+  // When we are on `bikelanes`, `roads`, we only show some todos; on
+  const maprouletteProjectKeys =
+    sourceId === 'atlas_todos_lines'
+      ? todoKeys
+      : todoKeys.filter((key) => todoIdsTableOnly.includes(key))
 
   if (!maprouletteProjectKeys.length || !osmTypeIdString || geometry?.type !== 'LineString') {
     return null
   }
 
-  const texts = maprouletteProjectKeys.map((projectKey) => {
-    return [
-      projectKey,
-      maprouletteTaskDescriptionMarkdown({
-        projectKey,
-        osmTypeIdString,
-        kind: kind || 'UNKOWN', // Falback is needed because TS cannot know that we only use this when the `kind` is known
-        geometry: geometry as LineString, // Guarded above
-      }),
-    ] as const
-  })
-
-  if (texts.length === 0) {
-    return null
-  }
+  const defaultOpen = sourceId.includes('todos_lines')
 
   return (
     <details
@@ -53,20 +43,21 @@ export const NoticeMaproulette = ({ sourceId, osmTypeIdString, kind, todos, geom
       open={defaultOpen}
     >
       <summary className="cursor-pointer hover:font-semibold">
-        Aufgaben{texts.length > 1 ? 'n' : ''} zur Datenverbesserung ({texts.length})
+        {/* NOTE: `maprouletteProjectKeys` is not ideal here because we might show viewer text block which is decided in the child component */}
+        Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
+        {maprouletteProjectKeys.length})
       </summary>
-      <div className="my-0 ml-3">
-        {texts.map(([projectKey, text]) => {
-          const headline = radinfraDeCampaigns.find((c) => c.id === projectKey)?.menuTitle
 
+      <div className="my-0 ml-3">
+        {maprouletteProjectKeys.map((projectKey) => {
           return (
-            <Fragment key={projectKey}>
-              <h2>{headline || `(Überschrift für ${projectKey} unbekannt)`}</h2>
-              <Markdown
-                markdown={text}
-                className="prose-sm mb-10 border-b-4 border-b-white pb-10 marker:text-purple-700 first:mt-5 last:mb-0 last:border-b-0"
-              />
-            </Fragment>
+            <NoticeMaprouletteTask
+              key={projectKey}
+              projectKey={projectKey}
+              osmTypeIdString={osmTypeIdString}
+              kind={kind}
+              geometry={geometry}
+            />
           )
         })}
       </div>

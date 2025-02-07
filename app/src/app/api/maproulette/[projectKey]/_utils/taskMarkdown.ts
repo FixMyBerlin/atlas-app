@@ -14,11 +14,13 @@ type Props = {
 }
 
 export const todoMarkdownToMaprouletteCampaignKey = (todos: string | undefined) => {
-  return todoIds.map((project) => {
-    if (todos?.includes(`* ${project}`)) {
-      return project
-    }
-  })
+  return todoIds
+    .map((project) => {
+      if (todos?.includes(`* ${project}`)) {
+        return project
+      }
+    })
+    .filter(Boolean)
 }
 
 export const maprouletteTaskDescriptionMarkdown = ({
