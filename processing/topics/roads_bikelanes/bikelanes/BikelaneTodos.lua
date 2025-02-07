@@ -186,7 +186,7 @@ local missing_width = BikelaneTodo.new({
   todoTableOnly = true,
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
-    return resultTags.width ~= nil
+    return resultTags.width == nil
   end
 })
 local missing_surface = BikelaneTodo.new({
@@ -195,7 +195,7 @@ local missing_surface = BikelaneTodo.new({
   todoTableOnly = true,
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
-    return resultTags.surface ~= nil
+    return resultTags.surface == nil
   end
 })
 
