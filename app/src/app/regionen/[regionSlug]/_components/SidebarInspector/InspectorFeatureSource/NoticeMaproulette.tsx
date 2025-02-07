@@ -1,8 +1,17 @@
 import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
 import { todoIds, todoIdsTableOnly } from '@/src/processingTypes/todoIds.const'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GeoJsonProperties } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { NoticeMaprouletteTask } from './NoticeMaprouletteTask'
+
+const maprouletteQueryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // default: true
+    },
+  },
+})
 
 export type NoticeMaproulette = {
   sourceId: string
@@ -38,29 +47,32 @@ export const NoticeMaproulette = ({
   const defaultOpen = sourceId.includes('todos_lines')
 
   return (
-    <details
-      className="prose prose-sm border-t border-white bg-purple-100 p-1 px-4 py-1.5"
-      open={defaultOpen}
-    >
-      <summary className="cursor-pointer hover:font-semibold">
-        {/* NOTE: `maprouletteProjectKeys` is not ideal here because we might show viewer text block which is decided in the child component */}
-        Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
-        {maprouletteProjectKeys.length})
-      </summary>
+    <QueryClientProvider client={maprouletteQueryClient}>
+      <details
+        className="prose prose-sm border-t border-white bg-purple-100 p-1 px-4 py-1.5"
+        open={defaultOpen}
+      >
+        <summary className="cursor-pointer hover:font-semibold">
+          {/* NOTE: `maprouletteProjectKeys` is not ideal here because we might show viewer text block which is decided in the child component */}
+          Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
+          {maprouletteProjectKeys.length})
+        </summary>
 
-      <div className="my-0 ml-3">
-        {maprouletteProjectKeys.map((projectKey) => {
-          return (
-            <NoticeMaprouletteTask
-              key={projectKey}
-              projectKey={projectKey}
-              osmTypeIdString={osmTypeIdString}
-              kind={kind}
-              geometry={geometry}
-            />
-          )
-        })}
-      </div>
-    </details>
+        <div className="my-0 ml-3">
+          {maprouletteProjectKeys.map((projectKey) => {
+            return (
+              <NoticeMaprouletteTask
+                key={projectKey}
+                projectKey={projectKey}
+                osmTypeIdString={osmTypeIdString}
+                kind={kind}
+                properties={properties}
+                geometry={geometry}
+              />
+            )
+          })}
+        </div>
+      </details>
+    </QueryClientProvider>
   )
 }
