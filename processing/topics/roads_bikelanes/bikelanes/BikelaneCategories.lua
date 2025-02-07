@@ -244,7 +244,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- isolated:
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
-    if osm2pgsql.has_prefix(trafficSign, "DE:237") and not tags.cycleway == "lane" then
+    if ContainsSubstring(trafficSign, "DE:237") and not tags.cycleway == "lane" then
       return true
     end
   end
