@@ -7,7 +7,7 @@ import { RadinfraDeCampaignSchema } from './radinfraDeCampaignSchema'
 export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   {
     id: 'adjoining_or_isolated',
-    name: 'Ergänze ob die Fahrradinfrastruktur straßenbegleitend oder selbstständig geführt ist',
+    name: 'Ergänze ob die Fahrradinfrastruktur straßenbegleitend oder selbstständig geführt ist (Alpha-Version)',
     menuTitle: 'Straßenbegleitend oder selbstständig geführt?',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -22,7 +22,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'advisory_or_exclusive',
-    name: 'Ergänze, ob es sich um einen Schutzstreifen oder Angebotsstreifen handelt',
+    name: 'Ergänze, ob es sich um einen Schutzstreifen oder Angebotsstreifen handelt (Alpha-Version)',
     menuTitle: 'Schutzstreifen oder Angebotsstreifen?',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -51,7 +51,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'deprecated_cycleway_shared',
-    name: 'Die Angabe `cycleway=shared` soll nicht mehr verwendet werden',
+    name: 'Die Angabe `cycleway=shared` soll nicht mehr verwendet werden (Alpha-Version)',
     menuTitle: 'Veraltetes Tagging (`shared`)',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -66,7 +66,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'missing_access_tag_240',
-    name: 'Ergänze das Zugangs-Tagging für Geh-/Radwege',
+    name: 'Ergänze das Zugangs-Tagging für Geh-/Radwege (Alpha-Version)',
     menuTitle: 'Zugangs-Tagging fehlt (Geh-/Radweg)',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -81,7 +81,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'missing_access_tag_bicycle_road',
-    name: 'Fahrradstraßen mit fehlendem `bicycle=designated`',
+    name: 'Fahrradstraßen mit fehlendem `bicycle=designated` (Alpha-Version)',
     menuTitle: 'Zugangs-Tagging fehlt (Fahrradstraße)',
     pubDate: '2024-10-01T15:00:00.000Z',
     category: 'traffic_signs',
@@ -96,7 +96,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'missing_segregated',
-    name: 'Ergänze Angaben zur Trennung von Fahrrad- und Fußverkehr auf Geh-/Radwegen',
+    name: 'Ergänze Angaben zur Trennung von Fahrrad- und Fußverkehr auf Geh-/Radwegen (Alpha-Version)',
     menuTitle: 'Gemeinsame oder getrennte Führung?',
     pubDate: '2024-09-20T15:00:00.000Z',
     category: 'traffic_signs',
@@ -140,7 +140,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'missing_traffic_sign_244',
-    name: 'Fahrradstraßen ohne Verkehrszeichen',
+    name: 'Fahrradstraßen ohne Verkehrszeichen (Alpha-Version)',
     menuTitle: 'Fehlendes Verkehrszeichen (Fahrradstraße)',
     pubDate: '2024-09-20T15:00:00.000Z',
     category: 'traffic_signs',
@@ -155,7 +155,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'missing_traffic_sign_vehicle_destination',
-    name: 'Fahrradstraßen ohne Zusatzzeichen »Anlieger frei«',
+    name: 'Fahrradstraßen ohne Zusatzzeichen »Anlieger frei« (Alpha-Version)',
     menuTitle: 'Fahrradstraßen ohne Zusatzzeichen',
     pubDate: '2024-10-01T15:00:00.000Z',
     category: 'traffic_signs',
@@ -185,7 +185,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'needs_clarification',
-    name: 'Die Radinfrastruktur konnte nicht kategorisiert werden',
+    name: 'Die Radinfrastruktur konnte nicht kategorisiert werden (Alpha-Version)',
     menuTitle: 'Führungsform unklar',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -199,7 +199,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'test_maproulette',
-    name: 'Test Kampagne um MapRoulette Funktionen zu test',
+    name: 'Test Kampagne um MapRoulette Funktionen zu testen',
     menuTitle: 'Test MapRoulette Updates',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
@@ -214,7 +214,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   },
   {
     id: 'unexpected_bicycle_access_on_footway',
-    name: 'Die Straßenklasse "Fußweg" ist unerwartet wenn Radinfrastruktur vorhanden ist',
+    name: 'Die Straßenklasse "Fußweg" ist unerwartet wenn Radinfrastruktur vorhanden ist (Alpha-Version)',
     menuTitle: 'Straßenklasse unklar (Fußweg)',
     pubDate: '2025-01-01T15:00:00.000Z',
     category: 'radinfra',
