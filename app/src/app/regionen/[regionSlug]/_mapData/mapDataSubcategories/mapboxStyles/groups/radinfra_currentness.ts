@@ -16,5 +16,20 @@ export const mapboxStyleGroupLayers_radinfra_currentness: MapboxStyleLayer[] = [
       'line-join': 'round',
       'line-cap': 'round',
     },
+    filter: ['has', 'updated_age'],
+  },
+  {
+    type: 'line',
+    id: 'current-zoomed-out',
+    paint: {
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
+      'line-color': 'gray',
+    },
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    filter: ['!', ['has', 'updated_age']],
   },
 ]

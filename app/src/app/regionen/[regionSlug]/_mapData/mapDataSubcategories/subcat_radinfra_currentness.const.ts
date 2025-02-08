@@ -34,6 +34,14 @@ export const bikelanesCurrentnessLegend: FileMapDataSubcategoryStyleLegend[] = [
       color: '#fda5e4',
     },
   },
+  {
+    id: 'missing',
+    name: 'Auf dieser Zoomstufe können die Daten nicht angezeigt werden',
+    style: {
+      type: 'line',
+      color: 'gray',
+    },
+  },
 ]
 export const subcat_radinfra_currentness: FileMapDataSubcategory = {
   id: subcatId,

@@ -13,7 +13,3 @@ They are also being called by the [/api/private/post-processing-hook](/app/src/a
    Create the PostgreSQL functions that are used by the export API in `src/pages/api/export/[tableName].ts`
 2. `initGeneralizationFunctions(InteracitvityConfiguartion)`
    Create the PostgreSQL functions that act as Martin function layers. Their main goal is to reduce tile size, which is archieved by simplifying geometries and leaving out tags that are not used in any style.
-
-## `cacheRadinfraDeCampaigns`
-
-Data that is being managed at radinfra.de is being copied over here so we can use it in our UI.

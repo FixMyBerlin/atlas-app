@@ -254,4 +254,5 @@ export const translations: { [key: string]: string } = {
   'atlas_todos_lines--title': 'Kampagnen',
   'atlas_trafficSigns--title': 'Verkehrszeichen',
   'mapillary_coverage--title': 'Mapillary Foto',
+  'atlas_aggregated_lengths--title': 'Statistik für radinfra.de',
 }

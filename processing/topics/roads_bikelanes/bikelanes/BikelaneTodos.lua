@@ -102,6 +102,8 @@ local missing_access_tag_240 = BikelaneTodo.new({
     return (ContainsSubstring(objectTags.traffic_sign, '240') or ContainsSubstring(objectTags.traffic_sign, '241'))
         and objectTags.bicycle ~= 'designated'
         and objectTags.foot ~= "designated"
+        and objectTags.cycleway ~= 'track'
+        and objectTags.cycleway ~= 'lane'
   end
 })
 -- TODO: If both bicycle=designated and foot=designated are present, check if the traffic_sign is 240 or 241.

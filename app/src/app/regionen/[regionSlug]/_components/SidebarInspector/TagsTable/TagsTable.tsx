@@ -1,4 +1,3 @@
-import React from 'react'
 import { SourcesId } from '../../../_mapData/mapDataSources/sources.const'
 import { InspectorFeatureProperty } from '../Inspector'
 import { TagsTableRow } from './TagsTableRow'
@@ -20,6 +19,10 @@ import {
   TagsTableRowCompositMaxspeed,
   tableKeyMaxspeed,
 } from './compositTableRows/TagsTableRowCompositMaxspeed'
+import {
+  TagsTableRowCompositRadinfraDeStatistics,
+  tableKeyRadinfraDeStatistics,
+} from './compositTableRows/TagsTableRowCompositRadinfraDeStatistics'
 import {
   TagsTableRowCompositRoadBikelanes,
   tableKeyRoadBikelanes,
@@ -46,8 +49,13 @@ type Props = {
   sourceId: SourcesId | string // string = StaticDatasetsIds
 }
 
-export const TagsTable: React.FC<Props> = ({ properties, sourceDocumentedKeys, sourceId }) => {
+export const TagsTable = ({ properties, sourceDocumentedKeys, sourceId }: Props) => {
   const keys = sourceDocumentedKeys === false ? Object.keys(properties) : sourceDocumentedKeys
+
+  // Switch based on the sourceId
+  if (sourceId === tableKeyRadinfraDeStatistics) {
+    return <TagsTableRowCompositRadinfraDeStatistics properties={properties} />
+  }
 
   return (
     <table className="w-full">
