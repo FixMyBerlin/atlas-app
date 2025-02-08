@@ -36,7 +36,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
 
     // NOTE: `todos_lines.tags->>${projectKey}` will automatically be wrapped like `todos_lines.tags->>'foo'`
     // `ST_Transform` changes projection
-    // `ST_Simplify` simplifies the geometry (number of nodes) https://postgis.net/docs/ST_Simplify.html
+    // `ST_SimplifyPreserveTopology` simplifies the geometry (number of nodes) https://postgis.net/docs/ST_SimplifyPreserveTopology.html
     // `ST_AsGeoJSON` with `6` will reduce the number of digits for the lat/lng values https://postgis.net/docs/ST_AsGeoJSON.html
     const sqlWays = await geoDataClient.$queryRaw<QueryType>`
       SELECT
@@ -46,7 +46,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         todos_lines.tags->>${projectKey} as priority,
         todos_lines.meta->'category' AS kind,
         ST_AsGeoJSON(
-          ST_Simplify(
+          ST_SimplifyPreserveTopology(
             ST_Transform(todos_lines.geom, 4326),
             0.75
           ),
