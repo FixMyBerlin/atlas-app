@@ -139,7 +139,7 @@ Dieser Weg wurde mit \`cycleway=shared\` getaggt. Dieses Tagging ist ungewöhnli
       },
     })
   } catch (e) {
-    if (isProd) console.error(e)
+    console.error(e)
     return Response.json(
       {
         error: 'Internal Server Error',

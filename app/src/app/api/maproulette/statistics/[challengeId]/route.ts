@@ -59,7 +59,7 @@ export async function GET(request: NextRequest, { params }: { params: { challeng
 
     return Response.json(parsed.data[0].actions)
   } catch (error) {
-    if (isProd) console.error(error)
+    console.error(error)
     return Response.json(
       {
         error: 'Internal Server Error',

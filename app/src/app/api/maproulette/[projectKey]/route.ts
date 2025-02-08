@@ -80,7 +80,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     const featureCollectionData = featureCollection(features)
     return Response.json(featureCollectionData)
   } catch (error) {
-    if (isProd) console.error(error)
+    console.error(error)
     return Response.json(
       { error: 'Internal Server Error', info: isProd ? undefined : error },
       { status: 500 },

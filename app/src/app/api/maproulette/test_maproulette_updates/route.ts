@@ -66,7 +66,7 @@ export async function GET() {
     const featureCollectionData = featureCollection(features)
     return Response.json(featureCollectionData)
   } catch (error) {
-    if (isProd) console.error(error)
+    console.error(error)
     return Response.json(
       {
         error: 'Internal Server Error',

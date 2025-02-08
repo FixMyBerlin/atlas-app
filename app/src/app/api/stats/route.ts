@@ -47,7 +47,7 @@ export async function GET() {
 
     return NextResponse.json(featureCollection(features))
   } catch (error) {
-    console.error(error) // Log files
+    console.error(error) // Logfile
     return Response.json(
       {
         error: 'Internal Server Error',
