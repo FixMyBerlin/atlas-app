@@ -138,7 +138,7 @@ TODO
       },
     })
   } catch (e) {
-    if (isProd) console.error(e)
+    console.error(e)
     return Response.json(
       {
         error: 'Internal Server Error',
