@@ -1,15 +1,19 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { geoDataClient } from '@/src/prisma-client'
-import { feature, featureCollection, simplify, truncate } from '@turf/turf'
+import { feature, featureCollection } from '@turf/turf'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
 const position = z.tuple([z.number(), z.number()])
 const linearRing = z.array(position)
 const polygon = z.array(linearRing)
-const multiPolygon = z.object({
+const geometryMultiPolygon = z.object({
   type: z.literal('MultiPolygon'),
   coordinates: z.array(polygon),
+})
+const geometryPolygon = z.object({
+  type: z.literal('Polygon'),
+  coordinates: polygon,
 })
 const DbStatSchema = z.object({
   id: z.string(),
@@ -17,7 +21,7 @@ const DbStatSchema = z.object({
   level: z.enum(['4', '6']),
   road_length: z.record(z.string(), z.number()),
   bikelane_length: z.record(z.string(), z.number()).nullable(),
-  geojson: multiPolygon,
+  geometry: geometryMultiPolygon.or(geometryPolygon),
 })
 const DbStatsSchema = z.array(DbStatSchema)
 
@@ -30,19 +34,19 @@ export async function GET() {
         level,
         road_length,
         bikelane_length,
-        ST_AsGeoJSON(ST_Transform(geom, 4326))::jsonb AS geojson
+        ST_AsGeoJSON(
+          ST_SimplifyPreserveTopology(
+            ST_Transform(geom, 4326),
+            1
+          ),
+          6
+        )::jsonb AS geometry
       FROM public.aggregated_lengths;`
 
     const parsed = DbStatsSchema.parse(raw)
 
-    const features = parsed.map(({ geojson, ...properties }) => {
-      // GEOMETRY: Cleanup
-      // Docs https://turfjs.org/docs/api/simplify
-      const geomSimplified = simplify(geojson, { tolerance: 0.05 })
-      // Docs https://turfjs.org/docs/api/truncate
-      const geomTruncated = truncate(geomSimplified, { precision: 6, coordinates: 2 })
-
-      return feature(geomTruncated, properties, { id: properties.id })
+    const features = parsed.map(({ geometry, ...properties }) => {
+      return feature(geometry, properties, { id: properties.id })
     })
 
     return NextResponse.json(featureCollection(features))
