@@ -14,6 +14,11 @@ type ReturnPosition = [number, number]
 // Case: When the geometry array is empty, we fall back to a place near Helgoland.
 const fallback = [8.1441836, 54.09762] as const satisfies ReturnPosition
 
+const truncate = (lng: number, lat: number) => {
+  const truncateToSixDigits = (num: number) => Math.floor(num * 1e6) / 1e6
+  return [truncateToSixDigits(lng), truncateToSixDigits(lat)] satisfies ReturnPosition
+}
+
 const pointOnMiddleOfLinestring = (geometry: GeoJSON.LineString) => {
   const halfLength = length(feature(geometry), { units: 'meters' }) / 2
   const wayToHalf = lineSliceAlong(geometry, 0, halfLength, {
@@ -22,7 +27,7 @@ const pointOnMiddleOfLinestring = (geometry: GeoJSON.LineString) => {
 
   const lng = wayToHalf.geometry.coordinates.at(-1)?.at(0) || fallback[0]
   const lat = wayToHalf.geometry.coordinates.at(-1)?.at(1) || fallback[1]
-  return [lng, lat] satisfies ReturnPosition
+  return truncate(lng, lat)
 }
 
 // TS Note: For some reason I need to add the return type once I add the recursion at the end.
@@ -40,20 +45,20 @@ export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']): Return
       fallbackFirstPoint,
       point: [lng, lat],
     })
-    return [lng, lat] satisfies ReturnPosition
+    return truncate(lng, lat)
   }
 
   switch (geometry.type) {
     case 'Point': {
       const lng = geometry.coordinates[0] || fallback[0]
       const lat = geometry.coordinates[1] || fallback[1]
-      return [lng, lat] satisfies ReturnPosition
+      return truncate(lng, lat)
     }
     case 'MultiPoint': {
       // Never happens, so we just force the first point
       const lng = geometry.coordinates[0]?.[0] || fallback[0]
       const lat = geometry.coordinates[0]?.[1] || fallback[1]
-      return [lng, lat] satisfies ReturnPosition
+      return truncate(lng, lat)
     }
     case 'LineString': {
       return pointOnMiddleOfLinestring(geometry)
@@ -77,14 +82,14 @@ export const pointFromGeometry = (geometry: GeoJSON.Feature['geometry']): Return
       const feature = centerOfMass(polygon(geometry.coordinates))
       const lng = feature.geometry.coordinates[0] || fallback[0]
       const lat = feature.geometry.coordinates[1] || fallback[1]
-      return [lng, lat] satisfies ReturnPosition
+      return truncate(lng, lat)
     }
     case 'MultiPolygon': {
       // This is not the best point. But we can always improve it to take the center of the largest Polygon
       const feature = center(geometry)
       const lng = feature.geometry.coordinates[0] || fallback[0]
       const lat = feature.geometry.coordinates[1] || fallback[1]
-      return [lng, lat] satisfies ReturnPosition
+      return truncate(lng, lat)
     }
     case 'GeometryCollection': {
       // `GeometryCollection` are an array of Point|LineString|Polygon|….
