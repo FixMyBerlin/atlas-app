@@ -2,7 +2,7 @@ import { isProd } from '@/src/app/_components/utils/isEnv'
 import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { geoDataClient } from '@/src/prisma-client'
 import { todoIds } from '@/src/processingTypes/todoIds.const'
-import { feature, featureCollection, truncate } from '@turf/turf'
+import { feature, featureCollection } from '@turf/turf'
 import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
@@ -71,9 +71,8 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
         task_markdown: (text || 'MISSING').replaceAll('\n', ' \n'),
       }
-      // Create feature and also shorten lat/lng values to 8 digits
       // feature.id is the unique ID for MapRoulette "way/40232717/cycleway/right"
-      return truncate(feature(geometry, properties, { id }), { precision: 8 })
+      return feature(geometry, properties, { id })
     })
 
     // RESPONSE
