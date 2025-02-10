@@ -17,7 +17,7 @@ const MaprouletteSchema = z
     download: z
       .string()
       .transform((val) => val === 'true')
-      .optional(),
+      .nullish(),
   })
   .strict()
 
