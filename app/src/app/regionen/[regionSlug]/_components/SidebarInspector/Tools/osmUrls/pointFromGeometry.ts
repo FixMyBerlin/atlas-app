@@ -20,14 +20,28 @@ const truncate = (lng: number, lat: number) => {
 }
 
 const pointOnMiddleOfLinestring = (geometry: GeoJSON.LineString) => {
-  const halfLength = length(feature(geometry), { units: 'meters' }) / 2
-  const wayToHalf = lineSliceAlong(geometry, 0, halfLength, {
-    units: 'meters',
-  })
+  try {
+    const halfLength = length(feature(geometry), { units: 'meters' }) / 2
 
-  const lng = wayToHalf.geometry.coordinates.at(-1)?.at(0) || fallback[0]
-  const lat = wayToHalf.geometry.coordinates.at(-1)?.at(1) || fallback[1]
-  return truncate(lng, lat)
+    // Handle the edge case when a linestring start and end are the same
+    // See https://github.com/Turfjs/turf/issues/1577#issuecomment-2646550413
+    if (halfLength === 0) {
+      const lng = geometry.coordinates.at(0)?.at(0) || fallback[0]
+      const lat = geometry.coordinates.at(0)?.at(1) || fallback[1]
+      return truncate(lng, lat)
+    }
+
+    const wayToHalf = lineSliceAlong(geometry, 0, halfLength, {
+      units: 'meters',
+    })
+
+    const lng = wayToHalf.geometry.coordinates.at(-1)?.at(0) || fallback[0]
+    const lat = wayToHalf.geometry.coordinates.at(-1)?.at(1) || fallback[1]
+    return truncate(lng, lat)
+  } catch (error) {
+    console.log('ERROR pointOnMiddleOfLinestring', error)
+    return truncate(fallback[0], fallback[1])
+  }
 }
 
 // TS Note: For some reason I need to add the return type once I add the recursion at the end.
