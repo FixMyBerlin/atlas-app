@@ -4,6 +4,7 @@ import { OSM_DOWNLOAD_DIR } from '../constants/directories.const'
 import { params } from '../utils/parameters'
 import { readPersistent, writePersistent } from '../utils/persistentData'
 import { synologyLogError } from '../utils/synology'
+import { filteredFilePath } from './filter'
 
 /**
  * Get the full path to the downloaded file.
@@ -63,10 +64,16 @@ export async function downloadFile() {
   const fileName = basename(downloadUrl)
   const filePath = originalFilePath(fileName)
   const fileExists = await Bun.file(filePath).exists()
+  const filteredFileExists = await Bun.file(filteredFilePath(fileName)).exists()
 
   // Check if file already exists
-  if (fileExists && params.skipDownload) {
-    console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.')
+  // We also check for the filteredFile because that is the one we actually need; if that is there, this is enough
+  if ((fileExists || filteredFileExists) && params.skipDownload) {
+    console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.', {
+      fileExists,
+      filteredFileExists,
+      skipDownload: params.skipDownload,
+    })
     return { fileName, fileChanged: false }
   }
 
