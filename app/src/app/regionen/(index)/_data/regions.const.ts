@@ -71,17 +71,14 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionSlug =
+  | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'bb-kampagne' // Kampagne mit Land Brandenburg
   | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-sg' // Land Brandenburg Steuerungsgruppe
   | 'bb' // Öffentlich, Land Brandenburg
-  | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'berlin'
-  | 'parkraum-berlin'
-  | 'parkraum-berlin-euvm'
   | 'bibi'
   | 'deutschland'
-  | 'radinfra' // radinfra.de
   | 'fahrradstellplaetze'
   | 'herrenberg'
   | 'langerwehe'
@@ -92,7 +89,10 @@ export type RegionSlug =
   | 'nudafa'
   | 'ostalbkreis'
   | 'pankow'
+  | 'parkraum-berlin-euvm'
+  | 'parkraum-berlin'
   | 'parkraum'
+  | 'radinfra' // radinfra.de
   | 'radplus'
   | 'rs8'
   | 'testing'
@@ -339,7 +339,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -363,7 +363,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -388,7 +388,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -412,7 +412,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -433,7 +433,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -457,7 +457,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -481,7 +481,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -505,7 +505,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -713,7 +713,7 @@ export const staticRegion: StaticRegion[] = [
       'roads',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -737,7 +737,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -760,7 +760,7 @@ export const staticRegion: StaticRegion[] = [
       'radinfra_statistics',
       'radinfra_mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
     cacheWarming: {
       minZoom: 5,
