@@ -134,7 +134,7 @@ export async function GET(
       )
     `
 
-    const outputFilePath = path.resolve('public', `export-temp-${Date.now()}.${format}`)
+    const outputFilePath = path.resolve('public', 'temp', `export-temp-${Date.now()}.${format}`)
     const dbConnection = `PG:"${process.env.GEO_DATABASE_URL.replace('?pool_timeout=0', '')}"`
     // LATER: Add something like -lco WRITE_NULL_VALUES=NO to cleanup the NULL properties from GeoJSON
     // See https://github.com/OSGeo/gdal/issues/1187

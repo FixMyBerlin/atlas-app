@@ -85,6 +85,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     // which suggest that the server ran out of memory.
     const outputFilePath = path.resolve(
       'public',
+      'temp',
       `api-maproulette-${projectKey}-temp-${Date.now()}.geojson`,
     )
     const fileStream = fs.createWriteStream(outputFilePath)
