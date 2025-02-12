@@ -34,6 +34,8 @@ services:
     logging:
       driver: json-file
   db:
+    # Flags to increase debug levels
+    # command: ["-c", "config_file=/postgresql/postgresql.conf", "-c", "log_statement=all", "-c", "log_min_duration_statement=100"]
     logging:
       driver: json-file
 
