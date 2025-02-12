@@ -48,10 +48,6 @@ import {
   SubcatLitPlusCompletenessStyleIds,
 } from './mapDataSubcategories/subcat_lit_plus_completeness.const'
 import {
-  SubcatLitPlusFreshnessId,
-  SubcatLitPlusFreshnessStyleIds,
-} from './mapDataSubcategories/subcat_lit_plus_freshness.const'
-import {
   SubcatMapillaryCoverageId,
   SubcatMapillaryCoverageStyleIds,
 } from './mapDataSubcategories/subcat_mapillaryCoverage.const'
@@ -155,7 +151,6 @@ export type SubcategoryId =
   | SubcatBikelanesStatsId
   | SubcatLitId
   | SubcatLitPlusCompletenessId
-  | SubcatLitPlusFreshnessId
   | SubcatMapillaryCoverageId
   | SubcatMaxspeedId
   | SubcatMaxspeedPlusPresenceId
@@ -199,7 +194,6 @@ export type StyleId =
   | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds
   | SubcatLitPlusCompletenessStyleIds
-  | SubcatLitPlusFreshnessStyleIds
   | SubcatLitStyleIds
   | SubcatMapillaryCoverageStyleIds
   | SubcatMaxspeedPlusPresenceStyleIds

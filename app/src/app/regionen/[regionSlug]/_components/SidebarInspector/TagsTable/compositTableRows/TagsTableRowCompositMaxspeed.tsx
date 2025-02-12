@@ -38,14 +38,14 @@ export const TagsTableRowCompositMaxspeed = ({
               tagValue={properties['maxspeed_confidence']}
             />
           </p>
-          <p>
+          {/* <p>
             <em>Aktualität:</em>{' '}
             <ConditionalFormattedValue
               sourceId={sourceId}
               tagKey={'fresh'}
               tagValue={properties['maxspeed_fresh']}
             />
-          </p>
+          </p> */}
         </ValueDisclosurePanel>
       </ValueDisclosure>
 

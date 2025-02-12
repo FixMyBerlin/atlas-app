@@ -8,20 +8,15 @@ type Props = {
 
 export const ToolsOtherProperties = ({ feature, documentedKeys }: Props) => {
   const systemKeys = [
-    '_freshNotes',
-    '_skip',
-    '_skipNotes',
     '_todos',
-    'fresh_age_days',
     'fresh',
-    'is_present',
     'osm_id',
     'osm_type',
     'osm_url',
     'update_at',
     'updated_age',
-    'verified_at',
-    'verified',
+    // 'verified_at',
+    // 'verified',
     'version',
     'offset',
     'side',
