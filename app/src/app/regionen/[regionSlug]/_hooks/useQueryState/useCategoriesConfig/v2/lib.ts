@@ -71,7 +71,7 @@ export function getSimplifiedConfigs() {
       const freshConfig = createFreshCategoriesConfig(region.categories)
       const simplifiedConfig = simplifyConfigForParams(freshConfig)
       const checksum = calcConfigChecksum(freshConfig)
-      return [checksum, simplifiedConfig]
+      return [checksum, { simplifiedConfig, region }]
     }),
   )
 }
