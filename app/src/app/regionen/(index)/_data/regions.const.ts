@@ -780,6 +780,7 @@ export const staticRegion: StaticRegion[] = [
     logoWhiteBackgroundRequired: true,
     categories: [
       // The order here specifies the order in the UI
+      'roads',
       'mapillary',
     ],
     backgroundSources: [
