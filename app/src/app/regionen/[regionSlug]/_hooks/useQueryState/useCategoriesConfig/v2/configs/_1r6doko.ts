@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions parkraum, parkraum-berlin
 export const _1r6doko: MapDataCategoryParam[] = [
   {
     id: 'parking',

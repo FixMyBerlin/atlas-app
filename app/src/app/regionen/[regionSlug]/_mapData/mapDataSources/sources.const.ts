@@ -61,7 +61,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -97,7 +96,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -117,7 +115,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -155,7 +152,6 @@ export const sources: MapDataSource<
       enabled: false,
       // apiIdentifier: 'bikelanes',
     },
-    freshness: { enabled: true },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -197,7 +193,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -238,7 +233,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
-    freshness: { enabled: true },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -279,7 +273,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
-    freshness: { enabled: true },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -305,7 +298,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
-    freshness: { enabled: true },
     calculator: { enabled: false },
     export: { enabled: false }, // can be exported as part of `roads`, `roadsPathClasses`
   },
@@ -334,7 +326,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false }, // this is false until we are able to merge the `bikelanesPresence` with `bikelanes`
     verification: { enabled: false },
-    freshness: { enabled: true },
     calculator: { enabled: false },
     export: { enabled: false }, // can be exported as part of `roads`, `roadsPathClasses`
   },
@@ -355,7 +346,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -381,7 +371,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -407,7 +396,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: {
       enabled: true,
@@ -431,7 +419,6 @@ export const sources: MapDataSource<
     inspector: { enabled: false },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -452,7 +439,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },
@@ -480,7 +466,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
     export: {
       enabled: true,
@@ -506,7 +491,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
     export: {
       enabled: true,
@@ -532,7 +516,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
     export: { enabled: false },
   },
@@ -553,7 +536,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false }, // TODO
     export: {
       enabled: true,
@@ -594,7 +576,6 @@ export const sources: MapDataSource<
     },
     // presence: { enabled: false },
     verification: { enabled: false },
-    freshness: { enabled: false },
     calculator: { enabled: false },
     export: { enabled: false },
   },

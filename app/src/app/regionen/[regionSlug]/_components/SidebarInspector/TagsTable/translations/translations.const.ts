@@ -1,10 +1,11 @@
+// Prettier: Overwrite via app/.prettierrc
 import { translationsParking } from './translationsParking.const'
 
 // Legend:
 // - "ALL--" stands for "all sources". Those translations are applied without checking the soureId
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 /* prettier-ignore */
-export const translations: { [key: string]: string } = {
+export const translations:{ [key: string]: string } = {
   ...translationsParking,
   'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
   'ALL--category--key': 'Führungsform',

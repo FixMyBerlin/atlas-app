@@ -8,7 +8,6 @@ import { NoticeTransformedGeometry } from './InspectorFeatureSource/NoticeTransf
 import { MapillaryIframe } from './MapillaryIframe/MapillaryIframe'
 import { TagsTable } from './TagsTable/TagsTable'
 import { translations } from './TagsTable/translations/translations.const'
-import { ToolsFreshness } from './Tools/ToolsFreshness'
 import { ToolsLinks } from './Tools/ToolsLinks'
 import { ToolsOtherProperties } from './Tools/ToolsOtherProperties'
 import { ToolsWrapper } from './Tools/ToolsWrapper'
@@ -59,16 +58,6 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeatur
               editors={sourceData.inspector.editors}
               osmIdConfig={sourceData.osmIdConfig}
             />
-            {sourceData.freshness.enabled &&
-              sourceData.freshness.freshConfigs?.map((freshConfig) => {
-                return (
-                  <ToolsFreshness
-                    key={freshConfig.dateKey}
-                    properties={properties}
-                    freshConfig={freshConfig}
-                  />
-                )
-              })}
             <ToolsOtherProperties
               feature={feature}
               documentedKeys={sourceData.inspector.documentedKeys}

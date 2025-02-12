@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions radinfra
 export const _ife2uk: MapDataCategoryParam[] = [
   {
     id: 'radinfra_bikelanes',

@@ -101,24 +101,6 @@ type MapDataSourceVerifcation<TVerIds> =
       apiIdentifier?: undefined
     }
 
-// TODO: We change the data format in atlas-geo but did not update atlas-app, yet
-export type MapDataSourceFreshnessConfig = {
-  primaryKeyTranslation: string
-  freshKey: string
-  dateKey: string
-}
-
-type MapDataSourceFreshness =
-  | {
-      enabled: true
-      /** @desc The `check_date:*=<Date>` key that that is used to calculate `is_fresh=<boolean>` */
-      freshConfigs?: MapDataSourceFreshnessConfig[]
-    }
-  | {
-      enabled: false
-      freshConfigs?: undefined
-    }
-
 export type MapDataSourceCalculator =
   | {
       enabled: true
@@ -177,8 +159,6 @@ export type MapDataSource<TIds, TVerIds, TExpIds> = {
   // }
   /** @desc Inspector: Enable and configure in app verification */
   verification: MapDataSourceVerifcation<TVerIds>
-  /** @desc Inspector: Enable and configure info data on freshness */
-  freshness: MapDataSourceFreshness
   /** @desc Calculator: Enable and configure calculator feature */
   calculator: MapDataSourceCalculator
   /** @desc Export: Enable and configure data export */

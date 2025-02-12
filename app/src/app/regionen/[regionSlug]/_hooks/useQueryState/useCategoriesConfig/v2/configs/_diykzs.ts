@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions fahrradstellplaetze
 export const _diykzs: MapDataCategoryParam[] = [
   {
     id: 'bicycleParking',

@@ -71,17 +71,14 @@ const defaultBackgroundSources: SourcesRasterIds[] = [
 ]
 
 export type RegionSlug =
+  | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'bb-kampagne' // Kampagne mit Land Brandenburg
   | 'bb-pg' // Land Brandenburg Projektgruppe
   | 'bb-sg' // Land Brandenburg Steuerungsgruppe
   | 'bb' // Öffentlich, Land Brandenburg
-  | 'bb-beteiligung' // Land Brandenburg, für Beteiligung
   | 'berlin'
-  | 'parkraum-berlin'
-  | 'parkraum-berlin-euvm'
   | 'bibi'
   | 'deutschland'
-  | 'radinfra' // radinfra.de
   | 'fahrradstellplaetze'
   | 'herrenberg'
   | 'langerwehe'
@@ -91,7 +88,11 @@ export type RegionSlug =
   | 'muenchen'
   | 'nudafa'
   | 'ostalbkreis'
+  | 'pankow'
+  | 'parkraum-berlin-euvm'
+  | 'parkraum-berlin'
   | 'parkraum'
+  | 'radinfra' // radinfra.de
   | 'radplus'
   | 'rs8'
   | 'testing'
@@ -338,7 +339,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -362,7 +363,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -387,7 +388,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -411,7 +412,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -432,7 +433,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -456,7 +457,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -480,7 +481,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -504,7 +505,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -712,7 +713,7 @@ export const staticRegion: StaticRegion[] = [
       'roads',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -736,7 +737,7 @@ export const staticRegion: StaticRegion[] = [
       'lit',
       'mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
   },
   {
@@ -759,13 +760,40 @@ export const staticRegion: StaticRegion[] = [
       'radinfra_statistics',
       'radinfra_mapillary',
     ],
-    backgroundSources: [...defaultBackgroundSources],
+    backgroundSources: defaultBackgroundSources,
     notes: 'osmNotes',
     cacheWarming: {
       minZoom: 5,
       maxZoom: 8,
-      tables: ['bikelanes'],
+      tables: ['bikelanes', 'todos_lines'],
     },
+  },
+  {
+    slug: 'pankow',
+    name: 'Pankow',
+    fullName: 'Pankow',
+    osmRelationIds: [164723],
+    map: { lat: 52.5482, lng: 13.4016, zoom: 16 },
+    bbox: null,
+    externalLogoPath:
+      'https://www.berlin.de/imgscaler/F5uhRQooKmQVGom47pZ-GrE68UX1FF9gh_Tkiv9mFCk/sitelogo/L3N5czExLXByb2QvYmEtcGFua293L19hc3NldHMvZml0dG9zaXplX181MF83NV9lZTI0MDBhYmY5ZmQzZjdiM2FjZThjMDhhNGE5ZjY2NV93YXBwZW5fcGFua293X21pdF9tYXVlcmtyb25lLmpwZw.jpg',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'roads',
+      'mapillary',
+    ],
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'alkis',
+      'areal2024',
+      'areal2023',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+    ],
+    notes: 'atlasNotes',
   },
   {
     slug: 'testing',

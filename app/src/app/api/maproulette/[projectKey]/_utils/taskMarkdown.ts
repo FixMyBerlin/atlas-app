@@ -367,12 +367,32 @@ Diesem Weg fehlt eine Angabe zur Oberfläche.
 
 ## Aufgabe
 
-**Bitte ergänze die Angabe zur Oberfläche** und gerne auch zur Oberflächenqualität.
+**Bitte ergänze die Angabe zur Oberfläche** und gerne auch zur Oberflächenqualität.**
 
 * Nutze \`surface\` um die Oberfläche zu beschreiben. [Zum Wiki](https://wiki.openstreetmap.org/wiki/DE:Key:surface)
 * Nutze \`smoothness\` um die Oberflächenqualität zu beschreiben. Dieser Wert ist subjektiver, bitte orientiere dich an den [Beispielen im Wiki](https://wiki.openstreetmap.org/wiki/DE:Key:smoothness) und [in dieser Gallerie](https://wiki.openstreetmap.org/wiki/Key:smoothness/Gallery).
 
 Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete.app/). Dort findet du gute Beispielbilder, was die Erfassung vereinfacht.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+`
+    case 'deprecated_cycleway_shared':
+      return `
+## Kontext
+
+Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.
+
+## Aufgabe
+
+**Bitte prüfe die Infrastruktur und aktualisiere das Tagging.**
+
+* In vielen Fällen kann das \`cycleway=shared\` einfach gelöscht werden.
+* Wenn keine Radinfrastruktur vorliegt, ergänze \`cycleway:both=no\`
 
 ## Hilfsmittel
 

@@ -66,12 +66,21 @@ export function decodeBits(integers: number[]) {
 }
 
 export function getSimplifiedConfigs() {
-  return Object.fromEntries(
-    staticRegion.map((region) => {
-      const freshConfig = createFreshCategoriesConfig(region.categories)
-      const simplifiedConfig = simplifyConfigForParams(freshConfig)
-      const checksum = calcConfigChecksum(freshConfig)
-      return [checksum, simplifiedConfig]
-    }),
-  )
+  type Result = Map<
+    string,
+    { config: ReturnType<typeof simplifyConfigForParams>; regionSlugs: string[] }
+  >
+  const result: Result = new Map([])
+  for (const region of staticRegion) {
+    const freshConfig = createFreshCategoriesConfig(region.categories)
+    const checksum = calcConfigChecksum(freshConfig)
+    const simplifiedConfig = simplifyConfigForParams(freshConfig)
+    result.set(checksum, {
+      config: simplifiedConfig,
+      regionSlugs: [...(result.get(checksum)?.regionSlugs || []), region.slug].sort((a, b) =>
+        a.localeCompare(b),
+      ),
+    })
+  }
+  return result
 }

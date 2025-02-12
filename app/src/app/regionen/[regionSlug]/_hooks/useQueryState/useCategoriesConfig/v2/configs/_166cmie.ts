@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions bb, bb-pg, bb-sg
 export const _166cmie: MapDataCategoryParam[] = [
   {
     id: 'poi',

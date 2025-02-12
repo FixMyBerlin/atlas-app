@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions testing
 export const _1rg9mwb: MapDataCategoryParam[] = [
   {
     id: 'poi',

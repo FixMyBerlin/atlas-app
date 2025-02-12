@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions radplus
 export const _st5qyw: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',

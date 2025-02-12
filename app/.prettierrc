@@ -5,5 +5,13 @@
   "printWidth": 100,
   "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"],
   "tailwindAttributes": ["positionClasses", "classNameOverwrite"],
-  "tailwindFunctions": ["twMerge", "clsx", "twJoin"]
+  "tailwindFunctions": ["twMerge", "clsx", "twJoin"],
+  "overrides": [
+    {
+      "files": "app/src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const.ts",
+      "options": {
+        "printWidth": 1000
+      }
+    }
+  ]
 }

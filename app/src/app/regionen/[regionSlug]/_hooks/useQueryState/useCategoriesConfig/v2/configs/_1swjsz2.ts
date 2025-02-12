@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions berlin
 export const _1swjsz2: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',
