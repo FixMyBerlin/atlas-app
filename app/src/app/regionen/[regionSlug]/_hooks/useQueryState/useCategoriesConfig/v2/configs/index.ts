@@ -45,6 +45,7 @@ import { _vvhkik } from './_vvhkik'
 import { _wvqr4 } from './_wvqr4'
 import { _yx2kv4 } from './_yx2kv4'
 import { _z9tzbb } from './_z9tzbb'
+import { pankow_iv8u2n } from './pankow_iv8u2n'
 
 export const configs = {
   '14zbfci': _14zbfci,
@@ -91,4 +92,5 @@ export const configs = {
   wvqr4: _wvqr4,
   yx2kv4: _yx2kv4,
   z9tzbb: _z9tzbb,
+  pankow_iv8u2n: pankow_iv8u2n,
 }

@@ -91,6 +91,7 @@ export type RegionSlug =
   | 'muenchen'
   | 'nudafa'
   | 'ostalbkreis'
+  | 'pankow'
   | 'parkraum'
   | 'radplus'
   | 'rs8'
@@ -766,6 +767,32 @@ export const staticRegion: StaticRegion[] = [
       maxZoom: 8,
       tables: ['bikelanes'],
     },
+  },
+  {
+    slug: 'pankow',
+    name: 'Pankow',
+    fullName: 'Pankow',
+    osmRelationIds: [164723],
+    map: { lat: 52.5482, lng: 13.4016, zoom: 16 },
+    bbox: null,
+    externalLogoPath:
+      'https://www.berlin.de/imgscaler/F5uhRQooKmQVGom47pZ-GrE68UX1FF9gh_Tkiv9mFCk/sitelogo/L3N5czExLXByb2QvYmEtcGFua293L19hc3NldHMvZml0dG9zaXplX181MF83NV9lZTI0MDBhYmY5ZmQzZjdiM2FjZThjMDhhNGE5ZjY2NV93YXBwZW5fcGFua293X21pdF9tYXVlcmtyb25lLmpwZw.jpg',
+    logoWhiteBackgroundRequired: true,
+    categories: [
+      // The order here specifies the order in the UI
+      'mapillary',
+    ],
+    backgroundSources: [
+      ...defaultBackgroundSources,
+      'alkis',
+      'areal2024',
+      'areal2023',
+      'areal2022',
+      'areal2021',
+      'areal2020',
+      'areal2019',
+    ],
+    notes: 'atlasNotes',
   },
   {
     slug: 'testing',
