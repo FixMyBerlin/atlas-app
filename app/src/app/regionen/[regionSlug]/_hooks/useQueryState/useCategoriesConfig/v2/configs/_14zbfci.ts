@@ -3,21 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-// For region fahrradstellplaetze (Fahrradstellplätze)
-export const fahrradstellplaetze_diykzs: MapDataCategoryParam[] = [
-  {
-    id: 'bicycleParking',
-    active: false,
-    subcategories: [
-      {
-        id: 'bicycleParking',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-        ],
-      },
-    ],
-  },
+export const _14zbfci: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -100,6 +86,43 @@ export const fahrradstellplaetze_diykzs: MapDataCategoryParam[] = [
       { id: 'roads_plus_oneway', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_footways', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_label', styles: [{ id: 'default', active: true }] },
+    ],
+  },
+  {
+    id: 'surface',
+    active: false,
+    subcategories: [
+      {
+        id: 'surfaceRoads',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'bad', active: false },
+        ],
+      },
+      {
+        id: 'surfaceBikelanes',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'bad', active: false },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'lit',
+    active: false,
+    subcategories: [
+      {
+        id: 'lit',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'lit', active: false },
+        ],
+      },
+      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {

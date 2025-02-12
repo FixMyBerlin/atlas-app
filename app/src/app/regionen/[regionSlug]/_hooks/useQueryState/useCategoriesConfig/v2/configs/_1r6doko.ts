@@ -3,8 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-// For region parkraum (Parkraum)
-export const parkraum_1r6doko: MapDataCategoryParam[] = [
+export const _1r6doko: MapDataCategoryParam[] = [
   {
     id: 'parking',
     active: false,

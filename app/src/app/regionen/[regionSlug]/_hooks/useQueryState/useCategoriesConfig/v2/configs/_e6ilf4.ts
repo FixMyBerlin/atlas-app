@@ -3,8 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-// For region bb-sg (Brandenburg Steuerungsgruppe)
-export const bbsg_166cmie: MapDataCategoryParam[] = [
+export const _e6ilf4: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -109,6 +108,21 @@ export const bbsg_166cmie: MapDataCategoryParam[] = [
           { id: 'bad', active: false },
         ],
       },
+    ],
+  },
+  {
+    id: 'lit',
+    active: false,
+    subcategories: [
+      {
+        id: 'lit',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'lit', active: false },
+        ],
+      },
+      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {

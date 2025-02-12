@@ -3,8 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-// For region magdeburg (Magdeburg)
-export const magdeburg_14zbfci: MapDataCategoryParam[] = [
+export const _166cmie: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -112,18 +111,16 @@ export const magdeburg_14zbfci: MapDataCategoryParam[] = [
     ],
   },
   {
-    id: 'lit',
+    id: 'bicycleParking',
     active: false,
     subcategories: [
       {
-        id: 'lit',
+        id: 'bicycleParking',
         styles: [
           { id: 'hidden', active: false },
           { id: 'default', active: true },
-          { id: 'lit', active: false },
         ],
       },
-      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {

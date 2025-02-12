@@ -3,8 +3,42 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-// For region berlin (Berlin)
-export const berlin_1swjsz2: MapDataCategoryParam[] = [
+export const _l464fe: MapDataCategoryParam[] = [
+  {
+    id: 'poi',
+    active: false,
+    subcategories: [
+      {
+        id: 'poi',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'education', active: false },
+        ],
+      },
+      {
+        id: 'poiPlaces',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'circle', active: false },
+        ],
+      },
+      {
+        id: 'poiBoundaries',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'category_district_label', active: false },
+          { id: 'category_municipality', active: false },
+          { id: 'category_municipality_label', active: false },
+        ],
+      },
+      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
+      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
+      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
+    ],
+  },
   {
     id: 'bikelanes',
     active: false,
@@ -77,6 +111,21 @@ export const berlin_1swjsz2: MapDataCategoryParam[] = [
     ],
   },
   {
+    id: 'lit',
+    active: false,
+    subcategories: [
+      {
+        id: 'lit',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'lit', active: false },
+        ],
+      },
+      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
+    ],
+  },
+  {
     id: 'parking',
     active: false,
     subcategories: [
@@ -140,54 +189,6 @@ export const berlin_1swjsz2: MapDataCategoryParam[] = [
           { id: 'default', active: false },
         ],
       },
-    ],
-  },
-  {
-    id: 'bicycleParking',
-    active: false,
-    subcategories: [
-      {
-        id: 'bicycleParking',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'poi',
-    active: false,
-    subcategories: [
-      {
-        id: 'poi',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'education', active: false },
-        ],
-      },
-      {
-        id: 'poiPlaces',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'circle', active: false },
-        ],
-      },
-      {
-        id: 'poiBoundaries',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-          { id: 'category_district_label', active: false },
-          { id: 'category_municipality', active: false },
-          { id: 'category_municipality_label', active: false },
-        ],
-      },
-      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
     ],
   },
   {
