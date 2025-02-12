@@ -3,28 +3,8 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _r6m1yq: MapDataCategoryParam[] = [
-  {
-    id: 'bikelanes',
-    active: false,
-    subcategories: [
-      {
-        id: 'bikelanes',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'details', active: false },
-          { id: 'width', active: false },
-        ],
-      },
-      { id: 'bikelanes_plus_presence', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_width', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
-      { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: false }] },
-    ],
-  },
+// For region bibi (BiBi)
+export const bibi_l464fe: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -58,6 +38,27 @@ export const _r6m1yq: MapDataCategoryParam[] = [
       { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
       { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
       { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
+    ],
+  },
+  {
+    id: 'bikelanes',
+    active: false,
+    subcategories: [
+      {
+        id: 'bikelanes',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'details', active: false },
+          { id: 'width', active: false },
+        ],
+      },
+      { id: 'bikelanes_plus_presence', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_width', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_surface_smoothness', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
+      { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: false }] },
     ],
   },
   {
@@ -123,6 +124,72 @@ export const _r6m1yq: MapDataCategoryParam[] = [
         ],
       },
       { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
+    ],
+  },
+  {
+    id: 'parking',
+    active: false,
+    subcategories: [
+      {
+        id: 'parking',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'presence', active: false },
+          { id: 'missing', active: false },
+          { id: 'surface', active: false },
+        ],
+      },
+      {
+        id: 'parkingPoints',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
+      {
+        id: 'parkingAreas',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'street_side', active: false },
+        ],
+      },
+      {
+        id: 'parkingDebug',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
+      {
+        id: 'parkingStats',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'stats-admin-level-4', active: false },
+          { id: 'default', active: false },
+          { id: 'stats-admin-level-10', active: false },
+          { id: 'length-admin-level-4', active: false },
+          { id: 'length-admin-level-9', active: false },
+          { id: 'length-admin-level-10', active: false },
+        ],
+      },
+      {
+        id: 'parkingBoundaries',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'boundaries-admin-level-4', active: false },
+          { id: 'boundaries-admin-level-9', active: false },
+          { id: 'default', active: false },
+        ],
+      },
+      {
+        id: 'signs',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+        ],
+      },
     ],
   },
   {

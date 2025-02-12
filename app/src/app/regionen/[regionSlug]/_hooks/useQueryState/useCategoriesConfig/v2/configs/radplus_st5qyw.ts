@@ -3,7 +3,8 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _1qeycq8: MapDataCategoryParam[] = [
+// For region radplus (Rad+)
+export const radplus_st5qyw: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',
     active: false,
@@ -23,21 +24,6 @@ export const _1qeycq8: MapDataCategoryParam[] = [
       { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: false }] },
-    ],
-  },
-  {
-    id: 'lit',
-    active: false,
-    subcategories: [
-      {
-        id: 'lit',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'lit', active: false },
-        ],
-      },
-      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {
@@ -101,28 +87,6 @@ export const _1qeycq8: MapDataCategoryParam[] = [
       { id: 'roads_plus_oneway', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_footways', styles: [{ id: 'default', active: false }] },
       { id: 'roads_plus_label', styles: [{ id: 'default', active: true }] },
-    ],
-  },
-  {
-    id: 'surface',
-    active: false,
-    subcategories: [
-      {
-        id: 'surfaceRoads',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'bad', active: false },
-        ],
-      },
-      {
-        id: 'surfaceBikelanes',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-          { id: 'bad', active: false },
-        ],
-      },
     ],
   },
   {

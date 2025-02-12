@@ -3,7 +3,8 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _st5qyw: MapDataCategoryParam[] = [
+// For region bb-kampagne (Brandenburg Kampagne)
+export const bbkampagne_bv3m8i: MapDataCategoryParam[] = [
   {
     id: 'bikelanes',
     active: false,
@@ -23,41 +24,6 @@ export const _st5qyw: MapDataCategoryParam[] = [
       { id: 'bikelanes_plus_signs', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_routes', styles: [{ id: 'default', active: false }] },
       { id: 'bikelanes_plus_bikesuitability', styles: [{ id: 'default', active: false }] },
-    ],
-  },
-  {
-    id: 'poi',
-    active: false,
-    subcategories: [
-      {
-        id: 'poi',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'education', active: false },
-        ],
-      },
-      {
-        id: 'poiPlaces',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'circle', active: false },
-        ],
-      },
-      {
-        id: 'poiBoundaries',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-          { id: 'category_district_label', active: false },
-          { id: 'category_municipality', active: false },
-          { id: 'category_municipality_label', active: false },
-        ],
-      },
-      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
     ],
   },
   {
@@ -89,16 +55,50 @@ export const _st5qyw: MapDataCategoryParam[] = [
     ],
   },
   {
-    id: 'bicycleParking',
+    id: 'surface',
     active: false,
     subcategories: [
       {
-        id: 'bicycleParking',
+        id: 'surfaceRoads',
         styles: [
           { id: 'hidden', active: false },
           { id: 'default', active: true },
+          { id: 'bad', active: false },
         ],
       },
+      {
+        id: 'surfaceBikelanes',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'bad', active: false },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'boundaries',
+    active: false,
+    subcategories: [
+      {
+        id: 'poiPlaces',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'circle', active: false },
+        ],
+      },
+      {
+        id: 'poiBoundaries',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'category_district_label', active: false },
+          { id: 'category_municipality', active: false },
+          { id: 'category_municipality_label', active: false },
+        ],
+      },
+      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
     ],
   },
   {

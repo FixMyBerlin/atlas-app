@@ -3,7 +3,43 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _1swjsz2: MapDataCategoryParam[] = [
+// For region nudafa (NUDAFA)
+export const nudafa_e6ilf4: MapDataCategoryParam[] = [
+  {
+    id: 'poi',
+    active: false,
+    subcategories: [
+      {
+        id: 'poi',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'education', active: false },
+        ],
+      },
+      {
+        id: 'poiPlaces',
+        styles: [
+          { id: 'hidden', active: false },
+          { id: 'default', active: true },
+          { id: 'circle', active: false },
+        ],
+      },
+      {
+        id: 'poiBoundaries',
+        styles: [
+          { id: 'hidden', active: true },
+          { id: 'default', active: false },
+          { id: 'category_district_label', active: false },
+          { id: 'category_municipality', active: false },
+          { id: 'category_municipality_label', active: false },
+        ],
+      },
+      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
+      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
+      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
+    ],
+  },
   {
     id: 'bikelanes',
     active: false,
@@ -76,69 +112,18 @@ export const _1swjsz2: MapDataCategoryParam[] = [
     ],
   },
   {
-    id: 'parking',
+    id: 'lit',
     active: false,
     subcategories: [
       {
-        id: 'parking',
+        id: 'lit',
         styles: [
           { id: 'hidden', active: false },
           { id: 'default', active: true },
-          { id: 'presence', active: false },
-          { id: 'missing', active: false },
-          { id: 'surface', active: false },
+          { id: 'lit', active: false },
         ],
       },
-      {
-        id: 'parkingPoints',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-        ],
-      },
-      {
-        id: 'parkingAreas',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'street_side', active: false },
-        ],
-      },
-      {
-        id: 'parkingDebug',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-        ],
-      },
-      {
-        id: 'parkingStats',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'stats-admin-level-4', active: false },
-          { id: 'default', active: false },
-          { id: 'stats-admin-level-10', active: false },
-          { id: 'length-admin-level-4', active: false },
-          { id: 'length-admin-level-9', active: false },
-          { id: 'length-admin-level-10', active: false },
-        ],
-      },
-      {
-        id: 'parkingBoundaries',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'boundaries-admin-level-4', active: false },
-          { id: 'boundaries-admin-level-9', active: false },
-          { id: 'default', active: false },
-        ],
-      },
-      {
-        id: 'signs',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-        ],
-      },
+      { id: 'lit-completeness', styles: [{ id: 'completeness', active: false }] },
     ],
   },
   {
@@ -152,41 +137,6 @@ export const _1swjsz2: MapDataCategoryParam[] = [
           { id: 'default', active: true },
         ],
       },
-    ],
-  },
-  {
-    id: 'poi',
-    active: false,
-    subcategories: [
-      {
-        id: 'poi',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'education', active: false },
-        ],
-      },
-      {
-        id: 'poiPlaces',
-        styles: [
-          { id: 'hidden', active: false },
-          { id: 'default', active: true },
-          { id: 'circle', active: false },
-        ],
-      },
-      {
-        id: 'poiBoundaries',
-        styles: [
-          { id: 'hidden', active: true },
-          { id: 'default', active: false },
-          { id: 'category_district_label', active: false },
-          { id: 'category_municipality', active: false },
-          { id: 'category_municipality_label', active: false },
-        ],
-      },
-      { id: 'poiPlusBarriers', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusLanduse', styles: [{ id: 'default', active: false }] },
-      { id: 'poiPlusPublicTransport', styles: [{ id: 'default', active: false }] },
     ],
   },
   {

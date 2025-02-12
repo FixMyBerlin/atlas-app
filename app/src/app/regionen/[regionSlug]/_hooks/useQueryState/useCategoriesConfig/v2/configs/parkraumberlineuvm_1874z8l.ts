@@ -3,7 +3,8 @@
 
 import { MapDataCategoryParam } from '../../type'
 
-export const _1874z8l: MapDataCategoryParam[] = [
+// For region parkraum-berlin-euvm (Parkraum Berlin eUVM)
+export const parkraumberlineuvm_1874z8l: MapDataCategoryParam[] = [
   {
     id: 'roads',
     active: false,
