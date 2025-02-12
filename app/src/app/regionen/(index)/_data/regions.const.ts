@@ -765,7 +765,7 @@ export const staticRegion: StaticRegion[] = [
     cacheWarming: {
       minZoom: 5,
       maxZoom: 8,
-      tables: ['bikelanes'],
+      tables: ['bikelanes', 'todos_lines'],
     },
   },
   {
