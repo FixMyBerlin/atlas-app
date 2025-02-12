@@ -18,10 +18,10 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
       'road',
       'road_oneway',
       'road_oneway:bicycle',
-      'lit',
+      // 'lit',
       'maxspeed',
       'smoothness',
-      'surface',
+      // 'surface',
       'bikelane_left',
       'bikelane_right',
       'bikelane_self',
@@ -41,7 +41,12 @@ export const interactivityConfiguration: InteracitvityConfiguartion = {
     minzoom: 11,
   },
   bikelanes: {
-    stylingKeys: ['category', 'surface', 'smoothness', 'width'],
+    stylingKeys: [
+      'category',
+      // 'surface',
+      'smoothness',
+      'width',
+    ],
     minzoom: 9,
   },
   places: {
