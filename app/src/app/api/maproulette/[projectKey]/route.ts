@@ -3,9 +3,9 @@ import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/Sid
 import { geoDataClient } from '@/src/prisma-client'
 import { todoIds } from '@/src/processingTypes/todoIds.const'
 import { feature } from '@turf/turf'
-import fs from 'fs'
 import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
+import fs from 'node:fs'
 import path from 'node:path'
 import pako from 'pako'
 import { z } from 'zod'
@@ -49,9 +49,15 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     }[]
 
     // NOTE: `todos_lines.tags->>${projectKey}` will automatically be wrapped like `todos_lines.tags->>'foo'`
+    // Docs:
     // `ST_Transform` changes projection
     // `ST_SimplifyPreserveTopology` simplifies the geometry (number of nodes) https://postgis.net/docs/ST_SimplifyPreserveTopology.html
     // `ST_AsGeoJSON` with `6` will reduce the number of digits for the lat/lng values https://postgis.net/docs/ST_AsGeoJSON.html
+    //
+    // NOTE `LIMIT`: MapRoulette allows 50k tasks per challenge.
+    //   Source https://github.com/search?q=repo%3Amaproulette%2Fmaproulette-backend%20DEFAULT_MAX_TASKS_PER_CHALLENGE&type=code
+    //   The working theory is, that the 50k limit will include completed tasks. See https://osmus.slack.com/archives/C1QN12RS7/p1739360075037439
+    //   Which is why we go for 40k and after 10k have been completed, we will have to create a new challenge…
     const sqlWays = await geoDataClient.$queryRaw<QueryType>`
       SELECT
         todos_lines.osm_type as osm_type,
@@ -66,18 +72,10 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
           ),
           6
         )::jsonb AS geometry
-        -- We could use this to resolve the issues that the simplification above can result in a geometry
-        -- that can be considered invalid by turf. However, we only have access to the DB here but not
-        -- in the inspector, so this is not the way to go.
-        -- See also https://github.com/Turfjs/turf/issues/1577#issuecomment-2646550413
-        -- ST_AsGeoJSON(
-        --   ST_LineInterpolatePoint(
-        --     ST_Transform(todos_lines.geom, 4326),
-        --     0.5),
-        --   6
-        -- )::jsonb  AS center
       FROM public.todos_lines as todos_lines
-      WHERE todos_lines.tags ? ${projectKey};
+      WHERE todos_lines.tags ? ${projectKey}
+      ORDER BY todos_lines.length DESC
+      LIMIT 40000;
     `
 
     // We need to stream the response and cache it as file.
@@ -91,6 +89,10 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     const fileStream = fs.createWriteStream(outputFilePath)
 
     // ADD MAPROULETTE TASK DATA
+    console.log('INFO', 'api/maproulette/[projectKey]/route.ts:', {
+      resultSize: sqlWays.length,
+      projectKey,
+    })
     for (const sqlWay of sqlWays) {
       const { osm_type, osm_id, id, priority, kind, geometry } = sqlWay
       const osmTypeId = osmTypeIdString(osm_type, osm_id)
@@ -105,7 +107,8 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         })
       } catch (error) {
         console.log(
-          'ERROR app/src/app/api/maproulette/[projectKey]/route.ts',
+          'ERROR',
+          'api/maproulette/[projectKey]/route.ts',
           'in maprouletteTaskDescriptionMarkdown',
           error,
           { osm_type, osm_id, id, priority, kind, geometry },

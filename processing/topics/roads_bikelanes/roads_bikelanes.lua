@@ -126,12 +126,15 @@ local todoLiniesTable = osm2pgsql.define_table({
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'linestring' },
+    { column = 'length',  type = 'integer' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
     { column = { 'minzoom', 'geom' }, method = 'gist' },
     { column = { 'id', 'table' },     method = 'btree', unique = true },
-    { column = { 'tags' },            method = 'gin' } -- locally this is not used
+    { column = { 'tags' },            method = 'gin' }, -- locally this is not used
+    { column = { 'meta' },            method = 'gin' }, -- locally this is not used
+    { column = { 'length' },          method = 'btree' },
   }
 })
 
@@ -200,6 +203,7 @@ function osm2pgsql.process_way(object)
           table = 'bikelanes',
           tags = cycleway._todo_list,
           meta = meta,
+          length = math.floor(results.length),
           geom = object:as_linestring(),
           minzoom = 0
         })
@@ -292,6 +296,7 @@ function osm2pgsql.process_way(object)
         table = "roads",
         tags = results._todo_list,
         meta = meta,
+        length = math.floor(results.length),
         geom = object:as_linestring(),
         minzoom = 0
       })
