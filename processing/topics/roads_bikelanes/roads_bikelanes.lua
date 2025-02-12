@@ -240,10 +240,10 @@ function osm2pgsql.process_way(object)
 
     MergeTable(meta, {
       age = AgeInDays(ParseCheckDate(tags["check_date"])),
-      surface_age = results._surface_age,
-      smoothness_age = results._smoothness_age,
-      maxspeed_age = results._maxspeed_age,
-      lit_age = results._lit_age
+      -- surface_age = results._surface_age,
+      -- smoothness_age = results._smoothness_age,
+      -- maxspeed_age = results._maxspeed_age, -- unused
+      -- lit_age = results._lit_age -- unused
     })
 
     -- (C.3) WRITE `bikeSuitability` table
