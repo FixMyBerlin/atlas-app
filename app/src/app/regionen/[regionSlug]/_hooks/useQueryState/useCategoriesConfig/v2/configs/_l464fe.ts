@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions bibi
 export const _l464fe: MapDataCategoryParam[] = [
   {
     id: 'poi',

@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions herrenberg, langerwehe, lueneburg, magdeburg, mainz, ostalbkreis, rs8, trto, woldegk
 export const _14zbfci: MapDataCategoryParam[] = [
   {
     id: 'poi',

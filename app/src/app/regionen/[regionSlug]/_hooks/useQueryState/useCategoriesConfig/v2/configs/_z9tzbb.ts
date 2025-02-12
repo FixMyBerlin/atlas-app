@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions bb-beteiligung
 export const _z9tzbb: MapDataCategoryParam[] = [
   {
     id: 'bikelanes-minimal',

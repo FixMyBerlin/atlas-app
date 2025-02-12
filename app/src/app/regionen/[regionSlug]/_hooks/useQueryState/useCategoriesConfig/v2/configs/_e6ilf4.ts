@@ -3,6 +3,7 @@
 
 import { MapDataCategoryParam } from '../../type'
 
+// For regions nudafa
 export const _e6ilf4: MapDataCategoryParam[] = [
   {
     id: 'poi',
