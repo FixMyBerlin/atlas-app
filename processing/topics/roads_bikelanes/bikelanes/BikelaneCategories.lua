@@ -219,19 +219,6 @@ local cyclewaySeparated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false,  -- "track"-like and `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
-    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-
-    -- Case "Hochbordradwege"
-    -- Detailled tagging to separate this case from `footAndCyclewaySegregatedCases`
-    if tags.highway == "path"
-        and (tags.foot == "yes" or tags.foot == "designated")
-        and (tags.bicycle == "yes" or tags.bicycle == "designated")
-        and tags.segregated == "yes"
-        and tags.is_sidepath == "yes"
-        and not ContainsSubstring(trafficSign, "241") then
-      return true
-    end
-
     -- traffic_sign=DE:237, "Radweg", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
     -- cycleway=track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=track
     -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_track
