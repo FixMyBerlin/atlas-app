@@ -61,7 +61,9 @@ export const NoticeMaprouletteTask = ({
     geometry: geometry as LineString, // Guarded above
   })
 
-  if (!text) return null
+  if (!text) {
+    return <p>(Die Aufgabenbeschreibung ist noch in Arbeit)</p>
+  }
 
   // The location of the MR pin is the best we can use, but we can always fall back to the one we use internally elsewhere
   // const [centerLng, centerLat] = data?.location?.coordinates || pointFromGeometry(geometry)
