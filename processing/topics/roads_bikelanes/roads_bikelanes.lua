@@ -165,6 +165,7 @@ function osm2pgsql.process_way(object)
   local results = {
     name = tags.name or tags.ref or tags['is_sidepath:of:name'],
     length = length,
+    _updated_age = AgeInDays(object.timestamp)
   }
 
   MergeTable(results, RoadClassification(object))
@@ -184,7 +185,7 @@ function osm2pgsql.process_way(object)
       local publicTags = ExtractPublicTags(cycleway)
       publicTags._parent_highway = cycleway._parent_highway
       local meta = Metadata(object)
-      meta.age = cycleway._age
+      -- meta.age = cycleway._age
 
       cycleway.segregated = nil -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
@@ -260,7 +261,7 @@ function osm2pgsql.process_way(object)
       bikeSuitabilityTable:insert({
         id = DefaultId(object),
         tags = ExtractPublicTags(bikeSuitabilityTags),
-        meta = Metadata(object), -- without the *_age tags
+        meta = Metadata(object),
         geom = object:as_linestring(),
         minzoom = 0
       })
