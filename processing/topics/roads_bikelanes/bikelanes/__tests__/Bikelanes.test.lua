@@ -40,8 +40,8 @@ describe("Bikelanes", function()
       local input_object = {
         tags = {
           highway = 'path',
-          bicycle = 'yes',
-          foot = 'yes',
+          bicycle = 'designated',
+          foot = 'designated',
           segregated = "yes",
           is_sidepath = "yes",
           ['cycleway:width'] = '5 m',
@@ -50,7 +50,7 @@ describe("Bikelanes", function()
         type = 'way'
       }
       local result = Bikelanes(input_object)
-      assert.are.equal(result[1].category, "cycleway_adjoining")
+      assert.are.equal(result[1].category, "footAndCyclewaySegregated_adjoining")
       assert.are.equal(result[1].width, 5)
     end)
   end)

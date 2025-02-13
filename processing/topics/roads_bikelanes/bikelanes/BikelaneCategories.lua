@@ -233,7 +233,8 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- isolated:
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
-    if ContainsSubstring(trafficSign, "DE:237") and not tags.cycleway == "lane" then
+    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+    if ContainsSubstring(trafficSign, "237") and tags.cycleway ~= "lane" then
       return true
     end
   end
@@ -300,7 +301,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
             return false
           end
         end
-        if ContainsSubstring(tags._parent['bicycle:lanes'], '|designated|') then
+        if tags._parent ~= nil and ContainsSubstring(tags._parent['bicycle:lanes'], '|designated|') then
           if not osm2pgsql.has_suffix(tags._parent['bicycle:lanes'], '|designated') then
             return false
           end
