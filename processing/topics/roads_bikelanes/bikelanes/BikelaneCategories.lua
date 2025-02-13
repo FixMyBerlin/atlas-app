@@ -129,7 +129,6 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   end
 })
 
-
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:240
 local footAndCyclewayShared = BikelaneCategory.new({
   id = 'footAndCyclewayShared',
@@ -138,7 +137,10 @@ local footAndCyclewayShared = BikelaneCategory.new({
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
     -- isolated: Eg https://www.openstreetmap.org/way/440072364 highway=service
-    if tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no" then
+    if tags.segregated == "no" and tags.bicycle == "designated" and tags.foot == "designated"  then
+      return true
+    end
+    if tags.segregated == "no" and tags.bicycle == "yes" and tags.foot == "yes"  then
       return true
     end
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
@@ -157,7 +159,10 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
-    if tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes" then
+    if tags.segregated == "yes" and tags.bicycle == "designated" and tags.foot == "designated" then
+        return true
+    end
+    if tags.segregated == "yes" and tags.bicycle == "yes" and tags.foot == "yes"  then
       return true
     end
 
@@ -187,8 +192,7 @@ local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, f
 -- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:239
 local footwayBicycleYes = BikelaneCategory.new({
   id = 'footwayBicycleYes',
-  desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`)' ..
-      ' (DE: "Gehweg, Fahrrad frei")',
+  desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`) (DE: "Gehweg, Fahrrad frei")',
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
@@ -225,6 +229,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     if tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath) then
       return true
     end
+
     -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
     -- adjoining:
     -- This could be PBLs "Protected Bike Lanes"
