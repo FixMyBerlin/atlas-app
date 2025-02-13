@@ -41,9 +41,14 @@ export const NoticeMaprouletteTask = ({
   properties,
   geometry,
 }: Props) => {
-  const maprouletteCampaign = radinfraDeCampaigns.find((c) => c.id === projectKey)
+  const maprouletteCampaign = radinfraDeCampaigns.find(
+    (c) => c.id === projectKey && c.maprouletteChallenge.discriminant === true,
+  )
   const headline = maprouletteCampaign?.menuTitle
-  const mapRouletteId = maprouletteCampaign?.maprouletteChallenge?.id
+  const mapRouletteId =
+    maprouletteCampaign?.maprouletteChallenge?.discriminant === true
+      ? maprouletteCampaign?.maprouletteChallenge?.value?.id
+      : undefined
 
   const { data, isLoading } = useQuery({
     queryKey: ['mapRouletteTask', mapRouletteId, properties.id],
