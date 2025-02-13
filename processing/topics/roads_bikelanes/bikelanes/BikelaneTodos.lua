@@ -153,17 +153,15 @@ local needs_clarification = BikelaneTodo.new({
       )
   end
 })
+-- Name is not precise anymore since we only include one sub-category here.
+-- Background: https://github.com/FixMyBerlin/private-issues/issues/2081#issuecomment-2656458701
 local adjoining_or_isolated = BikelaneTodo.new({
   id = "adjoining_or_isolated",
-  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
+  desc = "Only for category=cycleway_adjoiningOrIsolated for now. Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
   todoTableOnly = false,
-  priority = function(_, resultTags)
-    if resultTags.category == "footwayBicycleYes_adjoiningOrIsolated" then return "2" end
-    return "1"
-  end,
-  conditions = function(objectTags, resultTags)
-    return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
-      and objectTags.cycleway ~= "track"
+  priority = function(_, _) return "1" end,
+  conditions = function(_, resultTags)
+    return resultTags.category == 'cycleway_adjoiningOrIsolated'
   end
 })
 local advisory_or_exclusive = BikelaneTodo.new({
