@@ -35,10 +35,6 @@ import {
   SubcatBikelanesPlusSurfaceStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_surface_text.const'
 import {
-  SubcatBikelanesPlusVerificationId,
-  SubcatBikelanesPlusVerificationStyleIds,
-} from './mapDataSubcategories/subcat_bikelanes_plus_verification.const'
-import {
   SubcatBikelanesPlusWidthTextId,
   SubcatBikelanesPlusWidthTextStyleIds,
 } from './mapDataSubcategories/subcat_bikelanes_plus_width_text.const'
@@ -146,7 +142,6 @@ export type SubcategoryId =
   | SubcatBikelanesPlusRoutesId
   | SubcatBikelanesPlusSignsId
   | SubcatBikelanesPlusSurfaceId
-  | SubcatBikelanesPlusVerificationId
   | SubcatBikelanesPlusWidthTextId
   | SubcatBikelanesStatsId
   | SubcatLitId
@@ -189,7 +184,6 @@ export type StyleId =
   | SubcatBikelanesPlusRoutesStyleIds
   | SubcatBikelanesPlusSignsStyleIds
   | SubcatBikelanesPlusSurfaceStyleIds
-  | SubcatBikelanesPlusVerificationStyleIds
   | SubcatBikelanesPlusWidthTextStyleIds
   | SubcatBikelanesStatsStyleIds
   | SubcatBikelanesStyleIds
