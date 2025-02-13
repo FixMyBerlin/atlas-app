@@ -170,17 +170,23 @@ local advisory_or_exclusive = BikelaneTodo.new({
 })
 
 -- === Other ===
+local days_in_year = 365
 local currentness_too_old = BikelaneTodo.new({
   id = "currentness_too_old",
   desc = "Infrastructure that has not been edited for about 7 years",
   todoTableOnly = true,
   priority = function(_, resultTags)
-    -- Older than ~10 years is "prio1", everything else "prio2"
-    if resultTags._age >= 3600 then return "1" else return "2" end
+    if resultTags._updated_age >= days_in_year * 15 then
+      return "1"
+    elseif resultTags._updated_age >= days_in_year * 12 then
+      return "2"
+    else
+      return "3"
+    end
   end,
   conditions = function(_, resultTags)
     -- Sync date with `app/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/groups/radinfra_currentness.ts`
-    return resultTags.category ~= nil and resultTags._age ~= nil and resultTags._age >= 2190
+    return resultTags.category ~= nil and resultTags._updated_age ~= nil and resultTags._updated_age >= days_in_year*10
   end
 })
 local missing_width = BikelaneTodo.new({
