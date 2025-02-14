@@ -155,6 +155,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
           'Content-Type': 'application/json',
           'Content-Encoding': 'gzip',
           'Content-Length': compressed.length.toString(),
+          'Access-Control-Allow-Origin': '*',
           ...optionalDownloadHeader,
         },
       })
@@ -163,6 +164,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       headers: {
         'Content-Type': 'application/json',
         'Content-Length': fileBuffer.length.toString(),
+        'Access-Control-Allow-Origin': '*',
         ...optionalDownloadHeader,
       },
     })
