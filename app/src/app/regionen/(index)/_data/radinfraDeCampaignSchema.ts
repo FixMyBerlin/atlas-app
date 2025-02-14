@@ -26,6 +26,7 @@ const AstroCampaignMaprouletteSchema = z.object({
     // checkinComment: z.string(),
     // checkinSource: z.string(),
     resultsLimited: z.boolean(),
+    rebuildAt: z.string().datetime().nullable().optional(),
   }),
 })
 export const AstroCampaignSchema = AstroCampaignBaseSchema.merge(
