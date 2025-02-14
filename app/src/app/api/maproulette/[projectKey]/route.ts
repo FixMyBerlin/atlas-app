@@ -2,7 +2,7 @@ import { isProd } from '@/src/app/_components/utils/isEnv'
 import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { geoDataClient } from '@/src/prisma-client'
 import { todoIds } from '@/src/processingTypes/todoIds.const'
-import { feature } from '@turf/turf'
+import { feature, featureCollection } from '@turf/turf'
 import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'node:fs'
@@ -125,13 +125,13 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       }
 
       // feature.id is the unique ID for MapRoulette "way/40232717/cycleway/right"
-      const geojsonFeature = feature(geometry, properties, { id })
+      const geojsonResult = featureCollection([feature(geometry, properties, { id })])
       const rsChar = String.fromCharCode(0x1e) // See https://learn.maproulette.org/en-us/documentation/line-by-line-geojson/
-      fileStream.write(`${rsChar}${JSON.stringify(geojsonFeature)}\n`)
+      fileStream.write(`${rsChar}${JSON.stringify(geojsonResult)}\n`)
     }
 
     // RESPONSE
-    // We return Newline-delimited GeoJSON (also known as "line-oriented GeoJSON", "GeoJSONL", "GeoJSONSeq" or "GeoJSON Text Sequences")
+    // We return Newline-delimited GeoJSON (also known as "line-oriented GeoJSON", "NDGeoJSON", "GeoJSONL", "GeoJSONSeq" or "GeoJSON Text Sequences")
     // because that is easier to do an MapRoulette can handle it just as well.
     fileStream.end()
     await new Promise((resolve, reject) => {
