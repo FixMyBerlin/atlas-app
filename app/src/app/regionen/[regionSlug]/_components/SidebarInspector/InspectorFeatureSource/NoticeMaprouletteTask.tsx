@@ -66,9 +66,10 @@ export const NoticeMaprouletteTask = ({
     geometry: geometry as LineString, // Guarded above
   })
   // In special cases, we add Mustache Tags to our MapRoulette Task Markdown
-  // Those need to be replaced here.
-  // - `{{osmIdentifier}}` – we could replace this with `osmTypeIdString` but we don't need that info in our Inspector
-  const text = textWithMustacheTags?.replaceAll('{{osmIdentifier}}', '')
+  // Those need to be replaced here:
+  const text = textWithMustacheTags
+    ?.replaceAll('{{osmIdentifier}}', '') // we could replace this with `osmTypeIdString` but we don't need that info in our Inspector
+    ?.replaceAll('{{task_updated_at}}', '') // only relevant for MapRoulette as well
 
   if (!text) {
     return <p>(Die Aufgabenbeschreibung ist noch in Arbeit)</p>

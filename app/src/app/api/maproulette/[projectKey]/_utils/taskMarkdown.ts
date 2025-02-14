@@ -68,6 +68,7 @@ Bitte präzisiere das Tagging.
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'advisory_or_exclusive':
       return `
@@ -95,6 +96,7 @@ Bitte präzisiere das Tagging.
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'needs_clarification':
       return `
@@ -123,6 +125,7 @@ Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'missing_traffic_sign_244':
       return `
@@ -150,6 +153,7 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'missing_access_tag_240':
       return `
@@ -175,6 +179,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'missing_traffic_sign_vehicle_destination':
       return `
@@ -203,6 +208,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
 
+{{task_updated_at}}
 `
     case 'missing_access_tag_bicycle_road':
       return `
@@ -228,6 +234,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
 
+{{task_updated_at}}
 `
     case 'missing_traffic_sign':
       return `
@@ -253,6 +260,7 @@ Für diese Infrastruktur {{osmIdentifier}} ist kein Verkehrszeichen-Tag hinterle
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'unexpected_bicycle_access_on_footway':
       return `
@@ -283,6 +291,7 @@ Tagging-Empfehlungen:
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'missing_segregated':
       return `
@@ -308,6 +317,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
+{{task_updated_at}}
 `
     case 'currentness_too_old':
       return `
@@ -357,7 +367,8 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
-* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+{{task_updated_at}}* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
     case 'missing_surface':
       return `
@@ -379,7 +390,8 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
-* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+
+{{task_updated_at}}* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
     case 'deprecated_cycleway_shared':
       return `
