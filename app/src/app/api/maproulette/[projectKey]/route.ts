@@ -117,6 +117,9 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
       const properties = {
         // id: osmTypeId, // feature.properties.id is the OSM ID "way/123"
         priority,
+        // For use as Mustache Tag. MR will show `way/123` but Rapid will make this a link to hover/select the object.
+        // However, Rapid will use some `name` property for that, see https://osmus.slack.com/archives/C1QN12RS7/p1739525039984349?thread_ts=1739524180.359629&cid=C1QN12RS7
+        osmIdentifier: osmTypeId,
         task_updated_at: new Date().toISOString(), // can be used in MapRoulette to see if/when data was fetched
         task_markdown: (text || 'TASK DESCRIPTION MISSING').replaceAll('\n', ' \n'),
       }
