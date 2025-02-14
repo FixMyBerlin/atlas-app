@@ -11,8 +11,22 @@ import { z } from 'zod'
 import { osmEditIdUrl } from '../Tools/osmUrls/osmUrls'
 import { NoticeMaproulette } from './NoticeMaproulette'
 
+const maprouletteStatus = new Map([
+  [0, 'Offen'],
+  [1, 'Erledigt'],
+  [2, 'Erledigt (war kein Problem)'],
+  [3, 'Offen (übersprungen)'],
+  [4, 'Gelöscht'],
+  [5, 'Erledigt (war bereits erledigt)'],
+  [6, 'Offen (zu schwer?)'],
+])
+const maprouletteStatusCompleted = [1, 2, 4, 5]
+
 const maprouletteTaskSchema = z.object({
   id: z.number(),
+  // https://maproulette-python-client.readthedocs.io/en/latest/usage/functionality.html
+  //  0 = Created, 1 = Fixed, 2 = False Positive, 3 = Skipped, 4 = Deleted, 5 = Already Fixed, 6 = Too Hard
+  status: z.number(),
   location: z.object({
     type: z.literal('Point'),
     coordinates: z.tuple([z.number(), z.number()]),
@@ -59,17 +73,12 @@ export const NoticeMaprouletteTask = ({
   if (!osmTypeIdString) return null
   if (geometry?.type !== 'LineString') return null
 
-  const textWithMustacheTags = maprouletteTaskDescriptionMarkdown({
+  const text = maprouletteTaskDescriptionMarkdown({
     projectKey,
     osmTypeIdString,
     kind: kind || 'UNKOWN', // Fallback is needed because TS cannot know that we only use this when the `kind` is known
     geometry: geometry as LineString, // Guarded above
   })
-  // In special cases, we add Mustache Tags to our MapRoulette Task Markdown
-  // Those need to be replaced here:
-  const text = textWithMustacheTags
-    ?.replaceAll('{{osmIdentifier}}', '') // we could replace this with `osmTypeIdString` but we don't need that info in our Inspector
-    ?.replaceAll('{{task_updated_at}}', '') // only relevant for MapRoulette as well
 
   if (!text) {
     return <p>(Die Aufgabenbeschreibung ist noch in Arbeit)</p>
@@ -90,6 +99,7 @@ export const NoticeMaprouletteTask = ({
   const [osmType, osmId] = osmTypeIdString.split('/')
   // @ts-expect-error we could clean this up…
   const osmEditIdUrlHref = osmEditIdUrl({ osmType, osmId })
+  const completed = data?.status && maprouletteStatusCompleted.includes(data.status)
 
   return (
     <Fragment key={projectKey}>
@@ -116,9 +126,12 @@ export const NoticeMaprouletteTask = ({
         {isLoading ? (
           <SmallSpinner />
         ) : maprouletteTaskLink ? (
-          <LinkExternal href={maprouletteTaskLink} blank button>
-            Als MapRoulette Aufgabe bearbeiten
-          </LinkExternal>
+          <>
+            {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
+            <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
+              {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
+            </LinkExternal>
+          </>
         ) : (
           <span className="text-gray-500">Fehler: Konnte MapRoulette URL nicht generieren</span>
         )}

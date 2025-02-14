@@ -53,11 +53,19 @@ export async function GET(request: NextRequest, { params }: { params: { challeng
     const parsed = maprouletteChallengeStatistic.safeParse(json)
 
     // RESPONSE
+
+    const responseHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    }
     if (parsed.success === false || !parsed.data[0]) {
-      return NextResponse.json({ error: 'Invalid response', parsed, json }, { status: 500 })
+      return NextResponse.json(
+        { error: 'Invalid response', parsed, json },
+        { status: 500, headers: responseHeaders },
+      )
     }
 
-    return Response.json(parsed.data[0].actions)
+    return Response.json(parsed.data[0].actions, { headers: responseHeaders })
   } catch (error) {
     console.error(error)
     return Response.json(
