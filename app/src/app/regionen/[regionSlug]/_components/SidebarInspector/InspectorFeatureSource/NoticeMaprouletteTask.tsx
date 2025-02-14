@@ -59,17 +59,12 @@ export const NoticeMaprouletteTask = ({
   if (!osmTypeIdString) return null
   if (geometry?.type !== 'LineString') return null
 
-  const textWithMustacheTags = maprouletteTaskDescriptionMarkdown({
+  const text = maprouletteTaskDescriptionMarkdown({
     projectKey,
     osmTypeIdString,
     kind: kind || 'UNKOWN', // Fallback is needed because TS cannot know that we only use this when the `kind` is known
     geometry: geometry as LineString, // Guarded above
   })
-  // In special cases, we add Mustache Tags to our MapRoulette Task Markdown
-  // Those need to be replaced here:
-  const text = textWithMustacheTags
-    ?.replaceAll('{{osmIdentifier}}', '') // we could replace this with `osmTypeIdString` but we don't need that info in our Inspector
-    ?.replaceAll('{{task_updated_at}}', '') // only relevant for MapRoulette as well
 
   if (!text) {
     return <p>(Die Aufgabenbeschreibung ist noch in Arbeit)</p>

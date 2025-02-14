@@ -38,22 +38,13 @@ export const maprouletteTaskDescriptionMarkdown = ({
     ?.replace('(Kategorisierung unklar)', '')
 
   // Do not add indentation, it will break the Markdown in Maproulette
-  // Use in MapRoulette as… (min 150 chars)
-  /*
-    ```
-{{task_markdown}}
-
-
-
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-    ```
-    */
+  // REMINDER: This is not the full text. This just what is added to MR with `{task_markdown}`
+  //           Some other parts are added by the default instructions when we create/update the challenge.
+  //           This is done because we need to use Mustache tags for some features which cannot be part of this string.
   switch (projectKey) {
     case 'adjoining_or_isolated':
       return `
-## Kontext
-
-Für diese Infrastruktur {{osmIdentifier}} (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
+Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
 
 ## Aufgabe
 
@@ -67,14 +58,10 @@ Bitte präzisiere das Tagging.
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'advisory_or_exclusive':
       return `
-## Kontext
-
-Für diese Infrastruktur {{osmIdentifier}} fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.
+Für diese Infrastruktur fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.
 
 ## Aufgabe
 
@@ -95,14 +82,10 @@ Bitte präzisiere das Tagging.
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'needs_clarification':
       return `
-## Kontext
-
-Diese Radinfrastruktur {{osmIdentifier}} konnte nicht richtig kategorisiert werden.
+Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.
 
 Das passiert häufig, wenn der Weg als \`highway=cycleway\` ohne weitere Attribute angegeben ist.
 
@@ -124,14 +107,10 @@ Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'missing_traffic_sign_244':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**
+Dieser Weg ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**
 
 ## Aufgabe
 
@@ -152,14 +131,10 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'missing_access_tag_240':
       return `
-## Kontext
-
-Für diesen Weg {{osmIdentifier}} wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
+Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
 
 * [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
 * [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))
@@ -178,14 +153,10 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'missing_traffic_sign_vehicle_destination':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
+Dieser Weg ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
 
 ## Aufgabe
 
@@ -207,14 +178,10 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
-
-{{task_updated_at}}
 `
     case 'missing_access_tag_bicycle_road':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.
+Dieser Weg ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.
 
 ## Aufgabe
 
@@ -233,14 +200,10 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
-
-{{task_updated_at}}
 `
     case 'missing_traffic_sign':
       return `
-## Kontext
-
-Für diese Infrastruktur {{osmIdentifier}} ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fuß- und Fahrrad-Infrastruktur ist es sehr hilfreich, das Verkehrszeichen explizit zu erfassen.
+Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fuß- und Fahrrad-Infrastruktur ist es sehr hilfreich, das Verkehrszeichen explizit zu erfassen.
 
 ## Aufgabe
 
@@ -259,14 +222,10 @@ Für diese Infrastruktur {{osmIdentifier}} ist kein Verkehrszeichen-Tag hinterle
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'unexpected_bicycle_access_on_footway':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.
+Dieser Weg verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.
 
 ## Aufgabe
 
@@ -290,14 +249,10 @@ Tagging-Empfehlungen:
 
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'missing_segregated':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} wird vom Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).
+Dieser Weg wird vom Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).
 
 ## Aufgabe
 
@@ -316,14 +271,10 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-{{task_updated_at}}
 `
     case 'currentness_too_old':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} ist seit vielen Jahren nicht mehr überprüft worden.
+Dieser Weg ist seit vielen Jahren nicht mehr überprüft worden.
 
 ## Aufgabe
 
@@ -349,9 +300,7 @@ Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu
     // TODO: Add wiki link about how to calculate the width
     case 'missing_width':
       return `
-## Kontext
-
-Diesem Weg {{osmIdentifier}} fehlt eine Angabe zur Breite.
+Diesem Weg fehlt eine Angabe zur Breite.
 
 ## Aufgabe
 
@@ -367,14 +316,11 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
-
-{{task_updated_at}}* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
     case 'missing_surface':
       return `
-## Kontext
-
-Diesem Weg {{osmIdentifier}} fehlt eine Angabe zur Oberfläche.
+Diesem Weg fehlt eine Angabe zur Oberfläche.
 
 ## Aufgabe
 
@@ -390,14 +336,11 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, panos: true, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=13/${centerLat}/${centerLng})
-
-{{task_updated_at}}* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
     case 'deprecated_cycleway_shared':
       return `
-## Kontext
-
-Dieser Weg {{osmIdentifier}} hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.
+Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.
 
 ## Aufgabe
 
