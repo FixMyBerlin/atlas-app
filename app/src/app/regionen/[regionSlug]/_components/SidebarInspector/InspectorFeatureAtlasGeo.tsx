@@ -32,6 +32,7 @@ export const InspectorFeatureAtlasGeo = ({ sourceKey, feature }: InspectorFeatur
       <IntlProvider messages={translations} locale="de" defaultLocale="de">
         <Disclosure title={<FormattedMessage id={`${sourceId}--title`} />} objectId={osmTypeId}>
           <NoticeTransformedGeometry visible={properties?.prefix} />
+
           <NoticeMaproulette
             sourceId={sourceId}
             osmTypeIdString={osmTypeId}

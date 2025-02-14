@@ -53,7 +53,7 @@ export const maprouletteTaskDescriptionMarkdown = ({
       return `
 ## Kontext
 
-Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
+Für diese Infrastruktur {{osmIdentifier}} (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
 
 ## Aufgabe
 
@@ -73,7 +73,7 @@ Bitte präzisiere das Tagging.
       return `
 ## Kontext
 
-Für diese Infrastruktur fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.
+Für diese Infrastruktur {{osmIdentifier}} fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.
 
 ## Aufgabe
 
@@ -100,7 +100,7 @@ Bitte präzisiere das Tagging.
       return `
 ## Kontext
 
-Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.
+Diese Radinfrastruktur {{osmIdentifier}} konnte nicht richtig kategorisiert werden.
 
 Das passiert häufig, wenn der Weg als \`highway=cycleway\` ohne weitere Attribute angegeben ist.
 
@@ -128,7 +128,7 @@ Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de
       return `
 ## Kontext
 
-Dieser Weg ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**
+Dieser Weg {{osmIdentifier}} ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**
 
 ## Aufgabe
 
@@ -155,7 +155,7 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
       return `
 ## Kontext
 
-Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
+Für diesen Weg {{osmIdentifier}} wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
 
 * [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
 * [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))
@@ -180,7 +180,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
       return `
 ## Kontext
 
-Dieser Weg ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
+Dieser Weg {{osmIdentifier}} ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
 
 ## Aufgabe
 
@@ -208,7 +208,7 @@ Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu
       return `
 ## Kontext
 
-Dieser Weg ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.
+Dieser Weg {{osmIdentifier}} ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.
 
 ## Aufgabe
 
@@ -233,7 +233,7 @@ Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu
       return `
 ## Kontext
 
-Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fuß- und Fahrrad-Infrastruktur ist es sehr hilfreich, das Verkehrszeichen explizit zu erfassen.
+Für diese Infrastruktur {{osmIdentifier}} ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fuß- und Fahrrad-Infrastruktur ist es sehr hilfreich, das Verkehrszeichen explizit zu erfassen.
 
 ## Aufgabe
 
@@ -258,7 +258,7 @@ Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fu
       return `
 ## Kontext
 
-Dieser Weg verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.
+Dieser Weg {{osmIdentifier}} verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.
 
 ## Aufgabe
 
@@ -288,7 +288,7 @@ Tagging-Empfehlungen:
       return `
 ## Kontext
 
-Diese Wege werden von Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).
+Dieser Weg {{osmIdentifier}} wird vom Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).
 
 ## Aufgabe
 
@@ -313,7 +313,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
       return `
 ## Kontext
 
-Dieser Weg ist seht vielen Jahren nicht mehr überprüft worden.
+Dieser Weg {{osmIdentifier}} ist seit vielen Jahren nicht mehr überprüft worden.
 
 ## Aufgabe
 
@@ -341,7 +341,7 @@ Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu
       return `
 ## Kontext
 
-Diesem Weg fehlt eine Angabe zur Breite.
+Diesem Weg {{osmIdentifier}} fehlt eine Angabe zur Breite.
 
 ## Aufgabe
 
@@ -363,7 +363,7 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
       return `
 ## Kontext
 
-Diesem Weg fehlt eine Angabe zur Oberfläche.
+Diesem Weg {{osmIdentifier}} fehlt eine Angabe zur Oberfläche.
 
 ## Aufgabe
 
@@ -385,7 +385,7 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
       return `
 ## Kontext
 
-Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.
+Dieser Weg {{osmIdentifier}} hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.
 
 ## Aufgabe
 

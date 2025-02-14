@@ -57,7 +57,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     maprouletteChallenge: {
       discriminant: true,
       value: {
-        id: null,
+        id: 51041,
         enabled: true,
         name: 'Sehr lange nicht geprüfte Wege',
         resultsLimited: false,
@@ -188,6 +188,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
         enabled: true,
         name: 'Fahrradstraßen ohne Verkehrszeichen',
         resultsLimited: false,
+        rebuildAt: '2025-02-14T09:32:00.000Z',
       },
     },
   },
