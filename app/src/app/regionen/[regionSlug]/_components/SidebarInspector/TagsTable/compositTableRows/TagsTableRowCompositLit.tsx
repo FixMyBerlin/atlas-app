@@ -30,14 +30,14 @@ export const TagsTableRowCompositLit = ({ sourceId, tagKey, properties }: Compos
                 />
               </p>
             )}
-          <p className="mt-1 leading-tight">
+          {/* <p className="mt-1 leading-tight">
             <em>Aktualität:</em>{' '}
             <ConditionalFormattedValue
               sourceId={sourceId}
               tagKey={'fresh'}
               tagValue={properties['lit_fresh']}
             />
-          </p>
+          </p> */}
         </ValueDisclosurePanel>
       </ValueDisclosure>
     </TagsTableRow>

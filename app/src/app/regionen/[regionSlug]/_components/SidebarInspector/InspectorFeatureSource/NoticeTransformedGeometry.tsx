@@ -4,7 +4,7 @@ export const NoticeTransformedGeometry = ({ visible }: Props) => {
   if (!visible) return null
 
   return (
-    <details className="prose prose-sm bg-purple-100 p-1 px-4 py-1.5">
+    <details className="prose prose-sm bg-indigo-200 p-1 px-4 py-1.5">
       <summary className="cursor-pointer hover:font-semibold">
         Hinweis: Transformierte Geometrie
       </summary>

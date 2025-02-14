@@ -64,15 +64,14 @@ function Bikelanes(object)
       local result_tags = {
         _side = transformedTags._side,
         _infrastructureExists = category.infrastructureExists,
-        -- We have to duplicate Metadata.lua so we can use this value in BikelaneTodos.lua
-        _age = AgeInDays(object.timestamp),
+        _updated_age = AgeInDays(object.timestamp), -- duplicated because we don't have access to where the data is added in road_bikelanes.lua and need it for BikelaneTodos
         category = category.id,
       }
       if category.infrastructureExists then
         MergeTable(result_tags, {
           _id = DefaultId(object),
           _infrastructureExists = true,
-          _age = AgeInDays(ParseCheckDate(tags["check_date"])) or result_tags._age,
+          -- _age = AgeInDays(ParseCheckDate(tags["check_date"])),
           prefix = transformedTags._prefix,
           width = ParseLength(transformedTags.width),
           oneway = DeriveOneway(transformedTags, category),
@@ -92,9 +91,8 @@ function Bikelanes(object)
           result_tags._id = DefaultId(object) .. '/' .. transformedTags._prefix .. '/' .. transformedTags._side
           result_tags._parent_highway = transformedTags._parent_highway
           result_tags.offset = sideSignMap[transformedTags._side] * RoadWidth(tags) / 2
-          result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix])) or result_tags._age
+          -- result_tags._age = AgeInDays(ParseCheckDate(tags["check_date:" .. transformedTags._prefix]))
         end
-
 
         local todos = CollectTodos(BikelaneTodos, transformedTags, result_tags)
         result_tags._todo_list = ToTodoTags(todos)

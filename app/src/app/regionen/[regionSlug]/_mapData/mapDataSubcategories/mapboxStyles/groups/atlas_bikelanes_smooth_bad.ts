@@ -5,7 +5,7 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_atlas_bikelanes_smooth_bad: MapboxStyleLayer[] = [
   {
-    filter: ['has', 'surface'],
+    filter: ['has', 'smoothness'],
     type: 'line',
     id: 'smoothness-badonly',
     paint: {

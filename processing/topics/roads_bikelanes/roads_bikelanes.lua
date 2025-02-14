@@ -126,12 +126,15 @@ local todoLiniesTable = osm2pgsql.define_table({
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'linestring' },
+    { column = 'length',  type = 'integer' },
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
     { column = { 'minzoom', 'geom' }, method = 'gist' },
     { column = { 'id', 'table' },     method = 'btree', unique = true },
-    { column = { 'tags' },            method = 'gin' } -- locally this is not used
+    { column = { 'tags' },            method = 'gin' }, -- locally this is not used
+    { column = { 'meta' },            method = 'gin' }, -- locally this is not used
+    { column = { 'length' },          method = 'btree' },
   }
 })
 
@@ -162,6 +165,7 @@ function osm2pgsql.process_way(object)
   local results = {
     name = tags.name or tags.ref or tags['is_sidepath:of:name'],
     length = length,
+    _updated_age = AgeInDays(object.timestamp)
   }
 
   MergeTable(results, RoadClassification(object))
@@ -181,7 +185,7 @@ function osm2pgsql.process_way(object)
       local publicTags = ExtractPublicTags(cycleway)
       publicTags._parent_highway = cycleway._parent_highway
       local meta = Metadata(object)
-      meta.age = cycleway._age
+      -- meta.age = cycleway._age
 
       cycleway.segregated = nil -- no idea why that is present in the inspector frontend for way 9717355
       bikelanesTable:insert({
@@ -200,6 +204,7 @@ function osm2pgsql.process_way(object)
           table = 'bikelanes',
           tags = cycleway._todo_list,
           meta = meta,
+          length = math.floor(results.length),
           geom = object:as_linestring(),
           minzoom = 0
         })
@@ -236,10 +241,10 @@ function osm2pgsql.process_way(object)
 
     MergeTable(meta, {
       age = AgeInDays(ParseCheckDate(tags["check_date"])),
-      surface_age = results._surface_age,
-      smoothness_age = results._smoothness_age,
-      maxspeed_age = results._maxspeed_age,
-      lit_age = results._lit_age
+      -- surface_age = results._surface_age,
+      -- smoothness_age = results._smoothness_age,
+      -- maxspeed_age = results._maxspeed_age, -- unused
+      -- lit_age = results._lit_age -- unused
     })
 
     -- (C.3) WRITE `bikeSuitability` table
@@ -256,7 +261,7 @@ function osm2pgsql.process_way(object)
       bikeSuitabilityTable:insert({
         id = DefaultId(object),
         tags = ExtractPublicTags(bikeSuitabilityTags),
-        meta = Metadata(object), -- without the *_age tags
+        meta = Metadata(object),
         geom = object:as_linestring(),
         minzoom = 0
       })
@@ -292,6 +297,7 @@ function osm2pgsql.process_way(object)
         table = "roads",
         tags = results._todo_list,
         meta = meta,
+        length = math.floor(results.length),
         geom = object:as_linestring(),
         minzoom = 0
       })

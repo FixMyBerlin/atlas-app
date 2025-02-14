@@ -129,7 +129,6 @@ local bicycleRoad_vehicleDestination = BikelaneCategory.new({
   end
 })
 
-
 -- traffic_sign=DE:240, https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:240
 local footAndCyclewayShared = BikelaneCategory.new({
   id = 'footAndCyclewayShared',
@@ -138,7 +137,10 @@ local footAndCyclewayShared = BikelaneCategory.new({
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
     -- isolated: Eg https://www.openstreetmap.org/way/440072364 highway=service
-    if tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "no" then
+    if tags.segregated == "no" and tags.bicycle == "designated" and tags.foot == "designated"  then
+      return true
+    end
+    if tags.segregated == "no" and tags.bicycle == "yes" and tags.foot == "yes"  then
       return true
     end
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
@@ -157,7 +159,10 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
-    if tags.bicycle == "designated" and tags.foot == "designated" and tags.segregated == "yes" then
+    if tags.segregated == "yes" and tags.bicycle == "designated" and tags.foot == "designated" then
+        return true
+    end
+    if tags.segregated == "yes" and tags.bicycle == "yes" and tags.foot == "yes"  then
       return true
     end
 
@@ -187,8 +192,7 @@ local footAndCyclewaySegregated_adjoining, footAndCyclewaySegregated_isolated, f
 -- traffic_sign=DE:1022-10 "Fahrrad frei", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic_sign=DE:239
 local footwayBicycleYes = BikelaneCategory.new({
   id = 'footwayBicycleYes',
-  desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`)' ..
-      ' (DE: "Gehweg, Fahrrad frei")',
+  desc = 'Footway / Sidewalk with explicit allowance for bicycles (`bicycle=yes`) (DE: "Gehweg, Fahrrad frei")',
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
@@ -219,25 +223,13 @@ local cyclewaySeparated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false,  -- "track"-like and `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
-    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-
-    -- Case "Hochbordradwege"
-    -- Detailled tagging to separate this case from `footAndCyclewaySegregatedCases`
-    if tags.highway == "path"
-        and (tags.foot == "yes" or tags.foot == "designated")
-        and (tags.bicycle == "yes" or tags.bicycle == "designated")
-        and tags.segregated == "yes"
-        and tags.is_sidepath == "yes"
-        and not ContainsSubstring(trafficSign, "241") then
-      return true
-    end
-
     -- traffic_sign=DE:237, "Radweg", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
     -- cycleway=track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=track
     -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_track
     if tags.highway == "cycleway" and (tags.cycleway == "track" or tags.cycleway == "opposite_track" or tags.is_sidepath) then
       return true
     end
+
     -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
     -- adjoining:
     -- This could be PBLs "Protected Bike Lanes"
@@ -246,7 +238,8 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- isolated:
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
-    if ContainsSubstring(trafficSign, "DE:237") and not tags.cycleway == "lane" then
+    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+    if ContainsSubstring(trafficSign, "237") and tags.cycleway ~= "lane" then
       return true
     end
   end
@@ -313,7 +306,7 @@ local cyclewayOnHighway_advisoryOrExclusive = BikelaneCategory.new({
             return false
           end
         end
-        if ContainsSubstring(tags._parent['bicycle:lanes'], '|designated|') then
+        if tags._parent ~= nil and ContainsSubstring(tags._parent['bicycle:lanes'], '|designated|') then
           if not osm2pgsql.has_suffix(tags._parent['bicycle:lanes'], '|designated') then
             return false
           end

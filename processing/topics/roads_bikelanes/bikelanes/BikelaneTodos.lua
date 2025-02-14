@@ -81,14 +81,17 @@ local missing_traffic_sign = BikelaneTodo.new({
     if objectTags.bicycle == "yes" then return "2" end
     return "3"
   end,
-  conditions = function(objectTags, _)
+  conditions = function(objectTags, resultTags)
     local traffic_sign = objectTags['traffic_sign'] or objectTags['traffic_sign:forward'] or objectTags['traffic_sign:backward']
     return traffic_sign == nil
-        and not (
-          missing_traffic_sign_244(objectTags) or
-          missing_traffic_sign_vehicle_destination(objectTags)
-          -- Add any missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
-        )
+      and not (
+        missing_traffic_sign_244(objectTags) or
+        missing_traffic_sign_vehicle_destination(objectTags)
+        -- Add any new missing_traffic_sign_* here so we only trigger this TODO when no other traffic_sign todo is present.
+      )
+      and resultTags.category ~= 'cyclwayLink'
+      and resultTags.category ~= 'crossing'
+      and resultTags.category ~= 'needsClarification'
   end
 })
 
@@ -150,13 +153,15 @@ local needs_clarification = BikelaneTodo.new({
       )
   end
 })
+-- Name is not precise anymore since we only include one sub-category here.
+-- Background: https://github.com/FixMyBerlin/private-issues/issues/2081#issuecomment-2656458701
 local adjoining_or_isolated = BikelaneTodo.new({
   id = "adjoining_or_isolated",
-  desc = "Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
+  desc = "Only for category=cycleway_adjoiningOrIsolated for now. Expected tag `is_sidepath=yes` or `is_sidepath=no`.",
   todoTableOnly = false,
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
-    return ContainsSubstring(resultTags.category, '_adjoiningOrIsolated')
+    return resultTags.category == 'cycleway_adjoiningOrIsolated'
   end
 })
 local advisory_or_exclusive = BikelaneTodo.new({
@@ -170,17 +175,19 @@ local advisory_or_exclusive = BikelaneTodo.new({
 })
 
 -- === Other ===
+local days_in_year = 365
 local currentness_too_old = BikelaneTodo.new({
   id = "currentness_too_old",
   desc = "Infrastructure that has not been edited for about 7 years",
   todoTableOnly = true,
   priority = function(_, resultTags)
-    -- Older than ~10 years is "prio1", everything else "prio2"
-    if resultTags._age >= 3600 then return "1" else return "2" end
+    if resultTags._updated_age >= days_in_year * 15 then return "1" end
+    if resultTags._updated_age >= days_in_year * 12 then return "2" end
+    return "3"
   end,
   conditions = function(_, resultTags)
     -- Sync date with `app/src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles/groups/radinfra_currentness.ts`
-    return resultTags.category ~= nil and resultTags._age ~= nil and resultTags._age >= 2190
+    return resultTags.category ~= nil and resultTags._updated_age ~= nil and resultTags._updated_age >= days_in_year*10
   end
 })
 local missing_width = BikelaneTodo.new({
@@ -190,15 +197,28 @@ local missing_width = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(_, resultTags)
     return resultTags.width == nil
+      and resultTags.category ~= 'cyclwayLink'
+      and resultTags.category ~= 'sharedBusLaneBikeWithBus'
+      and resultTags.category ~= 'sharedBusLaneBusWithBike'
+      and resultTags.category ~= 'crossing'
+      and resultTags.category ~= 'pedestrianAreaBicycleYes'
+      and resultTags.category ~= 'footAndCyclewayShared_isolated'
+      and resultTags.category ~= 'footAndCyclewayShared_adjoiningOrIsolated'
+      and resultTags.category ~= 'needsClarification'
   end
 })
 local missing_surface = BikelaneTodo.new({
   id = "missing_surface",
   desc = "Ways without `surface`",
   todoTableOnly = true,
-  priority = function(_, _) return "1" end,
+  priority = function(_, resultTags)
+    if resultTags.category == 'crossing' then return "2" end
+    return "1"
+  end,
   conditions = function(_, resultTags)
     return resultTags.surface == nil
+      and resultTags.category ~= 'cyclwayLink'
+      and resultTags.category ~= 'needsClarification'
   end
 })
 

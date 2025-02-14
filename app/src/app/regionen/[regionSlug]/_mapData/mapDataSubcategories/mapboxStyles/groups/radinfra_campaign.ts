@@ -12,7 +12,7 @@ export const mapboxStyleGroupLayers_radinfra_campaign: MapboxStyleLayer[] = [
     type: 'line',
     id: 'campaign-line',
     paint: {
-      'line-color': '#a97bea',
+      'line-color': '#fda5e4',
       'line-opacity': [
         'interpolate',
         ['linear'],

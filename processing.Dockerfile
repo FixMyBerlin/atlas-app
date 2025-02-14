@@ -11,6 +11,8 @@ RUN luarocks install busted && \
 COPY processing /processing/
 
 ENTRYPOINT [ "busted" ]
+# Testing: Hacky way to only run a specific file
+# CMD ["--pattern=%BikelaneCategories.test%.lua$", "/processing/topics/"]
 CMD ["--pattern=%.test%.lua$", "/processing/topics/"]
 
 FROM testing AS processing

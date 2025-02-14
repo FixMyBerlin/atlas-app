@@ -41,9 +41,14 @@ export const NoticeMaprouletteTask = ({
   properties,
   geometry,
 }: Props) => {
-  const maprouletteCampaign = radinfraDeCampaigns.find((c) => c.id === projectKey)
+  const maprouletteCampaign = radinfraDeCampaigns.find(
+    (c) => c.id === projectKey && c.maprouletteChallenge.discriminant === true,
+  )
   const headline = maprouletteCampaign?.menuTitle
-  const mapRouletteId = maprouletteCampaign?.maprouletteChallenge?.id
+  const mapRouletteId =
+    maprouletteCampaign?.maprouletteChallenge?.discriminant === true
+      ? maprouletteCampaign?.maprouletteChallenge?.value?.id
+      : undefined
 
   const { data, isLoading } = useQuery({
     queryKey: ['mapRouletteTask', mapRouletteId, properties.id],
@@ -61,7 +66,9 @@ export const NoticeMaprouletteTask = ({
     geometry: geometry as LineString, // Guarded above
   })
 
-  if (!text) return null
+  if (!text) {
+    return <p>(Die Aufgabenbeschreibung ist noch in Arbeit)</p>
+  }
 
   // The location of the MR pin is the best we can use, but we can always fall back to the one we use internally elsewhere
   // const [centerLng, centerLat] = data?.location?.coordinates || pointFromGeometry(geometry)

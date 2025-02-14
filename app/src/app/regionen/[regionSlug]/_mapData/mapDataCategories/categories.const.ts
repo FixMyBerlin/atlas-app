@@ -91,7 +91,6 @@ export const categories: StaticMapDataCategory[] = [
       { ...subcat_bikelanes_plus_signs, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_routes, defaultStyle: 'hidden' },
       { ...subcat_bikelanes_plus_bikesuitability, defaultStyle: 'hidden' },
-      // { ...subcat_bikelanes_plus_verification, defaultStyle: 'hidden' }, // WARNING: We nee permission per subcat first before we add this layer
       // LATER
       // { id: 'bikelanesProtection', defaultStyle: 'hidden' },
       // { id: 'tram', defaultStyle: 'hidden' },
@@ -109,10 +108,7 @@ export const categories: StaticMapDataCategory[] = [
     desc: 'Fahrbahn & Radinfrastruktur',
     subcategories: [
       { ...subcat_lit, defaultStyle: 'default' },
-      // { ...subcat_surface_bikelane, defaultStyle: 'hidden' },
-      // PLUS:
       { ...subcat_lit_plus_completeness, defaultStyle: 'hidden' },
-      // { ...subcat_lit_plus_freshness, defaultStyle: 'hidden' },
     ],
   },
   {
