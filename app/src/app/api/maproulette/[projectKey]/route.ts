@@ -123,7 +123,8 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
 
       // feature.id is the unique ID for MapRoulette "way/40232717/cycleway/right"
       const geojsonFeature = feature(geometry, properties, { id })
-      fileStream.write(JSON.stringify(geojsonFeature) + '\n')
+      const rsChar = String.fromCharCode(0x1e) // See https://learn.maproulette.org/en-us/documentation/line-by-line-geojson/
+      fileStream.write(`${rsChar}${JSON.stringify(geojsonFeature)}\n`)
     }
 
     // RESPONSE
