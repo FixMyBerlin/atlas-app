@@ -6,7 +6,7 @@ type Props = { visible: boolean; title: string; children: React.ReactNode }
 
 export const NotesNew = ({ visible, title, children }: Props) => {
   const session = useSession()
-  const isAuthenticated = session.osmToken !== null
+  const isAuthenticated = typeof session.osmToken === 'string'
 
   if (!visible) return null
 
