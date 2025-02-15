@@ -73,8 +73,8 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
                 öffentlichen Daten sehen, aber eventuelle geschützte Daten nicht.
               </p>
             )}
-            <p className="mb-1">
-              <div className="truncate">
+            <div className="mb-1">
+              <p className="truncate">
                 Name:{' '}
                 {getFullname(user) ? (
                   getFullname(user)
@@ -86,9 +86,9 @@ export const UserLoggedIn = ({ user }: UserLoggedInProp) => {
                     Bitte Name ergänzen…
                   </Link>
                 )}
-              </div>
-              <div className="truncate">eMail: {user.email ?? '–'}</div>
-            </p>
+              </p>
+              <p className="truncate">eMail: {user.email ?? '–'}</p>
+            </div>
             {isRegionsPage && hasPermissions === true && !isAdmin(user) && (
               <div className="flex items-center gap-1 text-xs leading-4">
                 <CheckBadgeIcon className="inline-block h-6 w-6" />
