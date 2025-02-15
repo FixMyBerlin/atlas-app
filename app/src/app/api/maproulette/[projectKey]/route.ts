@@ -122,6 +122,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         osmIdentifier: osmTypeId,
         task_updated_at: new Date().toLocaleString('de-DE'), // Used in MapRoulette to see when data was fetched lasted
         task_markdown: (text || 'TASK DESCRIPTION MISSING').replaceAll('\n', ' \n'),
+        blank: '',
       }
 
       // feature.id is the unique ID for MapRoulette "way/40232717/cycleway/right"
