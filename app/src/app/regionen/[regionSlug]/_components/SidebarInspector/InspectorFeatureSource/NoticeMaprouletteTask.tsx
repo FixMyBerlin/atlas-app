@@ -55,10 +55,9 @@ export const NoticeMaprouletteTask = ({
   properties,
   geometry,
 }: Props) => {
-  const maprouletteCampaign = radinfraDeCampaigns.find(
-    (c) => c.id === projectKey && c.maprouletteChallenge.discriminant === true,
-  )
-  const headline = maprouletteCampaign?.menuTitle
+  const radinfraCampaign = radinfraDeCampaigns.find((c) => c.id === projectKey)
+  const maprouletteCampaign =
+    radinfraCampaign?.maprouletteChallenge.discriminant === true ? radinfraCampaign : undefined
   const mapRouletteId =
     maprouletteCampaign?.maprouletteChallenge?.discriminant === true
       ? maprouletteCampaign?.maprouletteChallenge?.value?.id
@@ -103,9 +102,9 @@ export const NoticeMaprouletteTask = ({
 
   return (
     <Fragment key={projectKey}>
-      <h2>{headline || `${projectKey} (in Arbeit)`}</h2>
-      <p className="-mt-5 text-right text-xs">
-        {mapRouletteId ? (
+      <h2>{radinfraCampaign?.menuTitle || `${projectKey} (in Arbeit)`}</h2>
+      {mapRouletteId && (
+        <p className="-mt-5 text-right text-xs">
           <LinkExternal
             href={maprouletteCampaignLink}
             title="MapRoulette"
@@ -114,26 +113,30 @@ export const NoticeMaprouletteTask = ({
           >
             MR #{mapRouletteId}
           </LinkExternal>
-        ) : (
-          <>No MR ID</>
-        )}
-      </p>
+        </p>
+      )}
       <div className="mb-5 mt-0 flex flex-col items-center gap-1.5 rounded-sm bg-white/80 p-3">
         {/* See https://github.com/facebook/Rapid/issues/1686 */}
         {/* <LinkExternal href={rapidCampaignLink} blank button>
           In OpenStreetMap bearbeiten
         </LinkExternal> */}
-        {isLoading ? (
-          <SmallSpinner />
-        ) : maprouletteTaskLink ? (
+        {mapRouletteId ? (
           <>
-            {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
-            <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
-              {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
-            </LinkExternal>
+            {isLoading ? (
+              <SmallSpinner />
+            ) : maprouletteTaskLink ? (
+              <>
+                {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
+                <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
+                  {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
+                </LinkExternal>
+              </>
+            ) : (
+              <span className="text-gray-500">Fehler: Konnte MapRoulette URL nicht generieren</span>
+            )}
           </>
         ) : (
-          <span className="text-gray-500">Fehler: Konnte MapRoulette URL nicht generieren</span>
+          <></>
         )}
         {osmEditIdUrlHref && (
           <LinkExternal
