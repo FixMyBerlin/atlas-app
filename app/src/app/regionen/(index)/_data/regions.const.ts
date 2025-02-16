@@ -29,12 +29,6 @@ export type StaticRegion = {
   map: StaticRegionInitialMapPositionZoom
   /** @desc Used by the download panel to pass to the api endpoint */
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
-  logoWhiteBackgroundRequired: boolean
-  categories: MapDataCategoryId[]
-  backgroundSources: SourcesRasterIds[]
-  notes: 'osmNotes' | 'atlasNotes' | 'disabled'
-  hideDownload?: boolean
-  cacheWarming?: { minZoom: number; maxZoom: number; tables: UnionTiles<TableId>[] }
 } & (
   | {
       logoPath: StaticImageData | null
@@ -44,7 +38,15 @@ export type StaticRegion = {
       logoPath?: never
       externalLogoPath: string | null
     }
-)
+) & {
+    logoWhiteBackgroundRequired: boolean
+    navigationLinks?: { name: string; href: string }[]
+    categories: MapDataCategoryId[]
+    backgroundSources: SourcesRasterIds[]
+    notes: 'osmNotes' | 'atlasNotes' | 'disabled'
+    hideDownload?: boolean
+    cacheWarming?: { minZoom: number; maxZoom: number; tables: UnionTiles<TableId>[] }
+  }
 
 const bboxToMinMax = (bbox: [number, number, number, number]) => {
   return {
@@ -743,12 +745,16 @@ export const staticRegion: StaticRegion[] = [
   {
     slug: 'radinfra',
     name: 'radinfra.de',
-    fullName: 'Radinfrastrukturdaten für Deutschland (radinfra.de)',
+    fullName: 'radinfra.de – Radinfrastrukturdaten für Deutschland',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 6 },
     bbox: null,
     externalLogoPath: 'https://radinfra.de/radinfra-de-logo.png',
     logoWhiteBackgroundRequired: false,
+    navigationLinks: [
+      { name: 'Was ist radinfra.de', href: 'https://radinfra.de/' },
+      { name: 'Mithelfen', href: 'https://radinfra.de/mitmachen/' },
+    ],
     categories: [
       // The order here specifies the order in the UI
       'radinfra_bikelanes',
