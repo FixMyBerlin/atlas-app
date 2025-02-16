@@ -1,8 +1,8 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require('ContainsSubstring')
+-- local inspect = require('inspect')
 BikelaneTodo = {}
 BikelaneTodo.__index = BikelaneTodo
--- local inspect = require('inspect')
 
 -- @param args table
 -- @param args.id string
@@ -169,8 +169,13 @@ local advisory_or_exclusive = BikelaneTodo.new({
   desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
   todoTableOnly = false,
   priority = function(_, _) return "1" end,
-  conditions = function(_, resultTags)
+    conditions = function(objectTags, resultTags)
     return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
+      -- We only want one task per centerline, we pick the "right" side
+      and ( (objectTags._parent['cycleway:both'] == "lane" and objectTags._side == "right")
+         or (objectTags._parent['cycleway:right'] == "lane" and objectTags._side == "right")
+         or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
+      )
   end
 })
 
