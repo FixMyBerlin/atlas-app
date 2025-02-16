@@ -17,7 +17,10 @@ export const NavigationMobile = ({ primaryNavigation, secondaryNavigation, logo:
       {({ open }) => (
         <>
           <div className="relative flex min-h-[4rem] items-center justify-between sm:h-16">
-            <div className="absolute inset-y-0 right-0 flex items-center space-x-2">
+            <div className="flex flex-1 items-center justify-start sm:items-stretch">
+              <div className="flex flex-1 flex-shrink-0 items-center">{Logo}</div>
+            </div>
+            <div className="flex items-center space-x-2">
               <User />
               <DisclosureButton className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                 <span className="sr-only">Hauptmenü öffnen</span>
@@ -27,9 +30,6 @@ export const NavigationMobile = ({ primaryNavigation, secondaryNavigation, logo:
                   <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                 )}
               </DisclosureButton>
-            </div>
-            <div className="flex flex-1 items-center justify-start sm:items-stretch">
-              <div className="flex flex-shrink-0 items-center">{Logo}</div>
             </div>
           </div>
 
