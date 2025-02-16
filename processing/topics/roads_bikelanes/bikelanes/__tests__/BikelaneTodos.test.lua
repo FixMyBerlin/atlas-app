@@ -60,6 +60,27 @@ describe("BikelaneTodos", function()
       local right = cycleways[2]
       assert.are.equal(right._id, "way/1/cycleway/right")
       assert.are.equal(TableIncludes(right._todo_list, "advisory_or_exclusive"), true)
+        end)
+
+    it('creates only one task for cycleway', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'secondary',
+          ["cycleway"] = 'lane',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 2)
+
+      local left = cycleways[1]
+      assert.are.equal(left._id, "way/1/cycleway/left")
+      assert.are.equal(TableIncludes(left._todo_list, "advisory_or_exclusive"), false)
+
+      local right = cycleways[2]
+      assert.are.equal(right._id, "way/1/cycleway/right")
+      assert.are.equal(TableIncludes(right._todo_list, "advisory_or_exclusive"), true)
     end)
 
     it('creates only one task for cycleway:left + cycleway:right', function()

@@ -173,6 +173,7 @@ local advisory_or_exclusive = BikelaneTodo.new({
     return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
       -- We only want one task per centerline, we pick the "right" side
       and ( (objectTags._parent['cycleway:both'] == "lane" and objectTags._side == "right")
+         or (objectTags._parent['cycleway'] == "lane" and objectTags._side == "right")
          or (objectTags._parent['cycleway:right'] == "lane" and objectTags._side == "right")
          or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
       )
