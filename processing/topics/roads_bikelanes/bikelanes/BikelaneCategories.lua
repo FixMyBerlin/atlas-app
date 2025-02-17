@@ -223,6 +223,8 @@ local cyclewaySeparated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = false,  -- "track"-like and `oneway=yes` (common in cities) is usually explicit
   condition = function(tags)
+    if (tags.cycleway == "lane") then return false end
+
     -- traffic_sign=DE:237, "Radweg", https://wiki.openstreetmap.org/wiki/DE:Tag:traffic%20sign=DE:237
     -- cycleway=track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=track
     -- cycleway=opposite_track, https://wiki.openstreetmap.org/wiki/DE:Tag:cycleway=opposite_track
@@ -239,7 +241,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if ContainsSubstring(trafficSign, "237") and tags.cycleway ~= "lane" then
+    if ContainsSubstring(trafficSign, "237") then
       return true
     end
   end
