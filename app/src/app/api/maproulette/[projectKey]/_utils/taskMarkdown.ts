@@ -356,5 +356,77 @@ Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualis
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
+    case 'needs_clarification_track':
+      return `
+Dieser Weg ist als \`cycleway=track\` eingetragen. Das sind nicht genug Daten, um eine eindeutige Radinfrastruktur-Kategorie zu vergeben.
+
+## Aufgabe
+
+**Bitte prüfe die Infrastruktur und aktualisiere das Tagging.**
+
+_Wenn du so wenig wie möglich ändern möchtest:_
+
+* Ergänze \`cycleway:right:segregated=yes\`, wenn Rad- und Fußverkehr getrennt sind (bzw. \`no\` bei einem gem. Geh-Radweg).
+* Ergänze \`cycleway:right:traffic_sign=*\`, mit dem [passenden Verkehrsschild](https://trafficsigns.osm-verkehrswende.org/DE) (oder \`none\` wenn unbeschildert).
+
+(Das gleiche gilt auch für \`cycleway:right:*\` bzw. \`cycleway:both:*\`.)
+
+_Wenn du dir zutraust die Geometrie umzuwandeln:_ In vielen Fällen bietet es sich an, den Weg als separate Geometrie parallel zur Straße einzutragen:
+
+* [Das Wiki gibt gute Hilfestellung](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren#Stra%C3%9Fenbegleitende_Wege).
+* [Das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/DE) hilft, den Weg mit passenden Attributen auszustatten.
+* Bitte ergänze \`is_sidepath=yes\` um den Weg als straßenbegleitend zu attributieren.
+* Und ändere die Tags an der Straße, die auf den neuen Weg verweisen (siehe Wiki).
+* Kreuzt der neue Weg andere Wege? Hier bitte den Übergang passend eintragen.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+`
+    case 'mixed_cycleway_both':
+      return `
+Dieser Weg hat Tags die sich überschneiden, was die Datenverarbeitung erschwert.
+
+Das Problem: \`cycleway\` und \`cycleway:both\` sind synoym zu verstehen und beschreiben beide Seiten der Straße
+An diesem Weg ist zusätzlich eine Angabe mit Seitenangabe (z.B. \`cycleway:right\`) vorhanden. Diese Angaben überschneiden sind.
+
+
+## Aufgabe
+
+**Bitte die Tags und ändere sie, so dass sie eindeutig sind.**
+
+* Wenn auf beiden Straßenseiten Radinfrastruktur vorhanden ist, wählen \`cycleway:both\` und lösche die Angaben zur Seite.
+* Wenn nur auf einer Straßenseite Radinfrastruktur vorhanden ist, _lösche_ die Angabe \`cycleway:both\` bzw. \`cycleway\`.
+
+In wenigen fällen kommt ein Tagging wie \`cycleway=left\` vor. Das ist ein Tagging-Fehler und kann – nach Kontrolle – zu Gunsten [des üblichen Taggings](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren#Stra%C3%9Fenbegleitende_Wege) gelöscht werden.
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+`
+    case 'malformed_traffic_sign':
+      return `
+Das Verkehrszeichen-Tag an diese Weg enthalt einen Fehler.
+
+## Aufgabe
+
+**Bitte prüfe und korrigiere den Wert der Tags \`traffic_sign\`, \`traffic_sign:forward\`, \`traffic_sign:backward\`.**
+
+* [Das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/DE) hilft, den richtigen Wert zu finden
+* Häufig sind es Tippfehler bei \`DE:\` oder zusätzliche Leerzeichen zwischen den Trennzeichen \`,\` und \`;\`
+
+## Hilfsmittel
+
+* [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
+* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
+`
   }
 }
