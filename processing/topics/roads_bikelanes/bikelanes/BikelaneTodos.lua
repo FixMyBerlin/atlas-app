@@ -33,6 +33,11 @@ function BikelaneTodo:__call(objectTags, resultTags)
 end
 
 
+-- ========
+-- REMINDER
+-- ========
+-- Cleanup function is part of `processing/topics/roads_bikelanes/roads_bikelanes.sql`
+
 -- === Bicycle Roads ===
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
   id = "missing_traffic_sign_vehicle_destination",
@@ -185,14 +190,8 @@ local advisory_or_exclusive = BikelaneTodo.new({
   desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
   todoTableOnly = false,
   priority = function(_, _) return "1" end,
-  conditions = function(objectTags, resultTags)
-    if ContainsSubstring(resultTags.category, '_advisoryOrExclusive') == false then return false end
-    if objectTags._parent == nil then return false end
-    -- We only want one task per centerline, we pick the "right" side
-    return (objectTags._parent['cycleway:both'] == "lane" and objectTags._side == "right")
-        or (objectTags._parent['cycleway'] == "lane" and objectTags._side == "right")
-        or (objectTags._parent['cycleway:right'] == "lane" and objectTags._side == "right")
-        or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
+  conditions = function(_, resultTags)
+    return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
   end
 })
 local needs_clarification_track = BikelaneTodo.new({
@@ -210,11 +209,10 @@ local needs_clarification_track = BikelaneTodo.new({
     local traffic_sign = objectTags._parent['cycleway:both:traffic_sign'] or objectTags._parent['cycleway:left:traffic_sign'] or objectTags._parent['cycleway:right:traffic_sign']
     if ContainsSubstring(traffic_sign, '240') or ContainsSubstring(traffic_sign, '241') then return false end
 
-    -- We only want one task per centerline, we pick the "right" side
-    return (objectTags._parent['cycleway:both'] == "track" and objectTags._side == "right")
-        or (objectTags._parent['cycleway'] == "track" and objectTags._side == "right")
-        or (objectTags._parent['cycleway:right'] == "track" and objectTags._side == "right")
-        or (objectTags._parent['cycleway:left'] == "track" and objectTags._parent['cycleway:right'] ~= "track" and objectTags._side == "left")
+    return objectTags._parent['cycleway'] == "track"
+      or objectTags._parent['cycleway:both'] == "track"
+      or objectTags._parent['cycleway:left'] == "track"
+      or objectTags._parent['cycleway:right'] ~= "track"
   end
 })
 local mixed_cycleway_both = BikelaneTodo.new({
@@ -224,8 +222,6 @@ local mixed_cycleway_both = BikelaneTodo.new({
   priority = function(_, _) return "1" end,
   conditions = function(objectTags, _)
     if objectTags._parent == nil then return false end
-    -- We only want one task per centerline, we pick the "right" side
-    if objectTags._side ~= "right" then return false end
     -- NOTE: This will trigger on "no" values. Which is OK, because the mix of "both" and "SIDE" is still not ideal.
     return (objectTags._parent['cycleway:both'] ~= nil and (objectTags._parent['cycleway:left'] ~= nil or objectTags._parent['cycleway:right'] ~= nil))
         or (objectTags._parent['cycleway'] ~= nil and (objectTags._parent['cycleway:left'] ~= nil or objectTags._parent['cycleway:right'] ~= nil))
