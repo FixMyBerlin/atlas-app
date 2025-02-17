@@ -63,6 +63,12 @@ export const NoticeMaprouletteTask = ({
       ? maprouletteCampaign?.maprouletteChallenge?.value?.id
       : undefined
 
+  const showMaproulette =
+    radinfraCampaign?.recommendedAction === 'maproulette' &&
+    radinfraCampaign?.maprouletteChallenge.discriminant === true
+  const showStreetcomplete = radinfraCampaign?.recommendedAction === 'streetcomplete'
+  const showEditor = radinfraCampaign?.recommendedAction === 'map'
+
   const { data, isLoading } = useQuery({
     queryKey: ['mapRouletteTask', mapRouletteId, properties.id],
     queryFn: () => fetchMapRouletteTask(mapRouletteId, properties.id),
@@ -120,10 +126,12 @@ export const NoticeMaprouletteTask = ({
         {/* <LinkExternal href={rapidCampaignLink} blank button>
           In OpenStreetMap bearbeiten
         </LinkExternal> */}
-        {mapRouletteId ? (
+        {showMaproulette && (
           <>
             {isLoading ? (
-              <SmallSpinner />
+              <span className="flex items-center gap-2 text-gray-400">
+                <SmallSpinner /> Lade MapRoulette-Link…
+              </span>
             ) : maprouletteTaskLink ? (
               <>
                 {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
@@ -135,14 +143,21 @@ export const NoticeMaprouletteTask = ({
               <span className="text-gray-500">Fehler: Konnte MapRoulette URL nicht generieren</span>
             )}
           </>
-        ) : (
-          <></>
+        )}
+        {showStreetcomplete && (
+          <LinkExternal href="https://radinfra.de/mitmachen/streetcomplete/" blank button>
+            Tipp: Nutze StreetComplete für diese Daten
+          </LinkExternal>
         )}
         {osmEditIdUrlHref && (
           <LinkExternal
             href={osmEditIdUrlHref}
             blank
-            button={isLoading === false && !maprouletteTaskLink}
+            button={
+              showMaproulette || showStreetcomplete
+                ? false
+                : isLoading === false && !maprouletteTaskLink
+            }
           >
             Bearbeiten im iD Editor
           </LinkExternal>
