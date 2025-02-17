@@ -433,14 +433,15 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
     local function isPhysicalSeperation(separation)
       local physicalSeparations = {
         'bollard',
-        'parking_lane',
         'bump',
-        'separation_kerb',
-        'vertical_panel',
         'fence',
         'flex_post',
         'jersey_barrier',
-        'kerb'
+        'kerb',
+        'parking_lane',
+        'planter',
+        'separation_kerb',
+        'vertical_panel',
       }
       for _, value in pairs(physicalSeparations) do
         if ContainsSubstring(separation, value) then
@@ -453,13 +454,14 @@ local protectedCyclewayOnHighway = BikelaneCategory.new({
     local separation_left = tags['separation:left'] or tags['separation:both'] or tags['separation']
     local separation_right = tags['separation:right'] or tags['separation:both'] or tags['separation']
 
+    -- Has to have physical separation left, else exit
     if not isPhysicalSeperation(separation_left) then
       return false
     end
 
     -- Check also the left separation for the rare case that there is motorized traffic on the right hand side
     local traffic_mode_right = tags['traffic_mode:right'] or tags['traffic_mode:both'] or tags['traffic_mode']
-    if traffic_mode_right == 'motorized' then
+    if ContainsSubstring(traffic_mode_right, 'motor_vehicle') then
       if not isPhysicalSeperation(separation_right) then
         return false
       end
