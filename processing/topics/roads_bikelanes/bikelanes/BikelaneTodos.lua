@@ -185,14 +185,14 @@ local advisory_or_exclusive = BikelaneTodo.new({
   desc = "Expected tag `cycleway:*:lane=advisory` or `exclusive`.",
   todoTableOnly = false,
   priority = function(_, _) return "1" end,
-    conditions = function(objectTags, resultTags)
-    return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
-      -- We only want one task per centerline, we pick the "right" side
-      and ( (objectTags._parent['cycleway:both'] == "lane" and objectTags._side == "right")
-         or (objectTags._parent['cycleway'] == "lane" and objectTags._side == "right")
-         or (objectTags._parent['cycleway:right'] == "lane" and objectTags._side == "right")
-         or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
-      )
+  conditions = function(objectTags, resultTags)
+    if ContainsSubstring(resultTags.category, '_advisoryOrExclusive') == false then return false end
+    if objectTags._parent == nil then return false end
+    -- We only want one task per centerline, we pick the "right" side
+    return (objectTags._parent['cycleway:both'] == "lane" and objectTags._side == "right")
+        or (objectTags._parent['cycleway'] == "lane" and objectTags._side == "right")
+        or (objectTags._parent['cycleway:right'] == "lane" and objectTags._side == "right")
+        or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
   end
 })
 
