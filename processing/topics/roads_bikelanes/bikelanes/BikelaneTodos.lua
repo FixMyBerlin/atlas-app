@@ -252,13 +252,11 @@ local missing_width = BikelaneTodo.new({
   conditions = function(_, resultTags)
     return resultTags.width == nil
       and resultTags.category ~= 'cyclwayLink'
-      and resultTags.category ~= 'sharedBusLaneBikeWithBus'
-      and resultTags.category ~= 'sharedBusLaneBusWithBike'
       and resultTags.category ~= 'crossing'
       and resultTags.category ~= 'pedestrianAreaBicycleYes'
-      and resultTags.category ~= 'footAndCyclewayShared_isolated'
-      and resultTags.category ~= 'footAndCyclewayShared_adjoiningOrIsolated'
       and resultTags.category ~= 'needsClarification'
+      and not ContainsSubstring(resultTags.category, 'cyclewayOnHighway')
+      and not ContainsSubstring(resultTags.category, 'sharedBusLane')
   end
 })
 local missing_surface = BikelaneTodo.new({
@@ -273,6 +271,8 @@ local missing_surface = BikelaneTodo.new({
     return resultTags.surface == nil
       and resultTags.category ~= 'cyclwayLink'
       and resultTags.category ~= 'needsClarification'
+      and not ContainsSubstring(resultTags.category, 'cyclewayOnHighway')
+      and not ContainsSubstring(resultTags.category, 'sharedBusLane')
   end
 })
 
