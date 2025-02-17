@@ -207,6 +207,52 @@ describe("BikelaneTodos", function()
     end)
   end)
 
+  describe('`needs_clarification_track`:', function()
+    it('creates only one task for cycleway:both', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'secondary',
+          ["cycleway:both"] = 'track',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 2)
+
+      local left = cycleways[1]
+      assert.are.equal(left._id, "way/1/cycleway/left")
+      assert.are.equal(TableIncludes(left._todo_list, "needs_clarification_track"), false)
+
+      local right = cycleways[2]
+      assert.are.equal(right._id, "way/1/cycleway/right")
+      assert.are.equal(TableIncludes(right._todo_list, "needs_clarification_track"), true)
+    end)
+
+    it('skip when sufficient tagging is present', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'secondary',
+          ["cycleway:both"] = 'track',
+          ["cycleway:left:traffic_sign"] = 'DE:241-30',
+          -- ["cycleway:left:segregated"] = 'yes', -- works as well
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 2)
+
+      local left = cycleways[1]
+      assert.are.equal(left._id, "way/1/cycleway/left")
+      assert.are.equal(TableIncludes(left._todo_list, "needs_clarification_track"), false)
+
+      local right = cycleways[2]
+      assert.are.equal(right._id, "way/1/cycleway/right")
+      assert.are.equal(TableIncludes(right._todo_list, "needs_clarification_track"), false)
+    end)
+  end)
+
   describe('`mixed_cycleway_both`:', function()
     it('creates only one task for cycleway', function()
       local input_object = {

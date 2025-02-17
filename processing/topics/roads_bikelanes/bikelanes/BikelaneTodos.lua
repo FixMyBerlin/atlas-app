@@ -195,6 +195,28 @@ local advisory_or_exclusive = BikelaneTodo.new({
         or (objectTags._parent['cycleway:left'] == "lane" and objectTags._parent['cycleway:right'] ~= "lane" and objectTags._side == "left")
   end
 })
+local needs_clarification_track = BikelaneTodo.new({
+  id = "needs_clarification_track",
+  desc = "Tagging `cycleway=track` insufficient to categorize the bike infrastructure`.",
+  todoTableOnly = false,
+  priority = function(_, _) return "1" end,
+  conditions = function(objectTags, _)
+    if objectTags._parent == nil then return false end
+
+    -- Some cases are tagged sufficiently with `cycleway:SIDE:segregated` or `cycleway:SIDE:traffic_signs`
+    -- It is hard to check both sides propery. This will error on the side of caution.
+    local segregated = objectTags._parent['cycleway:both:segregated'] or objectTags._parent['cycleway:left:segregated'] or objectTags._parent['cycleway:right:segregated']
+    if segregated == "yes" or segregated == "no" then return false end
+    local traffic_sign = objectTags._parent['cycleway:both:traffic_sign'] or objectTags._parent['cycleway:left:traffic_sign'] or objectTags._parent['cycleway:right:traffic_sign']
+    if ContainsSubstring(traffic_sign, '240') or ContainsSubstring(traffic_sign, '241') then return false end
+
+    -- We only want one task per centerline, we pick the "right" side
+    return (objectTags._parent['cycleway:both'] == "track" and objectTags._side == "right")
+        or (objectTags._parent['cycleway'] == "track" and objectTags._side == "right")
+        or (objectTags._parent['cycleway:right'] == "track" and objectTags._side == "right")
+        or (objectTags._parent['cycleway:left'] == "track" and objectTags._parent['cycleway:right'] ~= "track" and objectTags._side == "left")
+  end
+})
 local mixed_cycleway_both = BikelaneTodo.new({
   id = "mixed_cycleway_both",
   desc = "Mixed tagging of cycleway=* or cycleway:both=* with cycleway:SIDE",
@@ -264,6 +286,7 @@ BikelaneTodos = {
   needs_clarification,
   adjoining_or_isolated,
   advisory_or_exclusive,
+  needs_clarification_track,
   mixed_cycleway_both,
   -- Bicycle Roads
   missing_traffic_sign_vehicle_destination,
