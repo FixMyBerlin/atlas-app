@@ -232,6 +232,19 @@ local cyclewaySeparated = BikelaneCategory.new({
       return true
     end
 
+    -- Sometimes users add a `traffic_sign=DE:237` right on the `highway=secondard` but it should be `cycleway:right:traffic_sign`
+    -- We only allow the follow highway tags. This will still produce false positives but less so.
+    -- And looking at the _parent_highway and left|right|nil|both tags for this is way to complex.
+    local allowedHighways = Set({
+      "living_street",
+      "pedestrian",
+      "service",
+      "track",
+      "bridleway",
+      "path",
+      "footway",
+      "cycleway",
+    })
     -- Testcase: The "not 'lane'" part is needed for places like https://www.openstreetmap.org/way/964589554 which have the traffic sign but are not separated.
     -- adjoining:
     -- This could be PBLs "Protected Bike Lanes"
@@ -241,7 +254,7 @@ local cyclewaySeparated = BikelaneCategory.new({
     -- Case: "frei geführte Radwege", dedicated cycleways that are not next to a road
     -- Eg https://www.openstreetmap.org/way/27701956
     local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if ContainsSubstring(trafficSign, "237") then
+    if allowedHighways[tags.highway] and ContainsSubstring(trafficSign, "237") then
       return true
     end
   end
