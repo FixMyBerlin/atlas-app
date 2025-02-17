@@ -136,15 +136,21 @@ local footAndCyclewayShared = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
-    -- isolated: Eg https://www.openstreetmap.org/way/440072364 highway=service
+    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+
+    -- Handle cycleway:SIDE=track (which becomes highway=cycleway)
+    if tags.highway == "cycleway" and tags.cycleway == "track" and (tags.segregated == "no" or ContainsSubstring(trafficSign, "240")) then
+      return true
+    end
+
+    -- https://www.openstreetmap.org/way/440072364 highway=service
     if tags.segregated == "no" and tags.bicycle == "designated" and tags.foot == "designated"  then
       return true
     end
     if tags.segregated == "no" and tags.bicycle == "yes" and tags.foot == "yes"  then
       return true
     end
-    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if osm2pgsql.has_prefix(trafficSign, "DE:240") then
+    if ContainsSubstring(trafficSign, "240") then
       return true
     end
   end
@@ -159,6 +165,13 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
   infrastructureExists = true,
   implicitOneWay = true, -- "shared lane"-like
   condition = function(tags)
+    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
+
+    -- Handle cycleway:SIDE=track (which becomes highway=cycleway)
+    if tags.highway == "cycleway" and tags.cycleway == "track" and (tags.segregated == "yes" or ContainsSubstring(trafficSign, "241")) then
+      return true
+    end
+
     if tags.segregated == "yes" and tags.bicycle == "designated" and tags.foot == "designated" then
         return true
     end
@@ -166,8 +179,7 @@ local footAndCyclewaySegregated = BikelaneCategory.new({
       return true
     end
 
-    local trafficSign = SanitizeTrafficSign(tags.traffic_sign)
-    if ContainsSubstring(trafficSign, "DE:241") and tags.highway ~= "footway" then
+    if ContainsSubstring(trafficSign, "241") and tags.highway ~= "footway" then
       return true
     end
 
