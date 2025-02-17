@@ -1,5 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require('ContainsSubstring')
+require('SanitizeTrafficSign')
 -- local inspect = require('inspect')
 BikelaneTodo = {}
 BikelaneTodo.__index = BikelaneTodo
@@ -72,6 +73,21 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
 -- === Traffic Signs ===
+local malformed_traffic_sign = BikelaneTodo.new({
+  id = "malformed_traffic_sign",
+  desc = "Traffic sign tag needs cleaning up.",
+  todoTableOnly = true,
+  priority = function(_, _) return 1 end,
+  conditions = function(objectTags, resultTags)
+    if (resultTags.category == nil) then return false end
+
+    -- Compare raw with sanatized tag and create 'todo' if different
+    if objectTags['traffic_sign'] ~= SanitizeTrafficSign(objectTags['traffic_sign']) then return true end
+    if objectTags['traffic_sign:forward'] ~= SanitizeTrafficSign(objectTags['traffic_sign:forward']) then return true end
+    if objectTags['traffic_sign:backward'] ~= SanitizeTrafficSign(objectTags['traffic_sign:backward']) then return true end
+    return false
+  end
+})
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
@@ -240,6 +256,7 @@ BikelaneTodos = {
   missing_access_tag_bicycle_road,
   -- Traffic Signs
   missing_traffic_sign,
+  malformed_traffic_sign,
   -- Bike- and Foot Path
   missing_access_tag_240,
   missing_segregated,

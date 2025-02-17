@@ -23,6 +23,37 @@ describe("BikelaneTodos", function()
     end)
   end)
 
+  describe('`malformed_traffic_sign`:', function()
+    it('happy path', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'residential',
+          ["bicycle_road"] = 'yes',
+          ["traffic_sign"] = 'DE:244.1,1020-30,1026-36',
+          ["traffic_sign:forward"] = 'DE:244.1,1020-30,1026-36',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(TableIncludes(result[1]._todo_list, "malformed_traffic_sign"), false)
+    end)
+    it('create todo', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'residential',
+          ["bicycle_road"] = 'yes',
+          ["traffic_sign"] = 'DE:244.1,1020-30, 1026-36',
+          ["traffic_sign:right"] = 'D:244.1,1020-30,1026-36',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local result = Bikelanes(input_object)
+      assert.are.equal(TableIncludes(result[1]._todo_list, "malformed_traffic_sign"), true)
+    end)
+  end)
+
   describe('`currentness_too_old`:', function()
     it('15 year old way shows up in category', function()
       local input_object = {
