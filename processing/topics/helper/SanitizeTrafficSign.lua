@@ -16,9 +16,8 @@ function SanitizeTrafficSign(traffic_sign)
     return "none"
   end
 
-  -- Docs: patterns with "^" target beginning of string
-
   -- This is the correct tagging, all traffic signs should start with DE:
+  -- DOCS: patterns with "^" target beginning of string
   if string.find(traffic_sign, '^DE:%S') then
     return stripWhitespaces(traffic_sign)
   end
@@ -42,7 +41,6 @@ function SanitizeTrafficSign(traffic_sign)
   for pattern, substitude in pairs(substitutions) do
     local val, n = string.gsub(traffic_sign, pattern, substitude)
     if n > 0 then
-      -- TODO: add to todo list
       return stripWhitespaces(val)
     end
   end

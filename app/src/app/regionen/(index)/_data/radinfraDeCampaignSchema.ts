@@ -10,6 +10,7 @@ const AstroCampaignBaseSchema = z.object({
   //   .transform((val) => new Date(val)),
   visibility: z.string(), //z.enum(visibilityOptions),
   category: z.string(), //z.enum(campaignCategories),
+  recommendedAction: z.string(), //z.enum(recommendedActions),
   // author: z.string(),
   // language: z.enum(languages).optional(),
   // mapUrl: z.string().url().optional(),

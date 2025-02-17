@@ -6,10 +6,10 @@ export const primaryNavigation: PrimaryNavigation[] = [
   // { name: 'Über', href: '/ueber' },
 ]
 
-export const defaultSecondaryNavigation: SecondaryNavigation[] = [
+export const globalSecondaryNavigation: SecondaryNavigation[] = [
   { name: 'Feedback', href: '/kontakt#feedback' },
   { name: 'Datenschutz', href: '/datenschutz' },
   { name: 'Kontakt & Impressum', href: '/kontakt' },
 ]
 
-export const secondaryNavigationGrouped: SecondaryNavigation[][] = [[...defaultSecondaryNavigation]]
+export const secondaryNavigationGrouped: SecondaryNavigation[][] = [[...globalSecondaryNavigation]]

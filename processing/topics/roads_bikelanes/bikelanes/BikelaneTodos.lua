@@ -1,8 +1,9 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require('ContainsSubstring')
+require('SanitizeTrafficSign')
+-- local inspect = require('inspect')
 BikelaneTodo = {}
 BikelaneTodo.__index = BikelaneTodo
--- local inspect = require('inspect')
 
 -- @param args table
 -- @param args.id string
@@ -31,6 +32,11 @@ function BikelaneTodo:__call(objectTags, resultTags)
   end
 end
 
+
+-- ========
+-- REMINDER
+-- ========
+-- Cleanup function is part of `processing/topics/roads_bikelanes/roads_bikelanes.sql`
 
 -- === Bicycle Roads ===
 local missing_traffic_sign_vehicle_destination = BikelaneTodo.new({
@@ -72,6 +78,21 @@ local missing_access_tag_bicycle_road = BikelaneTodo.new({
 -- IDEA: Check if `motor_vehicle=*` instead of `vehicle=*` was used (https://wiki.openstreetmap.org/wiki/Tag:bicycle_road%3Dyes, https://wiki.openstreetmap.org/wiki/Key:access#Land-based_transportation)
 
 -- === Traffic Signs ===
+local malformed_traffic_sign = BikelaneTodo.new({
+  id = "malformed_traffic_sign",
+  desc = "Traffic sign tag needs cleaning up.",
+  todoTableOnly = true,
+  priority = function(_, _) return 1 end,
+  conditions = function(objectTags, resultTags)
+    if (resultTags.category == nil) then return false end
+
+    -- Compare raw with sanatized tag and create 'todo' if different
+    if objectTags['traffic_sign'] ~= SanitizeTrafficSign(objectTags['traffic_sign']) then return true end
+    if objectTags['traffic_sign:forward'] ~= SanitizeTrafficSign(objectTags['traffic_sign:forward']) then return true end
+    if objectTags['traffic_sign:backward'] ~= SanitizeTrafficSign(objectTags['traffic_sign:backward']) then return true end
+    return false
+  end
+})
 local missing_traffic_sign = BikelaneTodo.new({
   id = "missing_traffic_sign",
   desc = "Expected tag `traffic_sign=DE:*` or `traffic_sign=none`.",
@@ -173,12 +194,45 @@ local advisory_or_exclusive = BikelaneTodo.new({
     return ContainsSubstring(resultTags.category, '_advisoryOrExclusive')
   end
 })
+local needs_clarification_track = BikelaneTodo.new({
+  id = "needs_clarification_track",
+  desc = "Tagging `cycleway=track` insufficient to categorize the bike infrastructure`.",
+  todoTableOnly = false,
+  priority = function(_, _) return "1" end,
+  conditions = function(objectTags, _)
+    if objectTags._parent == nil then return false end
+
+    -- Some cases are tagged sufficiently with `cycleway:SIDE:segregated` or `cycleway:SIDE:traffic_signs`
+    -- It is hard to check both sides propery. This will error on the side of caution.
+    local segregated = objectTags._parent['cycleway:both:segregated'] or objectTags._parent['cycleway:left:segregated'] or objectTags._parent['cycleway:right:segregated']
+    if segregated == "yes" or segregated == "no" then return false end
+    local traffic_sign = objectTags._parent['cycleway:both:traffic_sign'] or objectTags._parent['cycleway:left:traffic_sign'] or objectTags._parent['cycleway:right:traffic_sign']
+    if ContainsSubstring(traffic_sign, '240') or ContainsSubstring(traffic_sign, '241') then return false end
+
+    return objectTags._parent['cycleway'] == "track"
+      or objectTags._parent['cycleway:both'] == "track"
+      or objectTags._parent['cycleway:left'] == "track"
+      or objectTags._parent['cycleway:right'] ~= "track"
+  end
+})
+local mixed_cycleway_both = BikelaneTodo.new({
+  id = "mixed_cycleway_both",
+  desc = "Mixed tagging of cycleway=* or cycleway:both=* with cycleway:SIDE",
+  todoTableOnly = false,
+  priority = function(_, _) return "1" end,
+  conditions = function(objectTags, _)
+    if objectTags._parent == nil then return false end
+    -- NOTE: This will trigger on "no" values. Which is OK, because the mix of "both" and "SIDE" is still not ideal.
+    return (objectTags._parent['cycleway:both'] ~= nil and (objectTags._parent['cycleway:left'] ~= nil or objectTags._parent['cycleway:right'] ~= nil))
+        or (objectTags._parent['cycleway'] ~= nil and (objectTags._parent['cycleway:left'] ~= nil or objectTags._parent['cycleway:right'] ~= nil))
+  end
+})
 
 -- === Other ===
 local days_in_year = 365
 local currentness_too_old = BikelaneTodo.new({
   id = "currentness_too_old",
-  desc = "Infrastructure that has not been edited for about 7 years",
+  desc = "Infrastructure that has not been edited for about 10 years",
   todoTableOnly = true,
   priority = function(_, resultTags)
     if resultTags._updated_age >= days_in_year * 15 then return "1" end
@@ -198,13 +252,11 @@ local missing_width = BikelaneTodo.new({
   conditions = function(_, resultTags)
     return resultTags.width == nil
       and resultTags.category ~= 'cyclwayLink'
-      and resultTags.category ~= 'sharedBusLaneBikeWithBus'
-      and resultTags.category ~= 'sharedBusLaneBusWithBike'
       and resultTags.category ~= 'crossing'
       and resultTags.category ~= 'pedestrianAreaBicycleYes'
-      and resultTags.category ~= 'footAndCyclewayShared_isolated'
-      and resultTags.category ~= 'footAndCyclewayShared_adjoiningOrIsolated'
       and resultTags.category ~= 'needsClarification'
+      and not ContainsSubstring(resultTags.category, 'cyclewayOnHighway')
+      and not ContainsSubstring(resultTags.category, 'sharedBusLane')
   end
 })
 local missing_surface = BikelaneTodo.new({
@@ -219,6 +271,8 @@ local missing_surface = BikelaneTodo.new({
     return resultTags.surface == nil
       and resultTags.category ~= 'cyclwayLink'
       and resultTags.category ~= 'needsClarification'
+      and not ContainsSubstring(resultTags.category, 'cyclewayOnHighway')
+      and not ContainsSubstring(resultTags.category, 'sharedBusLane')
   end
 })
 
@@ -228,12 +282,15 @@ BikelaneTodos = {
   needs_clarification,
   adjoining_or_isolated,
   advisory_or_exclusive,
+  needs_clarification_track,
+  mixed_cycleway_both,
   -- Bicycle Roads
   missing_traffic_sign_vehicle_destination,
   missing_traffic_sign_244,
   missing_access_tag_bicycle_road,
   -- Traffic Signs
   missing_traffic_sign,
+  malformed_traffic_sign,
   -- Bike- and Foot Path
   missing_access_tag_240,
   missing_segregated,

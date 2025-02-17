@@ -1,3 +1,4 @@
+import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
 import { todoIds, todoIdsTableOnly } from '@/src/processingTypes/todoIds.const'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -45,6 +46,7 @@ export const NoticeMaproulette = ({
   }
 
   const defaultOpen = sourceId.includes('todos_lines')
+  const showOsmEditWarning = sourceId.includes('todos_lines')
 
   return (
     <QueryClientProvider client={maprouletteQueryClient}>
@@ -58,6 +60,20 @@ export const NoticeMaproulette = ({
           Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
           {maprouletteProjectKeys.length})
         </summary>
+
+        {showOsmEditWarning && (
+          <div className="mt-4 rounded bg-pink-300 px-4 py-3">
+            <strong>Willkommen!</strong> Bitte ändere in OpenStreetMap nur das, von dem du sicher
+            bist, dass es eine <strong>gute und richtige Änderung</strong> ist. <br />
+            <LinkExternal href="https://radinfra.de/kontakt/" blank>
+              Kontakt bei Fragen…
+            </LinkExternal>{' '}
+            <br />
+            <LinkExternal href="https://radinfra.de/mitmachen/" blank>
+              Einfachere Wege mitzuhelfen…
+            </LinkExternal>
+          </div>
+        )}
 
         <div className="my-0 ml-3">
           {maprouletteProjectKeys.map((projectKey) => {

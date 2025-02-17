@@ -8,13 +8,16 @@ export const bikelaneTodoIdsTableAndField = [
   'missing_access_tag_240',
   'missing_access_tag_bicycle_road',
   'missing_segregated',
+  'mixed_cycleway_both',
   'needs_clarification',
+  'needs_clarification_track',
   'unexpected_bicycle_access_on_footway',
 ] as const
 export type BikelaneTodoIdTableAndField = (typeof bikelaneTodoIdsTableAndField)[number]
 
 export const bikelaneTodoIdsTableOnly = [
   'currentness_too_old',
+  'malformed_traffic_sign',
   'missing_surface',
   'missing_traffic_sign',
   'missing_traffic_sign_244',

@@ -1,10 +1,10 @@
-import { useRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegion'
+import { useStaticRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { twJoin } from 'tailwind-merge'
 
 export const HeaderRegionenLogo = () => {
-  const region = useRegion()
+  const region = useStaticRegion()
 
   if (!region) return null
 
@@ -20,11 +20,11 @@ export const HeaderRegionenLogo = () => {
         >
           {region.externalLogoPath && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={region.externalLogoPath} className="h-6 w-auto" alt="" />
+            <img src={region.externalLogoPath} className="h-8 w-auto" alt="" />
           )}
           {region.logoPath && (
             // local files
-            <Image src={region.logoPath} className="h-6 w-auto" alt="" />
+            <Image src={region.logoPath} className="h-8 w-auto" alt="" />
           )}
         </div>
       )}
@@ -36,9 +36,13 @@ export const HeaderRegionenLogo = () => {
         </>
       )}
 
-      <span className={twJoin('ml-2', customLogo ? 'text-gray-400' : 'text-yellow-400')}>
-        Radverkehrsatlas (beta) <span className="hidden md:inline">{region.fullName}</span>
-      </span>
+      <div className="ml-3 truncate leading-tight">
+        <div className={twJoin('truncate', customLogo ? 'text-gray-200' : 'text-yellow-400')}>
+          <span className="md:hidden">{region.name}</span>
+          <span className="hidden md:inline">{region.fullName}</span>
+        </div>
+        <div className="text-xs text-gray-400">Radverkehrsatlas (beta)</div>
+      </div>
     </>
   )
 }
