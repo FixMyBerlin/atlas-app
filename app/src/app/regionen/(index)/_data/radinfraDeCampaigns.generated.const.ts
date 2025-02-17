@@ -14,7 +14,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     category: 'radinfra',
     recommendedAction: 'maproulette',
     description:
-      'Diese Kampagne enthält Wege, deren Führungsform [im Radverkehrsatlas](https://radverkehrsatlas.de/) nicht präzise angegeben werden kann. (Aktuell werden nur Wege der Kategorie "Radweg" aufgenommen.)',
+      'Diese Kampagne enthält Wege, deren Führungsform [im Radverkehrsatlas](https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.3yo4.f6&v=2) nicht präzise angegeben werden kann. (Aktuell werden nur Wege der Kategorie "Radweg" aufgenommen.)',
     task: '**Bitte prüfe ob die Radinfrastruktur straßenbegleitend ist und ergänze den fehlenden Zugangs-Tag `is_sidepath=yes` oder `no`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.\n',
     maprouletteChallenge: {
       discriminant: true,
@@ -57,7 +57,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     visibility: 'promote',
     category: 'currentness',
     recommendedAction: 'maproulette',
-    description: 'Diese Kampagne enthält Wege, die seit mehr als 6 Jahren nicht editiert wurden.',
+    description: 'Diese Kampagne enthält Wege, die seit mehr als 10 Jahren nicht editiert wurden.',
     task: '**Bitte prüfe und aktualisiere diese Infrastruktur.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
@@ -93,6 +93,26 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     },
   },
   {
+    id: 'malformed_traffic_sign',
+    name: 'Fehler im Verkehrszeichen-Tag (Beta-Version)',
+    menuTitle: 'Fehlerhaftes Verkehrszeichen-Tag',
+    pubDate: '2025-02-17T10:00:00.000Z',
+    visibility: 'secondary',
+    category: 'traffic_signs',
+    recommendedAction: 'maproulette',
+    description: 'Diese Kampagne enthält Wege mit einem Fehler im Wert des `traffic_sign*`-Tags',
+    task: '**Bitte prüfe und korrigiere den Wert der Tags `traffic_sign`, `traffic_sign:forward`, `traffic_sign:backward`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+    maprouletteChallenge: {
+      discriminant: true,
+      value: {
+        id: null,
+        enabled: true,
+        name: 'Fehler im Verkehrszeichen-Tag',
+        resultsLimited: false,
+      },
+    },
+  },
+  {
     id: 'missing_access_tag_240',
     name: 'Ergänze das Zugangs-Tagging für Geh-/Radwege (Beta-Version)',
     menuTitle: 'Zugangs-Tagging fehlt (Geh-/Radweg)',
@@ -101,7 +121,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     category: 'radinfra',
     recommendedAction: 'maproulette',
     description:
-      'Diese Kampagne enthält Wege die mit dem Verkehrszeichen `240` (Gem. Geh- und Radweg) oder `241` (Getr. Rad- und Gehweg) markiert sind aber das dazu passende Zugangs-Tagging fehlt.',
+      'Diese Kampagne enthält Wege, die mit dem Verkehrszeichen `240` (Gem. Geh- und Radweg) oder `241` (Getr. Rad- und Gehweg) markiert sind aber das dazu passende Zugangs-Tagging fehlt.',
     task: '**Bitte prüfe die Radinfrastruktur und ergänze die Zugangs-Tags.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
@@ -122,8 +142,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     visibility: 'secondary',
     category: 'traffic_signs',
     recommendedAction: 'maproulette',
-    description:
-      'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße klassifiziert sind, bei denen jedoch das `bicycle=designated` fehlt.',
+    description: 'Diese Kampagne enthält Fahrradstraße bei denen der Zugangs-Tag fehlt.',
     task: '**Bitte prüfe die Situation und ergänze den fehlenden Zugangs-Tag `bicycle=designated`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
@@ -176,7 +195,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   {
     id: 'missing_surface',
     name: 'Ergänze Angaben Oberfläche',
-    menuTitle: 'Wie ist die Oberfläche?',
+    menuTitle: 'Ergänze die Oberfläche',
     pubDate: '2025-01-01T15:00:00.000Z',
     visibility: 'secondary',
     category: 'surface',
@@ -209,9 +228,8 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     visibility: 'promote',
     category: 'traffic_signs',
     recommendedAction: 'maproulette',
-    description:
-      'Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße kategorisiert wurden, jedoch fehlt das zugehörige Verkehrszeichen.',
-    task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+    description: 'Diese Kampagne enthält Fahrradstraße ohne zugehörigen Verkehrszeichen-Tag.',
+    task: '**Bitte ergänze fehlende Verkehrszeichen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
       value: {
@@ -232,8 +250,8 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     category: 'traffic_signs',
     recommendedAction: 'maproulette',
     description:
-      "Diese Kampagne enthält Wege, die [im Radverkehrsatlas](https://radverkehrsatlas.de/) als Fahrradstraße mit 'Anlieger frei'-Freigabe für Kfz kategorisiert wurden, jedoch fehlt das zugehörige Zusatzzeichen.",
-    task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+      "Diese Kampagne enthält Fahrradstraßen mit der Freigabe 'Anlieger frei' für Kfz. Es fehlt jedoch das zugehörige Zusatzzeichen.",
+    task: '**Bitte ergänze fehlende Verkehrszeichen oder korrigiere den Zugangs-Tag`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
       value: {
@@ -248,7 +266,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
   {
     id: 'missing_width',
     name: 'Ergänze Angaben zur Breite der Radinfrastruktur',
-    menuTitle: 'Wie ist die Breite',
+    menuTitle: 'Ergänze die Breite',
     pubDate: '2025-01-01T15:00:00.000Z',
     visibility: 'secondary',
     category: 'width',
@@ -258,6 +276,27 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     task: '**Bitte ergänze die Breite der Radinfrastruktur `width`.**',
     maprouletteChallenge: {
       discriminant: false,
+    },
+  },
+  {
+    id: 'mixed_cycleway_both',
+    name: 'Überschneidende Tags für `cycleway*` (Beta-Version)',
+    menuTitle: 'Überschneidende Tags',
+    pubDate: '2025-02-17T10:00:00.000Z',
+    visibility: 'secondary',
+    category: 'radinfra',
+    recommendedAction: 'maproulette',
+    description:
+      'Dieser Weg hat Tags die sich überschneiden: `cycleway` (Angabe für beide Seiten) in Kombination mit `cycleway:left|right` (Angabe für eine bestimmte Seite).',
+    task: '**Bitte kontrolliere die Angaben und ändere sie, so dass sie eindeutig sind.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+    maprouletteChallenge: {
+      discriminant: true,
+      value: {
+        id: null,
+        enabled: true,
+        name: 'Überschneidende Tags für `cycleway*`',
+        resultsLimited: false,
+      },
     },
   },
   {
@@ -279,6 +318,27 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
         name: 'Führungsform der Radinfrastruktur unklar',
         resultsLimited: false,
         rebuildAt: '2025-02-14T12:58:00.000Z',
+      },
+    },
+  },
+  {
+    id: 'needs_clarification_track',
+    name: 'Zusätzliche attribute für `cycleway=track` ergänzen (Beta-Version)',
+    menuTitle: '`cycleway=track` präzisieren',
+    pubDate: '2025-02-17T10:00:00.000Z',
+    visibility: 'secondary',
+    category: 'radinfra',
+    recommendedAction: 'maproulette',
+    description:
+      'Dieser Weg ist als `cycleway=track` eingetragen. Das sind nicht genug Daten, um eine eindeutige Radinfrastruktur-Kategorie zu vergeben.',
+    task: '**Bitte ergänze weitere Tags, um eine präzise Kategorisierung sicherzustellen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+    maprouletteChallenge: {
+      discriminant: true,
+      value: {
+        id: null,
+        enabled: true,
+        name: '`cycleway=track` präzisieren',
+        resultsLimited: false,
       },
     },
   },
@@ -314,7 +374,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     recommendedAction: 'maproulette',
     description:
       'Diese Kampagne enthält Fußwege, die gleichzeitig Angaben zur Radinfrastruktur haben.',
-    task: '**Bitte prüfe das Tagging; Eventuell ist eine andere Straßenklasse angebracht.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
+    task: '**Bitte prüfe das Tagging. Eventuell ist eine andere Straßenklasse angebracht.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
       discriminant: true,
       value: {

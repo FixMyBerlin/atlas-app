@@ -388,15 +388,15 @@ _Wenn du dir zutraust die Geometrie umzuwandeln:_ In vielen Fällen bietet es si
 `
     case 'mixed_cycleway_both':
       return `
-Dieser Weg hat Tags die sich überschneiden, was die Datenverarbeitung erschwert.
+Dieser Weg hat Tags die sich überschneiden:
+* sowohl eine Angabe \`cycleway\` oder \`cycleway:both\` (Tags für beide Seiten)
+* als auch eine Angabe für eine Seite (z.B. \`cycleway:right\`)
 
-Das Problem: \`cycleway\` und \`cycleway:both\` sind synoym zu verstehen und beschreiben beide Seiten der Straße
-An diesem Weg ist zusätzlich eine Angabe mit Seitenangabe (z.B. \`cycleway:right\`) vorhanden. Diese Angaben überschneiden sind.
-
+Diese Überschneidung erschwert die Datenverarbeitung und kann zu falschen Ergebnissen führen.
 
 ## Aufgabe
 
-**Bitte die Tags und ändere sie, so dass sie eindeutig sind.**
+**Bitte kontrolliere die Angaben und ändere sie, so dass sie eindeutig sind.**
 
 * Wenn auf beiden Straßenseiten Radinfrastruktur vorhanden ist, wählen \`cycleway:both\` und lösche die Angaben zur Seite.
 * Wenn nur auf einer Straßenseite Radinfrastruktur vorhanden ist, _lösche_ die Angabe \`cycleway:both\` bzw. \`cycleway\`.
@@ -412,7 +412,7 @@ In wenigen fällen kommt ein Tagging wie \`cycleway=left\` vor. Das ist ein Tagg
 `
     case 'malformed_traffic_sign':
       return `
-Das Verkehrszeichen-Tag an diese Weg enthalt einen Fehler.
+Das Verkehrszeichen-Tag an diese Weg enthält einen Fehler.
 
 ## Aufgabe
 

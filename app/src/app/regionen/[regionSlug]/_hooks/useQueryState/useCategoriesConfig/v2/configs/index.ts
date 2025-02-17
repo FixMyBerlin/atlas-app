@@ -37,8 +37,10 @@ import { _rcqwse } from './_rcqwse'
 import { _st5qyw } from './_st5qyw'
 import { _tztqka } from './_tztqka'
 import { _up0vgv } from './_up0vgv'
+import { _v92cax } from './_v92cax'
 import { _vvhkik } from './_vvhkik'
 import { _wvqr4 } from './_wvqr4'
+import { _z6mvi1 } from './_z6mvi1'
 import { _z9tzbb } from './_z9tzbb'
 
 export const configs = {
@@ -78,7 +80,9 @@ export const configs = {
   st5qyw: _st5qyw,
   tztqka: _tztqka,
   up0vgv: _up0vgv,
+  v92cax: _v92cax,
   vvhkik: _vvhkik,
   wvqr4: _wvqr4,
+  z6mvi1: _z6mvi1,
   z9tzbb: _z9tzbb,
 }
