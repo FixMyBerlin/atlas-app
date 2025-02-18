@@ -14,7 +14,7 @@ import {
   mapillaryUrl,
   osmEditIdUrl,
   osmEditRapidUrl,
-  osmUrl,
+  osmOrgUrl,
 } from './osmUrls/osmUrls'
 
 type Props = {
@@ -26,7 +26,7 @@ type Props = {
 export const ToolsLinks = ({ feature, editors, osmIdConfig }: Props) => {
   const osmTypeId = extractOsmTypeIdByConfig(feature.properties, osmIdConfig)
 
-  const osmUrlHref = osmUrl(osmTypeId)
+  const osmUrlHref = osmOrgUrl(osmTypeId)
   const osmEditIdUrlHref = osmEditIdUrl(osmTypeId)
   const osmEditRapidUrlHref = osmEditRapidUrl(osmTypeId)
   const historyUrlHref = historyUrl(osmTypeId)

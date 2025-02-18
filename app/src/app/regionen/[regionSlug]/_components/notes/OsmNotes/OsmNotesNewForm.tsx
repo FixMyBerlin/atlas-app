@@ -8,7 +8,7 @@ import { useSession } from '@blitzjs/auth'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
-import { osmTypeIdString, osmUrl } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
+import { osmOrgUrl, osmTypeIdString } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
 import { useRegion } from '../../regionUtils/useRegion'
 import { OsmNotesThread } from './types'
 
@@ -69,7 +69,7 @@ export const OsmNotesNewForm = () => {
     // Text snippets for comment on a specific feature
     let featureFooter = ''
     if (osmNewNoteFeature?.osmType && osmNewNoteFeature?.osmId) {
-      const footerFeatureOsmUrl = osmUrl({
+      const footerFeatureOsmUrl = osmOrgUrl({
         osmType: osmNewNoteFeature.osmType,
         osmId: osmNewNoteFeature.osmId,
       })
