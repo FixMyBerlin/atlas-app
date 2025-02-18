@@ -1,6 +1,6 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
-import { todoIds, todoIdsTableOnly } from '@/src/processingTypes/todoIds.const'
+import { todoIds } from '@/src/processingTypes/todoIds.const'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GeoJsonProperties } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
@@ -33,13 +33,9 @@ export const NoticeMaproulette = ({
   const todosKeyFromTodoTag = todoMarkdownToMaprouletteCampaignKey(properties?.todos)
   // This is how we store todos on `todos_lines`
   const todoKeysFromKeys = todoIds.filter((id) => Object.keys(properties).includes(id))
-  const todoKeys = Array.from(new Set([...todosKeyFromTodoTag, ...todoKeysFromKeys]))
-
-  // When we are on `bikelanes`, `roads`, we only show some todos; on
+  // When we are on `bikelanes`, `roads`, we only show some todos
   const maprouletteProjectKeys =
-    sourceId === 'atlas_todos_lines'
-      ? todoKeys
-      : todoKeys.filter((key) => todoIdsTableOnly.includes(key))
+    sourceId === 'atlas_todos_lines' ? todoKeysFromKeys : todosKeyFromTodoTag
 
   if (!maprouletteProjectKeys.length || !osmTypeIdString || geometry?.type !== 'LineString') {
     return null
