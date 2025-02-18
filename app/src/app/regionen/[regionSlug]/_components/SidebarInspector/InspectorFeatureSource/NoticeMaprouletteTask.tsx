@@ -119,7 +119,7 @@ export const NoticeMaprouletteTask = ({
   return (
     <Fragment key={projectKey}>
       <h2>{radinfraCampaign?.menuTitle || `${projectKey} (in Arbeit)`}</h2>
-      {mapRouletteId && (
+      {!!mapRouletteId && (
         <p className="-mt-5 text-right text-xs">
           <LinkExternal
             href={maprouletteCampaignLink}
@@ -144,7 +144,7 @@ export const NoticeMaprouletteTask = ({
               </span>
             ) : maprouletteTaskLink ? (
               <>
-                {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
+                {completed ? <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong> : null}
                 <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
                   {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
                 </LinkExternal>
@@ -159,14 +159,16 @@ export const NoticeMaprouletteTask = ({
             Tipp: Nutze StreetComplete für diese Daten
           </LinkExternal>
         )}
-        {osmEditIdUrlHref && (
+        {!!osmEditIdUrlHref && (
           <LinkExternal
             href={osmEditIdUrlHref}
             blank
             button={
-              showMaproulette || showStreetcomplete
+              showMaproulette
                 ? false
-                : isLoading === false && !maprouletteTaskLink
+                : showStreetcomplete
+                  ? false
+                  : isLoading === false && !maprouletteTaskLink
             }
           >
             Bearbeiten im iD Editor
