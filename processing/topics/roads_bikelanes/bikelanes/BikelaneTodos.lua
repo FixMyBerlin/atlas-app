@@ -212,7 +212,7 @@ local needs_clarification_track = BikelaneTodo.new({
     return objectTags._parent['cycleway'] == "track"
       or objectTags._parent['cycleway:both'] == "track"
       or objectTags._parent['cycleway:left'] == "track"
-      or objectTags._parent['cycleway:right'] ~= "track"
+      or objectTags._parent['cycleway:right'] == "track"
   end
 })
 local mixed_cycleway_both = BikelaneTodo.new({

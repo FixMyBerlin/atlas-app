@@ -1,4 +1,4 @@
-import { getOsmUrl } from '@/src/app/_components/utils/getOsmUrl'
+import { getOsmOrgUrl, getOsmUrl } from '@/src/app/_components/utils/getOsmUrl'
 import { format, subYears } from 'date-fns'
 import { Point } from 'geojson'
 import { EditorUrlGeometry, editorUrl } from './editorUrl'
@@ -10,10 +10,10 @@ export const osmTypeIdString = (type: string, id: string | number) => {
   return `${longOsmType[type]}/${id}`
 }
 
-export const osmUrl = ({ osmType, osmId }: OsmTypeId) => {
+export const osmOrgUrl = ({ osmType, osmId }: OsmTypeId) => {
   if (!osmType || !osmId) return undefined
 
-  return getOsmUrl(`/${osmType}/${osmId}`)
+  return getOsmOrgUrl(`/${osmType}/${osmId}`)
 }
 
 export const osmEditIdUrl = ({ osmType, osmId }: OsmTypeId) => {

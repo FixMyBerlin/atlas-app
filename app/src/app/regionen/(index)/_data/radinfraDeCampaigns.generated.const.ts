@@ -105,7 +105,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     maprouletteChallenge: {
       discriminant: true,
       value: {
-        id: null,
+        id: 51092,
         enabled: true,
         name: 'Fehler im Verkehrszeichen-Tag',
         resultsLimited: false,
@@ -292,7 +292,7 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     maprouletteChallenge: {
       discriminant: true,
       value: {
-        id: null,
+        id: 51093,
         enabled: true,
         name: 'Überschneidende Tags für `cycleway*`',
         resultsLimited: false,
@@ -328,18 +328,12 @@ export const radinfraDeCampaigns: RadinfraDeCampaignSchema[] = [
     pubDate: '2025-02-17T10:00:00.000Z',
     visibility: 'secondary',
     category: 'radinfra',
-    recommendedAction: 'maproulette',
+    recommendedAction: 'map',
     description:
       'Dieser Weg ist als `cycleway=track` eingetragen. Das sind nicht genug Daten, um eine eindeutige Radinfrastruktur-Kategorie zu vergeben.',
     task: '**Bitte ergänze weitere Tags, um eine präzise Kategorisierung sicherzustellen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
     maprouletteChallenge: {
-      discriminant: true,
-      value: {
-        id: null,
-        enabled: true,
-        name: '`cycleway=track` präzisieren',
-        resultsLimited: false,
-      },
+      discriminant: false,
     },
   },
   {

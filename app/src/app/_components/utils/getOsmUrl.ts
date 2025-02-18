@@ -13,6 +13,12 @@ export const getOsmUrl = (path?: string) => {
   return (path ? `${base}${path}` : base) as MapDataSourceInspectorEditor['urlTemplate']
 }
 
+export const getOsmOrgUrl = (path?: string) => {
+  const base = osmUrls.production
+
+  return (path ? `${base}${path}` : base) as MapDataSourceInspectorEditor['urlTemplate']
+}
+
 export const getOsmApiUrl = (path?: string) => {
   const base = process.env.NEXT_PUBLIC_OSM_API_URL
 
