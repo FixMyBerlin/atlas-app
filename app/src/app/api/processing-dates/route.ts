@@ -1,26 +1,19 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { geoDataClient } from '@/src/prisma-client'
+import { ProcessingDates } from '@/src/regions/schemas'
 import { NextResponse } from 'next/server'
-import { z } from 'zod'
-
-const DatesSchema = z.object({
-  processed_at: z.date(),
-  osm_data_from: z.date(),
-})
 
 export async function GET() {
   try {
-    const result = await geoDataClient.$queryRaw`
+    type Query = { processed_at: string; osm_data_from: string }[]
+    const result = await geoDataClient.$queryRaw<Query>`
       SELECT processed_at, osm_data_from
       FROM public.meta
       ORDER BY id DESC
       LIMIT 1
     `
 
-    const parsed = DatesSchema.parse(
-      // @ts-expect-error
-      result[0],
-    )
+    const parsed = ProcessingDates.parse(result[0])
 
     return NextResponse.json(parsed)
   } catch (error) {

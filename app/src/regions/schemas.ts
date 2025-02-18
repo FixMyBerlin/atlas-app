@@ -17,3 +17,8 @@ export const RegionFormSchema = RegionSchema.omit({ public: true, exportPublic: 
 export const DeleteRegionSchema = z.object({
   slug: z.string(),
 })
+
+export const ProcessingDates = z.object({
+  processed_at: z.date(),
+  osm_data_from: z.date(),
+})

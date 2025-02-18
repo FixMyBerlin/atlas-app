@@ -1,5 +1,6 @@
 import db from '@/db'
 import { resolver } from '@blitzjs/rpc'
+import { ProcessingDates } from '../schemas'
 
 export default resolver.pipe(
   // resolver.authorize(/* ok */), // Open without Auth
@@ -12,6 +13,6 @@ export default resolver.pipe(
       LIMIT 1
     `
 
-    return result[0]
+    return ProcessingDates.parse(result[0])
   },
 )
