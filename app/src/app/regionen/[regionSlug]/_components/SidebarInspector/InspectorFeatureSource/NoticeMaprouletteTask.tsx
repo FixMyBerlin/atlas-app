@@ -102,8 +102,18 @@ export const NoticeMaprouletteTask = ({
   const maprouletteCampaignLink = `https://maproulette.org/browse/challenges/${mapRouletteId}`
 
   const [osmType, osmId] = osmTypeIdString.split('/')
-  // @ts-expect-error we could clean this up…
-  const osmEditIdUrlHref = osmEditIdUrl({ osmType, osmId })
+  const osmEditIdUrlHref = osmEditIdUrl({
+    // @ts-expect-error we could clean this up…
+    osmType,
+    // @ts-expect-error we could clean this up…
+    osmId,
+    comment:
+      radinfraCampaign?.maprouletteChallenge.discriminant == true
+        ? radinfraCampaign.maprouletteChallenge.value.checkinComment
+        : undefined,
+    hashtags: radinfraCampaign?.hashtags?.join(','),
+    source: 'radinfra_de',
+  })
   const completed = data?.status && maprouletteStatusCompleted.includes(data.status)
 
   return (

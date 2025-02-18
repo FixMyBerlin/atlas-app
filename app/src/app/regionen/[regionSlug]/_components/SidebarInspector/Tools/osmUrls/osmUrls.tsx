@@ -16,10 +16,23 @@ export const osmOrgUrl = ({ osmType, osmId }: OsmTypeId) => {
   return getOsmOrgUrl(`/${osmType}/${osmId}`)
 }
 
-export const osmEditIdUrl = ({ osmType, osmId }: OsmTypeId) => {
+export const osmEditIdUrl = ({
+  osmType,
+  osmId,
+  comment,
+  hashtags,
+  source,
+}: OsmTypeId & { comment?: string; hashtags?: string; source?: string }) => {
   if (!osmType || !osmId) return undefined
+  const url = new URL('https://www.openstreetmap.org/edit')
+  url.searchParams.append(osmType, String(osmId))
 
-  return `https://www.openstreetmap.org/edit?${osmType}=${osmId}`
+  const hashParams = new URLSearchParams()
+  comment && hashParams.append('comment', comment)
+  source && hashParams.append('source', source)
+  hashParams.append('hashtags', hashtags || '#radverkehrsatlas')
+
+  return `${url.toString()}#${hashParams.toString()}`
 }
 
 export const osmEditRapidUrl = ({ osmType, osmId }: OsmTypeId) => {
