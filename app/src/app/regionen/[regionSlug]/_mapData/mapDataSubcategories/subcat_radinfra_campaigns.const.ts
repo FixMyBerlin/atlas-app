@@ -1,5 +1,6 @@
 import { bikelaneTodoIds, roadTodoIds, TodoId } from '@/src/data/processingTypes/todoIds.const'
-import { radinfraDeCampaigns } from '@/src/data/radinfra-de/radinfraDeCampaigns.generated.const'
+import { campaigns } from '@/src/data/radinfra-de/campaigns'
+import { campaignCategorySelect } from '@/src/data/radinfra-de/schema/utils/campaignCategorySelect'
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
 import { mapboxStyleGroupLayers_radinfra_campaign } from './mapboxStyles/groups/radinfra_campaign'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
@@ -21,16 +22,6 @@ export const campaignLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
 ]
 
-// Copied from radinfra.de/cms/utils/campaignCategorySelect.ts
-export const campaignCategorySelect = [
-  { label: 'Radinfrastruktur', value: 'radinfra' },
-  { label: 'Aktualität', value: 'currentness' },
-  { label: 'Verkehrszeichen', value: 'traffic_signs' },
-  { label: 'Oberfläche', value: 'surface' },
-  { label: 'Breite', value: 'width' },
-  { label: 'Straßenfotos/Mapillary', value: 'mapillary' },
-]
-
 export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
   id: subcatId,
   name: 'Kampagnen',
@@ -49,15 +40,18 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
       }),
       legends: campaignLegend,
     },
+    // NOTE: We still iterate over the generated campaign ids here.
+    // This way we only show what the data really has.
+    // And we also show unfinished campaigns that don't have text, yet.
     ...[...bikelaneTodoIds, ...roadTodoIds].map((todoId) => {
-      const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.title
+      const campaign = campaigns.find((c) => c.id === todoId)
       const category = campaignCategorySelect.find(
-        (entry) => entry.value === radinfraDeCampaigns.find((c) => c.id === todoId)?.category,
+        (entry) => entry.value === campaign?.category,
       )?.label
 
       return {
         id: todoId,
-        name: headline || `${todoId} (in Arbeit)`,
+        name: campaign?.title || `${todoId} (in Arbeit)`,
         category: category || 'In Vorbereitung',
         desc: null,
         layers: mapboxStyleLayers({

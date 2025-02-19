@@ -3,7 +3,7 @@ import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/Sid
 import { geoDataClient } from '@/src/server/prisma-client'
 import { feature, featureCollection, truncate } from '@turf/turf'
 import { LineString } from 'geojson'
-import { maprouletteTaskDescriptionMarkdown } from '../[projectKey]/_utils/taskMarkdown'
+import { buildTaskInstructions } from '../../../../../data/radinfra-de/utils/buildTaskInstructions'
 
 // About
 // The goal of this test API endpoint is to test how MapRoulette behaves when given a set of data which is updated externally
@@ -47,7 +47,7 @@ export async function GET() {
     // ADD MAPROULETTE TASK DATA
     const features = sqlWays.map(({ type, id, kind, geometry }) => {
       const osmTypeId = osmTypeIdString(type, id)
-      const text = maprouletteTaskDescriptionMarkdown({
+      const text = buildTaskInstructions({
         projectKey,
         osmTypeIdString: osmTypeId,
         kind,

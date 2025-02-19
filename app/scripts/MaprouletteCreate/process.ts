@@ -1,10 +1,14 @@
-import { $, Glob } from 'bun'
-import { AstroCampaignSchema, MaprouletteCampaignCreationSchema } from 'cms/campaignsSchema'
+import { CAMPAIGN_API_BASE_URL } from '@/src/app/api/maproulette/data/[projectKey]/_utils/campaignApiBaseUrl.const'
+import {
+  CampaignMaprouletteSchema,
+  CampaignMaprouletteType,
+} from '@/src/data/radinfra-de/schema/campaignsSchema.js'
 import { startOfDay } from 'date-fns'
 import invariant from 'tiny-invariant'
 import { parseArgs } from 'util'
 import { z } from 'zod'
-import { buildHashtags } from './buildHashtags'
+import { campaigns } from '../../src/data/radinfra-de/campaigns'
+import { buildHashtags } from '../../src/data/radinfra-de/utils/buildHashtags'
 import { defaultChallenge } from './default.const'
 import {
   CreateMapRouletteChallengeSchema,
@@ -24,33 +28,31 @@ const { values } = parseArgs({
   allowPositionals: true,
 })
 
-type ActionData = { slug: string } & z.infer<typeof MaprouletteCampaignCreationSchema>
-
-function dataCreateChallenge({ slug, ...astroCampaignData }: ActionData) {
-  const hashtags = buildHashtags(slug, astroCampaignData.category, true)
+function dataCreateChallenge({ id, ...astroCampaignData }: CampaignMaprouletteType) {
+  const hashtags = buildHashtags(id, astroCampaignData.category, true)
   const challengeData: CreateMapRouletteChallengeType = {
     ...defaultChallenge,
     name: astroCampaignData.title,
-    infoLink: `https://radinfra.de/kampagnen/${slug}/`,
-    remoteGeoJson: astroCampaignData.maprouletteChallenge.value.remoteGeoJson,
-    enabled: astroCampaignData.maprouletteChallenge.value.enabled,
+    infoLink: `https://radinfra.de/kampagnen/${id}/`,
+    remoteGeoJson: `${CAMPAIGN_API_BASE_URL}${id}`,
+    enabled: astroCampaignData.maprouletteChallenge.enabled,
     description: astroCampaignData.description,
-    checkinComment: `${astroCampaignData.maprouletteChallenge.value.checkinComment}  ${hashtags.join(' ')}`,
-    checkinSource: astroCampaignData.maprouletteChallenge.value.checkinSource,
+    checkinComment: `${astroCampaignData.maprouletteChallenge.checkinComment}  ${hashtags.join(' ')}`,
+    checkinSource: astroCampaignData.maprouletteChallenge.checkinSource,
     dataOriginDate: startOfDay(new Date()).toISOString(), // We skip this; the tasks have their own updatedAt at the bottom of the task description
   }
   return CreateMapRouletteChallengeSchema.parse(challengeData)
 }
 
-function dataUpdateChallenge({ slug, ...astroCampaignData }: ActionData) {
+function dataUpdateChallenge({ id, ...astroCampaignData }: CampaignMaprouletteType) {
   invariant(
-    astroCampaignData.maprouletteChallenge.value.id,
+    astroCampaignData.maprouletteChallenge.id,
     'challenge.id is required dataUpdateChallenge',
   )
 
   const challengeData: UpdateMapRouletteChallengeType = {
-    ...dataCreateChallenge({ slug, ...astroCampaignData }),
-    id: astroCampaignData.maprouletteChallenge.value.id,
+    ...dataCreateChallenge({ id, ...astroCampaignData }),
+    id: astroCampaignData.maprouletteChallenge.id,
   }
   return UpdateMapRouletteChallengeSchema.parse(challengeData)
 }
@@ -100,57 +102,48 @@ async function createChallenge(challenge: CreateMapRouletteChallengeType) {
 }
 
 async function main(filter: string | undefined) {
-  const campaignsFolder = './src/content/campaigns'
-  const glob = new Glob('**/*/index.json')
-  const campaignPaths = glob.scan(campaignsFolder)
-
-  for await (const campaignPath of campaignPaths) {
-    // SKIP BY FILTER PARAM
-    const skip = filter ? !campaignPath.includes(filter) : false
-    const logPrefix = skip ? '\x1b[33m↷ SKIP\x1b[0m' : '\x1b[32m✎ PROCESS\x1b[0m'
-    console.log('\t', logPrefix, campaignPath)
-    if (skip) continue
-
-    // LOAD JSON
-    const [slug] = campaignPath.split('/')
-    const filePath = `${campaignsFolder}/${campaignPath}`
-    const json = await Bun.file(filePath).json()
-    const parsed = AstroCampaignSchema.parse(json)
-
+  for await (const campaign of campaigns) {
     // SKIP WHEN MR OFF
-    if (parsed.maprouletteChallenge.discriminant === false) {
-      console.log('\t', '\x1b[37m↷ SKIP\x1b[0m', slug, '(No MapRoulette)')
+    if (campaign.maprouletteChallenge.enabled === false) {
+      console.log('\t', '\x1b[37m↷ SKIP\x1b[0m', campaign.id, '(No MapRoulette)')
       continue
     }
 
+    // SKIP BY FILTER PARAM
+    const skip = filter ? !campaign.id.includes(filter) : false
+    const logPrefix = skip ? '\x1b[33m↷ SKIP\x1b[0m' : '\x1b[32m✎ PROCESS\x1b[0m'
+    console.log('\t', logPrefix, campaign.id)
+    if (skip) continue
+
     // ACTION
-    const saveParsed = MaprouletteCampaignCreationSchema.parse(parsed) // A second time to mak TS happy
-    const action = parsed.maprouletteChallenge.value.id ? 'UPDATE' : 'CREATE'
-    invariant(slug)
+    const saveParsed = CampaignMaprouletteSchema.parse(campaign)
+    const action = saveParsed.maprouletteChallenge.id ? 'UPDATE' : 'CREATE'
+
     switch (action) {
       case 'CREATE':
-        const createData = dataCreateChallenge({ slug, ...saveParsed })
+        const createData = dataCreateChallenge(saveParsed)
         const challenge = await createChallenge(createData)
         // Write back the ID into the given Keystatic Content file
         const { id } = z.object({ id: z.number() }).parse(challenge)
-        json.maprouletteChallenge.value.id = id
-        await Bun.write(filePath, JSON.stringify(json, undefined, 2))
+
+        // TODO: Readd the part where we write back the mr-id to the local data automatically
         console.log('\t\t', 'CREATED campaign', maprouletteChallengeUrl(id))
+        console.log('\t\t', `NOW UPDATE campaign ${saveParsed.id} with MapRoulette ID`, id)
         break
       case 'UPDATE':
-        const updateData = dataUpdateChallenge({ slug, ...json })
+        const updateData = dataUpdateChallenge(saveParsed)
         await updateChallenge(updateData)
         console.log('\t\t', 'UPDATED campaign', maprouletteChallengeUrl(updateData.id))
         break
     }
   }
 
-  // FORMATTING
-  $`prettier 'src/content/campaigns/**/*.json' --write`
+  // // FORMATTING
+  // $`prettier 'src/content/campaigns/**/*.json' --write`
 }
 
 console.log(
-  'STARTING maproulette/process',
+  'STARTING MaprouletteCreate',
   values.filter ? `–\x1b[33m using filter \"${values.filter}\"\x1b[0m` : '',
 )
 main(values.filter)

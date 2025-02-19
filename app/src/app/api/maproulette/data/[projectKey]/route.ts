@@ -10,7 +10,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import pako from 'pako'
 import { z } from 'zod'
-import { maprouletteTaskDescriptionMarkdown } from './_utils/taskMarkdown'
+import { buildTaskInstructions } from '../../../../../data/radinfra-de/utils/buildTaskInstructions'
 
 const MaprouletteSchema = z
   .object({
@@ -107,7 +107,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
 
       let text: undefined | string = undefined
       try {
-        text = maprouletteTaskDescriptionMarkdown({
+        text = buildTaskInstructions({
           projectKey,
           osmTypeIdString: osmTypeId,
           kind,

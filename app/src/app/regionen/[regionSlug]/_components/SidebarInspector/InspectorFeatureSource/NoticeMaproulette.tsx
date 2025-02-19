@@ -1,10 +1,10 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
-import { todoMarkdownToMaprouletteCampaignKey } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
 import { todoIds } from '@/src/data/processingTypes/todoIds.const'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { GeoJsonProperties } from 'geojson'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'
 import { NoticeMaprouletteTask } from './NoticeMaprouletteTask'
+import { todoMarkdownToMaprouletteCampaignKey } from './utils/todoMarkdownToMaprouletteCampaignKey'
 
 const maprouletteQueryClient = new QueryClient({
   defaultOptions: {
