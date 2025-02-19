@@ -1,5 +1,5 @@
-import { TableId } from '../../app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
-import { geoDataClient } from '../prisma-client'
+import { TableId } from '@/src/processingTypes/tableId.generated.const'
+import { geoDataClient } from '../../prisma-client'
 
 const lengthCounterIdentifier = (id: TableId) =>
   `atlas_aggregate_${id.toLowerCase()}` as `atlas_aggregate_${Lowercase<TableId>}`
