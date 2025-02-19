@@ -27,6 +27,7 @@ import { createInspectorFeatureKey } from '../utils/sourceKeyUtils/createInspect
 import { isSourceKeyAtlasGeo } from '../utils/sourceKeyUtils/sourceKeyUtilsAtlasGeo'
 import { parseSourceKeyStaticDatasets } from '../utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
 import { Calculator } from './Calculator/Calculator'
+import { Search } from './Search/Search'
 import { SourceGeojson } from './SourcesAndLayers/SourceGeojson/SourceGeojson'
 import { SourcesLayerRasterBackgrounds } from './SourcesAndLayers/SourcesLayerRasterBackgrounds'
 import { SourcesLayersAtlasGeo } from './SourcesAndLayers/SourcesLayersAtlasGeo'
@@ -268,6 +269,8 @@ export const Map = () => {
       <SourcesLayersAtlasNotes />
       {isDev ? <SourceGeojson /> : null}
       <AttributionControl compact={true} position="bottom-left" />
+
+      <Search />
 
       <NavigationControl showCompass={false /* TODO: See Story */} visualizePitch={true} />
       <Calculator />

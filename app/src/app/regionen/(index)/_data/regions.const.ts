@@ -45,6 +45,7 @@ export type StaticRegion = {
     backgroundSources: SourcesRasterIds[]
     notes: 'osmNotes' | 'atlasNotes' | 'disabled'
     hideDownload?: boolean
+    showSearch?: boolean
     cacheWarming?: { minZoom: number; maxZoom: number; tables: UnionTiles<TableId>[] }
   }
 
@@ -755,6 +756,8 @@ export const staticRegion: StaticRegion[] = [
       { name: 'Was ist radinfra.de', href: 'https://radinfra.de/' },
       { name: 'Mithelfen', href: 'https://radinfra.de/mitmachen/' },
     ],
+    showSearch: true,
+    hideDownload: false,
     categories: [
       // The order here specifies the order in the UI
       'radinfra_bikelanes',
