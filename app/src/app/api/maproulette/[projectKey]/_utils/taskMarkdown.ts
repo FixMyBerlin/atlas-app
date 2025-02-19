@@ -93,14 +93,15 @@ Das passiert häufig, wenn der Weg als \`highway=cycleway\` ohne weitere Attribu
 ## Aufgabe
 
 Bitte präzisiere das Tagging.
+* Bitte versuch als erstes das Verkehrszeichen zu ergänzen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)) oder ein explizites \`traffic_sign=none\`.
 * Ist es ein Übergang an einer Straße? ➔ Füge \`cycleway=crossing\` oder \`path=crossing\` hinzu.
 * Ist es ein Verbindungsstück das nur für das Routing relevant ist? ➔ Füge \`cycleway=link\` hinzu.
 * Ist es ein gemeinsamer oder getrennter Geh- und Radweg? ➔ Füge \`segregated=yes\` oder  \`segregated=no\` hinzu.
 * Ist es ein Radweg \`highway=cycleway\`? ➔ Ergänze \`is_sidepath=yes\` für straßenbegleitende Wege bzw. \`no\` für selbständig geführte Wege.
-* Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)).
-* Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
 
-Weitere [Hinweise zu den Kategorien und ihrer Prozessierung](https://radinfra.de/dokumentation/fuehrungsform) findest du in der Dokumentation.
+Weitere tipps zu passenden Tags findest du [im Wiki](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren#Stra%C3%9Fenbegleitende_Wege) und in [der Dokumentation](https://radinfra.de/dokumentation/fuehrungsform) der Prozessierung.
+
+Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
 
 ## Hilfsmittel
 
@@ -362,8 +363,8 @@ Dieser Weg ist als \`cycleway=track\` eingetragen. Das sind nicht genug Daten, u
 
 _Wenn du so wenig wie möglich ändern möchtest:_
 
-* Ergänze \`cycleway:right:segregated=yes\`, wenn Rad- und Fußverkehr getrennt sind (bzw. \`no\` bei einem gem. Geh-Radweg).
-* Ergänze \`cycleway:right:traffic_sign=*\`, mit dem [passenden Verkehrsschild](https://trafficsigns.osm-verkehrswende.org/DE) (oder \`none\` wenn unbeschildert).
+* Ergänze \`cycleway:right:segregated=yes\`, wenn Rad- und Fußverkehr getrennt sind — bzw. \`no\` bei einem gem. Geh-Radweg.
+* Ergänze \`cycleway:right:traffic_sign=*\`, mit dem [passenden Verkehrszeichen](https://trafficsigns.osm-verkehrswende.org/DE) — oder \`none\` wenn unbeschildert.
 
 (Das gleiche gilt auch für \`cycleway:right:*\` bzw. \`cycleway:both:*\`.)
 
@@ -395,7 +396,7 @@ Diese Überschneidung erschwert die Datenverarbeitung und kann zu falschen Ergeb
 **Bitte kontrolliere die Angaben und ändere sie, so dass sie eindeutig sind.**
 
 * Wenn auf beiden Straßenseiten Radinfrastruktur vorhanden ist, wählen \`cycleway:both\` und lösche die Angaben zur Seite.
-* Wenn nur auf einer Straßenseite Radinfrastruktur vorhanden ist, _lösche_ die Angabe \`cycleway:both\` bzw. \`cycleway\`.
+* Wenn nur auf einer Straßenseite Radinfrastruktur vorhanden ist, _lösche_ die Angabe \`cycleway:both\` bzw. \`cycleway\`. Jede Seite sollte dann einen Wert oder ein \`no\` haben.
 
 In wenigen fällen kommt ein Tagging wie \`cycleway=left\` vor. Das ist ein Tagging-Fehler und kann – nach Kontrolle – zu Gunsten [des üblichen Taggings](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren#Stra%C3%9Fenbegleitende_Wege) gelöscht werden.
 
