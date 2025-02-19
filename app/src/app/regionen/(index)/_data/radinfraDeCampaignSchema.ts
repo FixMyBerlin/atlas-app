@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 // REMINDER: Keep in sync with https://github.com/FixMyBerlin/radinfra.de/blob/main/cms/campaignsAstro.ts
 const AstroCampaignBaseSchema = z.object({
-  name: z.string(),
-  menuTitle: z.string(),
+  title: z.string(),
   pubDate: z.string().datetime(),
   // pubDate: z
   //   .string()
@@ -22,10 +21,9 @@ const AstroCampaignMaprouletteSchema = z.object({
   value: z.object({
     id: z.number().nullable().optional(),
     enabled: z.boolean(),
-    name: z.string(),
     // remoteGeoJson: z.string().url(),
-    // checkinComment: z.string(),
-    // checkinSource: z.string(),
+    checkinComment: z.string(),
+    checkinSource: z.string(),
     resultsLimited: z.boolean(),
     rebuildAt: z.string().datetime().nullable().optional(),
   }),
@@ -41,7 +39,13 @@ export const AstroCampaignSchema = AstroCampaignBaseSchema.merge(
   }),
 )
 export const radinfraDeCampaignSchema = z.array(
-  z.object({ id: z.string() }).merge(AstroCampaignSchema).strip(),
+  z
+    .object({
+      id: z.string(),
+      hashtags: z.array(z.string()),
+    })
+    .merge(AstroCampaignSchema)
+    .strip(),
 )
 
 export type RadinfraDeCampaignSchema = z.infer<typeof radinfraDeCampaignSchema>[number]

@@ -199,7 +199,8 @@ local needs_clarification_track = BikelaneTodo.new({
   desc = "Tagging `cycleway=track` insufficient to categorize the bike infrastructure`.",
   todoTableOnly = false,
   priority = function(_, _) return "1" end,
-  conditions = function(objectTags, _)
+  conditions = function(objectTags, resultTags)
+    if resultTags.category == "protectedCyclewayOnHighway" then return false end
     if objectTags._parent == nil then return false end
 
     -- Some cases are tagged sufficiently with `cycleway:SIDE:segregated` or `cycleway:SIDE:traffic_signs`

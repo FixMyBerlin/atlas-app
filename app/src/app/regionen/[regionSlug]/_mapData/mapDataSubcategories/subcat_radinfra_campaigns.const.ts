@@ -50,7 +50,7 @@ export const subcat_radinfra_campaigns: FileMapDataSubcategory = {
       legends: campaignLegend,
     },
     ...[...bikelaneTodoIds, ...roadTodoIds].map((todoId) => {
-      const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.menuTitle
+      const headline = radinfraDeCampaigns.find((c) => c.id === todoId)?.title
       const category = campaignCategorySelect.find(
         (entry) => entry.value === radinfraDeCampaigns.find((c) => c.id === todoId)?.category,
       )?.label

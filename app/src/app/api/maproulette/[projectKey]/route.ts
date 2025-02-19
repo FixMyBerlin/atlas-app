@@ -2,6 +2,7 @@ import { isProd } from '@/src/app/_components/utils/isEnv'
 import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { geoDataClient } from '@/src/prisma-client'
 import { todoIds } from '@/src/processingTypes/todoIds.const'
+import { ProcessingDates } from '@/src/regions/schemas'
 import { feature, featureCollection } from '@turf/turf'
 import { LineString } from 'geojson'
 import { NextRequest, NextResponse } from 'next/server'
@@ -38,6 +39,13 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
   const { projectKey, download } = parsedParams.data
 
   try {
+    // SELECT `osm_data_from`
+    type DateQuery = { processed_at: string; osm_data_from: string }[]
+    const result = await geoDataClient.$queryRaw<DateQuery>`
+      SELECT processed_at, osm_data_from FROM public.meta ORDER BY id DESC LIMIT 1
+    `
+    const { osm_data_from } = ProcessingDates.parse(result[0])
+
     // SELECT DATA FROM `bikelanes` or `roads`
     type QueryType = {
       osm_type: string
@@ -120,6 +128,7 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
         // For use as Mustache Tag. MR will show `way/123` but Rapid will make this a link to hover/select the object.
         // However, Rapid will use some `name` property for that, see https://osmus.slack.com/archives/C1QN12RS7/p1739525039984349?thread_ts=1739524180.359629&cid=C1QN12RS7
         osmIdentifier: osmTypeId,
+        data_updated_at: osm_data_from.toLocaleString('de-DE'),
         task_updated_at: new Date().toLocaleString('de-DE'), // Used in MapRoulette to see when data was fetched lasted
         task_markdown: (text || 'TASK DESCRIPTION MISSING').replaceAll('\n', ' \n'),
         blank: '',

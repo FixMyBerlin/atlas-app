@@ -1,4 +1,5 @@
 // We use bun.sh to run this file
+import { MAPTILER_API_KEY } from '@/src/app/regionen/[regionSlug]/_components/Map/utils/maptilerApiKey.const'
 import chalk from 'chalk'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -8,8 +9,7 @@ import { fetchStyle, log, saveJson } from './util'
 console.log(chalk.inverse.bold('START'), __filename)
 
 // Configuration
-const baseMapStyle =
-  'https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=ECOoUBmpqklzSCASXxcu'
+const baseMapStyle = `https://api.maptiler.com/maps/08357855-50d4-44e1-ac9f-ea099d9de4a5/style.json?key=${MAPTILER_API_KEY}`
 const keys = ['atlas-style-package-1', 'atlas-style-package-2', 'atlas-style-package-3', 'parking']
 const apiConfigs = [
   // The order in this array specifies which sprite "wins" when sprite filenames are identical (the last entry "wins")

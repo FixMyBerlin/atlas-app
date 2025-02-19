@@ -102,14 +102,24 @@ export const NoticeMaprouletteTask = ({
   const maprouletteCampaignLink = `https://maproulette.org/browse/challenges/${mapRouletteId}`
 
   const [osmType, osmId] = osmTypeIdString.split('/')
-  // @ts-expect-error we could clean this up…
-  const osmEditIdUrlHref = osmEditIdUrl({ osmType, osmId })
+  const osmEditIdUrlHref = osmEditIdUrl({
+    // @ts-expect-error we could clean this up…
+    osmType,
+    // @ts-expect-error we could clean this up…
+    osmId,
+    comment:
+      radinfraCampaign?.maprouletteChallenge.discriminant == true
+        ? radinfraCampaign.maprouletteChallenge.value.checkinComment
+        : undefined,
+    hashtags: radinfraCampaign?.hashtags?.join(','),
+    source: 'radinfra_de',
+  })
   const completed = data?.status && maprouletteStatusCompleted.includes(data.status)
 
   return (
     <Fragment key={projectKey}>
-      <h2>{radinfraCampaign?.menuTitle || `${projectKey} (in Arbeit)`}</h2>
-      {mapRouletteId && (
+      <h2>{radinfraCampaign?.title || `${projectKey} (in Arbeit)`}</h2>
+      {!!mapRouletteId && (
         <p className="-mt-5 text-right text-xs">
           <LinkExternal
             href={maprouletteCampaignLink}
@@ -134,7 +144,7 @@ export const NoticeMaprouletteTask = ({
               </span>
             ) : maprouletteTaskLink ? (
               <>
-                {completed && <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong>}
+                {completed ? <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong> : null}
                 <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
                   {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
                 </LinkExternal>
@@ -149,14 +159,16 @@ export const NoticeMaprouletteTask = ({
             Tipp: Nutze StreetComplete für diese Daten
           </LinkExternal>
         )}
-        {osmEditIdUrlHref && (
+        {!!osmEditIdUrlHref && (
           <LinkExternal
             href={osmEditIdUrlHref}
             blank
             button={
-              showMaproulette || showStreetcomplete
+              showMaproulette
                 ? false
-                : isLoading === false && !maprouletteTaskLink
+                : showStreetcomplete
+                  ? false
+                  : isLoading === false && !maprouletteTaskLink
             }
           >
             Bearbeiten im iD Editor

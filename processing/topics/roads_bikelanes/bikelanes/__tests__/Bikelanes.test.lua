@@ -228,13 +228,13 @@ describe("Bikelanes", function()
       end
     end)
 
-    it('Categories for protected bikelanes (traffic_mode:right=motorized)', function()
+    it('Categories for protected bikelanes (traffic_mode:right=motor_vehicle)', function()
       local input_object = {
         tags = {
           highway = 'tertiary',
           ['cycleway:right:separation:left'] = 'line',
           ['cycleway:left:separation:left'] = 'vertical_panel',
-          ['cycleway:left:traffic_mode:right'] = 'motorized'
+          ['cycleway:left:traffic_mode:right'] = 'motor_vehicle'
         },
         id = 1,
         type = 'way'
