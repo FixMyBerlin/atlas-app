@@ -118,7 +118,7 @@ export const NoticeMaprouletteTask = ({
 
   return (
     <Fragment key={projectKey}>
-      <h2>{radinfraCampaign?.menuTitle || `${projectKey} (in Arbeit)`}</h2>
+      <h2>{radinfraCampaign?.title || `${projectKey} (in Arbeit)`}</h2>
       {!!mapRouletteId && (
         <p className="-mt-5 text-right text-xs">
           <LinkExternal

@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 // REMINDER: Keep in sync with https://github.com/FixMyBerlin/radinfra.de/blob/main/cms/campaignsAstro.ts
 const AstroCampaignBaseSchema = z.object({
-  name: z.string(),
-  menuTitle: z.string(),
+  title: z.string(),
   pubDate: z.string().datetime(),
   // pubDate: z
   //   .string()
@@ -22,7 +21,6 @@ const AstroCampaignMaprouletteSchema = z.object({
   value: z.object({
     id: z.number().nullable().optional(),
     enabled: z.boolean(),
-    name: z.string(),
     // remoteGeoJson: z.string().url(),
     checkinComment: z.string(),
     checkinSource: z.string(),
