@@ -1,5 +1,5 @@
 import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
-import getAtlasGeoMetadata from '@/src/regions/queries/getAtlasGeoMetadata'
+import getAtlasGeoMetadata from '@/src/server/regions/queries/getAtlasGeoMetadata'
 import { useQuery } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 

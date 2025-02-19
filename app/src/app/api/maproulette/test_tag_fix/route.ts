@@ -4,7 +4,7 @@ import {
   osmTypeIdString,
 } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
 import { pointFromGeometry } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/pointFromGeometry'
-import { geoDataClient } from '@/src/prisma-client'
+import { geoDataClient } from '@/src/server/prisma-client'
 import { Prisma } from '@prisma/client'
 import { feature, featureCollection, truncate } from '@turf/turf'
 import { LineString } from 'geojson'

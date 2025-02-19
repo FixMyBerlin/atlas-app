@@ -7,7 +7,7 @@ import { Breadcrumb } from '@/src/app/admin/_components/Breadcrumb'
 import { HeaderWrapper } from '@/src/app/admin/_components/HeaderWrapper'
 import { ObjectDump } from '@/src/app/admin/_components/ObjectDump'
 import { createSourceKeyStaticDatasets } from '@/src/app/regionen/[regionSlug]/_components/utils/sourceKeyUtils/sourceKeyUtilsStaticDataset'
-import getUploadWithRegions from '@/src/uploads/queries/getUploadWithRegions'
+import getUploadWithRegions from '@/src/server/uploads/queries/getUploadWithRegions'
 import { useQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 

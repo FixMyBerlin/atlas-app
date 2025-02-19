@@ -1,6 +1,6 @@
 import { Markdown } from '@/src/app/_components/text/Markdown'
 import { proseClasses } from '@/src/app/_components/text/prose'
-import { NoteAndComments } from '@/src/notes/queries/getNoteAndComments'
+import { NoteAndComments } from '@/src/server/notes/queries/getNoteAndComments'
 import dompurify from 'dompurify'
 import { twJoin } from 'tailwind-merge'
 import { OsmUserLink } from '../OsmUserLink'

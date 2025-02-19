@@ -1,6 +1,6 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
 import { osmTypeIdString } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/Tools/osmUrls/osmUrls'
-import { geoDataClient } from '@/src/prisma-client'
+import { geoDataClient } from '@/src/server/prisma-client'
 import { feature, featureCollection, truncate } from '@turf/turf'
 import { LineString } from 'geojson'
 import { maprouletteTaskDescriptionMarkdown } from '../[projectKey]/_utils/taskMarkdown'

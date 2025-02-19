@@ -1,6 +1,5 @@
 import { Markdown } from '@/src/app/_components/text/Markdown'
-import { TVerification } from '@/src/bikelane-verifications/queries/getBikelaneVerification'
-import { userById } from '@/src/users/components/utils/usersUtils'
+import { TVerification } from '@/src/server/bikelane-verifications/queries/getBikelaneVerification'
 import { BoltIcon, ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 type Props = {
@@ -14,8 +13,8 @@ export const VerificationHistoryEntries = ({ history }: Props) => {
         {history.map((event) => {
           const date = new Date(event.verified_at)
           const datetimeFormatted = `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
-          const verifiedBy =
-            userById(Number(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
+          const verifiedBy = '(Unbekannter Nutzer)'
+          // const verifiedBy = userById(Number(event.verified_by))?.displayName || '(Unbekannter Nutzer)'
 
           return (
             <li key={event.id} className="flex gap-2">

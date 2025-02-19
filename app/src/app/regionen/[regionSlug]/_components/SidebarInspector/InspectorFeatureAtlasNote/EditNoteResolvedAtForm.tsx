@@ -1,6 +1,6 @@
 import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
-import updateNoteResolvedAt from '@/src/notes/mutations/updateNoteResolvedAt'
-import getNoteAndComments, { NoteAndComments } from '@/src/notes/queries/getNoteAndComments'
+import updateNoteResolvedAt from '@/src/server/notes/mutations/updateNoteResolvedAt'
+import getNoteAndComments, { NoteAndComments } from '@/src/server/notes/queries/getNoteAndComments'
 import { getQueryClient, getQueryKey, useMutation } from '@blitzjs/rpc'
 import { Field, Label, Switch } from '@headlessui/react'
 import { useEffect, useState } from 'react'

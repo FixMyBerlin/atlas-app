@@ -1,7 +1,7 @@
 'use client'
 import { Link } from '@/src/app/_components/links/Link'
 import { staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
-import { TRegion } from '@/src/regions/queries/getRegion'
+import { TRegion } from '@/src/server/regions/queries/getRegion'
 import { ObjectDump } from '../../_components/ObjectDump'
 
 export const MissingRegions = ({ regions }: { regions: TRegion[] }) => {

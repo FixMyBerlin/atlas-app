@@ -1,6 +1,6 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
-import { geoDataClient } from '@/src/prisma-client'
-import { ProcessingDates } from '@/src/regions/schemas'
+import { geoDataClient } from '@/src/server/prisma-client'
+import { ProcessingDates } from '@/src/server/regions/schemas'
 import { NextResponse } from 'next/server'
 
 export async function GET() {

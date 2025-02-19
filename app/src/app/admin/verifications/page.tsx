@@ -1,7 +1,7 @@
 'use client'
 import { buttonStyles } from '@/src/app/_components/links/styles'
 import { Markdown } from '@/src/app/_components/text/Markdown'
-import getBikelaneVerifications from '@/src/bikelane-verifications/queries/getBikelaneVerifications'
+import getBikelaneVerifications from '@/src/server/bikelane-verifications/queries/getBikelaneVerifications'
 import { usePaginatedQuery } from '@blitzjs/rpc'
 import { Route } from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

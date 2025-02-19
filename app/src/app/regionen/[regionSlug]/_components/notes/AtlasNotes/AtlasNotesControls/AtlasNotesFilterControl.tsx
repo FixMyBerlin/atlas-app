@@ -1,7 +1,7 @@
 import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
 import { getFullname } from '@/src/app/admin/memberships/_components/utils/getFullname'
 import { useAtlasFilterParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
-import getNotesAndCommentsForRegion from '@/src/notes/queries/getNotesAndCommentsForRegion'
+import getNotesAndCommentsForRegion from '@/src/server/notes/queries/getNotesAndCommentsForRegion'
 import { useQuery } from '@blitzjs/rpc'
 import { Menu, MenuButton, MenuHeading, MenuItem, MenuItems, MenuSection } from '@headlessui/react'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/20/solid'

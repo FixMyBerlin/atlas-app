@@ -1,4 +1,4 @@
-import { TCreateVerificationSchema } from '@/src/bikelane-verifications/schemas'
+import { TCreateVerificationSchema } from '@/src/server/bikelane-verifications/schemas'
 import { isEqual } from 'lodash'
 import { LngLatBounds } from 'maplibre-gl'
 import { MapGeoJSONFeature } from 'react-map-gl/maplibre'

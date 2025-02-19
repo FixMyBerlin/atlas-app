@@ -1,7 +1,7 @@
 import {
   TVerificationStatus,
   verificationStatusOptions,
-} from '@/src/bikelane-verifications/schemas'
+} from '@/src/server/bikelane-verifications/schemas'
 import { useFormContext } from 'react-hook-form'
 import { verifiedColor } from '../verifiedColor.const'
 

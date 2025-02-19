@@ -1,5 +1,5 @@
 import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
-import membershipExists from '@/src/memberships/queries/membershipExists'
+import membershipExists from '@/src/server/memberships/queries/membershipExists'
 import { useSession } from '@blitzjs/auth'
 import { useQuery } from '@blitzjs/rpc'
 

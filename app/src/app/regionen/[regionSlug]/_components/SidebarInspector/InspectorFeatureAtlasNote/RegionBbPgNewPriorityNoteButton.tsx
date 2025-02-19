@@ -1,6 +1,6 @@
 import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
 import { buttonStylesOnYellow } from '@/src/app/_components/links/styles'
-import createNote from '@/src/notes/mutations/createNote'
+import createNote from '@/src/server/notes/mutations/createNote'
 import { useSession } from '@blitzjs/auth'
 import { getQueryClient, useMutation } from '@blitzjs/rpc'
 import { useState } from 'react'

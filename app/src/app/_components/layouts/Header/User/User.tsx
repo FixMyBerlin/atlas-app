@@ -1,4 +1,4 @@
-import { useCurrentUser } from '@/src/users/hooks/useCurrentUser'
+import { useCurrentUser } from '@/src/app/_hooks/useCurrentUser'
 import { RemoveCookie } from './RemoveCookie'
 import { UserLoggedIn } from './UserLoggedIn'
 import { UserLoggedOut } from './UserLoggedOut'

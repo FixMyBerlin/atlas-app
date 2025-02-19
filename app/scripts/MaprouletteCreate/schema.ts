@@ -1,4 +1,4 @@
-import { z } from 'astro/zod'
+import { z } from 'zod'
 
 // const prioritySchema = z.object({
 //   condition: z.literal('AND'),
@@ -15,7 +15,7 @@ export const CreateMapRouletteChallengeSchema = z.strictObject({
   defaultBasemap: z.literal(-1), // -1,
   defaultBasemapId: z.literal(''), // "",
   description: z.string(), // Challenge Level
-  difficulty: z.z.union([z.literal(1), z.literal(2), z.literal(3)]), // 2,
+  difficulty: z.union([z.literal(1), z.literal(2), z.literal(3)]), // 2,
   instruction: z.string().refine((val) => val.replace(/\n/g, '').length >= 150, {
     message: 'Description must be at least 150 characters long',
   }), // Task Level

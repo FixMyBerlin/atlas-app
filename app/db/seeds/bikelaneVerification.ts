@@ -1,4 +1,4 @@
-import { VerificationSchema } from '@/src/bikelane-verifications/schemas'
+import { VerificationSchema } from '@/src/server/bikelane-verifications/schemas'
 import { z } from 'zod'
 import db from '../index'
 
