@@ -1,5 +1,5 @@
 import db, { Prisma } from '@/db'
-import { staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
+import { staticRegion } from '@/src/data/regions.const'
 import { resolver } from '@blitzjs/rpc'
 import { NotFoundError } from 'blitz'
 import { TRegion } from './getRegion'

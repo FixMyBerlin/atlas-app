@@ -1,4 +1,6 @@
 // We use bun.sh to run this file
+import { getBoundaryExportApiBaseUrl } from '@/src/app/_components/utils/getExportApiUrl'
+import { staticRegion } from '@/src/data/regions.const'
 import {
   bbox,
   buffer,
@@ -13,8 +15,6 @@ import {
 import chalk from 'chalk'
 import { Feature, MultiPolygon, Polygon } from 'geojson'
 import path from 'node:path'
-import { getBoundaryExportApiBaseUrl } from '@/src/app/_components/utils/getExportApiUrl'
-import { staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 
 console.log(chalk.inverse.bold('START'), __filename)

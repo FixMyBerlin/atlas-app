@@ -1,5 +1,5 @@
+import { staticRegion } from '@/src/data/regions.const'
 import adler32 from 'adler-32'
-import { staticRegion } from '../../../../../(index)/_data/regions.const'
 import { createFreshCategoriesConfig } from '../createFreshCategoriesConfig'
 import { MapDataCategoryConfig } from '../type'
 import { simplifyConfigForParams } from '../utils/simplifyConfigForParams'

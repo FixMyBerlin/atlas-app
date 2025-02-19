@@ -28,7 +28,7 @@ services:
       - geodata:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
-      - ./app/src/processingTypes:/data/processingTypes
+      - ./app/src/data/processingTypes:/data/processingTypes
     depends_on:
       db:
         condition: service_healthy

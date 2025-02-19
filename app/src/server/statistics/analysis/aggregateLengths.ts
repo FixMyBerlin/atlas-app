@@ -1,4 +1,4 @@
-import { TableId } from '@/src/processingTypes/tableId.generated.const'
+import { TableId } from '@/src/data/processingTypes/tableId.generated.const'
 import { geoDataClient } from '../../prisma-client'
 
 const lengthCounterIdentifier = (id: TableId) =>

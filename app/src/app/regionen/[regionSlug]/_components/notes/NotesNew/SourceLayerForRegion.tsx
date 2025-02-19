@@ -1,5 +1,5 @@
-import { RegionSlug } from '@/src/app/regionen/(index)/_data/regions.const'
 import { useStaticRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
+import { RegionSlug } from '@/src/data/regions.const'
 import { SourceLayerBikelanes } from './SourceLayerBikelanes'
 import { SourceLayerRegionBbSg } from './SourceLayerRegionBbSg'
 

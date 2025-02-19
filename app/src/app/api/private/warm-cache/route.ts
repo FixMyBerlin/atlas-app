@@ -1,6 +1,6 @@
+import { StaticRegion, staticRegion } from '@/src/data/regions.const'
 import chalk from 'chalk'
 import { NextRequest, NextResponse } from 'next/server'
-import { staticRegion, StaticRegion } from 'src/app/regionen/(index)/_data/regions.const'
 import { z } from 'zod'
 import { guardEnpoint } from '../guardEndpoint'
 import { warmCache } from './warmCache'

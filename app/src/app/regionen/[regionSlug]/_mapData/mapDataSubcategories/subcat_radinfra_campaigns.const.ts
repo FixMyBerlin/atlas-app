@@ -1,5 +1,5 @@
-import { bikelaneTodoIds, roadTodoIds, TodoId } from '@/src/processingTypes/todoIds.const'
-import { radinfraDeCampaigns } from '../../../(index)/_data/radinfraDeCampaigns.generated.const'
+import { bikelaneTodoIds, roadTodoIds, TodoId } from '@/src/data/processingTypes/todoIds.const'
+import { radinfraDeCampaigns } from '@/src/data/radinfra-de/radinfraDeCampaigns.generated.const'
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
 import { mapboxStyleGroupLayers_radinfra_campaign } from './mapboxStyles/groups/radinfra_campaign'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'

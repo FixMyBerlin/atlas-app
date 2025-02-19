@@ -1,6 +1,6 @@
 'use client'
 import { Link } from '@/src/app/_components/links/Link'
-import { staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
+import { staticRegion } from '@/src/data/regions.const'
 import { TRegion } from '@/src/server/regions/queries/getRegion'
 import { ObjectDump } from '../../_components/ObjectDump'
 

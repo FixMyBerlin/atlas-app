@@ -12,7 +12,7 @@ import {
   UnionTiles,
 } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
 import { StaticImageData } from 'next/image'
-import { MapDataCategoryId } from '../../[regionSlug]/_mapData/mapDataCategories/MapDataCategoryId'
+import { MapDataCategoryId } from '../app/regionen/[regionSlug]/_mapData/mapDataCategories/MapDataCategoryId'
 
 type StaticRegionInitialMapPositionZoom = {
   lat: number
