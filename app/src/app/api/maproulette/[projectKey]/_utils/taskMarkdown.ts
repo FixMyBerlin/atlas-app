@@ -36,6 +36,7 @@ export const maprouletteTaskDescriptionMarkdown = ({
   const infrastructureName = translations[`ALL--category=${kind}`]
     ?.replace('(Straßenbegleitend oder selbstständig geführt; Kategorisierung unklar)', '')
     ?.replace('(Kategorisierung unklar)', '')
+    ?.trim()
 
   // Do not add indentation, it will break the Markdown in Maproulette
   // REMINDER: This is not the full text. This just what is added to MR with `{task_markdown}`
@@ -44,13 +45,13 @@ export const maprouletteTaskDescriptionMarkdown = ({
   switch (projectKey) {
     case 'adjoining_or_isolated':
       return `
-Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe ob sie straßenbegleitend ist (oder nicht).
+Für diese Infrastruktur (${infrastructureName}) fehlt uns eine Angabe, ob sie straßenbegleitend ist (oder nicht).
 
 ## Aufgabe
 
 Bitte präzisiere das Tagging.
+* Ist die Infrastruktur ein Radweg oder geteilter/gemeinsamer Geh- und Radweg? Dann ergänze bitte \`is_sidepath=yes\`, wenn der Weg straßenbegleitend ist oder \`is_sidepath=no\` für selbständig/frei geführt Wege.
 * Ist die Infrastruktur ein Gehweg? Dann wähle "Gehweg" als Typ aus oder füge \`footway=sidepath\` hinzu.
-* Ist die Infrastruktur ein Radweg oder geteilter/gemeinsamer Geh- und Radweg? Dann ergänze bitte \`is_sidepath=yes\` wenn der Weg straßenbegleitend ist oder \`is_sidepath=no\` für selbständig/frei geführt Wege.
 
 ## Hilfsmittel
 
@@ -136,14 +137,13 @@ Wenn wirklich kein Verkehrszeichen existiert, tagge \`traffic_sign=none\`, um di
       return `
 Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.
 
-* [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
-* [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30))
-
 ## Aufgabe
 
 Bitte prüfe die Infrastruktur und ergänze:
 
 * \`bicycle=designated\` und \`foot=designated\`
+* Empfehlungen für [\`240\` Gem. Geh- und Radweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:240)
+* Empfehlungen für [\`241\` Getr. Rad- und Gehweg](https://trafficsigns.osm-verkehrswende.org/DE?signs=DE:241-30)
 
 Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu sehen ist.
 
@@ -281,7 +281,7 @@ Dieser Weg ist seit vielen Jahren nicht mehr überprüft worden.
 **Bitte prüfe und aktualisiere diese Infrastruktur:**
 
 * Wenn du Tags veränderst, wird automatisch das Datum der letzten Bearbeitung aktualisiert. (Reine Geometrie-Änderungen ändern das Datum dagegen nicht.)
-* Wenn bereits alles richtig ist getaggt ist, ergänze \`check_date=2025-MM-TT\` um zu hinterlegen, dass aus deiner Sicht alles aktuell ist.
+* Wenn bereits alles richtig getaggt ist, ergänze \`check_date=2025-MM-TT\` um zu hinterlegen, dass aus deiner Sicht alles aktuell ist.
 * Wenn möglich, ergänze bitte auch das Verkehrszeichen ([Tagging-Hilfe](https://trafficsigns.osm-verkehrswende.org/)) bzw. \`traffic_sign=none\`.
 * Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary=IMAGE_KEY\` hinzu.
 
@@ -291,10 +291,6 @@ Dieser Weg ist seit vielen Jahren nicht mehr überprüft worden.
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
-
-
-Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.
-
 `
     // TODO: Add line about how to count width based on stones
     // TODO: Add wiki link about how to calculate the width
@@ -419,14 +415,15 @@ Das Verkehrszeichen-Tag an diese Weg enthält einen Fehler.
 **Bitte prüfe und korrigiere den Wert der Tags \`traffic_sign\`, \`traffic_sign:forward\`, \`traffic_sign:backward\`.**
 
 * [Das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/DE) hilft, den richtigen Wert zu finden
-* Häufig sind es Tippfehler bei \`DE:\` oder zusätzliche Leerzeichen zwischen den Trennzeichen \`,\` und \`;\`
+* Häufig sind es Tippfehler bei \`DE:\` oder zusätzliche Leerzeichen zwischen den Trennzeichen \`,\` und \`;\`. Auch Großschreibung wird geprüft.
+* Es werden auch "verschachtelte" Tags geprüft wie zum Beispiel \`cycleway:right:traffic_sign\`
 
 ## Hilfsmittel
 
+* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 * [Mapillary-Link vom Anfang der Straße](${mapillaryUrl(startPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
 * [Mapillary-Link vom Ende der Straße](${mapillaryUrl(endPoint, { yearsAgo: 2, zoom: 17, trafficSign: 'all' })})
 * [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/radinfra?map=17/${centerLat}/${centerLng})
-* [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString})
 `
   }
 }
