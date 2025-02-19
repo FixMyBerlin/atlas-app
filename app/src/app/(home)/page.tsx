@@ -1,4 +1,4 @@
-import { cookieName } from '@/src/server/auth/cookieName'
+import { cookieName } from '@/src/server/auth/cookieName.const'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'

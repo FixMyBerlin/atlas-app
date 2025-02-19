@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
-import { cookieName } from '../../server/auth/cookieName'
+import { cookieName } from '../../server/auth/cookieName.const'
 
 export const useStartUserLogin = () => {
   const router = useRouter()
