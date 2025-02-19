@@ -1,4 +1,5 @@
 import { isDev, isProd } from '@/src/app/_components/utils/isEnv'
+import { MAP_STYLE_URL } from '@/src/app/api/map-style/_utils/mapStyleUrl.const'
 import { useMapParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useMapParam'
 import { SIMPLIFY_MIN_ZOOM } from '@/src/server/instrumentation/registerGeneralizationFunctions'
 import { bbox, bboxPolygon, buffer } from '@turf/turf'
@@ -240,7 +241,7 @@ export const Map = () => {
       {...mapMaxBoundsSettings}
       // hash // we cannot use the hash prop because it interfiers with our URL based states; we recreate the same behavior manually
       style={{ width: '100%', height: '100%' }}
-      mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
+      mapStyle={MAP_STYLE_URL}
       interactiveLayerIds={interactiveLayerIds}
       // onMouseMove={}
       // onLoad={handleInspect}

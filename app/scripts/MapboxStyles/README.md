@@ -24,6 +24,6 @@ The reason for that is, that styling the data there has the best editor experien
    - Only Mapbox folders that are prefixed with the term given in `mapboxGroupPrefix` (eg. `atlas_`) are processed.
    - The styles are cleaned up by removing 'source', 'source-layer', 'metadata' which we add back later in our subcategory configuration.
 2. The script generates a merged sprite file in `public/map/`
-3. The script stores the original base style in `src/pages/api/map/style.json`.
+3. The script stores the original base style in `src/app/api/map/style.json`.
    The `style.json` represents our `baseMapStyle`.
    The `style.ts` API is where we replace the sprite reference with our own.
