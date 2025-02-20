@@ -41,6 +41,8 @@ export async function GET(request: NextRequest, { params }: { params: { challeng
     const apiUrl = `https://maproulette.org/api/v2/data/challenge/${challengeId}`
 
     const response = await fetch(apiUrl, {
+      // https://nextjs.org/docs/14/app/api-reference/functions/fetch#optionscache
+      cache: 'force-cache',
       // credentials: 'include',
       method: 'GET',
       headers: {
