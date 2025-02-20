@@ -1,6 +1,5 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { StaticRegion, staticRegion } from './app/regionen/(index)/_data/regions.const'
 import { searchParamsRegistry } from './app/regionen/[regionSlug]/_hooks/useQueryState/searchParamsRegistry'
 import { createFreshCategoriesConfig } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/createFreshCategoriesConfig'
 import { migrateUrl } from './app/regionen/[regionSlug]/_hooks/useQueryState/useCategoriesConfig/migrateUrl'
@@ -12,6 +11,7 @@ import {
   parseMapParam,
   serializeMapParam,
 } from './app/regionen/[regionSlug]/_hooks/useQueryState/utils/mapParam'
+import { StaticRegion, staticRegion } from './data/regions.const'
 
 // 'matcher' specifies on which routes the `middleware` runs
 export const config = {

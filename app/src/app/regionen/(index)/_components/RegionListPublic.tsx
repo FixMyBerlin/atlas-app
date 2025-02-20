@@ -1,5 +1,5 @@
 import { invoke } from '@/src/blitz-server'
-import getRegionsWithAdditionalData from '@/src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from '@/src/server/regions/queries/getRegionsWithAdditionalData'
 import 'server-only'
 import { RegionTeaser } from './RegionTeaser'
 

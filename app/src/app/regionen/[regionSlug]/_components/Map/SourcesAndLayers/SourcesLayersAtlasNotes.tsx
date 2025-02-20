@@ -1,4 +1,4 @@
-import getNotesAndCommentsForRegion from '@/src/notes/queries/getNotesAndCommentsForRegion'
+import getNotesAndCommentsForRegion from '@/src/server/notes/queries/getNotesAndCommentsForRegion'
 import { useQuery } from '@blitzjs/rpc'
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useMapInspectorFeatures } from '../../../_hooks/mapState/useMapState'

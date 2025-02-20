@@ -1,5 +1,5 @@
 'use client'
-import { staticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
+import { staticRegion } from '@/src/data/regions.const'
 import { useRegionSlug } from './useRegionSlug'
 
 export const useStaticRegion = () => {

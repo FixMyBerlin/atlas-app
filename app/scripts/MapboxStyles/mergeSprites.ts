@@ -86,7 +86,7 @@ export async function mergeSprites(sprites: SpriteSource[], pixelRatio: 1 | 2) {
   )
 
   // Create a single merged sprite
-  const filename = `public/map/sprite${pixelRatio === 1 ? '' : '@2x'}`
+  const filename = `public/map-style/sprite${pixelRatio === 1 ? '' : '@2x'}`
   log('Create merged sprite', filename)
 
   const spriteResult: SpritesmithResult = await new Promise((resolve, reject) => {

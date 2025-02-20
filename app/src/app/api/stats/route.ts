@@ -1,5 +1,5 @@
 import { isProd } from '@/src/app/_components/utils/isEnv'
-import { geoDataClient } from '@/src/prisma-client'
+import { geoDataClient } from '@/src/server/prisma-client'
 import { feature, featureCollection } from '@turf/turf'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'

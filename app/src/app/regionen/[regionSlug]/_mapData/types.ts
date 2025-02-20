@@ -1,5 +1,5 @@
 import { Prettify } from '@/src/app/_components/types/types'
-import { RegionSlug } from '@/src/app/regionen/(index)/_data/regions.const'
+import { RegionSlug } from '@/src/data/regions.const'
 import {
   CircleLayer,
   FillLayer,

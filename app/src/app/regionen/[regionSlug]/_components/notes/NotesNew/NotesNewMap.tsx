@@ -1,3 +1,4 @@
+import { MAP_STYLE_URL } from '@/src/app/api/map-style/_utils/mapStyleUrl.const'
 import { MapPinIcon, PlusIcon } from '@heroicons/react/24/solid'
 import { bbox } from '@turf/turf'
 import { useState } from 'react'
@@ -64,7 +65,7 @@ export const NotesNewMap = ({ mapId, newNoteMapParam, setNewNoteMapParam }: Prop
         id={mapId}
         initialViewState={initialViewState}
         style={{ width: '100%', height: '100%' }}
-        mapStyle={process.env.NEXT_PUBLIC_APP_ORIGIN + '/api/map/style'}
+        mapStyle={MAP_STYLE_URL}
         interactiveLayerIds={[]}
         cursor={'grab'}
         onMoveEnd={handleMove}

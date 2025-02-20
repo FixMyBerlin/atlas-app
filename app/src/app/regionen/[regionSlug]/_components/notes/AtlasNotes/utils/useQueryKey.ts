@@ -1,5 +1,5 @@
 import { useAtlasFilterParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
-import getNotesAndCommentsForRegion from '@/src/notes/queries/getNotesAndCommentsForRegion'
+import getNotesAndCommentsForRegion from '@/src/server/notes/queries/getNotesAndCommentsForRegion'
 import { getQueryKey } from '@blitzjs/rpc'
 import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
 

@@ -210,7 +210,7 @@ log(`Store metadata on processing`, metaFileContent)
 
 const originalBaseMapStyle = await fetchStyle('base', baseMapStyle, scriptJsonFolder)
 // Store the original style. See README for more.
-await saveJson('src/pages/api/map/style.json', originalBaseMapStyle)
+await saveJson('src/app/api/map-style/style.json', originalBaseMapStyle)
 
 // Create a merged sprite for pixelRatio 1 and 2
 spriteUrls.push({ url: originalBaseMapStyle.sprite })

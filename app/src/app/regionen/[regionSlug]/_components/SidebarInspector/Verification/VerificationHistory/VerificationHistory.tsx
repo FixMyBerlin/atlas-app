@@ -1,4 +1,4 @@
-import { TVerification } from '@/src/bikelane-verifications/queries/getBikelaneVerification'
+import { TVerification } from '@/src/server/bikelane-verifications/queries/getBikelaneVerification'
 import { VerificationHistoryEntries } from './VerificationHistoryEntries'
 
 type Props = {

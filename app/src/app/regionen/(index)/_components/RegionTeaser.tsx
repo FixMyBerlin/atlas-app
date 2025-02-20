@@ -1,4 +1,4 @@
-import { TRegion } from '@/src/regions/queries/getRegion'
+import { TRegion } from '@/src/server/regions/queries/getRegion'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import Link from 'next/link'

@@ -1,5 +1,5 @@
 import { buttonStylesOnYellow } from '@/src/app/_components/links/styles'
-import { useStartUserLogin } from '@/src/users/hooks/useStartUserLogin'
+import { useStartUserLogin } from '@/src/app/_hooks/useStartUserLogin'
 
 export const NotesNewLoginNotice = () => {
   const handleLogin = useStartUserLogin()

@@ -1,5 +1,5 @@
-import { StaticRegion } from '@/src/app/regionen/(index)/_data/regions.const'
 import { SourceExportApiIdentifier } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
+import { StaticRegion } from '@/src/data/regions.const'
 
 // Configruation:
 // BBox: Brandenburg

@@ -5,7 +5,7 @@ import {
   exportFunctionIdentifier,
 } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/export/exportIdentifier'
 import { getBlitzContext } from '@/src/blitz-server'
-import { geoDataClient } from '@/src/prisma-client'
+import { geoDataClient } from '@/src/server/prisma-client'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 

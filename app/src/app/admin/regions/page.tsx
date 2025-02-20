@@ -1,6 +1,6 @@
 import { Link } from '@/src/app/_components/links/Link'
 import { invoke } from '@/src/blitz-server'
-import getRegionsWithAdditionalData from '@/src/regions/queries/getRegionsWithAdditionalData'
+import getRegionsWithAdditionalData from '@/src/server/regions/queries/getRegionsWithAdditionalData'
 import { Metadata } from 'next'
 import { Breadcrumb } from '../_components/Breadcrumb'
 import { HeaderWrapper } from '../_components/HeaderWrapper'

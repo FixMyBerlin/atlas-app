@@ -1,6 +1,6 @@
 import { invoke } from '@/src/blitz-server'
-import getRegionsWithAdditionalData from '@/src/regions/queries/getRegionsWithAdditionalData'
-import getCurrentUser from '@/src/users/queries/getCurrentUser'
+import getRegionsWithAdditionalData from '@/src/server/regions/queries/getRegionsWithAdditionalData'
+import getCurrentUser from '@/src/server/users/queries/getCurrentUser'
 import 'server-only'
 import { RegionTeaser } from './RegionTeaser'
 

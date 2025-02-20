@@ -1,15 +1,15 @@
 import { Spinner } from '@/src/app/_components/Spinner/Spinner'
 import Form, { FORM_ERROR } from '@/src/app/_components/forms/Form'
+import { useCurrentUser } from '@/src/app/_hooks/useCurrentUser'
 import { useRegionSlug } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useRegionSlug'
 import { useMapActions } from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapState'
-import createBikelaneVerification from '@/src/bikelane-verifications/mutations/createBikelaneVerification'
+import createBikelaneVerification from '@/src/server/bikelane-verifications/mutations/createBikelaneVerification'
 import {
   FormVerificationSchema,
   TCreateVerificationSchema,
   TVerificationStatus,
   verificationStatusOptions,
-} from '@/src/bikelane-verifications/schemas'
-import { useCurrentUser } from '@/src/users/hooks/useCurrentUser'
+} from '@/src/server/bikelane-verifications/schemas'
 import { useMutation } from '@blitzjs/rpc'
 import { Suspense } from 'react'
 import { twJoin } from 'tailwind-merge'

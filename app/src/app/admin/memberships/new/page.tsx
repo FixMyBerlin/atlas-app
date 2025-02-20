@@ -1,5 +1,5 @@
 'use client'
-import createMembership from '@/src/memberships/mutations/createMembership'
+import createMembership from '@/src/server/memberships/mutations/createMembership'
 import { useMutation } from '@blitzjs/rpc'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Breadcrumb } from '../../_components/Breadcrumb'

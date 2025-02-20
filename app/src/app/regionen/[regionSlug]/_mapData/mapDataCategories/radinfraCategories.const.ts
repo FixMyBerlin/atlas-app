@@ -63,7 +63,7 @@ export const radinfraCategories: StaticMapDataCategory[] = [
   {
     id: 'radinfra_campagins',
     name: 'Kampagnen',
-    desc: 'Wo es etwas zu tun gibt…',
+    desc: 'Hier gibt es etwas zu tun…',
     subcategories: [{ ...subcat_radinfra_campaigns, defaultStyle: 'default' }],
   },
   {

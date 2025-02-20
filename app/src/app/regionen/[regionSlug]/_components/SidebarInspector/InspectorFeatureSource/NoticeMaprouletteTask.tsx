@@ -1,9 +1,10 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
 import { Markdown } from '@/src/app/_components/text/Markdown'
-import { maprouletteTaskDescriptionMarkdown } from '@/src/app/api/maproulette/[projectKey]/_utils/taskMarkdown'
-import { radinfraDeCampaigns } from '@/src/app/regionen/(index)/_data/radinfraDeCampaigns.generated.const'
-import { TodoId } from '@/src/processingTypes/todoIds.const'
+import { TodoId } from '@/src/data/processingTypes/todoIds.const'
+import { campaigns } from '@/src/data/radinfra-de/campaigns'
+import { buildHashtags } from '@/src/data/radinfra-de/utils/buildHashtags'
+import { buildTaskInstructions } from '@/src/data/radinfra-de/utils/buildTaskInstructions'
 import { useQuery } from '@tanstack/react-query'
 import { LineString } from 'geojson'
 import { Fragment } from 'react'
@@ -55,17 +56,17 @@ export const NoticeMaprouletteTask = ({
   properties,
   geometry,
 }: Props) => {
-  const radinfraCampaign = radinfraDeCampaigns.find((c) => c.id === projectKey)
+  const radinfraCampaign = campaigns?.find((c) => c.id === projectKey)
   const maprouletteCampaign =
-    radinfraCampaign?.maprouletteChallenge.discriminant === true ? radinfraCampaign : undefined
+    radinfraCampaign?.maprouletteChallenge.enabled === true ? radinfraCampaign : undefined
   const mapRouletteId =
-    maprouletteCampaign?.maprouletteChallenge?.discriminant === true
-      ? maprouletteCampaign?.maprouletteChallenge?.value?.id
+    maprouletteCampaign?.maprouletteChallenge?.enabled === true
+      ? maprouletteCampaign?.maprouletteChallenge?.id
       : undefined
 
   const showMaproulette =
     radinfraCampaign?.recommendedAction === 'maproulette' &&
-    radinfraCampaign?.maprouletteChallenge.discriminant === true
+    radinfraCampaign?.maprouletteChallenge.enabled === true
   const showStreetcomplete = radinfraCampaign?.recommendedAction === 'streetcomplete'
   const showEditor = radinfraCampaign?.recommendedAction === 'map'
 
@@ -78,7 +79,7 @@ export const NoticeMaprouletteTask = ({
   if (!osmTypeIdString) return null
   if (geometry?.type !== 'LineString') return null
 
-  const text = maprouletteTaskDescriptionMarkdown({
+  const text = buildTaskInstructions({
     projectKey,
     osmTypeIdString,
     kind: kind || 'UNKOWN', // Fallback is needed because TS cannot know that we only use this when the `kind` is known
@@ -108,10 +109,14 @@ export const NoticeMaprouletteTask = ({
     // @ts-expect-error we could clean this up…
     osmId,
     comment:
-      radinfraCampaign?.maprouletteChallenge.discriminant == true
-        ? radinfraCampaign.maprouletteChallenge.value.checkinComment
+      radinfraCampaign?.maprouletteChallenge.enabled == true
+        ? radinfraCampaign.maprouletteChallenge.checkinComment
         : undefined,
-    hashtags: radinfraCampaign?.hashtags?.join(','),
+    hashtags: buildHashtags(
+      radinfraCampaign?.id,
+      radinfraCampaign?.category,
+      radinfraCampaign?.maprouletteChallenge.enabled === true,
+    )?.join(','),
     source: 'radinfra_de',
   })
   const completed = data?.status && maprouletteStatusCompleted.includes(data.status)

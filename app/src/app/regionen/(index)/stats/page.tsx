@@ -1,6 +1,6 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { invoke } from '@/src/blitz-server'
-import getAllStatistics from '@/src/statistics/queries/getAllStatistics'
+import getAllStatistics from '@/src/server/statistics/queries/getAllStatistics'
 
 const sumLength = (lengthMap): number =>
   Object.values(lengthMap).reduce((acc: number, curr: number) => acc + curr, 0) as number

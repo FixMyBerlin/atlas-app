@@ -1,5 +1,5 @@
 'use client'
-import getRegion from '@/src/regions/queries/getRegion'
+import getRegion from '@/src/server/regions/queries/getRegion'
 import { useQuery } from '@blitzjs/rpc'
 import invariant from 'tiny-invariant'
 import { useRegionSlug } from './useRegionSlug'

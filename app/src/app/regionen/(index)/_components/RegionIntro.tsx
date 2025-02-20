@@ -1,4 +1,4 @@
-import { TRegion } from '@/src/regions/queries/getRegion'
+import { TRegion } from '@/src/server/regions/queries/getRegion'
 import Image from 'next/image'
 
 type Props = { regions: TRegion[] | undefined }
