@@ -564,6 +564,7 @@ export const staticRegion: StaticRegion[] = [
     },
     externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
     logoWhiteBackgroundRequired: true,
+    showSearch: true,
     categories: [
       // The order here specifies the order in the UI
       'bikelanes-minimal',
@@ -590,6 +591,7 @@ export const staticRegion: StaticRegion[] = [
     },
     externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
     logoWhiteBackgroundRequired: true,
+    showSearch: true,
     categories: [
       // The order here specifies the order in the UI
       'poi',
@@ -619,6 +621,7 @@ export const staticRegion: StaticRegion[] = [
     },
     externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
     logoWhiteBackgroundRequired: true,
+    showSearch: true,
     categories: [
       // The order here specifies the order in the UI
       'poi',
@@ -647,6 +650,7 @@ export const staticRegion: StaticRegion[] = [
     },
     externalLogoPath: 'https://brandenburg.de/media_fast/bb1.a.3795.de/logo-brb@2.png',
     logoWhiteBackgroundRequired: true,
+    showSearch: true,
     categories: [
       // The order here specifies the order in the UI
       'bikelanes',
