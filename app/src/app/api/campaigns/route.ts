@@ -14,5 +14,9 @@ export async function GET() {
       ),
     }
   })
-  return Response.json(result)
+  return Response.json(result, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  })
 }
