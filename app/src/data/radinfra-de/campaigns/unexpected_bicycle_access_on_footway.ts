@@ -15,7 +15,6 @@ export const unexpected_bicycle_access_on_footway = {
     checkinComment: 'Straßenklasse Fußweg in Kombination mit Radinfrastruktur verbessert.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:50:42.219Z',
   },
   taskTemplate: `
 Dieser Weg verwendet eine unerwarte Kombination an Tags: Er ist als Gehweg attributiert aber gleichzeitig als für Fahrrad vorgesehen Infrastruktur.

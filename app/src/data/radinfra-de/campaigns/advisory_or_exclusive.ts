@@ -15,7 +15,6 @@ export const advisory_or_exclusive = {
     checkinComment: 'Angabe zur Führungsform ergänzt (Schutzstreifen oder Angebotsstreifen).',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:50:18.013Z',
   },
   taskTemplate: `
 Für diese Infrastruktur fehlen uns Angaben, um sie als Schutzstreifen oder Radfahrstreifen einzutragen.

@@ -15,7 +15,6 @@ export const test_maproulette_updates = {
     checkinComment: '#radinfra_de #maproulette',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:55:06.091Z',
   },
   taskTemplate: ``,
 }

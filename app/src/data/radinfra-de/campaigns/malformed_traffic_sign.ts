@@ -14,7 +14,6 @@ export const malformed_traffic_sign = {
     checkinComment: '`traffic_sign:*` korrigiert.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:53:42.353Z',
   },
   taskTemplate: `
 Das Verkehrszeichen-Tag an diese Weg enthält einen Fehler.

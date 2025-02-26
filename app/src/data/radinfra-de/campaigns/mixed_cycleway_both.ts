@@ -15,7 +15,6 @@ export const mixed_cycleway_both = {
     checkinComment: 'Überschneidende Tags präzisiert.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:50:18.013Z',
   },
   taskTemplate: `
 Dieser Weg hat Tags die sich überschneiden:

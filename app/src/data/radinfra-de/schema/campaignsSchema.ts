@@ -20,9 +20,6 @@ const MaprouletteEnabled = z.object({
   // The results are ordered by length, shorter ways are cut of first.
   // This field is used to show a notice to users so they know this is likely to happen.
   resultsLimited: z.boolean(),
-  // READONLY: Date/Time of the last rebuild
-  // This field is managed by the rebuild script.
-  rebuildAt: InputDateTimeSchema.nullable().optional(),
 })
 const MaprouletteDisabled = z.object({ enabled: z.literal(false) })
 

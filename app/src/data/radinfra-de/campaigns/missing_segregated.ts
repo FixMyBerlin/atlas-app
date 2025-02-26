@@ -15,7 +15,6 @@ export const missing_segregated = {
     checkinComment: 'Angabe zu `segregated` ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:50:15.376Z',
   },
   taskTemplate: `
 Dieser Weg wird vom Fußverkehr und Radverkehr genutzt (laut Verkehrszeichen oder Zugangs-Tagging).

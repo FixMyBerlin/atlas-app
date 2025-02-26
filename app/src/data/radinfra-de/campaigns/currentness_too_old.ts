@@ -14,7 +14,6 @@ export const currentness_too_old = {
     checkinComment: 'Radinfrastruktur überprüft.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-26T13:50:42.219Z',
   },
   taskTemplate: `
 Dieser Weg ist seit vielen Jahren nicht mehr überprüft worden.
