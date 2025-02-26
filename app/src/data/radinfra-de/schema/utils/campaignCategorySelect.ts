@@ -9,7 +9,7 @@ export const campaignCategories = [
 
 // This is also the order in which campaigns are displayed on the /kampagnen page
 export const campaignCategorySelect = [
-  { label: 'Radinfrastruktur', value: 'radinfra' },
+  { label: 'Führungsform', value: 'radinfra' },
   { label: 'Aktualität', value: 'currentness' },
   { label: 'Verkehrszeichen', value: 'traffic_signs' },
   { label: 'Straßenfotos/Mapillary', value: 'pictures' },
