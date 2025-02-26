@@ -20,13 +20,11 @@ const MaprouletteEnabled = z.object({
   // The results are ordered by length, shorter ways are cut of first.
   // This field is used to show a notice to users so they know this is likely to happen.
   resultsLimited: z.boolean(),
-  // READONLY: Date/Time of the last rebuild
-  // This field is managed by the rebuild script.
-  rebuildAt: InputDateTimeSchema.nullable().optional(),
 })
 const MaprouletteDisabled = z.object({ enabled: z.literal(false) })
 
 const CampaignBaseSchema = z.object({
+  id: z.string(),
   title: z.string(),
   pubDate: InputDateTimeSchema,
   visibility: z.enum(visibilityOptions),
@@ -37,10 +35,8 @@ const CampaignBaseSchema = z.object({
   task: z.string(),
   taskTemplate: z.string(),
 })
-const CampaignAddedPropertiesSchmea = z.object({
-  id: z.string(),
-})
-export const CampaignSchema = CampaignBaseSchema.merge(CampaignAddedPropertiesSchmea).merge(
+
+export const CampaignSchema = CampaignBaseSchema.merge(
   z.object({
     maprouletteChallenge: z.discriminatedUnion('enabled', [
       MaprouletteEnabled,
@@ -50,8 +46,6 @@ export const CampaignSchema = CampaignBaseSchema.merge(CampaignAddedPropertiesSc
 )
 
 export const CampaignMaprouletteSchema = CampaignBaseSchema.merge(
-  CampaignAddedPropertiesSchmea,
-).merge(
   z.object({
     maprouletteChallenge: MaprouletteEnabled,
   }),

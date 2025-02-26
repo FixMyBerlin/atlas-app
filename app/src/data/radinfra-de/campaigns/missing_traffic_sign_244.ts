@@ -14,7 +14,6 @@ export const missing_traffic_sign_244 = {
     checkinComment: 'Verkehrszeichen an Fahrradstraße ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-18T10:54',
   },
   taskTemplate: `
 Dieser Weg ist als Fahrradstraße getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag.**

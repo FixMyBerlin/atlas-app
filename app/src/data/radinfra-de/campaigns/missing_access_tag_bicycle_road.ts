@@ -14,7 +14,6 @@ export const missing_access_tag_bicycle_road = {
     checkinComment: 'bicycle=designated an Fahrradstraßen ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-14T13:04',
   },
   taskTemplate: `
 Dieser Weg ist als Fahrradstraße getaggt **ohne das zugehörige \`bicycle=designated\`.** Ohne diesen Zusatz können Router nicht erkennen, dass die Straße für den Radverkehr freigegeben ist.

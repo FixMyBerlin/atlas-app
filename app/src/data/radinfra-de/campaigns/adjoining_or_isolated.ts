@@ -16,7 +16,6 @@ export const adjoining_or_isolated = {
       'Angabe zur Führung der Fahrradinfrastruktur (straßenbegleitend bzw. selbstständig geführt) ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-18T10:46',
   },
   taskTemplate: `
 Für diese Infrastruktur (%%CATEGORY%%) fehlt uns eine Angabe, ob sie straßenbegleitend ist (oder nicht).

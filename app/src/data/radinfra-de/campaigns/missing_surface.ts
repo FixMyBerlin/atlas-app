@@ -6,13 +6,13 @@ export const missing_surface = {
   recommendedAction: 'streetcomplete',
   visibility: 'secondary',
   description: 'Diese Karte zeigt Wege, bei denen die Angabe zur Oberfläche fehlt.',
-  task: '**Bitte ergänze die Oberfläche `surface` und gerne auch die Oberflächenqualität `smoothness`.**',
+  task: '**Bitte ergänze die Oberfläche / den Belag `surface` und gerne auch die Oberflächenqualität `smoothness`.**',
   mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.k0cbo.f6&v=2',
   maprouletteChallenge: {
     enabled: false,
   },
   taskTemplate: `
-Diesem Weg fehlt eine Angabe zur Oberfläche.
+Diesem Weg fehlt eine Angabe zur Oberfläche/Belag.
 
 ## Aufgabe
 

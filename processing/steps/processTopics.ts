@@ -25,10 +25,14 @@ const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
  */
 async function runSQL(topic: Topic) {
   const psqlFile = `${mainFilePath(topic)}.sql`
+  const exists = await Bun.file(psqlFile).exists()
 
-  if (await Bun.file(psqlFile).exists()) {
+  if (exists) {
     try {
+      console.log(`Running SQL ${psqlFile}`)
+      console.time(`Running SQL ${psqlFile}`)
       await $`psql -q -f ${psqlFile}`
+      console.timeEnd(`Running SQL ${psqlFile}`)
     } catch (error) {
       throw new Error(`Failed to run SQL file "${psqlFile}": ${error}`)
     }

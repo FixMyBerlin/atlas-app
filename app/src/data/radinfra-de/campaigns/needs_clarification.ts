@@ -15,7 +15,6 @@ export const needs_clarification = {
     checkinComment: 'Angabe zur Führungsform ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-14T12:58',
   },
   taskTemplate: `
 Diese Radinfrastruktur konnte nicht richtig kategorisiert werden.

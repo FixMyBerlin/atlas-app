@@ -14,7 +14,6 @@ export const deprecated_cycleway_shared = {
     checkinComment: 'Deprecated cycleway=shared.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-18T10:54',
   },
   taskTemplate: `
 Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualisieren.

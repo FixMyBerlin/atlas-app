@@ -1,0 +1,18 @@
+name: Regenerate Campaign Tasks
+
+on:
+  workflow_dispatch:
+  schedule:
+    # TESTING:
+    # Runs every day at 9:00 AM
+    - cron: '0 9 * * *'
+    # Runs every Monday at 9:00 AM to show the version
+    # - cron: '0 9 * * 1'
+jobs:
+  generate-maproulette-tasks:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - name: Trigger MapRoulette Campaign Task regeneration
+        run: curl --fail -s -S -X GET "https://radverkehrsatlas.de/api/private/generate-maproulette-tasks?apiKey=${{ secrets.ATLAS_API_KEY }}"

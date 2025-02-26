@@ -63,7 +63,7 @@ async function updateChallenge(challenge: UpdateMapRouletteChallengeType) {
     headers: {
       accept: 'application/json',
       'Content-Type': 'application/json',
-      apiKey: process.env.MAPROULETTE_KEY!,
+      apiKey: process.env.MAPROULETTE_API_KEY!,
     },
     body: JSON.stringify(challenge),
   })
@@ -85,7 +85,7 @@ async function createChallenge(challenge: CreateMapRouletteChallengeType) {
     headers: {
       accept: 'application/json',
       'Content-Type': 'application/json',
-      apiKey: process.env.MAPROULETTE_KEY!,
+      apiKey: process.env.MAPROULETTE_API_KEY!,
     },
     body: JSON.stringify(challenge),
   })
