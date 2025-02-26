@@ -27,6 +27,7 @@ const MaprouletteEnabled = z.object({
 const MaprouletteDisabled = z.object({ enabled: z.literal(false) })
 
 const CampaignBaseSchema = z.object({
+  id: z.string(),
   title: z.string(),
   pubDate: InputDateTimeSchema,
   visibility: z.enum(visibilityOptions),
@@ -37,10 +38,8 @@ const CampaignBaseSchema = z.object({
   task: z.string(),
   taskTemplate: z.string(),
 })
-const CampaignAddedPropertiesSchmea = z.object({
-  id: z.string(),
-})
-export const CampaignSchema = CampaignBaseSchema.merge(CampaignAddedPropertiesSchmea).merge(
+
+export const CampaignSchema = CampaignBaseSchema.merge(
   z.object({
     maprouletteChallenge: z.discriminatedUnion('enabled', [
       MaprouletteEnabled,
@@ -50,8 +49,6 @@ export const CampaignSchema = CampaignBaseSchema.merge(CampaignAddedPropertiesSc
 )
 
 export const CampaignMaprouletteSchema = CampaignBaseSchema.merge(
-  CampaignAddedPropertiesSchmea,
-).merge(
   z.object({
     maprouletteChallenge: MaprouletteEnabled,
   }),

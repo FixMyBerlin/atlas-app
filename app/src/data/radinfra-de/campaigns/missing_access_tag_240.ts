@@ -15,7 +15,7 @@ export const missing_access_tag_240 = {
     checkinComment: 'Access-Tags ergänzt.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-18T10:54',
+    rebuildAt: '2025-02-26T13:50:15.195Z',
   },
   taskTemplate: `
 Für diesen Weg wurde das Verkehrszeichen \`240\` oder \`241\` angegeben aber ein entsprechendes Zugangs-Taggging fehlt.

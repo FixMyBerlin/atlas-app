@@ -15,7 +15,7 @@ export const missing_traffic_sign_vehicle_destination = {
     checkinComment: 'Verkehrszeichen und access-Tagging vereinheitlicht.',
     checkinSource: 'radinfra_de',
     resultsLimited: false,
-    rebuildAt: '2025-02-14T12:57',
+    rebuildAt: '2025-02-26T13:53:50.238Z',
   },
   taskTemplate: `
 Dieser Weg ist als Fahrradstraße mit Freigabe für Kfz getaggt, **jedoch fehlt der zugehörige Verkehrszeichen-Tag (Zusatzzeichen).**
