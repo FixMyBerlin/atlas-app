@@ -12,8 +12,7 @@ export async function GET(req: NextRequest) {
   const { access, response } = guardEnpoint(req, Schema)
   if (!access) return response
   try {
-    // FOR TESTING
-    const filter = 'test_maproulette_updates'
+    const filter = undefined // Can be used for testing
     await maprouletteRebuildTasks(filter)
     return NextResponse.json({ message: 'FINISHED' }, { status: 200 })
   } catch (e) {
