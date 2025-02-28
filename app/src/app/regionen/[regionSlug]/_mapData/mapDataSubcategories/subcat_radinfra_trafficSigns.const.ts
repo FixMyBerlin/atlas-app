@@ -27,7 +27,18 @@ export const bikelanesTrafficSignLegend: FileMapDataSubcategoryStyleLegend[] = [
   {
     id: 'missing',
     name: 'Angaben fehlen',
-    style: { type: 'line', color: '#fda5e4', dasharray: [3, 2], width: 2 },
+    style: {
+      type: 'line',
+      color: '#fda5e4',
+    },
+  },
+  {
+    id: 'missing',
+    name: 'Auf dieser Zoomstufe können die Daten nicht angezeigt werden',
+    style: {
+      type: 'line',
+      color: 'gray',
+    },
   },
 ]
 

@@ -18,19 +18,26 @@ export const bikelanesCurrentnessLegend: FileMapDataSubcategoryStyleLegend[] = [
     },
   },
   {
-    id: 'ok',
-    name: '3-6 Jahre', // From 3*365=1.095
+    id: 'check3',
+    name: '3-6 Jahre',
     style: {
       type: 'line',
-      color: '#f6de09',
+      color: '#b5c615',
+    },
+  },
+  {
+    id: 'check6',
+    name: '6-10 Jahre',
+    style: {
+      type: 'line',
+      color: '#ffe500',
     },
   },
   {
     id: 'old',
-    name: 'Dringed prüfen (6+ Jahre)', // From 6*365=2.190
+    name: 'Dringed prüfen (10+ Jahre)',
     style: {
       type: 'line',
-      // color: '#d8035c',
       color: '#fda5e4',
     },
   },

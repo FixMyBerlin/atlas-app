@@ -11,3 +11,9 @@ See https://maproulette.org/docs/swagger-ui/index.html#/Challenge/rebuildChallen
 ## Params
 
 You can use the `filter` param to only run specific challenges. See [package.json](../../package.json) `npm run Maproulette:help` for more.
+
+## Cron job
+
+Triggered by [`.github/workflows/generate-maproulette-tasks.production.yml`](.github/workflows/generate-maproulette-tasks.production.yml).
+
+Use `journalctl CONTAINER_NAME=app --since=2025-02-28 | grep 'MaprouletteRebuild'` on the server to see the logs.

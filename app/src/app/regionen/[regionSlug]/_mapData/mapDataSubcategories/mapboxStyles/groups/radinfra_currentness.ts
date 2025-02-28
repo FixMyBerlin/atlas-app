@@ -9,8 +9,18 @@ export const mapboxStyleGroupLayers_radinfra_currentness: MapboxStyleLayer[] = [
     id: 'current-colors',
     paint: {
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
-      'line-color': ['step', ['get', 'updated_age'], '#15c65c', 2370, '#f6de09', 3650, '#fda5e4'],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 16, 4],
+      'line-color': [
+        'step',
+        ['get', 'updated_age'],
+        '#15c65c',
+        1185,
+        '#b5c615',
+        2370,
+        '#ffe500',
+        3650,
+        '#fda5e4',
+      ],
     },
     layout: {
       'line-join': 'round',
@@ -23,7 +33,7 @@ export const mapboxStyleGroupLayers_radinfra_currentness: MapboxStyleLayer[] = [
     id: 'current-zoomed-out',
     paint: {
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 16, 4],
       'line-color': 'gray',
     },
     layout: {
