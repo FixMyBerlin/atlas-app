@@ -43,29 +43,31 @@ export const defaultChallenge = {
   // I then uploaded it to a test challenge to get this object below.
   taskWidgetLayout: {
     meta: {
-      exportName: 'Radinfra.de',
-      exportTimestamp: '2025-02-15T16:15:54.537Z',
-      targetWorkspace: 'taskCompletion',
       exportFormatVersion: 1,
+      targetWorkspace: 'taskCompletion',
+      exportName: 'Radinfra.de #2',
+      exportTimestamp: '2025-03-05T04:46:17.581Z',
     },
     workspace: {
-      cols: 12,
+      dataModelVersion: 2,
       name: 'taskCompletion',
-      layout: [
-        { h: 30, w: 5, x: 0, y: 0 },
-        { h: 0, w: 7, x: 5, y: 0 },
-        { h: 10, w: 7, x: 5, y: 0 },
-        { h: 20, w: 7, x: 5, y: 10 },
-      ],
-      targets: ['task'],
+      cols: 12,
       rowHeight: 30,
+      targets: ['task'],
       widgetKeys: [
+        'OSMElementTagsWidget',
         'TaskInstructionsWidget',
         'TagDiffWidget', // Only visible for "Fix Tag" challenges
         'TaskCompletionWidget',
         'TaskMapWidget',
       ],
-      dataModelVersion: 2,
+      layout: [
+        { h: 6, w: 12, x: 0, y: 20 },
+        { h: 20, w: 5, x: 0, y: 0 },
+        { h: 0, w: 7, x: 5, y: 0 },
+        { h: 6, w: 7, x: 5, y: 0 },
+        { h: 14, w: 7, x: 5, y: 6 },
+      ],
     },
   },
 } satisfies Partial<CreateMapRouletteChallengeType>
