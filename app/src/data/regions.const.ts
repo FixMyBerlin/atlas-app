@@ -416,7 +416,7 @@ export const staticRegion: StaticRegion[] = [
       'mapillary',
     ],
     backgroundSources: defaultBackgroundSources,
-    notes: 'osmNotes',
+    notes: 'atlasNotes',
   },
   {
     slug: 'ostalbkreis',
