@@ -1,4 +1,5 @@
 import { invoke } from '@/src/blitz-server'
+import { productName } from '@/src/data/tildaProductNames.const'
 import getRegion from '@/src/server/regions/queries/getRegion'
 import { DevMiddlewareHostnameWorkaround } from './_components/DevMiddlewareHostnameWorkaround'
 import { MapInterface } from './_components/MapInterface'
@@ -8,7 +9,7 @@ export async function generateMetadata({ params }) {
 
   return {
     robots: 'noindex',
-    title: { absolute: `${region?.fullName} — TILDA` },
+    title: { absolute: `${region?.fullName} — ${productName.get(region.product)}` },
   }
 }
 

@@ -1,6 +1,7 @@
 import imageBibi from '@/src/app/_components/assets/bibi-logo.svg'
 import imageNudafa from '@/src/app/_components/assets/nudafa-logo.svg'
 import imageParking from '@/src/app/_components/assets/parking.svg'
+import imageRadinfra from '@/src/app/_components/assets/radinfra-logo.svg'
 import imageTrTo from '@/src/app/_components/assets/trto-logo.png'
 import { categories } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
 import {
@@ -24,6 +25,7 @@ export type StaticRegion = {
   slug: RegionSlug
   name: string
   fullName: string
+  product: 'radverkehr' | 'parkraum' | 'fußverkehr'
   /** @desc 1-n relation IDs, used for the mask and export bbox — @href use https://hanshack.com/geotools/gimmegeodata/ to get the ids */
   osmRelationIds: number[] | []
   map: StaticRegionInitialMapPositionZoom
@@ -107,6 +109,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'bibi',
     name: 'BiBi',
     fullName: 'Bietigheim-Bissingen',
+    product: 'radverkehr',
     osmRelationIds: [1613510],
     map: { lat: 48.95793, lng: 9.1395, zoom: 13 },
     bbox: {
@@ -132,6 +135,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'trto',
     name: 'TrTo',
     fullName: 'Treptower Tollensewinkel',
+    product: 'radverkehr',
     osmRelationIds: [1427697],
     map: { lat: 53.6774, lng: 13.267, zoom: 10.6 },
     bbox: {
@@ -156,6 +160,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'berlin',
     name: 'Berlin',
     fullName: 'Berlin Ring',
+    product: 'radverkehr',
     osmRelationIds: [
       62422,
       // 11905744, // Hundekopf not 'adminstration' and therefore not present
@@ -195,6 +200,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'parkraum-berlin',
     name: 'Parkraum Berlin',
     fullName: 'Parkraum Berlin',
+    product: 'parkraum',
     osmRelationIds: [62422],
     map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
     bbox: null,
@@ -224,6 +230,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'parkraum-berlin-euvm',
     name: 'Parkraum Berlin eUVM',
     fullName: 'Parkraum Berlin eUVM',
+    product: 'parkraum',
     osmRelationIds: [62422],
     map: { lat: 52.507, lng: 13.367, zoom: 11.8 },
     bbox: null,
@@ -254,6 +261,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'parkraum',
     name: 'Parkraum',
     fullName: 'Parkraumanalyse',
+    product: 'parkraum',
     osmRelationIds: [],
     map: { lat: 52.4918, lng: 13.4261, zoom: 13.5 },
     bbox: null,
@@ -285,6 +293,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'nudafa',
     name: 'NUDAFA',
     fullName: 'NUDAFA',
+    product: 'radverkehr',
     osmRelationIds: [
       55775, // Zeuthen
       55773, //Eichwalde
@@ -321,6 +330,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'rs8',
     name: 'RS 8',
     fullName: 'Trassenscout RS 8',
+    product: 'radverkehr',
     osmRelationIds: [
       405292, // Stadt Ludwigsburg
       405291, // Remseck am Neckar
@@ -349,6 +359,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'mainz',
     name: 'Mainz',
     fullName: 'radnetz-mainz.de',
+    product: 'radverkehr',
     osmRelationIds: [62630],
     map: { lat: 49.9876, lng: 8.2506, zoom: 14 },
     bbox: {
@@ -373,6 +384,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'lueneburg',
     name: 'LK Lüneburg',
     fullName: 'Landkreis Lüneburg',
+    product: 'radverkehr',
     osmRelationIds: [2084746],
     map: { lat: 53.2493, lng: 10.4142, zoom: 11.5 },
     bbox: {
@@ -398,6 +410,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'woldegk',
     name: 'Woldegk',
     fullName: 'Amt Woldegk',
+    product: 'radverkehr',
     osmRelationIds: [1419902],
     map: { lat: 53.4613672, lng: 13.5808433, zoom: 11.5 },
     bbox: {
@@ -422,6 +435,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'ostalbkreis',
     name: 'Ostalbkreis',
     fullName: 'Ostalbkreis',
+    product: 'radverkehr',
     osmRelationIds: [62708],
     map: { lat: 48.8364862, lng: 10.092577, zoom: 10 },
     bbox: bboxToMinMax([9.6189511, 48.7145541, 10.4569049, 49.0608132]),
@@ -442,6 +456,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Langerwehe',
     fullName: 'Gemeinde Langerwehe',
+    product: 'radverkehr',
     slug: 'langerwehe',
     osmRelationIds: [162550],
     map: { lat: 50.8176382, lng: 6.3580711, zoom: 12 },
@@ -466,6 +481,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Herrenberg',
     fullName: 'Stadt Herrenberg',
+    product: 'radverkehr',
     slug: 'herrenberg',
     osmRelationIds: [722073],
     map: { lat: 48.5959, lng: 8.8675, zoom: 11 },
@@ -490,6 +506,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Magdeburg',
     fullName: 'Stadt Magdeburg',
+    product: 'radverkehr',
     slug: 'magdeburg',
     osmRelationIds: [62481],
     map: { lat: 52.1257, lng: 11.6423, zoom: 11 },
@@ -514,6 +531,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Brandenburg',
     fullName: 'Land Brandenburg',
+    product: 'radverkehr',
     slug: 'bb',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
@@ -555,6 +573,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Brandenburg Beteiligung',
     fullName: 'Land Brandenburg – Version für Beteiligung',
+    product: 'radverkehr',
     slug: 'bb-beteiligung',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
@@ -583,6 +602,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'bb-pg',
     name: 'Brandenburg Projektgruppe',
     fullName: 'Land Brandenburg – Version für Projektgruppe',
+    product: 'radverkehr',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
@@ -613,6 +633,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'bb-sg',
     name: 'Brandenburg Steuerungsgruppe',
     fullName: 'Land Brandenburg – Version für Steuerungsgruppe',
+    product: 'radverkehr',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
     bbox: {
@@ -641,6 +662,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Brandenburg Kampagne',
     fullName: 'Kampagne Radinfrastruktur Brandenburg',
+    product: 'radverkehr',
     slug: 'bb-kampagne',
     osmRelationIds: [62504],
     map: { lat: 52.3968, lng: 13.0342, zoom: 11 },
@@ -670,6 +692,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'muenchen',
     name: 'München',
     fullName: 'München',
+    product: 'radverkehr',
     osmRelationIds: [62428],
     map: { lat: 48.1566, lng: 11.5492, zoom: 12 },
     bbox: {
@@ -686,6 +709,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'radplus',
     name: 'Rad+',
     fullName: 'Rad+ & Bahnhofsumfelddaten',
+    product: 'radverkehr',
     osmRelationIds: [62369, 62422],
     map: { lat: 52.3919, lng: 13.0702, zoom: 13 },
     bbox: null,
@@ -702,6 +726,7 @@ export const staticRegion: StaticRegion[] = [
   {
     name: 'Fahrradstellplätze',
     fullName: 'Fahrradstellplätze',
+    product: 'radverkehr',
     slug: 'fahrradstellplaetze',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
@@ -727,6 +752,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'deutschland',
     name: 'Download',
     fullName: 'Deutschlandweiter Download',
+    product: 'radverkehr',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
@@ -750,11 +776,12 @@ export const staticRegion: StaticRegion[] = [
   {
     slug: 'radinfra',
     name: 'radinfra.de',
-    fullName: 'radinfra.de – Radinfrastrukturdaten für Deutschland',
+    fullName: 'radinfra.de – Radinfrastruktur Deutschland',
+    product: 'radverkehr',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 6 },
     bbox: null,
-    externalLogoPath: 'https://radinfra.de/radinfra-de-logo.png',
+    logoPath: imageRadinfra,
     logoWhiteBackgroundRequired: false,
     navigationLinks: [
       { name: 'Was ist radinfra.de', href: 'https://radinfra.de/' },
@@ -785,6 +812,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'pankow',
     name: 'Pankow',
     fullName: 'Pankow',
+    product: 'fußverkehr',
     osmRelationIds: [164723],
     map: { lat: 52.5482, lng: 13.4016, zoom: 16 },
     bbox: null,
@@ -812,6 +840,7 @@ export const staticRegion: StaticRegion[] = [
     slug: 'testing',
     name: 'Testing',
     fullName: 'Test new processing',
+    product: 'radverkehr',
     osmRelationIds: [],
     map: { lat: 51.07, lng: 13.35, zoom: 5 },
     bbox: {
