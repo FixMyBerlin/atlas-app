@@ -5,11 +5,13 @@ import { NavigationDesktopMenu } from './NavigationDesktopMenu'
 
 type Props = PrimaryNavigationProps & {
   logo: React.ReactElement
+  secondaryNavigationLogo: boolean
 }
 
 export const NavigationDesktop = ({
   primaryNavigation,
   secondaryNavigation,
+  secondaryNavigationLogo,
   logo: Logo,
 }: Props) => {
   return (
@@ -22,7 +24,7 @@ export const NavigationDesktop = ({
       <div className="flex items-center">
         <NavigationDesktopLinks menuItems={primaryNavigation} />
         <User />
-        <NavigationDesktopMenu menuItems={secondaryNavigation} />
+        <NavigationDesktopMenu menuItems={secondaryNavigation} logo={secondaryNavigationLogo} />
       </div>
     </div>
   )

@@ -1,11 +1,19 @@
 import Image from 'next/image'
-import svgTildaLogo from '../../assets/tilda-logo-weiss.svg'
+import svgTildaLogoWhite from '../../assets/tilda-logo-weiss.svg'
+import svgTildaLogoBlack from '../../assets/tilda-logo.svg'
 
-export const HeaderAppLogo = () => {
+export const HeaderAppLogoWhite = () => {
   return (
     <>
-      <Image src={svgTildaLogo} alt="" className="h-8 w-auto text-yellow-400" />{' '}
-      <span className="ml-2 text-gray-400">TILDA</span>
+      <Image src={svgTildaLogoWhite} alt="TILDA Logo" className="h-8 w-auto" />{' '}
+    </>
+  )
+}
+
+export const HeaderAppLogoBlack = () => {
+  return (
+    <>
+      <Image src={svgTildaLogoBlack} alt="TILDA Logo" className="h-8 w-auto" />{' '}
     </>
   )
 }
