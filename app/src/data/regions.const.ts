@@ -11,7 +11,7 @@ import {
   TableId,
   UnionTiles,
 } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataSources/tables.const'
-import { StaticImageData } from 'next/image'
+import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import { MapDataCategoryId } from '../app/regionen/[regionSlug]/_mapData/mapDataCategories/MapDataCategoryId'
 
 type StaticRegionInitialMapPositionZoom = {
@@ -31,7 +31,7 @@ export type StaticRegion = {
   bbox: { min: readonly [number, number]; max: readonly [number, number] } | null
 } & (
   | {
-      logoPath: StaticImageData | null
+      logoPath: string | StaticImport | null
       externalLogoPath?: never
     }
   | {
