@@ -85,7 +85,7 @@
     "geojson": "0.5.0",
     "immer": "10.1.1",
     "js-cookie": "3.0.5",
-    "jsts": "2.12.1",
+    "jsts": "2.11.3",
     "jsurl2": "2.2.0",
     "lodash": "4.17.21",
     "maplibre-gl": "4.7.1",
