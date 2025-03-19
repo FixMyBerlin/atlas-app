@@ -96,7 +96,7 @@ export async function computeDiff(table: string) {
       ${backupTableId}.id AS old_id,
       ${backupTableId}.meta AS old_meta,
       ${backupTableId}.geom AS old_geom
-    FROM ${backupTableId}
+    FROM "${backupTableId}"
     FULL OUTER JOIN ${tableId} ON ${backupTableId}.id = ${tableId}.id`)
 
   // create the diff table
@@ -113,7 +113,7 @@ export async function computeDiff(table: string) {
       jsonb_diff(old_tags, new_tags) || ${changeTypes.modified} AS tags,
       new_meta AS meta,
       new_geom AS geom
-      FROM ${joinedTableId}
+      FROM "${joinedTableId}"
       WHERE new_id IS NOT NULL AND old_id IS NOT NULL AND old_tags <> new_tags`)
 
   const addedPromise: Promise<number> = prisma.$executeRawUnsafe(`
@@ -123,7 +123,7 @@ export async function computeDiff(table: string) {
       new_tags || ${changeTypes.added} AS tags,
       new_meta AS meta,
       new_geom AS geom
-    FROM ${joinedTableId}
+    FROM "${joinedTableId}"
     WHERE old_id IS NULL;`)
 
   const removedPromise: Promise<number> = prisma.$executeRawUnsafe(`
@@ -133,7 +133,7 @@ export async function computeDiff(table: string) {
       old_tags || ${changeTypes.removed} AS tags,
       old_meta AS meta,
       old_geom AS geom
-    FROM ${joinedTableId}
+    FROM "${joinedTableId}"
     WHERE new_id IS NULL`)
 
   return Promise.all([modifiedPromise, addedPromise, removedPromise]).then(

@@ -127,7 +127,7 @@ export async function GET(
         osm_type,
         ${tagColumns},
         ${metaColumns}
-      FROM ${tableName}
+      FROM "public"."${tableName}"
       WHERE geom && ST_Transform(
         (SELECT ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326)),
         3857
