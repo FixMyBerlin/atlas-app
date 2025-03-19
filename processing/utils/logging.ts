@@ -30,12 +30,12 @@ export function logEnd(id: string) {
 export function logTileInfo() {
   const tileURLs = {
     development: 'http://localhost:3000/catalog',
-    staging: 'https://staging-tiles.radverkehrsatlas.de/catalog',
-    production: 'https://tiles.radverkehrsatlas.de/catalog',
+    staging: 'https://staging-tiles.tilda-geo.de/catalog',
+    production: 'https://tiles.tilda-geo.de/catalog',
   } as const
 
   if (params.environment in tileURLs) {
-    console.log('Tile Inspector: https://viewer.radverkehrsatlas.de/index.html')
+    console.log('Tile Inspector: https://viewer.tilda-geo.de/index.html')
     console.log(`Tile Catalog:   ${tileURLs[params.environment as keyof typeof tileURLs]}`)
   }
 }

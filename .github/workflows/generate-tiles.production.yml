@@ -9,7 +9,7 @@ jobs:
     uses: ./.github/workflows/generate-tiles.yml
     with:
       ENVIRONMENT: production
-      url: https://tiles.radverkehrsatlas.de
+      url: https://tiles.tilda-geo.de
     secrets:
       SSH_HOST: ${{ secrets.SSH_HOST }}
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}

@@ -14,19 +14,19 @@ export const metadata: Metadata = {
   // For testing, use ...{ robots: true ? undefined : 'noindex' },
   ...{ robots: isProd ? undefined : 'noindex' },
   title: {
-    default: 'Radverkehrsatlas – Daten für die Radverkehrsplanung',
-    template: '%s – radverkehrsatlas.de',
+    default: 'TILDA – Geodaten für die Verkehrsplanung',
+    template: '%s – tilda-geo.de',
   },
   description:
-    'Der Radverkehrsatlas beschleunigt die kommunale Radverkehrsplanung, mit umfassenden und amtlich nutzbaren Daten für die Radverkehrsplanung.',
-  metadataBase: new URL('https://radverkehrsatlas.de'),
+    'TILDA bringt Ihnen Geodaten für die Verkehrsplanung – nachhaltig und für die Nutzung im Team.',
+  metadataBase: new URL('https://tilda-geo.de'),
   openGraph: {
     images: [
       {
         url: SocialSharingImage.src,
-        width: 1201,
-        height: 631,
-        alt: 'Karte des Radverkehrsatlas mit Radinfrastruktur und Optionen für weitere Themenkarten.',
+        height: 630,
+        width: 1200,
+        alt: 'TILDA bringt Ihnen Geodaten für die Verkehrsplanung – nachhaltig und für die Nutzung im Team.',
       },
     ],
     locale: 'de_DE',

@@ -8,7 +8,7 @@ export async function generateMetadata({ params }) {
 
   return {
     robots: 'noindex',
-    title: { absolute: `${region?.fullName} im Radverkehrsatlas` },
+    title: { absolute: `${region?.fullName} — TILDA` },
   }
 }
 

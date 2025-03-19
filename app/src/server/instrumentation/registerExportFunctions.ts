@@ -6,7 +6,7 @@ import { geoDataClient } from '@/src/server/prisma-client'
 
 // specify license and attribution for data export
 // const license = "'ODbL 1.0, https://opendatacommons.org/licenses/odbl/'"
-// const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; Radverkehrsatlas.de'"
+// const attribution = "'OpenStreetMap, https://www.openstreetmap.org/copyright; tilda-geo.de'"
 
 // See the following issues on tests to handle type `number`/`float` and `null` values
 // https://github.com/flatgeobuf/flatgeobuf/discussions/342#discussioncomment-11806223

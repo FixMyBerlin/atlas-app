@@ -30,7 +30,7 @@ const CampaignBaseSchema = z.object({
   visibility: z.enum(visibilityOptions),
   category: z.enum(campaignCategories),
   recommendedAction: z.enum(recommendedActions),
-  mapUrl: z.string().url().optional(), // Radverkehrsatlas URL
+  mapUrl: z.string().url().optional(), // TILDA URL
   description: z.string(),
   task: z.string(),
   taskTemplate: z.string(),

@@ -47,8 +47,8 @@ module.exports = withBlitz(
       // https://stackoverflow.com/a/70184067
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'www.radverkehrsatlas.de' }],
-        destination: 'https://radverkehrsatlas.de/:path*',
+        has: [{ type: 'host', value: 'www.tilda-geo.de' }],
+        destination: 'https://tilda-geo.de/:path*',
         permanent: true,
       },
     ],

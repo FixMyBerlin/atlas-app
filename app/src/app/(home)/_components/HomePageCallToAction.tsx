@@ -18,8 +18,7 @@ export const HomePageCallToAction = () => {
             Haben Sie auch Interesse?
           </h2>
           <p className="my-4 text-lg tracking-tight text-white">
-            Sie möchten informiert bleiben und den Radverkehrsatlas als Pilotkommune nutzen? Tragen
-            Sie sich für die Warteliste ein.
+            Sie möchten informiert bleiben und TILDA nutzen?
           </p>
           <WaitlistButton />
         </div>

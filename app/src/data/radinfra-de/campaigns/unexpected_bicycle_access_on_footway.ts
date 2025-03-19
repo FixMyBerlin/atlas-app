@@ -8,7 +8,7 @@ export const unexpected_bicycle_access_on_footway = {
   description:
     'Diese Kampagne enthält Fußwege, die gleichzeitig Angaben zur Radinfrastruktur haben.',
   task: '**Bitte prüfe das Tagging. Eventuell ist eine andere Straßenklasse angebracht.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.50y84.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.50y84.f6&v=2',
   maprouletteChallenge: {
     enabled: true,
     id: 50883,
@@ -39,7 +39,7 @@ Tagging-Empfehlungen:
 
 ## Hilfsmittel
 
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

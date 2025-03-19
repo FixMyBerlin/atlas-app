@@ -7,7 +7,7 @@ export const missing_traffic_sign = {
   visibility: 'secondary',
   description: 'Diese Karte enthält Radinfrastruktur der ein Verkehrszeichen-Tag fehlt.',
   task: '**Bitte ergänze fehlende Verkehrszeichen oder ein explizites `traffic_sign=none`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.13zkn8.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.13zkn8.f6&v=2',
   maprouletteChallenge: {
     enabled: false,
   },
@@ -29,7 +29,7 @@ Für diese Infrastruktur ist kein Verkehrszeichen-Tag hinterlegt. Gerade für Fu
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

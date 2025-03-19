@@ -5,8 +5,8 @@ export const WaitlistButton: React.FC = () => {
   return (
     <LinkMail
       mailto="radverkehrsatlas@fixmycity.de"
-      body="Bitte nehmt mich mit dieser E-Mail-Adresse in die Warteliste auf und informiert mich über Neuigkeiten zum Radverkehrsatlas. — Danke"
-      subject="Radverkehrsatlas Anmeldung Warteliste"
+      body="Bitte informiert mich über Neuigkeiten TILDA. — Danke"
+      subject="TILDA"
       className="flex items-center bg-yellow-400 no-underline hover:bg-yellow-500"
       button
     >

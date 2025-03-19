@@ -1,7 +1,7 @@
 // TODO type MapDataCategoryIds = typeof sources[number]['id']
 
 export type MapDataCategoryId =
-  // Radverkehrsatlas
+  // TILDA Radverkehr
   | 'bikelanes'
   | 'bikelanes-minimal'
   | 'boundaries' // Only used ONCE for now for the 'bb-kampagne'-region
@@ -10,7 +10,7 @@ export type MapDataCategoryId =
   | 'roads'
   | 'statistics'
   | 'surface'
-  // Parking Atlas
+  // TILDA Parkraum
   | 'parking'
   // bicycleParking Atlas
   | 'bicycleParking'

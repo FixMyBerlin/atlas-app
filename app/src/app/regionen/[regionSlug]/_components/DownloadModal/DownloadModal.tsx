@@ -25,7 +25,7 @@ export const DownloadModal = () => {
   return (
     <section>
       <IconModal
-        title="Daten des Radverkehrsatlas downloaden"
+        title="Daten downloaden"
         titleIcon="download"
         triggerStyle="button"
         triggerIcon={<ArrowDownTrayIcon className="h-5 w-5" />}

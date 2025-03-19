@@ -8,7 +8,7 @@ export const missing_traffic_sign_vehicle_destination = {
   description:
     'Diese Kampagne enthält Fahrradstraßen mit der Freigabe »Anlieger frei« für Kfz. Es fehlt jedoch das zugehörige Zusatzzeichen.',
   task: '**Bitte ergänze fehlende Verkehrszeichen oder korrigiere den Zugangs-Tag`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.4funno.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.4funno.f6&v=2',
   maprouletteChallenge: {
     enabled: true,
     id: 49363,
@@ -35,7 +35,7 @@ Ergänze gerne auch einen \`mapillary=*\` Tag auf dem das Verkehrszeichen zu seh
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 
 Wenn keine Änderung nötig ist, ergänze gerne einen \`check_date=*\` Tag um zu signalisieren, dass alle Tags geprüft wurden und aktuell sind. Das hilft bei der Auswertung.

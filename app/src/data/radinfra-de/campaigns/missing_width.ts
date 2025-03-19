@@ -8,7 +8,7 @@ export const missing_width = {
   description:
     'Diese Karte zeigt Wege, bei denen die Angabe zur Breite der Radinfrastruktur fehlt.',
   task: '**Bitte ergänze die Breite der Radinfrastruktur `width`.**',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.8vo5z8.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.8vo5z8.f6&v=2',
   maprouletteChallenge: {
     enabled: false,
   },
@@ -28,7 +28,7 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

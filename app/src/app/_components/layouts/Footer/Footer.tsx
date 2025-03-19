@@ -8,7 +8,7 @@ export const Footer: React.FC = () => {
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-8 sm:flex-row sm:px-6 lg:mx-20 lg:px-8">
         <div className="flex items-center">
           <MapIcon className="h-8 w-auto text-yellow-400" />
-          <span className="ml-2 text-gray-400">Radverkehrsatlas (beta)</span>
+          <span className="ml-2 text-gray-400">TILDA</span>
         </div>
         <FooterLinkList linkList={footerLinks} className="" />
       </div>

@@ -7,7 +7,7 @@ export const deprecated_cycleway_shared = {
   visibility: 'secondary',
   description: 'Diese Kampagne enthält Wege, die die veraltete Angabe `cycleway=shared` verwenden.',
   task: '**Bitte ändere das Tagging. In vielen Fällen kann es ersatzlos gestrichen werden. Es ist aber wichtig, die Infrastruktur in diesem Zuge zu prüfen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.hrb610.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.hrb610.f6&v=2',
   maprouletteChallenge: {
     enabled: true,
     id: 50889,
@@ -29,7 +29,7 @@ Dieser Weg hat den veralteten Tag \`cycleway=shared\`. Diese wollen wir aktualis
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

@@ -64,7 +64,7 @@ export const UserFormOsmDescriptionMissing = () => {
 
   // === Text recommendation and helper to copy the text ===
   const [copySuccess, setCopySuccess] = useState('')
-  const textToCopy = `Dies ist ein Account der Abteilung NAME im AMT_NAME. Wir nutzen OSM-Daten für die Erfassung und Planung von Radinfrastruktur mithilfe des [Radverkehrsatlas](https://osm.wiki/FixMyCity_GmbH/Radverkehrsatlas).`
+  const textToCopy = `Dies ist ein Account der Abteilung NAME im AMT_NAME. Wir nutzen OSM-Daten für die Erfassung und Planung von Radinfrastruktur mithilfe von [TILDA Radverkehr](https://osm.wiki/FixMyCity_GmbH/TILDA).`
   const copyToClipboard: React.ComponentProps<'button'>['onClick'] = async (event) => {
     event.preventDefault()
     try {

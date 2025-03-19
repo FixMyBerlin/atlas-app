@@ -8,7 +8,7 @@ export const needs_clarification = {
   description:
     'Diese Kampagne enthält Radinfrastruktur, die nicht eindeutig kategorisiert werden konnte.',
   task: '**Bitte prüfe das Tagging und ergänze weitere Attribute, die bei der Kategorisierung helfen.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.2j1vo.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.2j1vo.f6&v=2',
   maprouletteChallenge: {
     enabled: true,
     id: 50891,
@@ -38,7 +38,7 @@ Wenn du ein aussagekräftiges Foto in Mapillary siehst, füge es als \`mapillary
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }
