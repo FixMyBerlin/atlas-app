@@ -1,6 +1,5 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import { ogrFormats } from '@/src/app/api/export-ogr/[regionSlug]/[tableName]/_utils/ogrFormats.const'
-import { twJoin } from 'tailwind-merge'
 import { getExportApiBboxUrl } from '../../../../_components/utils/getExportApiUrl'
 import { sources } from '../../_mapData/mapDataSources/sources.const'
 import { useRegion } from '../regionUtils/useRegion'
@@ -21,9 +20,6 @@ export const DownloadModalDownloadList = () => {
         const url = bbox
           ? getExportApiBboxUrl(regionSlug!, sourceData.export.apiIdentifier, bbox)
           : undefined
-
-        // TODO: Disabled until we have a solution for https://github.com/OSGeo/gdal/issues/11987
-        const disableGdalExport = url !== url?.toLocaleLowerCase()
 
         return (
           <li key={sourceData.id} className="py-5">
@@ -89,29 +85,23 @@ export const DownloadModalDownloadList = () => {
                 />
               </div>
             </div>
-            <div
-              className={twJoin('mt-1 space-x-3 text-xs', disableGdalExport ? 'text-gray-300' : '')}
-            >
+            <div className="mt-1 space-x-3 text-xs">
               {url && (
                 <>
                   Beta:{' '}
-                  {disableGdalExport ? (
-                    <>Beta-Export ist nicht verfügbar</>
-                  ) : (
-                    Object.entries(ogrFormats).map(([param, name]) => {
-                      return (
-                        <LinkExternal
-                          key={param}
-                          href={`${url.replace('export', 'export-ogr')}&format=${param}`}
-                          className="text-xs"
-                          download
-                          blank
-                        >
-                          {name}
-                        </LinkExternal>
-                      )
-                    })
-                  )}
+                  {Object.entries(ogrFormats).map(([param, name]) => {
+                    return (
+                      <LinkExternal
+                        key={param}
+                        href={`${url.replace('export', 'export-ogr')}&format=${param}`}
+                        className="text-xs"
+                        download
+                        blank
+                      >
+                        {name}
+                      </LinkExternal>
+                    )
+                  })}
                 </>
               )}
             </div>
