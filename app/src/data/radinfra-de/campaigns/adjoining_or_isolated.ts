@@ -6,9 +6,9 @@ export const adjoining_or_isolated = {
   recommendedAction: 'maproulette',
   visibility: 'secondary',
   description:
-    'Diese Kampagne enthält Wege, deren Führungsform [im Radverkehrsatlas](https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.3yo4.f6&v=2) nicht präzise angegeben werden kann. (Aktuell werden nur Wege der Kategorie "Radweg" aufgenommen.)',
+    'Diese Kampagne enthält Wege, deren Führungsform [in TILDA Radverkehr](https://tilda-geo.de/regionen/radinfra?config=ife2uk.3yo4.f6&v=2) nicht präzise angegeben werden kann. (Aktuell werden nur Wege der Kategorie "Radweg" aufgenommen.)',
   task: '**Bitte prüfe ob die Radinfrastruktur straßenbegleitend ist und ergänze den fehlenden Zugangs-Tag `is_sidepath=yes` oder `no`.** Weitere Hinweise findet Du in der Aufgabenbeschreibung.\n',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.3yo4.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.3yo4.f6&v=2',
   maprouletteChallenge: {
     enabled: true,
     id: 50885,
@@ -30,7 +30,7 @@ Bitte präzisiere das Tagging.
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

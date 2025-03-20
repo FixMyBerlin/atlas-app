@@ -4,8 +4,8 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   robots: 'noindex',
   title: {
-    default: 'ADMIN Radverkehrsatlas',
-    template: 'ADMIN: %s – radverkehrsatlas.de',
+    default: 'ADMIN TILDA',
+    template: 'ADMIN: %s – tilda-geo.de/admin',
   },
 }
 
@@ -24,7 +24,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-full bg-pink-300">
       <main className="prose mx-auto w-full max-w-4xl py-10">
-        <h1>Radverkehrsatlas ADMIN</h1>
+        <h1>TILDA ADMIN</h1>
         {children}
       </main>
     </div>

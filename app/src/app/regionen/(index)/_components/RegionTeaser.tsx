@@ -28,7 +28,7 @@ export const RegionTeaser = ({ region }: Props) => {
           </span>
         </div>
         <h3 className="flex min-h-32 items-center justify-center text-center text-xl font-medium leading-tight text-gray-900">
-          Radverkehrsatlas <br />
+          TILDA <br />
           {region.fullName}
         </h3>
       </div>

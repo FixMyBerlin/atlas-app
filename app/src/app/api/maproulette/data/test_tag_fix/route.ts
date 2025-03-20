@@ -80,7 +80,7 @@ TODO
 ## Hilfsmittel
 
 * [Mapillary-Link zu dieser Stelle](${mapillaryUrl(geometry)})
-* [Radverkehrsatlas an dieser Stelle](https://radverkehrsatlas.de/regionen/deutschland?map=13/${lat}/${lng})
+* [TILDA Radverkehr an dieser Stelle](https://tilda-geo.de/regionen/deutschland?map=13/${lat}/${lng})
 * [OpenStreetMap](https://www.openstreetmap.org/${osmTypeIdString(type, id)})
 `
     }

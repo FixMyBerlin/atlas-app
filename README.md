@@ -1,11 +1,11 @@
 <div align="center">
-  <!-- <img src="src/images/" height="80" /> -->
-  <h1 align="center"><a href="https://radverkehrsatlas.de/">radverkehrsatlas.de</a> (Beta)</h1>
+  <img src="app/src/app/_components/layouts/assets/logo-tilda.png" height="80" />
+  <h1 align="center"><a href="https://tilda-geo.de/">TILDA</a></h1>
 </div>
 
 # About
 
-**Radverkehrsatlas** makes **bicycle infrastructure** and related data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) easily accessible. The OSM data is processed and visualized in various map views.
+**TILDA** (previously _Radverkehrsatlas_) makes **bicycle infrastructure** and related data from [**OpenStreetMap** (OSM)](https://www.openstreetmap.org) easily accessible. The OSM data is processed and visualized in various map views.
 
 **Core use cases:**
 
@@ -21,7 +21,7 @@
 - Process OpenStreetMap data to normalize and sanitize it for easy use in the daily work of administrative staff.
 - Gather feedback on potential mapping issues to improve OpenStreetMap data.
 
-Please [contact FixMyCity GmbH to learn more](https://www.fixmycity.de/radverkehrsatlas).
+Please [contact FixMyCity GmbH to learn more](https://www.fixmycity.de/tilda).
 
 # Development
 

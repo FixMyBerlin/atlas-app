@@ -127,13 +127,15 @@ export async function GET(
         osm_type,
         ${tagColumns},
         ${metaColumns}
-      FROM ${tableName}
+      FROM public."${tableName}"
       WHERE geom && ST_Transform(
         (SELECT ST_SetSRID(ST_MakeEnvelope(${minlon}, ${minlat}, ${maxlon}, ${maxlat}), 4326)),
         3857
       )
     `
-
+      // IMPORTANT: We need to escape all `"` used inside this query
+      // See https://github.com/OSGeo/gdal/issues/11987#issuecomment-2736324614 for more
+      .replaceAll('"', '\\"')
     const outputFilePath = path.resolve('public', 'temp', `export-temp-${Date.now()}.${format}`)
     const dbConnection = `PG:"${process.env.GEO_DATABASE_URL.replace('?pool_timeout=0', '')}"`
     // LATER: Add something like -lco WRITE_NULL_VALUES=NO to cleanup the NULL properties from GeoJSON

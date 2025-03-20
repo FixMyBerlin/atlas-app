@@ -7,7 +7,7 @@ export const missing_surface = {
   visibility: 'secondary',
   description: 'Diese Karte zeigt Wege, bei denen die Angabe zur Oberfläche fehlt.',
   task: '**Bitte ergänze die Oberfläche / den Belag `surface` und gerne auch die Oberflächenqualität `smoothness`.**',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=ife2uk.k0cbo.f6&v=2',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=ife2uk.k0cbo.f6&v=2',
   maprouletteChallenge: {
     enabled: false,
   },
@@ -27,7 +27,7 @@ Tipp: Android Nutzer:innen empfehlen wir [StreetComplete](https://streetcomplete
 
 * [Mapillary-Link vom Anfang der Straße](%%MAPILLARY_URL_START%%)
 * [Mapillary-Link vom Ende der Straße](%%MAPILLARY_URL_END%%)
-* [Radverkehrsatlas an dieser Stelle](%%ATLAS_URL%%)
+* [TILDA Radverkehr an dieser Stelle](%%ATLAS_URL%%)
 * [OpenStreetMap](%%OSM_URL%%)
 `,
 }

@@ -124,7 +124,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -166,7 +166,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -207,7 +207,7 @@ export const sources: MapDataSource<
     minzoom: 8,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -247,7 +247,7 @@ export const sources: MapDataSource<
     minzoom: 10,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -287,7 +287,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -307,7 +307,7 @@ export const sources: MapDataSource<
     minzoom: 10,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -335,7 +335,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -360,7 +360,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -385,7 +385,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -412,7 +412,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -428,7 +428,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -450,7 +450,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -480,7 +480,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -505,7 +505,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },
@@ -525,7 +525,7 @@ export const sources: MapDataSource<
     minzoom: SIMPLIFY_MIN_ZOOM,
     maxzoom: SIMPLIFY_MAX_ZOOM,
     attributionHtml:
-      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://radverkehrsatlas.de">radverkehrsatlas.de</a>',
+      '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap</a>; <a href="https://tilda-geo.de">tilda-geo.de</a>',
     licence: 'ODbL',
     promoteId: 'id',
     osmIdConfig: { osmTypeId: 'id' },

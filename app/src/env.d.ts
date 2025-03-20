@@ -28,8 +28,8 @@ namespace NodeJS {
     readonly S3_REGION: 'eu-central-1'
     readonly API_ROOT_URL:
       | 'http://127.0.0.1:5173/api'
-      | 'https://staging.radverkehrsatlas.de/api'
-      | 'https://radverkehrsatlas.de/api'
+      | 'https://staging.tilda-geo.de/api'
+      | 'https://tilda-geo.de/api'
     readonly S3_BUCKET: string
     readonly S3_UPLOAD_FOLDER: production | staging | localdev
     // API

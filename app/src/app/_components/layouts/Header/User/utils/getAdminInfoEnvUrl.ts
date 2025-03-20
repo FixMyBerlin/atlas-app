@@ -2,8 +2,8 @@ import { envKey, isBrowser } from '@/src/app/_components/utils/isEnv'
 
 const envFrontendDomain = {
   development: 'http://127.0.0.1:5173/',
-  staging: 'https://staging.radverkehrsatlas.de/',
-  production: 'https://radverkehrsatlas.de/',
+  staging: 'https://staging.tilda-geo.de/',
+  production: 'https://tilda-geo.de/',
 }
 
 type Environment = keyof typeof envFrontendDomain

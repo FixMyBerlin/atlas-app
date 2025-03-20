@@ -22,6 +22,7 @@ export const HeaderRegionen = () => {
           logo={<HeaderRegionenLogo />}
           primaryNavigation={primaryNavigation}
           secondaryNavigation={defaultSecondaryNavigationGrouped}
+          secondaryNavigationLogo={true}
         />
       </RenderIfNotDoNotNavigate>
     </NavigationWrapper>

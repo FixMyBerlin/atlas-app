@@ -22,7 +22,7 @@ export default function KontaktPage() {
         <br />
         12099 Berlin
         <br />
-        <LinkMail subject="Feedback Radverkehrsatlas">feedback@fixmycity.de</LinkMail>
+        <LinkMail subject="Feedback TILDA">feedback@fixmycity.de</LinkMail>
         <br />
         Telefon: <LinkTel>+49-30-54908665</LinkTel>
         <br />
@@ -38,7 +38,7 @@ export default function KontaktPage() {
       <h2>Feedback &amp; Kontakt</h2>
       <p>
         Wir freuen uns über Kommentare Anregungen und Unterstützung an{' '}
-        <LinkMail subject="Feedback Radverkehrsatlas">feedback@fixmycity.de</LinkMail>
+        <LinkMail subject="Feedback TILDA">feedback@fixmycity.de</LinkMail>
       </p>
       <p>
         Sie finden uns auch auf{' '}

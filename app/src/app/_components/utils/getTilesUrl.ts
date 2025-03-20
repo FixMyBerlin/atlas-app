@@ -2,8 +2,8 @@ import { envKey, isDev } from './isEnv'
 
 const tilesBaseUrl = {
   development: 'http://localhost:3000',
-  staging: 'https://staging-tiles.radverkehrsatlas.de',
-  production: 'https://tiles.radverkehrsatlas.de',
+  staging: 'https://staging-tiles.tilda-geo.de',
+  production: 'https://tiles.tilda-geo.de',
 }
 
 export const getTilesUrl = (path?: string) => {

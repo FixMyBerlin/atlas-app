@@ -85,21 +85,25 @@ export const DownloadModalDownloadList = () => {
                 />
               </div>
             </div>
-            <div className="space-x-3">
-              {url &&
-                Object.entries(ogrFormats).map(([param, name]) => {
-                  return (
-                    <LinkExternal
-                      key={param}
-                      href={`${url.replace('export', 'export-ogr')}&format=${param}`}
-                      className="text-xs"
-                      download
-                      blank
-                    >
-                      {name}
-                    </LinkExternal>
-                  )
-                })}
+            <div className="mt-1 space-x-3 text-xs">
+              {url && (
+                <>
+                  Beta:{' '}
+                  {Object.entries(ogrFormats).map(([param, name]) => {
+                    return (
+                      <LinkExternal
+                        key={param}
+                        href={`${url.replace('export', 'export-ogr')}&format=${param}`}
+                        className="text-xs"
+                        download
+                        blank
+                      >
+                        {name}
+                      </LinkExternal>
+                    )
+                  })}
+                </>
+              )}
             </div>
           </li>
         )

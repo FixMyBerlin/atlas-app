@@ -8,7 +8,7 @@ export const test_maproulette_updates = {
   description:
     'Mit dieser Kampagne test ich, wie sich MapRoulette verhält, wenn sich Daten extern ändern.',
   task: 'Hier gibt es nihts zu tun.',
-  mapUrl: 'https://radverkehrsatlas.de/regionen/radinfra?config=',
+  mapUrl: 'https://tilda-geo.de/regionen/radinfra?config=',
   maprouletteChallenge: {
     enabled: true,
     id: 50884,

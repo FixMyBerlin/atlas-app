@@ -11,10 +11,9 @@ type Feature = {
 const features: Feature[] = [
   {
     name: 'Daten Betrachten',
-    summary:
-      'Der Radverkehrsatlas visualisiert Daten interaktiv zur direkten Unterstützung der Planung.',
+    summary: 'TILDA visualisiert Daten interaktiv zur direkten Unterstützung der Planung.',
     description:
-      'Nutzen Sie die vorhandenen Daten im Radverkehrsatlas zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme.',
+      'Nutzen Sie die vorhandenen Daten in TILDA zur Planung von Radinfrastruktur oder exportieren Sie die Daten in Ihre Planungsprogramme.',
     icon: <EyeIcon className="text-white" />,
   },
   {

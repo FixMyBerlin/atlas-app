@@ -63,8 +63,8 @@ export const OsmNotesNewForm = () => {
     const footerUrl = region.public
       ? `${appBaseUrl.production}/regionen/${region.slug}`
       : appBaseUrl.production
-    const footerWiki = 'https://osm.wiki/FixMyCity_GmbH/Radverkehrsatlas'
-    const footer = `\n--\n#radverkehrsatlas ${footerMemberHashtag} ${footerUrl} ${footerWiki}`
+    const footerWiki = 'https://osm.wiki/FixMyCity_GmbH/TILDA'
+    const footer = `\n--\n#TILDA ${footerMemberHashtag} ${footerUrl} ${footerWiki}`
 
     // Text snippets for comment on a specific feature
     let featureFooter = ''

@@ -8,7 +8,7 @@ export const HomePageCompanies: React.FC = () => {
     <section className="mx-auto max-w-7xl px-4 pb-16 text-center sm:px-6 lg:px-8">
       <div className="mt-36 lg:mt-24">
         <p className="font-display text-3xl tracking-tight text-gray-900 sm:text-4xl">
-          Pilot-Kommunen, die den Radverkehrsatlas nutzen
+          Pilot-Kommunen, die TILDA nutzen
         </p>
         <ul className="mt-8 flex items-center justify-center gap-x-8 sm:flex-col sm:gap-x-0 sm:gap-y-10 xl:flex-row xl:gap-x-12 xl:gap-y-0">
           {[

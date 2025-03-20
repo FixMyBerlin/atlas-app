@@ -1,4 +1,5 @@
 import { useStaticRegion } from '@/src/app/regionen/[regionSlug]/_components/regionUtils/useStaticRegion'
+import { productName } from '@/src/data/tildaProductNames.const'
 import { BuildingLibraryIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image'
 import { twJoin } from 'tailwind-merge'
@@ -41,7 +42,7 @@ export const HeaderRegionenLogo = () => {
           <span className="md:hidden">{region.name}</span>
           <span className="hidden md:inline">{region.fullName}</span>
         </div>
-        <div className="text-xs text-gray-400">Radverkehrsatlas (beta)</div>
+        <div className="text-xs text-gray-400">{productName.get(region.product)}</div>
       </div>
     </>
   )

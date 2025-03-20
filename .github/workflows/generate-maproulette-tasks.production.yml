@@ -12,4 +12,4 @@ jobs:
       name: production
     steps:
       - name: Trigger MapRoulette Campaign Task regeneration
-        run: curl --fail -s -S -X GET "https://radverkehrsatlas.de/api/private/generate-maproulette-tasks?apiKey=${{ secrets.ATLAS_API_KEY }}"
+        run: curl --fail -s -S -X GET "https://tilda-geo.de/api/private/generate-maproulette-tasks?apiKey=${{ secrets.ATLAS_API_KEY }}"

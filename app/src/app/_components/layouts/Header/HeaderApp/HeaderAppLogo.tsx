@@ -1,10 +1,19 @@
-import { MapIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image'
+import svgTildaLogoWhite from '../../assets/tilda-logo-weiss.svg'
+import svgTildaLogoBlack from '../../assets/tilda-logo.svg'
 
-export const HeaderAppLogo = () => {
+export const HeaderAppLogoWhite = () => {
   return (
     <>
-      <MapIcon className="h-8 w-auto text-yellow-400" />{' '}
-      <span className="ml-2 text-gray-400">Radverkehrsatlas (beta)</span>
+      <Image src={svgTildaLogoWhite} alt="TILDA Logo" className="h-8 w-auto" />{' '}
+    </>
+  )
+}
+
+export const HeaderAppLogoBlack = () => {
+  return (
+    <>
+      <Image src={svgTildaLogoBlack} alt="TILDA Logo" className="h-8 w-auto" />{' '}
     </>
   )
 }
