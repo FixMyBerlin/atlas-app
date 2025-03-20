@@ -1,6 +1,6 @@
 # Static Datasets
 
-These scripts manage geodata files, which are made public or semi-public in radverkehrsatlas.de as static datasets.
+These scripts manage geodata files, which are made public or semi-public in tilda-geo.de as static datasets.
 
 ## Setup
 
