@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import backgroundImage from './assets/background-call-to-action.jpg'
-import { WaitlistButton } from './buttons/WaitlistButton'
 
 export const HomePageCallToAction = () => {
   return (
@@ -20,7 +19,6 @@ export const HomePageCallToAction = () => {
           <p className="my-4 text-lg tracking-tight text-white">
             Sie möchten informiert bleiben und TILDA nutzen?
           </p>
-          <WaitlistButton />
         </div>
       </div>
     </section>

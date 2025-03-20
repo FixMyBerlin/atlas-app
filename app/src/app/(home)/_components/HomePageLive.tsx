@@ -1,8 +1,8 @@
 import { LinkExternal } from '@/src/app/_components/links/LinkExternal'
 import Image, { StaticImageData } from 'next/image'
-import screenshotBiBi from './assets/HomePageLive/bibi.jpg'
-import screenshotTrTo from './assets/HomePageLive/trto.jpg'
-import screenshotNudafa from './assets/HomePageLive/zes.jpg'
+import screenshotNudafa from './assets/HomePageLive/nudafa.jpg'
+import screenshotParkraum from './assets/HomePageLive/parkraum.jpg'
+import screenshotRadverkehr from './assets/HomePageLive/radverkehr.jpg'
 
 type Callout = {
   name: string
@@ -14,33 +14,32 @@ type Callout = {
 
 const callouts: Callout[] = [
   {
-    name: 'Bietigheim-Bissingen',
-    description: 'OpenData zu Beleuchtung',
-    image: screenshotBiBi,
+    name: 'TILDA Radverkehr',
+    description: 'Daten für die Planung des Radnetz im Land Brandenburg',
+    image: screenshotRadverkehr,
     imageAlt: '',
-    href: '/regionen/bibi',
+    href: '/regionen/bb-kampagne',
   },
   {
-    name: 'NUDAFA',
-    description:
-      'TILDA Radverkehr, eingebettet in ein laufendes Projekten der Radnetz- und Maßnahmenplanung.',
+    name: 'TILDA Radverkehr',
+    description: 'NUDAFA — Interkommunale Radnetzplanung.',
     image: screenshotNudafa,
     imageAlt: '',
     href: 'https://www.nudafa.de/radnetzplanung',
   },
   {
-    name: 'Treptower Tollensewinkel',
-    description: 'Radinfrastruktur als OpenData',
-    image: screenshotTrTo,
+    name: 'TILDA Parkraum',
+    description: 'Parkraumdaten Berlin',
+    image: screenshotParkraum,
     imageAlt: '',
-    href: '/regionen/trto',
+    href: '/regionen/parkraum?map=13.5%2F52.4918%2F13.4261&config=1r6doko.4qfsxx.0&v=2',
   },
 ]
 
 export const HomePageLive = () => {
   return (
-    <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-2xl py-16 text-center sm:py-24 lg:max-w-none lg:py-32">
+    <section className="mx-auto mt-28 max-w-7xl bg-gray-100 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl py-16 text-center sm:py-24 lg:max-w-none lg:py-28">
         <h2 className="font-display text-3xl tracking-tight text-gray-900 sm:text-4xl">
           TILDA live erleben
         </h2>
