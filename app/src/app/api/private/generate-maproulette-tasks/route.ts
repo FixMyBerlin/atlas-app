@@ -8,13 +8,15 @@ const Schema = z.object({
   apiKey: z.string(),
 })
 
+// To run it locally, use http://127.0.0.1:5173/api/private/generate-maproulette-tasks?apiKey=<KEY_FROM_ENV>
 export async function GET(req: NextRequest) {
   const { access, response } = guardEnpoint(req, Schema)
   if (!access) return response
   try {
-    const filter = undefined // Can be used for testing
-    await maprouletteRebuildTasks(filter)
-    return NextResponse.json({ message: 'FINISHED' }, { status: 200 })
+    const filter = undefined // Can be used for testing to only run certain campaigns
+    // NOTE: We do not await the result here because that takes ~30 minutes
+    maprouletteRebuildTasks(filter)
+    return NextResponse.json({ message: 'TRIGGERED' }, { status: 200 })
   } catch (e) {
     console.error(e)
     if (!isProd) throw e
