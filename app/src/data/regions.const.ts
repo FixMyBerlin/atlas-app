@@ -1,6 +1,6 @@
 import imageBibi from '@/src/app/_components/assets/bibi-logo.svg'
 import imageNudafa from '@/src/app/_components/assets/nudafa-logo.svg'
-import imageParking from '@/src/app/_components/assets/parking.svg'
+import imageParking from '@/src/app/_components/assets/osm-parkraum-logo-2025.svg'
 import imageRadinfra from '@/src/app/_components/assets/radinfra-logo.svg'
 import imageTrTo from '@/src/app/_components/assets/trto-logo.png'
 import { categories } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataCategories/categories.const'
