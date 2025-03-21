@@ -1,18 +1,12 @@
-import { getOsmApiUrl } from '@/src/app/_components/utils/getOsmUrl'
 import { ErrorBoundary } from '@blitzjs/next'
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
-import { useMapBounds, useMapLoaded } from '../../../_hooks/mapState/useMapState'
-import { useOsmNotesActions } from '../../../_hooks/mapState/userMapNotes'
-import {
-  useNewOsmNoteMapParam,
-  useShowOsmNotesParam,
-} from '../../../_hooks/useQueryState/useNotesOsmParams'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 import { useStaticRegion } from '../../regionUtils/useStaticRegion'
 import { NotesNew } from '../NotesNew/NotesNew'
 import { NotesNewMap } from '../NotesNew/NotesNewMap'
-import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
 import { OsmNotesControls } from './OsmNotesControls'
 import { OsmNotesNewForm } from './OsmNotesNewForm'
+import { useLoadOsmNotes } from './utils/useLoadOsmNotes'
 
 const osmNotesQueryClient = new QueryClient()
 
@@ -29,36 +23,9 @@ export const OsmNotes = () => {
 }
 
 const OsmNotesWrappedInQUeryClientProvider = () => {
-  const mapLoaded = useMapLoaded()
-  const mapBounds = useMapBounds()
-  const { setOsmNotesFeatures } = useOsmNotesActions()
-  const { showOsmNotesParam } = useShowOsmNotesParam()
   const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
-  const notesActiveByZoom = useNotesActiveByZoom()
 
-  const bbox = mapBounds
-    ?.toArray()
-    ?.flat()
-    ?.map((coord) => coord.toFixed(3))
-    ?.join(',')
-  const apiUrl = getOsmApiUrl(`/notes.json?bbox=${bbox}`)
-  const { error, isLoading, isError } = useQuery({
-    queryKey: ['osmNotes', bbox],
-    queryFn: async () => {
-      const response = await fetch(apiUrl, { headers: { Accept: 'application/json' } })
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-      const featureCollection = await response.json()
-      setOsmNotesFeatures(featureCollection)
-      return featureCollection
-    },
-    enabled: mapLoaded && Boolean(bbox) && showOsmNotesParam && notesActiveByZoom,
-  })
-
-  if (isError) {
-    console.error('Error when loading notes from', apiUrl, error)
-  }
+  const { isLoading, isError } = useLoadOsmNotes()
 
   return (
     <>

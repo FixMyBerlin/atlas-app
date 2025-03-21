@@ -2,14 +2,14 @@ import { featureCollection } from '@turf/turf'
 import type { FeatureCollection, Geometry, Point } from 'geojson'
 import { create } from 'zustand'
 import { OsmTypeIdNonNull } from '../../_components/SidebarInspector/Tools/osmUrls/extractOsmTypeIdByConfig'
-import { OsmNotesThread } from '../../_components/notes/OsmNotes/types'
+import { OsmApiNotesThreadType } from '../../_components/notes/OsmNotes/schema'
 
 // INFO DEBUGGING: We could use a middleware to log state changes https://github.com/pmndrs/zustand#middleware
 
 export type Store = StoreOsmNotesFeatures & StoreOsmNewNoteFeature
 
 type StoreOsmNotesFeatures = {
-  osmNotesFeatures: FeatureCollection<Point, OsmNotesThread>
+  osmNotesFeatures: FeatureCollection<Point, OsmApiNotesThreadType>
   actions: { setOsmNotesFeatures: (osmNotesFeatures: Store['osmNotesFeatures']) => void }
 }
 

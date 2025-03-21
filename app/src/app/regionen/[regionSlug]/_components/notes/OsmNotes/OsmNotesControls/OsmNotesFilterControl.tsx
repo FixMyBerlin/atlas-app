@@ -1,35 +1,34 @@
-import { SmallSpinner } from '@/src/app/_components/Spinner/SmallSpinner'
-import { getFullname } from '@/src/app/admin/memberships/_components/utils/getFullname'
-import { useAtlasFilterParam } from '@/src/app/regionen/[regionSlug]/_hooks/useQueryState/useNotesAtlasParams'
-import getNotesAndCommentsForRegion from '@/src/server/notes/queries/getNotesAndCommentsForRegion'
-import { useQuery } from '@blitzjs/rpc'
+import { useCurrentUser } from '@/src/app/_hooks/useCurrentUser'
 import { Menu, MenuButton, MenuHeading, MenuItem, MenuItems, MenuSection } from '@headlessui/react'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/20/solid'
 import { FunnelIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
 import { twJoin } from 'tailwind-merge'
-import { useStaticRegion } from '../../../regionUtils/useStaticRegion'
-import { useQueryKey } from '../utils/useQueryKey'
+import { useOsmNotesFeatures } from '../../../../_hooks/mapState/userMapNotes'
+import { useOsmFilterParam } from '../../../../_hooks/useQueryState/useNotesOsmParams'
+import { menuItemClasses } from '../../AtlasNotes/AtlasNotesControls/AtlasNotesFilterControl'
 
-export const menuItemClasses = (active: boolean) => {
-  return twJoin(
-    active ? 'bg-yellow-100' : 'data-[focus]:bg-gray-100',
-    'w-full px-4 py-2 text-left text-gray-700 data-[focus]:text-gray-900',
-  )
-}
-
-export const AtlasNotesFilterControl = () => {
-  const { slug: regionSlug } = useStaticRegion()!
-  const { atlasNotesFilterParam, setAtlasNotesFilterParam } = useAtlasFilterParam()
-  const queryKey = useQueryKey()
-  const [{ authors, stats }, { isLoading }] = useQuery(
-    getNotesAndCommentsForRegion,
-    { regionSlug, filter: atlasNotesFilterParam },
-    { queryKey },
-  )
-  const noFilterActive = !Object.values(atlasNotesFilterParam || {}).some(
+export const OsmNotesFilterControl = () => {
+  const { osmNotesFilterParam, setOsmNotesFilterParam } = useOsmFilterParam()
+  const noFilterActive = !Object.values(osmNotesFilterParam || {}).some(
     (value) => value !== undefined,
   )
+  const osmNotesFeatures = useOsmNotesFeatures()
+  const authors: Map<string, number> = new Map()
+  osmNotesFeatures.features.forEach((f) => {
+    const displayName = f.properties.comments.at(0)?.user
+    if (!displayName || authors.has(displayName)) return
+    const count = osmNotesFeatures.features.map((f) => f.properties.comments.at(0)?.user).length
+    authors.set(displayName, count)
+  })
+  const stats = {
+    commented: osmNotesFeatures.features.filter((n) => n.properties.comments.length > 1).length,
+    uncommented: osmNotesFeatures.features.filter((n) => n.properties.comments.length === 1).length,
+    completed: osmNotesFeatures.features.filter((n) => n.properties.status === 'closed').length,
+    uncompleted: osmNotesFeatures.features.filter((n) => n.properties.status === 'open').length,
+    filteredTotal: osmNotesFeatures.features.length,
+  }
+  const currentUser = useCurrentUser()
 
   const handleMenuClick = (
     e:
@@ -39,7 +38,7 @@ export const AtlasNotesFilterControl = () => {
     state: Record<string, any>,
   ) => {
     e.preventDefault()
-    setAtlasNotesFilterParam({ ...atlasNotesFilterParam, ...state })
+    setOsmNotesFilterParam({ ...osmNotesFilterParam, ...state })
   }
 
   return (
@@ -70,7 +69,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuHeading>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.completed === true)}
+            className={menuItemClasses(osmNotesFilterParam?.completed === true)}
             onClick={(e) => handleMenuClick(e, { completed: true })}
           >
             Nur erledigte Hinweise{' '}
@@ -78,7 +77,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuItem>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.completed === false)}
+            className={menuItemClasses(osmNotesFilterParam?.completed === false)}
             onClick={(e) => handleMenuClick(e, { completed: false })}
           >
             Nur offene Hinweise{' '}
@@ -86,7 +85,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuItem>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.completed === undefined)}
+            className={menuItemClasses(osmNotesFilterParam?.completed === undefined)}
             onClick={(e) => handleMenuClick(e, { completed: undefined })}
           >
             Offen & erledigt
@@ -95,26 +94,26 @@ export const AtlasNotesFilterControl = () => {
 
         <MenuSection className="m-1 overflow-clip rounded-md border">
           <MenuHeading className="flex items-center gap-2 bg-gray-100 px-4 py-1 text-xs font-semibold uppercase text-gray-600">
-            Nutzer {isLoading && <SmallSpinner />}
+            Nutzer
           </MenuHeading>
-          {authors?.map((author) => {
+          {Array.from(authors).map(([displayName, count]) => {
             return (
               <MenuItem
-                key={author.id}
+                key={displayName}
                 as="button"
-                className={menuItemClasses(atlasNotesFilterParam?.user === author.id)}
-                onClick={(e) => handleMenuClick(e, { user: author.id })}
+                className={menuItemClasses(osmNotesFilterParam?.user === displayName)}
+                onClick={(e) => handleMenuClick(e, { user: displayName })}
               >
-                {author.currentUser
+                {displayName === currentUser?.osmName
                   ? 'Meine Hinweise'
-                  : `Hinweise von ${getFullname(author) || author.osmName}`}{' '}
-                {noFilterActive && <span className="text-gray-500">({author.count})</span>}
+                  : `Hinweise von ${displayName}`}{' '}
+                {noFilterActive && <span className="text-gray-500">({count})</span>}
               </MenuItem>
             )
           })}
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.user === undefined)}
+            className={menuItemClasses(osmNotesFilterParam?.user === undefined)}
             onClick={(e) => handleMenuClick(e, { user: undefined })}
           >
             Alle Nutzer
@@ -127,7 +126,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuHeading>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.commented === true)}
+            className={menuItemClasses(osmNotesFilterParam?.commented === true)}
             onClick={(e) => handleMenuClick(e, { commented: true })}
           >
             Nur kommentierte Hinweise{' '}
@@ -135,7 +134,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuItem>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.commented === false)}
+            className={menuItemClasses(osmNotesFilterParam?.commented === false)}
             onClick={(e) => handleMenuClick(e, { commented: false })}
           >
             Nur unkommentierte Hinweise{' '}
@@ -143,7 +142,7 @@ export const AtlasNotesFilterControl = () => {
           </MenuItem>
           <MenuItem
             as="button"
-            className={menuItemClasses(atlasNotesFilterParam?.commented === undefined)}
+            className={menuItemClasses(osmNotesFilterParam?.commented === undefined)}
             onClick={(e) => handleMenuClick(e, { commented: undefined })}
           >
             Kommentiert & unkommentiert
@@ -157,7 +156,7 @@ export const AtlasNotesFilterControl = () => {
           <MenuItem
             as="form"
             className={twJoin(
-              atlasNotesFilterParam?.query !== undefined ? 'bg-yellow-100' : '',
+              osmNotesFilterParam?.query !== undefined ? 'bg-yellow-100' : '',
               'relative p-2',
             )}
             onSubmit={(e) => {
@@ -180,7 +179,7 @@ export const AtlasNotesFilterControl = () => {
                   handleMenuClick(e, { query: e.currentTarget.value })
                 }
               }}
-              defaultValue={atlasNotesFilterParam?.query || ''}
+              defaultValue={osmNotesFilterParam?.query || ''}
             />
             <div className="absolute inset-y-3 right-3 flex items-center gap-1">
               <button

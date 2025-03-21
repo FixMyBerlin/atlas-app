@@ -8,6 +8,7 @@ import {
   useShowOsmNotesParam,
 } from '../../../_hooks/useQueryState/useNotesOsmParams'
 import { useNotesActiveByZoom } from '../utils/useNotesActiveByZoom'
+import { OsmNotesFilterControl } from './OsmNotesControls/OsmNotesFilterControl'
 
 type Props = { isLoading: boolean; isError: boolean }
 
@@ -52,20 +53,22 @@ export const OsmNotesControls = ({ isLoading, isError }: Props) => {
           {isError && <span className="ml-1 text-orange-500">Fehler beim Laden der Hinweise</span>}
         </button>
       </Tooltip>
-      <Tooltip text="Hinweis auf openstreetmap.org erstellen">
-        <button
-          // Default zoom since Note pins on osm.org are only visible when zoomed in…
-          onClick={() => setNewOsmNoteMapParam(mapParam)}
-          className={twJoin(
-            showOsmNotesParam ? 'translate-x-0' : '-translate-x-20',
-            'z-0 -ml-px justify-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 hover:text-gray-800 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500',
-            showOsmNotesParam ? 'inline-flex' : 'hidden',
-          )}
-        >
-          <PlusIcon className="h-5 w-5" />
-          <span className="sr-only">Neuen Hinweis auf openstreetmap.org erstellen</span>
-        </button>
-      </Tooltip>
+
+      {showOsmNotesParam && (
+        <>
+          <OsmNotesFilterControl />
+          <Tooltip text="Hinweis auf openstreetmap.org erstellen">
+            <button
+              // Default zoom since Note pins on osm.org are only visible when zoomed in…
+              onClick={() => setNewOsmNoteMapParam(mapParam)}
+              className="z-0 -ml-px justify-center rounded-r-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-md hover:bg-yellow-50 hover:text-gray-800 focus:relative focus:z-10 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            >
+              <PlusIcon className="size-5" />
+              <span className="sr-only">Neuen Hinweis auf openstreetmap.org erstellen</span>
+            </button>
+          </Tooltip>
+        </>
+      )}
     </div>
   )
 }

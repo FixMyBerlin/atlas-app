@@ -1,30 +1,41 @@
 import { Layer, Source } from 'react-map-gl/maplibre'
 import { useMapInspectorFeatures } from '../../../_hooks/mapState/useMapState'
-import { useOsmNotesFeatures } from '../../../_hooks/mapState/userMapNotes'
 import { useShowOsmNotesParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
+import { useFilteredOsmNotes } from './utils/useFilteredOsmNotes'
 
 export const osmNotesLayerId = 'osm-notes'
 
 export const SourcesLayersOsmNotes = () => {
   const { showOsmNotesParam } = useShowOsmNotesParam()
   const inspectorFeatures = useMapInspectorFeatures()
-
-  const osmNotesFeatures = useOsmNotesFeatures()
+  const filteredFeatures = useFilteredOsmNotes()
 
   const selectedFeatureIds = inspectorFeatures
     .filter((feature) => feature.source === 'osm-notes')
-    .map((feature) => (feature?.properties?.id || 0) as number)
+    .map((feature) => (feature?.id || 0) as number)
 
   return (
     <Source
       id="osm-notes"
       key="osm-notes"
       type="geojson"
-      data={osmNotesFeatures}
+      data={filteredFeatures}
       attribution="Notes: openstreetmap.org"
     >
       {showOsmNotesParam && (
         <>
+          {/* Highlight "tilda" notes */}
+          <Layer
+            id="osm-notes-tilda"
+            key="osm-notes-tilda"
+            source="osm-notes"
+            type="circle"
+            paint={{
+              'circle-radius': 12,
+              'circle-color': '#fed7aa', // orange-200 https://tailwindcss.com/docs/customizing-colors
+            }}
+            filter={['get', 'tilda']}
+          />
           <Layer
             id="osm-notes-hover"
             key="osm-notes-hover"
