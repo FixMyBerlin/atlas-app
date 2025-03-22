@@ -17,7 +17,7 @@ export const campaignLegend: FileMapDataSubcategoryStyleLegend[] = [
     name: 'Hier gibt es was zu tun',
     style: {
       type: 'line',
-      color: '#a97bea',
+      color: '#fda5e4',
     },
   },
 ]

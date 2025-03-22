@@ -12,6 +12,7 @@ import { _1dhu3si } from './_1dhu3si'
 import { _1e6163i } from './_1e6163i'
 import { _1gk36d0 } from './_1gk36d0'
 import { _1j7ax4m } from './_1j7ax4m'
+import { _1jfclvk } from './_1jfclvk'
 import { _1k7izoy } from './_1k7izoy'
 import { _1lhd7a } from './_1lhd7a'
 import { _1ljsnj0 } from './_1ljsnj0'
@@ -29,6 +30,7 @@ import { _e6ilf4 } from './_e6ilf4'
 import { _eu560i } from './_eu560i'
 import { _gdl8v6 } from './_gdl8v6'
 import { _ife2uk } from './_ife2uk'
+import { _ipmbmm } from './_ipmbmm'
 import { _l464fe } from './_l464fe'
 import { _nq3m12 } from './_nq3m12'
 import { _qver32 } from './_qver32'
@@ -55,6 +57,7 @@ export const configs = {
   '1e6163i': _1e6163i,
   '1gk36d0': _1gk36d0,
   '1j7ax4m': _1j7ax4m,
+  '1jfclvk': _1jfclvk,
   '1k7izoy': _1k7izoy,
   '1lhd7a': _1lhd7a,
   '1ljsnj0': _1ljsnj0,
@@ -72,6 +75,7 @@ export const configs = {
   eu560i: _eu560i,
   gdl8v6: _gdl8v6,
   ife2uk: _ife2uk,
+  ipmbmm: _ipmbmm,
   l464fe: _l464fe,
   nq3m12: _nq3m12,
   qver32: _qver32,

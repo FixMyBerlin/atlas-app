@@ -1,12 +1,14 @@
-// Prettier: Overwrite via app/.prettierrc
+// Prettier: Overwrite via app/.prettierrc.mjs
+import { translationsOneway } from './translationsOneway.const'
 import { translationsParking } from './translationsParking.const'
 
 // Legend:
 // - "ALL--" stands for "all sources". Those translations are applied without checking the soureId
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 /* prettier-ignore */
-export const translations:{ [key: string]: string } = {
+export const translations: { [key: string]: string } = {
   ...translationsParking,
+  ...translationsOneway,
   'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
   'ALL--category--key': 'Führungsform',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
@@ -74,7 +76,6 @@ export const translations:{ [key: string]: string } = {
   'ALL--length--tooltip': 'Ein berechneter Wert für as OpenStreetMap-Straßensegment. Die Berechnung nutzt die Projektion EPSG:25833 / ETRS89 / UTM zone 33N und hat somit eine gute Genaugikeit für Deutschland.',
   'ALL--maxspeed--key': 'Höchstgeschwindigkeit',
   'ALL--name--key': 'Name',
-  'ALL--oneway--key': 'Fahrtrichtung',
   'ALL--smoothness=bad': 'Schlecht',
   'ALL--smoothness=excellent': 'Sehr gut',
   'ALL--smoothness=good': 'Gut',
@@ -100,25 +101,17 @@ export const translations:{ [key: string]: string } = {
   'ALL--surface=sett': 'Behauenes Steinpflaster (Kopfsteinpflaster)',
   'ALL--surface=unhewn_cobblestone': 'Kopfsteinpflaster',
   'ALL--surface=unpaved': 'Unbefestigt (unspezifisch)',
-  'ALL--traffic_sign--key': 'Verkehrszeichen',
-  'ALL--traffic_sign:backward--key': 'Verkehrszeichen Gegenrichtung',
+  'ALL--traffic_sign--key': 'Beschilderung',
+  'ALL--traffic_sign:backward--key': 'Beschilderung in Gegenrichtung',
   'ALL--traffic_sign:backward=none': 'Unbeschildert',
-  'ALL--traffic_sign:forward--key': 'Verkehrszeichen in Fahrtrichtung',
+  'ALL--traffic_sign:forward--key': 'Beschilderung in Verkehrsrichtung',
   'ALL--traffic_sign:forward=none': 'Unbeschildert',
   'ALL--traffic_sign=none': 'Unbeschildert',
   'ALL--width--key': 'Breite',
   'atlas_bicycleParking--capacity--key': 'Anzahl Fahrrad-Stellplätze',
   'atlas_bicycleParking--capacity:cargo_bike--key': 'Anzahl Lastenfahrrad-Stellplätze',
   'atlas_bicycleParking--title': 'Fahrradstellplätze',
-  'atlas_bikelanes--category--key': 'Straßentyp',
-  'atlas_bikelanes--oneway=assumed_no--tooltip': 'Wenn keine explizite Angabe vorliegt, nehmen wir für bestimmten Straßenklassen bzw. RVA an, dass der Radverkehr in beiden Richtungen fahren darf.',
-  'atlas_bikelanes--oneway=assumed_no': 'Zweirichtungsradwege (angenommen)',
-  'atlas_bikelanes--oneway=car_not_bike': 'Einbahnstraße für Kfz aber Zweirichtungsradwege',
-  'atlas_bikelanes--oneway=implicit_yes--tooltip': 'Wenn keine explizite Angabe vorliegt, nehmen wir für bestimmten Straßenklassen bzw. RVA an, dass der Radverkehr in nur eine Richtungen fahren darf.',
-  'atlas_bikelanes--oneway=implicit_yes': 'Einrichtungsradweg (implizit)',
-  'atlas_bikelanes--oneway=no': 'Zweirichtungsradwege',
-  'atlas_bikelanes--oneway=unknown':  '(!) Es liegt ein Fehler in der Prozesssierung vor, bitte meldet diesen Weg an tobias@fixmycity.de',
-  'atlas_bikelanes--oneway=yes': 'Einrichtungsradweg',
+  'atlas_bikelanes--category--key': 'Bauliche Führung',
   'atlas_bikelanes--smoothness_source=mtb:scale_to_smoothness': 'Abgeleitet von dem OSM Wert `mtb:scale`',
   'atlas_bikelanes--smoothness_source=surface_to_smoothness': 'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
   'atlas_bikelanes--smoothness_source=tag': 'OSM-Tag `smoothness`',
@@ -237,13 +230,6 @@ export const translations:{ [key: string]: string } = {
   'atlas_roads--osm_name--key': 'Name',
   'atlas_roads--osm_source:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
   'atlas_roads--osm_zone:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
-  'atlas_roads--road_oneway--key': 'Fahrtrichtung',
-  'atlas_roads--road_oneway:bicycle--key': 'Fahrtrichtung Fahrrad',
-  'atlas_roads--road_oneway:bicycle=no': 'Freigabe für Radverkehr in beide Richtungen',
-  'atlas_roads--road_oneway:bicycle=yes': 'Einbahnstraße auch für Radverkehr',
-  'atlas_roads--road_oneway=no': 'Befahrbar in beide Richtungen',
-  'atlas_roads--road_oneway=yes_dual_carriageway': 'Einbahnstraße da separate Geometrie pro Seite',
-  'atlas_roads--road_oneway=yes': 'Einbahnstraße',
   'atlas_roads--road--key': 'Straßentyp',
   'atlas_roads--smoothness_source=mtb:scale_to_smoothness': 'Abgeleitet von dem OSM Wert `mtb:scale`',
   'atlas_roads--smoothness_source=surface_to_smoothness': 'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
@@ -253,7 +239,7 @@ export const translations:{ [key: string]: string } = {
   'atlas_roads--title': 'Daten zur Straße',
   'atlas_roadsPathClasses--title': 'Daten zu Wegen',
   'atlas_todos_lines--title': 'Kampagnen',
-  'atlas_trafficSigns--title': 'Verkehrszeichen',
+  'atlas_trafficSigns--title': 'Beschilderung',
   'mapillary_coverage--title': 'Mapillary Foto',
   'atlas_aggregated_lengths--title': 'Statistik für radinfra.de',
 }

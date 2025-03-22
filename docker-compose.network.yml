@@ -16,7 +16,7 @@ services:
     environment:
       TZ: Europe/Berlin
     command:
-      - "--log.level=WARN"
+      - "--log.level=WARN" # Change to INFO for debugging
       - "--api.insecure=false"
       - "--api.dashboard=false"
       - "--providers.docker=true"

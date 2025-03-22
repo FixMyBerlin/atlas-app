@@ -3,28 +3,23 @@ import { buttonStylesOnYellow } from '@/src/app/_components/links/styles'
 import { appBaseUrl } from '@/src/app/_components/utils/appBaseUrl.const'
 import { getOsmApiUrl } from '@/src/app/_components/utils/getOsmUrl'
 import { useHasPermissions } from '@/src/app/_hooks/useHasPermissions'
-import { useMapBounds } from '@/src/app/regionen/[regionSlug]/_hooks/mapState/useMapState'
 import { useSession } from '@blitzjs/auth'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useOsmNewNoteFeature } from '../../../_hooks/mapState/userMapNotes'
 import { useNewOsmNoteMapParam } from '../../../_hooks/useQueryState/useNotesOsmParams'
 import { osmOrgUrl, osmTypeIdString } from '../../SidebarInspector/Tools/osmUrls/osmUrls'
 import { useRegion } from '../../regionUtils/useRegion'
-import { OsmNotesThread } from './types'
+import { OsmApiNotesThreadType } from './schema'
+import { useQueryKey } from './utils/useQueryKey'
 
 export const OsmNotesNewForm = () => {
   const session = useSession()
   const { newOsmNoteMapParam, setNewOsmNoteMapParam } = useNewOsmNoteMapParam()
-  const mapBounds = useMapBounds()
   const osmNewNoteFeature = useOsmNewNoteFeature()
 
   const queryClient = useQueryClient()
   const apiUrl = getOsmApiUrl('/notes.json')
-  const bbox = mapBounds
-    ?.toArray()
-    ?.flat()
-    ?.map((coord) => coord.toFixed(3))
-    ?.join(',')
+  const queryKey = useQueryKey()
   const { mutate, isPending, error } = useMutation({
     mutationFn: async (body: string) => {
       const post = await fetch(apiUrl, {
@@ -40,12 +35,12 @@ export const OsmNotesNewForm = () => {
           text: body,
         }),
       })
-      const data = (await post.json()) as OsmNotesThread
+      const data = (await post.json()) as OsmApiNotesThreadType
       return data
     },
     onSuccess: (_data) => {
       setNewOsmNoteMapParam(null)
-      return queryClient.invalidateQueries({ queryKey: ['osmNotes', bbox] })
+      return queryClient.invalidateQueries({ queryKey })
     },
   })
 

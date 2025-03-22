@@ -21,9 +21,25 @@ export const mapboxStyleGroupLayers_radinfra_width: MapboxStyleLayer[] = [
   },
   {
     type: 'line',
+    id: 'hitarea-missing-width',
+    paint: {
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
+      'line-color': 'rgb(216, 20, 255)',
+      'line-dasharray': [3, 1],
+      'line-opacity': 0,
+    },
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    filter: ['any', ['!', ['has', 'width']], ['match', ['get', 'width'], [''], true, false]],
+  },
+  {
+    type: 'line',
     id: 'width-colors',
     paint: {
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 16, 4],
       'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
       'line-color': [
         'interpolate',

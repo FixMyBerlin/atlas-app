@@ -5,6 +5,7 @@ import { subcat_mapillaryCoverage } from '../mapDataSubcategories/subcat_mapilla
 import { subcat_radinfra_bikelanes } from '../mapDataSubcategories/subcat_radinfra_bikelanes.const'
 import { subcat_radinfra_campaigns } from '../mapDataSubcategories/subcat_radinfra_campaigns.const'
 import { subcat_radinfra_currentness } from '../mapDataSubcategories/subcat_radinfra_currentness.const'
+import { subcat_radinfra_oneway } from '../mapDataSubcategories/subcat_radinfra_oneway.const'
 import { subcat_radinfraPlusMapillary } from '../mapDataSubcategories/subcat_radinfra_plus_mapillary.const'
 import { subcat_radinfra_smoothness } from '../mapDataSubcategories/subcat_radinfra_smoothness.const'
 import { subcat_radinfra_stats } from '../mapDataSubcategories/subcat_radinfra_stats'
@@ -47,6 +48,12 @@ export const radinfraCategories: StaticMapDataCategory[] = [
         defaultStyle: 'hidden',
       },
     ],
+  },
+  {
+    id: 'radinfra_oneway',
+    name: 'Verkehrsrichtung',
+    desc: 'Einbahnstraße oder beidseitig befahrbar?',
+    subcategories: [{ ...subcat_radinfra_oneway, defaultStyle: 'default' }],
   },
   {
     id: 'radinfra_trafficSigns',

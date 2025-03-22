@@ -8,7 +8,8 @@ describe('Check if configs were changed', () => {
     // Which means you need to run `npm run save-configs` to preserve this config as a template.
     // See [README.md](../../README.md) for more.
     const existingChecksums = Object.keys(configs)
-    const currentChecksums = Object.keys(getSimplifiedConfigs())
+    const currentChecksums = Array.from(getSimplifiedConfigs().keys())
+    expect(currentChecksums.length).not.toBe(0) // Guard that the array has data
     for (const checksum of currentChecksums) {
       expect(existingChecksums).toContain(checksum)
     }

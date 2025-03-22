@@ -7,7 +7,7 @@
 // @match        https://tilda-geo.de/*
 // @match        https://staging.tilda-geo.de/*
 // @match        http://127.0.0.1:5173/*
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=radverkehrsatlas.de
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=tilda-geo.de
 // @grant        none
 // ==/UserScript==
 

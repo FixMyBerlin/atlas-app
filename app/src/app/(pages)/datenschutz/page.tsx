@@ -45,11 +45,11 @@ export default function DatenschutzPage() {
       <h2>Einleitung</h2>
       <p>
         Mit den nachfolgenden Informationen wollen wir Ihnen einen Überblick über die Verarbeitung
-        Ihrer personenbezogenen Daten auf unserer Website radverkehrsatlas.de (nachfolgend „Website“
-        genannt) geben. Wir wollen Ihnen ebenfalls über eure Rechte aus dem Datenschutzrecht
-        informieren. Die Verarbeitung Ihrer personenbezogenen Daten durch uns erfolgt stets im
-        Einklang mit der Datenschutzgrundverordnung (nachfolgend „DSGVO“ genannt) sowie allen
-        geltenden landesspezifischen Datenschutzbestimmungen.
+        Ihrer personenbezogenen Daten auf unserer Website tilda-geo.de (zuvor radverkehrsatlas.de)
+        (nachfolgend „Website“ genannt) geben. Wir wollen Ihnen ebenfalls über eure Rechte aus dem
+        Datenschutzrecht informieren. Die Verarbeitung Ihrer personenbezogenen Daten durch uns
+        erfolgt stets im Einklang mit der Datenschutzgrundverordnung (nachfolgend „DSGVO“ genannt)
+        sowie allen geltenden landesspezifischen Datenschutzbestimmungen.
       </p>
       <h2 id="responsible">Verantwortlichkeit</h2>
       <h3>Verantwortlich im Sinne der DSGVO</h3>
