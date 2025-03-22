@@ -797,7 +797,7 @@ export const staticRegion: StaticRegion[] = [
       'radinfra_trafficSigns',
       'radinfra_currentness',
       'radinfra_campagins',
-      'radinfra_statistics',
+      // 'radinfra_statistics',
       'radinfra_mapillary',
     ],
     backgroundSources: defaultBackgroundSources,
