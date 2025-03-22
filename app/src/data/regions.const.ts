@@ -794,6 +794,7 @@ export const staticRegion: StaticRegion[] = [
       'radinfra_bikelanes',
       'radinfra_surface',
       'radinfra_width',
+      'radinfra_oneway',
       'radinfra_trafficSigns',
       'radinfra_currentness',
       'radinfra_campagins',
