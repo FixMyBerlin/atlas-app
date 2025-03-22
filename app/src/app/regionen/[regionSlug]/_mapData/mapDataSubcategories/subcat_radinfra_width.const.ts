@@ -1,5 +1,5 @@
 import { FileMapDataSubcategory, FileMapDataSubcategoryStyleLegend } from '../types'
-import { mapboxStyleGroupLayers_atlas_bikelanes_widths } from './mapboxStyles/groups/atlas_bikelanes_widths'
+import { mapboxStyleGroupLayers_radinfra_width } from './mapboxStyles/groups/radinfra_width'
 import { mapboxStyleLayers } from './mapboxStyles/mapboxStyleLayers'
 
 const subcatId = 'bikelanes'
@@ -64,7 +64,7 @@ export const subcat_radinfra_width: FileMapDataSubcategory = {
       name: 'RVA Breite', // field hidden
       desc: null,
       layers: mapboxStyleLayers({
-        layers: mapboxStyleGroupLayers_atlas_bikelanes_widths,
+        layers: mapboxStyleGroupLayers_radinfra_width,
         source,
         sourceLayer,
       }),

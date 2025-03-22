@@ -47,7 +47,7 @@ export const mapboxStyleGroupLayers_radinfra_smoothness: MapboxStyleLayer[] = [
         '#37f644',
         'rgba(0, 0, 0, 0)',
       ],
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 14, 3, 16, 4],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 16, 4],
     },
     filter: ['has', 'smoothness'],
   },

@@ -22,6 +22,22 @@ export const mapboxStyleGroupLayers_radinfra_traffic_signs: MapboxStyleLayer[] =
     },
   },
   {
+    type: 'line',
+    id: 'hitarea-missing-sign',
+    paint: {
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-width': ['interpolate', ['linear'], ['zoom'], 9, 1, 14.1, 10, 22, 12],
+      'line-color': 'rgb(216, 20, 255)',
+      'line-dasharray': [3, 1],
+      'line-opacity': 0,
+    },
+    layout: {
+      'line-join': 'round',
+      'line-cap': 'round',
+    },
+    filter: ['!', ['has', 'traffic_sign']],
+  },
+  {
     minzoom: 8,
     layout: {
       'line-cap': 'round',
