@@ -11,7 +11,7 @@ export type SubcatRadinfraOnewayStyleIds = 'default'
 export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
   {
     id: 'yes',
-    name: 'Eine Richtung',
+    name: 'eine Richtung',
     style: {
       type: 'line',
       color: '#a1e217',
@@ -19,7 +19,7 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
   {
     id: 'no',
-    name: 'Beide Richtungen',
+    name: 'beide Richtungen',
     style: {
       type: 'line',
       color: '#00c29e',
@@ -27,7 +27,7 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
   {
     id: 'no_bike',
-    name: 'Beide Richtungen (Fahrrad)',
+    name: 'beide Richtungen für Fahrrad',
     style: {
       type: 'line',
       color: '#00c29e',
@@ -36,7 +36,7 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
   {
     id: 'assumed_no',
-    name: 'Zu prüfen: Beide Richtung angenommen',
+    name: 'Zu prüfen: beide Richtungen?',
     style: {
       type: 'line',
       color: '#fda5e4',
@@ -46,7 +46,7 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
   },
   {
     id: 'implicit_yes',
-    name: 'Zu prüfen: Eine Richtung angenommen',
+    name: 'Zu prüfen: eine Richtung?',
     style: {
       type: 'line',
       color: '#d8a5fd',
@@ -58,13 +58,13 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
 
 export const subcat_radinfra_oneway: FileMapDataSubcategory = {
   id: subcatId,
-  name: 'RVA Richtungsfreigabe',
+  name: 'Verkehrsrichtung',
   ui: 'checkbox',
   sourceId: source,
   styles: [
     {
       id: 'default',
-      name: 'RVA Richtungsfreigabe', // field hidden
+      name: 'Verkehrsrichtung', // field hidden
       desc: null,
       layers: mapboxStyleLayers({
         layers: mapboxStyleGroupLayers_radinfra_oneway,

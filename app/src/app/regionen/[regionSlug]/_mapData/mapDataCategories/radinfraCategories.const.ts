@@ -51,8 +51,8 @@ export const radinfraCategories: StaticMapDataCategory[] = [
   },
   {
     id: 'radinfra_oneway',
-    name: 'Richtungsfreigabe',
-    desc: 'Einbahnstraße oder nicht?',
+    name: 'Verkehrsrichtung',
+    desc: 'Einbahnstraße oder beidseitig befahrbar?',
     subcategories: [{ ...subcat_radinfra_oneway, defaultStyle: 'default' }],
   },
   {

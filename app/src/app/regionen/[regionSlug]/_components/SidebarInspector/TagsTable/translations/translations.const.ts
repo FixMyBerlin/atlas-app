@@ -1,12 +1,14 @@
-// Prettier: Overwrite via app/.prettierrc
+// Prettier: Overwrite via app/.prettierrc.mjs
+import { translationsOneway } from './translationsOneway.const'
 import { translationsParking } from './translationsParking.const'
 
 // Legend:
 // - "ALL--" stands for "all sources". Those translations are applied without checking the soureId
 // - "ALL--category" is replaced with 'ALL--highway' in `ConditionalFormattedValue`
 /* prettier-ignore */
-export const translations:{ [key: string]: string } = {
+export const translations: { [key: string]: string } = {
   ...translationsParking,
+  ...translationsOneway,
   'ALL--_parent_highway--key': 'Straßentyp Fahrbahn',
   'ALL--category--key': 'Führungsform',
   'ALL--category=bicycleRoad_vehicleDestination': 'Fahrradstraße mit Anlieger frei',
@@ -74,7 +76,6 @@ export const translations:{ [key: string]: string } = {
   'ALL--length--tooltip': 'Ein berechneter Wert für as OpenStreetMap-Straßensegment. Die Berechnung nutzt die Projektion EPSG:25833 / ETRS89 / UTM zone 33N und hat somit eine gute Genaugikeit für Deutschland.',
   'ALL--maxspeed--key': 'Höchstgeschwindigkeit',
   'ALL--name--key': 'Name',
-  'ALL--oneway--key': 'Fahrtrichtung',
   'ALL--smoothness=bad': 'Schlecht',
   'ALL--smoothness=excellent': 'Sehr gut',
   'ALL--smoothness=good': 'Gut',
@@ -110,15 +111,6 @@ export const translations:{ [key: string]: string } = {
   'atlas_bicycleParking--capacity--key': 'Anzahl Fahrrad-Stellplätze',
   'atlas_bicycleParking--capacity:cargo_bike--key': 'Anzahl Lastenfahrrad-Stellplätze',
   'atlas_bicycleParking--title': 'Fahrradstellplätze',
-  'atlas_bikelanes--oneway--key': 'Fahrtrichtung',
-  'atlas_bikelanes--oneway=assumed_no--tooltip': 'Wenn keine explizite Angabe vorliegt, nehmen wir für bestimmten Infrastruktur an, dass der Radverkehr in beiden Richtungen fahren darf.',
-  'atlas_bikelanes--oneway=assumed_no': 'Vermutlich beide Fahrtrichtungen freigegeben',
-  'atlas_bikelanes--oneway=car_not_bike': 'Einbahnstraße für Kfz aber in beide Richtungen freigegeben für Fahrräder',
-  'atlas_bikelanes--oneway=implicit_yes--tooltip': 'Wenn keine explizite Angabe vorliegt, nehmen wir für bestimmten Infrastruktur an, dass der Radverkehr in nur eine Richtungen fahren darf.',
-  'atlas_bikelanes--oneway=implicit_yes': 'Wahrscheinlich Einbahnstraße / Einrichtungsradweg',
-  'atlas_bikelanes--oneway=no': 'Beide Fahrtrichtungen freigegeben',
-  'atlas_bikelanes--oneway=unknown':  '(!) Es liegt ein Fehler in der Prozesssierung vor, bitte meldet diesen Weg an tobias@fixmycity.de',
-  'atlas_bikelanes--oneway=yes': 'Einbahnstraße / Einrichtungsradweg',
   'atlas_bikelanes--category--key': 'Bauliche Führung',
   'atlas_bikelanes--smoothness_source=mtb:scale_to_smoothness': 'Abgeleitet von dem OSM Wert `mtb:scale`',
   'atlas_bikelanes--smoothness_source=surface_to_smoothness': 'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
@@ -238,13 +230,6 @@ export const translations:{ [key: string]: string } = {
   'atlas_roads--osm_name--key': 'Name',
   'atlas_roads--osm_source:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
   'atlas_roads--osm_zone:maxspeed--key': 'Höchstgeschwindigkeit Kategorie-Tag',
-  'atlas_roads--road_oneway--key': 'Fahrtrichtung',
-  'atlas_roads--road_oneway:bicycle--key': 'Fahrtrichtung Fahrrad',
-  'atlas_roads--road_oneway:bicycle=no': 'Freigabe für Radverkehr in beide Richtungen',
-  'atlas_roads--road_oneway:bicycle=yes': 'Einbahnstraße auch für Radverkehr',
-  'atlas_roads--road_oneway=no': 'Beide Fahrtrichtungen freigegeben',
-  'atlas_roads--road_oneway=yes_dual_carriageway': 'Einbahnstraße da separate Geometrie pro Seite',
-  'atlas_roads--road_oneway=yes': 'Einbahnstraße',
   'atlas_roads--road--key': 'Straßentyp',
   'atlas_roads--smoothness_source=mtb:scale_to_smoothness': 'Abgeleitet von dem OSM Wert `mtb:scale`',
   'atlas_roads--smoothness_source=surface_to_smoothness': 'Abgeleitet von dem Wert der Oberfläche über Standard-Werte',
