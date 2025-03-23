@@ -3,7 +3,7 @@ require("Set")
 require("Sanitize")
 
 ---@param category table
----@return 'yes' | 'no' | 'car_not_bike' | 'assumed_no' | 'implicit_yes' | 'unknown'
+---@return 'yes' | 'no' | 'car_not_bike' | 'assumed_no' | 'implicit_yes'
 --- Derive oneway information based on tags and given category
 function DeriveOneway(tags, category)
   -- if `oneway:bicycle` is explicitly tagged check if it differs from `oneway`
