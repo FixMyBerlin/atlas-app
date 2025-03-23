@@ -54,6 +54,14 @@ export const bikelanesOnewayLegend: FileMapDataSubcategoryStyleLegend[] = [
       width: 2,
     },
   },
+  {
+    id: 'zoom_needed',
+    name: 'Auf dieser Zoomstufe können die Daten nicht angezeigt werden',
+    style: {
+      type: 'line',
+      color: 'gray',
+    },
+  },
 ]
 
 export const subcat_radinfra_oneway: FileMapDataSubcategory = {
