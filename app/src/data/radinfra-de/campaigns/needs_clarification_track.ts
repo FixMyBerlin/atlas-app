@@ -23,6 +23,7 @@ _Wenn du so wenig wie möglich ändern möchtest:_
 
 * Ergänze \`cycleway:right:segregated=yes\`, wenn Rad- und Fußverkehr getrennt sind — bzw. \`no\` bei einem gem. Geh-Radweg.
 * Ergänze \`cycleway:right:traffic_sign=*\`, mit dem [passenden Verkehrszeichen](https://trafficsigns.osm-verkehrswende.org/DE) — oder \`none\` wenn unbeschildert.
+* Wenn der Radweg in beide Richtunge befahren werden darf, ergänze \`cycleway:right:oneway=no\`.
 
 (Das gleiche gilt auch für \`cycleway:right:*\` bzw. \`cycleway:both:*\`.)
 
@@ -31,7 +32,8 @@ _Wenn du dir zutraust die Geometrie umzuwandeln:_ In vielen Fällen bietet es si
 * [Das Wiki gibt gute Hilfestellung](https://wiki.openstreetmap.org/wiki/DE:Bicycle/Radverkehrsanlagen_kartieren#Stra%C3%9Fenbegleitende_Wege).
 * [Das Verkehrszeichen-Tool](https://trafficsigns.osm-verkehrswende.org/DE) hilft, den Weg mit passenden Attributen auszustatten.
 * Bitte ergänze \`is_sidepath=yes\` um den Weg als straßenbegleitend zu attributieren.
-* Und ändere die Tags an der Straße, die auf den neuen Weg verweisen (siehe Wiki).
+* Bitte ergänze \`oneway=yes|no\` für die Richtungsfreigabe.
+* Und ändere die Tags an der Straße, die auf den neuen Weg verweisen von \`track\` auf \`separate\` (siehe Wiki).
 * Kreuzt der neue Weg andere Wege? Hier bitte den Übergang passend eintragen.
 
 ## Hilfsmittel
