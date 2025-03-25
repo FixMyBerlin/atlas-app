@@ -47,6 +47,7 @@ export async function getSchemaTables(schema: string) {
  * @returns the Promise of the query
  */
 export async function backupTable(table: string) {
+  console.log('Diffing: backupTable', table)
   const tableId = tableIdentifier(table)
   const backupTableId = backupTableIdentifier(table)
   await prisma.$queryRawUnsafe(`DROP TABLE IF EXISTS ${backupTableId}`)
@@ -176,6 +177,8 @@ function printDiffInfo(diffInfo: Awaited<ReturnType<typeof computeDiff>>) {
  * @param tables
  */
 export async function diffTables(tables: string[]) {
+  console.log('Diffing: diffTables', tables)
+
   // compute all diffs in parallel
   const diffResults = await Promise.all(tables.map((table) => computeDiff(table)))
 

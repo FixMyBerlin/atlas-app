@@ -42,7 +42,7 @@ export const bikelanesCurrentnessLegend: FileMapDataSubcategoryStyleLegend[] = [
     },
   },
   {
-    id: 'missing',
+    id: 'zoom_needed',
     name: 'Auf dieser Zoomstufe können die Daten nicht angezeigt werden',
     style: {
       type: 'line',

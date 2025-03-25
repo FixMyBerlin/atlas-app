@@ -24,12 +24,12 @@ const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
  * @returns
  */
 async function runSQL(topic: Topic) {
+  console.log('runTopic: runSQL', topic)
   const psqlFile = `${mainFilePath(topic)}.sql`
   const exists = await Bun.file(psqlFile).exists()
 
   if (exists) {
     try {
-      console.log(`Running SQL ${psqlFile}`)
       console.time(`Running SQL ${psqlFile}`)
       await $`psql -q -f ${psqlFile}`
       console.timeEnd(`Running SQL ${psqlFile}`)
@@ -43,6 +43,7 @@ async function runSQL(topic: Topic) {
  * Run the given topic's lua file with osm2pgsql on the given file
  */
 async function runLua(fileName: string, topic: Topic) {
+  console.log('runTopic: runLua', topic)
   const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
   try {
@@ -126,6 +127,7 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
 
     // Backup all tables related to topic
     if (diffChanges) {
+      console.log('Diffing:', 'Backup table')
       // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
       // Which means existing backup tables don't change (are frozen).
       // Learn more in [processing/README](../../processing/README.md#reference)
@@ -143,6 +145,7 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
 
     // Update the diff tables
     if (diffChanges) {
+      console.log('Diffing:', 'Update diffs')
       await diffTables(Array.from(processedTopicTables))
     }
 
