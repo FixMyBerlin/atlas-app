@@ -19,7 +19,11 @@ export const useShowAtlasNotesParam = () => {
 const newAtlasNoteMapParamParser = createParser({
   parse: (query) => parseMapParam(query),
   serialize: (object) => serializeMapParam(object),
-}).withOptions({ history: 'replace' })
+}).withOptions({
+  history: 'replace',
+  // Bugfix: Firefox breaks when zooming via scrool wheel due to too many events
+  throttleMs: 1000,
+})
 
 export const useNewAtlasNoteMapParam = () => {
   const [newAtlasNoteMapParam, setNewAtlasNoteMapParam] = useQueryState(
