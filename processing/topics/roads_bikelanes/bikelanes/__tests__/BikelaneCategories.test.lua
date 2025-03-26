@@ -65,4 +65,35 @@ describe("`BikelaneCategories`", function()
       assert.are.equal(category, 'cycleway_isolated')
     end)
   end)
+
+  describe('`needsClarification`:', function()
+    it('cw=shared is ignored', function()
+      local tags = {
+        ["highway"] = 'cycleway',
+        ["cycleway"] = 'shared',
+      }
+      -- print('xxx'..inspect(CategorizeBikelane(tags)))
+      assert.are.equal(CategorizeBikelane(tags), nil)
+    end)
+
+    it('footway + bicycle=designated', function()
+      local tags = {
+        ["highway"] = 'footway',
+        ["bicycle"] = 'designated',
+      }
+      -- print('xxx'..inspect(CategorizeBikelane(tags)))
+      local category = CategorizeBikelane(tags).id
+      assert.are.equal(category, 'needsClarification')
+    end)
+
+    it('path + bicycle=designated', function()
+      local tags = {
+        ["highway"] = 'path',
+        ["bicycle"] = 'designated',
+      }
+      -- print('xxx'..inspect(CategorizeBikelane(tags)))
+      local category = CategorizeBikelane(tags).id
+      assert.are.equal(category, 'needsClarification')
+    end)
+  end)
 end)

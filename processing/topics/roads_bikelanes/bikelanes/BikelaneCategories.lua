@@ -581,7 +581,8 @@ local needsClarification = BikelaneCategory.new({
     end
 
     if tags.cycleway == "shared" then
-      return true
+      -- We handle this as a campaign now because it is very likely not infrastructure
+      return false
     end
 
     if tags.highway == "cycleway"
