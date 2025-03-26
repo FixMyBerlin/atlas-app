@@ -68,6 +68,7 @@ function Bikelanes(object)
         _updated_age = AgeInDays(object.timestamp), -- duplicated because we don't have access to where the data is added in road_bikelanes.lua and need it for BikelaneTodos
         category = category.id,
       }
+
       if category.infrastructureExists then
         MergeTable(result_tags, {
           _id = DefaultId(object),
