@@ -276,4 +276,78 @@ describe("BikelaneTodos", function()
       assert.are.equal(TableIncludes(right._todo_list, "mixed_cycleway_both"), true)
     end)
   end)
+
+  describe('`missing_oneway`:', function()
+    it('creates tasks for oneway', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'cycleway',
+          ["is_sidepath"] = 'yes',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 1)
+
+      local data = cycleways[1]
+      -- print('xxxdata'..inspect(data))
+      assert.are.equal(data._id, "way/1")
+      assert.are.equal(TableIncludes(data._todo_list, "missing_oneway"), true)
+    end)
+
+    it('skips specific category "cyclewayLink"', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'cycleway',
+          ["cycleway"] = 'link',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 1)
+
+      local data = cycleways[1]
+      -- print('xxxdata'..inspect(data))
+      assert.are.equal(data._id, "way/1")
+      assert.are.equal(TableIncludes(data._todo_list, "missing_oneway"), false)
+    end)
+
+    it('skips implicitOneWayConfidence="high"', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'cycleway',
+          ["cycleway"] = 'share_busway',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 1)
+
+      local data = cycleways[1]
+      -- print('xxxdata'..inspect(data))
+      assert.are.equal(data._id, "way/1")
+      assert.are.equal(TableIncludes(data._todo_list, "missing_oneway"), false)
+    end)
+
+    it('skips cycleway="track"', function()
+      local input_object = {
+        tags = {
+          ["highway"] = 'secondary',
+          ["cycleway:left"] = 'track',
+        },
+        id = 1,
+        type = 'way'
+      }
+      local cycleways = Bikelanes(input_object)
+      assert.are.equal(TableSize(cycleways), 1)
+
+      local left = cycleways[1]
+      -- print('xxxleft'..inspect(left))
+      assert.are.equal(left._id, "way/1/cycleway/left")
+      assert.are.equal(TableIncludes(left._todo_list, "missing_oneway"), false)
+    end)
+  end)
 end)

@@ -277,6 +277,27 @@ local missing_surface = BikelaneTodo.new({
   end
 })
 
+local missing_oneway = BikelaneTodo.new({
+  id = "missing_oneway",
+  desc = "Ways without explicit `oneway`",
+  todoTableOnly = false,
+  priority = function(_, resultTags)
+    if resultTags.oneway == 'assumed_no' then return "1" end
+    return "2"
+  end,
+  conditions = function(objectTags, resultTags)
+    -- Skip if the "track" campaign is present
+    if needs_clarification_track(objectTags, resultTags) then return false end
+    if needs_clarification(objectTags, resultTags) then return false end
+    -- We rely on `_implicitOneWayConfidence` from `processing/topics/roads_bikelanes/bikelanes/BikelaneCategories.lua`
+    -- But some infra it not relevant enough for now:
+    if resultTags.category == 'crossing' then return false end
+    if resultTags.category == 'cyclewayLink' then return false end
+    if not (resultTags.oneway == 'assumed_no' or resultTags.oneway == 'implicit_yes') then return false end
+    return resultTags._implicitOneWayConfidence == 'low'
+  end
+})
+
 BikelaneTodos = {
   -- REMINDER: Always use snake_case, never camelCase
   -- Infrastructure
@@ -300,4 +321,5 @@ BikelaneTodos = {
   currentness_too_old,
   missing_width,
   missing_surface,
+  missing_oneway,
 }

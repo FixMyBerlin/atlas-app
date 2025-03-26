@@ -1,7 +1,9 @@
-export const needs_clarification_track = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const needs_clarification_track: CampaignType = {
   id: 'needs_clarification_track',
   title: 'Führungsform `track` unklar',
-  pubDate: '2025-02-17T10:00',
+  pubDate: new Date('2025-02-17T10:00'),
   category: 'radinfra',
   recommendedAction: 'map',
   visibility: 'secondary',

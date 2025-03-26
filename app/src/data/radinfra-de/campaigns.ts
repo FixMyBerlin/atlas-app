@@ -5,6 +5,7 @@ import { deprecated_cycleway_shared } from './campaigns/deprecated_cycleway_shar
 import { malformed_traffic_sign } from './campaigns/malformed_traffic_sign'
 import { missing_access_tag_240 } from './campaigns/missing_access_tag_240'
 import { missing_access_tag_bicycle_road } from './campaigns/missing_access_tag_bicycle_road'
+import { missing_oneway } from './campaigns/missing_oneway'
 import { missing_segregated } from './campaigns/missing_segregated'
 import { missing_surface } from './campaigns/missing_surface'
 import { missing_traffic_sign } from './campaigns/missing_traffic_sign'
@@ -36,6 +37,7 @@ const rawCampaigns = [
   missing_traffic_sign_vehicle_destination,
   missing_width,
   deprecated_cycleway_shared,
+  missing_oneway,
 ]
 
 const collectCampaigns = (rawCampaigns) => {

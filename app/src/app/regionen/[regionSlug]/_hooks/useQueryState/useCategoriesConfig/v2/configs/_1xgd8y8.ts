@@ -4,7 +4,7 @@
 import { MapDataCategoryParam } from '../../type'
 
 // For regions testing
-export const _1jfclvk: MapDataCategoryParam[] = [
+export const _1xgd8y8: MapDataCategoryParam[] = [
   {
     id: 'poi',
     active: false,
@@ -356,6 +356,7 @@ export const _1jfclvk: MapDataCategoryParam[] = [
           { id: 'advisory_or_exclusive', active: false },
           { id: 'missing_access_tag_240', active: false },
           { id: 'missing_access_tag_bicycle_road', active: false },
+          { id: 'missing_oneway', active: false },
           { id: 'missing_segregated', active: false },
           { id: 'mixed_cycleway_both', active: false },
           { id: 'needs_clarification', active: false },

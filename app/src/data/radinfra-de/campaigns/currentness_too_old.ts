@@ -1,7 +1,9 @@
-export const currentness_too_old = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const currentness_too_old: CampaignType = {
   id: 'currentness_too_old',
   title: 'Sehr lange nicht geprüfte Radinfra',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'currentness',
   recommendedAction: 'maproulette',
   visibility: 'promote',

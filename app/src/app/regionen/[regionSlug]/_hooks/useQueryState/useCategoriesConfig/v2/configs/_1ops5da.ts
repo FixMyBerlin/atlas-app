@@ -4,7 +4,7 @@
 import { MapDataCategoryParam } from '../../type'
 
 // For regions radinfra
-export const _ipmbmm: MapDataCategoryParam[] = [
+export const _1ops5da: MapDataCategoryParam[] = [
   {
     id: 'radinfra_bikelanes',
     active: false,
@@ -63,6 +63,7 @@ export const _ipmbmm: MapDataCategoryParam[] = [
           { id: 'advisory_or_exclusive', active: false },
           { id: 'missing_access_tag_240', active: false },
           { id: 'missing_access_tag_bicycle_road', active: false },
+          { id: 'missing_oneway', active: false },
           { id: 'missing_segregated', active: false },
           { id: 'mixed_cycleway_both', active: false },
           { id: 'needs_clarification', active: false },

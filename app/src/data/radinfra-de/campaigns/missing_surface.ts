@@ -1,7 +1,9 @@
-export const missing_surface = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_surface: CampaignType = {
   id: 'missing_surface',
   title: 'Ergänze Angaben zur Oberfläche',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'surface',
   recommendedAction: 'streetcomplete',
   visibility: 'secondary',

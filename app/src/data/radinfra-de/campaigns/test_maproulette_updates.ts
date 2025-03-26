@@ -1,7 +1,9 @@
-export const test_maproulette_updates = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const test_maproulette_updates: CampaignType = {
   id: 'test_maproulette_updates',
   title: 'Test Kampagne um MapRoulette Funktionen zu testen',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'hidden',

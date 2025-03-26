@@ -1,7 +1,9 @@
-export const unexpected_bicycle_access_on_footway = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const unexpected_bicycle_access_on_footway: CampaignType = {
   id: 'unexpected_bicycle_access_on_footway',
   title: 'Straßenklasse Fußweg unerwartet',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

@@ -1,7 +1,9 @@
-export const malformed_traffic_sign = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const malformed_traffic_sign: CampaignType = {
   id: 'malformed_traffic_sign',
   title: 'Fehler im Verkehrszeichen-Tag',
-  pubDate: '2025-02-17T10:00',
+  pubDate: new Date('2025-02-17T10:00'),
   category: 'traffic_signs',
   recommendedAction: 'maproulette',
   visibility: 'secondary',
