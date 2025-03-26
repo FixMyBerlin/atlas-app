@@ -1,7 +1,9 @@
-export const missing_traffic_sign_vehicle_destination = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_traffic_sign_vehicle_destination: CampaignType = {
   id: 'missing_traffic_sign_vehicle_destination',
   title: 'Ergänze das Verkehrszeichen »Anlieger frei«',
-  pubDate: '2024-10-01T15:00',
+  pubDate: new Date('2024-10-01T15:00'),
   category: 'traffic_signs',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

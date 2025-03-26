@@ -1,7 +1,9 @@
-export const missing_access_tag_bicycle_road = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_access_tag_bicycle_road: CampaignType = {
   id: 'missing_access_tag_bicycle_road',
   title: 'Fehlender Zugangs-Tag bei Fahrradstraßen',
-  pubDate: '2024-10-01T15:00',
+  pubDate: new Date('2024-10-01T15:00'),
   category: 'traffic_signs',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

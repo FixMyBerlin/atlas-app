@@ -1,7 +1,9 @@
-export const missing_width = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_width: CampaignType = {
   id: 'missing_width',
   title: 'Ergänze Angaben zur Breite',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'width',
   recommendedAction: 'streetcomplete',
   visibility: 'secondary',

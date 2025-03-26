@@ -1,7 +1,9 @@
-export const deprecated_cycleway_shared = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const deprecated_cycleway_shared: CampaignType = {
   id: 'deprecated_cycleway_shared',
   title: 'Veraltetes Tagging `shared`',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

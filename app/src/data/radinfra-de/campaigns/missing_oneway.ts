@@ -1,7 +1,9 @@
-export const missing_oneway = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_oneway: CampaignType = {
   id: 'missing_oneway',
   title: 'Ergänze Angaben zur Verkehrsrichtung',
-  pubDate: '2025-03-01T15:00',
+  pubDate: new Date('2025-03-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'map',
   visibility: 'secondary',

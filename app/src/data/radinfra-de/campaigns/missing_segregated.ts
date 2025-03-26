@@ -1,7 +1,9 @@
-export const missing_segregated = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_segregated: CampaignType = {
   id: 'missing_segregated',
   title: 'Gemeinsame oder getrennte Führung?',
-  pubDate: '2024-09-20T15:00',
+  pubDate: new Date('2024-09-20T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

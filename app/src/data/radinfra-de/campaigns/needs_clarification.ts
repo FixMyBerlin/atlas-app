@@ -1,7 +1,9 @@
-export const needs_clarification = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const needs_clarification: CampaignType = {
   id: 'needs_clarification',
   title: 'Führungsform unklar',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'promote',

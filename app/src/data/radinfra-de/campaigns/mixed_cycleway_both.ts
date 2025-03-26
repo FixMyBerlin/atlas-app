@@ -1,7 +1,9 @@
-export const mixed_cycleway_both = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const mixed_cycleway_both: CampaignType = {
   id: 'mixed_cycleway_both',
   title: 'Überschneidende Tags (`cycleway*`)',
-  pubDate: '2025-02-17T10:00',
+  pubDate: new Date('2025-02-17T10:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

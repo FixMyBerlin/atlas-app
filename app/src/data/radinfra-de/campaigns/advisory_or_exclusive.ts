@@ -1,7 +1,9 @@
-export const advisory_or_exclusive = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const advisory_or_exclusive: CampaignType = {
   id: 'advisory_or_exclusive',
   title: 'Schutzstreifen oder Angebotsstreifen?',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'radinfra',
   recommendedAction: 'maproulette',
   visibility: 'secondary',

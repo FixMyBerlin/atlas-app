@@ -1,7 +1,9 @@
-export const missing_traffic_sign = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_traffic_sign: CampaignType = {
   id: 'missing_traffic_sign',
   title: 'Ergänze das Verkehrszeichen (Radinfrastruktur)',
-  pubDate: '2025-01-01T15:00',
+  pubDate: new Date('2025-01-01T15:00'),
   category: 'traffic_signs',
   recommendedAction: 'map',
   visibility: 'secondary',

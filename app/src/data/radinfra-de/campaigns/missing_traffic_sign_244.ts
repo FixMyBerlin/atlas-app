@@ -1,7 +1,9 @@
-export const missing_traffic_sign_244 = {
+import { CampaignType } from '../schema/campaignsSchema'
+
+export const missing_traffic_sign_244: CampaignType = {
   id: 'missing_traffic_sign_244',
   title: 'Ergänze das Verkehrszeichen bei Fahrradstraßen',
-  pubDate: '2024-09-20T15:00',
+  pubDate: new Date('2024-09-20T15:00'),
   category: 'traffic_signs',
   recommendedAction: 'maproulette',
   visibility: 'promote',
