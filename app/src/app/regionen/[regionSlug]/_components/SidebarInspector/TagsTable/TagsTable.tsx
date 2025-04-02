@@ -178,6 +178,16 @@ export const TagsTable = ({ properties, sourceDocumentedKeys, sourceId }: Props)
                 />
               )
             }
+            case tableKeyTrafficSign: {
+              return (
+                <TagsTableRowCompositTrafficSign
+                  key={cleanedKey}
+                  sourceId={sourceId}
+                  tagKey={key}
+                  properties={properties}
+                />
+              )
+            }
             case tableKeyTrassencoutSurveyResponse: {
               return (
                 <TagsTableRowCompositTrassencoutSurveyResponse
@@ -194,17 +204,17 @@ export const TagsTable = ({ properties, sourceDocumentedKeys, sourceId }: Props)
                 return null
               }
 
-              // We cannot use the `case` here due to the key array
-              if (tableKeyTrafficSign.includes(cleanedKey)) {
-                return (
-                  <TagsTableRowCompositTrafficSign
-                    key={cleanedKey}
-                    sourceId={sourceId}
-                    tagKey={cleanedKey}
-                    properties={properties}
-                  />
-                )
-              }
+              // // We cannot use the `case` here due to the key array
+              // if (tableKeyTrafficSign.includes(cleanedKey)) {
+              //   return (
+              //     <TagsTableRowCompositTrafficSign
+              //       key={cleanedKey}
+              //       sourceId={sourceId}
+              //       tagKey={cleanedKey}
+              //       properties={properties}
+              //     />
+              //   )
+              // }
 
               return (
                 <TagsTableRow
