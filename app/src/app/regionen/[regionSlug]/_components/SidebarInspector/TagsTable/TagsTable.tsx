@@ -204,18 +204,6 @@ export const TagsTable = ({ properties, sourceDocumentedKeys, sourceId }: Props)
                 return null
               }
 
-              // // We cannot use the `case` here due to the key array
-              // if (tableKeyTrafficSign.includes(cleanedKey)) {
-              //   return (
-              //     <TagsTableRowCompositTrafficSign
-              //       key={cleanedKey}
-              //       sourceId={sourceId}
-              //       tagKey={cleanedKey}
-              //       properties={properties}
-              //     />
-              //   )
-              // }
-
               return (
                 <TagsTableRow
                   key={cleanedKey}
