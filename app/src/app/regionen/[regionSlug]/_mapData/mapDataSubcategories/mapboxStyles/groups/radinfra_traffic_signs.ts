@@ -5,23 +5,6 @@ import { MapboxStyleLayer } from '../types'
 
 export const mapboxStyleGroupLayers_radinfra_traffic_signs: MapboxStyleLayer[] = [
   {
-    minzoom: 8,
-    layout: {
-      'line-cap': 'round',
-      'line-join': 'round',
-    },
-    filter: ['!', ['has', 'traffic_sign']],
-    type: 'line',
-    id: 'sign-missing',
-    paint: {
-      'line-color': '#fda5e4',
-      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 20, 4],
-      'line-opacity': 0.6,
-      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
-      'line-dasharray': [3, 1],
-    },
-  },
-  {
     type: 'line',
     id: 'hitarea-missing-sign',
     paint: {
@@ -35,7 +18,15 @@ export const mapboxStyleGroupLayers_radinfra_traffic_signs: MapboxStyleLayer[] =
       'line-join': 'round',
       'line-cap': 'round',
     },
-    filter: ['!', ['has', 'traffic_sign']],
+    filter: [
+      '!',
+      [
+        'any',
+        ['has', 'traffic_sign'],
+        ['has', 'traffic_sign:forward'],
+        ['has', 'traffic_sign:backward'],
+      ],
+    ],
   },
   {
     minzoom: 8,
@@ -43,11 +34,47 @@ export const mapboxStyleGroupLayers_radinfra_traffic_signs: MapboxStyleLayer[] =
       'line-cap': 'round',
       'line-join': 'round',
     },
-    filter: ['has', 'traffic_sign'],
+    filter: [
+      '!',
+      [
+        'any',
+        ['has', 'traffic_sign'],
+        ['has', 'traffic_sign:forward'],
+        ['has', 'traffic_sign:backward'],
+      ],
+    ],
+    type: 'line',
+    id: 'sign-missing',
+    paint: {
+      'line-color': '#fda5e4',
+      'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 20, 4],
+      'line-opacity': 0.6,
+      'line-offset': ['interpolate', ['linear'], ['zoom'], 12, 0, 15, -1],
+      'line-dasharray': [3, 1],
+    },
+  },
+  {
+    minzoom: 8,
+    layout: {
+      'line-cap': 'round',
+      'line-join': 'round',
+    },
+    filter: [
+      'any',
+      ['has', 'traffic_sign'],
+      ['has', 'traffic_sign:forward'],
+      ['has', 'traffic_sign:backward'],
+    ],
     type: 'line',
     id: 'sign-colors',
     paint: {
-      'line-color': ['match', ['get', 'traffic_sign'], ['none'], '#00c29e', '#a1e217'],
+      'line-color': [
+        'match',
+        ['get', 'traffic_sign'],
+        ['none'],
+        '#00c29e',
+        ['match', ['get', 'traffic_sign:forward'], ['none'], '#00c29e', '#a1e217'],
+      ],
       'line-width': ['interpolate', ['linear'], ['zoom'], 10, 1.5, 16, 4],
       'line-opacity': 0.6,
     },

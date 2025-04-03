@@ -8,9 +8,18 @@ const diffTableIdentifier = (table: string) => `public."${table}_diff"`
 const tableIdentifier = (table: string) => `public."${table}"`
 export async function getTopicTables(topic: Topic) {
   try {
-    const tables = await $`lua /processing/utils/TableNames.lua ${topic}`
-      .text()
-      .then((tables) => new Set(tables.split('\n').filter((table) => table !== '')))
+    // Some tables don't follow the strict schema that is required for the diffing to work.
+    // We need to skip those so nothing breaks.
+    const ignoreTableNames = ['todos_lines']
+    const tables = await $`lua /processing/utils/TableNames.lua ${topic}`.text().then(
+      (tables) =>
+        new Set(
+          tables
+            .split('\n')
+            .filter((tName) => tName !== '')
+            .filter((tName) => !ignoreTableNames.includes(tName)),
+        ),
+    )
     return tables
   } catch (error) {
     throw new Error(

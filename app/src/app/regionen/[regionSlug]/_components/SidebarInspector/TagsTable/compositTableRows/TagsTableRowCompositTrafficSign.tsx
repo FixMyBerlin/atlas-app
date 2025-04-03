@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import { TagsTableRow } from '../TagsTableRow'
+import { ConditionalFormattedKey } from '../translations/ConditionalFormattedKey'
 import { ConditionalFormattedValue } from '../translations/ConditionalFormattedValue'
+import { NodataFallback } from './NodataFallback'
 import { CompositTableRow } from './types'
 
 // Gute Liste:
@@ -103,17 +105,26 @@ const trafficSigns: Record<string, { title: string; signUrl: string }> = {
   // "Kfz frei" hat wohl keine ID https://de.wikipedia.org/wiki/Datei:Zusatzzeichen_KFZ_frei.svg
 }
 
-export const tableKeyTrafficSign = ['traffic_sign', 'traffic_sign:forward', 'traffic_sign:backward']
+export const tableKeyTrafficSign = 'traffic_sign'
 export const TagsTableRowCompositTrafficSign = ({
   sourceId,
   tagKey,
   properties,
 }: CompositTableRow) => {
-  const receivedSigns: string[] | undefined = properties[tagKey]
-    ?.replaceAll('DE:', '')
-    ?.split(/[,;]/) // Of course OSM has to have two ways to separate traffic signs =(
+  type Signs = {
+    both: ReturnType<typeof split>
+    forward: ReturnType<typeof split>
+    backward: ReturnType<typeof split>
+  }
+  const split = (input: string | undefined) => input?.replaceAll('DE:', '')?.split(/[,;]/) // TODO: This is not very hardy. We need to use the traffic sign package here
+  const receivedSigns: Signs = {
+    both: split(properties['traffic_sign']),
+    forward: split(properties['traffic_sign:forward']),
+    backward: split(properties['traffic_sign:backward']),
+  }
 
-  if (!receivedSigns?.length) {
+  const anySigns = Object.values(receivedSigns).flat().filter(Boolean).length > 0
+  if (!anySigns) {
     return (
       <TagsTableRow
         key={tagKey}
@@ -124,50 +135,83 @@ export const TagsTableRowCompositTrafficSign = ({
     )
   }
 
-  if (properties[tagKey] === 'none') {
+  // CASE: Show only 'both'
+  if (
+    receivedSigns.both &&
+    receivedSigns.forward === undefined &&
+    receivedSigns.backward === undefined
+  ) {
     return (
       <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
-        <ConditionalFormattedValue
-          sourceId={sourceId}
-          tagKey={tagKey}
-          tagValue={properties[tagKey]}
-        />
+        <Signs signKeys={receivedSigns.both} />
       </TagsTableRow>
     )
   }
 
+  // CASE: Show all variations
   return (
     <TagsTableRow key={tagKey} sourceId={sourceId} tagKey={tagKey}>
-      <div className="flex divide-x">
-        {receivedSigns.map((sign) => {
-          return (
-            <div
-              key={sign}
-              className="flex flex-col items-start justify-center px-3 first:pl-0 last:pr-0"
-            >
-              {trafficSigns[sign]?.title ? (
-                <>
-                  <p className="mb-1 leading-tight">{trafficSigns[sign]?.title}</p>
-                  {trafficSigns[sign]?.signUrl && (
-                    // TS: Why do I need to "!" this when I just guarded it…?
-                    <Image
-                      src={trafficSigns[sign]!.signUrl}
-                      width={48}
-                      height={48}
-                      alt=""
-                      className="h-12 max-w-[3rem]"
-                    />
-                  )}
-                </>
-              ) : (
-                <code className="block rounded-md border bg-gray-700 p-1.5 text-center text-xs leading-tight text-gray-50">
-                  {sign}
-                </code>
-              )}
-            </div>
-          )
-        })}
+      <div className="flex flex-col gap-3">
+        {receivedSigns.both && <Signs signKeys={receivedSigns.both} />}
+        {(receivedSigns.forward || receivedSigns.backward) && (
+          <>
+            <Signs titleTag="traffic_sign:forward" signKeys={receivedSigns.forward} />
+            <Signs titleTag="traffic_sign:backward" signKeys={receivedSigns.backward} />
+          </>
+        )}
       </div>
     </TagsTableRow>
+  )
+}
+
+function Signs({ titleTag, signKeys }: { titleTag?: string; signKeys: string[] | undefined }) {
+  return (
+    <div>
+      {titleTag && (
+        <strong className="font-medium">
+          <ConditionalFormattedKey sourceId="" tagKey={titleTag} />:
+        </strong>
+      )}
+      {signKeys === undefined ? (
+        <NodataFallback />
+      ) : signKeys.at(0) === 'none' ? (
+        <ConditionalFormattedValue sourceId="" tagKey="traffic_sign" tagValue="none" />
+      ) : (
+        <div className="flex divide-x">
+          {signKeys.map((signKey) => {
+            return <Sign key={signKey} signKey={signKey} />
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function Sign({ signKey }: { signKey: string }) {
+  return (
+    <div
+      key={signKey}
+      className="flex flex-col items-start justify-center px-3 first:pl-0 last:pr-0"
+    >
+      {trafficSigns[signKey]?.title ? (
+        <>
+          <p className="mb-1 leading-tight">{trafficSigns[signKey]?.title}</p>
+          {trafficSigns[signKey]?.signUrl && (
+            // TS: Why do I need to "!" this when I just guarded it…?
+            <Image
+              src={trafficSigns[signKey]!.signUrl}
+              width={48}
+              height={48}
+              alt=""
+              className="h-12 max-w-[3rem]"
+            />
+          )}
+        </>
+      ) : (
+        <code className="block rounded-md border bg-gray-700 p-1.5 text-center text-xs leading-tight text-gray-50">
+          {signKey}
+        </code>
+      )}
+    </div>
   )
 }
