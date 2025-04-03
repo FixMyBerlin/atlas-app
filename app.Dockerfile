@@ -34,4 +34,7 @@ FROM base AS production
 
 RUN npm install --global pm2
 
+# TODO: Is addding `SHELL ["/bin/bash", "-c"]` here a good way to work around this Github action warning?
+# - https://docs.docker.com/reference/build-checks/json-args-recommended/
+# - "JSON arguments recommended for ENTRYPOINT/CMD to prevent unintended behavior related to OS signals: app.Dockerfile#L30 | JSONArgsRecommended: JSON arguments recommended for CMD to prevent unintended behavior related to OS signals"
 CMD npx blitz@2.0.10 prisma migrate deploy && exec pm2-runtime node -- ./node_modules/next/dist/bin/next start -p 4000
