@@ -1,5 +1,8 @@
 # About
 
+> [!NOTE]
+> This script and process can only be used by FixMyBerlin employees.
+
 We store most of our custom styles in Mapbox Studio:
 https://studio.mapbox.com/styles/hejco/cl706a84j003v14o23n2r81w7/edit/#13.49/48.95568/9.13281
 
