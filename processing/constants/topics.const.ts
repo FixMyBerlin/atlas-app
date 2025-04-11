@@ -13,6 +13,7 @@ export const topicList = [
   'publicTransport',
   'poiClassification',
   'barriers',
+  'parking',
 ] as const
 
 export type Topic = (typeof topicList)[number]
