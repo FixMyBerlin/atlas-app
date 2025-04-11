@@ -144,10 +144,11 @@ export async function GET(request: NextRequest, { params }: { params: { projectK
     // We return Newline-delimited GeoJSON (also known as "line-oriented GeoJSON", "NDGeoJSON", "GeoJSONL", "GeoJSONSeq" or "GeoJSON Text Sequences")
     // because that is easier to do an MapRoulette can handle it just as well.
     fileStream.end()
-    await new Promise((resolve, reject) => {
-      fileStream.on('finish', resolve)
-      fileStream.on('error', reject)
+    await new Promise<void>((resolve, reject) => {
+      fileStream.on('finish', () => resolve())
+      fileStream.on('error', (err) => reject(err))
     })
+
     // Re-read the file to return it; then delete it right away
     const fileBuffer = await fs.promises.readFile(outputFilePath)
     await fs.promises.unlink(outputFilePath) // delete file
