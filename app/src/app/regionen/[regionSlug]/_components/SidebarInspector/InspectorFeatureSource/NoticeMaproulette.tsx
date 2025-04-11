@@ -53,7 +53,7 @@ export const NoticeMaproulette = ({
       >
         <summary className="cursor-pointer hover:font-semibold">
           {/* NOTE: `maprouletteProjectKeys` is not ideal here because we might show viewer text block which is decided in the child component */}
-          Aufgaben{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
+          Aufgabe{maprouletteProjectKeys.length > 1 ? 'n' : ''} zur Datenverbesserung (
           {maprouletteProjectKeys.length})
         </summary>
 
