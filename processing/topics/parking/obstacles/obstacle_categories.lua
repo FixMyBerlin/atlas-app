@@ -25,10 +25,6 @@ function obstacle_category.new(args)
   return self
 end
 
-local function is_obstacle(tags)
-  return tags['obstacle:parking'] == 'yes'
-end
-
 function obstacle_category:__call(tags)
   return self.conditions(tags)
 end
@@ -42,7 +38,7 @@ obstacle_categories = {
     perform_buffer = 0.3,
     further_tags = { "access" },
     conditions = function(tags)
-      return is_obstacle(tags) and tags.barrier == "bollard"
+      return tags['obstacle:parking'] == 'yes' and tags.barrier == "bollard"
     end
   }),
   obstacle_category.new({
@@ -53,7 +49,7 @@ obstacle_categories = {
     perform_buffer = 0.4,
     further_tags = { "ref" },
     conditions = function(tags)
-      return is_obstacle(tags) and tags.highway == "street_lamp"
+      return tags['obstacle:parking'] == 'yes' and tags.highway == "street_lamp"
     end
   }),
   obstacle_category.new({
@@ -64,7 +60,7 @@ obstacle_categories = {
     perform_buffer = 1.5,
     further_tags = { "ref" },
     conditions = function(tags)
-      return is_obstacle(tags) and (tags.natural == "tree" or tags.natural == "tree_stump")
+      return tags['obstacle:parking'] == 'yes' and (tags.natural == "tree" or tags.natural == "tree_stump")
     end
   }),
   obstacle_category.new({
