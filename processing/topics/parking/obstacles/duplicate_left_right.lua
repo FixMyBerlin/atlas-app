@@ -1,8 +1,8 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-require("obstacle_categories")
-require("StructuredClone")
+require("Clone")
 require("Sanitize")
+require("obstacle_point_categories")
 local inspect = require("inspect")
 
 function duplicate_left_right(object)
@@ -10,7 +10,7 @@ function duplicate_left_right(object)
 
   -- Filter obstacle_categories to those with side_key ~= nil
   local side_key_categories = {}
-  for _, category in ipairs(obstacle_categories) do
+  for _, category in ipairs(obstacle_point_categories) do
     if category.side_key ~= nil then
       table.insert(side_key_categories, category)
     end
@@ -26,18 +26,18 @@ function duplicate_left_right(object)
       -- Check if the value is left|right|both
       if side_value == "both" then
         -- Create explicit left and right objects
-        local left_object = copy2(object)
+        local left_object = MetaClone(object)
         left_object.tags[side_key] = "left"
         left_object._transformed = "left"
-                table.insert(result, left_object)
+        table.insert(result, left_object)
 
-        local right_object = copy2(object)
+        local right_object = MetaClone(object)
         right_object.tags[side_key] = "right"
         right_object._transformed = "right"
         table.insert(result, right_object)
       else
         -- Create a single object with the specific side
-        local transformed_object = copy2(object)
+        local transformed_object = MetaClone(object)
         transformed_object.tags[side_key] = side_value
         transformed_object._transformed = side_value
         table.insert(result, transformed_object)

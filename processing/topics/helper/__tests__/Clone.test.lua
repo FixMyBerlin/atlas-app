@@ -1,8 +1,6 @@
-require("osm2pgsql")
-
 describe("structuredClone", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  require("StructuredClone")
+  require("Clone")
 
   it("clones a flat table", function()
     local original = { a = 1, b = 2, c = 3 }

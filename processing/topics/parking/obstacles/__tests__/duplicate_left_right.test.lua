@@ -1,7 +1,6 @@
 describe("`duplicate_left_right`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-  require("osm2pgsql")
   require("duplicate_left_right")
   local inspect = require('inspect')
 
@@ -32,9 +31,7 @@ describe("`duplicate_left_right`", function()
       ["crossing:kerb_extension"] = 'both',
     }
     local result = duplicate_left_right({ tags = tags })
-        assert.are.equal(#result, 2)
-    print('xx1'..inspect(result[1]))
-    print('xx2'..inspect(result[2]))
+    assert.are.equal(#result, 2)
     assert.are.equal(result[1]._transformed, 'left')
     assert.are.equal(result[2]._transformed, 'right')
     assert.are.same(result[1].tags["crossing:kerb_extension"], "left")

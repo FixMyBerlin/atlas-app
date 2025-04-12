@@ -15,7 +15,7 @@ function StructuredClone(original)
 end
 
 -- Thanks to https://gist.github.com/tylerneylon/81333721109155b2d244#file-copy-lua-L77-L88
-function MetaClone(obj)
+function MetaClone(obj, seen)
     -- Handle non-tables and previously-seen tables.
     if type(obj) ~= 'table' then return obj end
     if seen and seen[obj] then return seen[obj] end

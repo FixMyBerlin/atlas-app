@@ -3,8 +3,9 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
-require("obstacle_categories")
 require("duplicate_left_right")
+require("categorize_obstacles")
+require("obstacle_point_categories")
 local inspect = require('inspect')
 
 local tags_cc = {
@@ -19,7 +20,7 @@ function parking_obstacle_points(object)
 
   local results = {}
   for _, transformation in ipairs(transformations) do
-    local category = categorize_obstacles(transformation.tags)
+    local category = categorize_obstacles(transformation.tags, obstacle_point_categories)
     if category and category.conditions then
       local id = DefaultId(transformation) .. '/' .. category.side
 
