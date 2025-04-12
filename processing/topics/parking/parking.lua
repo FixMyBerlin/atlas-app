@@ -18,9 +18,11 @@ local obstacle_points = osm2pgsql.define_table({
 })
 
 function osm2pgsql.process_node(object)
-  local result = parking_obstacle_points(object)
-  if(result) then
-    obstacle_points:insert(result)
+  local results = parking_obstacle_points(object)
+  if results then
+    for _, result in ipairs(results) do
+      obstacle_points:insert(result)
+    end
   end
 end
 
