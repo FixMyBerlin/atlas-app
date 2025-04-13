@@ -37,6 +37,72 @@ obstacle_point_categories = {
     end
   }),
   obstacle_category_class.new({
+    source = "highway=turning_circle", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_circle
+    side = "self",
+    side_key = nil,
+    perform_move = false,
+    perform_buffer = 10,
+    further_tags = { "ref" },
+    conditions = function(tags)
+      return tags['highway'] == 'turning_circle'
+    end
+  }),
+  obstacle_category_class.new({
+    source = "highway=turning_loop", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_loop
+    side = "self",
+    side_key = nil,
+    perform_move = false,
+    perform_buffer = 15,
+    further_tags = { "ref" },
+    conditions = function(tags)
+      return tags['highway'] == 'turning_loop'
+    end
+  }),
+  obstacle_category_class.new({
+    source = "crossing=zebra(…)",
+    side = "left",
+    side_key = nil,
+    perform_move = true,
+    perform_buffer = 4.5,
+    further_tags = {},
+    conditions = function(tags)
+      return tags['crossing'] == "zebra" or tags['crossing_ref'] == "zebra" or tags['crossing:markings'] == "zebra"
+    end
+  }),
+  obstacle_category_class.new({
+    source = "crossing=zebra(…)",
+    side = "right",
+    side_key = nil,
+    perform_move = true,
+    perform_buffer = 4.5,
+    further_tags = {},
+    conditions = function(tags)
+      return tags['crossing'] == "zebra" or tags['crossing_ref'] == "zebra" or tags['crossing:markings'] == "zebra"
+    end
+  }),
+  obstacle_category_class.new({
+    source = "crossing=marked",
+    side = "left",
+    side_key = nil,
+    perform_move = true,
+    perform_buffer = 2,
+    further_tags = {},
+    conditions = function(tags)
+      return tags['crossing'] == "marked"
+    end
+  }),
+  obstacle_category_class.new({
+    source = "crossing=marked",
+    side = "right",
+    side_key = nil,
+    perform_move = true,
+    perform_buffer = 2,
+    further_tags = {},
+    conditions = function(tags)
+      return tags['crossing'] == "marked"
+    end
+  }),
+  obstacle_category_class.new({
     source = "crossing:buffer_marking=SIDE",
     side = "left",
     side_key = "crossing:buffer_marking",
