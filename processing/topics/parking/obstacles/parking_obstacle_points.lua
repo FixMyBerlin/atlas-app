@@ -3,46 +3,46 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
-require("duplicate_left_right")
-require("categorize_obstacles")
+require("categorize_and_transform")
 require("obstacle_point_categories")
-local inspect = require('inspect')
 
-local tags_cc = {
-  "mapillary",
-}
+
+function result_tags(result)
+  local id = DefaultId(result.object) .. '/' .. result.object._side
+
+  local result_tags = {
+    source = result.category.source,
+    side = result.object._side,
+    perform_buffer = result.category.perform_buffer,
+    perform_snap = result.category.perform_snap,
+  }
+
+  local tags_cc = {
+    "mapillary",
+  }
+  CopyTags(result_tags, result.object.tags, tags_cc, "osm_")
+  CopyTags(result_tags, result.object.tags, result.category.further_tags, "osm_")
+
+  local result_meta = Metadata(result)
+  result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
+
+  return {
+    id = id,
+    tags = result_tags,
+    meta = result_meta,
+    minzoom = 0 -- TODO
+  }
+end
 
 function parking_obstacle_points(object)
   if not object.tags then return end
-
-  local transformations = duplicate_left_right(object)
-  if not transformations then return end
-
   local results = {}
-  for _, transformation in ipairs(transformations) do
-    local category = categorize_obstacles(transformation.tags, obstacle_point_categories)
-    if category and category.conditions then
-      local id = DefaultId(transformation) .. '/' .. category.side
 
-      local result_tags = {
-        source = category.source,
-        side = category.side,
-        perform_buffer = category.perform_buffer,
-        perform_move = category.perform_move,
-      }
-      CopyTags(result_tags, transformation.tags, category.further_tags, "osm_")
-      CopyTags(result_tags, transformation.tags, tags_cc, "osm_")
-
-      local result_meta = Metadata(transformation)
-      result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
-
-      table.insert(results, {
-        id = id,
-        tags = result_tags,
-        meta = result_meta,
-        geom = transformation:as_point(),
-        minzoom = 0 -- TODO
-      })
+  local self_left_right = categorize_and_transform(object)
+  for _, result in ipairs(self_left_right) do
+    if result.category then
+      -- `geom` cannot be part of result_tags because that makes testing result_tags harder
+      table.insert(results, MergeTable({ geom = result.object:as_point() }, result_tags(result)))
     end
   end
 
