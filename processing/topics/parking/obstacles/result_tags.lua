@@ -8,6 +8,7 @@ function result_tags(result)
   local id = DefaultId(result.object) .. "/" .. result.object._side
 
   local result_tags = {
+    category = result.category.id,
     source = result.category.source,
     side = result.object._side,
     perform_buffer = result.category.perform_buffer,
