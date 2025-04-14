@@ -33,7 +33,7 @@ require("obstacle_point_categories")
 ---@field right BestResult
 --
 ---@return table<string, BestResult>
-function categorize_and_transform(object)
+function categorize_and_transform_points(object)
   ---@type table<string, number>
   local max_buffer = { self = -1, left = -1, right = -1 }
 

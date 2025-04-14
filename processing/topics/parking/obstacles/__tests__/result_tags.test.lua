@@ -1,8 +1,8 @@
-describe("`result_data`", function()
+describe("`result_tags`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-  require("parking_obstacle_points")
-  require("categorize_and_transform")
+  require("result_tags")
+  require("categorize_and_transform_points")
   require("Log")
 
   it('works', function()
@@ -14,7 +14,7 @@ describe("`result_data`", function()
       id = 1,
       type = 'node'
     }
-    local results = categorize_and_transform(input_object)
+    local results = categorize_and_transform_points(input_object)
     assert.are.equal(results.self.category, nil)
 
     local left_result = result_tags(results.left)

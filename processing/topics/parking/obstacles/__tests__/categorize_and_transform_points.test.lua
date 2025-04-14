@@ -1,7 +1,7 @@
-describe("`categorize_and_transform`", function()
+describe("`categorize_and_transform_points`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-  require("categorize_and_transform")
+  require("categorize_and_transform_points")
   require("Log")
 
   it('no category matches', function()
@@ -9,7 +9,7 @@ describe("`categorize_and_transform`", function()
       ["natural"] = 'tree',
       ["obstacle:parking"] = 'yes',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(type(result.self), "table")
     assert.are.equal(result.self.category.id, 'tree')
     assert.are.equal(result.self.object._side, 'self')
@@ -23,7 +23,7 @@ describe("`categorize_and_transform`", function()
       ["crossing:kerb_extension"] = 'left',
       ["any"] = 'tag',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(result.self.category, nil)
 
     assert.are.equal(type(result.left), "table")
@@ -38,7 +38,7 @@ describe("`categorize_and_transform`", function()
     local tags = {
       ["crossing:kerb_extension"] = 'both',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(result.self.category, nil)
 
     assert.are.equal(type(result.left), "table")
@@ -56,7 +56,7 @@ describe("`categorize_and_transform`", function()
     local tags = {
       ["crossing:kerb_extension"] = 'unknown',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(result.self.category, nil)
     assert.are.equal(result.left.category, nil)
     assert.are.equal(result.right.category, nil)
@@ -67,7 +67,7 @@ describe("`categorize_and_transform`", function()
       ["crossing:kerb_extension"] = 'left',
       ["crossing:buffer_marking"] = 'both',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(result.self.category, nil)
 
     assert.are.equal(type(result.left), "table")
@@ -90,7 +90,7 @@ describe("`categorize_and_transform`", function()
       ["crossing"] = 'marked',
       ["crossing:markings"] = 'zebra',
     }
-    local result = categorize_and_transform({ tags = tags })
+    local result = categorize_and_transform_points({ tags = tags })
     assert.are.equal(result.self.category, nil)
 
     assert.are.equal(type(result.left), "table")
