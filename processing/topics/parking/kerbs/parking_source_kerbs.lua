@@ -14,11 +14,10 @@ function parking_source_kerbs(object)
 
   if exit_processing(object.tags) then return results end
 
-  local objects = transform_kerbs(object)
-
-  if objects.object then
-    table.insert(objects, MergeTable({ geom = objects:as_linestring() }, result_tags_kerbs(objects)))
+  local transformed_objects = transform_kerbs(object)
+  for _, transformed_object in ipairs(transformed_objects) do
+    table.insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_kerbs(transformed_object)))
   end
 
-  return objects
+  return results
 end
