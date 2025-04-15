@@ -4,15 +4,14 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
-require("RoadClassification")
+require("RoadClassificationRoadValue")
 
 function result_tags_kerbs(object)
   local id = DefaultId(object) .. "/" .. object._side
 
-  local road_classification = RoadClassification(object)
   local result_tags = {
     name = object.tags.name or object.tags.ref or object.tags['is_sidepath:of:name'],
-    road = road_classification.road,
+    road = RoadClassificationRoadValue(object.tags),
     side = object._side,
   }
 
