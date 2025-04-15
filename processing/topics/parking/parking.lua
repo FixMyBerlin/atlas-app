@@ -1,12 +1,12 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-require("parking_obstacle_points")
-require("parking_obstacle_areas")
+require("parking_source_obstacle_points")
+require("parking_source_obstacle_areas")
 require("parking_source_kerbs")
 require("Log")
 
-local obstacle_points_table = osm2pgsql.define_table({
-  name = 'parking_obstacles_points',
+local source_obstacle_points_table = osm2pgsql.define_table({
+  name = 'parking_source_obstacles_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
@@ -21,8 +21,8 @@ local obstacle_points_table = osm2pgsql.define_table({
   }
 })
 
-local obstacle_areas_table = osm2pgsql.define_table({
-  name = 'parking_obstacles_areas',
+local source_obstacle_areas_table = osm2pgsql.define_table({
+  name = 'parking_source_obstacles_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
@@ -54,17 +54,17 @@ local source_kerbs_table = osm2pgsql.define_table({
 })
 
 function osm2pgsql.process_node(object)
-  local results = parking_obstacle_points(object)
+  local results = parking_source_obstacle_points(object)
   for _, result in ipairs(results) do
-    obstacle_points_table:insert(result)
+    source_obstacle_points_table:insert(result)
   end
 end
 
 function osm2pgsql.process_way(object)
-  local result_obstacles = parking_obstacle_areas(object)
+  local result_obstacles = parking_source_obstacle_areas(object)
   if result_obstacles then
     for _, result in ipairs(result_obstacles) do
-      obstacle_areas_table:insert(result)
+      source_obstacle_areas_table:insert(result)
     end
   end
 

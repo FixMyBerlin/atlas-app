@@ -5,7 +5,7 @@ require("MergeTable")
 require("categorize_area")
 require("result_tags_obstacles")
 
-function parking_obstacle_areas(object)
+function parking_source_obstacle_areas(object)
   local results = {}
   if not object.is_closed then return results end
   if next(object.tags) == nil then return results end
