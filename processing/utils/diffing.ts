@@ -22,8 +22,10 @@ export async function getTopicTables(topic: Topic) {
     )
     return tables
   } catch (error) {
+    // @ts-expect-error error is unkown but we know it's likely a bun error here https://bun.sh/docs/runtime/shell#error-handling
+    const msg = 'stderr' in error ? error.stderr.toString() : error
     throw new Error(
-      `Failed to get tables for topic "${topic}". This is likely due to some required columns missing: ${error}`,
+      `Failed to get tables for topic "${topic}". This is likely due to some required columns missing: ${msg}`,
     )
   }
 }

@@ -74,6 +74,7 @@ async function logToSynology(message: string, token: string) {
  */
 
 export async function synologyLogInfo(message: string) {
+  console.info('INFO synologyLogInfo', message)
   if (!params.synologyLogToken) {
     return
   }
@@ -86,6 +87,7 @@ export async function synologyLogInfo(message: string) {
  * @returns
  */
 export async function synologyLogError(message: string) {
+  console.error('ERROR synologyLogError', message)
   if (!params.synologyErrorLogToken) {
     return
   }
