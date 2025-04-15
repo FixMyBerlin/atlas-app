@@ -17,7 +17,7 @@ import { synologyLogError } from './utils/synology'
 async function main() {
   try {
     logPadded('Processing')
-    console.log('Processing:', 'Initilize')
+    console.log('Processing:', 'Initialize')
     await initialize()
 
     console.log('Processing:', 'Handle Data')
