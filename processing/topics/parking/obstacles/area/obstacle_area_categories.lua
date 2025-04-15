@@ -1,6 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/helper?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/area?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
 require("class_obstacle_category")
 
 obstacle_area_categories = {

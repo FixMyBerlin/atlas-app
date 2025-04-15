@@ -3,7 +3,6 @@ package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
 require("Log")
 require("MergeTable")
 require("JoinSets")
-require("RoadClassification")
 require("HighwayClasses")
 require("categorize_and_transform_points")
 require("result_tags_kerbs")
