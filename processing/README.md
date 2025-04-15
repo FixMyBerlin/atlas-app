@@ -90,6 +90,10 @@ For the development process it's often useful to run the processing on a single 
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
+### Process only certain topics
+
+Use `PROCESSING_OVERWRITE_TOPIC_LIST=parking` to only run the "parking" topic.
+
 ## Tests
 
 We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as our testing framework.

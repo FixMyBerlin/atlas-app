@@ -13,6 +13,7 @@ function parseParameters() {
     synologyLogToken: process.env.SYNOLOGY_LOG_TOKEN,
     synologyErrorLogToken: process.env.SYNOLOGY_ERROR_LOG_TOKEN,
     synologyURL: process.env.SYNOLOGY_URL,
+    topicListOverwrite: process.env.PROCESSING_OVERWRITE_TOPIC_LIST || undefined,
   }
 }
 

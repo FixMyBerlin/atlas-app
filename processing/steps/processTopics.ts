@@ -106,7 +106,15 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     console.log('ERROR logging the lastModified date', error)
   }
 
-  for (const topic of topicList) {
+  const topicsOverwrite = params.topicListOverwrite?.split(',').map((t) => t.trim())
+  const topics = topicsOverwrite ? topicList.filter((t) => topicsOverwrite.includes(t)) : topicList
+  if (topicsOverwrite) {
+    console.log(
+      `⏩ Skipping Topics based on PROCESSING_OVERWRITE_TOPIC_LIST=${params.topicListOverwrite}`,
+      { topics },
+    )
+  }
+  for (const topic of topics) {
     // Get all tables related to `topic`
     // This needs to happen first, so `processedTables` includes what we skip below
     const topicTables = await getTopicTables(topic)
