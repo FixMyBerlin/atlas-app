@@ -1,5 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/helper?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/point?.lua"
 require("class_obstacle_category")
 
 local function is_left_right_both(input)

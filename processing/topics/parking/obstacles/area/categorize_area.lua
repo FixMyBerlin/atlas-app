@@ -1,5 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/helper?.lua"
+package.path = package.path .. ";/processing/topics/parking/obstacles/area?.lua"
 require("Log")
 require("obstacle_area_categories")
 
