@@ -1,3 +1,6 @@
+-- package.path = package.path .. ";/processing/topics/helper/?.lua"
+-- require("osm2pgsql") -- Warning: Don't include this, it will fail the processing for unkown reasons.
+
 -- Makes sure our sanitized `width` only holds "meter" values and only numbers
 function ParseLength(length)
   local val, unit = osm2pgsql.split_unit(length, 'm')

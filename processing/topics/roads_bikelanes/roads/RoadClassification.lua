@@ -3,6 +3,8 @@ require("Set")
 require("CopyTags")
 require("Sanitize")
 require("DeriveTrafficSigns")
+require("ParseLength")
+require("MergeTable")
 
 local tags_copied = {
   "mapillary",

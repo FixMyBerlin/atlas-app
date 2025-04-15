@@ -3,8 +3,9 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
+require("Log")
 
-function result_tags(result)
+function result_tags_obstacles(result)
   local id = DefaultId(result.object) .. "/" .. result.object._side
 
   local result_tags = {

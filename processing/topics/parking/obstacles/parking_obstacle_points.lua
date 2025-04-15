@@ -3,7 +3,7 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("Log")
 require("MergeTable")
 require("categorize_and_transform_points")
-require("result_tags")
+require("result_tags_obstacles")
 
 function parking_obstacle_points(object)
   local results = {}
@@ -12,7 +12,7 @@ function parking_obstacle_points(object)
   local self_left_right = categorize_and_transform_points(object)
   for _, result in pairs(self_left_right) do
     if result.object then
-      table.insert(results, MergeTable({ geom = result.object:as_point() }, result_tags(result)))
+      table.insert(results, MergeTable({ geom = result.object:as_point() }, result_tags_obstacles(result)))
     end
   end
 
