@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client'
-import { $ } from 'bun'
+import { $, sql } from 'bun'
 import chalk from 'chalk'
 import type { Topic } from '../constants/topics.const'
+import { params } from './parameters'
 
-const backupTableIdentifier = (table: string) => `backup."${table}"`
-const diffTableIdentifier = (table: string) => `public."${table}_diff"`
-const tableIdentifier = (table: string) => `public."${table}"`
+const backupTableIdentifier = (table: string) => `backup."${table}"` as const
+const diffTableIdentifier = (table: string) => `public."${table}_diff"` as const
+const tableIdentifier = (table: string) => `public."${table}"` as const
 export async function getTopicTables(topic: Topic) {
   try {
     // Some tables don't follow the strict schema that is required for the diffing to work.
@@ -30,10 +30,8 @@ export async function getTopicTables(topic: Topic) {
   }
 }
 
-const prisma = new PrismaClient()
-
 export async function initializeBackupSchema() {
-  return prisma.$executeRaw`CREATE SCHEMA IF NOT EXISTS backup`
+  return sql`CREATE SCHEMA IF NOT EXISTS backup`
 }
 export async function initializeCustonFunctions() {
   return $`psql -q -f ./utils/diffing/jsonb_diff.sql`
@@ -45,11 +43,11 @@ export async function initializeCustonFunctions() {
  * @returns a set of table names
  */
 export async function getSchemaTables(schema: string) {
-  const rows: { table_name: string }[] = await prisma.$queryRaw`
+  const rows: { table_name: string }[] = await sql`
     SELECT table_name
     FROM information_schema.tables
     WHERE table_schema = ${schema}
-    AND table_type = 'BASE TABLE';`
+    AND table_type = 'BASE TABLE'`
   return new Set(rows.map(({ table_name }) => table_name))
 }
 
@@ -58,16 +56,19 @@ export async function getSchemaTables(schema: string) {
  * @returns the Promise of the query
  */
 export async function backupTable(table: string) {
-  console.log('Diffing: backupTable', table)
   const tableId = tableIdentifier(table)
   const backupTableId = backupTableIdentifier(table)
-  await prisma.$queryRawUnsafe(`DROP TABLE IF EXISTS ${backupTableId}`)
-  return prisma.$queryRawUnsafe(`CREATE TABLE ${backupTableId} AS TABLE ${tableId}`)
+  await sql.unsafe(`DROP TABLE IF EXISTS ${backupTableId}`)
+  await sql.unsafe(`CREATE TABLE ${backupTableId} AS TABLE ${tableId}`)
+  if (params.environment === 'development') {
+    console.log('Diffing: Dropped and created table', table)
+  }
+  return
 }
 
 export async function dropDiffTable(table: string) {
   const diffTableId = diffTableIdentifier(table)
-  return prisma.$executeRawUnsafe(`DROP TABLE IF EXISTS ${diffTableId}`)
+  return sql.unsafe(`DROP TABLE IF EXISTS ${diffTableId}`)
 }
 
 /**
@@ -76,7 +77,7 @@ export async function dropDiffTable(table: string) {
  */
 async function createSpatialIndex(table: string) {
   const tableId = diffTableIdentifier(table)
-  return prisma.$executeRawUnsafe(`CREATE INDEX ON ${tableId} USING GIST(geom)`)
+  return sql.unsafe(`CREATE INDEX ON ${tableId} USING GIST(geom)`)
 }
 
 /**
@@ -96,8 +97,8 @@ export async function computeDiff(table: string) {
   }
 
   // compute full outer join
-  await prisma.$executeRawUnsafe(`DROP TABLE IF EXISTS ${joinedTableId}`)
-  await prisma.$executeRawUnsafe(`
+  await sql.unsafe(`DROP TABLE IF EXISTS ${joinedTableId}`)
+  await sql.unsafe(`
     CREATE TABLE ${joinedTableId} AS
     SELECT
       ${tableId}.tags AS new_tags,
@@ -108,44 +109,44 @@ export async function computeDiff(table: string) {
       ${backupTableId}.id AS old_id,
       ${backupTableId}.meta AS old_meta,
       ${backupTableId}.geom AS old_geom
-    FROM "${backupTableId}"
+    FROM ${backupTableId}
     FULL OUTER JOIN ${tableId} ON ${backupTableId}.id = ${tableId}.id`)
 
   // create the diff table
-  await prisma.$executeRawUnsafe(`
+  await sql.unsafe(`
     CREATE TABLE ${diffTableId} AS
     SELECT id, tags, meta, geom FROM ${tableId}
     WITH NO DATA`)
 
   // compute diff
-  const modifiedPromise: Promise<number> = prisma.$executeRawUnsafe(`
+  const modifiedPromise: Promise<number> = sql.unsafe(`
     INSERT INTO ${diffTableId} (id, tags, meta, geom)
     SELECT
       new_id AS id,
       jsonb_diff(old_tags, new_tags) || ${changeTypes.modified} AS tags,
       new_meta AS meta,
       new_geom AS geom
-      FROM "${joinedTableId}"
+      FROM ${joinedTableId}
       WHERE new_id IS NOT NULL AND old_id IS NOT NULL AND old_tags <> new_tags`)
 
-  const addedPromise: Promise<number> = prisma.$executeRawUnsafe(`
+  const addedPromise: Promise<number> = sql.unsafe(`
     INSERT INTO ${diffTableId} (id, tags, meta, geom)
     SELECT
       new_id AS id,
       new_tags || ${changeTypes.added} AS tags,
       new_meta AS meta,
       new_geom AS geom
-    FROM "${joinedTableId}"
-    WHERE old_id IS NULL;`)
+    FROM ${joinedTableId}
+    WHERE old_id IS NULL`)
 
-  const removedPromise: Promise<number> = prisma.$executeRawUnsafe(`
+  const removedPromise: Promise<number> = sql.unsafe(`
     INSERT INTO ${diffTableId} (id, tags, meta, geom)
     SELECT
       old_id AS id,
       old_tags || ${changeTypes.removed} AS tags,
       old_meta AS meta,
       old_geom AS geom
-    FROM "${joinedTableId}"
+    FROM ${joinedTableId}
     WHERE new_id IS NULL`)
 
   return Promise.all([modifiedPromise, addedPromise, removedPromise]).then(
@@ -156,7 +157,7 @@ export async function computeDiff(table: string) {
       } else {
         createSpatialIndex(table)
       }
-      await prisma.$executeRawUnsafe(`DROP TABLE ${joinedTableId}`)
+      await sql`DROP TABLE IF EXISTS ${sql(joinedTableId)}`
       return {
         table,
         nTotal,

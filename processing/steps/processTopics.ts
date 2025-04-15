@@ -127,7 +127,7 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
 
     // Backup all tables related to topic
     if (diffChanges) {
-      console.log('Diffing:', 'Backup table')
+      console.log('Diffing:', 'Backup tables')
       // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
       // Which means existing backup tables don't change (are frozen).
       // Learn more in [processing/README](../../processing/README.md#reference)

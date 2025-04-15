@@ -1,21 +1,18 @@
-import { PrismaClient } from '@prisma/client'
-import { $ } from 'bun'
+import { $, sql } from 'bun'
 import { filteredFilePath } from './filter'
-
-const prisma = new PrismaClient()
 
 /**
  * Create the metadata table in the database. If already exists, does nothing.
  * @returns the Promise of the query
  */
 export async function initializeMetadataTable() {
-  return prisma.$executeRaw`
+  return sql`
     CREATE TABLE IF NOT EXISTS public.meta (
       id SERIAL PRIMARY KEY,
       processed_at TIMESTAMP,
       processing_duration TIME,
       osm_data_from TIMESTAMP
-    );`
+    )`
 }
 
 /**
@@ -40,12 +37,12 @@ export async function getFileTimestamp(fileName: string) {
  * @returns the Promise of the query
  */
 export async function writeMetadata(fileName: string, processingDurationMS: number) {
-  const filesTimestamp = new Date(await getFileTimestamp(fileName))
-  const processingDate = new Date()
-  const processingDuration = new Date(processingDurationMS)
+  const processingDuration = new Date(processingDurationMS).toISOString().slice(11, 19) // Extract HH:MM:SS from the ISO string
 
-  return prisma.$executeRaw`
-    INSERT INTO public.meta
-      (processed_at, processing_duration, osm_data_from)
-      VALUES (${processingDate}, ${processingDuration}, ${filesTimestamp});`
+  const data = {
+    processed_at: new Date(),
+    processing_duration: processingDuration,
+    osm_data_from: new Date(await getFileTimestamp(fileName)),
+  }
+  return sql`INSERT INTO public.meta ${sql(data)}`
 }

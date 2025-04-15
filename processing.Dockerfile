@@ -41,5 +41,4 @@ RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH=/root/.bun/bin:$PATH
 RUN bun install
 
-RUN bunx prisma generate --schema=/processing/constants/schema.prisma
 CMD bun run /processing/index.ts
