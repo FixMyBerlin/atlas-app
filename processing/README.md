@@ -114,7 +114,7 @@ Additionally all tests are being run in the [husky](https://typicode.github.io/h
 
 **Good to know:**
 
-- To use the `inspect` package we need to require it first `inspect = require('inspect')` ([Docs](https://github.com/kikito/inspect.lua?tab=readme-ov-file#installation))
+- To use the `Log` helper (`require("Log")`) to inspect and print data ([Docs](https://github.com/kikito/inspect.lua?tab=readme-ov-file#installation))
 
 ## Deployment
 
