@@ -7,15 +7,19 @@ require("Metadata")
 require("ParseLength")
 require("RoadClassificationRoadValue")
 
-function result_tags_kerbs(object)
+function result_tags_kerb(object)
   local id = DefaultId(object) .. "/" .. object._side
 
   local result_tags = {
     name = object.tags.name or object.tags.ref or object.tags['is_sidepath:of:name'],
-    width = ParseLength(object.tags.width),
+    width = ParseLength(object.tags.width), -- TODO: fallback
     road = RoadClassificationRoadValue(object.tags),
     side = object._side,
+    perform_move = 3, -- TODO: Based on width/2
   }
+  if object._side == "left" then
+    result_tags.perform_move = result_tags.perform_move * -1 -- LATER: Specific value based on which lane the centerline uses…
+  end
 
   local tags_cc = {
     "mapillary",

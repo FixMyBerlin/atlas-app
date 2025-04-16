@@ -1,9 +1,8 @@
-describe("`result_tags_kerbs`", function()
+describe("`transform_kerbs`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/parking/kerbs/helper/?.lua"
-  require("result_tags_kerbs")
+  require("transform_kerbs")
   require("Log")
-  require('osm2pgsql')
 
   it('works', function()
     local input_object = {
@@ -14,13 +13,12 @@ describe("`result_tags_kerbs`", function()
       },
       id = 1,
       type = 'way',
-      _side = 'left'
     }
-    local result = result_tags_kerbs(input_object)
-    assert.are.equal(result.id, "way/"..input_object.id.."/"..result.tags.side)
-    assert.are.equal(type(result.meta.update_at), "string")
-    assert.are.equal(result.minzoom, 0)
-    assert.are.equal(result.tags.side, input_object._side)
-    assert.are.equal(result.tags.osm_mapillary, input_object.tags.mapillary)
+    local results = transform_parking_lines(input_object)
+    assert.are.equal(#results, 2)
+    assert.are.equal(results[1].id, input_object.id)
+    assert.are.equal(results[1]._side, "left")
+    assert.are.equal(results[2].id, input_object.id)
+    assert.are.equal(results[2]._side, "right")
   end)
 end)
