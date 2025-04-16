@@ -1,10 +1,8 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
+package.path = package.path .. ";/processing/topics/parking/kerbs/helper/?.lua"
 require("Log")
 require("MergeTable")
-require("JoinSets")
-require("HighwayClasses")
-require("categorize_and_transform_points")
 require("result_tags_kerbs")
 require("exit_processing")
 require("transform_kerbs")

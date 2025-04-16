@@ -1,6 +1,6 @@
 describe("`result_tags_kerbs`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
+  package.path = package.path .. ";/processing/topics/parking/kerbs/helper/?.lua"
   require("result_tags_kerbs")
   require("Log")
   require('osm2pgsql')

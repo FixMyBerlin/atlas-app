@@ -1,6 +1,6 @@
 describe("`exit_processing`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
+  package.path = package.path .. ";/processing/topics/parking/kerbs/helper/?.lua"
   require("exit_processing")
   require("Log")
 
