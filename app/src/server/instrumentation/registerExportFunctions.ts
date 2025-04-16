@@ -37,7 +37,7 @@ export async function registerExportFunctions(tables: typeof exportApiIdentifier
       if (!tagKeys || !metaKeys) {
         console.error(
           'Failed to `registerExportFunctions` because required tagKeys or metaKeys are empty',
-          { functionName, tagKeyQuery, metaKeyQuery },
+          JSON.stringify({ functionName, tagKeyQuery, metaKeyQuery }),
         )
       }
 

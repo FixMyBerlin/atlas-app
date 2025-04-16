@@ -66,6 +66,7 @@ export function createBoundingPolygon(mapInstance, sidebarSize, inspectorSize) {
 }
 
 export function compareFeatures(feature1, feature2) {
+  // @ts-expect-error, see https://github.com/bjornharrtell/jsts/issues/532
   const geojsonReader = new GeoJSONReader()
   const f1 = geojsonReader.read(feature1.geometry)
   const f2 = geojsonReader.read(feature2.geometry)
