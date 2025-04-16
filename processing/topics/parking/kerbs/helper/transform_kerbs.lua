@@ -3,7 +3,7 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 require("Log")
 require("Clone")
 
-function transform_kerbs(object)
+function transform_parking_lines(object)
   local transformed_objects = {}
   for _, side in ipairs({ "left", "right" }) do
     local side_object = MetaClone(object)

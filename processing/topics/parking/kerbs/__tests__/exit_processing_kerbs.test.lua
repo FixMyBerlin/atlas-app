@@ -1,14 +1,14 @@
-describe("`exit_processing`", function()
+describe("`exit_processing_kerbs`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
   package.path = package.path .. ";/processing/topics/parking/kerbs/helper/?.lua"
-  require("exit_processing")
+  require("exit_processing_kerbs")
   require("Log")
 
   it('ignores non highway', function()
     local tags = {
       ["foo"] = 'bar',
     }
-    local result = exit_processing(tags)
+    local result = exit_processing_kerbs(tags)
     assert.are.equal(result, true)
   end)
 
@@ -16,7 +16,7 @@ describe("`exit_processing`", function()
     local tags = {
       ["highway"] = 'service',
     }
-    local result = exit_processing(tags)
+    local result = exit_processing_kerbs(tags)
     assert.are.equal(result, false)
   end)
 
@@ -25,7 +25,7 @@ describe("`exit_processing`", function()
       ["highway"] = 'construction',
       ["construction"] = 'service',
     }
-    local result = exit_processing(tags)
+    local result = exit_processing_kerbs(tags)
     assert.are.equal(result, false)
   end)
 
@@ -34,7 +34,7 @@ describe("`exit_processing`", function()
       ["highway"] = 'residential',
       ["vehicle"] = 'destination',
     }
-    local result = exit_processing(tags)
+    local result = exit_processing_kerbs(tags)
     assert.are.equal(result, false)
   end)
 end)

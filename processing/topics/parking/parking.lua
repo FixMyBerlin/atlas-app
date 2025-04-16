@@ -1,9 +1,11 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
+package.path = package.path .. ";/processing/topics/parking/parking/?.lua"
 require("parking_source_obstacle_points")
 require("parking_source_obstacle_areas")
 require("parking_source_kerbs")
+require("parking_source_parking_lines")
 require("Log")
 
 local source_obstacle_points_table = osm2pgsql.define_table({
@@ -54,6 +56,22 @@ local source_kerbs_table = osm2pgsql.define_table({
   }
 })
 
+local source_parking_lines_table = osm2pgsql.define_table({
+  name = 'parking_source_parking_lines',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring' },
+    { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
+  }
+})
+
 function osm2pgsql.process_node(object)
   local results = parking_source_obstacle_points(object)
   for _, result in ipairs(results) do
@@ -63,16 +81,20 @@ end
 
 function osm2pgsql.process_way(object)
   local result_obstacles = parking_source_obstacle_areas(object)
-  if result_obstacles then
-    for _, result in ipairs(result_obstacles) do
-      source_obstacle_areas_table:insert(result)
-    end
+  for _, result in ipairs(result_obstacles) do
+    source_obstacle_areas_table:insert(result)
   end
 
   local result_kerbs = parking_source_kerbs(object)
   for _, result in ipairs(result_kerbs) do
     source_kerbs_table:insert(result)
   end
+
+  local result_parking = parking_source_parking_lines(object)
+  for _, result in ipairs(result_parking) do
+    source_parking_lines_table:insert(result)
+  end
+
 end
 
 -- function osm2pgsql.process_relation(object)

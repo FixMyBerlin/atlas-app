@@ -4,7 +4,7 @@ require("JoinSets")
 require("HighwayClasses")
 require("Log")
 
-function exit_processing(tags)
+function exit_processing_kerbs(tags)
   if not tags.highway then return true end
 
   -- Filter based on highway classes

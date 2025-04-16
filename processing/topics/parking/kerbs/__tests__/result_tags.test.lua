@@ -14,7 +14,7 @@ describe("`transform_kerbs`", function()
       id = 1,
       type = 'way',
     }
-    local results = transform_kerbs(input_object)
+    local results = transform_parking_lines(input_object)
     assert.are.equal(#results, 2)
     assert.are.equal(results[1].id, input_object.id)
     assert.are.equal(results[1]._side, "left")
