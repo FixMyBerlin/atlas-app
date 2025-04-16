@@ -28,4 +28,13 @@ describe("`exit_processing`", function()
     local result = exit_processing(tags)
     assert.are.equal(result, false)
   end)
+
+  it('works for construction highways', function()
+    local tags = {
+      ["highway"] = 'residential',
+      ["vehicle"] = 'destination',
+    }
+    local result = exit_processing(tags)
+    assert.are.equal(result, false)
+  end)
 end)
