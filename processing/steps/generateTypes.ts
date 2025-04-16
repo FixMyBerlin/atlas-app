@@ -20,6 +20,14 @@ export async function generateTypes(processedTables: string[]) {
 }
 
 async function writeTableIdTypes(processedTables: string[]) {
+  if (params.topicListOverwrite) {
+    console.info(
+      'Generating types:',
+      'Skipped because `PROCESSING_OVERWRITE_TOPIC_LIST` is present',
+    )
+    return
+  }
+
   const typeFilePath = join(TYPES_DIR, 'tableId.generated.const.ts')
   const typeFile = Bun.file(typeFilePath)
 
