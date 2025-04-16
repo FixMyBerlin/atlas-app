@@ -1,7 +1,7 @@
 import { $, sql } from 'bun'
 import chalk from 'chalk'
 import type { Topic } from '../constants/topics.const'
-import { params } from './parameters'
+import { isDev } from './isDev'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"` as const
 const diffTableIdentifier = (table: string) => `public."${table}_diff"` as const
@@ -60,7 +60,7 @@ export async function backupTable(table: string) {
   const backupTableId = backupTableIdentifier(table)
   await sql.unsafe(`DROP TABLE IF EXISTS ${backupTableId}`)
   await sql.unsafe(`CREATE TABLE ${backupTableId} AS TABLE ${tableId}`)
-  if (params.environment === 'development') {
+  if (isDev) {
     console.log('Diffing: Dropped and created table', table)
   }
   return
