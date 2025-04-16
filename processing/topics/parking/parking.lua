@@ -90,8 +90,8 @@ function osm2pgsql.process_way(object)
     source_kerbs_table:insert(result)
   end
 
-  local result_parking = parking_source_parking_lines(object)
-  for _, result in ipairs(result_parking) do
+  local result_parking_lines = parking_source_parking_lines(object)
+  for _, result in ipairs(result_parking_lines) do
     source_parking_lines_table:insert(result)
   end
 

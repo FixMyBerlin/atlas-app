@@ -12,13 +12,8 @@ function parking_source_parking_lines(object)
   if exit_processing_parking_lines(object.tags) then return results end
 
   local transformed_objects = transform_parking_lines(object)
-
-  if transformed_objects.left ~= nil then
-    table.insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_parking_lines(transformed_objects.left)))
-  end
-
-  if transformed_objects.right ~= nil then
-    table.insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_parking_lines(transformed_objects.right)))
+  for _, transformed_object in ipairs(transformed_objects) do
+    table.insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_parking_lines(transformed_object)))
   end
 
   return results
