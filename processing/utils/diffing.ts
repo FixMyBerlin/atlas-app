@@ -1,6 +1,6 @@
 import { $, sql } from 'bun'
 import chalk from 'chalk'
-import type { Topic } from '../constants/topics.const'
+import type { Topic } from '../constants/projects.const'
 import { isDev } from './isDev'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"` as const
