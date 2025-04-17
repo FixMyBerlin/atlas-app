@@ -76,3 +76,21 @@ export async function idFilter(fileName: string, ids: string) {
 
   return { fileName: ID_FILTERED_FILE, fileChanged: true }
 }
+export async function bboxFilter(
+  fileName: string,
+  outputName: string,
+  bbox: [number, number, number, number],
+) {
+  const bboxString = bbox.join(',')
+  console.log(`Filtering the OSM file with bbox=${bboxString}...`)
+  try {
+    await $`osmium extract \
+              --overwrite \
+              --set-bounds \
+              --bbox ${bboxString} \
+              --output ${filteredFilePath(outputName)} \
+              ${filteredFilePath(fileName)}`
+  } catch (error) {
+    throw new Error(`Failed to filter the OSM file by bbox: ${error}`)
+  }
+}

@@ -1,8 +1,7 @@
 import { $ } from 'bun'
-import chalk from 'chalk'
 import { join } from 'path'
 import { TOPIC_DIR } from '../constants/directories.const'
-import { topicList, type Topic } from '../constants/topics.const'
+import { projects, type Topic } from '../constants/projects.const'
 import {
   backupTable,
   diffTables,
@@ -14,9 +13,9 @@ import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
 import { synologyLogInfo } from '../utils/synology'
-import { filteredFilePath } from './filter'
+import { bboxFilter, filteredFilePath } from './filter'
 
-const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
+const topicPath = (topic: Topic) => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
 
 /**
@@ -44,36 +43,18 @@ async function runSQL(topic: Topic) {
  * Run the given topic's lua file with osm2pgsql on the given file
  */
 async function runLua(fileName: string, topic: Topic) {
-  console.log(
-    'runTopic: runLua',
-    topic,
-    params.processOnlyBbox
-      ? chalk.yellow(`But only for PROCESS_ONLY_BBOX=${params.processOnlyBbox}`)
-      : '',
-  )
-  const bboxFilterCommand = params.processOnlyBbox ? `--bbox=${params.processOnlyBbox} \\` : ''
+  console.log('runTopic: runLua', topic)
   const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
   try {
     // Did not find an easy way to use $(Shell) and make the `--bbox` optional
-    if (params.processOnlyBbox) {
-      await $`osm2pgsql \
-              --bbox=${params.processOnlyBbox} \
+    await $`osm2pgsql \
               --number-processes=8 \
               --create \
               --output=flex \
               --extra-attributes \
               --style=${luaFile} \
               ${filePath}`
-    } else {
-      await $`osm2pgsql \
-              --number-processes=8 \
-              --create \
-              --output=flex \
-              --extra-attributes \
-              --style=${luaFile} \
-              ${filePath}`
-    }
   } catch (error) {
     throw new Error(`Failed to run lua file "${luaFile}": ${error}`)
   }
@@ -126,60 +107,64 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     console.log('ERROR logging the lastModified date', error)
   }
 
-  const topics =
-    params.processOnlyTopics.length > 0
-      ? topicList.filter((t) => params.processOnlyTopics?.includes(t))
-      : topicList
-  if (params.processOnlyTopics.length > 0) {
-    console.log(
-      `⏩ Skipping Topics based on PROCESS_ONLY_TOPICS=${params.processOnlyTopics.join(',')}`,
-      { topics },
-    )
-  }
-  for (const topic of topics) {
-    // Get all tables related to `topic`
-    // This needs to happen first, so `processedTables` includes what we skip below
-    const topicTables = await getTopicTables(topic)
-    topicTables.forEach((table) => processedTables.add(table))
-
-    // Guard
-    const topicChanged = await directoryHasChanged(topicPath(topic))
-    if (skipCode && !topicChanged) {
-      console.log(
-        `⏩ Skipping topic "${topic}".`,
-        "The code hasn't changed and `SKIP_UNCHANGED` is active.",
-      )
+  for (const project of projects) {
+    if (!params.project && !project.default) {
       continue
     }
-
-    logStart(`Topic "${topic}"`)
-    const processedTopicTables = topicTables.intersection(tableListPublic)
-
-    // Backup all tables related to topic
-    if (diffChanges) {
-      console.log('Diffing:', 'Backup tables')
-      // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
-      // Which means existing backup tables don't change (are frozen).
-      // Learn more in [processing/README](../../processing/README.md#reference)
-      const toBackup = params.freezeData
-        ? processedTopicTables.difference(tableListBackup)
-        : processedTopicTables
-      await Promise.all(Array.from(toBackup).map(backupTable))
+    if (params.project !== project.name) {
+      continue
     }
-
-    // Run the topic with osm2pgsql and the sql post-processing
-    await runTopic(fileName, topic)
-
-    // Update the code hashes
-    updateDirectoryHash(topicPath(topic))
-
-    // Update the diff tables
-    if (diffChanges) {
-      console.log('Diffing:', 'Update diffs')
-      await diffTables(Array.from(processedTopicTables))
+    let projectFileName = fileName
+    if (project.bbox) {
+      projectFileName = `${project.name}_extracted.osm.pbf`
+      await bboxFilter(fileName, projectFileName, project.bbox)
+      // TODO: this isn't handled by the hashing logic. Changes in the bbox will not be detected atm.
     }
+    for (const topic of project.topics) {
+      // Get all tables related to `topic`
+      // This needs to happen first, so `processedTables` includes what we skip below
+      const topicTables = await getTopicTables(topic)
+      topicTables.forEach((table) => processedTables.add(table))
 
-    logEnd(`Topic "${topic}"`)
+      // Guard
+      const topicChanged = await directoryHasChanged(topicPath(topic))
+      if (skipCode && !topicChanged) {
+        console.log(
+          `⏩ Skipping topic "${topic}".`,
+          "The code hasn't changed and `SKIP_UNCHANGED` is active.",
+        )
+        continue
+      }
+
+      logStart(`Topic "${topic}"`)
+      const processedTopicTables = topicTables.intersection(tableListPublic)
+
+      // Backup all tables related to topic
+      if (diffChanges) {
+        console.log('Diffing:', 'Backup tables')
+        // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
+        // Which means existing backup tables don't change (are frozen).
+        // Learn more in [processing/README](../../processing/README.md#reference)
+        const toBackup = params.freezeData
+          ? processedTopicTables.difference(tableListBackup)
+          : processedTopicTables
+        await Promise.all(Array.from(toBackup).map(backupTable))
+      }
+
+      // Run the topic with osm2pgsql and the sql post-processing
+      await runTopic(projectFileName, topic)
+
+      // Update the code hashes
+      updateDirectoryHash(topicPath(topic))
+
+      // Update the diff tables
+      if (diffChanges) {
+        console.log('Diffing:', 'Update diffs')
+        await diffTables(Array.from(processedTopicTables))
+      }
+
+      logEnd(`Topic "${topic}"`)
+    }
   }
 
   const timeElapsed = logEnd('Processing Topics')
