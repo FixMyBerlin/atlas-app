@@ -5,8 +5,8 @@
 
 -- From source_germany, cut bbox for region bibi
 -- bbox: {min: [9.0671, 48.9229],max: [9.1753, 48.9838],},
-INSERT INTO public.parking_source_regions_parking_lines
-SELECT * FROM public.parking_source_germany_parking_lines
+INSERT INTO public.parking_source_regions_obstacle_areas
+SELECT * FROM public.parking_source_germany_obstacle_areas
 WHERE ST_Intersects(
     geom,
     ST_Transform(
@@ -17,8 +17,8 @@ WHERE ST_Intersects(
 
 -- From source_germany, cut bbox for region berlin
 -- bbox: {min: [13.2809, 52.46],max: [13.4929, 52.5528],},
-INSERT INTO public.parking_source_regions_parking_lines
-SELECT * FROM public.parking_source_germany_parking_lines
+INSERT INTO public.parking_source_regions_obstacle_areas
+SELECT * FROM public.parking_source_germany_obstacle_areas
 WHERE ST_Intersects(
     geom,
     ST_Transform(
@@ -28,5 +28,5 @@ WHERE ST_Intersects(
 );
 
 -- Copy the result into the table that we perform updates on
-INSERT INTO public.parking_parking_lines
-SELECT * FROM public.parking_source_regions_parking_lines;
+INSERT INTO public.parking_obstacle_areas
+SELECT * FROM public.parking_source_regions_obstacle_areas;

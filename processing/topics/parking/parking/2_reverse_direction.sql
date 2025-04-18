@@ -2,7 +2,7 @@
 -- Reverse the line direction for alle parking lines on the left.
 
 UPDATE
-  public.parking_source_parking_lines
+  public.parking_parking_lines
 SET
   geom = ST_Reverse(geom)
 WHERE
