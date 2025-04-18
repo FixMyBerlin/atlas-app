@@ -92,7 +92,15 @@ See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) 
 
 ### Process only certain topics
 
-Use `PROCESSING_OVERWRITE_TOPIC_LIST=parking` to only run the "parking" topic.
+Use `PROCESS_ONLY_TOPICS=parking` to only run the "parking" topic.
+Format: "topic1,topic2".
+This can be used during development to speed up the process.
+
+### Process only a certain bbox
+
+Use `PROCESS_ONLY_BBOX=13.4178,52.4681,13.4550,52.4817` to only process data withing this bbox.
+Format: MINLON,MINLAT,MAXLON,MAXLAT. [osm2pgsql Docs](https://osm2pgsql.org/doc/manual.html#the-input).
+This can be used during development to speed up the process.
 
 ## Tests
 
