@@ -14,16 +14,13 @@
 UPDATE
   public.parking_obstacle_points
 SET
-  geom = ST_Transform(
-    ST_Project(
-      ST_Transform(geom, 25833),
-      4.4, -- distance to move
-      CASE
-        WHEN (tags->>'side')::text = 'left' THEN radians(270) -- move to the left
-        ELSE radians(90) -- move to the right (default)
-      END
-    ),
-    3857
+  geom = ST_Project(
+    geom,
+    4.4, -- distance to move
+    CASE
+      WHEN (tags->>'side')::text = 'left' THEN radians(270) -- move to the left
+      ELSE radians(90) -- move to the right (default)
+    END
   )
 WHERE
   (tags->>'perform_snap')::text = 'side';

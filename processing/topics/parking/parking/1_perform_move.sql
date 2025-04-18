@@ -5,7 +5,7 @@
 UPDATE
   public.parking_parking_lines
 SET
-  geom = ST_Transform(ST_OffsetCurve(ST_Simplify(ST_Transform(geom, 25833), 0.5), (tags->>'perform_move')::numeric), 3857)
+  geom = ST_OffsetCurve(ST_Simplify(geom, 0.5), (tags->>'perform_move')::numeric)
 WHERE
   ST_IsSimple(geom)
   AND NOT ST_IsClosed(geom)
