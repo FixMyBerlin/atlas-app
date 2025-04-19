@@ -1,17 +1,19 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
+package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
 require("ParseLength")
 require("RoadClassificationRoadValue")
+require("road_name")
 
 function result_tags_kerb(object)
   local id = DefaultId(object) .. "/" .. object._side
 
   local result_tags = {
-    name = object.tags.name or object.tags.ref or object.tags['is_sidepath:of:name'],
+    name = road_name(object.tags),
     width = ParseLength(object.tags.width), -- TODO: fallback
     road = RoadClassificationRoadValue(object.tags),
     side = object._side,

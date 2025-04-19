@@ -1,11 +1,13 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
+package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
 require("CopyTags")
 require("MergeTable")
 require("DefaultId")
 require("Metadata")
 require("ParseLength")
 require("RoadClassificationRoadValue")
+require("road_name")
 require("Log")
 
 function result_tags_parking_lines(object)
@@ -13,7 +15,7 @@ function result_tags_parking_lines(object)
 
   local result_tags = {
     side = object._side,
-    name = object.tags.name or object.tags.ref or object.tags['is_sidepath:of:name'] or object._parent_tags.name,
+    name = road_name(object.tags),
     -- width = ParseLength(object.tags.width), -- TODO calculate based on direction
     perform_move = 3, -- TODO: Based on parent highwy width/2, see result_tags_kerbs
     -- parent_road = RoadClassificationRoadValue(object._parent_tags),
