@@ -4,14 +4,10 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua
 require("Log")
 require("obstacle_area_categories")
 
----@class BestResult
----@field category
----@field object
---
----@return table<string, BestResult>
+---@return table<string, { category: ObstacleCategory, object: OSMObject} | { category: nil, object: nil}>
 function categorize_area(object)
   for _, category in ipairs(obstacle_area_categories) do
-    if category(object.tags) then
+    if category:is_active(object.tags) then
       local result_object = object
       result_object._side = "self"
       return {

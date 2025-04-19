@@ -12,20 +12,12 @@ require("obstacle_point_categories")
 -- - "self": Points that are applied once at their given location
 -- - "left/right": Points that have a key that specifies the side; those are duplicated based on that key.
 -- - "left/right": Points that are are always applied to both sides; those are always duplicated.
----@class Category
----@field id string
----@field side_key string|nil
----@field perform_snap string
----@field perform_buffer number
----@field further_tags table<string, string>
----@field conditions fun(tags: table<string, string>): boolean
---
 ---@class Object
 ---@field tags table<string, string>
 ---@field _side string|nil
 --
 ---@class BestResult
----@field category Category|nil
+---@field category ObstacleCategory|nil
 ---@field object Object|nil
 --
 ---@class BestResultTable
@@ -45,13 +37,12 @@ function categorize_and_transform_points(object)
     right = { category = nil, object = nil },
   }
   for _, category in ipairs(obstacle_point_categories) do
-    -- CHECK: Does category apply to tags?
-    if(category(object.tags)) then
+    if category:is_active(object.tags) then -- Updated to use is_active method
       -- CASE: perform_snap="self"
       -- Points that are snapped to the parking line nearby, like trees or street_laps
       if(category.perform_snap == "self") then
-        if category.perform_buffer > max_buffer['self'] then
-          max_buffer['self'] = category.perform_buffer
+        if category:get_perform_buffer(object.tags) > max_buffer['self'] then
+          max_buffer['self'] = category:get_perform_buffer(object.tags)
           best_result['self'].category = category
 
           local side_object = MetaClone(object)
@@ -64,8 +55,8 @@ function categorize_and_transform_points(object)
       -- Points that are always transformed to left/right
       if(category.perform_snap == "side" and not category.side_key) then
         for _, side in ipairs({ "left", "right" }) do
-          if category.perform_buffer > max_buffer[side] then
-            max_buffer[side] = category.perform_buffer
+          if category:get_perform_buffer(object.tags) > max_buffer[side] then
+            max_buffer[side] = category:get_perform_buffer(object.tags)
             best_result[side].category = category
 
             local side_object = MetaClone(object)
@@ -84,8 +75,8 @@ function categorize_and_transform_points(object)
         end
 
         for _, side in ipairs(side_set) do
-          if category.perform_buffer > max_buffer[side] then
-            max_buffer[side] = category.perform_buffer
+          if category:get_perform_buffer(object.tags) > max_buffer[side] then
+            max_buffer[side] = category:get_perform_buffer(object.tags)
             best_result[side].category = category
 
             local side_object = MetaClone(object)

@@ -8,8 +8,8 @@ obstacle_area_categories = {
     id = "bicycle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "amenity", "capacity", "bicycle_parking:position", "position" },
     conditions = function(tags)
       return tags.amenity == "bicycle_parking" and (
@@ -26,8 +26,8 @@ obstacle_area_categories = {
     id = "motorcycle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "amenity", "capacity", "motorcycle_parking:position", "position" },
     conditions = function(tags)
       return tags.amenity == "motorcycle_parking" and (
@@ -44,8 +44,8 @@ obstacle_area_categories = {
     id = "small_electric_vehicle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "amenity", "capacity", "small_electric_vehicle_parking:position", "position" },
     conditions = function(tags)
       return tags.amenity == "small_electric_vehicle_parking" and (
@@ -62,8 +62,8 @@ obstacle_area_categories = {
     id = "bicycle_rental",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "amenity", "capacity", "bicycle_rental:position", "position" },
     conditions = function(tags)
       return tags.amenity == "bicycle_rental" and (
@@ -80,8 +80,8 @@ obstacle_area_categories = {
     id = "mobility_hub",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "amenity", "capacity", "mobility_hub:position", "position" },
     conditions = function(tags)
       return tags.amenity == "mobility_hub" and (
@@ -98,8 +98,8 @@ obstacle_area_categories = {
     id = "parklet",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 5,
-    tags = {},
+    perform_buffer = function(tags) return 5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "leisure", "outdoor_seating" },
     conditions = function(tags)
       return tags.leisure == "parklet" or tags.leisure == "outdoor_seating" and tags.outdoor_seating == "parklet"
@@ -109,8 +109,8 @@ obstacle_area_categories = {
     id = "road_marking_restricted_area",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.5,
-    tags = {},
+    perform_buffer = function(tags) return 0.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "area:highway" },
     conditions = function(tags)
       return tags['area:highway'] == "prohibited"

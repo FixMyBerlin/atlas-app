@@ -2,6 +2,7 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
 require("class_obstacle_category")
+require("Sanitize")
 
 local function is_left_right_both(input)
   return input == "left" or input == "right" or input == "both"
@@ -16,8 +17,8 @@ obstacle_point_categories = {
     id = "bollard",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.3,
-    tags = {},
+    perform_buffer = function(tags) return 0.3 end,
+    tags = function(tags) return {} end,
     tags_cc = { "barrier", "access" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.barrier == "bollard"
@@ -27,8 +28,8 @@ obstacle_point_categories = {
     id = "street_lamp",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.4,
-    tags = {},
+    perform_buffer = function(tags) return 0.4 end,
+    tags = function(tags) return {} end,
     tags_cc = { "highway", "ref" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.highway == "street_lamp"
@@ -38,8 +39,8 @@ obstacle_point_categories = {
     id = "tree",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 1.5,
-    tags = {},
+    perform_buffer = function(tags) return 1.5 end,
+    tags = function(tags) return { natural = Sanitize(tags.natural, { "tree", "tree_stump" }) } end,
     tags_cc = { "natural", "ref" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and (tags.natural == "tree" or tags.natural == "tree_stump")
@@ -49,8 +50,8 @@ obstacle_point_categories = {
     id = "street_cabinet", -- https://wiki.openstreetmap.org/wiki/Tag:man_made%3Dstreet_cabinet
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 1.5, -- todo: based on width
-    tags = {},
+    perform_buffer = function(tags) return 1.5 end, -- todo: based on widt endh
+    tags = function(tags) return {} end,
     tags_cc = { "street_cabinet" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.man_made == "street_cabinet"
@@ -60,8 +61,8 @@ obstacle_point_categories = {
     id = "advertising", -- https://wiki.openstreetmap.org/wiki/Key:traffic_sign
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 0.3,
-    tags = {},
+    perform_buffer = function(tags) return 0.3 end,
+    tags = function(tags) return {} end,
     tags_cc = { "traffic_sign", "highway" },
     conditions = function(tags)
       -- highway=traffic_sign is not used a lot but a way to describe a unspecified sign
@@ -72,8 +73,8 @@ obstacle_point_categories = {
     id = "turning_circle", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_circle
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 10,
-    tags = {},
+    perform_buffer = function(tags) return 10 end,
+    tags = function(tags) return {} end,
     tags_cc = { "ref" },
     conditions = function(tags)
       return tags['highway'] == 'turning_circle'
@@ -83,8 +84,8 @@ obstacle_point_categories = {
     id = "turning_loop", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_loop
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 15,
-    tags = {},
+    perform_buffer = function(tags) return 15 end,
+    tags = function(tags) return {} end,
     tags_cc = { "ref" },
     conditions = function(tags)
       return tags['highway'] == 'turning_loop'
@@ -94,8 +95,8 @@ obstacle_point_categories = {
     id = "bus_stop", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dbus_stop
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = 15,
-    tags = {},
+    perform_buffer = function(tags) return 15 end,
+    tags = function(tags) return {} end,
     tags_cc = { "ref" },
     conditions = function(tags)
       return tags['highway'] == 'bus_stop'
@@ -105,8 +106,8 @@ obstacle_point_categories = {
     id = "crossing_zebra",
     side_key = nil,
     perform_snap = "side",
-    perform_buffer = 4.5,
-    tags = {},
+    perform_buffer = function(tags) return 4.5 end,
+    tags = function(tags) return {} end,
     tags_cc = { "crossing", "crossing_ref", "crossing:markings", "crossing:buffer_marking", "crossing:kerb_extension" },
     conditions = function(tags)
       return tags['crossing'] == "zebra" or tags['crossing_ref'] == "zebra" or tags['crossing:markings'] == "zebra"
@@ -116,8 +117,8 @@ obstacle_point_categories = {
     id = "crossing_marked",
     side_key = nil,
     perform_snap = "side",
-    perform_buffer = 2,
-    tags = {},
+    perform_buffer = function(tags) return 2 end,
+    tags = function(tags) return {} end,
     tags_cc = {},
     conditions = function(tags)
       return tags['crossing'] == "marked"
@@ -127,8 +128,8 @@ obstacle_point_categories = {
     id = "crossing_buffer_marking",
     side_key = "crossing:buffer_marking",
     perform_snap = "side",
-    perform_buffer = 3,
-    tags = {},
+    perform_buffer = function(tags) return 3 end,
+    tags = function(tags) return {} end,
     tags_cc = { "crossing", "crossing_ref", "crossing:markings", "crossing:buffer_marking", "crossing:kerb_extension" },
     conditions = function(tags)
       return is_left_right_both(tags['crossing:buffer_marking'])
@@ -138,8 +139,8 @@ obstacle_point_categories = {
     id = "crossing_kerb_extension",
     side_key = "crossing:kerb_extension",
     perform_snap = "side",
-    perform_buffer = 3,
-    tags = {},
+    perform_buffer = function(tags) return 3 end,
+    tags = function(tags) return {} end,
     tags_cc = { "crossing", "crossing_ref", "crossing:markings", "crossing:buffer_marking", "crossing:kerb_extension" },
     conditions = function(tags)
       return is_left_right_both(tags['crossing:kerb_extension'])

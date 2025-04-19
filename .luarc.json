@@ -4,7 +4,9 @@
   },
   "diagnostics": {
     "globals": [
-      "osm2pgsql"
+      "osm2pgsql",
+      "describe", // from busted
+      "it" // from busted
     ],
     "disable": [
       "lowercase-global"
