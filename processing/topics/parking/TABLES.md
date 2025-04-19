@@ -23,8 +23,8 @@ flowchart TB
             %% DELETE: SGPL1:::labelStyle@{label: "fa:fa-tag roads with parking"} -.- SGPL
             %% DELETE: SGPL2:::labelStyle@{label: "fa:fa-tag service roads with parking"} -.- SGPL
 
-            nn  -->|"osm2gpsql"| SGPA("<code>parking_source_germany_<br>parking_areas</code>")
-            nn  -->|"osm2gpsql"| SGPP("<code>parking_source_germany_<br>parking_points</code>")
+            nn  -->|"osm2gpsql"| SGSPA("<code>parking_source_germany_<br>separate_parking_areas</code>")
+            nn  -->|"osm2gpsql"| SGSPP("<code>parking_source_germany_<br>separate_parking_points</code>")
         end
     end
     subgraph sql ["SQL"]
@@ -35,8 +35,8 @@ flowchart TB
             SGSR  -->|"bbox copy"| SRSR("<code>parking_source_regions_<br>service_roads</code>")
             SGK  -->|"bbox copy"| SRK("<code>parking_source_regions_<br>kerbs</code>")
             SGPL  -->|"bbox copy"| SRPL("<code>parking_source_regions_<br>parking_lines</code>")
-            SGPA  -->|"bbox copy"| SRPA("<code>parking_source_regions_<br>parking_areas</code>")
-            SGPP  -->|"bbox copy"| SRPP("<code>parking_source_regions_<br>parking_points</code>")
+            SGSPA  -->|"bbox copy"| SRSPA("<code>parking_source_regions_<br>separate_parking_areas</code>")
+            SGSPP  -->|"bbox copy"| SRSPP("<code>parking_source_regions_<br>separate_parking_points</code>")
 
             SROA -->|"copy"| OA("<code>parking_<br>obstacle_areas</code>")
             SROP -->|"copy"| OP("<code>parking_<br>obstacle_points</code>")
@@ -44,8 +44,8 @@ flowchart TB
             SRSR  -->|"copy"| SR("<code>parking_<br>service_roads</code>")
             SRK  -->|"copy"| K("<code>parking_<br>kerbs</code>")
             SRPL  -->|"copy"| PL("<code>parking_<br>parking_lines</code>")
-            SRPA  -->|"copy"| PA("<code>parking_<br>parking_areas</code>")
-            SRPP  -->|"copy"| PP("<code>parking_<br>parking_points</code>")
+            SRSPA  -->|"copy"| PA("<code>parking_<br>separate_parking_areas</code>")
+            SRSPP  -->|"copy"| PP("<code>parking_<br>separate_parking_points</code>")
         end
         subgraph punch ["punch areas"]
             OA -->|"buffer"| PAO("<code>parking_<br>punch_obstacles</code>")
