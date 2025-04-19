@@ -9,7 +9,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { "capacity" },
+    tags = { "capacity" },
+    tags_cc = {},
     conditions = function(tags)
       return tags.amenity == "bicycle_parking" and (
         tags["bicycle_parking:position"] == "lane" or
@@ -26,7 +27,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { "capacity" },
+    tags = { "capacity" },
+    tags_cc = {},
     conditions = function(tags)
       return tags.amenity == "motorcycle_parking" and (
         tags["motorcycle_parking:position"] == "lane" or
@@ -43,7 +45,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { "capacity" },
+    tags = { "capacity" },
+    tags_cc = {},
     conditions = function(tags)
       return tags.amenity == "small_electric_vehicle_parking" and (
         tags["small_electric_vehicle_parking:position"] == "lane" or
@@ -60,7 +63,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { "capacity" },
+    tags = { "capacity" },
+    tags_cc = {},
     conditions = function(tags)
       return tags.amenity == "bicycle_rental" and (
         tags["bicycle_rental:position"] == "lane" or
@@ -77,7 +81,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { "capacity" },
+    tags = { "capacity" },
+    tags_cc = {},
     conditions = function(tags)
       return tags.amenity == "mobility_hub" and (
         tags["mobility_hub:position"] == "lane" or
@@ -94,7 +99,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 5,
-    further_tags = { },
+    tags = { },
+    tags_cc = {},
     conditions = function(tags)
       return tags.leisure == "parklet" or tags.leisure == "outdoor_seating" and tags.outdoor_seating == "parklet"
     end
@@ -104,7 +110,8 @@ obstacle_area_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.5,
-    further_tags = { },
+    tags = { },
+    tags_cc = {},
     conditions = function(tags)
       return tags['area:highway'] == "prohibited"
     end

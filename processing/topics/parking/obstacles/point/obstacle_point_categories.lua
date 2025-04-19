@@ -17,7 +17,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.3,
-    further_tags = { "access" },
+    tags = { "access" },
+    tags_cc = {},
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.barrier == "bollard"
     end
@@ -27,7 +28,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.4,
-    further_tags = { "ref" },
+    tags = { "ref" },
+    tags_cc = {},
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.highway == "street_lamp"
     end
@@ -37,7 +39,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 1.5,
-    further_tags = { "ref" },
+    tags = { "natural" },
+    tags_cc = { "ref" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and (tags.natural == "tree" or tags.natural == "tree_stump")
     end
@@ -47,7 +50,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 1.5, -- todo: based on width
-    further_tags = { "street_cabinet" },
+    tags = { "street_cabinet" },
+    tags_cc = {},
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.man_made == "street_cabinet"
     end
@@ -57,7 +61,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 0.3,
-    further_tags = { "traffic_sign", "highway" },
+    tags = { "traffic_sign", "highway" },
+    tags_cc = {},
     conditions = function(tags)
       -- highway=traffic_sign is not used a lot but a way to describe a unspecified sign
       return is_obstacle_parking(tags) and (tags.traffic_sign ~= nil or tags.highway == "traffic_sign")
@@ -68,7 +73,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 10,
-    further_tags = { "ref" },
+    tags = { "ref" },
+    tags_cc = {},
     conditions = function(tags)
       return tags['highway'] == 'turning_circle'
     end
@@ -78,7 +84,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 15,
-    further_tags = { "ref" },
+    tags = { "ref" },
+    tags_cc = {},
     conditions = function(tags)
       return tags['highway'] == 'turning_loop'
     end
@@ -88,7 +95,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = 15,
-    further_tags = { "ref" },
+    tags = { "ref" },
+    tags_cc = {},
     conditions = function(tags)
       return tags['highway'] == 'bus_stop'
     end
@@ -98,7 +106,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "side",
     perform_buffer = 4.5,
-    further_tags = {},
+    tags = {},
+    tags_cc = {},
     conditions = function(tags)
       return tags['crossing'] == "zebra" or tags['crossing_ref'] == "zebra" or tags['crossing:markings'] == "zebra"
     end
@@ -108,7 +117,8 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "side",
     perform_buffer = 2,
-    further_tags = {},
+    tags = {},
+    tags_cc = {},
     conditions = function(tags)
       return tags['crossing'] == "marked"
     end
@@ -118,7 +128,8 @@ obstacle_point_categories = {
     side_key = "crossing:buffer_marking",
     perform_snap = "side",
     perform_buffer = 3,
-    further_tags = { "crossing" },
+    tags = { "crossing" },
+    tags_cc = {},
     conditions = function(tags)
       return is_left_right_both(tags['crossing:buffer_marking'])
     end
@@ -128,7 +139,8 @@ obstacle_point_categories = {
     side_key = "crossing:kerb_extension",
     perform_snap = "side",
     perform_buffer = 3,
-    further_tags = { "crossing" },
+    tags = { "crossing" },
+    tags_cc = {},
     conditions = function(tags)
       return is_left_right_both(tags['crossing:kerb_extension'])
     end

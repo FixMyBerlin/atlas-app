@@ -35,4 +35,25 @@ describe("`result_tags_obstacles`", function()
     assert.are.equal(right_result.tags.side, "right")
     assert.are.equal(right_result.tags.osm_mapillary, input_object.tags.mapillary)
   end)
+
+  it('check tags, tags_cc', function()
+    local input_object = {
+      tags = {
+        ["obstacle:parking"] = 'yes',
+        natural = 'tree_stump',
+        mapillary = "123",
+        ref = "007",
+      },
+      id = 1,
+      type = 'node'
+    }
+    local results = categorize_and_transform_points(input_object)
+    local self_result = result_tags_obstacles(results.self)
+    assert.are.equal(self_result.tags.osm_mapillary, "123")
+    assert.are.equal(self_result.tags.osm_ref, "007")
+    assert.are.equal(self_result.tags.natural, "tree_stump")
+
+    assert.are.equal(next(results.left) == nil, true)
+    assert.are.equal(next(results.right) == nil, true)
+  end)
 end)

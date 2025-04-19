@@ -15,11 +15,12 @@ function result_tags_obstacles(result)
     perform_snap = result.category.perform_snap,
   }
 
-  local tags_cc = {
+  local global_tags_cc = {
     "mapillary",
   }
-  CopyTags(result_tags, result.object.tags, tags_cc, "osm_")
-  CopyTags(result_tags, result.object.tags, result.category.further_tags, "osm_")
+  CopyTags(result_tags, result.object.tags, global_tags_cc, "osm_")
+  CopyTags(result_tags, result.object.tags, result.category.tags_cc, "osm_")
+  CopyTags(result_tags, result.object.tags, result.category.tags) -- those are sanitized already
 
   local result_meta = Metadata(result)
   result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
