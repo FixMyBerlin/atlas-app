@@ -12,20 +12,12 @@ require("obstacle_point_categories")
 -- - "self": Points that are applied once at their given location
 -- - "left/right": Points that have a key that specifies the side; those are duplicated based on that key.
 -- - "left/right": Points that are are always applied to both sides; those are always duplicated.
----@class Category
----@field id string
----@field side_key string|nil
----@field perform_snap string
----@field perform_buffer number
----@field further_tags table<string, string>
----@field conditions fun(tags: table<string, string>): boolean
---
 ---@class Object
 ---@field tags table<string, string>
 ---@field _side string|nil
 --
 ---@class BestResult
----@field category Category|nil
+---@field category ObstacleCategory|nil
 ---@field object Object|nil
 --
 ---@class BestResultTable
@@ -44,15 +36,17 @@ function categorize_and_transform_points(object)
     left = { category = nil, object = nil },
     right = { category = nil, object = nil },
   }
-  for _, category in ipairs(obstacle_point_categories) do
+  for _, category_instance in ipairs(obstacle_point_categories) do
+    local category = category_instance(object.tags)
+    Log(category)
     -- CHECK: Does category apply to tags?
-    if(category(object.tags)) then
+    if(category) then
       -- CASE: perform_snap="self"
       -- Points that are snapped to the parking line nearby, like trees or street_laps
-      if(category.perform_snap == "self") then
-        if category.perform_buffer > max_buffer['self'] then
-          max_buffer['self'] = category.perform_buffer
-          best_result['self'].category = category
+      if(category_instance.perform_snap == "self") then
+        if category.get_buffer() > max_buffer['self'] then
+          max_buffer['self'] = category.get_buffer()
+          best_result['self'].category = category_instance
 
           local side_object = MetaClone(object)
           side_object._side = "self"
@@ -62,11 +56,11 @@ function categorize_and_transform_points(object)
 
       -- CASE: perform_snap="side" WITHOUT side_key
       -- Points that are always transformed to left/right
-      if(category.perform_snap == "side" and not category.side_key) then
+      if(category_instance.perform_snap == "side" and not category_instance.side_key) then
         for _, side in ipairs({ "left", "right" }) do
-          if category.perform_buffer > max_buffer[side] then
-            max_buffer[side] = category.perform_buffer
-            best_result[side].category = category
+          if category.get_buffer() > max_buffer[side] then
+            max_buffer[side] = category.get_buffer()
+            best_result[side].category = category_instance
 
             local side_object = MetaClone(object)
             side_object._side = side
