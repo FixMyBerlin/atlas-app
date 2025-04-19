@@ -43,6 +43,27 @@ obstacle_point_categories = {
     end
   }),
   class_obstacle_category.new({
+    id = "street_cabinet", -- https://wiki.openstreetmap.org/wiki/Tag:man_made%3Dstreet_cabinet
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = 1.5, -- todo: based on width
+    further_tags = { "street_cabinet" },
+    conditions = function(tags)
+      return is_obstacle_parking(tags) and tags.man_made == "street_cabinet"
+    end
+  }),
+  class_obstacle_category.new({
+    id = "advertising", -- https://wiki.openstreetmap.org/wiki/Key:traffic_sign
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = 0.3,
+    further_tags = { "traffic_sign", "highway" },
+    conditions = function(tags)
+      -- highway=traffic_sign is not used a lot but a way to describe a unspecified sign
+      return is_obstacle_parking(tags) and (tags.traffic_sign ~= nil or tags.highway == "traffic_sign")
+    end
+  }),
+  class_obstacle_category.new({
     id = "turning_circle", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_circle
     side_key = nil,
     perform_snap = "self",
@@ -60,6 +81,16 @@ obstacle_point_categories = {
     further_tags = { "ref" },
     conditions = function(tags)
       return tags['highway'] == 'turning_loop'
+    end
+  }),
+  class_obstacle_category.new({
+    id = "bus_stop", -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dbus_stop
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = 15,
+    further_tags = { "ref" },
+    conditions = function(tags)
+      return tags['highway'] == 'bus_stop'
     end
   }),
   class_obstacle_category.new({
