@@ -1,0 +1,13 @@
+{
+  "runtime": {
+    "version": "Lua 5.3"
+  },
+  "diagnostics": {
+    "globals": [
+      "osm2pgsql"
+    ],
+    "disable": [
+      "lowercase-global"
+    ]
+  }
+}
