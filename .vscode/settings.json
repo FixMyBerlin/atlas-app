@@ -12,6 +12,12 @@
   },
   // Use TS version from node_modules
   "typescript.tsdk": "node_modules/typescript/lib",
-  "Lua.diagnostics.globals": ["osm2pgsql"],
-  "Lua.runtime.version": "Lua 5.3"
+  // LUA VS Code Plugin https://marketplace.visualstudio.com/items/?itemName=sumneko.lua
+  // - Docs general: https://luals.github.io/wiki/
+  // - Docs on the config options https://luals.github.io/wiki/configuration/
+  "Lua.runtime.version": "Lua 5.3",
+  "Lua.diagnostics.globals": ["osm2pgsql", "describe", "it"],
+  "Lua.diagnostics.disable": ["lowercase-global", "duplicate-set-field"],
+  // FYI: The addons feature https://luals.github.io/wiki/addons/ does not work for us.
+  "Lua.addonManager.enable": false,
 }
