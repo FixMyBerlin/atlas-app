@@ -15,6 +15,8 @@ flowchart TB
             nn -->|"osm2gpsql"| SGR("<code>parking_source_germany_<br>roads</code>")
             nn -->|"osm2gpsql"| SGSR("<code>parking_source_germany_<br>service_roads</code>")
             nn -->|"osm2gpsql"| SGK("<code>parking_source_germany_<br>kerbs</code>")
+            nn  -->|"osm2gpsql"| SGSPA("<code>parking_source_germany_<br>separate_parking_areas</code>")
+            nn  -->|"osm2gpsql"| SGSPP("<code>parking_source_germany_<br>separate_parking_points</code>")
             nn -->|"osm2gpsql"| SGPL("<code>parking_source_germany_<br>parking_lines</code>")
             %% We copy all roads and add the attribute parking=yes, parking=missing.
             %% We handle dual carridgeway as parking=not_expected
@@ -22,9 +24,6 @@ flowchart TB
             %% We add highway=\* so we can see the service roads.
             %% DELETE: SGPL1:::labelStyle@{label: "fa:fa-tag roads with parking"} -.- SGPL
             %% DELETE: SGPL2:::labelStyle@{label: "fa:fa-tag service roads with parking"} -.- SGPL
-
-            nn  -->|"osm2gpsql"| SGSPA("<code>parking_source_germany_<br>separate_parking_areas</code>")
-            nn  -->|"osm2gpsql"| SGSPP("<code>parking_source_germany_<br>separate_parking_points</code>")
         end
     end
     subgraph sql ["SQL"]
@@ -52,11 +51,12 @@ flowchart TB
             OP -->|"buffer"| PAO
             R -->|"buffer"| PARA("<code>parking_<br>punch_road</code>")
             SR  -->|"buffer"| PAD("<code>parking_<br>punch_driveways</code>")
-            R -->|"buffer"| PAC("<code>parking_<br>punch_crossings</code>")
+            R -->|"buffer"| PAC("<code>parking_<br>punch_intersections</code>")
             PA  -->|"snapp"| PSP("<code>parking_<br>punch_separate_parking</code>")
             PP  -->|"buffer"| PSP
         end
         subgraph result ["result lines"]
+            PL -.->|"copy"| RPL
             PA -->|"process"| RSPL("parking_<br>result_separate_parking_lines")
             PARA -->|"cut"| RPL("parking_<br>result_parking_lines")
             PAO -->|"cut"| RPL
@@ -68,3 +68,5 @@ flowchart TB
 
 classDef labelStyle fill:lightgray,stroke:white,stroke-width:1px;
 ```
+
+Tooling: Test chart in https://www.mermaidchart.com/app/projects
