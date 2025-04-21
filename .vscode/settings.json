@@ -20,4 +20,9 @@
   "Lua.diagnostics.disable": ["lowercase-global", "duplicate-set-field"],
   // FYI: The addons feature https://luals.github.io/wiki/addons/ does not work for us.
   "Lua.addonManager.enable": false,
+  "[sql]": {
+    // https://marketplace.visualstudio.com/items?itemName=ReneSaarsoo.sql-formatter-vsc
+    "editor.defaultFormatter": "ReneSaarsoo.sql-formatter-vsc"
+  },
+  "SQL-Formatter-VSCode.dialect": "postgresql"
 }

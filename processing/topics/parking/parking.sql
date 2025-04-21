@@ -1,3 +1,5 @@
+/* sql-formatter-disable */
+--
 -- Entry point for all SQL based processing of parking data.
 --
 -- Guidelines:
