@@ -1,6 +1,7 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
+require("two_wheel_parking_helper")
 require("class_obstacle_category")
 require("Sanitize")
 
@@ -145,5 +146,50 @@ obstacle_point_categories = {
     conditions = function(tags)
       return is_left_right_both(tags['crossing:kerb_extension'])
     end
+  }),
+  class_obstacle_category.new({
+    id = "bicycle_parking",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "bicycle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('bicycle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "bicycle_parking") end,
+  }),
+  class_obstacle_category.new({
+    id = "motorcycle_parking",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "motorcycle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('motorcycle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "motorcycle_parking") end,
+  }),
+  class_obstacle_category.new({
+    id = "small_electric_vehicle_parking",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "small_electric_vehicle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('small_electric_vehicle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "small_electric_vehicle_parking") end,
+  }),
+  class_obstacle_category.new({
+    id = "bicycle_rental",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "bicycle_rental") end,
+    tags_cc = two_wheel_parking_tags_cc('bicycle_rental'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "bicycle_rental") end,
+  }),
+  class_obstacle_category.new({
+    id = "mobility_hub",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "mobility_hub") end,
+    tags_cc = two_wheel_parking_tags_cc('mobility_hub'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "mobility_hub") end,
   }),
 }

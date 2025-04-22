@@ -3,6 +3,7 @@ describe("`result_tags_obstacles`", function()
   package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
   require("result_tags_obstacles")
   require("categorize_and_transform_points")
+  require("osm2pgsql")
   require("Log")
 
   it('works', function()
@@ -52,6 +53,28 @@ describe("`result_tags_obstacles`", function()
     assert.are.equal(self_result.tags.osm_mapillary, "123")
     assert.are.equal(self_result.tags.osm_ref, "007")
     assert.are.equal(self_result.tags.natural, "tree_stump")
+
+    assert.are.equal(next(results.left) == nil, true)
+    assert.are.equal(next(results.right) == nil, true)
+  end)
+
+
+  it('handels buffer for two wheel parking', function()
+    local input_object = {
+      tags = {
+        ["amenity"] = 'bicycle_parking',
+        ["position"] = 'lane',
+        ["capacity"] = '10',
+        ["capacity:cargo"] = '5',
+      },
+      id = 1,
+      type = 'node'
+    }
+    local results = categorize_and_transform_points(input_object)
+    local self_result = result_tags_obstacles(results.self)
+    assert.are.equal(self_result.tags.capacity, 5)
+    assert.are.equal(self_result.tags["capacity:cargo"], 5)
+    assert.are.equal(self_result.tags.perform_buffer, 10 / 2 * 1.6)
 
     assert.are.equal(next(results.left) == nil, true)
     assert.are.equal(next(results.right) == nil, true)

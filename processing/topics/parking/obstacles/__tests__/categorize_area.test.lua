@@ -5,6 +5,7 @@ describe("`categorize_area`", function()
   require("categorize_area")
   require("result_tags_obstacles")
   require("Log")
+  require("osm2pgsql")
 
   it('no category matches', function()
     local tags = {

@@ -2,97 +2,53 @@ package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
 require("class_obstacle_category")
+require("two_wheel_parking_helper")
 
 obstacle_area_categories = {
   class_obstacle_category.new({
     id = "bicycle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = function(tags) return 0.5 end,
-    tags = function(tags) return {} end,
-    tags_cc = { "amenity", "capacity", "bicycle_parking:position", "position" },
-    conditions = function(tags)
-      return tags.amenity == "bicycle_parking" and (
-        tags["bicycle_parking:position"] == "lane" or
-        tags["bicycle_parking:position"] == "street_side" or
-        tags["bicycle_parking:position"] == "kerb_extension" or
-        tags["position"] == "lane" or
-        tags["position"] == "street_side" or
-        tags["position"] == "kerb_extension"
-      )
-    end
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "bicycle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('bicycle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "bicycle_parking") end,
   }),
   class_obstacle_category.new({
     id = "motorcycle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = function(tags) return 0.5 end,
-    tags = function(tags) return {} end,
-    tags_cc = { "amenity", "capacity", "motorcycle_parking:position", "position" },
-    conditions = function(tags)
-      return tags.amenity == "motorcycle_parking" and (
-        tags["motorcycle_parking:position"] == "lane" or
-        tags["motorcycle_parking:position"] == "street_side" or
-        tags["motorcycle_parking:position"] == "kerb_extension" or
-        tags["position"] == "lane" or
-        tags["position"] == "street_side" or
-        tags["position"] == "kerb_extension"
-      )
-    end
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "motorcycle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('motorcycle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "motorcycle_parking") end,
   }),
   class_obstacle_category.new({
     id = "small_electric_vehicle_parking",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = function(tags) return 0.5 end,
-    tags = function(tags) return {} end,
-    tags_cc = { "amenity", "capacity", "small_electric_vehicle_parking:position", "position" },
-    conditions = function(tags)
-      return tags.amenity == "small_electric_vehicle_parking" and (
-        tags["small_electric_vehicle_parking:position"] == "lane" or
-        tags["small_electric_vehicle_parking:position"] == "street_side" or
-        tags["small_electric_vehicle_parking:position"] == "kerb_extension" or
-        tags["position"] == "lane" or
-        tags["position"] == "street_side" or
-        tags["position"] == "kerb_extension"
-      )
-    end
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "small_electric_vehicle_parking") end,
+    tags_cc = two_wheel_parking_tags_cc('small_electric_vehicle_parking'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "small_electric_vehicle_parking") end,
   }),
   class_obstacle_category.new({
     id = "bicycle_rental",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = function(tags) return 0.5 end,
-    tags = function(tags) return {} end,
-    tags_cc = { "amenity", "capacity", "bicycle_rental:position", "position" },
-    conditions = function(tags)
-      return tags.amenity == "bicycle_rental" and (
-        tags["bicycle_rental:position"] == "lane" or
-        tags["bicycle_rental:position"] == "street_side" or
-        tags["bicycle_rental:position"] == "kerb_extension" or
-        tags["position"] == "lane" or
-        tags["position"] == "street_side" or
-        tags["position"] == "kerb_extension"
-      )
-    end
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "bicycle_rental") end,
+    tags_cc = two_wheel_parking_tags_cc('bicycle_rental'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "bicycle_rental") end,
   }),
   class_obstacle_category.new({
     id = "mobility_hub",
     side_key = nil,
     perform_snap = "self",
-    perform_buffer = function(tags) return 0.5 end,
-    tags = function(tags) return {} end,
-    tags_cc = { "amenity", "capacity", "mobility_hub:position", "position" },
-    conditions = function(tags)
-      return tags.amenity == "mobility_hub" and (
-        tags["mobility_hub:position"] == "lane" or
-        tags["mobility_hub:position"] == "street_side" or
-        tags["mobility_hub:position"] == "kerb_extension" or
-        tags["position"] == "lane" or
-        tags["position"] == "street_side" or
-        tags["position"] == "kerb_extension"
-      )
-    end
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return two_wheel_parking_tags(tags, "mobility_hub") end,
+    tags_cc = two_wheel_parking_tags_cc('mobility_hub'),
+    conditions = function(tags) return two_wheel_parking_conditions(tags, "mobility_hub") end,
   }),
   class_obstacle_category.new({
     id = "parklet",
