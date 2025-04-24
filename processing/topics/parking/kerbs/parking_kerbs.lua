@@ -39,9 +39,6 @@ function parking_kerbs(object)
   if exit_processing_kerbs(object.tags) then return end
 
   for _, node_id in ipairs(object.nodes) do
-    if object.id == 879462302 then
-      print(node_id)
-    end
     node_kerb_mapping:insert({
       node_id = node_id
     })
