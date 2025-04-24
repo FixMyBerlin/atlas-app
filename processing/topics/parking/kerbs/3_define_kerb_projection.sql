@@ -39,9 +39,11 @@ BEGIN
   FOR rec IN
     SELECT * FROM ST_DumpPoints(input_geom)
   LOOP
-    -- For each point, check whether it extends the substring
+    -- For each point, get the relative position on the closest kerb
     point_on_kerb := ST_ClosestPoint(closest_kerb_quantized, rec.geom);
     rel_position_on_kerb :=  ST_LineLocatePoint(closest_kerb, point_on_kerb);
+
+    -- Check if the point extends the substring
     substring_start := LEAST(substring_start, rel_position_on_kerb);
     substring_end := GREATEST(substring_end, rel_position_on_kerb);
   END LOOP;
