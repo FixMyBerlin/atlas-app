@@ -12,9 +12,9 @@
 
 -- HANDLE KERBS
 
-\i '/processing/topics/parking/kerbs/1_perform_move.sql'
-\i '/processing/topics/parking/kerbs/2_merge_kerbs.sql'
-\i '/processing/topics/parking/kerbs/3_define_kerb_projection.sql'
+\i '/processing/topics/parking/kerbs/0_perform_move.sql'
+\i '/processing/topics/parking/kerbs/1_merge_kerbs.sql'
+\i '/processing/topics/parking/kerbs/2_define_kerb_projection.sql'
 
 -- HANDLE OBSTACLES
 --
@@ -27,5 +27,5 @@
 
 -- HANDLE PARKING LINES
 --
-\i '/processing/topics/parking/parking/1_perform_move.sql'
-\i '/processing/topics/parking/parking/2_reverse_direction.sql'
+\i '/processing/topics/parking/parking/0_perform_move.sql'
+\i '/processing/topics/parking/parking/1_reverse_direction.sql'
