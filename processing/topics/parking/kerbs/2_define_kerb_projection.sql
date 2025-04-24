@@ -2,6 +2,8 @@
 -- the parameter tolerance define the maximum distance to the closest kerb
 -- the parameter quantization controls the maximal distance between two points on the kerb
 -- a small quantization results in a better approximation of the projection while increasing computational cost
+
+-- TODO: we probably need to project to the k nearest kerbs see: https://tiles-inspector.netlify.app/#20.03/52.50324/13.3912685
 CREATE OR REPLACE FUNCTION project_to_closest_kerb(
   input_geom geometry,
   tolerance double precision,
