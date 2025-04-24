@@ -24,7 +24,7 @@ local parking_lines_table = osm2pgsql.define_table({
 })
 
 
-function parking_source_parking_lines(object)
+function parking_parking_lines(object)
   local results = {}
 
   if exit_processing_parking_lines(object.tags) then return results end

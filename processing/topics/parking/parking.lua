@@ -3,12 +3,12 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
 package.path = package.path .. ";/processing/topics/parking/parking/?.lua"
 package.path = package.path .. ";/processing/topics/parking/roads/?.lua"
-require("parking_source_obstacle_points")
-require("parking_source_obstacle_areas")
-require("parking_source_kerbs")
-require("parking_source_parking_lines")
-require("parking_source_road")
-require("parking_source_service_road")
+require("parking_obstacle_points")
+require("parking_obstacle_areas")
+require("parking_kerbs")
+require("parking_parking_lines")
+require("parking_road")
+require("parking_service_road")
 require("Log")
 
 -- NOTE ON PROJECTIONS:
@@ -18,19 +18,19 @@ require("Log")
 
 
 function osm2pgsql.process_node(object)
-  parking_source_obstacle_points(object)
+  parking_obstacle_points(object)
 end
 
 function osm2pgsql.process_way(object)
-  parking_source_obstacle_areas(object)
+  parking_obstacle_areas(object)
 
-  parking_source_road(object)
+  parking_road(object)
 
-  parking_source_service_road(object)
+  parking_service_road(object)
 
-  parking_source_kerbs(object)
+  parking_kerbs(object)
 
-  parking_source_parking_lines(object)
+  parking_parking_lines(object)
 
 end
 

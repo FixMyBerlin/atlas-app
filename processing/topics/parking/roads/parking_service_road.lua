@@ -21,7 +21,7 @@ local service_roads_table = osm2pgsql.define_table({
   }
 })
 
-function parking_source_service_road(object)
+function parking_service_road(object)
   if exit_processing_service_roads(object.tags) then return nil end
 
   service_roads_table:insert(MergeTable({ geom = object:as_linestring() }, result_tags_roads(object)))

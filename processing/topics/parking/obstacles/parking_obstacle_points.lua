@@ -22,7 +22,7 @@ local obstacle_points_table = osm2pgsql.define_table({
   }
 })
 
-function parking_source_obstacle_points(object)
+function parking_obstacle_points(object)
   local results = {}
   if next(object.tags) == nil then return results end
 
