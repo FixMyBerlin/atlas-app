@@ -7,7 +7,7 @@ require("result_tags_obstacles")
 
 
 local obstacle_areas_table = osm2pgsql.define_table({
-  name = 'parking_areas',
+  name = 'parking_obstacle_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
