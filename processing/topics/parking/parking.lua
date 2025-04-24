@@ -12,6 +12,7 @@ require("parking_service_road")
 require("Log")
 
 -- NOTE ON PROJECTIONS:
+
 -- All `paring_*` tables use EPSG:5243
 --  which is optimized for Germany and uses Meters
 --  https://spatialreference.org/ref/epsg/5243/

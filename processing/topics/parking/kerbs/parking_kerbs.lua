@@ -30,7 +30,8 @@ function parking_kerbs(object)
 
   local transformed_objects = transform_kerbs(object)
   for _, transformed_object in ipairs(transformed_objects) do
-    kerbs_table:insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_kerb(transformed_object)))
+    local row = MergeTable({ geom = object:as_linestring() }, result_tags_kerb(transformed_object))
+    kerbs_table:insert(row)
   end
 
   return results

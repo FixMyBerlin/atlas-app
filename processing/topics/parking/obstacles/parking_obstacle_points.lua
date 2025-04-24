@@ -29,7 +29,8 @@ function parking_obstacle_points(object)
   local self_left_right = categorize_and_transform_points(object)
   for _, result in pairs(self_left_right) do
     if result.object then
-      obstacle_points_table:insert(results, MergeTable({ geom = result.object:as_point() }, result_tags_obstacles(result)))
+      local row = MergeTable({ geom = result.object:as_point() }, result_tags_obstacles(result))
+      obstacle_points_table:insert(row)
     end
   end
 

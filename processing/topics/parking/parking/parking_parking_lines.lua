@@ -31,7 +31,8 @@ function parking_parking_lines(object)
 
   local transformed_objects = transform_parking_lines(object)
   for _, transformed_object in ipairs(transformed_objects) do
-    parking_lines_table:insert(results, MergeTable({ geom = object:as_linestring() }, result_tags_parking_lines(transformed_object)))
+    local row = MergeTable({ geom = object:as_linestring() }, result_tags_parking_lines(transformed_object))
+    parking_lines_table:insert(row)
   end
 
   return results

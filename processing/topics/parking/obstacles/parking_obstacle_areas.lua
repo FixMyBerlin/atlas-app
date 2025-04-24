@@ -30,7 +30,8 @@ function parking_obstacle_areas(object)
 
   local result = categorize_area(object)
   if result.object then
-    obstacle_areas_table:insert(results, MergeTable({ geom = result.object:as_polygon() }, result_tags_obstacles(result)))
+    local row = MergeTable({ geom = result.object:as_polygon() }, result_tags_obstacles(result))
+    obstacle_areas_table:insert(row)
   end
 
   return results
