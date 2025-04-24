@@ -1,0 +1,22 @@
+DROP TABLE IF EXISTS parking_obstacle_points_projected CASCADE;
+
+SELECT
+  osm_type,
+  osm_id,
+  id,
+  tags,
+  meta,
+  minzoom,
+  project_to_closest_kerb(geom, 1, 0.5) as geom
+INTO parking_obstacle_points_projected
+FROM parking_obstacle_points
+WHERE tags->>'perform_snap' = 'self';
+
+DELETE FROM parking_obstacle_points_projected WHERE geom IS NULL;
+
+ALTER TABLE parking_obstacle_points_projected
+ALTER COLUMN geom TYPE geometry(Geometry, 5243)
+USING ST_SetSRID(geom, 5243);
+
+CREATE INDEX idx_parking_obstacle_areas_projected_geom
+ON parking_obstacle_areas_projected USING gist (geom);
