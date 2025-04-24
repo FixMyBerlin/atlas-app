@@ -16,7 +16,7 @@ BEGIN
     LIMIT 1;
 
     IF longest_kerb IS NULL THEN
-        RAISE EXCEPTION 'No roads found for node %', node_id_input;
+        RETURN NULL;
     END IF;
 
     -- Return relative position on the longest road
