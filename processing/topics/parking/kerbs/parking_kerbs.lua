@@ -23,7 +23,7 @@ local kerbs_table = osm2pgsql.define_table({
   }
 })
 
-function parking_source_kerbs(object)
+function parking_kerbs(object)
   local results = {}
 
   if exit_processing_kerbs(object.tags) then return results end

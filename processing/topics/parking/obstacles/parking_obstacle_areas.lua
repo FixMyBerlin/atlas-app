@@ -23,7 +23,7 @@ local obstacle_areas_table = osm2pgsql.define_table({
 })
 
 
-function parking_source_obstacle_areas(object)
+function parking_obstacle_areas(object)
   local results = {}
   if not object.is_closed then return results end
   if next(object.tags) == nil then return results end
