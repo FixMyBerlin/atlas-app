@@ -10,13 +10,20 @@
 -- - TODO: Add tests for those files.
 --
 
+-- HANDLE KERBS
+
+\i '/processing/topics/parking/kerbs/1_perform_move.sql'
+\i '/processing/topics/parking/kerbs/2_merge_kerbs.sql'
+\i '/processing/topics/parking/kerbs/3_define_kerb_projection.sql'
+
 -- HANDLE OBSTACLES
 --
 \i '/processing/topics/parking/obstacles/points_1_perform_move.sql'
+\i '/processing/topics/parking/obstacles/0_areas_project_to_kerb.sql'
+
 
 -- HANDLE ROADS
 
--- HANDLE KERBS
 
 -- HANDLE PARKING LINES
 --
