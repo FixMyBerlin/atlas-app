@@ -38,15 +38,17 @@ function parking_kerbs(object)
 
   if exit_processing_kerbs(object.tags) then return end
 
+  for _, node_id in ipairs(object.nodes) do
+    node_kerb_mapping:insert({
+      street_id = object.id,
+      node_id = node_id
+    })
+  end
+
   local transformed_objects = transform_kerbs(object)
   for _, transformed_object in ipairs(transformed_objects) do
     local row = MergeTable({ geom = object:as_linestring() }, result_tags_kerb(transformed_object))
     kerbs_table:insert(row)
-    for _, node_id in ipairs(object.nodes) do
-      node_kerb_mapping:insert({
-        street_id = object.id,
-        node_id = node_id
-      })
-    end
+
   end
 end
