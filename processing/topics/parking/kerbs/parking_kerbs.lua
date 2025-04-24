@@ -24,15 +24,12 @@ local kerbs_table = osm2pgsql.define_table({
 })
 
 function parking_kerbs(object)
-  local results = {}
 
-  if exit_processing_kerbs(object.tags) then return results end
+  if exit_processing_kerbs(object.tags) then return end
 
   local transformed_objects = transform_kerbs(object)
   for _, transformed_object in ipairs(transformed_objects) do
     local row = MergeTable({ geom = object:as_linestring() }, result_tags_kerb(transformed_object))
     kerbs_table:insert(row)
   end
-
-  return results
 end

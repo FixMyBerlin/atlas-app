@@ -23,8 +23,7 @@ local obstacle_points_table = osm2pgsql.define_table({
 })
 
 function parking_obstacle_points(object)
-  local results = {}
-  if next(object.tags) == nil then return results end
+  if next(object.tags) == nil then return end
 
   local self_left_right = categorize_and_transform_points(object)
   for _, result in pairs(self_left_right) do
@@ -33,6 +32,4 @@ function parking_obstacle_points(object)
       obstacle_points_table:insert(row)
     end
   end
-
-  return results
 end
