@@ -24,9 +24,8 @@ local obstacle_areas_table = osm2pgsql.define_table({
 
 
 function parking_obstacle_areas(object)
-  local results = {}
-  if not object.is_closed then return results end
-  if next(object.tags) == nil then return results end
+  if not object.is_closed then return end
+  if next(object.tags) == nil then return end
 
   local result = categorize_area(object)
   if result.object then
@@ -34,5 +33,4 @@ function parking_obstacle_areas(object)
     obstacle_areas_table:insert(row)
   end
 
-  return results
 end
