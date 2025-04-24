@@ -23,6 +23,17 @@ local kerbs_table = osm2pgsql.define_table({
   }
 })
 
+local node_kerb_mapping = osm2pgsql.define_table({
+  name = '_node_kerb_mapping',
+  ids = { type = 'way', id_column = 'way_id', create_index = 'always'},
+  columns = {
+    { column = 'node_id',    type = 'integer', not_null = true },
+  },
+  indexes = {
+    { column = 'node_id',                    method = 'btree'}
+  }
+})
+
 function parking_kerbs(object)
 
   if exit_processing_kerbs(object.tags) then return end
@@ -31,5 +42,11 @@ function parking_kerbs(object)
   for _, transformed_object in ipairs(transformed_objects) do
     local row = MergeTable({ geom = object:as_linestring() }, result_tags_kerb(transformed_object))
     kerbs_table:insert(row)
+    for _, node_id in ipairs(object.nodes) do
+      node_kerb_mapping:insert({
+        street_id = object.id,
+        node_id = node_id
+      })
+    end
   end
 end
