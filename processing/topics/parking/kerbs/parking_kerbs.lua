@@ -27,10 +27,10 @@ local node_kerb_mapping = osm2pgsql.define_table({
   name = '_node_kerb_mapping',
   ids = { type = 'way', id_column = 'way_id', create_index = 'always'},
   columns = {
-    { column = 'node_id',    type = 'integer', not_null = true },
+    { column = 'node_id', type = 'bigint', not_null = true },
   },
   indexes = {
-    { column = 'node_id',                    method = 'btree'}
+    { column = 'node_id', method = 'btree'}
   }
 })
 
@@ -39,8 +39,10 @@ function parking_kerbs(object)
   if exit_processing_kerbs(object.tags) then return end
 
   for _, node_id in ipairs(object.nodes) do
+    if object.id == 879462302 then
+      print(node_id)
+    end
     node_kerb_mapping:insert({
-      street_id = object.id,
       node_id = node_id
     })
   end
