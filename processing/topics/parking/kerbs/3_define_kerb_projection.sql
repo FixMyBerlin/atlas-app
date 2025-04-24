@@ -13,8 +13,12 @@ DECLARE
   closest_kerb_quantized geometry;
   point_on_kerb geometry;
   rec RECORD;
+  rel_position_on_kerb double precision;
+  substring_start double precision := 1.0;
+  substring_end double precision := 0.0;
 BEGIN
-  -- Step 1: Find the closest kerb from parking_kerbs_merged
+
+  -- Find the closest kerb from parking_kerbs_merged
   SELECT geom
   INTO closest_kerb
   FROM parking_kerbs_merged
@@ -22,38 +26,28 @@ BEGIN
   ORDER BY ST_Distance(input_geom, geom)
   LIMIT 1;
 
-  IF closest_kerb IS NOT NULL THEN
-    -- Step 2: Apply ST_Segmentize to discretize the closest kerb geometry
-    closest_kerb_quantized := ST_Segmentize(closest_kerb, quantization);
-
-	DROP TABLE IF EXISTS temp_points;
-    -- Step 3: Create a temporary table to store the points and their relative position on the kerb
-    CREATE TEMP TABLE temp_points (
-      point_geom geometry,
-      rel_position double precision
-    );
-
-    -- Step 4: Loop through each point in the input geometry using ST_DumpPoints
-    FOR rec IN
-      SELECT * FROM ST_DumpPoints(input_geom)  -- Get all points in the input geometry
-    LOOP
-      -- Step 5: For each point, find the closest point on the quantized kerb geometry
-      point_on_kerb := ST_ClosestPoint(closest_kerb_quantized, rec.geom);
-
-      -- Step 6: Get the relative position of the point on the quantized kerb geometry
-      INSERT INTO temp_points (point_geom, rel_position)
-      VALUES (
-        point_on_kerb,
-        ST_LineLocatePoint(closest_kerb, point_on_kerb)
-      );
-    END LOOP;
-
-    -- Step 7: Use the relative position to sort the points and create the LineString
-    RETURN ST_MakeLine(point_geom ORDER BY rel_position) FROM temp_points;
-	DROP TABLE temp_points;
-  ELSE
-    -- If no closest geometry (kerb) is found, return the input geometry
-    RETURN input_geom;
+  -- If no closest geometry (kerb) is found, return the input geometry
+  IF closest_kerb IS NULL THEN
+      RETURN input_geom;
   END IF;
+
+  -- Apply ST_Segmentize to discretize the closest kerb geometry
+  closest_kerb_quantized := ST_Segmentize(closest_kerb, quantization);
+
+
+  -- Loop through each point in the input geometry using ST_DumpPoints
+  FOR rec IN
+    SELECT * FROM ST_DumpPoints(input_geom)
+  LOOP
+    -- For each point, check whether it extends the substring
+    point_on_kerb := ST_ClosestPoint(closest_kerb_quantized, rec.geom);
+    rel_position_on_kerb :=  ST_LineLocatePoint(closest_kerb, point_on_kerb);
+    substring_start := LEAST(substring_start, rel_position_on_kerb);
+    substring_end := GREATEST(substring_end, rel_position_on_kerb);
+  END LOOP;
+
+  -- Use the relative start and end position to extract the projected substring
+  RETURN ST_LineSubstring(closest_kerb, substring_start, substring_end);
+
 END;
-$$ LANGUAGE plpgsql VOLATILE;
+$$ LANGUAGE plpgsql STABLE;
