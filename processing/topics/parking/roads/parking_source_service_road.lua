@@ -5,8 +5,24 @@ require("MergeTable")
 require("result_tags_roads")
 require("exit_processing_service_roads")
 
+local service_roads_table = osm2pgsql.define_table({
+  name = 'parking_service_roads',
+  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
+  columns = {
+    { column = 'id',      type = 'text',      not_null = true },
+    { column = 'tags',    type = 'jsonb' },
+    { column = 'meta',    type = 'jsonb' },
+    { column = 'geom',    type = 'linestring', projection = 5243 },
+    { column = 'minzoom', type = 'integer' },
+  },
+  indexes = {
+    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = 'id',                  method = 'btree', unique = true }
+  }
+})
+
 function parking_source_service_road(object)
   if exit_processing_service_roads(object.tags) then return nil end
 
-  return MergeTable({ geom = object:as_linestring() }, result_tags_roads(object))
+  service_roads_table:insert(MergeTable({ geom = object:as_linestring() }, result_tags_roads(object)))
 end
