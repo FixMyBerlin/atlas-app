@@ -11,20 +11,14 @@
 --
 
 -- HANDLE OBSTACLES
-\i '/processing/topics/parking/obstacles/points_0_initialize.sql'
-\i '/processing/topics/parking/obstacles/areas_0_initialize.sql'
 --
 \i '/processing/topics/parking/obstacles/points_1_perform_move.sql'
 
 -- HANDLE ROADS
-\i '/processing/topics/parking/roads/roads_0_initialize.sql'
-\i '/processing/topics/parking/roads/service_roads_0_initialize.sql'
 
 -- HANDLE KERBS
-\i '/processing/topics/parking/kerbs/0_initialize.sql'
 
 -- HANDLE PARKING LINES
-\i '/processing/topics/parking/parking/0_initialize.sql'
 --
 \i '/processing/topics/parking/parking/1_perform_move.sql'
 \i '/processing/topics/parking/parking/2_reverse_direction.sql'

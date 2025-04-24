@@ -17,38 +17,6 @@ require("Log")
 --  https://spatialreference.org/ref/epsg/5243/
 
 local source_obstacle_points_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_obstacle_points',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'point', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_obstacle_points_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_obstacle_points',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'point', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_obstacle_points_table = osm2pgsql.define_table({
   name = 'parking_obstacle_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -65,39 +33,7 @@ local create_empty_obstacle_points_table = osm2pgsql.define_table({
 })
 
 local source_obstacle_areas_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_obstacle_areas',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'polygon', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_obstacle_areas_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_obstacle_areas',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'polygon', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_obstacle_areas_table = osm2pgsql.define_table({
-  name = 'parking_obstacle_areas',
+  name = 'parking_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
@@ -113,38 +49,6 @@ local create_empty_obstacle_areas_table = osm2pgsql.define_table({
 })
 
 local source_kerbs_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_kerbs',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_kerbs_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_kerbs',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_kerbs_table = osm2pgsql.define_table({
   name = 'parking_kerbs',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -161,38 +65,6 @@ local create_empty_kerbs_table = osm2pgsql.define_table({
 })
 
 local source_roads_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_roads',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_roads_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_roads',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_roads_table = osm2pgsql.define_table({
   name = 'parking_roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -209,38 +81,6 @@ local create_empty_roads_table = osm2pgsql.define_table({
 })
 
 local source_service_roads_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_service_roads',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_service_roads_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_service_roads',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_service_roads_table = osm2pgsql.define_table({
   name = 'parking_service_roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -256,39 +96,8 @@ local create_empty_service_roads_table = osm2pgsql.define_table({
   }
 })
 
+
 local source_parking_lines_table = osm2pgsql.define_table({
-  name = 'parking_source_germany_parking_lines',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_source_regions_parking_lines_table = osm2pgsql.define_table({
-  name = 'parking_source_regions_parking_lines',
-  ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
-  columns = {
-    { column = 'id',      type = 'text',      not_null = true },
-    { column = 'tags',    type = 'jsonb' },
-    { column = 'meta',    type = 'jsonb' },
-    { column = 'geom',    type = 'linestring', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
-  },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
-})
-
-local create_empty_parking_lines_table = osm2pgsql.define_table({
   name = 'parking_parking_lines',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -303,6 +112,7 @@ local create_empty_parking_lines_table = osm2pgsql.define_table({
     { column = 'id',                  method = 'btree', unique = true }
   }
 })
+
 
 function osm2pgsql.process_node(object)
   local results = parking_source_obstacle_points(object)
