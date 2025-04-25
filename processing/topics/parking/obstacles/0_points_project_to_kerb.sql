@@ -7,7 +7,7 @@ SELECT
   tags,
   meta,
   minzoom,
-  project_to_closest_kerb(geom, 1, 0.5) as geom
+  project_to_k_closest_kerbs(geom, 1, 0.5, 1) as geom
 INTO parking_obstacle_points_projected
 FROM parking_obstacle_points
 WHERE tags->>'perform_snap' = 'self';

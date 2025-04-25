@@ -7,7 +7,7 @@ SELECT
   tags,
   meta,
   minzoom,
-  project_to_closest_kerb(geom, 1, 0.5) as geom
+  project_to_k_closest_kerbs(geom, 1, 0.5, 3) as geom
 INTO parking_obstacle_areas_projected FROM parking_obstacle_areas;
 
 DELETE FROM parking_obstacle_areas_projected WHERE geom IS NULL;

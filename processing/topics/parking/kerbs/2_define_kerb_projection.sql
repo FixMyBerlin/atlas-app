@@ -31,27 +31,29 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql STABLE;
 
-
-CREATE OR REPLACE FUNCTION project_to_closest_kerb(
+CREATE OR REPLACE FUNCTION project_to_k_closest_kerbs(
   input_geom geometry,
   tolerance double precision,
-  quantization double precision
+  quantization double precision,
+  k integer
 )
 RETURNS geometry AS $$
 DECLARE
-  closest_kerb geometry;
+  kerb geometry;
+  projected geometry;
+  result geometry := NULL;
 BEGIN
-  SELECT geom
-  INTO closest_kerb
-  FROM parking_kerbs_merged
-  WHERE ST_DWithin(input_geom, geom, tolerance)
-  ORDER BY ST_Distance(input_geom, geom)
-  LIMIT 1;
+  FOR kerb IN
+    SELECT geom
+    FROM parking_kerbs_merged
+    WHERE ST_DWithin(input_geom, geom, tolerance)
+    ORDER BY ST_Distance(input_geom, geom)
+    LIMIT k
+  LOOP
+    projected := project_to_line(input_geom, kerb, quantization);
+    result := ST_Collect(result, projected);
+  END LOOP;
 
-  IF closest_kerb IS NULL THEN
-    RETURN input_geom;
-  END IF;
-
-  RETURN project_to_line(input_geom, closest_kerb, quantization);
+  RETURN result;
 END;
 $$ LANGUAGE plpgsql STABLE;
