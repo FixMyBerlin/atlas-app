@@ -28,6 +28,7 @@ local node_kerb_mapping = osm2pgsql.define_table({
   ids = { type = 'way', id_column = 'way_id', create_index = 'always'},
   columns = {
     { column = 'node_id', type = 'bigint', not_null = true },
+    { column = 'idx', type = 'int', not_null = true },
   },
   indexes = {
     { column = 'node_id', method = 'btree'}
@@ -38,9 +39,10 @@ function parking_kerbs(object)
 
   if exit_processing_kerbs(object.tags) then return end
 
-  for _, node_id in ipairs(object.nodes) do
+  for idx, node_id in ipairs(object.nodes) do
     node_kerb_mapping:insert({
-      node_id = node_id
+      node_id = node_id,
+      idx = idx
     })
   end
 

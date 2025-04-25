@@ -16,6 +16,7 @@
 \i '/processing/topics/parking/kerbs/1_merge_kerbs.sql'
 \i '/processing/topics/parking/kerbs/2_define_kerb_projection.sql'
 \i '/processing/topics/parking/kerbs/3_define_locate_on_kerb.sql'
+\i '/processing/topics/parking/kerbs/4_find_intersections.sql'
 
 -- HANDLE OBSTACLES
 --
