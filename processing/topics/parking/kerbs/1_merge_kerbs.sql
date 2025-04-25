@@ -9,5 +9,4 @@ ALTER COLUMN geom TYPE geometry(Geometry, 5243)
 USING ST_SetSRID(geom, 5243);
 
 -- create an index on the merged table
-DROP INDEX IF EXISTS parking_kerbs_merged_idx;
 CREATE INDEX parking_kerbs_merged_idx ON parking_kerbs_merged USING GIST (geom);
