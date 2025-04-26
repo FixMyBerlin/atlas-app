@@ -3,10 +3,10 @@ package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
 require("Log")
 require("MergeTable")
 require("result_tags_roads")
-require("exit_processing_service_roads")
+require("exit_processing_roads")
 
-local service_roads_table = osm2pgsql.define_table({
-  name = 'parking_service_roads',
+local roads_table = osm2pgsql.define_table({
+  name = 'parking_roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
@@ -21,8 +21,8 @@ local service_roads_table = osm2pgsql.define_table({
   }
 })
 
-function parking_service_road(object)
-  if exit_processing_service_roads(object.tags) then return nil end
+function parking_roads(object)
+  if exit_processing_roads(object.tags) then return nil end
   local row = MergeTable({ geom = object:as_linestring() }, result_tags_roads(object))
-  service_roads_table:insert(row)
+  roads_table:insert(row)
 end
