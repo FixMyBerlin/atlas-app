@@ -29,6 +29,7 @@ local node_kerb_mapping = osm2pgsql.define_table({
   columns = {
     { column = 'node_id', type = 'bigint', not_null = true },
     { column = 'idx', type = 'int', not_null = true },
+    { column = 'is_terminal_node', type = 'boolean', not_null = true },
   },
   indexes = {
     { column = 'node_id', method = 'btree'}
@@ -40,9 +41,11 @@ function parking_kerbs(object)
   if exit_processing_kerbs(object.tags) then return end
 
   for idx, node_id in ipairs(object.nodes) do
+    local is_terminal_node = idx == 1 or idx == #object.nodes
     node_kerb_mapping:insert({
       node_id = node_id,
-      idx = idx
+      idx = idx,
+      is_terminal_node = is_terminal_node,
     })
   end
 

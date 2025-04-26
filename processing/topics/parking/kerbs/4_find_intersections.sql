@@ -7,8 +7,7 @@ WITH intersections AS (
     MIN(way_id) AS way_id
   FROM "_node_kerb_mapping"
   GROUP BY node_id
-  HAVING COUNT(way_id) > 2
-  -- TODO: some T-intersections have only 2 ways, we probably need to add a check on the angle or street name
+  HAVING COUNT(way_id) > 2 OR (COUNT(way_id) = 2 AND NOT bool_and(is_terminal_node))
 )
 SELECT
   i.node_id,
