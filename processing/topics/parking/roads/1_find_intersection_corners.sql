@@ -1,22 +1,25 @@
 CREATE OR REPLACE FUNCTION find_intersection_corners(
-  center geometry,
-  radius double precision
+  intersection_id BIGINT
 )
 RETURNS TABLE(intersection geometry) AS $$
 BEGIN
   RETURN QUERY
-  WITH kerbs_within_r AS (
+  WITH kerbs AS (
     SELECT id, geom
     FROM parking_kerbs_moved
-    WHERE ST_DWithin(geom, center, radius)
+    WHERE osm_id IN (
+      SELECT way_id
+      FROM _node_kerb_mapping
+      WHERE node_id = intersection_id
+    )
   ),
   kerb_pairs AS (
     SELECT
       k1.id AS id1,
       k2.id AS id2,
       ST_Intersection(k1.geom, k2.geom) AS geom
-    FROM kerbs_within_r k1
-    JOIN kerbs_within_r k2
+    FROM kerbs k1
+    JOIN kerbs k2
       ON k1.id < k2.id  -- prevent duplicates and self-joins
     WHERE ST_Intersects(k1.geom, k2.geom)
   )
@@ -41,7 +44,7 @@ INTO parking_intersection_corners
 FROM
   parking_intersections as i
 CROSS JOIN LATERAL
-  find_intersection_corners(i.geom, 15) AS corners;
+  find_intersection_corners(i.node_id) AS corners;
 
 ALTER TABLE parking_intersection_corners
 ALTER COLUMN geom TYPE geometry(Geometry, 5243)
