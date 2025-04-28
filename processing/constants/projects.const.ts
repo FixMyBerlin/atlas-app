@@ -46,7 +46,7 @@ export const projects: {
   {
     name: 'parking',
     topics: ['parking'],
-    default: false,
+    default: true,
     bbox: [13.08283, 52.33446, 13.762245, 52.6783],
   },
 ]
