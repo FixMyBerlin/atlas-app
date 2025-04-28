@@ -4,12 +4,10 @@ CREATE OR REPLACE FUNCTION intersection_angle (
   road_id2 BIGINT
 ) RETURNS double precision AS $$
 DECLARE
-  azimuth_road1 double precision;
-  azimuth_road2 double precision;
-  intersection_angle double precision;
+  smallest_angle double precision;
 BEGIN
-
-   -- calculate the azimuth of the two roads at the intersection point
+  -- for each pair of intersction_id and way_id, get the index of the node in the way
+  -- and the index of the next node in the way. For n > 1 this is n - 1 for n = 1 this is n + 1
   WITH end_segments AS (
     SELECT
       way_id,
@@ -22,6 +20,8 @@ BEGIN
     WHERE node_id = intersection_id
       AND way_id IN (road_id1, road_id2)
   ),
+  -- calculate the azimuths of the two roads at the intersection point
+  -- for loops we have more than one pair of intersection_id and way_id
   azimuths AS (
     SELECT
       es.way_id,
@@ -31,45 +31,52 @@ BEGIN
       ) AS azimuth
     FROM end_segments es
     JOIN parking_roads r ON r.osm_id = es.way_id
+  ),
+  intersection_angles AS (
+    SELECT
+      abs(a1.azimuth - a2.azimuth) AS angle
+    FROM azimuths a1
+    JOIN azimuths a2
+      ON a1.way_id < a2.way_id
   )
+  -- Get the smallest angle (adjust for angles greater than pi)
   SELECT
-    (SELECT azimuth FROM azimuths WHERE way_id = road_id1),
-    (SELECT azimuth FROM azimuths WHERE way_id = road_id2)
-  INTO azimuth_road1, azimuth_road2;
+    MIN(CASE
+          WHEN angle > pi() THEN 2 * pi() - angle
+          ELSE angle
+        END)
+  INTO smallest_angle
+  FROM intersection_angles;
 
-  -- calculate the angle difference
-  intersection_angle := abs(azimuth_road1 - azimuth_road2);
-
-  IF intersection_angle > pi() THEN
-    RETURN (2 * pi()) - intersection_angle;
-  END IF;
-
-  RETURN intersection_angle;
+  RETURN smallest_angle;
 END;
+
 $$ LANGUAGE plpgsql STABLE;
 
 CREATE OR REPLACE FUNCTION find_intersection_corners (intersection_id BIGINT, max_degree INT) RETURNS TABLE (intersection geometry) AS $$
 BEGIN
   RETURN QUERY
-  WITH kerbs AS (
-    SELECT id, osm_id, geom
-    FROM parking_kerbs_moved
-    WHERE osm_id IN (
-      SELECT way_id
-      FROM _node_kerb_mapping
-      WHERE node_id = intersection_id
-    )
+  WITH intersection_roads AS (
+    SELECT way_id
+    FROM _node_kerb_mapping
+    WHERE node_id = intersection_id
+  ),
+  road_pairs AS (
+    SELECT
+      r1.way_id AS road_id1,
+      r2.way_id AS road_id2
+    FROM intersection_roads r1
+    JOIN intersection_roads r2
+      ON r1.way_id < r2.way_id -- prevent duplicates and self-joins
+    WHERE degrees(intersection_angle (intersection_id, r1.way_id, r2.way_id)) < max_degree
   ),
   kerb_pairs AS (
     SELECT
-      k1.id AS id1,
-      k2.id AS id2,
-      ST_Intersection(k1.geom, k2.geom) AS geom
-    FROM kerbs k1
-    JOIN kerbs k2
-      ON k1.id < k2.id  -- prevent duplicates and self-joins
-    WHERE ST_Intersects(k1.geom, k2.geom)
-    AND degrees(intersection_angle (intersection_id, k1.osm_id, k2.osm_id)) < max_degree
+      ST_Intersection(kerb1.geom, kerb2.geom) AS geom
+    FROM road_pairs rp
+    JOIN parking_kerbs_moved kerb1 ON kerb1.osm_id = rp.road_id1
+    JOIN parking_kerbs_moved kerb2 ON kerb2.osm_id = rp.road_id2
+    WHERE ST_Intersects(kerb1.geom, kerb2.geom)
   )
   SELECT
     geom
