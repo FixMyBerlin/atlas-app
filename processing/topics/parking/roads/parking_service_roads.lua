@@ -16,8 +16,7 @@ local service_roads_table = osm2pgsql.define_table({
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
+    { column = { 'osm_id' }, method = 'btree' },
   }
 })
 
