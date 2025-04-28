@@ -1,27 +1,26 @@
 DROP TABLE IF EXISTS parking_intersections;
 
+-- we define intersections as either:
+--  1. nodes that are part of more than 2 roads
+--  2. nodes that are part of exactly 2 roads of which at least one is not ending at the node
+--  (a T-junction where one road is not splitted)
+-- we can select these nodes from the _node_kerb_mapping table
 WITH
   intersections AS (
     SELECT
-      node_id,
-      COUNT(way_id) AS way_count,
-      MIN(way_id) AS way_id
+      nkm.node_id,
+      COUNT(nkm.way_id) AS way_count,
+      MIN(nkm.way_id) AS way_id
     FROM
-      "_node_kerb_mapping"
-    WHERE
-      way_id IN (
-        SELECT
-          osm_id
-        FROM
-          parking_roads
-      )
+      _node_kerb_mapping nkm
+      JOIN parking_roads r ON nkm.way_id = r.osm_id
     GROUP BY
-      node_id
+      nkm.node_id
     HAVING
-      COUNT(way_id) > 2
+      COUNT(nkm.way_id) > 2
       OR (
-        COUNT(way_id) = 2
-        AND NOT bool_and(is_terminal_node)
+        COUNT(nkm.way_id) = 2
+        AND NOT bool_and(nkm.is_terminal_node)
       )
   )
 SELECT
@@ -31,7 +30,7 @@ SELECT
   ST_PointN (road.geom, nkm.idx) AS geom INTO parking_intersections
 FROM
   intersections i
-  JOIN "_node_kerb_mapping" nkm ON i.way_id = nkm.way_id
+  JOIN _node_kerb_mapping nkm ON i.way_id = nkm.way_id
   AND i.node_id = nkm.node_id
   JOIN parking_roads road ON road.osm_id = nkm.way_id;
 
