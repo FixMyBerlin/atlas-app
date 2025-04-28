@@ -33,9 +33,6 @@ export async function getTopicTables(topic: Topic) {
 export async function initializeBackupSchema() {
   return sql`CREATE SCHEMA IF NOT EXISTS backup`
 }
-export async function initializeCustonFunctions() {
-  return $`psql -q -f ./utils/diffing/jsonb_diff.sql`
-}
 
 /**
  * Get all table names from the given schema.

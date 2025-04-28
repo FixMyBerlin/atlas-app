@@ -1,5 +1,4 @@
-CREATE OR REPLACE FUNCTION jsonb_diff(old JSONB, new JSONB)
-RETURNS JSONB AS $$
+CREATE OR REPLACE FUNCTION jsonb_diff (old JSONB, new JSONB) RETURNS JSONB AS $$
 DECLARE
     diff JSONB;
     v RECORD;
@@ -22,8 +21,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION jsonb_prefix_values(json_in JSONB, prefix text)
-RETURNS JSONB AS $$
+CREATE OR REPLACE FUNCTION jsonb_prefix_values (json_in JSONB, prefix text) RETURNS JSONB AS $$
 DECLARE
     json_out JSONB;
     v RECORD;
