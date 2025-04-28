@@ -88,10 +88,6 @@ $$ LANGUAGE plpgsql STABLE;
 
 DROP TABLE IF EXISTS parking_intersection_corners;
 
-DROP INDEX IF EXISTS parking_kerbs_moved_idx;
-
-CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs_moved USING GIST (geom);
-
 SELECT
   i.node_id as intersection_id,
   i.way_count,
