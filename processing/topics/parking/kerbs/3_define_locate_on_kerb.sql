@@ -1,3 +1,4 @@
+-- this function returns the way_id and relative position of a node on the longest kerb it is part of
 CREATE OR REPLACE FUNCTION locate_on_kerb (node_id_input bigint, node_geom geometry) RETURNS TABLE (rel_position double precision, way_id bigint) AS $$
 BEGIN
     -- Find the longest road that the node is part of

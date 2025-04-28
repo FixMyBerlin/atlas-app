@@ -56,11 +56,14 @@ $$ LANGUAGE plpgsql STABLE;
 CREATE OR REPLACE FUNCTION find_intersection_corners (intersection_id BIGINT, max_degree INT) RETURNS TABLE (intersection geometry) AS $$
 BEGIN
   RETURN QUERY
+  -- get the ways that are connected to the intersection
   WITH intersection_roads AS (
     SELECT way_id
     FROM _node_kerb_mapping
     WHERE node_id = intersection_id
   ),
+  -- for each pair of roads, calculate the angle between them
+  -- and filter out the pairs that have too shallow angles
   road_pairs AS (
     SELECT
       r1.way_id AS road_id1,
@@ -70,6 +73,7 @@ BEGIN
       ON r1.way_id < r2.way_id -- prevent duplicates and self-joins
     WHERE degrees(intersection_angle (intersection_id, r1.way_id, r2.way_id)) < max_degree
   ),
+  -- for each pair of roads get the moved kerbs and look for intersections
   kerb_pairs AS (
     SELECT
       ST_Intersection(kerb1.geom, kerb2.geom) AS geom
@@ -88,6 +92,8 @@ $$ LANGUAGE plpgsql STABLE;
 
 DROP TABLE IF EXISTS parking_intersection_corners;
 
+-- for each road intersection where the roads incide with an angle smaller than 140 degrees
+-- find the intersection points of the kerbs
 SELECT
   i.node_id as intersection_id,
   i.way_count,
