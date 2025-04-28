@@ -37,3 +37,9 @@ FROM
 
 ALTER TABLE parking_intersections
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
+
+DO $$
+BEGIN
+  RAISE NOTICE 'Finished finding intersections';
+END
+$$;
