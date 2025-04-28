@@ -9,7 +9,7 @@ WITH
   intersections AS (
     SELECT
       nkm.node_id,
-      COUNT(nkm.way_id) AS way_count,
+      COUNT(nkm.way_id) + SUM((NOT is_terminal_node)::INT) AS degree,
       MIN(nkm.way_id) AS way_id
     FROM
       _node_kerb_mapping nkm
@@ -17,22 +17,20 @@ WITH
     GROUP BY
       nkm.node_id
     HAVING
-      COUNT(nkm.way_id) > 2
-      OR (
-        COUNT(nkm.way_id) = 2
-        AND NOT bool_and(nkm.is_terminal_node)
-      )
+      COUNT(nkm.way_id) > 1
   )
 SELECT
   i.node_id,
   i.way_id,
-  i.way_count,
+  i.degree,
   ST_PointN (road.geom, nkm.idx) AS geom INTO parking_intersections
 FROM
   intersections i
   JOIN _node_kerb_mapping nkm ON i.way_id = nkm.way_id
   AND i.node_id = nkm.node_id
-  JOIN parking_roads road ON road.osm_id = nkm.way_id;
+  JOIN parking_roads road ON road.osm_id = nkm.way_id
+WHERE
+  i.degree > 2;
 
 ALTER TABLE parking_intersections
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);

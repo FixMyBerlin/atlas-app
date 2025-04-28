@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS parking_intersection_corners;
 -- find the intersection points of the kerbs
 SELECT
   i.node_id as intersection_id,
-  i.way_count,
+  i.degree,
   corners as geom INTO parking_intersection_corners
 FROM
   parking_intersections as i
