@@ -1,3 +1,4 @@
+-- TODO: sometimes we miss intersection corners because the roads are splitted close to the intersection, see: https://tiles-inspector.netlify.app/#20.12/52.4714732/13.3406221
 CREATE OR REPLACE FUNCTION intersection_angle (
   intersection_id BIGINT,
   road_id1 BIGINT,
