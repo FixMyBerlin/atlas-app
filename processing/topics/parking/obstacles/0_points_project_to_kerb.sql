@@ -7,17 +7,19 @@ SELECT
   tags,
   meta,
   minzoom,
-  project_to_k_closest_kerbs(geom, 3, 0.5, 1) as geom
+  project_to_k_closest_kerbs (geom, 3, 0.5, 1) as geom
   -- TODO: the tollerance here is too large, we need to decrease it once we have better offset values for the kerbs
-INTO parking_obstacle_points_projected
-FROM parking_obstacle_points
-WHERE tags->>'perform_snap' = 'self';
+  INTO parking_obstacle_points_projected
+FROM
+  parking_obstacle_points
+WHERE
+  tags ->> 'perform_snap' = 'self';
 
-DELETE FROM parking_obstacle_points_projected WHERE geom IS NULL;
+DELETE FROM parking_obstacle_points_projected
+WHERE
+  geom IS NULL;
 
 ALTER TABLE parking_obstacle_points_projected
-ALTER COLUMN geom TYPE geometry(Geometry, 5243)
-USING ST_SetSRID(geom, 5243);
+ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
-CREATE INDEX idx_parking_obstacle_points_projected_geom
-ON parking_obstacle_points_projected USING gist (geom);
+CREATE INDEX idx_parking_obstacle_points_projected_geom ON parking_obstacle_points_projected USING gist (geom);
