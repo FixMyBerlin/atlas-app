@@ -1,5 +1,5 @@
--- this function projects a given geometry to the closest kerb resulting in a linestring
--- the parameter tolerance define the maximum distance to the closest kerb
+-- this function projects all points of input_geom to the line
+-- returns the substring that is spanned by the projected points
 CREATE OR REPLACE FUNCTION project_to_line (input_geom geometry, line geometry) RETURNS geometry AS $$
 DECLARE
   rec RECORD;
@@ -8,6 +8,8 @@ DECLARE
   substring_start double precision := 1.0;
   substring_end double precision := 0.0;
 BEGIN
+  -- project all points of the input geometry to the line
+  -- for each projected point, get relative position on the line and keep track of the min and max
   FOR rec IN SELECT * FROM ST_DumpPoints(input_geom)
   LOOP
     point_on_line := ST_ClosestPoint(line, rec.geom);
@@ -16,10 +18,13 @@ BEGIN
     substring_end := GREATEST(substring_end, rel_position);
   END LOOP;
 
+  -- extract the substring of the line between the min and max relative position
   RETURN ST_LineSubstring(line, substring_start, substring_end);
 END;
 $$ LANGUAGE plpgsql STABLE;
 
+-- this function projects a given geometry to the k closest kerbs
+-- the parameter tolerance define the maximum distance to the closest kerb
 CREATE OR REPLACE FUNCTION project_to_k_closest_kerbs (
   input_geom geometry,
   tolerance double precision,
@@ -30,6 +35,7 @@ DECLARE
   projected geometry;
   result geometry := NULL;
 BEGIN
+  -- get the k closest kerbs w.r.t the input_geom
   FOR kerb IN
     SELECT geom
     FROM parking_kerbs_merged
@@ -37,6 +43,7 @@ BEGIN
     ORDER BY ST_Distance(input_geom, geom)
     LIMIT k
   LOOP
+    -- project the input_geom to the kerb and collect the results
     projected := project_to_line(input_geom, kerb);
     result := ST_Collect(result, projected);
   END LOOP;
