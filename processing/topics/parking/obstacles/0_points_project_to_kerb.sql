@@ -7,7 +7,7 @@ SELECT
   tags,
   meta,
   minzoom,
-  project_to_k_closest_kerbs (geom, 3, 0.5, 1) as geom
+  project_to_k_closest_kerbs (geom, 3, 1) as geom
   -- TODO: the tollerance here is too large, we need to decrease it once we have better offset values for the kerbs
   INTO parking_obstacle_points_projected
 FROM
