@@ -1,3 +1,4 @@
+import { mapillaryCoverageDateString } from '@/src/data/mapillaryCoverage.const'
 import { bikelaneTodoIds, roadTodoIds, TodoId } from '@/src/data/processingTypes/todoIds.const'
 import { campaigns } from '@/src/data/radinfra-de/campaigns'
 import { campaignCategorySelect } from '@/src/data/radinfra-de/schema/utils/campaignCategorySelect'
@@ -18,6 +19,15 @@ export const campaignLegend: FileMapDataSubcategoryStyleLegend[] = [
     style: {
       type: 'line',
       color: '#fda5e4',
+    },
+  },
+  {
+    id: 'mapillary',
+    name: 'Mapillary Fotos vorhanden',
+    desc: [`Prozessierte Mapillary Sequenzen von ${mapillaryCoverageDateString}.`],
+    style: {
+      type: 'line',
+      color: '#050dff',
     },
   },
 ]
