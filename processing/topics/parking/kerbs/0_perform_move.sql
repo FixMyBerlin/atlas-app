@@ -20,3 +20,7 @@ WHERE
 
 ALTER TABLE parking_kerbs_moved
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
+
+DROP INDEX IF EXISTS parking_kerbs_moved_idx;
+
+CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs_moved USING GIST (geom);
