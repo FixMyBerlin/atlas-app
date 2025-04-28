@@ -23,3 +23,9 @@ ALTER TABLE parking_obstacle_points_projected
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
 CREATE INDEX idx_parking_obstacle_points_projected_geom ON parking_obstacle_points_projected USING gist (geom);
+
+DO $$
+BEGIN
+  RAISE NOTICE 'Finished projecting obstacle points';
+END
+$$;

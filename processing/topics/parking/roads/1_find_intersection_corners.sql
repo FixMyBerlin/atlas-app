@@ -104,3 +104,9 @@ FROM
 
 ALTER TABLE parking_intersection_corners
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
+
+DO $$
+BEGIN
+  RAISE NOTICE 'Finished calculating intersection corners';
+END
+$$;
