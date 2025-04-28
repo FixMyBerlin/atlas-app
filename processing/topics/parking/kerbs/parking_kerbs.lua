@@ -32,7 +32,9 @@ local node_kerb_mapping = osm2pgsql.define_table({
     { column = 'is_terminal_node', type = 'boolean', not_null = true },
   },
   indexes = {
-    { column = 'node_id', method = 'btree'}
+    { column = 'node_id', method = 'btree'},
+    { column = 'way_id', method = 'btree'},
+    { column = {'node_id', 'way_id'}, method = 'btree'}
   }
 })
 

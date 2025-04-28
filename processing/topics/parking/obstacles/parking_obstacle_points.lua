@@ -16,10 +16,6 @@ local obstacle_points_table = osm2pgsql.define_table({
     { column = 'geom',    type = 'point', projection = 5243 },
     { column = 'minzoom', type = 'integer' },
   },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
 })
 
 function parking_obstacle_points(object)

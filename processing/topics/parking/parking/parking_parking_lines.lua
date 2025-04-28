@@ -17,10 +17,6 @@ local parking_lines_table = osm2pgsql.define_table({
     { column = 'geom',    type = 'linestring', projection = 5243 },
     { column = 'minzoom', type = 'integer' },
   },
-  indexes = {
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
-    { column = 'id',                  method = 'btree', unique = true }
-  }
 })
 
 
