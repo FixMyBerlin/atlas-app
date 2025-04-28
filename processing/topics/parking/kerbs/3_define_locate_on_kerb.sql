@@ -1,11 +1,4 @@
-CREATE OR REPLACE FUNCTION locate_on_kerb(
-    node_id_input bigint,
-    node_geom geometry
-)
-RETURNS TABLE (
-    rel_position double precision,
-    way_id bigint
-) AS $$
+CREATE OR REPLACE FUNCTION locate_on_kerb (node_id_input bigint, node_geom geometry) RETURNS TABLE (rel_position double precision, way_id bigint) AS $$
 BEGIN
     -- Find the longest road that the node is part of
     RETURN QUERY
@@ -20,4 +13,3 @@ BEGIN
     LIMIT 1;
 END;
 $$ LANGUAGE plpgsql STABLE;
-
