@@ -1,8 +1,8 @@
 describe("`transform_kerbs`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/parking/helper/?.lua"
-  require("transform_parking_lines")
-  require("result_tags_parking_lines")
+  package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+  require("transform_parkings")
+  require("result_tags_parkings")
   require("Log")
   require("osm2pgsql")
 
@@ -16,8 +16,8 @@ describe("`transform_kerbs`", function()
       id = 1,
       type = 'way',
     }
-    local results = transform_parking_lines(input_object)
-    local object_part = result_tags_parking_lines(results[1])
+    local results = transform_parkings(input_object)
+    local object_part = result_tags_parkings(results[1])
 
     assert.are.equal(object_part.id, "way/1/left")
     assert.are.equal(object_part.tags.side, "left")

@@ -1,12 +1,12 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
 package.path = package.path .. ";/processing/topics/parking/kerbs/?.lua"
-package.path = package.path .. ";/processing/topics/parking/parking/?.lua"
+package.path = package.path .. ";/processing/topics/parking/parkings/?.lua"
 package.path = package.path .. ";/processing/topics/parking/roads/?.lua"
 require("parking_obstacle_points")
 require("parking_obstacle_areas")
 require("parking_kerbs")
-require("parking_parking_lines")
+require("parking_parkings")
 require("parking_roads")
 require("parking_service_roads")
 require("Log")
@@ -31,7 +31,7 @@ function osm2pgsql.process_way(object)
 
   parking_kerbs(object)
 
-  parking_parking_lines(object)
+  parking_parkings(object)
 
 end
 

@@ -1,5 +1,5 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/parking/helper/?.lua"
+package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
 require("Log")
 require("Clone")
 require("parking_transformations")
@@ -9,7 +9,7 @@ local parking_transformation = centerline_transformation_class.new({
     direction_reference = 'self'
 })
 
-function transform_parking_lines(object)
+function transform_parkings(object)
   local transformed_objects = transform_objects(object.tags, { parking_transformation })
 
   local result_objects = {}
