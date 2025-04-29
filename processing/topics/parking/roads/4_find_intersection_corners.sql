@@ -17,7 +17,7 @@ BEGIN
         WHEN idx = 1 THEN idx + 1
         ELSE idx - 1
       END AS idx_next
-    FROM _node_kerb_mapping
+    FROM _node_road_mapping
     WHERE node_id = intersection_id
       AND way_id IN (road_id1, road_id2)
   ),
@@ -31,7 +31,7 @@ BEGIN
         ST_PointN(r.geom, es.idx_next)
       ) AS azimuth
     FROM end_segments es
-    JOIN parking_roads r ON r.osm_id = es.way_id
+    JOIN _parking_roads r ON r.osm_id = es.way_id
   ),
   intersection_angles AS (
     SELECT
@@ -60,7 +60,7 @@ BEGIN
   -- get the ways that are connected to the intersection
   WITH intersection_roads AS (
     SELECT way_id
-    FROM _node_kerb_mapping
+    FROM _node_road_mapping
     WHERE node_id = intersection_id
   ),
   -- for each pair of roads, calculate the angle between them
@@ -79,8 +79,8 @@ BEGIN
     SELECT
       ST_Intersection(kerb1.geom, kerb2.geom) AS geom
     FROM road_pairs rp
-    JOIN parking_kerbs_moved kerb1 ON kerb1.osm_id = rp.road_id1
-    JOIN parking_kerbs_moved kerb2 ON kerb2.osm_id = rp.road_id2
+    JOIN parking_kerbs kerb1 ON kerb1.osm_id = rp.road_id1
+    JOIN parking_kerbs kerb2 ON kerb2.osm_id = rp.road_id2
     WHERE degrees(rp.angle) < max_degree
     AND kerb1.geom && kerb2.geom
     AND ST_Intersects(kerb1.geom, kerb2.geom)
