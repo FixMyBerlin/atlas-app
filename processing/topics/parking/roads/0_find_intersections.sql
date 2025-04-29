@@ -39,6 +39,6 @@ CREATE INDEX parking_intersections_idx ON parking_intersections USING BTREE (nod
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Finished finding intersections';
+  RAISE NOTICE 'Finished finding intersections at %', clock_timestamp();
 END
 $$;
