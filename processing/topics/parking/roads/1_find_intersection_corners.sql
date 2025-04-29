@@ -67,12 +67,12 @@ BEGIN
   -- and filter out the pairs that have too shallow angles
   road_pairs AS (
     SELECT
+      intersection_angle (intersection_id, r1.way_id, r2.way_id) as angle,
       r1.way_id AS road_id1,
       r2.way_id AS road_id2
     FROM intersection_roads r1
     JOIN intersection_roads r2
       ON r1.way_id < r2.way_id -- prevent duplicates and self-joins
-    WHERE degrees(intersection_angle (intersection_id, r1.way_id, r2.way_id)) < max_degree
   ),
   -- for each pair of roads get the moved kerbs and look for intersections
   kerb_pairs AS (
@@ -81,7 +81,9 @@ BEGIN
     FROM road_pairs rp
     JOIN parking_kerbs_moved kerb1 ON kerb1.osm_id = rp.road_id1
     JOIN parking_kerbs_moved kerb2 ON kerb2.osm_id = rp.road_id2
-    WHERE ST_Intersects(kerb1.geom, kerb2.geom)
+    WHERE degrees(rp.angle) < max_degree
+    AND kerb1.geom && kerb2.geom
+    AND ST_Intersects(kerb1.geom, kerb2.geom)
   )
   SELECT
     geom
