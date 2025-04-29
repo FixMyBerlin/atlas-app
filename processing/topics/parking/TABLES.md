@@ -57,8 +57,8 @@ flowchart TB
         end
         subgraph result ["result lines"]
             PL -.->|"copy"| RPL
-            PA -->|"process"| RSPL("parking_<br>result_separate_parking_lines")
-            PARA -->|"cut"| RPL("parking_<br>result_parking_lines")
+            PA -->|"process"| RSPL("parking_<br>result_separate_parkings")
+            PARA -->|"cut"| RPL("parking_<br>result_parkings")
             PAO -->|"cut"| RPL
             PAD -->|"cut"| RPL
             PAC -->|"cut"| RPL

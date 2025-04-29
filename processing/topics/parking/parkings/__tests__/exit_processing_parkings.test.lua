@@ -1,14 +1,14 @@
-describe("`exit_processing_parking_lines`", function()
+describe("`exit_processing_parkings`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/parking/helper/?.lua"
-  require("exit_processing_parking_lines")
+  package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+  require("exit_processing_parkings")
   require("Log")
 
   it('ignores non highway', function()
     local tags = {
       ["foo"] = 'bar',
     }
-    local result = exit_processing_parking_lines(tags)
+    local result = exit_processing_parkings(tags)
     assert.are.equal(result, true)
   end)
 
@@ -17,7 +17,7 @@ describe("`exit_processing_parking_lines`", function()
       ["highway"] = 'service',
       ["parking:foo"] = 'bar',
     }
-    local result = exit_processing_parking_lines(tags)
+    local result = exit_processing_parkings(tags)
     assert.are.equal(result, false)
   end)
 end)

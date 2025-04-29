@@ -25,9 +25,3 @@
 -- HANDLE ROADS
 \i '/processing/topics/parking/roads/0_find_intersections.sql'
 \i '/processing/topics/parking/roads/1_find_intersection_corners.sql'
-
-
--- HANDLE PARKING LINES
---
-\i '/processing/topics/parking/parking/0_perform_move.sql'
-\i '/processing/topics/parking/parking/1_reverse_direction.sql'
