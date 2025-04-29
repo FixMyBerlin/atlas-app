@@ -25,6 +25,6 @@ ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Finished locating obstacle points on kerb';
+  RAISE NOTICE 'Finished locating obstacle points on kerb at %', clock_timestamp();
 END
 $$;

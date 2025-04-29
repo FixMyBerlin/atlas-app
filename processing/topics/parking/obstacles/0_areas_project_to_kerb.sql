@@ -22,6 +22,6 @@ CREATE INDEX idx_parking_obstacle_areas_projected_geom ON parking_obstacle_areas
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Finished projecting obstacle areas';
+  RAISE NOTICE 'Finished projecting obstacle areas at %', clock_timestamp();
 END
 $$;
