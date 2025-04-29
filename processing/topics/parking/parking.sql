@@ -10,18 +10,17 @@
 -- - TODO: Add tests for those files.
 --
 
--- HANDLE KERBS
 
-\i '/processing/topics/parking/kerbs/0_perform_move.sql'
-\i '/processing/topics/parking/kerbs/1_merge_kerbs.sql'
-\i '/processing/topics/parking/kerbs/2_define_kerb_projection.sql'
+-- HANDLE ROADS
+\i '/processing/topics/parking/roads/0_create_kerbs.sql'
+\i '/processing/topics/parking/roads/1_merge_kerbs.sql'
+\i '/processing/topics/parking/roads/2_define_kerb_projection.sql'
+\i '/processing/topics/parking/roads/3_find_intersections.sql'
+\i '/processing/topics/parking/roads/4_find_intersection_corners.sql'
+
 
 -- HANDLE OBSTACLES
 --
 \i '/processing/topics/parking/obstacles/0_areas_project_to_kerb.sql'
 \i '/processing/topics/parking/obstacles/0_points_project_to_kerb.sql'
 \i '/processing/topics/parking/obstacles/1_points_locate_on_kerb.sql'
-
--- HANDLE ROADS
-\i '/processing/topics/parking/roads/0_find_intersections.sql'
-\i '/processing/topics/parking/roads/1_find_intersection_corners.sql'

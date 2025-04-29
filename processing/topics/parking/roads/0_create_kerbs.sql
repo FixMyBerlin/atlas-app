@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS parking_kerbs_moved;
+DROP TABLE IF EXISTS parking_kerbs;
 
 SELECT
   ROW_NUMBER() OVER () as id,
@@ -8,9 +8,9 @@ SELECT
   osm_id,
   tags,
   meta,
-  minzoom INTO parking_kerbs_moved
+  minzoom INTO parking_kerbs
 FROM
-  _parking_kerbs
+  _parking_roads
   CROSS JOIN LATERAL (
     VALUES
       (
@@ -23,14 +23,14 @@ FROM
       )
   ) AS kerb_sides (side, geom);
 
-ALTER TABLE parking_kerbs_moved
+ALTER TABLE parking_kerbs
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
-CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs_moved USING BTREE (osm_id);
+CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs USING BTREE (osm_id);
 
-CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs_moved USING BTREE (osm_id, side);
+CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs USING BTREE (osm_id, side);
 
-CREATE INDEX parking_kerbs_moved_geom_idx ON parking_kerbs_moved USING GIST (geom);
+CREATE INDEX parking_kerbs_moved_geom_idx ON parking_kerbs USING GIST (geom);
 
 DO $$
 BEGIN

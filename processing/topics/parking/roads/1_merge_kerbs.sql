@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS parking_kerbs_merged;
 SELECT
   (ST_Dump (ST_LineMerge (ST_Collect (geom)))).geom as geom INTO parking_kerbs_merged
 from
-  parking_kerbs_moved;
+  parking_kerbs;
 
 ALTER TABLE parking_kerbs_merged
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
