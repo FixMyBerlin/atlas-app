@@ -28,7 +28,7 @@ ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
 CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs USING BTREE (osm_id);
 
-CREATE INDEX parking_kerbs_moved_idx ON parking_kerbs USING BTREE (osm_id, side);
+CREATE INDEX parking_kerbs_moved_joint_idx ON parking_kerbs USING BTREE (osm_id, side);
 
 CREATE INDEX parking_kerbs_moved_geom_idx ON parking_kerbs USING GIST (geom);
 
