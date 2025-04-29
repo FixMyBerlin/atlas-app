@@ -17,6 +17,8 @@
 \i '/processing/topics/parking/roads/2_define_kerb_projection.sql'
 \i '/processing/topics/parking/roads/3_find_intersections.sql'
 \i '/processing/topics/parking/roads/4_find_intersection_corners.sql'
+\i '/processing/topics/parking/roads/5_define_kerb_tangent.sql'
+
 
 
 -- HANDLE OBSTACLES
@@ -24,3 +26,4 @@
 \i '/processing/topics/parking/obstacles/0_areas_project_to_kerb.sql'
 \i '/processing/topics/parking/obstacles/0_points_project_to_kerb.sql'
 \i '/processing/topics/parking/obstacles/1_points_locate_on_kerb.sql'
+\i '/processing/topics/parking/obstacles/2_points_create_kerb_tangents.sql'
