@@ -16,9 +16,16 @@ UPDATE parking_driveways
 SET
   geom = ST_MakeLine (
     ST_PointN (geom, idx),
-    COALESCE(
-      ST_PointN (geom, idx + 1),
-      ST_PointN (geom, idx - 1)
+    ST_Project (
+      ST_PointN (geom, idx),
+      ST_Azimuth (
+        COALESCE(
+          ST_PointN (geom, idx + 1),
+          ST_PointN (geom, idx - 1)
+        ),
+        ST_PointN (geom, idx)
+      ),
+      1
     )
   );
 
