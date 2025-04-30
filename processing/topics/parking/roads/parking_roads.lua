@@ -4,6 +4,7 @@ require("Log")
 require("MergeTable")
 require("result_tags_roads")
 require("exit_processing_roads")
+require("exit_processing_service_roads")
 
 
 local roads_table = osm2pgsql.define_table({
@@ -13,6 +14,7 @@ local roads_table = osm2pgsql.define_table({
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'linestring', projection = 5243 },
+    { column = 'is_service', type = 'boolean'},
     { column = 'minzoom', type = 'integer' },
   },
   indexes = {
@@ -28,6 +30,7 @@ local node_road_mapping = osm2pgsql.define_table({
     { column = 'node_id', type = 'bigint', not_null = true },
     { column = 'idx', type = 'int', not_null = true },
     { column = 'is_terminal_node', type = 'boolean', not_null = true },
+    { column = 'is_service', type = 'boolean'},
   },
   indexes = {
     { column = 'node_id', method = 'btree'},
@@ -38,16 +41,21 @@ local node_road_mapping = osm2pgsql.define_table({
 
 
 function parking_roads(object)
-  if exit_processing_roads(object.tags) then return nil end
+  local exit_road = exit_processing_roads(object.tags)
+  local exit_service_road = exit_processing_service_roads(object.tags)
 
+  if exit_road and exit_service_road then return end
+  local is_service = not exit_service_road
   for idx, node_id in ipairs(object.nodes) do
     local is_terminal_node = idx == 1 or idx == #object.nodes
     node_road_mapping:insert({
       node_id = node_id,
       idx = idx,
       is_terminal_node = is_terminal_node,
+      is_service = is_service,
     })
   end
-  local row = MergeTable({ geom = object:as_linestring() }, result_tags_roads(object))
+  local result_tags_roads = result_tags_roads(object)
+  local row = MergeTable({ geom = object:as_linestring(), is_service = is_service}, result_tags_roads)
   roads_table:insert(row)
 end
