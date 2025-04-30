@@ -34,6 +34,6 @@ CREATE INDEX parking_kerbs_moved_geom_idx ON parking_kerbs USING GIST (geom);
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Finished moving kerbs';
+  RAISE NOTICE 'Finished creating kerbs %', clock_timestamp();
 END
 $$;
