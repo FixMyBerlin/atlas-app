@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS parking_driveways;
+
+SELECT
+  r.* INTO parking_driveways
+FROM
+  _parking_roads r
+  JOIN _node_road_mapping nrm ON r.osm_id = nrm.way_id
+  JOIN parking_intersections i ON nrm.node_id = i.node_id
+WHERE
+  r.is_service
+  AND i.is_service;
+
+ALTER TABLE parking_driveways
+ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
+
+DO $$
+BEGIN
+  RAISE NOTICE 'Finished finding driveways at %', clock_timestamp();
+END
+$$;
