@@ -16,8 +16,7 @@ WITH
           AND is_service
         )::INT
       ) AS service_degree,
-      MIN(nrm.way_id) AS way_id,
-      BOOL_OR(is_service) as is_service
+      MIN(nrm.way_id) AS way_id
     FROM
       _node_road_mapping nrm
     GROUP BY
@@ -29,7 +28,6 @@ SELECT
   i.node_id,
   i.degree,
   i.service_degree,
-  i.is_service,
   ST_PointN (road.geom, nrm.idx) AS geom INTO parking_intersections
 FROM
   intersections i
