@@ -27,7 +27,6 @@ WITH
   )
 SELECT
   i.node_id,
-  i.way_id,
   i.degree,
   i.service_degree,
   i.is_service,
@@ -43,7 +42,7 @@ WHERE
 ALTER TABLE parking_intersections
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
-CREATE INDEX parking_intersections_idx ON parking_intersections USING BTREE (node_id, way_id);
+CREATE INDEX parking_intersections_idx ON parking_intersections USING BTREE (node_id);
 
 DO $$
 BEGIN
