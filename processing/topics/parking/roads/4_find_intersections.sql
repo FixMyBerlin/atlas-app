@@ -10,7 +10,7 @@ WITH
     SELECT
       nrm.node_id,
       COUNT(nrm.way_id) + SUM((NOT is_terminal_node)::INT) AS degree,
-      COUNT(is_service::INT) + SUM(
+      SUM(is_service::INT) + SUM(
         (
           NOT is_terminal_node
           AND is_service
