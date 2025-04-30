@@ -10,6 +10,12 @@ WITH
     SELECT
       nrm.node_id,
       COUNT(nrm.way_id) + SUM((NOT is_terminal_node)::INT) AS degree,
+      COUNT(is_service::INT) + SUM(
+        (
+          NOT is_terminal_node
+          AND is_service
+        )::INT
+      ) AS service_degree,
       MIN(nrm.way_id) AS way_id,
       BOOL_OR(is_service) as is_service
     FROM
@@ -23,6 +29,7 @@ SELECT
   i.node_id,
   i.way_id,
   i.degree,
+  i.service_degree,
   i.is_service,
   ST_PointN (road.geom, nrm.idx) AS geom INTO parking_intersections
 FROM
