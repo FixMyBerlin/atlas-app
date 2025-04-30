@@ -6,7 +6,6 @@ require("parking_obstacle_points")
 require("parking_obstacle_areas")
 require("parking_parkings")
 require("parking_roads")
-require("parking_service_roads")
 require("Log")
 
 -- NOTE ON PROJECTIONS:
@@ -24,8 +23,6 @@ function osm2pgsql.process_way(object)
   parking_obstacle_areas(object)
 
   parking_roads(object)
-
-  parking_service_roads(object)
 
   parking_parkings(object)
 

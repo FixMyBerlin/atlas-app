@@ -103,7 +103,9 @@ SELECT
   corners as geom INTO parking_intersection_corners
 FROM
   parking_intersections as i
-  CROSS JOIN LATERAL find_intersection_corners (i.node_id, 140) AS corners;
+  CROSS JOIN LATERAL find_intersection_corners (i.node_id, 140) AS corners
+WHERE
+  NOT i.is_service;
 
 ALTER TABLE parking_intersection_corners
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
