@@ -10,6 +10,16 @@ WHERE
   r.is_service
   AND i.is_service;
 
+UPDATE parking_driveways
+SET
+  geom = ST_MakeLine (
+    ST_PointN (geom, idx),
+    COALESCE(
+      ST_PointN (geom, idx + 1),
+      ST_PointN (geom, idx - 1)
+    )
+  );
+
 ALTER TABLE parking_driveways
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
