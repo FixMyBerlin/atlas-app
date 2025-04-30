@@ -8,9 +8,9 @@ FROM
   JOIN _node_road_mapping nrm ON r.osm_id = nrm.way_id
   JOIN parking_intersections i ON nrm.node_id = i.node_id
 WHERE
-  r.is_service
+  i.service_degree > 0
   AND i.degree <> i.service_degree
-  AND i.is_service;
+  AND r.is_service;
 
 UPDATE parking_driveways
 SET
