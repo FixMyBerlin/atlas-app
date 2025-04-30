@@ -18,6 +18,7 @@
 \i '/processing/topics/parking/roads/3_find_intersections.sql'
 \i '/processing/topics/parking/roads/4_find_intersection_corners.sql'
 \i '/processing/topics/parking/roads/5_define_kerb_tangent.sql'
+\i '/processing/topics/parking/roads/6_find_driveways.sql'
 
 
 
