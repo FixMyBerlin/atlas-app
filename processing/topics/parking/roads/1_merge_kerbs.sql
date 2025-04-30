@@ -15,6 +15,6 @@ CREATE INDEX parking_kerbs_merged_idx ON parking_kerbs_merged USING GIST (geom);
 
 DO $$
 BEGIN
-  RAISE NOTICE 'Finished merging kerbs';
+  RAISE NOTICE 'Finished merging kerbs %', clock_timestamp();
 END
 $$;
