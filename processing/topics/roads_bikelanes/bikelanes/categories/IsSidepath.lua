@@ -6,5 +6,7 @@ function IsSidepath(tags)
       or tags._parent_highway
       or tags.footway == "sidewalk"
       or tags.path == "sidewalk"
+      or tags.path == "sidepath"
+      or tags.cycleway == "sidepath"
       or tags.steps == "sidewalk"
 end
