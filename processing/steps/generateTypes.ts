@@ -20,6 +20,11 @@ export async function generateTypes(processedTables: string[]) {
 }
 
 async function writeTableIdTypes(processedTables: string[]) {
+  if (params.processOnlyTopics) {
+    console.info('Generating types:', 'Skipped because `PROCESS_ONLY_TOPICS` is present')
+    return
+  }
+
   const typeFilePath = join(TYPES_DIR, 'tableId.generated.const.ts')
   const typeFile = Bun.file(typeFilePath)
 

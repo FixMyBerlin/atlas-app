@@ -1,9 +1,8 @@
-import React from 'react'
 import { FileMapDataSubcategoryStyleLegend } from '../../../_mapData/types'
 
 type Props = Pick<FileMapDataSubcategoryStyleLegend, 'name' | 'desc'>
 
-export const LegendNameDesc: React.FC<Props> = ({ name, desc }) => {
+export const LegendNameDesc = ({ name, desc }: Props) => {
   if (desc) {
     return (
       <div className="ml-2.5 flex items-center font-medium leading-none text-gray-700">

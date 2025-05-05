@@ -10,6 +10,7 @@ import { LineString } from 'geojson'
 import { Fragment } from 'react'
 import { z } from 'zod'
 import { osmEditIdUrl } from '../Tools/osmUrls/osmUrls'
+import { pointFromGeometry } from '../Tools/osmUrls/pointFromGeometry'
 import { NoticeMaproulette } from './NoticeMaproulette'
 
 const maprouletteStatus = new Map([
@@ -91,8 +92,8 @@ export const NoticeMaprouletteTask = ({
   }
 
   // The location of the MR pin is the best we can use, but we can always fall back to the one we use internally elsewhere
-  // const [centerLng, centerLat] = data?.location?.coordinates || pointFromGeometry(geometry)
-  // const rapidCampaignLink = `https://rapideditor.org/edit#map=19/${centerLat}/${centerLng}&maproulette=${mapRouletteId}&datasets=&disable_features=boundaries`
+  const [centerLng, centerLat] = data?.location?.coordinates || pointFromGeometry(geometry)
+  const rapidCampaignLink = `https://rapideditor.org/edit#map=19.5/${centerLat}/${centerLng}&maproulette=${mapRouletteId}&datasets=&disable_features=points,building_parts,indoor,boundaries,pistes,aerialways,power`
 
   const maprouletteTaskLink = isLoading
     ? undefined
@@ -137,12 +138,11 @@ export const NoticeMaprouletteTask = ({
         </p>
       )}
       <div className="mb-5 mt-0 flex flex-col items-center gap-1.5 rounded-sm bg-white/80 p-3">
-        {/* See https://github.com/facebook/Rapid/issues/1686 */}
-        {/* <LinkExternal href={rapidCampaignLink} blank button>
-          In OpenStreetMap bearbeiten
-        </LinkExternal> */}
         {showMaproulette && (
           <>
+            <LinkExternal href={rapidCampaignLink} blank button>
+              Kampagne im Rapid Editor bearbeiten
+            </LinkExternal>
             {isLoading ? (
               <span className="flex items-center gap-2 text-gray-400">
                 <SmallSpinner /> Lade MapRoulette-Link…
@@ -150,7 +150,7 @@ export const NoticeMaprouletteTask = ({
             ) : maprouletteTaskLink ? (
               <>
                 {completed ? <strong>🎉 Die Aufgabe wurde bereits erledigt.</strong> : null}
-                <LinkExternal href={maprouletteTaskLink} blank button={!completed}>
+                <LinkExternal href={maprouletteTaskLink} blank>
                   {completed ? 'MapRoulette öffnen' : 'Als MapRoulette Aufgabe bearbeiten'}
                 </LinkExternal>
               </>

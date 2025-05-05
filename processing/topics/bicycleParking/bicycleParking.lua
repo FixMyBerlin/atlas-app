@@ -7,6 +7,7 @@ require("DefaultId")
 require("SanitizeTrafficSign")
 require("MergeTable")
 require("ExtractPublicTags")
+require("capacity_normalization")
 
 local nodeTable = osm2pgsql.define_table({
   name = 'bicycleParking_points',
@@ -46,32 +47,12 @@ local function exitProcessing(object)
   end
 end
 
-local function capacityNormalization(tags)
-  local capacities = { capacity = tonumber(tags.capacity) }
-  if capacities.capacity == nil then return capacities end
-  for key, val in pairs(tags) do
-    if osm2pgsql.has_prefix(key, "capacity:") then
-      val = tonumber(val)
-      if val ~= nil then
-        capacities.capacity = capacities.capacity - val
-        capacities[key] = val
-      end
-    end
-  end
-  for k, v in pairs(capacities) do
-    if v == 0 then
-      capacities[k] = nil
-    end
-  end
-  return capacities
-end
-
 local function processTags(tags)
   -- this is the list of tags found in the wiki: https://wiki.openstreetmap.org/wiki/Tag:amenity%3Dbicycle_parking
   -- also https://wiki.openstreetmap.org/wiki/Berlin/Verkehrswende/Fahrradparkpl%C3%A4tze
   local result_tags = {_meta = {}}
   local binary = { "yes", "no" }
-  MergeTable(result_tags, capacityNormalization(tags))
+  MergeTable(result_tags, capacity_normalization(tags))
   result_tags.access = Sanitize(tags.access, { "yes", "private", "permissive", "customers" })
   result_tags.covered = Sanitize(tags.covered, binary, "implicit_no")
   result_tags.fee = Sanitize(tags.fee, binary, "implicit_no")

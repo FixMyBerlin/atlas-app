@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="app/src/app/_components/layouts/assets/logo-tilda.png" height="80" />
+  <img src="app/src/app/_components/layouts/assets/tilda-logo.png" height="80" />
   <h1 align="center"><a href="https://tilda-geo.de/">TILDA</a></h1>
 </div>
 

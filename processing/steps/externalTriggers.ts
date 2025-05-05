@@ -1,11 +1,12 @@
 import { $ } from 'bun'
+import { isDev } from '../utils/isDev'
 import { params } from '../utils/parameters'
 
 async function triggerPrivateApi(endpoint: string) {
-  const domain = params.environment === 'development' ? 'http://127.0.0.1:5173' : 'http://app:4000'
+  const domain = isDev ? 'http://127.0.0.1:5173' : 'http://app:4000'
   const url = `${domain}/api/private/${endpoint}?apiKey=${params.apiKey}`
 
-  if (params.environment === 'development') {
+  if (isDev) {
     console.info(
       '👉 Action recommended:',
       'In DEV, the processing cannot trigger API calls. You should do this manually:',

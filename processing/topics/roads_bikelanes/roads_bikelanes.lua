@@ -33,7 +33,7 @@ require("CollectTodos")
 require("ToMarkdownList")
 require("ToTodoTags")
 require("BikeSuitability")
--- local inspect = require('inspect')
+require("Log")
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',

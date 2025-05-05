@@ -13,6 +13,10 @@ function parseParameters() {
     synologyLogToken: process.env.SYNOLOGY_LOG_TOKEN,
     synologyErrorLogToken: process.env.SYNOLOGY_ERROR_LOG_TOKEN,
     synologyURL: process.env.SYNOLOGY_URL,
+    processOnlyTopics: process.env.PROCESS_ONLY_TOPICS
+      ? process.env.PROCESS_ONLY_TOPICS.split(',').map((t) => t.trim())
+      : [],
+    processOnlyBbox: process.env.PROCESS_ONLY_BBOX,
   }
 }
 

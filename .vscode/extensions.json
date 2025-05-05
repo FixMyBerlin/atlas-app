@@ -10,7 +10,7 @@
     // https://vitest.dev/guide/#ide-integrations
     "ZixuanChen.vitest-explorer",
     "sumneko.lua",
-    "adpyke.vscode-sql-formatter"
+    "ReneSaarsoo.sql-formatter-vsc"
   ],
   "unwantedRecommendations": []
 }

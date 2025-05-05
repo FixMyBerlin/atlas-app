@@ -90,6 +90,18 @@ For the development process it's often useful to run the processing on a single 
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
+### Process only certain topics
+
+Use `PROCESS_ONLY_TOPICS=parking` to only run the "parking" topic.
+Format: "topic1,topic2".
+This can be used during development to speed up the process.
+
+### Process only a certain bbox
+
+Use `PROCESS_ONLY_BBOX=13.4178,52.4681,13.4550,52.4817` to only process data withing this bbox.
+Format: MINLON,MINLAT,MAXLON,MAXLAT. [osm2pgsql Docs](https://osm2pgsql.org/doc/manual.html#the-input).
+This can be used during development to speed up the process.
+
 ## Tests
 
 We use the luarocks package [busted](https://lunarmodules.github.io/busted/) as our testing framework.
@@ -110,7 +122,7 @@ Additionally all tests are being run in the [husky](https://typicode.github.io/h
 
 **Good to know:**
 
-- To use the `inspect` package we need to require it first `inspect = require('inspect')` ([Docs](https://github.com/kikito/inspect.lua?tab=readme-ov-file#installation))
+- To use the `Log` helper (`require("Log")`) to inspect and print data ([Docs](https://github.com/kikito/inspect.lua?tab=readme-ov-file#installation))
 
 ## Deployment
 

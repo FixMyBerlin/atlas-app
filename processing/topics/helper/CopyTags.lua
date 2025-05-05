@@ -12,7 +12,9 @@ function CopyTags(dst, src, tags, prefix)
   end
 
   for _, val in pairs(tags) do
-    dst[prefix .. val] = src[val]
+    if(src[val] ~= nil) then
+      dst[prefix .. val] = src[val]
+    end
   end
   return dst
 end

@@ -5,7 +5,8 @@ export const exportApiIdentifier = [
   'bicycleParking_areas', // private for now
   'bikelanes',
   'bikeroutes',
-  // 'boundaries', // Does not work, yet, see 'tarmac-geo'
+  // 'boundaries', // Does not work due to different table structure
+  // 'boundaryLabels', // We don't need this
   'landuse',
   'places',
   'poiClassification',
@@ -17,8 +18,6 @@ export const exportApiIdentifier = [
   'trafficSigns',
   'barrierAreas',
   'barrierLines',
-  'boundaries',
-  'boundaryLabels',
   // 'aggregated_lengths', // Does not work because the table does not conform to the required table structure with `tags` and `meta`
   'todos_lines',
 ] as const

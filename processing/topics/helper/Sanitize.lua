@@ -1,3 +1,6 @@
+package.path = package.path .. ";/processing/topics/helper/?.lua"
+require("Set")
+
 ---@param value any
 ---@param allowed table
 ---@param fallback? any

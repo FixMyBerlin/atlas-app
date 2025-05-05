@@ -1,4 +1,5 @@
 import { $ } from 'bun'
+import chalk from 'chalk'
 import { join } from 'path'
 import { TOPIC_DIR } from '../constants/directories.const'
 import { topicList, type Topic } from '../constants/topics.const'
@@ -43,17 +44,36 @@ async function runSQL(topic: Topic) {
  * Run the given topic's lua file with osm2pgsql on the given file
  */
 async function runLua(fileName: string, topic: Topic) {
-  console.log('runTopic: runLua', topic)
+  console.log(
+    'runTopic: runLua',
+    topic,
+    params.processOnlyBbox
+      ? chalk.yellow(`But only for PROCESS_ONLY_BBOX=${params.processOnlyBbox}`)
+      : '',
+  )
+  const bboxFilterCommand = params.processOnlyBbox ? `--bbox=${params.processOnlyBbox} \\` : ''
   const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
   try {
-    await $`osm2pgsql \
+    // Did not find an easy way to use $(Shell) and make the `--bbox` optional
+    if (params.processOnlyBbox) {
+      await $`osm2pgsql \
+              --bbox=${params.processOnlyBbox} \
               --number-processes=8 \
               --create \
               --output=flex \
               --extra-attributes \
               --style=${luaFile} \
               ${filePath}`
+    } else {
+      await $`osm2pgsql \
+              --number-processes=8 \
+              --create \
+              --output=flex \
+              --extra-attributes \
+              --style=${luaFile} \
+              ${filePath}`
+    }
   } catch (error) {
     throw new Error(`Failed to run lua file "${luaFile}": ${error}`)
   }
@@ -106,7 +126,17 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     console.log('ERROR logging the lastModified date', error)
   }
 
-  for (const topic of topicList) {
+  const topics =
+    params.processOnlyTopics.length > 0
+      ? topicList.filter((t) => params.processOnlyTopics?.includes(t))
+      : topicList
+  if (params.processOnlyTopics.length > 0) {
+    console.log(
+      `⏩ Skipping Topics based on PROCESS_ONLY_TOPICS=${params.processOnlyTopics.join(',')}`,
+      { topics },
+    )
+  }
+  for (const topic of topics) {
     // Get all tables related to `topic`
     // This needs to happen first, so `processedTables` includes what we skip below
     const topicTables = await getTopicTables(topic)
@@ -127,7 +157,7 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
 
     // Backup all tables related to topic
     if (diffChanges) {
-      console.log('Diffing:', 'Backup table')
+      console.log('Diffing:', 'Backup tables')
       // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
       // Which means existing backup tables don't change (are frozen).
       // Learn more in [processing/README](../../processing/README.md#reference)
