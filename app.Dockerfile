@@ -27,7 +27,7 @@ ARG NEXT_PUBLIC_OSM_API_URL
 RUN npx blitz@2.2.2 prisma generate
 RUN npx blitz@2.2.2 build
 
-CMD npx blitz@2.2.2 prisma migrate deploy && npx blitz@2.2.2 start -p 4000
+CMD ["npx", "blitz@2.2.2", "prisma", "migrate", "deploy", "&&", "npx", "blitz@2.2.2", "start", "-p", "4000"]
 
 # From here on we are building the production image
 FROM base AS production
