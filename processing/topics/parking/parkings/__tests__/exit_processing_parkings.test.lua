@@ -9,7 +9,7 @@ describe("`exit_processing_parkings`", function()
       ["foo"] = 'bar',
     }
     local result = exit_processing_parkings(tags)
-    assert.are.equal(result, true)
+    assert.are.is_true(result)
   end)
 
   it('works when any tag is prefixed with "parking:"', function()
@@ -18,6 +18,6 @@ describe("`exit_processing_parkings`", function()
       ["parking:foo"] = 'bar',
     }
     local result = exit_processing_parkings(tags)
-    assert.are.equal(result, false)
+    assert.are.is_false(result)
   end)
 end)
