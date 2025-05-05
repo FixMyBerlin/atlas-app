@@ -15,9 +15,9 @@ function exit_processing_kerbs(tags)
   if not (is_allowed_highway or is_construction_highway) then return true end
 
   -- Filter based on access
-  if tags.motor_vehicle ~= nil and tags.motor_vehicle == "no" then return true end
-  if tags.vehicle ~= nil and tags.vehicle == "no" then return true end
-  if tags.emergency ~= nil and tags.emergency == "no" then return true end
+  if tags.motor_vehicle == "no" then return true end
+  if tags.vehicle == "no" then return true end
+  if tags.emergency == "no" then return true end
 
   return false
 end

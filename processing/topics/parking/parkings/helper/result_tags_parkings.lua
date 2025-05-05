@@ -10,19 +10,14 @@ require("RoadClassificationRoadValue")
 require("road_name")
 require("Log")
 
-function result_tags_parking_lines(object)
+function result_tags_parkings(object)
   local id = DefaultId(object) .. "/" .. object._side
 
   local result_tags = {
-    side = object._side,
     name = road_name(object.tags),
     -- width = ParseLength(object.tags.width), -- TODO calculate based on direction
-    perform_move = 3, -- TODO: Based on parent highwy width/2, see result_tags_kerbs
     -- parent_road = RoadClassificationRoadValue(object._parent_tags),
   }
-  if object._side == "left" then
-    result_tags.perform_move = result_tags.perform_move * -1 -- LATER: Specific value based on which lane the centerline uses…
-  end
 
   MergeTable(result_tags, object.tags)
   local tags_cc = {
@@ -36,6 +31,7 @@ function result_tags_parking_lines(object)
 
   return {
     id = id,
+    side = object._side,
     tags = result_tags,
     meta = result_meta,
     minzoom = 0 -- TODO

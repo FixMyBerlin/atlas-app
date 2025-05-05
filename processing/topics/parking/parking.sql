@@ -10,21 +10,23 @@
 -- - TODO: Add tests for those files.
 --
 
--- HANDLE OBSTACLES
-\i '/processing/topics/parking/obstacles/points_0_initialize.sql'
-\i '/processing/topics/parking/obstacles/areas_0_initialize.sql'
---
-\i '/processing/topics/parking/obstacles/points_1_perform_move.sql'
 
 -- HANDLE ROADS
-\i '/processing/topics/parking/roads/roads_0_initialize.sql'
-\i '/processing/topics/parking/roads/service_roads_0_initialize.sql'
+\i '/processing/topics/parking/roads/0_create_kerbs.sql'
+\i '/processing/topics/parking/roads/1_merge_kerbs.sql'
+\i '/processing/topics/parking/roads/2_define_kerb_projection.sql'
+\i '/processing/topics/parking/roads/3_define_kerb_tangent.sql'
+\i '/processing/topics/parking/roads/4_find_intersections.sql'
+\i '/processing/topics/parking/roads/5_find_intersection_corners.sql'
+\i '/processing/topics/parking/roads/6_find_driveways.sql'
 
--- HANDLE KERBS
-\i '/processing/topics/parking/kerbs/0_initialize.sql'
 
--- HANDLE PARKING LINES
-\i '/processing/topics/parking/parking/0_initialize.sql'
---
-\i '/processing/topics/parking/parking/1_perform_move.sql'
-\i '/processing/topics/parking/parking/2_reverse_direction.sql'
+
+-- HANDLE OBSTACLES
+\i '/processing/topics/parking/obstacles/0_areas_project_to_kerb.sql'
+\i '/processing/topics/parking/obstacles/0_points_project_to_kerb.sql'
+\i '/processing/topics/parking/obstacles/1_points_locate_on_kerb.sql'
+\i '/processing/topics/parking/obstacles/2_points_create_kerb_tangents.sql'
+
+-- CREATE PUNCHING AREAS
+\i '/processing/topics/parking/punching_areas.sql'

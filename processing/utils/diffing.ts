@@ -1,6 +1,6 @@
 import { $, sql } from 'bun'
 import chalk from 'chalk'
-import type { Topic } from '../constants/topics.const'
+import type { Topic } from '../constants/projects.const'
 import { isDev } from './isDev'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"` as const
@@ -58,7 +58,7 @@ export async function backupTable(table: string) {
   await sql.unsafe(`DROP TABLE IF EXISTS ${backupTableId}`)
   await sql.unsafe(`CREATE TABLE ${backupTableId} AS TABLE ${tableId}`)
   if (isDev) {
-    console.log('Diffing: Dropped and created table', table)
+    console.log('Diffing: Recreated backup table', table)
   }
   return
 }

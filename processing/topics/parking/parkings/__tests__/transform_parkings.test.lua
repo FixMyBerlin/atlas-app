@@ -1,7 +1,7 @@
-describe("`transform_parking_lines`", function()
+describe("`transform_parkings`", function()
   package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/parking/helper/?.lua"
-  require("transform_parking_lines")
+  package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+  require("transform_parkings")
   require("Log")
   require('osm2pgsql')
 
@@ -18,7 +18,7 @@ describe("`transform_parking_lines`", function()
       id = 1,
       type = 'way',
     }
-    local results = transform_parking_lines(input_object)
+    local results = transform_parkings(input_object)
 
     local left = results[1]
     assert.are.equal(type(left), "table")
@@ -42,7 +42,7 @@ describe("`transform_parking_lines`", function()
       id = 1,
       type = 'way',
     }
-    local results = transform_parking_lines(input_object)
+    local results = transform_parkings(input_object)
 
     local left = results[1]
     assert.are.equal(type(left), "table")

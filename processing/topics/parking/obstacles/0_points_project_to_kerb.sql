@@ -1,0 +1,31 @@
+DROP TABLE IF EXISTS parking_obstacle_points_projected CASCADE;
+
+SELECT
+  osm_type,
+  osm_id,
+  id,
+  tags,
+  meta,
+  minzoom,
+  project_to_k_closest_kerbs (geom, 5, 1) as geom
+  -- TODO: the tollerance here is too large, we need to decrease it once we have better offset values for the kerbs
+  INTO parking_obstacle_points_projected
+FROM
+  parking_obstacle_points
+WHERE
+  tags ->> 'perform_snap' = 'self';
+
+DELETE FROM parking_obstacle_points_projected
+WHERE
+  geom IS NULL;
+
+ALTER TABLE parking_obstacle_points_projected
+ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
+
+CREATE INDEX idx_parking_obstacle_points_projected_geom ON parking_obstacle_points_projected USING gist (geom);
+
+DO $$
+BEGIN
+  RAISE NOTICE 'Finished projecting obstacle points at %', clock_timestamp();
+END
+$$;

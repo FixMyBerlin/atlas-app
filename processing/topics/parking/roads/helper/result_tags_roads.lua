@@ -17,10 +17,14 @@ function result_tags_roads(object)
     road = RoadClassificationRoadValue(object.tags),
     name = road_name(object.tags),
     width = ParseLength(object.tags.width), -- TODO: fallback
+    offset_left = -3, -- TODO
+    offset_right = 3,
   }
 
-  -- local tags_cc = {}
-  -- CopyTags(result_tags, object.tags, tags_cc, "osm_")
+  local tags_cc = {
+    "mapillary",
+  }
+  CopyTags(result_tags, object.tags, tags_cc, "osm_")
 
   local result_meta = Metadata(object)
   result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
