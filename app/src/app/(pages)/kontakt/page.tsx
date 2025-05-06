@@ -48,11 +48,11 @@ export default function KontaktPage() {
       </p>
       <p>
         Sofern Sie Bugs oder Verbesserungsvorschläge haben, geben Sie uns gerne{' '}
-        <Link blank href="https://github.com/FixMyBerlin/atlas-app">
+        <Link blank href="https://github.com/FixMyBerlin/tilda-geo/issues">
           auf GitHub Feedback
         </Link>
         . Sie können den Source Code auch weiterentwickeln. Lizenz:{' '}
-        <Link href="https://github.com/FixMyBerlin/atlas-app/blob/develop/LICENSE.md" blank>
+        <Link href="https://github.com/FixMyBerlin/tilda-geo/blob/develop/LICENSE.md" blank>
           AGPL v3
         </Link>
         .

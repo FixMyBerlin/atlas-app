@@ -301,7 +301,7 @@ local cyclewaySeparated = BikelaneCategory.new({
 })
 local cyclewaySeparated_adjoining, cyclewaySeparated_isolated, cyclewaySeparated_adjoiningOrIsolated = CreateSubcategoriesAdjoiningOrIsolated(cyclewaySeparated)
 
--- Examples https://github.com/FixMyBerlin/atlas-app/issues/23
+-- Examples https://github.com/FixMyBerlin/tilda-geo/issues/23
 local crossing = BikelaneCategory.new({
   id = 'crossing',
   desc = 'Crossings with relevance for bicycles.' ..

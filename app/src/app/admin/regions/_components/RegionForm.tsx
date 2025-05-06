@@ -20,7 +20,7 @@ export function RegionForm<S extends z.ZodType<any, any>>(props: FormProps<S>) {
             Wir können nur Regionen anlegen, für die vorab{' '}
             <Link
               blank
-              href="https://github.com/FixMyBerlin/atlas-app/blob/develop/src/regions/components/additionalRegionAttributes.const.ts#L89"
+              href="https://github.com/FixMyBerlin/tilda-geo/blob/develop/src/regions/components/additionalRegionAttributes.const.ts#L89"
             >
               statische Daten deployed wurden
             </Link>

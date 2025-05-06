@@ -30,7 +30,7 @@ We use the [public Germany export from Geofabrik](https://download.geofabrik.de/
 
 ### Martin catalogue and preview
 
-See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/utils/logging.ts#L31-L40 for a list URLs to see the data that Martin provides.
+See https://github.com/FixMyBerlin/tilda-geo/blob/develop/processing/utils/logging.ts#L31-L40 for a list URLs to see the data that Martin provides.
 
 ## Development
 
@@ -126,7 +126,7 @@ Additionally all tests are being run in the [husky](https://typicode.github.io/h
 
 ## Deployment
 
-1. First https://github.com/FixMyBerlin/atlas-app/actions runs.
+1. First https://github.com/FixMyBerlin/tilda-geo/actions runs.
 2. Server (IONOS) runs the processing one table at a time.
    The whole processing takes about 1.5 h.
    See [`index.ts`](./index.ts) for details.

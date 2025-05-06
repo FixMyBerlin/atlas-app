@@ -18,12 +18,12 @@ const migration: UrlMigration = function (initialUrl) {
       'i~fromTo~': 'i~poi~',
       'i~shops~': 'i~poi~',
       'i~roadClassification~': 'i~roads~',
-      // Done in https://github.com/FixMyBerlin/atlas-app/commit/5541a6ac3f03e4276e65fa4334c90f3408a48de5
+      // Done in https://github.com/FixMyBerlin/tilda-geo/commit/5541a6ac3f03e4276e65fa4334c90f3408a48de5
       'i~boundaries~s': 'i~poiBoundaries~s',
       'i~barriers~s': 'i~poiPlusBarriers~s',
       'i~landuse~s': 'i~poiPlusLanduse~s',
       'i~publicTransport~s': 'i~poiPlusPublicTransport~s',
-      // Done in https://github.com/FixMyBerlin/atlas-app/commit/7f8f987b1e4927f79fe7c4f7f7f09f2c54d0781e
+      // Done in https://github.com/FixMyBerlin/tilda-geo/commit/7f8f987b1e4927f79fe7c4f7f7f09f2c54d0781e
       'i~places~s': 'i~poiPlaces~s',
       // Property name changes:
       '~topics~': '~sc~',
