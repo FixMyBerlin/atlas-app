@@ -69,7 +69,7 @@ export const SelectDataset = ({
                 blank
                 href={githubUrl}
                 className="absolute bottom-0 right-0 text-pink-500 hover:text-pink-800"
-                title='Öffne den Datensatz im "atlas-static-data" Repository auf GitHub; Link nur in Dev und Staging sichtbar.'
+                title='Öffne den Datensatz im "tilda-static-data" Repository auf GitHub; Link nur in Dev und Staging sichtbar.'
               >
                 <LinkIcon className="h-4 w-4" />
               </LinkExternal>

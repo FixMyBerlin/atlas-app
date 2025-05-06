@@ -11,7 +11,7 @@ These scripts manage geodata files, which are made public or semi-public in tild
 - [Install felt/tippecanoe](https://github.com/felt/tippecanoe/blob/main/README.md#installation)
   - macOS `brew install tippecanoe`
   - Archlinux `yay -S tippecanoe`
-- Setup [`atlas-static-data`](https://github.com/FixMyBerlin/atlas-static-data), see README.
+- Setup [`tilda-static-data`](https://github.com/FixMyBerlin/tilda-static-data), see README.
 
 ## Update and add data
 

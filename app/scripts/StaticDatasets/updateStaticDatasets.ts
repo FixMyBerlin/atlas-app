@@ -63,7 +63,7 @@ const ignorePatterns = fs.existsSync(updateIgnorePath)
   : []
 
 if (!fs.existsSync(geoJsonFolder)) {
-  red(`folder "${geoJsonFolder}" does not exists. Please run "npm run link-atlas-static-data"?`)
+  red(`folder "${geoJsonFolder}" does not exists. Please run "npm run link-tilda-static-data"?`)
   process.exit(1)
 }
 
@@ -185,7 +185,7 @@ for (const { datasetFolderPath, regionFolder, datasetFolder } of datasetFileFold
   if (!dryRun) {
     const mergedConfigs = metaData.configs.map((config) => {
       return {
-        githubUrl: `https://github.com/FixMyBerlin/atlas-static-data/tree/main/geojson/${regionAndDatasetFolder}`,
+        githubUrl: `https://github.com/FixMyBerlin/tilda-static-data/tree/main/geojson/${regionAndDatasetFolder}`,
         ...config,
       }
     })
@@ -221,9 +221,9 @@ if (!keepTemporaryFiles) {
 }
 
 // For production runs, add a tag so we can see which data was published
-//   https://github.com/FixMyBerlin/atlas-static-data/tags
+//   https://github.com/FixMyBerlin/tilda-static-data/tags
 // How to use: Compare with the previous tag at
-//   https://github.com/FixMyBerlin/atlas-static-data/compare/main...publish_2024-05-23_prd
+//   https://github.com/FixMyBerlin/tilda-static-data/compare/main...publish_2024-05-23_prd
 if (process.env.S3_UPLOAD_FOLDER === 'production') {
   const currentDateTime = new Date().toISOString()
   const tagName = `publish_${currentDateTime}_${process.env.S3_UPLOAD_FOLDER}`
@@ -231,10 +231,10 @@ if (process.env.S3_UPLOAD_FOLDER === 'production') {
 
   try {
     Bun.spawnSync(['git', 'tag', '-a', tagName, '-m', tagMessage], {
-      cwd: '../../atlas-static-data',
+      cwd: '../../tilda-static-data',
     })
     Bun.spawnSync(['git', 'push', 'origin', tagName], {
-      cwd: '../../atlas-static-data',
+      cwd: '../../tilda-static-data',
     })
     console.log(`Tag '${tagName}' has been created and pushed to GitHub.`)
   } catch (error) {

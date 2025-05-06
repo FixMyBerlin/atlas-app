@@ -35,7 +35,7 @@
     "coverage": "vitest run --coverage",
     "check": "npm run type-check && npm run lint && npm run format && npm run test:run",
     "MapboxStyles:update": "bun ./scripts/MapboxStyles/process.ts && npm run lint -- --fix && prettier \"src/app/regionen/[regionSlug]/_mapData/mapDataSubcategories/mapboxStyles\" --write && github",
-    "StaticDatasets:link": "ln -s ../../../../atlas-static-data/geojson scripts/StaticDatasets",
+    "StaticDatasets:link": "ln -s ../../../../tilda-static-data/geojson scripts/StaticDatasets",
     "StaticDatasets:update:help": "echo \"(i) Use --dry-run to test but not publish\n(i) Use --keep-tmp to inspect the processed files\n(i) Use --folder-filter=FOO to only upload folder/files with this term\"",
     "StaticDatasets:update:dev": "bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.development ./scripts/StaticDatasets/updateStaticDatasets.ts --folder-filter=",
     "StaticDatasets:update:staging": "bun --env-file=.env --env-file=./scripts/StaticDatasets/.env.staging ./scripts/StaticDatasets/updateStaticDatasets.ts --folder-filter=",
