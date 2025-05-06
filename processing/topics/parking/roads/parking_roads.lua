@@ -24,7 +24,7 @@ local roads_table = osm2pgsql.define_table({
 })
 
 local node_road_mapping = osm2pgsql.define_table({
-  name = '_node_road_mapping',
+  name = '_parking_node_road_mapping',
   ids = { type = 'way', id_column = 'way_id', create_index = 'always'},
   columns = {
     { column = 'node_id', type = 'bigint', not_null = true },

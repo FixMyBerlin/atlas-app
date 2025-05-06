@@ -22,13 +22,13 @@ BEGIN
   -- Initialize source_id to the first node on the way
   SELECT node_id
     INTO source_id
-  FROM _node_road_mapping
+  FROM _parking_node_road_mapping
   WHERE way_id = way_id AND idx = 1;
 
   -- Loop through all nodes on this way in order
   FOR rec IN
     SELECT node_id, idx
-      FROM _node_road_mapping
+      FROM _parking_node_road_mapping
       WHERE way_id = way_id
       ORDER BY idx
   LOOP

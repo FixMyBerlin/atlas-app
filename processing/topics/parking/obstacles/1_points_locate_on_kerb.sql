@@ -13,7 +13,7 @@ SELECT DISTINCT
   p.minzoom INTO parking_obstacle_points_located
 FROM
   parking_obstacle_points p
-  JOIN _node_road_mapping nrm ON p.osm_id = nrm.node_id
+  JOIN _parking_node_road_mapping nrm ON p.osm_id = nrm.node_id
 WHERE
   p.tags ->> 'perform_snap' = 'side'
 ORDER BY

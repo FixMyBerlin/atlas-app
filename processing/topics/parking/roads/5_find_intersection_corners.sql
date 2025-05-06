@@ -17,7 +17,7 @@ BEGIN
         WHEN idx = 1 THEN idx + 1
         ELSE idx - 1
       END AS idx_next
-    FROM _node_road_mapping
+    FROM _parking_node_road_mapping
     WHERE node_id = intersection_id
       AND way_id IN (road_id1, road_id2)
   ),
@@ -60,7 +60,7 @@ BEGIN
   -- get the ways that are connected to the intersection
   WITH intersection_roads AS (
     SELECT way_id
-    FROM _node_road_mapping
+    FROM _parking_node_road_mapping
     WHERE node_id = intersection_id
   ),
   -- for each pair of roads, calculate the angle between them

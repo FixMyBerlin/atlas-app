@@ -5,7 +5,7 @@ SELECT
   nrm.idx INTO parking_driveways
 FROM
   _parking_roads r
-  JOIN _node_road_mapping nrm ON r.osm_id = nrm.way_id
+  JOIN _parking_node_road_mapping nrm ON r.osm_id = nrm.way_id
   JOIN parking_intersections i ON nrm.node_id = i.node_id
 WHERE
   i.service_degree > 0
