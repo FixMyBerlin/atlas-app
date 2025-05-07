@@ -1,4 +1,4 @@
-# Symlink `npm run link-tilda-static-data`
+# Symlink `npm run StaticDatasets:link`
 /geojson
 /_geojson_temp
 

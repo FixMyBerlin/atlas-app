@@ -63,7 +63,7 @@ const ignorePatterns = fs.existsSync(updateIgnorePath)
   : []
 
 if (!fs.existsSync(geoJsonFolder)) {
-  red(`folder "${geoJsonFolder}" does not exists. Please run "npm run link-tilda-static-data"?`)
+  red(`folder "${geoJsonFolder}" does not exists. Please run "npm run StaticDatasets:link"?`)
   process.exit(1)
 }
 
