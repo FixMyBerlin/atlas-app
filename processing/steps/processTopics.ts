@@ -1,7 +1,7 @@
 import { $ } from 'bun'
 import { join } from 'path'
 import { TOPIC_DIR } from '../constants/directories.const'
-import { projects, type Topic } from '../constants/projects.const'
+import { topicsConfig, type Topic } from '../constants/topics.const'
 import {
   backupTable,
   diffTables,
@@ -13,9 +13,9 @@ import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
 import { synologyLogInfo } from '../utils/synology'
-import { bboxFilter, filteredFilePath } from './filter'
+import { bboxesFilter, filteredFilePath } from './filter'
 
-const topicPath = (topic: Topic) => join(TOPIC_DIR, topic)
+const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
 
 /**
@@ -107,64 +107,75 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     console.log('ERROR logging the lastModified date', error)
   }
 
-  for (const project of projects) {
-    if (!params.project && !project.default) {
+  for (const [topic, bboxes] of Array.from(topicsConfig)) {
+    let innerBboxes = bboxes
+    let innerFileName = fileName
+
+    // Topic: Skip unchanged topic
+    const topicChanged = await directoryHasChanged(topicPath(topic))
+    if (skipCode && !topicChanged) {
+      console.log(
+        `⏩ Skipping topic "${topic}".`,
+        "The code hasn't changed and `SKIP_UNCHANGED` is active.",
+      )
       continue
     }
-    if (params.project !== project.name) {
+    // Topic: Skip topic based on ENV
+    if (params.processOnlyTopics.length > 0 && !params.processOnlyTopics.includes(topic)) {
+      console.log(
+        `⏩ Skipping topic ${topic} based on PROCESS_ONLY_TOPICS=${params.processOnlyTopics.join(',')}`,
+      )
       continue
     }
-    let projectFileName = fileName
-    if (project.bbox) {
-      projectFileName = `${project.name}_extracted.osm.pbf`
-      await bboxFilter(fileName, projectFileName, project.bbox)
-      // TODO: this isn't handled by the hashing logic. Changes in the bbox will not be detected atm.
+    // Bboxes: Overwrite bboxes based on ENV
+    if (params.processOnlyBbox?.length === 4) {
+      console.log(
+        `✄ Forcing a bbox filter based on PROCESS_ONLY_BBOX=${params.processOnlyBbox.join(',')}`,
+      )
+      // @ts-expect-error the readonly part gets in the way here…
+      innerBboxes = [params.processOnlyBbox]
     }
-    for (const topic of project.topics) {
-      // Get all tables related to `topic`
-      // This needs to happen first, so `processedTables` includes what we skip below
-      const topicTables = await getTopicTables(topic)
-      topicTables.forEach((table) => processedTables.add(table))
 
-      // Guard
-      const topicChanged = await directoryHasChanged(topicPath(topic))
-      if (skipCode && !topicChanged) {
-        console.log(
-          `⏩ Skipping topic "${topic}".`,
-          "The code hasn't changed and `SKIP_UNCHANGED` is active.",
-        )
-        continue
-      }
-
-      logStart(`Topic "${topic}"`)
-      const processedTopicTables = topicTables.intersection(tableListPublic)
-
-      // Backup all tables related to topic
-      if (diffChanges) {
-        console.log('Diffing:', 'Backup tables')
-        // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
-        // Which means existing backup tables don't change (are frozen).
-        // Learn more in [processing/README](../../processing/README.md#reference)
-        const toBackup = params.freezeData
-          ? processedTopicTables.difference(tableListBackup)
-          : processedTopicTables
-        await Promise.all(Array.from(toBackup).map(backupTable))
-      }
-
-      // Run the topic with osm2pgsql and the sql post-processing
-      await runTopic(projectFileName, topic)
-
-      // Update the code hashes
-      updateDirectoryHash(topicPath(topic))
-
-      // Update the diff tables
-      if (diffChanges) {
-        console.log('Diffing:', 'Update diffs')
-        await diffTables(Array.from(processedTopicTables))
-      }
-
-      logEnd(`Topic "${topic}"`)
+    // Bboxes: Crate filtered source file
+    // TODO: this isn't handled by the hashing logic. Changes in the bbox will not be detected atm.
+    if (innerBboxes) {
+      innerFileName = `${topic}_extracted.osm.pbf`
+      await bboxesFilter(fileName, innerFileName, innerBboxes)
     }
+
+    // Get all tables related to `topic`
+    // This needs to happen first, so `processedTables` includes what we skip below
+    const topicTables = await getTopicTables(topic)
+    topicTables.forEach((table) => processedTables.add(table))
+
+    logStart(`Topic "${topic}"`)
+    const processedTopicTables = topicTables.intersection(tableListPublic)
+
+    // Backup all tables related to topic
+    if (diffChanges) {
+      console.log('Diffing:', 'Backup tables')
+      // With `freezeData=true` (which is `FREEZE_DATA=1`) we only backup tables that are not already backed up (making sure the backup is complete).
+      // Which means existing backup tables don't change (are frozen).
+      // Learn more in [processing/README](../../processing/README.md#reference)
+      const toBackup = params.freezeData
+        ? processedTopicTables.difference(tableListBackup)
+        : processedTopicTables
+      await Promise.all(Array.from(toBackup).map(backupTable))
+    }
+
+    // Run the topic with osm2pgsql (LUA) and the sql processing
+    await runTopic(innerFileName, topic)
+
+    // Update the code hashes
+    updateDirectoryHash(topicPath(topic))
+
+    // Update the diff tables
+    if (diffChanges) {
+      console.log('Diffing:', 'Update diffs')
+      await diffTables(Array.from(processedTopicTables))
+    }
+
+    logEnd(`Topic "${topic}"`)
   }
 
   const timeElapsed = logEnd('Processing Topics')

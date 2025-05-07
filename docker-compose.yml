@@ -13,6 +13,8 @@ services:
       SKIP_DOWNLOAD:
       WAIT_FOR_FRESH_DATA:
       SKIP_WARM_CACHE:
+      PROCESS_ONLY_TOPICS:
+      PROCESS_ONLY_BBOX:
       TILES_URL:
       ID_FILTER:
       ENVIRONMENT:
@@ -23,7 +25,6 @@ services:
       FREEZE_DATA:
       ATLAS_API_KEY:
       FORCE_COLOR: 1
-      PROJECT:
     volumes:
       - osmfiles:/data
       - geodata:/data/db

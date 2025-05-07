@@ -1,3 +1,4 @@
+import { bboxPolygon, featureCollection, union } from '@turf/turf'
 import { $ } from 'bun'
 import { join } from 'path'
 import {
@@ -6,6 +7,7 @@ import {
   ID_FILTERED_FILE,
   OSM_FILTERED_DIR,
 } from '../constants/directories.const'
+import type { TopicConfigBbox } from '../constants/topics.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { params } from '../utils/parameters'
 import { originalFilePath } from './download'
@@ -76,21 +78,34 @@ export async function idFilter(fileName: string, ids: string) {
 
   return { fileName: ID_FILTERED_FILE, fileChanged: true }
 }
-export async function bboxFilter(
+
+export async function bboxesFilter(
   fileName: string,
   outputName: string,
-  bbox: [number, number, number, number],
+  bboxes: Readonly<Array<TopicConfigBbox>>,
 ) {
-  const bboxString = bbox.join(',')
-  console.log(`Filtering the OSM file with bbox=${bboxString}...`)
+  // Generate the osmium filter file.
+  // We need to merge the bboxes to prevent https://github.com/osmcode/osmium-tool/issues/266
+  const mergedBboxPolygonFeatures =
+    bboxes.length > 1
+      ? union(featureCollection(bboxes.map((bbox) => bboxPolygon(bbox))))
+      : bboxPolygon(bboxes[0])
+  if (!mergedBboxPolygonFeatures) {
+    throw new Error(`Failed to merge bboxes ${JSON.stringify(bboxes)}`)
+  }
+
+  const filterFile = filteredFilePath(`${outputName.split('.').at(0)}_filter.geojson`)
+  Bun.write(filterFile, JSON.stringify(mergedBboxPolygonFeatures))
+  console.log(`Filtering the OSM file with bboxes...`, mergedBboxPolygonFeatures)
+
   try {
     await $`osmium extract \
               --overwrite \
               --set-bounds \
-              --bbox ${bboxString} \
+              --polygon ${filterFile} \
               --output ${filteredFilePath(outputName)} \
               ${filteredFilePath(fileName)}`
   } catch (error) {
-    throw new Error(`Failed to filter the OSM file by bbox: ${error}`)
+    throw new Error(`Failed to filter the OSM file by polygon: ${error}`)
   }
 }
