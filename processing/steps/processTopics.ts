@@ -1,6 +1,6 @@
 import { $ } from 'bun'
 import { join } from 'path'
-import { TOPIC_DIR } from '../constants/directories.const'
+import { CONSTANTS_DIR, TOPIC_DIR } from '../constants/directories.const'
 import { topicsConfig, type Topic } from '../constants/topics.const'
 import {
   backupTable,
@@ -15,7 +15,7 @@ import { params } from '../utils/parameters'
 import { synologyLogInfo } from '../utils/synology'
 import { bboxesFilter, filteredFilePath } from './filter'
 
-const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
+const topicPath = (topic: Topic) => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
 
 /**
@@ -87,13 +87,26 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
   }
 
   // when the helpers have changed we disable all diffing functionality
-  const helpersChanged = await directoryHasChanged(topicPath('helper'))
-  updateDirectoryHash(topicPath('helper'))
+  const helperPath = join(TOPIC_DIR, 'helper')
+  const helpersChanged = await directoryHasChanged(helperPath)
+  updateDirectoryHash(helperPath)
   if (helpersChanged) {
     console.log('ℹ️ Helpers have changed. Rerunning all code.')
   }
 
-  const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
+  // when the constants have changed we disable all diffing functionality
+  const constantsChanged = await directoryHasChanged(CONSTANTS_DIR)
+  updateDirectoryHash(CONSTANTS_DIR)
+  if (constantsChanged) {
+    console.log('ℹ️ Constants have changed. Rerunning all code.')
+  }
+
+  const skipCode =
+    params.skipUnchanged &&
+    !helpersChanged &&
+    !constantsChanged &&
+    !fileChanged &&
+    params.processOnlyBbox !== null
   const diffChanges = params.computeDiffs && !fileChanged
 
   logStart('Processing Topics')
@@ -137,7 +150,6 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     }
 
     // Bboxes: Crate filtered source file
-    // TODO: this isn't handled by the hashing logic. Changes in the bbox will not be detected atm.
     if (innerBboxes) {
       innerFileName = `${topic}_extracted.osm.pbf`
       await bboxesFilter(fileName, innerFileName, innerBboxes)
