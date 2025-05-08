@@ -12,11 +12,12 @@ export const getDecompressedFilename = ({ inputFilename, outputFilename, outputF
     fs.copyFileSync(inputFilename, compressedCopy)
 
     // TODO: Maybe use pako.ungzip() here instead, we use pako in `StaticDatasets/updateStaticDatasets/isCompressedSmallerThan.ts`
-    const bunFeedback = Bun.spawnSync(['gzip', '--decompress', '--force', compressedCopy], {})
+    const bunFeedback = Bun.spawnSync(['gzip', '--decompress', '--force', compressedCopy])
     if (bunFeedback.success === false) {
       red(
         'ERROR with Bun.spawnSync gzip decompress',
         bunFeedback.stdout.toString(),
+        // @ts-expect-error this came up after updating packages; don't see a clear way to reasolve this nor something in the docs that we need to change…
         bunFeedback.stderr.toString(),
       )
     }
