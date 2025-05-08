@@ -5,6 +5,7 @@ package.path = package.path .. ";/processing/topics/parking/roads/?.lua"
 require("parking_obstacle_points")
 require("parking_obstacle_areas")
 require("parking_parkings")
+require("parking_node_road_mapping")
 require("parking_roads")
 require("Log")
 
@@ -20,6 +21,7 @@ end
 function osm2pgsql.process_way(object)
   parking_obstacle_areas(object)
 
+  parking_node_road_mapping(object)
   parking_roads(object)
 
   parking_parkings(object)
