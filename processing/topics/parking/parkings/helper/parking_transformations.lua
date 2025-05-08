@@ -12,17 +12,13 @@ centerline_transformation_class.__index = centerline_transformation_class
 --@return table
 function centerline_transformation_class.new(args)
   local self = setmetatable({}, centerline_transformation_class)
-  local mandatory = {
-    'prefix',
-    -- 'direction_reference',
-  }
+  local mandatory = { 'prefix' }
   for k, v in pairs(mandatory) do
     if args[v] == nil then
       error('Missing mandatory argument ' .. v .. ' for CenterLineTransformation')
     end
     self[v] = args[v]
   end
-  -- self.filter = args.filter or function(_) return true end
   return self
 end
 
@@ -55,50 +51,6 @@ local function unnest_prefixed_tags(tags, prefix, infix, dest)
   end
   return dest
 end
-
--- -- tags that get projected based on the direction suffix e.g `:forward` or `:backward`
--- local directedTags = {
---   -- these are tags that get copied from the parent
---   parent = {
---     'parking:lanes'
---   },
---   -- these are tags that get copied from the cycleway itself
---   self = {
---     'traffic_sign'
---   }
--- }
-
--- -- https://wiki.openstreetmap.org/wiki/Forward_%26_backward,_left_%26_right
--- local sideToDirection = {
---   [''] = '',
---   both = '',
---   left = ':backward',
---   right = ':forward',
--- }
-
--- -- convert all `directedTags` from `[directedTags:direction]=val` -> `[directedTags]=val`
--- ---@param cycleway table
--- ---@param direction_reference 'self' | 'parent' whether directions refer to the cycleway or its parent
--- ---@return table
--- local function convertDirectedTags(cycleway, direction_reference)
---   local parent = cycleway._parent
---   local side = cycleway._side
---   -- project directed keys from the center line
---   for _, key in pairs(directedTags.parent) do
---     local directedKey = key .. sideToDirection[side]
---     cycleway[key] = cycleway[key] or parent[key] or parent[directedKey]
---   end
---   -- project directed keys from the side
---   for _, key in pairs(directedTags.self) do
---     if direction_reference == 'self' then
---       cycleway[key] = cycleway[key] or cycleway[key .. ':forward']
---     elseif direction_reference == 'parent' then
---       local directedKey = key .. sideToDirection[side]
---       cycleway[key] = cycleway[key] or cycleway[directedKey]
---     end
---   end
---   return cycleway
--- end
 
 ---@class TransformedObject
 ---@field _prefix string
@@ -144,10 +96,6 @@ function transform_objects(tags, transformations)
 
       -- This condition checks if we actually projected something
       if newObj._infix ~= nil then
-        -- if transformation.filter(newObj) then
-        --   convertDirectedTags(newObj, transformation.direction_reference)
-        --   table.insert(results, newObj)
-        -- end
         results[side] = newObj
       end
     end

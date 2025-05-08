@@ -9,11 +9,9 @@ require("parking_roads")
 require("Log")
 
 -- NOTE ON PROJECTIONS:
-
 -- All `paring_*` tables use EPSG:5243
 --  which is optimized for Germany and uses Meters
 --  https://spatialreference.org/ref/epsg/5243/
-
 
 function osm2pgsql.process_node(object)
   parking_obstacle_points(object)
@@ -25,7 +23,6 @@ function osm2pgsql.process_way(object)
   parking_roads(object)
 
   parking_parkings(object)
-
 end
 
 -- function osm2pgsql.process_relation(object)

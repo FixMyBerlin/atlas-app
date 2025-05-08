@@ -6,7 +6,7 @@ require("MergeTable")
 require("categorize_and_transform_points")
 require("result_tags_obstacles")
 
-local obstacle_points_table = osm2pgsql.define_table({
+local db_table = osm2pgsql.define_table({
   name = 'parking_obstacle_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type', index='always' },
   columns = {
@@ -25,7 +25,7 @@ function parking_obstacle_points(object)
   for _, result in pairs(self_left_right) do
     if result.object then
       local row = MergeTable({ geom = result.object:as_point() }, result_tags_obstacles(result))
-      obstacle_points_table:insert(row)
+      db_table:insert(row)
     end
   end
 end

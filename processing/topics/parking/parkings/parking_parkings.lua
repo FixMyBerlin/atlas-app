@@ -6,8 +6,7 @@ require("result_tags_parkings")
 require("exit_processing_parkings")
 require("transform_parkings")
 
-
-local parking_lines_table = osm2pgsql.define_table({
+local db_table = osm2pgsql.define_table({
   name = '_parking_parkings',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -21,16 +20,12 @@ local parking_lines_table = osm2pgsql.define_table({
   }
 })
 
-
 function parking_parkings(object)
-  local results = {}
-
-  if exit_processing_parkings(object.tags) then return results end
+  if exit_processing_parkings(object.tags) then return end
 
   local transformed_objects = transform_parkings(object)
   for _, transformed_object in ipairs(transformed_objects) do
-    parking_lines_table:insert(result_tags_parkings(transformed_object))
+    -- Note: No geometry for this table
+    db_table:insert(result_tags_parkings(transformed_object))
   end
-
-  return results
 end

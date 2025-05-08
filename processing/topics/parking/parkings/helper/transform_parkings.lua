@@ -4,10 +4,7 @@ require("Log")
 require("Clone")
 require("parking_transformations")
 
-local parking_transformation = centerline_transformation_class.new({
-    prefix = "parking",
-    direction_reference = 'self'
-})
+local parking_transformation = centerline_transformation_class.new({ prefix = "parking" })
 
 function transform_parkings(object)
   local transformed_objects = transform_objects(object.tags, { parking_transformation })

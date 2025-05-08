@@ -6,7 +6,7 @@ require("categorize_area")
 require("result_tags_obstacles")
 
 
-local obstacle_areas_table = osm2pgsql.define_table({
+local db_table = osm2pgsql.define_table({
   name = 'parking_obstacle_areas',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
@@ -26,7 +26,7 @@ function parking_obstacle_areas(object)
   local result = categorize_area(object)
   if result.object then
     local row = MergeTable({ geom = result.object:as_polygon() }, result_tags_obstacles(result))
-    obstacle_areas_table:insert(row)
+    db_table:insert(row)
   end
 
 end

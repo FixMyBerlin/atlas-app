@@ -7,6 +7,7 @@
 -- - Use "command tags" like "perform_snap".
 -- - Extract complex SQL into functions.
 -- - Split code into files and document them.
+-- - Indexes are handled by the SQL files.
 -- - TODO: Add tests for those files.
 --
 
@@ -19,8 +20,6 @@
 \i '/processing/topics/parking/roads/4_find_intersections.sql'
 \i '/processing/topics/parking/roads/5_find_intersection_corners.sql'
 \i '/processing/topics/parking/roads/6_find_driveways.sql'
-
-
 
 -- HANDLE OBSTACLES
 \i '/processing/topics/parking/obstacles/0_areas_project_to_kerb.sql'
