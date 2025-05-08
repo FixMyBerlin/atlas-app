@@ -16,11 +16,11 @@ FROM
     VALUES
       (
         'left',
-        ST_OffsetCurve (geom, (tags ->> 'offset_left')::numeric)
+        ST_OffsetCurve (geom, (tags ->> 'perform_offset_left')::numeric)
       ),
       (
         'right',
-        ST_OffsetCurve (geom, (tags ->> 'offset_right')::numeric)
+        ST_OffsetCurve (geom, (tags ->> 'perform_offset_right')::numeric)
       )
   ) AS kerb_sides (side, geom);
 

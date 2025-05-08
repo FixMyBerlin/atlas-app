@@ -8,17 +8,38 @@ require("ParseLength")
 require("RoadClassificationRoadValue")
 require("road_name")
 
+local highway_width_fallbacks = {
+  ["primary"] = 10,
+  ["primary_link"] = 10,
+  ["secondary"] = 10,
+  ["secondary_link"] = 10,
+  ["tertiary"] = 10,
+  ["tertiary_link"] = 10,
+  ["residential"] = 10,
+  ["unclassified"] = 10,
+  ["living_street"] = 10,
+  ["pedestrian"] = 10,
+  ["road"] = 10,
+  ["service"] = 10,
+  ["track"] = 10,
+  ["bus_guideway"] = 10,
+}
+
 function result_tags_roads(object)
   local id = DefaultId(object)
+
+  local width = ParseLength(object.tags.width) or highway_width_fallbacks[object.tags.highway] or 10
 
   local result_tags = {
     highway = object.tags.highway,
     service = object.tags.service,
     road = RoadClassificationRoadValue(object.tags),
     name = road_name(object.tags),
-    width = ParseLength(object.tags.width), -- TODO: fallback
-    offset_left = -3, -- TODO
-    offset_right = 3,
+    width = width,
+    -- NOTE: In the future we might want to also check `placement`
+    -- (More about `placement` in https://strassenraumkarte.osm-berlin.org/posts/2021-12-31-micromap-update)
+    perform_offset_left = width / 2 * -1,
+    perform_offset_right = width / 2,
   }
 
   local tags_cc = {
