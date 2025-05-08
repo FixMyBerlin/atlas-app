@@ -44,11 +44,14 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
       throw new Error(`Failed to filter the OSM file: ${error}`)
     }
   } else {
-    console.log('⏩ Skipping tag filter. The file and filters are unchanged.', {
-      fileChanged,
-      filtersChanged,
-      fileMissing,
-    })
+    console.log(
+      '⏩ Skipping tag filter. The file and filters are unchanged.',
+      JSON.stringify({
+        fileChanged,
+        filtersChanged,
+        fileMissing,
+      }),
+    )
   }
 
   updateDirectoryHash(FILTER_DIR)

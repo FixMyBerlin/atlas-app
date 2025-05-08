@@ -90,7 +90,7 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
   const helpersChanged = await directoryHasChanged(topicPath('helper'))
   updateDirectoryHash(topicPath('helper'))
   if (helpersChanged) {
-    console.log('Helpers have changed. Rerunning all code.')
+    console.log('ℹ️ Helpers have changed. Rerunning all code.')
   }
 
   const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged

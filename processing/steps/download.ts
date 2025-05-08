@@ -18,7 +18,7 @@ export const originalFilePath = (fileName: string) => join(OSM_DOWNLOAD_DIR, fil
  */
 export async function waitForFreshData() {
   if (!params.waitForFreshData) {
-    console.log('Skipping `waitForFreshData` due to `WAIT_FOR_FRESH_DATA=0`')
+    console.log('⏩ Skipping `waitForFreshData` due to `WAIT_FOR_FRESH_DATA=0`')
     return
   }
 
@@ -77,11 +77,14 @@ export async function downloadFile() {
   // Check if file already exists
   // We also check for the filteredFile because that is the one we actually need; if that is there, this is enough
   if ((fileExists || filteredFileExists) && params.skipDownload) {
-    console.log('⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.', {
-      fileExists,
-      filteredFileExists,
-      skipDownload: params.skipDownload,
-    })
+    console.log(
+      '⏩ Skipping download. The file already exist and `SKIP_DOWNLOAD` is active.',
+      JSON.stringify({
+        fileExists,
+        filteredFileExists,
+        skipDownload: params.skipDownload,
+      }),
+    )
     return { fileName, fileChanged: false }
   }
 
