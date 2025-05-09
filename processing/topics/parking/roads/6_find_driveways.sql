@@ -15,7 +15,7 @@ WHERE
   AND r.is_service;
 
 -- SHORTEN the driveway
--- @var: "3" specifies the new line to be 3 meters long
+-- @var: "10" specifies the new line to be 10 meters long
 -- (Actually, this creates a new line starting from the road in the direction of the previous line.)
 UPDATE parking_driveways
 SET
@@ -23,7 +23,7 @@ SET
     ST_PointN (geom, idx),
     ST_Project (
       ST_PointN (geom, idx),
-      3,
+      10,
       ST_Azimuth (
         ST_PointN (geom, idx),
         COALESCE(
