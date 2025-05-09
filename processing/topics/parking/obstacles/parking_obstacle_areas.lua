@@ -1,6 +1,7 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
+require("Log")
 require("MergeTable")
 require("categorize_area")
 require("result_tags_obstacles")

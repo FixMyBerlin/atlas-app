@@ -53,4 +53,28 @@ describe("`categorize_area`", function()
     assert.are.equal(result_tags.tags.osm_mapillary, input_object.tags.mapillary)
     assert.are.equal(result_tags.tags.not_copied, nil)
   end)
+
+  it('parklet', function()
+    local tags = {
+      ["leisure"] = 'parklet',
+    }
+    local result = categorize_area({ tags = tags })
+    assert.are.equal(result.category.id, "parklet")
+    assert.are.equal(type(result.object), "table")
+  end)
+
+  it('road_marking_restricted_area', function()
+    local input_object = {
+      tags = {
+        ["area:highway"] = 'prohibited',
+      },
+      id = 1,
+      type = 'way'
+    }
+    local result = categorize_area(input_object)
+    local result_tags = result_tags_obstacles(result)
+    assert.are.equal(result.category.id, "road_marking_restricted_area")
+    assert.are.equal(type(result.object), "table")
+    assert.are.equal(result_tags.id, "way/"..input_object.id.."/self")
+  end)
 end)
