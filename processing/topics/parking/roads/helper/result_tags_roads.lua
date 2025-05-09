@@ -1,12 +1,14 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
 package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
+package.path = package.path .. ";/processing/topics/raods/helper/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
 require("ParseLength")
 require("RoadClassificationRoadValue")
 require("road_name")
+require("exit_processing_service_roads")
 
 local highway_width_fallbacks = {
   ["primary"] = 10,
@@ -35,6 +37,7 @@ function result_tags_roads(object)
     service = object.tags.service,
     road = RoadClassificationRoadValue(object.tags),
     name = road_name(object.tags),
+    is_service = not exit_processing_service_roads(object.tags),
     width = width,
     -- NOTE: In the future we might want to also check `placement`
     -- (More about `placement` in https://strassenraumkarte.osm-berlin.org/posts/2021-12-31-micromap-update)
