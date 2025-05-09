@@ -36,7 +36,7 @@ function parking_node_road_mapping(object)
       node_id = node_id,
       idx = idx,
       is_terminal_node = idx == 1 or idx == #object.nodes,
-      is_service = is_service,
+      is_service = is_service or allows_vehicles,
     }
     db_table:insert(row)
   end
