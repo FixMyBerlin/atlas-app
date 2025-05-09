@@ -99,7 +99,7 @@ export async function bboxesFilter(
 
   const filterFile = filteredFilePath(`${outputName.split('.').at(0)}_filter.geojson`)
   Bun.write(filterFile, JSON.stringify(mergedBboxPolygonFeatures))
-  console.log(`Filtering the OSM file with bboxes...`, mergedBboxPolygonFeatures)
+  console.log(`Filtering the OSM file with bboxes...`, filterFile)
 
   try {
     await $`osmium extract \
