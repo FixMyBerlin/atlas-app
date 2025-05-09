@@ -1,5 +1,7 @@
+-- PREPARE
 DROP TABLE IF EXISTS parking_driveways;
 
+-- CREATE driveway table based on roads with `perform_driveway_punch=true`
 SELECT
   r.*,
   nrm.idx INTO parking_driveways
@@ -12,6 +14,9 @@ WHERE
   AND i.degree <> i.service_degree
   AND r.is_service;
 
+-- SHORTEN the driveway
+-- @var: "3" specifies the new line to be 3 meters long
+-- (Actually, this creates a new line starting from the road in the direction of the previous line.)
 UPDATE parking_driveways
 SET
   geom = ST_MakeLine (
@@ -29,6 +34,7 @@ SET
     )
   );
 
+-- MISC
 ALTER TABLE parking_driveways
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 

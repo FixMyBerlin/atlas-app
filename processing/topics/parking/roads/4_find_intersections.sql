@@ -1,10 +1,12 @@
+-- PREPARE
 DROP TABLE IF EXISTS parking_intersections;
 
--- we define intersections as either:
+-- CREATE intersections table
+-- We define intersections as either:
 --  1. nodes that are part of more than 2 roads
 --  2. nodes that are part of exactly 2 roads of which at least one is not ending at the node
 --  (a T-junction where one road is not splitted)
--- we can select these nodes from the _parking_node_road_mapping table
+-- We can select these nodes from the _parking_node_road_mapping table.
 WITH
   intersections AS (
     SELECT
@@ -37,6 +39,7 @@ FROM
 WHERE
   i.degree > 2;
 
+-- MISC
 ALTER TABLE parking_intersections
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
