@@ -4,13 +4,15 @@ package.path = package.path .. ";/processing/topics/parking/parkings/?.lua"
 require("JoinSets")
 require("HighwayClasses")
 require("Log")
-require("exit_processing_roads")
-require("exit_processing_service_roads")
+require("has_allowed_access")
+require("is_main_road")
+require("is_service_road")
+require("is_vehicle_path")
 
 function exit_processing_parkings(tags)
   if not tags.highway then return true end
-
-  if exit_processing_roads(tags) and exit_processing_service_roads(tags) then return true end
+  if not has_allowed_access(tags) then return true end
+  if not (is_main_road(tags) or is_service_road(tags) or is_vehicle_path(tags)) then return true end
 
   for key, _ in pairs(tags) do
     if key:match("^parking:") then

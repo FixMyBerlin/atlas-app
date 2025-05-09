@@ -3,8 +3,10 @@ package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
 require("Log")
 require("MergeTable")
 require("result_tags_roads")
-require("exit_processing_roads")
-require("exit_processing_service_roads")
+require("has_allowed_access")
+require("is_main_road")
+require("is_service_road")
+require("is_vehicle_path")
 
 local db_table = osm2pgsql.define_table({
   name = '_parking_node_road_mapping',
@@ -23,16 +25,18 @@ local db_table = osm2pgsql.define_table({
 })
 
 function parking_node_road_mapping(object)
-  local exit_road = exit_processing_roads(object.tags)
-  local exit_service_road = exit_processing_service_roads(object.tags)
-  if exit_road and exit_service_road then return end
+  if not has_allowed_access(object.tags) then return end
+  local is_main = is_main_road(object.tags)
+  local is_service = is_service_road(object.tags)
+  local allows_vehicles = is_vehicle_path(object.tags)
+  if not (is_main or is_service or allows_vehicles) then return end
 
   for idx, node_id in ipairs(object.nodes) do
     local row = {
       node_id = node_id,
       idx = idx,
       is_terminal_node = idx == 1 or idx == #object.nodes,
-      is_service = not exit_service_road,
+      is_service = is_service,
     }
     db_table:insert(row)
   end

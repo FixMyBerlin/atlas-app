@@ -7,7 +7,7 @@ require("DefaultId")
 require("Metadata")
 require("RoadClassificationRoadValue")
 require("road_name")
-require("exit_processing_service_roads")
+require("is_service_road")
 require("road_width")
 
 function result_tags_roads(object)
@@ -20,7 +20,7 @@ function result_tags_roads(object)
     service = object.tags.service,
     road = RoadClassificationRoadValue(object.tags),
     name = road_name(object.tags),
-    is_service = not exit_processing_service_roads(object.tags),
+    is_service = is_service_road(object.tags),
     width = width,
     -- NOTE: In the future we might want to also check `placement`
     -- (More about `placement` in https://strassenraumkarte.osm-berlin.org/posts/2021-12-31-micromap-update)
