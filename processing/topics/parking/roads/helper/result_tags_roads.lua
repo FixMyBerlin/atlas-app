@@ -17,7 +17,6 @@ function result_tags_roads(object)
 
   local result_tags = {
     highway = object.tags.highway,
-    service = object.tags.service,
     road = RoadClassificationRoadValue(object.tags),
     name = road_name(object.tags),
     is_service = is_service_road(object.tags),
@@ -30,6 +29,7 @@ function result_tags_roads(object)
 
   local tags_cc = {
     "mapillary",
+    "service",
   }
   CopyTags(result_tags, object.tags, tags_cc, "osm_")
 
