@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS parking_punching_areas;
 -- INSERT driveway buffers (rectangles)
 -- "5" is the buffer in meter where no parking is allowed legally
 SELECT
+  -- TODO: Create a unique ID. Right now all 4 nodes in a crossing have the same ID. There is nothing (except the geom) to make them distinct.
   'node/' || intersection_id AS id,
   ST_Buffer (geom, 5) as geom,
   jsonb_build_object(
