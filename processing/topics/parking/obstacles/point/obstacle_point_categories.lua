@@ -1,9 +1,10 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
-require("two_wheel_parking_helper")
-require("class_obstacle_category")
 require("Sanitize")
+require("class_obstacle_category")
+require("two_wheel_parking_helper")
+require("amenity_parking_helper")
 
 local function is_left_right_both(input)
   return input == "left" or input == "right" or input == "both"
@@ -191,5 +192,27 @@ obstacle_point_categories = {
     tags = function(tags) return two_wheel_parking_tags(tags, "mobility_hub") end,
     tags_cc = two_wheel_parking_tags_cc('mobility_hub'),
     conditions = function(tags) return two_wheel_parking_conditions(tags, "mobility_hub") end,
-  }),
+    }),
+    class_obstacle_category.new({
+      id = "parking_lane",
+      side_key = nil,
+      perform_snap = "self",
+      perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
+      tags = function(tags) return amenity_parking_tags(tags) end,
+      tags_cc = amenity_parking_tags_cc(),
+      conditions = function(tags)
+        return tags['amenity'] == "parking" and tags['parking'] == "lane"
+      end
+    }),
+    class_obstacle_category.new({
+      id = "parking_street_side",
+      side_key = nil,
+      perform_snap = "self",
+      perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
+      tags = function(tags) return amenity_parking_tags(tags) end,
+      tags_cc = amenity_parking_tags_cc(),
+      conditions = function(tags)
+        return tags['amenity'] == "parking" and tags['parking'] == "street_side"
+      end
+    }),
 }

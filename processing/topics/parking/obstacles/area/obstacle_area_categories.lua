@@ -3,6 +3,7 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.l
 package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
 require("class_obstacle_category")
 require("two_wheel_parking_helper")
+require("amenity_parking_helper")
 
 obstacle_area_categories = {
   class_obstacle_category.new({
@@ -70,6 +71,31 @@ obstacle_area_categories = {
     tags_cc = { "area:highway" },
     conditions = function(tags)
       return tags['area:highway'] == "prohibited"
+    end
+  }),
+  class_obstacle_category.new({
+    -- https://www.openstreetmap.org/way/1198952905
+    -- https://www.openstreetmap.org/way/1181489790 disabled
+    id = "parking_lane",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return amenity_parking_tags(tags) end,
+    tags_cc = amenity_parking_tags_cc(),
+    conditions = function(tags)
+      return tags['amenity'] == "parking" and tags['parking'] == "lane"
+    end
+  }),
+  class_obstacle_category.new({
+    -- https://www.openstreetmap.org/way/559505481
+    id = "parking_street_side",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return nil end,
+    tags = function(tags) return amenity_parking_tags(tags) end,
+    tags_cc = amenity_parking_tags_cc(),
+    conditions = function(tags)
+      return tags['amenity'] == "parking" and tags['parking'] == "street_side"
     end
   }),
 }
