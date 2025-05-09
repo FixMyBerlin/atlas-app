@@ -10,6 +10,7 @@ local db_table = osm2pgsql.define_table({
   name = '_parking_roads',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    { column = 'id',      type = 'text',      not_null = true },
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'linestring', projection = 5243 },
