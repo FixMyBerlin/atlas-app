@@ -5,32 +5,15 @@ package.path = package.path .. ";/processing/topics/raods/helper/?.lua"
 require("CopyTags")
 require("DefaultId")
 require("Metadata")
-require("ParseLength")
 require("RoadClassificationRoadValue")
 require("road_name")
 require("exit_processing_service_roads")
-
-local highway_width_fallbacks = {
-  ["primary"] = 10,
-  ["primary_link"] = 10,
-  ["secondary"] = 10,
-  ["secondary_link"] = 10,
-  ["tertiary"] = 10,
-  ["tertiary_link"] = 10,
-  ["residential"] = 10,
-  ["unclassified"] = 10,
-  ["living_street"] = 10,
-  ["pedestrian"] = 10,
-  ["road"] = 10,
-  ["service"] = 10,
-  ["track"] = 10,
-  ["bus_guideway"] = 10,
-}
+require("road_width")
 
 function result_tags_roads(object)
   local id = DefaultId(object)
 
-  local width = ParseLength(object.tags.width) or highway_width_fallbacks[object.tags.highway] or 10
+  local width = road_width(object.tags)
 
   local result_tags = {
     highway = object.tags.highway,
