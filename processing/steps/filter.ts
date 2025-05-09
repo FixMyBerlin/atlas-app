@@ -32,6 +32,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
 
   // Only run tag filters if the file or the filters have changed
   const filtersChanged = await directoryHasChanged(FILTER_DIR)
+  const runFilter = fileChanged || filtersChanged || fileMissing
   if (fileChanged || filtersChanged || fileMissing) {
     console.log('Filtering the OSM file...')
     try {
@@ -56,7 +57,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
 
   updateDirectoryHash(FILTER_DIR)
 
-  return fileName
+  return { fileName, fileChanged: runFilter }
 }
 
 /**
