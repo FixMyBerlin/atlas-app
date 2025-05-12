@@ -11,11 +11,13 @@
 -- - TODO: Add tests for those files.
 --
 
+-- CREATE CUSTOM FUNCTIONS
+\i '/processing/topics/parking/custom_functions/project_to_k_closest_kerbs.sql'
+\i '/processing/topics/parking/custom_functions/project_to_line.sql'
 
 -- HANDLE ROADS
 \i '/processing/topics/parking/roads/0_create_kerbs.sql'
 \i '/processing/topics/parking/roads/1_merge_kerbs.sql'
-\i '/processing/topics/parking/roads/2_define_kerb_projection.sql'
 \i '/processing/topics/parking/roads/3_define_kerb_tangent.sql'
 \i '/processing/topics/parking/roads/4_find_intersections.sql'
 \i '/processing/topics/parking/roads/5_find_intersection_corners.sql'
