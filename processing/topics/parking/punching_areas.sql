@@ -13,7 +13,9 @@ SELECT
     /* sql-formatter-enable */
   ) AS tags,
   '{}'::jsonb AS meta,
-  0 AS minzoom INTO parking_punching_areas
+  0 AS minzoom
+  --
+  INTO parking_punching_areas
 FROM
   parking_intersection_corners;
 

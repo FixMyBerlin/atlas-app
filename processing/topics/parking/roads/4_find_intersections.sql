@@ -33,7 +33,9 @@ SELECT
   i.node_id,
   i.degree,
   i.driveway_degree,
-  ST_PointN (road.geom, nrm.idx) AS geom INTO parking_intersections
+  ST_PointN (road.geom, nrm.idx) AS geom
+  --
+  INTO parking_intersections
 FROM
   intersections i
   JOIN _parking_node_road_mapping nrm ON i.way_id = nrm.way_id

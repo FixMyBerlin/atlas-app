@@ -10,7 +10,9 @@ SELECT
   is_parking,
   tags,
   meta,
-  minzoom INTO parking_kerbs
+  minzoom
+  --
+  INTO parking_kerbs
 FROM
   _parking_roads
   CROSS JOIN LATERAL (

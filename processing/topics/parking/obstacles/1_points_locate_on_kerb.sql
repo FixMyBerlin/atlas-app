@@ -1,7 +1,6 @@
 -- PREPARE
 DROP TABLE IF EXISTS parking_obstacle_points_located;
 
--- Correct INTO placement
 SELECT DISTINCT
   ON (nrm.node_id) nrm.idx,
   nrm.way_id,
@@ -11,7 +10,9 @@ SELECT DISTINCT
   p.tags,
   p.meta,
   p.geom,
-  p.minzoom INTO parking_obstacle_points_located
+  p.minzoom
+  --
+  INTO parking_obstacle_points_located
 FROM
   parking_obstacle_points p
   JOIN _parking_node_road_mapping nrm ON p.osm_id = nrm.node_id

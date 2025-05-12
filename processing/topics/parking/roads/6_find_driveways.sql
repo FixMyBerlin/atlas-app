@@ -4,7 +4,9 @@ DROP TABLE IF EXISTS parking_driveways;
 -- CREATE driveway table based on roads with `is_driveway=true`
 SELECT
   r.*,
-  nrm.idx INTO parking_driveways
+  nrm.idx
+  --
+  INTO parking_driveways
 FROM
   _parking_roads r
   JOIN _parking_node_road_mapping nrm ON r.osm_id = nrm.way_id

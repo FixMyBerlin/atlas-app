@@ -25,7 +25,9 @@ SELECT
   side,
   is_parking,
   array_agg(osm_id) AS original_osm_ids,
-  (ST_Dump (ST_LineMerge (ST_Union (geom, 0.005)))).geom AS geom INTO parking_kerbs_merged
+  (ST_Dump (ST_LineMerge (ST_Union (geom, 0.005)))).geom AS geom
+  --
+  INTO parking_kerbs_merged
 FROM
   clustered
 GROUP BY

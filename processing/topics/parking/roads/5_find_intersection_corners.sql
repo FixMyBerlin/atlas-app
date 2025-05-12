@@ -6,7 +6,9 @@ DROP TABLE IF EXISTS parking_intersection_corners;
 SELECT
   i.node_id as intersection_id,
   i.degree,
-  corners as geom INTO parking_intersection_corners
+  corners as geom
+  --
+  INTO parking_intersection_corners
 FROM
   parking_intersections as i
   CROSS JOIN LATERAL find_intersection_corners (i.node_id, 140) AS corners

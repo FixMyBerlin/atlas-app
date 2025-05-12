@@ -3,7 +3,9 @@ DROP TABLE IF EXISTS parking_kerb_tangents;
 SELECT DISTINCT
   osm_id,
   tags,
-  kerb_tangent (way_id, idx, tags ->> 'side', 1, 1) as geom INTO parking_kerb_tangents
+  kerb_tangent (way_id, idx, tags ->> 'side', 1, 1) as geom
+  --
+  INTO parking_kerb_tangents
 FROM
   parking_obstacle_points_located;
 
