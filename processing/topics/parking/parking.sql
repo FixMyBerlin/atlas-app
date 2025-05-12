@@ -21,6 +21,7 @@
 -- * INTERSECTIONS
 \i '/processing/topics/parking/custom_functions/intersection_angle.sql'
 \i '/processing/topics/parking/custom_functions/find_intersection_corners.sql'
+\i '/processing/topics/parking/custom_functions/segmentize_way_to_edges.sql'
 
 -- HANDLE ROADS
 \i '/processing/topics/parking/roads/0_create_kerbs.sql'
