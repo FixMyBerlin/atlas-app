@@ -8,6 +8,8 @@ SELECT
   meta,
   minzoom,
   project_to_k_closest_kerbs (geom, 2, 3) as geom INTO parking_obstacle_areas_projected
+  -- @var "2": Max distance (radius) (Meter) for snapping
+  -- @var "3": Max number of kerbs that gets snapped to
 FROM
   parking_obstacle_areas;
 

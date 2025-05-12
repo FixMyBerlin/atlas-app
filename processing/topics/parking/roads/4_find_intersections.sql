@@ -7,6 +7,9 @@ DROP TABLE IF EXISTS parking_intersections;
 --  2. nodes that are part of exactly 2 roads of which at least one is not ending at the node
 --  (a T-junction where one road is not splitted)
 -- We can select these nodes from the _parking_node_road_mapping table.
+--
+-- `degree` – the number of ways that start/end at a node
+-- `driveway_degree` – the number of driveway-ways that start/end at a node
 WITH
   intersections AS (
     SELECT

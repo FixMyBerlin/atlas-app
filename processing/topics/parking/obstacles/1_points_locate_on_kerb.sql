@@ -1,3 +1,4 @@
+-- PREPARE
 DROP TABLE IF EXISTS parking_obstacle_points_located;
 
 -- Correct INTO placement
