@@ -83,4 +83,14 @@ export const staticDatasetCategories = {
     title: 'Changing Cities Monitoring',
     subtitle: 'Statische Geodaten zum Monitoring des Radnetzes von Changing Cities.',
   },
+  'woldegk/primary': {
+    order: 1,
+    title: 'Aktuelle Planungen',
+    subtitle: 'Statische Geodaten zu aktuellen Planungen.',
+  },
+  'woldegk/archive': {
+    order: 1,
+    title: 'Archivierte Planungen',
+    subtitle: 'Statische Geodaten zu vergangenen Planungsständen.',
+  },
 } as const
