@@ -9,10 +9,12 @@ WITH
       osm_id,
       geom,
       side,
+      is_parking,
       ST_ClusterDBSCAN (geom, eps := 0.005, minpoints := 1) OVER (
         PARTITION BY
           street_name,
-          side
+          side,
+          is_parking
       ) AS cluster_id
     FROM
       parking_kerbs
@@ -21,6 +23,7 @@ SELECT
   street_name,
   cluster_id,
   side,
+  is_parking,
   array_agg(osm_id) AS original_osm_ids,
   (ST_Dump (ST_LineMerge (ST_Union (geom, 0.005)))).geom AS geom INTO parking_kerbs_merged
 FROM
@@ -28,6 +31,7 @@ FROM
 GROUP BY
   street_name,
   side,
+  is_parking,
   cluster_id;
 
 ALTER TABLE parking_kerbs_merged

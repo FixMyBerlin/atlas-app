@@ -7,6 +7,7 @@ SELECT
   osm_type,
   osm_id,
   tags ->> 'name' as street_name,
+  is_parking,
   tags,
   meta,
   minzoom INTO parking_kerbs
