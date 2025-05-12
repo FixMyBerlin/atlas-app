@@ -3,7 +3,7 @@ package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
 require("Set")
 require("Log")
 
-function is_main_road(tags)
+function is_road(tags)
   if not tags.highway then return false end
 
   local allowed_highways = Set({

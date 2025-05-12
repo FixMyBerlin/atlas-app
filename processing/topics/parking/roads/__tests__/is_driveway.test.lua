@@ -1,14 +1,14 @@
-describe('`is_vehicle_path`', function()
+describe('`is_driveway`', function()
   package.path = package.path .. ';/processing/topics/helper/?.lua'
   package.path = package.path .. ';/processing/topics/parking/roads/helper/?.lua'
-  require('is_vehicle_path')
+  require('is_driveway')
   require('Log')
 
   it('ignores non highway', function()
     local tags = {
       ['foo'] = 'bar',
     }
-    local result = is_vehicle_path(tags)
+    local result = is_driveway(tags)
     assert.are.equal(result, false)
   end)
 
@@ -16,7 +16,7 @@ describe('`is_vehicle_path`', function()
     local tags = {
       ['highway'] = 'residential',
     }
-    local result = is_vehicle_path(tags)
+    local result = is_driveway(tags)
     assert.are.equal(result, false)
   end)
 
@@ -25,7 +25,7 @@ describe('`is_vehicle_path`', function()
       ['highway'] = 'construction',
       ['construction'] = 'residential',
     }
-    local result = is_vehicle_path(tags)
+    local result = is_driveway(tags)
     assert.are.equal(result, false)
   end)
 
@@ -33,8 +33,8 @@ describe('`is_vehicle_path`', function()
     local tags = {
       ['highway'] = 'service',
     }
-    local result = is_vehicle_path(tags)
-    assert.are.equal(result, false)
+    local result = is_driveway(tags)
+    assert.are.equal(result, true)
   end)
 
   it('works for construction highway service', function()
@@ -42,8 +42,8 @@ describe('`is_vehicle_path`', function()
       ['highway'] = 'construction',
       ['construction'] = 'service',
     }
-    local result = is_vehicle_path(tags)
-    assert.are.equal(result, false)
+    local result = is_driveway(tags)
+    assert.are.equal(result, true)
   end)
 
   it('accepts special access values A', function()
@@ -51,7 +51,7 @@ describe('`is_vehicle_path`', function()
       ['highway'] = 'footway',
       ['emergency'] = 'yes',
     }
-    local result = is_vehicle_path(tags)
+    local result = is_driveway(tags)
     assert.are.equal(result, true)
   end)
 
@@ -60,7 +60,7 @@ describe('`is_vehicle_path`', function()
       ['highway'] = 'path',
       ['motor_vehicle'] = 'destination',
     }
-    local result = is_vehicle_path(tags)
+    local result = is_driveway(tags)
     assert.are.equal(result, true)
   end)
 
@@ -78,7 +78,7 @@ describe('`is_vehicle_path`', function()
       ['vehicle'] = 'destination',
       ['width'] = '9',
     }
-    local result = is_vehicle_path(tags)
-    assert.are.equal(result, true)
+    local result = is_driveway(tags)
+    assert.are.is_false(result)
   end)
 end)

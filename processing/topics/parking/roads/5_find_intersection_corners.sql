@@ -105,7 +105,7 @@ FROM
   parking_intersections as i
   CROSS JOIN LATERAL find_intersection_corners (i.node_id, 140) AS corners
 WHERE
-  i.service_degree = 0;
+  i.driveway_degree = 0;
 
 ALTER TABLE parking_intersection_corners
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);

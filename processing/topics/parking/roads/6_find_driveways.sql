@@ -1,7 +1,7 @@
 -- PREPARE
 DROP TABLE IF EXISTS parking_driveways;
 
--- CREATE driveway table based on roads with `perform_driveway_punch=true`
+-- CREATE driveway table based on roads with `is_driveway=true`
 SELECT
   r.*,
   nrm.idx INTO parking_driveways
@@ -10,9 +10,9 @@ FROM
   JOIN _parking_node_road_mapping nrm ON r.osm_id = nrm.way_id
   JOIN parking_intersections i ON nrm.node_id = i.node_id
 WHERE
-  i.service_degree > 0
-  AND i.degree <> i.service_degree
-  AND r.is_service;
+  i.driveway_degree > 0
+  AND i.degree <> i.driveway_degree
+  AND r.is_driveway;
 
 -- SHORTEN the driveway
 -- @var: "10" specifies the new line to be 10 meters long

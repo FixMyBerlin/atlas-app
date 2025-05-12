@@ -3,7 +3,7 @@ package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lu
 require("Log")
 require("MergeTable")
 require("result_tags_parkings")
-require("exit_processing_parkings")
+require("is_parking")
 require("transform_parkings")
 
 local db_table = osm2pgsql.define_table({
@@ -21,7 +21,7 @@ local db_table = osm2pgsql.define_table({
 })
 
 function parking_parkings(object)
-  if exit_processing_parkings(object.tags) then return end
+  if not is_parking(object.tags) then return end
 
   local transformed_objects = transform_parkings(object)
   for _, transformed_object in ipairs(transformed_objects) do

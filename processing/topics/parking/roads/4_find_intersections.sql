@@ -16,11 +16,11 @@ WITH
       nrm.node_id,
       SUM(1 + (NOT is_terminal_node)::INT) AS degree,
       SUM(
-        is_service::INT + (
+        is_driveway::INT + (
           NOT is_terminal_node
-          AND is_service
+          AND is_driveway
         )::INT
-      ) AS service_degree,
+      ) AS driveway_degree,
       MIN(nrm.way_id) AS way_id
     FROM
       _parking_node_road_mapping nrm
@@ -32,7 +32,7 @@ WITH
 SELECT
   i.node_id,
   i.degree,
-  i.service_degree,
+  i.driveway_degree,
   ST_PointN (road.geom, nrm.idx) AS geom INTO parking_intersections
 FROM
   intersections i

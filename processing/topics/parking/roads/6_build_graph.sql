@@ -36,7 +36,7 @@ BEGIN
     IF rec.idx > 1
        AND EXISTS(
          SELECT 1 FROM parking_intersections i
-         WHERE i.node_id = rec.node_id AND i.degree - i.service_degree > 2
+         WHERE i.node_id = rec.node_id AND i.degree - i.driveway_degree > 2
        )
     THEN
       -- Build edge id
