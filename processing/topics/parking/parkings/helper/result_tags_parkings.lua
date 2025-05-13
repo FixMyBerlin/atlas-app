@@ -1,6 +1,7 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
 package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
+package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
 require("CopyTags")
 require("MergeTable")
 require("DefaultId")
@@ -9,19 +10,88 @@ require("ParseLength")
 require("RoadClassificationRoadValue")
 require("road_name")
 require("Log")
+require("road_width")
+require("ParseLength")
+require("Sanitize")
+
+-- EXAMPLE
+-- INPUT
+-- ["parking:left"] = "no",
+-- ["parking:left:restriction"] = "no_stopping",
+-- ["parking:right"] = "lane",
+-- ["parking:right:fee"] = "no",
+-- ["parking:right:markings"] = "yes",
+-- ["parking:right:orientation"] = "parallel",
+-- ["parking:right:restriction:conditional"] = "loading_only @ (Mo-Fr 08:00-18:00)",
+--
+-- LEFT
+-- parent_highway = "residential",
+-- parking = "no",
+-- restriction = "no_stopping",
+-- side = "left"
+--
+-- RIGHT
+-- fee = "no",
+-- markings = "yes",
+-- orientation = "parallel",
+-- parent_highway = "residential",
+-- parking = "lane",
+-- ["restriction:conditional"] = "loading_only @ (Mo-Fr 08:00-18:00)",
+-- side = "right"
 
 function result_tags_parkings(object)
   local id = DefaultId(object) .. "/" .. object._side
 
   local result_tags = {
+    -- ROAD
     name = road_name(object.tags),
-    -- width = ParseLength(object.tags.width), -- TODO calculate based on direction
-    -- parent_road = RoadClassificationRoadValue(object._parent_tags),
+    surface = object.tags.surface,
+    road_width = road_width(object.tags),
+    road = RoadClassificationRoadValue(object._parent_tags),
+    -- PARKING
+    parking = Sanitize(object.tags.parking, {"no", "yes", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}),
+    orientation = Sanitize(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
+    capacity = ParseLength(object.tags.capacity),
+    markings = Sanitize(object.tags.markings, {"yes", "no"}),
+    direction = Sanitize(object.tags.direction, {"back_in", "head_in"}),
+    staggered = Sanitize(object.tags.staggered, {"yes", "no"}),
+    restriction = Sanitize(object.tags.restriction, {"no_parking", "no_stopping", "no_standing", "loading_only", "charging_only", "none"}),
+    ["restriction:conditional"] = object.tags["restriction:conditional"],
+    ["restriction:bus"] = object.tags["restriction:bus"],
+    ["restriction:hgv"] = object.tags["restriction:hgv"],
+    ["restriction:reason"] = object.tags["restriction:reason"],
+    ["restriction:reason:conditional"] = object.tags["restriction:reason:conditional"],
+    access = object.tags.access,
+    ["access:conditional"] = object.tags["access:conditional"],
+    fee = Sanitize(object.tags.fee, {"yes", "no"}),
+    ["fee:conditional"] = object.tags["fee:conditional"],
+    charge = object.tags.charge,
+    ["charge:conditional"] = object.tags["charge:conditional"],
+    maxstay = object.tags.maxstay,
+    ["maxstay:conditional"] = object.tags["maxstay:conditional"],
+    ["maxstay:motorhome"] = object.tags["maxstay:motorhome"],
+    ["authentication:disc"] = Sanitize(object.tags["authentication:disc"], {"yes", "no"}),
+    ["authentication:disc:conditional"] = object.tags["authentication:disc:conditional"],
+    zone = object.tags.zone,
+    private = object.tags.private,
+    disabled = object.tags.disabled,
+    ["disabled:conditional"] = object.tags["disabled:conditional"],
+    taxi = object.tags.taxi,
+    ["taxi:conditional"] = object.tags["taxi:conditional"],
+    motorcar = object.tags.motorcar,
+    hgv = object.tags.hgv,
+    ["hgv:conditional"] = object.tags["hgv:conditional"],
+    reason = object.tags.reason
   }
 
   MergeTable(result_tags, object.tags)
   local tags_cc = {
     "mapillary",
+    "panoramax",
+    "panoramax:0",
+    "panoramax:1",
+    "panoramax:2",
+    "panoramax:3",
   }
   CopyTags(result_tags, object._parent_tags, tags_cc, "osm_")
   CopyTags(result_tags, object.tags, tags_cc, "osm_")

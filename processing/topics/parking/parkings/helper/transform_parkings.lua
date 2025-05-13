@@ -23,7 +23,6 @@ function transform_parkings(object)
       -- Reset the helper transformation helper tags
       side_object.tags._infix = nil
       side_object.tags._parent_highway = nil
-      side_object.tags._parent_highway = nil
       side_object.tags._parent_tags = nil
       side_object.tags._prefix = nil
       side_object.tags._side = nil
