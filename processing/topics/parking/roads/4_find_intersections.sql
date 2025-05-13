@@ -1,5 +1,5 @@
 -- PREPARE
-DROP TABLE IF EXISTS parking_intersections;
+DROP TABLE IF EXISTS _parking_intersections;
 
 -- CREATE intersections table
 -- We define intersections as either:
@@ -35,7 +35,7 @@ SELECT
   i.driveway_degree,
   ST_PointN (road.geom, nrm.idx) AS geom
   --
-  INTO parking_intersections
+  INTO _parking_intersections
 FROM
   intersections i
   JOIN _parking_node_road_mapping nrm ON i.way_id = nrm.way_id
@@ -45,10 +45,10 @@ WHERE
   i.degree > 2;
 
 -- MISC
-ALTER TABLE parking_intersections
+ALTER TABLE _parking_intersections
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
-CREATE INDEX parking_intersections_idx ON parking_intersections USING BTREE (node_id);
+CREATE INDEX parking_intersections_idx ON _parking_intersections USING BTREE (node_id);
 
 DO $$
 BEGIN

@@ -1,5 +1,5 @@
 -- PREPARE
-DROP TABLE IF EXISTS parking_obstacle_points_located;
+DROP TABLE IF EXISTS _parking_obstacle_points_located;
 
 SELECT DISTINCT
   ON (nrm.node_id) nrm.idx,
@@ -12,9 +12,9 @@ SELECT DISTINCT
   p.geom,
   p.minzoom
   --
-  INTO parking_obstacle_points_located
+  INTO _parking_obstacle_points_located
 FROM
-  parking_obstacle_points p
+  _parking_obstacle_points p
   JOIN _parking_node_road_mapping nrm ON p.osm_id = nrm.node_id
 WHERE
   p.tags ->> 'perform_snap' = 'side'
@@ -22,7 +22,7 @@ ORDER BY
   nrm.node_id,
   nrm.way_id DESC;
 
-ALTER TABLE parking_obstacle_points_located
+ALTER TABLE _parking_obstacle_points_located
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
 DO $$

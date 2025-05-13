@@ -23,8 +23,8 @@ BEGIN
     SELECT
       ST_Intersection(kerb1.geom, kerb2.geom) AS geom
     FROM road_pairs rp
-    JOIN parking_kerbs kerb1 ON kerb1.osm_id = rp.road_id1
-    JOIN parking_kerbs kerb2 ON kerb2.osm_id = rp.road_id2
+    JOIN _parking_kerbs kerb1 ON kerb1.osm_id = rp.road_id1
+    JOIN _parking_kerbs kerb2 ON kerb2.osm_id = rp.road_id2
     WHERE degrees(rp.angle) < max_degree
     AND kerb1.geom && kerb2.geom
     AND ST_Intersects(kerb1.geom, kerb2.geom)

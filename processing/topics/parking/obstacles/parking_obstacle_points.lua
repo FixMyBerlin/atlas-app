@@ -7,7 +7,7 @@ require("categorize_and_transform_points")
 require("result_tags_obstacles")
 
 local db_table = osm2pgsql.define_table({
-  name = 'parking_obstacle_points',
+  name = '_parking_obstacle_points',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type', index='always' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },

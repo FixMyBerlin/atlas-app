@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS parking_kerb_tangents;
+DROP TABLE IF EXISTS _parking_kerb_tangents;
 
 SELECT DISTINCT
   osm_id,
   tags,
   kerb_tangent (way_id, idx, tags ->> 'side', 1, 1) as geom
   --
-  INTO parking_kerb_tangents
+  INTO _parking_kerb_tangents
 FROM
-  parking_obstacle_points_located;
+  _parking_obstacle_points_located;
 
-ALTER TABLE parking_kerb_tangents
+ALTER TABLE _parking_kerb_tangents
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
 DO $$

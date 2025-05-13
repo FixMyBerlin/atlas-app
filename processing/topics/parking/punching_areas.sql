@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS parking_punching_areas;
+DROP TABLE IF EXISTS _parking_punching_areas;
 
 -- INSERT driveway buffers (rectangles)
 -- @var: "5" is the buffer in meter where no parking is allowed legally
@@ -15,13 +15,13 @@ SELECT
   '{}'::jsonb AS meta,
   0 AS minzoom
   --
-  INTO parking_punching_areas
+  INTO _parking_punching_areas
 FROM
-  parking_intersection_corners;
+  _parking_intersection_corners;
 
 -- INSERT driveway buffers (rectangles)
 INSERT INTO
-  parking_punching_areas (id, geom, tags, meta, minzoom)
+  _parking_punching_areas (id, geom, tags, meta, minzoom)
 SELECT
   id,
   ST_Buffer (
@@ -41,13 +41,13 @@ SELECT
   jsonb_build_object('updated_at', meta ->> 'updated_at') AS meta,
   0 AS minzoom
 FROM
-  parking_driveways;
+  _parking_driveways;
 
 -- MISC
-ALTER TABLE parking_punching_areas
+ALTER TABLE _parking_punching_areas
 ALTER COLUMN geom TYPE geometry (Geometry, 5243) USING ST_SetSRID (geom, 5243);
 
-CREATE INDEX parking_punching_areas_geom_idx ON parking_intersections USING GIST (geom);
+CREATE INDEX parking_punching_areas_geom_idx ON _parking_intersections USING GIST (geom);
 
 DO $$
 BEGIN

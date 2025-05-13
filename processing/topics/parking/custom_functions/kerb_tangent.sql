@@ -13,7 +13,7 @@ DECLARE
   azimuth double precision;
 BEGIN
   SELECT geom INTO road_geom FROM _parking_roads WHERE osm_id = road_id;
-  SELECT geom INTO kerb_geom FROM parking_kerbs WHERE osm_id = road_id AND parking_kerbs.side = kerb_tangent.side;
+  SELECT geom INTO kerb_geom FROM _parking_kerbs WHERE osm_id = road_id AND _parking_kerbs.side = kerb_tangent.side;
   point_geom := ST_ClosestPoint(kerb_geom, ST_PointN(road_geom, idx));
 
   IF side = 'right' THEN

@@ -13,7 +13,7 @@ BEGIN
   -- get the k closest kerbs w.r.t the input_geom
   FOR kerb IN
     SELECT geom
-    FROM parking_kerbs_merged
+    FROM _parking_kerbs_merged
     WHERE is_parking AND ST_DWithin(input_geom, geom, tolerance)
     ORDER BY ST_Distance(input_geom, geom)
     LIMIT k
