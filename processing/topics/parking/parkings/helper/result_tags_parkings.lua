@@ -39,8 +39,14 @@ require("Sanitize")
 -- ["restriction:conditional"] = "loading_only @ (Mo-Fr 08:00-18:00)",
 -- side = "right"
 
+
+
 function result_tags_parkings(object)
   local id = DefaultId(object) .. "/" .. object._side
+
+  local allowed_reasons = {
+    "bus_lane", "rails", "bus_stop", "crossing", "cycleway", "driveway", "dual_carriage", "fire_lane", "junction", "loading_zone", "markings", "narrow", "passenger_loading_zone", "priority_road", "street_cleaning", "turnaround", "turn_lane"
+  }
 
   local result_tags = {
     -- ROAD
@@ -59,7 +65,7 @@ function result_tags_parkings(object)
     ["restriction:conditional"] = object.tags["restriction:conditional"],
     ["restriction:bus"] = object.tags["restriction:bus"],
     ["restriction:hgv"] = object.tags["restriction:hgv"],
-    ["restriction:reason"] = object.tags["restriction:reason"],
+    ["restriction:reason"] = Sanitize(object.tags["restriction:reason"], allowed_reasons),
     ["restriction:reason:conditional"] = object.tags["restriction:reason:conditional"],
     access = object.tags.access,
     ["access:conditional"] = object.tags["access:conditional"],
@@ -81,7 +87,7 @@ function result_tags_parkings(object)
     motorcar = object.tags.motorcar,
     hgv = object.tags.hgv,
     ["hgv:conditional"] = object.tags["hgv:conditional"],
-    reason = object.tags.reason
+    reason = Sanitize(object.tags.reason, allowed_reasons)
   }
 
   MergeTable(result_tags, object.tags)
