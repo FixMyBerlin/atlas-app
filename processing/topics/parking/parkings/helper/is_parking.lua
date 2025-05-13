@@ -14,11 +14,11 @@ function is_parking(tags)
 
   -- We only include driveways with explicit parking tagging.
   if is_driveway(tags) then
-      for key, _ in pairs(tags) do
-          if key:match("^parking:") then
-              return true
-          end
+    for key, _ in pairs(tags) do
+      if key:match("^parking:") then
+        return true
       end
+    end
   end
 
   return false

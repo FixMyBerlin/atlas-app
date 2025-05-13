@@ -11,9 +11,9 @@ local db_table = osm2pgsql.define_table({
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
     { column = 'id',      type = 'text',      not_null = true },
+    { column = 'side',    type = 'text' },
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
-    { column = 'side',    type = 'text' }
   },
   indexes = {
     { column = { 'osm_id', 'side' }, method = 'btree' },
