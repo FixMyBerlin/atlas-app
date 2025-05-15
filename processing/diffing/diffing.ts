@@ -1,7 +1,7 @@
 import { $, sql } from 'bun'
 import chalk from 'chalk'
 import type { Topic } from '../constants/topics.const'
-import { isDev } from './isDev'
+import { isDev } from '../utils/isDev'
 
 const backupTableIdentifier = (table: string) => `backup."${table}"` as const
 const diffTableIdentifier = (table: string) => `public."${table}_diff"` as const
@@ -30,8 +30,12 @@ export async function getTopicTables(topic: Topic) {
   }
 }
 
-export async function initializeBackupSchema() {
+export async function initializeSchemaBackup() {
   return sql`CREATE SCHEMA IF NOT EXISTS backup`
+}
+
+export async function initializeCustomFunctionDiffing() {
+  await $`psql -q -f ./diffing/jsonb_diff.sql`
 }
 
 /**

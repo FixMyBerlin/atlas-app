@@ -8,7 +8,7 @@ import {
   dropDiffTable,
   getSchemaTables,
   getTopicTables,
-} from '../utils/diffing'
+} from '../diffing/diffing'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
