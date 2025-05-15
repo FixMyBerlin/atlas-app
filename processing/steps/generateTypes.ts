@@ -20,7 +20,7 @@ export async function generateTypes(processedTables: string[]) {
 }
 
 async function writeTableIdTypes(processedTables: string[]) {
-  if (params.processOnlyTopics) {
+  if (params.processOnlyTopics.length > 0) {
     console.info('Generating types:', 'Skipped because `PROCESS_ONLY_TOPICS` is present')
     return
   }
