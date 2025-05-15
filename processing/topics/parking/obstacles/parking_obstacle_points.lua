@@ -14,7 +14,6 @@ local db_table = osm2pgsql.define_table({
     { column = 'tags',    type = 'jsonb' },
     { column = 'meta',    type = 'jsonb' },
     { column = 'geom',    type = 'point', projection = 5243 },
-    { column = 'minzoom', type = 'integer' },
   },
 })
 

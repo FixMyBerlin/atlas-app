@@ -9,8 +9,7 @@ SELECT DISTINCT
   p.id,
   p.tags,
   p.meta,
-  p.geom,
-  p.minzoom
+  p.geom
   --
   INTO _parking_obstacle_points_located
 FROM

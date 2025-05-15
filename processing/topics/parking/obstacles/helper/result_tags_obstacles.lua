@@ -30,6 +30,5 @@ function result_tags_obstacles(result)
     id = id,
     tags = result_tags,
     meta = result_meta,
-    minzoom = 0 -- TODO
   }
 end
