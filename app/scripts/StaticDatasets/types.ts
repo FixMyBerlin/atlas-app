@@ -1,4 +1,3 @@
-import { CircleLayer, FillLayer, HeatmapLayer, LineLayer, SymbolLayer } from 'react-map-gl/maplibre'
 import { translations } from '@/src/app/regionen/[regionSlug]/_components/SidebarInspector/TagsTable/translations/translations.const'
 import { StaticDatasetCategoryKey } from '@/src/app/regionen/[regionSlug]/_mapData/mapDataStaticDatasetCategories/staticDatasetCategories.const'
 import {
@@ -6,6 +5,7 @@ import {
   MapDataOsmIdConfig,
   MapDataSourceInspectorEditor,
 } from '@/src/app/regionen/[regionSlug]/_mapData/types'
+import { CircleLayer, FillLayer, HeatmapLayer, LineLayer, SymbolLayer } from 'react-map-gl/maplibre'
 
 // a modified version of MapDataDatasetsSource from '../../src/app/regionen/[regionSlug]/_mapData/types'
 type MapDataDatasetsSource = {
@@ -26,8 +26,10 @@ type MapDataDatasetsSource = {
     | 'ODbL'
     | 'CC Zero'
     | 'CC BY 2.0'
+    | 'CC BY 3.0'
     | 'CC BY 4.0'
     | 'CC BY-NC-SA 4.0'
+    | 'DL-DE/ZERO-2.0' // https://www.govdata.de/dl-de/zero-2-0
     | 'DL-DE/BY-2.0' // https://www.govdata.de/dl-de/by-2-0
   /** @desc Are the data OSM compatible due to the licence itself or an explicit waiver */
   licenceOsmCompatible?: undefined | 'licence' | 'waiver' | 'no'
