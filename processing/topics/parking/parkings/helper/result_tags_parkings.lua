@@ -59,7 +59,10 @@ function result_tags_parkings(object)
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
     -- PARKING
-    parking = sanitize_for_logging(object.tags.parking, {"no", "yes", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}),
+    -- `parking` is our main tag.
+    -- for is_driveway this is alway some precise value (because everything else is excluded)
+    -- for is_road this with either "missing" or some precise value. ""
+    parking = sanitize_for_logging(object.tags.parking, {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}) or "missing",
     orientation = sanitize_for_logging(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
     capacity = ParseLength(object.tags.capacity),
     markings = sanitize_for_logging(object.tags.markings, {"yes", "no"}),

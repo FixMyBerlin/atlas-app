@@ -11,7 +11,7 @@ describe("`transform_kerbs`", function()
       tags = {
         highway = 'residential',
         mapillary = "123",
-        ["parking:left:parking"] = 'lane',
+        ["parking:left"] = 'lane',
       },
       id = 1,
       type = 'way',

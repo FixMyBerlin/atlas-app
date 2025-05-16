@@ -23,10 +23,19 @@ describe("`is_parking`", function()
   it('is_driveway is true when "parking:" given', function()
     local tags = {
       ["highway"] = 'service',
-      ["parking:foo"] = 'bar',
+      ["parking:left"] = 'lane',
     }
     local result = is_parking(tags)
     assert.are.is_true(result)
+  end)
+
+  it('is_driveway is false with unclear parking value', function()
+    local tags = {
+      ["highway"] = 'service',
+      ["parking:left"] = 'yes',
+    }
+    local result = is_parking(tags)
+    assert.are.is_false(result)
   end)
 
   it('is_driveway is false without "parking:"', function()

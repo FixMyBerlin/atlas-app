@@ -4,6 +4,7 @@ require("Set")
 require("Log")
 require("is_road")
 require("is_driveway")
+require("Sanitize")
 
 function is_parking(tags)
   -- We expect explict parking tagging on roads.
@@ -13,11 +14,14 @@ function is_parking(tags)
   end
 
   -- We only include driveways with explicit parking tagging.
+  -- However "yes" and other values are not considered explicit.
   if is_driveway(tags) then
-    for key, _ in pairs(tags) do
-      if key:match("^parking:") then
-        return true
-      end
+    local allowed_values = {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}
+    local both = Sanitize(tags['parking:both'], allowed_values)
+    local left = Sanitize(tags['parking:left'], allowed_values)
+    local right = Sanitize(tags['parking:right'], allowed_values)
+    if(both or left or right) then
+      return true
     end
   end
 
