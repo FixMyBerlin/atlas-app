@@ -14,6 +14,7 @@ require("road_width")
 require("ParseLength")
 require("sanitize_for_logging")
 require("this_or_that")
+require('result_tags_value_helpers')
 
 -- EXAMPLE
 -- INPUT
@@ -57,7 +58,7 @@ function result_tags_parkings(object)
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
     -- PARKING
-    parking = nil, -- below
+    parking = parking_value(object),
     orientation = sanitize_for_logging(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
     capacity = ParseLength(object.tags.capacity),
     markings = sanitize_for_logging(object.tags.markings, {"yes", "no"}),
@@ -96,16 +97,6 @@ function result_tags_parkings(object)
     ["hgv:conditional"] = object.tags["hgv:conditional"],
   }
   MergeTable(result_tags, specific_tags)
-
-  -- `parking` is our main tag.
-  -- for is_driveway this is alway some precise value (because everything else is excluded)
-  -- for is_road this with either "missing" or some precise value.
-  -- except for dual_carriageway|s when we fall back to "not_expected" instead of "missing"
-  result_tags.parking = sanitize_for_logging(object.tags.parking, {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"})
-  if (object._parent_tags.dual_carriageway == "yes") then
-    result_tags.parking = result_tags.parking or 'not_expected'
-  end
-  result_tags.parking = result_tags.parking or "missing"
 
   local result_tags_surface = this_or_that("surface", { value = object.tags.surface, confidence = "high", source = "tag" }, { value = object._parent_tags.surface, confidence = "medium", source = "parent_highway" })
   MergeTable(result_tags, result_tags_surface)
