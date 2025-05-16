@@ -1,6 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("capacity_normalization")
-require("Sanitize")
+require("sanitize_for_logging")
 require("SanitizeTrafficSign")
 require("MergeTable")
 require("Log")
@@ -20,11 +20,11 @@ function amenity_parking_tags(tags)
     {
       amenity = tags.amenity,
       parking = tags.parking,
-      orientation = Sanitize(tags.orientation, { "perpendicular", "parallel", "diagonal" }),
-      informal = Sanitize(tags.informal, { "yes" }),
-      access = Sanitize(tags.access, { "no" }),
-      markings = Sanitize(tags.markings, { "yes", "no" }),
-      disabled = Sanitize(tags.disabled, { "private" }),
+      orientation = sanitize_for_logging(tags.orientation, { "perpendicular", "parallel", "diagonal" }),
+      informal = sanitize_for_logging(tags.informal, { "yes" }),
+      access = sanitize_for_logging(tags.access, { "no" }),
+      markings = sanitize_for_logging(tags.markings, { "yes", "no" }),
+      disabled = sanitize_for_logging(tags.disabled, { "private" }),
       traffic_sign = SanitizeTrafficSign(tags.traffic_sign),
     }, capacity_normalization(tags)
   )

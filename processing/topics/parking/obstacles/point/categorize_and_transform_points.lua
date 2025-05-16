@@ -3,7 +3,6 @@ package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.l
 package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
 require("Clone")
 require("Log")
-require("Sanitize")
 require("obstacle_point_categories")
 
 -- Categorize the object and transforms it if needed. Picks the best result for self, left, right.

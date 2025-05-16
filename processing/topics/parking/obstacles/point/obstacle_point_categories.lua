@@ -1,7 +1,7 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
-require("Sanitize")
+require("sanitize_for_logging")
 require("class_obstacle_category")
 require("two_wheel_parking_helper")
 require("amenity_parking_helper")
@@ -42,7 +42,7 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = "self",
     perform_buffer = function(tags) return 1.5 end,
-    tags = function(tags) return { natural = Sanitize(tags.natural, { "tree", "tree_stump" }) } end,
+    tags = function(tags) return { natural = sanitize_for_logging(tags.natural, { "tree", "tree_stump" }) } end,
     tags_cc = { "natural", "ref" },
     conditions = function(tags)
       return is_obstacle_parking(tags) and (tags.natural == "tree" or tags.natural == "tree_stump")

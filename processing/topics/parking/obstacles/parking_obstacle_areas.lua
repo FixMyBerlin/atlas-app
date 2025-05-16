@@ -1,10 +1,13 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
+package.path = package.path .. ";/processing/topics/parking/errors/?.lua"
 require("Log")
 require("MergeTable")
 require("categorize_area")
+require("sanitize_cleaner")
 require("result_tags_obstacles")
+require("parking_errors")
 
 
 local db_table = osm2pgsql.define_table({
@@ -25,7 +28,10 @@ function parking_obstacle_areas(object)
 
   local result = categorize_area(object)
   if result.object then
-    local row = MergeTable({ geom = result.object:as_polygon() }, result_tags_obstacles(result))
+    local cleaned_tags, replaced_tags = sanitize_cleaner(result_tags_obstacles(result), result.object.tags)
+    parking_errors(result.object, replaced_tags, 'parking_obstacle_areas')
+
+    local row = MergeTable({ geom = result.object:as_polygon() }, cleaned_tags)
     db_table:insert(row)
   end
 

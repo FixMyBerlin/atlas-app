@@ -12,7 +12,7 @@ require("road_name")
 require("Log")
 require("road_width")
 require("ParseLength")
-require("Sanitize")
+require("sanitize_for_logging")
 require("this_or_that")
 
 -- EXAMPLE
@@ -46,9 +46,8 @@ function result_tags_parkings(object)
   local id = DefaultId(object) .. "/" .. object._side
 
   local allowed_reasons = {
-    "bus_lane", "rails", "bus_stop", "crossing", "cycleway", "driveway", "dual_carriage", "fire_lane", "junction", "loading_zone", "markings", "narrow", "passenger_loading_zone", "priority_road", "street_cleaning", "turnaround", "turn_lane"
+    "bus_lane", "rails", "bus_stop", "crossing", "cycleway", "driveway", "dual_carriage", "fire_lane", "junction", "loading_zone", "markings", "narrow", "passenger_loading_zone", "priority_road", "street_cleaning", "turnaround", "turn_lane", "living_street"
   }
-
   local allowed_access = {"yes", "no", "private", "customers", "delivery", "permissive", "residents", "designated", "unknown"}
 
   local result_tags = {}
@@ -60,20 +59,20 @@ function result_tags_parkings(object)
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
     -- PARKING
-    parking = Sanitize(object.tags.parking, {"no", "yes", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}),
-    orientation = Sanitize(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
+    parking = sanitize_for_logging(object.tags.parking, {"no", "yes", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}),
+    orientation = sanitize_for_logging(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
     capacity = ParseLength(object.tags.capacity),
-    markings = Sanitize(object.tags.markings, {"yes", "no"}),
-    direction = Sanitize(object.tags.direction, {"back_in", "head_in"}),
-    reason = Sanitize(object.tags.reason, allowed_reasons),
-    staggered = Sanitize(object.tags.staggered, {"yes", "no"}),
-    restriction = Sanitize(object.tags.restriction, {"no_parking", "no_stopping", "no_standing", "loading_only", "charging_only", "none"}),
+    markings = sanitize_for_logging(object.tags.markings, {"yes", "no"}),
+    direction = sanitize_for_logging(object.tags.direction, {"back_in", "head_in"}),
+    reason = sanitize_for_logging(object.tags.reason, allowed_reasons),
+    staggered = sanitize_for_logging(object.tags.staggered, {"yes", "no"}),
+    restriction = sanitize_for_logging(object.tags.restriction, {"no_parking", "no_stopping", "no_standing", "loading_only", "charging_only", "none"}),
     ["restriction:conditional"] = object.tags["restriction:conditional"],
     ["restriction:bus"] = object.tags["restriction:bus"],
     ["restriction:hgv"] = object.tags["restriction:hgv"],
-    ["restriction:reason"] = Sanitize(object.tags["restriction:reason"], allowed_reasons),
+    ["restriction:reason"] = sanitize_for_logging(object.tags["restriction:reason"], allowed_reasons),
     ["restriction:reason:conditional"] = object.tags["restriction:reason:conditional"],
-    fee = Sanitize(object.tags.fee, {"yes", "no"}),
+    fee = sanitize_for_logging(object.tags.fee, {"yes", "no"}),
     ["fee:conditional"] = object.tags["fee:conditional"],
     charge = object.tags.charge,
     ["charge:conditional"] = object.tags["charge:conditional"],
@@ -82,20 +81,20 @@ function result_tags_parkings(object)
     ["maxstay:motorhome"] = object.tags["maxstay:motorhome"],
     -- ZONE
     zone = object.tags.zone,
-    ["authentication:disc"] = Sanitize(object.tags["authentication:disc"], {"yes", "no"}),
+    ["authentication:disc"] = sanitize_for_logging(object.tags["authentication:disc"], {"yes", "no"}),
     ["authentication:disc:conditional"] = object.tags["authentication:disc:conditional"],
     -- ACCESS
-    access = Sanitize(object.tags.access, allowed_access),
+    access = sanitize_for_logging(object.tags.access, allowed_access),
     ["access:conditional"] = object.tags["access:conditional"],
     private = object.tags.private,
     ["private:conditional"] = object.tags["private:conditional"],
-    disabled = Sanitize(object.tags.disabled, allowed_access),
+    disabled = sanitize_for_logging(object.tags.disabled, allowed_access),
     ["disabled:conditional"] = object.tags["disabled:conditional"],
-    taxi = Sanitize(object.tags.taxi, allowed_access),
+    taxi = sanitize_for_logging(object.tags.taxi, allowed_access),
     ["taxi:conditional"] = object.tags["taxi:conditional"],
-    motorcar = Sanitize(object.tags.motorcar, allowed_access),
+    motorcar = sanitize_for_logging(object.tags.motorcar, allowed_access),
     ["motorcar:conditional"] = object.tags["motorcar:conditional"],
-    hgv = Sanitize(object.tags.hgv, allowed_access),
+    hgv = sanitize_for_logging(object.tags.hgv, allowed_access),
     ["hgv:conditional"] = object.tags["hgv:conditional"],
   }
   MergeTable(result_tags, specific_tags)

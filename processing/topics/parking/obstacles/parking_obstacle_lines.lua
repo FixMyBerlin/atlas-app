@@ -25,7 +25,10 @@ function parking_obstacle_lines(object)
 
   local result = categorize_line(object)
   if result.object then
-    local row = MergeTable({ geom = result.object:as_linestring() }, result_tags_obstacles(result))
+    local cleaned_tags, replaced_tags = sanitize_cleaner(result_tags_obstacles(result), result.object.tags)
+    parking_errors(result.object, replaced_tags, 'parking_obstacle_lines')
+
+    local row = MergeTable({ geom = result.object:as_linestring() }, cleaned_tags)
     db_table:insert(row)
   end
 
