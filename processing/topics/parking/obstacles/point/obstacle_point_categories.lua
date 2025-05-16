@@ -149,6 +149,15 @@ obstacle_point_categories = {
     end
   }),
   class_obstacle_category.new({
+    id = "loading_ramp",
+    side_key = nil,
+    perform_snap = "self",
+    perform_buffer = function(tags) return 0 end,
+    tags = function(tags) return { amenity = "loading_ramp",  operator = tags.operator } end,
+    tags_cc = {},
+    conditions = function(tags) return tags.amenity == "loading_ramp" end,
+  }),
+  class_obstacle_category.new({
     id = "bicycle_parking",
     side_key = nil,
     perform_snap = "self",
