@@ -24,7 +24,7 @@ function parking_parkings(object)
   if not is_parking(object.tags) then return end
 
   local transformed_objects = transform_parkings(object)
-  for _, transformed_object in ipairs(transformed_objects) do
+  for _, transformed_object in pairs(transformed_objects) do
 
     local result = result_tags_parkings(transformed_object)
     local cleaned_tags, replaced_tags = sanitize_cleaner(result.tags, transformed_object.tags)

@@ -13,24 +13,21 @@ describe("`transform_parkings`", function()
         ["parking:right"] = "street_side",
         ["parking:both"] = "lane",
         ["parking:both:fee"] = "no",
-        ["parking:both:orientation"] = "parallel",
       },
       id = 1,
       type = 'way',
     }
     local results = transform_parkings(input_object)
 
-    local left = results[1]
-    assert.are.equal(type(left), "table")
-    assert.are.equal(left._side, "left")
-    assert.are.equal(left.tags.fee, "no")
-    assert.are.equal(left.tags.parking, "lane")
+    assert.are.equal(type(results.left), "table")
+    assert.are.equal(results.left.tags.side, "left")
+    assert.are.equal(results.left.tags.fee, "no")
+    assert.are.equal(results.left.tags.parking, "lane")
 
-    local right = results[2]
-    assert.are.equal(type(right), "table")
-    assert.are.equal(right._side, "right")
-    assert.are.equal(right.tags.fee, "no")
-    assert.are.equal(right.tags.parking, "street_side")
+    assert.are.equal(type(results.right), "table")
+    assert.are.equal(results.right.tags.side, "right")
+    assert.are.equal(results.right.tags.fee, "no")
+    assert.are.equal(results.right.tags.parking, "street_side")
   end)
 
   it('case one side', function()
@@ -44,12 +41,12 @@ describe("`transform_parkings`", function()
     }
     local results = transform_parkings(input_object)
 
-    local left = results[1]
-    assert.are.equal(type(left), "table")
-    assert.are.equal(left._side, "left")
-    assert.are.equal(left.tags.parking, "lane")
+    assert.are.equal(type(results.left), "table")
+    assert.are.equal(results.left.tags.side, "left")
+    assert.are.equal(results.left.tags.parking, "lane")
 
-    local right = results[2]
-    assert.are.equal(type(right), "nil")
+    assert.are.equal(type(results.right), "table")
+    assert.are.equal(results.right.tags.side, "right")
+    assert.are.equal(results.right.tags.parking, nil)
   end)
 end)

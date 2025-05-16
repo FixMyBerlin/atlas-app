@@ -40,10 +40,8 @@ require("this_or_that")
 -- ["restriction:conditional"] = "loading_only @ (Mo-Fr 08:00-18:00)",
 -- side = "right"
 
-
-
 function result_tags_parkings(object)
-  local id = DefaultId(object) .. "/" .. object._side
+  local id = DefaultId(object) .. "/" .. object.tags.side
 
   local allowed_reasons = {
     "bus_lane", "rails", "bus_stop", "crossing", "cycleway", "driveway", "dual_carriage", "fire_lane", "junction", "loading_zone", "markings", "narrow", "passenger_loading_zone", "priority_road", "street_cleaning", "turnaround", "turn_lane", "living_street"
@@ -59,10 +57,7 @@ function result_tags_parkings(object)
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
     -- PARKING
-    -- `parking` is our main tag.
-    -- for is_driveway this is alway some precise value (because everything else is excluded)
-    -- for is_road this with either "missing" or some precise value. ""
-    parking = sanitize_for_logging(object.tags.parking, {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"}) or "missing",
+    parking = nil, -- below
     orientation = sanitize_for_logging(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
     capacity = ParseLength(object.tags.capacity),
     markings = sanitize_for_logging(object.tags.markings, {"yes", "no"}),
@@ -102,6 +97,16 @@ function result_tags_parkings(object)
   }
   MergeTable(result_tags, specific_tags)
 
+  -- `parking` is our main tag.
+  -- for is_driveway this is alway some precise value (because everything else is excluded)
+  -- for is_road this with either "missing" or some precise value.
+  -- except for dual_carriageway|s when we fall back to "not_expected" instead of "missing"
+  result_tags.parking = sanitize_for_logging(object.tags.parking, {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"})
+  if (object._parent_tags.dual_carriageway == "yes") then
+    result_tags.parking = result_tags.parking or 'not_expected'
+  end
+  result_tags.parking = result_tags.parking or "missing"
+
   local result_tags_surface = this_or_that("surface", { value = object.tags.surface, confidence = "high", source = "tag" }, { value = object._parent_tags.surface, confidence = "medium", source = "parent_highway" })
   MergeTable(result_tags, result_tags_surface)
 
@@ -121,7 +126,7 @@ function result_tags_parkings(object)
 
   return {
     id = id,
-    side = object._side,
+    side = object.tags.side,
     tags = result_tags,
     meta = result_meta,
   }
