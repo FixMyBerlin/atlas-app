@@ -116,6 +116,5 @@ function result_tags_parkings(object)
     side = object._side,
     tags = result_tags,
     meta = result_meta,
-    minzoom = 0 -- TODO
   }
 end

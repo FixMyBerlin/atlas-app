@@ -17,11 +17,10 @@ local db_table = osm2pgsql.define_table({
     { column = 'geom',    type = 'linestring', projection = 5243 },
     { column = 'is_driveway', type = 'boolean'},
     { column = 'is_parking', type = 'boolean'},
-    { column = 'minzoom', type = 'integer' },
   },
   indexes = {
     { column = { 'osm_id' }, method = 'btree' },
-    { column = { 'minzoom', 'geom' }, method = 'gist' },
+    { column = { 'geom' }, method = 'gist' },
   }
 })
 

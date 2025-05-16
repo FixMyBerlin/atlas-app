@@ -45,6 +45,5 @@ function result_tags_roads(object)
     id = id,
     tags = result_tags,
     meta = result_meta,
-    minzoom = 0 -- TODO
   }
 end

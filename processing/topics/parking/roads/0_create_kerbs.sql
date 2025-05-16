@@ -9,8 +9,7 @@ SELECT
   tags ->> 'name' as street_name,
   is_parking,
   tags,
-  meta,
-  minzoom
+  meta
   --
   INTO _parking_kerbs
 FROM
