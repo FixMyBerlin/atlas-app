@@ -13,6 +13,7 @@ require("Log")
 require("road_width")
 require("ParseLength")
 require("Sanitize")
+require("this_or_that")
 
 -- EXAMPLE
 -- INPUT
@@ -50,10 +51,12 @@ function result_tags_parkings(object)
 
   local allowed_access = {"yes", "no", "private", "customers", "delivery", "permissive", "residents", "designated", "unknown"}
 
-  local result_tags = {
+  local result_tags = {}
+  MergeTable(result_tags, object.tags) -- tags specified in transform_parkings()
+
+  local specific_tags = {
     -- ROAD
     name = road_name(object.tags),
-    surface = object.tags.surface,
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
     -- PARKING
@@ -95,8 +98,11 @@ function result_tags_parkings(object)
     hgv = Sanitize(object.tags.hgv, allowed_access),
     ["hgv:conditional"] = object.tags["hgv:conditional"],
   }
+  MergeTable(result_tags, specific_tags)
 
-  MergeTable(result_tags, object.tags)
+  local result_tags_surface = this_or_that("surface", { value = object.tags.surface, confidence = "high", source = "tag" }, { value = object._parent_tags.surface, confidence = "medium", source = "parent_highway" })
+  MergeTable(result_tags, result_tags_surface)
+
   local tags_cc = {
     "mapillary",
     "panoramax",
