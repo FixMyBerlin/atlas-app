@@ -19,3 +19,16 @@ describe("parking_value", function()
     end)
 end)
 
+describe("operator_type_value", function()
+    it("returns sanitized value for is_road", function()
+        local object = { tags = { ["operator:type"] = "public" } }
+        local result = operator_type_value(object)
+        assert.are.equal(result, "public")
+    end)
+    it("returns sanitized value for is_driveway", function()
+        local object = { tags = { ["operator:type"] = "private" } }
+        -- is_driveway returns true if tags table is passed, so this triggers the branch
+        local result = operator_type_value(object)
+        assert.are.equal(result, "private")
+    end)
+end)

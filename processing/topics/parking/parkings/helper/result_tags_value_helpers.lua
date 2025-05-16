@@ -3,7 +3,9 @@ package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
 package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
 package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
 require("Log")
+require("Sanitize")
 require("sanitize_for_logging")
+require("is_driveway")
 
 -- `parking` is our main tag.
 -- for is_driveway this is alway some precise value (because everything else is excluded)
@@ -18,3 +20,14 @@ function parking_value(object)
   return result
 end
 
+-- `operator_type`
+-- for is_road, sanitize the value or nil
+-- for is_driveway, sanitize but add an error because we excpet this to be present
+function operator_type_value(object)
+  local result = Sanitize(object.tags['operator:type'], {"public", "private"})
+  if is_driveway(object.tags) then
+    result = sanitize_for_logging(object.tags['operator:type'], {"public", "private"})
+  end
+
+  return result
+end

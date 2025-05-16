@@ -57,6 +57,7 @@ function result_tags_parkings(object)
     name = road_name(object.tags),
     road_width = road_width(object.tags),
     road = RoadClassificationRoadValue(object._parent_tags),
+    operator_type = operator_type_value(object),
     -- PARKING
     parking = parking_value(object),
     orientation = sanitize_for_logging(object.tags.orientation, {"parallel", "diagonal", "perpendicular"}),
