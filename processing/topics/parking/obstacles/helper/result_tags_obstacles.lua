@@ -6,12 +6,12 @@ require("Metadata")
 require("Log")
 
 function result_tags_obstacles(result)
-  local id = DefaultId(result.object) .. "/" .. result.object._side
+  local id = DefaultId(result.object) .. "/" .. result.object.tags.side
 
   local result_tags = {
     category = result.category.id,
     source = result.category.source,
-    side = result.object._side,
+    side = result.object.tags.side,
     perform_buffer = result.category:get_perform_buffer(result.object.tags),
     perform_snap = result.category.perform_snap,
   }

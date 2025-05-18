@@ -9,7 +9,7 @@ function categorize_line(object)
   for _, category in ipairs(obstacle_line_categories) do
     if category:is_active(object.tags) then
       local result_object = object
-      result_object._side = "self"
+      result_object.tags.side = "self"
       return {
         category = category,
         object = object
