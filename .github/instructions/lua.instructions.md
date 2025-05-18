@@ -6,8 +6,11 @@ applyTo: '**/*.lua'
   - That means we have access to a few helpers from https://osm2pgsql.org/doc/manual.html#lua-library-for-flex-output.
   - There is also the special `osm2pgsql` class that we use all over which is documented at https://osm2pgsql.org/doc/manual.html.
 - We have helper libraries installed which can be found in [processing.Dockerfile](../processing.Dockerfile)
-  - Right now that should only be busted (https://lunarmodules.github.io/busted/) and inspect (https://github.com/kikito/inspect.lua).
-  - We can add more helpers if this makes our code cleaner.
+  - Use those rather than create helper functions from scratch.
+  - `busted` is our testing framework https://lunarmodules.github.io/busted/
+  - `inspect` is to print / inspect tables https://github.com/kikito/inspect.lua — our own helper around that is called `Log(object, 'logging prefix')`
+  - `penlight` is to add python like helpers to lua https://lunarmodules.github.io/Penlight/
+  - We can add more helpers if this makes our code cleaner; make a suggestion if that applies.
 - We use camel_case for our file names and functions and variables.
   - However, there are legacy functions that are still using MixedCase. Don't change this during an unrelated edit.
   - Our linter does not accept lower case global functions but we ignore that because we cannot configure the linter properly.
