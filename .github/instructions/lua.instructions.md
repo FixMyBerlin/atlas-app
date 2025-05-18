@@ -17,3 +17,13 @@ applyTo: '**/*.lua'
 - Each file has to start with a `package.path` which lists the path where all helpers live that are used in this file.
   `package.path = package.path .. ";/processing/topics/helper/?.lua"`
 - To require a function, we just `require("function_name")` the file and then use `function_name`. We _do not_ assign local variables like `local function_name = require("function_name")` except we have to like with the `is_env.is_production` case.
+- Preserve code comments that are still relevant.
+
+Software tests:
+- Are always in a `__tests__` folder in the same directory or one directory up.
+- They need to have a name like `file_name_of_functions.test.lua`. So the same name as the file that is being tested postfixed with ".test".
+- They use busted internally but that is automatically loaded and does not need to be required.
+- Use `require("foo")` to load the function that is being tested.
+
+Formatting:
+- Use 2 spaces for indentation.
