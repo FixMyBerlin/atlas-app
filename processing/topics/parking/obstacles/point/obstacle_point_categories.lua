@@ -54,7 +54,7 @@ obstacle_point_categories = {
     side_schema = nil,
     side_key = nil,
     perform_snap = 'self',
-    perform_buffer = function(tags) return 1.5 end, -- todo: based on widt endh
+    perform_buffer = function(tags) return 1.5 end,
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.man_made == 'street_cabinet'
     end,
@@ -193,7 +193,7 @@ obstacle_point_categories = {
     side_schema = nil,
     side_key = nil,
     perform_snap = 'self',
-    perform_buffer = function(tags) return 0 end,
+    perform_buffer = function(tags) return 2 end,
     conditions = function(tags) return tags.amenity == 'loading_ramp' end,
     tags = function(tags) return { amenity = 'loading_ramp',  operator = tags.operator } end,
     tags_cc = {},
@@ -223,7 +223,8 @@ obstacle_point_categories = {
     side_schema = nil,
     side_key = nil,
     perform_snap = 'self',
-    perform_buffer = function(tags) return two_wheel_parking_buffer(tags) end,
+    -- Fixed buffer of 5m because SEV don't hava a capacity so our capacity based width does not work
+    perform_buffer = function(tags) return 5 end,
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'small_electric_vehicle_parking') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'small_electric_vehicle_parking') end,
     tags_cc = two_wheel_parking_tags_cc('small_electric_vehicle_parking'),
@@ -271,5 +272,17 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return amenity_parking_tags(tags) end,
     tags_cc = amenity_parking_tags_cc(),
+  }),
+  class_obstacle_category.new({
+    id = 'recycling',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return tags.width or 5 end,
+    conditions = function(tags)
+      return is_obstacle_parking(tags) and tags.amenity == 'recycling'
+    end,
+    tags = function(tags) return { amenity = tags.amenity } end,
+    tags_cc = {},
   }),
 }

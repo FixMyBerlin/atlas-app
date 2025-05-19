@@ -6,6 +6,10 @@ local db_table = osm2pgsql.define_table({
   name = 'parking_errors',
   ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
   columns = {
+    -- We might have to change the way we handle unique IDs here.
+    -- But for now we add the `caller_name` to the ID.
+    -- https://osm2pgsql.org/doc/manual-v1.html#using-an-additional-id-column
+    -- { column = 'serial_id', sql_type = 'serial', create_only = true },
     { column = 'id',   type = 'text', not_null = true },
     { column = 'tags', type = 'jsonb' },
     { column = 'meta', type = 'jsonb' },
@@ -14,7 +18,9 @@ local db_table = osm2pgsql.define_table({
   },
   indexes = {
     { column = {'minzoom', 'geom'}, method = 'gist' },
-    { column = 'id', method = 'btree', unique = true  }
+    -- { column = 'serial_id', method = 'btree', unique = false  },
+    -- { column = 'id', method = 'btree', unique = false  },
+    { column = 'id', method = 'btree', unique = true  },
   }
 })
 
@@ -32,7 +38,7 @@ function parking_errors(object, tags, caller_name)
   tags._caller_name = caller_name
   tags._instruction = "These tags have values that were not accepted by our sanitization. Please review the values, fix the data, or update the sanitization."
   local row = {
-    id = DefaultId(object),
+    id = DefaultId(object) .. "/" .. caller_name,
     geom = geom,
     tags = tags,
     meta = {},

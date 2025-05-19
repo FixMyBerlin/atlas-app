@@ -5,6 +5,10 @@ require('class_obstacle_category')
 require('two_wheel_parking_helper')
 require('amenity_parking_helper')
 
+local function is_obstacle_parking(tags)
+  return tags['obstacle:parking'] == 'yes'
+end
+
 obstacle_area_categories = {
   class_obstacle_category.new({
     id = 'bicycle_parking',
@@ -106,5 +110,18 @@ obstacle_area_categories = {
     end,
     tags = function(tags) return amenity_parking_tags(tags) end,
     tags_cc = amenity_parking_tags_cc(),
+  }),
+  class_obstacle_category.new({
+    -- https://www.openstreetmap.org/way/1127983079
+    id = 'tree_pit',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return nil end,
+    conditions = function(tags)
+      return is_obstacle_parking(tags) and tags.landuse == "tree_pit"
+    end,
+    tags = function(tags) return { landuse = tags.landuse } end,
+    tags_cc = {},
   }),
 }

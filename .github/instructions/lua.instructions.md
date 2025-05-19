@@ -25,6 +25,7 @@ Software tests:
 - They use busted internally but that is automatically loaded and does not need to be required.
 - Use `require("foo")` to load the function that is being tested.
 - Always add `require('Log')` and `package.path = package.path .. ';/processing/topics/helper/?.lua'`
+- To run the test, to got `./` and run `./processing/run-tests.sh`
 
 Formatting:
 - Use 2 spaces for indentation.
