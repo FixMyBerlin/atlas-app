@@ -54,7 +54,7 @@ obstacle_point_categories = {
     side_schema = nil,
     side_key = nil,
     perform_snap = 'self',
-    perform_buffer = function(tags) return 1.5 end, -- todo: based on widt endh
+    perform_buffer = function(tags) return 1.5 end,
     conditions = function(tags)
       return is_obstacle_parking(tags) and tags.man_made == 'street_cabinet'
     end,

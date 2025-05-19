@@ -22,4 +22,17 @@ obstacle_line_categories = {
     } end,
     tags_cc = { },
   }),
+  class_obstacle_category.new({
+    id = 'barrier',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return nil end,
+    conditions = function(tags)
+      return tags.barrier == 'bollard' or -- https://www.openstreetmap.org/way/889059815
+        tags.barrier == "fence" -- https://www.openstreetmap.org/way/777325759
+    end,
+    tags = function(tags) return { barrier = tags.barrier } end,
+    tags_cc = { },
+  }),
 }
