@@ -1,3 +1,4 @@
+import { bboxPolygon, featureCollection, union } from '@turf/turf'
 import { $ } from 'bun'
 import { join } from 'path'
 import {
@@ -6,6 +7,7 @@ import {
   ID_FILTERED_FILE,
   OSM_FILTERED_DIR,
 } from '../constants/directories.const'
+import type { TopicConfigBbox } from '../constants/topics.const'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { params } from '../utils/parameters'
 import { originalFilePath } from './download'
@@ -30,6 +32,7 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
 
   // Only run tag filters if the file or the filters have changed
   const filtersChanged = await directoryHasChanged(FILTER_DIR)
+  const runFilter = fileChanged || filtersChanged || fileMissing
   if (fileChanged || filtersChanged || fileMissing) {
     console.log('Filtering the OSM file...')
     try {
@@ -42,16 +45,19 @@ export async function tagFilter(fileName: string, fileChanged: boolean) {
       throw new Error(`Failed to filter the OSM file: ${error}`)
     }
   } else {
-    console.log('⏩ Skipping tag filter. The file and filters are unchanged.', {
-      fileChanged,
-      filtersChanged,
-      fileMissing,
-    })
+    console.log(
+      '⏩ Skipping tag filter. The file and filters are unchanged.',
+      JSON.stringify({
+        fileChanged,
+        filtersChanged,
+        fileMissing,
+      }),
+    )
   }
 
   updateDirectoryHash(FILTER_DIR)
 
-  return fileName
+  return { fileName, fileChanged: runFilter }
 }
 
 /**
@@ -75,4 +81,35 @@ export async function idFilter(fileName: string, ids: string) {
   }
 
   return { fileName: ID_FILTERED_FILE, fileChanged: true }
+}
+
+export async function bboxesFilter(
+  fileName: string,
+  outputName: string,
+  bboxes: Readonly<Array<TopicConfigBbox>>,
+) {
+  // Generate the osmium filter file.
+  // We need to merge the bboxes to prevent https://github.com/osmcode/osmium-tool/issues/266
+  const mergedBboxPolygonFeatures =
+    bboxes.length > 1
+      ? union(featureCollection(bboxes.map((bbox) => bboxPolygon(bbox))))
+      : bboxPolygon(bboxes[0])
+  if (!mergedBboxPolygonFeatures) {
+    throw new Error(`Failed to merge bboxes ${JSON.stringify(bboxes)}`)
+  }
+
+  const filterFile = filteredFilePath(`${outputName.split('.').at(0)}_filter.geojson`)
+  Bun.write(filterFile, JSON.stringify(mergedBboxPolygonFeatures))
+  console.log(`Filtering the OSM file with bboxes...`, filterFile)
+
+  try {
+    await $`osmium extract \
+              --overwrite \
+              --set-bounds \
+              --polygon ${filterFile} \
+              --output ${filteredFilePath(outputName)} \
+              ${filteredFilePath(fileName)}`
+  } catch (error) {
+    throw new Error(`Failed to filter the OSM file by polygon: ${error}`)
+  }
 }

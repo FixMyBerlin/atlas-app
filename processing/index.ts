@@ -25,7 +25,9 @@ async function main() {
     let { fileName, fileChanged } = await downloadFile()
 
     console.log('Processing:', 'Handle Filter')
-    await tagFilter(fileName, fileChanged)
+    const tagFilterResponse = await tagFilter(fileName, fileChanged)
+    if (tagFilterResponse) ({ fileName, fileChanged } = tagFilterResponse)
+
     const idFilterResponse = await idFilter(fileName, params.idFilter)
     if (idFilterResponse) ({ fileName, fileChanged } = idFilterResponse)
 

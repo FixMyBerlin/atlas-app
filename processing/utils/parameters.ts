@@ -1,3 +1,5 @@
+import type { TopicConfigBbox } from '../constants/topics.const'
+
 function parseParameters() {
   return {
     waitForFreshData: process.env.WAIT_FOR_FRESH_DATA === '1',
@@ -16,7 +18,9 @@ function parseParameters() {
     processOnlyTopics: process.env.PROCESS_ONLY_TOPICS
       ? process.env.PROCESS_ONLY_TOPICS.split(',').map((t) => t.trim())
       : [],
-    processOnlyBbox: process.env.PROCESS_ONLY_BBOX,
+    processOnlyBbox: process.env.PROCESS_ONLY_BBOX
+      ? (process.env.PROCESS_ONLY_BBOX.split(',').map((t) => Number(t.trim())) as TopicConfigBbox)
+      : null,
   }
 }
 

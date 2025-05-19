@@ -11,7 +11,7 @@ export async function generateTypes(processedTables: string[]) {
   // Only generate type when in development
   if (params.environment !== 'development') return
 
-  console.log('Generating types...')
+  console.log('[DEV] Generating types...')
 
   writeTableIdTypes(processedTables)
   writeTodoIdTypes()
@@ -20,22 +20,21 @@ export async function generateTypes(processedTables: string[]) {
 }
 
 async function writeTableIdTypes(processedTables: string[]) {
-  if (params.processOnlyTopics) {
-    console.info('Generating types:', 'Skipped because `PROCESS_ONLY_TOPICS` is present')
+  if (params.processOnlyTopics.length > 0) {
+    console.info('[DEV] Generating types:', 'Skipped because `PROCESS_ONLY_TOPICS` is present')
     return
   }
 
-  const typeFilePath = join(TYPES_DIR, 'tableId.generated.const.ts')
-  const typeFile = Bun.file(typeFilePath)
+  const typeFile = join(TYPES_DIR, 'tableId.generated.const.ts')
+  const content = prefixGeneratedFiles(
+    `export type TableId = ${
+      processedTables
+        .sort()
+        .map((tableName) => `'${tableName}'`)
+        .join(' | ') || 'ERROR'
+    }`,
+  )
 
-  const fileContent = `export type TableId = ${
-    processedTables
-      .sort()
-      .map((tableName) => `'${tableName}'`)
-      .join(' | ') || 'ERROR'
-  }`
-
-  const content = prefixGeneratedFiles(fileContent)
   await Bun.write(typeFile, content)
 }
 
@@ -50,7 +49,7 @@ async function callLuaForNames(luaFilename: 'ExtractBikelaneTodos' | 'ExtractRoa
       })
     return result
   } catch (error) {
-    throw new Error(`Failed to get names for "${luaFilename}": ${error}`)
+    throw new Error(`[DEV] Failed to get names for "${luaFilename}": ${error}`)
   }
 }
 

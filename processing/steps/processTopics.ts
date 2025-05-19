@@ -1,22 +1,21 @@
 import { $ } from 'bun'
-import chalk from 'chalk'
 import { join } from 'path'
-import { TOPIC_DIR } from '../constants/directories.const'
-import { topicList, type Topic } from '../constants/topics.const'
+import { CONSTANTS_DIR, TOPIC_DIR } from '../constants/directories.const'
+import { topicsConfig, type Topic } from '../constants/topics.const'
 import {
   backupTable,
   diffTables,
   dropDiffTable,
   getSchemaTables,
   getTopicTables,
-} from '../utils/diffing'
+} from '../diffing/diffing'
 import { directoryHasChanged, updateDirectoryHash } from '../utils/hashing'
 import { logEnd, logStart } from '../utils/logging'
 import { params } from '../utils/parameters'
 import { synologyLogInfo } from '../utils/synology'
-import { filteredFilePath } from './filter'
+import { bboxesFilter, filteredFilePath } from './filter'
 
-const topicPath = (topic: Topic | 'helper') => join(TOPIC_DIR, topic)
+const topicPath = (topic: Topic) => join(TOPIC_DIR, topic)
 const mainFilePath = (topic: Topic) => join(topicPath(topic), topic)
 
 /**
@@ -44,36 +43,18 @@ async function runSQL(topic: Topic) {
  * Run the given topic's lua file with osm2pgsql on the given file
  */
 async function runLua(fileName: string, topic: Topic) {
-  console.log(
-    'runTopic: runLua',
-    topic,
-    params.processOnlyBbox
-      ? chalk.yellow(`But only for PROCESS_ONLY_BBOX=${params.processOnlyBbox}`)
-      : '',
-  )
-  const bboxFilterCommand = params.processOnlyBbox ? `--bbox=${params.processOnlyBbox} \\` : ''
+  console.log('runTopic: runLua', topic)
   const filePath = filteredFilePath(fileName)
   const luaFile = `${mainFilePath(topic)}.lua`
   try {
     // Did not find an easy way to use $(Shell) and make the `--bbox` optional
-    if (params.processOnlyBbox) {
-      await $`osm2pgsql \
-              --bbox=${params.processOnlyBbox} \
+    await $`osm2pgsql \
               --number-processes=8 \
               --create \
               --output=flex \
               --extra-attributes \
               --style=${luaFile} \
               ${filePath}`
-    } else {
-      await $`osm2pgsql \
-              --number-processes=8 \
-              --create \
-              --output=flex \
-              --extra-attributes \
-              --style=${luaFile} \
-              ${filePath}`
-    }
   } catch (error) {
     throw new Error(`Failed to run lua file "${luaFile}": ${error}`)
   }
@@ -106,13 +87,26 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
   }
 
   // when the helpers have changed we disable all diffing functionality
-  const helpersChanged = await directoryHasChanged(topicPath('helper'))
-  updateDirectoryHash(topicPath('helper'))
+  const helperPath = join(TOPIC_DIR, 'helper')
+  const helpersChanged = await directoryHasChanged(helperPath)
+  updateDirectoryHash(helperPath)
   if (helpersChanged) {
-    console.log('Helpers have changed. Rerunning all code.')
+    console.log('ℹ️ Helpers have changed. Rerunning all code.')
   }
 
-  const skipCode = params.skipUnchanged && !helpersChanged && !fileChanged
+  // when the constants have changed we disable all diffing functionality
+  const constantsChanged = await directoryHasChanged(CONSTANTS_DIR)
+  updateDirectoryHash(CONSTANTS_DIR)
+  if (constantsChanged) {
+    console.log('ℹ️ Constants have changed. Rerunning all code.')
+  }
+
+  const skipCode =
+    params.skipUnchanged &&
+    !helpersChanged &&
+    !constantsChanged &&
+    !fileChanged &&
+    params.processOnlyBbox !== null
   const diffChanges = params.computeDiffs && !fileChanged
 
   logStart('Processing Topics')
@@ -126,23 +120,11 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
     console.log('ERROR logging the lastModified date', error)
   }
 
-  const topics =
-    params.processOnlyTopics.length > 0
-      ? topicList.filter((t) => params.processOnlyTopics?.includes(t))
-      : topicList
-  if (params.processOnlyTopics.length > 0) {
-    console.log(
-      `⏩ Skipping Topics based on PROCESS_ONLY_TOPICS=${params.processOnlyTopics.join(',')}`,
-      { topics },
-    )
-  }
-  for (const topic of topics) {
-    // Get all tables related to `topic`
-    // This needs to happen first, so `processedTables` includes what we skip below
-    const topicTables = await getTopicTables(topic)
-    topicTables.forEach((table) => processedTables.add(table))
+  for (const [topic, bboxes] of Array.from(topicsConfig)) {
+    let innerBboxes = bboxes
+    let innerFileName = fileName
 
-    // Guard
+    // Topic: Skip unchanged topic
     const topicChanged = await directoryHasChanged(topicPath(topic))
     if (skipCode && !topicChanged) {
       console.log(
@@ -151,6 +133,32 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
       )
       continue
     }
+    // Topic: Skip topic based on ENV
+    if (params.processOnlyTopics.length > 0 && !params.processOnlyTopics.includes(topic)) {
+      console.log(
+        `⏩ Skipping topic ${topic} based on PROCESS_ONLY_TOPICS=${params.processOnlyTopics.join(',')}`,
+      )
+      continue
+    }
+    // Bboxes: Overwrite bboxes based on ENV
+    if (params.processOnlyBbox?.length === 4) {
+      console.log(
+        `ℹ️ Forcing a bbox filter based on PROCESS_ONLY_BBOX=${params.processOnlyBbox.join(',')}`,
+      )
+      // @ts-expect-error the readonly part gets in the way here…
+      innerBboxes = [params.processOnlyBbox]
+    }
+
+    // Bboxes: Crate filtered source file
+    if (innerBboxes) {
+      innerFileName = `${topic}_extracted.osm.pbf`
+      await bboxesFilter(fileName, innerFileName, innerBboxes)
+    }
+
+    // Get all tables related to `topic`
+    // This needs to happen first, so `processedTables` includes what we skip below
+    const topicTables = await getTopicTables(topic)
+    topicTables.forEach((table) => processedTables.add(table))
 
     logStart(`Topic "${topic}"`)
     const processedTopicTables = topicTables.intersection(tableListPublic)
@@ -167,8 +175,8 @@ export async function processTopics(fileName: string, fileChanged: boolean) {
       await Promise.all(Array.from(toBackup).map(backupTable))
     }
 
-    // Run the topic with osm2pgsql and the sql post-processing
-    await runTopic(fileName, topic)
+    // Run the topic with osm2pgsql (LUA) and the sql processing
+    await runTopic(innerFileName, topic)
 
     // Update the code hashes
     updateDirectoryHash(topicPath(topic))

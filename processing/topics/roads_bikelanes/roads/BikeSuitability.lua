@@ -84,7 +84,7 @@ local noOvertaking = BikeSuitability.new({
 -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway=living_street
 local livingStreet = BikeSuitability.new({
   id = 'livingStreet',
-  desc = 'Living streets are considered bike friendly unless prohibided.' ..
+  desc = 'Living streets are considered bike friendly unless prohibited.' ..
       ' (DE: "Verkehrsberuhigter Bereich" AKA "Spielstraße")',
   condition = function(tags)
     if tags.highway == "living_street" then

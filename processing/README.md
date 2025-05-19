@@ -30,7 +30,7 @@ We use the [public Germany export from Geofabrik](https://download.geofabrik.de/
 
 ### Martin catalogue and preview
 
-See https://github.com/FixMyBerlin/atlas-app/blob/develop/processing/utils/logging.ts#L31-L40 for a list URLs to see the data that Martin provides.
+See https://github.com/FixMyBerlin/tilda-geo/blob/develop/processing/utils/logging.ts#L31-L40 for a list URLs to see the data that Martin provides.
 
 ## Development
 
@@ -90,17 +90,16 @@ For the development process it's often useful to run the processing on a single 
 For that you can specify an id (list) as `ID_FILTER` in the [`processing/run-3-filter.sh`](/processing/run-3-filter.sh).
 See the [osmium-docs](https://docs.osmcode.org/osmium/latest/osmium-getid.html) for more information.
 
-### Process only certain topics
+### Process only certain topics and certain bbox
 
-Use `PROCESS_ONLY_TOPICS=parking` to only run the "parking" topic.
-Format: "topic1,topic2".
-This can be used during development to speed up the process.
+- Use `PROCESS_ONLY_TOPICS=parking` to only run the "parking" topic.
+  Format: "topic1,topic2".
+  This can be used during development to speed up the process.
 
-### Process only a certain bbox
-
-Use `PROCESS_ONLY_BBOX=13.4178,52.4681,13.4550,52.4817` to only process data withing this bbox.
-Format: MINLON,MINLAT,MAXLON,MAXLAT. [osm2pgsql Docs](https://osm2pgsql.org/doc/manual.html#the-input).
-This can be used during development to speed up the process.
+- Use `PROCESS_ONLY_BBOX=13.4178,52.4681,13.4550,52.4817` to only process data withing this bbox.
+  Format: MINLON,MINLAT,MAXLON,MAXLAT.
+  This can be used during development to speed up the process.
+  Best to use this with `PROCESS_ONLY_TOPICS` because it will create a filtered source for each topic.
 
 ## Tests
 
@@ -126,7 +125,7 @@ Additionally all tests are being run in the [husky](https://typicode.github.io/h
 
 ## Deployment
 
-1. First https://github.com/FixMyBerlin/atlas-app/actions runs.
+1. First https://github.com/FixMyBerlin/tilda-geo/actions runs.
 2. Server (IONOS) runs the processing one table at a time.
    The whole processing takes about 1.5 h.
    See [`index.ts`](./index.ts) for details.

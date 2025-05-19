@@ -35,7 +35,9 @@ export function logTileInfo() {
   } as const
 
   if (params.environment in tileURLs) {
-    console.log('Tile Inspector: https://viewer.tilda-geo.de/index.html')
+    const environmentCapitalized =
+      params.environment.charAt(0).toUpperCase() + params.environment.slice(1)
+    console.log(`Tile Inspector: https://viewer.tilda-geo.de/?source=${environmentCapitalized}`)
     console.log(`Tile Catalog:   ${tileURLs[params.environment as keyof typeof tileURLs]}`)
   }
 }

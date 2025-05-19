@@ -16,7 +16,7 @@ UPDATE "bikelanes"
 SET
   geom = ST_Transform (
     ST_OffsetCurve (
-      ST_Simplify (ST_Transform (geom, 25833), 0.5),
+      ST_Simplify (ST_Transform (geom, 5243), 0.5),
       (tags ->> 'offset')::numeric
     ),
     3857

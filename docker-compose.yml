@@ -27,7 +27,7 @@ services:
       FORCE_COLOR: 1
     volumes:
       - osmfiles:/data
-      - geodata:/data/db
+      - db_postgres_17:/data/db
       - /var/run/docker.sock:/var/run/docker.sock
       - ./cache:/var/cache/nginx
       - ./app/src/data/processingTypes:/data/processingTypes
@@ -100,7 +100,7 @@ services:
     logging:
       driver: journald
   db:
-    image: postgis/postgis:14-3.4-alpine
+    image: pgrouting/pgrouting:17-3.5-3.8
     container_name: ${DATABASE_HOST}
     shm_size: 1g
     restart: unless-stopped
@@ -114,7 +114,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - geodata:/var/lib/postgresql/data
+      - db_postgres_17:/var/lib/postgresql/data
     configs:
       - source: postgres_conf
         target: /postgresql/postgresql.conf
@@ -130,7 +130,7 @@ services:
       driver: journald
 
 volumes:
-  geodata:
+  db_postgres_17:
   osmfiles:
 
 configs:

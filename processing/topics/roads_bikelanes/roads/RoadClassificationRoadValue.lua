@@ -1,5 +1,6 @@
 function RoadClassificationRoadValue(tags)
   local road_value = nil
+  if (tags.highway == nil) then return road_value end
 
   -- https://wiki.openstreetmap.org/wiki/DE:Key:highway
   -- In general, we use the OSM highway value as category, but have a few special cases below.

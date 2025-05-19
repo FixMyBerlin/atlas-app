@@ -4,11 +4,10 @@
     "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "mikestead.dotenv",
-    "mgmcdermott.vscode-language-babel",
     "orta.vscode-jest",
     "prisma.prisma",
     // https://vitest.dev/guide/#ide-integrations
-    "ZixuanChen.vitest-explorer",
+    "vitest.explorer",
     "sumneko.lua",
     "ReneSaarsoo.sql-formatter-vsc"
   ],

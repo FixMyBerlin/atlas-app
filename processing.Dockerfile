@@ -6,8 +6,10 @@ RUN apt update && apt install -y lua5.3 liblua5.3-dev luarocks
 
 # `busted` is our testing framework https://lunarmodules.github.io/busted/
 # `inspect` is to print / inspect tables https://github.com/kikito/inspect.lua
+# `penlight` is to add python like helpers to lua https://lunarmodules.github.io/Penlight/, https://github.com/lunarmodules/Penlight, https://luarocks.org/modules/tieske/penlight
 RUN luarocks install busted && \
-    luarocks install inspect
+    luarocks install inspect && \
+    luarocks install penlight
 COPY processing /processing/
 
 ENTRYPOINT [ "busted" ]

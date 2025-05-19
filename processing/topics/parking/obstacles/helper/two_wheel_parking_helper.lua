@@ -1,6 +1,6 @@
 package.path = package.path .. ";/processing/topics/helper/?.lua"
 require("capacity_normalization")
-require("Sanitize")
+require("sanitize_for_logging")
 require("MergeTable")
 require("Log")
 
@@ -17,7 +17,7 @@ function two_wheel_parking_buffer(tags)
 end
 
 function two_wheel_parking_tags(tags, value)
-  return MergeTable({ amenity = Sanitize(tags.amenity, { value }) }, capacity_normalization(tags))
+  return MergeTable({ amenity = sanitize_for_logging(tags.amenity, { value }) }, capacity_normalization(tags))
 end
 
 function two_wheel_parking_tags_cc(value)
