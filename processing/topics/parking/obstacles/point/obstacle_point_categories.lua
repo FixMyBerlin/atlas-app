@@ -272,4 +272,16 @@ obstacle_point_categories = {
     tags = function(tags) return amenity_parking_tags(tags) end,
     tags_cc = amenity_parking_tags_cc(),
   }),
+  class_obstacle_category.new({
+    id = 'recycling',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return tags.width or 5 end,
+    conditions = function(tags)
+      return is_obstacle_parking(tags) and tags.amenity == 'recycling'
+    end,
+    tags = function(tags) return { amenity = tags.amenity } end,
+    tags_cc = {},
+  }),
 }
