@@ -100,7 +100,7 @@ services:
     logging:
       driver: journald
   db:
-    image: postgis/postgis:17-3.5-alpine
+    image: pgrouting/pgrouting:17-3.5-3.8
     container_name: ${DATABASE_HOST}
     shm_size: 1g
     restart: unless-stopped
