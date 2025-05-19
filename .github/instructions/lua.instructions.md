@@ -16,7 +16,7 @@ applyTo: '**/*.lua'
   - Our linter does not accept lower case global functions but we ignore that because we cannot configure the linter properly.
 - Each file has to start with a `package.path` which lists the path where all helpers live that are used in this file.
   `package.path = package.path .. ";/processing/topics/helper/?.lua"`
-- To require a function, we just `require("function_name")` the file and then use `function_name`. We _do not_ assign local variables like `local function_name = require("function_name")` except we have to like with the `is_env.is_production` case.
+- To require a function, used to put everything in the global namespace like `require("function_name")` the file and then use `function_name`. But for new helper methods, we return from the helper file and require via  `local function_name = require("function_name")`.
 - Preserve code comments that are still relevant.
 
 Software tests:
@@ -24,6 +24,7 @@ Software tests:
 - They need to have a name like `file_name_of_functions.test.lua`. So the same name as the file that is being tested postfixed with ".test".
 - They use busted internally but that is automatically loaded and does not need to be required.
 - Use `require("foo")` to load the function that is being tested.
+- Always add `require('Log')` and `package.path = package.path .. ';/processing/topics/helper/?.lua'`
 
 Formatting:
 - Use 2 spaces for indentation.
