@@ -4,7 +4,8 @@ local ENV = require("ENV")
 
 describe("sanitize_for_logging on staging, development", function()
   -- Overwrite what is used in sanitize_for_logging
-  ENV.is_production =  false
+  -- But also this is nil for testing because env variables do not work in testing.
+  ENV.is_production = false
 
   it("returns value if allowed", function()
     local value = sanitize_for_logging("value_foo", {"value_foo"})
@@ -24,7 +25,8 @@ end)
 
 describe("sanitize_for_logging on production", function()
   -- Overwrite what is used in sanitize_for_logging
-  ENV.is_production =  true
+  -- But also this is nil for testing because env variables do not work in testing.
+  ENV.is_production = true
 
   it("returns value if allowed", function()
     local value = sanitize_for_logging("value_foo", {"value_foo"})
