@@ -4,11 +4,8 @@ local helper = require('obstacle_point_categories_helper')
 require('class_obstacle_category')
 require('two_wheel_parking_helper')
 require('amenity_parking_helper')
+local TAG_HELPER = require('tag_helper')
 
-
-local function is_obstacle_parking(tags)
-  return tags['obstacle:parking'] == 'yes'
-end
 
 obstacle_point_categories = {
   class_obstacle_category.new({
@@ -18,7 +15,7 @@ obstacle_point_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return 0.3 end,
     conditions = function(tags)
-      return is_obstacle_parking(tags) and tags.barrier == 'bollard'
+      return TAG_HELPER.is_obstacle_parking(tags) and tags.barrier == 'bollard'
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'barrier', 'access' },
@@ -30,7 +27,7 @@ obstacle_point_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return 0.4 end,
     conditions = function(tags)
-      return is_obstacle_parking(tags) and tags.highway == 'street_lamp'
+      return TAG_HELPER.is_obstacle_parking(tags) and tags.highway == 'street_lamp'
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'highway', 'ref' },
@@ -42,7 +39,7 @@ obstacle_point_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return 1.5 end,
     conditions = function(tags)
-      return is_obstacle_parking(tags) and (tags.natural == 'tree' or tags.natural == 'tree_stump')
+      return TAG_HELPER.is_obstacle_parking(tags) and (tags.natural == 'tree' or tags.natural == 'tree_stump')
     end,
     tags = function(tags) return { natural = sanitize_for_logging(tags.natural, { 'tree', 'tree_stump' }) } end,
     tags_cc = { 'natural', 'ref' },
@@ -54,7 +51,7 @@ obstacle_point_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return 1.5 end,
     conditions = function(tags)
-      return is_obstacle_parking(tags) and tags.man_made == 'street_cabinet'
+      return TAG_HELPER.is_obstacle_parking(tags) and tags.man_made == 'street_cabinet'
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'street_cabinet' },
@@ -69,7 +66,7 @@ obstacle_point_categories = {
     tags_cc = { 'traffic_sign', 'highway' },
     conditions = function(tags)
       -- highway=traffic_sign is not used a lot but a way to describe a unspecified sign
-      return is_obstacle_parking(tags) and (tags.traffic_sign ~= nil or tags.highway == 'traffic_sign')
+      return TAG_HELPER.is_obstacle_parking(tags) and (tags.traffic_sign ~= nil or tags.highway == 'traffic_sign')
     end
   }),
   class_obstacle_category.new({
@@ -278,7 +275,7 @@ obstacle_point_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return tags.width or 5 end,
     conditions = function(tags)
-      return is_obstacle_parking(tags) and tags.amenity == 'recycling'
+      return TAG_HELPER.is_obstacle_parking(tags) and tags.amenity == 'recycling'
     end,
     tags = function(tags) return { amenity = tags.amenity } end,
     tags_cc = {},
