@@ -91,7 +91,7 @@ obstacle_area_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return nil end,
     conditions = function(tags)
-      return tags['amenity'] == 'parking' and tags['parking'] == 'lane'
+      return tags.amenity == 'parking' and tags.parking == 'lane'
     end,
     tags = function(tags) return amenity_parking_tags(tags) end,
     tags_cc = amenity_parking_tags_cc(),
@@ -104,7 +104,31 @@ obstacle_area_categories = {
     perform_snap = 'self',
     perform_buffer = function(tags) return nil end,
     conditions = function(tags)
-      return tags['amenity'] == 'parking' and tags['parking'] == 'street_side'
+      return tags.amenity == 'parking' and tags.parking == 'street_side'
+    end,
+    tags = function(tags) return amenity_parking_tags(tags) end,
+    tags_cc = amenity_parking_tags_cc(),
+  }),
+  class_obstacle_category.new({
+    id = 'parking_kerb',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return nil end,
+    conditions = function(tags)
+      return tags.amenity == 'parking' and (tags.parking == 'on_kerb' or tags.parking == 'half_on_kerb')
+    end,
+    tags = function(tags) return amenity_parking_tags(tags) end,
+    tags_cc = amenity_parking_tags_cc(),
+  }),
+  class_obstacle_category.new({
+    id = 'parking_shoulder',
+    side_schema = nil,
+    side_key = nil,
+    perform_snap = 'self',
+    perform_buffer = function(tags) return nil end,
+    conditions = function(tags)
+      return tags.amenity == 'parking' and tags.parking == 'shoulder'
     end,
     tags = function(tags) return amenity_parking_tags(tags) end,
     tags_cc = amenity_parking_tags_cc(),

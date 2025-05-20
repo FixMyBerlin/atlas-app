@@ -1,12 +1,25 @@
 require('init')
 require('class_off_street_parking_category')
+require('sanitize_for_logging')
 
 local off_street_parking_point_categories = {
   class_off_street_parking_category.new({
-    id = 'bicycle_parking',
-    conditions = function(tags) return false end,
-    tags = function(tags) return {} end,
-    tags_cc = {},
+    id = 'parking_entrance', -- https://www.openstreetmap.org/node/7783387559
+    conditions = function(tags) return tags.amenity	== "parking_entrance" end,
+    tags = function(tags) return {
+      amenity = tags.amenity,
+      parking = sanitize_for_logging(tags.parking, { 'underground' })
+    } end,
+    tags_cc = { 'access' },
+  }),
+  class_off_street_parking_category.new({
+    id = 'garage_entrance', -- https://www.openstreetmap.org/node/7773846323
+    conditions = function(tags) return tags.entrance	== "garage" end,
+    tags = function(tags) return {
+      entrance = tags.entrance,
+      parking = sanitize_for_logging(tags.parking, { 'underground' })
+    } end,
+    tags_cc = { 'access' },
   }),
 }
 

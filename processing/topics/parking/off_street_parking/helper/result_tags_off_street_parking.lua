@@ -5,9 +5,7 @@ require("DefaultId")
 require("Metadata")
 require("Log")
 
-function result_tags_off_street_parking(result)
-  local id = DefaultId(result.object) .. "/" .. result.object.tags.side
-
+local function result_tags_off_street_parking(result)
   local result_tags = {
     category = result.category.id,
   }
@@ -23,8 +21,10 @@ function result_tags_off_street_parking(result)
   result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
 
   return {
-    id = id,
+    id = DefaultId(result.object),
     tags = result_tags,
     meta = result_meta,
   }
 end
+
+return result_tags_off_street_parking
