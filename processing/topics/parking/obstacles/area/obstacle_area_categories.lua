@@ -12,8 +12,8 @@ end
 obstacle_area_categories = {
   class_obstacle_category.new({
     id = 'bicycle_parking',
-    side_schema = "nil",
-    side_key = "nil",
+    side_schema = nil,
+    side_key = nil,
     perform_snap = 'self',
     perform_buffer = function(tags) return nil end,
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'bicycle_parking') end,
