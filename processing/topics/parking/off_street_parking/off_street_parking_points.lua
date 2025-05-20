@@ -26,10 +26,12 @@ local function off_street_parking_points(object)
 
   local result = categorize_off_street_parking(object, off_street_parking_point_categories)
   if result.object then
-    local cleaned_tags, replaced_tags = sanitize_cleaner(result_tags_obstacles(result), result.object.tags)
+    local row_tags = result_tags_obstacles(result)
+    local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
+    row_tags.tags = cleaned_tags
     parking_errors(result.object, replaced_tags, 'parking_obstacle_points')
 
-    local row = MergeTable({ geom = result.object:as_point() }, cleaned_tags)
+    local row = MergeTable({ geom = result.object:as_point() }, row_tags)
     db_table:insert(row)
   end
 end
