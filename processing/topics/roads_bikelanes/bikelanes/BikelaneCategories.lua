@@ -1,5 +1,4 @@
-package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("ContainsSubstring")
 require("IsSidepath")
 require("CreateSubcategoriesAdjoiningOrIsolated")

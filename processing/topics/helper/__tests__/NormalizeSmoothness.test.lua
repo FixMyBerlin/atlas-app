@@ -1,5 +1,5 @@
 describe("DeriveSmoothness", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("DeriveSmoothness")
 
   it('normalize "good" to "good"', function()

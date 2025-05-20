@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("ParseLength")
 
 local highway_width_fallbacks = {

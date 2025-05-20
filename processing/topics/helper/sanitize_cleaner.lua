@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("sanitize_for_logging") -- DISALLOWED_VALUE
 require("Clone") -- 'StructuredClone'
 require("Log")

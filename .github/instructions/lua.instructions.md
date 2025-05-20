@@ -14,8 +14,7 @@ applyTo: '**/*.lua'
 - We use camel_case for our file names and functions and variables.
   - However, there are legacy functions that are still using MixedCase. Don't change this during an unrelated edit.
   - Our linter does not accept lower case global functions but we ignore that because we cannot configure the linter properly.
-- Each file has to start with a `package.path` which lists the path where all helpers live that are used in this file.
-  `package.path = package.path .. ";/processing/topics/helper/?.lua"`
+- Each file has to start with a `require('init')` which will make all `package.path` avaiable so we don't have to require those manually.
 - To require a function, used to put everything in the global namespace like `require("function_name")` the file and then use `function_name`. But for new helper methods, we return from the helper file and require via  `local function_name = require("function_name")`.
 - Preserve code comments that are still relevant.
 
@@ -24,7 +23,7 @@ Software tests:
 - They need to have a name like `file_name_of_functions.test.lua`. So the same name as the file that is being tested postfixed with ".test".
 - They use busted internally but that is automatically loaded and does not need to be required.
 - Use `require("foo")` to load the function that is being tested.
-- Always add `require('Log')` and `package.path = package.path .. ';/processing/topics/helper/?.lua'`
+- Always add `require('Log')` and `require('init')`
 - To run the test, to got `./` and run `./processing/run-tests.sh`
 
 Formatting:

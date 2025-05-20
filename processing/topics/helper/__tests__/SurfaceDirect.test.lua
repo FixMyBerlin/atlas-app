@@ -1,5 +1,5 @@
 describe("DeriveSurface", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("DeriveSurface")
 
   it('return correct surface_source, surface_confidence for tag', function()

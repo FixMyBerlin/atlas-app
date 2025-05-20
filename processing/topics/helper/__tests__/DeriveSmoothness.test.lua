@@ -1,5 +1,5 @@
 describe("DeriveSmoothness", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require('DeriveSmoothness')
 
   it('return nil for surface "nil"', function()

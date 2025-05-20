@@ -1,13 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-local dir = ";/processing/topics/roads_bikelanes/"
-package.path = package.path .. dir .. "roads/?.lua"
-package.path = package.path .. dir .. "maxspeed/?.lua"
-package.path = package.path .. dir .. "surfaceQuality/?.lua"
-package.path = package.path .. dir .. "lit/?.lua"
-package.path = package.path .. dir .. "bikelanes/?.lua"
-package.path = package.path .. dir .. "bikelanes/categories/?.lua"
-package.path = package.path .. dir .. "bikeroutes/?.lua"
-package.path = package.path .. dir .. "paths/?.lua"
+require('init')
 require("Set")
 require("JoinSets")
 require("Metadata")

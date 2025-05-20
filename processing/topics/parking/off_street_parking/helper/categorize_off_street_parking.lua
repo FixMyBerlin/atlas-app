@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("Log")
 
 ---@return table<string, { category: OffStreetParkingCategory, object: OSMObject} | { category: nil, object: nil}>

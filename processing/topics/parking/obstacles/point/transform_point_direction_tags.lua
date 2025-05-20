@@ -1,4 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
+require('init')
 require('Sanitize')
 
 -- Helper transform `direction` tags to our left|right|both schema.

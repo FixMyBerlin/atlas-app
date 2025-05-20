@@ -1,5 +1,5 @@
 
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("sanitize_cleaner")
 require("sanitize_for_logging") -- DISALLOWED_VALUE
 

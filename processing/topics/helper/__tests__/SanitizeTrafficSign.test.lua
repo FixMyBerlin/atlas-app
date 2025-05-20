@@ -1,5 +1,5 @@
 describe("SanitizeTrafficSign", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("SanitizeTrafficSign")
 
   -- Cleanup

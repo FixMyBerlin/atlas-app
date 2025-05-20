@@ -1,5 +1,5 @@
 describe("ContainsTrafficSignId", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("ContainsTrafficSignId")
 
   it('works for `DE:*`', function()

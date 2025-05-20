@@ -1,6 +1,5 @@
 describe("`is_parking`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+  require('init')
   require("is_parking")
   require("Log")
 

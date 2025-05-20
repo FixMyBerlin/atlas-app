@@ -1,5 +1,5 @@
 describe("CopyTags", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("CopyTags")
   require("Log")
 

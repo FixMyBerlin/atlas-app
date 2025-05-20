@@ -1,4 +1,4 @@
--- package.path = package.path .. ";/processing/topics/helper/?.lua"
+-- require('init')
 -- require("osm2pgsql") -- Warning: Don't include this, it will fail the processing for unkown reasons.
 
 -- Makes sure our sanitized `width` only holds "meter" values and only numbers

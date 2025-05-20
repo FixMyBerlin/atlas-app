@@ -1,5 +1,5 @@
 describe("ConvertCyclewayOppositeSchema", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("CompareTables")
   require("ConvertCyclewayOppositeSchema")
   require("osm2pgsql")

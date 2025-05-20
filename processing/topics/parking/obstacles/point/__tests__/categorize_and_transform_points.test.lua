@@ -1,7 +1,5 @@
 describe("`categorize_and_transform_points`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
+  require('init')
   require("categorize_and_transform_points")
   require("Log")
 

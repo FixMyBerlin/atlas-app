@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua;/processing/topics/poiClassification/?.lua"
+require("init")
 require("Set")
 require("ExtractKeys")
 require("InferAddress")

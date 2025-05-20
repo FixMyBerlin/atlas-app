@@ -1,5 +1,5 @@
 describe("CreateSubcategoriesAdjoiningOrIsolated", function()
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/categories/?.lua"
+  require('init')
   require("BikelaneCategories")
   require("CreateSubcategoriesAdjoiningOrIsolated")
 

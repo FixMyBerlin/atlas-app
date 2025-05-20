@@ -1,4 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
+require('init')
 require('DefaultId')
 require('sanitize_for_logging')
 

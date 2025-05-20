@@ -1,6 +1,5 @@
 describe("`result_tags_roads`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/roads/helper/?.lua"
+  require('init')
   require("result_tags_roads")
   require("Log")
   require('osm2pgsql')

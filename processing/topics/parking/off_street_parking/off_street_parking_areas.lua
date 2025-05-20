@@ -1,6 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/off_street_parking/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/off_street_parking/areas/?.lua'
+require('init')
 require('DefaultId')
 require('Metadata')
 require('sanitize_cleaner')

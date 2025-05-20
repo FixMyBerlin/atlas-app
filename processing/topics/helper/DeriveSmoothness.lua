@@ -3,8 +3,7 @@
 -- 2. `smoothess` extrapolated from `surface` data
 -- 3. `smoothess` extrapolated from `tracktype` tag, mostly on `highway=track`
 -- 4. `smoothess` extrapolated from `mtb:scale` tag, mostly on `highway=path`
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-
+require('init')
 require("Set")
 
 local function normalizeSmoothness(smoothness)

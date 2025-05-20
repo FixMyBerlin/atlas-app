@@ -1,6 +1,5 @@
 describe('`is_driveway`', function()
-  package.path = package.path .. ';/processing/topics/helper/?.lua'
-  package.path = package.path .. ';/processing/topics/parking/roads/helper/?.lua'
+  require('init')
   require('is_driveway')
   require('Log')
 
