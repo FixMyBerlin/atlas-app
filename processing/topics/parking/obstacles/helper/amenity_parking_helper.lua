@@ -19,12 +19,12 @@ function amenity_parking_tags(tags)
   return MergeTable(
     {
       amenity = tags.amenity,
-      parking = tags.parking,
+      parking = tags.parking, -- sanitized by 'conditions'
       orientation = sanitize_for_logging(tags.orientation, { "perpendicular", "parallel", "diagonal" }),
       informal = sanitize_for_logging(tags.informal, { "yes" }),
-      access = sanitize_for_logging(tags.access, { "no" }),
+      access = sanitize_for_logging(tags.access, { "no", "private", "permissive" }, { "yes" }),
       markings = sanitize_for_logging(tags.markings, { "yes", "no" }),
-      disabled = sanitize_for_logging(tags.disabled, { "private" }),
+      disabled = sanitize_for_logging(tags.disabled, { "private", "designated" }),
       traffic_sign = SanitizeTrafficSign(tags.traffic_sign),
     }, capacity_normalization(tags)
   )

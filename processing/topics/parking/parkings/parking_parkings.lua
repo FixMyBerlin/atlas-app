@@ -25,13 +25,12 @@ function parking_parkings(object)
   local transformed_objects = transform_parkings(object)
   for _, transformed_object in pairs(transformed_objects) do
 
-    local result = result_tags_parkings(transformed_object)
-    local cleaned_tags, replaced_tags = sanitize_cleaner(result.tags, transformed_object.tags)
-    result.tags = cleaned_tags
-
+    local row_tags = result_tags_parkings(transformed_object)
+    local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, transformed_object.tags)
+    row_tags.tags = cleaned_tags
     parking_errors(transformed_object, replaced_tags, 'parking_parkings')
 
     -- Note: No geometry for this table
-    db_table:insert(result)
+    db_table:insert(row_tags)
   end
 end

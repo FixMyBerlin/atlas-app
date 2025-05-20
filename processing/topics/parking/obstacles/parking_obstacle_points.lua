@@ -21,10 +21,12 @@ function parking_obstacle_points(object)
   local self_left_right = categorize_and_transform_points(object)
   for _, result in pairs(self_left_right) do
     if result.object then
-      local cleaned_tags, replaced_tags = sanitize_cleaner(result_tags_obstacles(result), result.object.tags)
+      local row_tags = result_tags_obstacles(result)
+      local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
+      row_tags.tags = cleaned_tags
       parking_errors(result.object, replaced_tags, 'parking_obstacle_points')
 
-      local row = MergeTable({ geom = result.object:as_point() }, cleaned_tags)
+      local row = MergeTable({ geom = result.object:as_point() }, row_tags)
       db_table:insert(row)
     end
   end

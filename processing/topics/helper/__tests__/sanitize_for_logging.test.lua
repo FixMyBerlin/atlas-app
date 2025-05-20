@@ -21,6 +21,11 @@ describe("sanitize_for_logging on staging, development", function()
     local value = sanitize_for_logging("value_not_allowed", {"value_foo"})
     assert.are.equal(value, "DISALLOWED_VALUE")
   end)
+
+  it("return nil if value not ignored", function()
+    local value = sanitize_for_logging("yes", {"no"}, {"yes"})
+    assert.are.equal(value, nil)
+  end)
 end)
 
 describe("sanitize_for_logging on production", function()
