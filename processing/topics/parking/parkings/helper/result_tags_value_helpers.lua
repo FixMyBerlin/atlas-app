@@ -9,7 +9,8 @@ require("is_driveway")
 -- for is_road this with either "missing" or some precise value.
 -- except for dual_carriageway|s when we fall back to "not_expected" instead of "missing"
 function parking_value(object)
-  local result = sanitize_for_logging(object.tags.parking, {"no", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"})
+  -- We allow "yes" as unspecified value for edge cases when the position is not yet know
+  local result = sanitize_for_logging(object.tags.parking, {"no", "yes", "lane", "street_side", "on_kerb", "half_on_kerb", "shoulder", "separate"})
   if (object._parent_tags.dual_carriageway == "yes") then
     result = result or 'not_expected'
   end
