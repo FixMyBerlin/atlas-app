@@ -1,6 +1,5 @@
 describe('`unnest_parking_tags`', function()
-  package.path = package.path .. ';/processing/topics/helper/?.lua'
-  package.path = package.path .. ';/processing/topics/parking/parkings/helper/?.lua'
+  require('init')
   require('unnest_parking_tags')
   require('Log')
   require('osm2pgsql')

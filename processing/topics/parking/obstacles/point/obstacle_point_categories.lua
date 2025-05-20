@@ -1,6 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/obstacles/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/obstacles/point/?.lua'
+require('init')
 require('sanitize_for_logging')
 local helper = require('obstacle_point_categories_helper')
 require('class_obstacle_category')

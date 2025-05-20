@@ -1,5 +1,5 @@
 describe("ParseLength", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("osm2pgsql")
   require("ParseLength")
 

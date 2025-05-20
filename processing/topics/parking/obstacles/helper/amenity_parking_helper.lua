@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("capacity_normalization")
 require("sanitize_for_logging")
 require("SanitizeTrafficSign")

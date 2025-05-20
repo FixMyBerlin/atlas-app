@@ -1,6 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/area/?.lua"
+require('init')
 require("Log")
 require("obstacle_area_categories")
 
@@ -8,8 +6,8 @@ require("obstacle_area_categories")
 function categorize_area(object)
   for _, category in ipairs(obstacle_area_categories) do
     if category:is_active(object.tags) then
-      local result_object = object
-      result_object.tags.side = "self"
+      object.tags.side = category.perform_snap
+
       return {
         category = category,
         object = object

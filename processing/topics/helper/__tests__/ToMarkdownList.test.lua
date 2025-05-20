@@ -1,7 +1,5 @@
 describe("ToMarkdownList", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/?.lua"
+  require('init')
   require("ToMarkdownList")
   require("CollectTodos")
   require("RoadTodos")

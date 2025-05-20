@@ -1,6 +1,5 @@
 describe("`result_tags_parkings`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+  require('init')
   require("transform_parkings")
   require("result_tags_parkings")
   require("Log")

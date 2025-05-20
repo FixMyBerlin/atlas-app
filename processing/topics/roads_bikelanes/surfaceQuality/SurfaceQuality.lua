@@ -1,5 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/roads_bikelanes/surfaceQuality/?.lua"
+require('init')
 require("TimeUtils")
 require("DeriveSurface")
 require("DeriveSmoothness")

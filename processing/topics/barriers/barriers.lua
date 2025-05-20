@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("Set")
 require("Metadata")
 require("HighwayClasses")

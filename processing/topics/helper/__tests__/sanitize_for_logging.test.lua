@@ -1,11 +1,10 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("sanitize_for_logging")
-local is_env = require("is_env")
-
+local ENV = require("ENV")
 
 describe("sanitize_for_logging on staging, development", function()
   -- Overwrite what is used in sanitize_for_logging
-  is_env.is_production =  false
+  ENV.is_production =  false
 
   it("returns value if allowed", function()
     local value = sanitize_for_logging("value_foo", {"value_foo"})
@@ -23,10 +22,9 @@ describe("sanitize_for_logging on staging, development", function()
   end)
 end)
 
-
 describe("sanitize_for_logging on production", function()
   -- Overwrite what is used in sanitize_for_logging
-  is_env.is_production =  true
+  ENV.is_production =  true
 
   it("returns value if allowed", function()
     local value = sanitize_for_logging("value_foo", {"value_foo"})

@@ -1,6 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/obstacles/helper/?.lua'
-package.path = package.path .. ';/processing/topics/parking/obstacles/area/?.lua'
+require('init')
 require('class_obstacle_category')
 require('two_wheel_parking_helper')
 require('amenity_parking_helper')
@@ -12,8 +10,8 @@ end
 obstacle_area_categories = {
   class_obstacle_category.new({
     id = 'bicycle_parking',
-    side_schema = "nil",
-    side_key = "nil",
+    side_schema = nil,
+    side_key = nil,
     perform_snap = 'self',
     perform_buffer = function(tags) return nil end,
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'bicycle_parking') end,

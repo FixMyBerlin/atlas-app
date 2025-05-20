@@ -1,6 +1,5 @@
 
 describe("road_width", function()
-  package.path = package.path .. ";/processing/topics/parking/helper/?.lua"
   require("road_width")
   require("osm2pgsql")
 

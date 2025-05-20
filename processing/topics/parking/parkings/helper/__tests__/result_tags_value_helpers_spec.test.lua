@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/parking/parkings/helper/?.lua"
+require('init')
 require('result_tags_value_helpers')
 
 describe("parking_value", function()

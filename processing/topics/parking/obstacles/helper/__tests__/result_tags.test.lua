@@ -1,7 +1,5 @@
 describe("`result_tags_obstacles`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/obstacles/point/?.lua"
-  package.path = package.path .. ";/processing/topics/parking/obstacles/helper/?.lua"
+  require('init')
   require("result_tags_obstacles")
   require("categorize_and_transform_points")
   require("osm2pgsql")

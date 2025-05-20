@@ -1,5 +1,5 @@
 describe("MergeTable", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("MergeTable")
 
   local base = { ["base"] = "base" }

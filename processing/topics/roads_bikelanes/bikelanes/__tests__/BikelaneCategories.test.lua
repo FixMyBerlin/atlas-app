@@ -1,6 +1,5 @@
 describe("`BikelaneCategories`", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/bikelanes/?.lua"
+  require('init')
   require("osm2pgsql")
   require("BikelaneCategories")
   local inspect = require('inspect')

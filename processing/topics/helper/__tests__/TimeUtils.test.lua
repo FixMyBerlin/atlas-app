@@ -1,5 +1,5 @@
 describe("TimeUtils", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("TimeUtils")
 
   describe("AgeInDays", function()

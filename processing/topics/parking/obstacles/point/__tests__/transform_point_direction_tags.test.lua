@@ -1,4 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
+require('init')
 local tablex = require('pl.tablex')
 require('Log')
 require('transform_point_direction_tags')

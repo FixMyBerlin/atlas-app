@@ -1,4 +1,4 @@
-package.path = package.path .. ';/processing/topics/helper/?.lua'
+require('init')
 require('DefaultId')
 require('sanitize_for_logging')
 
@@ -18,7 +18,7 @@ local db_table = osm2pgsql.define_table({
   indexes = {
     { column = {'minzoom', 'geom'}, method = 'gist' },
     { column = 'serial_id', method = 'btree', unique = true  },
-    -- { column = 'id', method = 'btree', unique = false  },
+    { column = 'id', method = 'btree', unique = false  },
   }
 })
 

@@ -1,6 +1,5 @@
 describe("ToTodoTags", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
-  package.path = package.path .. ";/processing/topics/roads_bikelanes/roads/?.lua"
+  require('init')
   require("ToTodoTags")
   require("CollectTodos")
   require("RoadTodos")

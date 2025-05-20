@@ -1,10 +1,9 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
-package.path = package.path .. ";/processing/topics/parking/obstacles/?.lua"
-package.path = package.path .. ";/processing/topics/parking/parkings/?.lua"
-package.path = package.path .. ";/processing/topics/parking/roads/?.lua"
+require('init')
 require("parking_obstacle_areas")
 require("parking_obstacle_lines")
 require("parking_obstacle_points")
+local off_street_parking_points = require("off_street_parking_points")
+local off_street_parking_areas = require("off_street_parking_areas")
 require("parking_parkings")
 require("parking_node_road_mapping")
 require("parking_roads")
@@ -17,6 +16,7 @@ require("Log")
 
 function osm2pgsql.process_node(object)
   parking_obstacle_points(object)
+  off_street_parking_points(object)
 end
 
 function osm2pgsql.process_way(object)
@@ -28,6 +28,8 @@ function osm2pgsql.process_way(object)
   parking_roads(object)
 
   parking_parkings(object)
+
+  off_street_parking_areas(object)
 end
 
 -- function osm2pgsql.process_relation(object)

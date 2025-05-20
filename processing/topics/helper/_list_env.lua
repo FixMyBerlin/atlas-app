@@ -1,4 +1,4 @@
-package.path = package.path .. ";/processing/topics/helper/?.lua"
+require('init')
 require("Log")
 
 -- List and return all available environment variables.

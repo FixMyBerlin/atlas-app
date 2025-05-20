@@ -1,5 +1,5 @@
 describe("structuredClone", function()
-  package.path = package.path .. ";/processing/topics/helper/?.lua"
+  require('init')
   require("Clone")
 
   it("clones a flat table", function()

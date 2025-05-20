@@ -1,7 +1,6 @@
 
 describe('obstacle_point_categories_helper', function()
-  package.path = package.path .. ';/processing/topics/helper/?.lua'
-  package.path = package.path .. ';/processing/topics/parking/obstacles/point/?.lua'
+  require('init')
   require('Log')
   local helper = require('obstacle_point_categories_helper')
 
