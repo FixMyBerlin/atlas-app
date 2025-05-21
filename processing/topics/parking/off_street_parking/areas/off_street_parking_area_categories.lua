@@ -17,7 +17,7 @@ local off_street_parking_area_categories = {
     tags = function(tags) return {
       amenity = tags.amenity,
       capacity = tonumber(tags.capacity),
-      parking = sanitize_for_logging(tags.parking, { 'multi-storey', 'underground' }),
+      parking = tags.parking, -- sanitized by `conditions`
       access = sanitize_for_logging(tags.access, { 'customers', 'permissive', 'private' }, { 'yes' }),
     } end,
     tags_cc = { 'fee', 'maxstay' },
@@ -37,7 +37,7 @@ local off_street_parking_area_categories = {
     tags = function(tags) return {
       amenity = tags.amenity,
       capacity = tonumber(tags.capacity),
-      parking = sanitize_for_logging(tags.parking, { 'multi-storey', 'underground' }),
+      parking = tags.parking, -- sanitized by `conditions`
       access = sanitize_for_logging(tags.access, { 'customers', 'permissive', 'private' }, { 'yes' }),
     } end,
     tags_cc = { 'fee', 'maxstay' },
