@@ -30,7 +30,7 @@ local function off_street_parking_points(object)
     local row_tags = result_tags_off_street_parking(result)
     local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
     row_tags.tags = cleaned_tags
-    parking_errors(result.object, replaced_tags, 'parking_obstacle_points')
+    parking_errors(result.object, replaced_tags, 'off_street_parking_points')
 
     local row = MergeTable({ geom = result.object:as_point() }, row_tags)
     db_table:insert(row)

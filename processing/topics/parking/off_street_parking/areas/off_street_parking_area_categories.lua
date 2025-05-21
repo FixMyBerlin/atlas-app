@@ -47,6 +47,7 @@ local off_street_parking_area_categories = {
     -- Wiki https://wiki.openstreetmap.org/wiki/Tag:building%3Dgarage
     id = 'building',
     conditions = function(tags)
+      -- (!) Every single(!) building value(!) needs to be allowed in processing/filter/filter-expressions.txt
       return tags.building == 'garages' or
         tags.building == 'garage' or
         tags.building == 'carport'
