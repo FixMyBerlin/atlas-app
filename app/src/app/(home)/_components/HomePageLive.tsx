@@ -44,8 +44,7 @@ export const HomePageLive = () => {
           TILDA live erleben
         </h2>
         <p className="mt-4 text-lg tracking-tight text-gray-700">
-          Hier können Sie die ersten Ergebnisse aus den noch laufenden Projekten einsehen – mehr ist
-          in Arbeit.
+          Hier können Sie Projekte von bestehenden Kunden live erleben:
         </p>
 
         <div className="mt-6 justify-center space-y-10 lg:flex lg:gap-x-6 lg:space-y-0">
