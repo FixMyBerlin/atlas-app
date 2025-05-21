@@ -8,7 +8,7 @@ local off_street_parking_point_categories = {
     conditions = function(tags) return tags.amenity	== "parking_entrance" end,
     tags = function(tags) return {
       amenity = tags.amenity,
-      parking = sanitize_for_logging(tags.parking, { 'underground' })
+      parking = sanitize_for_logging(tags.parking, { 'depot', 'underground', 'multi-storey' })
     } end,
     tags_cc = { 'access' },
   }),
@@ -17,7 +17,7 @@ local off_street_parking_point_categories = {
     conditions = function(tags) return tags.entrance	== "garage" end,
     tags = function(tags) return {
       entrance = tags.entrance,
-      parking = sanitize_for_logging(tags.parking, { 'underground' })
+      parking = sanitize_for_logging(tags.parking, { 'depot', 'underground', 'multi-storey' })
     } end,
     tags_cc = { 'access' },
   }),
