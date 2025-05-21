@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const osmNotesCommentSchema = z.object({
   date: z.string(),
-  action: z.enum(['opened', 'commented', 'closed']),
+  action: z.enum(['opened', 'commented', 'closed', 'reopened']),
   // Apparently can be blank, see https://github.com/openstreetmap/openstreetmap-website/blob/master/app/views/api/notes/_note.xml.builder#L30-L33
   text: z.string().optional(),
   html: z.string(),
