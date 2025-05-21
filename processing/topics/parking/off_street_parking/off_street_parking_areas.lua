@@ -47,11 +47,10 @@ local function off_street_parking_areas(object)
     local row_tags = result_tags_off_street_parking(result)
     local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
     row_tags.tags = cleaned_tags
-    parking_errors(result.object, replaced_tags, 'parking_obstacle_areas')
+    parking_errors(result.object, replaced_tags, 'off_street_parking_areas')
 
     local row = MergeTable({ geom = result.object:as_polygon() }, row_tags)
     db_table_area:insert(row)
-
 
     local label_row_tags = {
       id = row_tags.id,
