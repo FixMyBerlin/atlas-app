@@ -10,6 +10,7 @@ export async function initialize() {
   await $`mkdir -p ${OSM_DOWNLOAD_DIR} ${OSM_FILTERED_DIR} ${PERSISTENT_DIR}`
 
   await sql`CREATE EXTENSION IF NOT EXISTS postgis`
+  await sql`CREATE EXTENSION IF NOT EXISTS pgRouting`
 
   // See ./diffing
   await initializeSchemaBackup()
