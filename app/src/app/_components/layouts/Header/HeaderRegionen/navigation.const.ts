@@ -9,5 +9,8 @@ export const defaultPrimaryNavigation: PrimaryNavigation[] = [
 ]
 
 export const defaultSecondaryNavigationGrouped: SecondaryNavigation[][] = [
-  [{ name: 'Startseite', href: '/' }, ...globalSecondaryNavigation],
+  [
+    // { name: 'Startseite', href: '/' }, // hidden for regions
+    ...globalSecondaryNavigation,
+  ],
 ]

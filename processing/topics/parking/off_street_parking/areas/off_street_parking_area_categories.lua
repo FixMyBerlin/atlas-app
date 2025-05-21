@@ -17,8 +17,8 @@ local off_street_parking_area_categories = {
     tags = function(tags) return {
       amenity = tags.amenity,
       capacity = tonumber(tags.capacity),
-      parking = sanitize_for_logging(tags.parking, { 'multi-storey', 'underground' }),
-      access = sanitize_for_logging(tags.access, { 'customers', 'permissive', 'private' }, { 'yes' }),
+      parking = tags.parking, -- sanitized by `conditions`
+      access = sanitize_for_logging(tags.access, { 'employees', 'customers', 'permissive', 'private' }, { 'yes' }),
     } end,
     tags_cc = { 'fee', 'maxstay' },
   }),
@@ -37,8 +37,8 @@ local off_street_parking_area_categories = {
     tags = function(tags) return {
       amenity = tags.amenity,
       capacity = tonumber(tags.capacity),
-      parking = sanitize_for_logging(tags.parking, { 'multi-storey', 'underground' }),
-      access = sanitize_for_logging(tags.access, { 'customers', 'permissive', 'private' }, { 'yes' }),
+      parking = tags.parking, -- sanitized by `conditions`
+      access = sanitize_for_logging(tags.access, { 'employees', 'customers', 'permissive', 'private' }, { 'yes' }),
     } end,
     tags_cc = { 'fee', 'maxstay' },
   }),
@@ -55,7 +55,7 @@ local off_street_parking_area_categories = {
     tags = function(tags) return {
       building = tags.building,
       capacity = tonumber(tags.capacity),
-      access = sanitize_for_logging(tags.access, { 'customers', 'permissive', 'private' }, { 'yes' }),
+      access = sanitize_for_logging(tags.access, { 'employees', 'customers', 'permissive', 'private' }, { 'yes' }),
     } end,
     tags_cc = { 'fee', 'maxstay' },
   }),
