@@ -23,7 +23,7 @@ local function result_tags_obstacles(result, area)
   CopyTags(result_tags, result.object.tags, result.category.tags_cc, "osm_")
   MergeTable(result_tags, result.category:get_tags(result.object.tags)) -- those are sanitized already
   if area ~= nil then
-    MergeTable(result_tags, result.category:get_capacity_from_area(result.object.tags, area))
+    MergeTable(result_tags, result.category:get_capacity(result.object.tags, area))
   end
 
   local result_meta = Metadata(result)

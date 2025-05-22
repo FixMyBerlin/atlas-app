@@ -19,6 +19,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'barrier', 'access' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'street_lamp',
@@ -31,6 +32,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'highway', 'ref' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'tree',
@@ -43,6 +45,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return { natural = sanitize_for_logging(tags.natural, { 'tree', 'tree_stump' }) } end,
     tags_cc = { 'natural', 'ref' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'street_cabinet', -- https://wiki.openstreetmap.org/wiki/Tag:man_made%3Dstreet_cabinet
@@ -55,6 +58,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'street_cabinet' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'advertising', -- https://wiki.openstreetmap.org/wiki/Key:traffic_sign
@@ -62,12 +66,13 @@ obstacle_point_categories = {
     side_key = nil,
     perform_snap = 'self',
     perform_buffer = function(tags) return 0.3 end,
-    tags = function(tags) return {} end,
-    tags_cc = { 'traffic_sign', 'highway' },
     conditions = function(tags)
       -- highway=traffic_sign is not used a lot but a way to describe a unspecified sign
       return TAG_HELPER.is_obstacle_parking(tags) and (tags.traffic_sign ~= nil or tags.highway == 'traffic_sign')
-    end
+    end,
+    tags = function(tags) return {} end,
+    tags_cc = { 'traffic_sign', 'highway' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'turning_circle', -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_circle
@@ -80,6 +85,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'ref' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'turning_loop', -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dturning_loop
@@ -92,6 +98,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'ref' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'bus_stop', -- https://wiki.openstreetmap.org/wiki/DE:Tag:highway%3Dbus_stop
@@ -104,6 +111,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'ref' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'crossing_zebra',
@@ -116,6 +124,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'crossing', 'crossing_ref', 'crossing:markings', 'crossing:buffer_marking', 'crossing:kerb_extension' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'crossing_marked',
@@ -128,6 +137,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = {},
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'crossing_buffer_marking',
@@ -140,6 +150,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'crossing', 'crossing_ref', 'crossing:markings', 'crossing:buffer_marking', 'crossing:kerb_extension' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'crossing_kerb_extension',
@@ -152,6 +163,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return {} end,
     tags_cc = { 'crossing', 'crossing_ref', 'crossing:markings', 'crossing:buffer_marking', 'crossing:kerb_extension' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     -- https://overpass-turbo.eu/s/24o4
@@ -168,6 +180,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return { traffic_calming = tags.traffic_calming, direction = tags.direction } end,
     tags_cc = { 'crossing', 'crossing_ref', 'crossing:markings', 'crossing:buffer_marking', 'crossing:kerb_extension' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     -- https://overpass-turbo.eu/s/24o4
@@ -182,6 +195,7 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return { traffic_calming = 'choker' } end,
     tags_cc = { 'crossing', 'crossing_ref', 'crossing:markings', 'crossing:buffer_marking', 'crossing:kerb_extension' },
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'loading_ramp',
@@ -192,6 +206,7 @@ obstacle_point_categories = {
     conditions = function(tags) return tags.amenity == 'loading_ramp' end,
     tags = function(tags) return { amenity = 'loading_ramp',  operator = tags.operator } end,
     tags_cc = {},
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'bicycle_parking',
@@ -202,6 +217,7 @@ obstacle_point_categories = {
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'bicycle_parking') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'bicycle_parking') end,
     tags_cc = two_wheel_parking_tags_cc('bicycle_parking'),
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'motorcycle_parking',
@@ -212,6 +228,7 @@ obstacle_point_categories = {
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'motorcycle_parking') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'motorcycle_parking') end,
     tags_cc = two_wheel_parking_tags_cc('motorcycle_parking'),
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'small_electric_vehicle_parking',
@@ -223,6 +240,7 @@ obstacle_point_categories = {
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'small_electric_vehicle_parking') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'small_electric_vehicle_parking') end,
     tags_cc = two_wheel_parking_tags_cc('small_electric_vehicle_parking'),
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'bicycle_rental',
@@ -233,6 +251,7 @@ obstacle_point_categories = {
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'bicycle_rental') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'bicycle_rental') end,
     tags_cc = two_wheel_parking_tags_cc('bicycle_rental'),
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'mobility_hub',
@@ -243,31 +262,36 @@ obstacle_point_categories = {
     conditions = function(tags) return two_wheel_parking_conditions(tags, 'mobility_hub') end,
     tags = function(tags) return two_wheel_parking_tags(tags, 'mobility_hub') end,
     tags_cc = two_wheel_parking_tags_cc('mobility_hub'),
+    apply_parking_capacity_fallback = false,
   }),
-  class_obstacle_category.new({
-    id = 'parking_lane',
-    side_schema = nil,
-    side_key = nil,
-    perform_snap = 'self',
-    perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
-    conditions = function(tags)
-      return tags['amenity'] == 'parking' and tags['parking'] == 'lane'
-    end,
-    tags = function(tags) return amenity_parking_tags(tags) end,
-    tags_cc = amenity_parking_tags_cc(),
-  }),
-  class_obstacle_category.new({
-    id = 'parking_street_side',
-    side_schema = nil,
-    side_key = nil,
-    perform_snap = 'self',
-    perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
-    conditions = function(tags)
-      return tags['amenity'] == 'parking' and tags['parking'] == 'street_side'
-    end,
-    tags = function(tags) return amenity_parking_tags(tags) end,
-    tags_cc = amenity_parking_tags_cc(),
-  }),
+  -- TODO Do those make sense? I think we can remove them…
+  --
+  -- class_obstacle_category.new({
+  --   id = 'parking_lane',
+  --   side_schema = nil,
+  --   side_key = nil,
+  --   perform_snap = 'self',
+  --   perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
+  --   conditions = function(tags)
+  --     return tags['amenity'] == 'parking' and tags['parking'] == 'lane'
+  --   end,
+  --   tags = function(tags) return amenity_parking_tags(tags) end,
+  --   tags_cc = amenity_parking_tags_cc(),
+  --   apply_parking_capacity_fallback = false,
+  -- }),
+  -- class_obstacle_category.new({
+  --   id = 'parking_street_side',
+  --   side_schema = nil,
+  --   side_key = nil,
+  --   perform_snap = 'self',
+  --   perform_buffer = function(tags) return amenity_parking_point_buffer(tags) end,
+  --   conditions = function(tags)
+  --     return tags['amenity'] == 'parking' and tags['parking'] == 'street_side'
+  --   end,
+  --   tags = function(tags) return amenity_parking_tags(tags) end,
+  --   tags_cc = amenity_parking_tags_cc(),
+  --   apply_parking_capacity_fallback = false,
+  -- }),
   class_obstacle_category.new({
     id = 'recycling',
     side_schema = nil,
@@ -279,5 +303,6 @@ obstacle_point_categories = {
     end,
     tags = function(tags) return { amenity = tags.amenity } end,
     tags_cc = {},
+    apply_parking_capacity_fallback = false,
   }),
 }

@@ -2,7 +2,7 @@ require('init')
 require("Log")
 require("MergeTable")
 require("categorize_and_transform_points")
-require("result_tags_obstacles")
+local result_tags_obstacles = require("result_tags_obstacles")
 
 local db_table = osm2pgsql.define_table({
   name = '_parking_obstacle_points',

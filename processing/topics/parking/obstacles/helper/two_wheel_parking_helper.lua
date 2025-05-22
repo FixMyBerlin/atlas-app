@@ -21,7 +21,7 @@ function two_wheel_parking_tags(tags, value)
 end
 
 function two_wheel_parking_tags_cc(value)
-  return { value..":position", "position" }
+  return { value..":position", "position", "capacity" }
 end
 
 function two_wheel_parking_conditions(tags, value)

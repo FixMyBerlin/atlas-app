@@ -19,7 +19,8 @@ obstacle_line_categories = {
       barrier = tags.barrier,
       kerb = tags.kerb
     } end,
-    tags_cc = { },
+    tags_cc = {},
+    apply_parking_capacity_fallback = false,
   }),
   class_obstacle_category.new({
     id = 'barrier',
@@ -34,7 +35,8 @@ obstacle_line_categories = {
       )
     end,
     tags = function(tags) return { barrier = tags.barrier } end,
-    tags_cc = { },
+    tags_cc = {},
+    apply_parking_capacity_fallback = false,
   }),
   -- class_obstacle_category.new({
   --   id = 'path',
@@ -48,6 +50,7 @@ obstacle_line_categories = {
   --     )
   --   end,
   --   tags = function(tags) return { barrier = tags.barrier } end,
-  --   tags_cc = { },
+  --   tags_cc = {},
+  --   apply_parking_capacity_fallback = false,
   -- }),
 }

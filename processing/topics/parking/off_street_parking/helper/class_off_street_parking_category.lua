@@ -22,7 +22,7 @@ function class_off_street_parking_category.new(args)
   self._conditions = args.conditions -- use category:is_active(tags)
   self._tags = args.tags -- use category:get_tags(tags)
   self.tags_cc = args.tags_cc
-  self._capacity_from_area = args.capacity_from_area -- use category:get_capacity_from_area(tags)
+  self._capacity_from_area = args.capacity_from_area -- use category:get_capacity(tags)
 
   return self
 end
@@ -40,6 +40,6 @@ end
 
 ---Returns a table representing an off-street parking category.
 ---@return table { area: number, capacity: number, capacity_confidence: "high"|"medium"|"low", capacity_source: string }
-function class_off_street_parking_category:get_capacity_from_area(tags, area)
+function class_off_street_parking_category:get_capacity(tags, area)
   return capacity_from_tag(tags, area) or self._capacity_from_area(tags, area)
 end
