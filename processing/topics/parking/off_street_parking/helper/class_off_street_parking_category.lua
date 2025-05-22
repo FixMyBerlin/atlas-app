@@ -1,6 +1,6 @@
 require('init')
 require("Log")
-local round = require('round')
+local capacity_from_tag = require('capacity_from_tag')
 
 ---@meta
 
@@ -41,14 +41,5 @@ end
 ---Returns a table representing an off-street parking category.
 ---@return table { area: number, capacity: number, capacity_confidence: "high"|"medium"|"low", capacity_source: string }
 function class_off_street_parking_category:get_capacity_from_area(tags, area)
-  if type(tonumber(tags.capacity)) == "number" then
-    return {
-      area = round(area, 2),
-      capacity = tonumber(tags.capacity),
-      capacity_confidence = 'high',
-      capacity_source = 'tag',
-    }
-  end
-
-  return self._capacity_from_area(tags, area)
+  return capacity_from_tag(tags, area) or self._capacity_from_area(tags, area)
 end

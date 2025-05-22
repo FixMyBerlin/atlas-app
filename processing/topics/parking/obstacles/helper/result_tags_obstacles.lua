@@ -5,7 +5,7 @@ require("DefaultId")
 require("Metadata")
 require("Log")
 
-function result_tags_obstacles(result)
+local function result_tags_obstacles(result, area)
   local id = DefaultId(result.object) .. "/" .. result.object.tags.side
 
   local result_tags = {
@@ -22,6 +22,9 @@ function result_tags_obstacles(result)
   CopyTags(result_tags, result.object.tags, global_tags_cc, "osm_")
   CopyTags(result_tags, result.object.tags, result.category.tags_cc, "osm_")
   MergeTable(result_tags, result.category:get_tags(result.object.tags)) -- those are sanitized already
+  if area ~= nil then
+    MergeTable(result_tags, result.category:get_capacity_from_area(result.object.tags, area))
+  end
 
   local result_meta = Metadata(result)
   result_meta.updated_age = nil -- Lets start without this because it adds work and might not be needed
@@ -32,3 +35,5 @@ function result_tags_obstacles(result)
     meta = result_meta,
   }
 end
+
+return result_tags_obstacles

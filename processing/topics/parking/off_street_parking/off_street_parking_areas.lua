@@ -5,6 +5,7 @@ require('sanitize_cleaner')
 local result_tags_off_street_parking = require('result_tags_off_street_parking')
 local categorize_off_street_parking = require('categorize_off_street_parking')
 local off_street_parking_area_categories = require('off_street_parking_area_categories')
+local area_sqm = require('area_sqm')
 
 local db_table_area = osm2pgsql.define_table({
   name = 'off_street_parking_areas',
@@ -44,8 +45,7 @@ local function off_street_parking_areas(object)
 
   local result = categorize_off_street_parking(object, off_street_parking_area_categories)
   if result.object then
-    local area = result.object:as_polygon():transform(5243):area()
-    local row_tags = result_tags_off_street_parking(result, area)
+    local row_tags = result_tags_off_street_parking(result, area_sqm(result.object))
     local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
     row_tags.tags = cleaned_tags
     parking_errors(result.object, replaced_tags, 'off_street_parking_areas')
