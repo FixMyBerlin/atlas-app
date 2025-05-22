@@ -25,6 +25,7 @@ require("ToMarkdownList")
 require("ToTodoTags")
 require("BikeSuitability")
 require("Log")
+local round = require('round')
 
 local roadsTable = osm2pgsql.define_table({
   name = 'roads',
@@ -150,7 +151,7 @@ function osm2pgsql.process_way(object)
   ConvertCyclewayOppositeSchema(tags)
   -- Calculate and format length, see also https://github.com/osm2pgsql-dev/osm2pgsql/discussions/1756#discussioncomment-3614364
   -- Use https://epsg.io/5243 (same as `presenceStats.sql`); update `atlas_roads--length--tooltip` if changed.
-  local length = Round(object:as_linestring():transform(5243):length(), 2)
+  local length = round(object:as_linestring():transform(5243):length(), 2)
 
   -- ====== (C) Compute results and insert ======
   local results = {

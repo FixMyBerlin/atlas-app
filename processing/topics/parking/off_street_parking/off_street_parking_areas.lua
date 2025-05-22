@@ -44,7 +44,8 @@ local function off_street_parking_areas(object)
 
   local result = categorize_off_street_parking(object, off_street_parking_area_categories)
   if result.object then
-    local row_tags = result_tags_off_street_parking(result)
+    local area = result.object:as_polygon():transform(5243):area()
+    local row_tags = result_tags_off_street_parking(result, area)
     local cleaned_tags, replaced_tags = sanitize_cleaner(row_tags.tags, result.object.tags)
     row_tags.tags = cleaned_tags
     parking_errors(result.object, replaced_tags, 'off_street_parking_areas')
@@ -56,7 +57,7 @@ local function off_street_parking_areas(object)
       id = row_tags.id,
       tags = { capacity = row_tags.tags.capacity }
     }
-    local label_row = MergeTable({ geom = result.object:as_polygon():centroid() }, label_row_tags)
+    local label_row = MergeTable({ geom = result.object:as_polygon():pole_of_inaccessibility() }, label_row_tags)
     db_table_label:insert(label_row)
   end
 end
