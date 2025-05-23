@@ -2,7 +2,9 @@ import { readdir } from 'node:fs/promises'
 import { join, relative } from 'node:path'
 import { isDev } from './isDev'
 
-export const initializeLuaPackagePath = async () => {
+const pathPrefix = { runProcessing: '/processing', runTests: '' }
+
+export const initializeLuaPackagePath = async (directoryContext: keyof typeof pathPrefix) => {
   const rootDir = './'
   // Default package.path is "/usr/local/share/lua/5.3/?.lua;/usr/local/share/lua/5.3/?/init.lua;/usr/local/lib/lua/5.3/?.lua;/usr/local/lib/lua/5.3/?/init.lua;/usr/share/lua/5.3/?.lua;/usr/share/lua/5.3/?/init.lua;./?.lua;./?/init.lua"
   // Which means in order to just `require('init')` we need to put the file into `./processing/init.lua`
@@ -25,7 +27,7 @@ export const initializeLuaPackagePath = async () => {
 
   const pathEntries = Array.from(seen)
     .filter((p) => !p.includes('__tests__'))
-    .map((p) => `/processing/${p}/?.lua`)
+    .map((p) => `${pathPrefix[directoryContext]}/${p}/?.lua`)
     .join(';')
 
   const luaCode = `-- Auto-generated using processing/utils/initializeLuaPackagePath.ts

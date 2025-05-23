@@ -24,7 +24,7 @@ export async function initialize() {
   await initializeMetadataTable()
 
   // osm2pgsql LUA
-  await initializeLuaPackagePath()
+  await initializeLuaPackagePath('runProcessing')
 
   return true
 }
