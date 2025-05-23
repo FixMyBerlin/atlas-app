@@ -18,7 +18,6 @@ local db_table = osm2pgsql.define_table({
   },
 })
 
-
 function parking_obstacle_areas(object)
   if not object.is_closed then return end
   if next(object.tags) == nil then return end

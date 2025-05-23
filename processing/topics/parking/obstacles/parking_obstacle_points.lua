@@ -2,6 +2,8 @@ require('init')
 require("Log")
 require("MergeTable")
 require("categorize_and_transform_points")
+require("sanitize_cleaner")
+require("parking_errors")
 local result_tags_obstacles = require("result_tags_obstacles")
 
 local db_table = osm2pgsql.define_table({
